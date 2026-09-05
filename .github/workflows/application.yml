@@ -8,7 +8,7 @@ permissions:
   contents: read
 jobs:
   p01:
-    name: P01/P02/P03/P04/P05/P06 local application and PostgreSQL proof
+    name: P01/P02/P03/P04/P05/P06/P07 local application and PostgreSQL proof
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     services:
@@ -40,6 +40,8 @@ jobs:
           npm --version
           git rev-parse HEAD
           npm ls --depth=0
+      - name: Prepare formatted review copies without changing executed source
+        run: node scripts/format-review-copy.mjs
       - name: Install pinned controlled PDF renderer
         run: npx playwright install --with-deps chromium
       - name: Static, unit and build checks
@@ -95,7 +97,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: P06-browser-document-evidence
+          name: P07-browser-field-evidence
           path: |
             test-results/
             playwright-report/

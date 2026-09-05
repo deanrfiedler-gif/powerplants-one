@@ -99,7 +99,7 @@ test("P06 upgrade and repeat seed preserve exact P05 SQL evidence, revoked grant
   );
   assert.equal(
     (await rows("SELECT count(*)::int n FROM public.ppo_migrations"))[0].n,
-    6,
+    7,
   );
   assert.equal(
     (
@@ -160,7 +160,7 @@ test("P06 exact immutable output and two independent acknowledgements control co
   await acknowledgePack(second.p, q.issue_id, second.input);
   const ready = await dispatchReadiness(database(), q.p, q.pack.appointment_id);
   assert.equal(ready.component_ready, true);
-  assert.equal(ready.actual_start_implemented, false);
+  assert.equal(ready.actual_start_implemented, true); // P07 supplies the real guarded start; original acknowledgement assertions remain.
   assert.equal(
     (await readAppointment(q.p, q.pack.appointment_id)).items[0].dispatch_hold,
     false,
