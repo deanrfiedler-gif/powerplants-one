@@ -21,6 +21,7 @@ import {
   processRenderJob,
   readRenderJob,
 } from "../../src/documents/worker";
+import { saveWorkScope, readWorkOrder } from "../../src/service/work-orders";
 import { documentStore } from "../../src/documents/store";
 import { readOperation } from "../../src/shared/receipts";
 import {
@@ -291,10 +292,16 @@ for (const change of [
             "UPDATE ppo.pack_source_locations SET available=false,version=version+1 WHERE source_id=$1",
             [id("c2")],
           );
-        if (change === "template")
+        if (change === "template") {
           await database().query(
-            "UPDATE ppo.pack_policy SET version=version+1",
+            "INSERT INTO ppo.pack_templates(id,workspace_id,version,name,renderer_version,definition,content_hash) SELECT $1,workspace_id,2,name,renderer_version,definition,content_hash FROM ppo.pack_templates WHERE id=$2",
+            [id("c1", 2), id("c1")],
           );
+          await database().query(
+            "UPDATE ppo.pack_policy SET version=version+1,template_id=$1",
+            [id("c1", 2)],
+          );
+        }
         if (change === "permission")
           await database().query(
             "UPDATE ppo.permission_grants SET valid_to='2026-09-01' WHERE capability='pack.issue'",
@@ -710,4 +717,87 @@ test("P06 amendment contact activity failure rolls back withdrawal and exact ret
   const current = (await readPack(q.p, q.pack.id)).items[0];
   assert.equal(current.follow_ups.length, 1);
   assert.equal(current.follow_ups[0].status, "Open");
+});
+
+test("P06 successor scope Draft atomically invalidates real pack without altering authorised scope or original files", async () => {
+  const q = await issued(),
+    a = (await readAppointment(q.p, q.pack.appointment_id)).items[0],
+    w = (await readWorkOrder(q.p, a.work_order_id)).items[0];
+  const original = await rows(
+    "SELECT to_jsonb(r) snapshot FROM ppo.scope_revisions r WHERE id=$1",
+    [w.authorised_scope_revision_id],
+  );
+  const bytes = await readBundle(q.p, q.pack.issues[0].manifest);
+  await saveWorkScope(
+    q.p,
+    w.id,
+    {
+      ...base(),
+      expected_version: w.version,
+      change_reason:
+        "SYN review additional observations; no extra-work authority",
+      scope: {
+        summary: "SYN proposed successor",
+        exclusions: "No shutdown or intervention",
+        diagnostic_limit: "External visual inspection only",
+        pending_account_plan: "SYN Finance review remains separate",
+        authority_evidence: {
+          title: "SYN proposed authority",
+          content_text: "SYN draft evidence only",
+          source_reference: "SYN-PPO-P06-SUCCESSOR",
+          source_version: "1",
+        },
+        coverage: {
+          status: "Disputed",
+          agreement_reference: null,
+          source_version: null,
+          effective_from: null,
+          effective_to: null,
+          assessment: "SYN disputed",
+          reason: "SYN review",
+          charging_route: "FinanceReview",
+        },
+        items: [
+          {
+            task_kind: "Inspection",
+            task_description: "SYN external observation",
+            expected_outcome: "Record observations",
+            completion_requirements: ["Stop before intervention"],
+            required_skill_codes: ["SYN-VISUAL"],
+            shutdown_condition: null,
+            access_condition: null,
+            assets: [
+              {
+                asset_id: id("80"),
+                configuration_id: null,
+                identification_plan: null,
+              },
+            ],
+          },
+        ],
+      },
+    },
+    true,
+  );
+  const current = (await readWorkOrder(q.p, w.id)).items[0],
+    pack = (await readPack(q.p, q.pack.id)).items[0];
+  assert.notEqual(
+    current.scope_revision_id,
+    current.authorised_scope_revision_id,
+  );
+  assert.equal(
+    current.authorised_scope_revision_id,
+    w.authorised_scope_revision_id,
+  );
+  assert.deepEqual(
+    await rows(
+      "SELECT to_jsonb(r) snapshot FROM ppo.scope_revisions r WHERE id=$1",
+      [w.authorised_scope_revision_id],
+    ),
+    original,
+  );
+  assert.equal(pack.needs_review, true);
+  assert.equal(pack.readiness.dispatch_hold, true);
+  assert.equal(pack.follow_ups.length, 1);
+  assert.deepEqual(await readBundle(q.p, q.pack.issues[0].manifest), bytes);
 });

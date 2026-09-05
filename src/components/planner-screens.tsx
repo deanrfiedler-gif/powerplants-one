@@ -874,14 +874,22 @@ export function AppointmentScreen({ id }: { id: string }) {
             </p>
           )}
           <div className="planner-holds">
-            <strong>Dispatch held</strong>
+            <strong>
+              {a.dispatch_hold
+                ? "Dispatch held"
+                : "Crew responses recorded — check current pack readiness"}
+            </strong>
             <span>
               {a.pack_requirement === "ReviewRequired"
                 ? "Pack review required"
                 : a.pack_requirement === "CancellationReviewRequired"
                   ? "Cancellation consequences require review"
-                  : "Pack preparation required"}{" "}
-              · P06 pack issue and crew acknowledgement remain pending.
+                  : a.pack_requirement === "AwaitingAcknowledgement"
+                    ? "Awaiting individual crew acknowledgement"
+                    : a.pack_requirement === "Acknowledged"
+                      ? "Acknowledgements recorded against the issued pack"
+                      : "Pack preparation required"}{" "}
+              · Open the job pack to check current applicability and controls.
             </span>
           </div>
           {a.scope_review_required && (
