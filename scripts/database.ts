@@ -6,35 +6,48 @@ import { database, transaction, closeDatabase } from "../src/platform/database";
 import { localConfig } from "../src/platform/config";
 const read = (name: string) =>
   readFile(new URL(`../db/${name}`, import.meta.url), "utf8");
-export async function migrate() {
-  const sql = await read("migrations/0001-foundation.sql"),
-    hash = createHash("sha256").update(sql).digest("hex");
+export async function migrate(through = 2) {
   await transaction(async (client) => {
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     await client.query(
       "CREATE TABLE IF NOT EXISTS public.ppo_migrations(version integer PRIMARY KEY,sha256 text NOT NULL,applied_at timestamptz NOT NULL DEFAULT clock_timestamp())",
     );
-    const prior = await client.query(
-      "SELECT sha256 FROM public.ppo_migrations WHERE version=1",
-    );
-    if (prior.rows[0]) {
-      if (prior.rows[0].sha256 !== hash)
-        throw new Error(
-          "Migration checksum mismatch. Preserve the database and investigate; do not edit an applied migration.",
-        );
-      return;
+    for (const [index, file] of [
+      "0001-foundation.sql",
+      "0002-shared-foundation.sql",
+    ].entries()) {
+      const version = index + 1;
+      if (version > through) break;
+      const sql = await read(`migrations/${file}`),
+        hash = createHash("sha256").update(sql).digest("hex");
+      const prior = await client.query(
+        "SELECT sha256 FROM public.ppo_migrations WHERE version=$1",
+        [version],
+      );
+      if (prior.rows[0]) {
+        if (prior.rows[0].sha256 !== hash)
+          throw new Error(
+            "Migration checksum mismatch. Preserve the database and investigate; do not edit an applied migration.",
+          );
+        continue;
+      }
+      await client.query(sql);
+      await client.query(
+        "INSERT INTO public.ppo_migrations(version,sha256) VALUES($1,$2)",
+        [version, hash],
+      );
     }
-    await client.query(sql);
-    await client.query(
-      "INSERT INTO public.ppo_migrations(version,sha256) VALUES(1,$1)",
-      [hash],
-    );
   });
 }
 export async function seed() {
   await transaction(async (client) => {
     await client.query("SELECT pg_advisory_xact_lock(10001)");
+    const prior = await client.query(
+      "SELECT 1 FROM ppo.seed_receipts WHERE version=2",
+    );
+    if (prior.rowCount) return;
     await client.query(await read("seed.sql"));
+    await client.query("INSERT INTO ppo.seed_receipts(version) VALUES(2)");
   });
 }
 export async function reset() {
@@ -54,7 +67,10 @@ export async function reset() {
   await migrate();
   await seed();
 }
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (
+  process.argv[1] &&
+  resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+) {
   try {
     const command = process.argv[2];
     if (command === "migrate") await migrate();

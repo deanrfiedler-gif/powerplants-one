@@ -7,7 +7,7 @@ import { localConfig } from "../../src/platform/config";
 import { migrate } from "../../scripts/database";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw new Error("Reservation proof requires ppo_synthetic_test.");
-before(migrate);
+before(() => migrate());
 after(closeDatabase);
 test("competing PostgreSQL transactions cannot commit overlapping active reservations", async () => {
   const pool = database(),

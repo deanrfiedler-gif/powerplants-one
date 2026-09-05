@@ -8,7 +8,8 @@ export async function GET(request: NextRequest) {
     const migration = await database().query(
       "SELECT version FROM public.ppo_migrations WHERE version=1",
     );
-    if (migration.rowCount !== 1) throw new Error("P01 migration is not applied.");
+    if (migration.rowCount !== 1)
+      throw new Error("P01 migration is not applied.");
     return reply({
       environment: "LocalSynthetic",
       database: "Connected",
