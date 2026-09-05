@@ -4,6 +4,7 @@ import type { Principal } from "../platform/identity";
 import type { DocumentKey } from "../adapters/contracts";
 import { recordOperation, canonical } from "../platform/operations";
 import { AppError, unavailable } from "../platform/errors";
+import { requireCapability } from "../platform/permissions";
 import { uuid } from "../shared/validation";
 import { packContext, snapshot, fail } from "./context";
 import { insert, bumpPack, issueEvent } from "./packs";
@@ -368,6 +369,7 @@ export async function runPendingRenderJobs() {
   return jobs.length;
 }
 export async function readRenderJob(p: Principal, id: string) {
+  await requireCapability(database(), p, "pack.issue");
   const j = (
     await database().query(
       "SELECT * FROM ppo.pack_render_jobs WHERE workspace_id=$1 AND id=$2",

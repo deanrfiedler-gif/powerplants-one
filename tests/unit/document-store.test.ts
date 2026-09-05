@@ -35,6 +35,13 @@ test("P06 source lookup never substitutes a latest version; symlink and in-repos
         operation_id: randomUUID(),
       },
       s = new LocalSyntheticDocumentStore(root);
+    await assert.rejects(
+      new LocalSyntheticDocumentStore(process.cwd()).store(
+        c,
+        Buffer.from("x"),
+        digest("x"),
+      ),
+    );
     const key = await s.store(c, Buffer.from("v1"), digest("v1"));
     await assert.rejects(s.read(c, { ...key, version_id: digest("v2") }));
     const link = join(root, "alias");

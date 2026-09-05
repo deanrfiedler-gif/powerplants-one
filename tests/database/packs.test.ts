@@ -528,3 +528,120 @@ test("P06 database dispatch guard replaces the old unconditional hold without al
     true,
   );
 });
+for (const table of [
+  "pack_issues",
+  "pack_recipients",
+  "pack_distribution_events",
+  "audit_events",
+  "operation_receipts",
+  "outbox_jobs",
+])
+  test(`P06 late ${table} database failure rolls back issue and recovers original stored bytes`, async () => {
+    const q = await queued(),
+      job = q.pack.jobs[0];
+    await database().query(
+      `CREATE FUNCTION ppo.fail_p06_write() RETURNS trigger LANGUAGE plpgsql AS $$BEGIN RAISE EXCEPTION 'SYN injected P06 finalisation rollback'; END$$; CREATE TRIGGER fail_write BEFORE INSERT ON ppo.${table} FOR EACH ROW EXECUTE FUNCTION ppo.fail_p06_write()`,
+    );
+    const result = await processRenderJob(job.id);
+    assert.equal("state" in result && result.state, "Failed");
+    const stored = await documentStore().locate({
+      ...q.p,
+      operation_id: job.id,
+    });
+    assert.ok(stored);
+    assert.equal(
+      (await rows("SELECT count(*)::int n FROM ppo.pack_issues"))[0].n,
+      0,
+    );
+    assert.equal(
+      (await rows("SELECT count(*)::int n FROM ppo.pack_recipients"))[0].n,
+      0,
+    );
+    assert.equal(
+      (
+        await rows("SELECT count(*)::int n FROM ppo.pack_distribution_events")
+      )[0].n,
+      0,
+    );
+    assert.deepEqual(
+      await readOperation(q.p, q.cmd.operation_id),
+      q.receipt.receipt,
+    );
+    assert.equal(
+      (await readPack(q.p, q.pack.id)).items[0].current_issue_id,
+      null,
+    );
+    await database().query(
+      `DROP TRIGGER fail_write ON ppo.${table}; DROP FUNCTION ppo.fail_p06_write()`,
+    );
+    assert.ok(
+      "issue_id" in
+        (await processRenderJob(job.id, {
+          render: async () => {
+            throw Error("No replacement rendering permitted");
+          },
+        })),
+    );
+    assert.deepEqual(
+      await documentStore().locate({ ...q.p, operation_id: job.id }),
+      stored,
+    );
+    assert.equal(
+      (await rows("SELECT count(*)::int n FROM ppo.pack_recipients"))[0].n,
+      2,
+    );
+    assert.equal(
+      (
+        await rows(
+          "SELECT count(*)::int n FROM ppo.outbox_jobs WHERE kind='PackIssued'",
+        )
+      )[0].n,
+      1,
+    );
+  });
+test("P06 acknowledgement audit failure rolls back response/hold and unchanged retry succeeds", async () => {
+  const q = await issued(),
+    first = await ack(q.pack, "assigned-technician");
+  await database().query(
+    "CREATE FUNCTION ppo.fail_p06_ack() RETURNS trigger LANGUAGE plpgsql AS $$BEGIN RAISE EXCEPTION 'SYN acknowledgement rollback'; END$$; CREATE TRIGGER fail_ack BEFORE INSERT ON ppo.audit_events FOR EACH ROW EXECUTE FUNCTION ppo.fail_p06_ack()",
+  );
+  await assert.rejects(acknowledgePack(first.p, q.issue_id, first.input));
+  assert.equal(
+    (await rows("SELECT count(*)::int n FROM ppo.pack_acknowledgements"))[0].n,
+    0,
+  );
+  assert.equal(
+    (await readAppointment(q.p, q.pack.appointment_id)).items[0].dispatch_hold,
+    true,
+  );
+  await database().query(
+    "DROP TRIGGER fail_ack ON ppo.audit_events; DROP FUNCTION ppo.fail_p06_ack()",
+  );
+  await acknowledgePack(first.p, q.issue_id, first.input);
+  await database().query(
+    "UPDATE ppo.permission_grants SET valid_to='2026-09-01' WHERE user_id=$1 AND capability='pack.acknowledge'",
+    [first.p.actor_id],
+  );
+  await assert.rejects(
+    acknowledgePack(first.p, q.issue_id, first.input),
+    code("Forbidden"),
+  );
+  await assert.rejects(
+    readOperation(first.p, first.input.operation_id),
+    code("Forbidden"),
+  );
+});
+test("P06 expired competency cannot be waived by successful pack responses", async () => {
+  const q = await issued(),
+    first = await ack(q.pack, "assigned-technician");
+  await acknowledgePack(first.p, q.issue_id, first.input);
+  await database().query(
+    "UPDATE ppo.skill_evidence SET active=false WHERE resource_id=$1",
+    [id("a4", 9)],
+  );
+  const second = await ack(q.pack, "second-technician");
+  await acknowledgePack(second.p, q.issue_id, second.input);
+  const state = await dispatchReadiness(database(), q.p, q.pack.appointment_id);
+  assert.equal(state.dispatch_hold, true);
+  assert.match(state.reasons.join(" "), /competency/);
+});

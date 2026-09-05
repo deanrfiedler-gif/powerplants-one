@@ -138,9 +138,7 @@ test("P06 complete workbench preparation, check, queued output, exact document a
     page.getByRole("heading", { name: "Prepare nine-section job pack" }),
   ).toBeVisible();
   await capture(page, info, "empty-preparation");
-  await page
-    .getByText("SYN visual inspection reference", { exact: true })
-    .click();
+  await page.getByRole("checkbox", { name: /SYN visual inspection/ }).check();
   for (const k of keys)
     await page
       .locator(`#section-${k}`)
@@ -227,9 +225,29 @@ test("P06 complete workbench preparation, check, queued output, exact document a
     page.getByRole("button", { name: /Acknowledge this exact issue/ }),
   ).toBeEnabled();
   await capture(page, info, "riley-acknowledgement");
+  const acknowledgementPath = `**/api/v1/pack-issues/${issue.id}/acknowledge`;
+  let acceptedBody: string | null = null;
+  await page.route(
+    acknowledgementPath,
+    async (route) => {
+      acceptedBody = route.request().postData();
+      await route.fetch();
+      await route.abort("failed");
+    },
+    { times: 1 },
+  );
   await page
     .getByRole("button", { name: /Acknowledge this exact issue/ })
     .click();
+  await expect(page.locator(".business-error")).toBeVisible();
+  await capture(page, info, "acknowledgement-response-lost");
+  const replay = page.waitForRequest((request) =>
+    request.url().endsWith(`/pack-issues/${issue.id}/acknowledge`),
+  );
+  await page
+    .getByRole("button", { name: /Acknowledge this exact issue/ })
+    .click();
+  expect((await replay).postData()).toBe(acceptedBody);
   await expect(
     page.getByRole("button", { name: /Acknowledge this exact issue/ }),
   ).toHaveCount(0);
@@ -357,7 +375,7 @@ test("P06 unavailable read and unassigned identity expose honest recovery and no
     }),
   );
   await page.reload();
-  await expect(page.getByRole("alert")).toContainText(
+  await expect(page.locator(".business-error")).toContainText(
     "document register is unavailable",
   );
   await capture(page, info, "read-unavailable");

@@ -15,7 +15,7 @@ import { object, uuid } from "../shared/validation";
 import type { RouteContext } from "../shared/http";
 import { issueContext, packContext } from "./context";
 import { packHtml, type PackSnapshot } from "./render";
-import { readBundle, retryRenderJob } from "./worker";
+import { readBundle, retryRenderJob, readRenderJob } from "./worker";
 import { requestIssue } from "./packs";
 const fileHeaders = {
   "Cache-Control": "private, no-store",
@@ -141,4 +141,66 @@ export async function recoverJob(request: NextRequest, context: RouteContext) {
   } catch (e) {
     return failure(e);
   }
+}
+export async function issueDetails(
+  request: NextRequest,
+  context: RouteContext,
+) {
+  try {
+    localRequest(request);
+    object(Object.fromEntries(request.nextUrl.searchParams), []);
+    const p = await identity(request),
+      { id } = await context.params;
+    const { pack, a, issue } = await issueContext(
+      database(),
+      p,
+      uuid(id, "issue_id"),
+    );
+    return reply({
+      pack_id: pack.id,
+      issue_id: issue.id,
+      issued_at: issue.issued_at,
+      status: pack.status,
+      applicable:
+        pack.current_issue_id === issue.id &&
+        !pack.needs_review &&
+        pack.status === "Issued" &&
+        a.status === "Confirmed" &&
+        issue.assignment_version === a.assignment_version &&
+        issue.schedule_version === a.schedule_version,
+      as_at: new Date().toISOString(),
+    });
+  } catch (e) {
+    return failure(e);
+  }
+}
+export function generatedFile(kind: "pdf" | "html") {
+  return async (request: NextRequest, context: RouteContext) => {
+    try {
+      localRequest(request);
+      object(Object.fromEntries(request.nextUrl.searchParams), []);
+      const p = await identity(request),
+        { id } = await context.params;
+      const job = await readRenderJob(p, uuid(id, "job_id"));
+      if (!job.output_manifest) throw unavailable();
+      const bytes = await readBundle(p, job.output_manifest);
+      return new NextResponse(
+        kind === "pdf" ? new Uint8Array(bytes.pdf) : bytes.html,
+        {
+          headers: {
+            ...fileHeaders,
+            "Content-Type":
+              kind === "pdf" ? "application/pdf" : "text/html; charset=utf-8",
+            ...(kind === "pdf"
+              ? {
+                  "Content-Disposition": `attachment; filename="${job.output_manifest.filename}"`,
+                }
+              : {}),
+          },
+        },
+      );
+    } catch (e) {
+      return failure(e);
+    }
+  };
 }

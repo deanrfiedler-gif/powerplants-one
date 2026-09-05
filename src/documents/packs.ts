@@ -598,12 +598,44 @@ export async function readPack(p: Principal, id: string) {
     return envelope([
       {
         ...pack,
+        current_issue_id:
+          staff || currentIssues.length ? pack.current_issue_id : null,
+        current_revision_id:
+          staff || permittedRevisions.length ? pack.current_revision_id : null,
         revisions: permittedRevisions,
         checks: staff ? checks : [],
         issues: currentIssues,
-        events: events.filter((e) =>
-          currentIssues.some((i) => i.id === e.issue_id),
-        ),
+        events: events
+          .filter((e) => currentIssues.some((i) => i.id === e.issue_id))
+          .map((e) =>
+            staff
+              ? e
+              : {
+                  id: e.id,
+                  issue_id: e.issue_id,
+                  kind: e.kind,
+                  occurred_at: e.occurred_at,
+                  reason: "Refer to current pack applicability.",
+                },
+          ),
+        history: staff
+          ? (
+              await c.query(
+                "SELECT id,kind,summary FROM ppo.history_records WHERE workspace_id=$1 AND company_id=$2 AND site_id=$3 AND access_class IN ('RestrictedService','CustomerApproved') ORDER BY occurred_at DESC",
+                [p.workspace_id, a.company_id, a.site_id],
+              )
+            ).rows
+          : [],
+        distribution: (
+          await c.query(
+            "SELECT e.id,e.recipient_id,e.kind,e.occurred_at,u.display_name FROM ppo.pack_distribution_events e JOIN ppo.pack_recipients pr ON pr.id=e.recipient_id JOIN ppo.users u ON u.id=pr.user_id WHERE e.workspace_id=$1 AND pr.issue_id=$2 ORDER BY e.occurred_at DESC",
+            [
+              p.workspace_id,
+              currentIssues.find((i) => i.id === pack.current_issue_id)?.id ??
+                null,
+            ],
+          )
+        ).rows,
         jobs: staff ? jobs : [],
         sources: staff
           ? await availableSources(c, p, a.company_id, a.site_id)

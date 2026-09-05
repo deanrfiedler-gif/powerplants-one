@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -25,6 +25,7 @@ type Source = {
   content_hash: string;
   version_id: string;
 };
+type History = { id: string; kind: string; summary: string };
 type Revision = {
   id: string;
   revision: number;
@@ -82,6 +83,14 @@ type Pack = {
     issue_id: string | null;
   }[];
   sources: Source[];
+  history: History[];
+  distribution: {
+    id: string;
+    recipient_id: string;
+    display_name: string;
+    kind: string;
+    occurred_at: string;
+  }[];
   readiness: {
     dispatch_hold: boolean;
     component_ready: boolean;
@@ -125,11 +134,13 @@ function PreparationForm({
   appointment,
   pack,
   sources,
+  history,
   onSaved,
 }: {
   appointment?: { id: string; version: number };
   pack?: Pack;
   sources: Source[];
+  history: History[];
   onSaved: (id: string) => void;
 }) {
   const current = pack?.revisions[0];
@@ -138,6 +149,9 @@ function PreparationForm({
     ),
     [sourceIds, setSourceIds] = useState<string[]>(
       current?.input.source_ids ?? [],
+    ),
+    [historyIds, setHistoryIds] = useState<string[]>(
+      current?.input.history_ids ?? [],
     ),
     [reason, setReason] = useState(""),
     [id] = useState(() => crypto.randomUUID());
@@ -161,7 +175,7 @@ function PreparationForm({
             content: {
               sections,
               source_ids: sourceIds,
-              history_ids: current?.input.history_ids ?? [],
+              history_ids: historyIds,
             },
           },
         );
@@ -200,6 +214,31 @@ function PreparationForm({
             </span>
           </label>
         ))}
+      </fieldset>
+      <fieldset disabled={command.busy}>
+        <legend>Relevant service history</legend>
+        {history.length ? (
+          history.map((h) => (
+            <label className="pack-choice" key={h.id}>
+              <input
+                type="checkbox"
+                checked={historyIds.includes(h.id)}
+                onChange={(e) =>
+                  setHistoryIds((x) =>
+                    e.target.checked
+                      ? [...x, h.id]
+                      : x.filter((v) => v !== h.id),
+                  )
+                }
+              />
+              <span>
+                {h.kind}: {h.summary}
+              </span>
+            </label>
+          ))
+        ) : (
+          <p>No permitted service history is available for selection.</p>
+        )}
       </fieldset>
       {sectionKeys.map((k, i) => (
         <label className="pack-field" key={k} htmlFor={`section-${k}`}>
@@ -286,6 +325,7 @@ export function NewPackScreen({ appointmentId }: { appointmentId: string }) {
       appointment: { id: string; version: number; display_number: string };
       work_order_reference: string;
       sources: Source[];
+      history: History[];
     }>(`appointments/${appointmentId}/pack-options`);
   return (
     <div className="business-page">
@@ -303,6 +343,7 @@ export function NewPackScreen({ appointmentId }: { appointmentId: string }) {
           <PreparationForm
             appointment={r.data.appointment}
             sources={r.data.sources}
+            history={r.data.history}
             onSaved={(id) => router.push(`/service/packs/${id}`)}
           />
         </>
@@ -319,6 +360,9 @@ export function PackScreen({ id }: { id: string }) {
     [editing, setEditing] = useState(false),
     [working, setWorking] = useState(false),
     [error, setError] = useState<unknown>(null);
+  const acknowledgement = useRef<{ key: string; captured_at: string } | null>(
+    null,
+  );
   const p = r.data?.items[0],
     revision = p?.revisions.find((x) => x.id === p.current_revision_id),
     issue = p?.issues.find((x) => x.id === p.current_issue_id),
@@ -422,6 +466,7 @@ export function PackScreen({ id }: { id: string }) {
               key={p.version}
               pack={p}
               sources={p.sources}
+              history={p.history}
               onSaved={() => {
                 setEditing(false);
                 r.reload();
@@ -510,6 +555,22 @@ export function PackScreen({ id }: { id: string }) {
                           : "Process or recover original output"}
                       </button>
                     )}
+                  {p.actions.can_issue && j.attempts > 0 && (
+                    <p>
+                      <a
+                        href={`/api/v1/render-jobs/${j.id}/html`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Inspect retained generated attempt
+                      </a>{" "}
+                      ·{" "}
+                      <a href={`/api/v1/render-jobs/${j.id}/pdf`}>
+                        Download retained attempt
+                      </a>{" "}
+                      (availability verified on retrieval)
+                    </p>
+                  )}
                   {j.state === "StaleSource" && (
                     <p>
                       Original attempt retained. Prepare and check a new
@@ -554,6 +615,12 @@ export function PackScreen({ id }: { id: string }) {
                   <button
                     disabled={busy}
                     onClick={async () => {
+                      const key = `${issue.id}/${mine.assignment_id}/${identity.actor_id}`;
+                      if (acknowledgement.current?.key !== key)
+                        acknowledgement.current = {
+                          key,
+                          captured_at: new Date().toISOString(),
+                        };
                       const result = await command.send(
                         `pack-issues/${issue.id}/acknowledge`,
                         {
@@ -562,10 +629,13 @@ export function PackScreen({ id }: { id: string }) {
                           assignment_id: mine.assignment_id,
                           assignment_version: mine.assignment_version,
                           presented_hash: issue.output_hash,
-                          captured_at: new Date().toISOString(),
+                          captured_at: acknowledgement.current.captured_at,
                         },
                       );
-                      if (result) r.reload();
+                      if (result) {
+                        acknowledgement.current = null;
+                        r.reload();
+                      }
                     }}
                   >
                     Acknowledge this exact issue as {identity.display_name}
@@ -573,6 +643,41 @@ export function PackScreen({ id }: { id: string }) {
                   <ErrorNotice error={command.error} />
                 </>
               )}
+          </section>
+          <section className="pack-panel">
+            <h2>Distribution facts</h2>
+            <p>
+              In-app tasks, simulated sending and retrieval are separate from
+              explicit acknowledgement. No message is sent.
+            </p>
+            {p.distribution.map((d) => (
+              <p key={d.id}>
+                {d.display_name}: {d.kind} · <Stamp value={d.occurred_at} />
+              </p>
+            ))}
+            {p.actions.can_issue &&
+              issue &&
+              p.readiness.recipients.map((recipient) => (
+                <button
+                  className="secondary"
+                  key={recipient.id}
+                  disabled={busy || !reason.trim()}
+                  onClick={async () => {
+                    const result = await command.send(
+                      `pack-issues/${issue.id}/distribution`,
+                      {
+                        reason,
+                        recipient_id: recipient.id,
+                        kind: "SimulatedSent",
+                        evidence: reason,
+                      },
+                    );
+                    if (result) r.reload();
+                  }}
+                >
+                  Record simulated sending to {recipient.display_name}
+                </button>
+              ))}
           </section>
           <section className="pack-panel">
             <h2>Revision and issue history</h2>
@@ -603,6 +708,13 @@ export function PackScreen({ id }: { id: string }) {
   );
 }
 export function DocumentScreen({ id }: { id: string }) {
+  const status = useResource<{
+    pack_id: string;
+    status: string;
+    applicable: boolean;
+    issued_at: string;
+    as_at: string;
+  }>(`pack-issues/${id}`);
   const r = useResource<
     Issue["manifest"] & {
       template: { version: number; hash: string };
@@ -623,6 +735,22 @@ export function DocumentScreen({ id }: { id: string }) {
       {r.data && (
         <>
           <h2>{r.data.filename}</h2>
+          <ErrorNotice error={status.error} />
+          {status.data && (
+            <p role="status">
+              <strong>
+                {status.data.applicable
+                  ? "Current applicable issue"
+                  : "Not currently applicable"}
+              </strong>{" "}
+              · {status.data.status} · issued{" "}
+              <Stamp value={status.data.issued_at} /> · checked as at{" "}
+              <Stamp value={status.data.as_at} />.{" "}
+              <Link href={`/service/packs/${status.data.pack_id}`}>
+                Open current pack status
+              </Link>
+            </p>
+          )}
           <div className="pack-toolbar">
             <a
               className="button"
