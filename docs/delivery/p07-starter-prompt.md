@@ -4,7 +4,7 @@ Implement only P07 of the maintained ordered plan for Dean Fiedler's personal pr
 
 ## Verify the maintained baseline first
 
-Read AGENTS, README, STATUS, PPO-STD-001, BP-02/BP-07, the ordered plan, ADR-0009/0010/0011, dictionary/API and document issue/distribution contract, acceptance catalogue and relevant registers. Read [P06 handover](p06-handover.md) and its linked final publication comment on [issue #30](https://github.com/deanrfiedler-gif/powerplants-one/issues/30) for exact final head/tree, merge SHA/tree and merged-main checks. Verify connected user, private visibility/current permissions, actual main SHA/tree, P06 issue/PR state, later commits and existing P07 work. Preserve unrelated local work, all issued source bytes and all 78 parent identities. Resolve an incomplete P06 dependency before claiming P07 ready. Do not change visibility, membership, access, branch rules or paid services.
+Read AGENTS, README, STATUS, PPO-STD-001, BP-02/BP-07, the ordered plan, ADR-0009/0010/0011, dictionary/API and document issue/distribution contract, acceptance catalogue and relevant registers. Read [P06 handover](p06-handover.md) and its [final publication record](https://github.com/deanrfiedler-gif/powerplants-one/issues/30#issuecomment-5552360820) for exact final head/tree, merge SHA/tree and merged-main checks. Verify connected user, private visibility/current permissions, actual main SHA/tree, P06 issue/PR state, later commits and existing P07 work. Preserve unrelated local work, all issued source bytes and all 78 parent identities. Resolve an incomplete P06 dependency before claiming P07 ready. Do not change visibility, membership, access, branch rules or paid services.
 
 ## Deliver the bounded online increment
 

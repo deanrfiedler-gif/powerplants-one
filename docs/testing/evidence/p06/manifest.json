@@ -1,0 +1,977 @@
+{
+  "edition": "P06-r01",
+  "synthetic": true,
+  "environment": "Ubuntu 24.04; Node24.20.0; npm11.19.0; PostgreSQL16.15; Playwright1.63.0; Chromium153.0.8010.12 build1243; en-AU desktop1440x1000 phone390x844",
+  "review": "Codex implementation self-review only; no independent review, owner acceptance, full PT/AT pass or production-readiness claim.",
+  "runs": [
+    {
+      "directory": "run-33970856208",
+      "source_commit": "ec1a48a811f0eba7de7532a7ab5d692141e7bb3c",
+      "tree": "c3ebd0c8f4c8d1fae6990367fab93f433f4ac0ae",
+      "executed_sha": "9efcb765f94e3ca07bf7646f1e91bdef3af9623d",
+      "run_id": 33970856208,
+      "artifact_id": 9971046047,
+      "archive_sha256": "2d670c159a4f6e80a00a99524189eb5c55f98b2f19e93d88d8a4f015d0fa0f36",
+      "selection": "Original selected visual suite; two premature document-manifest captures are retained as rejected SC-14 evidence."
+    },
+    {
+      "directory": "prior-run-33967998661",
+      "source_commit": "c6832a6f324fb706d00e7538c2b74b3522bee07f",
+      "tree": "cff88498c82f70e5e344a20e7d2d9b47da377b12",
+      "executed_sha": "111071983c0cc5c53807d168644973b333aae728",
+      "run_id": 33967998661,
+      "artifact_id": 9970247382,
+      "archive_sha256": "3bd32ad095c66ff4ff2c5b2dea4347af374d188f35f3b8bab1d6775b2d17950e",
+      "selection": "Only two original long PDF/HTML/source-manifest sets retained; earlier run failed unrelated browser selectors."
+    },
+    {
+      "directory": "supplement-run-33972180297",
+      "source_commit": "de7d2928dea3daa960ef844f6e3035c8b54b6c65",
+      "tree": "abb639050ffce8689a386af2fd67aee95d3d485e",
+      "executed_sha": "b00f615ba0ef88c92edecdf95e169d66b8311340",
+      "run_id": 33972180297,
+      "artifact_id": 9971411233,
+      "archive_sha256": "2956666140a14b05b3dc8d67a0cfcdcb491711c9e2bd3db2fdbb99b33edc4fb6",
+      "selection": "Four original corrected current/withdrawn SC-14 screenshots plus two original source/output manifests; the primary suite PDF/HTML originals remain the selected page-review evidence."
+    }
+  ],
+  "files": [
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-acknowledgement-response-lost.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-acknowledgement-response-lost.png",
+      "run_id": 33970856208,
+      "sha256": "794108bd84d3d14a53a033faef2184539a00db76493c4181aa0ea094a129f250",
+      "bytes": 197530,
+      "width": 1440,
+      "height": 1683,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-checked.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-checked.png",
+      "run_id": 33970856208,
+      "sha256": "173e0af879f2c2a43c4b49f3ba99a7ebbf7df04d00963effe680eefe2fdcd416",
+      "bytes": 169833,
+      "width": 1440,
+      "height": 1810,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-document-manifest.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-document-manifest.png",
+      "run_id": 33970856208,
+      "sha256": "558e849beba0992668b7866960337a97b3a2aa3e47f947e3c0cc7474adab1891",
+      "bytes": 249111,
+      "width": 1440,
+      "height": 2313,
+      "inspection": "REJECTED as document-screen evidence: captured before navigation, duplicates issued workbench. Original retained; corrected in supplement."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-empty-preparation.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-empty-preparation.png",
+      "run_id": 33970856208,
+      "sha256": "c84a7491b52af9971957f59f6cec7f1497a126e71203c00fa069d3397fdd802b",
+      "bytes": 177870,
+      "width": 1440,
+      "height": 2722,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-exact-html.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-exact-html.png",
+      "run_id": 33970856208,
+      "sha256": "8f55240eac179e2c30eae74b300e5319140d971139fc8613d5495495e62b67a6",
+      "bytes": 753335,
+      "width": 1440,
+      "height": 3869,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-issued-awaiting-crew.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-issued-awaiting-crew.png",
+      "run_id": 33970856208,
+      "sha256": "558e849beba0992668b7866960337a97b3a2aa3e47f947e3c0cc7474adab1891",
+      "bytes": 249111,
+      "width": 1440,
+      "height": 2313,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-original-eaf08a21-5498-463d-9d18-75261aabf555.html",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-original-eaf08a21-5498-463d-9d18-75261aabf555.html",
+      "run_id": 33970856208,
+      "sha256": "bca755fe9dd42611846f14a7a186784ba295cfed736e8e35185f8a5cb9aa96d9",
+      "bytes": 10896
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-output-manifest.json",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-output-manifest.json",
+      "run_id": 33970856208,
+      "sha256": "9adbe433e74a0ee170f9a720c0e0e1fe51deeb6ee78f1f738ca69640b8d0859e",
+      "bytes": 15189,
+      "provenance": {
+        "executed_sha": "9efcb765f94e3ca07bf7646f1e91bdef3af9623d",
+        "head_ref": "feature/p06-job-pack-issue",
+        "project": "desktop-chromium"
+      },
+      "output": {
+        "issue_id": "eaf08a21-5498-463d-9d18-75261aabf555",
+        "job_id": "32a76f91-5427-424c-a65f-292c84976476",
+        "filename": "SYN-PPO-PACK-000002-job-pack-r01.pdf",
+        "pdf_hash": "35cd0e8738af7d94e1fbc15e46c1185fc86428b72c84fe773aeb1322920aeb72",
+        "html_hash": "bca755fe9dd42611846f14a7a186784ba295cfed736e8e35185f8a5cb9aa96d9",
+        "snapshot_hash": "f569770d5cbcbb4a4630fa2ee86097bbcbd9cde6a7e9732e3b0aa04c471497b8",
+        "renderer_version": "playwright-1.63.0",
+        "browser_version": "153.0.8010.12",
+        "prepared_at": "2026-09-05T14:15:19.438Z"
+      }
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-prepared.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-prepared.png",
+      "run_id": 33970856208,
+      "sha256": "47e9aefc000f16e7bd8a11af5a44ba7846201a12542e0d554c2d453f09814994",
+      "bytes": 155290,
+      "width": 1440,
+      "height": 1732,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-queued-not-issued.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-queued-not-issued.png",
+      "run_id": 33970856208,
+      "sha256": "3edd8766a80d3ee92a8ff83615823dadf905d56c562c7a9d9f2b2c5897fc9d1d",
+      "bytes": 188873,
+      "width": 1440,
+      "height": 2070,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-riley-acknowledgement.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-riley-acknowledgement.png",
+      "run_id": 33970856208,
+      "sha256": "0fd92dd48d35f0933c148d2bc07d7cd0eea15662cc79b3c4f25583da3e6f9b04",
+      "bytes": 187900,
+      "width": 1440,
+      "height": 1595,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-two-responses-ready.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-two-responses-ready.png",
+      "run_id": 33970856208,
+      "sha256": "2d8252780e07a6aa7416d3d7787553eeff037a0038f2840324bf2c59ae5577f6",
+      "bytes": 164189,
+      "width": 1440,
+      "height": 1443,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-withdrawn-original-retained.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-withdrawn-original-retained.png",
+      "run_id": 33970856208,
+      "sha256": "ffa7f8833e6ebdfe5d6a9baa66152732c3f6274c3e7e9c19f8f990b3894f792b",
+      "bytes": 262880,
+      "width": 1440,
+      "height": 2341,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/SYN-PPO-PACK-000002-job-pack-r01.pdf",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/SYN-PPO-PACK-000002-job-pack-r01.pdf",
+      "run_id": 33970856208,
+      "sha256": "35cd0e8738af7d94e1fbc15e46c1185fc86428b72c84fe773aeb1322920aeb72",
+      "bytes": 60596,
+      "pages": 4,
+      "page_boxes": [
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ]
+      ],
+      "tagged": true,
+      "outline_entries": 2,
+      "inspection": "Every original page self-reviewed using Poppler inspection derivatives; readable A4, repeated identity/page counts, no blocking clipping/overlap. PDF/UA and screen-reader behaviour unverified."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-acknowledgement-response-lost.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-acknowledgement-response-lost.png",
+      "run_id": 33970856208,
+      "sha256": "82ab7721497a1afeca464bf20142feaea01ad0fa8dc92c28407320b960b436b2",
+      "bytes": 180676,
+      "width": 390,
+      "height": 2569,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-checked.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-checked.png",
+      "run_id": 33970856208,
+      "sha256": "108b60fc26611413d45f5cb8a8bb3e730256337e28249611c9589de8c3c0fc9e",
+      "bytes": 151638,
+      "width": 390,
+      "height": 2444,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-document-manifest.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-document-manifest.png",
+      "run_id": 33970856208,
+      "sha256": "2ead130b26616c17ffc30cfb0fe0f942c08463b46a2853d341cac763d7493a27",
+      "bytes": 232461,
+      "width": 390,
+      "height": 3386,
+      "inspection": "REJECTED as document-screen evidence: captured before navigation, duplicates issued workbench. Original retained; corrected in supplement."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-empty-preparation.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-empty-preparation.png",
+      "run_id": 33970856208,
+      "sha256": "a2a37d3bddcb445ac91c7984b8d4dd269cb6a0a784c304ad6a29259ef193c1e0",
+      "bytes": 152154,
+      "width": 390,
+      "height": 3193,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-exact-html.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-exact-html.png",
+      "run_id": 33970856208,
+      "sha256": "d0d7a1a7f83406fddd088de762d9657f3aca292d97d285364c0243433e675eb1",
+      "bytes": 723037,
+      "width": 390,
+      "height": 6387,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-issued-awaiting-crew.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-issued-awaiting-crew.png",
+      "run_id": 33970856208,
+      "sha256": "2ead130b26616c17ffc30cfb0fe0f942c08463b46a2853d341cac763d7493a27",
+      "bytes": 232461,
+      "width": 390,
+      "height": 3386,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-original-94376aae-7a5f-4bd3-9d8a-66f171310cbf.html",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-original-94376aae-7a5f-4bd3-9d8a-66f171310cbf.html",
+      "run_id": 33970856208,
+      "sha256": "665661b8a684215ad58567feb66f7a54d96774c121196ec4b9e1a839b23ff84f",
+      "bytes": 10896
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-output-manifest.json",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-output-manifest.json",
+      "run_id": 33970856208,
+      "sha256": "b5c3184d7fe960deeb8b205c2aa09054649c6d92efdce41b3b144eb2f846e4b7",
+      "bytes": 15189,
+      "provenance": {
+        "executed_sha": "9efcb765f94e3ca07bf7646f1e91bdef3af9623d",
+        "head_ref": "feature/p06-job-pack-issue",
+        "project": "mobile-chromium"
+      },
+      "output": {
+        "issue_id": "94376aae-7a5f-4bd3-9d8a-66f171310cbf",
+        "job_id": "cccde64b-f242-4877-8bff-a5244d8ee857",
+        "filename": "SYN-PPO-PACK-000004-job-pack-r01.pdf",
+        "pdf_hash": "c7c7320542a33dfdb62753f66d3ce3634e503e53b287aabd9396763a01f3f410",
+        "html_hash": "665661b8a684215ad58567feb66f7a54d96774c121196ec4b9e1a839b23ff84f",
+        "snapshot_hash": "b68f4e9ad7b204f9a43dce64f755e70cbd9a1a5fa62e4c15b03ee126c98097e0",
+        "renderer_version": "playwright-1.63.0",
+        "browser_version": "153.0.8010.12",
+        "prepared_at": "2026-09-05T14:18:04.018Z"
+      }
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-prepared.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-prepared.png",
+      "run_id": 33970856208,
+      "sha256": "4297ba9a5fdd9b14e31b5ae0f5e39a06dffc61b21d5c0971079451786ef37d7c",
+      "bytes": 138818,
+      "width": 390,
+      "height": 2406,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-queued-not-issued.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-queued-not-issued.png",
+      "run_id": 33970856208,
+      "sha256": "1d5c56e4d07815d022068a9a592c51ca0ad47f51133d2bc9bfacbf57b0867452",
+      "bytes": 169185,
+      "width": 390,
+      "height": 2741,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-riley-acknowledgement.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-riley-acknowledgement.png",
+      "run_id": 33970856208,
+      "sha256": "02e06b37ebc117d5dff5539513097deeb821e07a54cf217c59e9095830e39254",
+      "bytes": 170978,
+      "width": 390,
+      "height": 2433,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-two-responses-ready.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-two-responses-ready.png",
+      "run_id": 33970856208,
+      "sha256": "ebf52f9afa2dd177bc1e59fcdcd05a0ed3c1da72292f9d54689a8b22bb006947",
+      "bytes": 146278,
+      "width": 390,
+      "height": 2113,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-withdrawn-original-retained.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-withdrawn-original-retained.png",
+      "run_id": 33970856208,
+      "sha256": "c0e4785dc642deedcd0c0b4de3fd78595b86507a896980a33427e76d014fb34f",
+      "bytes": 246998,
+      "width": 390,
+      "height": 3462,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/SYN-PPO-PACK-000004-job-pack-r01.pdf",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/SYN-PPO-PACK-000004-job-pack-r01.pdf",
+      "run_id": 33970856208,
+      "sha256": "c7c7320542a33dfdb62753f66d3ce3634e503e53b287aabd9396763a01f3f410",
+      "bytes": 60609,
+      "pages": 4,
+      "page_boxes": [
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ]
+      ],
+      "tagged": true,
+      "outline_entries": 2,
+      "inspection": "Every original page self-reviewed using Poppler inspection derivatives; readable A4, repeated identity/page counts, no blocking clipping/overlap. PDF/UA and screen-reader behaviour unverified."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/P06-long-html.png",
+      "original_path": "test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/P06-long-html.png",
+      "run_id": 33970856208,
+      "sha256": "d2fe7ddcba92294ce259b9e18a74541a1fc0fd85c9657a9948b70a571255518c",
+      "bytes": 1598429,
+      "width": 1440,
+      "height": 7861,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/P06-long-manifest.json",
+      "original_path": "test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/P06-long-manifest.json",
+      "run_id": 33970856208,
+      "sha256": "5ff81d480fb4b0f8c99388bc1047e10e63024b2e7b64982b8135c11cd15e69d6",
+      "bytes": 26745,
+      "provenance": {
+        "executed_sha": "9efcb765f94e3ca07bf7646f1e91bdef3af9623d",
+        "head_ref": "feature/p06-job-pack-issue",
+        "project": "desktop-chromium"
+      },
+      "output": {
+        "issue_id": "55fe8677-e596-481d-941e-44f81f7937ce",
+        "job_id": "3a99cc20-1d73-449d-bdec-93fc8376e6e3",
+        "filename": "SYN-PPO-PACK-000003-job-pack-r01.pdf",
+        "pdf_hash": "2b99b2c15262daa9db49aaa16b9c04ca2bd22591572b2c797ee254dc67130cec",
+        "html_hash": "f4232e7e64fda1788e0d8de8e3c3547a7110e02bc7ebf6d79ed95d6272550b7f",
+        "snapshot_hash": "7c120919891e3f849af837c8fe906737edf4e03eaf2d68b9062a8b23a1315adb",
+        "renderer_version": "playwright-1.63.0",
+        "browser_version": "153.0.8010.12",
+        "prepared_at": "2026-09-05T14:15:43.021Z"
+      }
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/P06-original-55fe8677-e596-481d-941e-44f81f7937ce.html",
+      "original_path": "test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/P06-original-55fe8677-e596-481d-941e-44f81f7937ce.html",
+      "run_id": 33970856208,
+      "sha256": "f4232e7e64fda1788e0d8de8e3c3547a7110e02bc7ebf6d79ed95d6272550b7f",
+      "bytes": 21054
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/P06-renderer-fixture.html",
+      "original_path": "test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/P06-renderer-fixture.html",
+      "run_id": 33970856208,
+      "sha256": "5ea021674685b1136c4cdfcd07c5cdc158c89c90e8bb924741a5e08dc33063a3",
+      "bytes": 19860
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/P06-renderer-fixture.json",
+      "original_path": "test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/P06-renderer-fixture.json",
+      "run_id": 33970856208,
+      "sha256": "d1e638806d749d687d8cd41af2ac4a7932ed659ea3c223b8963c8753785f33a6",
+      "bytes": 21235,
+      "provenance": {
+        "executed_sha": "9efcb765f94e3ca07bf7646f1e91bdef3af9623d",
+        "project": "desktop-chromium"
+      }
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/SYN-PPO-PACK-900001-job-pack-r99.pdf",
+      "original_path": "test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/SYN-PPO-PACK-900001-job-pack-r99.pdf",
+      "run_id": 33970856208,
+      "sha256": "b338c566eb87b0c26342aa7e2fde0eafae750fc37b7e8eff8b3c944da0f9873a",
+      "bytes": 70281,
+      "pages": 7,
+      "page_boxes": [
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ]
+      ],
+      "tagged": true,
+      "outline_entries": 2,
+      "inspection": "Every original page self-reviewed using Poppler inspection derivatives; readable A4, repeated identity/page counts, no blocking clipping/overlap. PDF/UA and screen-reader behaviour unverified."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/long/SYN-PPO-PACK-000003-job-pack-r01.pdf",
+      "original_path": "test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/long/SYN-PPO-PACK-000003-job-pack-r01.pdf",
+      "run_id": 33970856208,
+      "sha256": "2b99b2c15262daa9db49aaa16b9c04ca2bd22591572b2c797ee254dc67130cec",
+      "bytes": 66120,
+      "pages": 7,
+      "page_boxes": [
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ]
+      ],
+      "tagged": true,
+      "outline_entries": 2,
+      "inspection": "Every original page self-reviewed using Poppler inspection derivatives; readable A4, repeated identity/page counts, no blocking clipping/overlap. PDF/UA and screen-reader behaviour unverified."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-mobile-chromium/P06-long-html.png",
+      "original_path": "test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-mobile-chromium/P06-long-html.png",
+      "run_id": 33970856208,
+      "sha256": "e928a08fe01be85228b22ae9bfa414cf00abc44eea6e8071d043972dbce036a6",
+      "bytes": 1546502,
+      "width": 390,
+      "height": 14590,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-mobile-chromium/P06-long-manifest.json",
+      "original_path": "test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-mobile-chromium/P06-long-manifest.json",
+      "run_id": 33970856208,
+      "sha256": "ec62da81b6741be200528986c44f1114f655a28b7b80e27fe04561f3271370e7",
+      "bytes": 26745,
+      "provenance": {
+        "executed_sha": "9efcb765f94e3ca07bf7646f1e91bdef3af9623d",
+        "head_ref": "feature/p06-job-pack-issue",
+        "project": "mobile-chromium"
+      },
+      "output": {
+        "issue_id": "59f47779-0b7b-4399-9553-32442c2aa7ec",
+        "job_id": "3940d591-9550-4046-b043-921ca1954213",
+        "filename": "SYN-PPO-PACK-000005-job-pack-r01.pdf",
+        "pdf_hash": "c6f932d1fd63c26ad3f0364367f683e32907e05bf0871ff01bfddd2707110d38",
+        "html_hash": "691858c7dabba5f3d61157148918c5a10a9dd1afc151daaa22d04bf2422bd661",
+        "snapshot_hash": "9c670868f3c90bf02e5e859604c10951165b2414f689992b4c7f65aebc9d515d",
+        "renderer_version": "playwright-1.63.0",
+        "browser_version": "153.0.8010.12",
+        "prepared_at": "2026-09-05T14:18:20.243Z"
+      }
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-mobile-chromium/P06-original-59f47779-0b7b-4399-9553-32442c2aa7ec.html",
+      "original_path": "test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-mobile-chromium/P06-original-59f47779-0b7b-4399-9553-32442c2aa7ec.html",
+      "run_id": 33970856208,
+      "sha256": "691858c7dabba5f3d61157148918c5a10a9dd1afc151daaa22d04bf2422bd661",
+      "bytes": 21054
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-mobile-chromium/long/SYN-PPO-PACK-000005-job-pack-r01.pdf",
+      "original_path": "test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-mobile-chromium/long/SYN-PPO-PACK-000005-job-pack-r01.pdf",
+      "run_id": 33970856208,
+      "sha256": "c6f932d1fd63c26ad3f0364367f683e32907e05bf0871ff01bfddd2707110d38",
+      "bytes": 66124,
+      "pages": 7,
+      "page_boxes": [
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ]
+      ],
+      "tagged": true,
+      "outline_entries": 2,
+      "inspection": "Every original page self-reviewed using Poppler inspection derivatives; readable A4, repeated identity/page counts, no blocking clipping/overlap. PDF/UA and screen-reader behaviour unverified."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-unavailable-read-cf896-ery-and-no-document-content-desktop-chromium/P06-read-unavailable.png",
+      "original_path": "test-results/packs-P06-unavailable-read-cf896-ery-and-no-document-content-desktop-chromium/P06-read-unavailable.png",
+      "run_id": 33970856208,
+      "sha256": "322bf29a1a1191d98afce51a22f9cafff5a0d7d034985aadfe94ffd09b6747c9",
+      "bytes": 95146,
+      "width": 1440,
+      "height": 1000,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-unavailable-read-cf896-ery-and-no-document-content-desktop-chromium/P06-unassigned-empty.png",
+      "original_path": "test-results/packs-P06-unavailable-read-cf896-ery-and-no-document-content-desktop-chromium/P06-unassigned-empty.png",
+      "run_id": 33970856208,
+      "sha256": "661d708944f170d832e222e1cd98299559f2c723342d4d3dd1a26a1da9a99495",
+      "bytes": 87591,
+      "width": 1440,
+      "height": 1000,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-unavailable-read-cf896-ery-and-no-document-content-mobile-chromium/P06-read-unavailable.png",
+      "original_path": "test-results/packs-P06-unavailable-read-cf896-ery-and-no-document-content-mobile-chromium/P06-read-unavailable.png",
+      "run_id": 33970856208,
+      "sha256": "36c871a14c1ca47b80c78eabdfb0723a8ca0eb69ff157c98852a7e3e6e7b65a3",
+      "bytes": 80606,
+      "width": 390,
+      "height": 1270,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "run-33970856208/test-results/packs-P06-unavailable-read-cf896-ery-and-no-document-content-mobile-chromium/P06-unassigned-empty.png",
+      "original_path": "test-results/packs-P06-unavailable-read-cf896-ery-and-no-document-content-mobile-chromium/P06-unassigned-empty.png",
+      "run_id": 33970856208,
+      "sha256": "30dded1a8b5933213314fdf12d12785927690dc4ad1eb5ed0f352b23477fd0e2",
+      "bytes": 72391,
+      "width": 390,
+      "height": 1158,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "prior-run-33967998661/test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/P06-long-manifest.json",
+      "original_path": "test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/P06-long-manifest.json",
+      "run_id": 33967998661,
+      "sha256": "ab76bcbf558456c5af8e92d2574e35028dbea3e846c9aa5f18972de41190e8d9",
+      "bytes": 26745,
+      "provenance": {
+        "executed_sha": "111071983c0cc5c53807d168644973b333aae728",
+        "head_ref": "feature/p06-job-pack-issue",
+        "project": "desktop-chromium"
+      },
+      "output": {
+        "issue_id": "825df13c-7666-4f18-b8de-b77ff451dda2",
+        "job_id": "b0a70a04-e940-42fe-b1b0-64a9cc6755d5",
+        "filename": "SYN-PPO-PACK-000002-job-pack-r01.pdf",
+        "pdf_hash": "f3a1e1a177989e50597a3e45244bb0ba815336729832a3753321c534807bde05",
+        "html_hash": "5990c9d9fc28b40943290743af051ddbc8d84f40bffd7241dd599282c50b5886",
+        "snapshot_hash": "ad0d5a9f19173bc3c86244e3e71bfd2ffcd8c413191e9fe07edad3c9624e9c57",
+        "renderer_version": "playwright-1.63.0",
+        "browser_version": "153.0.8010.12",
+        "prepared_at": "2026-09-05T13:15:42.360Z"
+      }
+    },
+    {
+      "path": "prior-run-33967998661/test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/P06-original-825df13c-7666-4f18-b8de-b77ff451dda2.html",
+      "original_path": "test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/P06-original-825df13c-7666-4f18-b8de-b77ff451dda2.html",
+      "run_id": 33967998661,
+      "sha256": "5990c9d9fc28b40943290743af051ddbc8d84f40bffd7241dd599282c50b5886",
+      "bytes": 20949
+    },
+    {
+      "path": "prior-run-33967998661/test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/long/SYN-PPO-PACK-000002-job-pack-r01.pdf",
+      "original_path": "test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-desktop-chromium/long/SYN-PPO-PACK-000002-job-pack-r01.pdf",
+      "run_id": 33967998661,
+      "sha256": "f3a1e1a177989e50597a3e45244bb0ba815336729832a3753321c534807bde05",
+      "bytes": 66038,
+      "pages": 7,
+      "page_boxes": [
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ]
+      ],
+      "tagged": true,
+      "outline_entries": 2,
+      "inspection": "Every original page self-reviewed using Poppler inspection derivatives; readable A4, repeated identity/page counts, no blocking clipping/overlap. PDF/UA and screen-reader behaviour unverified."
+    },
+    {
+      "path": "prior-run-33967998661/test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-mobile-chromium/P06-long-manifest.json",
+      "original_path": "test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-mobile-chromium/P06-long-manifest.json",
+      "run_id": 33967998661,
+      "sha256": "380d26c44023b8a172f03455819f17d0e3a85e796d97a1570e8b81f8de112899",
+      "bytes": 26745,
+      "provenance": {
+        "executed_sha": "111071983c0cc5c53807d168644973b333aae728",
+        "head_ref": "feature/p06-job-pack-issue",
+        "project": "mobile-chromium"
+      },
+      "output": {
+        "issue_id": "4f6f5ebe-25cb-4b0a-a9fa-f44374300a5d",
+        "job_id": "d813a94e-96db-47e7-a9a9-921786ab5fbd",
+        "filename": "SYN-PPO-PACK-000003-job-pack-r01.pdf",
+        "pdf_hash": "dc37075af3d29b933bee4a26282a23a902fc34345a2a23c48e93245f5509573f",
+        "html_hash": "89c2798605755d5cbf765f91cb448702bc18600235d028cfca37940c615502b8",
+        "snapshot_hash": "3ea42efbe528ffa0f6f16816a3ef96f19fb4139da98f9ef8faa5e42d64596942",
+        "renderer_version": "playwright-1.63.0",
+        "browser_version": "153.0.8010.12",
+        "prepared_at": "2026-09-05T13:20:35.967Z"
+      }
+    },
+    {
+      "path": "prior-run-33967998661/test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-mobile-chromium/P06-original-4f6f5ebe-25cb-4b0a-a9fa-f44374300a5d.html",
+      "original_path": "test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-mobile-chromium/P06-original-4f6f5ebe-25cb-4b0a-a9fa-f44374300a5d.html",
+      "run_id": 33967998661,
+      "sha256": "89c2798605755d5cbf765f91cb448702bc18600235d028cfca37940c615502b8",
+      "bytes": 20949
+    },
+    {
+      "path": "prior-run-33967998661/test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-mobile-chromium/long/SYN-PPO-PACK-000003-job-pack-r01.pdf",
+      "original_path": "test-results/packs-P06-long-content-rem-c1579-ML-and-multi-page-A4-output-mobile-chromium/long/SYN-PPO-PACK-000003-job-pack-r01.pdf",
+      "run_id": 33967998661,
+      "sha256": "dc37075af3d29b933bee4a26282a23a902fc34345a2a23c48e93245f5509573f",
+      "bytes": 66037,
+      "pages": 7,
+      "page_boxes": [
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ],
+        [
+          0.0,
+          0.0,
+          595.91998,
+          842.88
+        ]
+      ],
+      "tagged": true,
+      "outline_entries": 2,
+      "inspection": "Every original page self-reviewed using Poppler inspection derivatives; readable A4, repeated identity/page counts, no blocking clipping/overlap. PDF/UA and screen-reader behaviour unverified."
+    },
+    {
+      "path": "supplement-run-33972180297/test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-document-manifest.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-document-manifest.png",
+      "run_id": 33972180297,
+      "sha256": "9e62d663108a4d564187dd27ca9259eda940a973068fc3956bd550e20644dcea",
+      "bytes": 173239,
+      "width": 1440,
+      "height": 1177,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "supplement-run-33972180297/test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-output-manifest.json",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-output-manifest.json",
+      "run_id": 33972180297,
+      "sha256": "5ad1a16b4df174f86a8dd1554812e0366ee63ba8ec44c1ddbf5bab581c51638d",
+      "bytes": 15189,
+      "provenance": {
+        "executed_sha": "b00f615ba0ef88c92edecdf95e169d66b8311340",
+        "head_ref": "feature/p06-job-pack-issue",
+        "project": "desktop-chromium"
+      },
+      "output": {
+        "issue_id": "dab408ed-2621-4b16-ae26-d22d4967799f",
+        "job_id": "b5e88c72-46fc-44cd-a703-8a76f5a00150",
+        "filename": "SYN-PPO-PACK-000002-job-pack-r01.pdf",
+        "pdf_hash": "ae00351bab90f82501d3ea813164b14febd38918f423d42600938b253d073476",
+        "html_hash": "08ba6c5107cac28dec512cd145786e3ffa1bf9b3352feec4a96f9253a855dd11",
+        "snapshot_hash": "cf84cf7afcb35cbfce699c6dd2cadf9bcf2177ae88c22eead2c1e37de632432d",
+        "renderer_version": "playwright-1.63.0",
+        "browser_version": "153.0.8010.12",
+        "prepared_at": "2026-09-05T14:40:05.064Z"
+      }
+    },
+    {
+      "path": "supplement-run-33972180297/test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-withdrawn-document-status.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-desktop-chromium/P06-withdrawn-document-status.png",
+      "run_id": 33972180297,
+      "sha256": "3765c9caaa361cb4ab6dedf881c9277e6720820b1c365bad27efff1193dac327",
+      "bytes": 174166,
+      "width": 1440,
+      "height": 1177,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "supplement-run-33972180297/test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-document-manifest.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-document-manifest.png",
+      "run_id": 33972180297,
+      "sha256": "118b46e966b339dd9770c465f0e840e781d72fbd0dc6103a46ea9ccf4c9a7015",
+      "bytes": 158039,
+      "width": 390,
+      "height": 2073,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "supplement-run-33972180297/test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-output-manifest.json",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-output-manifest.json",
+      "run_id": 33972180297,
+      "sha256": "40f101450925c287a0bbacf247d2ca868c009cdeff304848623b3dfda0daebbb",
+      "bytes": 15189,
+      "provenance": {
+        "executed_sha": "b00f615ba0ef88c92edecdf95e169d66b8311340",
+        "head_ref": "feature/p06-job-pack-issue",
+        "project": "mobile-chromium"
+      },
+      "output": {
+        "issue_id": "0ebc6c0b-5545-419c-ba91-ca7f4698ee7c",
+        "job_id": "efc44f10-2f2f-480d-bfb9-b2790773aa01",
+        "filename": "SYN-PPO-PACK-000004-job-pack-r01.pdf",
+        "pdf_hash": "f276493a6978ade495221dd97242df8b9edd6d4db6e8e8c2e5498956065ab26e",
+        "html_hash": "427a4e20fceee642ac56cbe5adfd6a4b74eb3c49213a6ce75ddd509a1118adfd",
+        "snapshot_hash": "bef2ccef8444e24b6ef8e10afda6bd990f38468d7935e492d173bfba80a12933",
+        "renderer_version": "playwright-1.63.0",
+        "browser_version": "153.0.8010.12",
+        "prepared_at": "2026-09-05T14:43:33.240Z"
+      }
+    },
+    {
+      "path": "supplement-run-33972180297/test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-withdrawn-document-status.png",
+      "original_path": "test-results/packs-P06-complete-workben-47630--independent-crew-responses-mobile-chromium/P06-withdrawn-document-status.png",
+      "run_id": 33972180297,
+      "sha256": "2bf771cd59aa7fa5ef4e5a78c6a0006a6914702d63aa4064fe632481854e9866",
+      "bytes": 158054,
+      "width": 390,
+      "height": 2073,
+      "inspection": "Self-reviewed original screenshot; readable responsive layout."
+    },
+    {
+      "path": "sources/c2000000-0000-4000-8000-000000000001-363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a.txt",
+      "id": "c2000000-0000-4000-8000-000000000001",
+      "version_id": "363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a",
+      "sha256": "363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a",
+      "bytes": 225,
+      "provenance": "Exact UTF-8 source text extracted from retained issued snapshot; hash/count match source manifest."
+    },
+    {
+      "path": "sources/c2000000-0000-4000-8000-000000000002-706c6ea40ebdd04e9bafde18369a0a3c6ff778019d69543b3d08bdad651f7411.txt",
+      "id": "c2000000-0000-4000-8000-000000000002",
+      "version_id": "706c6ea40ebdd04e9bafde18369a0a3c6ff778019d69543b3d08bdad651f7411",
+      "sha256": "706c6ea40ebdd04e9bafde18369a0a3c6ff778019d69543b3d08bdad651f7411",
+      "bytes": 171,
+      "provenance": "Exact UTF-8 source text extracted from retained issued snapshot; hash/count match source manifest."
+    }
+  ],
+  "inspection_limits": [
+    "Retained primary suite: 28 original PNGs reviewed, including two rejected premature SC-14 captures. Supplement contains four corrected original SC-14 status screenshots.",
+    "Seven original PDFs / 43 pages manually inspected, including the earlier two long outputs and five primary suite outputs.",
+    "HTML original screenshots inspected at desktop and phone, with full-height reading strips for standard and long content. Inspection derivatives do not replace originals.",
+    "PDF tagging/outline/A4/text extraction were checked; PDF/UA conformance and assistive-technology testing remain unverified.",
+    "Prior inspection PNG page3 was initially truncated; re-rendered from the unchanged original PDF. Initial desktop reading crop cut left-edge text; corrected from unchanged screenshot. Neither was an application defect.",
+    "Subsequent assurance reruns create distinct synthetic UUID/timestamp output; they do not replace these selected exact originals."
+  ]
+}

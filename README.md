@@ -2,7 +2,7 @@
 
 Private prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P06 controlled job packs implemented; final component verification/publication in handover; exact publication state in the handover · **Deployment:** none.
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P06 controlled job packs component-verified; exact publication state in the handover · **Deployment:** none.
 
 This repository is Dean's personal private prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. The complete service journey remains planned. Company ownership, production approval and external-system write authority are not implied.
 

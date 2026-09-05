@@ -61,7 +61,42 @@ Capabilities are `pack.read`, `pack.prepare`, `pack.check`, `pack.issue`, `pack.
 
 ## Verification record
 
-All three maintained Python checks, npm check, real PostgreSQL upgrade/repeat-seed/reset/restart, HTTP routes and desktop/phone Chromium suites are required on the final source. Local scratch cannot run PostgreSQL or browser sockets; actual database/HTTP/browser evidence comes from the authorised disposable GitHub CI service. Component results and original visual/output provenance will be entered after final execution. No full PT/AT status is promoted.
+All three maintained Python checks, npm check, real PostgreSQL upgrade/repeat-seed/reset/restart, HTTP routes and desktop/phone Chromium suites are required on the final source. Local scratch cannot run PostgreSQL or browser sockets; actual database/HTTP/browser evidence comes from the authorised disposable GitHub CI service. The complete [Application run 33970856208](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33970856208) and [Documentation run 33970856161](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33970856161) passed on source `ec1a48a811f0eba7de7532a7ab5d692141e7bb3c`, tree `c3ebd0c8f4c8d1fae6990367fab93f433f4ac0ae`. Application checkout was PR merge `9efcb765f94e3ca07bf7646f1e91bdef3af9623d`, verified to have that same tree. Subsequent exact-source checks, final PR and merged-main results are in the publication record. No full PT/AT status is promoted.
+
+| Executed component gate | Result |
+|---|---|
+| `check_foundation.py`, `check_prototype.py`, `check_naming.py` | All three passed; 4 issued source hashes, 78 parent identities, 29 decisions, 38 AT scenarios, 16 backlog records, 30 full PT definitions retained; 24 Core / 25 Partial / 29 Deferred remain scope classifications. |
+| `npm run check` | ESLint, TypeScript, 7 unit cases and production bundle build passed; production startup remains refused. |
+| Real PostgreSQL | 96 cases passed (65 earlier + 31 P06); fresh migration, P05 upgrade, repeated non-destructive seed, guarded reset and database process restart passed. |
+| Actual HTTP | 10 cases passed, including exact persisted issue after PostgreSQL restart and scoped source/file/receipt routes. |
+| Chromium desktop / phone | 34 cases passed at 1440×1000 and 390×844, locale en-AU; both independent crew responses, uncertain-response retry and exact retained withdrawal bytes executed. |
+
+The total is **147 component cases**, plus documentation/static/build/lifecycle gates. Repeat runs do not increase the case count. Tests remain in `tests/database/packs.test.ts`, `tests/http/packs.test.ts` and `tests/browser/packs.spec.ts` alongside all earlier suites. The complete executable order, pinned Actions and disposable PostgreSQL service are in `.github/workflows/application.yml` and `.github/workflows/documentation.yml`.
+
+```sh
+python3 scripts/check_foundation.py
+python3 scripts/check_prototype.py
+python3 scripts/check_naming.py
+npm run check
+npm run test:db
+# Start the loopback application with npm run dev in a separate terminal.
+npm run test:http
+# Browser configuration starts its own loopback server when needed.
+npm run test:browser
+# Destructive only to the explicitly named disposable synthetic database:
+PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+```
+
+The workflow executes `node --env-file=.env.local --import tsx scripts/persistence-proof.ts write`, restarts the disposable PostgreSQL container and executes the same script with `verify`. It retains original file/hash/issue/recipient evidence across the restart. It also challenges reset without opt-ins and with a mismatched database name.
+
+| Procedure component | Verified P06 evidence; incomplete boundary |
+|---|---|
+| PT-06 | Durable queued intent, one issue, two distinct assignment acknowledgements and current component guard, including first-response hold; final actual-start step is absent until P07. |
+| PT-07 | Material revision hold, checked successor issue, old-issue refusal, current recipient responses and original output retrieval; no full-procedure acceptance claim. |
+| PT-18 | Stable source identity after rename, missing original version refusal, exact old issue retrieval and audience/metadata/file/receipt traversal challenges; reports, Finance and integrated source-provider steps remain absent. |
+| PT-23 | Current template v2/source/assignment/permission changes during rendering; storage failure and six late SQL finalisation failures (issue, recipient, distribution, audit, receipt, outbox); same-operation original-bundle reconciliation; multi-page inspection. Later OUT report/Finance and integration steps remain absent. |
+
+Additional challenges cover concurrent worker/issue/acknowledgement, changed operation reuse, stale check, same-404 cross-company traversal, revoked receipt/Activity access, immediate hold and owned follow-up for P05 move/cancellation and P04 scope successor, rollback of all owned-follow-up rows, and direct forged dispatch clearance. Published P05 competency bundles refuse mutation; current non-waivable policy and recipient-access refusals are preserved.
 
 | Failed run | Observed failure and disposition |
 |---|---|
@@ -69,11 +104,22 @@ All three maintained Python checks, npm check, real PostgreSQL upgrade/repeat-se
 | [33967654188](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33967654188), `4b19e8237759bb86b1b23005db853c52f9444b49` | 84/85 PostgreSQL; second valid acknowledgement met the old P04 unconditional hold constraint. Replaced only that obsolete boundary assertion with a real database pack/crew response guard and forged-clearance refusal. |
 | [33967998661](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33967998661), `c6832a6f324fb706d00e7538c2b74b3522bee07f` | 7 unit, 86 PostgreSQL, 9 HTTP and restart passed; 30/34 browser. Source checkbox text included availability text; alert locator also matched Next's announcer. Use the actual checkbox accessible name and scoped business alert; no business gate was weakened. Long output cases passed. |
 | [33969662455](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33969662455), `bfb298f4fa0c581657f9fd9a71eff35f77980012` | 93/94 PostgreSQL; new challenge attempted to mutate an immutable P05 skill bundle. Preserve that refusal, then challenge current recipient access revocation instead. All six late database-finalisation rollback cases passed. |
-
 | [33970069533](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33970069533), `f8c0e238be23caaede5e17ec52d01dee5545be92` | Migration validation found the new owned-follow-up composite FK needed a matching workspace/event unique key. Added that key in the unreleased additive 0006 migration; no earlier migration or source bytes changed. |
+
+## Original output and visual review
+
+The [evidence index](../testing/evidence/p06/README.md) and [file manifest](../testing/evidence/p06/manifest.json) identify every selected original by source/executed SHA, tree, workflow/artifact, path, byte count and SHA-256. The retained `P06-output-evidence.zip` is **9,141,721 bytes**, SHA-256 `b86b38532f32d05c9a82b79769ef53e050212803f91494fa5e3355e7d3cf5605`. It contains 57 source/output evidence files: 7 original PDFs, 7 original HTML files, 9 source/output manifests, 32 original screenshots and 2 exact fictional source text files, plus its index/manifest. Output bytes stay outside Git.
+
+Self-review inspected **all 43 pages of the seven retained PDF originals**: two four-page standard outputs, three seven-page long outputs (including the explicitly never-issued long customer/site/24-asset renderer fixture), and two seven-page outputs preserved from earlier run 33967998661. A4 dimensions, text extraction, tags and outline were checked. Every page was rendered with Poppler and visually inspected for readable body text, identity, page count, wrapping, clipping and overlap. No blocking page defect remained. Tags/outline are evidence of requested structure, not PDF/UA or screen-reader conformance.
+
+The 28 primary desktop/phone screenshots were inspected, with full-height reading strips for standard and long HTML. Two original `P06-document-manifest.png` captures were found to duplicate the workbench because navigation had not settled; they are retained and explicitly rejected as SC-14 evidence. The test now waits for the exact document URL, heading and loaded applicability before capture, and also captures withdrawn document status. [Application 33972180297](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33972180297) and [Documentation 33972180317](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33972180317) passed all 147 cases/gates on source `de7d2928dea3daa960ef844f6e3035c8b54b6c65`, tree `abb639050ffce8689a386af2fd67aee95d3d485e`; executed merge `b00f615ba0ef88c92edecdf95e169d66b8311340` has that same tree. Its four original current/withdrawn SC-14 screenshots were manually inspected on desktop and phone and retained with their source manifests. Primary PDF originals were not replaced by that rerun.
+
+Self-review also found that linked contact Activities needed their own current permission check before projection into a pack; `visibleActivity` now applies that check and revoked Activity access is challenged. [Application 33971589543](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33971589543) / [Documentation 33971589619](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33971589619) passed all 147 cases/gates on source `04386eb2fd6d3e71f94039a69d13fabbd7a5f5f8`, tree `8a2c227b09d165cbd2d7eb15e22d0139aa58defc`; executed merge `a3e646e09acf947aa938849fa41d3f88f39f4796` has that same tree. This fix is also included in the corrected capture run.
+
+Inspection-only derivative failures were resolved from unchanged originals: one Poppler PNG was truncated and was re-rendered; one initial reading crop omitted left-edge text and was corrected. Original ZIP/PDF/PNG hashes remained unchanged. No visual editing or regeneration replaced selected issued files. CI artifacts expire after 14 days; the separately retained evidence ZIP and repository manifest preserve the reviewable selected originals beyond that CI retention window.
 
 ## Review, publication and P07
 
-Final exact head/tree, checks, review/thread/rule reads, normal merge and exact merged-main checks belong in the final publication comment on [issue #30](https://github.com/deanrfiedler-gif/powerplants-one/issues/30). This avoids circular self-SHA claims. A successful component run is not independent review, owner acceptance or production readiness. All thirty full PT procedures and all full AT/PP-01 acceptance remain incomplete. PT-06/07/18/23 are component obligations; PT-18/23 report/Finance steps remain P09/P10 and integrated dependencies.
+Final exact head/tree, checks, review/thread/rule reads, normal merge and exact merged-main checks belong in the [final publication record](https://github.com/deanrfiedler-gif/powerplants-one/issues/30#issuecomment-5552360820). This avoids circular self-SHA claims. A successful component run is not independent review, owner acceptance or production readiness. All thirty full PT procedures and all full AT/PP-01 acceptance remain incomplete. PT-06/07/18/23 are component obligations; PT-18/23 report/Finance steps remain P09/P10 and integrated dependencies.
 
 The prepared next increment is [P07 — Technician online workflow and capture](p07-starter-prompt.md). No P07 implementation issue, field entry, actual start, hosting, production migration, live ERP/SharePoint or customer communication is created by this increment. Stop after verified P06 publication and the prepared P07 brief.

@@ -1,6 +1,6 @@
 # ADR-0011 — P06 controlled job packs
 
-**Date:** 5 September 2026 · **Status:** Selected for authorised implementation; verification pending. **Related:** issue #30, SC-06/14, DAT-07/11, OUT-09, API-C08–11, TR-04–07, EVT-04/05, PT-06/07/18/23 components.
+**Date:** 5 September 2026 · **Status:** Implemented and component-verified; publication evidence in the P06 handover. **Related:** issue #30, SC-06/14, DAT-07/11, OUT-09, API-C08–11, TR-04–07, EVT-04/05, PT-06/07/18/23 components.
 
 Retain the TypeScript/PostgreSQL modular monolith and workspace transaction lock. Pack preparation is independent of dispatch readiness: a confirmed appointment and current authorised scope can be prepared and checked while dispatch is held. Final issue additionally requires current non-waivable authority, exact sources, current template policy and a complete set of individually identified recipient assignments. A successor scope Draft never authorises extra work.
 
