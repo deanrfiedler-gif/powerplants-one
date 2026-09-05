@@ -1,0 +1,110 @@
+{
+  "record": "P01DependencyInventory",
+  "as_at": "2026-09-05",
+  "source": "package-lock.json",
+  "lockfile_sha256": "1f5903977d87c067409493d451c709de7cdf070341c9ecdb8be1adc392192f74",
+  "node": "24.20.0",
+  "npm": "11.19.0",
+  "postgresql_ci": "16.15",
+  "direct_packages": {
+    "next": {
+      "version": "16.3.4",
+      "kind": "dependencies",
+      "declared_licence": "MIT"
+    },
+    "pg": {
+      "version": "8.23.0",
+      "kind": "dependencies",
+      "declared_licence": "MIT"
+    },
+    "react": {
+      "version": "19.2.8",
+      "kind": "dependencies",
+      "declared_licence": "MIT"
+    },
+    "react-dom": {
+      "version": "19.2.8",
+      "kind": "dependencies",
+      "declared_licence": "MIT"
+    },
+    "server-only": {
+      "version": "0.0.1",
+      "kind": "dependencies",
+      "declared_licence": "MIT"
+    },
+    "@next/eslint-plugin-next": {
+      "version": "16.3.4",
+      "kind": "devDependencies",
+      "declared_licence": "MIT"
+    },
+    "@playwright/test": {
+      "version": "1.63.0",
+      "kind": "devDependencies",
+      "declared_licence": "Apache-2.0"
+    },
+    "@types/node": {
+      "version": "24.13.3",
+      "kind": "devDependencies",
+      "declared_licence": "MIT"
+    },
+    "@types/pg": {
+      "version": "8.23.1",
+      "kind": "devDependencies",
+      "declared_licence": "MIT"
+    },
+    "@types/react": {
+      "version": "19.2.18",
+      "kind": "devDependencies",
+      "declared_licence": "MIT"
+    },
+    "@types/react-dom": {
+      "version": "19.2.7",
+      "kind": "devDependencies",
+      "declared_licence": "MIT"
+    },
+    "eslint": {
+      "version": "10.10.0",
+      "kind": "devDependencies",
+      "declared_licence": "MIT"
+    },
+    "eslint-plugin-react-hooks": {
+      "version": "7.1.1",
+      "kind": "devDependencies",
+      "declared_licence": "MIT"
+    },
+    "prettier": {
+      "version": "3.9.6",
+      "kind": "devDependencies",
+      "declared_licence": "MIT"
+    },
+    "tsx": {
+      "version": "4.23.13",
+      "kind": "devDependencies",
+      "declared_licence": "MIT"
+    },
+    "typescript": {
+      "version": "6.0.3",
+      "kind": "devDependencies",
+      "declared_licence": "Apache-2.0"
+    },
+    "typescript-eslint": {
+      "version": "8.69.0",
+      "kind": "devDependencies",
+      "declared_licence": "MIT"
+    }
+  },
+  "all_platform_lock_entries_by_declared_licence": {
+    "MIT": 188,
+    "ISC": 15,
+    "Apache-2.0": 33,
+    "LGPL-3.0-or-later": 10,
+    "Apache-2.0 AND LGPL-3.0-or-later AND MIT": 1,
+    "Apache-2.0 AND LGPL-3.0-or-later": 3,
+    "CC-BY-4.0": 1,
+    "BSD-2-Clause": 6,
+    "BSD-3-Clause": 2,
+    "BlueOak-1.0.0": 1,
+    "0BSD": 1
+  },
+  "note": "Counts include optional platform variants; these are declared package licences, not all installed binaries. Native sharp/libvips entries include LGPL-3.0-or-later; caniuse-lite declares CC-BY-4.0. Preserve upstream notices with redistribution."
+}

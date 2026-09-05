@@ -49,7 +49,11 @@ test("responsive shell, keyboard focus, server save, read-only refusal and stora
   ).toBeDisabled();
   await page.getByLabel("Demonstration identity").selectOption("systems");
   await page.getByRole("button", { name: "Use this identity" }).click();
-  await expect(page.getByRole("alert")).toContainText("cannot read");
+  await expect(
+    page
+      .getByRole("alert")
+      .filter({ hasText: "This identity cannot read service requests." }),
+  ).toBeVisible();
   await page.getByText("Browser-storage experiment", { exact: true }).click();
   await page.getByRole("button", { name: "Check browser storage" }).click();
   await expect(page.getByText(/Synthetic marker committed/)).toBeVisible();
