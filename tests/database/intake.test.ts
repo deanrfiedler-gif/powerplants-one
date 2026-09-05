@@ -167,9 +167,9 @@ test("P03 migration preserves every P02 legacy field, accepted operation hash an
     "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='shared.create'",
     [actor],
   );
-  await migrate();
-  await seed();
-  await seed();
+  await migrate(4);
+  await seed(4);
+  await seed(4);
   const expanded = await rows(
     "SELECT * FROM ppo.tickets WHERE intake_schema_version=1 ORDER BY id",
   );

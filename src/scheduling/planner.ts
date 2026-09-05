@@ -365,6 +365,15 @@ async function guardBooking(
       );
   }
   const controls = await readiness(c, p, r, a.id);
+  if (
+    controls.some(
+      (x) => x.criterion_code === "CrewCompetency" && x.outcome === "Blocked",
+    )
+  )
+    blocked(
+      "CrewCompetency",
+      "An explicit crew control blocker requires review before booking.",
+    );
   for (const x of controls.filter(
     (x) =>
       x.blocking_stage === "Booking" && x.criterion_code !== "CrewCompetency",

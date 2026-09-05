@@ -194,7 +194,7 @@ CREATE TABLE ppo.schedule_change_requests (
  CHECK(isfinite(proposed_start) AND isfinite(proposed_end) AND proposed_end>proposed_start),
  FOREIGN KEY(workspace_id,decision_by) REFERENCES ppo.users(workspace_id,id),CHECK((status='Pending')=(decision_by IS NULL AND decision_at IS NULL AND decision_reason IS NULL))
 );
-CREATE TRIGGER register_identity BEFORE INSERT OR UPDATE ON ppo.schedule_change_requests FOR EACH ROW EXECUTE FUNCTION ppo.register_identity('ScheduleChangeRequest');
+CREATE TRIGGER register_identity BEFORE INSERT OR UPDATE ON ppo.schedule_change_requests FOR EACH ROW EXECUTE FUNCTION ppo.register_identity('ScheduleChangeRequest','');
 ALTER TABLE ppo.schedule_change_requests ADD CONSTRAINT fk_schedule_change_requests_identity FOREIGN KEY(workspace_id,id) REFERENCES ppo.business_identities(workspace_id,id);
 CREATE TRIGGER no_delete BEFORE DELETE ON ppo.schedule_change_requests FOR EACH ROW EXECUTE FUNCTION ppo.immutable_evidence();
 CREATE TABLE ppo.contact_outcomes (
@@ -209,7 +209,7 @@ CREATE TABLE ppo.contact_outcomes (
  FOREIGN KEY(workspace_id,recipient_id) REFERENCES ppo.people(workspace_id,id),FOREIGN KEY(workspace_id,activity_id) REFERENCES ppo.activities(workspace_id,id),
  CHECK(isfinite(occurred_at) AND isfinite(start_at) AND isfinite(end_at) AND end_at>start_at)
 );
-CREATE TRIGGER register_identity BEFORE INSERT OR UPDATE ON ppo.contact_outcomes FOR EACH ROW EXECUTE FUNCTION ppo.register_identity('ContactOutcome');
+CREATE TRIGGER register_identity BEFORE INSERT OR UPDATE ON ppo.contact_outcomes FOR EACH ROW EXECUTE FUNCTION ppo.register_identity('ContactOutcome','');
 ALTER TABLE ppo.contact_outcomes ADD CONSTRAINT fk_contact_outcomes_identity FOREIGN KEY(workspace_id,id) REFERENCES ppo.business_identities(workspace_id,id);
 CREATE TRIGGER no_delete BEFORE DELETE ON ppo.contact_outcomes FOR EACH ROW EXECUTE FUNCTION ppo.immutable_evidence();
 CREATE TRIGGER contact_immutable BEFORE UPDATE ON ppo.contact_outcomes FOR EACH ROW EXECUTE FUNCTION ppo.immutable_evidence();
@@ -255,3 +255,15 @@ END $$;
 CREATE CONSTRAINT TRIGGER booking_consistency AFTER INSERT OR UPDATE ON ppo.appointments DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.check_booking_consistency();
 CREATE CONSTRAINT TRIGGER booking_consistency AFTER INSERT OR UPDATE ON ppo.assignments DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.check_booking_consistency();
 CREATE CONSTRAINT TRIGGER booking_consistency AFTER INSERT OR UPDATE ON ppo.resource_reservations DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.check_booking_consistency();
+
+CREATE OR REPLACE FUNCTION ppo.identity_has_typed_record() RETURNS trigger LANGUAGE plpgsql AS $$
+DECLARE target text; present boolean;
+BEGIN
+ target:=CASE NEW.object_type WHEN 'Ticket' THEN 'tickets' WHEN 'Organisation' THEN 'organisations' WHEN 'Person' THEN 'people' WHEN 'Site' THEN 'sites' WHEN 'Facility' THEN 'facilities' WHEN 'Asset' THEN 'assets' WHEN 'Relationship' THEN 'relationships' WHEN 'SiteParty' THEN 'site_parties' WHEN 'ErpAccountMapping' THEN 'erp_account_mappings' WHEN 'AssetConfiguration' THEN 'asset_configurations' WHEN 'AssetLocationEvent' THEN 'asset_location_events' WHEN 'HistoryRecord' THEN 'history_records' WHEN 'Activity' THEN 'activities' WHEN 'WorkOrder' THEN 'work_orders' WHEN 'Appointment' THEN 'appointments' WHEN 'ScheduleChangeRequest' THEN 'schedule_change_requests' WHEN 'ContactOutcome' THEN 'contact_outcomes' END;
+ EXECUTE format('SELECT EXISTS(SELECT 1 FROM ppo.%I WHERE workspace_id=$1 AND id=$2)',target) INTO present USING NEW.workspace_id,NEW.id;
+ IF NOT present THEN RAISE EXCEPTION 'Typed identity target is missing' USING ERRCODE='23514'; END IF;
+ RETURN NULL;
+END $$;
+
+ALTER TABLE ppo.appointments ADD CONSTRAINT ck_appointment_booking_hash CHECK(booking_snapshot IS NULL OR booking_hash=encode(sha256(convert_to(booking_snapshot::text,'UTF8')),'hex'));
+ALTER TABLE ppo.contact_outcomes ADD CONSTRAINT fk_contact_company_person FOREIGN KEY(workspace_id,company_id,recipient_id) REFERENCES ppo.person_company_contexts(workspace_id,company_id,person_id);

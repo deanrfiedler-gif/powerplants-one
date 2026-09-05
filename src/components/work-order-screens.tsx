@@ -1514,7 +1514,7 @@ export function WorkOrderDetail({ id }: { id: string }) {
             ) : (
               <p>
                 {r?.approved_at
-                  ? "The current scope is authorised. Visits remain proposed until later planner checks."
+                  ? "The current scope is authorised. Confirmed appointments require controlled planner checks."
                   : "The saved scope is ready for an authorised reviewer’s decision."}
               </p>
             )}
@@ -1584,15 +1584,20 @@ export function WorkOrderDetail({ id }: { id: string }) {
             </section>
           )}
           <section className="panel">
-            <h2>Proposed visits</h2>
+            <h2>Planned visits</h2>
             <p>
-              Future attendance intent only. No technician is assigned, booked,
-              dispatched or acknowledged.
+              Proposals reserve no crew. Open the appointment for confirmed
+              booking, crew and contact details. Dispatch and acknowledgement
+              remain separate.
             </p>
             {!w.visits.length && <p>No visits proposed yet.</p>}
             {w.visits.map((v) => (
               <article className="wo-task" key={v.id}>
-                <h3>{v.display_number}</h3>
+                <h3>
+                  <Link href={`/service/appointments/${v.id}`}>
+                    {v.display_number}
+                  </Link>
+                </h3>
                 <Status value={v.status} />
                 <p>
                   <Stamp value={v.start_at} timezone={v.site_timezone} /> –{" "}
@@ -1611,6 +1616,7 @@ export function WorkOrderDetail({ id }: { id: string }) {
                 )}
                 <ReadinessTable rows={v.readiness} />
                 {w.actions.can_assess &&
+                  v.status !== "Cancelled" &&
                   w.scopes.find((s) => s.id === v.scope_revision_id) && (
                     <details className="wo-edit">
                       <summary>Review proposed visit preparation</summary>
