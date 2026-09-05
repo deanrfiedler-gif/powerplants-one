@@ -152,7 +152,9 @@ test("P05 additive upgrade preserves exact P04 proposal bytes, receipts, source 
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(4);
   await seed(4);
-  const before = await rows("SELECT id,to_jsonb(a) snapshot FROM ppo.appointments a ORDER BY id"),
+  const before = await rows(
+      "SELECT id,to_jsonb(a) snapshot FROM ppo.appointments a ORDER BY id",
+    ),
     orderBefore = await rows("SELECT * FROM ppo.work_orders ORDER BY id"),
     scopeBefore = await rows("SELECT * FROM ppo.scope_revisions ORDER BY id"),
     migrations = await rows(
@@ -510,7 +512,7 @@ test("wrong site/company, narrow fields, scope and policy versions, urgent prior
     code("BookingBlocked"),
   );
 });
-test("successor scope does not transfer authority; expired/current site source and customer windows are rechecked", async () => {
+test("successor scope does not transfer authority and existing booking exposes review hold", async () => {
   const actor = await p(),
     w = (await readWorkOrder(actor, wo)).items[0],
     r = w.scopes[0];
@@ -563,6 +565,28 @@ test("successor scope does not transfer authority; expired/current site source a
   );
   assert.equal((await appointment(1)).scope_review_required, true);
 });
+test("current site source changes and immutable customer windows block booking without reservation loss", async () => {
+  const actor = await p(),
+    before = await snapshot(1);
+  await assert.rejects(
+    moveAppointment(actor, id("a8", 1), {
+      ...(await cmd(1, crew(1, 2))),
+      start_at: "2026-09-22T00:00:00Z",
+      end_at: "2026-09-22T07:00:00Z",
+    }),
+    code("BookingBlocked"),
+  );
+  assert.deepEqual(await snapshot(1), before);
+  await database().query(
+    "UPDATE ppo.sites SET version=version+1,updated_at=clock_timestamp() WHERE id=$1",
+    [site],
+  );
+  await assert.rejects(
+    confirmAppointment(actor, id("a8", 2), await cmd()),
+    code("ScopeReviewRequired"),
+  );
+  assert.deepEqual(await snapshot(1), before);
+});
 test("project/manual requests reserve nothing; accept/reject/cancel are versioned and accepted moves keep contact/pack hold", async () => {
   const actor = await p(),
     before = await snapshot(1),
@@ -585,6 +609,18 @@ test("project/manual requests reserve nothing; accept/reject/cancel are versione
   assert.deepEqual(
     (await createChangeRequest(actor, a.id, input)).receipt,
     receipt.receipt,
+  );
+  await assert.rejects(
+    database().query(
+      "INSERT INTO ppo.schedule_request_crew SELECT workspace_id,request_id,$2,1,1,'Specialist',0,0,'SYN forged addition' FROM ppo.schedule_request_crew WHERE request_id=$1 LIMIT 1",
+      [requestId, id("a4", 5)],
+    ),
+  );
+  await assert.rejects(
+    database().query(
+      "UPDATE ppo.schedule_change_requests SET crew_snapshot='[]' WHERE id=$1",
+      [requestId],
+    ),
   );
   const { crew: _crew, ...versions } = await cmd(1);
   void _crew;
@@ -865,6 +901,72 @@ test("injected appointment/assignment/reservation/history/activity/audit/receipt
         );
     }
   }
+});
+test("contact, request acceptance and cancellation roll back owned consequences and original booking on late outbox failure", async () => {
+  const actor = await p(),
+    a = await appointment(1),
+    rid = randomUUID();
+  await createChangeRequest(actor, a.id, {
+    ...base(),
+    id: rid,
+    expected_version: a.version,
+    source_type: "Manual",
+    source_reference: "SYN rollback",
+    source_version: "1",
+    start_at: "2026-09-23T00:00:00Z",
+    end_at: "2026-09-23T02:00:00Z",
+    crew: crew(1, 2),
+  });
+  const before = await snapshot(1),
+    followups = await rows(
+      "SELECT * FROM ppo.schedule_follow_ups ORDER BY activity_id",
+    ),
+    contacts = await rows("SELECT * FROM ppo.contact_outcomes ORDER BY id");
+  await database().query(
+    "CREATE FUNCTION ppo.inject_p05_failure() RETURNS trigger LANGUAGE plpgsql AS $$BEGIN RAISE EXCEPTION 'SYN P05 late rollback'; END$$; CREATE TRIGGER inject_p05 BEFORE INSERT ON ppo.outbox_jobs FOR EACH ROW EXECUTE FUNCTION ppo.inject_p05_failure();",
+  );
+  const { crew: _crew, ...versions } = await cmd(1);
+  void _crew;
+  for (const action of [
+    () => contact(1, "Failed"),
+    () =>
+      decideChangeRequest(
+        actor,
+        rid,
+        { ...versions, expected_request_version: 1 },
+        "accept",
+      ),
+    () =>
+      cancelAppointment(actor, a.id, {
+        ...base(),
+        expected_version: a.version,
+        expected_work_order_version: a.work_order_version,
+        expected_assignment_version: a.assignment_version,
+      }),
+  ]) {
+    await assert.rejects(action());
+    assert.deepEqual(await snapshot(1), before);
+    assert.deepEqual(
+      await rows("SELECT * FROM ppo.schedule_follow_ups ORDER BY activity_id"),
+      followups,
+    );
+    assert.deepEqual(
+      await rows("SELECT * FROM ppo.contact_outcomes ORDER BY id"),
+      contacts,
+    );
+    assert.equal(
+      (
+        await rows(
+          "SELECT status FROM ppo.schedule_change_requests WHERE id=$1",
+          [rid],
+        )
+      )[0].status,
+      "Pending",
+    );
+  }
+  await database().query(
+    "DROP TRIGGER inject_p05 ON ppo.outbox_jobs;DROP FUNCTION ppo.inject_p05_failure();",
+  );
 });
 test("PostgreSQL exclusion is authoritative across independent transactions, not only same-record versions", async () => {
   const make = async (n: number) =>

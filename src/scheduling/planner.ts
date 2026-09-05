@@ -958,6 +958,7 @@ export async function createChangeRequest(
         ...childMeta(p, a, cmd.id),
         expected_version: a.version,
         expected_schedule_version: a.schedule_version,
+        crew_snapshot: JSON.stringify(cmd.crew),
         source_type: cmd.source_type,
         source_reference: cmd.source_reference,
         source_version: cmd.source_version,

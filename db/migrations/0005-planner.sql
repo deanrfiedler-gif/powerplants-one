@@ -188,6 +188,7 @@ CREATE TABLE ppo.schedule_change_requests (
  synthetic boolean NOT NULL DEFAULT true CHECK(synthetic),UNIQUE(workspace_id,id),UNIQUE(workspace_id,company_id,site_id,id),
  FOREIGN KEY(workspace_id,company_id,site_id,appointment_id) REFERENCES ppo.appointments(workspace_id,company_id,site_id,id),
  FOREIGN KEY(workspace_id,created_by) REFERENCES ppo.users(workspace_id,id),FOREIGN KEY(workspace_id,updated_by) REFERENCES ppo.users(workspace_id,id),
+ crew_snapshot jsonb NOT NULL CHECK(jsonb_typeof(crew_snapshot)='array' AND jsonb_array_length(crew_snapshot) BETWEEN 1 AND 6),
  expected_version integer NOT NULL,expected_schedule_version integer NOT NULL,source_type text NOT NULL CHECK(source_type IN ('Manual','ProjectReference','TechnicianRequest')),
  source_reference text NOT NULL,source_version text NOT NULL,reason text NOT NULL,proposed_start timestamptz NOT NULL,proposed_end timestamptz NOT NULL,
  status text NOT NULL DEFAULT 'Pending' CHECK(status IN ('Pending','Accepted','Rejected','Cancelled')),decision_by uuid,decision_at timestamptz,decision_reason text,
@@ -227,6 +228,21 @@ CREATE TABLE ppo.schedule_request_crew (
  PRIMARY KEY(workspace_id,request_id,resource_id),FOREIGN KEY(workspace_id,request_id) REFERENCES ppo.schedule_change_requests(workspace_id,id),FOREIGN KEY(workspace_id,resource_id) REFERENCES ppo.resources(workspace_id,id)
 );
 CREATE TRIGGER request_crew_immutable BEFORE UPDATE OR DELETE ON ppo.schedule_request_crew FOR EACH ROW EXECUTE FUNCTION ppo.immutable_evidence();
+-- The immutable parent seals the exact crew intent. Deferred comparison allows the
+-- parent and all typed children to be written in one transaction, but rejects any
+-- later insertion, deletion or substitution, including after a decision.
+CREATE FUNCTION ppo.check_request_crew() RETURNS trigger LANGUAGE plpgsql AS $$
+DECLARE rid uuid; wid uuid; expected jsonb; actual jsonb;
+BEGIN
+ rid:=CASE WHEN TG_TABLE_NAME='schedule_change_requests' THEN NEW.id ELSE NEW.request_id END;
+ wid:=NEW.workspace_id;
+ SELECT jsonb_agg(e ORDER BY e->>'resource_id') INTO expected FROM ppo.schedule_change_requests q, jsonb_array_elements(q.crew_snapshot) e WHERE q.workspace_id=wid AND q.id=rid;
+ SELECT jsonb_agg(to_jsonb(x)-ARRAY['workspace_id','request_id'] ORDER BY x.resource_id) INTO actual FROM ppo.schedule_request_crew x WHERE x.workspace_id=wid AND x.request_id=rid;
+ IF expected IS DISTINCT FROM actual THEN RAISE EXCEPTION 'Typed request crew must match immutable intent' USING ERRCODE='23514'; END IF;
+ RETURN NULL;
+END $$;
+CREATE CONSTRAINT TRIGGER exact_request_crew AFTER INSERT ON ppo.schedule_change_requests DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.check_request_crew();
+CREATE CONSTRAINT TRIGGER exact_request_crew AFTER INSERT ON ppo.schedule_request_crew DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.check_request_crew();
 CREATE TABLE ppo.schedule_follow_ups (
  workspace_id uuid NOT NULL,appointment_id uuid NOT NULL,activity_id uuid NOT NULL,schedule_version integer NOT NULL,
  consequence text NOT NULL CHECK(consequence IN ('CustomerConfirmation','ChangedSchedule','Cancellation','ContactUnsuccessful')),

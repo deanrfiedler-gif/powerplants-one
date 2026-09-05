@@ -1364,7 +1364,24 @@ export function PlannerScreen() {
                     Resource v{r.version} · Calendar v{r.calendar.version}
                   </small>
                   <details>
-                    <summary>Skills and evidence</summary>
+                    <summary>Calendar, skills and evidence</summary>
+                    {r.calendar.intervals.map((i) => (
+                      <p key={`${i.weekday}-${i.start_minute}`}>
+                        {
+                          [
+                            "Sunday",
+                            "Monday",
+                            "Tuesday",
+                            "Wednesday",
+                            "Thursday",
+                            "Friday",
+                            "Saturday",
+                          ][i.weekday]
+                        }{" "}
+                        {minuteText(i.start_minute)}–{minuteText(i.end_minute)}{" "}
+                        · {r.calendar.timezone}
+                      </p>
+                    ))}
                     {r.skills.map((s) => (
                       <p key={s.skill_code}>
                         {s.skill_code} · {s.status} through{" "}
@@ -1407,6 +1424,15 @@ export function PlannerScreen() {
                           Date.parse(b.end_at) >
                             Date.parse(utcFromLocal(d + "T00:00", zone)),
                       ),
+                      busy = (r.busy ?? []).filter(
+                        (b) =>
+                          Date.parse(b.start_at) <
+                            Date.parse(
+                              utcFromLocal(addDays(d, 1) + "T00:00", zone),
+                            ) &&
+                          Date.parse(b.end_at) >
+                            Date.parse(utcFromLocal(d + "T00:00", zone)),
+                      ),
                       closed = (r.exceptions ?? []).filter((b) =>
                         onDay(b.start_at, d),
                       );
@@ -1423,14 +1449,16 @@ export function PlannerScreen() {
                       >
                         <h3>{displayDay(d)}</h3>
                         <p className="calendar-slot">
-                          {slots.length
-                            ? slots
-                                .map(
-                                  (i) =>
-                                    `${minuteText(i.start_minute)}–${minuteText(i.end_minute)}`,
-                                )
-                                .join(", ")
-                            : "Non-working day"}
+                          {zone !== r.calendar.timezone
+                            ? "Working hours: see resource calendar"
+                            : slots.length
+                              ? slots
+                                  .map(
+                                    (i) =>
+                                      `${minuteText(i.start_minute)}–${minuteText(i.end_minute)}`,
+                                  )
+                                  .join(", ")
+                              : "Non-working day"}
                           <br />
                           {r.calendar.timezone}
                         </p>
@@ -1447,6 +1475,25 @@ export function PlannerScreen() {
                             Calendar closed
                           </p>
                         ))}
+                        {busy.length > 0 && (
+                          <details className="reserved-periods">
+                            <summary>
+                              {busy.length} reserved{" "}
+                              {busy.length === 1 ? "period" : "periods"} ·
+                              includes travel
+                            </summary>
+                            <p>
+                              Capacity remains reserved across appointment
+                              filters.
+                            </p>
+                            {busy.map((b) => (
+                              <p key={b.start_at}>
+                                <Stamp value={b.start_at} timezone={zone} /> –{" "}
+                                <Stamp value={b.end_at} timezone={zone} />
+                              </p>
+                            ))}
+                          </details>
+                        )}
                         {events.map((a) => (
                           <AppointmentCard
                             key={a.id}
