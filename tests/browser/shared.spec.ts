@@ -7,6 +7,7 @@ test("P02 diagnostic context, labels, keyboard focus and scoped error state", as
   await page.getByLabel("Demonstration identity").selectOption("coordinator");
   await page.getByRole("button", { name: "Use this identity" }).click();
   const load = page.getByRole("button", { name: "Load shared context" });
+  await expect(load).toBeEnabled();
   await load.focus();
   await expect(load).toBeFocused();
   await page.keyboard.press("Enter");
@@ -58,6 +59,7 @@ test("P02 diagnostic context, labels, keyboard focus and scoped error state", as
   await expect(
     page.getByText("SYN Previous Technician", { exact: false }),
   ).toHaveCount(0);
+  await expect(load).toBeEnabled();
   await load.focus();
   await expect(load).toBeFocused();
   await page.screenshot({

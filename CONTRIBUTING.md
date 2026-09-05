@@ -40,4 +40,4 @@ python3 scripts/check_naming.py
 npm run check
 ```
 
-GitHub checks use pinned actions with read-only contents access. Application assurance runs the local synthetic application and disposable PostgreSQL; no deployment or ERP access is involved. Follow the [P01 handover](docs/delivery/p01-handover.md) for database, HTTP and browser checks and local configuration. Keep component evidence separate from full business acceptance.
+GitHub checks use pinned actions with read-only contents access. Application assurance runs the local synthetic application and disposable PostgreSQL; no deployment or ERP access is involved. Follow the [P02 handover](docs/delivery/p02-handover.md) for database, HTTP and browser checks and local configuration. Keep component evidence separate from full business acceptance.

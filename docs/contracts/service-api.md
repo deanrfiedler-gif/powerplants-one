@@ -1,6 +1,6 @@
 # PP-01 — Service API, operation and event contracts
 
-**Edition:** r03 · **Status:** Internal API contract; the bounded P01 subset below is implemented, with results recorded separately. These are Powerplants One routes, never asserted MYOB endpoints.
+**Edition:** r04 · **Status:** Internal API contract; bounded P01/P02 subsets are implemented, with results recorded separately. These are Powerplants One routes, never asserted MYOB endpoints.
 
 [Architecture](../architecture/BP-02-platform-architecture.md) · [Dictionary](service-data-dictionary.md) · [Service specification](../blueprints/BP-07-service-operations.md).
 
@@ -17,6 +17,34 @@ The transaction also appends a P01-only `TicketDraftSaved` outbox record with ve
 Local diagnostics are GET `/api/v1/health` and GET/POST `/api/v1/local-session`. The latter accepts only an allowlisted demonstration `profile`, resolves a server user/session and returns current actor/display context. These local-only routes are not future shared authentication APIs. All routes require the launcher gateway boundary; POST additionally requires the exact loopback Origin and JSON. Non-JSON or oversized bodies are rejected. The rest of this catalogue remains planned. See [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md).
 
 ## 1. Common protocol
+
+### P02 implementation amendment
+
+[P02 handover](../delivery/p02-handover.md) and [ADR-0007](../decisions/ADR-0007-p02-shared-foundation.md) record the implementation, physical mappings, permissions and deferrals. The source of exact runtime schemas is [shared commands](../../src/shared/commands.ts); unlisted fields are rejected. All routes below retain the P01 local gateway/origin/session boundaries, `/api/v1` prefix and private/no-store responses.
+
+| Contract / method / route | Implemented fields and result |
+|---|---|
+| API-R01 GET `/customers`, `/customers/:id` | Organisation projection; authorised contacts, sites and mapping state. Internal notes and exact account keys require separate appropriate grants. No Finance amounts. |
+| API-R02 GET `/sites`, `/sites/:id`, `/assets`, `/assets/:id`, `/assets/:id/history` | Scoped site/asset lists, effective party intervals, current asset context, immutable configuration/location records and attributed history. Previous-site history and both sides of move events are independently scoped. |
+| Narrow GET `/people`, `/people/:id`, `/facilities`, `/facilities/:id`, `/customers/:id/mappings` | Scoped shared selectors and source context needed to exercise P02; no assignment-derived access. |
+| API-R09 GET `/operations/:id` | Original receipt only for its actor/workspace and current target/mutation authority. No cross-user operation browsing. |
+| API-C01 POST `/customers` | Common envelope plus `id`, `company_id`, `display_name`, `relationship_status`, `owner_id`; optional `legal_name`, `parent_organisation_id`, `sector`, `notes`, `access_class` (default Internal). |
+| API-C01 POST `/sites` | Common envelope plus `id`, `company_id`, `display_name`, `location_description`, `timezone`, `owner_id`; optional `primary_contact_id`, `access_instructions`, `biosecurity_notes`, and up to ten initial `parties` with `organisation_id`, `role`, `valid_from`, optional `valid_to`. Site and initial relationships commit together. |
+| API-C01 POST `/assets` | Common envelope plus `id`, `company_id`, `site_id`, `description`, `identity_status`, `effective_at`; optional `facility_id`, `parent_asset_id`, `predecessor_asset_id`, `manufacturer`, `model`, `serial`, `external_equipment_ref`, `lifecycle_status` (default Active), four dictionary dates and initial `configuration` description. Initial location and optional configuration commit with the asset. |
+| Narrow POST `/people` | Common envelope plus `id`, `company_ids` (1–10 explicitly authorised contexts), `display_name`; optional `email`, `phone`, `contact_preference`. Initial active=true; no inferred consent or identity deduplication. |
+| Narrow POST `/facilities` | Common envelope plus `id`, `company_id`, `site_id`, `name`, optional `parent_facility_id`. |
+| Narrow POST `/customers/:id/affiliations` | Common envelope plus new relationship `id`, organisation `expected_version`, `person_id`, `role_label`, date-only `valid_from`, optional `valid_to`. Increments parent version atomically. |
+| Narrow POST `/sites/:id/parties` | Common envelope plus new relationship `id`, site `expected_version`, `organisation_id`, `role`, UTC `valid_from`, optional `valid_to`. Increments parent version; overlaps fail. No operator-change impact workflow implied. |
+| Narrow POST `/customers/:id/mappings` | Common envelope plus new mapping `id`, organisation `expected_version`, exact `erp_connection_id` UUID, `erp_company_id`, `entity_type=Customer`, `customer_id`, UTC effective period. Creates Proposed only and increments organisation version. Wrong-company/connection rejected. |
+| Typed POST `/customers/:id/revise-identity` | Common envelope plus `expected_version`, `display_name`, `parent_organisation_id` (UUID/null; omitted means null). Updates identity description/hierarchy with before/after audit; UUID/reference/company unchanged. |
+| Typed POST `/assets/:id/revise-identity` | Common envelope plus `expected_version`, `identity_status`, `serial` (exact text/null), `parent_asset_id` (UUID/null; omitted means null). Preserves historical uncertainty and before/after audit. No move, warranty approval or scope authorisation. |
+| Narrow POST `/sites/:id/history` | Common envelope plus new history `id`, site `expected_version`, `occurred_at`, `author_label`, `kind`, `summary`, `confidence` (Reported/Suspected only); optional `asset_id`, paired exact `source_system`/`source_id`, `access_class` (default RestrictedService). Capture actor/time and site/operator snapshots are server-derived; source-backed records are Imported, others ReviewRequired. No verification assertion or business approval accepted. |
+
+For these commands the common envelope is exactly `operation_id`, `schema_version=1`, `reason`. Create identities require a valid UUID. Parent-changing commands also require a positive safe `expected_version`. `201` means a new resource committed; replay returns `200` and the original receipt; typed identity updates return `200`. Child-create receipts identify the child/version; re-read the parent to obtain its incremented version. No worker runs and no external side effect is implied by an outbox/task ID. New outbox kinds are `SharedRecordCreated`, `SharedRecordUpdated`, `SharedHistoryRecorded`; EVT-01–12 remain planned.
+
+List filters are `limit` (default 50, 1–200), `cursor`, literal case-insensitive substring `q`, `company_id` and, for site/asset/facility lists, `site_id`. Person scope derives from authorised company contexts/primary contacts and does not accept company/site filters. History accepts pagination only. Stable ordering is UUID; signed opaque cursors are bound to current actor/workspace/resource/filters/page size and become invalid after the process restarts. Every page reapplies scope. Missing capability is 403; out-of-scope/missing records share 404. Returned page completeness refers to that scoped result, not a global total.
+
+Narrative command fields currently use the bounded single-line text validator (up to 10,000 characters); richer multiline history entry is P03. Exact identifiers preserve all supplied characters, case, punctuation and zeros; date-only values and UTC instants are distinct. Address, coordinates, booking controls, source document evidence, Verified mappings/configurations, operational identity, assignment grants, lifecycle transition commands and downstream workflows are not enabled merely because the physical model or broader catalogue defines them.
 
 Use authenticated same-origin HTTPS JSON endpoints under `/api/v1` for shared browser/mobile commands. Local development may use loopback transport appropriate to the development server. The version is an API compatibility major; each payload also has a schema version. Route handlers call the same domain services as server-rendered actions. A second UI entry point must not bypass permissions, expected versions or operation receipts.
 

@@ -34,7 +34,10 @@ async function scope(
 ) {
   await requireCapability(client, p, cap);
   await requireCapability(client, p, "shared.read");
-  if (!(await hasPermission(client, p, cap, company_id, site_id)))
+  if (
+    !(await hasPermission(client, p, "shared.read", company_id, site_id)) ||
+    !(await hasPermission(client, p, cap, company_id, site_id))
+  )
     throw unavailable();
   const company = await client.query(
     "SELECT 1 FROM ppo.companies WHERE workspace_id=$1 AND id=$2",

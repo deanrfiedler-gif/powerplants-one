@@ -207,6 +207,10 @@ test("workspace/company/site scopes apply to detail, list, filter, pagination an
   );
   const context = await siteContext(siteOnly, site);
   assert.equal(context.assets.items.length, 2);
+  assert.equal(
+    context.parties.filter((x) => x.role === "Operator" && x.is_current).length,
+    1,
+  );
   const customer = await customerContext(siteOnly, org);
   assert.equal(customer.sites.length, 1);
   assert.equal(customer.contacts.length, 0);
@@ -597,6 +601,14 @@ test("history keeps previous site/operator, author, uncertainty and exact source
     asset_identity_status: string;
   }[];
   assert.equal(h[0].asset_identity_status, "Unresolved");
+  const change = (
+    await rows(
+      "SELECT details FROM ppo.audit_events WHERE object_id=$1 AND operation_id IS NOT NULL",
+      [id(80, 2)],
+    )
+  )[0].details;
+  assert.equal(change.before.identity_status, "Unresolved");
+  assert.equal(change.after.identity_status, "Verified");
   assert.ok(JSON.stringify(before).includes("SYN Former Technician"));
   assert.ok(JSON.stringify(before).includes("000Hist-Ab.01"));
   assert.ok(JSON.stringify(before).includes("SYN Previous Operator"));

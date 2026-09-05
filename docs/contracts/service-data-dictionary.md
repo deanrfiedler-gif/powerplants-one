@@ -1,12 +1,20 @@
 # PP-01 — Service data and choice dictionary
 
-**Edition:** r03 · **Status:** Logical contract; P01 implements a bounded subset with the explicit limits below. This is not an exported CREMS/MYOB schema.
+**Edition:** r04 · **Status:** Logical contract; P01/P02 implement bounded subsets with explicit limits below. This is not an exported CREMS/MYOB schema.
 
 [BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md) · [Finance](finance-handoff.md) · [Documents](document-issue-distribution.md).
 
 **P01 physical subset:** Workspace, synthetic company context, User, company-scoped read/edit grants, opaque Session, New Ticket, AuditEvent, OperationReceipt and OutboxJob. Ticket fixtures use owned requester/site clarification markers; `site_identification_needed=true` and no site relation exists yet. Shared Organisation/Person/Site/Asset models and full scope/assignment permissions remain P02. Fixture references are deterministic reserved SYN-PPO identities; no create endpoint or production reference allocator exists. Full cross-type allocation/uniqueness is a P02 obligation. The separate `ppo_proof` reservation table is a disposable feasibility experiment, not a completed DAT-06 model. [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md) and the [handover](../delivery/p01-handover.md) record migrations, tests and limits.
 
 ## 1. Conventions
+
+**P02 physical amendment:** [ADR-0007](../decisions/ADR-0007-p02-shared-foundation.md) and the [handover](../delivery/p02-handover.md) supersede the P01-only deferrals above for included shared records. Organisation/Person/Relationship/Site/SiteParty/Facility/Asset/ErpAccountMapping/AssetConfiguration/AssetLocationEvent/HistoryRecord now have typed tables. Company visibility contexts, permanent identity/reference registration and scoped grants extend P01. Historical P01 ticket clarification fields remain unchanged until P03. All downstream DAT-04–11 business models remain outside P02 except the existing P01 ticket/platform subset.
+
+Organisation/Site have an explicit company visibility context; this is neither automatic debtor ownership nor billing authority. Person has explicit company contexts supporting many affiliations. Site/asset relationships are company-consistent, with same-site hierarchy constraints. P01's text connection field maps to a UUID connection while preserving the original exact key in `legacy_erp_connection_key` and `external_connection_key`. Provider is Synthetic; entity_type is Customer for included mapping commands. The migration does not invent MYOB endpoints or actual source ownership.
+
+P02 configuration/history/location content is immutable. History additionally preserves captured `site_label`, optional `operator_organisation_id/operator_label`, and optional `asset_identity_status` at the represented historical context. Unknown historical identity status remains null; original source author and occurrence time are distinct from server actor/capture time. P02 location chains must match current asset site, and asset site mutation is blocked pending a reviewed move command. Site operator periods exclude overlaps; Owner/BillingParty permit distinct concurrent parties.
+
+Controlled source document evidence and verification fields/commands are deferred; P02 prohibits Verified account mappings and keeps configurations ReviewRequired. Activity/ActivityLink and booking-stage commands are P03/later. The future verification migration must add typed document evidence, reviewer/time and invariants before lifting the Verified restriction. Open-ended configuration supersession, relationship correction and asset move-impact workflows need explicit successor migrations/commands. These bounded deferrals preserve meaning instead of supplying fictitious verification. Person readable references remain optional and absent; ORG/SITE/AST/TKT are allocated atomically and never reused after acceptance.
 
 R = required on record creation; G = required at the stated command/stage; O = optional; C = required when its stated condition applies. UUID means stable internal identity. `Ref(X)` means an internal foreign key to X in the same workspace, not free text. Text limits below are prototype design constraints, not facts from a legacy system. Display numbers are separate from internal/source keys.
 

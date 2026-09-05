@@ -17,3 +17,5 @@ ADR-0004,Synthetic service authority and bounded offline scope,docs/decisions/AD
 ADR-0005,Independent project naming and repository adoption,docs/decisions/ADR-0005-project-naming-adoption.md,,Adopted,Dean Fiedler - private prototype,,,
 ADR-0006,P01 local foundation implementation,docs/decisions/ADR-0006-p01-local-foundation.md,,Implemented local P01 decision,Dean Fiedler - private prototype,,,
 P01-HO,Application foundation handover,docs/delivery/p01-handover.md,r01,Verified P01 component handover,Dean Fiedler - private prototype,,,
+ADR-0007,P02 shared data foundation,docs/decisions/ADR-0007-p02-shared-foundation.md,,Implemented P02 decision,Dean Fiedler - private prototype,,,
+P02-HO,Shared data foundation handover,docs/delivery/p02-handover.md,r01,P02 delivery evidence,Dean Fiedler - private prototype,,,

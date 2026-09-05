@@ -19,3 +19,7 @@ Record execution status in [the foundation handover](../delivery/foundation-hand
 ## P01 component evidence
 
 The [P01 handover](../delivery/p01-handover.md) records exact runtime/database/browser commands, executed results, CI source commits and limitations. Application assurance runs against real PostgreSQL with separate competing connections and a database-process restart. Browser screenshots are viewport evidence, not real-device or offline readiness. The [dependency inventory](p01-dependencies.json) records pinned direct versions and transitive licence declarations.
+
+## P02 component evidence
+
+The [P02 handover](../delivery/p02-handover.md) records upgrade/fresh setup, permissions/projections, references, effective relationships/hierarchy/history, command rollback/replay and restart/browser evidence. Final PR checks and review govern completion; full PT-01/02/03 and AT acceptance remain Not run. The [P02 decision](../decisions/ADR-0007-p02-shared-foundation.md) records the material deferrals.

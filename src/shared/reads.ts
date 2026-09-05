@@ -336,7 +336,7 @@ export async function mappingViews(p: Principal, organisation_id: string) {
     (await hasPermission(client, p, "shared.finance.read", org.company_id));
   return (
     await client.query(
-      `SELECT m.id,m.version,m.mapping_status,m.valid_from,m.valid_to,m.company_id${keys ? ",m.erp_connection_id,c.provider,c.external_connection_key,m.erp_company_id,m.entity_type,m.customer_id" : ""} FROM ppo.erp_account_mappings m JOIN ppo.erp_connections c ON (c.workspace_id,c.id)=(m.workspace_id,m.erp_connection_id) WHERE m.workspace_id=$1 AND m.organisation_id=$2 ORDER BY m.id`,
+      `SELECT m.id,m.version,m.mapping_status,m.valid_from,m.valid_to,m.company_id,(m.valid_from<=clock_timestamp() AND (m.valid_to IS NULL OR m.valid_to>clock_timestamp())) AS is_current${keys ? ",m.erp_connection_id,c.provider,c.external_connection_key,m.erp_company_id,m.entity_type,m.customer_id" : ""} FROM ppo.erp_account_mappings m JOIN ppo.erp_connections c ON (c.workspace_id,c.id)=(m.workspace_id,m.erp_connection_id) WHERE m.workspace_id=$1 AND m.organisation_id=$2 ORDER BY m.id`,
       [p.workspace_id, organisation_id],
     )
   ).rows;
@@ -346,7 +346,7 @@ export async function siteContext(p: Principal, id: string) {
     site = await visible(client, p, "Site", id);
   const parties = (
     await client.query(
-      `SELECT sp.id,sp.version,sp.role,sp.organisation_id,r.display_name,sp.valid_from,sp.valid_to FROM ppo.site_parties sp JOIN ppo.organisations r ON (r.workspace_id,r.id)=(sp.workspace_id,sp.organisation_id) WHERE sp.workspace_id=$1 AND sp.site_id=$3 AND ${visibility("Organisation")} ORDER BY sp.valid_from,sp.id`,
+      `SELECT sp.id,sp.version,sp.role,sp.organisation_id,r.display_name,sp.valid_from,sp.valid_to,(sp.valid_from<=clock_timestamp() AND (sp.valid_to IS NULL OR sp.valid_to>clock_timestamp())) AS is_current FROM ppo.site_parties sp JOIN ppo.organisations r ON (r.workspace_id,r.id)=(sp.workspace_id,sp.organisation_id) WHERE sp.workspace_id=$1 AND sp.site_id=$3 AND ${visibility("Organisation")} ORDER BY sp.valid_from,sp.id`,
       [p.workspace_id, p.actor_id, id],
     )
   ).rows;
@@ -398,7 +398,7 @@ export async function assetContext(p: Principal, id: string) {
     asset = await visible(client, p, "Asset", id);
   const configurations = (
     await client.query(
-      `SELECT id,revision,description,verification_status,valid_from,valid_to FROM ppo.asset_configurations WHERE workspace_id=$1 AND asset_id=$2 ORDER BY revision`,
+      `SELECT id,revision,description,verification_status,valid_from,valid_to,(valid_from<=clock_timestamp() AND (valid_to IS NULL OR valid_to>clock_timestamp())) AS is_current FROM ppo.asset_configurations WHERE workspace_id=$1 AND asset_id=$2 ORDER BY revision`,
       [p.workspace_id, id],
     )
   ).rows;
