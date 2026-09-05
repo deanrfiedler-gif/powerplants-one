@@ -1,6 +1,6 @@
 # PP-01 — Ordered prototype implementation plan
 
-**Edition:** r05 · **Status:** P01/P02 complete; P03 implemented with final component and publication evidence in its [handover](p03-handover.md); P04 implementation/evidence in its [handover](p04-handover.md); P05–P12 planned. All full PT procedures remain Not run; see [P01 component evidence](p01-handover.md).
+**Edition:** r05 · **Status:** P01/P02 complete; P03 implemented with final component and publication evidence in its [handover](p03-handover.md); P04 component-verified with evidence in its [handover](p04-handover.md); P05–P12 planned. All full PT procedures remain Not run; see [P01 component evidence](p01-handover.md).
 
 [Package](../prototype/README.md) · [Scope](../prototype/scope-and-journey.md) · [BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md).
 

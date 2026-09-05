@@ -21,5 +21,5 @@ ADR-0007,P02 shared data foundation,docs/decisions/ADR-0007-p02-shared-foundatio
 P02-HO,Shared data foundation handover,docs/delivery/p02-handover.md,r01,Verified P02 component handover,Dean Fiedler - private prototype,,,
 ADR-0008,P03 customer context intake and owned follow-up,docs/decisions/ADR-0008-p03-customer-intake.md,,Implemented P03 decision,Dean Fiedler - private prototype,,,
 P03-HO,Customer context intake and owned follow-up handover,docs/delivery/p03-handover.md,r01,P03 verified component handover,Dean Fiedler - private prototype,,,
-ADR-0009,P04 work scope coverage and readiness,docs/decisions/ADR-0009-p04-work-scope-readiness.md,,P04 implementation; actual verification in handover,Dean Fiedler - private prototype,,,
-P04-HO,Work scope coverage and readiness handover,docs/delivery/p04-handover.md,r01,P04 implementation; actual verification in handover,Dean Fiedler - private prototype,,,
+ADR-0009,P04 work scope coverage and readiness,docs/decisions/ADR-0009-p04-work-scope-readiness.md,,P04 component verified; publication in handover,Dean Fiedler - private prototype,,,
+P04-HO,Work scope coverage and readiness handover,docs/delivery/p04-handover.md,r01,P04 component verified; publication in handover,Dean Fiedler - private prototype,,,

@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P04 work scope, coverage and readiness implemented; verification/publication evidence in the handover. PP-01 remains incomplete.
+**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P04 work scope, coverage and readiness component-verified; verification/publication evidence in the handover. PP-01 remains incomplete.
 
 ## Current direction
 

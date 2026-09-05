@@ -2,7 +2,7 @@
 
 **Revision:** r01 · **Date:** 5 September 2026 · **Owner:** Dean Fiedler · **Environment:** private local synthetic prototype.
 
-**Delivery state:** Implementation in review under [issue #26](https://github.com/deanrfiedler-gif/powerplants-one/issues/26), [PR #27](https://github.com/deanrfiedler-gif/powerplants-one/pull/27), branch `feature/p04-work-scope-readiness`. Verification/publication is recorded below and in the linked issue. No independent-review, owner-acceptance or production-readiness claim. P05 has not started; PP-01/full PT/AT remain incomplete.
+**Delivery state:** Implemented and component-verified under [issue #26](https://github.com/deanrfiedler-gif/powerplants-one/issues/26), [PR #27](https://github.com/deanrfiedler-gif/powerplants-one/pull/27), branch `feature/p04-work-scope-readiness`. Verification/publication is recorded below and in the linked issue. No independent-review, owner-acceptance or production-readiness claim. P05 has not started; PP-01/full PT/AT remain incomplete.
 
 [ADR-0009](../decisions/ADR-0009-p04-work-scope-readiness.md) · [P03 baseline](p03-handover.md) · [API](../contracts/service-api.md) · [Dictionary](../contracts/service-data-dictionary.md) · [Ordered plan](prototype-implementation-plan.md).
 
@@ -68,7 +68,7 @@ npm run db:health
 npm run dev
 ```
 
-Substitute the actual container name. Migration 0004 and seed receipt 4 are transactional and additive. Never edit applied 0001–0003/checksums or old receipts. A failed migration rolls back; preserve errors/data and fix an unapplied migration or add a later forward migration. There is no down migration. Recovery of valued work means restoring the private pre-upgrade dump into a separate allowlisted database and the matching source version. Backup/restore on Dean's machine is not claimed executed.
+Substitute the actual container name. Migration 0004 and seed receipt 4 are transactional and additive. Pre-merge 0004 iterations existed only in disposable development CI; P03 maintained installations upgrade directly to the final published 0004. Never apply an old PR iteration to valued data and then replace its checksum. Never edit applied 0001–0003/checksums or old receipts. A failed migration rolls back; preserve errors/data and fix an unapplied migration or add a later forward migration. There is no down migration. Recovery of valued work means restoring the private pre-upgrade dump into a separate allowlisted database and the matching source version. Backup/restore on Dean's machine is not claimed executed.
 
 Use separate `ppo_synthetic_test` for destructive component tests. Stop the app before reset; explicit disposal remains different from non-destructive seed:
 
@@ -113,7 +113,26 @@ First submitted implementation: remote head `d56f91103f72fb85a3073f20c0fd6543d99
 
 **Fourth CI:** [33955491974](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33955491974), head `2a93a721e522d408f3f217b76ab3bee96ab9426e`, passed 45 PostgreSQL, restart, 6 HTTP and 18/20 Chromium. Both remaining failures selected two identically labelled readiness controls in separate forms; the preparation test now scopes its locator to that visit's form. The actual browser save/review/authorise/propose/successor flow passed on both viewports. Review additionally tightened declared shutdown applicability, captured plan approval metadata in the approved snapshot and flags proposals immediately on successor drafting. The added shutdown test initially needed an explicit nullable TypeScript annotation; corrected before publication.
 
-**Current verification status:** complete real database/HTTP/browser and manual screenshot inspection pending. Component implementation is not full PT/AT acceptance. No independent review has occurred.
+**Passing implementation evidence:** [run 33955844049](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33955844049) first passed all 4 unit / 46 PostgreSQL / 6 HTTP / 20 Chromium cases. [Run 33956084974](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33956084974) passed the same suite with the final exact ticket-reference/version snapshot and immutable source-junction guard. Visual review then corrected the inherited P03 shell label to Service workspace; no workflow semantics changed.
+
+**Final captured application source:** remote head `39cdf6acb3188c754046c2363697743ac53537ff`, tree `9481112dfba25cca3e989a0c8d02877555f58836`, application [run 33956562610](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33956562610). Final documentation/evidence commit and merged-main checks are recorded with exact SHA/tree in the durable [issue #26 publication record](https://github.com/deanrfiedler-gif/powerplants-one/issues/26). Those later commits do not retroactively change the screenshot source provenance.
+
+| Check | Actual result |
+|---|---|
+| `python3 scripts/check_foundation.py` | Passed: 4 issued source hashes, 78 parents, 29 master decisions, 38 planned acceptance scenarios, 16 backlog/issue links |
+| `python3 scripts/check_prototype.py` | Passed: 78 dispositions, 30 authored full procedures, 12 packages; no full PT result changed |
+| `python3 scripts/check_naming.py` | Passed: 24 document records, 7 standing exceptions |
+| `npm run check` | Lint, TypeScript, **4/4 unit**, Next.js build passed |
+| `npm run test:db` | **46/46 PostgreSQL** passed (29 existing + 17 P04) |
+| Fresh migration, P03 upgrade, repeated migration/seed and disposable reset | Passed with actual PostgreSQL and unchanged earlier evidence/checksums |
+| PostgreSQL process restart | P01 ticket, P02 organisation, P03 activity/link and P04 order/link/receipts survived |
+| `npm run test:http` / refused production startup | **6/6 HTTP** passed (4 existing + 2 P04); production startup refused |
+| `npm run test:browser` | **20/20 Chromium** passed (12 existing + 8 P04 across two viewports) |
+| Manual visual inspection | **48 original P04 PNGs** inspected; no blocking layout/overflow defect remains |
+
+[Visual index and inspection notes](../testing/evidence/p04/README.md), [manifest](../testing/evidence/p04/manifest.json). Archive `9966628731` SHA-256: `9c6a8812c7bc20675c8963538063b684d5037029e0f35cf5f83fc24407d79d75`. Screenshot files remain original bytes; scratch contact sheets/crops were inspection aids only. Source artifacts expire after 14 days; committed PNGs/manifest preserve the evidence.
+
+**Review/acceptance distinction:** implementation self-review and component verification completed. No independent review, owner acceptance, production readiness or full PT/AT pass is claimed. Final normal merge and main verification must be evidenced in issue #26; no branch-rule enforcement is invented.
 
 ## Synthetic scenarios
 
@@ -126,3 +145,5 @@ Next bounded dependency: **P05 — Planner and controlled changes**. Read the [s
 Do not infer a proposal is booked. Do not bypass readiness or create a pack/acknowledgement circular dependency. Preserve earlier proposed records during additive schema expansion. P06 packs, P07 field, P08 offline, P09 reports, P10 Finance and later acceptance remain outside P05. P04 stops after verified publication; no P05 implementation begins here.
 
 P04 control clarification: an explicit shutdown condition keeps mandatory isolation and shutdown authority applicable even on an Inspection task. Non-intervention alone cannot make such a declared control NotApplicable.
+
+Final migration `0004-work-scope.sql` SHA-256: `f090bea4f4d006dcdc559eb434899a6f403a71343d560d7f4a998dac8299f927`. Seed `seed-p04.sql` SHA-256: `675a44cc2e20f35769fb499fea30d018e4aa13385ec5bacb4bde69c454d746e3`; seed receipt version **4**.

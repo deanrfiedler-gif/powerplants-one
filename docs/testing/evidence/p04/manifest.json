@@ -1,0 +1,347 @@
+{
+  "source_commit": "39cdf6acb3188c754046c2363697743ac53537ff",
+  "source_tree": "9481112dfba25cca3e989a0c8d02877555f58836",
+  "workflow_run": 33956562610,
+  "artifact_id": 9966628731,
+  "archive_sha256": "9c6a8812c7bc20675c8963538063b684d5037029e0f35cf5f83fc24407d79d75",
+  "environment": "GitHub Actions Ubuntu 24.04, PostgreSQL 16.15, Playwright 1.63.0 Chromium; desktop 1440x1000 / mobile 390x844, locale en-AU",
+  "scope": "Original unmodified synthetic PNGs. Component/viewport evidence only; no real-device, screen-reader, offline or full PT acceptance claim.",
+  "files": [
+    {
+      "file": "desktop-authorisation-refusal.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-desktop-chromium/P04-authorisation-refusal.png",
+      "sha256": "4247e0dfa9aeee64e423099db76d71716439604fc16846de6d2d64639bd6ec20",
+      "width": 1440,
+      "height": 3282
+    },
+    {
+      "file": "desktop-authorised-through-ui.png",
+      "original_path": "test-results/work-orders-P04-saved-scop-5c58a--preserve-approved-evidence-desktop-chromium/P04-authorised-through-ui.png",
+      "sha256": "da248ed67f1e2aec47583c327ec2233d8e5b7f2ab78bb9fcc444e0e50df2bad8",
+      "width": 1440,
+      "height": 3040
+    },
+    {
+      "file": "desktop-authorised.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-desktop-chromium/P04-authorised.png",
+      "sha256": "96acb1a448928e2dd5d105be9c4caaa1947fc54d3a9b93a2b1ae571f5af120dc",
+      "width": 1440,
+      "height": 3621
+    },
+    {
+      "file": "desktop-authority-missing.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-desktop-chromium/P04-authority-missing.png",
+      "sha256": "f85d1914938196f6788545fc1819b4cbff8c2a30b1bc825f5fe66d511c431b74",
+      "width": 1440,
+      "height": 3136
+    },
+    {
+      "file": "desktop-conflict-retained.png",
+      "original_path": "test-results/work-orders-P04-forms-reta-f2ac6--keyboard-and-phone-layouts-desktop-chromium/P04-conflict-retained.png",
+      "sha256": "2db8e2df3295162ad76672c995bfc999b5d853d90d5a67fb9cd67d132293c4ba",
+      "width": 1440,
+      "height": 6737
+    },
+    {
+      "file": "desktop-create-form.png",
+      "original_path": "test-results/work-orders-P04-creation-e-35abb-results-and-Systems-refusal-desktop-chromium/P04-create-form.png",
+      "sha256": "682d8ceca191c57f37b62d708df8752a34dddc27f09493992bc9aa54ffec98b7",
+      "width": 1440,
+      "height": 1224
+    },
+    {
+      "file": "desktop-created-empty-scope.png",
+      "original_path": "test-results/work-orders-P04-creation-e-35abb-results-and-Systems-refusal-desktop-chromium/P04-created-empty-scope.png",
+      "sha256": "c4b80ce91844975998e4f7b5022e25b531a5adfb007bc07c9dc985ec5fec3593",
+      "width": 1440,
+      "height": 2362
+    },
+    {
+      "file": "desktop-disputed.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-desktop-chromium/P04-disputed.png",
+      "sha256": "4d9bd7cedd4ae55a7af9686e91cef1cbf95d6c66e5759ee0ce63b9f6550e0a56",
+      "width": 1440,
+      "height": 3097
+    },
+    {
+      "file": "desktop-draft.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-desktop-chromium/P04-draft.png",
+      "sha256": "c4e910886fd8dd4a2eb8a8232852e19b9bee5fa89bf777e54473897dc0d621e6",
+      "width": 1440,
+      "height": 3097
+    },
+    {
+      "file": "desktop-empty.png",
+      "original_path": "test-results/work-orders-P04-creation-e-35abb-results-and-Systems-refusal-desktop-chromium/P04-empty.png",
+      "sha256": "c1ee45070a11e286e1172d5d03f4f3343231f799fa89e65e720d12999a38ef11",
+      "width": 1440,
+      "height": 1003
+    },
+    {
+      "file": "desktop-identification-plan.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-desktop-chromium/P04-identification-plan.png",
+      "sha256": "bb80114b258154f216e6ebf33fe4a4995d62c6b4dc1155547ac15682967767f1",
+      "width": 1440,
+      "height": 3253
+    },
+    {
+      "file": "desktop-list.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-desktop-chromium/P04-list.png",
+      "sha256": "182b39c312dd3063f3a982c5ae87c8acc052ff142cadfb224b2d401ac30a056b",
+      "width": 1440,
+      "height": 2326
+    },
+    {
+      "file": "desktop-mandatory-blocker.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-desktop-chromium/P04-mandatory-blocker.png",
+      "sha256": "6999265f0fab01156a78234c050370d95f5e8d2ec0ebf9a2b021c118e7470144",
+      "width": 1440,
+      "height": 3136
+    },
+    {
+      "file": "desktop-permitted-exception.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-desktop-chromium/P04-permitted-exception.png",
+      "sha256": "9ec6fe23ebcb7609bebc98bbd9e155a9dd705e677a0c5d25210446bb4fcb0780",
+      "width": 1440,
+      "height": 3765
+    },
+    {
+      "file": "desktop-preparation-review-form.png",
+      "original_path": "test-results/work-orders-P04-forms-reta-f2ac6--keyboard-and-phone-layouts-desktop-chromium/P04-preparation-review-form.png",
+      "sha256": "dd04dc5c90c5d28ac0aebe542918df67dbc16137c4c324be3e53170575ea2a8f",
+      "width": 1440,
+      "height": 4666
+    },
+    {
+      "file": "desktop-proposed-visit-form.png",
+      "original_path": "test-results/work-orders-P04-forms-reta-f2ac6--keyboard-and-phone-layouts-desktop-chromium/P04-proposed-visit-form.png",
+      "sha256": "d64d5a3455e6de650c16429cd227da3639b290c6496500df5ad5fffc490bba92",
+      "width": 1440,
+      "height": 3571
+    },
+    {
+      "file": "desktop-scope-form-focus.png",
+      "original_path": "test-results/work-orders-P04-forms-reta-f2ac6--keyboard-and-phone-layouts-desktop-chromium/P04-scope-form-focus.png",
+      "sha256": "b4969e936f401120340d5c5e63230a1224ba902cfaeb27d4175f1be6a83a7e9d",
+      "width": 1440,
+      "height": 6649
+    },
+    {
+      "file": "desktop-successor-saved-through-ui.png",
+      "original_path": "test-results/work-orders-P04-saved-scop-5c58a--preserve-approved-evidence-desktop-chromium/P04-successor-saved-through-ui.png",
+      "sha256": "b005660e10373b16dd7fc47b45c90718c65ebe667ef1751660bad301e151cd13",
+      "width": 1440,
+      "height": 7384
+    },
+    {
+      "file": "desktop-successor.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-desktop-chromium/P04-successor.png",
+      "sha256": "e4f7f170b2e71adfd189c9db33b99b03cee520f8f94578d9fce394a02e036386",
+      "width": 1440,
+      "height": 5220
+    },
+    {
+      "file": "desktop-systems-refusal.png",
+      "original_path": "test-results/work-orders-P04-creation-e-35abb-results-and-Systems-refusal-desktop-chromium/P04-systems-refusal.png",
+      "sha256": "8565ef4b0c397d9488d8737af7b30e77374500f1476de5a189ad379952772a6f",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "file": "desktop-uncertain-retry.png",
+      "original_path": "test-results/work-orders-P04-creation-e-35abb-results-and-Systems-refusal-desktop-chromium/P04-uncertain-retry.png",
+      "sha256": "32c0ffe240b1d65b2e0c2cf0beb22d86102c5fc856a80443df1f83dee2c5708f",
+      "width": 1440,
+      "height": 1296
+    },
+    {
+      "file": "desktop-unresolved.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-desktop-chromium/P04-unresolved.png",
+      "sha256": "c4cd9d460e7e9a56aed0b48bafaa202dbed4099ddab8d42a25b1bfe2a723233c",
+      "width": 1440,
+      "height": 3175
+    },
+    {
+      "file": "desktop-validation-retained.png",
+      "original_path": "test-results/work-orders-P04-forms-reta-f2ac6--keyboard-and-phone-layouts-desktop-chromium/P04-validation-retained.png",
+      "sha256": "83eb285f865b46ae408960827e39983e3c2de26a0ee20562bf327d1e57fb0922",
+      "width": 1440,
+      "height": 6839
+    },
+    {
+      "file": "desktop-visit-saved-through-ui.png",
+      "original_path": "test-results/work-orders-P04-saved-scop-5c58a--preserve-approved-evidence-desktop-chromium/P04-visit-saved-through-ui.png",
+      "sha256": "2d4bb027b2dd258c0e6ed4f8d4194a88e31eb974b6c90862b7f659d6b3e69448",
+      "width": 1440,
+      "height": 4032
+    },
+    {
+      "file": "mobile-authorisation-refusal.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-mobile-chromium/P04-authorisation-refusal.png",
+      "sha256": "d872d0d35902dc656ff558576caf0533b1273dcc74479e057019568373e1ebbd",
+      "width": 390,
+      "height": 4684
+    },
+    {
+      "file": "mobile-authorised-through-ui.png",
+      "original_path": "test-results/work-orders-P04-saved-scop-5c58a--preserve-approved-evidence-mobile-chromium/P04-authorised-through-ui.png",
+      "sha256": "2e95889cf7c2846aa6df9958aa7d5e3b57b0ac5f1ab8a2160e102dd7d6ce975d",
+      "width": 390,
+      "height": 4242
+    },
+    {
+      "file": "mobile-authorised.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-mobile-chromium/P04-authorised.png",
+      "sha256": "cb1091fc4489cc191ccc810d04e5746796622126622f8b93b7ba9fa114ebd2ef",
+      "width": 390,
+      "height": 5224
+    },
+    {
+      "file": "mobile-authority-missing.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-mobile-chromium/P04-authority-missing.png",
+      "sha256": "a0df15a7fe25c99ab4b763f76f4b23adad8a42a02ce1cbd9695cc63c1ebc854c",
+      "width": 390,
+      "height": 4470
+    },
+    {
+      "file": "mobile-conflict-retained.png",
+      "original_path": "test-results/work-orders-P04-forms-reta-f2ac6--keyboard-and-phone-layouts-mobile-chromium/P04-conflict-retained.png",
+      "sha256": "ec2040d7c9f3a30d85e2f49dbc4a2235c72d5268bc46207963007df564c55128",
+      "width": 390,
+      "height": 8193
+    },
+    {
+      "file": "mobile-create-form.png",
+      "original_path": "test-results/work-orders-P04-creation-e-35abb-results-and-Systems-refusal-mobile-chromium/P04-create-form.png",
+      "sha256": "89b8210956877618b6757615fbd96824246bb5502a8347a35864fcf8fd890f7c",
+      "width": 390,
+      "height": 1828
+    },
+    {
+      "file": "mobile-created-empty-scope.png",
+      "original_path": "test-results/work-orders-P04-creation-e-35abb-results-and-Systems-refusal-mobile-chromium/P04-created-empty-scope.png",
+      "sha256": "1d38fb8f22c7231fed45a9fa734f3288f59f07fa2b364d974418bdefb81350b9",
+      "width": 390,
+      "height": 3063
+    },
+    {
+      "file": "mobile-disputed.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-mobile-chromium/P04-disputed.png",
+      "sha256": "8e1b1718d72326323839e2df799c84f2398ca2c4917b5c3c8a4f2e002f4cdd59",
+      "width": 390,
+      "height": 4542
+    },
+    {
+      "file": "mobile-draft.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-mobile-chromium/P04-draft.png",
+      "sha256": "0b16ab257d26ff4c188e7aef285d17a1d7ae99ecf88ff1b83730877bd7cbaafa",
+      "width": 390,
+      "height": 4542
+    },
+    {
+      "file": "mobile-empty.png",
+      "original_path": "test-results/work-orders-P04-creation-e-35abb-results-and-Systems-refusal-mobile-chromium/P04-empty.png",
+      "sha256": "868eecd8a4123b74c9a177fdd0361df2eeb2e6447f7c73b54c5dfb4d76658526",
+      "width": 390,
+      "height": 1504
+    },
+    {
+      "file": "mobile-identification-plan.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-mobile-chromium/P04-identification-plan.png",
+      "sha256": "92f61f4cfa759e4404fe2d07f6fd51cd581465888b91e1a84d4425f3d56ddaa0",
+      "width": 390,
+      "height": 4842
+    },
+    {
+      "file": "mobile-list.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-mobile-chromium/P04-list.png",
+      "sha256": "0583226232b1c53ff8f030fe866fd918fa9e2eaf9a07e01ce942536cb0f1baea",
+      "width": 390,
+      "height": 4796
+    },
+    {
+      "file": "mobile-mandatory-blocker.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-mobile-chromium/P04-mandatory-blocker.png",
+      "sha256": "dd360e70055c8a3a7c4adfc5a414bfd912f44f707bab176f4644c415510ce2bb",
+      "width": 390,
+      "height": 4581
+    },
+    {
+      "file": "mobile-permitted-exception.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-mobile-chromium/P04-permitted-exception.png",
+      "sha256": "a827d6563b212cd80260b30a7c21863e864f3ed3f93101841f7160c2acbf40c1",
+      "width": 390,
+      "height": 5449
+    },
+    {
+      "file": "mobile-preparation-review-form.png",
+      "original_path": "test-results/work-orders-P04-forms-reta-f2ac6--keyboard-and-phone-layouts-mobile-chromium/P04-preparation-review-form.png",
+      "sha256": "8791ce361b1f8cacab0572bfe18370273a478218f00985c31f6510bd2c347961",
+      "width": 390,
+      "height": 6608
+    },
+    {
+      "file": "mobile-proposed-visit-form.png",
+      "original_path": "test-results/work-orders-P04-forms-reta-f2ac6--keyboard-and-phone-layouts-mobile-chromium/P04-proposed-visit-form.png",
+      "sha256": "7830229031abb0a177436619f48c704be924a7247deb40d80b623a561b8de895",
+      "width": 390,
+      "height": 5417
+    },
+    {
+      "file": "mobile-scope-form-focus.png",
+      "original_path": "test-results/work-orders-P04-forms-reta-f2ac6--keyboard-and-phone-layouts-mobile-chromium/P04-scope-form-focus.png",
+      "sha256": "98871286bf239ca3b2a6a836f9da2b67ee7a70fd48504a9bebbc1a18ff3ea575",
+      "width": 390,
+      "height": 8081
+    },
+    {
+      "file": "mobile-successor-saved-through-ui.png",
+      "original_path": "test-results/work-orders-P04-saved-scop-5c58a--preserve-approved-evidence-mobile-chromium/P04-successor-saved-through-ui.png",
+      "sha256": "304d5d490c319c1dc38a5f3054ddfb8f5a93799c433791dec9ed1d3602e08eda",
+      "width": 390,
+      "height": 9159
+    },
+    {
+      "file": "mobile-successor.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-mobile-chromium/P04-successor.png",
+      "sha256": "e847f855f6e33116c6582331d226cb9ab8f4a397536b47f3a34b39ac36fa0e53",
+      "width": 390,
+      "height": 7431
+    },
+    {
+      "file": "mobile-systems-refusal.png",
+      "original_path": "test-results/work-orders-P04-creation-e-35abb-results-and-Systems-refusal-mobile-chromium/P04-systems-refusal.png",
+      "sha256": "b3fbf743f82df6f467b8307f6b6be8e6137af07064201b5fc20204e18cc41aec",
+      "width": 390,
+      "height": 1461
+    },
+    {
+      "file": "mobile-uncertain-retry.png",
+      "original_path": "test-results/work-orders-P04-creation-e-35abb-results-and-Systems-refusal-mobile-chromium/P04-uncertain-retry.png",
+      "sha256": "598b5a61a2c01a930793643cba328d7085adcdea40d3da71e0d88a583a05ae6b",
+      "width": 390,
+      "height": 1948
+    },
+    {
+      "file": "mobile-unresolved.png",
+      "original_path": "test-results/work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-mobile-chromium/P04-unresolved.png",
+      "sha256": "4bea3f17cd34e80b0466e22961a949df5d09831a173bc1778b8d5fd1231a2238",
+      "width": 390,
+      "height": 4692
+    },
+    {
+      "file": "mobile-validation-retained.png",
+      "original_path": "test-results/work-orders-P04-forms-reta-f2ac6--keyboard-and-phone-layouts-mobile-chromium/P04-validation-retained.png",
+      "sha256": "0d405d355c5ff0c93667031f00c17c94867dd88d7ce2f5e579c96b7c83411dc5",
+      "width": 390,
+      "height": 8359
+    },
+    {
+      "file": "mobile-visit-saved-through-ui.png",
+      "original_path": "test-results/work-orders-P04-saved-scop-5c58a--preserve-approved-evidence-mobile-chromium/P04-visit-saved-through-ui.png",
+      "sha256": "4dada7d1a264b54f72f80711ce1746b542ca70d832a0289cd25b9cb792270916",
+      "width": 390,
+      "height": 5804
+    }
+  ]
+}
