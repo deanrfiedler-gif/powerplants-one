@@ -40,8 +40,6 @@ jobs:
           npm --version
           git rev-parse HEAD
           npm ls --depth=0
-      - name: Prepare formatted review copies without changing executed source
-        run: node scripts/format-review-copy.mjs
       - name: Install pinned controlled PDF renderer
         run: npx playwright install --with-deps chromium
       - name: Static, unit and build checks
@@ -100,6 +98,5 @@ jobs:
           name: P07-browser-field-evidence
           path: |
             test-results/
-            review-copies/
             playwright-report/
           retention-days: 14

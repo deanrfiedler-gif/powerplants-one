@@ -54,7 +54,7 @@ export async function acknowledged() {
     const p = await principal(profile),
       pack = (await readPack(q.p, q.pack.id)).items[0],
       recipient = pack.readiness.recipients.find(
-        (x: {user_id: string}) => x.user_id === p.actor_id,
+        (x: { user_id: string }) => x.user_id === p.actor_id,
       )!;
     await acknowledgePack(p, q.issue_id, {
       ...base(),
@@ -193,7 +193,7 @@ export function draft(
       : "None",
     declaration_reason:
       "SYN explicit personal declaration, no approval or billing",
-    task_outcomes: job.scope.items.map((t: {id:string}) => ({
+    task_outcomes: job.scope.items.map((t: { id: string }) => ({
       scope_item_id: t.id,
       outcome,
       reason: "SYN explicit task outcome and remaining-work reason",

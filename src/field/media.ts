@@ -71,7 +71,12 @@ export function inspectPng(bytes: Buffer) {
       if (!seenData || n !== 0 || end !== bytes.length) rejected();
       ended = true;
     } else {
-      if (!seenHeader || seenData || ancillary.has(type) || !["sRGB", "gAMA", "cHRM", "pHYs"].includes(type))
+      if (
+        !seenHeader ||
+        seenData ||
+        ancillary.has(type) ||
+        !["sRGB", "gAMA", "cHRM", "pHYs"].includes(type)
+      )
         rejected();
       ancillary.add(type);
       const lengths: Record<string, number> = {
@@ -81,7 +86,12 @@ export function inspectPng(bytes: Buffer) {
         pHYs: 9,
       };
       if (n !== lengths[type]) rejected();
-      if ((type === "sRGB" && data[0] > 3) || (type === "gAMA" && data.readUInt32BE(0) === 0) || (type === "pHYs" && data[8] > 1)) rejected();
+      if (
+        (type === "sRGB" && data[0] > 3) ||
+        (type === "gAMA" && data.readUInt32BE(0) === 0) ||
+        (type === "pHYs" && data[8] > 1)
+      )
+        rejected();
     }
     offset = end;
   }

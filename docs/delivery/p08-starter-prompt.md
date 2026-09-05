@@ -2,7 +2,7 @@
 
 **Prepared:** 5 September 2026 · **Owner:** Dean Fiedler · **Scope:** a future separately instructed P08 task. This file prepares P08; its existence does not start offline implementation or authorise a deployment.
 
-Copy the task below into a new session only when ready to begin P08. First verify the final [P07 handover](p07-handover.md) and the externally maintained publication record on [P07 issue #32](https://github.com/deanrfiedler-gif/powerplants-one/issues/32). Do not treat a draft PR, a branch check, a screenshot or this starter's preparation date as proof of merged-main publication.
+Copy the task below into a new session only when ready to begin P08. First verify the final [P07 handover](p07-handover.md) and the externally maintained publication record on [P07 issue #32](https://github.com/deanrfiedler-gif/powerplants-one/issues/32#issuecomment-5555401391). Do not treat a draft PR, a branch check, a screenshot or this starter's preparation date as proof of merged-main publication.
 
 ---
 

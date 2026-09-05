@@ -110,11 +110,18 @@ export async function startAttendance(
             ),
           ),
         ]) {
-          const evidence = (await c.query(
-            "SELECT s.id,s.resource_id,s.version,s.skill_code,s.status,s.valid_from,s.valid_to,s.source_as_at,s.evidence_ref,e.content_hash AS evidence_hash,e.version AS evidence_version FROM ppo.skill_evidence s JOIN ppo.resource_evidence e ON (e.workspace_id,e.resource_id,e.id)=(s.workspace_id,s.resource_id,s.evidence_ref) WHERE s.workspace_id=$1 AND s.resource_id=$2 AND s.skill_code=$3 AND s.active AND s.status='Verified' AND s.valid_from<=$4 AND s.valid_to>=$5 ORDER BY s.id",
-            [p.workspace_id, member.resource_id, skill, now, through],
-          )).rows;
-          if (!evidence.length) throw new AppError(422,"StartBlocked","Current crew competency evidence requires review.");
+          const evidence = (
+            await c.query(
+              "SELECT s.id,s.resource_id,s.version,s.skill_code,s.status,s.valid_from,s.valid_to,s.source_as_at,s.evidence_ref,e.content_hash AS evidence_hash,e.version AS evidence_version FROM ppo.skill_evidence s JOIN ppo.resource_evidence e ON (e.workspace_id,e.resource_id,e.id)=(s.workspace_id,s.resource_id,s.evidence_ref) WHERE s.workspace_id=$1 AND s.resource_id=$2 AND s.skill_code=$3 AND s.active AND s.status='Verified' AND s.valid_from<=$4 AND s.valid_to>=$5 ORDER BY s.id",
+              [p.workspace_id, member.resource_id, skill, now, through],
+            )
+          ).rows;
+          if (!evidence.length)
+            throw new AppError(
+              422,
+              "StartBlocked",
+              "Current crew competency evidence requires review.",
+            );
           competencies.push(...evidence);
         }
       }

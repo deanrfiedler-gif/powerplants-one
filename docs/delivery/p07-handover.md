@@ -1,6 +1,6 @@
 # P07 — Technician online workflow and capture
 
-**Edition:** r01 · **Date:** 5 September 2026 · **Owner:** Dean Fiedler · **Scope:** personal private synthetic prototype. [Issue #32](https://github.com/deanrfiedler-gif/powerplants-one/issues/32), [PR #33](https://github.com/deanrfiedler-gif/powerplants-one/pull/33), branch `feature/p07-technician-online`. Verification is in progress. Final publication evidence must be read from the externally maintained issue record; this file cannot attest its own final SHA or merge.
+**Edition:** r01 · **Date:** 5 September 2026 · **Owner:** Dean Fiedler · **Scope:** personal private synthetic prototype. [Issue #32](https://github.com/deanrfiedler-gif/powerplants-one/issues/32), [PR #33](https://github.com/deanrfiedler-gif/powerplants-one/pull/33), branch `feature/p07-technician-online`. Verification is in progress. Final publication evidence must be read from the [externally maintained publication record](https://github.com/deanrfiedler-gif/powerplants-one/issues/32#issuecomment-5555401391); this file cannot attest its own final SHA or merge.
 
 ## Outcome and exclusions
 
@@ -94,7 +94,9 @@ The workflow performs fresh migration/seed/health, reset refusal without both co
 
 Original visual review of the successful run found a saved completion form incorrectly showing Unsaved changes after loading its saved values. The P07 form now distinguishes pristine saved values from later edits, with an explicit browser assertion. Full-page screenshots now scroll to the top before capture so sticky navigation does not overlay labels in the long output. These run-33996669449 originals are intermediate evidence and are not the final visual acceptance set.
 
-The workflow's formatter produces separate review copies using the already pinned Prettier; it does not modify the executed checkout. Original source/tree identity is retained for every run. Failed artifacts are dispositioned, never represented as successful visual proof. Implementation self-review is not independent review or owner acceptance.
+Application 33997648863 on `1384f7f3c6843e0d0a8673ad6239a5c0ccac4204` stopped before runtime at three missing callback type annotations in the added two-task test. Explicit reference types corrected them; no check scope changed.
+
+A temporary CI formatter produced separate review copies using the already pinned Prettier without modifying the executed checkout. Those formatted copies were applied to the next source, and the temporary helper was removed after review. Original source/tree identity is retained for every run. Failed artifacts are dispositioned, never represented as successful visual proof. Implementation self-review is not independent review or owner acceptance.
 
 ## Acceptance boundaries and next task
 
@@ -104,4 +106,4 @@ P08 is prepared in the detailed [Offline queue and exception recovery starter](p
 
 ## Publication record
 
-Final head/check/review/main-state and normal expected-head merge evidence will be maintained externally on [issue #32](https://github.com/deanrfiedler-gif/powerplants-one/issues/32). Recheck actual PR head, checks/reviews/threads, current main, permissions and applicable rules before merge; accurately record inaccessible rule reads. Do not bypass/change controls. Verify merged main SHA/tree, issue/PR states and both actual main workflows after merge. The external record, not a self-referential SHA embedded here, establishes final publication.
+Final head/check/review/main-state and normal expected-head merge evidence will be maintained in the [external publication record](https://github.com/deanrfiedler-gif/powerplants-one/issues/32#issuecomment-5555401391). Recheck actual PR head, checks/reviews/threads, current main, permissions and applicable rules before merge; accurately record inaccessible rule reads. Do not bypass/change controls. Verify merged main SHA/tree, issue/PR states and both actual main workflows after merge. The external record, not a self-referential SHA embedded here, establishes final publication.

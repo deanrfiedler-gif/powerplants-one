@@ -1,9 +1,15 @@
-import { randomUUID } from 'node:crypto';
-import { base,id,content } from './packs';
-export async function prepareFieldAppointment(call: (path:string,body?:unknown)=>Promise<Awaited<ReturnType<Response["json"]>>>, day: string) {
-  const order = (await call( `service/work-orders/${id("a9")}`)).items[0],
+import { randomUUID } from "node:crypto";
+import { base, id, content } from "./packs";
+export async function prepareFieldAppointment(
+  call: (
+    path: string,
+    body?: unknown,
+  ) => Promise<Awaited<ReturnType<Response["json"]>>>,
+  day: string,
+) {
+  const order = (await call(`service/work-orders/${id("a9")}`)).items[0],
     aid = crypto.randomUUID();
-  await call( `service/work-orders/${order.id}/visits`, {
+  await call(`service/work-orders/${order.id}/visits`, {
     ...base(),
     id: aid,
     expected_version: order.version,
@@ -14,8 +20,8 @@ export async function prepareFieldAppointment(call: (path:string,body?:unknown)=
     customer_commitment: "Proposed",
     preparation_status: "Preparing",
   });
-  let a = (await call( `appointments/${aid}`)).items[0];
-  await call( `service/work-orders/${order.id}/readiness`, {
+  let a = (await call(`appointments/${aid}`)).items[0];
+  await call(`service/work-orders/${order.id}/readiness`, {
     ...base(),
     expected_version: a.work_order_version,
     assessment: {
@@ -34,7 +40,7 @@ export async function prepareFieldAppointment(call: (path:string,body?:unknown)=
       },
     },
   });
-  await call( `appointments/${aid}/contacts`, {
+  await call(`appointments/${aid}/contacts`, {
     ...base(),
     id: crypto.randomUUID(),
     expected_version: a.version,
@@ -44,8 +50,8 @@ export async function prepareFieldAppointment(call: (path:string,body?:unknown)=
     occurred_at: new Date().toISOString(),
     notes: "SYN manually recorded date agreement; no pack response.",
   });
-  a = (await call( `appointments/${aid}`)).items[0];
-  await call( `appointments/${aid}/confirm`, {
+  a = (await call(`appointments/${aid}`)).items[0];
+  await call(`appointments/${aid}/confirm`, {
     ...base(),
     expected_version: a.version,
     expected_work_order_version: a.work_order_version,
@@ -66,13 +72,27 @@ export async function prepareFieldAppointment(call: (path:string,body?:unknown)=
         "SYN explicit zero travel allowance at the same fictional site",
     })),
   });
-  const appointment=(await call(`appointments/${aid}`)).items[0],pid=randomUUID();
-  await call('packs',{...base(),id:pid,appointment_id:aid,expected_appointment_version:appointment.version,content:content()});
-  let pack=(await call(`packs/${pid}`)).items[0];
-  await call(`packs/${pid}/check`,{...base(),expected_version:pack.version,decision:'Checked'});
-  pack=(await call(`packs/${pid}`)).items[0];
-  await call(`packs/${pid}/issue`,{...base(),expected_version:pack.version});
-  pack=(await call(`packs/${pid}`)).items[0];
-  await call(`render-jobs/${pack.jobs[0].id}/retry`,{});
-  return {appointment_id:aid,pack:(await call(`packs/${pid}`)).items[0]};
+  const appointment = (await call(`appointments/${aid}`)).items[0],
+    pid = randomUUID();
+  await call("packs", {
+    ...base(),
+    id: pid,
+    appointment_id: aid,
+    expected_appointment_version: appointment.version,
+    content: content(),
+  });
+  let pack = (await call(`packs/${pid}`)).items[0];
+  await call(`packs/${pid}/check`, {
+    ...base(),
+    expected_version: pack.version,
+    decision: "Checked",
+  });
+  pack = (await call(`packs/${pid}`)).items[0];
+  await call(`packs/${pid}/issue`, {
+    ...base(),
+    expected_version: pack.version,
+  });
+  pack = (await call(`packs/${pid}`)).items[0];
+  await call(`render-jobs/${pack.jobs[0].id}/retry`, {});
+  return { appointment_id: aid, pack: (await call(`packs/${pid}`)).items[0] };
 }
