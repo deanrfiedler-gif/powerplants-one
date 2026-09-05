@@ -152,7 +152,7 @@ test("P05 additive upgrade preserves exact P04 proposal bytes, receipts, source 
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(4);
   await seed(4);
-  const before = await rows("SELECT * FROM ppo.appointments ORDER BY id"),
+  const before = await rows("SELECT id,to_jsonb(a) snapshot FROM ppo.appointments a ORDER BY id"),
     orderBefore = await rows("SELECT * FROM ppo.work_orders ORDER BY id"),
     scopeBefore = await rows("SELECT * FROM ppo.scope_revisions ORDER BY id"),
     migrations = await rows(
@@ -171,7 +171,7 @@ test("P05 additive upgrade preserves exact P04 proposal bytes, receipts, source 
         [a.id],
       )
     )[0].snapshot;
-    assert.deepEqual(original, JSON.parse(JSON.stringify(a)));
+    assert.deepEqual(original, a.snapshot);
     assert.equal(
       (await rows("SELECT status FROM ppo.appointments WHERE id=$1", [a.id]))[0]
         .status,
