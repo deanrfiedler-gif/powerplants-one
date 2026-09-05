@@ -57,9 +57,11 @@ export default function RootLayout({
                       <span aria-disabled="true">
                         {domain}
                         <small>
-                          {domain === "CRM" || domain === "Service Operations"
-                            ? "P03 context & intake"
-                            : "Planned"}
+                          {domain === "CRM"
+                            ? "Customer context"
+                            : domain === "Service Operations"
+                              ? "Work preparation"
+                              : "Planned"}
                         </small>
                       </span>
                     </li>
@@ -76,7 +78,7 @@ export default function RootLayout({
           <div className="workspace">
             <header className="topbar">
               <span>Powerplants Australia</span>
-              <span className="badge">P03 customer context</span>
+              <span className="badge">Service workspace</span>
             </header>
             <main id="main" tabIndex={-1}>
               {children}
