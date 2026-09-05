@@ -244,3 +244,7 @@ Published resource/calendar/skill/availability bundles and policy versions are i
 ## P06 current implementation boundary
 
 [ADR-0011](../decisions/ADR-0011-p06-controlled-job-packs.md), [current contracts](../contracts/document-issue-distribution.md) and [handover](../delivery/p06-handover.md) implement SC-06/SC-14 and OUT-09 with nine-section source review, private durable output, idempotent render/finalisation, exact recipient acknowledgements and owned amendment/withdrawal consequences. P04/P05 authority and immutable history remain. Non-waivable current controls plus current exact crew responses govern the dispatch component; P07 start/capture remains absent. No report, Finance, offline or communication implementation is implied.
+
+## P07 online evidence decision
+
+[ADR-0012](../decisions/ADR-0012-p07-online-field-evidence.md) retains the pinned stack and current shared transaction/permission boundary for technician starts, typed captures, successor corrections and completion drafts. Current P06 authority is checked inside actual start; immutable attendance records retain exact authority and timestamps. PostgreSQL actor-wide current-time exclusion and immutable history prevent overlapping accepted time and destructive correction. The P06 private write-once adapter supports bounded inspected synthetic PNGs with explicit storage/database reconciliation. No new dependency, remote object service, hosting or background browser persistence is added. IndexedDB/service workers/offline recovery remain P08; report submission/review remain P09.

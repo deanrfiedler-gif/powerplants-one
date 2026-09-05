@@ -29,15 +29,15 @@ export function inspectPng(bytes: Buffer) {
     channels = 0,
     seenHeader = false,
     seenData = false,
-    endedData = false,
     ended = false;
   const chunks: Buffer[] = [];
+  const ancillary = new Set<string>();
   while (offset < bytes.length) {
     if (offset + 12 > bytes.length) rejected();
     const n = bytes.readUInt32BE(offset),
       end = offset + 12 + n;
     if (end > bytes.length) rejected();
-    const type = bytes.toString("ascii", offset + 4, offset + 8),
+    const type = bytes.toString("latin1", offset + 4, offset + 8),
       data = bytes.subarray(offset + 8, offset + 8 + n);
     if (
       crc(bytes.subarray(offset + 4, offset + 8 + n)) !==
@@ -64,16 +64,16 @@ export function inspectPng(bytes: Buffer) {
       )
         rejected();
     } else if (type === "IDAT") {
-      if (!seenHeader || endedData || !n) rejected();
+      if (!seenHeader || !n) rejected();
       seenData = true;
       chunks.push(data);
     } else if (type === "IEND") {
       if (!seenData || n !== 0 || end !== bytes.length) rejected();
       ended = true;
     } else {
-      if (!seenHeader || !["sRGB", "gAMA", "cHRM", "pHYs"].includes(type))
+      if (!seenHeader || seenData || ancillary.has(type) || !["sRGB", "gAMA", "cHRM", "pHYs"].includes(type))
         rejected();
-      if (seenData) endedData = true;
+      ancillary.add(type);
       const lengths: Record<string, number> = {
         sRGB: 1,
         gAMA: 4,
@@ -81,6 +81,7 @@ export function inspectPng(bytes: Buffer) {
         pHYs: 9,
       };
       if (n !== lengths[type]) rejected();
+      if ((type === "sRGB" && data[0] > 3) || (type === "gAMA" && data.readUInt32BE(0) === 0) || (type === "pHYs" && data[8] > 1)) rejected();
     }
     offset = end;
   }

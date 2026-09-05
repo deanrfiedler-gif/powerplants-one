@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P06 controlled job packs component-verified; exact publication state in the P06 handover. PP-01 remains incomplete.
+**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P07 online workflow implemented; verification/publication state in the P07 handover. PP-01 remains incomplete.
 
 ## Current direction
 
@@ -49,7 +49,11 @@ P05 under [issue #28](https://github.com/deanrfiedler-gif/powerplants-one/issues
 
 P04 authority and original proposals remain exact. Booking changes never clear dispatch hold, create customer acknowledgement or financial disposition. P05 originally recorded preparation/review consequences without fabricated pack records. P06 now evolves that hold through actual issue and individual response evidence under [issue #30](https://github.com/deanrfiedler-gif/powerplants-one/issues/30) / [PR #31](https://github.com/deanrfiedler-gif/powerplants-one/pull/31). [P06 handover](delivery/p06-handover.md) records exact verification, original source/output provenance, failed runs and publication; [ADR-0011](decisions/ADR-0011-p06-controlled-job-packs.md) records the material choices. Nine-section preparation/check is possible while dispatch is held. Durable render recovery never silently changes old bytes or promotes queued output to Issued. Changes/withdrawal create owned contact Activities and require current crew response before component clearance.
 
-The next bounded task is **P07 — Technician online workflow and capture**, with a [prepared starter prompt](delivery/p07-starter-prompt.md). Actual start, field evidence, offline queues, reports, Finance processing, live integration/hosting and all full PT/AT/PP-01 acceptance remain incomplete. No independent review, owner acceptance or production readiness is implied.
+## P07 online field workflow
+
+P07 under [issue #32](https://github.com/deanrfiedler-gif/powerplants-one/issues/32) / [PR #33](https://github.com/deanrfiedler-gif/powerplants-one/pull/33) implements SC-09/10, bounded DAT-08, API-C12–14 and online TR-09/10: current personal assignments, real P06 authority checked at actual start, strict typed field capture, durable private fictional PNGs, immutable corrections and exact completion drafts. [ADR-0012](decisions/ADR-0012-p07-online-field-evidence.md) records the physical policies and [P07 handover](delivery/p07-handover.md) records actual verification, failed runs and publication state. Current work-order/ticket/reviewer/report/Finance lifecycles remain separate.
+
+The next bounded task is **P08 — Offline queue and exception recovery**, with a [detailed prepared starter](delivery/p08-starter-prompt.md) requiring verified P07 publication first. Open-page retry is in memory only. Durable offline queues, report submission/review/customer responses, Finance, live integration, hosting and full PP-01 remain incomplete. Full PT/AT status is governed by the acceptance catalogue and exact procedure evidence; component implementation does not imply independent review, owner acceptance or production readiness.
 
 ## Repository and publication controls
 

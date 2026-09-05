@@ -1,3 +1,4 @@
+import { twoTaskStarted } from "../helpers/field-two-tasks";
 import assert from "node:assert/strict";
 import { test, beforeEach, after } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -480,7 +481,7 @@ test("P07 typed evidence preserves attribution, failed fixes and exact decimals;
   );
   assert.equal(j.entries[0].issue_hash, q.job.attendance!.issue_hash);
   assert.equal(j.follow_ups.length, 1);
-  assert.equal(j.entries[0].review_status, "Captured");
+  assert.equal(j.entries[0].review_status, "Draft");
   assert.doesNotMatch(
     JSON.stringify(j),
     /CONFIDENTIAL-MARGIN|PRIVATE_FINANCE|pending_account_plan/,
@@ -951,3 +952,24 @@ for (const command of ["start", "capture", "draft"] as const)
       await assert.rejects(run());
       assert.deepEqual(await counts(), before);
     });
+
+test("P07 PT-14 component preserves two task/asset outcomes and uncertain identity with owned remaining work", async()=>{
+ const q=await twoTaskStarted(),j=q.job;
+ assert.equal(j.scope.items.length,2);
+ const first=entry(j,"Observation",{finding:"SYN controller external inspection finished",confidence:"Reported",attempted_fix:null,result:null,follow_up_required:false});
+ await captureEntry(q.p,first);
+ const second=j.scope.items[1];
+ await captureEntry(q.p,{...entry(j),scope_item_id:second.id,asset_id:second.assets[0].id});
+ const current=await fresh(q.p,j.id),cmd=draft(current);
+ cmd.task_outcomes[0].outcome="Complete";cmd.task_outcomes[1].outcome="UnableToProceed";
+ await saveCompletionDraft(q.p,j.id,cmd);
+ const saved=await fresh(q.p,j.id);
+ assert.deepEqual(saved.draft_revisions[0].task_outcomes.map((t:{scope_item_id:string;outcome:string})=>({id:t.scope_item_id,outcome:t.outcome})).sort((a:{id:string},b:{id:string})=>a.id.localeCompare(b.id)),cmd.task_outcomes.map(t=>({id:t.scope_item_id,outcome:t.outcome})).sort((a,b)=>a.id.localeCompare(b.id)));
+ assert.equal(saved.scope.items[1].assets[0].identity_status,second.assets[0].identity_status);
+ assert.notEqual(saved.scope.items[1].assets[0].identity_status,"Verified");
+ assert.equal(saved.work_order.status,"Authorised");assert.equal(saved.status,"InProgress");
+ assert.ok(saved.draft_revisions[0].follow_up_activity_id);
+ await assert.rejects(rows("UPDATE ppo.completion_drafts SET actor_id=$2,version=version+1 WHERE id=$1",[cmd.id,q.co.actor_id]));
+ await assert.rejects(rows("UPDATE ppo.completion_entry_refs SET entry_version=999 WHERE revision_id=$1",[saved.draft_revisions[0].id]));
+ assert.equal((await rows("SELECT count(*)::int n FROM ppo.appointments WHERE work_order_id=$1",[saved.work_order.id]))[0].n,1);
+});

@@ -135,9 +135,9 @@ CREATE TABLE ppo.field_entries (
  root_id uuid NOT NULL, version integer NOT NULL CHECK(version>0), supersedes_entry_id uuid, correction_reason text,
  kind text NOT NULL CHECK(kind IN ('Time','Material','Observation','Reading','Checklist','Photo')),
  scope_item_id uuid, asset_id uuid, captured_at timestamptz NOT NULL CHECK(isfinite(captured_at)), received_at timestamptz NOT NULL DEFAULT clock_timestamp(),
- review_status text NOT NULL DEFAULT 'Captured' CHECK(review_status='Captured'), authority_state text NOT NULL CHECK(authority_state IN ('Current','ReviewRequired')),
+ review_status text NOT NULL DEFAULT 'Draft' CHECK(review_status='Draft'), authority_state text NOT NULL CHECK(authority_state IN ('Current','ReviewRequired')),
  payload_schema_version integer NOT NULL DEFAULT 1 CHECK(payload_schema_version=1), payload jsonb NOT NULL CHECK(jsonb_typeof(payload)='object'),
- operation_id uuid NOT NULL, UNIQUE(workspace_id,id), UNIQUE(workspace_id,appointment_id,id), UNIQUE(workspace_id,root_id,version), UNIQUE(workspace_id,supersedes_entry_id),
+ operation_id uuid NOT NULL, UNIQUE(workspace_id,id), UNIQUE(workspace_id,appointment_id,id), UNIQUE(workspace_id,root_id,version), UNIQUE(workspace_id,appointment_id,id,version), UNIQUE(workspace_id,supersedes_entry_id),
  FOREIGN KEY(workspace_id,company_id,site_id,appointment_id) REFERENCES ppo.appointments(workspace_id,company_id,site_id,id),
  FOREIGN KEY(workspace_id,appointment_id,actor_id,attendance_id) REFERENCES ppo.field_attendances(workspace_id,appointment_id,actor_id,id),
  FOREIGN KEY(workspace_id,assignment_id) REFERENCES ppo.assignments(workspace_id,id), FOREIGN KEY(workspace_id,issue_id) REFERENCES ppo.pack_issues(workspace_id,id),
@@ -184,25 +184,32 @@ CREATE TRIGGER immutable BEFORE UPDATE OR DELETE ON ppo.field_follow_ups FOR EAC
 CREATE TABLE ppo.completion_drafts (
  id uuid PRIMARY KEY,workspace_id uuid NOT NULL,company_id uuid NOT NULL,site_id uuid NOT NULL,appointment_id uuid NOT NULL,actor_id uuid NOT NULL,
  version integer NOT NULL CHECK(version>0),updated_at timestamptz NOT NULL DEFAULT clock_timestamp(),
- UNIQUE(workspace_id,id),UNIQUE(workspace_id,appointment_id,actor_id),
+ UNIQUE(workspace_id,id),UNIQUE(workspace_id,appointment_id,actor_id),UNIQUE(workspace_id,appointment_id,actor_id,id),
  FOREIGN KEY(workspace_id,company_id,site_id,appointment_id) REFERENCES ppo.appointments(workspace_id,company_id,site_id,id), FOREIGN KEY(workspace_id,actor_id) REFERENCES ppo.users(workspace_id,id)
 );
+CREATE FUNCTION ppo.protect_completion_draft() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+ IF TG_OP='DELETE' OR (to_jsonb(NEW)-ARRAY['version','updated_at']) IS DISTINCT FROM (to_jsonb(OLD)-ARRAY['version','updated_at']) OR NEW.version<>OLD.version+1 THEN
+ RAISE EXCEPTION 'Completion draft identity is immutable; append an exact successor revision' USING ERRCODE='55000'; END IF;
+ RETURN NEW;
+END $$;
+CREATE TRIGGER protect BEFORE UPDATE OR DELETE ON ppo.completion_drafts FOR EACH ROW EXECUTE FUNCTION ppo.protect_completion_draft();
 CREATE TABLE ppo.completion_draft_revisions (
  id uuid PRIMARY KEY,workspace_id uuid NOT NULL,draft_id uuid NOT NULL,version integer NOT NULL,appointment_id uuid NOT NULL,actor_id uuid NOT NULL,attendance_id uuid NOT NULL,
  scope_outcome text NOT NULL CHECK(scope_outcome IN ('Complete','Partial','UnableToProceed')),work_performed text NOT NULL,exclusions text NOT NULL,remaining_work text NOT NULL,
  time_declaration text NOT NULL CHECK(time_declaration IN ('AllRecorded','None','Incomplete')),material_declaration text NOT NULL CHECK(material_declaration IN ('AllRecorded','None','Incomplete')),
  declaration_reason text NOT NULL,task_outcomes jsonb NOT NULL CHECK(jsonb_typeof(task_outcomes)='array'),required_attachments jsonb NOT NULL CHECK(jsonb_typeof(required_attachments)='array'),blockers jsonb NOT NULL,
  follow_up_activity_id uuid,received_at timestamptz NOT NULL DEFAULT clock_timestamp(),operation_id uuid NOT NULL,
- UNIQUE(workspace_id,id),UNIQUE(workspace_id,draft_id,version),
- FOREIGN KEY(workspace_id,draft_id) REFERENCES ppo.completion_drafts(workspace_id,id),
+ UNIQUE(workspace_id,id),UNIQUE(workspace_id,appointment_id,id),UNIQUE(workspace_id,draft_id,version),
+ FOREIGN KEY(workspace_id,appointment_id,actor_id,draft_id) REFERENCES ppo.completion_drafts(workspace_id,appointment_id,actor_id,id),
  FOREIGN KEY(workspace_id,appointment_id,actor_id,attendance_id) REFERENCES ppo.field_attendances(workspace_id,appointment_id,actor_id,id),
  FOREIGN KEY(workspace_id,follow_up_activity_id) REFERENCES ppo.activities(workspace_id,id)
 );
 CREATE TRIGGER immutable BEFORE UPDATE OR DELETE ON ppo.completion_draft_revisions FOR EACH ROW EXECUTE FUNCTION ppo.immutable_evidence();
 CREATE TABLE ppo.completion_entry_refs (
  workspace_id uuid NOT NULL,revision_id uuid NOT NULL,appointment_id uuid NOT NULL,entry_id uuid NOT NULL,entry_version integer NOT NULL,
- PRIMARY KEY(workspace_id,revision_id,entry_id),FOREIGN KEY(workspace_id,revision_id) REFERENCES ppo.completion_draft_revisions(workspace_id,id),
- FOREIGN KEY(workspace_id,appointment_id,entry_id) REFERENCES ppo.field_entries(workspace_id,appointment_id,id)
+ PRIMARY KEY(workspace_id,revision_id,entry_id),FOREIGN KEY(workspace_id,appointment_id,revision_id) REFERENCES ppo.completion_draft_revisions(workspace_id,appointment_id,id),
+ FOREIGN KEY(workspace_id,appointment_id,entry_id,entry_version) REFERENCES ppo.field_entries(workspace_id,appointment_id,id,version)
 );
 CREATE TRIGGER immutable BEFORE UPDATE OR DELETE ON ppo.completion_entry_refs FOR EACH ROW EXECUTE FUNCTION ppo.immutable_evidence();
 CREATE TRIGGER register_identity BEFORE INSERT ON ppo.field_entries FOR EACH ROW EXECUTE FUNCTION ppo.register_identity('FieldEntry','');

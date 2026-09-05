@@ -108,4 +108,10 @@ P04 does not deliver typed material requisitions/stock/shortage processing withi
 
 ## P06 delivery boundary and prepared P07
 
-[P06 handover](p06-handover.md) records SC-06/SC-14, DAT-07/minimum DAT-11, OUT-09, API-C08–11, TR-04–07 and EVT-04/05 components. Exact controlled files and current individual responses evolve dispatch readiness without circular preparation gates. P04/P05 source authority, reservations, contacts, receipts and all issued bytes remain. PT-06 final actual start remains P07; PT-18/23 report/Finance and integrated steps remain later. [P07 starter](p07-starter-prompt.md) prepares online technician capture only. No P07 implementation is included.
+[P06 handover](p06-handover.md) records SC-06/SC-14, DAT-07/minimum DAT-11, OUT-09, API-C08–11, TR-04–07 and EVT-04/05 components. Exact controlled files and current individual responses evolve dispatch readiness without circular preparation gates. P04/P05 source authority, reservations, contacts, receipts and all issued bytes remain. P06 originally left PT-06 final actual start to P07; PT-18/23 report/Finance and integrated steps remain later. P07 now implements that real online guard under the separately authorised increment below.
+
+## P07 delivery boundary and prepared P08
+
+[P07 handover](p07-handover.md) records SC-09/10, DAT-08, API-C12–14, online TR-09/10, typed capture/corrections, exact private PNGs and completion drafts. [ADR-0012](../decisions/ADR-0012-p07-online-field-evidence.md) preserves current P06 authority and per-actor attendance, original scope/issued evidence, actor-wide time exclusion, storage/database reconciliation and independent closure lifecycles. PT-06 is now an integrated P07 obligation; PT-13/14 reviewer/report/return steps remain P09. Actual verification/publication and acceptance status are linked from the handover, not inferred from implementation.
+
+[P08 starter](p08-starter-prompt.md) prepares bounded durable offline operation/attachment dependencies, stale-authority recovery and browser schema/quota/restart proof. P08 implementation is absent here. Report submission/customer response, Finance, hosting, production migration and live communication remain outside P07.

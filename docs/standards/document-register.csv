@@ -25,3 +25,5 @@ ADR-0009,P04 work scope coverage and readiness,docs/decisions/ADR-0009-p04-work-
 P04-HO,Work scope coverage and readiness handover,docs/delivery/p04-handover.md,r01,P04 component verified; publication in handover,Dean Fiedler - private prototype,,,
 ADR-0011,P06 controlled job packs,docs/decisions/ADR-0011-p06-controlled-job-packs.md,,P06 implemented; final evidence in handover,Dean Fiedler - private prototype,,,
 P06-HO,Job pack generation issue and acknowledgement handover,docs/delivery/p06-handover.md,r01,P06 implemented; final evidence in handover,Dean Fiedler - private prototype,,,
+ADR-0012,P07 online field evidence,docs/decisions/ADR-0012-p07-online-field-evidence.md,,P07 implementation; verification/publication in handover,Dean Fiedler - private prototype,,,
+P07-HO,Technician online workflow and capture handover,docs/delivery/p07-handover.md,r01,P07 implementation; verification/publication in handover,Dean Fiedler - private prototype,,,

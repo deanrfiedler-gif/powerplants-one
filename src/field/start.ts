@@ -95,6 +95,7 @@ export async function startAttendance(
             "StartBlocked",
             "Current control evidence has expired; arrange review.",
           );
+      const competencies: Record<string, unknown>[] = [];
       for (const member of auth.members) {
         if (member.effective_to < through)
           throw new AppError(
@@ -108,20 +109,14 @@ export async function startAttendance(
               (i: { required_skill_codes: string[] }) => i.required_skill_codes,
             ),
           ),
-        ])
-          if (
-            !(
-              await c.query(
-                "SELECT 1 FROM ppo.skill_evidence WHERE workspace_id=$1 AND resource_id=$2 AND skill_code=$3 AND active AND status='Verified' AND valid_from<=$4 AND valid_to>=$5",
-                [p.workspace_id, member.resource_id, skill, now, through],
-              )
-            ).rowCount
-          )
-            throw new AppError(
-              422,
-              "StartBlocked",
-              "Current crew competency evidence requires review.",
-            );
+        ]) {
+          const evidence = (await c.query(
+            "SELECT s.id,s.resource_id,s.version,s.skill_code,s.status,s.valid_from,s.valid_to,s.source_as_at,s.evidence_ref,e.content_hash AS evidence_hash,e.version AS evidence_version FROM ppo.skill_evidence s JOIN ppo.resource_evidence e ON (e.workspace_id,e.resource_id,e.id)=(s.workspace_id,s.resource_id,s.evidence_ref) WHERE s.workspace_id=$1 AND s.resource_id=$2 AND s.skill_code=$3 AND s.active AND s.status='Verified' AND s.valid_from<=$4 AND s.valid_to>=$5 ORDER BY s.id",
+            [p.workspace_id, member.resource_id, skill, now, through],
+          )).rows;
+          if (!evidence.length) throw new AppError(422,"StartBlocked","Current crew competency evidence requires review.");
+          competencies.push(...evidence);
+        }
       }
       if (Date.parse(cmd.captured_at) > now.getTime() + 300000)
         throw new AppError(
@@ -154,8 +149,17 @@ export async function startAttendance(
         issue_snapshot_hash: issue.snapshot_hash,
         site_version: auth.site.version,
         required_crew: issue.snapshot.recipients,
+        competencies,
+        scheduling_policy_id: a.scheduling_policy_id,
+        readiness_policy_id: auth.r.policy_version_id,
         acknowledgements,
         controls: auth.controls.map((x) => ({
+          assessment_id: x.assessment_id,
+          policy_version_id: x.policy_version_id,
+          scope_version: x.scope_version,
+          assessed_at: x.assessed_at,
+          assessed_by: x.assessed_by,
+          source_as_at: x.source_as_at,
           criterion_code: x.criterion_code,
           outcome: x.outcome,
           evidence_ref: x.evidence_ref,

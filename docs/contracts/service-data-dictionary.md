@@ -9,7 +9,7 @@
 
 ## P06 physical implementation amendment
 
-[ADR-0011](../decisions/ADR-0011-p06-controlled-job-packs.md), [API amendment](service-api.md#p06-implementation-amendment) and [handover](../delivery/p06-handover.md) govern current DAT-07/minimum DAT-11. Earlier stage limits describe their delivery point; DAT-08/09/10 remain design.
+[ADR-0011](../decisions/ADR-0011-p06-controlled-job-packs.md), [API amendment](service-api.md#p06-implementation-amendment) and [handover](../delivery/p06-handover.md) govern current DAT-07/minimum DAT-11. Earlier stage limits describe their delivery point; DAT-08 is now implemented within the P07 amendment below; DAT-09/10 remain design.
 
 | Logical record / physical mapping | Implemented facts and invariants |
 |---|---|
@@ -312,3 +312,33 @@ The [parent traceability register](../prototype/traceability.csv) identifies ful
 In compact table notation Ref(Handoff) means FinancialHandoff, Ref(Manifest) means IssueManifest, and Ref(User)/Ref(Person) unions require an explicit recipient kind plus the corresponding validated foreign key. Physical migrations use unambiguous names. Internal revision IDs are UUID record IDs; human integer revision numbers are attributes, not interchangeable keys. Payload schemas reject fields that are absent from the typed command contract.
 
 P04 control clarification: an explicit shutdown condition keeps mandatory isolation and shutdown authority applicable even on an Inspection task. Non-intervention alone cannot make such a declared control NotApplicable.
+
+## P07 physical implementation amendment
+
+Migration `0007-online-field.sql`, seed receipt 7 and [ADR-0012](../decisions/ADR-0012-p07-online-field-evidence.md) implement bounded DAT-08. Prior migrations, seeds, revoked grants, approved scope evidence, booking snapshots and issued files/manifests/receipts remain unchanged. A fresh setup applies 1–7; P06 upgrade applies only 7. Repeated seed does not overwrite accepted data or restore revoked grants.
+
+| Physical record | Identity, fields and invariant |
+|---|---|
+| `field_attendances` | Immutable UUID per appointment/actor; original assignment ID/version, schedule version, scope revision/version/hash, issued pack ID/hash, captured and authoritative received instants, reason, authority snapshot/hash. Snapshot includes current complete crew acknowledgements and non-waivable control/competency evidence. One technician never creates another's attendance. |
+| `field_entries` | Immutable UUID, root ID, integer lineage version, kind, actor/appointment/attendance, original assignment/scope/issue hashes, task/asset attribution, captured/received instants, review status Draft, authority state Current/ReviewRequired and strict typed payload. Successors retain source ID and required correction reason. Accepted originals are immutable even before review. |
+| `field_time_ranges` | Current effective version projection, per-actor half-open `[start,end)` exclusion across appointments. Adjacent exact intervals are valid. Correction replaces the projection atomically while preserving every historical interval. P07 provides no overlap override or review approval. |
+| `field_attachments` / events | Stable UUID, original upload operation, owner/appointment/attendance, safe filename, media type, declared byte count/hash, private provider/item/version identity, state/version, dimensions and safe failure code. Immutable state-event history. Available cannot silently change bytes. |
+| `field_entry_attachments` | Exact entry-to-attachment references, scoped to the same appointment. Unavailable references remain explicit and cannot satisfy a required completion check. |
+| `completion_drafts` / revisions | One draft root per appointment/actor, optimistic version; immutable revisions retain own attendance, scope outcome, actual work, limits, remaining work, personal declarations/reason, per-task outcomes, required attachment state snapshots, blockers, received time and owned follow-up. |
+| `completion_entry_refs` | Relational entry ID/version set per immutable draft revision. Own current accepted entries cannot be silently omitted. A later correction makes older draft evidence visibly stale; originals stay exact. |
+| `field_follow_ups` | Existing Activity/ActivityLink pattern binds unresolved observation/check, Required/Removed material or remaining completion work to this appointment/entry and the existing service owner. Due date is explicitly unknown and needs resolution. No confirmed return appointment is fabricated. |
+
+| Kind | Strict payload and synthetic policy |
+|---|---|
+| Time | `time_kind`: Travel/Labour/Break/Waiting/Other; UTC `start_at/end_at`; nullable `note`, required for Waiting/Other. Positive interval up to 48 hours, whole elapsed seconds and display minutes derived by the server. No booking-derived labour, rounding, automatic break deduction or overtime/payroll policy. |
+| Material | `movement_kind`: Consumed/Returned/Required/Removed; meaningful `description`, positive bounded decimal-string `quantity`, `uom`: EA/M/M2/M3/L/ML/KG/G/SET/PACK; nullable item/lot/serial/source references. SYN-PART-LOT needs lot, SYN-PART-SERIAL needs serial and quantity 1. `stock_status` Unknown/ReviewRequired only; VerifiedReference requires a later supported identification process. No stock posting or approved/billable quantity. |
+| Observation | `finding`, `confidence`: Reported/Suspected/Verified, nullable `attempted_fix/result`, explicit boolean `follow_up_required`. Attempted action requires its result, including failure. Finding confidence never verifies an uncertain asset identity or certifies compliance. |
+| Reading | `name`, exactly one of decimal-string `numeric_value` or `text_value`, controlled `unit`, meaningful `context`. No inferred tolerance/pass/fail. Allowed units are exported by `src/field/validation.ts`; unknown units are refused rather than silently converted. |
+| Checklist | Fixed synthetic `check_id`, Pass/Fail/NotPerformed/NotApplicable, reason for every non-Pass, scoped `evidence_ids`. SYN-SITE-CONTROLS and SYN-TASK-RESULT are mandatory and disallow N/A. Site-controls Pass requires available photo evidence. SYN-OPTIONAL-PHOTO allows reasoned N/A and requires photo for Pass. This is an explicit prototype policy, not operational safety certification. |
+| Photo | Durable `attachment_id` plus meaningful `caption`; references retain original bytes and source context. Required unavailable photos block Complete preparation and must block later submission when implemented. |
+
+Numeric values remain canonical exact decimal strings (up to nine integer and six fraction digits); readings permit a sign, quantities are positive. Physical payload names clarify the design dictionary's one `value` choice without adding ambiguous dual values. Attribution is required for materials, findings, readings, checks, photos and Labour time. The API rejects forged actor/scope/approval fields. Captured instants remain distinct from receipt and schedule; client future instants beyond the bounded five-minute allowance are refused, never silently rewritten.
+
+Attachment policy: exact PNG signature, chunk length/order/CRC, bounded inflate, exact scanline size/filter values; non-interlaced 8-bit RGB/RGBA only, maximum 4 MiB, 4096 pixels per side and 12 million pixels. Animated or embedded text/EXIF/unknown chunks are rejected. The private local P06 adapter writes immutable bytes outside Git with hash/byte-count/retrieval verification. Metadata alone stays Pending. Uploaded, Quarantined, Available and Rejected have distinct recoverable ownership and evidence; no deletion/garbage collector exists.
+
+Completion outcomes are Complete/Partial/UnableToProceed; personal time/material declarations are AllRecorded/None/Incomplete with explanation. Exact per-task outcomes must cover authorised tasks. Complete requires all task outcomes complete, valid declarations, required available attachments and mandatory checks without unresolved findings/control failures. Partial/UnableToProceed can preserve explicit blockers and owned remaining work. Saving any draft keeps attendance, work order, ticket, reviewer acceptance, report and Finance lifecycles separate. Report submission/review and approved entry sets remain DAT-09/P09, Finance DAT-10/P10; no future feature is represented by fake records.
