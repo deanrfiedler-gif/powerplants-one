@@ -11,8 +11,10 @@ This repository is Dean's personal private prototype. It contains the planning f
 | Document | Purpose |
 |---|---|
 | [First Prototype Definition & Architecture](docs/prototype/README.md) | Selected service journey, BP-02/BP-07, data/API/Finance/document contracts, acceptance and ordered implementation |
+| [Adopted naming standard](docs/standards/naming-conventions.md) | Powerplants One / PPO naming, references, revisions and implementation rules |
+| [ChatGPT project instructions](docs/standards/chatgpt-project-instructions.md) | Copy-ready instructions for the dedicated design and development project |
 | [Current project status](docs/STATUS.md) | What exists, what remains planned and how recent user decisions relate to the issued blueprint |
-| [Master Blueprint v02](docs/blueprints/GEN_SPC_PPABusinessPlatform_MasterBlueprint.md) | Scope Assurance & Development Planning Edition: seven domains, 78 parent requirements and release contracts |
+| [Master Blueprint — working r03](docs/blueprints/BP-01-master-blueprint.md) | Scope Assurance & Development Planning Edition: seven domains, 78 parent requirements and release contracts |
 | [Documentation index](docs/README.md) | Where specifications, decisions, requirements and acceptance records belong |
 | [Development backlog](docs/delivery/backlog.md) | Initial discovery/design work packages and their live GitHub issue links |
 | [First-release plan](docs/delivery/first-release.md) | Proposed planned-service journey, dependencies and readiness criteria |
@@ -28,6 +30,7 @@ MYOB Acumatica remains the intended authoritative ERP. SharePoint remains the in
 
 | Location | Content |
 |---|---|
+| `docs/standards/` | Adopted naming, migration/exception registers and ChatGPT project instructions |
 | `docs/blueprints/` | Stable working master and module blueprints |
 | `docs/prototype/`, `docs/contracts/` | PP-01 scope/traceability and selected data/API/Finance/document contracts |
 | `docs/reference/` | Historical master/audit and source-provenance manifest |
@@ -48,6 +51,7 @@ With Python 3 installed, run:
 ```sh
 python3 scripts/check_foundation.py
 python3 scripts/check_prototype.py
+python3 scripts/check_naming.py
 ```
 
 The check verifies reference hashes, register counts/IDs, local Markdown links and selected repository hygiene. It is not an application, security or business-acceptance test. The GitHub workflow runs the same check with read-only repository permissions; enforcement through branch protection is a separate account/settings matter.

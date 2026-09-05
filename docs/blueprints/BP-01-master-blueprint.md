@@ -1,6 +1,6 @@
-# Powerplants Business Operations Platform
+# Powerplants One — Business Operations Platform
 
-## Master Business & Build Blueprint v02
+## Master Business & Build Blueprint — working r03
 
 ### Scope Assurance & Development Planning Edition
 
@@ -10,17 +10,19 @@
 |---|---|
 | Prepared for | Powerplants Australia |
 | Requested by | Dean Fiedler |
-| Document reference | GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02 |
-| Version and date | v02 — 4 September 2026 UTC |
+| Document reference | PPO-BP-01 |
+| Version and date | r03 — 5 September 2026 UTC; naming/ownership amendment to issued v02 |
 | Document status | Draft target-state blueprint; business and technical approval not yet recorded |
 | Authoring basis | User requirements, supplied CREMS materials, prior read-only account observations and selected official sources |
 | Intended audience | Executive sponsor, departmental process owners, product owner, solution architect, delivery partners and acceptance reviewers |
 | Handling | Recommended internal distribution; contains business-system design information |
-| Programme reference | Not assigned. GEN is used provisionally; do not reuse SOL008, which identifies the existing PPA Delivery System work |
+| Programme reference | PPO — user-adopted independent private-project code; unrelated SOL008/STD-001 do not govern this project |
 | Supersedes | Master Blueprint v01 as the proposed planning baseline; v01 and its audit remain preserved historical records. The CREMS current-state specification remains a separate source |
-| Change basis | Master Blueprint Audit v01, findings F-01–F-16; user instruction to prepare the targeted v02 edition |
-| Working application name | Powerplants One — proposed, not adopted; repository setup remains unperformed |
-| Authorisation represented | Preparation of this Markdown document only |
+| Change basis | v02: Audit findings F-01–F-16. r03: user adoption of independent PPO naming and ADR-0005; baseline requirement scope unchanged |
+| Working application name | Powerplants One — user-confirmed; private repository foundation and PP-01 design package delivered |
+| Authorisation represented | Current amendment implements the user-adopted naming standard in the private repository; application implementation remains a separate task |
+
+> **Working amendment:** [ADR-0005](../decisions/ADR-0005-project-naming-adoption.md) records the naming adoption. The [issued v02](../reference/baselines/GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md) remains unchanged and continues to own baseline register wording. [Current status](../STATUS.md) and the [PP-01 package](../prototype/README.md) record later decisions. Historical source discussions below retain their original context.
 
 > **Decision requested:** Review and agree the business direction, operating responsibilities, scope boundaries and discovery priorities in this blueprint. Approval of the document does not authorise production deployment, migration, financial transactions, organisational restructuring or supplier commitments.
 >
@@ -1891,7 +1893,7 @@ Meeting frequency and owners should be agreed by the programme team. This docume
 
 ### 28.5 Proposed name and GitHub development plan
 
-**Powerplants One** remains a proposed application name; the formal programme title remains Powerplants Business Operations Platform. The candidate private repository is `powerplants-one`, with a development board named **Powerplants One — Development Roadmap**. These names, availability and company ownership have not been confirmed. GEN remains provisional and must not be replaced with SOL008. D-003/D-029 control the naming decisions.
+**Powerplants One** is the confirmed application name and **PPO** is the independently adopted project code. The formal descriptor is **Powerplants One — Business Operations Platform**. The private repository `deanrfiedler-gif/powerplants-one` is established under Dean's personal ownership. **Powerplants One — Development Roadmap** remains the recommended board name; a board has not been provisioned. [PPO-STD-001](../standards/naming-conventions.md) and ADR-0005 govern current project naming. GEN is historical; the other project's STD-001 and SOL008 do not apply. Company ownership/support remains distinct in D-029.
 
 GitHub is a suitable proposed home for source, controlled technical documentation and development work. A company-controlled organisation allows people to collaborate through their own accounts with centrally managed access. The user's existing personal account can participate as an approved owner/member; it should not be the only route by which the company controls its code. Specific private-repository controls depend on the selected plan and configuration, which remain unverified. [GitHub organisations](https://docs.github.com/en/organizations/collaborating-with-groups-in-organizations/about-organizations) [SRC-21]
 

@@ -14,7 +14,7 @@ The package is a future-state design. It does not certify the current CREMS solu
 |---|---|---|
 | D-001 | Dean owns personal prototype; corporate mandate open | Named company sponsor/mandate if company programme proceeds |
 | D-002 | Functional roles and capability matrix specified; no staff assigned | Actual delegations, separation/compensating controls, deputies |
-| D-003 | Stable repository naming applied; GEN retained; SOL008 separate | Assigned formal programme reference if required |
+| D-003 | Resolved for the personal prototype: Powerplants One / PPO and independent PPO-STD-001 adopted; ADR-0005 | No other-project naming prerequisite; actual external record authority remains in D-007/D-011/D-012 |
 | D-004 | Planned-service journey selected for requested package; synthetic fixture cohort defined | Real baseline, pilot cohort, benefit measures and acceptance owner |
 | D-005 | MYOB facts unknown; fixtures only | Version, companies, licences/modules, approved environment |
 | D-006 | Internal adapters/API contracts specified; no actual ERP endpoint asserted | Auth/endpoint/entity/command/delta/reversal/recovery proof |
@@ -42,7 +42,7 @@ The package is a future-state design. It does not certify the current CREMS solu
 | D-028 | Owned follow-up model; no group-company operations | Actual aftercare, partner and intercompany responsibilities |
 | D-029 | Private personal repository and stable naming confirmed; branch/PR workflow used | Future ownership/recovery, plan/protection capabilities and release/support controls |
 
-Only D-003/D-004/D-022/D-029 are marked partially resolved in the current working register. Other rows may have useful design detail while their required operational closure evidence remains open. No decision is marked fully closed by this package.
+D-003 is resolved for the personal prototype by the later user naming decision in ADR-0005. D-004/D-022/D-029 remain partially resolved; the other 25 master decisions remain open. This closes the naming decision without implying application implementation, corporate sponsorship or external-system approval.
 
 ## 3. Assumption register
 

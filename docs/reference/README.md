@@ -5,7 +5,8 @@
 | [Master Blueprint v01](GEN_SPC_PPABusinessPlatform_MasterBlueprint_v01.md) | Historical baseline, preserved unchanged |
 | [Master Blueprint Audit v01](GEN_RPT_PPABlueprint_Audit_v01.md) | Historical audit informing v02, preserved unchanged |
 | [Issued Master Blueprint v02](baselines/GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md) | Frozen source for parent requirements/decisions/acceptance |
-| [Working Master Blueprint](../blueprints/GEN_SPC_PPABusinessPlatform_MasterBlueprint.md) | Stable working path, initially byte-identical to issued v02 |
+| [Working Master Blueprint](../blueprints/BP-01-master-blueprint.md) | Stable working master; naming/ownership metadata updated in r03; issued v02 preserved |
+| [Adopted Naming Standard r02](baselines/PPO-STD-001-naming-conventions-r02.md) | Exact user-adopted source; current adoption edition is in `docs/standards/` |
 | [Source manifest](source-manifest.json) | Exact issued-file hashes/sizes, original path and commit provenance |
 
 The CREMS DOCX/PDF/HTML and guide-derived reconstruction remain originating source material; they are not copied into this repository foundation. The master/audit identify their limitations. Obtain controlled originals for later detailed estimating reconstruction. This is not a complete source archive.

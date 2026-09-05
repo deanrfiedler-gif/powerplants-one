@@ -1,6 +1,6 @@
 # PP-01 — Minimum document, issue and distribution contract
 
-**Edition:** v01 · **Status:** Proposed DAT-07/DAT-09/DAT-11 and OUT-09/OUT-10/OUT-14 contract. No actual SharePoint repository, template or retention policy has been verified in this package.
+**Edition:** r02 · **Status:** Proposed DAT-07/DAT-09/DAT-11 and OUT-09/OUT-10/OUT-14 contract. No actual SharePoint repository, template or retention policy has been verified in this package.
 
 [Package](../prototype/README.md) · [Dictionary](service-data-dictionary.md) · [BP-07](../blueprints/BP-07-service-operations.md).
 
@@ -82,7 +82,7 @@ If SharePoint is unavailable, retain the last authorised cached issue within dev
 
 ## 9. Document naming and repository distinction
 
-Application output names should follow STD-001 with a valid assigned business reference, type, description and issue version. Do not invent an OP/SOL number; prototype outputs use obvious SYN identities and remain synthetic. Formal document-reference decisions remain D-003/D-024.
+Use the independent [PPO-STD-001](../standards/naming-conventions.md), adopted in ADR-0005. The other project's STD-001 and OP/SOL numbering do not apply. Selected synthetic outputs are `SYN-PPO-PACK-000001-job-pack-r01.pdf`, `SYN-PPO-RPT-000001-service-report-r01.pdf` and `SYN-PPO-FH-000001-finance-evidence-r01.pdf`, allocated from the actual local record reference and content revision. Integer revisions render as rNN; filenames never replace UUID/provider/version/hash identity. New bytes require a new revision; repeated distribution of identical content records a new event. Every synthetic output is visibly labelled. D-003 is resolved for private naming; D-024 still owns actual output/template/acknowledgement acceptance. No operational output is issued by this amendment.
 
 GitHub working specifications use stable paths and internal edition/change metadata. The issued master v02 is retained separately as a hash-protected baseline under `docs/reference/baselines/`. This repository naming decision does not remove revisions from customer quotes, issued packs, service reports or exported controlled documents.
 

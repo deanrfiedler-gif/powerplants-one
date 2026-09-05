@@ -23,7 +23,7 @@ The agreed outcome exists, evidence is linked, applicable checks pass, source as
 
 ## Records and naming
 
-Use stable paths for working specifications and preserve the issued v02 snapshot under `docs/reference/baselines/` plus historical references. Record working changes through commits/PRs and internal edition metadata; issue explicit versioned snapshots when required. See [ADR-0002](docs/decisions/ADR-0002-stable-specification-filenames.md). Use STD-001 naming for issued business documents where applicable. `GEN` remains provisional; `SOL008` belongs to the separate Smartsheet PPA Delivery System and must not be reused here.
+Follow [PPO-STD-001](docs/standards/naming-conventions.md), adopted by Dean for Powerplants One, and [ADR-0005](docs/decisions/ADR-0005-project-naming-adoption.md). Powerplants One is the product; PPO is its independent project code. The other project's STD-001 and SOL008 do not govern this project. Keep working filenames stable, use explicit rNN revisions on newly issued documents, and preserve existing source identifiers and baseline bytes. The working master is `docs/blueprints/BP-01-master-blueprint.md`. The accepted naming r02 is frozen; the working r03 records adoption and implementation. Use the [migration record](docs/standards/naming-adoption.md) for old-path mappings and the [ChatGPT project instructions](docs/standards/chatgpt-project-instructions.md) for copy-ready collaboration guidance.
 
 GitHub filenames such as `README.md`, `AGENTS.md`, workflows and issue forms follow their standard conventions. Architecture decision IDs (`ADR-0001`) and backlog IDs (`PPO-001`) are local repository identifiers, not invented ERP/programme references.
 

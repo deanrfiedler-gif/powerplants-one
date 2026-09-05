@@ -1,0 +1,8 @@
+exception_key,scope,reason,owner,review_trigger
+issued_sources,docs/reference/ issued baseline files,Exact filenames and bytes preserve issued evidence; no naming rewrite,Dean Fiedler - private prototype,Source identity changes only through a new issue
+historical_decision,docs/decisions/ADR-0002-stable-specification-filenames.md,Prior path/STD-001 text retained under an explicit ADR-0005 supersession note,Dean Fiedler - private prototype,Further decision supersession
+conventional_files,README.md;AGENTS.md;CONTRIBUTING.md;STATUS.md;.github/,Tool and repository conventions retain case and required paths,Dean Fiedler - private prototype,Framework or repository tooling change
+python_utilities,scripts/*.py,Python utilities use snake_case filenames,Dean Fiedler - private prototype,New language/tool decision
+external_identifiers,Provider keys; ERP references; CAD source identities,"Preserve exact source casing, punctuation, leading zeros and dependencies",Dean Fiedler - private prototype,Verified source interface amendment
+existing_contract_keys,created_by;updated_by;active;synthetic;PascalCase enums/events,Existing explicit contracts retain names through typed layer mappings,Dean Fiedler - private prototype,Deliberate schema/contract migration
+planned_documents,Planned BP-03/04/05/06/08/09 register rows,Paths are reservations; no placeholder documents or implementation claims,Dean Fiedler - private prototype,Blueprint authoring begins

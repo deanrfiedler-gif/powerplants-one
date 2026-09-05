@@ -123,7 +123,7 @@ Check freezes the pack content revision. Issue records exact rendered object/has
 
 In PP-01 every confirmed date/time/crew change creates a pack review requirement. Reissue the schedule/recipient snapshot even if technical scope is unchanged; record the change category. For a material scope/control change, place a dispatch hold as soon as the change is raised. An already InProgress visit receives an urgent-change task/direct-contact requirement; the UI must not imply work stopped merely because a server flag changed.
 
-See the [document contract](../contracts/documents-and-issues.md) for generation, distribution, retention and OUT-09/OUT-10/OUT-14 layout content.
+See the [document contract](../contracts/document-issue-distribution.md) for generation, distribution, retention and OUT-09/OUT-10/OUT-14 layout content.
 
 ## 9. Scheduling specification
 

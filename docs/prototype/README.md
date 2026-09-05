@@ -10,7 +10,7 @@ Build one complete planned-service journey: customer/site/equipment context → 
 
 The recommended architecture is a TypeScript/Next.js modular monolith backed by PostgreSQL, with a bounded browser offline queue, server-enforced permissions and replaceable ERP/document adapters. Begin with synthetic data and local development; use simulated MYOB/SharePoint adapters and an explicit manual Finance queue. Evaluate an Azure-hosted container and managed PostgreSQL for a later private environment, after the implementation proof and cost review.
 
-This is an extension of the [master blueprint](../blueprints/GEN_SPC_PPABusinessPlatform_MasterBlueprint.md), not a replacement of the seven-domain programme. It turns the selected Wave A obligations into build inputs while keeping later CRM, estimating, Engineering, Projects, supply-chain and Finance scope visible.
+This is an extension of the [master blueprint](../blueprints/BP-01-master-blueprint.md), not a replacement of the seven-domain programme. It turns the selected Wave A obligations into build inputs while keeping later CRM, estimating, Engineering, Projects, supply-chain and Finance scope visible.
 
 ## Reading order and deliverables
 
@@ -22,7 +22,7 @@ This is an extension of the [master blueprint](../blueprints/GEN_SPC_PPABusiness
 | [Service data dictionary](../contracts/service-data-dictionary.md) | What records, fields, values, relationships and required-stage constraints exist? |
 | [Service API and event contracts](../contracts/service-api.md) | How are commands, reads, concurrency, retry and offline capture handled? |
 | [Minimum Finance contract](../contracts/finance-handoff.md) | How do reviewed work and account references connect to MYOB without false balances or duplicate processing? |
-| [Document and issue contract](../contracts/documents-and-issues.md) | How are exact packs, reports and evidence generated, issued and retained? |
+| [Document and issue contract](../contracts/document-issue-distribution.md) | How are exact packs, reports and evidence generated, issued and retained? |
 | [Synthetic acceptance pack](../testing/prototype-acceptance.md) | Which demonstrations and failure scenarios must the implementation pass? |
 | [Ordered implementation plan](../delivery/prototype-implementation-plan.md) | What should be built first, what depends on it, and what proves completion? |
 | [Decision and evidence register](decisions-and-evidence.md) | What is known, what is a design assumption and what still needs evidence? |
@@ -43,7 +43,7 @@ The source baseline is the issued Master Blueprint v02 and its inherited evidenc
 
 Current user direction authorises preparation of the selected design package and repository changes. Dean remains prototype owner. Department names in this package are functional roles to simulate, not assigned employees or an approved organisation chart. Live operational authority remains in the decision register.
 
-The stable master filename keeps the document's current identity easy to link. Its v02 content is initially unchanged; the [issued v02 snapshot](../reference/baselines/GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md) is hash-protected. Later design decisions live in ADRs and this package until a deliberate master amendment is made.
+The working master now uses the adopted BP-01 filename and r03 naming/ownership metadata. The [issued v02 snapshot](../reference/baselines/GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md) remains hash-protected. [ADR-0005](../decisions/ADR-0005-project-naming-adoption.md) records the naming adoption and design-contract alignment; requirement scope and application acceptance status remain unchanged.
 
 ## Review outcome sought
 
