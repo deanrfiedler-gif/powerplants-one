@@ -68,7 +68,7 @@ def main():
         require(f'SYN-PPO-{prefix}-000001-' in output, f'{prefix}: output naming example missing')
     decisions = {r['decision_id']:r for r in rows('docs/decisions/decision-register.csv')}
     require(decisions['D-003']['status'] == 'Resolved for private prototype', 'Naming decision state inconsistent')
-    print(json.dumps({'status':'failed' if ERRORS else 'passed','document_records':len(documents),'standing_exceptions':len(exceptions),'project_instruction_characters':len(instructions),'errors':ERRORS,'scope':'Naming and documentation consistency only; runtime behaviour remains unimplemented'}, indent=2))
+    print(json.dumps({'status':'failed' if ERRORS else 'passed','document_records':len(documents),'standing_exceptions':len(exceptions),'project_instruction_characters':len(instructions),'errors':ERRORS,'scope':'Naming and documentation consistency only; runtime behaviour is verified separately'}, indent=2))
     return bool(ERRORS)
 
 

@@ -27,3 +27,7 @@ coverage/
 /exports/
 /backups/
 /tmp/
+.next/
+*.tsbuildinfo
+test-results/
+playwright-report/

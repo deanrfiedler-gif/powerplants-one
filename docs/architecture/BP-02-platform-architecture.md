@@ -1,8 +1,8 @@
 # BP-02 — Platform Solution Architecture
 
-**Edition:** v01 · **Date:** 5 September 2026 · **Scope:** PP-01 synthetic planned-service prototype.
+**Edition:** r02 · **Date:** 5 September 2026 · **Scope:** PP-01 synthetic planned-service prototype.
 
-**Status:** Recommended architecture and build contract, not an implemented platform or production approval. [Package index](../prototype/README.md) · [Data dictionary](../contracts/service-data-dictionary.md) · [API contracts](../contracts/service-api.md).
+**Status:** Architecture/build contract; bounded P01 implementation and evidence are recorded in [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md). Not production approval. [Package index](../prototype/README.md) · [Data dictionary](../contracts/service-data-dictionary.md) · [API contracts](../contracts/service-api.md).
 
 ## 1. Architecture decision
 
@@ -63,7 +63,7 @@ Other domain modules are future packages. No generic all-purpose entity table sh
 
 ## 5. Data model and identifiers
 
-Use UUID internal primary keys generated before offline capture where needed. Human display numbers such as SYN-WO-001 are separate, unique within their documented scope, and never substitute for an ERP key. Every record has `workspace_id`; ERP mappings additionally require `erp_connection_id`, `erp_company_id`, `entity_type` and `external_id`. The prototype uses one private workspace but tests two ERP-company references to prevent accidental name-based linking.
+Use UUID internal primary keys generated before offline capture where needed. Human display numbers such as SYN-PPO-WO-000001 are separate, unique within their documented scope, and never substitute for an ERP key. Every record has `workspace_id`; ERP mappings additionally require `erp_connection_id`, `erp_company_id`, `entity_type` and `external_id`. The prototype uses one private workspace but tests two ERP-company references to prevent accidental name-based linking.
 
 Use typed relational tables, foreign keys, unique constraints and explicit junction tables. Many tickets can relate to many work orders; one work order has many appointments; appointments have multiple resource assignments and asset/scope links. Site/operator and asset location/configuration changes are effective-dated. Approved scope, issued documents and reviewed entry sets preserve snapshots.
 
@@ -161,7 +161,7 @@ Compare Azure container hosting/managed PostgreSQL with a managed Next.js host p
 
 The cost worksheet must price: web instance/runtime, worker execution, database compute/storage/backup, file staging, network egress, logs/retention, identity/licences, domain/certificates, CI usage and support labour. Record region, currency, GST basis, hours/minimum replicas, storage growth, backup retention and quote date. Calculate monthly total from those priced quantities and separate once-off development from recurring spend. **No defensible monthly total is available without those inputs; no paid service or budget is approved.**
 
-Choose the prototype hosting option during P01 feasibility, then record a costed deployment ADR before P12 remote demonstration. Local development need not wait for a cloud procurement decision.
+P01 is explicitly local-only under Dean's implementation instruction. Defer hosting selection and costed deployment to a separately authorised remote increment; P01 includes no remote provisioning or publishing.
 
 ## 14. Application structure to create during implementation
 

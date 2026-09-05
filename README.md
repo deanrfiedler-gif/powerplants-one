@@ -2,9 +2,9 @@
 
 Private prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** prototype definition and architecture package prepared · **Deployment:** none.
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01 application foundation under verification · **Deployment:** none.
 
-This repository is Dean's personal private prototype. It contains the planning foundation, source references and development backlog. It does not yet contain a runnable business application. Company ownership, production approval and external-system write authority are not implied.
+This repository is Dean's personal private prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application foundation; full business workflows remain planned. Company ownership, production approval and external-system write authority are not implied.
 
 ## Start here
 
@@ -42,7 +42,7 @@ MYOB Acumatica remains the intended authoritative ERP. SharePoint remains the in
 | `.github/` | Issue forms, pull-request template and documentation-check workflow |
 | `scripts/` | Small repository-assurance utilities |
 
-Application, database and deployment folders will be added during P01 implementation. The prototype architecture recommendation is recorded in ADR-0003; no application dependencies have been installed by this documentation package.
+Application code is in `src/`, explicit SQL migrations and fixtures are in `db/`, and runtime checks are in `tests/`. See [P01 setup, verification and handover](docs/delivery/p01-handover.md) and [ADR-0006](docs/decisions/ADR-0006-p01-local-foundation.md) for the local-only implementation and limits.
 
 ## Working checks
 
@@ -56,4 +56,4 @@ python3 scripts/check_naming.py
 
 The check verifies reference hashes, register counts/IDs, local Markdown links and selected repository hygiene. It is not an application, security or business-acceptance test. The GitHub workflow runs the same check with read-only repository permissions; enforcement through branch protection is a separate account/settings matter.
 
-Use [Issues](https://github.com/deanrfiedler-gif/powerplants-one/issues) for development work and [pull requests](https://github.com/deanrfiedler-gif/powerplants-one/pulls) for reviewable changes. The next implementation task is P01 in the [ordered prototype plan](docs/delivery/prototype-implementation-plan.md).
+Use [Issues](https://github.com/deanrfiedler-gif/powerplants-one/issues) for development work and [pull requests](https://github.com/deanrfiedler-gif/powerplants-one/pulls) for reviewable changes. P01 is under verification; P02 is the next bounded task after completion in the [ordered prototype plan](docs/delivery/prototype-implementation-plan.md).

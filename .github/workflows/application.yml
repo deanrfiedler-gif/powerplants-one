@@ -1,0 +1,92 @@
+name: Application assurance
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  p01:
+    name: P01 local application and PostgreSQL proof
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16.15
+        env:
+          POSTGRES_USER: ppo_local
+          POSTGRES_PASSWORD: ppo_disposable_ci_only
+          POSTGRES_DB: ppo_synthetic_test
+        ports:
+          - 127.0.0.1:5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ppo_local -d ppo_synthetic_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install exact package manager and locked dependencies
+        run: |
+          npm install --global npm@11.19.0
+          npm ci
+          node --version
+          npm --version
+          git rev-parse HEAD
+          npm ls --depth=0
+      - name: Static, unit and build checks
+        run: npm run check
+      - name: Configure disposable loopback database
+        run: |
+          cp .env.example .env.local
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('.env.local')
+          p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
+          PY
+          npm run db:migrate
+          npm run db:seed
+          npm run db:health
+      - name: Real PostgreSQL behaviour and competing transactions
+        run: npm run test:db
+      - name: Prove persistence across PostgreSQL process restart
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          node --env-file=.env.local --import tsx scripts/persistence-proof.ts write
+          docker restart "$PPO_POSTGRES_CONTAINER"
+          for attempt in $(seq 1 30); do
+            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx scripts/persistence-proof.ts verify
+      - name: Actual HTTP routes and startup boundary
+        run: |
+          if npm start; then exit 1; fi
+          node --env-file=.env.local --import tsx scripts/local-server.ts > "$RUNNER_TEMP/ppo-http.log" 2>&1 &
+          ppo_server_pid=$!
+          trap 'kill "$ppo_server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          npm run test:http
+      - name: Desktop and mobile browser checks
+        run: |
+          npx playwright install --with-deps chromium
+          npm run test:browser
+      - name: Preserve synthetic visual and failure evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: P01-browser-evidence
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14

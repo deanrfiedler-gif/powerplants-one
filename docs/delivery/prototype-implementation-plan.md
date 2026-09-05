@@ -1,6 +1,6 @@
 # PP-01 — Ordered prototype implementation plan
 
-**Edition:** v01 · **Status:** Planned implementation; no application code or PT tests executed.
+**Edition:** r02 · **Status:** P01 implementation under verification; P02–P12 planned. All full PT procedures remain Not run; see [P01 component evidence](p01-handover.md).
 
 [Package](../prototype/README.md) · [Scope](../prototype/scope-and-journey.md) · [BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md).
 
@@ -8,7 +8,7 @@
 
 Implement one complete synthetic planned-service journey in small reviewable pull requests. Use the architecture, dictionary, commands and acceptance scenarios as one contract. Keep basic identity/permission, audit and persistence in the foundation; do not postpone them until after a visually convincing demo.
 
-The current user instruction authorises this specification/repository package. The next requested action should be **P01 — Application foundation and architecture proof**. No framework installation, cloud subscription, deployment, ERP transaction or source migration is performed by this package.
+Dean subsequently authorised **P01 — Application foundation and architecture proof**, including local dependencies, code, tests, a focused issue, branch, PR and merge after applicable checks/review. P01 is local-only. Cloud subscription, deployment, ERP transaction and source migration remain outside scope.
 
 P01–P12 are local plan identifiers, not GitHub issue numbers or ERP references. Convert the next ready package into a focused implementation issue when beginning it; do not create a large speculative backlog of tiny tasks. Existing PPO-001–PPO-016 remain discovery/design issues and preserve their original scope.
 

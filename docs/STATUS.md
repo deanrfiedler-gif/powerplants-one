@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** prototype definition and architecture complete as documents; application implementation not started.
+**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P01 application foundation implemented and under verification; PP-01 business workflows incomplete.
 
 ## Current direction
 
@@ -23,7 +23,7 @@ Dean has now adopted the independent [PPO-STD-001 naming standard](standards/nam
 
 ## What is not implemented
 
-There is no runnable application, installed application framework, application database, operational source integration, migrated dataset, hosted environment or production service. The design selects a prototype stack recommendation; implementation versions and feasibility are P01 work. All application acceptance procedures remain Not run.
+P01 adds a runnable local shell, strict synthetic identity, draft-ticket command, SQL migration/fixtures, reservation experiment and automated checks. [P01 handover](delivery/p01-handover.md) records exact versions, commands, execution limits and current verification/publication state. No operational source integration, migrated dataset, hosted environment or production service exists. All 30 full PT acceptance procedures remain Not run; P01 component tests are recorded separately.
 
 No paid service, repository visibility/membership change, source-system transaction, customer message or migration is performed by this documentation package. MYOB and SharePoint configuration/authority remain unverified. Pipedrive, Smartsheet and native CAD retain their existing roles.
 
@@ -35,7 +35,7 @@ Dean owns private prototype decisions. Proposed department roles do not assign e
 
 ## Immediate next task
 
-[P01 — Application foundation and architecture proof](delivery/prototype-implementation-plan.md#4-p01-implementation-brief): prepare a reproducible local synthetic application, pin supported dependencies, verify PostgreSQL/permission/operation/reservation foundations, and record evidence. Follow the ordered P01–P12 plan. Missing operational facts do not prevent synthetic development under the explicit assumptions.
+Finish P01 verification and review under [issue #20](https://github.com/deanrfiedler-gif/powerplants-one/issues/20), then stop with the [bounded P02 handover](delivery/p01-handover.md#next-bounded-task--p02-not-started). Follow the ordered P01–P12 plan. Missing operational facts do not prevent synthetic development under the explicit assumptions.
 
 ## Repository and publication controls
 

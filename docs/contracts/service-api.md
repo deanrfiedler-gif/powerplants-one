@@ -1,10 +1,20 @@
 # PP-01 — Service API, operation and event contracts
 
-**Edition:** r02 · **Status:** Proposed internal API contract; no endpoints implemented. These are Powerplants One routes, never asserted MYOB endpoints.
+**Edition:** r03 · **Status:** Internal API contract; the bounded P01 subset below is implemented, with results recorded separately. These are Powerplants One routes, never asserted MYOB endpoints.
 
 [Architecture](../architecture/BP-02-platform-architecture.md) · [Dictionary](service-data-dictionary.md) · [Service specification](../blueprints/BP-07-service-operations.md).
 
-**Naming amendment:** ADR-0005 consolidates all ticket and work-order resources under `/service/tickets` and `/service/work-orders`. API-C/API-R IDs and workflow meanings are unchanged. No endpoints or legacy aliases are implemented.
+**Naming amendment:** ADR-0005 consolidates all ticket and work-order resources under `/service/tickets` and `/service/work-orders`. API-C/API-R IDs and workflow meanings are unchanged. No legacy aliases are implemented.
+
+### P01 implementation subset
+
+API-R03 includes GET `/api/v1/service/tickets/:id` as a single-ticket detail extension. It returns the common read envelope and only `id`, `display_number`, `summary`, `status`, `version`, `synthetic`, `updated_at` and server-derived `can_edit`. It is scoped to the current workspace/company grants. A missing capability returns 403; another company's/workspace's record returns the same 404 as a nonexistent record.
+
+The catalogue's typed draft-save provision is realised as POST `/api/v1/service/tickets/:id/save-draft`, associated with API-C02/DAT-04. Exactly these fields are accepted: `operation_id` UUID, `expected_version` positive safe integer, `schema_version=1`, `summary` 1–200 single-line characters and `reason` 1–1000 single-line characters. Text is trimmed; control characters and unlisted fields (including actor, role, workspace and state) are rejected. Only New requests can be updated. The server does not triage or authorise work. The target and all normalised fields participate in the receipt hash.
+
+The transaction also appends a P01-only `TicketDraftSaved` outbox record with versioned minimal synthetic payload. It remains Ready: no consumer or business side effect is implemented. Existing EVT-01–EVT-12 remain planned and are not renumbered. Server-assigned correlation uses the operation UUID for this bounded command.
+
+Local diagnostics are GET `/api/v1/health` and GET/POST `/api/v1/local-session`. The latter accepts only an allowlisted demonstration `profile`, resolves a server user/session and returns current actor/display context. These local-only routes are not future shared authentication APIs. All routes require the launcher gateway boundary; POST additionally requires the exact loopback Origin and JSON. Non-JSON or oversized bodies are rejected. The rest of this catalogue remains planned. See [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md).
 
 ## 1. Common protocol
 
