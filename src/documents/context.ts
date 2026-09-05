@@ -356,7 +356,7 @@ export async function snapshot(
       .join("\n\n"),
     readiness: controlText,
     site_controls: `Access: ${text(site.access_instructions)}\nBiosecurity: ${text(site.biosecurity_notes)}\n${controlText}\nStop if site access, isolation, shutdown authority or competency cannot be confirmed. Tool-preparation exceptions do not waive these controls.`,
-    completion: `${items.map((i) => `${i.sequence}. ${i.completion_requirements}`).join("\n")}\nRecord unresolved work and escalate to the preparation owner. This pack does not grant authority outside the approved scope. Field capture and actual start are not implemented in P06.`,
+    completion: `${items.map((i) => `${i.sequence}. ${i.completion_requirements}`).join("\n")}\nRecord unresolved work and escalate to the preparation owner. This pack does not grant authority outside the approved scope. Use My Jobs for online capture. Completion remains a draft; offline, reviewed reports and Finance remain incomplete.`,
   };
   const evidence = controls
     .filter((x) => x.evidence_ref)

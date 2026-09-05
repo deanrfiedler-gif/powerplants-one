@@ -165,7 +165,7 @@ export async function issueDetails(
         pack.current_issue_id === issue.id &&
         !pack.needs_review &&
         pack.status === "Issued" &&
-        a.status === "Confirmed" &&
+        ["Confirmed", "InProgress"].includes(a.status) &&
         issue.assignment_version === a.assignment_version &&
         issue.schedule_version === a.schedule_version,
       as_at: new Date().toISOString(),
