@@ -479,7 +479,7 @@ export async function saveWorkScope(
     successor ? "ScopeSuccessorCreated" : "ScopeDraftSaved",
   );
 }
-async function scopeDetail(
+export async function scopeDetail(
   c: QueryClient,
   p: Principal,
   w: WorkOrder,
@@ -528,7 +528,7 @@ async function scopeDetail(
         : items,
   };
 }
-async function readiness(
+export async function readiness(
   c: QueryClient,
   p: Principal,
   r: Awaited<ReturnType<typeof scopeDetail>>,
@@ -554,7 +554,7 @@ async function readiness(
     };
   });
 }
-async function blockers(
+export async function blockers(
   c: QueryClient,
   p: Principal,
   w: WorkOrder,
@@ -729,7 +729,7 @@ export async function assessWorkReadiness(
       )
         invalid(
           "outcome",
-          "This control needs the later planner/dispatch evidence and cannot be cleared in P04.",
+          "Crew competency is derived by booking checks; dispatch needs later issued-pack evidence. Manual assessment cannot clear this control.",
         );
       if (a.outcome === "PermittedException" && !pc.exception_allowed)
         invalid("outcome", "This mandatory control cannot be waived.");

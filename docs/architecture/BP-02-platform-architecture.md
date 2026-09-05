@@ -1,8 +1,8 @@
 # BP-02 — Platform Solution Architecture
 
-**Edition:** r04 · **Date:** 5 September 2026 · **Scope:** PP-01 synthetic planned-service prototype.
+**Edition:** r05 · **Date:** 5 September 2026 · **Scope:** PP-01 synthetic planned-service prototype.
 
-**Status:** Architecture/build contract; P01/P02/P03/P04 implementation and evidence are recorded in [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md) [ADR-0007](../decisions/ADR-0007-p02-shared-foundation.md) [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md) and [ADR-0009](../decisions/ADR-0009-p04-work-scope-readiness.md). Not production approval. [Package index](../prototype/README.md) · [Data dictionary](../contracts/service-data-dictionary.md) · [API contracts](../contracts/service-api.md).
+**Status:** Architecture/build contract; P01–P05 implementation and evidence are recorded in [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md), [ADR-0007](../decisions/ADR-0007-p02-shared-foundation.md), [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md), [ADR-0009](../decisions/ADR-0009-p04-work-scope-readiness.md) and [ADR-0010](../decisions/ADR-0010-p05-planner-controlled-changes.md). Not production approval. [Package index](../prototype/README.md) · [Data dictionary](../contracts/service-data-dictionary.md) · [API contracts](../contracts/service-api.md).
 
 ## 1. Architecture decision
 
@@ -232,3 +232,11 @@ P03 extends the same modular monolith, server identity/capability projections, a
 ## P04 physical architecture amendment
 
 The existing modular monolith/domain transaction boundary now includes `work-orders.ts`: Draft/Authorised work orders, exact revisions, coverage, bounded synthetic DocumentReference, published policy criteria, append-only readiness and immutable Proposed appointments. Route handlers remain thin and share authoritative domain commands. No external adapter is activated. Migration 0004 adds composite context/identity constraints and immutable evidence guards; seed receipt 4 preserves P01–P03 evidence. [ADR-0009](../decisions/ADR-0009-p04-work-scope-readiness.md) records the chosen authorisation stage, scope/content separation, conditional control applicability, successor and document boundaries. P05 must explicitly extend Proposed constraints using forward migration, not mutate accepted P04 migration bytes.
+
+## P05 physical architecture amendment
+
+The same modular monolith now includes `scheduling/planner.ts` and thin API handlers. Migration 0005 preserves original Proposed appointment snapshots before adding controlled current state. The existing workspace graph lock serialises shared authority mutations; old/new resource UUID union is additionally locked in a deterministic order. Real PostgreSQL half-open exclusion and deferred whole-crew consistency protect independent transactions, not just same-appointment expected versions. Reservation replacement/release, revisions, owned activities, audit, operation receipt and outbox share one transaction. Read snapshots use repeatable read and bounded scoped projections.
+
+Published resource/calendar/skill/availability bundles and policy versions are immutable, including child inserts. No second editable source path can silently invalidate a future booking. A later version-publication command must retain resource locks and explicit future-booking impact handling. This is a conservative synthetic capability boundary, not a roster or no-code policy platform. Appointment policy history stays readable after applicability expires; expired policy cannot authorise new work.
+
+[ADR-0010](../decisions/ADR-0010-p05-planner-controlled-changes.md) records the synthetic policy, immutable request crew, exact proposal/booking evidence, contact ownership, cancellation and P06 consequence boundary. The [P05 handover](../delivery/p05-handover.md) records verification and limits. No worker, document issue, remote hosting, alternate identity system or live adapter was enabled.

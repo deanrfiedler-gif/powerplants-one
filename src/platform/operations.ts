@@ -99,6 +99,15 @@ export async function recordOperation(
         record_id: result.id,
         record_version: result.version,
         ...(object_type === "Ticket" ? {} : { object_type }),
+        ...(object_type === "ScheduleChangeRequest" &&
+        kind === "AppointmentChanged"
+          ? {
+              appointment_id: (details as { appointment_id: string })
+                .appointment_id,
+              appointment_version: (details as { appointment_version: number })
+                .appointment_version,
+            }
+          : {}),
         synthetic: true,
       },
     ],

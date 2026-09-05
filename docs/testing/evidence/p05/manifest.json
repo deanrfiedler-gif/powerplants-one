@@ -1,0 +1,307 @@
+{
+  "source_commit": "97bf2c227587726e06d96ae671d2531c9004bdbf",
+  "source_tree": "becdd7fbdac1f1badd102c428d3da1ef752a32d2",
+  "executed_pr_merge_commit": "288734b24f545ede288223b575ad78326e65a913",
+  "executed_tree": "becdd7fbdac1f1badd102c428d3da1ef752a32d2",
+  "workflow_run": 33962234250,
+  "artifact_id": 9968406800,
+  "archive_sha256": "004f9828baa99c8e98f5fa6132e5ff0d0d3020a8a9cef68afb633781131eba02",
+  "environment": "GitHub Actions Ubuntu 24.04; PostgreSQL 16.15; Node 24.20.0; npm 11.19.0; Playwright 1.63.0; Chrome Headless Shell 153.0.8010.12 (v1243); desktop 1440x1000 / phone 390x844; locale en-AU",
+  "scope": "42 original unmodified synthetic PNGs. Implementation self-review and viewport evidence only; no real-device, screen-reader, independent-review or full PT/AT acceptance claim.",
+  "files": [
+    {
+      "file": "desktop-day.png",
+      "original_path": "test-results/planner-P05-SC-07-day-week-c685f-ty-error-and-keyboard-focus-desktop-chromium/P05-day.png",
+      "sha256": "f97c356ece769b6659a084ba47e4b93cef5a9a01d68c144d87e8c06cd275e3fb",
+      "width": 1440,
+      "height": 3748
+    },
+    {
+      "file": "desktop-empty.png",
+      "original_path": "test-results/planner-P05-SC-07-day-week-c685f-ty-error-and-keyboard-focus-desktop-chromium/P05-empty.png",
+      "sha256": "e91bc6f6b5a2430fe28090b1da465d96f5af9e11a1e6701bd7ab34c5d3276f96",
+      "width": 1440,
+      "height": 2956
+    },
+    {
+      "file": "desktop-keyboard-focus.png",
+      "original_path": "test-results/planner-P05-SC-07-day-week-c685f-ty-error-and-keyboard-focus-desktop-chromium/P05-keyboard-focus.png",
+      "sha256": "f97c356ece769b6659a084ba47e4b93cef5a9a01d68c144d87e8c06cd275e3fb",
+      "width": 1440,
+      "height": 3748
+    },
+    {
+      "file": "desktop-keyboard-move-form.png",
+      "original_path": "test-results/planner-P05-SC-07-day-week-c685f-ty-error-and-keyboard-focus-desktop-chromium/P05-keyboard-move-form.png",
+      "sha256": "6de8a287a2424b71cd5aebfc7175f412f4ee9d1c810861a1a8615b1f986dc336",
+      "width": 1440,
+      "height": 3748
+    },
+    {
+      "file": "desktop-read-failure.png",
+      "original_path": "test-results/planner-P05-SC-07-day-week-c685f-ty-error-and-keyboard-focus-desktop-chromium/P05-read-failure.png",
+      "sha256": "2339eb9b5080a6d1406ddbc65810b7aca50d5284adfd07677d607abeab04f3eb",
+      "width": 1440,
+      "height": 3142
+    },
+    {
+      "file": "desktop-systems-refusal.png",
+      "original_path": "test-results/planner-P05-SC-07-day-week-c685f-ty-error-and-keyboard-focus-desktop-chromium/P05-systems-refusal.png",
+      "sha256": "c53d043dea7b7faa5d5bb097459155ec834bc5079ffef8ceb5ef3076dd6e644e",
+      "width": 1440,
+      "height": 1147
+    },
+    {
+      "file": "desktop-week.png",
+      "original_path": "test-results/planner-P05-SC-07-day-week-c685f-ty-error-and-keyboard-focus-desktop-chromium/P05-week.png",
+      "sha256": "37c80e771b9dc0fbb80d135114d0146b2985229b38a309509b4e152cb9efcb1d",
+      "width": 1440,
+      "height": 5063
+    },
+    {
+      "file": "mobile-day.png",
+      "original_path": "test-results/planner-P05-SC-07-day-week-c685f-ty-error-and-keyboard-focus-mobile-chromium/P05-day.png",
+      "sha256": "89f2b93e3f64f251600cd0223cd38f9cf3be633cdede0250ea30b79ef3d56a88",
+      "width": 390,
+      "height": 6665
+    },
+    {
+      "file": "mobile-empty.png",
+      "original_path": "test-results/planner-P05-SC-07-day-week-c685f-ty-error-and-keyboard-focus-mobile-chromium/P05-empty.png",
+      "sha256": "9f6f2b698ae257a330ff723d7253e14e9f2512e1aba66d2e5d0b6f69e1076ef8",
+      "width": 390,
+      "height": 5178
+    },
+    {
+      "file": "mobile-keyboard-focus.png",
+      "original_path": "test-results/planner-P05-SC-07-day-week-c685f-ty-error-and-keyboard-focus-mobile-chromium/P05-keyboard-focus.png",
+      "sha256": "89f2b93e3f64f251600cd0223cd38f9cf3be633cdede0250ea30b79ef3d56a88",
+      "width": 390,
+      "height": 6665
+    },
+    {
+      "file": "mobile-keyboard-move-form.png",
+      "original_path": "test-results/planner-P05-SC-07-day-week-c685f-ty-error-and-keyboard-focus-mobile-chromium/P05-keyboard-move-form.png",
+      "sha256": "2c9c1df6b86ed163b5501d72a561c4de4317e91bd59853d401aeb823beeacb8d",
+      "width": 390,
+      "height": 6665
+    },
+    {
+      "file": "mobile-read-failure.png",
+      "original_path": "test-results/planner-P05-SC-07-day-week-c685f-ty-error-and-keyboard-focus-mobile-chromium/P05-read-failure.png",
+      "sha256": "1971b198310834d678a953059b2f1c5b11035a35a570116dbdb3d16a1f6f8103",
+      "width": 390,
+      "height": 5408
+    },
+    {
+      "file": "mobile-systems-refusal.png",
+      "original_path": "test-results/planner-P05-SC-07-day-week-c685f-ty-error-and-keyboard-focus-mobile-chromium/P05-systems-refusal.png",
+      "sha256": "9686f7463d0c2da29dc40c9fd5a0b25d29292d79972ff90f773a111b64e58283",
+      "width": 390,
+      "height": 2183
+    },
+    {
+      "file": "mobile-week-keyboard-scroll.png",
+      "original_path": "test-results/planner-P05-SC-07-day-week-c685f-ty-error-and-keyboard-focus-mobile-chromium/P05-week-keyboard-scroll.png",
+      "sha256": "f21fd36741a10e34297619802435403ca8f1370b73c1644d809fb86d6cd7de38",
+      "width": 390,
+      "height": 8230
+    },
+    {
+      "file": "mobile-week.png",
+      "original_path": "test-results/planner-P05-SC-07-day-week-c685f-ty-error-and-keyboard-focus-mobile-chromium/P05-week.png",
+      "sha256": "779c6737e589ab93e3b5a3742648b98e334f31b02343216253e71d8cabc96011",
+      "width": 390,
+      "height": 8230
+    },
+    {
+      "file": "desktop-cancelled.png",
+      "original_path": "test-results/planner-P05-SC-08-contact--601f1-nfirmation-and-cancellation-desktop-chromium/P05-cancelled.png",
+      "sha256": "b47dac25c8ff8fab182a9070b6808abcd252ffd32e188e0780bb42eed212811c",
+      "width": 1440,
+      "height": 2065
+    },
+    {
+      "file": "desktop-confirmed-crew.png",
+      "original_path": "test-results/planner-P05-SC-08-contact--601f1-nfirmation-and-cancellation-desktop-chromium/P05-confirmed-crew.png",
+      "sha256": "5d8322224a99f94915de37e918240a1e30a97938cd0183d276582912172efd75",
+      "width": 1440,
+      "height": 3834
+    },
+    {
+      "file": "desktop-contact-refusal-input-retained.png",
+      "original_path": "test-results/planner-P05-SC-08-contact--601f1-nfirmation-and-cancellation-desktop-chromium/P05-contact-refusal-input-retained.png",
+      "sha256": "63b4d449561bd34a9a8e2ade5ea70c5d4df20a821b429a5acc275f89535bb141",
+      "width": 1440,
+      "height": 3427
+    },
+    {
+      "file": "desktop-failed-contact-owned.png",
+      "original_path": "test-results/planner-P05-SC-08-contact--601f1-nfirmation-and-cancellation-desktop-chromium/P05-failed-contact-owned.png",
+      "sha256": "6389f095fe80f6fb72c5d06de1fd811a9b7df60829b9f7dcce57687c3a2a3702",
+      "width": 1440,
+      "height": 2326
+    },
+    {
+      "file": "mobile-cancelled.png",
+      "original_path": "test-results/planner-P05-SC-08-contact--601f1-nfirmation-and-cancellation-mobile-chromium/P05-cancelled.png",
+      "sha256": "c4aa987be50749ef69fc16d58414033d5d770e98328f16b86989484951f70114",
+      "width": 390,
+      "height": 3402
+    },
+    {
+      "file": "mobile-confirmed-crew.png",
+      "original_path": "test-results/planner-P05-SC-08-contact--601f1-nfirmation-and-cancellation-mobile-chromium/P05-confirmed-crew.png",
+      "sha256": "8d8f2e80699d37b596af77ad239ca1f30c8337c6f16bfd646c12266188a31137",
+      "width": 390,
+      "height": 5995
+    },
+    {
+      "file": "mobile-contact-refusal-input-retained.png",
+      "original_path": "test-results/planner-P05-SC-08-contact--601f1-nfirmation-and-cancellation-mobile-chromium/P05-contact-refusal-input-retained.png",
+      "sha256": "cdc1ec081f70cef9797606699d7f68c7a5bc460a66b4a38dbfa2abd355b6712a",
+      "width": 390,
+      "height": 5245
+    },
+    {
+      "file": "mobile-failed-contact-owned.png",
+      "original_path": "test-results/planner-P05-SC-08-contact--601f1-nfirmation-and-cancellation-mobile-chromium/P05-failed-contact-owned.png",
+      "sha256": "a6edc2420e711fc3dcaaf3c85870fd940cd8bae66de29e7323d6bac002118a78",
+      "width": 390,
+      "height": 3642
+    },
+    {
+      "file": "desktop-crew-conflict-original-retained.png",
+      "original_path": "test-results/planner-P05-controlled-mov-cc211-sult-retries-unchanged-once-desktop-chromium/P05-crew-conflict-original-retained.png",
+      "sha256": "7377dbd8c18894414e6b4f622f2edb6f1d29d4b638731d193d329acde5876a1c",
+      "width": 1440,
+      "height": 3953
+    },
+    {
+      "file": "desktop-drag-proposal.png",
+      "original_path": "test-results/planner-P05-controlled-mov-cc211-sult-retries-unchanged-once-desktop-chromium/P05-drag-proposal.png",
+      "sha256": "532b9f0f431992f14d53df9f1ea079dd1487e0b2092c7bd8a4a6119274883b9e",
+      "width": 1440,
+      "height": 3953
+    },
+    {
+      "file": "desktop-move-saved-review-held.png",
+      "original_path": "test-results/planner-P05-controlled-mov-cc211-sult-retries-unchanged-once-desktop-chromium/P05-move-saved-review-held.png",
+      "sha256": "23db64cba6a38103428b33cfd8f351e52b2dab0f9e2bab1b50b3f255767c199c",
+      "width": 1440,
+      "height": 3953
+    },
+    {
+      "file": "desktop-rejected-move-retained.png",
+      "original_path": "test-results/planner-P05-controlled-mov-cc211-sult-retries-unchanged-once-desktop-chromium/P05-rejected-move-retained.png",
+      "sha256": "4e94db337d7c261ed68046041a7cfe891231fc108608eea05f9f5c08b6da00a1",
+      "width": 1440,
+      "height": 3953
+    },
+    {
+      "file": "desktop-stale-move-current-review.png",
+      "original_path": "test-results/planner-P05-controlled-mov-cc211-sult-retries-unchanged-once-desktop-chromium/P05-stale-move-current-review.png",
+      "sha256": "69337b5d2cf83dae6c6ff7d870250ad03197c01e843d4ac258f08cf3dba78f77",
+      "width": 1440,
+      "height": 3953
+    },
+    {
+      "file": "desktop-uncertain-move-retry.png",
+      "original_path": "test-results/planner-P05-controlled-mov-cc211-sult-retries-unchanged-once-desktop-chromium/P05-uncertain-move-retry.png",
+      "sha256": "69b041dbf26a7c1a8c04d25aec0598c50fd5514f1d5703f4497e05cb97cdfb89",
+      "width": 1440,
+      "height": 3953
+    },
+    {
+      "file": "mobile-crew-conflict-original-retained.png",
+      "original_path": "test-results/planner-P05-controlled-mov-cc211-sult-retries-unchanged-once-mobile-chromium/P05-crew-conflict-original-retained.png",
+      "sha256": "72c28c77455603888cbc952d4852fe46804c7beb97f9a01ba577cfbcb93aa180",
+      "width": 390,
+      "height": 5942
+    },
+    {
+      "file": "mobile-move-saved-review-held.png",
+      "original_path": "test-results/planner-P05-controlled-mov-cc211-sult-retries-unchanged-once-mobile-chromium/P05-move-saved-review-held.png",
+      "sha256": "00c48e74d8e5953fa11215ecfe931cc349f3e85bbb4df15fc698cd64009c2a4f",
+      "width": 390,
+      "height": 6026
+    },
+    {
+      "file": "mobile-rejected-move-retained.png",
+      "original_path": "test-results/planner-P05-controlled-mov-cc211-sult-retries-unchanged-once-mobile-chromium/P05-rejected-move-retained.png",
+      "sha256": "549635880d7cf0d5a327ea9a49592aa4784424f791008acbcf3051c532be0e67",
+      "width": 390,
+      "height": 5942
+    },
+    {
+      "file": "mobile-stale-move-current-review.png",
+      "original_path": "test-results/planner-P05-controlled-mov-cc211-sult-retries-unchanged-once-mobile-chromium/P05-stale-move-current-review.png",
+      "sha256": "2c7bf1bce8cb4f5ea4e658c0fd1d757a57d6704ea194a15aa867f0476947c7f9",
+      "width": 390,
+      "height": 5942
+    },
+    {
+      "file": "mobile-uncertain-move-retry.png",
+      "original_path": "test-results/planner-P05-controlled-mov-cc211-sult-retries-unchanged-once-mobile-chromium/P05-uncertain-move-retry.png",
+      "sha256": "9d58031c8a53136406df13ed2857cdf6e6e6568cd4911836a8fd1d1fe1b262b9",
+      "width": 390,
+      "height": 5942
+    },
+    {
+      "file": "desktop-project-accepted-held.png",
+      "original_path": "test-results/planner-P05-project-reques-1a89c-cian-request-cannot-confirm-desktop-chromium/P05-project-accepted-held.png",
+      "sha256": "e22b0c3deeb70de116cbbbaaa22590efc6bed5baca00f209fd25c1e3a454ac5d",
+      "width": 1440,
+      "height": 4481
+    },
+    {
+      "file": "desktop-project-pending-long-content.png",
+      "original_path": "test-results/planner-P05-project-reques-1a89c-cian-request-cannot-confirm-desktop-chromium/P05-project-pending-long-content.png",
+      "sha256": "eed7fb6058307ea79bc59f75117ae473966a7e040a2fe695829bb6413f48affa",
+      "width": 1440,
+      "height": 4157
+    },
+    {
+      "file": "desktop-project-rejected.png",
+      "original_path": "test-results/planner-P05-project-reques-1a89c-cian-request-cannot-confirm-desktop-chromium/P05-project-rejected.png",
+      "sha256": "f3e0c88415ba282cf56ebf7224eceeb05ebbd31dd9750ee91f38ad3f56c59ddd",
+      "width": 1440,
+      "height": 4044
+    },
+    {
+      "file": "desktop-technician-request-boundary.png",
+      "original_path": "test-results/planner-P05-project-reques-1a89c-cian-request-cannot-confirm-desktop-chromium/P05-technician-request-boundary.png",
+      "sha256": "5c4c23e1114d0a5224533b3a065e95d0de0be049fc6d202de532d252b32b462a",
+      "width": 1440,
+      "height": 3707
+    },
+    {
+      "file": "mobile-project-accepted-held.png",
+      "original_path": "test-results/planner-P05-project-reques-1a89c-cian-request-cannot-confirm-mobile-chromium/P05-project-accepted-held.png",
+      "sha256": "1dfd037a8a668445f407bcfa10f1fb5a6b5fa05e7bd88b46b13acfd5c2cff95f",
+      "width": 390,
+      "height": 7199
+    },
+    {
+      "file": "mobile-project-pending-long-content.png",
+      "original_path": "test-results/planner-P05-project-reques-1a89c-cian-request-cannot-confirm-mobile-chromium/P05-project-pending-long-content.png",
+      "sha256": "cf192927a573c6b2942d24183eb96e958245b65a644217435f0e5c1f2c628bb3",
+      "width": 390,
+      "height": 6651
+    },
+    {
+      "file": "mobile-project-rejected.png",
+      "original_path": "test-results/planner-P05-project-reques-1a89c-cian-request-cannot-confirm-mobile-chromium/P05-project-rejected.png",
+      "sha256": "13057f5f530a603fb03aedf0b6718545dfc6932645dc3822485369dbd7d0f8c0",
+      "width": 390,
+      "height": 6512
+    },
+    {
+      "file": "mobile-technician-request-boundary.png",
+      "original_path": "test-results/planner-P05-project-reques-1a89c-cian-request-cannot-confirm-mobile-chromium/P05-technician-request-boundary.png",
+      "sha256": "b58a1ec2869380954ad07b86f38ade9a51d88bffd458852fcd5f5392b8a0a0c7",
+      "width": 390,
+      "height": 5766
+    }
+  ]
+}

@@ -157,10 +157,10 @@ test("P04 migration upgrades exact P03 evidence; repeat migration/seed retains d
     "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='service.ticket.edit'",
     [owner],
   );
-  await migrate();
-  await seed();
-  await migrate();
-  await seed();
+  await migrate(4);
+  await seed(4);
+  await migrate(4);
+  await seed(4);
   for (const t of [
     "activities",
     "activity_links",
@@ -456,7 +456,7 @@ test("proposed visit permits evidenced tool preparation exception but cannot cle
   assert.equal(
     (
       await rows(
-        "SELECT count(*)::int n FROM ppo.appointments WHERE status<>'Proposed'",
+        "SELECT count(*)::int n FROM ppo.appointments WHERE status<>'Proposed' AND id::text LIKE '98000000-%'",
       )
     )[0].n,
     0,

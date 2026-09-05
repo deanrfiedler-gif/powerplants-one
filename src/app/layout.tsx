@@ -48,6 +48,7 @@ export default function RootLayout({
               <Link href="/sites">Sites &amp; equipment</Link>
               <Link href="/service/tickets">Service requests</Link>
               <Link href="/service/work-orders">Work orders</Link>
+              <Link href="/schedule">Service planner</Link>
               <Link href="/foundation">Foundation checks</Link>
               <details className="domains">
                 <summary>Business domains</summary>
