@@ -1,2 +1,4 @@
 import { ContextList } from "../../../components/context-screens";
-export default function Page(){return <ContextList section="equipment"/>;}
+export default function Page() {
+  return <ContextList section="equipment" />;
+}

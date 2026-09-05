@@ -6,6 +6,7 @@ export default defineConfig({
   timeout: 45000,
   use: {
     baseURL: "http://127.0.0.1:3000",
+    locale: "en-AU",
     screenshot: "only-on-failure",
     trace: "retain-on-failure",
   },

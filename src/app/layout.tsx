@@ -48,7 +48,7 @@ export default function RootLayout({
               <Link href="/sites">Sites &amp; equipment</Link>
               <Link href="/service/tickets">Service requests</Link>
               <Link href="/foundation">Foundation checks</Link>
-              <details className="domains" open>
+              <details className="domains">
                 <summary>Business domains</summary>
                 <ul>
                   {domains.map((domain) => (

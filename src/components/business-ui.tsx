@@ -32,7 +32,16 @@ export async function api<T>(path: string, body?: unknown): Promise<T> {
       retryable: true,
     } satisfies Failure;
   }
-  const result = await response.json();
+  let result;
+  try {
+    result = await response.json();
+  } catch {
+    throw {
+      message:
+        "The server response could not be read. Your entries remain here; retry the unchanged action to confirm its result.",
+      retryable: true,
+    } satisfies Failure;
+  }
   if (!response.ok) throw { ...result, status: response.status };
   return result as T;
 }

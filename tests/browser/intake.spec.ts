@@ -40,6 +40,9 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
     page.getByRole("heading", { name: "Possible duplicate organisations" }),
   ).toBeVisible();
   await expect(page.getByText("000Ab-C.01")).toHaveCount(0);
+  await expect(
+    page.getByText("Loading permitted records…", { exact: true }),
+  ).toHaveCount(0);
   await page.screenshot({
     path: info.outputPath("P03-customer.png"),
     fullPage: true,
@@ -58,6 +61,9 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
   await expect(
     page.getByRole("link", { name: "Start service intake" }),
   ).toBeVisible();
+  await expect(
+    page.getByText("Loading permitted records…", { exact: true }),
+  ).toHaveCount(0);
   await page.screenshot({
     path: info.outputPath("P03-site.png"),
     fullPage: true,
@@ -68,6 +74,9 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
   await expect(
     page.getByRole("link", { name: /SYN OEM query:/ }),
   ).toBeVisible();
+  await expect(
+    page.getByText("Loading permitted records…", { exact: true }),
+  ).toHaveCount(0);
   await page.screenshot({
     path: info.outputPath("P03-history.png"),
     fullPage: true,
@@ -85,6 +94,9 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
   await expect(
     page.getByRole("heading", { name: "Due date needed", exact: true }),
   ).toBeVisible();
+  await expect(
+    page.getByText("Loading permitted records…", { exact: true }),
+  ).toHaveCount(0);
   await page.screenshot({
     path: info.outputPath("P03-work.png"),
     fullPage: true,
@@ -100,6 +112,9 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
   ).toBeVisible();
   await expect(
     page.getByText(/SYN conversation recorded as a fictional fixture/),
+  ).toHaveCount(0);
+  await expect(
+    page.getByText("Loading permitted records…", { exact: true }),
   ).toHaveCount(0);
   await page.screenshot({
     path: info.outputPath("P03-permission.png"),
@@ -157,6 +172,9 @@ test("P03 persisted intake, validation retention, clarification completion, tria
   await expect(page.getByLabel("Request summary", { exact: true })).toHaveValue(
     `SYN browser P03 ${info.project.name}`,
   );
+  await expect(
+    page.getByText("Loading permitted records…", { exact: true }),
+  ).toHaveCount(0);
   await page.screenshot({
     path: info.outputPath("P03-intake-validation.png"),
     fullPage: true,
@@ -245,6 +263,9 @@ test("P03 persisted intake, validation retention, clarification completion, tria
       exact: true,
     }),
   ).toBeVisible();
+  await expect(
+    page.getByText("Loading permitted records…", { exact: true }),
+  ).toHaveCount(0);
   await page.screenshot({
     path: info.outputPath("P03-intake-conflict.png"),
     fullPage: true,
@@ -283,6 +304,9 @@ test("P03 persisted intake, validation retention, clarification completion, tria
     .getByRole("button", { name: "Complete triage", exact: true })
     .click();
   await expect(page.getByText("Triaged", { exact: true })).toBeVisible();
+  await expect(
+    page.getByText("Loading permitted records…", { exact: true }),
+  ).toHaveCount(0);
   await page.screenshot({
     path: info.outputPath("P03-triaged.png"),
     fullPage: true,
@@ -292,6 +316,7 @@ test("P03 persisted intake, validation retention, clarification completion, tria
 test("P03 unavailable and empty queues stay distinct; keyboard focus and network-failed form entries survive", async ({
   page,
 }, info) => {
+  const retainedName = `SYN retained new customer ${info.project.name}`;
   await page.goto("/work");
   await identity(page);
   await page
@@ -300,6 +325,9 @@ test("P03 unavailable and empty queues stay distinct; keyboard focus and network
   await expect(
     page.getByText("No permitted activities match these filters."),
   ).toBeVisible();
+  await expect(
+    page.getByText("Loading permitted records…", { exact: true }),
+  ).toHaveCount(0);
   await page.screenshot({
     path: info.outputPath("P03-empty.png"),
     fullPage: true,
@@ -311,6 +339,9 @@ test("P03 unavailable and empty queues stay distinct; keyboard focus and network
   await expect(
     page.getByRole("alert").filter({ hasText: /could not be confirmed/ }),
   ).toBeVisible();
+  await expect(
+    page.getByText("Loading permitted records…", { exact: true }),
+  ).toHaveCount(0);
   await page.screenshot({
     path: info.outputPath("P03-unavailable.png"),
     fullPage: true,
@@ -319,9 +350,7 @@ test("P03 unavailable and empty queues stay distinct; keyboard focus and network
   await page
     .getByLabel("Company visibility context", { exact: true })
     .selectOption(company);
-  await page
-    .getByLabel("Display name", { exact: true })
-    .fill("SYN retained new customer");
+  await page.getByLabel("Display name", { exact: true }).fill(retainedName);
   await page
     .getByLabel("Reason for capture")
     .fill("Verify recoverable connection failure");
@@ -336,12 +365,50 @@ test("P03 unavailable and empty queues stay distinct; keyboard focus and network
     page.getByRole("alert").filter({ hasText: /could not be confirmed/ }),
   ).toBeVisible();
   await expect(page.getByLabel("Display name", { exact: true })).toHaveValue(
-    "SYN retained new customer",
+    retainedName,
   );
   await page.keyboard.press("Tab");
+  await expect(
+    page.getByText("Loading permitted records…", { exact: true }),
+  ).toHaveCount(0);
   await page.screenshot({
     path: info.outputPath("P03-failure-focus.png"),
     fullPage: true,
   });
   await noOverflow(page);
+  // Lose a real accepted receipt, then retry: the original operation must be replayed, not duplicated.
+  await page.unroute("**/api/v1/customers");
+  const operationIds: string[] = [];
+  await page.route("**/api/v1/customers", async (route) => {
+    if (route.request().method() !== "POST") return route.continue();
+    operationIds.push(route.request().postDataJSON().operation_id);
+    const response = await route.fetch();
+    if (operationIds.length === 1)
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: "{",
+      });
+    else await route.fulfill({ response });
+  });
+  await page.getByRole("button", { name: "Save record", exact: true }).click();
+  await expect(
+    page.getByRole("alert").filter({ hasText: /response could not be read/ }),
+  ).toBeVisible();
+  await expect(page.getByLabel("Display name", { exact: true })).toHaveValue(
+    retainedName,
+  );
+  await page.getByRole("button", { name: "Save record", exact: true }).click();
+  await expect(page).toHaveURL(/\/customers\/[0-9a-f-]{36}$/);
+  expect(operationIds).toHaveLength(2);
+  expect(operationIds[1]).toBe(operationIds[0]);
+  await expect(
+    page.getByRole("heading", { name: retainedName, exact: true }),
+  ).toBeVisible();
+  const records = await (
+    await page.request.get(
+      `/api/v1/customers?q=${encodeURIComponent(retainedName)}`,
+    )
+  ).json();
+  expect(records.items).toHaveLength(1);
 });

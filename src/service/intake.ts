@@ -410,7 +410,7 @@ export function triageBlockers(t: IntakeGate, clarificationComplete = false) {
     [
       "site_id",
       t.site_id,
-      "Identify the service site; diagnostic scope approval belongs to P04.",
+      "Identify the service site before completing triage.",
     ],
     [
       "requester_id",
@@ -500,7 +500,7 @@ export async function triageTicket(p: Principal, id: string, input: unknown) {
         throw new AppError(
           422,
           "TICKET_STATE_INVALID",
-          "This request is already triaged or outside the P03 intake lifecycle.",
+          "This request is already triaged or outside the editable intake states.",
         );
       const blockers = triageBlockers(t, activity?.status === "Completed");
       if (t.status === "NeedsInformation" && !command.clarification_outcome)

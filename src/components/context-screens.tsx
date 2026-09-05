@@ -346,8 +346,8 @@ function HistoryList({ path }: { path: string }) {
             ))
           )}
           <p className="scope-note">
-            The original P02 OEM note retains its historical wording. Current
-            owned follow-up is shown in the activity section.
+            The original OEM note retains its historical wording. Current owned
+            follow-up is shown in the activity section.
           </p>
           {r.data.next_cursor && (
             <button
@@ -525,9 +525,11 @@ export function ContextDetail({
                       <Status value={m.mapping_status} /> ·{" "}
                       {m.is_current
                         ? "Current interval"
-                        : "Historical / future interval"}{" "}
+                        : Date.parse(m.valid_from) > Date.now()
+                          ? "Future interval"
+                          : "Historical interval"}{" "}
                       · <Stamp value={m.valid_from} /> to{" "}
-                      <Stamp value={m.valid_to} />
+                      {m.valid_to ? <Stamp value={m.valid_to} /> : "open-ended"}
                     </p>
                   ))
                 ) : (
@@ -639,7 +641,11 @@ export function ContextDetail({
                       <div className="card-top">
                         <Status value={a.role} />
                         <span>
-                          {a.is_current ? "Current" : "Historical / future"}
+                          {a.is_current
+                            ? "Current"
+                            : Date.parse(a.valid_from) > Date.now()
+                              ? "Future"
+                              : "Historical"}
                         </span>
                       </div>
                       <h3>
@@ -726,7 +732,11 @@ export function ContextDetail({
                   <article className="history-card" key={c.id}>
                     <h3>
                       Revision {c.revision} ·{" "}
-                      {c.is_current ? "Current" : "Historical / future"}
+                      {c.is_current
+                        ? "Current"
+                        : Date.parse(c.valid_from) > Date.now()
+                          ? "Future"
+                          : "Historical"}
                     </h3>
                     <Status value={c.verification_status} />
                     <p className="narrative">{c.description}</p>

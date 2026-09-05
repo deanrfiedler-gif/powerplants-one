@@ -531,6 +531,28 @@ test("concurrent allocation, competing edits and accepted retries preserve ticke
   ]);
   assert.equal(competing.filter((r) => r.status === "fulfilled").length, 1);
   assert.equal((await readIntake(p, c.id)).version, 2);
+  // P01 retains a separate hash/receipt path; both generations must still compete on the same row.
+  const legacyRace = await Promise.allSettled([
+    saveDraft(p, c.id, {
+      ...base(),
+      expected_version: 2,
+      summary: "P01 competing writer",
+    }),
+    saveIntake(p, c.id, {
+      ...base(),
+      expected_version: 2,
+      ...fields(),
+      summary: "P03 competing writer",
+    }),
+  ]);
+  assert.equal(legacyRace.filter((r) => r.status === "fulfilled").length, 1);
+  assert.equal(
+    legacyRace.filter(
+      (r) => r.status === "rejected" && code("VersionConflict")(r.reason),
+    ).length,
+    1,
+  );
+  assert.equal((await readIntake(p, c.id)).version, 3);
   const a = activity();
   await createActivity(p, a);
   const update = {
