@@ -2,7 +2,7 @@
 
 **Edition:** r05 · **Date:** 5 September 2026 · **Scope:** PP-01 synthetic planned-service prototype.
 
-**Status:** Architecture/build contract; P01–P05 implementation and evidence are recorded in [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md) [ADR-0007](../decisions/ADR-0007-p02-shared-foundation.md) [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md) and [ADR-0009](../decisions/ADR-0009-p04-work-scope-readiness.md). Not production approval. [Package index](../prototype/README.md) · [Data dictionary](../contracts/service-data-dictionary.md) · [API contracts](../contracts/service-api.md).
+**Status:** Architecture/build contract; P01–P05 implementation and evidence are recorded in [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md), [ADR-0007](../decisions/ADR-0007-p02-shared-foundation.md), [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md), [ADR-0009](../decisions/ADR-0009-p04-work-scope-readiness.md) and [ADR-0010](../decisions/ADR-0010-p05-planner-controlled-changes.md). Not production approval. [Package index](../prototype/README.md) · [Data dictionary](../contracts/service-data-dictionary.md) · [API contracts](../contracts/service-api.md).
 
 ## 1. Architecture decision
 

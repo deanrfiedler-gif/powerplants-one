@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P05 planner and controlled changes implemented; final verification/publication in progress. PP-01 remains incomplete.
+**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P05 planner and controlled changes component-verified; exact publication state in the handover. PP-01 remains incomplete.
 
 ## Current direction
 

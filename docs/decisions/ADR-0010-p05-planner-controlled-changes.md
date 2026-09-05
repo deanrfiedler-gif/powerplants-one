@@ -1,6 +1,6 @@
 # ADR-0010 — P05 planner and controlled changes
 
-**Date:** 5 September 2026 · **Status:** Selected for authorised P05; verification pending.
+**Date:** 5 September 2026 · **Status:** Implemented and component-verified for authorised P05; publication evidence in the [handover](../delivery/p05-handover.md).
 **Related:** [issue #28](https://github.com/deanrfiedler-gif/powerplants-one/issues/28), SC-07/08, DAT-06, TR-03/08/16, API-R04/C04–07, EVT-02/03, SR-05/06/07/19/20, PT-08/09/10/26 components.
 
 Extend the existing TypeScript/Next.js/PostgreSQL services and pinned dependencies. Retain the workspace graph transaction lock and acquire the union of old/new resource row locks in UUID order. Real half-open PostgreSQL exclusion constraints enforce reservation conflicts independently of application versions. Every crew replacement, appointment revision, consequence, audit, original receipt and outbox event commits atomically. No optimistic UI position becomes a saved booking until the server accepts it.

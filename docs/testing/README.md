@@ -1,6 +1,6 @@
 # Acceptance and evidence
 
-[acceptance-scenarios.csv](acceptance-scenarios.csv) contains AT-01–AT-38 from the master blueprint. Every full scenario remains planned and unexecuted. P01/P02/P03 now have runnable component tests; these do not establish the full catalogue's business acceptance.
+[acceptance-scenarios.csv](acceptance-scenarios.csv) contains AT-01–AT-38 from the master blueprint. Every full scenario remains planned and unexecuted. P01–P05 now have runnable component tests; these do not establish the full catalogue's business acceptance.
 
 Each future case needs requirement links, fixture/version, actor, preconditions, action, expected observable result, failure/recovery path, environment, actual result, evidence, defect links and reviewer disposition. Financial and calculation fixtures need independently accepted expected values rather than expectations copied from the implementation.
 
@@ -33,3 +33,5 @@ The [P03 screenshot index](evidence/p03/README.md) preserves 38 inspected deskto
 ## P05 component verification
 
 [P05 handover](../delivery/p05-handover.md) records the exact SQL/HTTP/browser checks, failed-run disposition and publication state for SC-07/SC-08, TR-03/08/16 and PT-08/09/10/26 components. Existing P04 upgrade tests explicitly retain their P04 migration boundary; a separate P05 upgrade test compares original PostgreSQL snapshots including microseconds, receipts/checksums/revocations. No full PT or AT status is promoted. P06/P07 issued-pack/actual-work dependencies remain absent. Original screenshot provenance and manual inspection are recorded with the final P05 evidence.
+
+[P05 visual index](evidence/p05/README.md) retains 42 inspected original desktop/phone PNGs and exact provenance from application run 33962234250. The full run passed 5 unit, 65 PostgreSQL, 8 HTTP and 28 browser cases plus real restart. Publication/merged-main results are linked from the handover.
