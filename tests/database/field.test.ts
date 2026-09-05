@@ -1,8 +1,9 @@
+import { execFileSync } from "node:child_process";
 import { twoTaskStarted } from "../helpers/field-two-tasks";
 import assert from "node:assert/strict";
 import { test, beforeEach, after } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile, unlink, writeFile } from "node:fs/promises";
+import { readFile, unlink, writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { homedir } from "node:os";
 import { reset, migrate, seed } from "../../scripts/database";
@@ -135,7 +136,7 @@ test("PT-06 complete procedure: queued renderer is not Issued, first crew respon
   }
   const job = await fresh(p, pack.appointment_id);
   assert.equal(job.readiness.component_ready, true);
-  await startAttendance(p, job.id, startInput(job));
+  const accepted = await startAttendance(p, job.id, startInput(job));
   assert.equal((await fresh(p, job.id)).status, "InProgress");
   assert.equal(
     (await rows("SELECT count(*)::int n FROM ppo.pack_issues"))[0].n,
@@ -147,6 +148,60 @@ test("PT-06 complete procedure: queued renderer is not Issued, first crew respon
   );
   pack = (await readPack(q.p, q.pack.id)).items[0];
   assert.equal(pack.needs_review, false);
+  const issue = pack.issues[0],
+    bundle = await readBundle(q.p, issue.manifest);
+  const directory = "verification-evidence/PT-06";
+  await mkdir(directory, { recursive: true });
+  await writeFile(`${directory}/${issue.manifest.filename}`, bundle.pdf);
+  await writeFile(`${directory}/original.html`, bundle.html);
+  await writeFile(
+    `${directory}/execution.json`,
+    JSON.stringify(
+      {
+        procedure: "PT-06",
+        status: "Passed",
+        scope: "Complete synthetic coded procedure; not independent review or owner acceptance",
+        provenance: {
+          run_id: process.env.GITHUB_RUN_ID,
+          run_attempt: process.env.GITHUB_RUN_ATTEMPT,
+          source_branch: process.env.GITHUB_HEAD_REF,
+          executed_checkout: execFileSync("git", ["rev-parse", "HEAD"], {
+            encoding: "utf8",
+          }).trim(),
+          executed_tree: execFileSync("git", ["rev-parse", "HEAD^{tree}"], {
+            encoding: "utf8",
+          }).trim(),
+        },
+        preconditions: {
+          confirmed_two_person_appointment: true,
+          checked_nine_section_pack: true,
+          exact_technical_sources: true,
+        },
+        outcomes: {
+          queued_not_issued: true,
+          first_person_start: "StartBlocked",
+          first_person_attendance_count: 0,
+          complete_crew_readiness: true,
+          final_appointment_status: "InProgress",
+          final_issue_count: 1,
+          final_attendance_count: 1,
+        },
+        issue,
+        revision: pack.revisions[0],
+        recipients: pack.readiness.recipients,
+        acknowledgements: await rows(
+          "SELECT k.* FROM ppo.pack_acknowledgements k JOIN ppo.pack_recipients r ON r.id=k.recipient_id WHERE r.issue_id=$1 ORDER BY k.actor_id",
+          [issue.id],
+        ),
+        attendance: (
+          await rows("SELECT * FROM ppo.field_attendances WHERE appointment_id=$1", [job.id])
+        )[0],
+        start_receipt: accepted.receipt,
+      },
+      null,
+      2,
+    ),
+  );
 });
 test("P07 concurrent identical starts replay once; changed operation conflicts; another crew member records only their own start", async () => {
   const q = await acknowledged(),

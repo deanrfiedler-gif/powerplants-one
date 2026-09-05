@@ -145,7 +145,10 @@ test("P07 actual online visit: independent crew start, all typed forms, durable 
   await page
     .getByLabel("Start context")
     .fill("SYN actual start after independently reading original pack");
-  await page.getByRole("button", { name: "Record my actual start" }).click();
+  const startButton = page.getByRole("button", { name: "Record my actual start" });
+  await startButton.focus();
+  await expect(startButton).toBeFocused();
+  await startButton.press("Enter");
   await expect(page.locator(".business-error")).toContainText(
     "Resolve the current start blockers",
   );

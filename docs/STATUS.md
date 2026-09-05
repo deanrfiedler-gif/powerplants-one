@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P07 online workflow implemented; verification/publication state in the P07 handover. PP-01 remains incomplete.
+**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P07 online workflow component-verified; final publication evidence linked from the P07 handover. PP-01 remains incomplete.
 
 ## Current direction
 
@@ -23,7 +23,7 @@ Dean has now adopted the independent [PPO-STD-001 naming standard](standards/nam
 
 ## Implemented foundation and remaining scope
 
-P01 adds a runnable local shell, strict synthetic identity, draft-ticket command, SQL migration/fixtures, reservation experiment and automated checks. [P01 handover](delivery/p01-handover.md) records exact versions, commands, execution limits and current verification/publication state. No operational source integration, migrated dataset, hosted environment or production service exists. All 30 full PT acceptance procedures remain Not run; P01 component tests are recorded separately.
+P01 adds a runnable local shell, strict synthetic identity, draft-ticket command, SQL migration/fixtures, reservation experiment and automated checks. [P01 handover](delivery/p01-handover.md) records exact versions, commands, execution limits and current verification/publication state. No operational source integration, migrated dataset, hosted environment or production service exists. At the P01 boundary all 30 full PT procedures were Not run; subsequent executions are recorded separately in delivery evidence.
 
 No paid service, repository visibility/membership change, source-system transaction, customer message or migration is performed by P01. MYOB and SharePoint configuration/authority remain unverified. Pipedrive, Smartsheet and native CAD retain their existing roles.
 

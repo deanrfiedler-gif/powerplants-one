@@ -1,6 +1,6 @@
 # ADR-0012 — P07 online technician evidence
 
-**Date:** 5 September 2026 · **Status:** Implementation in progress; no verification or acceptance claim. **Scope:** issue #32, SC-09/10, DAT-08, API-C12–14, online TR-09/10, PT-06 integrated and PT-13/14 components.
+**Date:** 5 September 2026 · **Status:** Implemented and component-verified; exact publication evidence in the P07 handover. No independent review, owner acceptance or production-readiness claim. **Scope:** issue #32, SC-09/10, DAT-08, API-C12–14, online TR-09/10, PT-06 integrated and PT-13/14 components.
 
 Keep the pinned TypeScript/Next.js/PostgreSQL stack and shared workspace transaction lock. No dependency upgrade is required. Each assigned technician records their own start, with a separate immutable authority snapshot and server receipt time. The appointment's first actual start changes its state to InProgress; it creates no other person's attendance or labour. Additional crew starts repeat current P06 readiness inside the same transaction. Ordinary P05 move/cancel commands continue to refuse started work. Scope changes and pack withdrawal retain evidence and hold further work; already-started technicians can record what happened against their original authority, visibly requiring review. This is evidence capture, not renewed authority to act.
 

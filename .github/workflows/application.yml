@@ -98,5 +98,6 @@ jobs:
           name: P07-browser-field-evidence
           path: |
             test-results/
+            verification-evidence/
             playwright-report/
           retention-days: 14

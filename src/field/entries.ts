@@ -211,7 +211,7 @@ export async function captureEntry(
           c,
           p,
           ctx,
-          `Review ${cmd.kind.toLowerCase()} evidence ${entry.id}: ${cmd.reason}`,
+          `Review ${cmd.kind.toLowerCase()}: ${String(cmd.payload.finding ?? cmd.payload.description ?? cmd.payload.reason ?? cmd.reason).slice(0, 400)}`,
           cmd.payload.movement_kind !== undefined
             ? "MaterialAction"
             : "TechnicalFollowUp",

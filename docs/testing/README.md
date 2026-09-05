@@ -14,7 +14,7 @@ Record execution status in [the foundation handover](../delivery/foundation-hand
 
 ## Prototype procedures
 
-[PP-01 acceptance](prototype-acceptance.md) provides 30 detailed synthetic procedures with a [structured catalogue](prototype-scenarios.json). All remain Not run. Parent scope coverage is bounded by the [disposition register](../prototype/traceability.csv); selected tests do not establish full-enterprise acceptance.
+[PP-01 acceptance](prototype-acceptance.md) provides 30 detailed synthetic procedures with a [structured catalogue](prototype-scenarios.json). The catalogue keeps authored Not run defaults; actual full-procedure results are maintained separately in delivery evidence. Parent scope coverage is bounded by the [disposition register](../prototype/traceability.csv); selected tests do not establish full-enterprise acceptance.
 
 ## P01 component evidence
 
@@ -38,7 +38,7 @@ The [P03 screenshot index](evidence/p03/README.md) preserves 38 inspected deskto
 
 ## P06 component verification
 
-[P06 handover](../delivery/p06-handover.md) records exact runs, counts, failed-run dispositions, output/source/template hashes and manual visual inspection. PT-06/07/18/23 components are distinct from full procedures. P07 start/capture and P09/P10 report/Finance dependencies remain incomplete; all full PT/AT statuses are retained.
+[P06 handover](../delivery/p06-handover.md) records exact runs, counts, failed-run dispositions, output/source/template hashes and manual visual inspection. PT-06/07/18/23 components are distinct from full procedures. At the P06 boundary, P07 start/capture and P09/P10 report/Finance dependencies were incomplete. P07 now supplies actual start and capture; its separate execution evidence below governs PT-06.
 
 ## P07 online component verification
 

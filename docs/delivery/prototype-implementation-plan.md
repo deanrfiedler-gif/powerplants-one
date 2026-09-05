@@ -1,6 +1,6 @@
 # PP-01 — Ordered prototype implementation plan
 
-**Edition:** r07 · **Status:** P01/P02 complete; P03 implemented with final component and publication evidence in its [handover](p03-handover.md); P04 component-verified with evidence in its [handover](p04-handover.md); P05 implemented with final verification/publication in its [handover](p05-handover.md); P06 implemented with exact verification/publication in its [handover](p06-handover.md); P07–P12 planned. All full PT procedures remain Not run; see [P01 component evidence](p01-handover.md).
+**Edition:** r08 · **Status:** P01/P02 complete; P03 implemented with final component and publication evidence in its [handover](p03-handover.md); P04 component-verified with evidence in its [handover](p04-handover.md); P05 implemented with final verification/publication in its [handover](p05-handover.md); P06 implemented with exact verification/publication in its [handover](p06-handover.md); P07 implemented with exact verification/publication in its [handover](p07-handover.md); P08–P12 planned. Full-procedure execution is recorded separately from the authored catalogue defaults.
 
 [Package](../prototype/README.md) · [Scope](../prototype/scope-and-journey.md) · [BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md).
 
@@ -71,7 +71,7 @@ No real customer message, ERP post, file migration or source cutover is hidden i
 | PPO-006 / #6 | FD-10 and selected FD-01/02/04 simulation contract | Real Finance definitions/ERP reconciliation remain D-017 |
 | PPO-007 / #7 | DAT-11 and OUT-09/10/14 issue/retention contract | Actual SharePoint/templates/retention remain unverified |
 | PPO-008 / #8 | Permissions, offline boundary, candidate measurements and recovery | Device/identity/security/NFR operational evidence still needed |
-| PPO-014 / #14 | Deterministic fixtures and 30 executable manual test procedures | All full PT procedures remain Not run; P01 component evidence is separate |
+| PPO-014 / #14 | Deterministic fixtures and 30 executable manual test procedures | Authored procedure defaults are not execution evidence; actual results are maintained in delivery handovers |
 | PPO-016 / #16 | Initial environment/release/restore/support plan | Costed hosting/support and live operating handover remain open |
 
 A completed design issue means its specified design deliverable exists, not that referenced parent requirements have been implemented. Live issue states and closing evidence are recorded separately after publication.

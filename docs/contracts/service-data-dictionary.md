@@ -1,6 +1,6 @@
 # PP-01 — Service data and choice dictionary
 
-**Edition:** r07 · **Status:** Logical contract; P01–P06 implement bounded subsets with explicit limits below. This is not an exported CREMS/MYOB schema.
+**Edition:** r08 · **Status:** Logical contract; P01–P07 implement bounded subsets with explicit limits below. This is not an exported CREMS/MYOB schema.
 
 [BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md) · [Finance](finance-handoff.md) · [Documents](document-issue-distribution.md).
 
