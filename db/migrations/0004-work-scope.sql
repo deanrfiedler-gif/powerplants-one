@@ -285,3 +285,13 @@ BEGIN
  RETURN NEW;
 END $$;
 CREATE TRIGGER assessment_policy BEFORE INSERT ON ppo.readiness_assessments FOR EACH ROW EXECUTE FUNCTION ppo.validate_readiness_policy();
+
+-- The approved order retains its original source junction, as well as its scope.
+CREATE FUNCTION ppo.protect_approved_ticket_link() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+ IF EXISTS(SELECT 1 FROM ppo.work_orders WHERE workspace_id=NEW.workspace_id AND id=NEW.work_order_id AND status='Authorised') THEN
+  RAISE EXCEPTION 'Approved work-order source linkage is immutable' USING ERRCODE='55000';
+ END IF;
+ RETURN NEW;
+END $$;
+CREATE TRIGGER approved_link_immutable BEFORE INSERT ON ppo.work_order_tickets FOR EACH ROW EXECUTE FUNCTION ppo.protect_approved_ticket_link();

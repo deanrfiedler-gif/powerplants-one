@@ -284,6 +284,14 @@ test("TR-02 accepts exact ready scope once, freezes source and atomically record
     await rows("SELECT * FROM ppo.scope_revisions WHERE id=$1", [id(91)])
   )[0];
   assert.equal(s.approved_by, owner);
+  assert.equal(s.approved_snapshot.tickets[0].id, ticket);
+  assert.equal(s.approved_snapshot.tickets[0].version, 1);
+  await assert.rejects(
+    database().query(
+      "INSERT INTO ppo.work_order_tickets(workspace_id,company_id,site_id,work_order_id,ticket_id,issue_disposition) VALUES($1,$2,$3,$4,$5,'SYN attempted extra source after approval')",
+      [p.workspace_id, company, site, id(90), id(40, 10)],
+    ),
+  );
   assert.equal(
     s.approved_snapshot.financial_disposition,
     "PendingFinanceReview",

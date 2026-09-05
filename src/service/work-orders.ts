@@ -872,6 +872,13 @@ export async function authoriseWorkOrder(
         site,
         customer_id: w.customer_id,
         service_owner_id: w.service_owner_id,
+        work_order_version: w.version,
+        tickets: (
+          await c.query(
+            "SELECT t.id,t.display_number,t.version,t.status,l.issue_disposition FROM ppo.work_order_tickets l JOIN ppo.tickets t ON (t.workspace_id,t.id)=(l.workspace_id,l.ticket_id) WHERE l.workspace_id=$1 AND l.work_order_id=$2 ORDER BY t.id",
+            [p.workspace_id, w.id],
+          )
+        ).rows,
         revision: r.revision,
         scope_version: r.version,
         summary: r.summary,
