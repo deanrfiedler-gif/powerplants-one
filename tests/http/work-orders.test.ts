@@ -81,7 +81,7 @@ test("P04 HTTP routes expose safe scoped work-order detail, stage blockers and i
     409,
   );
   assert.ok(!JSON.stringify(detail.body).includes("erp_company_id"));
-  assert.ok(!JSON.stringify(detail.body).includes("000Ab-C.01"));
+  assert.ok(!JSON.stringify(detail.body).includes("erp_connection_id"));
 });
 test("P04 HTTP rejects spoofed authority, unknown routes and inaccessible direct IDs/lists/selectors", async () => {
   const systems = await session("systems"),

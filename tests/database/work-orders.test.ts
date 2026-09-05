@@ -658,7 +658,12 @@ test("cross-site/company substitution and ReviewRequired configuration are refus
     code("AuthorisationBlocked"),
   );
   const dto = JSON.stringify(await order());
-  assert.ok(!dto.includes("000Ab-C.01"));
+  assert.ok(!dto.includes("erp_connection_id"));
+  assert.ok(!dto.includes("billing_mapping_id"));
+  assert.equal(
+    (await order()).scopes[0].items[0].assets[0].serial,
+    "000Ab-C.01",
+  );
   assert.ok(!dto.includes("erp_company_id"));
 });
 test("injected scope/order/audit/receipt/outbox failures roll authorisation back without partial approval", async () => {

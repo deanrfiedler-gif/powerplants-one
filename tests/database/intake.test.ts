@@ -267,7 +267,10 @@ test("scoped search/traversal, same-name organisations, shared contacts, exact k
     }),
     code("RecordUnavailable"),
   );
-  assert.equal((await listTickets(siteOnly)).items.length, 1);
+  assert.deepEqual(
+    (await listTickets(siteOnly)).items.map((t) => t.id).sort(),
+    [id(40, 10), id(40, 20)].sort(),
+  );
   await assert.rejects(readIntake(siteOnly, id(40)), code("RecordUnavailable"));
   assert.equal((await listTickets(b)).items.length, 1);
   await assert.rejects(readIntake(b, id(40, 10)), code("RecordUnavailable"));
@@ -347,8 +350,13 @@ test("incomplete urgent intake saves explicit unknowns; invalid and valid TR-01 
   await triageTicket(p, direct.id, { ...base(), expected_version: 1 });
   assert.equal((await readIntake(p, direct.id)).status, "Triaged");
   assert.equal(
-    (await rows("SELECT to_regclass('ppo.work_orders') AS table"))[0].table,
-    null,
+    (
+      await rows(
+        "SELECT count(*)::int n FROM ppo.work_order_tickets WHERE ticket_id=$1",
+        [direct.id],
+      )
+    )[0].n,
+    0,
   );
 });
 
