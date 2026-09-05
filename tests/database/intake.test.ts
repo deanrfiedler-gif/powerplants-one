@@ -366,9 +366,15 @@ test("activity lifecycle requires owned outcomes/reasons and distinguishes due-n
       (x) => x.id === id(85),
     ),
   );
+  const future = {
+    ...activity(),
+    due_at: new Date(Date.now() + 86400000).toISOString(),
+    due_needed: false,
+  };
+  await createActivity(p, future);
   assert.ok(
     (await listActivities(p, { due: "Upcoming", status: "Active" })).items.some(
-      (x) => x.id === id(85, 5),
+      (x) => x.id === future.id,
     ),
   );
   await assert.rejects(

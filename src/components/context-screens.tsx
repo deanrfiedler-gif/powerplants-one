@@ -186,7 +186,7 @@ export function ContextList({
         hint="Names remain separate records. Equipment search also checks reference, model and serial."
       />
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-      {r.data && (
+      {r.data && !r.error && (
         <>
           <Observed envelope={r.data} />
           {r.data.items.length === 0 ? (
@@ -263,7 +263,7 @@ function RelatedActivities({ type, id }: { type: string; id: string }) {
     <section className="detail-section">
       <h2>Owned follow-up</h2>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-      {r.data && (
+      {r.data && !r.error && (
         <>
           {r.data.items.length === 0 ? (
             <p>No permitted linked activities have been recorded.</p>
@@ -306,7 +306,7 @@ function HistoryList({ path }: { path: string }) {
         original attribution. A previous attempt is not proof of resolution.
       </p>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-      {r.data && (
+      {r.data && !r.error && (
         <>
           {r.data.items.length === 0 ? (
             <p>No permitted history has been recorded.</p>
@@ -370,7 +370,7 @@ function DuplicateCandidates({ record }: { record: Shared }) {
     <section className="detail-section">
       <h2>Possible duplicate organisations</h2>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-      {r.data && (
+      {r.data && !r.error && (
         <>
           {r.data.items.filter((x) => x.id !== record.id).length === 0 ? (
             <p>No other permitted matching names were found in this page.</p>

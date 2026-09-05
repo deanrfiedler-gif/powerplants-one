@@ -73,7 +73,7 @@ export function TicketList() {
         />
       </div>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-      {r.data && (
+      {r.data && !r.error && (
         <>
           <Observed envelope={r.data} />
           {r.data.items.length === 0 ? (

@@ -346,7 +346,7 @@ export async function requestInformation(
         links: [{ object_type: "Ticket", object_id: id }],
       };
       await authoriseActivityInput(c, p, follow);
-      await scopedOwner(
+      const triageOwner = await scopedOwner(
         c,
         p,
         t.triage_owner_id,
@@ -354,6 +354,7 @@ export async function requestInformation(
         t.site_id ?? undefined,
         "service.ticket.edit",
       );
+      await visibleTicket(c, triageOwner, t.id);
       return { t, follow };
     },
     async (c, { t, follow }) => {
@@ -479,7 +480,7 @@ export async function triageTicket(p: Principal, id: string, input: unknown) {
           "Forbidden",
           "This identity cannot triage service requests.",
         );
-      await scopedOwner(
+      const triageOwner = await scopedOwner(
         c,
         p,
         t.triage_owner_id,
@@ -487,6 +488,7 @@ export async function triageTicket(p: Principal, id: string, input: unknown) {
         t.site_id ?? undefined,
         "service.ticket.edit",
       );
+      await visibleTicket(c, triageOwner, t.id);
       const activity = t.clarification_activity_id
         ? await visibleActivity(c, p, t.clarification_activity_id)
         : null;

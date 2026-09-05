@@ -100,6 +100,7 @@ export function useCommand() {
   const [busy, setBusy] = useState(false),
     [error, setError] = useState<unknown>(null),
     [saved, setSaved] = useState("");
+  const uncertain = useRef(false);
   const pending = useRef<{ key: string; body: Record<string, unknown> } | null>(
     null,
   );
@@ -108,14 +109,11 @@ export function useCommand() {
     fields: Record<string, unknown>,
   ): Promise<T | null> {
     const key = JSON.stringify({ path, fields });
-    if (
-      pending.current &&
-      pending.current.key !== key &&
-      (error as Failure)?.retryable
-    ) {
+    if (pending.current && pending.current.key !== key && uncertain.current) {
       setError({
         message:
           "First retry the unchanged pending action to confirm its result. Restore the submitted values, or compare the saved record before starting a new action.",
+        retryable: true,
       });
       return null;
     }
@@ -134,11 +132,13 @@ export function useCommand() {
     try {
       const result = await api<T>(path, pending.current.body);
       pending.current = null;
+      uncertain.current = false;
       setSaved("Saved to the server.");
       return result;
     } catch (e) {
       setError(e);
-      if (!(e as Failure).retryable) pending.current = null;
+      uncertain.current = !!(e as Failure).retryable;
+      if (!uncertain.current) pending.current = null;
       return null;
     } finally {
       setBusy(false);
@@ -151,6 +151,7 @@ export function useCommand() {
     saved,
     clear: () => {
       pending.current = null;
+      uncertain.current = false;
       setError(null);
       setSaved("");
     },

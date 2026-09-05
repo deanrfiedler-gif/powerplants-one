@@ -141,6 +141,7 @@ export async function ownerOptions(p: Principal, input: unknown = {}) {
         if (t) await visibleTicket(c, owner, t.id);
       }
       if (purpose === "Activity") {
+        if (t) await visibleTicket(c, owner, t.id);
         if (
           !(await hasPermission(
             c,
