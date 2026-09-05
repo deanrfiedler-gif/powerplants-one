@@ -38,3 +38,7 @@ Validation results are recorded after running `scripts/check_foundation.py` and 
 All 30 prototype procedures remain Not run. No application is installed, hosted or connected to live business systems. No actual MYOB/SharePoint/CAD/Pipedrive/Smartsheet configuration has been revalidated by this package. Runtime versions, architecture feasibility, real devices, business authority, source mappings, financial definitions, document retention, costed hosting and operational support remain explicit obligations.
 
 The immediate next implementation task is [P01](../delivery/prototype-implementation-plan.md#4-p01-implementation-brief). The package is complete as an authored, traceable design basis; implementation proofs and later operational decisions remain visible rather than being claimed satisfied by document completeness.
+
+## P05 component verification
+
+[P05 handover](../delivery/p05-handover.md) records the exact SQL/HTTP/browser checks, failed-run disposition and publication state for SC-07/SC-08, TR-03/08/16 and PT-08/09/10/26 components. Existing P04 upgrade tests explicitly retain their P04 migration boundary; a separate P05 upgrade test compares original PostgreSQL snapshots including microseconds, receipts/checksums/revocations. No full PT or AT status is promoted. P06/P07 issued-pack/actual-work dependencies remain absent. Original screenshot provenance and manual inspection are recorded with the final P05 evidence.

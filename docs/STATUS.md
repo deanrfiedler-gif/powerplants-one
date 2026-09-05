@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P04 work scope, coverage and readiness component-verified; verification/publication evidence in the handover. PP-01 remains incomplete.
+**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P05 planner and controlled changes implemented; final verification/publication in progress. PP-01 remains incomplete.
 
 ## Current direction
 
@@ -43,7 +43,11 @@ P03 delivers SC-01–SC-04 business views, owned Activity/ActivityLink, additive
 
 P04 under [issue #26](https://github.com/deanrfiedler-gif/powerplants-one/issues/26) and [PR #27](https://github.com/deanrfiedler-gif/powerplants-one/pull/27) implements SC-05: explicit ticket junction, scoped work orders, immutable approved revisions, items/assets/identification limits, manual synthetic authority, distinct coverage, server-controlled readiness and Proposed visits. [ADR-0009](decisions/ADR-0009-p04-work-scope-readiness.md) defines the small physical/contract amendments, including the known-site identification boundary and no financial disposition. The [P04 handover](delivery/p04-handover.md) is the actual test/visual/publication record; independent review and owner acceptance are not implied.
 
-The next bounded task is **P05 — Planner and controlled changes**, with a [prepared starter prompt](delivery/p05-starter-prompt.md). P05 has not started. Appointment confirmation, resource reservation, planner and controlled changes remain unimplemented. Packs, field execution, offline queues, reports, Finance processing and live integrations remain P06+. Follow P01–P12 in order. All full PT/AT procedures and the complete PP-01 journey remain incomplete.
+## P05 delivery and P06 preparation
+
+P05 under [issue #28](https://github.com/deanrfiedler-gif/powerplants-one/issues/28) / [PR #29](https://github.com/deanrfiedler-gif/powerplants-one/pull/29) implements SC-07/SC-08 and bounded TR-03/08/16: typed fictional crew/calendar/skills/availability, explicit travel reservations, controlled confirmation/moves/requests/cancellation, manual/simulated contact and owned follow-up. The [P05 handover](delivery/p05-handover.md) records actual verification, failed-run dispositions, source/merge evidence and limitations; [ADR-0010](decisions/ADR-0010-p05-planner-controlled-changes.md) records the conservative synthetic policy and immutable source bundles.
+
+P04 authority and original proposals remain exact. Booking changes never clear dispatch hold, create customer acknowledgement or financial disposition. P06 preparation/review consequences exist without fabricated pack records. The next bounded task is **P06 — Job-pack generation, issue and acknowledgement**, with a [prepared starter prompt](delivery/p06-starter-prompt.md). P06 has not started. Packs, field execution, offline queues, reports, Finance processing, live integration/hosting and all full PT/AT/PP-01 acceptance remain incomplete. No independent review or owner acceptance is implied.
 
 ## Repository and publication controls
 

@@ -152,6 +152,29 @@ test("P05 additive upgrade preserves exact P04 proposal bytes, receipts, source 
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(4);
   await seed(4);
+  const oldActor = await p(),
+    oldOrder = (await readWorkOrder(oldActor, id(90, 2))).items[0],
+    oldScope = oldOrder.scopes.find(
+      (x) => x.id === oldOrder.authorised_scope_revision_id,
+    )!;
+  const originalOperation = {
+    ...base(),
+    id: randomUUID(),
+    expected_version: oldOrder.version,
+    scope_revision_id: oldScope.id,
+    scope_version: oldScope.version,
+    start_at: "2026-09-17T00:00:00Z",
+    end_at: "2026-09-17T02:00:00Z",
+    customer_commitment: "Proposed",
+    preparation_status: "Preparing",
+  };
+  await proposeVisit(oldActor, oldOrder.id, originalOperation);
+  const originalEvidence: Record<string, unknown[]> = {};
+  for (const table of ["audit_events", "operation_receipts", "outbox_jobs"])
+    originalEvidence[table] = await rows(
+      `SELECT to_jsonb(t) evidence FROM ppo.${table} t WHERE operation_id=$1`,
+      [originalOperation.operation_id],
+    );
   const before = await rows(
       "SELECT id,to_jsonb(a) snapshot FROM ppo.appointments a ORDER BY id",
     ),
@@ -166,6 +189,14 @@ test("P05 additive upgrade preserves exact P04 proposal bytes, receipts, source 
   );
   await migrate();
   await seed();
+  for (const table of ["audit_events", "operation_receipts", "outbox_jobs"])
+    assert.deepEqual(
+      await rows(
+        `SELECT to_jsonb(t) evidence FROM ppo.${table} t WHERE operation_id=$1`,
+        [originalOperation.operation_id],
+      ),
+      originalEvidence[table],
+    );
   for (const a of before) {
     const original = (
       await rows(
@@ -329,6 +360,32 @@ test("simultaneous same-appointment changes reject stale input; failed move leav
   assert.equal(a.pack_requirement, "ReviewRequired");
   assert.equal(a.dispatch_hold, true);
   assert.equal(a.followups.length, 2);
+  await moveAppointment(actor, a.id, {
+    ...(await cmd(1, crew(1, 5))),
+    start_at: "2026-09-24T04:00:00Z",
+    end_at: "2026-09-24T05:00:00Z",
+  });
+  const reassigned = await appointment(1);
+  assert.deepEqual(
+    reassigned.assignments
+      .filter((x) => x.active)
+      .map((x) => x.resource_id)
+      .sort(),
+    [id("a4", 1), id("a4", 5)],
+  );
+  assert.equal(
+    reassigned.assignments.find((x) => x.resource_id === id("a4", 2))!.active,
+    false,
+  );
+  assert.equal(
+    (
+      await rows(
+        "SELECT count(*)::int n FROM ppo.resource_reservations r JOIN ppo.assignments x ON x.id=r.assignment_id WHERE x.appointment_id=$1 AND r.active",
+        [a.id],
+      )
+    )[0].n,
+    2,
+  );
 });
 test("half-open adjacency permits exact buffered boundary and refuses overlapping travel", async () => {
   const actor = await p();

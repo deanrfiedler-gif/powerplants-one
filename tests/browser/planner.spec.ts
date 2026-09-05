@@ -156,6 +156,18 @@ test("P05 SC-07 day/week lanes, explicit filters, empty/error and keyboard focus
     page.getByRole("heading", { name: "Service planner", exact: true }),
   ).toBeVisible();
   await capture(page, info, "week");
+  if (info.project.name.startsWith("mobile")) {
+    const strip = page.getByRole("region", {
+      name: "SYN Alex Lead days",
+      exact: true,
+    });
+    await strip.focus();
+    await page.keyboard.press("ArrowRight");
+    await expect
+      .poll(() => strip.evaluate((el) => el.scrollLeft))
+      .toBeGreaterThan(0);
+    await capture(page, info, "week-keyboard-scroll");
+  }
   await page.getByRole("button", { name: "Day", exact: true }).click();
   await capture(page, info, "day");
   const move = page
@@ -362,6 +374,16 @@ test("P05 controlled move conflict keeps original position; uncertain accepted r
   await dialog
     .getByRole("button", { name: "Use reviewed current versions" })
     .click();
+  await dialog.getByLabel("Start (site time)").fill("2026-09-21T10:00");
+  await dialog.getByLabel("Finish (site time)").fill("2026-09-21T12:00");
+  await dialog.getByRole("button", { name: "Save proposed move" }).click();
+  await expect(dialog.locator(".business-error[role=alert]")).toContainText(
+    "reserved",
+  );
+  expect((await call(page, "appointments/" + aid)).items[0].start_at).toContain(
+    day,
+  );
+  await capture(page, info, "crew-conflict-original-retained");
   const target = info.project.name.startsWith("mobile")
     ? "2026-10-13"
     : "2026-10-12";

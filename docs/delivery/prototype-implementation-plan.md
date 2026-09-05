@@ -1,6 +1,6 @@
 # PP-01 — Ordered prototype implementation plan
 
-**Edition:** r05 · **Status:** P01/P02 complete; P03 implemented with final component and publication evidence in its [handover](p03-handover.md); P04 component-verified with evidence in its [handover](p04-handover.md); P05–P12 planned. All full PT procedures remain Not run; see [P01 component evidence](p01-handover.md).
+**Edition:** r06 · **Status:** P01/P02 complete; P03 implemented with final component and publication evidence in its [handover](p03-handover.md); P04 component-verified with evidence in its [handover](p04-handover.md); P05 implemented with final verification/publication in its [handover](p05-handover.md); P06–P12 planned. All full PT procedures remain Not run; see [P01 component evidence](p01-handover.md).
 
 [Package](../prototype/README.md) · [Scope](../prototype/scope-and-journey.md) · [BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md).
 
@@ -96,6 +96,12 @@ The next separately authorised task is P04: SC-05 work scope, coverage, authorit
 
 ## P04 delivery boundary and next P05 prerequisite
 
-P04 implements SC-05, DAT-05 and the Authorisation/Proposed portion of DAT-06 through API-C03 and documented supporting commands. See [ADR-0009](../decisions/ADR-0009-p04-work-scope-readiness.md), [P04 component evidence/publication](p04-handover.md) and the [P05 starter](p05-starter-prompt.md). P03 known-site triage remains exact; known-site Identification plans do not enable site-less intake. Scope successors preserve approved originals and hold old proposal context for later review. P05 remains unimplemented and needs a separate task instruction.
+P04 implements SC-05, DAT-05 and the Authorisation/Proposed portion of DAT-06 through API-C03 and documented supporting commands. See [ADR-0009](../decisions/ADR-0009-p04-work-scope-readiness.md), [P04 component evidence/publication](p04-handover.md) and the [P05 starter](p05-starter-prompt.md). P03 known-site triage remains exact; known-site Identification plans do not enable site-less intake. Scope successors preserve approved originals and hold old proposal context for later review. P05 is now implemented under its separately authorised task; its maintained amendment and handover govern current scheduling behaviour.
 
 P04 does not deliver typed material requisitions/stock/shortage processing within SCM-01/SCM-06. Its controlled tool-preparation evidence and scope-review flags contribute only to SCM-08. Earlier package mappings identify dependencies, not proof that every mapped parent is complete. PT-03/PT-04/PT-05 components are separately evidenced; full acceptance remains Not run.
+
+## P05 delivery boundary and next P06 prerequisite
+
+[ADR-0010](../decisions/ADR-0010-p05-planner-controlled-changes.md) and [P05 handover](p05-handover.md) record SC-07/SC-08 controlled bookings/changes, real whole-crew reservation constraints, exact evidence, typed contact/requests and cancellation. PT-08/09/10/26 components are separately evidenced; no full procedure or parent requirement is marked complete. Source calendars/skills/availability are immutable synthetic bundles. Dispatch remains held pending real P06 pack/acknowledgement evidence; customer date agreement is separate.
+
+[P06 starter](p06-starter-prompt.md) prepares nine-section job packs, durable exact document output/issue and per-assignment acknowledgement. It requires verified P05 publication, avoids circular preparation/dispatch gates, preserves P05 scheduling consequences and acknowledges the P07 actual-start dependency. P06 is not started and has no implementation issue from this increment.

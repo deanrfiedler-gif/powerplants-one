@@ -1395,6 +1395,12 @@ export function PlannerScreen() {
             <span>Proposed = no capacity reserved</span>
             <span>Dispatch remains held</span>
           </p>
+          {mode === "week" && (
+            <p className="planner-scroll-hint">
+              Scroll within each resource lane to compare days. Keyboard: focus
+              the days and use arrow keys, or choose Day.
+            </p>
+          )}
           <section
             className={`planner-board ${mode}`}
             aria-label={`${mode === "week" ? "Week" : "Day"} resource planner`}
@@ -1458,6 +1464,9 @@ export function PlannerScreen() {
                 </header>
                 <div
                   className="lane-days"
+                  tabIndex={mode === "week" ? 0 : undefined}
+                  role="region"
+                  aria-label={`${r.name} days`}
                   style={
                     { "--planner-days": days.length } as React.CSSProperties
                   }

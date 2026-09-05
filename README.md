@@ -2,7 +2,7 @@
 
 Private prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P04 work scope, coverage and readiness component-verified; component/publication record in the handover · **Deployment:** none.
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P05 planner and controlled changes implemented; final verification/publication in progress · **Deployment:** none.
 
 This repository is Dean's personal private prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. The complete service journey remains planned. Company ownership, production approval and external-system write authority are not implied.
 
@@ -37,12 +37,12 @@ MYOB Acumatica remains the intended authoritative ERP. SharePoint remains the in
 | `docs/decisions/` | Current decision register and architecture decision records |
 | `docs/requirements/` | All 78 parent requirements with source/release/test linkage |
 | `docs/architecture/` | BP-02 architecture recommendation, boundaries and feasibility obligations |
-| `docs/testing/` | Full acceptance catalogue, P01/P02/P03/P04 component evidence and dependency inventory |
+| `docs/testing/` | Full acceptance catalogue, P01–P05 component evidence and dependency inventory |
 | `docs/delivery/` | Backlog, first-release plan and foundation handover |
 | `.github/` | Issue forms, pull-request template, documentation and application assurance workflows |
 | `scripts/` | Repository assurance, local launcher, database lifecycle and persistence proof |
 
-Application code is in `src/`, explicit SQL migrations and fixtures are in `db/`, and runtime checks are in `tests/`. See [P04 setup, verification and handover](docs/delivery/p04-handover.md) and [ADR-0006](docs/decisions/ADR-0006-p01-local-foundation.md) for the local-only implementation and limits.
+Application code is in `src/`, explicit SQL migrations and fixtures are in `db/`, and runtime checks are in `tests/`. See [P05 setup, verification and handover](docs/delivery/p05-handover.md) and [ADR-0006](docs/decisions/ADR-0006-p01-local-foundation.md) for the local-only implementation and limits.
 
 ## Run the local application
 
@@ -64,4 +64,4 @@ python3 scripts/check_naming.py
 
 The check verifies reference hashes, register counts/IDs, local Markdown links and selected repository hygiene. It is not an application, security or business-acceptance test. The GitHub workflow runs the same check with read-only repository permissions; enforcement through branch protection is a separate account/settings matter.
 
-Use [Issues](https://github.com/deanrfiedler-gif/powerplants-one/issues) for development work and [pull requests](https://github.com/deanrfiedler-gif/powerplants-one/pulls) for reviewable changes. P01/P02/P03 are component-verified; P04 adds exact scope approval, coverage, authority, stage-specific readiness and Proposed visits. Its actual verification/publication state is recorded in the [P04 handover](docs/delivery/p04-handover.md). P05 is the next bounded task in the [ordered prototype plan](docs/delivery/prototype-implementation-plan.md).
+Use [Issues](https://github.com/deanrfiedler-gif/powerplants-one/issues) for development work and [pull requests](https://github.com/deanrfiedler-gif/powerplants-one/pulls) for reviewable changes. P01–P04 are component-verified. P05 adds controlled crew confirmation/reservations, day/week planning, accessible moves, contact/change requests and cancellation. Its actual verification/publication state is recorded in the [P05 handover](docs/delivery/p05-handover.md). [P06 is prepared](docs/delivery/p06-starter-prompt.md) and remains unimplemented. The complete PP-01 journey remains incomplete.

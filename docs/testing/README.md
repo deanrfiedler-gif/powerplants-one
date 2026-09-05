@@ -29,3 +29,7 @@ The [P02 handover](../delivery/p02-handover.md) records upgrade/fresh setup, per
 The [P03 handover](../delivery/p03-handover.md) records actual source commits, CI environments, commands, results and limitations for customer/context traversal, intake/owned clarification, activities, authority/projections, competing updates, retries, rollback, upgrade/seed/reset/restart and browser recovery. [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md) records the narrower P03 gates and deferred ContactOutcome. Full PT-01–04/PT-25 and AT acceptance remain Not run. Screenshots supplement real PostgreSQL and HTTP proof.
 
 The [P03 screenshot index](evidence/p03/README.md) preserves 38 inspected desktop/mobile captures with a hash/provenance manifest. Source run 33949129677 passed 4 unit, 29 PostgreSQL, 4 HTTP and 12 Chromium cases. The linked delivery issue records final PR and merged-main publication checks.
+
+## P05 component verification
+
+[P05 handover](../delivery/p05-handover.md) records the exact SQL/HTTP/browser checks, failed-run disposition and publication state for SC-07/SC-08, TR-03/08/16 and PT-08/09/10/26 components. Existing P04 upgrade tests explicitly retain their P04 migration boundary; a separate P05 upgrade test compares original PostgreSQL snapshots including microseconds, receipts/checksums/revocations. No full PT or AT status is promoted. P06/P07 issued-pack/actual-work dependencies remain absent. Original screenshot provenance and manual inspection are recorded with the final P05 evidence.

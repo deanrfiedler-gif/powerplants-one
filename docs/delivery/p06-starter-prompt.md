@@ -1,0 +1,41 @@
+# P06 — Job-pack generation, issue and acknowledgement: prepared task
+
+**Prepared:** 5 September 2026 · **Status:** Next bounded task; not started by P05. This document is preparation, not evidence of P05 merge or authority to begin P06 without a new task instruction.
+
+Act as senior full-stack developer, architect, product designer, business analyst and quality engineer for Dean Fiedler's personal private **Powerplants One (PPO)** prototype. Implement only P06 from the maintained ordered plan, carry it through verified reviewable repository handover, prepare P07 and stop. Use synthetic data only.
+
+## Verify the maintained baseline first
+
+Repository: `https://github.com/deanrfiedler-gif/powerplants-one`. P05 is issue **#28**, PR **#29**, branch `feature/p05-planner-controlled-changes`. Read [P05 handover](p05-handover.md) and its linked publication record for exact final head/tree, merge SHA/tree and merged-main checks. Do not treat this prepared prompt as merge evidence. Verify connected user, private visibility/current permissions, main SHA/tree, issue/PR state, later commits and any existing P06 work. Inspect/preserve unrelated local work. Resolve or identify an incomplete P05 dependency before claiming P06 ready. Do not change visibility/membership/access/branch rules or paid services.
+
+Read AGENTS, README, STATUS, PPO-STD-001, ordered plan, BP-02/BP-07, ADR-0009/0010, dictionary/API, [document issue/distribution contract](../contracts/document-issue-distribution.md), acceptance catalogue, relevant registers and existing SQL/domain/permission/audit/receipt/outbox/seed code. Preserve all issued source bytes and all 78 parent identities. Current user decisions and maintained amendments override older assumptions. Record material architecture/contract choices with an ADR.
+
+## Deliver the bounded P06 increment
+
+Implement SC-06/SC-14, DAT-07 and minimum DAT-11 support, OUT-09, API-C08–11, TR-04–07 and EVT-04/05. Deliver nine-section synthetic job-pack preparation, check/return, exact source/template manifest, durable render job, issue/recipient/distribution facts, per-assignment acknowledgement and controlled amendment/withdrawal. Keep customer reports and Finance outputs at contract boundaries for P09/P10; no fake report, handoff or field-work implementation.
+
+Choose a supported renderer from primary documentation, check licence/runtime compatibility and pin dependencies. Produce readable accessible HTML previews and controlled A4 PDFs from one reviewed source snapshot. Use restrained navy/green text branding and explicit **Synthetic prototype — not for operational use**. No fabricated approved logo/address/certification/legal clause/signature policy. Follow exact SYN-PPO record/revision naming while UUID/provider/version/hash remain identity. Inspect all original PDF pages at desktop/phone HTML and long-content/multi-page cases; preserve exact files and source/run/hash provenance. Do not assume a browser-generated PDF is accessible without specific evidence.
+
+Implement a replaceable synthetic document adapter storing fictional source/output bytes durably in a private local directory outside Git, with stable IDs, versions, byte count/hash and retrieval checks. Preserve existing P04 small immutable text evidence and its accepted receipts. Never replace an unavailable historical source with latest content silently. Distinguish generated, checked, queued, durable, issued, sent/simulated, delivered/opened and explicitly acknowledged.
+
+Issue must first persist an idempotent render intent, then render/store/verify bytes, recheck current scope/appointment/assignment/recipients/policy permissions, and only then atomically commit immutable issue/pointer and durable recipient tasks. A queued job/202/timeout is not Issued. Reconcile storage success plus database failure by original operation/hash; retry must not duplicate file/issue/recipient tasks. Retain attempt/recovery ownership, stale-source failure and exact prior output. No email/SMS/calendar message is sent.
+
+## Preserve P04/P05 authority and avoid circular gates
+
+Current scope and authorised scope are distinct. A successor Draft is no extra-work authority. Approved scope, source hashes, readiness/policy evidence and original proposals remain immutable. P05 Confirmed appointments reserve the complete typed crew; Pending ScheduleChangeRequest reserves nothing. Preserve assignment/schedule versions, half-open buffers, exact booking snapshots, reservations, contact outcomes, owned follow-up, operation hashes and receipts.
+
+P05 dispatch holds remain true because packs/acknowledgements do not yet exist. Evolve the hold only through actual P06 issue and recipient evidence plus applicable non-waivable controls. Pack preparation/check must be possible while dispatch is held; do not require an already-issued pack or all acknowledgements to prepare/check/issue it. P04 scope Authorisation is not appointment Dispatch readiness. Tool-preparation exceptions cannot waive competency/site access/isolation/shutdown authority.
+
+For a confirmed date/time/crew change, apply the P05 ReviewRequired consequence to real P06 pack/assignment evidence atomically or through durable owned reconciliation with immediate hold. Scope/material amendments and withdrawal preserve original issued bytes and revoke applicability through explicit successor/status events. Old-issue acknowledgement cannot satisfy a new issue; one crew member cannot acknowledge for another. A replacement crew requires its own current recipient assignment and acknowledgement. A customer ContactOutcome Confirmed is a manually recorded date agreement, never pack acknowledgement.
+
+P07 actual start/capture is absent. Implement and challenge the P06 dispatch-readiness/acknowledgement component guard without inventing attendance. PT-06's final actual-start step remains a P07 integrated dependency. P05 cancellation markers enforce actual-work refusal; extend cancellation consequences to real issued packs without erasing issued/financial/history evidence. Do not add field labour, offline queue or completion/report workflow merely to claim a full PT pass.
+
+## Verify, publish and stop
+
+Use one focused P06 implementation issue and dedicated branch after checking duplicates. Continue server-derived identity, capability plus record/assignment/file scope, narrow fields, expected versions, atomic audit/receipts/outbox, same-404 errors and additive forward migration/non-destructive seed. Preserve earlier checks and exact hashes; any replaced boundary assertion needs a business-equivalent replacement.
+
+Run all three maintained Python checks, npm check, real PostgreSQL upgrade/repeat-seed/reset/restart, HTTP and browser suites. Challenge concurrent issue/acknowledgement, same operation retry/changed reuse, stale source/template/assignment during rendering, storage and finalisation failures, exact old bytes after amendment/withdrawal, scoped direct preview/download/manifest/receipt traversal, audience filtering including metadata/attachment names, two independent recipient acknowledgements, cancellation and P05 move consequences. Manually inspect original output pages and screenshots with exact provenance.
+
+PT-06/07/18/23 are component obligations. PT-18/23 include later report/Finance and integrated dependencies; full procedure Passed requires every precondition and step to exist and execute. All full PT/AT remain incomplete unless exact later evidence proves otherwise. Component-verified, independently reviewed, owner-accepted and production-ready are separate claims.
+
+PR/handover must explain outcome, scope/exclusions, choices, compatible migration/seed, endpoints/fields/capabilities, source IDs, exact runtime/dependencies, commands, counts/results, failed-run dispositions, screenshots/output provenance, operational limits and next boundary. Recheck actual checks/review/thread/rules before normal merge, then verify exact main SHA/tree and merged-main checks; maintain publication evidence without circular self-SHA claims. Stop after P06 and prepare **P07 — Technician online workflow and capture**. No hosting, production migration, live ERP/SharePoint, P07–P12 implementation or customer communication is authorised by this prepared document.

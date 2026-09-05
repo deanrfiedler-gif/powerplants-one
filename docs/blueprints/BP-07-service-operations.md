@@ -1,8 +1,18 @@
 # BP-07 — Service Operations Functional & Build Blueprint
 
-**Edition:** r03 · **Date:** 5 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
+**Edition:** r04 · **Date:** 5 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
 
-**Status:** Functional specification with the bounded P03/P04 SC-01–SC-05 implementation amendments below. Later workflows and full acceptance remain incomplete. [Package](../prototype/README.md) · [Dictionary](../contracts/service-data-dictionary.md) · [API](../contracts/service-api.md) · [Acceptance](../testing/prototype-acceptance.md).
+**Status:** Functional specification with the bounded P03–P05 SC-01–SC-05/SC-07/SC-08 implementation amendments below. Later workflows and full acceptance remain incomplete. [Package](../prototype/README.md) · [Dictionary](../contracts/service-data-dictionary.md) · [API](../contracts/service-api.md) · [Acceptance](../testing/prototype-acceptance.md).
+
+## P05 implementation amendment
+
+SC-07/SC-08 now coordinate day/week resource lanes and exact Appointment/WorkOrder identities through TR-03/TR-08/TR-16. [ADR-0010](../decisions/ADR-0010-p05-planner-controlled-changes.md), the [P05 API amendment](../contracts/service-api.md#p05-implementation-amendment--current-bounded-contract) and [handover](../delivery/p05-handover.md) define the delivered subset and actual evidence. Date/display/site timezone, observed versions, proposed demand, reserved travel periods, published calendars, availability, skill evidence and next permitted actions remain explicit. Reads are bounded/scoped; failed reads never imply free capacity.
+
+Confirmation rechecks authorised current scope, successor impact, exact policy/versions, customer window/agreement, complete crew, competency validity, calendar/leave/travel/conflicts and Booking readiness. PostgreSQL reserves all crew atomically. Dragging opens a reviewed proposal, with equivalent keyboard Move/Reassign; refusal retains original booking and entered proposal. The form can inspect current saved versions, then explicitly rebase; an uncertain accepted result first requires original receipt recovery. Urgency bypasses no gate.
+
+Manual/project/assigned-technician change requests remain Pending without modifying reservations. Authorised acceptance reruns booking guards and records immutable decision/history. Moves and cancellation create owned contact/preparation review consequences with dispatch held. P06 packs and crew acknowledgements do not exist; no pack ID or sent message is fabricated. Contact attempts, customer date agreement, confirmed booking, dispatch and actual attendance remain separate. Actual-work markers are a refusal interface challenged by component fixtures only.
+
+SR-05/06/07/19/20 and VAL-05/06/07/08/21/22 are applied in this bounded contract. Published synthetic resource/calendar/skill/availability bundles are immutable and have no edit endpoint. Non-waivable P04 controls, exact identification limits and coverage independence remain in force. P06+ and full PP-01 acceptance remain incomplete.
 
 ## P04 implementation amendment
 

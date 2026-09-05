@@ -1601,3 +1601,38 @@ button:disabled {
     font-size: 0.85rem;
   }
 }
+
+/* Keep the phone week compact, with a focusable local day strip. */
+.planner-scroll-hint {
+  color: #526c77;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.reserved-periods {
+  margin: 0.55rem 0 !important;
+  color: #255b49;
+  font-size: 0.75rem;
+}
+.reserved-periods p {
+  line-height: 1.5;
+}
+.planner-board.week .lane-days {
+  overflow-x: auto;
+  max-width: 100%;
+  overscroll-behavior-x: contain;
+}
+.planner-board.week .lane-days:focus-visible {
+  outline: 3px solid #25745a;
+  outline-offset: -3px;
+}
+@media (max-width: 1100px) {
+  .planner-board.week .lane-days {
+    display: grid;
+    grid-template-columns: repeat(var(--planner-days), minmax(245px, 1fr));
+    scroll-snap-type: x proximity;
+  }
+  .planner-board.week .planner-day-cell {
+    scroll-snap-align: start;
+    border-right: 1px solid #dce5e7;
+  }
+}

@@ -62,3 +62,7 @@ D-003 is resolved for the personal prototype by the later user naming decision i
 Highest implementation risks: cross-booking crew concurrency; immutable document/source linkage during asynchronous generation; offline assignment/revocation and storage failure; Finance quantity conservation/unknown outcomes; operational master overlap. Each has a command guard, source reference, PT scenario and explicit P work package.
 
 No discovery of actual customer network access, financial anomalies or departmental staffing is performed here. Do not import unrelated financial-health or personal information into this repository's synthetic product design.
+
+## P05 bounded scheduling evidence
+
+ADR-0010 selects clearly labelled synthetic working calendars, competency evidence and explicit travel choices; it does not appoint employees or establish trade approvals/overtime/travel rules. Initial customer date agreement is manually/synthetically recorded; changed dates and unsuccessful contact remain owned with dispatch held. D-012/D-021/D-024/D-025 remain open for actual retention, accessibility/load, templates and communication policy. P05 source bundles are immutable rather than an operational roster editor. Component evidence and publication are in the [P05 handover](../delivery/p05-handover.md); no full PT/AT or production acceptance follows from this selection.
