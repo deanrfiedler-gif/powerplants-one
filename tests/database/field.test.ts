@@ -481,6 +481,16 @@ test("P07 current capability, assignment, same-404 and receipt/file boundaries s
   const q = await started(),
     f = await photo(q.job, q.p),
     other = await principal("second-technician");
+  await captureEntry(q.p, entry(q.job));
+  assert.equal((await fresh(q.p, q.job.id)).follow_ups.length, 1);
+  await database().query(
+    "UPDATE ppo.permission_grants SET valid_to='2026-09-01' WHERE user_id=$1 AND capability='activity.read'",
+    [q.p.actor_id],
+  );
+  await seed();
+  const withoutActivityAccess = await fresh(q.p, q.job.id);
+  assert.equal(withoutActivityAccess.follow_ups.length, 0);
+  assert.equal(withoutActivityAccess.entries.length, 1);
   await assert.rejects(
     readFieldJob(q.p, randomUUID()),
     code("RecordUnavailable"),
