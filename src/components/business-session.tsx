@@ -59,8 +59,8 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
             Changing identity clears the displayed records and unsaved forms.
           </small>
         </div>
-        <label htmlFor="business-profile">
-          Identity
+        <div className="identity-choice">
+          <label htmlFor="business-profile">Identity</label>
           <select
             id="business-profile"
             value={profile}
@@ -83,7 +83,7 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
               </option>
             ))}
           </select>
-        </label>
+        </div>
         <button onClick={select} disabled={busy}>
           {busy ? "Selecting…" : "Use this identity"}
         </button>

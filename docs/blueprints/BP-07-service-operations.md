@@ -4,6 +4,14 @@
 
 **Status:** Proposed functional specification ready to guide implementation planning. No screens, rules or workflows described here are currently implemented. [Package](../prototype/README.md) · [Dictionary](../contracts/service-data-dictionary.md) · [API](../contracts/service-api.md) · [Acceptance](../testing/prototype-acceptance.md).
 
+## P03 implementation amendment
+
+[ADR-0008](../decisions/ADR-0008-p03-customer-intake.md), the [current API amendment](../contracts/service-api.md#p03-implementation-amendment--current-bounded-contract) and [P03 handover](../delivery/p03-handover.md) define the delivered SC-01–SC-04 subset. `/work` shows implemented owned activities only, with overdue/upcoming/explicit due-needed groups, filters and permitted linked traversal. Customers/contacts/sites/equipment use shared typed records and restricted projections; original unsuccessful fixes, reported symptoms, suspected causes and verified findings remain distinct and attributed. Same-name organisations and uncertain asset identities remain separate. Source mappings remain Proposed; configurations remain ReviewRequired.
+
+Intake permits owned explicit unknowns and New/NeedsInformation draft editing. TR-01 exposes New → NeedsInformation with an atomic owned clarification activity; New → Triaged and NeedsInformation → Triaged require known requester/site, received-time provenance, symptoms/impact, priority rationale, valid owner and next action. NeedsInformation additionally requires completed clarification with outcome/resolution. P03 deliberately defers the alternative approved identification-work path until P04 can represent the required scope and authority. Urgent priority grants no work, attendance or financial authority.
+
+API-C24 exposes active activity creation/update, Open → InProgress, and owner-only completion/cancellation with outcome/reason. Links are limited to implemented Organisation/Site/Asset/Ticket targets and independently checked on every read. CustomerContact is a task record, not delivery/acknowledgement evidence. Appointment-dependent ContactOutcome, work-order creation/linking, later ticket states, approved scope, issued reports and future appointments remain deferred. Broader SC-04/PT-25 references below do not expand the ordered P03 boundary. Full procedures remain Not run.
+
 ## 1. Functional objective
 
 A coordinator should be able to establish what a customer needs, authorise a clear scope, prepare the technician, reserve suitable attendance, handle changes and close the work with useful evidence. A technician should have a concise view of what to do, where, for whom, with what prerequisites, and what is already known. Finance receives reviewed quantities and exact evidence with a traceable outcome.

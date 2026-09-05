@@ -1,6 +1,6 @@
 # PP-01 — Ordered prototype implementation plan
 
-**Edition:** r03 · **Status:** P01 complete; P02 implemented and verified with final evidence in its [handover](p02-handover.md); P03–P12 planned. All full PT procedures remain Not run; see [P01 component evidence](p01-handover.md).
+**Edition:** r04 · **Status:** P01/P02 complete; P03 implemented with final component and publication evidence in its [handover](p03-handover.md); P04–P12 planned. All full PT procedures remain Not run; see [P01 component evidence](p01-handover.md).
 
 [Package](../prototype/README.md) · [Scope](../prototype/scope-and-journey.md) · [BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md).
 
@@ -87,3 +87,9 @@ Do not request all company exports to start P01. A few representative, authorise
 PPO-009–PPO-013/PPO-015 preserve CRM parity, CREMS reconstruction, Engineering, Projects, supply chain and extended service lifecycle work. Shared IDs/activities/document references established here support them. Detailed module design should follow a bounded next business journey and reuse the platform contracts; it should not independently invent another customer, asset, document or Finance master.
 
 The separate SOL008 Smartsheet delivery-system work remains intact. Its process lessons can inform future BP-06, but no migration or replacement is implied by completing PP-01.
+
+## P03 delivery boundary and P04 prerequisite
+
+SC-01–SC-04 now use persisted scoped business services. [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md) narrows triage to known requester/site and resolved owned clarification; it does not implement an approved identification scope. Activity/ActivityLink accepts only existing Organisation/Site/Asset/Ticket targets. Work-order creation in the broader SC-04 and issued reports/future appointments in PT-25 remain later dependencies. Full PT-02/PT-03/PT-04/PT-25 acceptance is not claimed by component tests.
+
+The next separately authorised task is P04: SC-05 work scope, coverage, authority, readiness and planned visits. Its concrete task and prerequisites are in the [P03 handover](p03-handover.md#next-bounded-task--p04-not-started). P03 does not start P04 or complete PP-01.

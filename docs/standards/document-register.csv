@@ -19,3 +19,5 @@ ADR-0006,P01 local foundation implementation,docs/decisions/ADR-0006-p01-local-f
 P01-HO,Application foundation handover,docs/delivery/p01-handover.md,r01,Verified P01 component handover,Dean Fiedler - private prototype,,,
 ADR-0007,P02 shared data foundation,docs/decisions/ADR-0007-p02-shared-foundation.md,,Implemented P02 decision,Dean Fiedler - private prototype,,,
 P02-HO,Shared data foundation handover,docs/delivery/p02-handover.md,r01,Verified P02 component handover,Dean Fiedler - private prototype,,,
+ADR-0008,P03 customer context intake and owned follow-up,docs/decisions/ADR-0008-p03-customer-intake.md,,Implemented P03 decision,Dean Fiedler - private prototype,,,
+P03-HO,Customer context intake and owned follow-up handover,docs/delivery/p03-handover.md,r01,P03 component handover,Dean Fiedler - private prototype,,,

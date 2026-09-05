@@ -231,34 +231,38 @@ export function Field({
   hint?: string;
 }) {
   return (
-    <label className="field" htmlFor={name}>
-      <span>
+    <div className="field">
+      <label htmlFor={name}>
         {label}
-        {required ? " *" : ""}
-      </span>
+        {required && <span aria-hidden="true"> *</span>}
+      </label>
       {multiline ? (
         <textarea
           id={name}
+          aria-label={label}
           name={name}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           required={required}
           maxLength={maxLength}
           rows={4}
+          aria-describedby={hint ? `${name}-hint` : undefined}
         />
       ) : (
         <input
           id={name}
+          aria-label={label}
           name={name}
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           required={required}
           maxLength={maxLength}
+          aria-describedby={hint ? `${name}-hint` : undefined}
         />
       )}{" "}
-      {hint && <small>{hint}</small>}
-    </label>
+      {hint && <small id={`${name}-hint`}>{hint}</small>}
+    </div>
   );
 }
 export type Option = {
@@ -285,13 +289,14 @@ export function SelectField({
   required?: boolean;
 }) {
   return (
-    <label className="field" htmlFor={name}>
-      <span>
+    <div className="field">
+      <label htmlFor={name}>
         {label}
-        {required ? " *" : ""}
-      </span>
+        {required && <span aria-hidden="true"> *</span>}
+      </label>
       <select
         id={name}
+        aria-label={label}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         required={required}
@@ -304,7 +309,7 @@ export function SelectField({
           </option>
         ))}
       </select>
-    </label>
+    </div>
   );
 }
 export function EnumField({

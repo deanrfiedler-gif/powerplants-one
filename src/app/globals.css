@@ -641,7 +641,7 @@ footer {
   margin-top: 0.35rem;
   color: #4a5f62;
 }
-.identity-strip label {
+.identity-strip .identity-choice {
   display: grid;
   gap: 0.35rem;
   font-size: 0.85rem;
@@ -977,7 +977,7 @@ button:disabled {
   }
   .actions .button,
   .actions button {
-    flex: 1 1 160px;
+    flex: 0 1 auto;
     text-align: center;
   }
   .record-tabs a {
