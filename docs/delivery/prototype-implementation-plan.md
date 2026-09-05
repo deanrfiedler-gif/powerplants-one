@@ -1,6 +1,6 @@
 # PP-01 — Ordered prototype implementation plan
 
-**Edition:** r02 · **Status:** P01 implementation under verification; P02–P12 planned. All full PT procedures remain Not run; see [P01 component evidence](p01-handover.md).
+**Edition:** r02 · **Status:** P01 local foundation complete; P02–P12 planned. All full PT procedures remain Not run; see [P01 component evidence](p01-handover.md).
 
 [Package](../prototype/README.md) · [Scope](../prototype/scope-and-journey.md) · [BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md).
 
@@ -66,12 +66,12 @@ No real customer message, ERP post, file migration or source cutover is hidden i
 | PPO-001 / #1 | Scope/rationale, synthetic journey, owner and baseline questions | Operational cohort/benefit baseline remains D-004 |
 | PPO-002 / #2 | Synthetic authority model, alternatives and evidence checklist | Actual MYOB configuration/API/service ownership remains open |
 | PPO-003 / #3 | DAT-01–DAT-03 dictionary, history/correction and identity tests | Actual master keys/data quality require later source validation |
-| PPO-004 / #4 | BP-02 options, selected design, ADRs and P01 proof | Feasibility/build/hosting procurement not executed |
-| PPO-005 / #5 | BP-07 screens, fields, transitions, rules, errors and tests | Application and real policy acceptance not executed |
+| PPO-004 / #4 | BP-02 options, selected design, ADRs and P01 proof | P01 local build/integrity proof executed; remote hosting/costing and operational feasibility deferred |
+| PPO-005 / #5 | BP-07 screens, fields, transitions, rules, errors and tests | P01 draft foundation only; business workflows and real policy acceptance remain |
 | PPO-006 / #6 | FD-10 and selected FD-01/02/04 simulation contract | Real Finance definitions/ERP reconciliation remain D-017 |
 | PPO-007 / #7 | DAT-11 and OUT-09/10/14 issue/retention contract | Actual SharePoint/templates/retention remain unverified |
 | PPO-008 / #8 | Permissions, offline boundary, candidate measurements and recovery | Device/identity/security/NFR operational evidence still needed |
-| PPO-014 / #14 | Deterministic fixtures and 30 executable manual test procedures | All test execution remains Not run |
+| PPO-014 / #14 | Deterministic fixtures and 30 executable manual test procedures | All full PT procedures remain Not run; P01 component evidence is separate |
 | PPO-016 / #16 | Initial environment/release/restore/support plan | Costed hosting/support and live operating handover remain open |
 
 A completed design issue means its specified design deliverable exists, not that referenced parent requirements have been implemented. Live issue states and closing evidence are recorded separately after publication.

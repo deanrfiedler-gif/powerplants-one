@@ -1,12 +1,12 @@
 # Current prototype status
 
-**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P01 application foundation implemented and under verification; PP-01 business workflows incomplete.
+**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P01 local application foundation complete; PP-01 business workflows incomplete.
 
 ## Current direction
 
 Dean chose to create his own private prototype and authorised the repository foundation, then explicitly requested the First Prototype Definition & Architecture package: scoped service journey, BP-02, BP-07, minimum Finance/document contracts and an ordered implementation plan.
 
-The [PP-01 package](prototype/README.md) now defines that synthetic planned-service journey. The technology design recommendation is TypeScript/Next.js with PostgreSQL, explicit domain services, a durable outbox, bounded browser offline capture and simulated source adapters. [ADR-0003](decisions/ADR-0003-prototype-architecture.md) records its scope and pending feasibility.
+The [PP-01 package](prototype/README.md) now defines that synthetic planned-service journey. The technology design recommendation is TypeScript/Next.js with PostgreSQL, explicit domain services, a durable outbox, bounded browser offline capture and simulated source adapters. [ADR-0003](decisions/ADR-0003-prototype-architecture.md) records its scope; [ADR-0006](decisions/ADR-0006-p01-local-foundation.md) and the P01 handover record the bounded implementation proof.
 
 Dean has now adopted the independent [PPO-STD-001 naming standard](standards/naming-conventions.md) and authorised its repository implementation. [ADR-0005](decisions/ADR-0005-project-naming-adoption.md) records Powerplants One / PPO, the stable master path, removal of the other project's STD-001 dependency and the scoped contract alignment. The [ChatGPT project instructions](standards/chatgpt-project-instructions.md) are maintained in the repository for the dedicated project.
 
@@ -21,11 +21,11 @@ Dean has now adopted the independent [PPO-STD-001 naming standard](standards/nam
 - All 78 parents dispositioned: 24 Core, 25 Partial, 29 Deferred within this prototype. These are scope classifications, not completed requirements.
 - Repository documentation checks for source hashes, baseline registers, local links and package traceability; actual check evidence in package assurance/publication records.
 
-## What is not implemented
+## Implemented foundation and remaining scope
 
 P01 adds a runnable local shell, strict synthetic identity, draft-ticket command, SQL migration/fixtures, reservation experiment and automated checks. [P01 handover](delivery/p01-handover.md) records exact versions, commands, execution limits and current verification/publication state. No operational source integration, migrated dataset, hosted environment or production service exists. All 30 full PT acceptance procedures remain Not run; P01 component tests are recorded separately.
 
-No paid service, repository visibility/membership change, source-system transaction, customer message or migration is performed by this documentation package. MYOB and SharePoint configuration/authority remain unverified. Pipedrive, Smartsheet and native CAD retain their existing roles.
+No paid service, repository visibility/membership change, source-system transaction, customer message or migration is performed by P01. MYOB and SharePoint configuration/authority remain unverified. Pipedrive, Smartsheet and native CAD retain their existing roles.
 
 ## Decision state
 
@@ -35,7 +35,7 @@ Dean owns private prototype decisions. Proposed department roles do not assign e
 
 ## Immediate next task
 
-Finish P01 verification and review under [issue #20](https://github.com/deanrfiedler-gif/powerplants-one/issues/20), then stop with the [bounded P02 handover](delivery/p01-handover.md#next-bounded-task--p02-not-started). Follow the ordered P01–P12 plan. Missing operational facts do not prevent synthetic development under the explicit assumptions.
+P01 is implemented and verified under [issue #20](https://github.com/deanrfiedler-gif/powerplants-one/issues/20) and [PR #21](https://github.com/deanrfiedler-gif/powerplants-one/pull/21). This increment stops with the [bounded P02 handover](delivery/p01-handover.md#next-bounded-task--p02-not-started). Follow the ordered P01–P12 plan. Missing operational facts do not prevent synthetic development under the explicit assumptions.
 
 ## Repository and publication controls
 

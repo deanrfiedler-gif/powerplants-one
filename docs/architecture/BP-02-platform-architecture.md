@@ -26,7 +26,7 @@ See [ADR-0003](../decisions/ADR-0003-prototype-architecture.md) and [ADR-0004](.
 | Power Platform extension | Potential reuse of Microsoft components and existing CREMS knowledge | Licensing, deployment model, complex planner/offline customisation and requested web-app independence need account-specific assessment | Retain existing sources; not chosen as new prototype foundation |
 | Microservices from the outset | Independent scaling/release boundaries | Distributed consistency, deployment and diagnosis overhead before scale or separate teams are established | Defer until measurable ownership/scaling need |
 
-This is a qualitative assessment. No developer skill survey, supplier quote, load benchmark or licence inventory has been completed. The recommendation favours a coherent, maintainable first implementation. A stack change is inexpensive before P01 and increasingly costly after persistence/offline contracts are implemented; record any change in a superseding ADR.
+This is a qualitative assessment. No developer skill survey, supplier quote, load benchmark or corporate licence assessment has been completed. P01 records the selected dependency declarations in its [inventory](../testing/p01-dependencies.json). The recommendation favours a coherent, maintainable first implementation. A stack change is inexpensive before P01 and increasingly costly after persistence/offline contracts are implemented; record any change in a superseding ADR.
 
 Next.js documents Node/container self-hosting and associated operational considerations. ASP.NET Core supports component-based web applications. These capabilities support the options assessment; they do not prove this application's feasibility or your licences. [Next.js self-hosting](https://nextjs.org/docs/app/guides/self-hosting), [ASP.NET Core Blazor](https://learn.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-10.0).
 
@@ -152,8 +152,8 @@ Microsoft Graph exposes selected-permission patterns and version-specific DriveI
 
 | Environment | Recommended form | Data/access | Current status |
 |---|---|---|---|
-| Local development | Node application and PostgreSQL, optionally reproducible containers; local synthetic document store | Synthetic only; local identity adapter permitted | Planned P01; no install in this document task |
-| Automated test | Disposable PostgreSQL and isolated test data/files; browser tests | Synthetic identities and simulated adapters | Planned P02 onward |
+| Local development | Node application and PostgreSQL, optionally reproducible containers; local synthetic document store | Synthetic only; local identity adapter permitted | P01 local shell/database implemented; document store remains a stub |
+| Automated test | Disposable PostgreSQL and isolated test data/files; browser tests | Synthetic identities and simulated adapters | P01 PostgreSQL/HTTP/browser CI executed; see the handover |
 | Private remote prototype | Container-capable hosting plus managed PostgreSQL, real authentication, protected file staging, logs and backup | Synthetic only until separately authorised | Azure Container Apps is the preferred option to assess; no purchase/deployment selected |
 | Operational pilot/production | Separately provisioned and approved environment with real identity/source contracts/support | Approved users and data | Out of current implementation authority |
 
@@ -223,4 +223,4 @@ P01 must prove a reproducible build, migrations, database reservations, the sele
 
 D-005/D-006/D-007 block real ERP operation; D-012 blocks real SharePoint issue/retention claims; D-016/D-020 block operational offline access; D-017 blocks verified real financial measures; D-022/D-023 block purchased hosting/production support commitments. None of these prevents writing or testing synthetic code using the explicit adapters and fixtures.
 
-The architecture is sufficiently specified to begin P01 after the user authorises implementation. Its feasibility remains a test obligation, not an assertion that selected software components automatically deliver the desired controls.
+P01 has implemented and verified the bounded local foundation under Dean's authority; see the [handover](../delivery/p01-handover.md). The broader architecture remains a test obligation for subsequent increments. P01 proof does not establish complete workflow, offline or operational readiness.

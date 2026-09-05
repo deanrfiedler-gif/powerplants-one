@@ -2,7 +2,7 @@
 
 **Revision:** r01 · **Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Environment:** personal private, local synthetic prototype.
 
-**Delivery state:** Implementation under verification. Do not infer P01 acceptance or merge from this working record. The final evidence section will record actual results and publication state. PP-01 is not complete; P02 has not started.
+**Delivery state:** P01 local foundation implemented and verified. This handover accompanies [PR #21](https://github.com/deanrfiedler-gif/powerplants-one/pull/21); its GitHub merge record and linked issue closure record are the authority for the final publication SHA/status. PP-01 is not complete; P02 has not started.
 
 [Issue #20](https://github.com/deanrfiedler-gif/powerplants-one/issues/20) · [Implementation decision](../decisions/ADR-0006-p01-local-foundation.md) · [Ordered plan](prototype-implementation-plan.md).
 
@@ -19,7 +19,7 @@ Prerequisites: Git, Python 3, Node **24.20.0**, npm **11.19.0**, and a real Post
 ```sh
 git clone https://github.com/deanrfiedler-gif/powerplants-one.git
 cd powerplants-one
-git switch feature/p01-foundation
+git switch main
 nvm install
 nvm use
 npm install --global npm@11.19.0
@@ -27,7 +27,7 @@ npm ci
 cp .env.example .env.local
 ```
 
-Use an equivalent Node 24.20.0 installation if nvm is unavailable. On PowerShell, use `Copy-Item .env.example .env.local`. The only enabled database names are `ppo_synthetic` and `ppo_synthetic_test`; the host must be `127.0.0.1`. URL query options and live database names are refused. Set a URL-encoded disposable local password in `.env.local`. Do not add that file to Git.
+These commands target main after PR #21 is merged. To inspect the implementation before merge, switch to `feature/p01-foundation` instead. Use an equivalent Node 24.20.0 installation if nvm is unavailable. On PowerShell, use `Copy-Item .env.example .env.local`. The only enabled database names are `ppo_synthetic` and `ppo_synthetic_test`; the host must be `127.0.0.1`. URL query options and live database names are refused. Set a URL-encoded disposable local password in `.env.local`. Do not add that file to Git. All exact direct versions and declared licences are recorded in the [dependency inventory](../testing/p01-dependencies.json), with the lockfile SHA-256.
 
 For a new disposable Docker database, create ignored `.env.postgres.local` containing:
 
@@ -119,6 +119,8 @@ Use `ppo_synthetic_test` for the test database. Both explicit flags are required
 
 Migration 0001 is one PostgreSQL transaction with a checksum and advisory lock. Failure leaves no partially created PPO schema. Rerun after addressing the reported prerequisite. A checksum mismatch stops migration; investigate and add a new migration rather than altering an already applied file. If a disposable development database is irrecoverable, the explicit reset path rebuilds it. No operational backup/restore or lossless downgrade is claimed. A database owner may bypass table triggers; production database roles and hardened privilege separation remain future work.
 
+The local database role needs schema creation and permission to install the trusted `btree_gist` extension, or an owner must preinstall it. PostgreSQL 16 supplies `gen_random_uuid()`. The Docker example creates a disposable database owner; it is not a production privilege pattern. The idle-connection test terminates a backend owned by the test role. Reservation timestamps are UTC instants; PostgreSQL normalises offsets. Active reservations use half-open `[start,end)` intervals: 09:00–11:00 and 11:00–12:00 may coexist. Zero-length, reversed and infinite intervals are rejected. All reservation tests are isolated from future planner records in `ppo_proof`.
+
 ## Implemented scope and limitations
 
 - Responsive navy/green shell with visible synthetic status, seven labelled planned domains, keyboard skip link, focus styles, loading/error/unavailable states and no invented metrics or branding.
@@ -132,7 +134,52 @@ Migration 0001 is one PostgreSQL transaction with a checksum and advisory lock. 
 
 Development environment: Ubuntu 24.04.3 container. Exact Node/npm installed locally; package downloads succeeded. System PostgreSQL installation failed because the container cannot change user/group; `runuser` also returned `cannot set groups: Operation not permitted`. The container is root and has no PostgreSQL/Docker runtime. No in-memory database was substituted. The cloud browser refused loopback with `net::ERR_BLOCKED_BY_CLIENT`; the app was not exposed remotely to work around that restriction.
 
-At this draft: documentation checks passed (4 issued sources, 78 parent requirements, 29 decisions, 38 master scenarios, 16 discovery items; all 30 full PT procedures remain Not run). Local runtime and CI checks are still being completed. This section will record actual check commands, source commits, visual inspection and final PR/merge status before delivery.
+The local isolated checkout and a separate clean checkout passed `npm ci` and `npm run check`. A loopback launch and actual same-process-network HTTP requests in the clean checkout verified shell 200, unauthenticated read 401, unavailable PostgreSQL 503 with a useful error, and hostile wire Host/Forwarded/Origin/gateway headers 403. Local PostgreSQL and cloud-browser proofs were blocked as described above; they were completed against real PostgreSQL and Chromium in the authorised repository CI, without hosting the app.
+
+The final implementation proof is [Application assurance run 33940495951](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33940495951), job `101236831837`, completed successfully on 5 September 2026. [Documentation assurance run 33940495946](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33940495946) also passed. CI used a fresh checkout, Node 24.20.0/npm 11.19.0, PostgreSQL 16.15 on x86_64, Ubuntu 24.04 and Playwright 1.63.0 with Chrome Headless Shell 153.0.8010.12 (build v1243). No database mock was used in the database, HTTP or successful browser-save paths.
+
+| Executed commands / checks | Actual result and boundary |
+|---|---|
+| `python3 scripts/check_foundation.py`, `python3 scripts/check_prototype.py`, `python3 scripts/check_naming.py` | Passed locally and in documentation CI. Four issued sources and all 78 parent IDs/wording preserved; 29 decisions, 38 master scenarios, 16 original issues, 30 full PT procedures retained. Documentation assurance only. |
+| `npm ci`; `npm run check` | Clean local and fresh CI install, lint, type check, four unit groups and Next build passed. Production compilation does not enable production serving. |
+| `npm audit`; `npm ls --depth=0` | Zero known vulnerabilities at execution on 5 September; exact direct graph with no invalid peers. This is a dated dependency check, not a security certification. |
+| `npm run db:migrate`; `npm run db:seed`; `npm run db:health` | Passed against real PostgreSQL 16.15; one recorded migration. Repeated seed/migration preserves an edited ticket and immutable evidence. |
+| `npm run db:reset` without flags; with a mismatched database flag | Both refused as expected, before disposal. Explicit matching `PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset` completed and health passed. |
+| `npm run test:db` | Eight test groups passed: scoped permission refusals; atomic accepted evidence; stale and duplicate/conflicting commands; final-write rollback; session/current-grant checks; seed/migration/evidence integrity; dropped idle connection recovery; genuinely competing reservations. |
+| Persistence write; `docker restart`; persistence verify | Actual PostgreSQL process restarted. A new process recovered the accepted command result. This proves database persistence, not operational restore/RPO. |
+| `npm start`; `npm run test:http` against `npm run dev` | Production startup refused; one HTTP behaviour group passed. Actual routes checked server sessions, actor switching, private no-store responses, 401/403/404/409/422 failures, exact retry result and origin/wire-header guards. |
+| `npx playwright install --with-deps chromium`; `npm run test:browser` | Four tests passed at 1440×1000 and 390×844. Keyboard Tab/Enter reaches the skip link, main and Foundation checks; real save/read-only/forbidden states, no horizontal overflow, useful unavailable/404 states and storage marker recovery checked. |
+| Manual visual inspection of eight captured images | Passed after correcting joined mobile heading words and the hidden skip-link capture artefact. Labels, navy/green contrast, visible focus outline, synthetic indicator, form controls and unavailable-state recovery action were readable at both widths. No real-device or assistive-technology audit claimed. |
+
+The database contention log recorded backend A `151`, backend B `152`, `blocked_before_commit=true`, SQLSTATE `23P01`, and exactly one committed overlapping reservation. The adjacent interval committed; a rejected move preserved its original 11:00 start. A later conflicting multi-resource insert rolled back the earlier insert in the same transaction. The command rollback test injects a failure at the final outbox insert and observes unchanged business version and zero command audit/receipt/outbox rows; removing the trigger permits the same operation ID to succeed. Concurrent identical retries return identical receipts with one effect; changed content and stale versions return conflicts.
+
+Both browser profiles recovered `SYN-PPO-P01-marker-v1` after reload. `navigator.storage.persist()` returned **not granted**; each reported quota was `2147639296` bytes. That estimate is specific to this ephemeral runner. No durable offline guarantee, attachment recovery, replay queue, service worker, Safari/iOS/Android validation or mobile readiness was established.
+
+### Source and visual evidence
+
+- Tested implementation branch: `feature/p01-foundation`; remote commit `e6c5048b184661400cc79517d0de4f316a049016`; exact tree `1551b665ecc70d206ea6a1e722d1f2a7bb79fe82`.
+- CI checked GitHub's PR merge ref `4b05e7b18510b5de821cc794603ddb93021cc816`, merging that head into the unchanged starting main. This is a test merge ref, not a claim that publication had already occurred.
+- Local implementation commit `b894658` has the same tree. Connector-created commit metadata differs from local commit metadata; every published tree was compared exactly. Evidence/status-only changes follow this tested implementation; the final PR checks cover the complete delivered tree.
+- [Visual manifest](../testing/evidence/p01/manifest.json) records original PNG hashes, dimensions, source and artifact provenance. The original artifact ZIP SHA-256 is `fb1739d0860ee40fc66e2647407be13f8285ee09deef6c859a25e996cba07dc4`. The images are committed here so evidence does not depend on 14-day CI artifact retention.
+
+| View | Desktop | Mobile viewport |
+|---|---|---|
+| Overview | [1440px](../testing/evidence/p01/desktop-overview.png) | [390px](../testing/evidence/p01/mobile-overview.png) |
+| Successful PostgreSQL save | [Desktop](../testing/evidence/p01/desktop-foundation.png) | [Mobile](../testing/evidence/p01/mobile-foundation.png) |
+| Keyboard focus | [Desktop](../testing/evidence/p01/desktop-keyboard-focus.png) | [Mobile](../testing/evidence/p01/mobile-keyboard-focus.png) |
+| Unavailable dependency UI | [Desktop](../testing/evidence/p01/desktop-unavailable.png) | [Mobile](../testing/evidence/p01/mobile-unavailable.png) |
+
+The unavailable screenshots deliberately abort only the browser health request; they are UI evidence. Separate real HTTP/database checks provide runtime evidence. Full-page screenshot heights exceed the viewport where content scrolls.
+
+### Review, corrections and unexecuted scope
+
+Earlier CI runs exposed three test defects: an overbroad shell cache expectation, Fetch normalising a hostile Host header, and an ambiguous alert locator matching Next's route announcer. Assertions were corrected to inspect private API headers, actual raw wire headers and the specific permission error. Those earlier runs are not recorded as passed. Visual inspection subsequently found and corrected mobile text spacing. Idle PostgreSQL connection error handling was added and exercised to prevent a dropped idle backend from terminating the local server.
+
+Implementation self-review checked identity/permission boundaries, transaction/retry ordering, migration/reset scope, adapter outcomes, naming, baseline integrity and workflow permissions. No independent reviewer was available or requested on PR #21; none is claimed. Review submissions and threads were empty when inspected. The normal GitHub merge operation must accept the current head after applicable final checks; no review/rule bypass or access setting change is used. The [PR](https://github.com/deanrfiedler-gif/powerplants-one/pull/21) and [issue #20](https://github.com/deanrfiedler-gif/powerplants-one/issues/20) retain final check and merge evidence.
+
+P01 component evidence relates to SVC-01 and NFR-01/02/03/05/08/09/12, API-R03/API-C02, DAT-04 and ADR-0003/0004/0005/0006. No parent requirement is declared complete. Full PT-01–PT-30 and AT-01–AT-38 acceptance remain **Not run**. No full scheduling-policy, performance/load, penetration, screen-reader, real-device, offline/replay, operational restore, production identity, remote hosting, live integration or Finance acceptance was executed. PowerShell-specific and owner-machine Docker setup were documented but not executed in the constrained development container; CI exercised the equivalent fresh PostgreSQL service and the exact npm lifecycle commands.
+
+Working-document corrections explicitly align BP-02's older hosting timing, historical synthetic examples and documentation-only status with the local-only user instruction and adopted PPO naming. Source baselines and all 78 parent definitions remain unchanged. No operational ownership decision was inferred from the synthetic service model.
 
 ## Next bounded task — P02 (not started)
 
