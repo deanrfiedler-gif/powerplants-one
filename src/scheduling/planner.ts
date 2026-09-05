@@ -59,7 +59,7 @@ export type Appointment = {
   version: number;
   assignment_version: number;
   schedule_version: number;
-  status: "Proposed" | "Confirmed" | "Cancelled";
+  status: "Proposed" | "Confirmed" | "InProgress" | "Cancelled";
   start_at: Date;
   end_at: Date;
   site_timezone: string;

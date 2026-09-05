@@ -109,10 +109,11 @@ export async function authority(
   c: QueryClient,
   p: Principal,
   appointmentId: string,
+  allowStarted = false,
 ) {
   const { a, w } = await visibleAppointment(c, p, appointmentId),
     r = await scopeDetail(c, p, w, a.scope_revision_id);
-  if (a.status !== "Confirmed" || a.actual_start_at || a.actual_end_at)
+  if ((!allowStarted && (a.status !== "Confirmed" || a.actual_start_at)) || (allowStarted && !["Confirmed", "InProgress"].includes(a.status)) || a.actual_end_at)
     fail("A confirmed, unstarted appointment is required.");
   if (
     w.status !== "Authorised" ||
