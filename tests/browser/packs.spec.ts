@@ -186,6 +186,11 @@ test("P06 complete workbench preparation, check, queued output, exact document a
   const pack = (await call(page, `packs/${pid}`)).items[0],
     issue = pack.issues[0];
   await page.getByRole("link", { name: "Open exact issued document" }).click();
+  await expect(page).toHaveURL(`/documents/${issue.id}`);
+  await expect(
+    page.getByRole("heading", { name: "Exact issued job pack", exact: true }),
+  ).toBeVisible();
+  await expect(page.getByText("Current applicable issue", { exact: true })).toBeVisible();
   await capture(page, info, "document-manifest");
   const pdf = await page.request.get(`/api/v1/pack-issues/${issue.id}/pdf`);
   expect(pdf.ok()).toBeTruthy();
@@ -270,6 +275,9 @@ test("P06 complete workbench preparation, check, queued output, exact document a
   await capture(page, info, "withdrawn-original-retained");
   const after = await page.request.get(`/api/v1/pack-issues/${issue.id}/pdf`);
   expect(await after.body()).toEqual(bytes);
+  await page.goto(`/documents/${issue.id}`);
+  await expect(page.getByText("Not currently applicable", { exact: true })).toBeVisible();
+  await capture(page, info, "withdrawn-document-status");
 });
 test("P06 long content remains readable in exact HTML and multi-page A4 output", async ({
   page,
