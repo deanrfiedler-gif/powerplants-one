@@ -236,7 +236,18 @@ test("typed work-order creation allocates permanent references and supports many
     }),
     code("VersionConflict"),
   );
-  await createWorkOrder(p, { ...payload, ...base(), id: randomUUID() });
+  await createWorkOrder(p, {
+    ...payload,
+    ...base(),
+    id: randomUUID(),
+    tickets: [
+      ...payload.tickets,
+      {
+        ticket_id: id(40, 10),
+        issue_disposition: "SYN second explicit source request",
+      },
+    ],
+  });
   assert.deepEqual(await rows("SELECT * FROM ppo.tickets ORDER BY id"), before);
   await assert.rejects(
     createWorkOrder(p, {
@@ -328,6 +339,9 @@ test("approved identification is limited to Identification tasks and preserves u
     )[0].approved_by,
     owner,
   );
+  const reviewedPlan = (await order(9)).scopes[0].items[0].assets[0];
+  assert.equal(reviewedPlan.approved_by, owner);
+  assert.ok(reviewedPlan.approved_at);
   const w = await order(5),
     draft = input();
   draft.items[0].assets[0].asset_id = id(80, 2);
@@ -514,6 +528,7 @@ test("approved scope and children resist SQL/API mutation; reviewed successor pr
     await rows("SELECT * FROM ppo.scope_revisions WHERE id=$1", [id(91, 2)]),
     before,
   );
+  assert.equal((await order(2)).visits[0].scope_review_required, true);
   await reviewAll(2);
   await authoriseWorkOrder(p, w.id, await authCommand(2));
   const current = await order(2);
@@ -742,18 +757,111 @@ test("proposed visits validate interval/scope, allocate APT once and retain exac
 });
 
 test("explicit shutdown conditions keep isolation and shutdown authority applicable even for inspection", async () => {
-  const p = await principal(), w = await order(), draft = input();
+  const p = await principal(),
+    w = await order(),
+    draft = input();
   draft.coverage.status = "Covered";
-  draft.items[0].shutdown_condition = "SYN inspection requires an authorised shutdown and isolation before approach.";
-  await saveWorkScope(p, w.id, { ...base(), expected_version: w.version, scope: draft });
-  const current = await order(), r = current.scopes[0];
+  draft.items[0].shutdown_condition =
+    "SYN inspection requires an authorised shutdown and isolation before approach.";
+  await saveWorkScope(p, w.id, {
+    ...base(),
+    expected_version: w.version,
+    scope: draft,
+  });
+  const current = await order(),
+    r = current.scopes[0];
   for (const criterion_code of ["MandatoryIsolation", "ShutdownAuthority"]) {
-    await assert.rejects(assessWorkReadiness(p, w.id, {
-      ...base(), expected_version: current.version,
-      assessment: { scope_revision_id: r.id, scope_version: r.version, criterion_code,
-        outcome: "NotApplicable", reason: "SYN attempted inspection-only waiver", evidence: doc(),
-        source_as_at: "2026-09-05T00:00:00Z" },
-    }), code("InvalidData"));
+    await assert.rejects(
+      assessWorkReadiness(p, w.id, {
+        ...base(),
+        expected_version: current.version,
+        assessment: {
+          scope_revision_id: r.id,
+          scope_version: r.version,
+          criterion_code,
+          outcome: "NotApplicable",
+          reason: "SYN attempted inspection-only waiver",
+          evidence: doc(),
+          source_as_at: "2026-09-05T00:00:00Z",
+        },
+      }),
+      code("InvalidData"),
+    );
   }
-  await assert.rejects(authoriseWorkOrder(p, w.id, await authCommand()), code("AuthorisationBlocked"));
+  await assert.rejects(
+    authoriseWorkOrder(p, w.id, await authCommand()),
+    code("AuthorisationBlocked"),
+  );
+});
+
+test("scope replacement rolls evidence, coverage, items, identity plans and receipt back together on write failure", async () => {
+  const p = await principal(),
+    w = await order();
+  const tables = [
+    "work_orders",
+    "scope_revisions",
+    "scope_items",
+    "scope_assets",
+    "identification_plans",
+    "document_references",
+    "coverage_assessments",
+    "readiness_assessments",
+    "audit_events",
+    "operation_receipts",
+    "outbox_jobs",
+  ];
+  const before = Object.fromEntries(
+    await Promise.all(
+      tables.map(async (t) => [
+        t,
+        await rows(`SELECT * FROM ppo.${t} ORDER BY 1,2`),
+      ]),
+    ),
+  );
+  for (const table of [
+    "document_references",
+    "coverage_assessments",
+    "scope_assets",
+    "identification_plans",
+    "outbox_jobs",
+  ]) {
+    await database().query(
+      `CREATE FUNCTION ppo.inject_scope_failure() RETURNS trigger LANGUAGE plpgsql AS $$BEGIN RAISE EXCEPTION 'SYN scope replacement failure'; END$$; CREATE TRIGGER inject_scope BEFORE INSERT ON ppo.${table} FOR EACH ROW EXECUTE FUNCTION ppo.inject_scope_failure();`,
+    );
+    const scope = input();
+    await assert.rejects(
+      saveWorkScope(p, w.id, {
+        ...base(),
+        expected_version: w.version,
+        scope: {
+          ...scope,
+          items: [
+            {
+              ...scope.items[0],
+              task_kind: "Identification",
+              assets: [
+                {
+                  asset_id: id(80, 2),
+                  configuration_id: null,
+                  identification_plan: {
+                    method: "Read external plate only",
+                    limits:
+                      "Stop before intervention; retain distinct candidate identity",
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      }),
+    );
+    await database().query(
+      `DROP TRIGGER inject_scope ON ppo.${table}; DROP FUNCTION ppo.inject_scope_failure();`,
+    );
+    for (const t of tables)
+      assert.deepEqual(
+        await rows(`SELECT * FROM ppo.${t} ORDER BY 1,2`),
+        before[t],
+      );
+  }
 });

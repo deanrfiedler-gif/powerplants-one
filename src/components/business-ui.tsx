@@ -46,13 +46,24 @@ export async function api<T>(path: string, body?: unknown): Promise<T> {
   return result as T;
 }
 const ValidationContext = createContext<Failure | null>(null);
-export function ValidationFields({ error, children }: { error: unknown; children: React.ReactNode }) {
-  return <ValidationContext.Provider value={error as Failure | null}>{children}</ValidationContext.Provider>;
+export function ValidationFields({
+  error,
+  children,
+}: {
+  error: unknown;
+  children: React.ReactNode;
+}) {
+  return (
+    <ValidationContext.Provider value={error as Failure | null}>
+      {children}
+    </ValidationContext.Provider>
+  );
 }
 function useFieldError(name: string) {
   const errors = useContext(ValidationContext)?.field_errors;
   const canonical = name.replace(/-\d+$/, "").replaceAll("-", "_");
-  return errors?.find((e) => e.field === name || e.field === canonical)?.message;
+  return errors?.find((e) => e.field === name || e.field === canonical)
+    ?.message;
 }
 export function ErrorNotice({ error }: { error: unknown }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -268,7 +279,11 @@ export function Field({
           maxLength={maxLength}
           rows={4}
           aria-invalid={!!error}
-          aria-describedby={[hint && `${name}-hint`, error && `${name}-error`].filter(Boolean).join(" ") || undefined}
+          aria-describedby={
+            [hint && `${name}-hint`, error && `${name}-error`]
+              .filter(Boolean)
+              .join(" ") || undefined
+          }
         />
       ) : (
         <input
@@ -281,10 +296,18 @@ export function Field({
           required={required}
           maxLength={maxLength}
           aria-invalid={!!error}
-          aria-describedby={[hint && `${name}-hint`, error && `${name}-error`].filter(Boolean).join(" ") || undefined}
+          aria-describedby={
+            [hint && `${name}-hint`, error && `${name}-error`]
+              .filter(Boolean)
+              .join(" ") || undefined
+          }
         />
       )}{" "}
-      {error && <small id={`${name}-error`} className="field-error">{error}</small>}
+      {error && (
+        <small id={`${name}-error`} className="field-error">
+          {error}
+        </small>
+      )}
       {hint && <small id={`${name}-hint`}>{hint}</small>}
     </div>
   );
@@ -338,7 +361,11 @@ export function SelectField({
           </option>
         ))}
       </select>
-      {error && <small id={`${name}-error`} className="field-error">{error}</small>}
+      {error && (
+        <small id={`${name}-error`} className="field-error">
+          {error}
+        </small>
+      )}
     </div>
   );
 }

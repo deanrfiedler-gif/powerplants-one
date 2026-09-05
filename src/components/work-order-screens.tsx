@@ -339,133 +339,135 @@ export function NewWorkOrder() {
         title="New work order"
         description="A draft retains the service request history and starts a separate scope decision."
       />
-      <ValidationFields error={cmd.error}><form
-        className="panel"
-        onSubmit={async (e) => {
-          e.preventDefault();
-          const result = await cmd.send<{ record_id: string }>(
-            "service/work-orders",
-            {
-              id,
-              company_id: company,
-              site_id: site,
-              customer_id: customer,
-              service_owner_id: owner,
-              tickets: tickets.map((ticket_id) => ({
-                ticket_id,
-                issue_disposition: disposition,
-              })),
-              reason: "Create a synthetic work-order draft",
-            },
-          );
-          if (result) router.push(`/service/work-orders/${result.record_id}`);
-        }}
-      >
-        <ErrorNotice error={cmd.error} />
-        <div className="form-grid">
-          <SelectField
-            name="wo-company"
-            label="Company context"
-            value={company}
-            onChange={(v) => {
-              setCompany(v);
-              setSite("");
-              setCustomer("");
-              setTickets([]);
-            }}
-            options={companies.data?.items ?? []}
-            required
-          />
-          <SelectField
-            name="wo-site"
-            label="Service site"
-            value={site}
-            onChange={(v) => {
-              setSite(v);
-              setCustomer("");
-              setTickets([]);
-            }}
-            options={sites.data?.items ?? []}
-            required
-          />
-          <SelectField
-            name="wo-customer"
-            label="Customer at this site"
-            value={customer}
-            onChange={setCustomer}
-            options={(detail?.parties ?? [])
-              .filter((p) => p.is_current)
-              .map((p) => ({
-                id: p.organisation_id,
-                display_name: p.display_name,
-              }))
-              .filter((p, i, a) => a.findIndex((x) => x.id === p.id) === i)}
-            required
-          />
-          <SelectField
-            name="wo-owner"
-            label="Service owner"
-            value={owner}
-            onChange={setOwner}
-            options={owners.data?.items ?? []}
-            required
-          />
-        </div>
-        <SelectField
-          name="wo-ticket"
-          label="Service request to link"
-          value={selected}
-          onChange={setSelected}
-          options={(requests.data?.items ?? []).map((t) => ({
-            ...t,
-            display_name: t.summary,
-          }))}
-        />
-        <button
-          type="button"
-          className="secondary"
-          disabled={!selected || tickets.includes(selected)}
-          onClick={() => {
-            setTickets([...tickets, selected]);
-            setSelected("");
+      <ValidationFields error={cmd.error}>
+        <form
+          className="panel"
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const result = await cmd.send<{ record_id: string }>(
+              "service/work-orders",
+              {
+                id,
+                company_id: company,
+                site_id: site,
+                customer_id: customer,
+                service_owner_id: owner,
+                tickets: tickets.map((ticket_id) => ({
+                  ticket_id,
+                  issue_disposition: disposition,
+                })),
+                reason: "Create a synthetic work-order draft",
+              },
+            );
+            if (result) router.push(`/service/work-orders/${result.record_id}`);
           }}
         >
-          Link service request
-        </button>
-        <ul>
-          {tickets.map((t) => (
-            <li key={t}>
-              {requests.data?.items.find((r) => r.id === t)?.display_number ??
-                t}{" "}
-              <button
-                type="button"
-                className="secondary"
-                onClick={() => setTickets(tickets.filter((x) => x !== t))}
-              >
-                Remove link
-              </button>
-            </li>
-          ))}
-        </ul>
-        <Field
-          name="issue_disposition"
-          label="Purpose of these linked requests"
-          value={disposition}
-          onChange={setDisposition}
-          multiline
-          maxLength={2000}
-          required
-        />
-        {[companies, sites, customers, owners, requests].map((r, i) => (
-          <ReadState
-            key={i}
-            loading={r.loading}
-            error={r.error}
-            retry={r.reload}
+          <ErrorNotice error={cmd.error} />
+          <div className="form-grid">
+            <SelectField
+              name="wo-company"
+              label="Company context"
+              value={company}
+              onChange={(v) => {
+                setCompany(v);
+                setSite("");
+                setCustomer("");
+                setTickets([]);
+              }}
+              options={companies.data?.items ?? []}
+              required
+            />
+            <SelectField
+              name="wo-site"
+              label="Service site"
+              value={site}
+              onChange={(v) => {
+                setSite(v);
+                setCustomer("");
+                setTickets([]);
+              }}
+              options={sites.data?.items ?? []}
+              required
+            />
+            <SelectField
+              name="wo-customer"
+              label="Customer at this site"
+              value={customer}
+              onChange={setCustomer}
+              options={(detail?.parties ?? [])
+                .filter((p) => p.is_current)
+                .map((p) => ({
+                  id: p.organisation_id,
+                  display_name: p.display_name,
+                }))
+                .filter((p, i, a) => a.findIndex((x) => x.id === p.id) === i)}
+              required
+            />
+            <SelectField
+              name="wo-owner"
+              label="Service owner"
+              value={owner}
+              onChange={setOwner}
+              options={owners.data?.items ?? []}
+              required
+            />
+          </div>
+          <SelectField
+            name="wo-ticket"
+            label="Service request to link"
+            value={selected}
+            onChange={setSelected}
+            options={(requests.data?.items ?? []).map((t) => ({
+              ...t,
+              display_name: t.summary,
+            }))}
           />
-        ))}
-        <button disabled={cmd.busy}>Save draft work order</button>
-      </form></ValidationFields>
+          <button
+            type="button"
+            className="secondary"
+            disabled={!selected || tickets.includes(selected)}
+            onClick={() => {
+              setTickets([...tickets, selected]);
+              setSelected("");
+            }}
+          >
+            Link service request
+          </button>
+          <ul>
+            {tickets.map((t) => (
+              <li key={t}>
+                {requests.data?.items.find((r) => r.id === t)?.display_number ??
+                  t}{" "}
+                <button
+                  type="button"
+                  className="secondary"
+                  onClick={() => setTickets(tickets.filter((x) => x !== t))}
+                >
+                  Remove link
+                </button>
+              </li>
+            ))}
+          </ul>
+          <Field
+            name="issue_disposition"
+            label="Purpose of these linked requests"
+            value={disposition}
+            onChange={setDisposition}
+            multiline
+            maxLength={2000}
+            required
+          />
+          {[companies, sites, customers, owners, requests].map((r, i) => (
+            <ReadState
+              key={i}
+              loading={r.loading}
+              error={r.error}
+              retry={r.reload}
+            />
+          ))}
+          <button disabled={cmd.busy}>Save draft work order</button>
+        </form>
+      </ValidationFields>
     </>
   );
 }
@@ -560,452 +562,465 @@ function ScopeForm({
       items: value.items.map((x, j) => (j === i ? { ...x, ...fields } : x)),
     });
   return (
-    <ValidationFields error={cmd.error}><form
-      onSubmit={async (e) => {
-        e.preventDefault();
-        const result = await cmd.send(
-          `service/work-orders/${w.id}/${successor ? "successor" : "save-scope"}`,
-          {
-            expected_version: expected,
-            scope: { ...value, items: value.items.map((item) => ({
-              task_kind: item.task_kind, task_description: item.task_description,
-              expected_outcome: item.expected_outcome, completion_requirements: item.completion_requirements,
-              required_skill_codes: item.required_skill_codes, shutdown_condition: item.shutdown_condition,
-              access_condition: item.access_condition, assets: item.assets,
-            })) },
-            ...(successor ? { change_reason: reason } : {}),
-            reason: successor
-              ? reason
-              : "Save synthetic scope draft for review",
-          },
-        );
-        if (result) {
-          onSaved();
-          setExpected((result as { record_version: number }).record_version);
-        }
-      }}
-    >
-      <ErrorNotice error={cmd.error} />
-      <ConflictReview
-        version={expected}
-        latest={w.version}
-        onAdopt={() => {
-          cmd.clear();
-          setExpected(w.version);
+    <ValidationFields error={cmd.error}>
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          const result = await cmd.send(
+            `service/work-orders/${w.id}/${successor ? "successor" : "save-scope"}`,
+            {
+              expected_version: expected,
+              scope: {
+                ...value,
+                items: value.items.map((item) => ({
+                  task_kind: item.task_kind,
+                  task_description: item.task_description,
+                  expected_outcome: item.expected_outcome,
+                  completion_requirements: item.completion_requirements,
+                  required_skill_codes: item.required_skill_codes,
+                  shutdown_condition: item.shutdown_condition,
+                  access_condition: item.access_condition,
+                  assets: item.assets,
+                })),
+              },
+              ...(successor ? { change_reason: reason } : {}),
+              reason: successor
+                ? reason
+                : "Save synthetic scope draft for review",
+            },
+          );
+          if (result) {
+            onSaved();
+            setExpected((result as { record_version: number }).record_version);
+          }
         }}
-      />
-      {successor && (
+      >
+        <ErrorNotice error={cmd.error} />
+        <ConflictReview
+          version={expected}
+          latest={w.version}
+          onAdopt={() => {
+            cmd.clear();
+            setExpected(w.version);
+          }}
+        />
+        {successor && (
+          <Field
+            name="change_reason"
+            label="Reason for successor scope"
+            value={reason}
+            onChange={setReason}
+            multiline
+            maxLength={2000}
+            required
+          />
+        )}
         <Field
-          name="change_reason"
-          label="Reason for successor scope"
-          value={reason}
-          onChange={setReason}
+          name="summary"
+          label="Scope summary"
+          value={value.summary ?? ""}
+          onChange={(v) => setValue({ ...value, summary: v || null })}
+          multiline
+          maxLength={4000}
+        />
+        <Field
+          name="exclusions"
+          label="Explicit exclusions"
+          value={value.exclusions ?? ""}
+          onChange={(v) => setValue({ ...value, exclusions: v || null })}
+          multiline
+          maxLength={4000}
+          hint="Record excluded work and control limits. Enter None only when reviewed."
+        />
+        <Field
+          name="diagnostic_limit"
+          label="Limited diagnostic authority"
+          value={value.diagnostic_limit ?? ""}
+          onChange={(v) => setValue({ ...value, diagnostic_limit: v || null })}
+          multiline
+          maxLength={4000}
+          hint="Required for unknown/disputed coverage and unresolved identification. This never authorises intervention."
+        />
+        <Field
+          name="pending_account_plan"
+          label="Account clarification and Finance review plan"
+          value={value.pending_account_plan ?? ""}
+          onChange={(v) =>
+            setValue({ ...value, pending_account_plan: v || null })
+          }
           multiline
           maxLength={2000}
-          required
         />
-      )}
-      <Field
-        name="summary"
-        label="Scope summary"
-        value={value.summary ?? ""}
-        onChange={(v) => setValue({ ...value, summary: v || null })}
-        multiline
-        maxLength={4000}
-      />
-      <Field
-        name="exclusions"
-        label="Explicit exclusions"
-        value={value.exclusions ?? ""}
-        onChange={(v) => setValue({ ...value, exclusions: v || null })}
-        multiline
-        maxLength={4000}
-        hint="Record excluded work and control limits. Enter None only when reviewed."
-      />
-      <Field
-        name="diagnostic_limit"
-        label="Limited diagnostic authority"
-        value={value.diagnostic_limit ?? ""}
-        onChange={(v) => setValue({ ...value, diagnostic_limit: v || null })}
-        multiline
-        maxLength={4000}
-        hint="Required for unknown/disputed coverage and unresolved identification. This never authorises intervention."
-      />
-      <Field
-        name="pending_account_plan"
-        label="Account clarification and Finance review plan"
-        value={value.pending_account_plan ?? ""}
-        onChange={(v) =>
-          setValue({ ...value, pending_account_plan: v || null })
-        }
-        multiline
-        maxLength={2000}
-      />
-      <h3>Tasks and affected equipment</h3>
-      {value.items.map((i, index) => (
-        <fieldset className="wo-task" key={index}>
-          <legend>Task {index + 1}</legend>
-          <EnumField
-            name={`task-kind-${index}`}
-            label="Task type"
-            value={i.task_kind}
-            values={taskKinds}
-            onChange={(v) =>
-              change(index, { task_kind: v as Item["task_kind"] })
-            }
-          />
-          <Field
-            name={`task-${index}`} validationField="task_description"
-            label="Task description"
-            value={i.task_description}
-            onChange={(v) => change(index, { task_description: v })}
-            multiline
-            maxLength={4000}
-          />
-          <Field
-            name={`outcome-${index}`} validationField="expected_outcome"
-            label="Expected outcome"
-            value={i.expected_outcome}
-            onChange={(v) => change(index, { expected_outcome: v })}
-            multiline
-            maxLength={4000}
-          />
-          <Field
-            name={`completion-${index}`}
-            label="Completion requirements — one per line"
-            value={i.completion_requirements.join("\n")}
-            onChange={(v) =>
-              change(index, { completion_requirements: v.split("\n") })
-            }
-            multiline
-            maxLength={10000}
-          />
-          <Field
-            name={`skills-${index}`}
-            label="Required competency codes — one per line"
-            value={i.required_skill_codes.join("\n")}
-            onChange={(v) =>
-              change(index, { required_skill_codes: v ? v.split("\n") : [] })
-            }
-            multiline
-            maxLength={2000}
-          />
-          <Field
-            name={`shutdown-${index}`}
-            label="Shutdown and isolation conditions"
-            value={i.shutdown_condition ?? ""}
-            onChange={(v) => change(index, { shutdown_condition: v || null })}
-            multiline
-            maxLength={2000}
-          />
-          <Field
-            name={`access-${index}`}
-            label="Task access conditions"
-            value={i.access_condition ?? ""}
-            onChange={(v) => change(index, { access_condition: v || null })}
-            multiline
-            maxLength={2000}
-          />
-          <SelectField
-            name={`asset-${index}`}
-            label="Equipment to include"
-            value={assetChoice[index] ?? ""}
-            onChange={(v) => setAssetChoice({ ...assetChoice, [index]: v })}
-            options={assets.data?.items ?? []}
-          />
-          <button
-            type="button"
-            className="secondary"
-            disabled={
-              !assetChoice[index] ||
-              i.assets.some((a) => a.asset_id === assetChoice[index])
-            }
-            onClick={() =>
-              change(index, {
-                assets: [
-                  ...i.assets,
-                  {
-                    asset_id: assetChoice[index],
-                    configuration_id: null,
-                    identification_plan: null,
-                  },
-                ],
-              })
-            }
-          >
-            Include equipment in task {index + 1}
-          </button>
-          {i.assets.map((a, j) => {
-            const current = assets.data?.items.find((x) => x.id === a.asset_id);
-            return (
-              <div className="wo-asset" key={a.asset_id}>
-                <strong>{current?.description ?? a.asset_id}</strong>{" "}
-                <Status value={current?.identity_status ?? "Unknown"} />
-                {a.configuration_id && (
-                  <p>
-                    Retained configuration reference: {a.configuration_id}. It
-                    requires verified evidence before authorisation.
-                  </p>
-                )}
-                <label className="check-label">
-                  <input
-                    type="checkbox"
-                    checked={!!a.identification_plan}
-                    onChange={(e) =>
+        <h3>Tasks and affected equipment</h3>
+        {value.items.map((i, index) => (
+          <fieldset className="wo-task" key={index}>
+            <legend>Task {index + 1}</legend>
+            <EnumField
+              name={`task-kind-${index}`}
+              label="Task type"
+              value={i.task_kind}
+              values={taskKinds}
+              onChange={(v) =>
+                change(index, { task_kind: v as Item["task_kind"] })
+              }
+            />
+            <Field
+              name={`task-${index}`}
+              validationField="task_description"
+              label="Task description"
+              value={i.task_description}
+              onChange={(v) => change(index, { task_description: v })}
+              multiline
+              maxLength={4000}
+            />
+            <Field
+              name={`outcome-${index}`}
+              validationField="expected_outcome"
+              label="Expected outcome"
+              value={i.expected_outcome}
+              onChange={(v) => change(index, { expected_outcome: v })}
+              multiline
+              maxLength={4000}
+            />
+            <Field
+              name={`completion-${index}`}
+              label="Completion requirements — one per line"
+              value={i.completion_requirements.join("\n")}
+              onChange={(v) =>
+                change(index, { completion_requirements: v.split("\n") })
+              }
+              multiline
+              maxLength={10000}
+            />
+            <Field
+              name={`skills-${index}`}
+              label="Required competency codes — one per line"
+              value={i.required_skill_codes.join("\n")}
+              onChange={(v) =>
+                change(index, { required_skill_codes: v ? v.split("\n") : [] })
+              }
+              multiline
+              maxLength={2000}
+            />
+            <Field
+              name={`shutdown-${index}`}
+              label="Shutdown and isolation conditions"
+              value={i.shutdown_condition ?? ""}
+              onChange={(v) => change(index, { shutdown_condition: v || null })}
+              multiline
+              maxLength={2000}
+            />
+            <Field
+              name={`access-${index}`}
+              label="Task access conditions"
+              value={i.access_condition ?? ""}
+              onChange={(v) => change(index, { access_condition: v || null })}
+              multiline
+              maxLength={2000}
+            />
+            <SelectField
+              name={`asset-${index}`}
+              label="Equipment to include"
+              value={assetChoice[index] ?? ""}
+              onChange={(v) => setAssetChoice({ ...assetChoice, [index]: v })}
+              options={assets.data?.items ?? []}
+            />
+            <button
+              type="button"
+              className="secondary"
+              disabled={
+                !assetChoice[index] ||
+                i.assets.some((a) => a.asset_id === assetChoice[index])
+              }
+              onClick={() =>
+                change(index, {
+                  assets: [
+                    ...i.assets,
+                    {
+                      asset_id: assetChoice[index],
+                      configuration_id: null,
+                      identification_plan: null,
+                    },
+                  ],
+                })
+              }
+            >
+              Include equipment in task {index + 1}
+            </button>
+            {i.assets.map((a, j) => {
+              const current = assets.data?.items.find(
+                (x) => x.id === a.asset_id,
+              );
+              return (
+                <div className="wo-asset" key={a.asset_id}>
+                  <strong>{current?.description ?? a.asset_id}</strong>{" "}
+                  <Status value={current?.identity_status ?? "Unknown"} />
+                  {a.configuration_id && (
+                    <p>
+                      Retained configuration reference: {a.configuration_id}. It
+                      requires verified evidence before authorisation.
+                    </p>
+                  )}
+                  <label className="check-label">
+                    <input
+                      type="checkbox"
+                      checked={!!a.identification_plan}
+                      onChange={(e) =>
+                        change(index, {
+                          assets: i.assets.map((x, k) =>
+                            j === k
+                              ? {
+                                  ...x,
+                                  identification_plan: e.target.checked
+                                    ? { method: "", limits: "" }
+                                    : null,
+                                }
+                              : x,
+                          ),
+                        })
+                      }
+                    />{" "}
+                    Include a bounded identification plan
+                  </label>
+                  {a.identification_plan && (
+                    <>
+                      <Field
+                        name={`method-${index}-${j}`}
+                        label="Identification method"
+                        value={a.identification_plan.method}
+                        onChange={(v) =>
+                          change(index, {
+                            assets: i.assets.map((x, k) =>
+                              j === k
+                                ? {
+                                    ...x,
+                                    identification_plan: {
+                                      method: v,
+                                      limits: a.identification_plan!.limits,
+                                    },
+                                  }
+                                : x,
+                            ),
+                          })
+                        }
+                        multiline
+                        maxLength={4000}
+                      />
+                      <Field
+                        name={`limits-${index}-${j}`}
+                        label="Identification limits"
+                        value={a.identification_plan.limits}
+                        onChange={(v) =>
+                          change(index, {
+                            assets: i.assets.map((x, k) =>
+                              j === k
+                                ? {
+                                    ...x,
+                                    identification_plan: {
+                                      method: a.identification_plan!.method,
+                                      limits: v,
+                                    },
+                                  }
+                                : x,
+                            ),
+                          })
+                        }
+                        multiline
+                        maxLength={4000}
+                      />
+                    </>
+                  )}
+                  <button
+                    type="button"
+                    className="secondary"
+                    onClick={() =>
                       change(index, {
-                        assets: i.assets.map((x, k) =>
-                          j === k
-                            ? {
-                                ...x,
-                                identification_plan: e.target.checked
-                                  ? { method: "", limits: "" }
-                                  : null,
-                              }
-                            : x,
-                        ),
+                        assets: i.assets.filter((_, k) => k !== j),
                       })
                     }
-                  />{" "}
-                  Include a bounded identification plan
-                </label>
-                {a.identification_plan && (
-                  <>
-                    <Field
-                      name={`method-${index}-${j}`}
-                      label="Identification method"
-                      value={a.identification_plan.method}
-                      onChange={(v) =>
-                        change(index, {
-                          assets: i.assets.map((x, k) =>
-                            j === k
-                              ? {
-                                  ...x,
-                                  identification_plan: {
-                                    method: v,
-                                    limits: a.identification_plan!.limits,
-                                  },
-                                }
-                              : x,
-                          ),
-                        })
-                      }
-                      multiline
-                      maxLength={4000}
-                    />
-                    <Field
-                      name={`limits-${index}-${j}`}
-                      label="Identification limits"
-                      value={a.identification_plan.limits}
-                      onChange={(v) =>
-                        change(index, {
-                          assets: i.assets.map((x, k) =>
-                            j === k
-                              ? {
-                                  ...x,
-                                  identification_plan: {
-                                    method: a.identification_plan!.method,
-                                    limits: v,
-                                  },
-                                }
-                              : x,
-                          ),
-                        })
-                      }
-                      multiline
-                      maxLength={4000}
-                    />
-                  </>
-                )}
-                <button
-                  type="button"
-                  className="secondary"
-                  onClick={() =>
-                    change(index, {
-                      assets: i.assets.filter((_, k) => k !== j),
-                    })
-                  }
-                >
-                  Remove equipment
-                </button>
-              </div>
-            );
-          })}
-          <button
-            type="button"
-            className="secondary"
-            onClick={() =>
-              setValue({
-                ...value,
-                items: value.items.filter((_, j) => j !== index),
-              })
-            }
-          >
-            Remove task {index + 1}
-          </button>
-        </fieldset>
-      ))}
-      <button
-        type="button"
-        className="secondary"
-        onClick={() =>
-          setValue({ ...value, items: [...value.items, emptyItem()] })
-        }
-      >
-        Add scope task
-      </button>
-      <ReadState
-        loading={assets.loading}
-        error={assets.error}
-        retry={assets.reload}
-      />
-      <h3>Coverage assessment</h3>
-      <label className="check-label">
-        <input
-          type="checkbox"
-          checked={!!value.coverage}
-          onChange={(e) =>
-            setValue({
-              ...value,
-              coverage: e.target.checked
-                ? {
-                    status: "Unknown",
-                    assessment: "",
-                    reason: "",
-                    agreement_reference: null,
-                    source_version: null,
-                    effective_from: null,
-                    effective_to: null,
-                    charging_route: "FinanceReview",
-                  }
-                : null,
-            })
-          }
-        />{" "}
-        Record a coverage assessment
-      </label>
-      {value.coverage && (
-        <>
-          <EnumField
-            name="coverage-state"
-            label="Coverage position"
-            values={coverageStates}
-            value={value.coverage.status}
-            onChange={(v) =>
-              setValue({
-                ...value,
-                coverage: {
-                  ...value.coverage!,
-                  status: v as NonNullable<ScopeInput["coverage"]>["status"],
-                },
-              })
-            }
-          />
-          <Field
-            name="coverage-assessment"
-            label="Assessment"
-            value={value.coverage.assessment}
-            onChange={(v) =>
-              setValue({
-                ...value,
-                coverage: { ...value.coverage!, assessment: v },
-              })
-            }
-            multiline
-            maxLength={4000}
-          />
-          <Field
-            name="coverage-reason"
-            label="Coverage reason"
-            value={value.coverage.reason}
-            onChange={(v) =>
-              setValue({
-                ...value,
-                coverage: { ...value.coverage!, reason: v },
-              })
-            }
-            multiline
-            maxLength={2000}
-          />
-          {(
-            [
-              "agreement_reference",
-              "source_version",
-              "effective_from",
-              "effective_to",
-            ] as const
-          ).map((k) => (
-            <Field
-              key={k}
-              name={`coverage-${k}`}
-              label={
-                {
-                  agreement_reference: "Agreement reference",
-                  source_version: "Agreement version",
-                  effective_from: "Effective from",
-                  effective_to: "Effective to",
-                }[k]
+                  >
+                    Remove equipment
+                  </button>
+                </div>
+              );
+            })}
+            <button
+              type="button"
+              className="secondary"
+              onClick={() =>
+                setValue({
+                  ...value,
+                  items: value.items.filter((_, j) => j !== index),
+                })
               }
-              type={k.startsWith("effective") ? "date" : "text"}
-              value={value.coverage![k] ?? ""}
+            >
+              Remove task {index + 1}
+            </button>
+          </fieldset>
+        ))}
+        <button
+          type="button"
+          className="secondary"
+          onClick={() =>
+            setValue({ ...value, items: [...value.items, emptyItem()] })
+          }
+        >
+          Add scope task
+        </button>
+        <ReadState
+          loading={assets.loading}
+          error={assets.error}
+          retry={assets.reload}
+        />
+        <h3>Coverage assessment</h3>
+        <label className="check-label">
+          <input
+            type="checkbox"
+            checked={!!value.coverage}
+            onChange={(e) =>
+              setValue({
+                ...value,
+                coverage: e.target.checked
+                  ? {
+                      status: "Unknown",
+                      assessment: "",
+                      reason: "",
+                      agreement_reference: null,
+                      source_version: null,
+                      effective_from: null,
+                      effective_to: null,
+                      charging_route: "FinanceReview",
+                    }
+                  : null,
+              })
+            }
+          />{" "}
+          Record a coverage assessment
+        </label>
+        {value.coverage && (
+          <>
+            <EnumField
+              name="coverage-state"
+              label="Coverage position"
+              values={coverageStates}
+              value={value.coverage.status}
               onChange={(v) =>
                 setValue({
                   ...value,
-                  coverage: { ...value.coverage!, [k]: v || null },
+                  coverage: {
+                    ...value.coverage!,
+                    status: v as NonNullable<ScopeInput["coverage"]>["status"],
+                  },
                 })
               }
             />
-          ))}
-          <EnumField
-            name="charging_route"
-            label="Charging decision route"
-            value={value.coverage.charging_route}
-            values={["FinanceReview", "ContractReference"]}
-            onChange={(v) =>
+            <Field
+              name="coverage-assessment"
+              label="Assessment"
+              value={value.coverage.assessment}
+              onChange={(v) =>
+                setValue({
+                  ...value,
+                  coverage: { ...value.coverage!, assessment: v },
+                })
+              }
+              multiline
+              maxLength={4000}
+            />
+            <Field
+              name="coverage-reason"
+              label="Coverage reason"
+              value={value.coverage.reason}
+              onChange={(v) =>
+                setValue({
+                  ...value,
+                  coverage: { ...value.coverage!, reason: v },
+                })
+              }
+              multiline
+              maxLength={2000}
+            />
+            {(
+              [
+                "agreement_reference",
+                "source_version",
+                "effective_from",
+                "effective_to",
+              ] as const
+            ).map((k) => (
+              <Field
+                key={k}
+                name={`coverage-${k}`}
+                label={
+                  {
+                    agreement_reference: "Agreement reference",
+                    source_version: "Agreement version",
+                    effective_from: "Effective from",
+                    effective_to: "Effective to",
+                  }[k]
+                }
+                type={k.startsWith("effective") ? "date" : "text"}
+                value={value.coverage![k] ?? ""}
+                onChange={(v) =>
+                  setValue({
+                    ...value,
+                    coverage: { ...value.coverage!, [k]: v || null },
+                  })
+                }
+              />
+            ))}
+            <EnumField
+              name="charging_route"
+              label="Charging decision route"
+              value={value.coverage.charging_route}
+              values={["FinanceReview", "ContractReference"]}
+              onChange={(v) =>
+                setValue({
+                  ...value,
+                  coverage: {
+                    ...value.coverage!,
+                    charging_route: v as "FinanceReview" | "ContractReference",
+                  },
+                })
+              }
+            />
+          </>
+        )}
+        <p className="callout">
+          Coverage does not decide billability, customer charging, warranty
+          liability or supplier recovery. Finance review remains separate.
+        </p>
+        <h3>Authority evidence</h3>
+        <label className="check-label">
+          <input
+            type="checkbox"
+            checked={!!value.authority_evidence}
+            onChange={(e) =>
               setValue({
                 ...value,
-                coverage: {
-                  ...value.coverage!,
-                  charging_route: v as "FinanceReview" | "ContractReference",
-                },
+                authority_evidence: e.target.checked ? emptyEvidence() : null,
               })
             }
+          />{" "}
+          Record synthetic manual authority evidence
+        </label>
+        {value.authority_evidence && (
+          <EvidenceFields
+            prefix="scope-authority"
+            value={value.authority_evidence}
+            onChange={(v) => setValue({ ...value, authority_evidence: v })}
           />
-        </>
-      )}
-      <p className="callout">
-        Coverage does not decide billability, customer charging, warranty
-        liability or supplier recovery. Finance review remains separate.
-      </p>
-      <h3>Authority evidence</h3>
-      <label className="check-label">
-        <input
-          type="checkbox"
-          checked={!!value.authority_evidence}
-          onChange={(e) =>
-            setValue({
-              ...value,
-              authority_evidence: e.target.checked ? emptyEvidence() : null,
-            })
-          }
-        />{" "}
-        Record synthetic manual authority evidence
-      </label>
-      {value.authority_evidence && (
-        <EvidenceFields
-          prefix="scope-authority"
-          value={value.authority_evidence}
-          onChange={(v) => setValue({ ...value, authority_evidence: v })}
-        />
-      )}
-      <p className="read-meta">
-        Saving changed scope requires fresh readiness review. Previous approvals
-        remain preserved.
-      </p>
-      <button disabled={cmd.busy}>
-        {successor ? "Create successor draft" : "Save scope draft"}
-      </button>
-      <p role="status">{cmd.saved}</p>
-    </form></ValidationFields>
+        )}
+        <p className="read-meta">
+          Saving changed scope requires fresh readiness review. Previous
+          approvals remain preserved.
+        </p>
+        <button disabled={cmd.busy}>
+          {successor ? "Create successor draft" : "Save scope draft"}
+        </button>
+        <p role="status">{cmd.saved}</p>
+      </form>
+    </ValidationFields>
   );
 }
 function ReadinessTable({ rows }: { rows: Assessment[] }) {
@@ -1071,104 +1086,109 @@ function AssessmentForm({
   const cmd = useCommand(),
     pc = rows.find((x) => x.criterion_code === criterion);
   return (
-    <ValidationFields error={cmd.error}><form
-      onSubmit={async (e) => {
-        e.preventDefault();
-        const result = await cmd.send<{ record_version: number }>(
-          `service/work-orders/${w.id}/readiness`,
-          {
-            expected_version: expected,
-            assessment: {
-              scope_revision_id: r.id,
-              scope_version: r.version,
-              appointment_id: visit?.id ?? null,
-              criterion_code: criterion,
-              outcome,
-              reason,
-              evidence: [
-                "Pass",
-                "PermittedException",
-                "NotApplicable",
-              ].includes(outcome)
-                ? evidence
-                : null,
-              source_as_at: asAt ? new Date(asAt).toISOString() : null,
-              valid_until: expiry ? new Date(expiry).toISOString() : null,
+    <ValidationFields error={cmd.error}>
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          const result = await cmd.send<{ record_version: number }>(
+            `service/work-orders/${w.id}/readiness`,
+            {
+              expected_version: expected,
+              assessment: {
+                scope_revision_id: r.id,
+                scope_version: r.version,
+                appointment_id: visit?.id ?? null,
+                criterion_code: criterion,
+                outcome,
+                reason,
+                evidence: [
+                  "Pass",
+                  "PermittedException",
+                  "NotApplicable",
+                ].includes(outcome)
+                  ? evidence
+                  : null,
+                source_as_at: asAt ? new Date(asAt).toISOString() : null,
+                valid_until: expiry ? new Date(expiry).toISOString() : null,
+              },
+              reason: "Review synthetic readiness evidence",
             },
-            reason: "Review synthetic readiness evidence",
-          },
-        );
-        if (result) {
-          setExpected(result.record_version);
-          onSaved();
-        }
-      }}
-    >
-      <ErrorNotice error={cmd.error} />
-      <ConflictReview
-        version={expected}
-        latest={w.version}
-        onAdopt={() => {
-          cmd.clear();
-          setExpected(w.version);
+          );
+          if (result) {
+            setExpected(result.record_version);
+            onSaved();
+          }
         }}
-      />
-      <SelectField
-        name={`criterion-${visit?.id ?? "scope"}`}
-        label="Readiness criterion"
-        value={criterion}
-        onChange={(v) => {
-          setCriterion(v);
-          setOutcome("Unknown");
-        }}
-        options={rows.map((a) => ({
-          id: a.criterion_code,
-          display_name: `${a.label} · ${a.blocking_stage}`,
-        }))}
-      />
-      <EnumField
-        name={`outcome-${visit?.id ?? "scope"}`}
-        label="Readiness decision"
-        value={outcome}
-        onChange={setOutcome}
-        values={readinessStates
-          .filter((v) => v !== "PermittedException" || pc?.exception_allowed)
-          .filter((v) => v !== "NotApplicable" || pc?.not_applicable_allowed)}
-      />
-      <Field
-        name={`reason-${visit?.id ?? "scope"}`} validationField="assessment_reason"
-        label="Review reason"
-        value={reason}
-        onChange={setReason}
-        multiline
-        maxLength={2000}
-        required
-      />
-      <Field
-        name={`asat-${visit?.id ?? "scope"}`} validationField="source_as_at"
-        label="Evidence source time (your device timezone)"
-        type="datetime-local"
-        value={asAt}
-        onChange={setAsAt}
-        required
-      />
-      <Field
-        name={`expiry-${visit?.id ?? "scope"}`} validationField="valid_until"
-        label="Evidence expiry (optional, your device timezone)"
-        type="datetime-local"
-        value={expiry}
-        onChange={setExpiry}
-      />
-      {["Pass", "PermittedException", "NotApplicable"].includes(outcome) && (
-        <EvidenceFields
-          prefix={`readiness-${visit?.id ?? "scope"}`}
-          value={evidence}
-          onChange={setEvidence}
+      >
+        <ErrorNotice error={cmd.error} />
+        <ConflictReview
+          version={expected}
+          latest={w.version}
+          onAdopt={() => {
+            cmd.clear();
+            setExpected(w.version);
+          }}
         />
-      )}
-      <button disabled={cmd.busy}>Record readiness review</button>
-      <p role="status">{cmd.saved}</p>
-    </form></ValidationFields>
+        <SelectField
+          name={`criterion-${visit?.id ?? "scope"}`}
+          label="Readiness criterion"
+          value={criterion}
+          onChange={(v) => {
+            setCriterion(v);
+            setOutcome("Unknown");
+          }}
+          options={rows.map((a) => ({
+            id: a.criterion_code,
+            display_name: `${a.label} · ${a.blocking_stage}`,
+          }))}
+        />
+        <EnumField
+          name={`outcome-${visit?.id ?? "scope"}`}
+          label="Readiness decision"
+          value={outcome}
+          onChange={setOutcome}
+          values={readinessStates
+            .filter((v) => v !== "PermittedException" || pc?.exception_allowed)
+            .filter((v) => v !== "NotApplicable" || pc?.not_applicable_allowed)}
+        />
+        <Field
+          name={`reason-${visit?.id ?? "scope"}`}
+          validationField="assessment_reason"
+          label="Review reason"
+          value={reason}
+          onChange={setReason}
+          multiline
+          maxLength={2000}
+          required
+        />
+        <Field
+          name={`asat-${visit?.id ?? "scope"}`}
+          validationField="source_as_at"
+          label="Evidence source time (your device timezone)"
+          type="datetime-local"
+          value={asAt}
+          onChange={setAsAt}
+          required
+        />
+        <Field
+          name={`expiry-${visit?.id ?? "scope"}`}
+          validationField="valid_until"
+          label="Evidence expiry (optional, your device timezone)"
+          type="datetime-local"
+          value={expiry}
+          onChange={setExpiry}
+        />
+        {["Pass", "PermittedException", "NotApplicable"].includes(outcome) && (
+          <EvidenceFields
+            prefix={`readiness-${visit?.id ?? "scope"}`}
+            value={evidence}
+            onChange={setEvidence}
+          />
+        )}
+        <button disabled={cmd.busy}>Record readiness review</button>
+        <p role="status">{cmd.saved}</p>
+      </form>
+    </ValidationFields>
   );
 }
 function VisitForm({
@@ -1190,91 +1210,93 @@ function VisitForm({
     [id] = useState(() => crypto.randomUUID());
   const cmd = useCommand();
   return (
-    <ValidationFields error={cmd.error}><form
-      onSubmit={async (e) => {
-        e.preventDefault();
-        const result = await cmd.send(`service/work-orders/${w.id}/visits`, {
-          id,
-          expected_version: expected,
-          scope_revision_id: r.id,
-          scope_version: r.version,
-          start_at: start ? new Date(start).toISOString() : null,
-          end_at: end ? new Date(end).toISOString() : null,
-          requested_window_start: windowStart
-            ? new Date(windowStart).toISOString()
-            : null,
-          requested_window_end: windowEnd
-            ? new Date(windowEnd).toISOString()
-            : null,
-          customer_commitment: commitment,
-          preparation_status: preparation,
-          reason: "Record synthetic proposed attendance only",
-        });
-        if (result) onSaved();
-      }}
-    >
-      <ErrorNotice error={cmd.error} />
-      <ConflictReview
-        version={expected}
-        latest={w.version}
-        onAdopt={() => {
-          cmd.clear();
-          setExpected(w.version);
+    <ValidationFields error={cmd.error}>
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          const result = await cmd.send(`service/work-orders/${w.id}/visits`, {
+            id,
+            expected_version: expected,
+            scope_revision_id: r.id,
+            scope_version: r.version,
+            start_at: start ? new Date(start).toISOString() : null,
+            end_at: end ? new Date(end).toISOString() : null,
+            requested_window_start: windowStart
+              ? new Date(windowStart).toISOString()
+              : null,
+            requested_window_end: windowEnd
+              ? new Date(windowEnd).toISOString()
+              : null,
+            customer_commitment: commitment,
+            preparation_status: preparation,
+            reason: "Record synthetic proposed attendance only",
+          });
+          if (result) onSaved();
         }}
-      />
-      <p>
-        Enter instants in your device timezone. The saved proposal is shown in{" "}
-        {w.site_timezone}. No crew or time is reserved.
-      </p>
-      <div className="form-grid">
-        <Field
-          name="visit-start"
-          label="Proposed start (device timezone)"
-          value={start}
-          onChange={setStart}
-          type="datetime-local"
-          required
+      >
+        <ErrorNotice error={cmd.error} />
+        <ConflictReview
+          version={expected}
+          latest={w.version}
+          onAdopt={() => {
+            cmd.clear();
+            setExpected(w.version);
+          }}
         />
-        <Field
-          name="visit-end"
-          label="Proposed finish (device timezone)"
-          value={end}
-          onChange={setEnd}
-          type="datetime-local"
-          required
-        />
-        <Field
-          name="window-start"
-          label="Customer window start (optional)"
-          value={windowStart}
-          onChange={setWindowStart}
-          type="datetime-local"
-        />
-        <Field
-          name="window-end"
-          label="Customer window finish (optional)"
-          value={windowEnd}
-          onChange={setWindowEnd}
-          type="datetime-local"
-        />
-        <EnumField
-          name="customer-commitment"
-          label="Customer commitment"
-          value={commitment}
-          values={["Unknown", "Proposed"]}
-          onChange={setCommitment}
-        />
-        <EnumField
-          name="preparation"
-          label="Preparation state"
-          value={preparation}
-          values={["Unknown", "Preparing", "Blocked"]}
-          onChange={setPreparation}
-        />
-      </div>
-      <button disabled={cmd.busy}>Save proposed visit</button>
-      <p role="status">{cmd.saved}</p>
-    </form></ValidationFields>
+        <p>
+          Enter instants in your device timezone. The saved proposal is shown in{" "}
+          {w.site_timezone}. No crew or time is reserved.
+        </p>
+        <div className="form-grid">
+          <Field
+            name="visit-start"
+            label="Proposed start (device timezone)"
+            value={start}
+            onChange={setStart}
+            type="datetime-local"
+            required
+          />
+          <Field
+            name="visit-end"
+            label="Proposed finish (device timezone)"
+            value={end}
+            onChange={setEnd}
+            type="datetime-local"
+            required
+          />
+          <Field
+            name="window-start"
+            label="Customer window start (optional)"
+            value={windowStart}
+            onChange={setWindowStart}
+            type="datetime-local"
+          />
+          <Field
+            name="window-end"
+            label="Customer window finish (optional)"
+            value={windowEnd}
+            onChange={setWindowEnd}
+            type="datetime-local"
+          />
+          <EnumField
+            name="customer-commitment"
+            label="Customer commitment"
+            value={commitment}
+            values={["Unknown", "Proposed"]}
+            onChange={setCommitment}
+          />
+          <EnumField
+            name="preparation"
+            label="Preparation state"
+            value={preparation}
+            values={["Unknown", "Preparing", "Blocked"]}
+            onChange={setPreparation}
+          />
+        </div>
+        <button disabled={cmd.busy}>Save proposed visit</button>
+        <p role="status">{cmd.saved}</p>
+      </form>
+    </ValidationFields>
   );
 }
 function ScopeView({ r }: { r: Scope }) {

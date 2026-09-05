@@ -891,10 +891,21 @@ export async function authoriseWorkOrder(
         financial_disposition: "PendingFinanceReview",
       };
 
-      await c.query(
-        "UPDATE ppo.identification_plans SET approved_by=$3,approved_at=clock_timestamp() WHERE workspace_id=$1 AND scope_revision_id=$2",
+      const approvedPlans = await c.query(
+        "UPDATE ppo.identification_plans SET approved_by=$3,approved_at=clock_timestamp() WHERE workspace_id=$1 AND scope_revision_id=$2 RETURNING id,approved_by,approved_at",
         [p.workspace_id, r.id, p.actor_id],
       );
+      for (const item of snapshot.items) {
+        for (const asset of item.assets) {
+          const plan = approvedPlans.rows.find(
+            (x) => x.id === asset.identification_plan_id,
+          );
+          if (plan) {
+            asset.approved_by = plan.approved_by;
+            asset.approved_at = plan.approved_at;
+          }
+        }
+      }
       const approved = (
         await c.query(
           "UPDATE ppo.scope_revisions SET approved_by=$3,approved_at=clock_timestamp(),approved_snapshot=$4,content_hash=encode(sha256(convert_to($4::jsonb::text,'UTF8')),'hex') WHERE workspace_id=$1 AND id=$2 RETURNING content_hash",
@@ -1040,6 +1051,7 @@ export async function readWorkOrder(p: Principal, id: string) {
     const r = scopes.find((s) => s.id === v.scope_revision_id);
     v.scope_review_required =
       v.scope_revision_id !== w.authorised_scope_revision_id ||
+      v.scope_revision_id !== w.scope_revision_id ||
       r?.version !== v.scope_version;
     v.readiness = r ? await readiness(c, p, r, v.id) : [];
   }

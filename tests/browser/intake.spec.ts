@@ -302,7 +302,16 @@ test("P03 persisted intake, validation retention, clarification completion, tria
     .getByRole("button", { name: "Save intake details", exact: true })
     .click();
   await expect(
-    page.locator("section").filter({ has: page.getByRole("heading", { name: "Edit intake details", exact: true }) }).getByRole("status").filter({ hasText: "Saved to the server." }),
+    page
+      .locator("section")
+      .filter({
+        has: page.getByRole("heading", {
+          name: "Edit intake details",
+          exact: true,
+        }),
+      })
+      .getByRole("status")
+      .filter({ hasText: "Saved to the server." }),
   ).toBeVisible();
   await page.goto(href!);
   await page
