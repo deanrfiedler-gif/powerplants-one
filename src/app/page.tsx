@@ -37,8 +37,7 @@ export default function Overview() {
           <span className="step">01 / Prepare</span>
           <h3>
             Know the customer.
-            <br />
-            Prepare the work.
+            <br /> Prepare the work.
           </h3>
           <p>
             Customer, site and equipment context. A clear request, authorised
@@ -50,8 +49,7 @@ export default function Overview() {
           <span className="step">02 / Coordinate</span>
           <h3>
             Make the visit
-            <br />
-            ready to happen.
+            <br /> ready to happen.
           </h3>
           <p>
             Technician commitments, readiness and controlled changes, with the
@@ -63,8 +61,7 @@ export default function Overview() {
           <span className="step">03 / Complete</span>
           <h3>
             Leave a useful
-            <br />
-            record behind.
+            <br /> record behind.
           </h3>
           <p>
             Field evidence, customer acknowledgement, reviewed reports and a

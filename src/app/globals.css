@@ -110,9 +110,13 @@ h3 {
   z-index: 99;
   background: white;
   padding: 12px;
+  opacity: 0;
+  pointer-events: none;
 }
 .skip-link:focus {
   top: 12px;
+  opacity: 1;
+  pointer-events: auto;
 }
 .environment {
   background: var(--green);
@@ -584,9 +588,6 @@ footer {
   }
   .cards h3 br {
     display: none;
-  }
-  .cards h3 br:after {
-    content: " ";
   }
   .step {
     margin-bottom: 12px;

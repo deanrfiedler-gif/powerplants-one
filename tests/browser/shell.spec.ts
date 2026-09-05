@@ -11,6 +11,9 @@ test("responsive shell, keyboard focus, server save, read-only refusal and stora
   await expect(
     page.getByRole("link", { name: "Skip to main content" }),
   ).toBeFocused();
+  await page.screenshot({
+    path: info.outputPath("P01-keyboard-focus.png"),
+  });
   await page.keyboard.press("Enter");
   await expect(page.locator("#main")).toBeFocused();
   expect(
@@ -22,7 +25,11 @@ test("responsive shell, keyboard focus, server save, read-only refusal and stora
     path: info.outputPath("P01-overview.png"),
     fullPage: true,
   });
-  await page.getByRole("link", { name: "Open foundation checks" }).click();
+  await page.keyboard.press("Tab");
+  await expect(
+    page.getByRole("link", { name: "Open foundation checks" }),
+  ).toBeFocused();
+  await page.keyboard.press("Enter");
   await expect(
     page.getByRole("heading", { name: "Foundation checks" }),
   ).toBeVisible();
