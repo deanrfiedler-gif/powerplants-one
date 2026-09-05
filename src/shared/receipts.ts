@@ -1,3 +1,4 @@
+import { visibleAppointment, visibleRequest } from "../scheduling/planner";
 import { visibleWorkOrder } from "../service/work-orders";
 import { database } from "../platform/database";
 import { unavailable } from "../platform/errors";
@@ -21,7 +22,39 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.object_type === "WorkOrder" || r.object_type === "Appointment") {
+  if (r.object_type === "ScheduleChangeRequest") {
+    await visibleRequest(
+      client,
+      p,
+      r.record_id,
+      r.command === "CreateScheduleChangeRequest" ||
+        r.command === "DecideScheduleChangeRequest:cancel"
+        ? "schedule.request"
+        : "schedule.manage",
+    );
+  } else if (r.object_type === "ContactOutcome") {
+    const contact = (
+      await client.query(
+        "SELECT appointment_id,recipient_id FROM ppo.contact_outcomes WHERE workspace_id=$1 AND id=$2",
+        [p.workspace_id, r.record_id],
+      )
+    ).rows[0];
+    if (!contact) throw unavailable();
+    await visibleAppointment(
+      client,
+      p,
+      contact.appointment_id,
+      "schedule.contact",
+    );
+    await visible(client, p, "Person", contact.recipient_id);
+  } else if (
+    r.object_type === "Appointment" &&
+    ["ConfirmAppointment", "MoveAppointment", "CancelAppointment"].includes(
+      r.command,
+    )
+  ) {
+    await visibleAppointment(client, p, r.record_id, "schedule.manage");
+  } else if (r.object_type === "WorkOrder" || r.object_type === "Appointment") {
     const cap =
       r.command === "AuthoriseWorkOrder"
         ? "service.scope.authorise"

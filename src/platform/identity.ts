@@ -21,6 +21,7 @@ export async function createSession(profile: string, previous_token?: string) {
       "other-workspace",
       "site-observer",
       "technician",
+      "assigned-technician",
       "finance",
       "second-company",
       "workspace-observer",

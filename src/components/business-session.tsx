@@ -76,6 +76,7 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
               ["workspace-observer", "Workspace observer"],
               ["other-workspace", "Other workspace"],
               ["technician", "Technician — assignment unavailable"],
+              ["assigned-technician", "Riley — technician change requests"],
               ["systems", "Systems — no business access"],
             ].map(([v, l]) => (
               <option key={v} value={v}>
