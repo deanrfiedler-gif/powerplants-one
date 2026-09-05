@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P03 customer context, intake and follow-up component-verified; publication evidence in the handover. PP-01 remains incomplete.
+**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P04 work scope, coverage and readiness component-verified; verification/publication evidence in the handover. PP-01 remains incomplete.
 
 ## Current direction
 
@@ -39,7 +39,11 @@ P02 is implemented and component-verified under [issue #22](https://github.com/d
 
 P03 delivers SC-01–SC-04 business views, owned Activity/ActivityLink, additive intake mapping, bounded TR-01 transitions and API-C24 extensions under [issue #24](https://github.com/deanrfiedler-gif/powerplants-one/issues/24) and [PR #25](https://github.com/deanrfiedler-gif/powerplants-one/pull/25). [ADR-0008](decisions/ADR-0008-p03-customer-intake.md) records the compatibility and permission decisions; the [P03 handover](delivery/p03-handover.md) records exact commands, actual checks, limitations and publication status. The final implementation run passed 4 unit, 29 PostgreSQL, 4 HTTP and 12 Chromium cases; 38 desktop/mobile captures were inspected and retained. There is no independent-review claim.
 
-The next bounded task is **P04 — Work scope, coverage and readiness**, with prerequisites and stopping point in the P03 handover. P04 has not started. Work orders, authority/coverage/readiness, planned visits, planner, reports, Finance processing and offline queues remain later work. Follow P01–P12 in order. All full PT/AT procedures and the complete PP-01 service journey remain incomplete.
+## P04 delivery and next dependency
+
+P04 under [issue #26](https://github.com/deanrfiedler-gif/powerplants-one/issues/26) and [PR #27](https://github.com/deanrfiedler-gif/powerplants-one/pull/27) implements SC-05: explicit ticket junction, scoped work orders, immutable approved revisions, items/assets/identification limits, manual synthetic authority, distinct coverage, server-controlled readiness and Proposed visits. [ADR-0009](decisions/ADR-0009-p04-work-scope-readiness.md) defines the small physical/contract amendments, including the known-site identification boundary and no financial disposition. The [P04 handover](delivery/p04-handover.md) is the actual test/visual/publication record; independent review and owner acceptance are not implied.
+
+The next bounded task is **P05 — Planner and controlled changes**, with a [prepared starter prompt](delivery/p05-starter-prompt.md). P05 has not started. Appointment confirmation, resource reservation, planner and controlled changes remain unimplemented. Packs, field execution, offline queues, reports, Finance processing and live integrations remain P06+. Follow P01–P12 in order. All full PT/AT procedures and the complete PP-01 journey remain incomplete.
 
 ## Repository and publication controls
 

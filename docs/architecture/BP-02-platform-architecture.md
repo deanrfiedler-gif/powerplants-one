@@ -1,8 +1,8 @@
 # BP-02 — Platform Solution Architecture
 
-**Edition:** r03 · **Date:** 5 September 2026 · **Scope:** PP-01 synthetic planned-service prototype.
+**Edition:** r04 · **Date:** 5 September 2026 · **Scope:** PP-01 synthetic planned-service prototype.
 
-**Status:** Architecture/build contract; P01/P02/P03 implementation and evidence are recorded in [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md) [ADR-0007](../decisions/ADR-0007-p02-shared-foundation.md) and [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md). Not production approval. [Package index](../prototype/README.md) · [Data dictionary](../contracts/service-data-dictionary.md) · [API contracts](../contracts/service-api.md).
+**Status:** Architecture/build contract; P01/P02/P03/P04 implementation and evidence are recorded in [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md) [ADR-0007](../decisions/ADR-0007-p02-shared-foundation.md) [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md) and [ADR-0009](../decisions/ADR-0009-p04-work-scope-readiness.md). Not production approval. [Package index](../prototype/README.md) · [Data dictionary](../contracts/service-data-dictionary.md) · [API contracts](../contracts/service-api.md).
 
 ## 1. Architecture decision
 
@@ -228,3 +228,7 @@ P01 has implemented and verified the bounded local foundation under Dean's autho
 ## P03 bounded implementation
 
 P03 extends the same modular monolith, server identity/capability projections, atomic reference allocator and shared operation/audit/outbox transaction. Typed Activity links point only to existing Organisation/Site/Asset/Ticket records with real composite foreign keys and independent scope checks. Additive Ticket mapping preserves legacy unknowns and accepted P01 hashes/receipts. There is no worker, alternate identity system or hosted integration. [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md) and the [handover](../delivery/p03-handover.md) record current gates, actual evidence and P04 prerequisites; future authority/readiness, offline, reports and Finance processing remain test obligations.
+
+## P04 physical architecture amendment
+
+The existing modular monolith/domain transaction boundary now includes `work-orders.ts`: Draft/Authorised work orders, exact revisions, coverage, bounded synthetic DocumentReference, published policy criteria, append-only readiness and immutable Proposed appointments. Route handlers remain thin and share authoritative domain commands. No external adapter is activated. Migration 0004 adds composite context/identity constraints and immutable evidence guards; seed receipt 4 preserves P01–P03 evidence. [ADR-0009](../decisions/ADR-0009-p04-work-scope-readiness.md) records the chosen authorisation stage, scope/content separation, conditional control applicability, successor and document boundaries. P05 must explicitly extend Proposed constraints using forward migration, not mutate accepted P04 migration bytes.

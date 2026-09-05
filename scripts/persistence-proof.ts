@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
+import { createWorkOrder, readWorkOrder } from "../src/service/work-orders";
 import { createSession } from "../src/platform/identity";
 import { readTicket, saveDraft } from "../src/service/tickets";
 import { createActivity, readActivity } from "../src/activities/activities";
@@ -52,6 +53,22 @@ try {
       ],
       reason: "P03 PostgreSQL restart proof",
     });
+    await createWorkOrder(p, {
+      operation_id: "99000000-0000-4000-8000-000000000001",
+      schema_version: 1,
+      id: "99000000-0000-4000-8000-000000000002",
+      company_id: "20000000-0000-4000-8000-000000000001",
+      site_id: "70000000-0000-4000-8000-000000000001",
+      customer_id: "50000000-0000-4000-8000-000000000001",
+      service_owner_id: p.actor_id,
+      tickets: [
+        {
+          ticket_id: "40000000-0000-4000-8000-000000000020",
+          issue_disposition: "SYN restart work-order link",
+        },
+      ],
+      reason: "P04 PostgreSQL restart proof",
+    });
   } else {
     assert.equal(current.summary, "SYN database restart sentinel");
     assert.ok(current.version > 1);
@@ -79,8 +96,17 @@ try {
         .record_version,
       1,
     );
+    assert.equal(
+      (await readWorkOrder(p, "99000000-0000-4000-8000-000000000002")).items[0]
+        .tickets.length,
+      1,
+    );
+    assert.equal(
+      (await readOperation(p, "99000000-0000-4000-8000-000000000001")).state,
+      "Draft",
+    );
     console.log(
-      "PostgreSQL restart: P01 ticket, P02 organisation, P03 activity/link and original operation receipts verified",
+      "PostgreSQL restart: P01 ticket, P02 organisation, P03 activity/link, P04 work order/ticket link and original operation receipts verified",
     );
   }
 } finally {

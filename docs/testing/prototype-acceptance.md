@@ -402,3 +402,15 @@ Other master scenarios remain in the original acceptance catalogue and later dom
 ## 5. Exit criteria
 
 The complete PP-01 demonstration requires all applicable PT cases executed with evidence, all critical access/data-loss/duplicate-financial-effect defects resolved, other defects explicitly dispositioned, restored data/files/queue demonstrated, and a usable owner runbook. Performance/accessibility findings are reported against measured conditions; proposed operational RPO/RTO, source definitions and corporate approvals remain open until separately established.
+
+## P04 component execution boundary
+
+The [P04 handover](../delivery/p04-handover.md) records exact run results and visual evidence. `tests/database/work-orders.test.ts`, `tests/http/work-orders.test.ts` and `tests/browser/work-orders.spec.ts` exercise implemented SC-05/API-C03. They supplement existing P03 incomplete intake/urgent tests. These are component results; every full procedure above remains **Not run**.
+
+| Procedure | P04 component obligation | Remaining full-procedure dependency |
+|---|---|---|
+| PT-03 | Unresolved equipment authorisation refusal; reviewed bounded Identification plan succeeds; original asset identity remains unchanged | Later field identification/verification with original visit-time uncertainty; site-less intake alternative remains deferred |
+| PT-04 | Owned incomplete work remains visible; missing authorisation stage fields listed; urgent cannot waive mandatory access; forged exception/N/A refused; reviewed evidence clears the criterion; tool exception only from controlled policy | Dispatch and its exact later evidence are absent |
+| PT-05 | Exact original approved hash/children preserved; technician cannot approve extra work; in-place edits refused; reviewed successor approved after new readiness; disputed coverage remains PendingFinanceReview | Technician extra-work request/field workflow, shutdown execution and full financial consequences are absent |
+
+SC-05 screenshot provenance and hashes are retained with P04 evidence after manual review. Injected browser conflict/unreadable-response tests prove recovery presentation; independent PostgreSQL tests prove real stale versions and idempotency. No screenshot alone proves a transaction or acceptance.

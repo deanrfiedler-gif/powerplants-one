@@ -990,3 +990,28 @@ button:disabled {
     font-size: 0.9rem;
   }
 }
+
+/* P04: readable scope, stage-specific controls and phone review. */
+.wo-state { display:flex; flex-wrap:wrap; align-items:center; gap:.8rem; margin:1rem 0 1.5rem; }
+.wo-task { border:1px solid var(--border,#cbd8df); border-radius:10px; padding:1.1rem; margin:1rem 0; min-width:0; }
+.wo-task legend { font-weight:700; padding:0 .5rem; }
+.wo-asset { padding:1rem; background:#f0f5f6; border-radius:7px; margin:.8rem 0; overflow-wrap:anywhere; }
+.wo-two-column { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin:1rem 0; }
+.wo-readiness { display:grid; gap:.65rem; margin:1rem 0; }
+.wo-criterion { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:start; gap:.35rem .75rem; border:1px solid #ccd8df; border-left:4px solid #568378; border-radius:6px; padding:.85rem; }
+.wo-criterion > p, .wo-criterion > details { grid-column:1/-1; margin:.2rem 0; }
+.wo-criterion p { font-size:.92rem; }
+.wo-blocked { border-left-color:#ac650e; background:#fffbf3; }
+.wo-edit { margin-top:1.5rem; border-top:1px solid #d3dce2; padding-top:1rem; }
+.wo-edit > summary { font-weight:700; color:#164e61; cursor:pointer; padding:.7rem 0; }
+.wo-edit form { padding:1rem 0; }
+.wo-blocker-list { padding-left:1.4rem; }
+.wo-blocker-list li { margin:.5rem 0; }
+.check-label { display:flex; align-items:center; gap:.75rem; margin:1rem 0; }
+.check-label input { width:1.2rem; height:1.2rem; flex-shrink:0; }
+.preserve-lines { white-space:pre-wrap; overflow-wrap:anywhere; }
+.hash { overflow-wrap:anywhere; font-family:monospace; font-size:.85rem; }
+@media(max-width:700px) { .wo-two-column { grid-template-columns:1fr; } .wo-criterion { grid-template-columns:1fr; } .wo-criterion > p,.wo-criterion > details {grid-column:1;} .wo-task { padding:.85rem; } }
+
+.field [aria-invalid="true"] { border: 2px solid #a33424; }
+.field-error { color: #8b241b; font-weight: 600; }

@@ -1,3 +1,4 @@
+import { visibleWorkOrder } from "../service/work-orders";
 import { database } from "../platform/database";
 import { unavailable } from "../platform/errors";
 import type { Principal } from "../platform/identity";
@@ -20,7 +21,26 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.object_type === "Ticket") {
+  if (r.object_type === "WorkOrder" || r.object_type === "Appointment") {
+    const cap =
+      r.command === "AuthoriseWorkOrder"
+        ? "service.scope.authorise"
+        : r.command === "AssessWorkReadiness"
+          ? "service.readiness.assess"
+          : "service.work_order.edit";
+    let id = r.record_id;
+    if (r.object_type === "Appointment") {
+      const v = (
+        await client.query(
+          "SELECT work_order_id FROM ppo.appointments WHERE workspace_id=$1 AND id=$2",
+          [p.workspace_id, id],
+        )
+      ).rows[0];
+      if (!v) throw unavailable();
+      id = v.work_order_id;
+    }
+    await visibleWorkOrder(client, p, id, cap);
+  } else if (r.object_type === "Ticket") {
     const t = await visibleTicket(client, p, r.record_id);
     if (
       !(await hasPermission(
