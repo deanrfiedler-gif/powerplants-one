@@ -1,0 +1,135 @@
+{
+  "record": "P02 component visual and execution evidence",
+  "date_utc": "2026-09-05",
+  "source_head": "cd9af8d7124319ab7730369db8f1852b962f464d",
+  "source_tree": "19b50f0e0c71c0605b19560abdbb233d822279ba",
+  "ci_checkout_merge_ref": "635e7d33d30d512c420c6712cdcf3e2d0b8535e6",
+  "base_main": "2dfbc7b1cb818b842a422be7c68c4a9ab8c33778",
+  "workflow_run": 33944069833,
+  "workflow_job": 101246845860,
+  "documentation_run": 33944069720,
+  "artifact_id": 9962783282,
+  "archive_sha256": "411892a3c65525f67200cc4116d987267fecfd245d3d47d0ef692e17a2332ee5",
+  "environment": {
+    "os": "GitHub Actions Ubuntu 24.04 x86_64",
+    "node": "24.20.0",
+    "npm": "11.19.0",
+    "postgresql": "16.15 (Debian 16.15-1.pgdg13+2)",
+    "playwright": "1.63.0",
+    "chromium_headless_shell": "153.0.8010.12 v1243"
+  },
+  "execution": {
+    "application_workflow": "success",
+    "documentation_workflow": "success",
+    "unit": {
+      "passed": 4,
+      "failed": 0
+    },
+    "postgresql": {
+      "passed": 18,
+      "failed": 0
+    },
+    "http": {
+      "passed": 2,
+      "failed": 0
+    },
+    "chromium": {
+      "passed": 6,
+      "failed": 0
+    },
+    "restart": "P01 ticket and P02 organisation/receipt verified after actual PostgreSQL restart",
+    "details": "../../../delivery/p02-handover.md"
+  },
+  "method": "Unmodified full-page Playwright screenshots of an ephemeral loopback application using real synthetic PostgreSQL. Full-page image height exceeds viewport. Mobile is Chromium viewport/touch emulation, not real-device validation.",
+  "files": [
+    {
+      "file": "desktop-shared-context.png",
+      "artifact_path": "test-results/shared-P02-diagnostic-cont-24e7b-ocus-and-scoped-error-state-desktop-chromium/P02-shared-context.png",
+      "sha256": "5bacda9fa77e1f0850122309e971f37f0112fd0b8f473ad2fbd0a833b443441e",
+      "dimensions_px": [
+        1440,
+        1690
+      ],
+      "viewport_px": [
+        1440,
+        1000
+      ]
+    },
+    {
+      "file": "desktop-site-scope.png",
+      "artifact_path": "test-results/shared-P02-diagnostic-cont-24e7b-ocus-and-scoped-error-state-desktop-chromium/P02-site-scope.png",
+      "sha256": "8ddc097199f12c6eb09a077d717815f71b5b4177a705cfff3d1e9e4663452ee7",
+      "dimensions_px": [
+        1440,
+        1619
+      ],
+      "viewport_px": [
+        1440,
+        1000
+      ]
+    },
+    {
+      "file": "desktop-permission-error-focus.png",
+      "artifact_path": "test-results/shared-P02-diagnostic-cont-24e7b-ocus-and-scoped-error-state-desktop-chromium/P02-permission-error-focus.png",
+      "sha256": "070d63fc8c638ceed7a2f547e46a1495e86e4b42ddba5a3a6f9caeb9a1100612",
+      "dimensions_px": [
+        1440,
+        1385
+      ],
+      "viewport_px": [
+        1440,
+        1000
+      ]
+    },
+    {
+      "file": "mobile-shared-context.png",
+      "artifact_path": "test-results/shared-P02-diagnostic-cont-24e7b-ocus-and-scoped-error-state-mobile-chromium/P02-shared-context.png",
+      "sha256": "3387d2d1b92cb5ec46ccd7dc33a516c82c7184db0fa243d5a10f3eaa3de99d56",
+      "dimensions_px": [
+        390,
+        2686
+      ],
+      "viewport_px": [
+        390,
+        844
+      ]
+    },
+    {
+      "file": "mobile-site-scope.png",
+      "artifact_path": "test-results/shared-P02-diagnostic-cont-24e7b-ocus-and-scoped-error-state-mobile-chromium/P02-site-scope.png",
+      "sha256": "9d7702a084171384c1104e4429711090a8b899ef8f23d4a97bcaa1beb90687a5",
+      "dimensions_px": [
+        390,
+        2399
+      ],
+      "viewport_px": [
+        390,
+        844
+      ]
+    },
+    {
+      "file": "mobile-permission-error-focus.png",
+      "artifact_path": "test-results/shared-P02-diagnostic-cont-24e7b-ocus-and-scoped-error-state-mobile-chromium/P02-permission-error-focus.png",
+      "sha256": "f040efadb1a412b00abb95fb1050fa0d3a55442205064649b896a9b0c26d8db6",
+      "dimensions_px": [
+        390,
+        2096
+      ],
+      "viewport_px": [
+        390,
+        844
+      ]
+    }
+  ],
+  "visual_inspection": {
+    "date": "2026-09-05",
+    "reviewer": "Implementing assistant; self-review",
+    "result": "All six original PNGs inspected. Readable labelled controls and history, visible synthetic indicator and P02 stage label, no horizontal overflow, correct previous-site history omission and Systems error with cleared content. Amber keyboard focus outline visible after Tab/Shift+Tab; Enter activation exercised."
+  },
+  "limits": [
+    "All 30 full PT and 38 AT procedures remain Not run.",
+    "No independent review, real-device, screen-reader or offline readiness claim.",
+    "Local OS group restriction prevented local PostgreSQL execution; database and browser proofs executed in repository CI.",
+    "Original P01 screenshot evidence is retained separately; new P01 regression cases also passed in this run."
+  ]
+}

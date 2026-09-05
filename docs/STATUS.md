@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P02 shared foundation implemented; final verification in progress; PP-01 business workflows incomplete.
+**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P02 shared foundation implemented and verified; PP-01 business workflows incomplete.
 
 ## Current direction
 
@@ -35,7 +35,7 @@ Dean owns private prototype decisions. Proposed department roles do not assign e
 
 ## P02 delivery and next task
 
-P02 is implemented under [issue #22](https://github.com/deanrfiedler-gif/powerplants-one/issues/22) and [PR #23](https://github.com/deanrfiedler-gif/powerplants-one/pull/23). The [P02 handover](delivery/p02-handover.md) records current verification/merge evidence, exact commands and limitations. [ADR-0007](decisions/ADR-0007-p02-shared-foundation.md) covers typed shared records, P01 migration, scope boundaries, immutable history, atomic references and non-destructive seed. This does not resolve operational ownership, department authority or live account verification.
+P02 is implemented and component-verified under [issue #22](https://github.com/deanrfiedler-gif/powerplants-one/issues/22) and [PR #23](https://github.com/deanrfiedler-gif/powerplants-one/pull/23). The [P02 handover](delivery/p02-handover.md) records current verification/merge evidence, exact commands and limitations. [ADR-0007](decisions/ADR-0007-p02-shared-foundation.md) covers typed shared records, P01 migration, scope boundaries, immutable history, atomic references and non-destructive seed. This does not resolve operational ownership, department authority or live account verification.
 
 The next bounded task is **P03 — Customer context and service intake**, with its prerequisites and stopping point in the handover. P03 has not started. Follow the ordered P01–P12 plan. Full PT/AT acceptance and the complete PP-01 service journey remain incomplete.
 

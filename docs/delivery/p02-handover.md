@@ -2,7 +2,7 @@
 
 **Revision:** r01 · **Date:** 5 September 2026 · **Owner:** Dean Fiedler · **Environment:** private local synthetic prototype.
 
-**Delivery state:** Implementation and verification in progress in [PR #23](https://github.com/deanrfiedler-gif/powerplants-one/pull/23), linked to [issue #22](https://github.com/deanrfiedler-gif/powerplants-one/issues/22). The final evidence section and GitHub merge record govern completion. P03 has not started; PP-01 remains incomplete.
+**Delivery state:** P02 implementation and component verification complete in [PR #23](https://github.com/deanrfiedler-gif/powerplants-one/pull/23), linked to [issue #22](https://github.com/deanrfiedler-gif/powerplants-one/issues/22). The PR merge record and issue's completion record provide the final merged SHA, delivered tree and final publication checks; these cannot be embedded in the commit they identify. P03 has not started; PP-01 remains incomplete.
 
 [Implementation decision](../decisions/ADR-0007-p02-shared-foundation.md) · [API contract](../contracts/service-api.md) · [Data dictionary](../contracts/service-data-dictionary.md) · [Ordered plan](prototype-implementation-plan.md).
 
@@ -163,7 +163,35 @@ Initial code tree `17cfd04e6fd0ab1bcab45af683b50616d31d9836`, remote head `9cfe4
 
 The next [application run 33943330004](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33943330004), head `01bb623dbfb96493cefca80c24769bd334112ea1`, passed all database and HTTP checks and the extended P01/P02 restart proof. Its two new browser cases tried to focus a still-disabled button before identity selection completed; the test now waits for the control to be enabled. The four P01 browser cases passed. That overall run is recorded as failed, not passed.
 
-Final run, visual evidence, exact tested head/tree, review and merge records will be added before marking P02 complete. No independent review is claimed. Full PT-01/PT-02/PT-03 procedures still require assignment/documents, work authorisation and Finance prerequisites that are deliberately absent. All 30 full PT and 38 AT procedures remain Not run. No production identity, real-device/offline durability, operational restore, performance/load, penetration, screen-reader, ERP or SharePoint acceptance is claimed.
+[Application run 33943726060](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33943726060) passed every step on head `03d1e97e1aea773863099946fc8d3118fb843fcb`, tree `4fdc66e3260015203a15da10dd1475e7770d636b`; GitHub tested merge ref `43daebf1d8b89eb072ae21dac95cd996c9cf3c8a` against unchanged P01 main. All 4 unit, 18 PostgreSQL, 2 HTTP and 6 Chromium tests passed, including the extended restart proof. [Documentation run 33943726065](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33943726065) passed. Visual inspection of six original P02 screenshots found readable desktop/mobile layouts, correct scoped content and errors; a final presentation correction updates the remaining P01 stage labels and captures keyboard-visible focus rather than programmatic focus. Final visual source and publication evidence follow below. No independent review is claimed. Full PT-01/PT-02/PT-03 procedures still require assignment/documents, work authorisation and Finance prerequisites that are deliberately absent. All 30 full PT and 38 AT procedures remain Not run. No production identity, real-device/offline durability, operational restore, performance/load, penetration, screen-reader, ERP or SharePoint acceptance is claimed.
+
+### Final verified implementation and visual evidence
+
+[Application run 33944069833](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33944069833) and [documentation run 33944069720](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/33944069720) both **passed** on final implementation head `cd9af8d7124319ab7730369db8f1852b962f464d`, tree `19b50f0e0c71c0605b19560abdbb233d822279ba`. GitHub checked out merge ref `635e7d33d30d512c420c6712cdcf3e2d0b8535e6` against P01 main. The subsequent publication commit adds evidence and documentation only and must pass the same CI before the normal merge. Its exact SHA, checks and merge result are recorded in issue #22 and PR #23.
+
+| Actual execution | Result |
+|---|---|
+| `python3 scripts/check_foundation.py`, `python3 scripts/check_prototype.py`, `python3 scripts/check_naming.py` | Passed locally and in documentation CI; all 78 parent IDs and issued source bytes preserved |
+| `npm ci`; `npm run check` (lint, typecheck, unit, build) | Passed in Ubuntu 24.04 CI with exact retained pins; 4 unit tests passed |
+| `npm run db:migrate`, `npm run db:seed`, `npm run db:health`; guarded `db:reset` | Passed on real PostgreSQL 16.15; missing/wrong reset authority refused |
+| `npm run test:db` | 18 passed: 7 P01 command/regression cases, reservation competition and 10 P02 behaviour groups |
+| Restart script write → `docker restart` → verify | Accepted P01 ticket and P02 organisation/receipt persisted across actual PostgreSQL process restart |
+| `npm start`; `npm run test:http` | Production startup refused as required; 2 HTTP groups passed against loopback Next.js |
+| `npx playwright install --with-deps chromium`; `npm run test:browser` | 6 passed: retained 4 P01 cases and 2 P02 viewport cases |
+
+The P02 database groups cover P01 upgrade with accepted evidence unchanged, clean setup, repeat seed preserving edits/revocations/counters, workspace/company/site projections and cursor scope, same-name records, exact external-key round trips, shared person affiliations, twelve concurrent reference creates, duplicate/conflicting operations, stale writes/current-permission replay, date/overlap/FK/hierarchy failures including competing hierarchy transactions, original history attribution/uncertainty and rollback of all changes when the final outbox write fails.
+
+The [durable screenshot and execution manifest](../testing/evidence/p02/manifest.json) preserves original artifact paths, dimensions, SHA-256 hashes and provenance from artifact `9962783282` (ZIP SHA-256 `411892a3c65525f67200cc4116d987267fecfd245d3d47d0ef692e17a2332ee5`). All six original P02 PNGs were visually inspected on 5 September 2026. Desktop viewport: 1440×1000; mobile viewport: 390×844; full-page heights vary. Browser: Chromium/Headless Shell 153.0.8010.12, Playwright build v1243. Database: PostgreSQL 16.15 Debian 16.15-1.pgdg13+2, x86_64.
+
+| View | Desktop | Mobile | Observed result |
+|---|---|---|---|
+| Coordinator shared context | [PNG](../testing/evidence/p02/desktop-shared-context.png) | [PNG](../testing/evidence/p02/mobile-shared-context.png) | Readable labels; verified/unresolved identities; previous-site unsuccessful fix and original authors; Finance note absent |
+| Site-scoped observer | [PNG](../testing/evidence/p02/desktop-site-scope.png) | [PNG](../testing/evidence/p02/mobile-site-scope.png) | Q01 history visible; previous-site history removed; unrelated ticket access refused |
+| Systems error and keyboard focus | [PNG](../testing/evidence/p02/desktop-permission-error-focus.png) | [PNG](../testing/evidence/p02/mobile-permission-error-focus.png) | Useful permission alert; prior shared content cleared; visible amber focus outline after Tab/Shift+Tab |
+
+The synthetic indicator and P02 stage label are visible in every image; controls stay inside the viewport with no horizontal overflow. Keyboard Enter activates the shared read. P01 browser tests retain save/reload, read-only refusal, connection failure and storage marker recovery. Storage persistence permission was not granted (reported quota 2,147,639,296 bytes); this is neither an offline queue nor mobile durability evidence.
+
+Review was implementation self-review and automated assurance, including manual inspection of CI screenshots. No independent reviewer or approval is claimed. No review submissions, requested reviewers or unresolved review threads existed at the review check; recheck before merge and respect any new requirement. No branch control was changed or bypassed. Full PT/AT results remain Not run as stated above. In particular, technician assignment scope, operational backup restore, screen readers and real devices were not exercised.
 
 ## Next bounded task — P03, not started
 

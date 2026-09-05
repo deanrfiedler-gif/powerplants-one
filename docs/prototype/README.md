@@ -2,7 +2,7 @@
 
 **Package:** PP-01 · **Edition:** v01 · **Date:** 5 September 2026 · **Owner:** Dean Fiedler
 
-**Status:** Authored design package for a personal, private, synthetic prototype. P01 is verified and P02 shared foundation is implemented; the full PP-01 journey and business acceptance remain incomplete. See the [P02 handover](../delivery/p02-handover.md) for current verification/merge evidence. Technical selections below are the recommended design basis; they are not claims of company approval, purchased services or proven tenant integration.
+**Status:** Authored design package for a personal, private, synthetic prototype. P01 is verified and P02 shared foundation is implemented and verified; the full PP-01 journey and business acceptance remain incomplete. See the [P02 handover](../delivery/p02-handover.md) for current verification/merge evidence. Technical selections below are the recommended design basis; they are not claims of company approval, purchased services or proven tenant integration.
 
 ## Decision brief
 
