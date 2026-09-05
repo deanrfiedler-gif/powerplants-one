@@ -216,7 +216,7 @@ test("P03 migration preserves every P02 legacy field, accepted operation hash an
   );
   assert.equal(
     (await rows("SELECT count(*)::int n FROM public.ppo_migrations"))[0].n,
-    3,
+    4,
   );
 });
 

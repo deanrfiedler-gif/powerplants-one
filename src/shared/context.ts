@@ -55,13 +55,20 @@ export async function ownerOptions(p: Principal, input: unknown = {}) {
     ]);
   const company = uuid(r.company_id, "company_id"),
     site = optionalId(r.site_id, "site_id"),
-    purpose = choice(r.purpose, "purpose", ["Customer", "Ticket", "Activity"]);
+    purpose = choice(r.purpose, "purpose", [
+      "Customer",
+      "Ticket",
+      "Activity",
+      "WorkOrder",
+    ]);
   const capability =
-    purpose === "Customer"
-      ? "shared.edit"
-      : purpose === "Ticket"
-        ? "service.ticket.edit"
-        : "activity.edit";
+    purpose === "WorkOrder"
+      ? "service.work_order.edit"
+      : purpose === "Customer"
+        ? "shared.edit"
+        : purpose === "Ticket"
+          ? "service.ticket.edit"
+          : "activity.edit";
   const access = choice(r.access_class ?? "RestrictedService", "access_class", [
     "Internal",
     "RestrictedService",
@@ -127,6 +134,17 @@ export async function ownerOptions(p: Principal, input: unknown = {}) {
         site ?? undefined,
         capability,
       );
+      if (
+        purpose === "WorkOrder" &&
+        !(await hasPermission(
+          c,
+          owner,
+          "service.work_order.read",
+          company,
+          site ?? undefined,
+        ))
+      )
+        continue;
       if (purpose === "Ticket") {
         if (
           !(await hasPermission(

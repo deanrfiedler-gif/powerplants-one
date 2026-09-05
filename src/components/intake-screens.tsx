@@ -164,6 +164,16 @@ export function TicketDetail({ id }: { id: string }) {
           <PageHeader
             eyebrow={`SC-04 / ${t.display_number}`}
             title={t.summary}
+            action={
+              t.site_id && (
+                <Link
+                  className="button"
+                  href={`/service/work-orders/new?${new URLSearchParams({ company_id: t.company_id, site_id: t.site_id, ticket_id: t.id })}`}
+                >
+                  Create work order
+                </Link>
+              )
+            }
           />
           <div className="record-banner">
             <Status value={t.status} />
