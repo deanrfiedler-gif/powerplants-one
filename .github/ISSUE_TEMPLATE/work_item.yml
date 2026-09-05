@@ -1,0 +1,30 @@
+name: Discovery or feature work
+description: Define a bounded outcome with source and acceptance links.
+title: "[Work] "
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Outcome and user need
+      description: Explain the intended outcome, actor and prototype/release scope.
+    validations:
+      required: true
+  - type: textarea
+    id: traceability
+    attributes:
+      label: Requirements and evidence
+      description: Include parent IDs, specification/source locators and unresolved questions.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Include normal, refusal and recovery behaviour where applicable.
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and boundaries
+      description: Link decisions/issues and identify excluded or unverified behaviour.

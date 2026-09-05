@@ -1,0 +1,541 @@
+{
+  "schema_version": 1,
+  "scope": "Initial discovery/design work packages; future implementation split into child issues",
+  "items": [
+    {
+      "id": "PPO-001",
+      "title": "Confirm prototype objectives and first-release boundary",
+      "priority": "P1",
+      "kind": "Discovery",
+      "specification": "BP-01",
+      "decision_ids": [
+        "D-001",
+        "D-002",
+        "D-003",
+        "D-004",
+        "D-028",
+        "D-029"
+      ],
+      "dependencies": [],
+      "objective": "Translate the master direction into a bounded personal-prototype charter and measurable first-release design objective.",
+      "acceptance_criteria": [
+        "Record Dean as prototype owner and distinguish company approvals from prototype choices.",
+        "Compare the planned-service starting point with any alternative Dean identifies; record the chosen rationale and explicit exclusions.",
+        "Define representative synthetic journey examples and the operational baseline questions that will need real evidence later.",
+        "Preserve GEN/SOL008 boundaries and update current status/decision records without rewriting issued sources."
+      ],
+      "requirement_ids": [],
+      "status": "Planned",
+      "github_issue_number": 1,
+      "github_issue_url": "https://github.com/deanrfiedler-gif/powerplants-one/issues/1"
+    },
+    {
+      "id": "PPO-002",
+      "title": "Establish MYOB and service ownership evidence",
+      "priority": "P1",
+      "kind": "Discovery",
+      "specification": "BP-02/BP-07",
+      "decision_ids": [
+        "D-005",
+        "D-006",
+        "D-007"
+      ],
+      "dependencies": [
+        "PPO-001"
+      ],
+      "objective": "Determine which records the ERP and prototype should own and prepare a supported integration/hand-off contract.",
+      "acceptance_criteria": [
+        "Inventory available MYOB version, companies, modules and approved non-production access; mark missing evidence explicitly.",
+        "Compare ERP-owned versus platform-owned service orders/appointments/time with one writable authority per field family.",
+        "Define the minimum read/manual path and candidate commands, keys, idempotency, unknown outcomes and reconciliation.",
+        "Produce a feasibility plan using synthetic examples; do not perform live ERP writes or imply the endpoints are verified."
+      ],
+      "requirement_ids": [
+        "EST-09",
+        "SVC-02"
+      ],
+      "status": "Planned",
+      "github_issue_number": 2,
+      "github_issue_url": "https://github.com/deanrfiedler-gif/powerplants-one/issues/2"
+    },
+    {
+      "id": "PPO-003",
+      "title": "Specify customer, site, asset and history contracts",
+      "priority": "P1",
+      "kind": "Design",
+      "specification": "BP-02/BP-07",
+      "decision_ids": [
+        "D-011"
+      ],
+      "dependencies": [
+        "PPO-001"
+      ],
+      "objective": "Develop DAT-01\u2013DAT-03 and shared identity rules into a reviewable dictionary suitable for the first service prototype.",
+      "acceptance_criteria": [
+        "Define stable IDs, ERP company/entity keys, required-by-stage fields, types and valid unknown states.",
+        "Distinguish legal account, group, operator, contact, site, facility and asset with effective-dated relationships.",
+        "Specify merge/correction, serial uncertainty, replacement/movement and historic report context.",
+        "Create synthetic same-name/wrong-company and multi-visit examples linked to AT-02/AT-30."
+      ],
+      "requirement_ids": [
+        "CRM-01",
+        "SVC-06"
+      ],
+      "status": "Planned",
+      "github_issue_number": 3,
+      "github_issue_url": "https://github.com/deanrfiedler-gif/powerplants-one/issues/3"
+    },
+    {
+      "id": "PPO-004",
+      "title": "Prepare BP-02 architecture options and recommendation",
+      "priority": "P1",
+      "kind": "Design",
+      "specification": "BP-02",
+      "decision_ids": [
+        "D-022",
+        "D-023"
+      ],
+      "dependencies": [
+        "PPO-001",
+        "PPO-002",
+        "PPO-003",
+        "PPO-008"
+      ],
+      "objective": "Choose a justified architecture for the private prototype and document a credible path to later operational use.",
+      "acceptance_criteria": [
+        "Compare suitable runtime/data/hosting options against maintainability, cost, skills, offline behaviour and integration needs.",
+        "Document boundaries for modules, data, identity, documents, integration workers and recovery.",
+        "Separate prototype assumptions from tenant-specific facts and future production controls.",
+        "Record selected choices in ADRs and define the first implementation slice; no hosting purchase or deployment is required by this issue."
+      ],
+      "requirement_ids": [
+        "NFR-12"
+      ],
+      "status": "Planned",
+      "github_issue_number": 4,
+      "github_issue_url": "https://github.com/deanrfiedler-gif/powerplants-one/issues/4"
+    },
+    {
+      "id": "PPO-005",
+      "title": "Prepare BP-07 planned-service workflow specification",
+      "priority": "P1",
+      "kind": "Design",
+      "specification": "BP-07",
+      "decision_ids": [
+        "D-007",
+        "D-015",
+        "D-018",
+        "D-019",
+        "D-024"
+      ],
+      "dependencies": [
+        "PPO-001",
+        "PPO-002",
+        "PPO-003",
+        "PPO-006",
+        "PPO-007",
+        "PPO-008"
+      ],
+      "objective": "Specify the complete service journey that resolves missing job packs, difficult scheduling and missing technician context.",
+      "acceptance_criteria": [
+        "Define screens, components, field/choice dictionary, role/state actions, validation messages and normal/refusal/recovery paths for A1\u2013A7.",
+        "Elaborate TR-01\u2013TR-16 with exact pack/report revisions, acknowledgements, concurrency, returned work and case/order/visit separation.",
+        "Specify drag/drop and keyboard scheduling, readiness, skills/travel, changes and customer communication outcomes.",
+        "Include time/parts review, report reservations, owned follow-up and Finance handoff; trace the selected scope to executable acceptance cases."
+      ],
+      "requirement_ids": [
+        "SVC-01",
+        "SVC-02",
+        "SVC-03",
+        "SVC-04",
+        "SVC-05",
+        "SVC-06",
+        "SVC-07",
+        "SVC-08",
+        "SVC-09",
+        "SVC-10",
+        "SVC-11",
+        "SVC-12"
+      ],
+      "status": "Planned",
+      "github_issue_number": 5,
+      "github_issue_url": "https://github.com/deanrfiedler-gif/powerplants-one/issues/5"
+    },
+    {
+      "id": "PPO-006",
+      "title": "Define the minimum Finance handoff and trusted account view",
+      "priority": "P1",
+      "kind": "Discovery/design",
+      "specification": "BP-09",
+      "decision_ids": [
+        "D-017"
+      ],
+      "dependencies": [
+        "PPO-001",
+        "PPO-002"
+      ],
+      "objective": "Make first-release financial processing explicit and reconcilable while retaining MYOB authority.",
+      "acceptance_criteria": [
+        "Specify FD-10 manual queue as a viable baseline or a supported API alternative, with roles, statuses, returned ERP IDs and line mapping.",
+        "Define approved/billable/captured/posting distinctions, quantity reuse prevention and correction/reversal paths.",
+        "Select any FD-01\u2013FD-04 account information required for the prototype; record grain, currency, tax, cutoff and source completeness.",
+        "Keep unresolved definitions and tolerances open; prepare synthetic partial-payment/credit/unknown-outcome cases for AT-31."
+      ],
+      "requirement_ids": [
+        "CRM-06",
+        "FIN-01",
+        "FIN-02",
+        "FIN-03",
+        "FIN-04",
+        "FIN-05",
+        "FIN-06",
+        "FIN-07",
+        "FIN-08"
+      ],
+      "status": "Planned",
+      "github_issue_number": 6,
+      "github_issue_url": "https://github.com/deanrfiedler-gif/powerplants-one/issues/6"
+    },
+    {
+      "id": "PPO-007",
+      "title": "Specify controlled documents and first-release outputs",
+      "priority": "P1",
+      "kind": "Design",
+      "specification": "BP-02/BP-07",
+      "decision_ids": [
+        "D-012",
+        "D-024",
+        "D-025"
+      ],
+      "dependencies": [
+        "PPO-001",
+        "PPO-003"
+      ],
+      "objective": "Define document references and exact issue evidence for job packs, reports and supporting information.",
+      "acceptance_criteria": [
+        "Specify DAT-11, repository identifiers, authorised file scope and exact issued-version preservation.",
+        "Design OUT-09/OUT-10/OUT-14 and selected technical/notification records with audience and required content.",
+        "Separate generated, approved, issued, sent, delivered and acknowledged events; include material amendment and offline old-version handling.",
+        "Identify actual SharePoint/template/retention facts still needed; use synthetic content and AT-20/AT-36 fixtures."
+      ],
+      "requirement_ids": [
+        "DOC-01",
+        "DOC-02",
+        "DOC-03",
+        "DOC-04",
+        "DOC-05",
+        "DOC-06"
+      ],
+      "status": "Planned",
+      "github_issue_number": 7,
+      "github_issue_url": "https://github.com/deanrfiedler-gif/powerplants-one/issues/7"
+    },
+    {
+      "id": "PPO-008",
+      "title": "Baseline permissions, offline scope and operational targets",
+      "priority": "P1",
+      "kind": "Design",
+      "specification": "BP-02/BP-07",
+      "decision_ids": [
+        "D-016",
+        "D-019",
+        "D-020",
+        "D-021"
+      ],
+      "dependencies": [
+        "PPO-001"
+      ],
+      "objective": "Turn the proposed permission, mobile and recovery controls into testable constraints for the first prototype.",
+      "acceptance_criteria": [
+        "Define actor/action/record permissions, restricted financial fields and server-side access checks.",
+        "Select representative device/connectivity assumptions and scope cached jobs, attachments, expiry and local durability.",
+        "Specify reassignment/revocation while disconnected, version conflicts, attachment retries and preserved captured evidence.",
+        "Define measurable performance/accessibility/recovery test conditions; preserve unapproved numeric targets as candidates and link AT-10/AT-11/AT-22/AT-23/AT-34."
+      ],
+      "requirement_ids": [
+        "SVC-07",
+        "DOC-06",
+        "NFR-01",
+        "NFR-02",
+        "NFR-03",
+        "NFR-04",
+        "NFR-05",
+        "NFR-06",
+        "NFR-07",
+        "NFR-08",
+        "NFR-09",
+        "NFR-10",
+        "NFR-11",
+        "NFR-12"
+      ],
+      "status": "Planned",
+      "github_issue_number": 8,
+      "github_issue_url": "https://github.com/deanrfiedler-gif/powerplants-one/issues/8"
+    },
+    {
+      "id": "PPO-009",
+      "title": "Complete account-specific CRM parity and BP-03 scope",
+      "priority": "P2",
+      "kind": "Discovery",
+      "specification": "BP-03",
+      "decision_ids": [
+        "D-013",
+        "D-025"
+      ],
+      "dependencies": [
+        "PPO-001"
+      ],
+      "objective": "Turn PAR-01\u2013PAR-18 into a complete required-outcome and migration inventory for Powerplants CRM.",
+      "acceptance_criteria": [
+        "Assess actual pipeline, separate lead/deal use, fields, activities, communications, automation, mobile sales and reporting.",
+        "Inspect licensed/used add-ons and integrations where access permits; distinguish unverified use from unnecessary functionality.",
+        "Define group/account/site/stakeholder relationships, next actions, renewal and aftercare outcomes.",
+        "Record preserve/improve/integrate/defer dispositions and source/history mapping with AT-25 evidence needs; no CRM mutation or cutover by this issue."
+      ],
+      "requirement_ids": [
+        "CRM-01",
+        "CRM-02",
+        "CRM-03",
+        "CRM-04",
+        "CRM-05",
+        "CRM-06",
+        "CRM-07",
+        "CRM-08"
+      ],
+      "status": "Planned",
+      "github_issue_number": 9,
+      "github_issue_url": "https://github.com/deanrfiedler-gif/powerplants-one/issues/9"
+    },
+    {
+      "id": "PPO-010",
+      "title": "Prepare CREMS rule evidence and BP-04 reconstruction scope",
+      "priority": "P2",
+      "kind": "Discovery",
+      "specification": "BP-04",
+      "decision_ids": [
+        "D-009",
+        "D-010"
+      ],
+      "dependencies": [
+        "PPO-001"
+      ],
+      "objective": "Preserve essential CREMS outcomes and resolve the hidden-rule risks before estimating replacement.",
+      "acceptance_criteria": [
+        "Validate CRE-01\u2013CRE-26 against controlled guide/solution/configuration sources and record each disposition.",
+        "Obtain or explicitly mark missing Screen Systems formulas/ranges/parts mappings, questionnaire rules and pricing thresholds.",
+        "Specify route inheritance, option/revision locks, staged edits, landed costs, discount/include/print rules and exact quotation outputs.",
+        "Create accepted calculation/output fixtures for AT-04/AT-26\u2013AT-28/AT-36 and define safe IF-01\u2013IF-03 conversion recovery."
+      ],
+      "requirement_ids": [
+        "EST-01",
+        "EST-02",
+        "EST-03",
+        "EST-04",
+        "EST-05",
+        "EST-06",
+        "EST-07",
+        "EST-08",
+        "EST-09"
+      ],
+      "status": "Planned",
+      "github_issue_number": 10,
+      "github_issue_url": "https://github.com/deanrfiedler-gif/powerplants-one/issues/10"
+    },
+    {
+      "id": "PPO-011",
+      "title": "Define BP-05 engineering and technical-release scope",
+      "priority": "P2",
+      "kind": "Discovery/design",
+      "specification": "BP-05",
+      "decision_ids": [
+        "D-002",
+        "D-008",
+        "D-019"
+      ],
+      "dependencies": [
+        "PPO-001"
+      ],
+      "objective": "Define the technical-control workflows and native CAD/document boundaries for the future engineering module.",
+      "acceptance_criteria": [
+        "Inventory engineering requests, design basis, capacity, RFI/queries, submittals, calculation reviews and interfaces.",
+        "Separate Engineering technical approval from PM gate coordination and record authority evidence still needed.",
+        "Specify material release/substitution, change impact, commissioning criteria, as-built and service handover.",
+        "Record CAD product/file relationship/storage constraints and AT-15/AT-37 evidence needs; no CAD relocation or authoring replacement implied."
+      ],
+      "requirement_ids": [
+        "ENG-01",
+        "ENG-02",
+        "ENG-03",
+        "ENG-04",
+        "ENG-05",
+        "ENG-06",
+        "ENG-07"
+      ],
+      "status": "Planned",
+      "github_issue_number": 11,
+      "github_issue_url": "https://github.com/deanrfiedler-gif/powerplants-one/issues/11"
+    },
+    {
+      "id": "PPO-012",
+      "title": "Define BP-06 project controls and Smartsheet transition",
+      "priority": "P2",
+      "kind": "Discovery/design",
+      "specification": "BP-06",
+      "decision_ids": [
+        "D-010",
+        "D-014",
+        "D-026"
+      ],
+      "dependencies": [
+        "PPO-001",
+        "PPO-011"
+      ],
+      "objective": "Preserve useful Smartsheet work and specify proportionate delivery/commercial controls.",
+      "acceptance_criteria": [
+        "Validate selected MIG assets and classify template, synthetic, historical and operational records.",
+        "Specify native FS/SS dependencies, calendar/baseline/forecast rules and stable source mappings rather than importing legacy text alone.",
+        "Define contract obligations, variations, subcontractor coordination, RAID, tests/defects, staged acceptance and closeout.",
+        "Preserve Service control of confirmed bookings and plan AT-09/AT-32/AT-38; do not migrate or modify live Smartsheet records under this issue."
+      ],
+      "requirement_ids": [
+        "PRJ-01",
+        "PRJ-02",
+        "PRJ-03",
+        "PRJ-04",
+        "PRJ-05",
+        "PRJ-06",
+        "PRJ-07",
+        "PRJ-08"
+      ],
+      "status": "Planned",
+      "github_issue_number": 12,
+      "github_issue_url": "https://github.com/deanrfiedler-gif/powerplants-one/issues/12"
+    },
+    {
+      "id": "PPO-013",
+      "title": "Define BP-08 material readiness and supply-chain interfaces",
+      "priority": "P2",
+      "kind": "Discovery/design",
+      "specification": "BP-08",
+      "decision_ids": [
+        "D-005",
+        "D-006",
+        "D-017"
+      ],
+      "dependencies": [
+        "PPO-002",
+        "PPO-006"
+      ],
+      "objective": "Specify demand, purchasing, receipt, logistics and return coordination without introducing a second stock master.",
+      "acceptance_criteria": [
+        "Map IF-11\u2013IF-16 business entities, source keys, directions and read/manual/command methods.",
+        "Distinguish promised, ordered, received, quarantined, usable, allocated, shipped, delivered and accepted quantities.",
+        "Define line-level partial/reversed outcomes, shortage/readiness impacts and return/claim/credit separation.",
+        "Prepare AT-16/AT-29 evidence contracts and a minimum manual/read readiness path for Wave A."
+      ],
+      "requirement_ids": [
+        "SCM-01",
+        "SCM-02",
+        "SCM-03",
+        "SCM-04",
+        "SCM-05",
+        "SCM-06",
+        "SCM-07",
+        "SCM-08"
+      ],
+      "status": "Planned",
+      "github_issue_number": 13,
+      "github_issue_url": "https://github.com/deanrfiedler-gif/powerplants-one/issues/13"
+    },
+    {
+      "id": "PPO-014",
+      "title": "Prepare synthetic pilot scenarios and acceptance coverage",
+      "priority": "P1",
+      "kind": "Validation planning",
+      "specification": "BP-02/BP-07",
+      "decision_ids": [
+        "D-004",
+        "D-026"
+      ],
+      "dependencies": [
+        "PPO-003",
+        "PPO-005",
+        "PPO-006",
+        "PPO-007",
+        "PPO-008"
+      ],
+      "objective": "Translate the planned acceptance catalogue into a bounded and realistic prototype test pack.",
+      "acceptance_criteria": [
+        "Define synthetic customer/site/assets, permitted actors, multiple visits, partial materials and report/Finance scenarios.",
+        "Expand selected AT cases into steps, independently specified expected results and evidence requirements.",
+        "Cover rescheduling concurrency, old pack offline, duplicate retries, unknown ERP outcomes and disputed/unavailable sign-off.",
+        "Separate documentation checks, synthetic prototype validation and future operational pilot acceptance; mark all unexecuted tests honestly."
+      ],
+      "requirement_ids": [
+        "CRM-08"
+      ],
+      "status": "Planned",
+      "github_issue_number": 14,
+      "github_issue_url": "https://github.com/deanrfiedler-gif/powerplants-one/issues/14"
+    },
+    {
+      "id": "PPO-015",
+      "title": "Specify service agreements, recurrence and asset lifecycle",
+      "priority": "P2",
+      "kind": "Discovery/design",
+      "specification": "BP-07/BP-03",
+      "decision_ids": [
+        "D-018",
+        "D-028"
+      ],
+      "dependencies": [
+        "PPO-003",
+        "PPO-006"
+      ],
+      "objective": "Expand SVC-12 into clear contracts for coverage, recurring maintenance, warranty, renewals and asset changes.",
+      "acceptance_criteria": [
+        "Distinguish agreement, installation, commissioning and warranty dates; define unknown/disputed coverage treatment.",
+        "Specify occurrence identity, recurrence/version changes, skip/defer/cancel and replay without duplicate generation.",
+        "Preserve asset replacement/movement/decommission history and affected future maintenance.",
+        "Define owned customer/technical follow-up and supplier recovery separately; prepare AT-19/AT-33 without inventing response guarantees."
+      ],
+      "requirement_ids": [
+        "SVC-12"
+      ],
+      "status": "Planned",
+      "github_issue_number": 15,
+      "github_issue_url": "https://github.com/deanrfiedler-gif/powerplants-one/issues/15"
+    },
+    {
+      "id": "PPO-016",
+      "title": "Define prototype delivery, recovery and future operating handover",
+      "priority": "P2",
+      "kind": "Delivery planning",
+      "specification": "BP-02",
+      "decision_ids": [
+        "D-021",
+        "D-023",
+        "D-026",
+        "D-029"
+      ],
+      "dependencies": [
+        "PPO-004",
+        "PPO-008",
+        "PPO-014"
+      ],
+      "objective": "Document the controls needed to move from a local/synthetic prototype to any later approved operating environment.",
+      "acceptance_criteria": [
+        "Define environment separation, deployment identity, schema/offline compatibility and secret handling after stack selection.",
+        "Assess repository review/required-check capabilities and ownership recovery; do not assume protection or a paid plan exists.",
+        "Specify backup/restore, monitoring, queue ownership, support hours, costs and knowledge transfer.",
+        "Record migration/rollback boundaries and AT-22/AT-35 evidence; no deployment, subscription purchase or production pilot is authorised by creating this issue."
+      ],
+      "requirement_ids": [
+        "NFR-12"
+      ],
+      "status": "Planned",
+      "github_issue_number": 16,
+      "github_issue_url": "https://github.com/deanrfiedler-gif/powerplants-one/issues/16"
+    }
+  ]
+}
