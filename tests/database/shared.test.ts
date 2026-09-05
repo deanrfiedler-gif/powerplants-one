@@ -32,6 +32,7 @@ import {
   readShared,
   siteContext,
 } from "../../src/shared/reads";
+import { readOperation } from "../../src/shared/receipts";
 const id = (type: number, n = 1) =>
   `${type}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const company = id(20),
@@ -406,6 +407,7 @@ test("stale edits and current-permission replay preserve original accepted resul
     };
   const first = await renameOrganisation(p, org, cmd);
   assert.equal(first.receipt.record_version, 2);
+  assert.deepEqual(await readOperation(p, cmd.operation_id), first.receipt);
   assert.deepEqual(
     (await renameOrganisation(p, org, cmd)).receipt,
     first.receipt,
@@ -420,6 +422,10 @@ test("stale edits and current-permission replay preserve original accepted resul
   );
   await assert.rejects(renameOrganisation(p, org, cmd), code("Forbidden"));
   await seed();
+  await assert.rejects(
+    readOperation(p, cmd.operation_id),
+    code("RecordUnavailable"),
+  );
   await assert.rejects(renameOrganisation(p, org, cmd), code("Forbidden"));
   assert.equal((await readShared(p, "Organisation", org)).version, 2);
 });

@@ -20,7 +20,7 @@ export function readRoute(
     try {
       localRequest(request);
       const p = await identity(request),
-        params = await context.params;
+        params = (await context.params) ?? {};
       return reply(
         await work(
           p,
@@ -45,7 +45,7 @@ export function commandRoute(
     try {
       localRequest(request, true);
       const p = await identity(request),
-        params = await context.params;
+        params = (await context.params) ?? {};
       const result = await work(p, params.id ?? "", await jsonBody(request));
       return reply(result.receipt, create && !result.replayed ? 201 : 200);
     } catch (error) {

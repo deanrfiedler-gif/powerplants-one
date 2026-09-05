@@ -61,6 +61,8 @@ jobs:
           npm run db:health
       - name: Real PostgreSQL behaviour and competing transactions
         run: npm run test:db
+      - name: Restore deterministic fixtures for HTTP and browser suites
+        run: PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
       - name: Prove persistence across PostgreSQL process restart
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}

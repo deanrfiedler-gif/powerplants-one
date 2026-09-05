@@ -772,7 +772,7 @@ export async function renameOrganisation(
     },
     async (c, org) => {
       checkVersion(org.version, command.expected_version);
-      return (
+      const updated = (
         await c.query(
           "UPDATE ppo.organisations SET display_name=$1,parent_organisation_id=$2,version=version+1,updated_by=$3,updated_at=clock_timestamp() WHERE workspace_id=$4 AND id=$5 RETURNING *,relationship_status AS state",
           [
@@ -784,6 +784,20 @@ export async function renameOrganisation(
           ],
         )
       ).rows[0];
+      return {
+        ...updated,
+        audit_details: {
+          previous_version: org.version,
+          before: {
+            display_name: org.display_name,
+            parent_organisation_id: org.parent_organisation_id,
+          },
+          after: {
+            display_name: command.display_name,
+            parent_organisation_id: command.parent_organisation_id,
+          },
+        },
+      };
     },
     "Organisation",
     "SharedRecordUpdated",
@@ -832,7 +846,7 @@ export async function reviseAssetIdentity(
     },
     async (c, a) => {
       checkVersion(a.version, command.expected_version);
-      return (
+      const updated = (
         await c.query(
           "UPDATE ppo.assets SET identity_status=$1,serial=$2,parent_asset_id=$3,version=version+1,updated_by=$4,updated_at=clock_timestamp() WHERE workspace_id=$5 AND id=$6 RETURNING *,identity_status AS state",
           [
@@ -845,6 +859,22 @@ export async function reviseAssetIdentity(
           ],
         )
       ).rows[0];
+      return {
+        ...updated,
+        audit_details: {
+          previous_version: a.version,
+          before: {
+            identity_status: a.identity_status,
+            serial: a.serial,
+            parent_asset_id: a.parent_asset_id,
+          },
+          after: {
+            identity_status: command.identity_status,
+            serial: command.serial,
+            parent_asset_id: command.parent_asset_id,
+          },
+        },
+      };
     },
     "Asset",
     "SharedRecordUpdated",

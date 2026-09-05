@@ -128,6 +128,7 @@ export async function sharedOperation<T>(
     version: number;
     state: string;
     updated_at: Date;
+    audit_details?: Record<string, unknown>;
   }>,
   object_type: string,
   kind: string,
@@ -155,7 +156,11 @@ export async function sharedOperation<T>(
         object_type,
         kind,
         hash,
-        { command: name, record_version: result.version },
+        {
+          command: name,
+          record_version: result.version,
+          ...result.audit_details,
+        },
       );
       return { receipt, replayed: false };
     });

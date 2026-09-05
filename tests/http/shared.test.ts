@@ -76,6 +76,14 @@ test("P02 HTTP envelopes, exact retry status, validation and field/relationship 
   const replay = await call(coordinator, "customers", body);
   assert.equal(replay.status, 200);
   assert.deepEqual(replay.body, created.body);
+  assert.deepEqual(
+    (await call(coordinator, `operations/${body.operation_id}`)).body,
+    created.body,
+  );
+  assert.equal(
+    (await call(observer, `operations/${body.operation_id}`)).status,
+    404,
+  );
   assert.equal(
     (
       await call(coordinator, "customers", {
