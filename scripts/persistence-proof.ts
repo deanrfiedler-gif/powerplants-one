@@ -1,3 +1,7 @@
+import { issued } from "../tests/helpers/packs";
+import { readBundle } from "../src/documents/worker";
+import { readPack } from "../src/documents/packs";
+import { writeFile, readFile } from "node:fs/promises";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { createWorkOrder, readWorkOrder } from "../src/service/work-orders";
@@ -98,7 +102,31 @@ try {
         },
       ],
     });
+    const p06 = await issued();
+    const doc = p06.pack.issues[0];
+    await writeFile(
+      "/tmp/ppo-p06-restart.json",
+      JSON.stringify({
+        pack_id: p06.pack.id,
+        issue_id: doc.id,
+        manifest: doc.manifest,
+        queued_receipt: p06.receipt.receipt,
+        operation_id: p06.cmd.operation_id,
+      }),
+    );
   } else {
+    const saved = JSON.parse(
+      await readFile("/tmp/ppo-p06-restart.json", "utf8"),
+    );
+    const p06 = (await readPack(p, saved.pack_id)).items[0];
+    assert.equal(p06.current_issue_id, saved.issue_id);
+    assert.deepEqual(p06.issues[0].manifest, saved.manifest);
+    assert.ok((await readBundle(p, saved.manifest)).pdf.length > 1000);
+    assert.deepEqual(
+      await readOperation(p, saved.operation_id),
+      saved.queued_receipt,
+    );
+    assert.equal(p06.readiness.recipients.length, 2);
     const a = (await readAppointment(p, "a8000000-0000-4000-8000-000000000008"))
       .items[0];
     assert.equal(a.status, "Confirmed");

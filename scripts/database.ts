@@ -1,3 +1,4 @@
+import { seedDocumentFiles } from "../src/documents/fixtures";
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
@@ -6,7 +7,7 @@ import { database, transaction, closeDatabase } from "../src/platform/database";
 import { localConfig } from "../src/platform/config";
 const read = (name: string) =>
   readFile(new URL(`../db/${name}`, import.meta.url), "utf8");
-export async function migrate(through = 5) {
+export async function migrate(through = 6) {
   await transaction(async (client) => {
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     await client.query(
@@ -18,6 +19,7 @@ export async function migrate(through = 5) {
       "0003-customer-intake.sql",
       "0004-work-scope.sql",
       "0005-planner.sql",
+      "0006-job-packs.sql",
     ].entries()) {
       const version = index + 1;
       if (version > through) break;
@@ -42,7 +44,7 @@ export async function migrate(through = 5) {
     }
   });
 }
-export async function seed(through = 5) {
+export async function seed(through = 6) {
   await transaction(async (client) => {
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     for (const [version, file] of [
@@ -50,6 +52,7 @@ export async function seed(through = 5) {
       [3, "seed-p03.sql"],
       [4, "seed-p04.sql"],
       [5, "seed-p05.sql"],
+      [6, "seed-p06.sql"],
     ] as const) {
       if (version > through) break;
       const prior = await client.query(
@@ -58,6 +61,7 @@ export async function seed(through = 5) {
       );
       if (prior.rowCount) continue;
       await client.query(await read(file));
+      if (version === 6) await seedDocumentFiles();
       await client.query("INSERT INTO ppo.seed_receipts(version) VALUES($1)", [
         version,
       ]);

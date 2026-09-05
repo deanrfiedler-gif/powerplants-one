@@ -1,8 +1,16 @@
 # PP-01 — Minimum document, issue and distribution contract
 
-**Edition:** r02 · **Status:** Proposed DAT-07/DAT-09/DAT-11 and OUT-09/OUT-10/OUT-14 contract. No actual SharePoint repository, template or retention policy has been verified in this package.
+**Edition:** r03 · **Status:** OUT-09/DAT-07/minimum DAT-11 implemented in P06; DAT-09/OUT-10/OUT-14 remain P09/P10 contracts. No actual SharePoint repository, template or retention policy has been verified in this package.
 
 [Package](../prototype/README.md) · [Dictionary](service-data-dictionary.md) · [BP-07](../blueprints/BP-07-service-operations.md).
+
+## P06 maintained implementation amendment
+
+[ADR-0011](../decisions/ADR-0011-p06-controlled-job-packs.md) and [handover](../delivery/p06-handover.md) record Playwright 1.63.0, exact immutable source/render/issue evidence, private synthetic adapter and per-assignment response. All content changes are material in this increment. Current applicability, actual release time and as-at are separately read in the application; filenames never establish status.
+
+Because exact bytes must be durable before the issue transaction, the file prints a **reserved issue timestamp** and issue UUID, explicitly effective only upon application release. This reserved output-preparation time is retained across recovery; it is not actual `issued_at` or evidence of release. Actual release is a later immutable database timestamp. This explicit distinction refines the general file-time requirement below without treating a queued or generated document as Issued. No PDF is edited after release to add a timestamp or signature. HTML is semantic/responsive; PDF tagging and outline are requested but PDF/UA and assistive-technology performance are not asserted.
+
+A returned/check decision is immutable, and new input requires a successor. P05/P04 changes cause immediate hold plus immutable events and owned P03 contact Activities in the same transaction. Simulated sending and limited server retrieval facts are separate from explicit responses. The source and financial canary filtering happens before HTML/PDF/manifest creation, including titles and metadata. Missing versions remain owned errors. Full report/Finance and integrated PT-18/PT-23 remain incomplete.
 
 ## 1. Ownership and content identity
 
@@ -88,4 +96,4 @@ GitHub working specifications use stable paths and internal edition/change metad
 
 ## 10. Acceptance obligations
 
-P06/P09/P10 implement selected outputs. PT-18/PT-23 verify exact hashes, source/template versions, long-content rendering, confidential-field exclusion, renamed/moved source handling, failed storage/finalisation and distinct distribution events. All scenarios remain Not run until application and output generation exist.
+P06/P09/P10 implement selected outputs. PT-18/PT-23 verify exact hashes, source/template versions, long-content rendering, confidential-field exclusion, renamed/moved source handling, failed storage/finalisation and distinct distribution events. All full procedures remain Not run in the authored catalogue; executed P06 component evidence is recorded separately in its handover.

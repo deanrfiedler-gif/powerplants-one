@@ -1,6 +1,6 @@
 # PP-01 — Service API, operation and event contracts
 
-**Edition:** r06 · **Status:** Internal API contract; bounded P01–P05 subsets are implemented, with component evidence recorded separately. These are Powerplants One routes, never asserted MYOB endpoints.
+**Edition:** r07 · **Status:** Internal API contract; bounded P01–P06 subsets are implemented, with component evidence recorded separately. These are Powerplants One routes, never asserted MYOB endpoints.
 
 [Architecture](../architecture/BP-02-platform-architecture.md) · [Dictionary](service-data-dictionary.md) · [Service specification](../blueprints/BP-07-service-operations.md).
 
@@ -17,6 +17,31 @@ The transaction also appends a P01-only `TicketDraftSaved` outbox record with ve
 Local diagnostics are GET `/api/v1/health` and GET/POST `/api/v1/local-session`. The latter accepts only an allowlisted demonstration `profile`, resolves a server user/session and returns current actor/display context. These local-only routes are not future shared authentication APIs. All routes require the launcher gateway boundary; POST additionally requires the exact loopback Origin and JSON. Non-JSON or oversized bodies are rejected. The rest of this catalogue remains planned. See [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md).
 
 ## 1. Common protocol
+
+
+### P06 implementation amendment
+
+[ADR-0011](../decisions/ADR-0011-p06-controlled-job-packs.md), [migration 0006](../../db/migrations/0006-job-packs.sql) and [P06 handover](../delivery/p06-handover.md) implement only OUT-09/SC-06/SC-14. All routes below are under `/api/v1`; identity, narrow JSON, same-origin, expected versions, private/no-store, atomic receipt/audit/outbox and capability-plus-record scope continue. P05 scheduling and all earlier source/receipt bytes remain authoritative.
+
+| Endpoint / mapping | Exact bounded fields and capability |
+|---|---|
+| GET `/packs`, `/packs/:id` | `pack.read` plus appointment/work-order/site scope; technician additionally current assignment. Staff receive preparation/check/jobs/history; technicians receive only applicable assignment issue context. No query fields. |
+| GET `/appointments/:id/pack-options` | `pack.prepare`; exact current appointment, service-audience sources and selectable history. |
+| POST `/packs` — API-C08 | Common `operation_id`, `schema_version=1`, `reason`; `id`, `appointment_id`, `expected_appointment_version`, `content`; `pack.prepare`. |
+| POST `/packs/:id/check` — API-C08/TR-04 | Common fields, `expected_version`, `decision=Checked/Returned`; `pack.check`. Exact immutable input is recomputed before Checked. |
+| POST `/packs/:id/issue` — API-C09/TR-05/EVT-04 | Common fields, `expected_version`; `pack.issue`. Template, sources and recipients are derived from the checked snapshot. Returns **202** original Queued operation receipt, including on replay. Read job/pack for finalisation result; replay never relabels that receipt as Issued. |
+| POST `/packs/:id/amend` — API-C10/TR-07/EVT-05 | Common fields, `expected_version`, `content`; `pack.prepare`. All content changes are conservatively material; reason is the change summary. New revision, prior issue retained, immediate hold and owned contact task. |
+| POST `/packs/:id/withdraw` — API-C10/TR-07 | Common fields, `expected_version`; `pack.issue`. Immutable withdrawal event and owned contact task; old bytes retained. |
+| POST `/pack-issues/:id/acknowledge` — API-C11/TR-06 | Common fields, `assignment_id`, `assignment_version`, `presented_hash`, `captured_at`; `pack.acknowledge`. Actor is exact recipient. Captured time is finite, at most five minutes ahead of server; authoritative acknowledged time is server-generated. |
+| POST `/pack-issues/:id/distribution` | Common fields, `recipient_id`, `kind=SimulatedSent`, `evidence`; `pack.issue`. No Sent/Delivered or message API exists. |
+| GET `/packs/:id/preview` | Optional UUID `revision_id`, constrained to this pack; staff with prepare/check/issue plus read scope. Explicit not-issued preview. |
+| GET `/pack-issues/:id`, `/html`, `/pdf`, `/manifest` | No query fields; `pack.read`, exact file/recipient scope. Detail returns current applicability/status/as-at and actual issue time separately from immutable manifest. Retrieval records limited Opened/Downloaded facts, never acknowledgement. |
+| GET `/render-jobs/:id`, `/html`, `/pdf`; POST `/render-jobs/:id/retry` | `pack.issue`, exact pack scope. Retry accepts only `{}`; original durable job identity is the recovery key, no new generic operation. Generated attempt files do not prove issue. |
+| GET `/operations/:id` | Existing receipt contract, current pack command capability and record/assignment scope. Final issue receipt has its own preallocated operation UUID; queued intent remains exact. |
+
+`content` accepts exactly `sections`, `source_ids` (maximum 20 exact UUID records) and `history_ids` (maximum 30). The nine mandatory section keys are in the document contract; every note is 1–6000 characters. Server context supplies actual authority, equipment, controls, dates and permitted source content; notes cannot extend scope. Unlisted actors/workspaces/states/template overrides/financial fields are rejected. Stored source/template IDs, hashes and policy versions are not chosen through untrusted fields.
+
+P06 errors retain the common envelope: 403 Forbidden; same 404 RecordUnavailable for missing/out-of-scope records; 409 VersionConflict/OperationConflict/StoredOperationConflict; 422 InvalidData/PackNotReady/ScopeReviewRequired/IssueNotApplicable/StaleSource/RecipientUnavailable/TemplateUnavailable/PolicyUnavailable; 503 ExactDocumentUnavailable or safe dependency failure. Durable job state is Queued/Running/Durable/Failed/StaleSource/Issued, with attempt history, safe error code and recovery owner. New SQL guards prevent duplicate revision issues/tasks and forged dispatch clearance; all late finalisation writes roll back together. EVT-05's owned contact task is a real P03 Activity, not an outgoing message. P07 actual start and P09/P10 report/Finance APIs remain absent.
 
 ### P05 implementation amendment — current bounded contract
 
@@ -63,7 +88,7 @@ Local diagnostics are GET `/api/v1/health` and GET/POST `/api/v1/local-session`.
 
 **Consequences/errors:** AppointmentConfirmed (EVT-02), AppointmentChanged (EVT-03), AppointmentCancelled, ScheduleChangeRequested/Decided and ContactOutcomeRecorded are durable unconsumed synthetic outbox intents. Accepted request emits AppointmentChanged with request receipt identity plus `appointment_id/appointment_version`; its audit retains the accepted request. Confirm creates PreparationRequired; move creates ReviewRequired and Changed commitment; cancellation creates CancellationReviewRequired and contact work. Dispatch hold stays true. No pack, sent message, customer acknowledgement or financial disposition is fabricated. A Confirmed contact on a cancelled appointment records cancellation contact without changing terminal appointment state.
 
-Existing error envelope applies: 403 Forbidden, indistinguishable 404 RecordUnavailable, 409 VersionConflict/OperationConflict/ResourceConflict, 422 BookingBlocked/ScopeReviewRequired/CustomerContactRequired/SkillOrTravelInvalid/ActualWorkRecorded/PolicyUnavailable/InvalidData; database failures roll back and expose the existing safe dependency error. Errors map VAL-05/06/07/08/21/22 business meanings without changing those IDs. Conflict details include only permitted resource name and occupied UTC interval. Urgency and a tool-preparation exception bypass no competency/access/isolation/shutdown authority. P06 dispatch/pack gates remain a later additive implementation.
+Existing error envelope applies: 403 Forbidden, indistinguishable 404 RecordUnavailable, 409 VersionConflict/OperationConflict/ResourceConflict, 422 BookingBlocked/ScopeReviewRequired/CustomerContactRequired/SkillOrTravelInvalid/ActualWorkRecorded/PolicyUnavailable/InvalidData; database failures roll back and expose the existing safe dependency error. Errors map VAL-05/06/07/08/21/22 business meanings without changing those IDs. Conflict details include only permitted resource name and occupied UTC interval. Urgency and a tool-preparation exception bypass no competency/access/isolation/shutdown authority. P06 dispatch/pack gates are implemented by the current amendment above.
 
 ### P04 implementation amendment — current bounded contract
 

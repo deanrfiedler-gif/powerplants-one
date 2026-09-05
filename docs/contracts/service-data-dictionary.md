@@ -1,10 +1,31 @@
 # PP-01 — Service data and choice dictionary
 
-**Edition:** r06 · **Status:** Logical contract; P01–P05 implement bounded subsets with explicit limits below. This is not an exported CREMS/MYOB schema.
+**Edition:** r07 · **Status:** Logical contract; P01–P06 implement bounded subsets with explicit limits below. This is not an exported CREMS/MYOB schema.
 
 [BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md) · [Finance](finance-handoff.md) · [Documents](document-issue-distribution.md).
 
 **P01 physical subset:** Workspace, synthetic company context, User, company-scoped read/edit grants, opaque Session, New Ticket, AuditEvent, OperationReceipt and OutboxJob. Ticket fixtures use owned requester/site clarification markers; `site_identification_needed=true` and no site relation exists yet. Shared Organisation/Person/Site/Asset models and full scope/assignment permissions remain P02. Fixture references are deterministic reserved SYN-PPO identities; no create endpoint or production reference allocator exists. Full cross-type allocation/uniqueness is a P02 obligation. The separate `ppo_proof` reservation table is a disposable feasibility experiment, not a completed DAT-06 model. [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md) and the [handover](../delivery/p01-handover.md) record migrations, tests and limits.
+
+
+## P06 physical implementation amendment
+
+[ADR-0011](../decisions/ADR-0011-p06-controlled-job-packs.md), [API amendment](service-api.md#p06-implementation-amendment) and [handover](../delivery/p06-handover.md) govern current DAT-07/minimum DAT-11. Earlier stage limits describe their delivery point; DAT-08/09/10 remain design.
+
+| Logical record / physical mapping | Implemented facts and invariants |
+|---|---|
+| Pack / packs | One pack per appointment, permanent PACK UUID/reference, current revision/issue pointer, version, Draft/Returned/Checked/Issued/Withdrawn and needs_review projection. |
+| PackRevision / pack_revisions | Immutable predecessor, integer revision, nine typed section notes and explicit source/history selection; exact server snapshot/hash/reason/actor/time. Check/return decisions are separate immutable pack_checks; no rewritten approved input. |
+| RenderJob / pack_render_jobs + pack_render_attempts | Immutable actor/operation/finalisation operation, input hash, reserved issue UUID/time; leased attempt/token, state, owner, safe errors and write-once output manifest. Original intent remains even without a file. |
+| PackIssue / pack_issues + pack_issue_events | One immutable issue per revision/job, actual issued_by/issued_at, exact manifest/output/source hash, schedule/assignment version. Issued/ReviewRequired/Superseded/Withdrawn are append-only events; old output never changes. |
+| PackRecipient / pack_recipients | Unique issue/assignment and issue/user, required individual assignment/version. Seed adds Morgan independently of Riley; acknowledgement never represents another person. |
+| PackAcknowledgement / pack_acknowledgements | Unique recipient and actor/operation, exact hash, original capture time and authoritative server response time. New issue or replacement assignment requires a new response. |
+| DistributionEvent / pack_distribution_events | TaskCreated/SimulatedSent/Opened/Downloaded only; time/evidence/actor/recipient. No invented delivery or acknowledgement. Contact outcome remains a separate P05 fact. |
+| PackFollowUp / pack_follow_ups | Immutable issue-event/Activity link. ReviewRequired/Withdrawn atomically create a service-owner CustomerContact Activity, Site link and due_needed=true. P03 completion requires a recorded outcome. No messages sent. |
+| DocumentReference / pack_sources + pack_source_locations | Synthetic provider/item/version/hash/byte count, title, owner, company/site/classification; immutable byte reference with availability/location version projection. Exact original bytes outside Git; P04 document_references text unchanged. |
+| DocumentTemplate/Policy / pack_templates + pack_policy | Immutable version/definition/hash/renderer; current policy version/template pointer rechecked before check/request/final issue. No public editor. |
+| IssueManifest / pack_issues.manifest and durable bundle | Exact source/template IDs/versions/hashes, source snapshot hash, stable adapter key, PDF/HTML/bundle bytes/hashes, filename/revision, prepared/reserved issue time and renderer/browser versions. Actual release time belongs to immutable issue row. |
+
+The P04 appointment unconditional `dispatch_hold` CHECK is replaced only in migration 0006 with actual issue/assignment/acknowledgement evidence. Domain readiness additionally rechecks non-waivable current policy/authority. A stored false flag is not sufficient for future P07 start: P07 must run the current guard inside its start transaction. Appointment/work-order change triggers invalidate pack applicability atomically with P05/P04 changes. Full reports, Finance, generic uploads and field evidence are not implemented.
 
 ## P05 physical implementation amendment
 

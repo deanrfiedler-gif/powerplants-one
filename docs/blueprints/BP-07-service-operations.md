@@ -1,6 +1,6 @@
 # BP-07 — Service Operations Functional & Build Blueprint
 
-**Edition:** r04 · **Date:** 5 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
+**Edition:** r05 · **Date:** 5 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
 
 **Status:** Functional specification with the bounded P03–P05 SC-01–SC-05/SC-07/SC-08 implementation amendments below. Later workflows and full acceptance remain incomplete. [Package](../prototype/README.md) · [Dictionary](../contracts/service-data-dictionary.md) · [API](../contracts/service-api.md) · [Acceptance](../testing/prototype-acceptance.md).
 
@@ -292,3 +292,7 @@ Manual agreement references and coverage review are included. Automatic recurren
 ## 17. Completion evidence and build handoff
 
 Each included screen/state/rule maps to PT scenarios and the implementation plan. A developer must demonstrate full persisted flows and failure handling, not just screenshots. Document checks verify the specification structure; they do not execute these rules. See the [acceptance pack](../testing/prototype-acceptance.md) for independent expected outcomes and the [ordered plan](../delivery/prototype-implementation-plan.md) for P01–P12.
+
+## P06 current implementation boundary
+
+[ADR-0011](../decisions/ADR-0011-p06-controlled-job-packs.md), [current contracts](../contracts/document-issue-distribution.md) and [handover](../delivery/p06-handover.md) implement SC-06/SC-14 and OUT-09 with nine-section source review, private durable output, idempotent render/finalisation, exact recipient acknowledgements and owned amendment/withdrawal consequences. P04/P05 authority and immutable history remain. Non-waivable current controls plus current exact crew responses govern the dispatch component; P07 start/capture remains absent. No report, Finance, offline or communication implementation is implied.

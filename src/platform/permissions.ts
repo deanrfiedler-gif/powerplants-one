@@ -4,6 +4,11 @@ import { AppError } from "./errors";
 
 export type QueryClient = Pick<PoolClient, "query">;
 export type Capability =
+  | "pack.read"
+  | "pack.prepare"
+  | "pack.check"
+  | "pack.issue"
+  | "pack.acknowledge"
   | "schedule.read"
   | "schedule.manage"
   | "schedule.request"
