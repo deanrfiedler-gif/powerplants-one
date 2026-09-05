@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 export type Envelope<T> = {
   items: T[];
@@ -44,6 +44,15 @@ export async function api<T>(path: string, body?: unknown): Promise<T> {
   }
   if (!response.ok) throw { ...result, status: response.status };
   return result as T;
+}
+const ValidationContext = createContext<Failure | null>(null);
+export function ValidationFields({ error, children }: { error: unknown; children: React.ReactNode }) {
+  return <ValidationContext.Provider value={error as Failure | null}>{children}</ValidationContext.Provider>;
+}
+function useFieldError(name: string) {
+  const errors = useContext(ValidationContext)?.field_errors;
+  const canonical = name.replace(/-\d+$/, "").replaceAll("-", "_");
+  return errors?.find((e) => e.field === name || e.field === canonical)?.message;
 }
 export function ErrorNotice({ error }: { error: unknown }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -220,6 +229,7 @@ export function PageHeader({
 }
 export function Field({
   name,
+  validationField,
   label,
   value,
   onChange,
@@ -230,6 +240,7 @@ export function Field({
   hint,
 }: {
   name: string;
+  validationField?: string;
   label: string;
   value: string;
   onChange: (v: string) => void;
@@ -239,6 +250,7 @@ export function Field({
   maxLength?: number;
   hint?: string;
 }) {
+  const error = useFieldError(validationField ?? name);
   return (
     <div className="field">
       <label htmlFor={name}>
@@ -255,7 +267,8 @@ export function Field({
           required={required}
           maxLength={maxLength}
           rows={4}
-          aria-describedby={hint ? `${name}-hint` : undefined}
+          aria-invalid={!!error}
+          aria-describedby={[hint && `${name}-hint`, error && `${name}-error`].filter(Boolean).join(" ") || undefined}
         />
       ) : (
         <input
@@ -267,9 +280,11 @@ export function Field({
           onChange={(e) => onChange(e.target.value)}
           required={required}
           maxLength={maxLength}
-          aria-describedby={hint ? `${name}-hint` : undefined}
+          aria-invalid={!!error}
+          aria-describedby={[hint && `${name}-hint`, error && `${name}-error`].filter(Boolean).join(" ") || undefined}
         />
       )}{" "}
+      {error && <small id={`${name}-error`} className="field-error">{error}</small>}
       {hint && <small id={`${name}-hint`}>{hint}</small>}
     </div>
   );
@@ -282,6 +297,7 @@ export type Option = {
 };
 export function SelectField({
   name,
+  validationField,
   label,
   value,
   onChange,
@@ -290,6 +306,7 @@ export function SelectField({
   required = false,
 }: {
   name: string;
+  validationField?: string;
   label: string;
   value: string;
   onChange: (v: string) => void;
@@ -297,6 +314,7 @@ export function SelectField({
   empty?: string;
   required?: boolean;
 }) {
+  const error = useFieldError(validationField ?? name);
   return (
     <div className="field">
       <label htmlFor={name}>
@@ -309,6 +327,8 @@ export function SelectField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         required={required}
+        aria-invalid={!!error}
+        aria-describedby={error ? `${name}-error` : undefined}
       >
         <option value="">{empty}</option>
         {options.map((o) => (
@@ -318,6 +338,7 @@ export function SelectField({
           </option>
         ))}
       </select>
+      {error && <small id={`${name}-error`} className="field-error">{error}</small>}
     </div>
   );
 }

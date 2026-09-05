@@ -6,6 +6,7 @@ import { useIdentity } from "./business-session";
 import {
   EnumField,
   ErrorNotice,
+  ValidationFields,
   Field,
   Observed,
   PageHeader,
@@ -338,7 +339,7 @@ export function NewWorkOrder() {
         title="New work order"
         description="A draft retains the service request history and starts a separate scope decision."
       />
-      <form
+      <ValidationFields error={cmd.error}><form
         className="panel"
         onSubmit={async (e) => {
           e.preventDefault();
@@ -464,7 +465,7 @@ export function NewWorkOrder() {
           />
         ))}
         <button disabled={cmd.busy}>Save draft work order</button>
-      </form>
+      </form></ValidationFields>
     </>
   );
 }
@@ -481,24 +482,28 @@ function EvidenceFields({
     <div className="form-grid">
       <Field
         name={`${prefix}-title`}
+        validationField="title"
         label="Evidence title"
         value={value.title}
         onChange={(v) => onChange({ ...value, title: v })}
       />
       <Field
         name={`${prefix}-ref`}
+        validationField="source_reference"
         label="Synthetic source reference"
         value={value.source_reference}
         onChange={(v) => onChange({ ...value, source_reference: v })}
       />
       <Field
         name={`${prefix}-version`}
+        validationField="source_version"
         label="Source version"
         value={value.source_version}
         onChange={(v) => onChange({ ...value, source_version: v })}
       />
       <Field
         name={`${prefix}-text`}
+        validationField="content_text"
         label="Exact manual evidence"
         value={value.content_text}
         onChange={(v) => onChange({ ...value, content_text: v })}
@@ -555,14 +560,19 @@ function ScopeForm({
       items: value.items.map((x, j) => (j === i ? { ...x, ...fields } : x)),
     });
   return (
-    <form
+    <ValidationFields error={cmd.error}><form
       onSubmit={async (e) => {
         e.preventDefault();
         const result = await cmd.send(
           `service/work-orders/${w.id}/${successor ? "successor" : "save-scope"}`,
           {
             expected_version: expected,
-            scope: value,
+            scope: { ...value, items: value.items.map((item) => ({
+              task_kind: item.task_kind, task_description: item.task_description,
+              expected_outcome: item.expected_outcome, completion_requirements: item.completion_requirements,
+              required_skill_codes: item.required_skill_codes, shutdown_condition: item.shutdown_condition,
+              access_condition: item.access_condition, assets: item.assets,
+            })) },
             ...(successor ? { change_reason: reason } : {}),
             reason: successor
               ? reason
@@ -645,7 +655,7 @@ function ScopeForm({
             }
           />
           <Field
-            name={`task-${index}`}
+            name={`task-${index}`} validationField="task_description"
             label="Task description"
             value={i.task_description}
             onChange={(v) => change(index, { task_description: v })}
@@ -653,7 +663,7 @@ function ScopeForm({
             maxLength={4000}
           />
           <Field
-            name={`outcome-${index}`}
+            name={`outcome-${index}`} validationField="expected_outcome"
             label="Expected outcome"
             value={i.expected_outcome}
             onChange={(v) => change(index, { expected_outcome: v })}
@@ -995,7 +1005,7 @@ function ScopeForm({
         {successor ? "Create successor draft" : "Save scope draft"}
       </button>
       <p role="status">{cmd.saved}</p>
-    </form>
+    </form></ValidationFields>
   );
 }
 function ReadinessTable({ rows }: { rows: Assessment[] }) {
@@ -1061,7 +1071,7 @@ function AssessmentForm({
   const cmd = useCommand(),
     pc = rows.find((x) => x.criterion_code === criterion);
   return (
-    <form
+    <ValidationFields error={cmd.error}><form
       onSubmit={async (e) => {
         e.preventDefault();
         const result = await cmd.send<{ record_version: number }>(
@@ -1126,7 +1136,7 @@ function AssessmentForm({
           .filter((v) => v !== "NotApplicable" || pc?.not_applicable_allowed)}
       />
       <Field
-        name={`reason-${visit?.id ?? "scope"}`}
+        name={`reason-${visit?.id ?? "scope"}`} validationField="assessment_reason"
         label="Review reason"
         value={reason}
         onChange={setReason}
@@ -1135,7 +1145,7 @@ function AssessmentForm({
         required
       />
       <Field
-        name={`asat-${visit?.id ?? "scope"}`}
+        name={`asat-${visit?.id ?? "scope"}`} validationField="source_as_at"
         label="Evidence source time (your device timezone)"
         type="datetime-local"
         value={asAt}
@@ -1143,7 +1153,7 @@ function AssessmentForm({
         required
       />
       <Field
-        name={`expiry-${visit?.id ?? "scope"}`}
+        name={`expiry-${visit?.id ?? "scope"}`} validationField="valid_until"
         label="Evidence expiry (optional, your device timezone)"
         type="datetime-local"
         value={expiry}
@@ -1158,7 +1168,7 @@ function AssessmentForm({
       )}
       <button disabled={cmd.busy}>Record readiness review</button>
       <p role="status">{cmd.saved}</p>
-    </form>
+    </form></ValidationFields>
   );
 }
 function VisitForm({
@@ -1180,7 +1190,7 @@ function VisitForm({
     [id] = useState(() => crypto.randomUUID());
   const cmd = useCommand();
   return (
-    <form
+    <ValidationFields error={cmd.error}><form
       onSubmit={async (e) => {
         e.preventDefault();
         const result = await cmd.send(`service/work-orders/${w.id}/visits`, {
@@ -1264,7 +1274,7 @@ function VisitForm({
       </div>
       <button disabled={cmd.busy}>Save proposed visit</button>
       <p role="status">{cmd.saved}</p>
-    </form>
+    </form></ValidationFields>
   );
 }
 function ScopeView({ r }: { r: Scope }) {

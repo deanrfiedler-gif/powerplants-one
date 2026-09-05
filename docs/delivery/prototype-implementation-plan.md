@@ -1,6 +1,6 @@
 # PP-01 — Ordered prototype implementation plan
 
-**Edition:** r04 · **Status:** P01/P02 complete; P03 implemented with final component and publication evidence in its [handover](p03-handover.md); P04–P12 planned. All full PT procedures remain Not run; see [P01 component evidence](p01-handover.md).
+**Edition:** r05 · **Status:** P01/P02 complete; P03 implemented with final component and publication evidence in its [handover](p03-handover.md); P04 implementation/evidence in its [handover](p04-handover.md); P05–P12 planned. All full PT procedures remain Not run; see [P01 component evidence](p01-handover.md).
 
 [Package](../prototype/README.md) · [Scope](../prototype/scope-and-journey.md) · [BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md).
 
@@ -93,3 +93,9 @@ The separate SOL008 Smartsheet delivery-system work remains intact. Its process 
 SC-01–SC-04 now use persisted scoped business services. [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md) narrows triage to known requester/site and resolved owned clarification; it does not implement an approved identification scope. Activity/ActivityLink accepts only existing Organisation/Site/Asset/Ticket targets. Work-order creation in the broader SC-04 and issued reports/future appointments in PT-25 remain later dependencies. Full PT-02/PT-03/PT-04/PT-25 acceptance is not claimed by component tests.
 
 The next separately authorised task is P04: SC-05 work scope, coverage, authority, readiness and planned visits. Its concrete task and prerequisites are in the [P03 handover](p03-handover.md#next-bounded-task--p04-not-started). P03 does not start P04 or complete PP-01.
+
+## P04 delivery boundary and next P05 prerequisite
+
+P04 implements SC-05, DAT-05 and the Authorisation/Proposed portion of DAT-06 through API-C03 and documented supporting commands. See [ADR-0009](../decisions/ADR-0009-p04-work-scope-readiness.md), [P04 component evidence/publication](p04-handover.md) and the [P05 starter](p05-starter-prompt.md). P03 known-site triage remains exact; known-site Identification plans do not enable site-less intake. Scope successors preserve approved originals and hold old proposal context for later review. P05 remains unimplemented and needs a separate task instruction.
+
+P04 does not deliver typed material requisitions/stock/shortage processing within SCM-01/SCM-06. Its controlled tool-preparation evidence and scope-review flags contribute only to SCM-08. Earlier package mappings identify dependencies, not proof that every mapped parent is complete. PT-03/PT-04/PT-05 components are separately evidenced; full acceptance remains Not run.

@@ -1,8 +1,16 @@
 # BP-07 — Service Operations Functional & Build Blueprint
 
-**Edition:** r02 · **Date:** 5 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
+**Edition:** r03 · **Date:** 5 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
 
-**Status:** Functional specification with the bounded P03 SC-01–SC-04 implementation amendment below. Later workflows and full acceptance remain incomplete. [Package](../prototype/README.md) · [Dictionary](../contracts/service-data-dictionary.md) · [API](../contracts/service-api.md) · [Acceptance](../testing/prototype-acceptance.md).
+**Status:** Functional specification with the bounded P03/P04 SC-01–SC-05 implementation amendments below. Later workflows and full acceptance remain incomplete. [Package](../prototype/README.md) · [Dictionary](../contracts/service-data-dictionary.md) · [API](../contracts/service-api.md) · [Acceptance](../testing/prototype-acceptance.md).
+
+## P04 implementation amendment
+
+[ADR-0009](../decisions/ADR-0009-p04-work-scope-readiness.md), the [current API amendment](../contracts/service-api.md#p04-implementation-amendment--current-bounded-contract) and [P04 handover](../delivery/p04-handover.md) define delivered SC-05/TR-02/DAT-05 and bounded DAT-06. The broader logical catalogue below remains the target design. Work-order creation is now available from SC-04 and the scoped list; no ticket history is rewritten.
+
+Work authority means the exact approved scope and evidence under the published synthetic policy. Coverage never settles charging or warranty liability. A successor is a distinct draft requiring renewed review; the original stays read-only. Inspection/Identification excludes intervention, and any explicit shutdown condition keeps isolation/shutdown authority applicable. Unresolved assets require a bounded Identification method and limits at the known service site. P03's known-site gate remains; the wider site-less intake alternative remains deferred, rather than guessing a WorkOrder site.
+
+Readiness has an explicit Authorisation stage plus later Booking/Dispatch stages. Critical site/access/competency/control criteria have no general override. ToolPreparation permits evidenced preparation exceptions. Crew/dispatch controls cannot be cleared before those capabilities exist. Proposed visits retain scope/content/policy, timezone and commitment/preparation context; they are never bookings, dispatches or customer acknowledgements. Activity links are not expanded to future targets. P05 planner/confirmation/reservation/change commands and P06+ outputs remain unimplemented.
 
 ## P03 implementation amendment
 

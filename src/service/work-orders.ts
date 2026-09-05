@@ -737,7 +737,8 @@ export async function assessWorkReadiness(
         a.outcome === "NotApplicable" &&
         (!pc.not_applicable_allowed ||
           r.items.some(
-            (i: { task_kind: string }) => i.task_kind === "Intervention",
+            (i: { task_kind: string; shutdown_condition: string | null }) =>
+              i.task_kind === "Intervention" || !!i.shutdown_condition,
           ))
       )
         invalid(

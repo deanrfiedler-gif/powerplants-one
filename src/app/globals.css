@@ -1012,3 +1012,6 @@ button:disabled {
 .preserve-lines { white-space:pre-wrap; overflow-wrap:anywhere; }
 .hash { overflow-wrap:anywhere; font-family:monospace; font-size:.85rem; }
 @media(max-width:700px) { .wo-two-column { grid-template-columns:1fr; } .wo-criterion { grid-template-columns:1fr; } .wo-criterion > p,.wo-criterion > details {grid-column:1;} .wo-task { padding:.85rem; } }
+
+.field [aria-invalid="true"] { border: 2px solid #a33424; }
+.field-error { color: #8b241b; font-weight: 600; }

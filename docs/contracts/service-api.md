@@ -18,6 +18,33 @@ Local diagnostics are GET `/api/v1/health` and GET/POST `/api/v1/local-session`.
 
 ## 1. Common protocol
 
+### P04 implementation amendment — current bounded contract
+
+[ADR-0009](../decisions/ADR-0009-p04-work-scope-readiness.md) and the [P04 handover](../delivery/p04-handover.md) extend P03 without changing accepted earlier operation schemas/hashes. Every route below has `/api/v1` prefix and the existing private/no-store, identity, same-origin, 64 KiB body, error and receipt contract. Business services are [work orders](../../src/service/work-orders.ts) and [narrow scope schemas](../../src/service/work-scope-validation.ts).
+
+| Surface | Exact P04 contract |
+|---|---|
+| API-R03 GET `/service/work-orders` | `limit/cursor/q`, optional `company_id/site_id/status` (Draft/Authorised); signed actor/filter-bound cursor, all linked targets scoped. No ERP keys/Finance amounts. |
+| API-R03 GET `/service/work-orders/:id` | Order/site/customer/owner, tickets, exact scopes/items/assets/coverage/authority, stage blockers, readiness, Proposed visits and permitted actions. Approved source context is retained; no general document browsing. |
+| API-C03 POST `/service/work-orders` | Common envelope, new `id`, `company_id/site_id/customer_id/service_owner_id`; `tickets` 1–20 unique `{ticket_id,issue_disposition}`; optional exact project/opportunity reference text. Starts Draft. Same site/company and current customer site-party required; no ticket history change. |
+| API-C03 POST `/service/work-orders/:id/save-scope` | Common envelope, work-order `expected_version`, `scope` below. Creates/edits current unapproved revision only, invalidates old content-version readiness. |
+| API-C25 POST `/service/work-orders/:id/successor` | Same fields plus required `change_reason`; current revision must be approved. Creates successor Draft preserving authorised original. No P05/P06 downstream object fabrication. |
+| API-C03 POST `/service/work-orders/:id/authorise` | Common envelope, `expected_version`, exact `scope_revision_id`, `scope_version`, `policy_version_id`. Reviewer capability plus record scope; all TR-02 gates. Initial Draft → Authorised or approval of current successor on Authorised order. Exact snapshot/hash/plan approval/state/audit/receipt/outbox atomic. |
+| Narrow POST `/service/work-orders/:id/readiness` | Common envelope, work-order `expected_version`, `assessment` below. Reviewer capability; append a criterion assessment version and increment order version. No generic override. |
+| Bounded API-C04 POST `/service/work-orders/:id/visits` | Common envelope, work-order `expected_version`, new appointment `id`, `scope_revision_id/scope_version`, UTC `start_at/end_at`, optional paired `requested_window_start/end`, `customer_commitment` Unknown/Proposed, `preparation_status` Unknown/Preparing/Blocked. Site timezone derives from work order; status Proposed and dispatch hold true are server facts. Child receipt identifies Appointment; re-read parent version. |
+| Owner selector | Existing `/selectors/owners` adds `purpose=WorkOrder`; active matching edit/read/shared grants and company/site scope. No role/Systems-derived authority. |
+| API-R09 receipt recovery | WorkOrder and Appointment receipts require current order/linked-target scope and original command capability: work_order.edit, scope.authorise or readiness.assess. Identical current-permitted retry returns original receipt even after record progression. |
+
+**Scope object:** optional/null `summary` (4000), `exclusions` (4000), `diagnostic_limit` (4000), `pending_account_plan` (2000), `authority_evidence`, `coverage`; required `items` array 0–20 (at least one at authorisation). Every item has `task_kind` Inspection/Identification/Intervention, `task_description/expected_outcome` (4000), `completion_requirements` 1–20 narratives (1000 each), optional `required_skill_codes` 0–20 (100 each), optional `shutdown_condition/access_condition` (2000), and `assets` 0–20 (nonempty at authorisation). Each asset is exactly `asset_id`, optional `configuration_id`, optional `identification_plan={method,limits}` (4000 each). Sequence/child IDs and reviewer timestamps derive on server. No serial guessing or configuration promotion.
+
+**Coverage object:** canonical `status`; optional `agreement_reference/source_version` and date-only `effective_from/effective_to`; required `assessment` (4000), `reason` (2000), `charging_route` FinanceReview/ContractReference. Source agreement/version required for ContractReference; Unknown/Disputed requires FinanceReview and limited non-intervention scope. ApprovedNonBillable is deliberately unavailable without financial authority. Coverage never releases a financial disposition.
+
+**Evidence object:** exactly `title` (200), `content_text` (10000), `source_reference/source_version` (200). New typed Synthetic/RestrictedService text evidence is immutable; provider/local key/hash/owner/actor/time are server-derived. There is no upload/URL/SharePoint/issue API.
+
+**Assessment object:** `scope_revision_id`, `scope_version`, optional/null `appointment_id`, `criterion_code`, canonical `outcome`, `reason` (2000), optional evidence object, UTC `source_as_at`, optional `valid_until`. Pass/PermittedException/NotApplicable needs evidence. Policy owns stage/exception/N/A applicability. Authorisation assessments bind current unapproved scope; other stages bind a real same-order scope proposal. Expired/stale evidence cannot pass; CrewCompetency/DispatchControls cannot clear in P04. Submitted `exception_allowed`, policy definitions, actor/workspace/approved state and other unlisted fields are rejected.
+
+Create/readiness/scope/authorise commands preserve current capability checks before receipt lookup, expected versions, atomic audit/outbox, exact references and no duplicated retry effects. ScopeAuthorised implements existing EVT-01 as an unconsumed synthetic event. New outbox kinds: WorkOrderCreated, ScopeDraftSaved, ScopeSuccessorCreated, ScopeAuthorised, ReadinessAssessed, AppointmentProposed. No planner/confirmation/crew/move/cancel/worker/pack/Finance endpoints are enabled here. P03 known-site triage and ActivityLink targets remain unchanged.
+
 ### P03 implementation amendment — current bounded contract
 
 [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md) and the [P03 handover](../delivery/p03-handover.md) take precedence over the historical subset descriptions below. All paths in this table use `/api/v1`. Existing envelopes, server sessions, scope checks, operation hashing, audit and transactional outbox remain the only protocol. The accepted P01 `SaveTicketDraft` schema, normalisation, hash and original receipts are unchanged; its New-only route remains available. Rich intake uses separate commands with API `schema_version=1`; the database's `intake_schema_version=2` is a distinct mapping marker.
@@ -175,3 +202,5 @@ Events carry `event_id`, `schema_version`, `workspace_id`, `aggregate_id/version
 ## 7. Contract proof
 
 P02 tests transaction/unique/foreign-key guards; P05 tests concurrent crew allocation; P08 tests operation/attachment replay and schema changes; P09/P10 test source revision and financial conservation; P11 tests forbidden direct API/file/query calls. PT cases provide expected business outcomes. Contract schemas and implementation tests must reference these IDs, and breaking changes require a new compatible API/payload version or tested migration.
+
+P04 control clarification: an explicit shutdown condition keeps mandatory isolation and shutdown authority applicable even on an Inspection task. Non-intervention alone cannot make such a declared control NotApplicable.

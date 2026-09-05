@@ -276,7 +276,7 @@ BEGIN
   SELECT * INTO d FROM ppo.document_references WHERE workspace_id=NEW.workspace_id AND id=NEW.evidence_ref;
   IF d.work_order_id IS DISTINCT FROM sr.work_order_id THEN RAISE EXCEPTION 'Readiness evidence belongs to another order' USING ERRCODE='23514'; END IF;
  END IF;
- IF NEW.outcome='NotApplicable' AND (NOT pc.not_applicable_allowed OR EXISTS(SELECT 1 FROM ppo.scope_items WHERE workspace_id=NEW.workspace_id AND scope_revision_id=NEW.scope_revision_id AND task_kind='Intervention')) THEN RAISE EXCEPTION 'Applicable mandatory control cannot be waived' USING ERRCODE='23514'; END IF;
+ IF NEW.outcome='NotApplicable' AND (NOT pc.not_applicable_allowed OR EXISTS(SELECT 1 FROM ppo.scope_items WHERE workspace_id=NEW.workspace_id AND scope_revision_id=NEW.scope_revision_id AND (task_kind='Intervention' OR nullif(btrim(shutdown_condition),'') IS NOT NULL))) THEN RAISE EXCEPTION 'Applicable mandatory control cannot be waived' USING ERRCODE='23514'; END IF;
  IF NEW.appointment_id IS NOT NULL THEN
   SELECT * INTO ap FROM ppo.appointments WHERE workspace_id=NEW.workspace_id AND id=NEW.appointment_id;
   IF ap.policy_version_id IS DISTINCT FROM NEW.policy_version_id OR ap.scope_version<>NEW.scope_version THEN RAISE EXCEPTION 'Proposal scope/policy evidence changed' USING ERRCODE='23514'; END IF;

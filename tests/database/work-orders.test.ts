@@ -75,7 +75,7 @@ const input = () => ({
       expected_outcome: "Record observed display state",
       completion_requirements: ["Record findings", "Stop before intervention"],
       required_skill_codes: ["SYN-VISUAL"],
-      shutdown_condition: null,
+      shutdown_condition: null as string | null,
       access_condition: null,
       assets: [
         { asset_id: id(80), configuration_id: null, identification_plan: null },
@@ -739,4 +739,21 @@ test("proposed visits validate interval/scope, allocate APT once and retain exac
     await rows("SELECT * FROM ppo.work_orders ORDER BY id"),
     before,
   );
+});
+
+test("explicit shutdown conditions keep isolation and shutdown authority applicable even for inspection", async () => {
+  const p = await principal(), w = await order(), draft = input();
+  draft.coverage.status = "Covered";
+  draft.items[0].shutdown_condition = "SYN inspection requires an authorised shutdown and isolation before approach.";
+  await saveWorkScope(p, w.id, { ...base(), expected_version: w.version, scope: draft });
+  const current = await order(), r = current.scopes[0];
+  for (const criterion_code of ["MandatoryIsolation", "ShutdownAuthority"]) {
+    await assert.rejects(assessWorkReadiness(p, w.id, {
+      ...base(), expected_version: current.version,
+      assessment: { scope_revision_id: r.id, scope_version: r.version, criterion_code,
+        outcome: "NotApplicable", reason: "SYN attempted inspection-only waiver", evidence: doc(),
+        source_as_at: "2026-09-05T00:00:00Z" },
+    }), code("InvalidData"));
+  }
+  await assert.rejects(authoriseWorkOrder(p, w.id, await authCommand()), code("AuthorisationBlocked"));
 });
