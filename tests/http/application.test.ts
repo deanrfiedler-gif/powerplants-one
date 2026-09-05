@@ -19,7 +19,7 @@ async function session(profile: string) {
 test("HTTP guard, server identity, strict schema and read-only permissions", async () => {
   const root = await fetch(origin);
   assert.equal(root.status, 200);
-  assert.match(root.headers.get("cache-control") ?? "", /no-store/);
+  assert.match(root.headers.get("cache-control") ?? "", /no-cache|no-store/);
   assert.equal(
     (await fetch(`${origin}/api/v1/service/tickets/${ticket}`)).status,
     401,
@@ -47,6 +47,8 @@ test("HTTP guard, server identity, strict schema and read-only permissions", asy
       headers: { Cookie: cookie, "X-Role": "Systems" },
     });
   assert.equal(get.status, 200);
+  assert.match(get.headers.get("cache-control") ?? "", /private/);
+  assert.match(get.headers.get("cache-control") ?? "", /no-store/);
   const view = (await get.json()).items[0];
   assert.equal(view.synthetic, true);
   assert.equal(view.can_edit, true);

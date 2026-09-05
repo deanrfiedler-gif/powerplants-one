@@ -1,5 +1,7 @@
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 import { database, transaction, closeDatabase } from "../src/platform/database";
 import { localConfig } from "../src/platform/config";
 const read = (name: string) =>
@@ -52,7 +54,7 @@ export async function reset() {
   await migrate();
   await seed();
 }
-if (process.argv[1]?.endsWith("/scripts/database.ts")) {
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
     const command = process.argv[2];
     if (command === "migrate") await migrate();
