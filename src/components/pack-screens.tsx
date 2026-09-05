@@ -84,6 +84,12 @@ type Pack = {
   }[];
   sources: Source[];
   history: History[];
+  follow_ups: {
+    activity_id: string;
+    owner_id: string;
+    status: string;
+    summary: string;
+  }[];
   distribution: {
     id: string;
     recipient_id: string;
@@ -646,6 +652,12 @@ export function PackScreen({ id }: { id: string }) {
           </section>
           <section className="pack-panel">
             <h2>Distribution facts</h2>
+            {p.follow_ups.map((f) => (
+              <p key={f.activity_id}>
+                <Link href={`/work/${f.activity_id}`}>{f.summary}</Link> ·{" "}
+                {f.status} · Owner {f.owner_id}
+              </p>
+            ))}
             <p>
               In-app tasks, simulated sending and retrieval are separate from
               explicit acknowledgement. No message is sent.

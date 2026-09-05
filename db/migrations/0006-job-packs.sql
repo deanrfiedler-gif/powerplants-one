@@ -215,3 +215,23 @@ BEGIN
  RETURN NEW;
 END $$;
 CREATE TRIGGER guard_dispatch BEFORE INSERT OR UPDATE ON ppo.appointments FOR EACH ROW EXECUTE FUNCTION ppo.guard_pack_dispatch();
+-- Owned urgent-contact/review activities are consequences, never outbound messages.
+CREATE TABLE ppo.pack_follow_ups (
+ workspace_id uuid NOT NULL, issue_event_id uuid PRIMARY KEY, activity_id uuid NOT NULL UNIQUE,
+ FOREIGN KEY(workspace_id,issue_event_id) REFERENCES ppo.pack_issue_events(workspace_id,id),
+ FOREIGN KEY(workspace_id,activity_id) REFERENCES ppo.activities(workspace_id,id)
+);
+CREATE TRIGGER immutable BEFORE UPDATE OR DELETE ON ppo.pack_follow_ups FOR EACH ROW EXECUTE FUNCTION ppo.immutable_evidence();
+CREATE FUNCTION ppo.pack_owned_follow_up() RETURNS trigger LANGUAGE plpgsql AS $$
+DECLARE p record; task uuid;
+BEGIN
+ IF NEW.kind NOT IN ('ReviewRequired','Withdrawn') THEN RETURN NEW; END IF;
+ SELECT pk.*,w.service_owner_id INTO p FROM ppo.pack_issues i JOIN ppo.packs pk ON pk.id=i.pack_id JOIN ppo.appointments a ON a.id=pk.appointment_id JOIN ppo.work_orders w ON w.id=a.work_order_id WHERE i.id=NEW.issue_id;
+ task:=gen_random_uuid();
+ INSERT INTO ppo.activities(id,workspace_id,company_id,site_id,created_by,updated_by,kind,owner_id,summary,due_at,due_needed,access_class)
+ VALUES(task,NEW.workspace_id,p.company_id,p.site_id,NEW.actor_id,NEW.actor_id,'CustomerContact',p.service_owner_id,p.display_number||' · '||NEW.kind||': urgently review crew/customer contact and record the outcome; no message has been sent.',NULL,true,'RestrictedService');
+ INSERT INTO ppo.activity_links(workspace_id,company_id,activity_id,object_type,object_id) VALUES(NEW.workspace_id,p.company_id,task,'Site',p.site_id);
+ INSERT INTO ppo.pack_follow_ups VALUES(NEW.workspace_id,NEW.id,task);
+ RETURN NEW;
+END $$;
+CREATE TRIGGER owned_follow_up AFTER INSERT ON ppo.pack_issue_events FOR EACH ROW EXECUTE FUNCTION ppo.pack_owned_follow_up();

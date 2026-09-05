@@ -1,6 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import { mkdir, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
+import { renderPack, type PackSnapshot } from "../../src/documents/render";
 const id = (t: string, n = 1) =>
   `${t}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const keys = [
@@ -353,6 +354,53 @@ test("P06 long content remains readable in exact HTML and multi-page A4 output",
   await page.goto(`/api/v1/pack-issues/${issue.id}/html`);
   await expect(page.getByRole("heading", { level: 2 })).toHaveCount(9);
   await capture(page, info, "long-html");
+  if (info.project.name === "desktop-chromium") {
+    const fixture: PackSnapshot = structuredClone(p.revisions[0].snapshot);
+    fixture.pack_reference = "SYN-PPO-PACK-900001";
+    fixture.revision = 99;
+    fixture.customer.name =
+      "SYN Extended Fictional Research and Demonstration Organisation with Multiple Site Operating Divisions and a Deliberately Long Customer Name";
+    fixture.site.name =
+      "SYN North Demonstration Facility including the Propagation Research Building, External Irrigation Gallery and Equipment Observation Area";
+    fixture.sections.identification.text =
+      "Standalone synthetic renderer fixture — no database issue or approved work exists for this fixture.";
+    fixture.sections.equipment.text = Array.from(
+      { length: 24 },
+      (_, i) =>
+        `SYN fixture asset ${i + 1}: external observation equipment with a long identification description; configuration unverified; no intervention. This is a layout fixture only.`,
+    ).join("\n\n");
+    fixture.sections.history.notes =
+      "Not applicable to this standalone layout fixture; no actual service history is asserted.";
+    const prepared_at = new Date().toISOString(),
+      issue_id = crypto.randomUUID();
+    const output = await renderPack(fixture, { prepared_at, issue_id });
+    await writeFile(
+      info.outputPath("SYN-PPO-PACK-900001-job-pack-r99.pdf"),
+      output.pdf,
+    );
+    await writeFile(info.outputPath("P06-renderer-fixture.html"), output.html);
+    await writeFile(
+      info.outputPath("P06-renderer-fixture.json"),
+      JSON.stringify(
+        {
+          kind: "Standalone synthetic visual fixture; never issued",
+          provenance: {
+            executed_sha: process.env.GITHUB_SHA,
+            project: info.project.name,
+          },
+          source: fixture,
+          prepared_at,
+          issue_id,
+          pdf_hash: createHash("sha256").update(output.pdf).digest("hex"),
+          html_hash: createHash("sha256").update(output.html).digest("hex"),
+          renderer_version: output.renderer_version,
+          browser_version: output.browser_version,
+        },
+        null,
+        2,
+      ),
+    );
+  }
 });
 test("P06 unavailable read and unassigned identity expose honest recovery and no document content", async ({
   page,

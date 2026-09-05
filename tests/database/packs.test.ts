@@ -497,7 +497,7 @@ test("P06 P05 confirmed move invalidates real pack/assignment applicability and 
     scheduling_policy_version: 1,
     start_at: "2026-09-23T03:00:00Z",
     end_at: "2026-09-23T05:00:00Z",
-    crew: [9, 2].map((n, i) => ({
+    crew: [9].map((n, i) => ({
       resource_id: id("a4", n),
       resource_version: 1,
       calendar_version: 1,
@@ -514,6 +514,47 @@ test("P06 P05 confirmed move invalidates real pack/assignment applicability and 
   );
   assert.equal(p.readiness.dispatch_hold, true);
   assert.equal(p.issues[0].output_hash, q.pack.issues[0].output_hash);
+  assert.equal(p.follow_ups.length, 1);
+  assert.equal(p.follow_ups[0].owner_id, id("30"));
+  await assert.rejects(
+    readPack(await principal("assigned-technician"), p.id),
+    code("RecordUnavailable"),
+  );
+  await revisePack(q.p, p.id, {
+    ...base(),
+    expected_version: p.version,
+    content: content(),
+  });
+  let next = (await readPack(q.p, p.id)).items[0];
+  await checkPack(q.p, p.id, {
+    ...base(),
+    expected_version: next.version,
+    decision: "Checked",
+  });
+  next = (await readPack(q.p, p.id)).items[0];
+  await requestIssue(q.p, p.id, { ...base(), expected_version: next.version });
+  next = (await readPack(q.p, p.id)).items[0];
+  await processRenderJob(next.jobs[0].id);
+  next = (await readPack(q.p, p.id)).items[0];
+  assert.notEqual(next.current_issue_id, q.issue_id);
+  assert.equal(next.readiness.recipients.length, 1);
+  assert.equal(next.readiness.recipients[0].user_id, id("30", 11));
+  assert.equal(next.readiness.recipients[0].acknowledged_at, null);
+  const replacement = await ack(next, "second-technician");
+  await acknowledgePack(
+    replacement.p,
+    next.current_issue_id!,
+    replacement.input,
+  );
+  assert.equal(
+    (
+      await rows(
+        "SELECT count(*)::int n FROM ppo.pack_acknowledgements WHERE recipient_id=$1",
+        [next.readiness.recipients[0].id],
+      )
+    )[0].n,
+    1,
+  );
 });
 test("P06 database dispatch guard replaces the old unconditional hold without allowing a forged clearance", async () => {
   const a = await confirmed();
@@ -631,17 +672,42 @@ test("P06 acknowledgement audit failure rolls back response/hold and unchanged r
     code("Forbidden"),
   );
 });
-test("P06 expired competency cannot be waived by successful pack responses", async () => {
+test("P06 current recipient access is non-waivable and published competency remains immutable", async () => {
   const q = await issued(),
     first = await ack(q.pack, "assigned-technician");
   await acknowledgePack(first.p, q.issue_id, first.input);
+  await assert.rejects(
+    database().query(
+      "UPDATE ppo.skill_evidence SET active=false WHERE resource_id=$1",
+      [id("a4", 9)],
+    ),
+  );
   await database().query(
-    "UPDATE ppo.skill_evidence SET active=false WHERE resource_id=$1",
-    [id("a4", 9)],
+    "UPDATE ppo.permission_grants SET valid_to='2026-09-01' WHERE user_id=$1 AND capability='pack.read'",
+    [id("30", 11)],
   );
   const second = await ack(q.pack, "second-technician");
   await acknowledgePack(second.p, q.issue_id, second.input);
   const state = await dispatchReadiness(database(), q.p, q.pack.appointment_id);
   assert.equal(state.dispatch_hold, true);
-  assert.match(state.reasons.join(" "), /competency/);
+  assert.match(state.reasons.join(" "), /access/);
+});
+test("P06 amendment contact activity failure rolls back withdrawal and exact retry creates one owned task", async () => {
+  const q = await issued(),
+    cmd = { ...base(), expected_version: q.pack.version };
+  for (const table of ["activities", "activity_links", "pack_follow_ups"]) {
+    await database().query(
+      `CREATE FUNCTION ppo.fail_followup() RETURNS trigger LANGUAGE plpgsql AS $$BEGIN RAISE EXCEPTION 'SYN follow-up rollback'; END$$; CREATE TRIGGER fail_followup BEFORE INSERT ON ppo.${table} FOR EACH ROW EXECUTE FUNCTION ppo.fail_followup()`,
+    );
+    await assert.rejects(withdrawPack(q.p, q.pack.id, cmd));
+    await database().query(
+      `DROP TRIGGER fail_followup ON ppo.${table}; DROP FUNCTION ppo.fail_followup()`,
+    );
+    assert.equal((await readPack(q.p, q.pack.id)).items[0].status, "Issued");
+  }
+  await withdrawPack(q.p, q.pack.id, cmd);
+  await withdrawPack(q.p, q.pack.id, cmd);
+  const current = (await readPack(q.p, q.pack.id)).items[0];
+  assert.equal(current.follow_ups.length, 1);
+  assert.equal(current.follow_ups[0].status, "Open");
 });

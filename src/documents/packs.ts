@@ -618,6 +618,14 @@ export async function readPack(p: Principal, id: string) {
                   reason: "Refer to current pack applicability.",
                 },
           ),
+        follow_ups: staff
+          ? (
+              await c.query(
+                "SELECT f.activity_id,a.owner_id,a.status,a.summary FROM ppo.pack_follow_ups f JOIN ppo.pack_issue_events e ON e.id=f.issue_event_id JOIN ppo.pack_issues i ON i.id=e.issue_id JOIN ppo.activities a ON a.id=f.activity_id WHERE f.workspace_id=$1 AND i.pack_id=$2",
+                [p.workspace_id, pack.id],
+              )
+            ).rows
+          : [],
         history: staff
           ? (
               await c.query(
