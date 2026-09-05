@@ -18,6 +18,17 @@ async function noOverflow(page: Page) {
     ),
   ).toBe(true);
 }
+async function capture(
+  page: Page,
+  info: { outputPath: (name: string) => string },
+  name: string,
+) {
+  await expect(
+    page.getByText("Loading permitted records…", { exact: true }),
+  ).toHaveCount(0);
+  await noOverflow(page);
+  await page.screenshot({ path: info.outputPath(name), fullPage: true });
+}
 test("P03 customer, shared contact, site/equipment attribution and My Work at desktop/mobile widths", async ({
   page,
 }, info) => {
@@ -32,6 +43,7 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
       exact: true,
     }),
   ).toHaveCount(2);
+  await capture(page, info, "P03-customers-list.png");
   await page
     .getByRole("link", { name: "SYN Greenhouse Demonstration", exact: true })
     .first()
@@ -54,6 +66,7 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
   await expect(
     page.getByRole("heading", { name: "Affiliations for this shared person" }),
   ).toBeVisible();
+  await capture(page, info, "P03-contact.png");
   await page.goto(`/sites/${site}`);
   await expect(
     page.getByRole("heading", { name: "Operator, owner and billing parties" }),
@@ -81,12 +94,20 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
     path: info.outputPath("P03-history.png"),
     fullPage: true,
   });
+  await page
+    .getByRole("link", { name: "Create follow-up", exact: true })
+    .click();
+  await page
+    .getByLabel("Purpose / summary", { exact: true })
+    .fill("SYN inspect owned equipment follow-up form");
+  await capture(page, info, "P03-create-activity.png");
   await page.goto("/equipment/80000000-0000-4000-8000-000000000002");
   await expect(
     page.getByText(
       /Similar descriptions or serial candidates remain separate assets/,
     ),
   ).toBeVisible();
+  await capture(page, info, "P03-identity-uncertainty.png");
   await page.goto("/work");
   await expect(
     page.getByRole("heading", { name: "Overdue", exact: true }),
@@ -150,6 +171,7 @@ test("P03 persisted intake, validation retention, clarification completion, tria
   await expect(page.getByLabel("Triage and next-action owner")).toContainText(
     "SYN Coordinator",
   );
+  await capture(page, info, "P03-create-intake.png");
   await page
     .getByRole("button", { name: "Save service request", exact: true })
     .click();
@@ -289,10 +311,12 @@ test("P03 persisted intake, validation retention, clarification completion, tria
   await page
     .getByLabel("Completion outcome or cancellation reason")
     .fill("Caller, site and impact confirmed in synthetic demonstration.");
+  await capture(page, info, "P03-activity.png");
   await page
     .getByRole("button", { name: "Complete with outcome", exact: true })
     .click();
   await expect(page.getByText("Completed", { exact: true })).toBeVisible();
+  await capture(page, info, "P03-activity-completed.png");
   await page.goto(url);
   await page
     .getByLabel("Reason for this triage action")
@@ -312,6 +336,11 @@ test("P03 persisted intake, validation retention, clarification completion, tria
     fullPage: true,
   });
   await noOverflow(page);
+  await page.goto("/service/tickets");
+  await expect(
+    page.getByRole("heading", { name: "Service requests", exact: true }),
+  ).toBeVisible();
+  await capture(page, info, "P03-tickets-list.png");
 });
 test("P03 unavailable and empty queues stay distinct; keyboard focus and network-failed form entries survive", async ({
   page,

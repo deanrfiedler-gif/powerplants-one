@@ -525,7 +525,8 @@ export function ContextDetail({
                       <Status value={m.mapping_status} /> ·{" "}
                       {m.is_current
                         ? "Current interval"
-                        : Date.parse(m.valid_from) > Date.now()
+                        : Date.parse(m.valid_from) >
+                            Date.parse(r.data!.observed_at)
                           ? "Future interval"
                           : "Historical interval"}{" "}
                       · <Stamp value={m.valid_from} /> to{" "}
@@ -643,7 +644,8 @@ export function ContextDetail({
                         <span>
                           {a.is_current
                             ? "Current"
-                            : Date.parse(a.valid_from) > Date.now()
+                            : Date.parse(a.valid_from) >
+                                Date.parse(r.data!.observed_at)
                               ? "Future"
                               : "Historical"}
                         </span>
@@ -734,7 +736,8 @@ export function ContextDetail({
                       Revision {c.revision} ·{" "}
                       {c.is_current
                         ? "Current"
-                        : Date.parse(c.valid_from) > Date.now()
+                        : Date.parse(c.valid_from) >
+                            Date.parse(r.data!.observed_at)
                           ? "Future"
                           : "Historical"}
                     </h3>
