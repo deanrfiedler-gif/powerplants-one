@@ -1,0 +1,24 @@
+name: Defect or documentation inconsistency
+description: Record expected versus observed behaviour with reproducible evidence.
+title: "[Defect] "
+body:
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected outcome and requirement/source
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual outcome and reproduction steps
+      description: Include environment/version; redact private data and credentials.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact and evidence
+      description: Identify affected records/workflows and any safe workaround.
+    validations:
+      required: true

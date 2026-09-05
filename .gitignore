@@ -1,0 +1,29 @@
+# Local credentials and configuration; examples must contain placeholders only.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets*.json
+# Local tooling and generated output.
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+__pycache__/
+*.py[cod]
+.venv/
+node_modules/
+dist/
+build/
+coverage/
+.pytest_cache/
+*.log
+# Operational data and local working material do not belong in source control.
+/local-data/
+/exports/
+/backups/
+/tmp/

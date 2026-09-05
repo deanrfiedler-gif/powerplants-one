@@ -1,0 +1,30 @@
+name: Decision or evidence gap
+description: Resolve a concrete question without inventing a source fact.
+title: "[Decision] "
+body:
+  - type: input
+    id: decision
+    attributes:
+      label: Related decision or requirement IDs
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Question and why it matters
+    validations:
+      required: true
+  - type: textarea
+    id: options
+    attributes:
+      label: Evidence, options and recommendation
+      description: Distinguish verified facts, synthetic assumptions and missing evidence.
+    validations:
+      required: true
+  - type: textarea
+    id: closure
+    attributes:
+      label: Owner role and closure evidence
+      description: State who can decide, affected scope and what would resolve the question.
+    validations:
+      required: true

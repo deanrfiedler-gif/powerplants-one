@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "scope": "Included issued references only; no claim of complete source archive",
+  "files": [
+    {
+      "path": "docs/blueprints/GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md",
+      "sha256": "854317d7bc9081f07157f9428f7b220a20e5f5800c2560e54f0ef3f82270858d",
+      "bytes": 271401,
+      "purpose": "Current issued planning baseline; decisions remain subject to subsequent recorded user instructions"
+    },
+    {
+      "path": "docs/reference/GEN_SPC_PPABusinessPlatform_MasterBlueprint_v01.md",
+      "sha256": "5eb13042a04f1ad6d593ea06e01ca840a82a52f50a93f0f2e405d301eda6426d",
+      "bytes": 137275,
+      "purpose": "Historical master, preserved unchanged"
+    },
+    {
+      "path": "docs/reference/GEN_RPT_PPABlueprint_Audit_v01.md",
+      "sha256": "f2406512c0e24132b434260e34ec51e0bb7582831aaf76a9e9e8b53b5faf54df",
+      "bytes": 74647,
+      "purpose": "Historical audit informing v02, preserved unchanged"
+    }
+  ]
+}
