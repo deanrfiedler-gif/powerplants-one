@@ -2,7 +2,7 @@ import Link from "next/link";
 export default function Overview() {
   return (
     <>
-      <p className="eyebrow">Application foundation / P01</p>
+      <p className="eyebrow">Shared data foundation / P02</p>
       <section className="hero">
         <div>
           <h1>

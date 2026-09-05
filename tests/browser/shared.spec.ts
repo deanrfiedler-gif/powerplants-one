@@ -9,6 +9,8 @@ test("P02 diagnostic context, labels, keyboard focus and scoped error state", as
   const load = page.getByRole("button", { name: "Load shared context" });
   await expect(load).toBeEnabled();
   await load.focus();
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Shift+Tab");
   await expect(load).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(
@@ -61,6 +63,8 @@ test("P02 diagnostic context, labels, keyboard focus and scoped error state", as
   ).toHaveCount(0);
   await expect(load).toBeEnabled();
   await load.focus();
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Shift+Tab");
   await expect(load).toBeFocused();
   await page.screenshot({
     path: info.outputPath("P02-permission-error-focus.png"),

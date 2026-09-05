@@ -2,7 +2,7 @@
 
 **Edition:** r02 · **Date:** 5 September 2026 · **Scope:** PP-01 synthetic planned-service prototype.
 
-**Status:** Architecture/build contract; bounded P01 implementation and evidence are recorded in [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md). Not production approval. [Package index](../prototype/README.md) · [Data dictionary](../contracts/service-data-dictionary.md) · [API contracts](../contracts/service-api.md).
+**Status:** Architecture/build contract; P01/P02 implementation and evidence are recorded in [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md) and [ADR-0007](../decisions/ADR-0007-p02-shared-foundation.md). Not production approval. [Package index](../prototype/README.md) · [Data dictionary](../contracts/service-data-dictionary.md) · [API contracts](../contracts/service-api.md).
 
 ## 1. Architecture decision
 
