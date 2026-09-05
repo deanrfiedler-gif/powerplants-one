@@ -79,3 +79,24 @@ export const accessClasses = [
   "CustomerApproved",
 ] as const;
 export const identityStates = ["Verified", "Unresolved", "Disputed"] as const;
+
+// Multiline narratives extend accepted single-line normalisation without altering old hashes.
+export function narrative(value: unknown, field: string, max = 10000): string {
+  if (
+    typeof value !== "string" ||
+    !value.trim() ||
+    value.trim().length > max ||
+    /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(value)
+  )
+    invalid(
+      field,
+      `Enter 1–${max} characters; line breaks and tabs are allowed.`,
+    );
+  return value.trim();
+}
+export const optionalNarrative = (
+  value: unknown,
+  field: string,
+  max = 10000,
+) =>
+  value === undefined || value === null ? null : narrative(value, field, max);

@@ -1,8 +1,8 @@
 # BP-02 — Platform Solution Architecture
 
-**Edition:** r02 · **Date:** 5 September 2026 · **Scope:** PP-01 synthetic planned-service prototype.
+**Edition:** r03 · **Date:** 5 September 2026 · **Scope:** PP-01 synthetic planned-service prototype.
 
-**Status:** Architecture/build contract; P01/P02 implementation and evidence are recorded in [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md) and [ADR-0007](../decisions/ADR-0007-p02-shared-foundation.md). Not production approval. [Package index](../prototype/README.md) · [Data dictionary](../contracts/service-data-dictionary.md) · [API contracts](../contracts/service-api.md).
+**Status:** Architecture/build contract; P01/P02/P03 implementation and evidence are recorded in [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md) [ADR-0007](../decisions/ADR-0007-p02-shared-foundation.md) and [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md). Not production approval. [Package index](../prototype/README.md) · [Data dictionary](../contracts/service-data-dictionary.md) · [API contracts](../contracts/service-api.md).
 
 ## 1. Architecture decision
 
@@ -152,8 +152,8 @@ Microsoft Graph exposes selected-permission patterns and version-specific DriveI
 
 | Environment | Recommended form | Data/access | Current status |
 |---|---|---|---|
-| Local development | Node application and PostgreSQL, optionally reproducible containers; local synthetic document store | Synthetic only; local identity adapter permitted | P01 local shell/database implemented; document store remains a stub |
-| Automated test | Disposable PostgreSQL and isolated test data/files; browser tests | Synthetic identities and simulated adapters | P01 PostgreSQL/HTTP/browser CI executed; see the handover |
+| Local development | Node application and PostgreSQL, optionally reproducible containers; local synthetic document store | Synthetic only; local identity adapter permitted | P01–P03 local shell/shared data/customer intake/follow-up implemented; document store remains a stub |
+| Automated test | Disposable PostgreSQL and isolated test data/files; browser tests | Synthetic identities and simulated adapters | P01–P03 PostgreSQL/HTTP/browser CI executed; see the P03 handover |
 | Private remote prototype | Container-capable hosting plus managed PostgreSQL, real authentication, protected file staging, logs and backup | Synthetic only until separately authorised | Azure Container Apps is the preferred option to assess; no purchase/deployment selected |
 | Operational pilot/production | Separately provisioned and approved environment with real identity/source contracts/support | Approved users and data | Out of current implementation authority |
 
@@ -224,3 +224,7 @@ P01 must prove a reproducible build, migrations, database reservations, the sele
 D-005/D-006/D-007 block real ERP operation; D-012 blocks real SharePoint issue/retention claims; D-016/D-020 block operational offline access; D-017 blocks verified real financial measures; D-022/D-023 block purchased hosting/production support commitments. None of these prevents writing or testing synthetic code using the explicit adapters and fixtures.
 
 P01 has implemented and verified the bounded local foundation under Dean's authority; see the [handover](../delivery/p01-handover.md). The broader architecture remains a test obligation for subsequent increments. P01 proof does not establish complete workflow, offline or operational readiness.
+
+## P03 bounded implementation
+
+P03 extends the same modular monolith, server identity/capability projections, atomic reference allocator and shared operation/audit/outbox transaction. Typed Activity links point only to existing Organisation/Site/Asset/Ticket records with real composite foreign keys and independent scope checks. Additive Ticket mapping preserves legacy unknowns and accepted P01 hashes/receipts. There is no worker, alternate identity system or hosted integration. [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md) and the [handover](../delivery/p03-handover.md) record current gates, actual evidence and P04 prerequisites; future authority/readiness, offline, reports and Finance processing remain test obligations.

@@ -6,6 +6,8 @@ export type QueryClient = Pick<PoolClient, "query">;
 export type Capability =
   | "service.ticket.read"
   | "service.ticket.edit"
+  | "activity.read"
+  | "activity.edit"
   | "shared.read"
   | "shared.create"
   | "shared.edit"

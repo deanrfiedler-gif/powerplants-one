@@ -26,10 +26,8 @@ test("responsive shell, keyboard focus, server save, read-only refusal and stora
     fullPage: true,
   });
   await page.keyboard.press("Tab");
-  await expect(
-    page.getByRole("link", { name: "Open foundation checks" }),
-  ).toBeFocused();
-  await page.keyboard.press("Enter");
+  await expect(page.getByRole("link", { name: "Open My Work" })).toBeFocused();
+  await page.getByRole("link", { name: "Open foundation checks" }).click();
   await expect(
     page.getByRole("heading", { name: "Foundation checks" }),
   ).toBeVisible();

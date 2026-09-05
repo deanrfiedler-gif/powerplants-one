@@ -1,0 +1,283 @@
+{
+  "source_commit": "8e32049373fd13749cfb77b177f209e9f98d35d9",
+  "source_tree": "ead79d134fb8e5753bc480e16de0f6a8e862cc94",
+  "workflow_run": 33949129677,
+  "artifact_id": 9964287660,
+  "archive_sha256": "5d79ba59fc737e3839af9d4bd2500167e00198b1e44b4c30a99db4139b6afbab",
+  "environment": "GitHub Actions Ubuntu 24.04, PostgreSQL 16.15, Playwright 1.63.0 Chromium; desktop 1440x1000 / mobile 390x844, locale en-AU",
+  "scope": "Original unmodified synthetic screenshots; component/viewport evidence only. No real-device, screen-reader, offline or full PT acceptance claim.",
+  "files": [
+    {
+      "file": "desktop-contact.png",
+      "original_path": "test-results/intake-P03-customer-shared-91077-rk-at-desktop-mobile-widths-desktop-chromium/P03-contact.png",
+      "sha256": "430aee45dfa41e26e862f12dd5b479ae7b39bf62d201b6bc7f29123064bb6053",
+      "width": 1440,
+      "height": 1078
+    },
+    {
+      "file": "desktop-create-activity.png",
+      "original_path": "test-results/intake-P03-customer-shared-91077-rk-at-desktop-mobile-widths-desktop-chromium/P03-create-activity.png",
+      "sha256": "f7ec2b5d04ba29924c84d5caa0241ddd288d50e1b8634029ac07d71184b8b383",
+      "width": 1440,
+      "height": 1214
+    },
+    {
+      "file": "desktop-customer.png",
+      "original_path": "test-results/intake-P03-customer-shared-91077-rk-at-desktop-mobile-widths-desktop-chromium/P03-customer.png",
+      "sha256": "ad37bc4e83a0d48df8f0f4f56e56b3849e7e89ed4bb5cf4727c64090f277eb42",
+      "width": 1440,
+      "height": 1802
+    },
+    {
+      "file": "desktop-customers-list.png",
+      "original_path": "test-results/intake-P03-customer-shared-91077-rk-at-desktop-mobile-widths-desktop-chromium/P03-customers-list.png",
+      "sha256": "a5edca6e23ee05e3c585ffdbab61db0e32fdca0030c5f2bd5983d15c78c220da",
+      "width": 1440,
+      "height": 1662
+    },
+    {
+      "file": "desktop-history.png",
+      "original_path": "test-results/intake-P03-customer-shared-91077-rk-at-desktop-mobile-widths-desktop-chromium/P03-history.png",
+      "sha256": "15a77d58019efacc513ca2e580d43b77810c5f7049ff68badd252537b294e03a",
+      "width": 1440,
+      "height": 2936
+    },
+    {
+      "file": "desktop-identity-uncertainty.png",
+      "original_path": "test-results/intake-P03-customer-shared-91077-rk-at-desktop-mobile-widths-desktop-chromium/P03-identity-uncertainty.png",
+      "sha256": "a1fb398bac727efa6dd94a3f8bb86457b27d6a431887b9d9f874c83455a5ea48",
+      "width": 1440,
+      "height": 2249
+    },
+    {
+      "file": "desktop-permission.png",
+      "original_path": "test-results/intake-P03-customer-shared-91077-rk-at-desktop-mobile-widths-desktop-chromium/P03-permission.png",
+      "sha256": "b852f59910b73d4c0e7c9a41b69f1103e073fc747cee8e4ef90df8f030401f4b",
+      "width": 1440,
+      "height": 1122
+    },
+    {
+      "file": "desktop-site.png",
+      "original_path": "test-results/intake-P03-customer-shared-91077-rk-at-desktop-mobile-widths-desktop-chromium/P03-site.png",
+      "sha256": "36eb8e63b7c9807b67f86193af0384a152eac1320dfebc74ac4c6b8d80462ca6",
+      "width": 1440,
+      "height": 3764
+    },
+    {
+      "file": "desktop-work.png",
+      "original_path": "test-results/intake-P03-customer-shared-91077-rk-at-desktop-mobile-widths-desktop-chromium/P03-work.png",
+      "sha256": "5bee09a5b0f9d061cf69e8f99291de71f0ed6715db95b30f0d0289aa60944453",
+      "width": 1440,
+      "height": 2067
+    },
+    {
+      "file": "mobile-contact.png",
+      "original_path": "test-results/intake-P03-customer-shared-91077-rk-at-desktop-mobile-widths-mobile-chromium/P03-contact.png",
+      "sha256": "f47ca7bb78b1a1e63f91c92699990fb0e3e7e9ce97265eaf306604199d65cb1f",
+      "width": 390,
+      "height": 1566
+    },
+    {
+      "file": "mobile-create-activity.png",
+      "original_path": "test-results/intake-P03-customer-shared-91077-rk-at-desktop-mobile-widths-mobile-chromium/P03-create-activity.png",
+      "sha256": "883bedf8a929a4d68220230fdbca2c3ae9db3790337d87dc7f948697372b8ac8",
+      "width": 390,
+      "height": 2005
+    },
+    {
+      "file": "mobile-customer.png",
+      "original_path": "test-results/intake-P03-customer-shared-91077-rk-at-desktop-mobile-widths-mobile-chromium/P03-customer.png",
+      "sha256": "791c2161ce9cfbceb4d8bd8ecea39e9a9dd4ba5b608a8d4f73e6894ef48ede44",
+      "width": 390,
+      "height": 2535
+    },
+    {
+      "file": "mobile-customers-list.png",
+      "original_path": "test-results/intake-P03-customer-shared-91077-rk-at-desktop-mobile-widths-mobile-chromium/P03-customers-list.png",
+      "sha256": "24676fa963db634c1986ab011242a6593fe5d2868b7686c8a6715f039a4b6c97",
+      "width": 390,
+      "height": 3019
+    },
+    {
+      "file": "mobile-history.png",
+      "original_path": "test-results/intake-P03-customer-shared-91077-rk-at-desktop-mobile-widths-mobile-chromium/P03-history.png",
+      "sha256": "d3478543ff4c30b8908552cde0aac05d92827d7ac278d13c7b76343f33a43df8",
+      "width": 390,
+      "height": 4143
+    },
+    {
+      "file": "mobile-identity-uncertainty.png",
+      "original_path": "test-results/intake-P03-customer-shared-91077-rk-at-desktop-mobile-widths-mobile-chromium/P03-identity-uncertainty.png",
+      "sha256": "29b5f76da12c202c45b457a44a99adc69b28310ebb5d7f1e74edf3c471de6dc7",
+      "width": 390,
+      "height": 3196
+    },
+    {
+      "file": "mobile-permission.png",
+      "original_path": "test-results/intake-P03-customer-shared-91077-rk-at-desktop-mobile-widths-mobile-chromium/P03-permission.png",
+      "sha256": "44c199fa7f6811dd509c1912e67e4520923ce2da20cba67355b25fe779128bd3",
+      "width": 390,
+      "height": 1852
+    },
+    {
+      "file": "mobile-site.png",
+      "original_path": "test-results/intake-P03-customer-shared-91077-rk-at-desktop-mobile-widths-mobile-chromium/P03-site.png",
+      "sha256": "9d698584282df8de5391cf781b30539150a05bce87d2341dc6f42165973aa98d",
+      "width": 390,
+      "height": 5257
+    },
+    {
+      "file": "mobile-work.png",
+      "original_path": "test-results/intake-P03-customer-shared-91077-rk-at-desktop-mobile-widths-mobile-chromium/P03-work.png",
+      "sha256": "839d4f2f532df0ebc4ff357772ffff503487bcc9983c342a6e64f24435e4c59c",
+      "width": 390,
+      "height": 3081
+    },
+    {
+      "file": "desktop-activity-completed.png",
+      "original_path": "test-results/intake-P03-persisted-intak-930ee-age-and-conflict-comparison-desktop-chromium/P03-activity-completed.png",
+      "sha256": "db6134e582105b4e76690b299c67d70f5261e2ea03936912280f89b6a99e60be",
+      "width": 1440,
+      "height": 1082
+    },
+    {
+      "file": "desktop-activity.png",
+      "original_path": "test-results/intake-P03-persisted-intak-930ee-age-and-conflict-comparison-desktop-chromium/P03-activity.png",
+      "sha256": "af00155ee16a472b64e1aba69ea93a65473d8ff352a3389a6861f061abb3b422",
+      "width": 1440,
+      "height": 1780
+    },
+    {
+      "file": "desktop-create-intake.png",
+      "original_path": "test-results/intake-P03-persisted-intak-930ee-age-and-conflict-comparison-desktop-chromium/P03-create-intake.png",
+      "sha256": "7147c53c012536dc803f6e9be5b6a62f2fbf38bf487670b29cad02b416406c41",
+      "width": 1440,
+      "height": 1946
+    },
+    {
+      "file": "desktop-intake-conflict.png",
+      "original_path": "test-results/intake-P03-persisted-intak-930ee-age-and-conflict-comparison-desktop-chromium/P03-intake-conflict.png",
+      "sha256": "49e22a70ca7322702f4c6757592f12d226b6142b595005d02978e7149b638b47",
+      "width": 1440,
+      "height": 3698
+    },
+    {
+      "file": "desktop-intake-validation.png",
+      "original_path": "test-results/intake-P03-persisted-intak-930ee-age-and-conflict-comparison-desktop-chromium/P03-intake-validation.png",
+      "sha256": "34b60f967fa7da1bec6c928379f7ea142cd38bb25e2f910a184e022c28ca2bf5",
+      "width": 1440,
+      "height": 3196
+    },
+    {
+      "file": "desktop-tickets-list.png",
+      "original_path": "test-results/intake-P03-persisted-intak-930ee-age-and-conflict-comparison-desktop-chromium/P03-tickets-list.png",
+      "sha256": "96068d2e40c6a79ccaa5d101b1bb6ca13baa87ca61e4ccf627de0214be8407d0",
+      "width": 1440,
+      "height": 1590
+    },
+    {
+      "file": "desktop-triaged.png",
+      "original_path": "test-results/intake-P03-persisted-intak-930ee-age-and-conflict-comparison-desktop-chromium/P03-triaged.png",
+      "sha256": "dc6a5d268c8b3645b5f4112c9f2ca9d5f6c7f24061c2f7eb53e0979b87e189ce",
+      "width": 1440,
+      "height": 1515
+    },
+    {
+      "file": "mobile-activity-completed.png",
+      "original_path": "test-results/intake-P03-persisted-intak-930ee-age-and-conflict-comparison-mobile-chromium/P03-activity-completed.png",
+      "sha256": "da01a1b6a69e847ebfd9caf0eb1efc54ff76f2bab0b8340039ea5b1d8bb33fe1",
+      "width": 390,
+      "height": 1570
+    },
+    {
+      "file": "mobile-activity.png",
+      "original_path": "test-results/intake-P03-persisted-intak-930ee-age-and-conflict-comparison-mobile-chromium/P03-activity.png",
+      "sha256": "fd94967336fd1adc4dfb4f09c8a5f0e24fa0656491eab79799341f55e10a5217",
+      "width": 390,
+      "height": 2551
+    },
+    {
+      "file": "mobile-create-intake.png",
+      "original_path": "test-results/intake-P03-persisted-intak-930ee-age-and-conflict-comparison-mobile-chromium/P03-create-intake.png",
+      "sha256": "f24eebf8222323b1dd68a109595f322180fc1a8dd45e536b53183383f45e1426",
+      "width": 390,
+      "height": 3127
+    },
+    {
+      "file": "mobile-intake-conflict.png",
+      "original_path": "test-results/intake-P03-persisted-intak-930ee-age-and-conflict-comparison-mobile-chromium/P03-intake-conflict.png",
+      "sha256": "c3596b2bfb0effd0b9be7e04cc53f4e7627797d0ece07a85b42d71419c875d85",
+      "width": 390,
+      "height": 5398
+    },
+    {
+      "file": "mobile-intake-validation.png",
+      "original_path": "test-results/intake-P03-persisted-intak-930ee-age-and-conflict-comparison-mobile-chromium/P03-intake-validation.png",
+      "sha256": "51da7d08dfab21362fb4e680508139c332dac3739a74fed7e74cd91f5b050847",
+      "width": 390,
+      "height": 4888
+    },
+    {
+      "file": "mobile-tickets-list.png",
+      "original_path": "test-results/intake-P03-persisted-intak-930ee-age-and-conflict-comparison-mobile-chromium/P03-tickets-list.png",
+      "sha256": "dbbd60c655a0472af5871c50f262bcb17e44993d5c34c5f6ab2de39a75d60b43",
+      "width": 390,
+      "height": 2714
+    },
+    {
+      "file": "mobile-triaged.png",
+      "original_path": "test-results/intake-P03-persisted-intak-930ee-age-and-conflict-comparison-mobile-chromium/P03-triaged.png",
+      "sha256": "eb306a2dc71114822aeddd30685e0d92c199318ef40912cd4ba8195376cb475a",
+      "width": 390,
+      "height": 2221
+    },
+    {
+      "file": "desktop-empty.png",
+      "original_path": "test-results/intake-P03-unavailable-and-0935c-failed-form-entries-survive-desktop-chromium/P03-empty.png",
+      "sha256": "c3659f3c74c85528ec8523e31e93b5585248a8aa90d321cdccf41319059353d5",
+      "width": 1440,
+      "height": 1184
+    },
+    {
+      "file": "desktop-failure-focus.png",
+      "original_path": "test-results/intake-P03-unavailable-and-0935c-failed-form-entries-survive-desktop-chromium/P03-failure-focus.png",
+      "sha256": "136ca3c822ae21e0daec114ccd2dddce0170fecfac6e5e96acee5a616e50227b",
+      "width": 1440,
+      "height": 1183
+    },
+    {
+      "file": "desktop-unavailable.png",
+      "original_path": "test-results/intake-P03-unavailable-and-0935c-failed-form-entries-survive-desktop-chromium/P03-unavailable.png",
+      "sha256": "66ce5ace9ea68630d1ead122d8e96ad708d4f871f793aa256d9dcc4d1a09af0c",
+      "width": 1440,
+      "height": 1092
+    },
+    {
+      "file": "mobile-empty.png",
+      "original_path": "test-results/intake-P03-unavailable-and-0935c-failed-form-entries-survive-mobile-chromium/P03-empty.png",
+      "sha256": "53bacb1e55e1755f639f758af51b67f18f4fd2d0cb4e21fd5b50a0d26d1582f3",
+      "width": 390,
+      "height": 1890
+    },
+    {
+      "file": "mobile-failure-focus.png",
+      "original_path": "test-results/intake-P03-unavailable-and-0935c-failed-form-entries-survive-mobile-chromium/P03-failure-focus.png",
+      "sha256": "c89d50737c99fc894f0c1e81010cab36f0c08c91991b32ec9f97db6f6d01c891",
+      "width": 390,
+      "height": 1835
+    },
+    {
+      "file": "mobile-unavailable.png",
+      "original_path": "test-results/intake-P03-unavailable-and-0935c-failed-form-entries-survive-mobile-chromium/P03-unavailable.png",
+      "sha256": "34832557feed9057b36644448bba70ea517abd9e4d5e209c2c820c6554bf2031",
+      "width": 390,
+      "height": 1826
+    }
+  ],
+  "manual_inspection": {
+    "reviewer": "Implementing agent (self-review, no independent review)",
+    "date": "2026-09-05",
+    "files_inspected": 38,
+    "result": "All indexed captures inspected; no blocking clipping, overlap, unreadable business content or loading placeholders found. Native select/input display is browser-dependent and may scroll/clip long current values within the control."
+  }
+}

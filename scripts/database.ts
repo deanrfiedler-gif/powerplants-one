@@ -6,7 +6,7 @@ import { database, transaction, closeDatabase } from "../src/platform/database";
 import { localConfig } from "../src/platform/config";
 const read = (name: string) =>
   readFile(new URL(`../db/${name}`, import.meta.url), "utf8");
-export async function migrate(through = 2) {
+export async function migrate(through = 3) {
   await transaction(async (client) => {
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     await client.query(
@@ -15,6 +15,7 @@ export async function migrate(through = 2) {
     for (const [index, file] of [
       "0001-foundation.sql",
       "0002-shared-foundation.sql",
+      "0003-customer-intake.sql",
     ].entries()) {
       const version = index + 1;
       if (version > through) break;
@@ -39,15 +40,24 @@ export async function migrate(through = 2) {
     }
   });
 }
-export async function seed() {
+export async function seed(through = 3) {
   await transaction(async (client) => {
     await client.query("SELECT pg_advisory_xact_lock(10001)");
-    const prior = await client.query(
-      "SELECT 1 FROM ppo.seed_receipts WHERE version=2",
-    );
-    if (prior.rowCount) return;
-    await client.query(await read("seed.sql"));
-    await client.query("INSERT INTO ppo.seed_receipts(version) VALUES(2)");
+    for (const [version, file] of [
+      [2, "seed.sql"],
+      [3, "seed-p03.sql"],
+    ] as const) {
+      if (version > through) break;
+      const prior = await client.query(
+        "SELECT 1 FROM ppo.seed_receipts WHERE version=$1",
+        [version],
+      );
+      if (prior.rowCount) continue;
+      await client.query(await read(file));
+      await client.query("INSERT INTO ppo.seed_receipts(version) VALUES($1)", [
+        version,
+      ]);
+    }
   });
 }
 export async function reset() {

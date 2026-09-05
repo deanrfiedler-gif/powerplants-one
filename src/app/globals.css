@@ -619,3 +619,374 @@ footer {
     margin-top: 7px;
   }
 }
+
+/* P03 business screens extend the established navy/green shell. */
+.identity-strip {
+  display: flex;
+  align-items: end;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1rem 1.2rem;
+  margin-bottom: 2rem;
+  background: #eef4f1;
+  border: 1px solid #cddbd4;
+  border-radius: 12px;
+}
+.identity-strip > div {
+  flex: 1;
+  min-width: 210px;
+}
+.identity-strip small {
+  display: block;
+  margin-top: 0.35rem;
+  color: #4a5f62;
+}
+.identity-strip .identity-choice {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+}
+.business-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 1.5rem;
+  margin: 1.5rem 0 2rem;
+}
+.business-heading h1 {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.business-heading .lede {
+  font-size: 1rem;
+  max-width: 65ch;
+}
+.record-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  border-bottom: 1px solid #ccd7d8;
+  margin: 1rem 0 1.5rem;
+  padding-bottom: 0.7rem;
+}
+.record-tabs a {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+}
+.record-tabs a[aria-current="page"] {
+  background: #143747;
+  color: white;
+  text-decoration: none;
+}
+.filters,
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.filters {
+  padding: 1rem;
+  background: #f3f6f5;
+  border-radius: 12px;
+  margin: 1rem 0;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  min-width: 0;
+}
+.field small {
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #52686e;
+}
+.field input,
+.field select,
+.field textarea,
+.identity-strip select {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  border: 1px solid #91a6ac;
+  border-radius: 6px;
+  background: white;
+  color: #163642;
+  padding: 0.7rem;
+  font: inherit;
+  min-height: 44px;
+}
+.field textarea {
+  resize: vertical;
+  line-height: 1.5;
+  font-weight: 400;
+}
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
+  outline: 3px solid #cc840a;
+  outline-offset: 2px;
+}
+.form-panel {
+  border: 1px solid #cdd9da;
+  border-radius: 12px;
+  background: white;
+  padding: 1.4rem;
+  margin: 1.4rem 0;
+}
+.form-panel h2 {
+  margin-top: 0;
+}
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+fieldset:disabled {
+  opacity: 0.75;
+}
+.form-panel button {
+  margin-top: 1rem;
+}
+.check-field {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 44px;
+}
+.check-field input {
+  width: 20px;
+  height: 20px;
+}
+.actions {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 1.3rem 0;
+}
+.secondary,
+.button.secondary {
+  color: #174c43;
+  background: #f4f8f6;
+  border: 1px solid #7f9f96;
+}
+button {
+  cursor: pointer;
+  min-height: 44px;
+}
+button:disabled {
+  cursor: wait;
+}
+.record-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1rem 0 1.5rem;
+}
+.record-card {
+  border: 1px solid #d0dcdf;
+  border-radius: 12px;
+  padding: 1.3rem;
+  background: white;
+  overflow-wrap: anywhere;
+}
+.record-card h2,
+.record-card h3 {
+  font-size: 1.08rem;
+  line-height: 1.55;
+  margin: 0.8rem 0;
+}
+.record-card p {
+  font-size: 0.9rem;
+}
+.record-card small {
+  color: #53696f;
+  line-height: 1.6;
+}
+.card-top {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+}
+.status-chip {
+  display: inline-block;
+  border: 1px solid #c4d4d1;
+  background: #eaf3ef;
+  color: #245346;
+  border-radius: 20px;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+.status-chip.attention {
+  background: #fff1d6;
+  color: #744c0a;
+  border-color: #ddb874;
+}
+.record-banner {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 1rem;
+  border-block: 1px solid #d0dcdf;
+  margin: 1rem 0;
+  color: #385861;
+  font-size: 0.9rem;
+}
+.read-meta {
+  font-size: 0.78rem;
+  color: #49646c;
+  line-height: 1.6;
+}
+.empty-state {
+  padding: 2rem;
+  border: 1px dashed #99b2b7;
+  border-radius: 12px;
+  background: #f6f8f7;
+  color: #425e65;
+}
+.business-error {
+  padding: 1rem 1.2rem;
+  border-left: 4px solid #a33827;
+  background: #fff1ed;
+  color: #7c281c;
+  border-radius: 6px;
+  margin: 1rem 0;
+  overflow-wrap: anywhere;
+}
+.business-error small {
+  display: block;
+  margin-top: 0.6rem;
+}
+.business-error:focus {
+  outline: 3px solid #d29932;
+  outline-offset: 2px;
+}
+.blocker-panel,
+.conflict-panel {
+  padding: 1rem 1.3rem;
+  background: #fff7e8;
+  border: 1px solid #e0c58d;
+  border-radius: 10px;
+  margin: 1rem 0;
+}
+.blocker-panel li {
+  margin: 0.5rem 0;
+}
+.context-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.5rem;
+  margin: 1.5rem 0;
+}
+.summary-pair {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.summary-pair dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #557077;
+  margin-bottom: 0.5rem;
+}
+.summary-pair dd {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.detail-section {
+  margin: 2rem 0;
+  padding-top: 1.3rem;
+  border-top: 1px solid #d2dddd;
+}
+.detail-section h2 {
+  font-size: 1.3rem;
+}
+.history-card {
+  padding: 1.2rem;
+  border-left: 3px solid #57937e;
+  background: #f5f8f7;
+  border-radius: 0 8px 8px 0;
+  margin: 1rem 0;
+}
+.narrative {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.7;
+}
+.related-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  font-size: 0.9rem;
+  margin: 1rem 0;
+}
+.equipment-tree {
+  padding-left: 1.3rem;
+}
+.equipment-tree li {
+  padding: 0.7rem 0;
+  line-height: 1.8;
+}
+.work-groups > section {
+  margin-top: 2rem;
+}
+.form-panel summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 0.5rem 0;
+}
+@media (max-width: 700px) {
+  .identity-strip {
+    padding: 0.9rem;
+  }
+  .identity-strip label {
+    width: 100%;
+  }
+  .business-heading {
+    display: block;
+  }
+  .business-heading > .button {
+    margin-top: 1rem;
+  }
+  .filters,
+  .form-grid,
+  .record-grid,
+  .context-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-panel {
+    padding: 1rem;
+  }
+  .record-card,
+  .history-card {
+    padding: 1rem;
+  }
+  .actions {
+    align-items: stretch;
+  }
+  .actions .button,
+  .actions button {
+    flex: 0 1 auto;
+    text-align: center;
+  }
+  .record-tabs a {
+    padding: 0.6rem 0.65rem;
+  }
+  .record-banner {
+    gap: 0.7rem;
+  }
+  .summary-pair dd {
+    font-size: 0.9rem;
+  }
+}

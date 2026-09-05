@@ -1,8 +1,10 @@
 # PP-01 — Prototype scope and service journey
 
-**Edition:** v01 · **Status:** Selected scope for the requested design package; synthetic implementation planned.
+**Edition:** v01 · **Status:** Selected scope for the requested design package; bounded P01–P03 implementation, full synthetic journey incomplete.
 
 Sources: Master Sections 06–08, 13, 15–21 and 24–26; DAT-01–DAT-11; SVC-01–SVC-12; user-confirmed service problems. [Package index](README.md).
+
+Current delivery is recorded in the [P03 handover](../delivery/p03-handover.md). SC-01–SC-04 context, intake and owned follow-up are implemented; work scope/coverage/readiness begins only with a separately authorised P04 task. Slice inclusion below describes the full planned PP-01 journey, not a completed acceptance result.
 
 ## 1. Product outcome
 

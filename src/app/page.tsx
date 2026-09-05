@@ -2,7 +2,7 @@ import Link from "next/link";
 export default function Overview() {
   return (
     <>
-      <p className="eyebrow">Shared data foundation / P02</p>
+      <p className="eyebrow">Customer context & service intake / P03</p>
       <section className="hero">
         <div>
           <h1>
@@ -14,23 +14,23 @@ export default function Overview() {
             A foundation for clearer coordination, prepared service visits and a
             dependable history of work.
           </p>
-          <Link className="button" href="/foundation">
-            Open foundation checks <span aria-hidden="true">↗</span>
+          <Link className="button" href="/work">
+            Open My Work <span aria-hidden="true">↗</span>
           </Link>
         </div>
         <div className="hero-note">
           <span className="number">01</span>
-          <p>Start with a reliable foundation.</p>
+          <p>Give the next action a clear owner.</p>
           <small>
             Local application · Synthetic records
             <br />
-            Server permissions · Database integrity
+            Customer context · Intake & follow-up
           </small>
         </div>
       </section>
       <div className="section-heading">
         <h2>The first service journey</h2>
-        <span className="muted">Planned through P02–P12</span>
+        <span className="muted">Delivered in increments P01–P12</span>
       </div>
       <div className="cards">
         <article className="card">
@@ -74,12 +74,14 @@ export default function Overview() {
         <div>
           <h2>What you can explore today</h2>
           <p>
-            A local demonstration identity and one synthetic draft request.
-            Foundation checks exercise the first database-backed read and save.
+            Scoped customer, contact, site and equipment views; service intake
+            and triage; owned follow-up with explicit unknowns.{" "}
+            <Link href="/foundation">Open foundation checks</Link> for
+            diagnostics.
           </p>
         </div>
         <p>
-          Business workflows, scheduling, documents, offline work and Finance
+          Work authorisation, scheduling, documents, offline work and Finance
           processing follow in later increments.
         </p>
       </section>

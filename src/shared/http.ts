@@ -46,7 +46,11 @@ export function commandRoute(
       localRequest(request, true);
       const p = await identity(request),
         params = (await context.params) ?? {};
-      const result = await work(p, params.id ?? "", await jsonBody(request));
+      const result = await work(
+        p,
+        params.id ?? "",
+        await jsonBody(request, 65536),
+      );
       return reply(result.receipt, create && !result.replayed ? 201 : 200);
     } catch (error) {
       return failure(error);

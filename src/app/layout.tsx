@@ -43,15 +43,23 @@ export default function RootLayout({
             </Link>
             <nav aria-label="Main navigation">
               <Link href="/">Overview</Link>
+              <Link href="/work">My Work</Link>
+              <Link href="/customers">Customers</Link>
+              <Link href="/sites">Sites &amp; equipment</Link>
+              <Link href="/service/tickets">Service requests</Link>
               <Link href="/foundation">Foundation checks</Link>
-              <details className="domains" open>
+              <details className="domains">
                 <summary>Business domains</summary>
                 <ul>
                   {domains.map((domain) => (
                     <li key={domain}>
                       <span aria-disabled="true">
                         {domain}
-                        <small>Planned</small>
+                        <small>
+                          {domain === "CRM" || domain === "Service Operations"
+                            ? "P03 context & intake"
+                            : "Planned"}
+                        </small>
                       </span>
                     </li>
                   ))}
@@ -67,7 +75,7 @@ export default function RootLayout({
           <div className="workspace">
             <header className="topbar">
               <span>Powerplants Australia</span>
-              <span className="badge">P02 shared foundation</span>
+              <span className="badge">P03 customer context</span>
             </header>
             <main id="main" tabIndex={-1}>
               {children}

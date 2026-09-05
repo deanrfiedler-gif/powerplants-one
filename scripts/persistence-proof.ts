@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { createSession } from "../src/platform/identity";
 import { readTicket, saveDraft } from "../src/service/tickets";
+import { createActivity, readActivity } from "../src/activities/activities";
 import { createOrganisation } from "../src/shared/commands";
 import { readShared } from "../src/shared/reads";
 import { readOperation } from "../src/shared/receipts";
@@ -31,6 +32,26 @@ try {
       owner_id: p.actor_id,
       reason: "P02 PostgreSQL restart proof",
     });
+    await createActivity(p, {
+      operation_id: "96000000-0000-4000-8000-000000000001",
+      schema_version: 1,
+      id: "96000000-0000-4000-8000-000000000002",
+      company_id: "20000000-0000-4000-8000-000000000001",
+      site_id: "70000000-0000-4000-8000-000000000001",
+      kind: "TechnicalFollowUp",
+      owner_id: p.actor_id,
+      summary: "SYN P03 restart-owned follow-up",
+      due_at: null,
+      due_needed: true,
+      access_class: "RestrictedService",
+      links: [
+        {
+          object_type: "Site",
+          object_id: "70000000-0000-4000-8000-000000000001",
+        },
+      ],
+      reason: "P03 PostgreSQL restart proof",
+    });
   } else {
     assert.equal(current.summary, "SYN database restart sentinel");
     assert.ok(current.version > 1);
@@ -49,8 +70,17 @@ try {
         .record_version,
       1,
     );
+    assert.equal(
+      (await readActivity(p, "96000000-0000-4000-8000-000000000002")).summary,
+      "SYN P03 restart-owned follow-up",
+    );
+    assert.equal(
+      (await readOperation(p, "96000000-0000-4000-8000-000000000001"))
+        .record_version,
+      1,
+    );
     console.log(
-      "PostgreSQL restart: P01 ticket, P02 organisation and original operation receipt verified",
+      "PostgreSQL restart: P01 ticket, P02 organisation, P03 activity/link and original operation receipts verified",
     );
   }
 } finally {

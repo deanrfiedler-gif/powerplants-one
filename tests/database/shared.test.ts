@@ -129,10 +129,10 @@ test("P01 schema, fixtures and accepted evidence upgrade without changing identi
       "SELECT id,erp_connection_id AS legacy_erp_connection_key,erp_company_id FROM ppo.companies ORDER BY id",
     ),
   };
-  await migrate();
-  await seed();
-  await seed();
-  await migrate();
+  await migrate(2);
+  await seed(2);
+  await seed(2);
+  await migrate(2);
   assert.deepEqual(
     await rows("SELECT * FROM ppo.tickets ORDER BY id"),
     before.tickets,

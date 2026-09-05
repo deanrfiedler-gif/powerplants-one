@@ -5,6 +5,7 @@ import { hasPermission, requireCapability } from "../platform/permissions";
 import { AppError, unavailable } from "../platform/errors";
 import { sharedOperation } from "../platform/operations";
 import { visible, type SharedKind } from "./reads";
+import { scopedOwner } from "./authority";
 import {
   accessClasses,
   choice,
@@ -16,6 +17,7 @@ import {
   instant,
   invalid,
   label,
+  narrative,
   object,
   optionalId,
   optionalText,
@@ -71,16 +73,13 @@ async function related(
   )
     throw unavailable();
 }
-async function owner(client: PoolClient, p: Principal, id: string) {
-  if (
-    !(
-      await client.query(
-        "SELECT 1 FROM ppo.users WHERE workspace_id=$1 AND id=$2 AND active",
-        [p.workspace_id, id],
-      )
-    ).rowCount
-  )
-    throw unavailable();
+async function owner(
+  client: PoolClient,
+  p: Principal,
+  id: string,
+  company_id: string,
+) {
+  await scopedOwner(client, p, id, company_id, undefined, "shared.edit");
 }
 async function insert(
   client: PoolClient,
@@ -182,7 +181,7 @@ export async function createOrganisation(p: Principal, input: unknown) {
     "CreateOrganisation",
     async (c) => {
       await scope(c, p, command.company_id);
-      await owner(c, p, command.owner_id);
+      await owner(c, p, command.owner_id, command.company_id);
       await related(
         c,
         p,
@@ -337,7 +336,7 @@ export async function createSite(p: Principal, input: unknown) {
     "CreateSite",
     async (c) => {
       await scope(c, p, command.company_id);
-      await owner(c, p, command.owner_id);
+      await owner(c, p, command.owner_id, command.company_id);
       await related(
         c,
         p,
@@ -929,7 +928,7 @@ export async function recordHistory(
       "AttemptedFix",
       "TechnicalAdvice",
     ]),
-    summary: label(raw.summary, "summary", 10000),
+    summary: narrative(raw.summary, "summary", 10000),
     confidence: choice(raw.confidence, "confidence", ["Reported", "Suspected"]),
     source_system,
     source_id,
