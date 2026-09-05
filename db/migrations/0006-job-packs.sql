@@ -200,3 +200,18 @@ BEGIN
  RETURN NEW;
 END $$;
 CREATE TRIGGER guard_ack BEFORE INSERT ON ppo.pack_acknowledgements FOR EACH ROW EXECUTE FUNCTION ppo.guard_pack_acknowledgement();
+-- Replace P04's unconditional hold with an evidence-backed component invariant.
+ALTER TABLE ppo.appointments DROP CONSTRAINT appointments_dispatch_hold_check;
+CREATE FUNCTION ppo.guard_pack_dispatch() RETURNS trigger LANGUAGE plpgsql AS $$
+DECLARE p ppo.packs; i ppo.pack_issues;
+BEGIN
+ IF NEW.dispatch_hold THEN RETURN NEW; END IF;
+ SELECT * INTO p FROM ppo.packs WHERE workspace_id=NEW.workspace_id AND appointment_id=NEW.id;
+ SELECT * INTO i FROM ppo.pack_issues WHERE workspace_id=NEW.workspace_id AND id=p.current_issue_id;
+ IF p.id IS NULL OR i.id IS NULL OR p.needs_review OR p.status<>'Issued' OR NEW.status<>'Confirmed' OR NEW.customer_commitment<>'Confirmed' OR NEW.pack_requirement<>'Acknowledged' OR NEW.assignment_version<>i.assignment_version OR NEW.schedule_version<>i.schedule_version OR NOT EXISTS(SELECT 1 FROM ppo.work_orders w WHERE w.id=NEW.work_order_id AND w.scope_revision_id=w.authorised_scope_revision_id AND w.authorised_scope_revision_id=NEW.scope_revision_id)
+ OR NOT EXISTS(SELECT 1 FROM ppo.assignments x WHERE x.appointment_id=NEW.id AND x.active)
+ OR EXISTS(SELECT 1 FROM ppo.assignments x LEFT JOIN ppo.pack_recipients r ON r.assignment_id=x.id AND r.issue_id=i.id LEFT JOIN ppo.pack_acknowledgements a ON a.recipient_id=r.id WHERE x.appointment_id=NEW.id AND x.active AND (r.id IS NULL OR a.id IS NULL OR a.presented_hash<>i.output_hash)) THEN
+ RAISE EXCEPTION 'Current issue and every independent crew response are required to clear dispatch hold' USING ERRCODE='23514'; END IF;
+ RETURN NEW;
+END $$;
+CREATE TRIGGER guard_dispatch BEFORE INSERT OR UPDATE ON ppo.appointments FOR EACH ROW EXECUTE FUNCTION ppo.guard_pack_dispatch();

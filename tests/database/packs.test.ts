@@ -515,3 +515,16 @@ test("P06 P05 confirmed move invalidates real pack/assignment applicability and 
   assert.equal(p.readiness.dispatch_hold, true);
   assert.equal(p.issues[0].output_hash, q.pack.issues[0].output_hash);
 });
+test("P06 database dispatch guard replaces the old unconditional hold without allowing a forged clearance", async () => {
+  const a = await confirmed();
+  await assert.rejects(
+    database().query(
+      "UPDATE ppo.appointments SET dispatch_hold=false,pack_requirement='Acknowledged',version=version+1 WHERE id=$1",
+      [a.id],
+    ),
+  );
+  assert.equal(
+    (await readAppointment(await principal(), a.id)).items[0].dispatch_hold,
+    true,
+  );
+});
