@@ -1,3 +1,4 @@
+import { packContext } from "../documents/context";
 import { visibleAppointment, visibleRequest } from "../scheduling/planner";
 import { visibleWorkOrder } from "../service/work-orders";
 import { database } from "../platform/database";
@@ -22,7 +23,17 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.object_type === "ScheduleChangeRequest") {
+  if (r.object_type === "Pack") {
+    const cap =
+      r.command === "AcknowledgePack"
+        ? "pack.acknowledge"
+        : r.command === "CheckPack"
+          ? "pack.check"
+          : ["CreatePack", "RevisePack"].includes(r.command)
+            ? "pack.prepare"
+            : "pack.issue";
+    await packContext(client, p, r.record_id, cap);
+  } else if (r.object_type === "ScheduleChangeRequest") {
     await visibleRequest(
       client,
       p,

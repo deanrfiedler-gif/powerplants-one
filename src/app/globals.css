@@ -1636,3 +1636,6 @@ button:disabled {
     border-right: 1px solid #dce5e7;
   }
 }
+
+/* P06 restrained document workbench. */
+.pack-panel,.pack-list article{background:#fff;border:1px solid #bdcdd0;border-radius:8px;padding:22px;margin:22px 0}.pack-status{border-left:5px solid #207354;padding:18px 22px;background:#eaf4ee;margin:24px 0}.pack-status.held{border-color:#8a651b;background:#fff7e6}.pack-toolbar{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:18px 0}.pack-field{display:flex;flex-direction:column;gap:8px;margin:22px 0}.pack-field textarea{width:100%;padding:12px;border:1px solid #758a94;border-radius:5px;resize:vertical;min-height:82px;font:inherit}.pack-form{max-width:1000px}.pack-choice{display:flex;gap:12px;align-items:flex-start;margin:14px 0}.pack-choice input{width:20px;height:20px}.pack-choice small{display:block}.pack-hash,.pack-manifest dd{overflow-wrap:anywhere;font-size:13px}.pack-manifest{display:grid;grid-template-columns:160px minmax(0,1fr);gap:12px}.pack-manifest dd{margin:0}.pack-list{max-width:1000px} @media(max-width:600px){.pack-panel{padding:16px}.pack-manifest{grid-template-columns:1fr;gap:4px}.pack-manifest dd{margin-bottom:14px}.pack-toolbar .button{width:100%}}

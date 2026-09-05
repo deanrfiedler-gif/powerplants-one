@@ -1094,6 +1094,12 @@ export function AppointmentScreen({ id }: { id: string }) {
           </details>
           <details className="panel">
             <summary>Exact record identities and observed context</summary>
+            <div className="pack-toolbar">
+              <Link href={`/service/packs/new?appointment_id=${a.id}`}>
+                Prepare job pack
+              </Link>
+              <Link href="/service/packs">Job packs and acknowledgements</Link>
+            </div>
             <p className="record-id">Appointment: {a.id}</p>
             <p className="record-id">Work order: {a.work_order_id}</p>
             <p className="record-id">
