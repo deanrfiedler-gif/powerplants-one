@@ -23,7 +23,7 @@ The agreed outcome exists, evidence is linked, applicable checks pass, source as
 
 ## Records and naming
 
-Preserve the issued `GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md` and historical references. Add a new controlled version for material source changes. Use STD-001 naming for issued business documents where applicable. `GEN` remains provisional; `SOL008` belongs to the separate Smartsheet PPA Delivery System and must not be reused here.
+Use stable paths for working specifications and preserve the issued v02 snapshot under `docs/reference/baselines/` plus historical references. Record working changes through commits/PRs and internal edition metadata; issue explicit versioned snapshots when required. See [ADR-0002](docs/decisions/ADR-0002-stable-specification-filenames.md). Use STD-001 naming for issued business documents where applicable. `GEN` remains provisional; `SOL008` belongs to the separate Smartsheet PPA Delivery System and must not be reused here.
 
 GitHub filenames such as `README.md`, `AGENTS.md`, workflows and issue forms follow their standard conventions. Architecture decision IDs (`ADR-0001`) and backlog IDs (`PPO-001`) are local repository identifiers, not invented ERP/programme references.
 
@@ -35,6 +35,7 @@ Keep operational MYOB exports, customer files, personal information and credenti
 
 ```sh
 python3 scripts/check_foundation.py
+python3 scripts/check_prototype.py
 ```
 
 GitHub checks use a pinned checkout action with read-only contents access. No deployment, ERP access or credentials are required. Add runtime/application checks after the technology and implementation scope are selected.

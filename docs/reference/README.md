@@ -3,12 +3,13 @@
 | Included reference | Role |
 |---|---|
 | [Master Blueprint v01](GEN_SPC_PPABusinessPlatform_MasterBlueprint_v01.md) | Historical baseline, preserved unchanged |
-| [Master Blueprint Audit v01](GEN_RPT_PPABlueprint_Audit_v01.md) | Sixteen findings that informed the targeted v02 |
-| [Current Master Blueprint v02](../blueprints/GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md) | Issued planning baseline, preserved unchanged |
-| [Source manifest](source-manifest.json) | Exact included-file hashes, sizes and treatment |
+| [Master Blueprint Audit v01](GEN_RPT_PPABlueprint_Audit_v01.md) | Historical audit informing v02, preserved unchanged |
+| [Issued Master Blueprint v02](baselines/GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md) | Frozen source for parent requirements/decisions/acceptance |
+| [Working Master Blueprint](../blueprints/GEN_SPC_PPABusinessPlatform_MasterBlueprint.md) | Stable working path, initially byte-identical to issued v02 |
+| [Source manifest](source-manifest.json) | Exact issued-file hashes/sizes, original path and commit provenance |
 
-The CREMS DOCX/PDF/HTML guide and the guide-derived v05 reconstruction report remain source material from the originating project. They are not copied into this initial repository foundation. The master and audit identify their names, locators and limitations; obtain the controlled originals when a detailed reconstruction task needs them. This is not a complete source archive.
+The CREMS DOCX/PDF/HTML and guide-derived reconstruction remain originating source material; they are not copied into this repository foundation. The master/audit identify their limitations. Obtain controlled originals for later detailed estimating reconstruction. This is not a complete source archive.
 
-Previously inspected Pipedrive and Smartsheet records are dated, bounded observations. This repository foundation does not refresh those business accounts. Smartsheet SOL008, template/synthetic rows, disabled rules and historical portfolio counts must not be described as verified live production facts.
+Prior Pipedrive/Smartsheet observations are bounded and dated. PP-01 does not refresh those accounts or verify MYOB/SharePoint/CAD configuration. SOL008 identifies separate Smartsheet delivery-system work.
 
-Never alter a reference to make its historic statements match new decisions. Preserve the evidence and record the later decision separately. A reviewed new source edition needs its own controlled filename, manifest entry and impact assessment.
+Retain frozen source bytes. Record new design decisions separately. Future working master changes use ordinary commits/PRs and preserve stable parent IDs; issuing a new baseline requires a controlled snapshot/manifest and impact review. Git history does not automatically update exported or ChatGPT-uploaded copies.

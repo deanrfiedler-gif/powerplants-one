@@ -1,38 +1,39 @@
 # Current prototype status
 
-## Recorded user direction
+**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** prototype definition and architecture complete as documents; application implementation not started.
 
-Dean chose to develop this as his own private prototype and created `deanrfiedler-gif/powerplants-one` with a README. He then authorised the repository foundation: the v02 blueprint, documentation structure, project guidance and initial development backlog.
+## Current direction
 
-This direction supersedes the master blueprint's proposed company-organisation setup for the **current prototype ownership only**. It does not approve a company deployment or close the enterprise ownership, finance, operational or security decisions.
+Dean chose to create his own private prototype and authorised the repository foundation, then explicitly requested the First Prototype Definition & Architecture package: scoped service journey, BP-02, BP-07, minimum Finance/document contracts and an ordered implementation plan.
 
-## What the foundation contains
+The [PP-01 package](prototype/README.md) now defines that synthetic planned-service journey. The technology design recommendation is TypeScript/Next.js with PostgreSQL, explicit domain services, a durable outbox, bounded browser offline capture and simulated source adapters. [ADR-0003](decisions/ADR-0003-prototype-architecture.md) records its scope and pending feasibility.
 
-- Issued Master Blueprint v02 and preserved v01/audit references.
-- An index of all 78 parent requirements, 29 open/partially resolved decisions and 38 planned acceptance scenarios.
-- Prototype ownership ADR, architecture/service work briefs, contribution/agent guidance and issue/PR templates.
-- Initial discovery/design backlog, with live issue links recorded in the delivery register.
-- A local documentation validator and a GitHub documentation-check workflow; execution evidence is recorded in the foundation handover.
+## What exists
 
-## What remains planned
+- Master working document with stable filename and an unchanged issued v02 baseline; preserved v01/audit references.
+- Original 78-parent requirement index, 29 decision register, 38 master acceptance scenarios and 16 linked discovery/design issues.
+- PP-01 scope, BP-02, BP-07, complete selected data/choice and API contracts, Finance/document contracts, decision/evidence treatment and implementation plan.
+- Fifteen screens, twelve reusable components, all sixteen master TR transitions, twenty service rules, twenty-four validation messages, twenty-six command families and ten read contracts.
+- Thirty synthetic acceptance procedures and structured catalogue; twelve ordered implementation work packages.
+- All 78 parents dispositioned: 24 Core, 25 Partial, 29 Deferred within this prototype. These are scope classifications, not completed requirements.
+- Repository documentation checks for source hashes, baseline registers, local links and package traceability; actual check evidence in package assurance/publication records.
 
-No application framework, hosting service, database, ERP write interface or deployment environment has been selected or implemented. There is no runnable business app, active integration, migrated operational dataset or production service. BP-02–BP-09 remain planned specifications, with BP-02/BP-07 and minimum Finance/document detail the recommended next package.
+## What is not implemented
 
-The first operational release remains the proposed planned-service journey. The owner can authorise synthetic prototype design while missing tenant contracts and operational policy values remain explicitly unresolved.
+There is no runnable application, installed application framework, application database, operational source integration, migrated dataset, hosted environment or production service. The design selects a prototype stack recommendation; implementation versions and feasibility are P01 work. All application acceptance procedures remain Not run.
 
-## Decisions affected by the repository setup
+No paid service, repository visibility/membership change, source-system transaction, customer message or migration is performed by this documentation package. MYOB and SharePoint configuration/authority remain unverified. Pipedrive, Smartsheet and native CAD retain their existing roles.
 
-| Master decision | Current treatment |
-|---|---|
-| D-003 | Repository slug `powerplants-one` is in use. Formal programme reference and broader naming remain open; GEN stays provisional |
-| D-029 | Personal private repository ownership is confirmed for this prototype. Plan features, enforceable review controls, recovery and eventual company ownership remain open |
-| D-001/D-002 | Dean owns prototype work. Company sponsorship, organisation structure and delegated business approvals remain unconfirmed |
-| D-022/D-023 | Technology, hosting, commercial budget and ongoing production support remain open |
+## Decision state
 
-[ADR-0001](decisions/ADR-0001-personal-private-prototype.md) records the ownership decision. The issued blueprint is intentionally unchanged so it continues to represent its original evidence and approval state.
+D-003/D-004/D-022/D-029 are partially resolved for repository naming, selected synthetic journey and recommended prototype design. The other 25 master decisions remain open; none is fully closed. [Current evidence treatment](prototype/decisions-and-evidence.md) distinguishes useful design detail from operational closure evidence.
 
-## Repository controls
+Dean owns private prototype decisions. Proposed department roles do not assign employees, approve an organisation chart or establish corporate sponsorship. SOL008 remains the separate PPA Smartsheet Delivery System reference; GEN is provisional here.
 
-The repository was confirmed private with `main` as default branch. Branch protection was not enabled in the inspected baseline. No branch-protection, visibility, membership or paid-plan setting is changed by this foundation. A GitHub Projects board has not been provisioned; the initial backlog uses repository Issues and a versioned index.
+## Immediate next task
 
-Read [foundation handover](delivery/foundation-handover.md) for the actual publication/check status and [the backlog](delivery/backlog.md) for next work.
+[P01 — Application foundation and architecture proof](delivery/prototype-implementation-plan.md#4-p01-implementation-brief): prepare a reproducible local synthetic application, pin supported dependencies, verify PostgreSQL/permission/operation/reservation foundations, and record evidence. Follow the ordered P01–P12 plan. Missing operational facts do not prevent synthetic development under the explicit assumptions.
+
+## Repository and publication controls
+
+The inspected repository is private with main as default branch. Branch protection was not enabled in the baseline, and a GitHub Projects board has not been provisioned. Existing Issues and the versioned backlog are used. No claim is made that checks are enforced by branch rules. See [foundation handover](delivery/foundation-handover.md) for earlier work and [package assurance](prototype/assurance.md) for this package's validation/publication status.

@@ -1,22 +1,7 @@
-# BP-02 architecture work brief
+# Architecture index
 
-**Status:** Scope for the next specification, not a selected architecture.
+[BP-02 — Platform Solution Architecture](BP-02-platform-architecture.md) is the current prototype design recommendation. It defines options/rationale, topology, data/authority, concurrency, source adapters, identity, offline, documents, hosting/cost inputs, updates, testing, monitoring and recovery.
 
-Define a maintainable prototype architecture against the master Section 23.4 and DAT-01–DAT-11 contracts. Begin with the smallest coherent service journey; retain room for all seven business domains without building their full interfaces prematurely.
+Read [ADR-0003](../decisions/ADR-0003-prototype-architecture.md), [ADR-0004](../decisions/ADR-0004-service-authority-and-offline-scope.md), the [data dictionary](../contracts/service-data-dictionary.md) and [API contract](../contracts/service-api.md) together. The recommendation is not an implementation or operational approval. P01 performs initial feasibility; tenant-specific proof remains in the decision register.
 
-## Required outputs
-
-| Area | Reviewable output |
-|---|---|
-| Runtime and hosting | Options, constraints, costs and decision record; development/test separation and future production path |
-| Data and authority | Logical-to-physical mapping, company/entity keys, field ownership, concurrency, history and source-as-at semantics |
-| Service model | ERP-owned versus platform-owned operational records assessed under D-007; one writable authority per phase |
-| Integration | Read/manual/command modes, API evidence, idempotency, partial failure, reconciliation and source outage behaviour |
-| Documents | Stable SharePoint reference model and exact issue preservation; native CAD boundary |
-| Identity and access | Role/action/data controls, device/cache scope, server enforcement and audit |
-| Operability | Monitoring, backup/restore, deployment/schema compatibility, migration, support and cost assumptions |
-| Validation | Representative synthetic fixtures plus later authorised non-production proofs for critical source assumptions |
-
-Use local repository ADR identifiers for decisions. Do not select a framework because it appears in a template or workflow. Python is used only for repository documentation checks at this stage; it is not the application-stack choice.
-
-Follow [the initial backlog](../delivery/backlog.md) and preserve [current decisions](../decisions/decision-register.csv). The paired BP-07 work is described in [the first-release brief](../delivery/first-release.md).
+The complete [PP-01 package](../prototype/README.md) pairs this architecture with BP-07 and the minimum Finance/document contracts. Python remains a documentation-check utility, not the chosen application runtime.

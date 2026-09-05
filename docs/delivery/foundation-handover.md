@@ -19,3 +19,7 @@ The workflow is configured to run the same check in GitHub with read-only conten
 ## Next work
 
 Begin with PPO-001 and the first-release authority, identity, Finance, document and permission decisions. Prepare BP-02 and BP-07 with the minimum Finance/document specification, then build the agreed synthetic prototype slice. Preserve the distinction between prototype design assumptions, source-system proof and later operational approval.
+
+## Subsequent work
+
+This handover describes the earlier foundation. The [PP-01 package](../prototype/README.md) subsequently supplies the recommended design package and stable master naming. [Current status](../STATUS.md) and [the implementation plan](prototype-implementation-plan.md) supersede the earlier next-step recommendation.

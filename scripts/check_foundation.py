@@ -13,7 +13,7 @@ from urllib.parse import unquote, urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MASTER = ROOT / 'docs/blueprints/GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md'
+MASTER = ROOT / 'docs/reference/baselines/GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md'
 ERRORS = []
 
 
