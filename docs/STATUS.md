@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P03 customer context, intake and follow-up implemented; final component/publication evidence in the handover. PP-01 remains incomplete.
+**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P03 customer context, intake and follow-up component-verified; publication evidence in the handover. PP-01 remains incomplete.
 
 ## Current direction
 
@@ -37,7 +37,7 @@ Dean owns private prototype decisions. Proposed department roles do not assign e
 
 P02 is implemented and component-verified under [issue #22](https://github.com/deanrfiedler-gif/powerplants-one/issues/22) and [PR #23](https://github.com/deanrfiedler-gif/powerplants-one/pull/23). The [P02 handover](delivery/p02-handover.md) records current verification/merge evidence, exact commands and limitations. [ADR-0007](decisions/ADR-0007-p02-shared-foundation.md) covers typed shared records, P01 migration, scope boundaries, immutable history, atomic references and non-destructive seed. This does not resolve operational ownership, department authority or live account verification.
 
-P03 delivers SC-01–SC-04 business views, owned Activity/ActivityLink, additive intake mapping, bounded TR-01 transitions and API-C24 extensions under [issue #24](https://github.com/deanrfiedler-gif/powerplants-one/issues/24) and [PR #25](https://github.com/deanrfiedler-gif/powerplants-one/pull/25). [ADR-0008](decisions/ADR-0008-p03-customer-intake.md) records the compatibility and permission decisions; the [P03 handover](delivery/p03-handover.md) records exact commands, actual checks, limitations and publication status. There is no independent-review claim.
+P03 delivers SC-01–SC-04 business views, owned Activity/ActivityLink, additive intake mapping, bounded TR-01 transitions and API-C24 extensions under [issue #24](https://github.com/deanrfiedler-gif/powerplants-one/issues/24) and [PR #25](https://github.com/deanrfiedler-gif/powerplants-one/pull/25). [ADR-0008](decisions/ADR-0008-p03-customer-intake.md) records the compatibility and permission decisions; the [P03 handover](delivery/p03-handover.md) records exact commands, actual checks, limitations and publication status. The final implementation run passed 4 unit, 29 PostgreSQL, 4 HTTP and 12 Chromium cases; 38 desktop/mobile captures were inspected and retained. There is no independent-review claim.
 
 The next bounded task is **P04 — Work scope, coverage and readiness**, with prerequisites and stopping point in the P03 handover. P04 has not started. Work orders, authority/coverage/readiness, planned visits, planner, reports, Finance processing and offline queues remain later work. Follow P01–P12 in order. All full PT/AT procedures and the complete PP-01 service journey remain incomplete.
 

@@ -1,8 +1,8 @@
 # BP-07 — Service Operations Functional & Build Blueprint
 
-**Edition:** v01 · **Date:** 5 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
+**Edition:** r02 · **Date:** 5 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
 
-**Status:** Proposed functional specification ready to guide implementation planning. No screens, rules or workflows described here are currently implemented. [Package](../prototype/README.md) · [Dictionary](../contracts/service-data-dictionary.md) · [API](../contracts/service-api.md) · [Acceptance](../testing/prototype-acceptance.md).
+**Status:** Functional specification with the bounded P03 SC-01–SC-04 implementation amendment below. Later workflows and full acceptance remain incomplete. [Package](../prototype/README.md) · [Dictionary](../contracts/service-data-dictionary.md) · [API](../contracts/service-api.md) · [Acceptance](../testing/prototype-acceptance.md).
 
 ## P03 implementation amendment
 

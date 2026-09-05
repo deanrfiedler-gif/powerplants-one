@@ -27,3 +27,5 @@ The [P02 handover](../delivery/p02-handover.md) records upgrade/fresh setup, per
 ## P03 component evidence
 
 The [P03 handover](../delivery/p03-handover.md) records actual source commits, CI environments, commands, results and limitations for customer/context traversal, intake/owned clarification, activities, authority/projections, competing updates, retries, rollback, upgrade/seed/reset/restart and browser recovery. [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md) records the narrower P03 gates and deferred ContactOutcome. Full PT-01–04/PT-25 and AT acceptance remain Not run. Screenshots supplement real PostgreSQL and HTTP proof.
+
+The [P03 screenshot index](evidence/p03/README.md) preserves 38 inspected desktop/mobile captures with a hash/provenance manifest. Source run 33949129677 passed 4 unit, 29 PostgreSQL, 4 HTTP and 12 Chromium cases. The linked delivery issue records final PR and merged-main publication checks.

@@ -14,7 +14,7 @@ Start with [current status](STATUS.md) and the [First Prototype Definition & Arc
 | Decisions | [ADR index](decisions/README.md), [29 decisions](decisions/decision-register.csv), [PP-01 evidence](prototype/decisions-and-evidence.md) |
 | Requirements | [78-parent register](requirements/requirements.csv), [prototype disposition](prototype/traceability.csv) |
 | Acceptance | [Master test guidance](testing/README.md), [30 prototype procedures](testing/prototype-acceptance.md) |
-| Delivery | [P01–P12 implementation plan](delivery/prototype-implementation-plan.md), [discovery backlog](delivery/backlog.md) |
+| Delivery | [P01–P12 implementation plan](delivery/prototype-implementation-plan.md), [P03 handover](delivery/p03-handover.md), [discovery backlog](delivery/backlog.md) |
 | Assurance | [Package review/check evidence](prototype/assurance.md), [foundation handover](delivery/foundation-handover.md) |
 
 Frozen issued references remain evidence. Stable working documents evolve through commits/PRs and explicit decision records. Tests/specifications do not silently turn proposals into implemented business capabilities.

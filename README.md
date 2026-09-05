@@ -2,7 +2,7 @@
 
 Private prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P03 customer context, intake and owned follow-up implemented; verification and merge record in the handover · **Deployment:** none.
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P03 customer context, intake and owned follow-up component-verified; publication record in the handover · **Deployment:** none.
 
 This repository is Dean's personal private prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake and owned follow-up screens. The complete service journey remains planned. Company ownership, production approval and external-system write authority are not implied.
 
@@ -64,4 +64,4 @@ python3 scripts/check_naming.py
 
 The check verifies reference hashes, register counts/IDs, local Markdown links and selected repository hygiene. It is not an application, security or business-acceptance test. The GitHub workflow runs the same check with read-only repository permissions; enforcement through branch protection is a separate account/settings matter.
 
-Use [Issues](https://github.com/deanrfiedler-gif/powerplants-one/issues) for development work and [pull requests](https://github.com/deanrfiedler-gif/powerplants-one/pulls) for reviewable changes. P01/P02 are verified; P03 delivery and component evidence are recorded in its [handover](docs/delivery/p03-handover.md). P04 is the next bounded task in the [ordered prototype plan](docs/delivery/prototype-implementation-plan.md).
+Use [Issues](https://github.com/deanrfiedler-gif/powerplants-one/issues) for development work and [pull requests](https://github.com/deanrfiedler-gif/powerplants-one/pulls) for reviewable changes. P01/P02/P03 are component-verified; P03 delivery and evidence are recorded in its [handover](docs/delivery/p03-handover.md). P04 is the next bounded task in the [ordered prototype plan](docs/delivery/prototype-implementation-plan.md).
