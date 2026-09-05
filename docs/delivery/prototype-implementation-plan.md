@@ -1,6 +1,6 @@
 # PP-01 — Ordered prototype implementation plan
 
-**Edition:** r06 · **Status:** P01/P02 complete; P03 implemented with final component and publication evidence in its [handover](p03-handover.md); P04 component-verified with evidence in its [handover](p04-handover.md); P05 implemented with final verification/publication in its [handover](p05-handover.md); P06–P12 planned. All full PT procedures remain Not run; see [P01 component evidence](p01-handover.md).
+**Edition:** r07 · **Status:** P01/P02 complete; P03 implemented with final component and publication evidence in its [handover](p03-handover.md); P04 component-verified with evidence in its [handover](p04-handover.md); P05 implemented with final verification/publication in its [handover](p05-handover.md); P06 implemented with exact verification/publication in its [handover](p06-handover.md); P07–P12 planned. All full PT procedures remain Not run; see [P01 component evidence](p01-handover.md).
 
 [Package](../prototype/README.md) · [Scope](../prototype/scope-and-journey.md) · [BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md).
 
@@ -104,4 +104,8 @@ P04 does not deliver typed material requisitions/stock/shortage processing withi
 
 [ADR-0010](../decisions/ADR-0010-p05-planner-controlled-changes.md) and [P05 handover](p05-handover.md) record SC-07/SC-08 controlled bookings/changes, real whole-crew reservation constraints, exact evidence, typed contact/requests and cancellation. PT-08/09/10/26 components are separately evidenced; no full procedure or parent requirement is marked complete. Source calendars/skills/availability are immutable synthetic bundles. Dispatch remains held pending real P06 pack/acknowledgement evidence; customer date agreement is separate.
 
-[P06 starter](p06-starter-prompt.md) prepares nine-section job packs, durable exact document output/issue and per-assignment acknowledgement. It requires verified P05 publication, avoids circular preparation/dispatch gates, preserves P05 scheduling consequences and acknowledges the P07 actual-start dependency. P06 is not started and has no implementation issue from this increment.
+[P06 starter](p06-starter-prompt.md) prepares nine-section job packs, durable exact document output/issue and per-assignment acknowledgement. It requires verified P05 publication, avoids circular preparation/dispatch gates, preserves P05 scheduling consequences and acknowledges the P07 actual-start dependency. P06 is now implemented under issue #30 / PR #31; its current amendment and handover govern real pack/assignment evidence.
+
+## P06 delivery boundary and prepared P07
+
+[P06 handover](p06-handover.md) records SC-06/SC-14, DAT-07/minimum DAT-11, OUT-09, API-C08–11, TR-04–07 and EVT-04/05 components. Exact controlled files and current individual responses evolve dispatch readiness without circular preparation gates. P04/P05 source authority, reservations, contacts, receipts and all issued bytes remain. PT-06 final actual start remains P07; PT-18/23 report/Finance and integrated steps remain later. [P07 starter](p07-starter-prompt.md) prepares online technician capture only. No P07 implementation is included.

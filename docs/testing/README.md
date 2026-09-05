@@ -32,6 +32,10 @@ The [P03 screenshot index](evidence/p03/README.md) preserves 38 inspected deskto
 
 ## P05 component verification
 
-[P05 handover](../delivery/p05-handover.md) records the exact SQL/HTTP/browser checks, failed-run disposition and publication state for SC-07/SC-08, TR-03/08/16 and PT-08/09/10/26 components. Existing P04 upgrade tests explicitly retain their P04 migration boundary; a separate P05 upgrade test compares original PostgreSQL snapshots including microseconds, receipts/checksums/revocations. No full PT or AT status is promoted. P06/P07 issued-pack/actual-work dependencies remain absent. Original screenshot provenance and manual inspection are recorded with the final P05 evidence.
+[P05 handover](../delivery/p05-handover.md) records the exact SQL/HTTP/browser checks, failed-run disposition and publication state for SC-07/SC-08, TR-03/08/16 and PT-08/09/10/26 components. Existing P04 upgrade tests explicitly retain their P04 migration boundary; a separate P05 upgrade test compares original PostgreSQL snapshots including microseconds, receipts/checksums/revocations. No full PT or AT status is promoted. At the P05 boundary, P06/P07 issued-pack/actual-work dependencies were absent; the P06 amendment now supplies real issued-pack evidence. Original screenshot provenance and manual inspection are recorded with the final P05 evidence.
 
 [P05 visual index](evidence/p05/README.md) retains 42 inspected original desktop/phone PNGs and exact provenance from application run 33962234250. The full run passed 5 unit, 65 PostgreSQL, 8 HTTP and 28 browser cases plus real restart. Publication/merged-main results are linked from the handover.
+
+## P06 component verification
+
+[P06 handover](../delivery/p06-handover.md) records exact runs, counts, failed-run dispositions, output/source/template hashes and manual visual inspection. PT-06/07/18/23 components are distinct from full procedures. P07 start/capture and P09/P10 report/Finance dependencies remain incomplete; all full PT/AT statuses are retained.

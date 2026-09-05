@@ -216,6 +216,7 @@ BEGIN
 END $$;
 CREATE TRIGGER guard_dispatch BEFORE INSERT OR UPDATE ON ppo.appointments FOR EACH ROW EXECUTE FUNCTION ppo.guard_pack_dispatch();
 -- Owned urgent-contact/review activities are consequences, never outbound messages.
+ALTER TABLE ppo.pack_issue_events ADD CONSTRAINT uq_pack_event_workspace UNIQUE(workspace_id,id);
 CREATE TABLE ppo.pack_follow_ups (
  workspace_id uuid NOT NULL, issue_event_id uuid PRIMARY KEY, activity_id uuid NOT NULL UNIQUE,
  FOREIGN KEY(workspace_id,issue_event_id) REFERENCES ppo.pack_issue_events(workspace_id,id),

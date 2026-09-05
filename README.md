@@ -2,7 +2,7 @@
 
 Private prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P05 planner and controlled changes component-verified; exact publication state in the handover · **Deployment:** none.
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P06 controlled job packs implemented; final component verification/publication in handover; exact publication state in the handover · **Deployment:** none.
 
 This repository is Dean's personal private prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. The complete service journey remains planned. Company ownership, production approval and external-system write authority are not implied.
 
@@ -37,16 +37,18 @@ MYOB Acumatica remains the intended authoritative ERP. SharePoint remains the in
 | `docs/decisions/` | Current decision register and architecture decision records |
 | `docs/requirements/` | All 78 parent requirements with source/release/test linkage |
 | `docs/architecture/` | BP-02 architecture recommendation, boundaries and feasibility obligations |
-| `docs/testing/` | Full acceptance catalogue, P01–P05 component evidence and dependency inventory |
+| `docs/testing/` | Full acceptance catalogue, P01–P06 component evidence and dependency inventory |
 | `docs/delivery/` | Backlog, first-release plan and foundation handover |
 | `.github/` | Issue forms, pull-request template, documentation and application assurance workflows |
 | `scripts/` | Repository assurance, local launcher, database lifecycle and persistence proof |
 
-Application code is in `src/`, explicit SQL migrations and fixtures are in `db/`, and runtime checks are in `tests/`. See [P05 setup, verification and handover](docs/delivery/p05-handover.md) and [ADR-0006](docs/decisions/ADR-0006-p01-local-foundation.md) for the local-only implementation and limits.
+Application code is in `src/`, explicit SQL migrations and fixtures are in `db/`, and runtime checks are in `tests/`. See [P06 setup, verification and handover](docs/delivery/p06-handover.md) and [ADR-0006](docs/decisions/ADR-0006-p01-local-foundation.md) for the local-only implementation and limits.
 
 ## Run the local application
 
-Follow the [exact setup and run commands](docs/delivery/p04-handover.md#versions-and-exact-commands): Node 24.20.0, npm 11.19.0, PostgreSQL 16.15, `npm ci`, ignored local configuration, migration/seed and `npm run dev`. Open `http://127.0.0.1:3000`. Production startup is intentionally refused. The handover includes test, reset and recovery commands.
+Follow the [exact P06 setup and run commands](docs/delivery/p06-handover.md#exact-runtime-setup-and-recovery): Node 24.20.0, npm 11.19.0, PostgreSQL 16.15, `npm ci`, ignored local configuration, migration/seed and `npm run dev`. Open `http://127.0.0.1:3000`. Production startup is intentionally refused. The handover includes test, reset and recovery commands.
+
+Job-pack preparation and issue are at `/service/packs`; exact documents at `/documents/:issue_id`. Install the matching Chromium renderer and retain its private output directory outside Git as described in the P06 handover.
 
 ## Working screens
 
@@ -64,4 +66,4 @@ python3 scripts/check_naming.py
 
 The check verifies reference hashes, register counts/IDs, local Markdown links and selected repository hygiene. It is not an application, security or business-acceptance test. The GitHub workflow runs the same check with read-only repository permissions; enforcement through branch protection is a separate account/settings matter.
 
-Use [Issues](https://github.com/deanrfiedler-gif/powerplants-one/issues) for development work and [pull requests](https://github.com/deanrfiedler-gif/powerplants-one/pulls) for reviewable changes. P01–P04 are component-verified. P05 adds controlled crew confirmation/reservations, day/week planning, accessible moves, contact/change requests and cancellation. Its actual verification/publication state is recorded in the [P05 handover](docs/delivery/p05-handover.md). [P06 is prepared](docs/delivery/p06-starter-prompt.md) and remains unimplemented. The complete PP-01 journey remains incomplete.
+Use [Issues](https://github.com/deanrfiedler-gif/powerplants-one/issues) for development work and [pull requests](https://github.com/deanrfiedler-gif/powerplants-one/pulls) for reviewable changes. P01–P04 are component-verified. P05 adds controlled crew confirmation/reservations, day/week planning, accessible moves, contact/change requests and cancellation. Its actual verification/publication state is recorded in the [P05 handover](docs/delivery/p05-handover.md). [P06 handover](docs/delivery/p06-handover.md) records controlled output, individual acknowledgement and current publication. [P07 is prepared](docs/delivery/p07-starter-prompt.md); actual start/capture remains absent. The complete PP-01 journey remains incomplete.
