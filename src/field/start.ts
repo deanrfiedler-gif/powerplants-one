@@ -97,11 +97,11 @@ export async function startAttendance(
           );
       const competencies: Record<string, unknown>[] = [];
       for (const member of auth.members) {
-        if (member.effective_to < through)
+        if (member.effective_from > now || member.effective_to < through)
           throw new AppError(
             422,
             "StartBlocked",
-            "Current crew authority has expired.",
+            "Current crew authority is not effective for actual attendance.",
           );
         for (const skill of [
           ...new Set<string>(

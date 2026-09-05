@@ -14,6 +14,7 @@ import {
   readPack,
   acknowledgePack,
   withdrawPack,
+  insert,
 } from "../../src/documents/packs";
 import { issued, queued, id as fixtureId } from "../helpers/packs";
 import { processRenderJob, readBundle } from "../../src/documents/worker";
@@ -407,6 +408,45 @@ for (const change of ["move", "reassign", "scope", "withdraw"] as const)
     if (["move", "reassign"].includes(change))
       assert.equal(outcomes.filter((x) => x.status === "fulfilled").length, 1);
   });
+test("P07 future-effective crew can be booked and acknowledge but cannot confer current actual-start authority", async () => {
+  // Publish a new fictional resource bundle; do not mutate an issued source or disable guards.
+  const original = (await rows("SELECT * FROM ppo.resources WHERE id=$1", [fixtureId("a4", 9)]))[0],
+    futureId = randomUUID(),
+    futureFrom = new Date("2026-09-22T00:00:00Z");
+  assert.ok(futureFrom.getTime() > Date.now());
+  await insert(database(), "resources", {
+    ...original,
+    id: futureId,
+    name: "SYN Morgan future-effective resource",
+    status: "Draft",
+    effective_from: futureFrom,
+    evidence: "SYN P07 future resource eligibility; valid for the booking, not current attendance",
+  });
+  for (const site of await rows("SELECT * FROM ppo.resource_sites WHERE resource_id=$1", [original.id]))
+    await insert(database(), "resource_sites", { ...site, resource_id: futureId });
+  const evidenceIds = new Map<string, string>();
+  for (const evidence of await rows("SELECT * FROM ppo.resource_evidence WHERE resource_id=$1", [original.id])) {
+    const evidenceId = randomUUID();
+    evidenceIds.set(evidence.id, evidenceId);
+    await insert(database(), "resource_evidence", { ...evidence, id: evidenceId, resource_id: futureId });
+  }
+  for (const skill of await rows("SELECT * FROM ppo.skill_evidence WHERE resource_id=$1", [original.id]))
+    await insert(database(), "skill_evidence", {
+      ...skill,
+      id: randomUUID(),
+      resource_id: futureId,
+      evidence_ref: evidenceIds.get(skill.evidence_ref),
+    });
+  await database().query("UPDATE ppo.resources SET status='Published' WHERE id=$1", [futureId]);
+  const q = await acknowledged([futureId, fixtureId("a4", 2)]),
+    p = await principal("assigned-technician"),
+    job = await fresh(p, q.pack.appointment_id);
+  assert.equal(job.readiness.component_ready, true);
+  await assert.rejects(startAttendance(p, job.id, startInput(job)), code("StartBlocked"));
+  assert.equal((await rows("SELECT count(*)::int n FROM ppo.field_attendances"))[0].n, 0);
+  assert.equal((await fresh(p, job.id)).status, "Confirmed");
+  assert.ok((await readBundle(q.p, q.pack.issues[0].manifest)).pdf.length > 1000);
+});
 for (const field of [
   "expected_version",
   "schedule_version",

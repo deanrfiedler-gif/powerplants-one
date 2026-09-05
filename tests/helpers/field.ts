@@ -48,8 +48,8 @@ export function png(width = 96, height = 64) {
     chunk("IEND", Buffer.alloc(0)),
   ]);
 }
-export async function acknowledged() {
-  const q = await issued();
+export async function acknowledged(crewIds?: string[]) {
+  const q = await issued(crewIds);
   for (const profile of ["assigned-technician", "second-technician"]) {
     const p = await principal(profile),
       pack = (await readPack(q.p, q.pack.id)).items[0],

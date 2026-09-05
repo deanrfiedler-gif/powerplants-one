@@ -154,7 +154,7 @@ export async function authority(
   }
   const members = (
     await c.query(
-      `SELECT x.*,r.name,r.user_id,r.active AS resource_active,r.effective_to,u.active AS user_active FROM ppo.assignments x JOIN ppo.resources r ON (r.workspace_id,r.id)=(x.workspace_id,x.resource_id) LEFT JOIN ppo.users u ON (u.workspace_id,u.id)=(r.workspace_id,r.user_id) WHERE x.workspace_id=$1 AND x.appointment_id=$2 AND x.active ORDER BY x.resource_id`,
+      `SELECT x.*,r.name,r.user_id,r.active AS resource_active,r.effective_from,r.effective_to,u.active AS user_active FROM ppo.assignments x JOIN ppo.resources r ON (r.workspace_id,r.id)=(x.workspace_id,x.resource_id) LEFT JOIN ppo.users u ON (u.workspace_id,u.id)=(r.workspace_id,r.user_id) WHERE x.workspace_id=$1 AND x.appointment_id=$2 AND x.active ORDER BY x.resource_id`,
       [p.workspace_id, a.id],
     )
   ).rows;
