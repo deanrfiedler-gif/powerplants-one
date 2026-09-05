@@ -3,7 +3,8 @@ import { unavailable } from "../platform/errors";
 import type { Principal } from "../platform/identity";
 import type { OperationReceipt } from "../platform/operations";
 import { hasPermission, type Capability } from "../platform/permissions";
-import { readTicket } from "../service/tickets";
+import { visibleTicket } from "../service/tickets";
+import { visibleActivity } from "../activities/activities";
 import { visible } from "./reads";
 import { uuid } from "./validation";
 export async function readOperation(
@@ -20,8 +21,52 @@ export async function readOperation(
   const r = result.rows[0];
   if (!r) throw unavailable();
   if (r.object_type === "Ticket") {
-    const t = await readTicket(p, r.record_id);
-    if (!t.can_edit) throw unavailable();
+    const t = await visibleTicket(client, p, r.record_id);
+    if (
+      !(await hasPermission(
+        client,
+        p,
+        "service.ticket.edit",
+        t.company_id,
+        t.site_id ?? undefined,
+      ))
+    )
+      throw unavailable();
+    if (
+      r.command === "RequestTicketInformation" &&
+      t.clarification_activity_id
+    ) {
+      const a = await visibleActivity(client, p, t.clarification_activity_id);
+      if (
+        !(await hasPermission(
+          client,
+          p,
+          "activity.edit",
+          a.company_id,
+          a.site_id ?? undefined,
+        ))
+      )
+        throw unavailable();
+    }
+  } else if (r.object_type === "Activity") {
+    const a = await visibleActivity(client, p, r.record_id);
+    if (
+      !(await hasPermission(
+        client,
+        p,
+        "activity.edit",
+        a.company_id,
+        a.site_id ?? undefined,
+      ))
+    )
+      throw unavailable();
+    if (
+      ["StartActivity", "CompleteActivity", "CancelActivity"].includes(
+        r.command,
+      ) &&
+      a.owner_id !== p.actor_id
+    )
+      throw unavailable();
   } else {
     const cap: Capability =
       r.command === "RecordSharedHistory"

@@ -33,7 +33,7 @@ export function localRequest(request: NextRequest, mutation = false) {
 }
 export const identity = (request: NextRequest) =>
   resolveIdentity(request.cookies.get(sessionCookie)?.value);
-export async function jsonBody(request: NextRequest): Promise<unknown> {
+export async function jsonBody(request: NextRequest, maxBytes = 16384): Promise<unknown> {
   const reader = request.body?.getReader();
   if (!reader)
     throw new AppError(422, "InvalidJson", "A JSON object is required.");
@@ -43,7 +43,7 @@ export async function jsonBody(request: NextRequest): Promise<unknown> {
     const { done, value } = await reader.read();
     if (done) break;
     bytes += value.length;
-    if (bytes > 16384) {
+    if (bytes > maxBytes) {
       await reader.cancel();
       throw new AppError(
         422,

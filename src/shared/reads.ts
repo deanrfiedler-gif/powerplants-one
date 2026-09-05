@@ -109,6 +109,14 @@ async function project(
       display_name: row.display_name,
       legal_name: row.legal_name,
       relationship_status: row.relationship_status,
+      owner_id: row.owner_id,
+      owner_name:
+        (
+          await client.query(
+            "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
+            [p.workspace_id, row.owner_id],
+          )
+        ).rows[0]?.display_name ?? null,
       sector: row.sector,
       parent_organisation_id: parent,
       can_edit,
@@ -172,10 +180,7 @@ async function project(
     can_edit,
   };
 }
-export const envelope = (
-  items: unknown[],
-  next_cursor: string | null = null,
-) => ({
+export const envelope = <T>(items: T[], next_cursor: string | null = null) => ({
   items,
   next_cursor,
   observed_at: new Date().toISOString(),
@@ -276,7 +281,7 @@ export async function listShared(
     await client.query(
       `SELECT r.* FROM ppo.${tables[kind]} r WHERE r.workspace_id=$1 AND ${visibility(kind)}
     AND ($3::uuid IS NULL OR ${company}=$3) AND ($4::uuid IS NULL OR ${site}=$4)
-    AND ($5::uuid IS NULL OR r.id>$5) AND position(lower($6) in lower(r.${label}))>0 ORDER BY r.id LIMIT $7`,
+    AND ($5::uuid IS NULL OR r.id>$5) AND position(lower($6) in lower(r.${label}${kind === "Person" || kind === "Facility" ? "" : "||' '||r.display_number"}${kind === "Asset" ? "||' '||coalesce(r.serial,'')||' '||coalesce(r.model,'')" : ""}))>0 ORDER BY r.id LIMIT $7`,
       [
         p.workspace_id,
         p.actor_id,
@@ -323,7 +328,14 @@ export async function customerContext(p: Principal, id: string) {
     ...(await project(client, p, "Organisation", org)),
     contacts,
     sites: await Promise.all(sites.map((s) => project(client, p, "Site", s))),
-    mappings,
+    mappings: mappings.map((m) => ({
+      id: m.id,
+      version: m.version,
+      mapping_status: m.mapping_status,
+      valid_from: m.valid_from,
+      valid_to: m.valid_to,
+      is_current: m.is_current,
+    })),
   };
 }
 export async function mappingViews(p: Principal, organisation_id: string) {

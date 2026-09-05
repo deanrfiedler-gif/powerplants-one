@@ -3,7 +3,8 @@ import type { PoolClient } from "pg";
 import { database, transaction } from "../platform/database";
 import { AppError, unavailable } from "../platform/errors";
 import { type Principal } from "../platform/identity";
-import { hasPermission } from "../platform/permissions";
+import { visibility } from "../shared/reads";
+import { hasPermission, scopeSql } from "../platform/permissions";
 import {
   lockOperation,
   priorReceipt,
@@ -61,7 +62,13 @@ export function draftCommand(input: unknown): DraftCommand {
     reason: label(p.reason, "reason", 1000),
   };
 }
-async function visibleTicket(
+export function ticketVisibility(alias = "t") {
+  return `${scopeSql(`${alias}.company_id`, `${alias}.site_id`, "service.ticket.read")}
+    AND (${alias}.site_id IS NULL OR EXISTS(SELECT 1 FROM ppo.sites ts WHERE ts.workspace_id=${alias}.workspace_id AND ts.id=${alias}.site_id AND ${visibility("Site", "ts")}))
+    AND (${alias}.requester_id IS NULL OR EXISTS(SELECT 1 FROM ppo.people tp WHERE tp.workspace_id=${alias}.workspace_id AND tp.id=${alias}.requester_id AND ${visibility("Person", "tp")}))
+    AND (${alias}.asset_id IS NULL OR EXISTS(SELECT 1 FROM ppo.assets ta WHERE ta.workspace_id=${alias}.workspace_id AND ta.id=${alias}.asset_id AND ${visibility("Asset", "ta")}))`;
+}
+export async function visibleTicket(
   client: Pick<PoolClient, "query">,
   p: Principal,
   id: string,
@@ -74,11 +81,8 @@ async function visibleTicket(
       "This identity cannot read service requests.",
     );
   const result = await client.query(
-    `SELECT t.* FROM ppo.tickets t WHERE t.workspace_id=$1 AND t.id=$2
-    AND EXISTS(SELECT 1 FROM ppo.permission_grants g WHERE g.workspace_id=t.workspace_id AND g.user_id=$3
-      AND g.company_id=t.company_id AND g.capability='service.ticket.read' AND g.valid_from<=clock_timestamp()
-      AND (g.valid_to IS NULL OR g.valid_to>clock_timestamp())) ${lock ? "FOR UPDATE OF t" : ""}`,
-    [p.workspace_id, id, p.actor_id],
+    `SELECT t.* FROM ppo.tickets t WHERE t.workspace_id=$1 AND t.id=$3 AND ${ticketVisibility()} ${lock ? "FOR UPDATE OF t" : ""}`,
+    [p.workspace_id, p.actor_id, id],
   );
   if (!result.rows[0]) throw unavailable();
   return result.rows[0];
@@ -98,7 +102,13 @@ export async function readTicket(
     updated_at: t.updated_at.toISOString(),
     can_edit:
       t.status === "New" &&
-      (await hasPermission(database(), p, "service.ticket.edit", t.company_id)),
+      (await hasPermission(
+        database(),
+        p,
+        "service.ticket.edit",
+        t.company_id,
+        t.site_id ?? undefined,
+      )),
   };
 }
 export async function saveDraft(
@@ -118,7 +128,15 @@ export async function saveDraft(
     // Serialise concurrent same-operation retries before reading the receipt. Collisions only reduce concurrency.
     await lockOperation(client, p, command.operation_id);
     const t = await visibleTicket(client, p, id, true);
-    if (!(await hasPermission(client, p, "service.ticket.edit", t.company_id)))
+    if (
+      !(await hasPermission(
+        client,
+        p,
+        "service.ticket.edit",
+        t.company_id,
+        t.site_id ?? undefined,
+      ))
+    )
       throw new AppError(
         403,
         "Forbidden",
