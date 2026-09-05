@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import { after, beforeEach, test } from "node:test";
 import { randomUUID } from "node:crypto";
+import { once } from "node:events";
+import pg from "pg";
 import { database, closeDatabase } from "../../src/platform/database";
 import { createSession, resolveIdentity } from "../../src/platform/identity";
 import { readTicket, saveDraft } from "../../src/service/tickets";
@@ -26,6 +28,27 @@ const principal = async (profile = "coordinator") =>
   (await createSession(profile)).principal;
 const code = (expected: string) => (error: unknown) =>
   (error as { code?: string }).code === expected;
+test("idle database disconnect is handled and accepted data survives reconnection", async () => {
+  const p = await principal(),
+    c = command();
+  await saveDraft(p, ticket, c);
+  const pool = database(),
+    pid = (await pool.query("SELECT pg_backend_pid() pid")).rows[0].pid;
+  const ended = once(pool, "error"),
+    control = new pg.Client({ connectionString: localConfig().database_url });
+  try {
+    await control.connect();
+    assert.equal(
+      (await control.query("SELECT pg_terminate_backend($1) terminated", [pid]))
+        .rows[0].terminated,
+      true,
+    );
+    await ended;
+    assert.equal((await readTicket(p, ticket)).summary, c.summary);
+  } finally {
+    await control.end();
+  }
+});
 test("authorised read/save persists matching actor, version, audit, receipt and outbox", async () => {
   const p = await principal(),
     before = await readTicket(p, ticket),

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { randomUUID } from "node:crypto";
+import { request as httpRequest } from "node:http";
 import { localConfig } from "../../src/platform/config";
 const origin = localConfig().origin,
   ticket = "40000000-0000-4000-8000-000000000001";
@@ -31,7 +32,19 @@ test("HTTP guard, server identity, strict schema and read-only permissions", asy
     { "X-PPO-Local-Gateway": "forged" },
   ];
   for (const headers of rejected_headers)
-    assert.equal((await fetch(origin, { headers })).status, 403);
+    assert.equal(
+      await new Promise<number | undefined>((resolve, reject) => {
+        // Fetch normalises/ignores Host. Use raw HTTP so hostile headers really reach the gateway.
+        const request = httpRequest(origin, { headers }, (response) => {
+          response.resume();
+          resolve(response.statusCode);
+        });
+        request.on("error", reject);
+        request.end();
+      }),
+      403,
+      `Reject actual wire headers ${JSON.stringify(headers)}`,
+    );
   assert.equal(
     (
       await fetch(`${origin}/api/v1/local-session`, {

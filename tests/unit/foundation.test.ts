@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { randomUUID } from "node:crypto";
+import { spawnSync } from "node:child_process";
 import { localConfig } from "../../src/platform/config";
 import { draftCommand } from "../../src/service/tickets";
 import {
@@ -16,6 +17,36 @@ const env = {
   DATABASE_URL:
     "postgresql://synthetic:placeholder@127.0.0.1:5432/ppo_synthetic_test",
 };
+test("launcher exits before serving in production, remote or shared configurations", () => {
+  const cases: Record<string, string>[] = [
+    { NODE_ENV: "production" },
+    { PPO_ENV: "remote-synthetic" },
+    { PPO_EXPOSURE: "shared" },
+  ];
+  for (const blocked of cases) {
+    const result = spawnSync(
+      process.execPath,
+      ["--import", "tsx", "scripts/local-server.ts"],
+      {
+        env: {
+          ...process.env,
+          ...env,
+          ...blocked,
+          NEXT_TELEMETRY_DISABLED: "1",
+        },
+        encoding: "utf8",
+        timeout: 5000,
+      },
+    );
+    assert.equal(result.error, undefined);
+    assert.equal(result.status, 1);
+    assert.match(
+      result.stderr,
+      /Synthetic identity requires an explicitly local/,
+    );
+    assert.doesNotMatch(result.stdout, /local synthetic only/);
+  }
+});
 test("synthetic configuration rejects production, missing, remote and shared settings", () => {
   assert.equal(localConfig(env).origin, "http://127.0.0.1:3000");
   for (const replacement of [
