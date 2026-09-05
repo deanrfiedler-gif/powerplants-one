@@ -239,7 +239,17 @@ function BookingForm({
   const resources = useResource<Envelope<Resource>>(
       `selectors/resources?site_id=${appointment.site_id}`,
     ),
-    command = useCommand();
+    command = useCommand(),
+    savedRecord = useResource<Envelope<Appointment>>(
+      `appointments/${appointment.id}`,
+    );
+  const reviewed = savedRecord.data?.items[0];
+  const latest =
+    reviewed && reviewed.version >= appointment.version
+      ? reviewed
+      : appointment;
+  const retryPending = !!(command.error as { retryable?: boolean } | null)
+    ?.retryable;
   const title =
     mode === "confirm"
       ? "Confirm appointment"
@@ -329,17 +339,49 @@ function BookingForm({
             : "Appointment saved. Dispatch remains held."}
         </p>
       )}
-      {appointment.version !== basis.version && (
+      <button
+        className="secondary"
+        type="button"
+        disabled={command.busy || savedRecord.loading}
+        onClick={savedRecord.reload}
+      >
+        Review saved appointment
+      </button>
+      <ReadState {...savedRecord} retry={savedRecord.reload} />
+      {latest.version !== basis.version && (
         <div className="planner-warning">
           <p>
-            The saved appointment is now v{appointment.version}. Your proposal
-            still uses v{basis.version}.
+            The saved appointment is now v{latest.version}. Your proposal still
+            uses v{basis.version}.
           </p>
+          <p>
+            Saved interval:{" "}
+            <Stamp value={latest.start_at} timezone={latest.site_timezone} /> –{" "}
+            <Stamp value={latest.end_at} timezone={latest.site_timezone} />.
+            Crew:{" "}
+            {latest.assignments
+              .filter((x) => x.active)
+              .map((x) => x.name)
+              .join(", ") || "None reserved"}
+            .
+          </p>
+          {retryPending && (
+            <p>
+              Retry the unchanged pending action to recover its original receipt
+              before using new versions.
+            </p>
+          )}
           <button
             className="secondary"
             type="button"
+            disabled={
+              retryPending ||
+              command.busy ||
+              savedRecord.loading ||
+              !!savedRecord.error
+            }
             onClick={() => {
-              setBasis(appointment);
+              setBasis(latest);
               command.clear();
             }}
           >
@@ -857,6 +899,7 @@ export function AppointmentScreen({ id }: { id: string }) {
             {a.actions.can_manage && a.status !== "Cancelled" && (
               <>
                 <button
+                  disabled={resource.loading || !!resource.error}
                   onClick={() =>
                     setMode(a.status === "Proposed" ? "confirm" : "move")
                   }
@@ -865,22 +908,38 @@ export function AppointmentScreen({ id }: { id: string }) {
                     ? "Confirm appointment"
                     : "Move or reassign"}
                 </button>
-                <button className="secondary" onClick={() => setMode("cancel")}>
+                <button
+                  disabled={resource.loading || !!resource.error}
+                  className="secondary"
+                  onClick={() => setMode("cancel")}
+                >
                   Cancel appointment
                 </button>
               </>
             )}
             {a.actions.can_request && a.status === "Confirmed" && (
-              <button className="secondary" onClick={() => setMode("request")}>
+              <button
+                disabled={resource.loading || !!resource.error}
+                className="secondary"
+                onClick={() => setMode("request")}
+              >
                 Propose change
               </button>
             )}
             {a.actions.can_contact && (
-              <button className="secondary" onClick={() => setMode("contact")}>
+              <button
+                disabled={resource.loading || !!resource.error}
+                className="secondary"
+                onClick={() => setMode("contact")}
+              >
                 Record contact
               </button>
             )}
-            <button className="secondary" onClick={resource.reload}>
+            <button
+              disabled={resource.loading || !!resource.error}
+              className="secondary"
+              onClick={resource.reload}
+            >
               Refresh saved appointment
             </button>
           </div>

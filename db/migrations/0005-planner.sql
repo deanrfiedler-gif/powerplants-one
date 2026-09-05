@@ -234,7 +234,7 @@ CREATE TRIGGER request_crew_immutable BEFORE UPDATE OR DELETE ON ppo.schedule_re
 CREATE FUNCTION ppo.check_request_crew() RETURNS trigger LANGUAGE plpgsql AS $$
 DECLARE rid uuid; wid uuid; expected jsonb; actual jsonb;
 BEGIN
- rid:=CASE WHEN TG_TABLE_NAME='schedule_change_requests' THEN NEW.id ELSE NEW.request_id END;
+ IF TG_TABLE_NAME='schedule_change_requests' THEN rid:=NEW.id; ELSE rid:=NEW.request_id; END IF;
  wid:=NEW.workspace_id;
  SELECT jsonb_agg(e ORDER BY e->>'resource_id') INTO expected FROM ppo.schedule_change_requests q, jsonb_array_elements(q.crew_snapshot) e WHERE q.workspace_id=wid AND q.id=rid;
  SELECT jsonb_agg(to_jsonb(x)-ARRAY['workspace_id','request_id'] ORDER BY x.resource_id) INTO actual FROM ppo.schedule_request_crew x WHERE x.workspace_id=wid AND x.request_id=rid;

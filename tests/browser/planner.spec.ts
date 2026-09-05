@@ -333,6 +333,35 @@ test("P05 controlled move conflict keeps original position; uncertain accepted r
     day,
   );
   await capture(page, info, "rejected-move-retained");
+  const observed = (await call(page, "appointments/" + aid)).items[0];
+  await call(page, `appointments/${aid}/contacts`, {
+    ...base(),
+    id: crypto.randomUUID(),
+    expected_version: observed.version,
+    recipient_id: id("60"),
+    channel: "Simulated",
+    outcome: "Attempted",
+    occurred_at: new Date().toISOString(),
+    notes:
+      "SYN another session recorded a contact attempt while this move form was open.",
+  });
+  await dialog.getByRole("button", { name: "Save proposed move" }).click();
+  await expect(dialog.locator(".business-error[role=alert]")).toContainText(
+    "changed",
+  );
+  await expect(dialog.getByLabel("Start (site time)")).toHaveValue(
+    "2026-10-10T10:00",
+  );
+  await dialog
+    .getByRole("button", { name: "Review saved appointment", exact: true })
+    .click();
+  await expect(
+    dialog.getByRole("button", { name: "Use reviewed current versions" }),
+  ).toBeEnabled();
+  await capture(page, info, "stale-move-current-review");
+  await dialog
+    .getByRole("button", { name: "Use reviewed current versions" })
+    .click();
   const target = info.project.name.startsWith("mobile")
     ? "2026-10-13"
     : "2026-10-12";

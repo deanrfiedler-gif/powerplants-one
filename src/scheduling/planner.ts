@@ -210,11 +210,12 @@ async function schedulingPolicy(
   c: QueryClient,
   p: Principal,
   id = SCHEDULING_POLICY_ID,
+  requireCurrent = true,
 ) {
   const r = (
     await c.query(
-      "SELECT * FROM ppo.scheduling_policies WHERE workspace_id=$1 AND id=$2 AND status='Published' AND effective_from<=clock_timestamp() AND effective_to>clock_timestamp()",
-      [p.workspace_id, id],
+      "SELECT * FROM ppo.scheduling_policies WHERE workspace_id=$1 AND id=$2 AND status='Published' AND ($3::boolean=false OR (effective_from<=clock_timestamp() AND effective_to>clock_timestamp()))",
+      [p.workspace_id, id, requireCurrent],
     )
   ).rows[0];
   if (!r)
@@ -1239,6 +1240,7 @@ async function appointmentDetail(c: QueryClient, p: Principal, id: string) {
     c,
     p,
     a.scheduling_policy_id ?? SCHEDULING_POLICY_ID,
+    false,
   );
   const proposal = (
     await c.query(

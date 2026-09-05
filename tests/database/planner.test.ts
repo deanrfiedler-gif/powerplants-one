@@ -568,14 +568,17 @@ test("successor scope does not transfer authority and existing booking exposes r
 test("current site source changes and immutable customer windows block booking without reservation loss", async () => {
   const actor = await p(),
     before = await snapshot(1);
+  await confirmAppointment(actor, id("a8", 10), await cmd(10, crew(1, 2)));
+  const windowBooking = await snapshot(10);
   await assert.rejects(
-    moveAppointment(actor, id("a8", 1), {
-      ...(await cmd(1, crew(1, 2))),
-      start_at: "2026-09-22T00:00:00Z",
-      end_at: "2026-09-22T07:00:00Z",
+    moveAppointment(actor, id("a8", 10), {
+      ...(await cmd(10, crew(1, 2))),
+      start_at: "2026-09-25T00:00:00Z",
+      end_at: "2026-09-25T02:00:00Z",
     }),
     code("BookingBlocked"),
   );
+  assert.deepEqual(await snapshot(10), windowBooking);
   assert.deepEqual(await snapshot(1), before);
   await database().query(
     "UPDATE ppo.sites SET version=version+1,updated_at=clock_timestamp() WHERE id=$1",
