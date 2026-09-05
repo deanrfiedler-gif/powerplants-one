@@ -14,7 +14,17 @@ export type Principal = {
 export async function createSession(profile: string, previous_token?: string) {
   localConfig();
   if (
-    !["coordinator", "observer", "systems", "other-workspace"].includes(profile)
+    ![
+      "coordinator",
+      "observer",
+      "systems",
+      "other-workspace",
+      "site-observer",
+      "technician",
+      "finance",
+      "second-company",
+      "workspace-observer",
+    ].includes(profile)
   )
     throw new AppError(
       422,

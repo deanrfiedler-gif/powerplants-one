@@ -2,7 +2,7 @@
 
 **Package:** PP-01 · **Edition:** v01 · **Date:** 5 September 2026 · **Owner:** Dean Fiedler
 
-**Status:** Authored design package for a personal, private, synthetic prototype. P01 local foundation is implemented and verified; the full PP-01 journey and business acceptance remain incomplete. See the [P01 handover](../delivery/p01-handover.md). Technical selections below are the recommended design basis; they are not claims of company approval, purchased services or proven tenant integration.
+**Status:** Authored design package for a personal, private, synthetic prototype. P01 is verified and P02 shared foundation is implemented and verified; the full PP-01 journey and business acceptance remain incomplete. See the [P02 handover](../delivery/p02-handover.md) for current verification/merge evidence. Technical selections below are the recommended design basis; they are not claims of company approval, purchased services or proven tenant integration.
 
 ## Decision brief
 
@@ -33,7 +33,7 @@ This is an extension of the [master blueprint](../blueprints/BP-01-master-bluepr
 
 1. Read the scope and BP-02 decision brief, then review the end-to-end example in BP-07.
 2. Use the dictionary, command contracts and test scenarios together when implementing a feature. A screen mock-up alone does not satisfy a workflow requirement.
-3. Implement work packages P01–P12 in dependency order. P01 is complete; P02 is the next bounded task. Existing PPO issues remain discovery/design records; they are not silently converted into application tasks.
+3. Implement work packages P01–P12 in dependency order. P01 is complete; P02 delivery is recorded in its handover and P03 is the next bounded task. Existing PPO issues remain discovery/design records; they are not silently converted into application tasks.
 4. Preserve source IDs (SVC, DAT, TR, BR, IF, OUT, FD, AT, D). PP/SC/CMP/SR/VAL/PT/P identifiers below are local to this package and are never ERP references.
 5. Record actual test results against a commit and environment. All PT scenarios in this edition are **Not run**.
 

@@ -1,8 +1,14 @@
-import { createHash, randomUUID } from "node:crypto";
+import { createHash } from "node:crypto";
 import type { PoolClient } from "pg";
 import { database, transaction } from "../platform/database";
 import { AppError, unavailable } from "../platform/errors";
 import { type Principal } from "../platform/identity";
+import { hasPermission } from "../platform/permissions";
+import {
+  lockOperation,
+  priorReceipt,
+  recordOperation,
+} from "../platform/operations";
 import { invalid, label, object, uuid } from "../platform/validation";
 
 export type DraftCommand = {
@@ -54,21 +60,6 @@ export function draftCommand(input: unknown): DraftCommand {
     summary: label(p.summary, "summary", 200),
     reason: label(p.reason, "reason", 1000),
   };
-}
-async function hasPermission(
-  client: Pick<PoolClient, "query">,
-  p: Principal,
-  capability: string,
-  company_id?: string,
-) {
-  const result = await client.query(
-    `SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id)
-    WHERE g.workspace_id=$1 AND g.user_id=$2 AND g.capability=$3 AND u.active
-    AND g.valid_from<=clock_timestamp() AND (g.valid_to IS NULL OR g.valid_to>clock_timestamp())
-    AND ($4::uuid IS NULL OR g.company_id=$4)`,
-    [p.workspace_id, p.actor_id, capability, company_id ?? null],
-  );
-  return result.rowCount !== 0;
 }
 async function visibleTicket(
   client: Pick<PoolClient, "query">,
@@ -125,9 +116,7 @@ export async function saveDraft(
     .digest("hex");
   return transaction(async (client) => {
     // Serialise concurrent same-operation retries before reading the receipt. Collisions only reduce concurrency.
-    await client.query("SELECT pg_advisory_xact_lock(hashtextextended($1,0))", [
-      `${p.workspace_id}:${p.actor_id}:${command.operation_id}`,
-    ]);
+    await lockOperation(client, p, command.operation_id);
     const t = await visibleTicket(client, p, id, true);
     if (!(await hasPermission(client, p, "service.ticket.edit", t.company_id)))
       throw new AppError(
@@ -135,19 +124,8 @@ export async function saveDraft(
         "Forbidden",
         "This identity cannot edit service requests.",
       );
-    const prior = await client.query(
-      "SELECT payload_hash,result FROM ppo.operation_receipts WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3",
-      [p.workspace_id, p.actor_id, command.operation_id],
-    );
-    if (prior.rows[0]) {
-      if (prior.rows[0].payload_hash !== hash)
-        throw new AppError(
-          409,
-          "OperationConflict",
-          "This operation ID was already used for different content.",
-        );
-      return prior.rows[0].result as Receipt;
-    }
+    const prior = await priorReceipt(client, p, command.operation_id, hash);
+    if (prior) return prior as Receipt;
     if (t.version !== command.expected_version)
       throw new AppError(
         409,
@@ -165,61 +143,21 @@ export async function saveDraft(
       WHERE workspace_id=$3 AND id=$4 RETURNING version,updated_at`,
       [command.summary, p.actor_id, p.workspace_id, id],
     );
-    const row = updated.rows[0],
-      receipt_id = randomUUID(),
-      event_id = randomUUID();
-    const receipt: Receipt = {
-      operation_id: command.operation_id,
-      record_id: id,
-      record_version: row.version,
-      state: "New",
-      accepted_at: row.updated_at.toISOString(),
-      receipt_id,
-      warnings: [],
-      task_ids: [event_id],
-    };
-    await client.query(
-      `INSERT INTO ppo.audit_events(id,workspace_id,actor_id,object_type,object_id,operation_id,outcome,reason,details)
-      VALUES($1,$2,$3,'Ticket',$4,$5,'Accepted',$6,$7)`,
-      [
-        randomUUID(),
-        p.workspace_id,
-        p.actor_id,
-        id,
-        command.operation_id,
-        command.reason,
-        {
-          previous_version: t.version,
-          record_version: row.version,
-          before_summary: t.summary,
-          after_summary: command.summary,
-        },
-      ],
-    );
-    await client.query(
-      `INSERT INTO ppo.operation_receipts(id,workspace_id,actor_id,operation_id,record_id,payload_hash,result)
-      VALUES($1,$2,$3,$4,$5,$6,$7)`,
-      [
-        receipt_id,
-        p.workspace_id,
-        p.actor_id,
-        command.operation_id,
-        id,
-        hash,
-        receipt,
-      ],
-    );
-    await client.query(
-      `INSERT INTO ppo.outbox_jobs(id,workspace_id,actor_id,operation_id,correlation_id,kind,payload_version,payload)
-      VALUES($1,$2,$3,$4,$4,'TicketDraftSaved',1,$5)`,
-      [
-        event_id,
-        p.workspace_id,
-        p.actor_id,
-        command.operation_id,
-        { record_id: id, record_version: row.version, synthetic: true },
-      ],
-    );
-    return receipt;
+    const row = updated.rows[0];
+    return (await recordOperation(
+      client,
+      p,
+      command,
+      { id, version: row.version, state: "New", updated_at: row.updated_at },
+      "Ticket",
+      "TicketDraftSaved",
+      hash,
+      {
+        previous_version: t.version,
+        record_version: row.version,
+        before_summary: t.summary,
+        after_summary: command.summary,
+      },
+    )) as Receipt;
   });
 }

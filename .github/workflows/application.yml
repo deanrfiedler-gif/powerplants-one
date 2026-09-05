@@ -8,7 +8,7 @@ permissions:
   contents: read
 jobs:
   p01:
-    name: P01 local application and PostgreSQL proof
+    name: P01/P02 local application and PostgreSQL proof
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     services:
@@ -61,6 +61,8 @@ jobs:
           npm run db:health
       - name: Real PostgreSQL behaviour and competing transactions
         run: npm run test:db
+      - name: Restore deterministic fixtures for HTTP and browser suites
+        run: PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
       - name: Prove persistence across PostgreSQL process restart
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
@@ -91,7 +93,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: P01-browser-evidence
+          name: P02-browser-evidence
           path: |
             test-results/
             playwright-report/

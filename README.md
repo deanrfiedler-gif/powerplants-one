@@ -2,7 +2,7 @@
 
 Private prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01 local application foundation complete · **Deployment:** none.
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P02 shared data foundation implemented and verified; merge record in the handover · **Deployment:** none.
 
 This repository is Dean's personal private prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application foundation; full business workflows remain planned. Company ownership, production approval and external-system write authority are not implied.
 
@@ -24,7 +24,7 @@ This repository is Dean's personal private prototype. It contains the planning f
 
 The proposed platform connects customer relationships, scoping and quotation, design, delivery, material coordination and equipment service. The candidate first release addresses prepared job packs, technician scheduling, relevant history, field evidence and a reviewed Finance handoff.
 
-MYOB Acumatica remains the intended authoritative ERP. SharePoint remains the intended business-document repository, subject to the actual supported configuration. Native CAD authoring remains in suitable engineering tools. Pipedrive and Smartsheet continue their current roles until an explicitly accepted transition. No integration or migration has been implemented here.
+MYOB Acumatica remains the intended authoritative ERP. SharePoint remains the intended business-document repository, subject to the actual supported configuration. Native CAD authoring remains in suitable engineering tools. Pipedrive and Smartsheet continue their current roles until an explicitly accepted transition. No live source integration or operational data migration has been implemented here.
 
 ## Repository structure
 
@@ -42,11 +42,11 @@ MYOB Acumatica remains the intended authoritative ERP. SharePoint remains the in
 | `.github/` | Issue forms, pull-request template, documentation and application assurance workflows |
 | `scripts/` | Repository assurance, local launcher, database lifecycle and persistence proof |
 
-Application code is in `src/`, explicit SQL migrations and fixtures are in `db/`, and runtime checks are in `tests/`. See [P01 setup, verification and handover](docs/delivery/p01-handover.md) and [ADR-0006](docs/decisions/ADR-0006-p01-local-foundation.md) for the local-only implementation and limits.
+Application code is in `src/`, explicit SQL migrations and fixtures are in `db/`, and runtime checks are in `tests/`. See [P02 setup, verification and handover](docs/delivery/p02-handover.md) and [ADR-0006](docs/decisions/ADR-0006-p01-local-foundation.md) for the local-only implementation and limits.
 
 ## Run the local application
 
-Follow the [exact setup and run commands](docs/delivery/p01-handover.md#exact-setup-and-run-commands): Node 24.20.0, npm 11.19.0, PostgreSQL 16.15, `npm ci`, ignored local configuration, migration/seed and `npm run dev`. Open `http://127.0.0.1:3000`. Production startup is intentionally refused. The handover includes test, reset and recovery commands.
+Follow the [exact setup and run commands](docs/delivery/p02-handover.md#exact-install-and-fresh-setup): Node 24.20.0, npm 11.19.0, PostgreSQL 16.15, `npm ci`, ignored local configuration, migration/seed and `npm run dev`. Open `http://127.0.0.1:3000`. Production startup is intentionally refused. The handover includes test, reset and recovery commands.
 
 ## Working checks
 
@@ -60,4 +60,4 @@ python3 scripts/check_naming.py
 
 The check verifies reference hashes, register counts/IDs, local Markdown links and selected repository hygiene. It is not an application, security or business-acceptance test. The GitHub workflow runs the same check with read-only repository permissions; enforcement through branch protection is a separate account/settings matter.
 
-Use [Issues](https://github.com/deanrfiedler-gif/powerplants-one/issues) for development work and [pull requests](https://github.com/deanrfiedler-gif/powerplants-one/pulls) for reviewable changes. P01 is implemented and verified; P02 is the next bounded task in the [ordered prototype plan](docs/delivery/prototype-implementation-plan.md).
+Use [Issues](https://github.com/deanrfiedler-gif/powerplants-one/issues) for development work and [pull requests](https://github.com/deanrfiedler-gif/powerplants-one/pulls) for reviewable changes. P01 is verified; P02 delivery and verification are recorded in its [handover](docs/delivery/p02-handover.md). P03 is the next bounded task in the [ordered prototype plan](docs/delivery/prototype-implementation-plan.md).

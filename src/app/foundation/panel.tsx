@@ -34,6 +34,63 @@ export function FoundationPanel() {
   const [storage, setStorage] = useState(
     "Not checked. This experiment stores a synthetic marker only.",
   );
+  const [shared, setShared] = useState<{
+    site_name: string;
+    assets: { id: string; description: string; identity_status: string }[];
+    history: {
+      id: string;
+      summary: string;
+      author_label: string;
+      site_label: string;
+    }[];
+  } | null>(null);
+  const [sharedMessage, setSharedMessage] = useState(
+    "Select an identity, then inspect the shared synthetic context.",
+  );
+  const [sharedError, setSharedError] = useState(false);
+  async function loadShared() {
+    setBusy(true);
+    setShared(null);
+    setSharedError(false);
+    try {
+      const site = await api<{
+        items: {
+          display_name: string;
+          assets: {
+            items: {
+              id: string;
+              description: string;
+              identity_status: string;
+            }[];
+          };
+        }[];
+      }>("sites/70000000-0000-4000-8000-000000000001");
+      const history = await api<{
+        items: {
+          id: string;
+          summary: string;
+          author_label: string;
+          site_label: string;
+        }[];
+      }>("assets/80000000-0000-4000-8000-000000000001/history");
+      setShared({
+        site_name: site.items[0].display_name,
+        assets: site.items[0].assets.items,
+        history: history.items,
+      });
+      setSharedMessage(
+        "Shared context loaded from PostgreSQL. Only permitted records and history are shown.",
+      );
+    } catch (e) {
+      setSharedError(true);
+      setSharedMessage(
+        (e as ApiFailure).message ??
+          "Shared context could not be loaded. Check the connection and try again.",
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
   function showError(e: unknown) {
     const f = e as ApiFailure;
     setError(true);
@@ -77,6 +134,11 @@ export function FoundationPanel() {
     setBusy(true);
     setError(false);
     setTicket(null);
+    setShared(null);
+    setSharedMessage(
+      "Identity changed. Load shared context to check its permissions.",
+    );
+    setSharedError(false);
     setAttempt(null);
     try {
       const p = await api<{ display_name: string }>("local-session", {
@@ -180,6 +242,12 @@ export function FoundationPanel() {
         >
           <option value="coordinator">Coordinator · read and edit</option>
           <option value="observer">Observer · read only</option>
+          <option value="site-observer">Site observer · Q01 only</option>
+          <option value="technician">
+            Technician · assignment unavailable
+          </option>
+          <option value="finance">Finance · permitted source context</option>
+          <option value="second-company">Company B · separate scope</option>
           <option value="systems">Systems · no business grants</option>
           <option value="other-workspace">
             Other workspace · separate scope
@@ -281,6 +349,47 @@ export function FoundationPanel() {
             A permitted identity and an available database are required to load
             this request.
           </p>
+        )}
+      </section>
+      <section className="card storage" aria-labelledby="shared-heading">
+        <h2 id="shared-heading">Shared data checks</h2>
+        <p>
+          Inspect the P02 foundation using synthetic fixtures. Customer and
+          service-intake screens are planned for P03.
+        </p>
+        <button onClick={loadShared} disabled={busy || !!attempt}>
+          Load shared context
+        </button>
+        <p
+          role={sharedError ? "alert" : "status"}
+          className={sharedError ? "message error" : "message"}
+        >
+          {sharedMessage}
+        </p>
+        {shared && (
+          <div>
+            <h3>{shared.site_name}</h3>
+            <ul>
+              {shared.assets.map((a) => (
+                <li key={a.id}>
+                  {a.description} · Identity: {a.identity_status}
+                </li>
+              ))}
+            </ul>
+            <h3>Permitted attributed history</h3>
+            {shared.history.length ? (
+              shared.history.map((h) => (
+                <article key={h.id}>
+                  <p>{h.summary}</p>
+                  <p className="reference">
+                    {h.author_label} · {h.site_label}
+                  </p>
+                </article>
+              ))
+            ) : (
+              <p>No history is available within this identity’s scope.</p>
+            )}
+          </div>
         )}
       </section>
       <details className="card storage">

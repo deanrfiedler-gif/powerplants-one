@@ -16,7 +16,7 @@ Test product/parts sales, planned service, equipment upgrades, major greenhouse 
 
 PP-01 demonstrates customer/site/equipment context, service intake, authorised work orders, checked/issued job packs, technician scheduling, field labour/parts/findings/photos, customer acknowledgement, reviewed reports and controlled Finance handoff/reconciliation.
 
-Follow P01–P12 in dependency order. At instruction issue, design and naming documentation exist; application implementation is outstanding. P01 establishes a runnable local application and proves the architecture. Check STATUS for later progress. Retain later domains in the backlog; build when the authorised increment is sufficiently specified.
+Follow P01–P12 in dependency order. At instruction issue, design and naming documentation exist; application implementation is outstanding. P01/P02 establish the local application and shared data foundation. Check STATUS for current progress. Retain later domains in the backlog; build when the authorised increment is sufficiently specified.
 
 ## 3. Sources and continuity
 

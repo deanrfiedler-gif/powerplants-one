@@ -67,7 +67,7 @@ export default function RootLayout({
           <div className="workspace">
             <header className="topbar">
               <span>Powerplants Australia</span>
-              <span className="badge">P01 foundation</span>
+              <span className="badge">P02 shared foundation</span>
             </header>
             <main id="main" tabIndex={-1}>
               {children}

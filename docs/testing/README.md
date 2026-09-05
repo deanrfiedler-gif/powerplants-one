@@ -1,6 +1,6 @@
 # Acceptance and evidence
 
-[acceptance-scenarios.csv](acceptance-scenarios.csv) contains AT-01–AT-38 from the master blueprint. Every full scenario remains planned and unexecuted. P01 now has runnable component tests; these do not establish the full catalogue's business acceptance.
+[acceptance-scenarios.csv](acceptance-scenarios.csv) contains AT-01–AT-38 from the master blueprint. Every full scenario remains planned and unexecuted. P01/P02 now have runnable component tests; these do not establish the full catalogue's business acceptance.
 
 Each future case needs requirement links, fixture/version, actor, preconditions, action, expected observable result, failure/recovery path, environment, actual result, evidence, defect links and reviewer disposition. Financial and calculation fixtures need independently accepted expected values rather than expectations copied from the implementation.
 
@@ -19,3 +19,7 @@ Record execution status in [the foundation handover](../delivery/foundation-hand
 ## P01 component evidence
 
 The [P01 handover](../delivery/p01-handover.md) records exact runtime/database/browser commands, executed results, CI source commits and limitations. Application assurance runs against real PostgreSQL with separate competing connections and a database-process restart. Browser screenshots are viewport evidence, not real-device or offline readiness. The [dependency inventory](p01-dependencies.json) records pinned direct versions and transitive licence declarations.
+
+## P02 component evidence
+
+The [P02 handover](../delivery/p02-handover.md) records upgrade/fresh setup, permissions/projections, references, effective relationships/hierarchy/history, command rollback/replay and restart/browser evidence. The [six original PNGs and provenance manifest](evidence/p02/manifest.json) retain inspected desktop/mobile evidence. Final PR checks and review govern merge; full PT-01/02/03 and AT acceptance remain Not run. The [P02 decision](../decisions/ADR-0007-p02-shared-foundation.md) records the material deferrals.
