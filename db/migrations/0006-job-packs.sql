@@ -166,3 +166,37 @@ BEGIN
 END $$;
 CREATE TRIGGER pack_consequences AFTER UPDATE ON ppo.appointments FOR EACH ROW EXECUTE FUNCTION ppo.invalidate_pack_applicability();
 CREATE TRIGGER pack_consequences AFTER UPDATE ON ppo.work_orders FOR EACH ROW EXECUTE FUNCTION ppo.invalidate_pack_applicability();
+CREATE FUNCTION ppo.guard_pack_identity() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+ IF (NEW.workspace_id,NEW.company_id,NEW.site_id,NEW.appointment_id) IS DISTINCT FROM (OLD.workspace_id,OLD.company_id,OLD.site_id,OLD.appointment_id) OR NEW.version<>OLD.version+1 THEN RAISE EXCEPTION 'Pack context/version is controlled' USING ERRCODE='55000'; END IF;
+ RETURN NEW;
+END $$;
+CREATE TRIGGER guard_pack BEFORE UPDATE ON ppo.packs FOR EACH ROW EXECUTE FUNCTION ppo.guard_pack_identity();
+CREATE FUNCTION ppo.guard_pack_issue() RETURNS trigger LANGUAGE plpgsql AS $$
+DECLARE j ppo.pack_render_jobs; p ppo.packs;
+BEGIN
+ SELECT * INTO j FROM ppo.pack_render_jobs WHERE workspace_id=NEW.workspace_id AND id=NEW.render_job_id;
+ SELECT * INTO p FROM ppo.packs WHERE workspace_id=NEW.workspace_id AND id=NEW.pack_id;
+ IF j.state<>'Durable' OR j.output_manifest IS DISTINCT FROM NEW.manifest OR NEW.output_hash IS DISTINCT FROM j.output_manifest->>'pdf_hash' OR NEW.snapshot_hash IS DISTINCT FROM j.input_hash OR NEW.id::text IS DISTINCT FROM j.render_snapshot->>'issue_id' OR p.current_revision_id<>NEW.revision_id OR p.status<>'Checked' THEN RAISE EXCEPTION 'Exact durable checked output is required' USING ERRCODE='23514'; END IF;
+ RETURN NEW;
+END $$;
+CREATE TRIGGER guard_issue BEFORE INSERT ON ppo.pack_issues FOR EACH ROW EXECUTE FUNCTION ppo.guard_pack_issue();
+CREATE FUNCTION ppo.guard_pack_recipient() RETURNS trigger LANGUAGE plpgsql AS $$
+DECLARE i ppo.pack_issues; a ppo.assignments; u uuid;
+BEGIN
+ SELECT * INTO i FROM ppo.pack_issues WHERE workspace_id=NEW.workspace_id AND id=NEW.issue_id;
+ SELECT * INTO a FROM ppo.assignments WHERE workspace_id=NEW.workspace_id AND id=NEW.assignment_id;
+ SELECT user_id INTO u FROM ppo.resources WHERE workspace_id=NEW.workspace_id AND id=a.resource_id;
+ IF NOT a.active OR a.assignment_version<>NEW.assignment_version OR NEW.assignment_version<>i.assignment_version OR u IS DISTINCT FROM NEW.user_id OR NOT EXISTS(SELECT 1 FROM ppo.packs WHERE id=i.pack_id AND appointment_id=a.appointment_id) THEN RAISE EXCEPTION 'Recipient must be exact current assignment user' USING ERRCODE='23514'; END IF;
+ RETURN NEW;
+END $$;
+CREATE TRIGGER guard_recipient BEFORE INSERT ON ppo.pack_recipients FOR EACH ROW EXECUTE FUNCTION ppo.guard_pack_recipient();
+CREATE FUNCTION ppo.guard_pack_acknowledgement() RETURNS trigger LANGUAGE plpgsql AS $$
+DECLARE r ppo.pack_recipients; i ppo.pack_issues;
+BEGIN
+ SELECT * INTO r FROM ppo.pack_recipients WHERE workspace_id=NEW.workspace_id AND id=NEW.recipient_id;
+ SELECT * INTO i FROM ppo.pack_issues WHERE workspace_id=NEW.workspace_id AND id=r.issue_id;
+ IF NEW.actor_id IS DISTINCT FROM r.user_id OR NEW.presented_hash IS DISTINCT FROM i.output_hash OR NOT EXISTS(SELECT 1 FROM ppo.packs p JOIN ppo.appointments a ON a.id=p.appointment_id JOIN ppo.assignments x ON x.appointment_id=a.id WHERE p.id=i.pack_id AND p.current_issue_id=i.id AND p.status='Issued' AND NOT p.needs_review AND a.status='Confirmed' AND a.schedule_version=i.schedule_version AND a.assignment_version=i.assignment_version AND x.id=r.assignment_id AND x.active) THEN RAISE EXCEPTION 'Only current exact recipient may acknowledge applicable issue' USING ERRCODE='23514'; END IF;
+ RETURN NEW;
+END $$;
+CREATE TRIGGER guard_ack BEFORE INSERT ON ppo.pack_acknowledgements FOR EACH ROW EXECUTE FUNCTION ppo.guard_pack_acknowledgement();

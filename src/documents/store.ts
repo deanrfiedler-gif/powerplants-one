@@ -46,7 +46,7 @@ export class LocalSyntheticDocumentStore implements DocumentStoreAdapter {
     )
       throw missing();
     const folder = join(root, context.workspace_id);
-    await mkdir(folder, { mode: 0o700 });
+    await mkdir(folder, { recursive: true, mode: 0o700 });
     const child = await lstat(folder);
     if (
       child.isSymbolicLink() ||
