@@ -21,7 +21,14 @@ async function call(cookie: string, path: string, body?: unknown) {
     },
     body: body ? JSON.stringify(body) : undefined,
   });
-  return { status: r.status, headers: r.headers, body: await r.json() };
+  const content = await r.text();
+  return {
+    status: r.status,
+    headers: r.headers,
+    body: r.headers.get("content-type")?.includes("application/json")
+      ? JSON.parse(content)
+      : content,
+  };
 }
 const base = () => ({
   operation_id: randomUUID(),
