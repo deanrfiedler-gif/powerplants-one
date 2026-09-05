@@ -21,3 +21,5 @@ jobs:
           persist-credentials: false
       - name: Validate references and registers
         run: python3 scripts/check_foundation.py
+      - name: Validate prototype contracts and traceability
+        run: python3 scripts/check_prototype.py

@@ -11,3 +11,7 @@ Each future case needs requirement links, fixture/version, actor, preconditions,
 The GitHub documentation workflow uses `actions/checkout` pinned to the exact v7.0.1 commit verified from its official release/tag, with persisted credentials disabled and contents-read permission only. There are no deployment steps or application secrets.
 
 Record execution status in [the foundation handover](../delivery/foundation-handover.md). Running the repository check cannot mark AT business scenarios passed. Branch protection and required checks must be assessed separately against actual account capabilities.
+
+## Prototype procedures
+
+[PP-01 acceptance](prototype-acceptance.md) provides 30 detailed synthetic procedures with a [structured catalogue](prototype-scenarios.json). All remain Not run. Parent scope coverage is bounded by the [disposition register](../prototype/traceability.csv); selected tests do not establish full-enterprise acceptance.

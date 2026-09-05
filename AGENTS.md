@@ -8,7 +8,7 @@ Powerplants One is Dean Fiedler's personal private prototype. Read `README.md`, 
 
 Preserve the distinction between a user decision, documented CREMS behaviour, bounded prior account observation, proposed design and unresolved question. Never turn a prototype, mocked response, disabled Smartsheet rule or example calculation into a production claim.
 
-Retain the issued source documents unchanged. Record newer decisions in `docs/decisions/` and update `docs/STATUS.md`. Preserve all existing parent requirement IDs. Derived registers must identify their source and remain consistent with the parent scope.
+Retain issued source snapshots in `docs/reference/` unchanged. The working master uses a stable versionless filename; edit working specifications through reviewed changes and preserve baseline/traceability. Record newer decisions in `docs/decisions/` and update `docs/STATUS.md`. Preserve all existing parent requirement IDs. Derived registers must identify their source and remain consistent with the parent scope.
 
 MYOB remains the intended ERP authority; SharePoint owns business documents; native CAD tools retain authoring responsibilities. This repository task does not authorise business transactions, production integration, customer communications or migration. Apply the actual scope of subsequent user instructions.
 
@@ -22,6 +22,6 @@ Before choosing a technology, capture the reason, constraints and alternatives i
 
 ## Validation and handover
 
-Run `python3 scripts/check_foundation.py` for changes affecting the foundation. Add meaningful application tests only when application behaviour exists. The current check is documentation assurance, not business acceptance.
+Run `python3 scripts/check_foundation.py` for foundation changes and `python3 scripts/check_prototype.py` for PP-01 package changes. Add meaningful application tests only when application behaviour exists. The current check is documentation assurance, not business acceptance.
 
 Link work to requirement, decision, interface and acceptance IDs where relevant. Explain what changed, what was checked and what remains open. Keep code delivery status separate from business approval and production readiness.

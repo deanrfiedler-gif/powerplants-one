@@ -3,10 +3,12 @@
   "scope": "Included issued references only; no claim of complete source archive",
   "files": [
     {
-      "path": "docs/blueprints/GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md",
+      "path": "docs/reference/baselines/GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md",
       "sha256": "854317d7bc9081f07157f9428f7b220a20e5f5800c2560e54f0ef3f82270858d",
       "bytes": 271401,
-      "purpose": "Current issued planning baseline; decisions remain subject to subsequent recorded user instructions"
+      "purpose": "Issued v02 baseline, preserved byte-for-byte; parent source registers derive from this snapshot",
+      "original_path": "docs/blueprints/GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md",
+      "original_commit": "0ae933be366ecdab053c853239c0766094bf293b"
     },
     {
       "path": "docs/reference/GEN_SPC_PPABusinessPlatform_MasterBlueprint_v01.md",

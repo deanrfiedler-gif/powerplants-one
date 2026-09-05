@@ -7,3 +7,7 @@
 The issued master owns the source requirement text. This CSV is a derived index; the foundation check detects missing/duplicate IDs, altered source wording and invalid initial-backlog or acceptance references. GitHub issue status describes work execution. Requirement approval, implementation and test status remain explicit and separate.
 
 All requirements are proposed; none is marked implemented by this foundation. A-min or A-manual delivery does not mean the whole parent is complete.
+
+## Prototype scope disposition
+
+[PP-01 traceability](../prototype/traceability.csv) retains all 78 parent IDs and classifies 24 Core, 25 Partial and 29 Deferred for this synthetic release. These classifications are design scope, not implementation or approval status. The original registers derive from the frozen issued v02 snapshot; the stable working master can evolve through explicit scope reconciliation.

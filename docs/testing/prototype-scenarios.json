@@ -1,0 +1,486 @@
+{
+  "schema_version": 1,
+  "package": "PP-01",
+  "scope": "Synthetic prototype procedures; not execution evidence",
+  "cases": [
+    {
+      "id": "PT-01",
+      "title": "Server permissions and information isolation",
+      "parent_acceptance_ids": [
+        "AT-01"
+      ],
+      "implementation_ids": [
+        "P02",
+        "P11"
+      ],
+      "preconditions": "Coordinator, technician, Finance and Systems test identities; two company/site scopes.",
+      "steps": "Read an assigned site as technician; request another site directly; request Finance data, search suggestions, document preview/export and notification payloads; repeat as Systems without business grants.",
+      "expected": "Assigned context succeeds; unauthorised APIs/files/exports/search/notifications reveal no restricted fields or record titles. Systems cannot approve service or Finance by default.",
+      "evidence": "API responses, role-grant fixture and negative access assertions.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-02",
+      "title": "Same-name account mapping",
+      "parent_acceptance_ids": [
+        "AT-02",
+        "AT-30"
+      ],
+      "implementation_ids": [
+        "P02",
+        "P03"
+      ],
+      "preconditions": "Two SYN companies each contain a customer called SYN Greenhouse Demonstration with distinct external IDs.",
+      "steps": "Create work against site Q01; propose the other-company debtor; submit a handoff without verified mapping; then choose the correct explicit mapping.",
+      "expected": "Ambiguous/wrong-company mapping cannot authorise financial release; correct connection/company/customer tuple is retained in source snapshot and every target mapping.",
+      "evidence": "Mapping records, refusal code VAL-01 and accepted tuple.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-03",
+      "title": "Unknown equipment identity",
+      "parent_acceptance_ids": [
+        "AT-30"
+      ],
+      "implementation_ids": [
+        "P02",
+        "P03"
+      ],
+      "preconditions": "Asset SYN-A02 has no verified serial; another asset has a similar description.",
+      "steps": "Attempt asset-specific scope authorisation; add an identification plan with reviewer/method/limits; authorise bounded identification work; later verify the asset.",
+      "expected": "First attempt blocks with VAL-02. Approved identification plan permits only its scope. Serial is never guessed; later verification preserves original visit-time uncertainty.",
+      "evidence": "Before/after scope versions, identification plan and audit.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-04",
+      "title": "Incomplete intake and readiness refusal",
+      "parent_acceptance_ids": [
+        "AT-06"
+      ],
+      "implementation_ids": [
+        "P03",
+        "P04"
+      ],
+      "preconditions": "Ticket missing access/control evidence; urgent priority; policy marks mandatory site control as non-waivable.",
+      "steps": "Save incomplete ticket; attempt authorisation/dispatch; try a generic override; supply reviewed required context and permitted preparation evidence.",
+      "expected": "Draft is saved with owner. Missing stage fields are listed. Urgent flag or general override cannot waive the mandatory control. Only valid evidence permits progression.",
+      "evidence": "Field-level errors, readiness assessments and policy version.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-05",
+      "title": "Scope and coverage authority",
+      "parent_acceptance_ids": [
+        "AT-06",
+        "AT-33"
+      ],
+      "implementation_ids": [
+        "P04"
+      ],
+      "preconditions": "Inspection-only approved scope; disputed coverage; technician proposes a shutdown/extra task.",
+      "steps": "Record the extra-work request; try to change approved scope in place; create a reviewed successor with explicit permitted conditions; inspect financial treatment.",
+      "expected": "Original scope remains exact. Technician cannot approve extra work. Coverage dispute remains separate from billing/supplier recovery; no automatic free work or invoice.",
+      "evidence": "Scope hashes, approval event, rejected command and unresolved Finance decision.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-06",
+      "title": "Complete pack issue and crew acknowledgement",
+      "parent_acceptance_ids": [
+        "AT-07",
+        "AT-36"
+      ],
+      "implementation_ids": [
+        "P06"
+      ],
+      "preconditions": "Confirmed two-person appointment; checked nine-section pack and exact technical sources.",
+      "steps": "Request issue; pause renderer; complete durable storage; acknowledge as first technician; try start; acknowledge as second; re-evaluate readiness and start.",
+      "expected": "Queued generation is not Issued. Exactly one durable issue is created. First acknowledgement does not cover the second recipient; start blocks until all required conditions pass.",
+      "evidence": "Output/manifest hashes, recipient events and start guard result.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-07",
+      "title": "Material pack amendment",
+      "parent_acceptance_ids": [
+        "AT-07",
+        "AT-34"
+      ],
+      "implementation_ids": [
+        "P06"
+      ],
+      "preconditions": "Pack revision 1 issued/acknowledged; scope/control amendment required before attendance.",
+      "steps": "Raise material amendment; inspect dispatch; prepare/check/issue revision 2; retry old acknowledgement; acknowledge revision 2 as each required recipient.",
+      "expected": "Dispatch hold begins when material change is raised. Original issue remains recoverable. Revision 1 acknowledgement cannot satisfy revision 2; each affected recipient must respond.",
+      "evidence": "Old/new output hashes, change reason, hold and acknowledgement list.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-08",
+      "title": "Concurrent edit of one appointment",
+      "parent_acceptance_ids": [
+        "AT-08"
+      ],
+      "implementation_ids": [
+        "P05"
+      ],
+      "preconditions": "Two independent sessions read appointment version 3.",
+      "steps": "Session A moves the booking and commits version 4. Session B submits a different move expecting version 3. Inspect booking, reservations and both user proposals.",
+      "expected": "A single version-4 outcome persists. B receives VAL-05 and retains proposed input; no silent overwrite or partial resource release occurs.",
+      "evidence": "Two request/response traces, reservation rows, audit and retained form state.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-09",
+      "title": "Concurrent crew conflict across bookings",
+      "parent_acceptance_ids": [
+        "AT-08"
+      ],
+      "implementation_ids": [
+        "P05"
+      ],
+      "preconditions": "Two different proposed appointments both need SYN-T01 during 09:00\u201311:00; each also includes a different second technician.",
+      "steps": "Confirm both concurrently. Inspect all resource reservations. Attempt an adjacent visit whose explicit travel buffer overlaps the winning booking.",
+      "expected": "Exactly one conflicting booking confirms; no partial crew reservation from loser. Adjacent core times still fail if buffer overlaps. No serial UI-only check can bypass database guard.",
+      "evidence": "Concurrent database/API test, complete crew reservation sets and VAL-06.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-10",
+      "title": "Project-request boundary and keyboard move",
+      "parent_acceptance_ids": [
+        "AT-09",
+        "AT-32"
+      ],
+      "implementation_ids": [
+        "P05"
+      ],
+      "preconditions": "Confirmed appointment linked to a synthetic project reference.",
+      "steps": "Submit a project-date change request. Inspect original booking; dispatcher uses keyboard Move action to evaluate/reject then later accept a valid request.",
+      "expected": "Project request does not overwrite confirmed attendance. Rejection has reason. Accepted move applies the same guards as drag/drop, records history and requires pack/contact review.",
+      "evidence": "Change-request state, before/after booking, keyboard recording and contact tasks.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-11",
+      "title": "Offline save, restart and quota failure",
+      "parent_acceptance_ids": [
+        "AT-10"
+      ],
+      "implementation_ids": [
+        "P08"
+      ],
+      "preconditions": "Two assigned cached jobs, current pack revisions; service worker enabled in a persistent test browser profile.",
+      "steps": "Disconnect; capture note/time/photo; close and reopen browser with same profile; inspect saved entries. Force a storage/quota write failure on another entry.",
+      "expected": "Committed local entries survive tested restart and show last sync/revision. Failed write never shows Saved. Evidence remains distinguishable from server-synchronised/reviewed work.",
+      "evidence": "IndexedDB state, restart evidence, quota failure message and device/browser version.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-12",
+      "title": "Duplicate replay and payload conflict",
+      "parent_acceptance_ids": [
+        "AT-11"
+      ],
+      "implementation_ids": [
+        "P08"
+      ],
+      "preconditions": "100 saved operations with stable IDs and one dependent attachment; server receipts initially absent.",
+      "steps": "Synchronise; lose client acknowledgement; replay all 100; reuse one ID with changed payload; interrupt and retry photo finalisation.",
+      "expected": "Exactly 100 evidence records exist; original receipts replay. Changed payload gets VAL-12. One final attachment identity exists; completion waits for its Available receipt.",
+      "evidence": "Record counts, operation receipts, hashes and dependency queue state.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-13",
+      "title": "Time/material correction and review",
+      "parent_acceptance_ids": [
+        "AT-12"
+      ],
+      "implementation_ids": [
+        "P07",
+        "P09"
+      ],
+      "preconditions": "90-minute labour interval and 2 EA consumed material; entries initially Draft.",
+      "steps": "Submit and approve entries; try in-place edit; create reasoned successor correction; inspect dependent report and handoff readiness.",
+      "expected": "Captured, reviewed and financial quantities remain separate. Approved original cannot change. Successor retains lineage; affected downstream review is invalidated without rewriting processed history.",
+      "evidence": "Entry revisions, guard response, dependent-review state and audit.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-14",
+      "title": "Partial work and return visit",
+      "parent_acceptance_ids": [
+        "AT-14",
+        "AT-30"
+      ],
+      "implementation_ids": [
+        "P07",
+        "P09"
+      ],
+      "preconditions": "One work order addresses two tasks/assets; first visit cannot finish the second task.",
+      "steps": "Submit Complete attendance with Partial scope outcome and owned follow-up; reviewer accepts attendance; propose return appointment; attempt whole-ticket/order closure prematurely.",
+      "expected": "Visit can become Completed while order remains InProgress and ticket Waiting/Active. Remaining task and owner visible to return crew. Premature closure is blocked.",
+      "evidence": "Independent state records, follow-up, return appointment and closure refusal.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-15",
+      "title": "Customer response alternatives",
+      "parent_acceptance_ids": [
+        "AT-13"
+      ],
+      "implementation_ids": [
+        "P09"
+      ],
+      "preconditions": "Exact issued customer report; five independent response fixtures.",
+      "steps": "Capture Accepted, AcceptedWithReservations, Declined, Unavailable and Disputed outcomes against presented content; omit mandatory remarks once.",
+      "expected": "Each response retains exact revision/hash/context. Reservations/decline/dispute need detail; unavailable has reason/contact action without invented signer. No response automatically approves billing.",
+      "evidence": "Response records, validation, owned activities and unchanged Finance state.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-16",
+      "title": "Signed report revision",
+      "parent_acceptance_ids": [
+        "AT-13",
+        "AT-36"
+      ],
+      "implementation_ids": [
+        "P09"
+      ],
+      "preconditions": "Report revision 1 issued and accepted; a finding needs material correction.",
+      "steps": "Create revision 2, re-review and issue; inspect old/new PDFs and response status; try attaching the old response to revision 2.",
+      "expected": "Revision 1 and its response remain exact. Revision 2 has new content/hash and no inherited signature/acceptance. VAL-20 prevents false reassociation.",
+      "evidence": "Two manifests/outputs, response foreign keys and rejected operation.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-17",
+      "title": "Finance split, allocation and no-posting outcome",
+      "parent_acceptance_ids": [
+        "AT-12",
+        "AT-31"
+      ],
+      "implementation_ids": [
+        "P10"
+      ],
+      "preconditions": "F-06: 90 approved MIN split 60 Billable/30 NonBillable; 2 EA part; verified synthetic mapping.",
+      "steps": "Submit/review one handoff; concurrently allocate the same source quantity elsewhere; process synthetic target for approved billable treatment; reconcile non-billable disposition separately.",
+      "expected": "Over-allocation is rejected atomically. All 90 MIN remain dispositioned. Target 60 MIN does not imply missing 30 when reviewed no-posting evidence covers it. No real ERP result is claimed.",
+      "evidence": "Allocation sum, target line map, non-billable reason, reconciliation record and synthetic label.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-18",
+      "title": "Exact document access and source movement",
+      "parent_acceptance_ids": [
+        "AT-20",
+        "AT-36"
+      ],
+      "implementation_ids": [
+        "P06",
+        "P11"
+      ],
+      "preconditions": "Issued synthetic pack/report/Finance output; source adapter supports simulated rename/move/version removal; restricted internal notes.",
+      "steps": "Rename source; resolve by stable identity; simulate identity-changing move and missing version; open retained exact issue; attempt technician/customer access to Finance/internal output.",
+      "expected": "Supported reference resolves or creates a specific exception. Historical issued bytes remain exact. No silent latest-version substitution or restricted content leak, including metadata/attachment names.",
+      "evidence": "Reference resolution, output hashes, manifest and negative access/content assertions.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-19",
+      "title": "Unknown external outcome and processing concurrency",
+      "parent_acceptance_ids": [
+        "AT-31"
+      ],
+      "implementation_ids": [
+        "P10"
+      ],
+      "preconditions": "Approved handoff; simulator creates one target then times out. Two Finance sessions can claim processing.",
+      "steps": "Race processing claims; allow one simulator effect; timeout; attempt repeat; perform outcome lookup; map discovered target and reconcile.",
+      "expected": "One processor claim and target effect only. State becomes OutcomeUnknown. Blind retry/cancel blocked; lookup resolves original reference before reconciliation.",
+      "evidence": "Claim/version evidence, simulator effect count, lookup and final mapping.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-20",
+      "title": "Account amounts, unapplied cash and reversal",
+      "parent_acceptance_ids": [
+        "AT-18",
+        "AT-31"
+      ],
+      "implementation_ids": [
+        "P10"
+      ],
+      "preconditions": "F-01 original 1100, applied payment 400, credit 100, remaining 600; F-02 unapplied 200; F-03 payment reversal.",
+      "steps": "Render F-01/F-02; compare source fields; apply F-03 observation; inspect history and company/currency labels.",
+      "expected": "Original remains 1100; open 600; unapplied 200 separate. After reversal current remaining is 1000 with lineage. Page subtotal and cash are not silently netted into invoice balance.",
+      "evidence": "Exact expected/observed decimal values, source timestamps and status history.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-21",
+      "title": "Incomplete source and undefined metric",
+      "parent_acceptance_ids": [
+        "AT-31"
+      ],
+      "implementation_ids": [
+        "P10"
+      ],
+      "preconditions": "F-04 missing second page; F-05 unknown commitment definition; existing last-good account snapshot.",
+      "steps": "Fail a refresh midway; filter to one page; request undefined metric.",
+      "expected": "Incomplete/unavailable/undefined states are explicit. Last-good values show their as-at/failure context. No verified zero, whole-account total from page sum, or invented commitment formula.",
+      "evidence": "Import run completeness, UI/JSON states and metric definition reference.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-22",
+      "title": "Restore and safe queue recovery",
+      "parent_acceptance_ids": [
+        "AT-22"
+      ],
+      "implementation_ids": [
+        "P12"
+      ],
+      "preconditions": "Synthetic database, issued objects, audit/outbox and an OutcomeUnknown handoff.",
+      "steps": "Take documented backup/checkpoint; restore into clean isolated environment with outbound effects disabled; compare records/files; recover queue leases and investigate unknown item before enabling simulation.",
+      "expected": "Referenced objects and record relationships restore; hashes/counts match declared backup point. Outbox replay does not duplicate issues/targets. Actual measured recovery/loss recorded, not claimed candidate SLA.",
+      "evidence": "Restore commands, timestamps, counts/hashes, queue receipts and measured results.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-23",
+      "title": "Template change, long output and storage failure",
+      "parent_acceptance_ids": [
+        "AT-36"
+      ],
+      "implementation_ids": [
+        "P06",
+        "P09",
+        "P11"
+      ],
+      "preconditions": "Long customer/site names, many assets/findings/pages; template versions 1/2; injectable storage/finalisation failure.",
+      "steps": "Generate selected OUT outputs; inspect all pages; change template/source during generation; fail file store then database finalisation; retry same operation.",
+      "expected": "No clipped/overlapping or confidential content. Stale render cannot issue without review. Durable storage failure does not show Issued; retry reconciles one output/issue. Prior template output unchanged.",
+      "evidence": "Page review checklist, output hashes, failed-attempt states and issue counts.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-24",
+      "title": "Offline reassignment, cancellation and revocation",
+      "parent_acceptance_ids": [
+        "AT-11",
+        "AT-34"
+      ],
+      "implementation_ids": [
+        "P08"
+      ],
+      "preconditions": "Technician offline with revision 1 and unsent evidence; server reassigns/cancels and issues changed scope.",
+      "steps": "Capture locally; reconnect with active identity but stale assignment; repeat with revoked normal access and no recovery capability; then exercise separately authorised recovery capability.",
+      "expected": "Stale evidence retained in restricted ReviewRequired and excluded from approved totals. Revoked user gets no normal access; local evidence retained until authorised recovery. Old pack never claimed current; direct-contact need visible.",
+      "evidence": "Access/assignment versions, local queue, restricted recovery receipts and audit.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-25",
+      "title": "Effective site/operator and asset history",
+      "parent_acceptance_ids": [
+        "AT-30",
+        "AT-33"
+      ],
+      "implementation_ids": [
+        "P03"
+      ],
+      "preconditions": "Completed visit and issued report under old operator/site/configuration; future appointment exists.",
+      "steps": "Record reviewed operator change/asset move at an effective instant; inspect current context, historic report and future pack readiness.",
+      "expected": "Current records reflect effective change; historical report/context unchanged. Affected future work requires review; no duplicate identity or retroactive reassignment. Automatic recurrence remains explicitly deferred.",
+      "evidence": "Effective relationships, old/new snapshots and future review task.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-26",
+      "title": "Cancellation and actual-work preservation",
+      "parent_acceptance_ids": [
+        "AT-14"
+      ],
+      "implementation_ids": [
+        "P05"
+      ],
+      "preconditions": "One future confirmed visit with issued pack; another visit contains actual field labour.",
+      "steps": "Cancel future visit with reason; attempt cancellation of visit with actual work; inspect resource reservations, packs, contacts and captured entries.",
+      "expected": "Future reservations released and history retained; contact tasks created. Actual-work visit cannot be erased/cancelled as unstarted; completion with remaining-work disposition is required.",
+      "evidence": "Reservation changes, VAL-21, retained entries and cancellation audit.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-27",
+      "title": "Accessibility and defined load",
+      "parent_acceptance_ids": [
+        "AT-23"
+      ],
+      "implementation_ids": [
+        "P11"
+      ],
+      "preconditions": "BP-02 benchmark fixture and recorded browser/device/network/build; keyboard and representative screen-reader setup.",
+      "steps": "Complete intake, booking move, field submission, report response and Finance review by keyboard; inspect errors/focus/reflow; run core-read timing sample including cold/warm distinction.",
+      "expected": "Workflow has labelled controls, meaningful focus, no drag-only action or colour-only meaning. Record p95 against candidate 3-second target with actual profile; disclose failures and no unsupported whole-product conformance claim.",
+      "evidence": "Accessibility findings, timings/raw sample, environment and remediation evidence.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-28",
+      "title": "Schema, policy and application update",
+      "parent_acceptance_ids": [
+        "AT-35"
+      ],
+      "implementation_ids": [
+        "P08",
+        "P12"
+      ],
+      "preconditions": "Queued payload v1, application update and policy/template successor; backup/recovery instructions.",
+      "steps": "Deploy compatible update; replay old payload; try unsupported schema; publish changed scheduling rule; inspect existing issued content and future bookings.",
+      "expected": "Supported payload migrates/accepts once. Unsupported original retained for recovery. Future affected work flagged; no silent reassignment/reissue or changed historic evidence. Software rollback does not erase external outcomes.",
+      "evidence": "Migration/result receipts, preserved payload, impact tasks and release note.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-29",
+      "title": "Honest empty, error and partial states",
+      "parent_acceptance_ids": [
+        "AT-23"
+      ],
+      "implementation_ids": [
+        "P11"
+      ],
+      "preconditions": "Known records plus injectable query/permission/render/upload failures.",
+      "steps": "Visit all 15 screens in empty, populated, loading, failed and applicable restricted/stale states; retry save while retaining input.",
+      "expected": "No-records differs from could-not-load. Errors provide actionable recovery without stack traces/secrets. Failed saves retain safe input; unsupported features never appear successful.",
+      "evidence": "Screen-state checklist, representative captures and API outcomes.",
+      "status": "Not run"
+    },
+    {
+      "id": "PT-30",
+      "title": "Complete owner demonstration",
+      "parent_acceptance_ids": [
+        "AT-06",
+        "AT-07",
+        "AT-08",
+        "AT-12",
+        "AT-13",
+        "AT-14",
+        "AT-31"
+      ],
+      "implementation_ids": [
+        "P11",
+        "P12"
+      ],
+      "preconditions": "Fresh deterministic synthetic seed; completed P01\u2013P12; previous PT findings dispositioned.",
+      "steps": "Execute the full scope narrative from customer history through return visit, report reservation and Finance reconciliation; restart application/database during a safe saved stage; revisit next technician history.",
+      "expected": "A complete persisted journey demonstrates preparation, controlled scheduling, useful history, field evidence and Finance outcome. All remaining limitations are labelled; no live integration/customer message claimed.",
+      "evidence": "Commit/environment, walkthrough record, outputs, test results and open-defect list.",
+      "status": "Not run"
+    }
+  ]
+}

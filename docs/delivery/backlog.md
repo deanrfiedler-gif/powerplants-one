@@ -32,3 +32,7 @@ Start with PPO-001, then the authority/identity/Finance/document/permission disc
 No issue is assigned to a colleague or given an invented due date. Dean remains prototype owner; departmental roles in the source documents remain proposed reviewers. Closing a discovery issue does not close every referenced parent requirement or record production approval.
 
 See [current status](../STATUS.md), [the first-release brief](first-release.md), [requirements](../requirements/requirements.csv) and [the detailed creation register](initial-backlog.json).
+
+## PP-01 design package
+
+The [requested package](../prototype/README.md) now supplies the selected scope, architecture, Service, data/API, Finance/documents and synthetic procedures. See the [design issue disposition](prototype-implementation-plan.md#6-design-issue-disposition) and live issues for publication/remaining evidence. The next application work is [P01](prototype-implementation-plan.md#4-p01-implementation-brief). P01–P12 are implementation plan IDs, not additional issued GitHub numbers.

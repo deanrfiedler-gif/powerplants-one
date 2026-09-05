@@ -19,3 +19,7 @@ A synthetic prototype can make workflow decisions reviewable while external-syst
 The release does not depend on full CRM cutover, every CREMS formula, complete project scheduling, native CAD automation, a customer portal or customer OT access. Basic financial, technical, material and document controls still apply.
 
 Produce BP-02 and BP-07 with the minimum BP-09 Finance/document detail, then test the authorised prototype scope. Any operational pilot needs explicit cohort, source authority, support, acceptance and recovery decisions; repository setup does not satisfy those gates.
+
+## Current design package
+
+The user subsequently requested this selected synthetic design package. [PP-01](../prototype/README.md), BP-02/BP-07 and minimum Finance/document contracts are now authored. Operational pilot approval remains separate. Follow [P01–P12](prototype-implementation-plan.md) for implementation.
