@@ -1,8 +1,8 @@
 # PP-01 — Service data and choice dictionary
 
-**Edition:** v01 · **Status:** Proposed logical contract for implementation. This is not an exported CREMS/MYOB schema or an executed database migration.
+**Edition:** r02 · **Status:** Proposed logical contract for implementation. This is not an exported CREMS/MYOB schema or an executed database migration.
 
-[BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md) · [Finance](finance-handoff.md) · [Documents](documents-and-issues.md).
+[BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md) · [Finance](finance-handoff.md) · [Documents](document-issue-distribution.md).
 
 ## 1. Conventions
 
@@ -13,6 +13,16 @@ Common to mutable business records: `id` UUID R; `workspace_id` UUID R; `version
 Common validation: trim surrounding text whitespace without changing meaningful serial/identifier case; reject control characters in single-line labels; short names 1–200 characters, external IDs 1–200, narrative 1–10,000 when required; URLs are display/reference text and never arbitrary server-fetch instructions. Quantity numeric(18,6), money numeric(19,4) with currency/basis, duration integer seconds ≥0, with derived decimal minutes; exact Finance comparison/rounding is defined separately. Maximum values and file sizes are configurable tested limits, not user-entered policy.
 
 Null means unknown/not supplied; use NotApplicable only when a reviewer records why. No empty UUID, magic zero date or inferred ERP number. Required-stage validations run on the server even if a form was bypassed. Effective-dated relationships use `[valid_from, valid_to)` with null end for current; overlapping active operator/location assignments are blocked unless their role explicitly permits multiple concurrent parties.
+
+### 1.1 Adopted readable-reference contract
+
+[PPO-STD-001](../standards/naming-conventions.md) and ADR-0005 define readable references separately from UUID and external keys. Existing `display_number` fields use `SYN-PPO-<TYPE>-<at-least-six-digit-sequence>` in PP-01: Asset=AST, Ticket=TKT, WorkOrder=WO, Appointment=APT and FinancialHandoff=FH. Add server-allocated `display_number` text to Organisation (ORG) and Site (SITE). Person (PER) display references are optional and are not required for the first prototype.
+
+Pack identity (`pack_id`) and report identity (`report_id`) each own one server-allocated display number, PACK and RPT respectively. Their revision records carry that same immutable display reference; a new content revision does not allocate a new pack/report number. Physical schema placement must enforce the logical identity/revision separation. This is a deliberate dictionary amendment, not an executed migration.
+
+Allocate atomically by workspace/type/synthetic namespace; enforce display-reference uniqueness across workspace business identities, preserve gaps and never reset annually or reuse a number. An offline draft has a stable UUID and displays **Pending reference** until server allocation; the persisted accepted record must have its required number. SYN is mandatory alongside `synthetic=true` in PP-01. Non-synthetic PPO references are reserved and disabled. External company/entity keys retain exact case, punctuation and leading zeros. Foreign keys always use UUIDs; repeated revision display values identify the same aggregate and are not duplicate aggregate allocations.
+
+Wire keys remain snake_case; enum/event values retain their current PascalCase contracts. The [label mapping](../standards/naming-conventions.md#122-canonical-state-values) controls friendly UI text. Future OPP/EST/QUO/PRJ/REQ/VAR/TRN reference types are naming reservations only; their records are not added to PP-01.
 
 ## 2. Shared context — DAT-01–DAT-03
 

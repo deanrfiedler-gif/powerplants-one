@@ -2,6 +2,9 @@
 
 **Status:** Applied repository convention under the requested package/naming review. **Date:** 5 September 2026. **Related:** D-003/D-029; DEV-03.
 
+
+> **Update — 5 September 2026:** [ADR-0005](ADR-0005-project-naming-adoption.md) supersedes the specific working-master path and external STD-001/GEN provisions below. Current master: [BP-01](../blueprints/BP-01-master-blueprint.md). Independent naming authority: [PPO-STD-001](../standards/naming-conventions.md). The stable-file and preserved-baseline principles remain in force. The text below records the earlier decision.
+
 ## Context
 
 The user asked whether `GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md` should become `GEN_SPC_PPABusinessPlatform_MasterBlueprint.md` because GitHub tracks changes. Stable working paths reduce link churn as the specification evolves. Issued evidence still needs a recoverable identity and must not be confused with later working edits.

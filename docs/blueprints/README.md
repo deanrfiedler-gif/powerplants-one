@@ -1,10 +1,10 @@
 # Blueprint register
 
-[Working master](GEN_SPC_PPABusinessPlatform_MasterBlueprint.md) uses a stable filename. Its initial content remains issued v02; the [frozen issued baseline](../reference/baselines/GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md) remains hash-protected. Current direction and later design choices appear in [STATUS](../STATUS.md) and ADRs. See [ADR-0002](../decisions/ADR-0002-stable-specification-filenames.md) for naming.
+[Working master](BP-01-master-blueprint.md) uses a stable filename. Its r03 working amendment updates naming/ownership metadata while preserving requirement scope; the [frozen issued baseline](../reference/baselines/GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md) remains hash-protected. Current direction and later design choices appear in [STATUS](../STATUS.md) and ADRs. See [ADR-0002](../decisions/ADR-0002-stable-specification-filenames.md) for the original stable-file decision, superseded in naming details by [ADR-0005](../decisions/ADR-0005-project-naming-adoption.md).
 
 | ID | Specification | Current status |
 |---|---|---|
-| BP-01 | Master Business & Build Blueprint | Working stable path; initial v02 content preserved |
+| BP-01 | Master Business & Build Blueprint | Working r03 naming amendment; issued v02 source preserved |
 | BP-02 | [Platform Solution Architecture](../architecture/BP-02-platform-architecture.md) | PP-01 design recommendation authored; feasibility/implementation pending |
 | BP-03 | CRM Functional & Build Blueprint | Planned; full Pipedrive parity remains open |
 | BP-04 | Estimating & Quotation Functional & Build Blueprint | Planned; controlled CREMS rule evidence required |

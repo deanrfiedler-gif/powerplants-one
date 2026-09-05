@@ -1,8 +1,10 @@
 # PP-01 — Service API, operation and event contracts
 
-**Edition:** v01 · **Status:** Proposed internal API contract; no endpoints implemented. These are Powerplants One routes, never asserted MYOB endpoints.
+**Edition:** r02 · **Status:** Proposed internal API contract; no endpoints implemented. These are Powerplants One routes, never asserted MYOB endpoints.
 
 [Architecture](../architecture/BP-02-platform-architecture.md) · [Dictionary](service-data-dictionary.md) · [Service specification](../blueprints/BP-07-service-operations.md).
+
+**Naming amendment:** ADR-0005 consolidates all ticket and work-order resources under `/service/tickets` and `/service/work-orders`. API-C/API-R IDs and workflow meanings are unchanged. No endpoints or legacy aliases are implemented.
 
 ## 1. Common protocol
 
@@ -39,7 +41,7 @@ All listed commands use POST. Updates are intent-specific; there is no unrestric
 |---|---|---|---|
 | API-C01 | `/customers`, `/sites`, `/assets` | Typed required fields from dictionary | Scoped synthetic create; identity review and no auto ERP write |
 | API-C02 | `/service/tickets`, `/service/tickets/:id/triage` | Request fields; impact/priority/clarification outcome | TR-01; next-action owner retained |
-| API-C03 | `/service/work-orders`, `/work-orders/:id/authorise` | Ticket/site; exact scope revision, coverage and authority evidence | TR-02; freeze authorised scope and its audit |
+| API-C03 | `/service/work-orders`, `/service/work-orders/:id/authorise` | Ticket/site; exact scope revision, coverage and authority evidence | TR-02; freeze authorised scope and its audit |
 | API-C04 | `/appointments`, `/appointments/:id/confirm` | Proposed interval, crew, buffer, policy version and readiness assessment | TR-03; all crew reservations atomic |
 | API-C05 | `/appointments/:id/move` | New time/crew, expected assignment/policy versions, reason and acknowledged warnings | TR-08; original remains on failure; impact tasks and pack review requirement |
 | API-C06 | `/appointments/:id/change-requests` | Proposed time/crew, source reference/version and reason | Pending request only; no reservation change |
@@ -59,7 +61,7 @@ All listed commands use POST. Updates are intent-specific; there is no unrestric
 | API-C20 | `/finance/handoffs/:id/review` | Approve/return, financial dispositions, definition/version and reason | Finance permission; exact source unchanged; Approved or Returned |
 | API-C21 | `/finance/handoffs/:id/begin-processing`, `/finance/handoffs/:id/record-outcome` | Processing claim/version; target references/evidence or Unknown | Single processor claim; no duplicate external operation |
 | API-C22 | `/finance/handoffs/:id/reconcile` | Source-target maps, basis, differences and reviewer disposition | Conservation/evidence/unknown checks; Reconciled only if valid |
-| API-C23 | `/work-orders/:id/close`, `/tickets/:id/resolve`, `/tickets/:id/close`, `/tickets/:id/reopen` | Resolution, evidence dispositions and owned follow-up/new-work link | TR-15; independent lifecycle checks |
+| API-C23 | `/service/work-orders/:id/close`, `/service/tickets/:id/resolve`, `/service/tickets/:id/close`, `/service/tickets/:id/reopen` | Resolution, evidence dispositions and owned follow-up/new-work link | TR-15; independent lifecycle checks |
 | API-C24 | `/activities`, `/activities/:id/complete`, `/contact-outcomes` | Owner/type/object links, due or due-needed, outcome/recipient context | Scoped attributable action; no outbound messaging |
 | API-C25 | `/assets/:id/move`, `/scope-revisions`, `/reports/:id/amend` | Effective change/reason/revision and reviewed impacts | Preserve historical context; dependent pack/report/Finance review |
 | API-C26 | `/policies/:id/publish`, `/templates/:id/publish` | Exact reviewed version/effective date/impact result | Business publisher permission plus tests; no deployment grants |

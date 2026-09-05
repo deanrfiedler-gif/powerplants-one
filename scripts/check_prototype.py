@@ -35,7 +35,7 @@ def main():
         'docs/architecture/BP-02-platform-architecture.md',
         'docs/blueprints/BP-07-service-operations.md',
         'docs/contracts/service-data-dictionary.md', 'docs/contracts/service-api.md',
-        'docs/contracts/finance-handoff.md', 'docs/contracts/documents-and-issues.md',
+        'docs/contracts/finance-handoff.md', 'docs/contracts/document-issue-distribution.md',
         'docs/testing/prototype-acceptance.md',
         'docs/delivery/prototype-implementation-plan.md',
     ]
@@ -114,7 +114,7 @@ def main():
     require(set(re.findall(r'\bD-\d{3}\b',all_text)) <= decision_ids, 'Undefined D reference in package')
     decisions_doc = read('docs/prototype/decisions-and-evidence.md')
     require(set(re.findall(r'^\| (D-\d{3}) ',decisions_doc,re.M)) == decision_ids, 'Decision disposition coverage mismatch')
-    working = read('docs/blueprints/GEN_SPC_PPABusinessPlatform_MasterBlueprint.md')
+    working = read('docs/blueprints/BP-01-master-blueprint.md')
     require(set(parents) <= set(re.findall(r'\b(?:CRM|EST|ENG|PRJ|SVC|SCM|FIN|DOC|NFR)-\d{2}\b',working)), 'Working master lost baseline parent IDs')
     report = {'status':'failed' if ERRORS else 'passed','package':'PP-01','documents':len(paths),'parent_dispositions':len(dispositions),'dispositions':{k:sum(x['disposition']==k for x in dispositions) for k in ['Core','Partial','Deferred']},'master_decisions':len(decision_ids),'prototype_procedures':len(tests),'implementation_packages':len(plan_ids),'registers':register_counts,'errors':ERRORS,'scope':'Documentation consistency only; all application procedures unexecuted'}
     print(json.dumps(report,indent=2))

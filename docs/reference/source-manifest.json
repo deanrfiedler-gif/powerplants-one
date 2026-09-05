@@ -21,6 +21,13 @@
       "sha256": "f2406512c0e24132b434260e34ec51e0bb7582831aaf76a9e9e8b53b5faf54df",
       "bytes": 74647,
       "purpose": "Historical audit informing v02, preserved unchanged"
+    },
+    {
+      "path": "docs/reference/baselines/PPO-STD-001-naming-conventions-r02.md",
+      "sha256": "d6c2efe1bc114ac7d30b3dd7c5fd63a82eb6d8289677b15f74faac0d840c7515",
+      "bytes": 82486,
+      "purpose": "Exact user-adopted PPO-STD-001 r02; adopted by user on 5 September 2026; working r03 records repository adoption",
+      "original_path": "powerplants-one-naming-standard.md"
     }
   ]
 }

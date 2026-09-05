@@ -23,3 +23,5 @@ jobs:
         run: python3 scripts/check_foundation.py
       - name: Validate prototype contracts and traceability
         run: python3 scripts/check_prototype.py
+      - name: Validate naming adoption and project instructions
+        run: python3 scripts/check_naming.py

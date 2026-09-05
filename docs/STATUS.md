@@ -8,8 +8,11 @@ Dean chose to create his own private prototype and authorised the repository fou
 
 The [PP-01 package](prototype/README.md) now defines that synthetic planned-service journey. The technology design recommendation is TypeScript/Next.js with PostgreSQL, explicit domain services, a durable outbox, bounded browser offline capture and simulated source adapters. [ADR-0003](decisions/ADR-0003-prototype-architecture.md) records its scope and pending feasibility.
 
+Dean has now adopted the independent [PPO-STD-001 naming standard](standards/naming-conventions.md) and authorised its repository implementation. [ADR-0005](decisions/ADR-0005-project-naming-adoption.md) records Powerplants One / PPO, the stable master path, removal of the other project's STD-001 dependency and the scoped contract alignment. The [ChatGPT project instructions](standards/chatgpt-project-instructions.md) are maintained in the repository for the dedicated project.
+
 ## What exists
 
+- Adopted naming r02 preserved exactly, with working r03 adoption edition, document/exception registers and naming checks.
 - Master working document with stable filename and an unchanged issued v02 baseline; preserved v01/audit references.
 - Original 78-parent requirement index, 29 decision register, 38 master acceptance scenarios and 16 linked discovery/design issues.
 - PP-01 scope, BP-02, BP-07, complete selected data/choice and API contracts, Finance/document contracts, decision/evidence treatment and implementation plan.
@@ -26,9 +29,9 @@ No paid service, repository visibility/membership change, source-system transact
 
 ## Decision state
 
-D-003/D-004/D-022/D-029 are partially resolved for repository naming, selected synthetic journey and recommended prototype design. The other 25 master decisions remain open; none is fully closed. [Current evidence treatment](prototype/decisions-and-evidence.md) distinguishes useful design detail from operational closure evidence.
+D-003 is resolved for this personal prototype: Powerplants One, PPO and its independent naming standard are user-adopted. D-004/D-022/D-029 remain partially resolved. The other 25 master decisions remain open. Corporate programme designation, if ever requested, would be a new scoped decision rather than a dependency on another project. [Current evidence treatment](prototype/decisions-and-evidence.md) distinguishes useful design detail from operational closure evidence.
 
-Dean owns private prototype decisions. Proposed department roles do not assign employees, approve an organisation chart or establish corporate sponsorship. SOL008 remains the separate PPA Smartsheet Delivery System reference; GEN is provisional here.
+Dean owns private prototype decisions. Proposed department roles do not assign employees, approve an organisation chart or establish corporate sponsorship. PPO is the adopted local project code; GEN remains only in preserved historical source names. SOL008 and the other project's STD-001 are outside this project's naming authority.
 
 ## Immediate next task
 
