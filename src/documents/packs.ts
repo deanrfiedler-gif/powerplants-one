@@ -1,3 +1,4 @@
+import { visibleActivity } from "../activities/activities";
 import { randomUUID } from "node:crypto";
 import { database, transaction } from "../platform/database";
 import type { Principal } from "../platform/identity";
@@ -595,6 +596,27 @@ export async function readPack(p: Principal, id: string) {
       : revisions.filter((r) =>
           currentIssues.some((i) => i.revision_id === r.id),
         );
+    const follow_ups = [];
+    if (staff)
+      for (const f of (
+        await c.query(
+          "SELECT f.activity_id FROM ppo.pack_follow_ups f JOIN ppo.pack_issue_events e ON e.id=f.issue_event_id JOIN ppo.pack_issues i ON i.id=e.issue_id WHERE f.workspace_id=$1 AND i.pack_id=$2",
+          [p.workspace_id, pack.id],
+        )
+      ).rows) {
+        try {
+          const task = await visibleActivity(c, p, f.activity_id);
+          follow_ups.push({
+            activity_id: task.id,
+            owner_id: task.owner_id,
+            status: task.status,
+            summary: task.summary,
+          });
+        } catch (e) {
+          if (!(e instanceof AppError) || ![403, 404].includes(e.status))
+            throw e;
+        }
+      }
     return envelope([
       {
         ...pack,
@@ -618,14 +640,7 @@ export async function readPack(p: Principal, id: string) {
                   reason: "Refer to current pack applicability.",
                 },
           ),
-        follow_ups: staff
-          ? (
-              await c.query(
-                "SELECT f.activity_id,a.owner_id,a.status,a.summary FROM ppo.pack_follow_ups f JOIN ppo.pack_issue_events e ON e.id=f.issue_event_id JOIN ppo.pack_issues i ON i.id=e.issue_id JOIN ppo.activities a ON a.id=f.activity_id WHERE f.workspace_id=$1 AND i.pack_id=$2",
-                [p.workspace_id, pack.id],
-              )
-            ).rows
-          : [],
+        follow_ups,
         history: staff
           ? (
               await c.query(

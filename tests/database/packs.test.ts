@@ -717,6 +717,11 @@ test("P06 amendment contact activity failure rolls back withdrawal and exact ret
   const current = (await readPack(q.p, q.pack.id)).items[0];
   assert.equal(current.follow_ups.length, 1);
   assert.equal(current.follow_ups[0].status, "Open");
+  await database().query(
+    "UPDATE ppo.permission_grants SET valid_to='2026-09-01' WHERE user_id=$1 AND capability='activity.read'",
+    [q.p.actor_id],
+  );
+  assert.deepEqual((await readPack(q.p, q.pack.id)).items[0].follow_ups, []);
 });
 
 test("P06 successor scope Draft atomically invalidates real pack without altering authorised scope or original files", async () => {
