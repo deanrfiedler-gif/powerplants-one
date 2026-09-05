@@ -1,0 +1,48 @@
+{
+  "name": "powerplants-one",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.20.0",
+    "npm": "11.19.0"
+  },
+  "packageManager": "npm@11.19.0",
+  "scripts": {
+    "dev": "node --env-file=.env.local --import tsx scripts/local-server.ts",
+    "build": "next build",
+    "start": "node scripts/reject-production.mjs",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "db:migrate": "node --env-file=.env.local --import tsx scripts/database.ts migrate",
+    "db:seed": "node --env-file=.env.local --import tsx scripts/database.ts seed",
+    "db:health": "node --env-file=.env.local --import tsx scripts/database.ts health",
+    "db:reset": "node --env-file=.env.local --import tsx scripts/database.ts reset",
+    "test:unit": "node --import tsx --test tests/unit/*.test.ts",
+    "test:db": "node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/*.test.ts",
+    "test:http": "node --env-file=.env.local --import tsx --test tests/http/*.test.ts",
+    "test:browser": "playwright test",
+    "check": "npm run lint && npm run typecheck && npm run test:unit && npm run build"
+  },
+  "dependencies": {
+    "next": "16.3.4",
+    "pg": "8.23.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "server-only": "0.0.1"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "16.3.4",
+    "@playwright/test": "1.63.0",
+    "@types/node": "24.13.3",
+    "@types/pg": "8.23.1",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "eslint": "10.10.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "prettier": "3.9.6",
+    "tsx": "4.23.13",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.69.0"
+  }
+}

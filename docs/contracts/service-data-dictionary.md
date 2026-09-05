@@ -1,8 +1,10 @@
 # PP-01 — Service data and choice dictionary
 
-**Edition:** r02 · **Status:** Proposed logical contract for implementation. This is not an exported CREMS/MYOB schema or an executed database migration.
+**Edition:** r03 · **Status:** Logical contract; P01 implements a bounded subset with the explicit limits below. This is not an exported CREMS/MYOB schema.
 
 [BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md) · [Finance](finance-handoff.md) · [Documents](document-issue-distribution.md).
+
+**P01 physical subset:** Workspace, synthetic company context, User, company-scoped read/edit grants, opaque Session, New Ticket, AuditEvent, OperationReceipt and OutboxJob. Ticket fixtures use owned requester/site clarification markers; `site_identification_needed=true` and no site relation exists yet. Shared Organisation/Person/Site/Asset models and full scope/assignment permissions remain P02. Fixture references are deterministic reserved SYN-PPO identities; no create endpoint or production reference allocator exists. Full cross-type allocation/uniqueness is a P02 obligation. The separate `ppo_proof` reservation table is a disposable feasibility experiment, not a completed DAT-06 model. [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md) and the [handover](../delivery/p01-handover.md) record migrations, tests and limits.
 
 ## 1. Conventions
 

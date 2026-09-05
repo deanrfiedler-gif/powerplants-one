@@ -36,6 +36,8 @@ Keep operational MYOB exports, customer files, personal information and credenti
 ```sh
 python3 scripts/check_foundation.py
 python3 scripts/check_prototype.py
+python3 scripts/check_naming.py
+npm run check
 ```
 
-GitHub checks use a pinned checkout action with read-only contents access. No deployment, ERP access or credentials are required. Add runtime/application checks after the technology and implementation scope are selected.
+GitHub checks use pinned actions with read-only contents access. Application assurance runs the local synthetic application and disposable PostgreSQL; no deployment or ERP access is involved. Follow the [P01 handover](docs/delivery/p01-handover.md) for database, HTTP and browser checks and local configuration. Keep component evidence separate from full business acceptance.

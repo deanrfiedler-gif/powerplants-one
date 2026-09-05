@@ -27,3 +27,8 @@ coverage/
 /exports/
 /backups/
 /tmp/
+.next/
+*.tsbuildinfo
+test-results/
+playwright-report/
+next-env.d.ts

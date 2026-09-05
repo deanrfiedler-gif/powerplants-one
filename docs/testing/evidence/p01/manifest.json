@@ -1,0 +1,123 @@
+{
+  "record": "P01 component visual evidence",
+  "captured_at_utc": "2026-09-05T02:58:53Z",
+  "source_head": "e6c5048b184661400cc79517d0de4f316a049016",
+  "source_tree": "1551b665ecc70d206ea6a1e722d1f2a7bb79fe82",
+  "workflow_run": 33940495951,
+  "workflow_job": 101236831837,
+  "artifact_id": 9961668513,
+  "archive_sha256": "fb1739d0860ee40fc66e2647407be13f8285ee09deef6c859a25e996cba07dc4",
+  "environment": {
+    "os": "GitHub Actions Ubuntu 24.04 x86_64",
+    "node": "24.20.0",
+    "npm": "11.19.0",
+    "postgresql": "16.15",
+    "playwright": "1.63.0",
+    "chromium_headless_shell": "153.0.8010.12 v1243"
+  },
+  "method": "Unmodified Playwright screenshots of a loopback application using real synthetic PostgreSQL. Unavailable screenshots deliberately abort the browser health request and prove UI recovery only. Full-page image height may exceed viewport. Mobile is Chromium viewport/touch emulation, not real-device validation.",
+  "files": [
+    {
+      "file": "desktop-foundation.png",
+      "sha256": "b5a8ff38318c872f31b6bb9e00c58dce5c0eb650c646934272f0aedd989b2781",
+      "dimensions_px": [
+        1440,
+        1081
+      ],
+      "viewport_px": [
+        1440,
+        1000
+      ]
+    },
+    {
+      "file": "desktop-keyboard-focus.png",
+      "sha256": "fea1a501c3cc0473a1b7dd6b6676affc142d0def521f6cd5dfa2418862c846fb",
+      "dimensions_px": [
+        1440,
+        1000
+      ],
+      "viewport_px": [
+        1440,
+        1000
+      ]
+    },
+    {
+      "file": "desktop-overview.png",
+      "sha256": "3b547c76620ced919062ea843afb7f10b91940e78ac88ab8bb92385a8e7bbebb",
+      "dimensions_px": [
+        1440,
+        1120
+      ],
+      "viewport_px": [
+        1440,
+        1000
+      ]
+    },
+    {
+      "file": "desktop-unavailable.png",
+      "sha256": "0dee15934fc976f277f59c1d180e8d8d42e026e8d5bf9e346fbe4216d80b9ed1",
+      "dimensions_px": [
+        1440,
+        1081
+      ],
+      "viewport_px": [
+        1440,
+        1000
+      ]
+    },
+    {
+      "file": "mobile-foundation.png",
+      "sha256": "19db311f6b89d5d55cbb6758f3a3559ebc59e30eb8ad09f322aeb35e6f1ae0e1",
+      "dimensions_px": [
+        390,
+        1969
+      ],
+      "viewport_px": [
+        390,
+        844
+      ]
+    },
+    {
+      "file": "mobile-keyboard-focus.png",
+      "sha256": "f18b1b3989d8682937932325d9aa57669f0935dc2e892751f782d465c925016e",
+      "dimensions_px": [
+        390,
+        844
+      ],
+      "viewport_px": [
+        390,
+        844
+      ]
+    },
+    {
+      "file": "mobile-overview.png",
+      "sha256": "152cd52ada7b3b4fc3c1b1962d74551ab1811a9f16506072254445099586cf3d",
+      "dimensions_px": [
+        390,
+        2084
+      ],
+      "viewport_px": [
+        390,
+        844
+      ]
+    },
+    {
+      "file": "mobile-unavailable.png",
+      "sha256": "6c95240cf563886be004bc12488a02dcef5716b887197e9a4ab83978a435f22d",
+      "dimensions_px": [
+        390,
+        1792
+      ],
+      "viewport_px": [
+        390,
+        844
+      ]
+    }
+  ],
+  "ci_checkout_merge_ref": "4b05e7b18510b5de821cc794603ddb93021cc816",
+  "visual_inspection": {
+    "date": "2026-09-05",
+    "reviewer": "Implementing assistant; self-review",
+    "result": "Eight original images inspected. Mobile heading spacing and hidden skip-link capture corrected; readable labels, focus, synthetic indicators and error recovery controls confirmed. No real-device claim."
+  }
+}

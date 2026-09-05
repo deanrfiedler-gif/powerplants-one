@@ -1,6 +1,6 @@
 # ADR-0003 — Prototype application architecture
 
-**Status:** Selected design recommendation for the requested PP-01 package; P01 feasibility not executed. **Date:** 5 September 2026. **Related:** D-022/D-023, NFR-01–NFR-12.
+**Status:** Selected architecture; P01 implementation/evidence now tracked in [ADR-0006](ADR-0006-p01-local-foundation.md) and the [P01 handover](../delivery/p01-handover.md). **Date:** 5 September 2026. **Related:** D-022/D-023, NFR-01–NFR-12.
 
 ## Context and options
 

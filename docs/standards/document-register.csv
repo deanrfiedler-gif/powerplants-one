@@ -1,7 +1,7 @@
 document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes
 PPO-STD-001,"Naming, Identification & Information Organisation Standard",docs/standards/naming-conventions.md,r03,Adopted,Dean Fiedler - private prototype,,powerplants-one-naming-standard.md,
 BP-01,Master Business & Build Blueprint,docs/blueprints/BP-01-master-blueprint.md,r03,Working design,Dean Fiedler - private prototype,c44321e8cbbe205a482e38499016f396e2f6374d,docs/blueprints/GEN_SPC_PPABusinessPlatform_MasterBlueprint.md,
-BP-02,Platform Solution Architecture,docs/architecture/BP-02-platform-architecture.md,v01,Design recommendation,Dean Fiedler - private prototype,c44321e8cbbe205a482e38499016f396e2f6374d,,
+BP-02,Platform Solution Architecture,docs/architecture/BP-02-platform-architecture.md,r02,Design with P01 implementation scope,Dean Fiedler - private prototype,c44321e8cbbe205a482e38499016f396e2f6374d,,
 BP-03,CRM Functional & Build Blueprint,docs/blueprints/BP-03-crm.md,,Planned,Dean Fiedler - private prototype,c44321e8cbbe205a482e38499016f396e2f6374d,,
 BP-04,Estimating & Quotation Functional & Build Blueprint,docs/blueprints/BP-04-estimating-quotation.md,,Planned,Dean Fiedler - private prototype,c44321e8cbbe205a482e38499016f396e2f6374d,,
 BP-05,Engineering & Design Control Functional & Build Blueprint,docs/blueprints/BP-05-engineering-design-control.md,,Planned,Dean Fiedler - private prototype,c44321e8cbbe205a482e38499016f396e2f6374d,,
@@ -15,3 +15,5 @@ ADR-0002,Stable working specification filenames,docs/decisions/ADR-0002-stable-s
 ADR-0003,Prototype application architecture,docs/decisions/ADR-0003-prototype-architecture.md,,Design recommendation,Dean Fiedler - private prototype,c44321e8cbbe205a482e38499016f396e2f6374d,,
 ADR-0004,Synthetic service authority and bounded offline scope,docs/decisions/ADR-0004-service-authority-and-offline-scope.md,,Adopted,Dean Fiedler - private prototype,c44321e8cbbe205a482e38499016f396e2f6374d,,
 ADR-0005,Independent project naming and repository adoption,docs/decisions/ADR-0005-project-naming-adoption.md,,Adopted,Dean Fiedler - private prototype,,,
+ADR-0006,P01 local foundation implementation,docs/decisions/ADR-0006-p01-local-foundation.md,,Implemented local P01 decision,Dean Fiedler - private prototype,,,
+P01-HO,Application foundation handover,docs/delivery/p01-handover.md,r01,Verified P01 component handover,Dean Fiedler - private prototype,,,

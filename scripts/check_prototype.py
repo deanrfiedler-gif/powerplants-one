@@ -116,7 +116,7 @@ def main():
     require(set(re.findall(r'^\| (D-\d{3}) ',decisions_doc,re.M)) == decision_ids, 'Decision disposition coverage mismatch')
     working = read('docs/blueprints/BP-01-master-blueprint.md')
     require(set(parents) <= set(re.findall(r'\b(?:CRM|EST|ENG|PRJ|SVC|SCM|FIN|DOC|NFR)-\d{2}\b',working)), 'Working master lost baseline parent IDs')
-    report = {'status':'failed' if ERRORS else 'passed','package':'PP-01','documents':len(paths),'parent_dispositions':len(dispositions),'dispositions':{k:sum(x['disposition']==k for x in dispositions) for k in ['Core','Partial','Deferred']},'master_decisions':len(decision_ids),'prototype_procedures':len(tests),'implementation_packages':len(plan_ids),'registers':register_counts,'errors':ERRORS,'scope':'Documentation consistency only; all application procedures unexecuted'}
+    report = {'status':'failed' if ERRORS else 'passed','package':'PP-01','documents':len(paths),'parent_dispositions':len(dispositions),'dispositions':{k:sum(x['disposition']==k for x in dispositions) for k in ['Core','Partial','Deferred']},'master_decisions':len(decision_ids),'prototype_procedures':len(tests),'implementation_packages':len(plan_ids),'registers':register_counts,'errors':ERRORS,'scope':'Documentation consistency only; all full PT procedures remain Not run; component evidence is separate'}
     print(json.dumps(report,indent=2))
     return bool(ERRORS)
 

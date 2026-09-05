@@ -8,6 +8,7 @@ import csv
 import hashlib
 import json
 import re
+import subprocess
 import sys
 from urllib.parse import unquote, urlsplit
 
@@ -169,7 +170,11 @@ def check_registers():
 
 def check_links_and_hygiene():
     checked = 0
-    docs = list(ROOT.rglob('*.md'))
+    # Validate repository inputs, including new untracked files, rather than installed
+    # dependency docs or ignored runtime output. Tracked/force-added secrets remain checked.
+    names = subprocess.check_output(['git', 'ls-files', '--cached', '--others', '--exclude-standard', '-z'], cwd=ROOT).decode().split('\0')
+    files = [ROOT / name for name in set(names) if name and (ROOT / name).is_file()]
+    docs = [path for path in files if path.suffix == '.md']
     for path in docs:
         if '.git' in path.parts:
             continue
@@ -188,7 +193,7 @@ def check_links_and_hygiene():
             checked += 1
         if re.search(r'\]\((?:sandbox:|file:)|/workspace/scratch/', text):
             problem(f'{path.relative_to(ROOT)}: scratch-only reference in repository document')
-    for path in ROOT.rglob('*'):
+    for path in files:
         if not path.is_file() or '.git' in path.parts:
             continue
         relative = path.relative_to(ROOT)

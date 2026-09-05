@@ -8,6 +8,7 @@
 | [ADR-0002](ADR-0002-stable-specification-filenames.md) | Stable working specification names and frozen issued baselines |
 | [ADR-0003](ADR-0003-prototype-architecture.md) | Recommended prototype application architecture and proof requirements |
 | [ADR-0005](ADR-0005-project-naming-adoption.md) | Adopted independent PPO naming, canonical paths, contract alignment and project instructions |
+| [ADR-0006](ADR-0006-p01-local-foundation.md) | Local-only P01 implementation, supported toolchain, identity/transaction proof and limits |
 | [ADR-0004](ADR-0004-service-authority-and-offline-scope.md) | Synthetic service authority, manual Finance simulation and bounded offline scope |
 
 [PP-01 decisions and evidence](../prototype/decisions-and-evidence.md) explains each operational gap. Design choices can enable synthetic work without becoming verified tenant facts or corporate approvals. Use [ADR-template](ADR-template.md) for substantive new choices; supersede old ADRs rather than deleting their history.
