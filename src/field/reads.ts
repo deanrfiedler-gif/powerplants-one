@@ -133,9 +133,13 @@ export async function readFieldJob(p: Principal, id: string) {
     const contact = site.primary_contact_id
       ? await visible(c, p, "Person", site.primary_contact_id)
       : null;
+    const report = (await c.query("SELECT to_regclass('ppo.service_reports') AS relation")).rows[0].relation ? (await c.query("SELECT id,version,revision,status,current_revision_id FROM ppo.service_reports WHERE workspace_id=$1 AND attendance_id=$2",[p.workspace_id,attendance?.id ?? null])).rows[0] ?? null : null;
+    const accepted_end_at = report ? (await c.query("SELECT accepted_end_at FROM ppo.attendance_acceptances WHERE workspace_id=$1 AND attendance_id=$2",[p.workspace_id,attendance?.id])).rows[0]?.accepted_end_at ?? null : null;
     return envelope(
       [
         {
+          report,
+          accepted_end_at,
           id: a.id,
           reference: a.display_number,
           version: a.version,

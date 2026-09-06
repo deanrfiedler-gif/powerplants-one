@@ -1,3 +1,4 @@
+import { reportContext, ownReport } from "../reports/context";
 import { fieldContext, entryContext, attachmentContext } from "../field/context";
 import { packContext } from "../documents/context";
 import { visibleAppointment, visibleRequest } from "../scheduling/planner";
@@ -24,7 +25,14 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.object_type === "FieldEntry") {
+  if (r.object_type === "ServiceReport") {
+    if (r.command === "SubmitCompletion" || r.command === "AmendReport") await ownReport(client,p,r.record_id);
+    else await reportContext(client,p,r.record_id,r.command === "ReviewReport" ? "report.review" : "report.issue");
+  } else if (r.object_type === "CustomerResponse") {
+    const response=(await client.query("SELECT report_id FROM ppo.customer_responses WHERE workspace_id=$1 AND actor_id=$2 AND id=$3",[p.workspace_id,p.actor_id,r.record_id])).rows[0];
+    if (!response) throw unavailable();
+    await reportContext(client,p,response.report_id,"report.respond");
+  } else if (r.object_type === "FieldEntry") {
     await entryContext(client,p,r.record_id,r.command === "CorrectFieldEntry" ? "field.correct.own" : "field.capture.own");
   } else if (r.object_type === "Attachment") {
     await attachmentContext(client,p,r.record_id,true);

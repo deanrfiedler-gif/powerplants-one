@@ -91,7 +91,7 @@ test("P08 additive P07 upgrade preserves attendance, receipt, bytes and revoked 
   assert.deepEqual((await attachmentBytes(q.p, image.id)).bytes, image.bytes);
   assert.equal(
     (await rows("SELECT count(*)::int n FROM public.ppo_migrations"))[0].n,
-    8,
+    9,
   );
   assert.equal(
     (

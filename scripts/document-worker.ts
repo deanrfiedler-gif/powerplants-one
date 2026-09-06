@@ -1,11 +1,13 @@
+import { runReportJobs } from "../src/reports/worker";
 import { runPendingRenderJobs } from "../src/documents/worker";
 import { closeDatabase } from "../src/platform/database";
 import { localConfig } from "../src/platform/config";
 localConfig();
 try {
   const count = await runPendingRenderJobs();
+  const reports = await runReportJobs();
   console.log(
-    `P06: examined ${count} durable render intents. No external messages sent.`,
+    `Examined ${count} pack and ${reports} report render intents. No external messages sent.`,
   );
 } catch {
   console.error(

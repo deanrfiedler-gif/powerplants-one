@@ -1,0 +1,27 @@
+import { common, commonKeys, object, uuid, version, choice, narrative, optionalNarrative, instant, invalid, optionalId } from "../shared/validation";
+import { hash } from "../field/validation";
+export const responseChoices = ["Accepted", "AcceptedWithReservations", "Declined", "Unavailable", "Disputed"] as const;
+export function submitCommand(id: string, input: unknown) {
+  const r=object(input,[...commonKeys,"id","attendance_id","draft_revision_id","expected_draft_version","expected_report_version","expected_appointment_version","attendance_end_at"]);
+  return {...common(r),appointment_id:uuid(id,"appointment_id"),id:uuid(r.id,"id"),attendance_id:uuid(r.attendance_id,"attendance_id"),draft_revision_id:uuid(r.draft_revision_id,"draft_revision_id"),expected_draft_version:version(r.expected_draft_version),expected_report_version:r.expected_report_version===0?0:version(r.expected_report_version),expected_appointment_version:version(r.expected_appointment_version),attendance_end_at:instant(r.attendance_end_at,"attendance_end_at")};
+}
+export function reviewCommand(id: string,input: unknown) {
+  const r=object(input,[...commonKeys,"expected_version","revision_id","source_hash","decision","entry_decisions","authority_disposition","remarks","recipient_id"]);
+  if(!Array.isArray(r.entry_decisions)||r.entry_decisions.length>200) invalid("entry_decisions","Review every exact submitted entry, up to 200.");
+  const entries=r.entry_decisions.map(v=>{const x=object(v,["id","version","decision","remarks"]);return {id:uuid(x.id,"entry_id"),version:version(x.version),decision:choice(x.decision,"entry_decision",["Approved","Returned"] as const),remarks:narrative(x.remarks,"entry_remarks",2000)};}).sort((a,b)=>a.id.localeCompare(b.id));
+  if(new Set(entries.map(x=>x.id)).size!==entries.length) invalid("entry_decisions","Review each entry once.");
+  return {...common(r),report_id:uuid(id,"report_id"),expected_version:version(r.expected_version),revision_id:uuid(r.revision_id,"revision_id"),source_hash:hash(r.source_hash),decision:choice(r.decision,"decision",["Approved","Returned"] as const),entry_decisions:entries,authority_disposition:choice(r.authority_disposition,"authority_disposition",["Current","OriginalAttendanceOnly"] as const),remarks:narrative(r.remarks,"remarks",4000),recipient_id:optionalId(r.recipient_id,"recipient_id")};
+}
+export function revisionCommand(id:string,input:unknown){const r=object(input,[...commonKeys,"expected_version","revision_id"]);return {...common(r),report_id:uuid(id,"report_id"),expected_version:version(r.expected_version),revision_id:uuid(r.revision_id,"revision_id")};}
+export function issueCommand(id:string,input:unknown){const r=object(input,[...commonKeys,"expected_version","revision_id","review_id","template_id","template_version"]);return {...common(r),report_id:uuid(id,"report_id"),expected_version:version(r.expected_version),revision_id:uuid(r.revision_id,"revision_id"),review_id:uuid(r.review_id,"review_id"),template_id:uuid(r.template_id,"template_id"),template_version:version(r.template_version)};}
+export function responseCommand(id:string,input:unknown){
+  const r=object(input,[...commonKeys,"id","presentation_id","revision_id","presentation_kind","presented_hash","expected_report_version","response","respondent_name","respondent_role","remarks","next_action","presented_at","captured_at","signature"]);
+  const response=choice(r.response,"response",responseChoices),remarks=optionalNarrative(r.remarks,"remarks",4000),next_action=optionalNarrative(r.next_action,"next_action",2000);
+  if(response!=="Accepted"&&(!remarks||remarks.length<10||!next_action||next_action.length<10)) invalid("remarks","Provide meaningful details and an owned next action (at least 10 characters each).");
+  if(response==="Unavailable"&&(r.respondent_name!=null||r.respondent_role!=null||r.signature!=null)) invalid("respondent_name","Unavailable has no respondent or signature; record the reason and contact action.");
+  const presented_at=instant(r.presented_at,"presented_at"),captured_at=instant(r.captured_at,"captured_at");
+  if(presented_at>captured_at) invalid("captured_at","Capture cannot precede presentation.");
+  let signature:null|{sha256:string;byte_count:number;content_base64:string}=null;
+  if(r.signature!=null){const s=object(r.signature,["sha256","byte_count","content_base64"]);if(!Number.isSafeInteger(s.byte_count)||Number(s.byte_count)<1||Number(s.byte_count)>4194304||typeof s.content_base64!=="string"||s.content_base64.length>5592408||s.content_base64.length%4||!/^[A-Za-z0-9+/]*={0,2}$/.test(s.content_base64))invalid("signature","Provide the original bounded synthetic PNG and its exact size/hash.");signature={sha256:hash(s.sha256),byte_count:Number(s.byte_count),content_base64:s.content_base64};}
+  return {...common(r),report_id:uuid(id,"report_id"),id:uuid(r.id,"id"),presentation_id:uuid(r.presentation_id,"presentation_id"),revision_id:uuid(r.revision_id,"revision_id"),presentation_kind:choice(r.presentation_kind,"presentation_kind",["IssuedReport","DraftEvidence"] as const),presented_hash:hash(r.presented_hash),expected_report_version:version(r.expected_report_version),response,respondent_name:response==="Unavailable"?null:narrative(r.respondent_name,"respondent_name",200),respondent_role:response==="Unavailable"?null:narrative(r.respondent_role,"respondent_role",200),remarks,next_action,presented_at,captured_at,signature};
+}
