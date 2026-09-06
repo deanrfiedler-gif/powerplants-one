@@ -47,7 +47,7 @@ CREATE TABLE ppo.report_reviews (
  UNIQUE(workspace_id,id),UNIQUE(workspace_id,report_id,id),UNIQUE(workspace_id,revision_id),
  FOREIGN KEY(workspace_id,report_id,revision_id) REFERENCES ppo.report_revisions(workspace_id,report_id,id),FOREIGN KEY(workspace_id,actor_id) REFERENCES ppo.users(workspace_id,id),
  FOREIGN KEY(workspace_id,recipient_id) REFERENCES ppo.people(workspace_id,id),
- CHECK(decision<>'Approved' OR (recipient_id IS NOT NULL AND customer_snapshot IS NOT NULL AND customer_hash ~ '^[a-f0-9]{64}$' AND source_guard IS NOT NULL))
+ CHECK(decision<>'Approved' OR (recipient_id IS NOT NULL AND customer_snapshot IS NOT NULL AND customer_hash IS NOT NULL AND customer_hash ~ '^[a-f0-9]{64}$' AND source_guard IS NOT NULL))
 );
 CREATE TABLE ppo.attendance_acceptances (
  workspace_id uuid NOT NULL,attendance_id uuid NOT NULL,report_id uuid NOT NULL,review_id uuid NOT NULL,accepted_end_at timestamptz NOT NULL,
@@ -99,7 +99,7 @@ CREATE TABLE ppo.customer_responses (
  CHECK(isfinite(presented_at) AND isfinite(captured_at) AND presented_at<=captured_at AND captured_at<=received_at+interval '5 minutes'),
  CHECK((response='Unavailable' AND respondent_name IS NULL AND respondent_role IS NULL AND signature_key IS NULL) OR (response<>'Unavailable' AND respondent_name IS NOT NULL AND respondent_role IS NOT NULL AND length(btrim(respondent_name))>0 AND length(btrim(respondent_role))>0)),
  CHECK(response='Accepted' OR (remarks IS NOT NULL AND next_action IS NOT NULL AND length(btrim(remarks))>=10 AND length(btrim(next_action))>=10 AND follow_up_activity_id IS NOT NULL)),
- CHECK((signature_key IS NULL AND signature_hash IS NULL AND signature_bytes IS NULL) OR (signature_key IS NOT NULL AND signature_hash ~ '^[a-f0-9]{64}$' AND signature_bytes BETWEEN 1 AND 4194304))
+ CHECK((signature_key IS NULL AND signature_hash IS NULL AND signature_bytes IS NULL) OR (signature_key IS NOT NULL AND signature_hash IS NOT NULL AND signature_bytes IS NOT NULL AND signature_hash ~ '^[a-f0-9]{64}$' AND signature_bytes BETWEEN 1 AND 4194304))
 );
 CREATE TRIGGER register_identity BEFORE INSERT ON ppo.customer_responses FOR EACH ROW EXECUTE FUNCTION ppo.register_identity('CustomerResponse','');
 CREATE TABLE ppo.report_follow_ups (workspace_id uuid NOT NULL,report_id uuid NOT NULL,activity_id uuid NOT NULL,kind text NOT NULL,created_at timestamptz NOT NULL DEFAULT clock_timestamp(),PRIMARY KEY(workspace_id,report_id,activity_id),FOREIGN KEY(workspace_id,report_id) REFERENCES ppo.service_reports(workspace_id,id),FOREIGN KEY(workspace_id,activity_id) REFERENCES ppo.activities(workspace_id,id));

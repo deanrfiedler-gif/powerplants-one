@@ -116,7 +116,17 @@ export async function retryRoute(request: NextRequest, context: RouteContext) {
     object(await jsonBody(request, 4096), []);
     const p = await identity(request),
       { id } = await context.params;
-    return reply(await retryReportJob(p, id!));
+    const job = await retryReportJob(p, id!);
+    return reply({
+      id: job.id,
+      report_id: job.report_id,
+      state: job.state,
+      attempts: job.attempts,
+      error_code: job.error_code,
+      issue_id: job.issue_id,
+      output_available: Boolean(job.output_manifest),
+      attempt_history: job.attempt_history,
+    });
   } catch (e) {
     return failure(e);
   }

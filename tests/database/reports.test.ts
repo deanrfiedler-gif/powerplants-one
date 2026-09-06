@@ -639,3 +639,27 @@ test("P09 all actually started crew must be accepted independently, with no inve
  const ids=[];for(const p of [q.p,m]){let j=(await readFieldJob(p,q.job.id)).items[0];await saveCompletionDraft(p,j.id,draft({...j,entries:j.entries.filter(e=>e.actor_id===p.actor_id),attachments:j.attachments.filter(e=>e.actor_id===p.actor_id)}));j=(await readFieldJob(p,j.id)).items[0];const id=randomUUID();ids.push(id);await submitCompletion(p,j.id,{...base(),id,attendance_id:j.attendance!.id,draft_revision_id:j.draft_revisions[0].id,expected_draft_version:j.draft!.version,expected_report_version:0,expected_appointment_version:j.version,attendance_end_at:new Date().toISOString()});}
  let r=(await readReport(co,ids[0])).items[0];await reviewReport(co,r.id,decision(r));assert.equal((await readReport(co,r.id)).items[0].appointment.status,"CompletedPendingReview");r=(await readReport(co,ids[1])).items[0];await reviewReport(co,r.id,decision(r));assert.equal((await readReport(co,r.id)).items[0].appointment.status,"Completed");assert.equal((await rows("SELECT count(*)::int n FROM ppo.attendance_acceptances"))[0].n,2);assert.equal((await rows("SELECT count(*)::int n FROM ppo.field_attendances"))[0].n,2);second=(await readFieldJob(m,q.job.id)).items[0];assert.ok(second.accepted_end_at);
 });
+
+test("P09 competing report correction and issue request respect one exact report version", async () => {
+  const q = await reviewed(), r = q.report;
+  const attempts = await Promise.allSettled([
+    requestReportIssue(q.reviewer, r.id, { ...base(), expected_version: r.version, revision_id: r.revisions[0].id, review_id: r.reviews[0].id, template_id: r.template.id, template_version: r.template.version }),
+    amendReport(q.p, r.id, { ...base(), expected_version: r.version, revision_id: r.revisions[0].id }),
+  ]);
+  assert.equal(attempts.filter(x => x.status === "fulfilled").length, 1);
+  const current = (await readReport(q.reviewer, r.id)).items[0];
+  assert.equal(current.appointment.status, "Completed");
+  assert.equal(current.issues.length, 0);
+  assert.equal((await rows("SELECT count(*)::int n FROM ppo.attendance_acceptances"))[0].n, 1);
+});
+test("P09 issue authority revoked after durable storage refuses release and original issue receipt recovery", async () => {
+  const q = await reviewed(), r = q.report, cmd = { ...base(), expected_version: r.version, revision_id: r.revisions[0].id, review_id: r.reviews[0].id, template_id: r.template.id, template_version: r.template.version };
+  await requestReportIssue(q.reviewer, r.id, cmd);
+  const job = (await readReport(q.reviewer, r.id)).items[0].jobs[0];
+  const result = await processReportJob(job.id, { afterStore: async () => { await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='report.issue'", [q.reviewer.actor_id]); } });
+  assert.equal("state" in result && result.state, "Failed");
+  await assert.rejects(readOperation(q.reviewer, cmd.operation_id));
+  await assert.rejects(readReportJob(q.reviewer, job.id));
+  assert.equal((await readReport(q.p, r.id)).items[0].issues.length, 0);
+  assert.equal((await rows("SELECT count(*)::int n FROM ppo.report_render_attempts WHERE outcome='Durable'"))[0].n, 1);
+});

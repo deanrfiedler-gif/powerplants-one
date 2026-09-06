@@ -1086,7 +1086,7 @@ async function renderQueue() {
         ),
       );
     if (
-      !["Start", "Acknowledge"].includes(op.command) &&
+      !["Start", "Acknowledge", "SubmitCompletion", "CustomerResponse"].includes(op.command) &&
       row.status.state !== "ServerSaved" &&
       row.status.state !== "Sending" &&
       !row.status.receipt &&
@@ -1392,10 +1392,10 @@ function renderReports(box:HTMLElement) {
   const form=element("form"),end=field(form,"Submission attendance end (ISO timezone)",j.accepted_end_at??new Date().toISOString()),reason=field(form,"Submission reason","","textarea"),submit=element("button","Save completion submission on this device");
   submit.type="submit";form.append(submit);section.append(form);
   form.onsubmit=e=>{e.preventDefault();void perform(async()=>{submit.disabled=true;try{
-    safeJob();const a=await attendance(),rows=(await queue(requireOwner())).filter(x=>x.original.appointment_id===j.id);
+    safeJob();if(!j.attendance)throw new Error("Synchronise your original start and download its accepted attendance before preparing a completion submission. Your field originals remain retained.");const a=await attendance(),rows=(await queue(requireOwner())).filter(x=>x.original.appointment_id===j.id);
     if(rows.some(x=>x.status.recovery))throw new Error("Restricted-recovery evidence cannot enter normal submission. Resolve its owned disposition online.");
     if(rows.some(x=>x.original.command==="SubmitCompletion"&&x.status.state!=="ServerSaved"))throw new Error("An original submission is already retained. Retry that exact original first.");
-    const localDraft=rows.filter(x=>x.original.command==="CompletionDraft").at(-1),d=j.draft_revisions[0];
+    const localDraft=rows.filter(x=>x.original.command==="CompletionDraft"&&Number(x.original.payload.expected_version)+1>=(j.draft?.version??0)).at(-1),d=j.draft_revisions[0];
     const pending=rows.filter(x=>x.status.state!=="ServerSaved"&&["Start","Capture","Correct","AttachmentInitiate","AttachmentUpload","AttachmentFinalise","CompletionDraft"].includes(x.original.command));
     if(!localDraft&&!d)throw new Error("Save an exact completion draft first.");
     if(pending.length&&!localDraft)throw new Error("Unsent evidence requires a new local completion draft with exact dependencies.");
