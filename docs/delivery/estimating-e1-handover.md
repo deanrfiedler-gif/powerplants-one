@@ -1,6 +1,6 @@
 # BP-04 E1 implementation handover
 
-**Status:** Implementation under verification, not yet delivered or owner-accepted. **Work:** [issue #46](https://github.com/deanrfiedler-gif/powerplants-one/issues/46). **Decision:** [ADR-0017](../decisions/ADR-0017-estimating-e1.md). **Contract:** [E1 physical/API contract](../contracts/estimating-e1.md).
+**Status:** Implementation under verification, not yet delivered or owner-accepted. **Review:** [draft PR #49](https://github.com/deanrfiedler-gif/powerplants-one/pull/49). **Work:** [issue #46](https://github.com/deanrfiedler-gif/powerplants-one/issues/46). **Decision:** [ADR-0017](../decisions/ADR-0017-estimating-e1.md). **Contract:** [E1 physical/API contract](../contracts/estimating-e1.md).
 
 ## Authority and baseline
 
@@ -19,6 +19,8 @@ The first increment supports only manual AUD excluding tax with the declared syn
 ## Verification record
 
 Local foundation, prototype, naming and BP-04 design assurance pass; all 78 parent IDs and four issued-source hashes remain intact. Local Node 24.19.0/npm 11.9.0 do not match required Node 24.20.0/npm 11.19.0. Engine checks are retained. Application execution is delegated to ordinary disposable repository CI under the existing exact pins; no local application pass is claimed.
+
+First CI attempt on `ea6be9cc`: documentation and design assurance passed. E1 run 34060623212 and application run 34060623200 stopped at TypeScript TS7022 in the restart proof’s response/byte inference; lint had passed. Explicit response/Buffer annotations correct that test-harness type cycle. No runtime case is claimed from this failed attempt. Review also expanded template provenance to retain and hash the complete template definition (layout, row layout, CSS and logo), not only its style/assets.
 
 Authored checks (not yet passed at this checkpoint): six arithmetic/validation unit cases; eleven PostgreSQL cases including current-main upgrade, reseed, immutable graphs, concurrency, actual current-authority denials, safe-only projection, interrupted storage and failed-render recovery; two direct HTTP journeys; five Chromium scenarios on desktop and phone, plus 320px reflow and long output; a separate three-application/browser-process and two-PostgreSQL-restart proof retaining exact receipts and final HTML/PDF bytes. Existing full P01–P09/CRM checks remain enabled. CI evidence records source head, executed checkout/tree, run ID, runtime, process identities and content hashes.
 

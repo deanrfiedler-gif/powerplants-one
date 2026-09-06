@@ -85,6 +85,7 @@ CREATE TABLE ppo.draft_quote_revisions (
  safe_snapshot jsonb NOT NULL CHECK(jsonb_typeof(safe_snapshot)='object'),
  template_version text NOT NULL CHECK(template_version='PPO-E1-DRAFT-r01'),
  template_hash text NOT NULL CHECK(template_hash ~ '^[a-f0-9]{64}$'),
+ template_definition text NOT NULL,
  input_html text NOT NULL, input_hash text NOT NULL CHECK(input_hash ~ '^[a-f0-9]{64}$'),
  reason text NOT NULL CHECK(length(btrim(reason)) BETWEEN 1 AND 1000),
  state text NOT NULL DEFAULT 'Draft' CHECK(state='Draft'),
@@ -132,7 +133,10 @@ CREATE CONSTRAINT TRIGGER estimate_graph AFTER INSERT OR UPDATE ON ppo.estimates
 CREATE FUNCTION ppo.check_estimate_version() RETURNS trigger LANGUAGE plpgsql AS $$ DECLARE row jsonb; c numeric:=0; s numeric:=0; BEGIN
  IF NEW.predecessor_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM ppo.estimate_versions WHERE workspace_id=NEW.workspace_id AND id=NEW.predecessor_id AND version=NEW.version-1) THEN RAISE EXCEPTION 'Exact predecessor required' USING ERRCODE='23514'; END IF;
  IF (SELECT count(DISTINCT x->>'id') FROM jsonb_array_elements(NEW.lines) x)<>jsonb_array_length(NEW.lines) THEN RAISE EXCEPTION 'Distinct line identities required' USING ERRCODE='23514'; END IF;
+ IF coalesce(NEW.scope->>'included','')='' OR coalesce(NEW.scope->>'excluded','')='' OR coalesce(NEW.scope->>'assumptions','')='' THEN RAISE EXCEPTION 'Explicit scope required' USING ERRCODE='23514'; END IF;
  FOR row IN SELECT * FROM jsonb_array_elements(NEW.lines) LOOP
+  IF coalesce(row->>'description','')='' OR coalesce(row->>'unit','')='' OR coalesce(row->>'source','')='' OR coalesce(row->>'category','') NOT IN ('Product','Labour','Freight') OR coalesce(row->>'effective_date','') !~ '^\d{4}-\d{2}-\d{2}$' THEN RAISE EXCEPTION 'Complete manual basis required' USING ERRCODE='23514'; END IF;
+  IF (row->>'effective_date')::date::text<>row->>'effective_date' THEN RAISE EXCEPTION 'Real source date required' USING ERRCODE='23514'; END IF;
   IF coalesce(row->>'quantity','') !~ '^(0|[1-9][0-9]{0,5})\.[0-9]{3}$' OR coalesce(row->>'unit_cost','') !~ '^(0|[1-9][0-9]{0,6})\.[0-9]{2}$' OR coalesce(row->>'unit_sell','') !~ '^(0|[1-9][0-9]{0,6})\.[0-9]{2}$' THEN RAISE EXCEPTION 'Canonical decimal values required' USING ERRCODE='23514'; END IF;
   IF (row->>'quantity')::numeric<=0 OR (row->>'quantity')::numeric>100000 OR (row->>'unit_cost')::numeric>1000000 OR (row->>'unit_sell')::numeric>1000000 OR (row->>'unit_sell')::numeric<(row->>'unit_cost')::numeric THEN RAISE EXCEPTION 'Invalid manual arithmetic' USING ERRCODE='23514'; END IF;
   c:=c+round((row->>'quantity')::numeric*(row->>'unit_cost')::numeric,2); s:=s+round((row->>'quantity')::numeric*(row->>'unit_sell')::numeric,2);

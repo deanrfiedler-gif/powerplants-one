@@ -67,9 +67,9 @@ export async function prepareQuote(p:Principal,id:string,value:unknown) {
     const names=(await c.query("SELECT r.display_name AS customer,s.display_name AS site,pe.display_name AS contact FROM ppo.opportunities o JOIN ppo.organisations r ON (r.workspace_id,r.id)=(o.workspace_id,o.organisation_id) LEFT JOIN ppo.sites s ON (s.workspace_id,s.id)=(o.workspace_id,o.site_id) LEFT JOIN ppo.people pe ON (pe.workspace_id,pe.id)=(o.workspace_id,o.primary_person_id) WHERE o.workspace_id=$1 AND o.id=$2",[p.workspace_id,e.opportunity_id])).rows[0];
     const snapshot:SafeQuote={synthetic:true,state:"Draft",display_number:q.display_number,revision:q.version,title:v.title,customer:names.customer,site:names.site,contact:names.contact,scope:v.scope,...quoteAmounts(v.lines,input.choices),tax_calculated:false};
     const template=await quoteTemplate(snapshot);
-    const revision=(await c.query(`INSERT INTO ppo.draft_quote_revisions(id,workspace_id,company_id,quote_id,estimate_id,estimate_version_id,version,created_by,updated_by,choices,safe_snapshot,template_version,template_hash,input_html,input_hash,reason)
-      VALUES($1,$2,$3,$4,$5,$6,$7,$8,$8,$9,$10,$11,$12,$13,$14,$15) RETURNING id,version,state,updated_at`,
-      [input.id,p.workspace_id,e.company_id,q.id,e.id,v.id,q.version,p.actor_id,JSON.stringify(input.choices),snapshot,template.template_version,template.template_hash,template.html,template.input_hash,input.reason])).rows[0];
+    const revision=(await c.query(`INSERT INTO ppo.draft_quote_revisions(id,workspace_id,company_id,quote_id,estimate_id,estimate_version_id,version,created_by,updated_by,choices,safe_snapshot,template_version,template_hash,input_html,input_hash,reason,template_definition)
+      VALUES($1,$2,$3,$4,$5,$6,$7,$8,$8,$9,$10,$11,$12,$13,$14,$15,$16) RETURNING id,version,state,updated_at`,
+      [input.id,p.workspace_id,e.company_id,q.id,e.id,v.id,q.version,p.actor_id,JSON.stringify(input.choices),snapshot,template.template_version,template.template_hash,template.html,template.input_hash,input.reason,template.template_definition])).rows[0];
     const job=randomUUID();
     await c.query("INSERT INTO ppo.estimate_quote_jobs(id,workspace_id,revision_id,actor_id) VALUES($1,$2,$3,$4)",[job,p.workspace_id,input.id,p.actor_id]);
     return {...revision,audit_details:{estimate_id:e.id,estimate_version_id:v.id,quote_id:q.id,render_job_id:job,input_hash:template.input_hash}};

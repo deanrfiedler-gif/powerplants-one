@@ -18,7 +18,7 @@ export type EstimateVersion = {
 };
 export type QuoteRevision = {
   id:string; workspace_id:string; company_id:string; quote_id:string; estimate_id:string; estimate_version_id:string;
-  version:number; choices:QuoteChoice[]; safe_snapshot:SafeQuote; template_version:string; template_hash:string;
+  version:number; choices:QuoteChoice[]; safe_snapshot:SafeQuote; template_version:string; template_hash:string; template_definition:string;
   input_html:string; input_hash:string; reason:string; state:"Draft"; updated_at:Date; created_at:Date;
 };
 export type EstimateCap = "estimating.read"|"estimating.edit"|"estimating.quote.read"|"estimating.quote.prepare";

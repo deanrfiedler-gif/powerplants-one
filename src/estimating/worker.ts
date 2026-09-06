@@ -24,7 +24,7 @@ export async function renderQuote(html:string) {
 function inspect(bytes:Uint8Array,j:Job,q:QuoteRevision) {
   try {
     const b=JSON.parse(Buffer.from(bytes).toString("utf8")) as Bundle,pdf=Buffer.from(b.pdf_base64,"base64");
-    if(b.schema!==1 || b.job_id!==j.id || b.workspace_id!==j.workspace_id || b.revision_id!==q.id || b.template_hash!==q.template_hash ||
+    if(digest(q.template_definition)!==q.template_hash || b.schema!==1 || b.job_id!==j.id || b.workspace_id!==j.workspace_id || b.revision_id!==q.id || b.template_hash!==q.template_hash ||
       b.html_hash!==q.input_hash || b.html!==q.input_html || digest(b.html)!==b.html_hash || digest(pdf)!==b.pdf_hash || !pdf.subarray(0,5).equals(Buffer.from("%PDF-")) || !b.browser_version) throw missing();
     return {bundle:b,pdf};
   } catch {throw missing();}
@@ -55,7 +55,7 @@ export async function runQuoteJob(id:string,hooks:{render?:typeof renderQuote;af
     const {q}=await quoteContext(c,p,j.revision_id,"estimating.quote.prepare");
     // The preparation capability cannot stand in for access to its quotation.
     await quoteContext(c,p,j.revision_id);
-    if(digest(q.input_html)!==q.input_hash) throw missing();
+    if(digest(q.input_html)!==q.input_hash || digest(q.template_definition)!==q.template_hash) throw missing();
     const token=randomUUID(),attempt=j.attempts+1;
     await c.query("UPDATE ppo.estimate_quote_jobs SET state='Running',attempts=$2,lease_token=$3,lease_until=clock_timestamp()+interval '2 minutes',error_code=NULL,updated_at=clock_timestamp() WHERE id=$1",[id,attempt,token]);
     await c.query("INSERT INTO ppo.estimate_quote_attempts(job_id,attempt,outcome) VALUES($1,$2,'Claimed')",[id,attempt]);

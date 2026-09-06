@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { spawn, execFileSync } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { chromium, expect } from "@playwright/test";
+import { chromium, expect, type APIResponse } from "@playwright/test";
 import { localConfig } from "../src/platform/config";
 import { database, closeDatabase } from "../src/platform/database";
 import { digest } from "../src/documents/store";
@@ -35,7 +35,7 @@ try {
     assert.deepEqual(await call("estimating/estimates",proof.input),proof.operations[0]);assert.deepEqual(await call(`estimating/estimates/${proof.input.id}`,proof.command),proof.operations[1]);assert.deepEqual(await call(`estimating/estimates/${proof.input.id}/quotes`,proof.quote),proof.operations[2]);
     const before=await call(`estimating/quotes/${proof.quote.id}`);assert.deepEqual(before.snapshot,proof.quote_before.snapshot);
     if(phase==="recover"){assert.equal(before.job.state,"Pending");await call(`estimating/quotes/${proof.quote.id}/render`,{});}else assert.equal(before.job.state,"Ready");
-    const hashes:Record<string,string>={};for(const kind of ["html","pdf"]){const r=await context.request.get(`${origin}/api/v1/estimating/quotes/${proof.quote.id}/file?kind=${kind}`);assert.ok(r.ok());const bytes=await r.body();hashes[kind]=digest(bytes);if(phase==="recover")await writeFile(join(root,`exact.${kind}`),bytes);else assert.deepEqual(bytes,await readFile(join(root,`exact.${kind}`)));}
+    const hashes:Record<string,string>={};for(const kind of ["html","pdf"]){const r:APIResponse=await context.request.get(`${origin}/api/v1/estimating/quotes/${proof.quote.id}/file?kind=${kind}`);assert.ok(r.ok());const bytes:Buffer=await r.body();hashes[kind]=digest(bytes);if(phase==="recover")await writeFile(join(root,`exact.${kind}`),bytes);else assert.deepEqual(bytes,await readFile(join(root,`exact.${kind}`)));}
     if(phase==="verify")assert.deepEqual(hashes,proof.hashes);proof.hashes=hashes;proof.application_pids.push(server.pid);proof.database_starts.push(await started());
     assert.equal((await database().query("SELECT count(*)::int AS n FROM ppo.estimate_quote_jobs WHERE revision_id=$1",[proof.quote.id])).rows[0].n,1);
   }
