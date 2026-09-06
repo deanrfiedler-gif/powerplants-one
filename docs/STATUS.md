@@ -84,3 +84,11 @@ P09 issue #36 / PR #37 implement exact completion submission, authorised review/
 ## CRM UI audit revision
 
 Dean authorised the next design revision after the published Board/Grid audit. The [r02 visual revision](delivery/crm-ui-design-handover.md) improves mobile first-record visibility, continuous desktop stage navigation, frozen grid headings/identity, full next actions/owners, creation context, validation and long text. [Updated captures and branded exception examples](blueprints/crm-ui-mockups/README.md) accompany shared UI specification r03 and I2 UI guidance r02. Original issued images and source bytes remain preserved. Verification and PR publication are recorded in the handover; this does not change I1/P09 application scope or close PPO-009/AT-25.
+
+## PPO-010 estimating and quotation discovery
+
+Dean authorised BP-04 discovery/design on 6 September 2026. [BP-04 r01](blueprints/BP-04-estimating-quotation.md), [CRE-01–CRE-26 evidence](blueprints/estimating-evidence.md), [synthetic costing/quotation preview](blueprints/estimating-workspace-mockup.html), [18 future acceptance procedures](testing/estimating-acceptance.md) and [E1–E6 sequence](delivery/estimating-implementation-plan.md) are authored. [Handover](delivery/estimating-discovery-handover.md) records source provenance and actual validation/publication. The design recognises merged CRM I1 while preserving its existing scope.
+
+This is design only. [E1 starter](delivery/estimating-first-increment-starter.md) is prepared for a later bounded instruction; no estimating application code or live integration is delivered. D-009/D-010 and issue #10 remain open; EA-01–EA-18 are Not run and master AT statuses are unchanged. Real formulas, policy thresholds, approved terms and accepted calculation examples remain evidence gaps. P01–P12 ordering and EST Wave B scope remain intact.
+
+Dean subsequently approved publishing the BP-04 package to this private repository and opening a review PR. The [handover](delivery/estimating-discovery-handover.md) preserves the earlier automatic-review block and governs current publication/check evidence. Estimating implementation remains prepared only.

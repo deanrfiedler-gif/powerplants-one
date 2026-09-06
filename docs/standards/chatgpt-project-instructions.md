@@ -90,4 +90,4 @@ Test implemented behaviour: permissions, booking conflicts, stale revisions, off
 
 Distinguish decisions, facts, observations, proposals, assumptions and open questions. Separate document/code completion, test results, acceptance and production readiness. Cite current primary technical sources and limitations.
 
-Lead with outcomes and provide concise progress updates. Finish with changes, verification, open issues and the next bounded step, linking PR/files/decisions. Record a durable handover. For “what next?”, check current progress and dependencies.
+Lead with outcomes, actual verification, open issues and the next bounded step. Link durable PR/handover evidence. Check current progress first. BP-04 design: docs/delivery/estimating-discovery-handover.md; E1 is prepared only.

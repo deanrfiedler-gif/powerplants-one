@@ -18,6 +18,7 @@ This repository is Dean's personal private prototype. It contains the planning f
 | [Documentation index](docs/README.md) | Where specifications, decisions, requirements and acceptance records belong |
 | [Development backlog](docs/delivery/backlog.md) | Initial discovery/design work packages and their live GitHub issue links |
 | [CRM blueprint and discovery handover](docs/delivery/crm-discovery-handover.md) | PPO-009 parallel CRM design, bounded Pipedrive evidence, synthetic wireframes and first implementation starter; account parity remains open |
+| [Estimating discovery and design](docs/delivery/estimating-discovery-handover.md) | PPO-010 / BP-04 source evidence, synthetic costing/quotation preview, acceptance plan and prepared E1 starter |
 | [CRM I1 handover](docs/delivery/crm-i1-handover.md) | Bounded owned opportunity implementation, actual verification/publication and prepared I2 Board/Grid starter |
 | [First-release plan](docs/delivery/first-release.md) | Proposed planned-service journey, dependencies and readiness criteria |
 | [Contributing](CONTRIBUTING.md) | Branches, pull requests, validation and evidence |
