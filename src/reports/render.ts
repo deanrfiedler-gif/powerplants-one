@@ -177,15 +177,25 @@ export type CustomerSnapshot = ReturnType<typeof customerSnapshot>;
 const fieldOrder: Record<string, readonly string[]> = {
   Time: ["kind", "start_at", "end_at", "elapsed_minutes", "elapsed_seconds"],
   Material: ["description", "movement", "quantity", "unit"],
-  Observation: ["finding", "confidence", "attempted_fix", "result", "follow_up_required"],
+  Observation: [
+    "finding",
+    "confidence",
+    "attempted_fix",
+    "result",
+    "follow_up_required",
+  ],
   Reading: ["name", "numeric_value", "text_value", "unit", "context"],
   Checklist: ["check", "result", "reason"],
   Photo: ["caption", "evidence"],
 };
 function evidenceFields(kind: string, facts: Record<string, unknown>) {
-  return fieldOrder[kind].map(key => [
-    key.replaceAll("_", " ").replace(/^./, c => c.toUpperCase()), facts[key],
-  ] as const);
+  return fieldOrder[kind].map(
+    (key) =>
+      [
+        key.replaceAll("_", " ").replace(/^./, (c) => c.toUpperCase()),
+        facts[key],
+      ] as const,
+  );
 }
 export function reportHtml(
   s: CustomerSnapshot,
@@ -216,7 +226,10 @@ export function reportHtml(
       ? s.evidence
           .map(
             (v, i) =>
-              `<h3>${i + 1}. ${e(v.kind)}</h3><dl>${evidenceFields(v.kind, v.facts)
+              `<h3>${i + 1}. ${e(v.kind)}</h3><dl>${evidenceFields(
+                v.kind,
+                v.facts,
+              )
                 .map(
                   ([k, v]) =>
                     `<div class="fact"><dt>${e(k)}</dt><dd>${e(text(v))}</dd></div>`,
@@ -225,7 +238,7 @@ export function reportHtml(
           )
           .join("")
       : "<p>No individual field entry was declared. Refer to the explicit work and unable-to-proceed context.</p>"
-  }</section><section><h2>Exclusions and remaining work</h2><p>${e(s.completion.exclusions)}</p><p>${e(s.completion.remaining_work)}</p>${s.completion.blockers.map(b=>`<p class="note">${e(b)}</p>`).join("")}<p>Next-action owner: ${e(s.completion.next_action_owner)}. A proposed return requires separate confirmation and work authority.</p></section><section><h2>Customer response context</h2><p class="note">A response describes only the exact content presented. It does not approve billing, the entire project, statutory compliance or warranty settlement. Stated identity and an optional synthetic mark are not independently verified identity. Responses are recorded separately; this PDF is never changed to add a signature.</p></section><footer><p>Exact customer content ${digest(canonical(s))}</p><p>${output.template_hash ? `Template ${e(output.template_hash)} · ` : ""}${e(s.reference)} ${rev}. Findings retain their recorded confidence; uncertain findings are not established diagnoses.</p></footer></main></body></html>`;
+  }</section><section><h2>Exclusions and remaining work</h2><p>${e(s.completion.exclusions)}</p><p>${e(s.completion.remaining_work)}</p>${s.completion.blockers.map((b) => `<p class="note">${e(b)}</p>`).join("")}<p>Next-action owner: ${e(s.completion.next_action_owner)}. A proposed return requires separate confirmation and work authority.</p></section><section><h2>Customer response context</h2><p class="note">A response describes only the exact content presented. It does not approve billing, the entire project, statutory compliance or warranty settlement. Stated identity and an optional synthetic mark are not independently verified identity. Responses are recorded separately; this PDF is never changed to add a signature.</p></section><footer><p>Exact customer content ${digest(canonical(s))}</p><p>${output.template_hash ? `Template ${e(output.template_hash)} · ` : ""}${e(s.reference)} ${rev}. Findings retain their recorded confidence; uncertain findings are not established diagnoses.</p></footer></main></body></html>`;
 }
 export async function renderReport(
   s: CustomerSnapshot,

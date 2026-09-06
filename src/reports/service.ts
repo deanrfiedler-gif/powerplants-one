@@ -868,6 +868,7 @@ export async function presentationBytes(
     return {
       html: v.html as string,
       pdf: null,
+      issued_at: null,
       manifest: {
         presentation_id: v.id,
         kind: v.kind,
@@ -885,5 +886,5 @@ export async function presentationBytes(
   ).rows[0];
   if (!i) throw unavailable();
   const b = await readReportBundle(p, i.manifest);
-  return { ...b, manifest: i.manifest };
+  return { ...b, manifest: i.manifest, issued_at: i.issued_at as Date };
 }

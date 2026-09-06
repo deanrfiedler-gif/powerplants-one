@@ -39,7 +39,7 @@ test("P09 real HTTP exact submit/review/issue/response enforces strict request a
     systems = await session("systems"),
     setup = await prepareFieldAppointment(
       (path, b) => ok(co, path, b),
-      "2026-12-17",
+      "2026-12-08",
     );
   for (const cookie of [p, m]) {
     const actor = await ok(cookie, "local-session"),
@@ -136,6 +136,11 @@ test("P09 real HTTP exact submit/review/issue/response enforces strict request a
         createHash("sha256").update(bytes).digest("hex"),
         v.content_hash,
       );
+    if (kind === "manifest") {
+      const manifest = JSON.parse(bytes.toString());
+      assert.equal(manifest.issued_at, r.issues[0].issued_at);
+      assert.ok(manifest.prepared_at);
+    }
     if (kind !== "pdf") {
       for (const forbidden of [
         "store_key",

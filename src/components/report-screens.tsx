@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import {
   api,
@@ -319,18 +319,23 @@ function ResponseForm({
     [role, setRole] = useState(""),
     [remarks, setRemarks] = useState(""),
     [next, setNext] = useState(""),
-    [captured, setCaptured] = useState(presentedAt),
+    [captured, setCaptured] = useState(""),
     [signature, setSignature] = useState<null | {
       sha256: string;
       byte_count: number;
       content_base64: string;
     }>(null),
-    [fileError, setFileError] = useState<unknown>(null);
+    [fileError, setFileError] = useState<unknown>(null),
+    [markLoading, setMarkLoading] = useState(false),
+    markSelection = useRef(0);
   return (
     <form
       className="business-card"
       onSubmit={async (e) => {
         e.preventDefault();
+        if (markLoading || fileError || c.busy) return;
+        const capturedAt = captured || new Date().toISOString();
+        setCaptured(capturedAt);
         if (
           await c.send(`reports/${r.id}/respond`, {
             id,
@@ -345,7 +350,7 @@ function ResponseForm({
             remarks: remarks || null,
             next_action: next || null,
             presented_at: presentedAt,
-            captured_at: captured,
+            captured_at: capturedAt,
             signature: choice === "Unavailable" ? null : signature,
             reason: "Synthetic customer response to exact presented content.",
           })
@@ -366,7 +371,15 @@ function ResponseForm({
       <Input
         label="Customer response"
         value={choice}
-        onChange={setChoice}
+        onChange={(value) => {
+          setChoice(value);
+          if (value === "Unavailable") {
+            markSelection.current++;
+            setSignature(null);
+            setFileError(null);
+            setMarkLoading(false);
+          }
+        }}
         options={responseChoices}
       />
       {choice !== "Unavailable" && (
@@ -387,8 +400,10 @@ function ResponseForm({
               type="file"
               accept="image/png"
               onChange={async (e) => {
+                const selection = ++markSelection.current;
                 setFileError(null);
                 setSignature(null);
+                setMarkLoading(true);
                 try {
                   const f = e.target.files?.[0];
                   if (!f) return;
@@ -400,13 +415,18 @@ function ResponseForm({
                     text += String.fromCharCode(
                       ...bytes.subarray(n, n + 32768),
                     );
+                  const hash = await sha256(bytes);
+                  if (selection !== markSelection.current) return;
                   setSignature({
-                    sha256: await sha256(bytes),
+                    sha256: hash,
                     byte_count: bytes.length,
                     content_base64: btoa(text),
                   });
                 } catch (error) {
-                  setFileError({ message: (error as Error).message });
+                  if (selection === markSelection.current)
+                    setFileError({ message: (error as Error).message });
+                } finally {
+                  if (selection === markSelection.current) setMarkLoading(false);
                 }
               }}
             />
@@ -435,8 +455,10 @@ function ResponseForm({
         value={captured}
         onChange={setCaptured}
       />
+      <p>Leave capture time blank to record the first save attempt. An uncertain retry retains that exact time.</p>
+      {markLoading && <p role="status">Checking the selected synthetic PNG…</p>}
       <ErrorNotice error={fileError ?? c.error} />
-      <button disabled={c.busy || !!fileError}>
+      <button disabled={c.busy || !!fileError || markLoading}>
         Save response to presented content
       </button>
       <p role="status">{c.saved}</p>
@@ -452,6 +474,7 @@ export function ReportScreen({ id }: { id: string }) {
       v: Presentation;
       at: string;
       version: number;
+      html: string;
     } | null>(null),
     [error, setError] = useState<unknown>(null);
   const reload = () => {
@@ -466,8 +489,10 @@ export function ReportScreen({ id }: { id: string }) {
         { cache: "no-store" },
       );
       if (!res.ok) throw await res.json();
-      await res.text();
-      setShown({ v, at: new Date().toISOString(), version: r!.version });
+      const html = await res.text();
+      if (await sha256(html) !== v.content_hash)
+        throw { message: "The presented bytes differ from the exact report hash. Refresh and recover the original report." };
+      setShown({ v, at: new Date().toISOString(), version: r!.version, html });
     } catch (e) {
       setError(e);
     }
@@ -683,7 +708,7 @@ export function ReportScreen({ id }: { id: string }) {
                 title="Exact customer-safe report presentation"
                 sandbox=""
                 className="report-preview"
-                src={`/api/v1/reports/${id}/html?presentation_id=${shown.v.id}`}
+                srcDoc={shown.html}
               />
               {r.can_respond &&
               shown.v.revision_id === r.revisions[0].id &&

@@ -23,11 +23,11 @@ import {
 import { verifyEvidence } from "./service";
 import { issueCommand } from "./validation";
 import {
-  reportTemplateDefinition,
   renderReport,
   reportHtml,
   type CustomerSnapshot,
 } from "./render";
+import { currentReportTemplate } from "./template";
 type Output = {
   kind: "IssuedReport";
   prepared_at: string;
@@ -87,7 +87,7 @@ async function template(c: Parameters<typeof insert>[0], p: Principal) {
   ).rows[0];
   if (
     !t ||
-    t.definition !== reportTemplateDefinition ||
+    t.definition !== await currentReportTemplate() ||
     t.content_hash !== digest(t.definition)
   )
     fail(

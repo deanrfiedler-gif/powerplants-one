@@ -203,6 +203,7 @@ try {
       await expect(page.locator("#notice")).toContainText(
         "Response and exact presentation hash saved",
       );
+      await expect(page.getByRole("button", { name: "Save customer response on this device", exact: true })).toBeDisabled();
       proof.response = (await originals(page)).find(
         (x: { original: WireOperation }) =>
           x.original.command === "CustomerResponse",
@@ -255,6 +256,9 @@ try {
           [report.id],
         )
       ).rows[0];
+      assert.deepEqual(proof.database_facts, {
+        submissions: "1", reviews: "1", issues: "1", responses: "1", follow_ups: "5",
+      });
       await writeFile(`${evidence}/proof.json`, JSON.stringify(proof, null, 2));
       await writeFile(`${evidence}/original-mark.png`, png());
     }

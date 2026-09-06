@@ -48,6 +48,7 @@ export function reportFile(kind: "html" | "pdf" | "manifest") {
           synthetic: true,
           presentation_id: q.presentation_id,
           revision_id: m.revision_id,
+          issued_at: data.issued_at,
           ...("pdf_hash" in m
             ? {
                 kind: "IssuedReport",

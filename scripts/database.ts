@@ -67,6 +67,17 @@ export async function seed(through = 9) {
       if (prior.rowCount) continue;
       await client.query(await read(file));
       if (version === 6) await seedDocumentFiles();
+      if (version === 9) {
+        const { currentReportTemplate } = await import("../src/reports/template");
+        const definition = await currentReportTemplate();
+        await client.query(
+          "INSERT INTO ppo.report_templates(id,workspace_id,version,definition,content_hash) VALUES('e1000000-0000-4000-8000-000000000001','10000000-0000-4000-8000-000000000001',1,$1,$2)",
+          [definition, createHash("sha256").update(definition).digest("hex")],
+        );
+        await client.query(
+          "INSERT INTO ppo.report_template_policy(workspace_id,template_id) VALUES('10000000-0000-4000-8000-000000000001','e1000000-0000-4000-8000-000000000001')",
+        );
+      }
       await client.query("INSERT INTO ppo.seed_receipts(version) VALUES($1)", [
         version,
       ]);

@@ -1588,8 +1588,10 @@ function renderReports(box: HTMLElement) {
         save.type = "submit";
         f.append(save);
         show.append(f);
+        let responseSaved = false;
         f.onsubmit = (e) => {
           e.preventDefault();
+          if (responseSaved || save.disabled) return;
           void perform(async () => {
             save.disabled = true;
             try {
@@ -1634,12 +1636,13 @@ function renderReports(box: HTMLElement) {
               await commitOperations(requireOwner(), [
                 await make("CustomerResponse", body, [], v.report_id),
               ]);
+              responseSaved = true;
               await renderQueue();
               notice(
                 "Response and exact presentation hash saved on this device. No server acknowledgement or distribution is claimed. Retry the retained original after reconnecting.",
               );
             } finally {
-              save.disabled = false;
+              save.disabled = responseSaved;
             }
           });
         };

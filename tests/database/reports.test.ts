@@ -684,3 +684,17 @@ test("P09 partial attendance review retains incomplete declarations without inve
   assert.match(b.html, /Material declaration remains incomplete/);
   assert.equal(r.finance_state, "Not implemented — P10");
 });
+
+test("P09 actual template source changes after rendering retain the original attempt without release", async () => {
+  const q = await reviewed(), r = q.report;
+  await requestReportIssue(q.reviewer, r.id, { ...base(), expected_version: r.version, revision_id: r.revisions[0].id, review_id: r.reviews[0].id, template_id: r.template.id, template_version: r.template.version });
+  const job = (await readReport(q.reviewer, r.id)).items[0].jobs[0], path = "src/reports/render.ts", original = await readFile(path);
+  try {
+    const result = await processReportJob(job.id, { afterRender: async () => { await writeFile(path, Buffer.concat([original, Buffer.from("\n// SYN changed controlled template source during generation\n")])); } });
+    assert.equal("state" in result && result.state, "StaleSource");
+    assert.equal((await readReport(q.reviewer, r.id)).items[0].issues.length, 0);
+  } finally {
+    await writeFile(path, original);
+  }
+  assert.deepEqual(await readFile(path), original);
+});

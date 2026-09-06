@@ -269,7 +269,7 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   await proof(page, info, "report-list");
   const setup = await prepareFieldAppointment(
     (path, body) => call(page, path, body),
-    info.project.name.startsWith("mobile") ? "2026-12-21" : "2026-12-18",
+    info.project.name.startsWith("mobile") ? "2026-12-10" : "2026-12-09",
   );
   for (const profile of ["assigned-technician", "second-technician"]) {
     await identity(page, profile);
@@ -369,15 +369,15 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
     .getByLabel("Proposed start (device timezone)")
     .fill(
       info.project.name.startsWith("mobile")
-        ? "2026-12-23T00:00"
-        : "2026-12-22T00:00",
+        ? "2026-12-14T00:00"
+        : "2026-12-11T00:00",
     );
   await page
     .getByLabel("Proposed finish (device timezone)")
     .fill(
       info.project.name.startsWith("mobile")
-        ? "2026-12-23T02:00"
-        : "2026-12-22T02:00",
+        ? "2026-12-14T02:00"
+        : "2026-12-11T02:00",
     );
   await page
     .getByRole("button", { name: "Save proposed visit", exact: true })
@@ -407,6 +407,10 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
         exact: true,
       }),
     ).toBeVisible();
+    const presentedHtml = await page
+      .getByTitle("Exact customer-safe report presentation", { exact: true })
+      .getAttribute("srcdoc");
+    expect(hash(presentedHtml!)).toBe(old.v.content_hash);
     await page
       .getByLabel("Customer response", { exact: true })
       .selectOption(value);
