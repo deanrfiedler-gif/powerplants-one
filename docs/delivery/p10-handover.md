@@ -2,7 +2,7 @@
 
 **State: implementation and verification in progress. This is not a completed P10 publication or P11 readiness claim.**
 
-User authority explicitly covers bounded P10 implementation, local dependencies, additive migrations/fixtures, tests, documentation, commits, PR and normal checked merge, followed by P11 starter preparation only. Work is tracked in [issue #45](https://github.com/deanrfiedler-gif/powerplants-one/issues/45) and [draft PR #48](https://github.com/deanrfiedler-gif/powerplants-one/pull/48), branch `feature/p10-finance-handoff`, [ADR-0016](../decisions/ADR-0016-p10-finance-handoff.md). No live financial operation, customer distribution, hosting or P11/P12 implementation is authorised.
+User authority explicitly covers bounded P10 implementation, local dependencies, additive migrations/fixtures, tests, documentation, commits, PR and normal checked merge, followed by P11 starter preparation only. The [authoritative external publication record](https://github.com/deanrfiedler-gif/powerplants-one/issues/45#issuecomment-5562750221) is maintained separately and remains incomplete until final-head and actual-main results are verified. Work is tracked in [issue #45](https://github.com/deanrfiedler-gif/powerplants-one/issues/45) and [draft PR #48](https://github.com/deanrfiedler-gif/powerplants-one/pull/48), branch `feature/p10-finance-handoff`, [ADR-0016](../decisions/ADR-0016-p10-finance-handoff.md). No live financial operation, customer distribution, hosting or P11/P12 implementation is authorised.
 
 ## Verified prerequisite and newer main
 
@@ -107,8 +107,14 @@ The original screenshot review found checkbox controls inheriting full-width sha
 
 Commit `08a64c6c77899178750d4b8062379886c98f9ec4`, tree `ff5d83ce4bf6ff01ea05c4e35b49a40692b60c89`, was published to the branch ref, but GitHub's PR snapshot and workflow collection had not advanced from the preceding candidate at the last read. It has no claimed CI result. Subsequent candidate verification must use its actual reflected PR head, not infer success from this ref update.
 
+Candidate `0566281d722e5b1c92c3b185d39fe086795f0ab3`, tree `0c68f23b81b1e59465c4aa8b864cd9bc9d1db677`, passed documentation run `34065110297`. Application run `34065110301`, job `101572384325`, attempt 1 passed static checks and 8/10 focused Finance browser cases. Both complete Finance journeys reached reconciliation and original OUT-14 issue, then failed their final Service/offline privacy assertion because the new test used GET for the existing POST-only offline context route. The test now uses each route's actual method, retaining successful access and no-Finance-canary assertions. The later restart and 45-case Finance database gates were skipped, not passed. Original artifact `9998760983` contains 206 files; its 16,318,759-byte ZIP has SHA-256 `206c42bc8aa7303fb1ad8bf0d90bd7a78571d3d739fb03bd20ad78d31e65fb8e`. The original HTML/PDF and screenshot evidence is retained for inspection; this failed run does not establish complete acceptance.
+
 ## Review and unresolved operational decisions
 
 The implementation review covers the actual SQL guards and transaction/receipt/outbox boundaries, source revision invalidation, controlled effect/lookup fence, current Finance permissions and byte adapter recovery. It is implementation self-review, not an independent reviewer or owner acceptance. Final PR requested/required reviews and unresolved threads must still be read before merge; inaccessible rules must be reported accurately without bypass.
 
 D-005/D-006/D-017/D-024 remain operationally open: actual MYOB configuration, supported API/manual evidence and ownership; SharePoint/audience/retention; accepted financial definitions, warranty/goodwill and billability treatment; price/tax/currency, accounting mapping/tolerance and correction/reversal authority; real identities, device/connectivity, support and recovery. Synthetic F-01–F-07 demonstrate the bounded contract only. P11 integrated quality and P12 restore/delivery/owner demonstration remain separately authorised work.
+
+## Prepared next invocation
+
+The [P11 starter](p11-starter-prompt.md) is maintained preparation only. It requires this handover's completed authoritative external publication, actual newer main/contracts and separate user authority. It creates no P11 issue, branch, schema, runtime or acceptance claim.

@@ -360,11 +360,22 @@ test("P10 PT-17/PT-19 complete UI allocation, return/correction, unknown lookup,
     ).status(),
   ).toBe(403);
   await call(page, "local-session", { profile: "assigned-technician" });
-  for (const path of [
-    `my-jobs/${report.appointment.id}`,
-    `sync/context/${report.appointment.id}`,
+  for (const [path, method] of [
+    [`my-jobs/${report.appointment.id}`, "GET"],
+    [`sync/context/${report.appointment.id}`, "POST"],
   ]) {
-    const response = await page.request.get(`/api/v1/${path}`);
+    const response = await page.request.fetch(`/api/v1/${path}`, {
+      method,
+      ...(method === "POST"
+        ? {
+            headers: {
+              Origin: "http://127.0.0.1:3000",
+              "Content-Type": "application/json",
+            },
+            data: {},
+          }
+        : {}),
+    });
     expect(response.ok()).toBe(true);
     expect(await response.text()).not.toContain("FINANCE_PRIVATE_CANARY");
   }
