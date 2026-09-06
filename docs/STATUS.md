@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 6 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P08 implemented; final verification/publication evidence linked from the P08 handover. PP-01 remains incomplete.
+**Updated:** 6 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P09 implementation under verification; P08 remains the last published increment. PP-01 remains incomplete.
 
 ## Current direction
 
@@ -60,3 +60,7 @@ The next bounded task is **P09 — Review, report and customer acknowledgement**
 ## Repository and publication controls
 
 The inspected repository is private with main as default branch. Branch protection was not enabled in the baseline, and a GitHub Projects board has not been provisioned. Existing Issues and the versioned backlog are used. No claim is made that checks are enforced by branch rules. See [foundation handover](delivery/foundation-handover.md) for earlier work and [package assurance](prototype/assurance.md) for this package's validation/publication status.
+
+## P09 service review and controlled reports
+
+P09 issue #36 / draft PR #37 implement exact completion submission, authorised review/return, immutable acceptance and report correction cycles, durable customer-safe OUT-10 revisions, five explicit responses and compatible P08 local intents. [ADR-0014](decisions/ADR-0014-p09-service-reports.md) and the [P09 handover](delivery/p09-handover.md) record physical contracts, active verification, failed-run dispositions and limits. P09 is not yet published or merged. Existing full PT-06 is preserved; new full acceptance is not claimed. The [P10 starter](delivery/p10-starter-prompt.md) is prepared only; Finance and P10–P12 remain unimplemented.

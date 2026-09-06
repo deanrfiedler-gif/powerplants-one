@@ -1,4 +1,6 @@
 -- Additive P09 exact submissions, review, reports and responses. Earlier migrations are preserved.
+ALTER TABLE ppo.outbox_jobs DROP CONSTRAINT ck_outbox_kind;
+ALTER TABLE ppo.outbox_jobs ADD CONSTRAINT ck_outbox_kind CHECK(kind IN ('TicketDraftSaved','SharedRecordCreated','SharedRecordUpdated','SharedHistoryRecorded','TicketCreated','TicketIntakeSaved','TicketInformationRequested','TicketTriaged','ActivityCreated','ActivityUpdated','ActivityStarted','ActivityCompleted','ActivityCancelled','WorkOrderCreated','ScopeDraftSaved','ScopeSuccessorCreated','ScopeAuthorised','ReadinessAssessed','AppointmentProposed','AppointmentConfirmed','AppointmentChanged','AppointmentCancelled','ScheduleChangeRequested','ScheduleChangeDecided','ContactOutcomeRecorded','PackPrepared','PackChecked','PackReturned','PackIssueRequested','PackIssued','PackAmendmentRaised','PackWithdrawn','PackAcknowledged','PackDistributionRecorded','AttendanceStarted','FieldEvidenceAccepted','FieldEvidenceCorrected','AttachmentInitiated','AttachmentUploaded','AttachmentFinalised','CompletionDraftSaved','CompletionSubmitted','ServiceReportReviewed','ReportCorrectionOpened','ReportIssueRequested','ReportIssued','CustomerResponseRecorded'));
 ALTER TABLE ppo.business_identities DROP CONSTRAINT ck_identities_type;
 ALTER TABLE ppo.business_identities ADD CONSTRAINT ck_identities_type CHECK(object_type IN ('Ticket','Organisation','Person','Site','Facility','Asset','Relationship','SiteParty','ErpAccountMapping','AssetConfiguration','AssetLocationEvent','HistoryRecord','Activity','WorkOrder','Appointment','ScheduleChangeRequest','ContactOutcome','Pack','FieldEntry','Attachment','CompletionDraft','ServiceReport','CustomerResponse'));
 ALTER TABLE ppo.audit_events DROP CONSTRAINT ck_audit_object_type;
@@ -116,7 +118,7 @@ CREATE FUNCTION ppo.guard_report_capture() RETURNS trigger LANGUAGE plpgsql AS $
  IF r.id IS NULL THEN RETURN NEW; END IF;
  IF r.status IN ('Submitted','Reviewed','Issued') THEN RAISE EXCEPTION 'Open an explicit correction cycle or return the exact submission before changing evidence' USING ERRCODE='55000'; END IF;
  SELECT EXISTS(SELECT 1 FROM ppo.attendance_acceptances WHERE workspace_id=NEW.workspace_id AND attendance_id=NEW.attendance_id) INTO accepted;
- IF accepted AND NEW.supersedes_entry_id IS NULL THEN RAISE EXCEPTION 'Accepted attendance permits linked factual corrections only; new physical work needs a new visit' USING ERRCODE='55000'; END IF; RETURN NEW; END $$;
+ IF (accepted OR r.revision>0) AND NEW.supersedes_entry_id IS NULL THEN RAISE EXCEPTION 'Accepted attendance permits linked factual corrections only; new physical work needs a new visit' USING ERRCODE='55000'; END IF; RETURN NEW; END $$;
 CREATE TRIGGER report_capture_guard BEFORE INSERT ON ppo.field_entries FOR EACH ROW EXECUTE FUNCTION ppo.guard_report_capture();
 
 CREATE OR REPLACE FUNCTION ppo.identity_has_typed_record() RETURNS trigger LANGUAGE plpgsql AS $$
@@ -185,3 +187,13 @@ BEGIN
  RETURN NEW;
 END $$;
 DO $$ DECLARE t text; BEGIN FOREACH t IN ARRAY ARRAY['report_revisions','report_entry_refs','report_reviews','attendance_acceptances','report_issues','report_presentations','customer_responses'] LOOP EXECUTE format('CREATE TRIGGER exact_fact BEFORE INSERT ON ppo.%I FOR EACH ROW EXECUTE FUNCTION ppo.check_report_fact()',t); END LOOP; END $$;
+CREATE FUNCTION ppo.check_report_state() RETURNS trigger LANGUAGE plpgsql AS $$ DECLARE r ppo.service_reports; v ppo.report_revisions; BEGIN
+ SELECT * INTO r FROM ppo.service_reports WHERE id=NEW.id;
+ IF r.revision=0 THEN IF r.status<>'Draft' OR r.current_revision_id IS NOT NULL THEN RAISE EXCEPTION 'New report is a draft without a revision' USING ERRCODE='23514'; END IF; RETURN NULL; END IF;
+ SELECT * INTO v FROM ppo.report_revisions WHERE id=r.current_revision_id;
+ IF v.id IS NULL OR v.report_id<>r.id OR v.revision<>r.revision OR (SELECT count(*) FROM ppo.report_entry_refs WHERE report_revision_id=v.id)<>jsonb_array_length(v.snapshot->'entries') THEN RAISE EXCEPTION 'Report current revision and exact entry set must agree' USING ERRCODE='23514'; END IF;
+ IF r.status IN ('Reviewed','Issued','Returned') AND NOT EXISTS(SELECT 1 FROM ppo.report_reviews WHERE revision_id=v.id AND decision=CASE WHEN r.status='Returned' THEN 'Returned' ELSE 'Approved' END) THEN RAISE EXCEPTION 'Report state requires its exact immutable review' USING ERRCODE='23514'; END IF;
+ IF r.status='Issued' AND NOT EXISTS(SELECT 1 FROM ppo.report_issues WHERE id=r.current_issue_id AND report_id=r.id AND revision_id=v.id) THEN RAISE EXCEPTION 'Issued state requires its exact current durable issue' USING ERRCODE='23514'; END IF;
+ RETURN NULL;
+END $$;
+CREATE CONSTRAINT TRIGGER report_state AFTER INSERT OR UPDATE ON ppo.service_reports DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.check_report_state();

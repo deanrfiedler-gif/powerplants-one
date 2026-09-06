@@ -273,9 +273,11 @@ export async function submitCompletion(
           [p.workspace_id, scope.id],
         )
       ).rows;
+      const submissionGuard=await sourceGuard(c,p,{...ctx,report});
       const snapshot = JSON.parse(
         JSON.stringify({
           schema_version: 1,
+          source_guard: submissionGuard,
           synthetic: true,
           appointment: {
             id,
@@ -422,6 +424,7 @@ export async function reviewReport(p: Principal, id: string, input: unknown) {
       const guard = await sourceGuard(c, p, ctx),
         s = revision.snapshot;
       const changed =
+        canonical(guard)!==canonical(s.source_guard) ||
         guard.scope_revision_id !== s.attendance.scope_revision_id ||
         guard.authorised_scope_revision_id !== s.attendance.scope_revision_id ||
         guard.pack?.current_issue_id !== s.attendance.issue_id ||
@@ -451,7 +454,7 @@ export async function reviewReport(p: Principal, id: string, input: unknown) {
               )
           : null;
       const customer = audience
-        ? customerSnapshot(s, r.display_number, revision.revision, audience)
+        ? customerSnapshot(s, r.display_number, revision.revision, audience, cmd.authority_disposition)
         : null;
       const review = await insert(c, "report_reviews", {
         id: randomUUID(),
@@ -633,6 +636,8 @@ export async function recordResponse(p: Principal, id: string, input: unknown) {
             "Retain the exact original synthetic signature PNG.",
           );
         inspectPng(bytes);
+        if ((await c.query("SELECT 1 FROM ppo.customer_responses WHERE workspace_id=$1 AND report_id=$2 AND signature_hash=$3 AND presented_hash<>$4",[p.workspace_id,id,cmd.signature.sha256,v.content_hash])).rowCount)
+          fail("SignatureReassociationRefused","The prior response mark belongs to different presented content. Obtain a new synthetic mark for this revision; no signature transfer is permitted.");
         const bundle = Buffer.from(
           canonical({
             schema_version: 1,

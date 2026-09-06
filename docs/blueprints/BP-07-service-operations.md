@@ -1,6 +1,6 @@
 # BP-07 — Service Operations Functional & Build Blueprint
 
-**Edition:** r06 · **Date:** 5 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
+**Edition:** r07 · **Date:** 5 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
 
 **Status:** Functional specification with the bounded P03–P05 SC-01–SC-05/SC-07/SC-08 implementation amendments below. Later workflows and full acceptance remain incomplete. [Package](../prototype/README.md) · [Dictionary](../contracts/service-data-dictionary.md) · [API](../contracts/service-api.md) · [Acceptance](../testing/prototype-acceptance.md).
 
@@ -315,3 +315,7 @@ SC-09/10 now link to `/offline/index.html` for up to two explicitly downloaded a
 TR-10 now retains original envelopes/hashes/bytes through offline navigation and restart, a bounded explicit sender, per-operation outcome isolation, stale authority and narrow owned exception recovery. Every local save waits for IndexedDB completion; every ServerSaved waits for a committed original server receipt. Uncertain sends, quota/abort/blocked upgrades, missing original bytes and changed reuse remain readable failures. Capture under review retains owned next action and exact originals; no new scope, booking, approved quantity, report or closure is inferred.
 
 PT-11/PT-12/PT-24/PT-28 coverage is component evidence unless every written procedure step executes. P09 submission/review/report/customer response is prepared only in the [next starter](../delivery/p09-starter-prompt.md); P10 Finance and full PP-01 remain incomplete.
+
+## P09 review and report implementation amendment
+
+[ADR-0014](../decisions/ADR-0014-p09-service-reports.md) and [P09 handover](../delivery/p09-handover.md) define the exact physical SC-11/DAT-09/API-C16–18/OUT-10/TR-11–13 implementation and current verification. Immutable personal submissions, per-entry review/return, separate attendance acceptance, successor corrections, durable customer-safe report issues and content-bound customer responses extend P04–P08. The appointment can become Completed while the physical work order remains Authorised with owned remaining work and an existing proposal/confirmation boundary. Conceptual whole-order/ticket closure and API-C19 Finance handoff are not silently implemented. P08 owner-bound version-2 IndexedDB and schema-1 originals remain compatible; only submission/response intents are added, with no offline approval/issue. Full acceptance, D-024 operational branding, customer delivery and live integration remain separate.

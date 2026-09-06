@@ -508,6 +508,15 @@ export function ReportScreen({ id }: { id: string }) {
               It is not a confirmed booking.
             </p>
           </section>
+          <section className="business-card">
+            <h2>Exact submitted completion</h2>
+            <p>Outcome: <strong>{r.revisions[0].snapshot.completion.scope_outcome}</strong> · Time: {r.revisions[0].snapshot.completion.time_declaration} · Materials: {r.revisions[0].snapshot.completion.material_declaration}</p>
+            <p className="preserve-lines">{r.revisions[0].snapshot.completion.work_performed}</p>
+            <p><strong>Exclusions:</strong> {r.revisions[0].snapshot.completion.exclusions}</p>
+            <p><strong>Remaining work:</strong> {r.revisions[0].snapshot.completion.remaining_work}</p>
+            {r.revisions[0].snapshot.completion.task_outcomes.map((t:{scope_item_id:string;outcome:string;reason:string})=><p key={t.scope_item_id}><strong>{t.outcome}</strong> · {t.reason}</p>)}
+            {r.revisions[0].snapshot.completion.blockers.map((b:string,i:number)=><p className="note" key={i}>{b}</p>)}
+          </section>
           {r.status === "Submitted" && r.can_review && (
             <ReviewForm key={r.version} r={r} reload={reload} />
           )}

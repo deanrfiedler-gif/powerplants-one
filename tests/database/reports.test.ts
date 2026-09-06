@@ -392,7 +392,8 @@ test("P09 revoked review and response receipt capability returns no original rec
 test("P09 accepted attendance correction preserves old output and refuses prior response reassociation", async () => {
   const q = await reportIssued(),
     old = q.report,
-    cmd = response(old);
+    mark=png(),
+    cmd = {...response(old),signature:{sha256:digest(mark),byte_count:mark.length,content_base64:mark.toString("base64")}};
   await recordResponse(q.p, old.id, cmd);
   const v = old.presentations.find(
       (x: { kind: string }) => x.kind === "IssuedReport",
@@ -465,6 +466,7 @@ test("P09 accepted attendance correction preserves old output and refuses prior 
     }),
     code("PresentedContentChanged"),
   );
+  await assert.rejects(recordResponse(q.p,r.id,{...cmd,...base(),id:randomUUID(),expected_report_version:r.version,presentation_id:newer.id,revision_id:newer.revision_id,presented_hash:newer.content_hash,presented_at:new Date().toISOString(),captured_at:new Date().toISOString()}),code("SignatureReassociationRefused"));
   assert.deepEqual((await presentationBytes(q.p, r.id, v.id)).pdf, bytes.pdf);
   await mkdir("verification-evidence/p09", { recursive: true });
   for (const [name, pres] of [
@@ -611,3 +613,14 @@ test("P09 source snapshot canonical hash uses persisted timestamps and every exa
     ),
   );
 });
+
+test("P09 competing personal submissions and identical customer responses produce one original effect",async()=>{
+ const q=await started();await saveCompletionDraft(q.p,q.job.id,draft(q.job));const j=(await readFieldJob(q.p,q.job.id)).items[0],cmd={...base(),id:randomUUID(),attendance_id:j.attendance!.id,draft_revision_id:j.draft_revisions[0].id,expected_draft_version:j.draft!.version,expected_report_version:0,expected_appointment_version:j.version,attendance_end_at:new Date().toISOString()};
+ const submissions=await Promise.all([submitCompletion(q.p,j.id,cmd),submitCompletion(q.p,j.id,cmd)]);assert.deepEqual(submissions[0].receipt,submissions[1].receipt);assert.equal((await rows("SELECT count(*)::int n FROM ppo.report_revisions"))[0].n,1);
+ const co=await principal("coordinator");let r=(await readReport(co,cmd.id)).items[0];await reviewReport(co,r.id,decision(r));r=(await readReport(co,r.id)).items[0];const answer=response(r,"Unavailable","DraftEvidence"),responses=await Promise.all([recordResponse(q.p,r.id,answer),recordResponse(q.p,r.id,answer)]);assert.deepEqual(responses[0].receipt,responses[1].receipt);assert.equal((await readReport(co,r.id)).items[0].responses.length,1);assert.equal((await rows("SELECT count(*)::int n FROM ppo.report_follow_ups WHERE kind='CustomerResponse'"))[0].n,1);
+});
+test("P09 real source change during generation and corrupted original bundle cannot issue",async()=>{
+ const q=await reviewed(),r=q.report;await requestReportIssue(q.reviewer,r.id,{...base(),expected_version:r.version,revision_id:r.revisions[0].id,review_id:r.reviews[0].id,template_id:r.template.id,template_version:r.template.version});const j=(await readReport(q.reviewer,r.id)).items[0].jobs[0];const result=await processReportJob(j.id,{afterRender:async()=>{await database().query("UPDATE ppo.assets SET version=version+1,description='SYN renamed asset during output' WHERE id=$1",[q.job.scope.items[0].assets[0].id]);}});assert.equal("state" in result&&result.state,"StaleSource");assert.equal((await readReport(q.reviewer,r.id)).items[0].issues.length,0);
+});
+test("P09 issued original byte removal or wrong hash is unavailable rather than regenerated",async()=>{const q=await reportIssued(),r=q.report,v=r.presentations.find((x:{kind:string})=>x.kind==="IssuedReport")!,j=r.jobs[0],path=join(process.env.PPO_DOCUMENT_DIRECTORY??join(homedir(),".ppo-synthetic-documents"),q.p.workspace_id,j.id),before=await readFile(path);await unlink(path);await assert.rejects(presentationBytes(q.p,r.id,v.id));await writeFile(path,Buffer.from("SYN wrong immutable original bytes"));await assert.rejects(presentationBytes(q.p,r.id,v.id));await writeFile(path,before,{mode:0o600});const b=await presentationBytes(q.p,r.id,v.id);assert.equal(digest(b.html),v.content_hash);assert.equal((await readReport(q.p,r.id)).items[0].issues.length,1);});
+test("P09 unsupported signature bytes are rejected without response or follow-up",async()=>{const q=await reviewed(),bytes=Buffer.from("SYN not a PNG"),cmd={...response(q.report,"AcceptedWithReservations","DraftEvidence"),signature:{sha256:digest(bytes),byte_count:bytes.length,content_base64:bytes.toString("base64")}},before=(await readReport(q.p,q.report.id)).items[0].follow_ups.length;await assert.rejects(recordResponse(q.p,q.report.id,cmd));const r=(await readReport(q.p,q.report.id)).items[0];assert.equal(r.responses.length,0);assert.equal(r.follow_ups.length,before);});
