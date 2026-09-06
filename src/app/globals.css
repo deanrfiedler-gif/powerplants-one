@@ -1709,7 +1709,7 @@ button:disabled {
 .crm-filter-picker { display:grid; gap:8px; }
 .crm-worklist-stamp { font-size:12px; line-height:1.5; margin:8px 0 12px; }
 .crm-stage-navigation { display:none; }
-.crm-board-scroll { max-width:100%; overflow-x:auto; padding:3px; }
+.crm-board-scroll { max-width:100%; max-height:65vh; overflow:auto; padding:3px; scroll-padding:64px 12px 12px; }
 .crm-board { display:grid; grid-template-columns:repeat(2,minmax(300px,1fr)); gap:16px; }
 .crm-stage { background:#edf0f3; border:1px solid #d3d9df; border-radius:8px; min-width:0; padding:10px; }
 .crm-stage-heading { display:flex; align-items:center; flex-wrap:wrap; justify-content:space-between; gap:4px 10px; border-top:3px solid var(--green); padding:10px 2px 6px; }
@@ -1778,6 +1778,7 @@ body:has(.crm-workspace) main { padding-top:18px; }
   .crm-stage-navigation { display:flex; gap:8px; margin-bottom:6px; }
   .crm-stage-navigation button { flex:1; min-width:0; padding:6px; min-height:44px; font-size:13px; }
   .crm-board { display:block; }
+  .crm-board-scroll { max-height:none; }
   .crm-stage[data-selected="false"] { display:none; }
   .crm-stage { padding:8px; }
   .crm-stage-heading { padding:6px 2px 4px; }
@@ -1786,8 +1787,8 @@ body:has(.crm-workspace) main { padding-top:18px; }
   .crm-card p { font-size:12px; line-height:1.45; }
   .crm-opportunity-title { font-size:15px; margin:3px 0 6px; }
   .crm-card-state { margin:6px 0; gap:6px; }
-  .crm-grid { min-width:1040px; }
-  .crm-grid thead th:first-child { width:190px; }
+  .crm-grid { min-width:990px; }
+  .crm-grid thead th:first-child { width:150px; }
   .crm-grid th,.crm-grid td { padding:10px; }
 }
 .crm-view-controls .crm-filter-toggle { margin-left:auto; min-width:0; }
@@ -1808,5 +1809,5 @@ body:has(.crm-workspace) main { padding-top:18px; }
   .crm-stage-heading { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); }
   .crm-stage .crm-worklist { margin-top:0; }
   .crm-opportunity-title { min-height:44px; }
-  .crm-grid-scroll { scroll-padding-left:200px; }
+  .crm-grid-scroll { scroll-padding-left:160px; }
 }

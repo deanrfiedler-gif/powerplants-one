@@ -20,16 +20,17 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
   const [p, setP] = useState<Identity | null>(null),
     [profile, setProfile] = useState("coordinator"),
     [error, setError] = useState<unknown>(null),
+    [loading, setLoading] = useState(true),
     [busy, setBusy] = useState(false),
     [epoch, setEpoch] = useState(0);
   useEffect(() => {
     let live = true;
     api<Identity>("local-session").then(
       (v) => {
-        if (live) setP(v);
+        if (live) { setP(v); setLoading(false); }
       },
       (e) => {
-        if (live && e.status !== 401) setError(e);
+        if (live) { if (e.status !== 401) setError(e); setLoading(false); }
       },
     );
     return () => {
@@ -56,6 +57,7 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
       <section
         className={`identity-strip${compact ? " identity-compact" : ""}`}
         aria-label="Local demonstration identity"
+        aria-busy={loading || busy}
       >
         <div>
           <strong>
@@ -71,7 +73,7 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
             id="business-profile"
             value={profile}
             onChange={(e) => setProfile(e.target.value)}
-            disabled={busy}
+            disabled={loading || busy}
           >
             {[
               ["coordinator", "Coordinator"],
@@ -92,7 +94,7 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
             ))}
           </select>
         </div>
-        <button onClick={select} disabled={busy}>
+        <button onClick={select} disabled={loading || busy}>
           {busy ? "Selecting…" : "Use this identity"}
         </button>
       {p && <button className="secondary" onClick={() => { void (async()=>{try{if(localStorage.getItem("ppo-offline-marker"))await lockLocal();await api("local-session/sign-out",{});setP(null);setEpoch(x=>x+1);}catch(e){setError(e);}})();}}>Sign out</button>}
@@ -105,7 +107,7 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
         </Session.Provider>
       ) : (
         <p className="empty-state">
-          Select an identity to load its permitted business records.
+          {loading ? "Loading demonstration identity…" : "Select an identity to load its permitted business records."}
         </p>
       )}
     </>

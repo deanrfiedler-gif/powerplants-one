@@ -6,6 +6,7 @@ import { CRM, crmCreate, crmAction, crmQualify } from "../helpers/crm";
 import { database, closeDatabase } from "../../src/platform/database";
 test.describe.configure({ timeout: 120000 });
 test.use({ actionTimeout: 15000 });
+test.beforeAll(() => { process.loadEnvFile(".env.local"); });
 test.afterAll(closeDatabase);
 async function call(page: Page, path: string, body?: unknown) {
   const r = await page.request.fetch(`/api/v1/${path}`, { method: body === undefined ? "GET" : "POST", headers: body === undefined ? {} : { Origin: "http://127.0.0.1:3000", "Content-Type": "application/json" }, data: body });
@@ -13,6 +14,7 @@ async function call(page: Page, path: string, body?: unknown) {
   return r.json();
 }
 async function identity(page: Page, profile = "coordinator") {
+  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
   if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await page.getByRole("button", { name: "Change identity", exact: true }).click();
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   await page.getByRole("button", { name: "Use this identity", exact: true }).click();
@@ -183,6 +185,31 @@ test("CA-06/10/13 I2 revocation clears list, filter labels and late responses; i
   await expect(page.locator('.business-error[role="alert"]')).toBeVisible();
   expect(await page.locator("body").innerText()).not.toContain(input.title);
   await capture(page, info, "identity-change-cleared");
+});
+
+test("CA-06/13 initial identity must settle before an actor can switch", async ({ page }, info) => {
+  await call(page, "local-session", { profile: "systems" });
+  let release!: () => void;
+  const held = new Promise<void>((resolve) => { release = resolve; });
+  await page.route("**/api/v1/local-session", async (route) => {
+    if (route.request().method() !== "GET") return route.continue();
+    const response = await route.fetch();
+    await held;
+    await route.fulfill({ response });
+  });
+  await page.goto("/crm/opportunities");
+  const strip = page.getByRole("region", { name: "Local demonstration identity", exact: true });
+  await expect(strip).toHaveAttribute("aria-busy", "true");
+  await expect(page.getByLabel("Identity", { exact: true })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Use this identity", exact: true })).toBeDisabled();
+  await capture(page, info, "identity-loading");
+  release();
+  await expect(strip).toHaveAttribute("aria-busy", "false");
+  await expect(strip).toContainText("SYN Systems");
+  await identity(page);
+  await expect(strip).toContainText("SYN Coordinator");
+  await expect(page.getByLabel("Search opportunities", { exact: true })).toBeVisible();
+  expect((await call(page, "local-session")).actor_id).toBe(CRM.owner);
 });
 
 test("CA-13 shared brand consumers retain navigation, readable actions and original identity controls", async ({ page }, info) => {

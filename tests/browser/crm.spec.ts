@@ -7,6 +7,7 @@ import { CRM, crmCreate, crmBase, crmAction } from "../helpers/crm";
 test.describe.configure({ timeout: 120000 });
 test.use({ actionTimeout: 15000 });
 async function identity(page: Page, profile = "coordinator") {
+  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
   if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await page.getByRole("button", { name: "Change identity", exact: true }).click();
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   await page
