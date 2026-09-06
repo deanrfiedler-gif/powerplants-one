@@ -10,7 +10,7 @@
 |---|---|
 | [BP-03 r01](../blueprints/BP-03-crm.md) | Seven journeys; actors/inputs/transitions/permissions/exceptions/audit; proposed records/commands/reads; capability matrix; communication, single-writer coexistence and migration/rollback design; eight-parent traceability |
 | [PAR-01–PAR-18 assessment](../blueprints/crm-parity.md) | Required outcomes, dates/scope/confidence, actual-use limits, users/criticality, fields/history, proposed disposition/dependencies/acceptance and ten small evidence requests |
-| [Screen specification](../blueprints/crm-screen-specification.md) and [standalone wireframes](../blueprints/crm-wireframes.html) | Seven synthetic desktop/phone screens, board/list alternative and seven illustrative states; no app integration or persistence |
+| [Screen specification](../blueprints/crm-screen-specification.md) and [standalone wireframes](../blueprints/crm-wireframes.html) and [18 original captures](../blueprints/crm-visuals/README.md) | Seven synthetic desktop/phone screens, board/list alternative and seven illustrative states; no app integration or persistence |
 | [Ordered sequence and acceptance](crm-implementation-plan.md) | Six BP-03-local increments, concrete first vertical slice, explicit exclusions/dependencies/migration implications and sixteen planned acceptance cases |
 | [Detailed first implementation starter](crm-first-increment-starter.md) | Copy-ready I1 instruction with live baseline, isolated work, synthetic persistence/permission tests, compatibility, checked merge and explicit stop boundary |
 
@@ -20,7 +20,7 @@ The maintained blueprint index, STATUS, discovery backlog/JSON, decision/documen
 
 GitHub connection succeeded as `deanrfiedler-gif` (231005545); repository metadata reported private visibility and pull/push/maintain/admin permissions. Starting main was `85bd2fcc388495cc24dc2ee4f273accc49da2f24`, tree `7406ceb9b000e616410489bb66503a6e9e8c6c08`. P08 #34/#35 and its [publication](https://github.com/deanrfiedler-gif/powerplants-one/issues/34#issuecomment-5556131594) were inspected. Issue #9 was open with four unchecked acceptance criteria, dependency PPO-001 and no comments; no CRM branch/PR existed in the inspected branch/PR collections. A separate local clone and `docs/ppo-009-crm-discovery` branch preserve P09's checkout.
 
-P09 was active separately in issue #36 / draft PR #37, starting head `54abe1f4c30272095088d9f5e6a1b13e2547d708`, then `08cfbcd37c072b56ff04c0a5e8baa2ba4bb3d3d0` during design. Main remained the P08 checkpoint at that reread. These observations are dated discovery evidence, not a fixed future baseline. The publication record captures final pre-merge observations.
+P09 was active separately in issue #36 / draft PR #37, starting head `54abe1f4c30272095088d9f5e6a1b13e2547d708`, then `08cfbcd37c072b56ff04c0a5e8baa2ba4bb3d3d0` and `da9790bf3dc1c2bd6be458976837dce8742ed715` during design. Main remained the P08 checkpoint at that reread. These observations are dated discovery evidence, not a fixed future baseline. The publication record captures final pre-merge observations.
 
 Pipedrive MCP BETA stage read succeeded with `limit=30`: ten nondeleted stages across pipeline IDs 1 and 6, no next cursor in the returned scope, matching BP-01's earlier configuration. Stage names, ordering, probabilities, ageing and update timestamps are recorded without customer content. Only this endpoint's working access was tested. No account/current-user/licence/permission-metadata endpoint is exposed; account identity and complete visibility remain unverified. Identifiable operational-record reads were not performed pending account context. Earlier 60-open-deal evidence is explicitly inherited, not re-executed or extrapolated to total pipeline size.
 
@@ -36,17 +36,17 @@ P09 retains submission/review/report/response ownership; P10 retains Finance. Sh
 
 ## Validation and review evidence
 
-Local documentation and wireframe validation is recorded below before PR publication; actual PR and merged-main CI outcomes are recorded externally. Documentation checks never establish runtime or business acceptance.
+Local documentation validation and initial PR wireframe evidence are recorded below; actual PR and merged-main CI outcomes are recorded externally. Documentation checks never establish runtime or business acceptance.
 
 | Validation | Actual result |
 |---|---|
 | Foundation, prototype and naming checks | All three passed locally. Initial foundation failure identified attempted changes to baseline-derived requirement fields; those fields were restored exactly and new links kept in maintained prototype traceability. |
-| CRM coverage/consistency self-review | All 8 CRM parents / 18 PAR items / 7 journeys / 7 screens / 16 proposed CA cases mapped; mechanical identity/status comparison described below |
-| Standalone wireframe browser/visual QA | Pending execution; no CRM application test claimed |
-| Existing application assurance | Required by current PR/main workflow; actual run evidence to be recorded in external publication |
+| CRM coverage/consistency self-review | All 8 CRM parents / 18 PAR items / 7 journeys / 7 screens / 16 proposed CA cases mapped. Mechanical comparison preserved all 78 identities/titles/scope/implementation/test statuses; baseline requirements, AT CSV and PT JSON bytes unchanged |
+| Standalone wireframe browser/visual QA | [Run 34014261906](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34014261906), attempt 1 passed: 147 screen/state/viewport views and behaviour/reflow checks, 18 original captures with verified hashes. Nine originals covering all seven screens and denied/conflict visually inspected; [gallery/provenance](../blueprints/crm-visuals/README.md). No CRM application or physical-device test claimed |
+| Existing application assurance | Required by current PR/main workflow; actual final-head and merged-main run results are recorded in the external publication record. These validate the existing synthetic platform, not new CRM runtime |
 | Independent review / owner acceptance | Not performed; sole-developer documentation self-review only, subject to actual PR requirements |
 
-Local Chromium was absent; installation via the available runtime failed (timeouts/invalid download). Visual browser verification therefore uses an isolated disposable CI job with the repository's existing pinned Playwright/Chromium and runtime; no dependency pin or application workflow changes.
+Local Chromium was absent; installation via the available runtime failed (timeouts/invalid download). Visual browser verification therefore used an isolated disposable CI job with the repository's existing pinned Playwright/Chromium and runtime; no dependency pin or application workflow changes.
 
 Local application engine availability at discovery was Node 24.19.0 / npm 11.9.0, while repository pins are Node 24.20.0 / npm 11.19.0. No engine pin/gate is weakened. Runtime baseline regression is checked by the existing disposable CI on the actual PR/main, not claimed from local Python checks or wireframe rendering. No new application tests are written for a documentation-only contribution.
 

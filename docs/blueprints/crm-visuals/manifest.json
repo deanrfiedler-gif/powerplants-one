@@ -1,0 +1,231 @@
+{
+  "scope": "Standalone synthetic wireframe only; not CRM runtime or business acceptance",
+  "source_head": "0b596345afe9a53497dd296d02d71ea37631943d",
+  "executed_checkout": "082104586093d448f282c5d2a4d1197c1b276def",
+  "executed_tree": "a0989c958a50f2aba8a5865c4609578c8f789db4",
+  "input": "docs/blueprints/crm-wireframes.html",
+  "input_sha256": "8ed6959814bcdc4633463da465b2a7d8c83966f6d59a518f8e21b663c76f4a6d",
+  "run_id": "34014261906",
+  "attempt": "1",
+  "screens": [
+    "work",
+    "pipeline",
+    "detail",
+    "relationships",
+    "activity",
+    "history",
+    "create"
+  ],
+  "states": [
+    "ready",
+    "loading",
+    "empty",
+    "validation",
+    "denied",
+    "conflict",
+    "unavailable"
+  ],
+  "captures": [
+    {
+      "filename": "desktop-work-ready.png",
+      "screen": "work",
+      "state": "ready",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "bytes": 134260,
+      "sha256": "50895f54484f9210fde2656df6678c61e4086781c450d9317e18c3f7a3f17539"
+    },
+    {
+      "filename": "desktop-pipeline-ready.png",
+      "screen": "pipeline",
+      "state": "ready",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "bytes": 119995,
+      "sha256": "4ccde416efeb9237bfb413641f83202b561e795a1b3e87ceeb0254ac94572c19"
+    },
+    {
+      "filename": "desktop-detail-ready.png",
+      "screen": "detail",
+      "state": "ready",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "bytes": 157318,
+      "sha256": "9f87a852f2b25e333b9c5d2db939cca0bae169eafd5481b3f36b63f4c7c3b055"
+    },
+    {
+      "filename": "desktop-detail-denied.png",
+      "screen": "detail",
+      "state": "denied",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "bytes": 75067,
+      "sha256": "fdd390324a2b4a8b259789194e5414be505cb09fa69d3623b07eaa442a8e842b"
+    },
+    {
+      "filename": "desktop-detail-conflict.png",
+      "screen": "detail",
+      "state": "conflict",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "bytes": 169860,
+      "sha256": "ab4559ba853538605dca932559e5b72aa9ccf4b16295ae5481e305eddaa23b9e"
+    },
+    {
+      "filename": "desktop-relationships-ready.png",
+      "screen": "relationships",
+      "state": "ready",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "bytes": 151214,
+      "sha256": "265dac19d49b2fa79e1295b8d14d2cc927c4c2381b242977ef849ee184128c72"
+    },
+    {
+      "filename": "desktop-activity-ready.png",
+      "screen": "activity",
+      "state": "ready",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "bytes": 126183,
+      "sha256": "40d70f1dda82c3012697e56ff30c8425529788bbb1e907dad201dbeb5fcccf2a"
+    },
+    {
+      "filename": "desktop-history-ready.png",
+      "screen": "history",
+      "state": "ready",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "bytes": 151516,
+      "sha256": "c8cf025f0345ab01f54194e80627f21ee0cb1411689a787d9612cfb8088fd516"
+    },
+    {
+      "filename": "desktop-create-ready.png",
+      "screen": "create",
+      "state": "ready",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "bytes": 122566,
+      "sha256": "6fdfa18ee05118c62ec6a505206b87645565431992dbc0bc0c5c74c0c9807e0e"
+    },
+    {
+      "filename": "phone-work-ready.png",
+      "screen": "work",
+      "state": "ready",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "bytes": 124631,
+      "sha256": "8ac6cff71b23591b0c2c4515053d25b8e530870f87350416bd052714f53647ca"
+    },
+    {
+      "filename": "phone-pipeline-ready.png",
+      "screen": "pipeline",
+      "state": "ready",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "bytes": 124459,
+      "sha256": "c4835eed036d7c7a177e2ca48110e058226e877c323d468f996c8f79b998ce2b"
+    },
+    {
+      "filename": "phone-detail-ready.png",
+      "screen": "detail",
+      "state": "ready",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "bytes": 151906,
+      "sha256": "89cf9ebf6b133cb09bfeb1590b7aeb87de44813a1c0e9803b0ce5d6f3a2f0485"
+    },
+    {
+      "filename": "phone-detail-denied.png",
+      "screen": "detail",
+      "state": "denied",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "bytes": 66400,
+      "sha256": "e90500769c3958a285010f5d296501233f333556a06b9dca4556d8399902d81b"
+    },
+    {
+      "filename": "phone-detail-conflict.png",
+      "screen": "detail",
+      "state": "conflict",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "bytes": 165088,
+      "sha256": "bd77ad7226085da36a41714b25abeba07a8d7b98713119b0bfda86d923fcf2a3"
+    },
+    {
+      "filename": "phone-relationships-ready.png",
+      "screen": "relationships",
+      "state": "ready",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "bytes": 139574,
+      "sha256": "f439010deaf14b768afc77b248d78c1a6619c7b9e86d5f8a6d1daa2ebd9157f7"
+    },
+    {
+      "filename": "phone-activity-ready.png",
+      "screen": "activity",
+      "state": "ready",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "bytes": 118418,
+      "sha256": "3e250ab546f1209fdf34a671d9ad1dc7d5b98e42eee102ea66a985be8572a423"
+    },
+    {
+      "filename": "phone-history-ready.png",
+      "screen": "history",
+      "state": "ready",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "bytes": 138240,
+      "sha256": "7648382c5a878b293f66a4e664cc173ecef70eea6fb806d05d3b4797013485bc"
+    },
+    {
+      "filename": "phone-create-ready.png",
+      "screen": "create",
+      "state": "ready",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "bytes": 121020,
+      "sha256": "d0bc81f1275d4606f3bf8a6ac4efb660be9c47bea1403fdaf974707d0ff0c981"
+    }
+  ],
+  "checked_views": 147,
+  "result": "passed",
+  "failures": []
+}
