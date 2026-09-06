@@ -1,0 +1,65 @@
+{
+  "revision": "r01",
+  "inspection_date": "2026-09-06",
+  "repository_commit": "c3ac9b2ab9c09308f620a5b451a337eb75fe6390",
+  "repository_tree": "163e4a9e7dcda9b067a67ed63299afd04d20e0b1",
+  "scope": "Targeted documentary discovery; no live CREMS/configuration/ERP validation",
+  "sources": [
+    {
+      "id": "EST-SRC-01",
+      "original_name": "CREMS Field Guide.pdf",
+      "bytes": 8748405,
+      "sha256": "94841a4b6451822029089db813aefbf8dd1c4ea43995395a3d31b53785b6aaa4",
+      "source_url": "https://chatgpt.com/api/library/files/libfile_4a054d3758e88191a69f753364cc4e57/download",
+      "access": "Original private source; not copied into repository"
+    },
+    {
+      "id": "EST-SRC-02",
+      "original_name": "CREMS Field Guide(1).html",
+      "bytes": 297726,
+      "sha256": "12a71d097130f8298cef3eaf51a7d382d31b1921a7bbecc2b42b1145f0e5e51e",
+      "source_url": "https://chatgpt.com/api/library/files/libfile_05be96c38bf88191abc0533270ef7d80/download",
+      "access": "Original private source; not copied into repository"
+    },
+    {
+      "id": "EST-SRC-03",
+      "original_name": "CREMS Field Guide.html",
+      "bytes": 293746,
+      "sha256": "5b04cb231dcdaf1a8a005c8e6c188e4aac68d259cd1284833079e351fd4f4f67",
+      "source_url": "https://chatgpt.com/api/library/files/libfile_ee0bd587212481918bea11972b1ef90b/download",
+      "access": "Original private source; not copied into repository"
+    },
+    {
+      "id": "EST-SRC-04",
+      "original_name": "GEN_RPT_CREMS_Current_State_and_Rebuild_Specification_v05.md",
+      "bytes": 470721,
+      "sha256": "cd6a26b28a0446dc22a5c1ab30482dfb7d0f0c75680852ae50c6e41528cd2e1a",
+      "source_url": "https://chatgpt.com/api/library/files/libfile_e035fca9dcb08191b1b34dce027453f6/download",
+      "access": "Original private source; not copied into repository"
+    },
+    {
+      "id": "EST-SRC-05",
+      "original_name": "GEN_RPT_CREMS_v05_Content_Assurance_Audit_v01.md",
+      "bytes": 11978,
+      "sha256": "600afd786956fd321c94b803cbfffcb763f2020019403ce82990b160b2fb59d3",
+      "source_url": "https://chatgpt.com/api/library/files/libfile_2f4527c904b08191a378eabab4bc9095/download",
+      "access": "Original private source; not copied into repository"
+    },
+    {
+      "id": "EST-BRAND-01",
+      "original_name": "02-PPA_BRAND_GUIDELINES_compressed-1-.pdf",
+      "bytes": 27591152,
+      "sha256": "335d3049bc72783799315d4790bd56b04e928acd0e1c2c81d8099cec2f2b8fd3",
+      "source_url": "https://chatgpt.com/api/library/files/libfile_1f5af70bcd048191bdb609b71f6587d7/download",
+      "access": "Supplied source bytes; unchanged logo embedded in design preview"
+    },
+    {
+      "id": "EST-BRAND-02",
+      "original_name": "01-GEN_LGO_PPALogoPrimaryTransparent_v01_ISS-1-.png",
+      "bytes": 315536,
+      "sha256": "8d12f0ecc394950cd9eb66964c588efb71c8e6f445390336c245c3f6712b9694",
+      "source_url": "https://chatgpt.com/api/library/files/libfile_9913ebd9706c8191925f506694666d4f/download",
+      "access": "Supplied source bytes; unchanged logo embedded in design preview"
+    }
+  ]
+}
