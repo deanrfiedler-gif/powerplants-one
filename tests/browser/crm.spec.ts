@@ -3,6 +3,9 @@ import { createHash, randomUUID } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { writeFile } from "node:fs/promises";
 import { CRM, crmCreate, crmBase, crmAction } from "../helpers/crm";
+// Each case covers a multi-command journey; individual controls must still respond promptly.
+test.describe.configure({ timeout: 120000 });
+test.use({ actionTimeout: 15000 });
 async function identity(page: Page, profile = "coordinator") {
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   await page
@@ -21,6 +24,31 @@ async function noOverflow(page: Page) {
 }
 async function capture(page: Page, info: TestInfo, scenario: string) {
   await noOverflow(page);
+  const errors = ["validation", "denied", "unavailable", "revoked-activity"];
+  const anchor = scenario === "loaded-sales-list"
+    ? page.locator(".crm-worklist")
+    : errors.includes(scenario)
+    ? page.locator('.business-error[role="alert"]').first()
+    : scenario === "conflict"
+      ? page.getByRole("heading", { name: "Compare saved version 2 with your proposal" })
+      : scenario === "uncertain-save"
+        ? page.getByRole("button", { name: "Confirm original save outcome" })
+        : scenario === "empty"
+          ? page.getByText("No permitted opportunities match this view.", { exact: true })
+          : scenario === "loading"
+            ? page.getByText("Loading permitted sales records…", { exact: true })
+            : scenario === "overdue"
+              ? page.getByRole("heading", { name: "Overdue", exact: true })
+              : scenario === "successor-action"
+                ? page.getByRole("heading", { name: "Due date needed", exact: true })
+                : scenario === "next-action-needed"
+                ? page.getByRole("heading", { name: "Next action needed", exact: true })
+                : scenario === "site-scoped-selectors"
+                  ? page.getByLabel("Site", { exact: true })
+                  : scenario === "reflow-320-keyboard"
+                    ? page.getByLabel("Stage", { exact: true })
+                    : page.locator("h1");
+  await anchor.evaluate((element) => element.scrollIntoView({ block: "start" }));
   const bytes = await page.screenshot({
     path: info.outputPath(`I1-${scenario}.png`),
     fullPage: false,
@@ -89,7 +117,7 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await page
     .getByRole("button", { name: "Create opportunity and action" })
     .click();
-  await expect(page.getByRole("alert")).toBeFocused();
+  await expect(page.locator('.business-error[role="alert"]')).toBeFocused();
   await capture(page, info, "validation");
   await page
     .getByLabel("Visibility company", { exact: true })
@@ -191,12 +219,14 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
       .first(),
   ).toBeVisible();
   await capture(page, info, "qualified-successor");
+  await capture(page, info, "successor-action");
   await page.goto("/crm/opportunities");
   await page.getByLabel("Search opportunities", { exact: true }).fill(title);
   await expect(
     page.getByRole("link", { name: title, exact: true }),
   ).toBeVisible();
   await capture(page, info, "sales-worklist");
+  await capture(page, info, "loaded-sales-list");
 });
 test("CA-02/03 real conflict retains proposed need; lost response reconciles original before a new intent", async ({
   page,
@@ -218,7 +248,7 @@ test("CA-02/03 real conflict retains proposed need; lost response reconciles ori
   await page
     .getByRole("button", { name: "Progress to Qualified", exact: true })
     .click();
-  await expect(page.getByRole("alert")).toContainText("changed");
+  await expect(page.locator('.business-error[role="alert"]')).toContainText("changed");
   await expect(
     page.getByLabel("Qualified customer need", { exact: true }),
   ).toHaveValue("SYN Safe proposed need retained after conflict");
@@ -286,7 +316,7 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   await expect(
     page.getByText("SYN Sensitive unsaved proposal", { exact: true }),
   ).toHaveCount(0);
-  await expect(page.getByRole("alert")).toBeVisible();
+  await expect(page.locator('.business-error[role="alert"]')).toBeVisible();
   await capture(page, info, "denied");
   await page.goto("/crm/opportunities");
   await identity(page);
@@ -317,7 +347,7 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
     }),
   );
   await page.getByRole("button", { name: "Refresh from start" }).click();
-  await expect(page.getByRole("alert")).toContainText(
+  await expect(page.locator('.business-error[role="alert"]')).toContainText(
     "temporarily unavailable",
   );
   await capture(page, info, "unavailable");
@@ -355,7 +385,7 @@ test("CA-06/10 real CRM permission revocation clears linked Activity content aft
   await expect(page.getByRole("heading",{name:i.initial_action.summary,exact:true})).toBeVisible();
   await page.getByLabel("Completion outcome or cancellation reason",{exact:true}).fill("SYN Sensitive proposed outcome");await page.getByLabel("Reason for change",{exact:true}).fill("SYN Attempt after actual revocation");
   await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.read'",[user]);
-  await page.getByRole("button",{name:"Complete with outcome",exact:true}).click();await expect(page.getByRole("alert")).toBeVisible();
+  await page.getByRole("button",{name:"Complete with outcome",exact:true}).click();await expect(page.locator('.business-error[role="alert"]')).toBeVisible();
   await expect(page.getByRole("heading",{name:i.initial_action.summary,exact:true})).toHaveCount(0);await expect(page.getByLabel("Completion outcome or cancellation reason",{exact:true})).toHaveCount(0);
   expect(await page.locator("body").innerText()).not.toContain(i.title);await capture(page,info,"revoked-activity");
   expect((await database().query("SELECT status,outcome FROM ppo.activities WHERE id=$1",[i.initial_action.id])).rows[0]).toEqual({status:"Open",outcome:null});
