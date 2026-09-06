@@ -1,8 +1,8 @@
 {
-  "revision": "r01",
+  "revision": "r02",
   "date": "2026-09-06",
   "scope": "Synthetic design assets; not application acceptance",
-  "base_commit": "ddc1a3cce769e011939e621d8d5f176542f48f8c",
+  "base_commit": "8bc0d903cb9da100136a8a5430bac9e6883bb27d",
   "assets": [
     {
       "path": "docs/standards/ui-assets/powerplants-logo-green-white.png",
@@ -24,6 +24,42 @@
       "bytes": 285778,
       "sha256": "5be004a1d4e4aed552c4b82b78f7344bc05ecb5423f72971864290e15c392bd3",
       "treatment": "Original bytes preserved"
+    },
+    {
+      "path": "docs/blueprints/crm-ui-mockups/board-r02.png",
+      "bytes": 221265,
+      "sha256": "4bf75c67f04b5bcf9875dd804b51179c8d352bed070e04b851ab241ed424c4b4",
+      "treatment": "r02 revised synthetic design; original r01 assets retained"
+    },
+    {
+      "path": "docs/blueprints/crm-ui-mockups/grid-r02.png",
+      "bytes": 249502,
+      "sha256": "fee8107952d15f35ae452ec77a0579db0b60421fc62455a5ab249f0a0dd2f689",
+      "treatment": "r02 revised synthetic design; original r01 assets retained"
+    },
+    {
+      "path": "docs/blueprints/crm-ui-mockups/phone-board-r02.png",
+      "bytes": 82597,
+      "sha256": "40ff06e7b4b4ac26121333e07052f083d3aa6a924084215b4d9eb5cff311fe77",
+      "treatment": "r02 revised synthetic design; original r01 assets retained"
+    },
+    {
+      "path": "docs/blueprints/crm-ui-mockups/phone-grid-r02.png",
+      "bytes": 77071,
+      "sha256": "577b9a3be12586b0b7b1931289d7245724ae8565fa724103aa8d8bb523b84325",
+      "treatment": "r02 revised synthetic design; original r01 assets retained"
+    },
+    {
+      "path": "docs/blueprints/crm-ui-mockups/states-r02.png",
+      "bytes": 157015,
+      "sha256": "deac843d247865e9171eb342dc2677e8e929cef0c5dd2dc6c914a0ef388f6df9",
+      "treatment": "r02 revised synthetic design; original r01 assets retained"
+    },
+    {
+      "path": "docs/blueprints/crm-ui-mockups/states.html",
+      "bytes": 550361,
+      "sha256": "364ee224cc60ca5ea6862c6b38cb75bd6cbcba69fad80e941081b9634a00dbbe",
+      "treatment": "r02 revised synthetic design; original r01 assets retained"
     }
   ],
   "brand_pdf": {
@@ -34,12 +70,16 @@
   },
   "interactive_export": {
     "path": "docs/blueprints/crm-board-grid-mockup.html",
-    "sha256": "ada9e0a8e8c3bfa2ad615264dc6b7aa643a1f9ff054b4a6bde1922aa5fb240b3",
-    "adaptation": "Standalone document; same fixture and UI; embedded subset of original Lucide 1.17.0 geometry replaces host icon runtime; no network/storage"
+    "sha256": "3ef6895d64a237c5cacc144dc5006df296b06b87c0b19e138b5c3560d0ac157a",
+    "adaptation": "r02 audited layout revision; same original synthetic fixture; standalone embedded assets; no network or storage"
   },
   "capture_environment": {
     "browser": "Chrome for Testing headless shell 151.0.7922.34",
     "content_width": 1800,
     "source": "Original conversation preview; export checked separately"
+  },
+  "revision_review": {
+    "path": "docs/blueprints/crm-ui-mockups/revision-review.json",
+    "scope": "Actual local export regression evidence; CI adds source-head and checkout evidence in its separate artifact"
   }
 }

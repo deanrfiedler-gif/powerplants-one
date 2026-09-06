@@ -1,6 +1,6 @@
 # CRM — I2 UI implementation guidance
 
-**Revision:** r01 · **Date:** 6 September 2026 · **Parent:** BP-03 / PPO-009 / issue #9 · **Owner:** Dean Fiedler, private prototype · **Status:** Design input for a later authorised increment.
+**Revision:** r02 · **Date:** 6 September 2026 · **Parent:** BP-03 / PPO-009 / issue #9 · **Owner:** Dean Fiedler, private prototype · **Status:** Design input for a later authorised increment.
 
 Read this alongside the [ordered implementation plan](crm-implementation-plan.md), [shared UI specification](../standards/ui-style-specification.md), [C01–C07 screen specification](../blueprints/crm-screen-specification.md) and [Board/Grid preview and captures](../blueprints/crm-ui-mockups/README.md). This is an additive UI handover, not the full I2 implementation starter. The active I1 workstream owns its completion handover and preparation of that starter.
 
@@ -19,13 +19,15 @@ I1 keeps Enquiry → Qualified, Open outcome, owned next action and no money fie
 | Board / Grid | Two presentations of the same permission-filtered query. Preserve filters, sort and search when switching; read the same detail. Counts and any future totals use the same permitted scope and completeness definition. |
 | Record emphasis | Title, organisation/site context, accountable owner and next action first. Distinguish overdue, due-needed and no-next-action states; use labels as well as colour. Never substitute zero for unavailable values. |
 | Stages and outcome | Render actual accepted definitions. Explicit, accessible stage action with reason/evidence/version guard; no drag-only movement. Closing, Won, customer acceptance and ERP order remain distinct. |
-| Reflow | Six columns only when readable; proposed 6/3/2/1 layout at ≥1400 / 781–1399 / 501–780 / ≤500 px. Grid scroll stays inside its container. Preserve logo clear space and labelled keyboard controls. |
+| Reflow | Above 780 px, one horizontal six-stage reference sequence with 250 px minimum columns and sticky headings. At ≤780 px, direct stage selector plus previous/next. Freeze Grid heading/identity; contain scrolling. First complete phone card and at least nine laptop Grid rows are review targets. Preserve the complete logo. |
 | Failure/recovery | Real loading, empty, denied, unavailable, validation and stale/conflict states from the server; preserve proposals safely and remove restricted content when scope changes. Saved requires durable acceptance. |
 
-The standalone preview implements view/filter/search/sort/detail and temporary creation only. It contains no permissions, persistence, real stage changes, owner transfer, account-plan editing, bulk edits, export or integration. Do not copy its synthetic data model, inline event code or client totals into the application as business contracts.
+The revised standalone preview implements view/filter/search/sort/detail, phone stage navigation, active criteria/reset and temporary creation. Creation starts in the selected pipeline, defaults to the current synthetic actor, preserves the view and offers View opportunity if outside its filters. Linked errors focus the invalid field. Titles/actions wrap at accepted lengths. The Grid shows full owner names and actual action text; the real implementation must distinguish Activity owner from opportunity owner where they differ. Eight branded state illustrations are static design references only. It contains no permissions, persistence, real stage changes, owner transfer, account-plan editing, bulk edits, export or integration. Do not copy its synthetic data model, inline event code or client totals into the application as business contracts.
 
 ## Verification for the eventual increment
 
 Cover actual Board/Grid record and filter equivalence; direct detail/search/count scope; unavailable/partial aggregates; empty and failed loads; long text at desktop, 390 and 320 px; keyboard entry, dialog focus and an accessible stage-change alternative. Exercise server authority, concurrent edits and revoked access using real database/HTTP/browser evidence for the accepted slice.
 
 Relevant mappings remain CRM-01/02/03/04/08, PAR-03/04/05/15, CA-02/03/05/06/07/10/11/13 and AT-25 components. The design screenshots and preview checks do not pass those business/runtime acceptance cases. Retain the broader I2 relationship scope in the plan; authorise a bounded implementation slice explicitly when ready.
+
+The [r02 design handover](crm-ui-design-handover.md) records the audit dispositions and exact regression evidence. Saved views, sortable headers, column resizing/reordering, bulk actions and persistence remain later work. Define bulk selection scope before exposing it; do not add nonfunctional controls to imply those capabilities.

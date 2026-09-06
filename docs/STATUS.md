@@ -80,3 +80,7 @@ P09 issue #36 / PR #37 implement exact completion submission, authorised review/
 ## BP-03 I1 implementation and publication
 
 [Issue #39](https://github.com/deanrfiedler-gif/powerplants-one/issues/39) authorises only synthetic owned opportunity and qualification follow-up. [I1 handover](delivery/crm-i1-handover.md) records the implemented slice, executed component checks, failed-run dispositions and actual publication status. Final merged-main evidence belongs to its linked external record. [ADR-0015](decisions/ADR-0015-crm-i1-owned-opportunities.md) reserves migration 0010 after P09's 0009. P09 remains separately owned in #36/#37. [I2 starter](delivery/crm-i2-starter.md) prepares only a scoped Board/Grid worklist using the accepted brand handover and I1 contracts; I2 has not begun. Full AT-25 and PPO-009 remain open; no operational transition is implied.
+
+## CRM UI audit revision
+
+Dean authorised the next design revision after the published Board/Grid audit. The [r02 visual revision](delivery/crm-ui-design-handover.md) improves mobile first-record visibility, continuous desktop stage navigation, frozen grid headings/identity, full next actions/owners, creation context, validation and long text. [Updated captures and branded exception examples](blueprints/crm-ui-mockups/README.md) accompany shared UI specification r03 and I2 UI guidance r02. Original issued images and source bytes remain preserved. Verification and PR publication are recorded in the handover; this does not change I1/P09 application scope or close PPO-009/AT-25.
