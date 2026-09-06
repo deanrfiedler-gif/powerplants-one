@@ -150,7 +150,7 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   const changed = page.waitForResponse(r => r.url().includes("/api/v1/crm/opportunities?") && r.status() === 409);
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
   expect((await changed).status()).toBe(409);
-  await expect(page.locator('.business-error[role="alert"]')).toContainText("The permitted results changed");
+  await expect(page.locator('.crm-workspace > .business-error[role="alert"]')).toContainText("The permitted results changed");
   await expect(page.locator(".crm-worklist-stamp")).toHaveCount(0);
   expect(await ids(page)).toEqual([]);
   await capture(page, info, "grid-changed-window");
@@ -158,7 +158,7 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   await expect.poll(() => ids(page)).toHaveLength(10);
   await page.route("**/api/v1/crm/opportunities?**", (route) => route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ code: "DatabaseUnavailable", message: "Sales records are temporarily unavailable.", retryable: true }) }));
   await page.getByRole("button", { name: "Refresh from start", exact: true }).click();
-  await expect(page.locator('.business-error[role="alert"]')).toBeVisible();
+  await expect(page.locator('.crm-workspace > .business-error[role="alert"]')).toBeVisible();
   await expect(page.locator(".crm-worklist-stamp")).toHaveCount(0);
   expect(await ids(page)).toEqual([]);
   await capture(page, info, "grid-unavailable");
@@ -166,7 +166,7 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   await page.getByRole("button", { name: "Try loading again", exact: true }).click();
   await expect.poll(() => ids(page)).toHaveLength(10);
   await page.goto(`/customers/${CRM.org}`);
-  const related = page.getByRole("link", { name: inputs[0].initial_action.summary, exact: true });
+  const related = page.locator(`a[href="/work/${inputs[0].initial_action.id}"]`);
   await expect(related).toHaveText(inputs[0].initial_action.summary);
   await related.focus();
   await related.evaluate(e => e.scrollIntoView({ block: "end" }));
@@ -215,7 +215,7 @@ test("CA-06/10/13 I2 revocation clears list, filter labels and late responses; i
   await expect(page.getByLabel("Search opportunities", { exact: true })).toHaveValue("");
   await page.getByLabel("Search opportunities", { exact: true }).fill(input.title);
   await identity(page, "systems");
-  await expect(page.locator('.business-error[role="alert"]')).toBeVisible();
+  await expect(page.locator('.crm-workspace > .business-error[role="alert"]')).toBeVisible();
   expect(await page.locator("body").innerText()).not.toContain(input.title);
   await capture(page, info, "identity-change-cleared");
 });
