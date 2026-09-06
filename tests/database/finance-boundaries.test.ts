@@ -657,3 +657,71 @@ test("P10 source changes after rendering preserve reserved bytes and refuse rele
       .output_manifest,
   );
 });
+
+test("P10 revoked Finance read scope denies released bytes and original issue receipt", async () => {
+  const q = await reconciledFinance(),
+    e = await evidence(q);
+  await processFinanceJob(e.job.id);
+  const issue = (await rows("SELECT * FROM ppo.finance_issues"))[0];
+  await database().query(
+    "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='finance.read'",
+    [q.reconciler.actor_id],
+  );
+  for (const format of ["html", "pdf"])
+    await assert.rejects(
+      financeIssueBytes(q.reconciler, issue.id, { format }),
+      code("Forbidden", "RecordUnavailable"),
+    );
+  await assert.rejects(
+    readOperation(q.reconciler, e.cmd.operation_id),
+    code("Forbidden", "RecordUnavailable"),
+  );
+  assert.equal(
+    (await rows("SELECT count(*)::int n FROM ppo.finance_issues"))[0].n,
+    1,
+  );
+});
+
+for (const change of ["policy", "renderer"] as const)
+  test(`P10 changed exact ${change} after rendering cannot issue stale bytes`, async () => {
+    const q = await reconciledFinance(),
+      e = await evidence(q),
+      path = "src/finance/render.ts",
+      original = await readFile(path);
+    let result;
+    try {
+      result = await processFinanceJob(e.job.id, {
+        afterRender: async () => {
+          if (change === "policy")
+            await database().query(
+              "UPDATE ppo.finance_template_policy SET version=version+1",
+            );
+          else
+            await writeFile(
+              path,
+              Buffer.concat([
+                original,
+                Buffer.from(
+                  "\n// SYN changed Finance template source during rendering\n",
+                ),
+              ]),
+            );
+        },
+      });
+    } finally {
+      if (change === "renderer") await writeFile(path, original);
+    }
+    assert.ok(
+      "state" in result &&
+        typeof result.state === "string" &&
+        ["StaleSource", "Failed"].includes(result.state),
+    );
+    assert.equal(
+      (await rows("SELECT count(*)::int n FROM ppo.finance_issues"))[0].n,
+      0,
+    );
+    assert.ok(
+      (await rows("SELECT output_manifest FROM ppo.finance_render_jobs"))[0]
+        .output_manifest,
+    );
+  });

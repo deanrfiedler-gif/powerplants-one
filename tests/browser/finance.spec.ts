@@ -91,7 +91,7 @@ test("P10 PT-17/PT-19 complete UI allocation, return/correction, unknown lookup,
   const desktop = info.project.name.startsWith("desktop"),
     source = await financeHttpSource(
       (p, b) => call(page, p, b),
-      desktop ? "2026-12-19" : "2026-12-20",
+      desktop ? "2026-11-25" : "2026-11-26",
       desktop ? 1 : 2,
     );
   await page.goto("/finance/handoffs/new");

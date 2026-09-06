@@ -204,6 +204,7 @@ export function FinanceQueue() {
         <label>
           Queue state
           <select
+            aria-label="Queue state"
             value={state}
             onChange={(e) => {
               setState(e.target.value);
@@ -461,6 +462,7 @@ export function FinanceForm({
               <label>
                 Work order
                 <select
+                  aria-label="Work order"
                   value={work}
                   disabled={!!id}
                   onChange={(e) => {
@@ -482,6 +484,7 @@ export function FinanceForm({
               <label>
                 Synthetic account
                 <select
+                  aria-label="Synthetic account"
                   value={account}
                   disabled={!!id}
                   onChange={(e) => setAccount(e.target.value)}
@@ -505,6 +508,7 @@ export function FinanceForm({
               <label>
                 Processing mode
                 <select
+                  aria-label="Processing mode"
                   value={mode}
                   disabled={!!id}
                   onChange={(e) => setMode(e.target.value)}
@@ -866,6 +870,7 @@ export function FinanceDetail({ id }: { id: string }) {
                       <label>
                         Synthetic outcome scenario
                         <select
+                          aria-label="Synthetic outcome scenario"
                           value={scenario}
                           onChange={(e) => setScenario(e.target.value)}
                         >
@@ -945,6 +950,7 @@ export function FinanceDetail({ id }: { id: string }) {
                       <label>
                         Linked correction decision
                         <select
+                          aria-label="Linked correction decision"
                           value={correction}
                           onChange={(e) => setCorrection(e.target.value)}
                         >
@@ -1164,6 +1170,7 @@ export function AccountScreen({
             <label>
               Independent fixture
               <select
+                aria-label="Independent fixture"
                 value={fixture}
                 onChange={(e) => setFixture(e.target.value)}
               >

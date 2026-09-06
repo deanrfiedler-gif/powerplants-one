@@ -164,6 +164,6 @@ jobs:
             test-results/
             verification-evidence/
             playwright-report/
-            !test-results/**/trace.zip
+            !**/trace.zip
             !playwright-report/data/*.zip
           retention-days: 14
