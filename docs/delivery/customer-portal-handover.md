@@ -3,7 +3,7 @@ title: Customer portal - design and staged delivery handover
 revision: r01
 date: 2026-09-06
 owner: Dean Fiedler
-status: Authored; verification and publication in progress
+status: Draft PR published; static checks passed; browser and CI verification blocked
 source_commit: 94289a20fc609e47af647b29ca8170557da312bb
 ---
 
@@ -32,9 +32,25 @@ The supplied logo matches the existing shared PNG exactly; PDF p17/p18 were rend
 
 ## Verification record
 
-Local foundation and prototype checks passed. The naming check initially exceeded the 8,000-character project-instruction limit; the redundant closing guidance was consolidated and is being rechecked. Exact Node 24.20.0 and existing locked Playwright 1.63.0 are available. Chromium download timed out in this container; no local browser pass is claimed. The draft PR will run the same reviewed design checks in disposable CI and retain original captures for inspection. The final contribution must record the actual foundation/prototype/naming results, local toolchain/browser, original preview hash, executed viewports/interactions, inspected captures and any failed-run dispositions before claiming readiness. The dedicated CI uses the existing exact dependency pins; no new package is selected. Full application regression remains an existing PR gate. Preview verification is not CPA runtime/security/business acceptance.
+The reconstructed local Git tree exactly matched the first published tree `417c8309c5c602743a98019bb448ed2ef84c7d43` at contribution `7577e3bda7b67afb43dc6f3928d680a4d22d9bac`. E1's merged tree is preserved in full; the portal diff is eighteen design/documentation/preview/workflow paths only.
 
-Commands:
+| Check | Actual outcome |
+|---|---|
+| Foundation | Passed locally: 4 issued sources, 78 parents, 29 original decisions, 38 master acceptance records and all local links |
+| Prototype | Passed locally: original 78 dispositions, 30 PT procedures and 12 implementation packages preserved |
+| Naming | Passed locally: 61 document records, original 7 exceptions, copy-ready instructions below 8,000 characters |
+| JavaScript | Exact Node 24.20.0 parsed both the inline preview and browser-check script; existing ESLint passed for the new check |
+| Brand/source | Original PDF p17/p18 and supplied PNG visually inspected; exact logo hash equals existing asset; self-contained font/logo preserved |
+| Browser design checks | Not run: local pinned Chromium download timed out; cloud browser rejected the local-file URL under its URL policy. No alternate URL or browser-policy bypass attempted. |
+| GitHub checks | First PR jobs failed before executing any steps; runner ID 0 and no artifact/log was produced. Cause beyond that is not verified. No test failure is inferred and no test pass is claimed. |
+| Visual walkthrough QA | Pending: no rendered walkthrough capture was produced or inspected. Layout and interaction source review is not a substitute. |
+| Runtime CPA / business acceptance | CPA-01–CPA-16 remain Not run; no portal application/security/production acceptance claimed |
+
+Initial failed-run dispositions: the naming instruction-size check failed before duplicate closing guidance was consolidated; the final local check passed. Local Chromium installation timed out on its advertised CDN. GitHub design run [34066046773](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34066046773), documentation run [34066046788](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34066046788), application run [34066046697](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34066046697) and E1 run [34066046810](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34066046810) stopped before runner steps. Connector step lists were empty; design artifacts were empty. Detailed check annotations could not be retrieved through the connector. The separate browser was signed out and could not inspect this private Actions page. Do not guess a billing or account-setting diagnosis.
+
+Source review additionally fixed unbroken detail-title wrapping and retained the submitted unknown-equipment/site context and impact in the example request. These fixes have syntax/static verification only until browser execution is available. No independent human review claim.
+
+Commands for continuation:
 
 ```sh
 python3 scripts/check_foundation.py
@@ -43,7 +59,7 @@ python3 scripts/check_naming.py
 node docs/blueprints/customer-portal-design-check.mjs
 ```
 
-Design evidence is emitted under `verification-evidence/customer-portal-design/`; selected original PNGs and a hash manifest will be retained with this design before delivery. There is no independent human review claim.
+The browser check must emit original PNGs and a source/capture hash manifest under `verification-evidence/customer-portal-design/`, using the existing exact package/renderer. Inspect those original desktop/390px/320px captures before merging. Retain selected original images and results; do not fabricate or substitute screenshots. Existing application/E1 regression gates stay enabled. A repository check failure does not authorise runner, billing, permission or required-check changes.
 
 ## Readiness and next step
 
@@ -51,6 +67,8 @@ CP1 is prepared but was not ready on the inspected main: P11/P12 integrated qual
 
 Operational identity/hosting, real customer membership/delegation, publishing/support/urgent-contact policy, retention, supplier content rights and MYOB/SharePoint entitlements remain open for real activation. No live customer access, invitation/message, paid service or operational integration was performed.
 
-## Publication
+## Publication and continuation
 
-The linked issue/PR publication record will identify final contribution head, checks, normal expected-head merge and actual merged-main verification. Do not infer publication from this authored file, a screenshot or an open PR. Preserve failed evidence alongside subsequent fixes.
+[Draft PR #51](https://github.com/deanrfiedler-gif/powerplants-one/pull/51) contains the reviewable design. First contribution: `7577e3bda7b67afb43dc6f3928d680a4d22d9bac`; publication base: `1f13dd8d6f5006559152fe9d5410aed3fff64234`. The external PR publication comment governs the latest contribution head and failed/check evidence. Normal merge and actual merged-main verification are pending. Keep #50 open until the design verification and publication finish.
+
+An hourly condition task, “Continue PPO customer portal”, was successfully configured on 6 September 2026 in Australia/Brisbane context. It checks current repository readiness, first completes #51's verification/publication when possible, and then resumes one authorised bounded synthetic stage when its dependencies are verified. It checks active work before mutating, avoids repeating an unchanged blocker and cannot bypass access, CI, billing or deployment boundaries. The task is a configured continuation mechanism; document storage itself never schedules work.

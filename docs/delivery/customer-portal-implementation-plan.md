@@ -53,3 +53,7 @@ Synthetic stage completion is not permission to invite real customers. Before ac
 Use the repository's existing exact toolchain, scripts and applicable CI. Run foundation/prototype/naming checks; preserve original regression gates. Execute real database, HTTP, browser and independent process/database restart cases for the new behaviour. Inspect desktop/320px/390px and long content. Record failures and their actual corrections, code head, environment, counts, original capture hashes, limitations and normal expected-head merge. Verify actual merged main; do not substitute feature-branch checks.
 
 Keep full CPA cases Not run or partial where downstream preconditions are missing; never promote mockup assertions into runtime acceptance. Finish the current bounded stage and maintain the next ready starter/dependency observation. No separate reauthorisation is required for the scope already granted, and no automatic background execution is implied without a configured task.
+
+## Configured continuation
+
+The hourly “Continue PPO customer portal” condition task was created successfully on 6 September 2026. It first checks the current status of design PR #51, then one ready bounded stage. It inspects active work to avoid duplicate/concurrent mutations, keeps unchanged blockers quiet, preserves checks and reports completed delivery or a new actionable blocker. This task supplies future execution; the maintained plan alone does not.
