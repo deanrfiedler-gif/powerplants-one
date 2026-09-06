@@ -244,9 +244,9 @@ test("P05 additive upgrade preserves exact P04 proposal bytes, receipts, source 
     await rows("SELECT * FROM ppo.appointments ORDER BY id"),
     all,
   );
-  assert.equal(
-    (await rows("SELECT count(*)::int n FROM public.ppo_migrations"))[0].n,
-    9,
+  assert.deepEqual(
+    (await rows("SELECT version FROM public.ppo_migrations ORDER BY version")).map(r=>r.version),
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   );
 });
 test("confirmation reserves full crew with exact evidence and immutable original receipt; changed operation and stale retry refused", async () => {

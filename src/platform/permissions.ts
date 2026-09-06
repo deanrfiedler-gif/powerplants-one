@@ -8,6 +8,10 @@ export type Capability =
   | "report.review"
   | "report.issue"
   | "report.respond"
+
+  | "crm.opportunity.read"
+  | "crm.opportunity.create"
+  | "crm.opportunity.edit"
   | "field.read.own"
   | "field.start.own"
   | "field.capture.own"

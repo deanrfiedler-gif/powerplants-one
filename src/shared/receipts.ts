@@ -1,3 +1,5 @@
+import { opportunityReceiptActions } from "../crm/receipt-authority";
+import { visibleOpportunity, relationshipContext, eligibleOpportunityOwner } from "../crm/context";
 import { reportContext, ownReport } from "../reports/context";
 import {
   fieldContext,
@@ -29,7 +31,14 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.object_type === "ServiceReport") {
+  if (r.object_type === "Opportunity") {
+    const o = await visibleOpportunity(client, p, r.record_id);
+    const cap = r.command === "CreateOpportunity" ? "crm.opportunity.create" : "crm.opportunity.edit";
+    await relationshipContext(client,p,o,cap);
+    await eligibleOpportunityOwner(client,p,o);
+    if (cap === "crm.opportunity.edit" && o.owner_id !== p.actor_id) throw unavailable();
+    await opportunityReceiptActions(client,p,o.id,operation_id);
+  } else if (r.object_type === "ServiceReport") {
     if (r.command === "SubmitCompletion" || r.command === "AmendReport")
       await ownReport(client, p, r.record_id);
     else

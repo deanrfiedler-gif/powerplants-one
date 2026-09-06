@@ -54,3 +54,7 @@ Full PT-11/PT-12/PT-24/PT-28 are assessed against every written precondition and
 ## P09 review, report and response verification
 
 [P09 handover](../delivery/p09-handover.md) records exact submission/review/correction, narrow attendance acceptance, durable customer-safe HTML/PDF, immutable responses and compatible offline originals. PostgreSQL, HTTP, browser and actual process-restart evidence are separate from the authored catalogue. The [external publication record](https://github.com/deanrfiedler-gif/powerplants-one/issues/36#issuecomment-5557392390) holds final-head/main identities, run results and preserved original evidence when complete. Existing full PT-06 remains Passed. PT-13/14/18/23/24/28 span additional boundaries; P09 components do not manufacture Finance or full integrated acceptance. Implementation self-review is not independent review or owner acceptance.
+
+## BP-03 I1 verification boundary
+
+The [I1 handover](../delivery/crm-i1-handover.md) records CA-01–CA-08/CA-10 applicable components and CA-13 desktop/phone/320px scope, actual failed-run dispositions, original screenshots and real PostgreSQL/HTTP/process-restart evidence. Its tests are `tests/database/crm.test.ts`, `tests/http/crm.test.ts`, `tests/browser/crm.spec.ts` and `scripts/crm-restart-proof.ts`. Authored tests alone are not execution evidence. Full AT-25 remains Planned; account parity, real hardware and CRM offline support are not established by these online component checks. Existing AT/PT catalogue statuses and 78 parent IDs are unchanged.

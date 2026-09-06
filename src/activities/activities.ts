@@ -1,3 +1,4 @@
+import { crmAvailable, opportunityVisibility, visibleOpportunity } from "../crm/context";
 import type { PoolClient } from "pg";
 import { database } from "../platform/database";
 import { AppError, unavailable } from "../platform/errors";
@@ -43,7 +44,7 @@ export const activityStates = [
   "Completed",
   "Cancelled",
 ] as const;
-export const linkKinds = ["Organisation", "Site", "Asset", "Ticket"] as const;
+export const linkKinds = ["Organisation", "Site", "Asset", "Ticket", "Opportunity"] as const;
 export type ActivityLink = {
   object_type: (typeof linkKinds)[number];
   object_id: string;
@@ -100,12 +101,13 @@ export function parseLinks(value: unknown): ActivityLink[] {
 export function classVisibility(alias = "a") {
   return `(${alias}.access_class='RestrictedService' OR (${alias}.access_class='Internal' AND ${scopeSql(`${alias}.company_id`, `${alias}.site_id`, "shared.internal.read")}) OR (${alias}.access_class='RestrictedFinance' AND ${scopeSql(`${alias}.company_id`, `${alias}.site_id`, "shared.finance.read")}))`;
 }
-export function activityVisibility(alias = "a") {
+export function activityVisibility(alias = "a", withOpportunity = false) {
   return `${scopeSql(`${alias}.company_id`, `${alias}.site_id`, "activity.read")} AND ${scopeSql(`${alias}.company_id`, `${alias}.site_id`)} AND ${classVisibility(alias)}
   AND NOT EXISTS(SELECT 1 FROM ppo.activity_links al WHERE al.workspace_id=${alias}.workspace_id AND al.activity_id=${alias}.id AND NOT (
     (al.object_type='Organisation' AND EXISTS(SELECT 1 FROM ppo.organisations lo WHERE lo.workspace_id=al.workspace_id AND lo.id=al.object_id AND ${visibility("Organisation", "lo")})) OR
     (al.object_type='Site' AND EXISTS(SELECT 1 FROM ppo.sites ls WHERE ls.workspace_id=al.workspace_id AND ls.id=al.object_id AND ${visibility("Site", "ls")})) OR
     (al.object_type='Asset' AND EXISTS(SELECT 1 FROM ppo.assets la WHERE la.workspace_id=al.workspace_id AND la.id=al.object_id AND ${visibility("Asset", "la")})) OR
+    ${withOpportunity ? `(al.object_type='Opportunity' AND EXISTS(SELECT 1 FROM ppo.opportunities co WHERE co.workspace_id=al.workspace_id AND co.id=al.object_id AND ${opportunityVisibility("co")})) OR` : ""}
     (al.object_type='Ticket' AND EXISTS(SELECT 1 FROM ppo.tickets lt WHERE lt.workspace_id=al.workspace_id AND lt.id=al.object_id AND ${ticketVisibility("lt")}))
   ))`;
 }
@@ -117,7 +119,7 @@ export async function visibleActivity(
   await requireCapability(c, p, "activity.read");
   const row = (
     await c.query(
-      `SELECT a.* FROM ppo.activities a WHERE a.workspace_id=$1 AND a.id=$3 AND ${activityVisibility()}`,
+      `SELECT a.* FROM ppo.activities a WHERE a.workspace_id=$1 AND a.id=$3 AND ${activityVisibility("a", await crmAvailable(c))}`,
       [p.workspace_id, p.actor_id, uuid(id, "id")],
     )
   ).rows[0];
@@ -131,10 +133,13 @@ export async function validateLinks(
 ) {
   for (const l of input.links) {
     const row =
-      l.object_type === "Ticket"
+      l.object_type === "Opportunity"
+        ? await visibleOpportunity(c, p, l.object_id)
+        : l.object_type === "Ticket"
         ? await visibleTicket(c, p, l.object_id)
         : await visible(c, p, l.object_type as SharedKind, l.object_id);
     if (row.company_id !== input.company_id) throw unavailable();
+    if (l.object_type === "Opportunity" && row.site_id !== input.site_id) throw unavailable();
     const site = l.object_type === "Site" ? row.id : row.site_id;
     if (
       input.site_id &&
@@ -447,12 +452,14 @@ export async function readActivity(p: Principal, id: string) {
   const links = [];
   for (const l of await activityLinks(c, p, id)) {
     const row =
-      l.object_type === "Ticket"
+      l.object_type === "Opportunity"
+        ? await visibleOpportunity(c, p, l.object_id)
+        : l.object_type === "Ticket"
         ? await visibleTicket(c, p, l.object_id)
         : await visible(c, p, l.object_type as SharedKind, l.object_id);
     links.push({
       ...l,
-      label: row.display_name ?? row.description ?? row.summary,
+      label: row.display_name ?? row.description ?? row.summary ?? row.title,
       display_number: row.display_number,
     });
   }
@@ -537,7 +544,9 @@ export async function listActivities(p: Principal, input: unknown = {}) {
   if ((filters.object_type === null) !== (filters.object_id === null))
     invalid("object_id", "Choose both a linked type and record.");
   if (filters.object_id) {
-    if (filters.object_type === "Ticket")
+    if (filters.object_type === "Opportunity")
+      await visibleOpportunity(c, p, filters.object_id);
+    else if (filters.object_type === "Ticket")
       await visibleTicket(c, p, filters.object_id);
     else
       await visible(c, p, filters.object_type as SharedKind, filters.object_id);
@@ -557,7 +566,7 @@ export async function listActivities(p: Principal, input: unknown = {}) {
   );
   const rows = (
     await c.query(
-      `SELECT a.id FROM ppo.activities a WHERE a.workspace_id=$1 AND ${activityVisibility()}
+      `SELECT a.id FROM ppo.activities a WHERE a.workspace_id=$1 AND ${activityVisibility("a", await crmAvailable(c))}
     AND ($3::uuid IS NULL OR a.company_id=$3) AND ($4::uuid IS NULL OR a.site_id=$4) AND ($5::uuid IS NULL OR a.id>$5)
     AND position(lower($6) in lower(a.summary))>0 AND ($7::uuid IS NULL OR a.owner_id=$7)
     AND ($8::text IS NULL OR a.status=$8 OR ($8='Active' AND a.status IN ('Open','InProgress')))

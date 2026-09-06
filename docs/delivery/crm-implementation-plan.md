@@ -1,6 +1,6 @@
 # CRM — Ordered implementation sequence
 
-**Revision:** r02 · **Date:** 6 September 2026 · **Status:** Proposed sequence; I1 active separately; this update adds design guidance · **Parent workstream:** PPO-009 / issue #9. **Owner:** Dean Fiedler, private prototype.
+**Revision:** r04 · **Date:** 6 September 2026 · **Status:** I1 implemented and component-tested; publication in its handover; bounded I2 prepared only · **Parent workstream:** PPO-009 / issue #9. **Owner:** Dean Fiedler, private prototype.
 
 [BP-03](../blueprints/BP-03-crm.md) · [Parity](../blueprints/crm-parity.md) · [First implementation starter](crm-first-increment-starter.md) · [Handover](crm-discovery-handover.md).
 
@@ -8,7 +8,7 @@ I1–I6 below are **BP-03-local sequence labels**, not new parent requirements, 
 
 ## Current coordination and visual handover
 
-The discovery session itself authorised no implementation. Subsequent I1 work is active in [issue #39](https://github.com/deanrfiedler-gif/powerplants-one/issues/39) / draft [PR #40](https://github.com/deanrfiedler-gif/powerplants-one/pull/40) at this update. This r02 design amendment does not expand that scope or authorise I2. Verify actual main and both I1/P09 handovers before selecting the next slice.
+The discovery session itself authorised no implementation. Subsequent I1 work is active in [issue #39](https://github.com/deanrfiedler-gif/powerplants-one/issues/39) / draft [PR #40](https://github.com/deanrfiedler-gif/powerplants-one/pull/40) at this update. The retained r02 design amendment does not expand that scope or authorise I2. Verify actual main and both I1/P09 handovers before selecting the next slice.
 
 Read the [I2 UI guidance](crm-i2-ui-guidance.md), [shared visual specification](../standards/ui-style-specification.md) and [branded C02 Board/Grid preview](../blueprints/crm-ui-mockups/README.md) when preparing I2. The addendum complements the full I2 starter to be prepared by I1. Six reference stage labels and fictional amounts illustrate future layout; accepted stage contracts govern implementation, I1 keeps two stages/no money, and commercial displays retain I3 prerequisites.
 
@@ -18,7 +18,11 @@ Read the [I2 UI guidance](crm-i2-ui-guidance.md), [shared visual specification](
 
 This yields a usable sales journey without relying on unknown operational pipeline names, source fields, pricing or mailbox configuration. It exercises the most consequential shared change—Opportunity links in Activity visibility/receipts—early and in a small surface. It is more valuable than disconnected account, board and report screens, and lower risk than beginning with migration, a separate lead model or Finance/quotation integration.
 
-First slice uses one fixed, clearly fictional pipeline with Enquiry → Qualified and `close_outcome=Open`. Both states are stages of one Open opportunity, not Pipedrive entity conversion or customer acceptance. No money/probability fields. Existing CustomerContact/RelationshipReview kinds cover its manual action. This design choice may be refined with owner feedback, but is sufficient for synthetic implementation under a subsequent instruction.
+First slice uses one fixed, clearly fictional pipeline with Enquiry → Qualified and `close_outcome=Open`. Both states are stages of one Open opportunity, not Pipedrive entity conversion or customer acceptance. No money/probability fields. Existing CustomerContact/RelationshipReview kinds cover its manual action. This fictional choice is implemented only under the separate I1 instruction; it remains unrelated to owner acceptance of operational pipeline policy.
+
+## Current bounded work
+
+I1 is tracked by [#39](https://github.com/deanrfiedler-gif/powerplants-one/issues/39) / [PR #40](https://github.com/deanrfiedler-gif/powerplants-one/pull/40); see its [handover](crm-i1-handover.md) and [external publication](https://github.com/deanrfiedler-gif/powerplants-one/issues/39#issuecomment-5557831957) for actual verification/merge state. The first [bounded I2 starter](crm-i2-starter.md) selects a scoped Board/Grid worklist with the accepted brand direction from the broader I2 theme. It uses only I1’s two actual stages and no money fields. Owner transfer, additional stages, close/reopen, separate lead, account plans and reassociation remain later proposed work. No I2 work begins merely because that starter exists.
 
 ## Ordered increments
 
@@ -53,7 +57,7 @@ The journey persists and is usable on desktop/phone; authorised/denied direct/li
 
 ## Acceptance catalogue
 
-All cases below are **design only — Not run**. Test IDs are BP-03-local CA-01–CA-16. Each implementation must record source commit/tree, environment, fixture IDs, actual result, evidence and reviewer limits. DB means real PostgreSQL constraints/concurrent transactions, HTTP means real routes/current session, Browser means actual UI/reload/focus/phone workflow. A screenshot proves only what was rendered.
+The catalogue below defines the complete cases. I1 component execution and failed-run dispositions are maintained in the [I1 handover](crm-i1-handover.md); full cases are not promoted from authored tests or an unmerged branch. Later-only components remain **Not run**. Test IDs are BP-03-local CA-01–CA-16. Each implementation must record source commit/tree, environment, fixture IDs, actual result, evidence and reviewer limits. DB means real PostgreSQL constraints/concurrent transactions, HTTP means real routes/current session, Browser means actual UI/reload/focus/phone workflow. A screenshot proves only what was rendered.
 
 | Case | Preconditions and action | Observable result / meaningful evidence | Layer / parent acceptance |
 |---|---|---|---|

@@ -1,6 +1,8 @@
 # PP-01 — Service API, operation and event contracts
 
-**Edition:** r10 · **Status:** Internal API contract; bounded P01–P09 subsets are implemented, with actual verification recorded separately. API-C19 and Finance remain P10. These are Powerplants One routes, never asserted MYOB endpoints.
+**Edition:** r11 · **Status:** Internal API contract; bounded P01–P09 subsets are implemented, with actual verification recorded separately. API-C19 and Finance remain P10. These are Powerplants One routes, never asserted MYOB endpoints.
+
+BP-03 I1 adds only the explicitly identified opportunity amendment below; its actual verification/publication is in the [I1 handover](../delivery/crm-i1-handover.md).
 
 [Architecture](../architecture/BP-02-platform-architecture.md) · [Dictionary](service-data-dictionary.md) · [Service specification](../blueprints/BP-07-service-operations.md).
 
@@ -382,3 +384,23 @@ Events are CompletionSubmitted, ServiceReportReviewed (decision retained), Repor
 P09 offline preparation requires a downloaded server-accepted attendance before submission. Provisional P08 starts/captures first synchronise and refresh their accepted context; no appointment version is guessed from a pending start. Older accepted local drafts are ignored when the downloaded server draft has a newer exact version. P09 submission/response originals remain retained after conflicts and are excluded from restricted P08 recovery actions.
 
 P09 online submission also checks retained originals in the current browser’s owner-bound P08 workspace. Unaccepted originals for the attendance (except separately bound customer responses) block a new online submission; locked/unreadable local ownership requires explicit verification. The server still validates exact accepted evidence and bytes transactionally. It cannot discover unsent evidence on another device. The report list explicitly exposes a bounded recent 200-candidate window and always labels that bounded discovery as BoundedWindow; it does not expose the number of inaccessible candidates.
+
+## BP-03 I1 opportunity implementation amendment
+
+The CRM slice uses BP-03-local command names, not new PP-01 API-C/API-R numbers. [ADR-0015](../decisions/ADR-0015-crm-i1-owned-opportunities.md) and [I1 handover](../delivery/crm-i1-handover.md) govern the implemented subset and actual verification. No old operation normalisation or payload hash changes.
+
+| Route / command | Strict input beyond the common envelope | Current authority and result |
+|---|---|---|
+| GET `/api/v1/crm/opportunities` | Optional `q`, `company_id`, `site_id`, `owner_id`, `stage_id` (Enquiry/Qualified), `next_action` (Needed/DueNeeded/Overdue/Upcoming/Unavailable), `limit`, `cursor` | Scoped CRM read, shared read, Internal and independently permitted organisation/site/person. Bounded visible-only rows and source time; no global hidden count. |
+| GET `/api/v1/crm/opportunities/:id` | UUID | Same read scope. Canonical customer context, immutable stage-entry time, owner, need, source, visible action/history, original qualification events and current edit availability. |
+| POST collection / CreateOpportunity | `id`, existing `company_id`, `organisation_id`, optional `site_id`/`primary_person_id`, matching unknown reasons, `title`, `need_summary`, `source_channel`, `source_basis`, eligible `owner_id`, immutable `pipeline_definition_id`, `initial_action` | Create + shared/Internal/Activity authority. Atomic opportunity/OPP identity, Internal action/typed links, event/audit/receipt/outbox. New acceptance 201; authorised replay 200. No identity creation/merge for customer records. |
+| POST `/:id/qualify` / RecordQualificationAndProgress | `expected_version`, original `pipeline_definition_id`, `need_summary`, `qualification_note`, optional `identification_activity_id` | Current opportunity owner and scoped edit. Only Open Enquiry → Qualified; permitted current contact or owned active linked CustomerContact/RelationshipReview identification action. 200 receipt. |
+| POST `/:id/next-action` / PlanOpportunityAction | `expected_version`; exactly one `activity_id` or `new_action` | Current opportunity owner and scoped edit/Activity authority. Create or deliberately designate active Internal same-context linked action, record event/version/audit/receipt/outbox. Never changes stage. 200 receipt. |
+| GET `/api/v1/crm/options` | `kind` Company/Organisation/Site/Person/Owner/ActionOwner, relevant existing context IDs, optional `opportunity_id`, `q`, `limit`, `cursor` | Existing permitted scoped identities only; no directory of Systems/unassigned users. Opportunity owners need scoped CRM edit; Activity owners independently need Activity edit/read and CRM read/Internal/context. |
+| GET `/api/v1/operations/:operation_id` | Original operation UUID | Existing actor-bound route additionally dispatches Opportunity with current command capability, relationships, eligible owner, and all-target visibility for the operation's recorded actions. Receipt metadata confers no access. |
+
+Common envelope is `schema_version=1`, UUID `operation_id`, nonblank bounded `reason`. Actor/workspace/time are server-derived. Unknown keys, actor/state/version/reference injection and bodies over 64 KiB fail. Title is 1–200 trimmed characters; need/qualification/action summaries 1–2000; source/unknown reasons and operation reason 1–1000. `source_channel` is fictional manual Phone/Email/Meeting/Referral/Other context, not an integration setting. Action input is UUID `id`, existing eligible `owner_id`, existing CustomerContact/RelationshipReview `kind`, `summary`, and exactly a finite `due_at` instant or `due_needed=true`. No due date is invented.
+
+Expected-version conflict is 409 `VersionConflict`; different content under an accepted operation is 409 `OperationConflict`. Valid active action and qualification guards return 422 with explicit failure codes. Unavailable and inaccessible records both return 404 `RecordUnavailable`; missing capability on a collection may return 403. All private responses retain no-store. There is no PATCH, reassociation, close/reopen, owner transfer, board, file, export/delete, lead, Finance, automation or offline CRM route.
+
+Identical content replays one original effect after current authority; terminal historical actions remain valid history, not a new state transition. An uncertain online save first looks up the original operation, then may retry only that exact original. The current page retains input/operation in memory; a stale version retains proposed fields and needs deliberate saved-version comparison. This is not durable offline storage for unsaved forms. Identity change or denied refresh removes sensitive visible CRM context.

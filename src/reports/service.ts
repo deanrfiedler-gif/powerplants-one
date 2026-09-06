@@ -17,6 +17,7 @@ import { inspectPng } from "../field/media";
 import { visible, envelope } from "../shared/reads";
 import { object, uuid } from "../shared/validation";
 import { activityVisibility } from "../activities/activities";
+import { crmAvailable } from "../crm/context";
 import {
   reportContext,
   ownReport,
@@ -801,7 +802,7 @@ export async function readReport(
     ).rows;
     const follow_ups = (
       await c.query(
-        `SELECT a.id,a.summary,a.status,a.owner_id,a.due_needed,u.display_name AS owner_name,f.kind FROM ppo.report_follow_ups f JOIN ppo.activities a ON a.id=f.activity_id JOIN ppo.users u ON u.id=a.owner_id WHERE f.workspace_id=$1 AND f.report_id=$3 AND ${activityVisibility("a")} ORDER BY f.created_at`,
+        `SELECT a.id,a.summary,a.status,a.owner_id,a.due_needed,u.display_name AS owner_name,f.kind FROM ppo.report_follow_ups f JOIN ppo.activities a ON a.id=f.activity_id JOIN ppo.users u ON u.id=a.owner_id WHERE f.workspace_id=$1 AND f.report_id=$3 AND ${activityVisibility("a", await crmAvailable(c))} ORDER BY f.created_at`,
         [p.workspace_id, p.actor_id, id],
       )
     ).rows;

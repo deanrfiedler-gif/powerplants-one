@@ -1,6 +1,8 @@
 # PP-01 — Service data and choice dictionary
 
-**Edition:** r10 · **Status:** Logical and physical contract; P01–P09 implement the bounded subsets explicitly identified below. P09 runtime verification is recorded in its handover. This is not an exported CREMS/MYOB schema.
+**Edition:** r11 · **Status:** Logical and physical contract; P01–P09 implement the bounded subsets explicitly identified below. P09 runtime verification is recorded in its handover. This is not an exported CREMS/MYOB schema.
+
+BP-03 I1 adds only the explicitly identified opportunity amendment below; its actual verification/publication is in the [I1 handover](../delivery/crm-i1-handover.md).
 
 [BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md) · [Finance](finance-handoff.md) · [Documents](document-issue-distribution.md).
 
@@ -399,3 +401,15 @@ Captured time/material quantities are immutable P07 payload facts. An approved r
 P08 IndexedDB remains version 2 and original envelope schema 1. Two additive command names and optional bounded `report_presentations` context preserve old records without rewriting. At most two exact current reviewed presentations per cached job (1 MiB HTML each) can be downloaded under current permissions. Their hashes are verified before saving; worker caches remain public shell only. Submission can reference a prior local completion-draft operation explicitly; the server resolves its exact accepted revision without altering the retained original envelope. Response depends on already server-reviewed/issued bytes, never queued approval or offline issuance. Restricted recovery grants do not accept P09 submission/response or grant report access.
 
 Partial/UnableToProceed P09 submissions retain Incomplete personal time/material declarations and their reasons/blockers with an owned next action. Review can accept that bounded factual attendance without completing missing declarations or creating quantities/Finance readiness. Complete remains blocked by those declarations; required unavailable evidence blocks all submission outcomes.
+
+## BP-03 I1 physical opportunity extension
+
+[Migration 0010](../../db/migrations/0010-crm-opportunities.sql) adds `opportunities`, `crm_pipeline_definitions`, `crm_stage_definitions` and `opportunity_events`; [ADR-0015](../decisions/ADR-0015-crm-i1-owned-opportunities.md) records the intentionally small model. Opportunity, pipeline definition and event UUIDs use the shared permanent identity registry. Only Opportunity gets an atomic `SYN-PPO-OPP` reference. UUID, reference, title, aggregate version, stage and close outcome are independent.
+
+One immutable fictional `SyntheticEnquiryI1` definition, version 1, has Enquiry ordinal 1 and Qualified ordinal 2. The pipeline UUID is `c1000000-0000-4000-8000-000000000001`; its label is “Fictional sales enquiry — I1”. No probability, amount, currency, forecast or operational pipeline mapping is stored. Stage-entry time changes only with qualification; normal action planning does not rewrite it.
+
+Opportunity fixes workspace/company, original organisation/site/contact IDs and unknown reasons, owner, definition, title and manually recorded source context. Qualification records current need/note and an optional owned identification Activity; original and subsequent event snapshots remain append-only. Real company/workspace FKs protect organisation, site, person-company context, owner, stage, event and action identities. A deferred guard requires the designated Activity to link that exact opportunity and requires a matching current-version event. A new designation must be active. Completion/cancellation later leaves that designation historical and derives Needed until a successor is deliberately selected.
+
+`activity_links.opportunity_id` is a generated typed column for `object_type=Opportunity`, with a real `(workspace_id, company_id, opportunity_id)` FK. Existing Organisation/Site/Asset/Ticket links retain their meaning. Opportunity-linked Activities are Internal and retain the opportunity's exact site, including explicit unknown site. Every target independently controls Activity visibility. No generic target cast, label-based linkage or ownership-derived visibility is introduced.
+
+Seed receipt 10 creates configuration and explicit CRM read/create/edit grants for eligible existing synthetic profiles only once. It creates no opportunity or action. Repeat seed preserves edits, revoked grants, counters and history. Systems/unassigned identities receive no default CRM authority. Original migration/seed/issued-source bytes and accepted operation hashes remain unchanged. Actual fresh/upgrade/restart results and current P09 migration ordering belong in the [I1 handover](../delivery/crm-i1-handover.md).

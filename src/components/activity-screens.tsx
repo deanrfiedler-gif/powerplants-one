@@ -7,6 +7,7 @@ import { useIdentity } from "./business-session";
 import {
   EnumField,
   ErrorNotice,
+  isDenied,
   Field,
   Observed,
   PageHeader,
@@ -200,7 +201,7 @@ export function ActivityDetail({ id }: { id: string }) {
     <>
       <Link href="/work">← My Work</Link>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-      {r.data?.items[0] && (
+      {!isDenied(r.error) && r.data?.items[0] && (
         <ActivityEditor key={id} activity={r.data.items[0]} reload={r.reload} />
       )}
     </>
@@ -247,6 +248,10 @@ function ActivityEditor({
       reload();
     }
   }
+  // Permission loss removes previously loaded content and unsaved context.
+  // Lifecycle payloads and retained-input handling for ordinary conflicts stay unchanged.
+  if (isDenied(cmd.error) || isDenied(owners.error))
+    return <ErrorNotice error={isDenied(cmd.error) ? cmd.error : owners.error} />;
   return (
     <>
       <PageHeader eyebrow="SC-01 / Activity" title={a.summary} />

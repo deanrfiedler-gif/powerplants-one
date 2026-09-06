@@ -18,6 +18,7 @@ This repository is Dean's personal private prototype. It contains the planning f
 | [Documentation index](docs/README.md) | Where specifications, decisions, requirements and acceptance records belong |
 | [Development backlog](docs/delivery/backlog.md) | Initial discovery/design work packages and their live GitHub issue links |
 | [CRM blueprint and discovery handover](docs/delivery/crm-discovery-handover.md) | PPO-009 parallel CRM design, bounded Pipedrive evidence, synthetic wireframes and first implementation starter; account parity remains open |
+| [CRM I1 handover](docs/delivery/crm-i1-handover.md) | Bounded owned opportunity implementation, actual verification/publication and prepared I2 Board/Grid starter |
 | [First-release plan](docs/delivery/first-release.md) | Proposed planned-service journey, dependencies and readiness criteria |
 | [Contributing](CONTRIBUTING.md) | Branches, pull requests, validation and evidence |
 
@@ -56,6 +57,8 @@ Technicians use `/my-jobs` and `/my-jobs/:id`. Riley and Morgan acknowledge and 
 ## Working screens
 
 Open My Work at `/work`, customer context at `/customers`, contacts at `/people`, sites at `/sites`, equipment at `/equipment`, service requests at `/service/tickets`, and work orders at `/service/work-orders`. Choose a server-backed synthetic identity. Foundation checks remain available as diagnostics. Incomplete intake retains owned unknowns; triage does not authorise work or book attendance. Activities retain explicit unknown due dates and require an outcome on completion.
+
+CRM Sales is at `/crm/opportunities`; New opportunity and detail lead through the existing Activity completion screen. The fictional pipeline is Enquiry → Qualified with sales outcome Open. [I1 handover](docs/delivery/crm-i1-handover.md) records verification and merge status; broader CRM parity remains proposed. [I2 starter](docs/delivery/crm-i2-starter.md) is preparation only.
 
 ## Working checks
 

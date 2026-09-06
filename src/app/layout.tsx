@@ -44,6 +44,7 @@ export default function RootLayout({
             <nav aria-label="Main navigation">
               <Link href="/">Overview</Link>
               <Link href="/work">My Work</Link>
+              <Link href="/crm/opportunities">CRM Sales</Link>
               <Link href="/my-jobs">My Jobs</Link>
               <Link href="/customers">Customers</Link>
               <Link href="/sites">Sites &amp; equipment</Link>

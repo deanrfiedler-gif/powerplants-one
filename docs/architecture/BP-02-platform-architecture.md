@@ -1,6 +1,6 @@
 # BP-02 — Platform Solution Architecture
 
-**Edition:** r09 · **Date:** 5 September 2026 · **Scope:** PP-01 synthetic planned-service prototype.
+**Edition:** r10 · **Date:** 6 September 2026 · **Scope:** PP-01 synthetic planned service and BP-03 I1 opportunity prototype.
 
 **Status:** Architecture/build contract; P01–P05 implementation and evidence are recorded in [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md), [ADR-0007](../decisions/ADR-0007-p02-shared-foundation.md), [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md), [ADR-0009](../decisions/ADR-0009-p04-work-scope-readiness.md) and [ADR-0010](../decisions/ADR-0010-p05-planner-controlled-changes.md). Not production approval. [Package index](../prototype/README.md) · [Data dictionary](../contracts/service-data-dictionary.md) · [API contracts](../contracts/service-api.md).
 
@@ -261,3 +261,7 @@ P09 review/report/customer response and P10 Finance remain absent. P08 completio
 ## P09 physical architecture amendment
 
 [ADR-0014](../decisions/ADR-0014-p09-service-reports.md) and [P09 handover](../delivery/p09-handover.md) define the exact physical SC-11/DAT-09/API-C16–18/OUT-10/TR-11–13 implementation and current verification. Immutable personal submissions, per-entry review/return, separate attendance acceptance, successor corrections, durable customer-safe report issues and content-bound customer responses extend P04–P08. The appointment can become Completed while the physical work order remains Authorised with owned remaining work and an existing proposal/confirmation boundary. Conceptual whole-order/ticket closure and API-C19 Finance handoff are not silently implemented. P08 owner-bound version-2 IndexedDB and schema-1 originals remain compatible; only submission/response intents are added, with no offline approval/issue. Full acceptance, D-024 operational branding, customer delivery and live integration remain separate.
+
+## BP-03 I1 bounded CRM extension
+
+The separately authorised [I1 slice](../delivery/crm-i1-handover.md) reuses the existing PostgreSQL/sharedOperation/identity/reference/permission/audit/receipt/outbox boundary. [ADR-0015](../decisions/ADR-0015-crm-i1-owned-opportunities.md) adds typed opportunity/configuration/event records and a real Opportunity Activity target. All-target Activity visibility remains authoritative across CRM, general work and field follow-up projections. No new stack dependency, account master, Pipedrive adapter, worker, hosting, cache, IndexedDB or service-worker scope is introduced. Migration 0010 is additive after the separately reserved P09 0009; final accepted ordering and regression evidence must be verified before publication. Broader BP-03 policy and parity remain proposals.

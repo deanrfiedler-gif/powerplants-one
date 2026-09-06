@@ -1662,3 +1662,18 @@ button:disabled {
 .report-screen button.secondary:not(:disabled) { background:#fff; color:var(--navy); }
 .report-screen button:focus-visible,.report-screen input:focus-visible,.report-screen select:focus-visible,.report-screen textarea:focus-visible { outline:3px solid var(--navy); outline-offset:3px; }
 .report-field input,.report-field select,.report-field textarea { color:#242a37; font-size:16px; }
+
+/* BP-03 I1: online sales list and fixed-context forms. */
+.crm-worklist,.crm-history{list-style:none;padding:0;margin:1rem 0;display:grid;gap:1rem}
+.crm-card,.crm-panel{background:white;border:1px solid #cbd7dc;border-radius:12px;padding:1.25rem;min-width:0;overflow-wrap:anywhere}
+.crm-card{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:1.5rem;border-left:5px solid #21634d}
+.crm-card h2{font-size:1.2rem;margin:.5rem 0}.crm-card strong,.crm-outcome{display:block;margin:.65rem 0}
+.crm-filters{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:1rem;align-items:end}
+.crm-check{display:flex;align-items:center;gap:.6rem;min-height:44px}.crm-check input{width:22px;height:22px}
+.crm-detail-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.2rem;margin:1rem 0}
+.crm-form{max-width:880px}.crm-form fieldset,.crm-panel fieldset{min-width:0;border:0;padding:0;margin:0;display:grid;gap:1rem}
+.crm-form legend,.crm-panel legend{font-size:1.35rem;font-weight:700;padding:1rem 0}
+.crm-picker{display:grid;gap:.5rem}.crm-status-row,.crm-actions{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin:1rem 0}
+.crm-panel dt{font-weight:700;margin-top:.8rem}.crm-panel dd{margin:.3rem 0}.crm-narrative{white-space:pre-wrap}
+.crm-history li{padding:.8rem 0;border-bottom:1px solid #d7e0e3;overflow-wrap:anywhere}.crm-conflict{border:2px solid #ad792d;padding:1rem;background:#fff6e7;overflow-wrap:anywhere}
+@media(max-width:800px){.crm-filters,.crm-card,.crm-detail-grid{grid-template-columns:minmax(0,1fr)}.crm-panel,.crm-card{padding:1rem}.crm-form input,.crm-form select,.crm-panel input,.crm-panel select{max-width:100%;min-width:0}.crm-actions>*{max-width:100%}}
