@@ -54,6 +54,7 @@ export function useCrmResource<T>(path: string | null) {
 export function useCrmCommand(
   onAccepted: (r: OperationReceipt) => void,
   initialStatus = "Unsaved",
+  onPendingChange?: (pending: boolean) => void,
 ) {
   const [busy, setBusy] = useState(false),
     [error, setError] = useState<unknown>(null),
@@ -68,6 +69,7 @@ export function useCrmCommand(
     lookup: boolean,
   ) {
     setBusy(true);
+    onPendingChange?.(true);
     setError(null);
     try {
       let receipt: OperationReceipt | null = null;
@@ -83,6 +85,7 @@ export function useCrmCommand(
       receipt ??= await api<OperationReceipt>(intent.path, intent.body);
       pending.current = null;
       setUncertain(false);
+      onPendingChange?.(false);
       setStatus("Saved to the server");
       onAccepted(receipt);
     } catch (e) {
@@ -92,6 +95,7 @@ export function useCrmCommand(
         !(e as Failure).status ||
         ((e as Failure).status ?? 0) >= 500;
       setUncertain(unknown);
+      onPendingChange?.(unknown);
       setStatus(
         unknown
           ? "Save outcome uncertain — confirm the original action"

@@ -117,11 +117,22 @@ jobs:
           if npm start; then exit 1; fi
           node --env-file=.env.local --import tsx scripts/local-server.ts > "$RUNNER_TEMP/ppo-http.log" 2>&1 &
           ppo_server_pid=$!
-          trap 'kill "$ppo_server_pid" 2>/dev/null || true' EXIT
+          ppo_http_cleanup() {
+            kill "$ppo_server_pid" 2>/dev/null || true
+            mkdir -p verification-evidence/http
+            cp "$RUNNER_TEMP/ppo-http.log" verification-evidence/http/server.log
+          }
+          trap ppo_http_cleanup EXIT
+          ppo_http_ready=0
           for attempt in $(seq 1 60); do
-            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            kill -0 "$ppo_server_pid" 2>/dev/null || exit 1
+            if grep -Fq 'Powerplants One — local synthetic only — http://127.0.0.1:3000' "$RUNNER_TEMP/ppo-http.log" && curl --fail --silent http://127.0.0.1:3000/ > /dev/null; then
+              ppo_http_ready=1
+              break
+            fi
             sleep 1
           done
+          test "$ppo_http_ready" = 1
           npm run test:http
       - name: Offline originals across application, PostgreSQL and browser process restarts
         env:

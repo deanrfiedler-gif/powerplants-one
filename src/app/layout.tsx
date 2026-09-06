@@ -45,6 +45,7 @@ export default function RootLayout({
               <Link href="/">Overview</Link>
               <Link href="/work">My Work</Link>
               <Link href="/crm/opportunities">CRM Sales</Link>
+              <Link href="/estimating">Estimating &amp; quotes</Link>
               <Link href="/my-jobs">My Jobs</Link>
               <Link href="/customers">Customers</Link>
               <Link href="/sites">Sites &amp; equipment</Link>

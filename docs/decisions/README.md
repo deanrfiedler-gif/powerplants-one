@@ -30,3 +30,4 @@ The [shared UI and CRM layout direction](ui-brand-and-crm-layout.md) records the
 [BP-04 discovery and sequencing](bp04-estimating-discovery.md) records the authorised PPO-010 design contribution. D-009/D-010 remain open; synthetic arithmetic and future E1–E6 scope are proposals, not adopted operational policy.
 
 [ADR-0016](ADR-0016-p10-finance-handoff.md) records P10 exact Finance source/allocation, separate processing and reconciliation authority, bounded synthetic accounts and durable OUT-14 recovery. It does not close D-005/D-006/D-017 or authorise operational accounting treatment.
+[ADR-0017](ADR-0017-estimating-e1.md) records the separately authorised manual E1 slice, exact decimal policy, immutable estimate/quote versions and durable draft output. Finance retains ADR-0016.

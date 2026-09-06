@@ -99,7 +99,7 @@ npm run test:browser
 
 Database/HTTP/browser checks require the named disposable `ppo_synthetic_test` configuration and real app/Chromium processes. The full [application workflow](../../.github/workflows/application.yml) is the executable environment/run order, including guarded reset, all retained P09/offline/CRM process restarts and P10's four `scripts/finance-restart-proof.ts` phases. Its PostgreSQL container is restarted between write/accept/reconcile/verify; each phase starts a fresh application and persistent browser process. Local static checks and disposable CI results are reported separately.
 
-Migration 0011 and `db/seed-p10.sql` are additive; all prior migration/seed bytes remain unchanged. Fresh setup applies all eleven migrations. The upgrade proof first creates actual P09 issued records on migration 0009, then applies 0010/0011 and repeats seed, comparing original rows (including attendance/audit/receipts/outbox) and private media/report bytes exactly. Repeat seed preserves existing observations and revoked grants. Guarded reset remains explicitly limited to the disposable synthetic database; it is not an upgrade or production migration.
+Migration 0011 and `db/seed-p10.sql` are additive; all prior migration/seed bytes remain unchanged. Fresh setup applies all twelve migrations. The upgrade proof first creates actual P09 issued records on migration 0009, then applies 0010/0011/0012 and repeats seed, comparing original rows (including attendance/audit/receipts/outbox) and private media/report bytes exactly. Repeat seed preserves existing observations and revoked grants. Guarded reset remains explicitly limited to the disposable synthetic database; it is not an upgrade or production migration.
 
 ## Additional implementation review findings
 
@@ -118,3 +118,13 @@ D-005/D-006/D-017/D-024 remain operationally open: actual MYOB configuration, su
 ## Prepared next invocation
 
 The [P11 starter](p11-starter-prompt.md) is maintained preparation only. It requires this handover's completed authoritative external publication, actual newer main/contracts and separate user authority. It creates no P11 issue, branch, schema, runtime or acceptance claim.
+
+
+## Newer main integration
+
+Estimating E1 PR #49 merged at `1f13dd8d6f5006559152fe9d5410aed3fff64234`, tree `2ec197b6cdb41c913e9c404daee727f734fcb593`, while P10 was under verification. The E1 files were imported with every original blob and complete tree verified. The P10 merge preserves E1 migration 0012/seed, ADR-0017, all 29 E1 cases, dedicated restart workflow and current commands/output. Shared migration runner, permissions, receipt authority, document worker, navigation and registers retain both contributions; no E1 arithmetic is adopted as Finance treatment. Existing upgrade assertions now require all twelve migrations. A new P10 upgrade case reproduces already-applied 0012 before missing 0011, with saved E1 versions/quote bytes/receipts and a revoked grant retained exactly. The union/identity extensions support either arrival order without editing applied migration bytes.
+
+The [E1 publication record](https://github.com/deanrfiedler-gif/powerplants-one/pull/49#issuecomment-5562344440), reread after merge, reports all contribution checks passed but actual-main runs `34065300518`, `34065300567`, `34065300525` and `34065300527` failed before job steps; documentation attempt 2 also stopped before execution. It does not claim actual-main verification. P10 preserves that distinction and must obtain its own exact contribution and actual merged-main checks; this newer execution restriction is not grounds to weaken or bypass gates.
+
+
+Original candidate-eight OUT-14 visual inspection found a pagination defect: a two-line closing bracket fragment occupied a nearly empty page before a forced source-appendix break. The renderer now keeps the short no-posting fact together, requires four-line preformatted widows/orphans and allows the next appendix to follow naturally. The original issued PDFs are unchanged; new rendered outputs require fresh every-page inspection. Each original desktop/phone PDF has seven A4 pages (84,658 / 84,648 bytes); 97 original PNG/metadata pairs in artifact 9998760983 matched their recorded sizes and SHA-256. Local merge verification passed `npm run check` with all 20 unit cases and build, and all three maintained Python checks. PostgreSQL, HTTP, browser and restart claims still depend on actual CI execution.
