@@ -28,3 +28,5 @@ The [shared UI and CRM layout direction](ui-brand-and-crm-layout.md) records the
 [ADR-0015](ADR-0015-crm-i1-owned-opportunities.md) records the separately authorised BP-03 I1 implementation, typed Opportunity Activity integration, fictional configuration and online recovery boundary. It does not close D-013/D-025 or adopt operational CRM parity. P09 retains ADR-0014.
 
 [BP-04 discovery and sequencing](bp04-estimating-discovery.md) records the authorised PPO-010 design contribution. D-009/D-010 remain open; synthetic arithmetic and future E1–E6 scope are proposals, not adopted operational policy.
+
+[ADR-0017](ADR-0017-estimating-e1.md) records the separately authorised manual E1 slice, exact decimal policy, immutable estimate/quote versions and durable draft output. Finance retains ADR-0016.
