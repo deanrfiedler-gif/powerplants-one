@@ -5,7 +5,9 @@ import { join } from "node:path";
 import { chromium, expect, type APIResponse } from "@playwright/test";
 import { localConfig } from "../src/platform/config";
 import { database, closeDatabase } from "../src/platform/database";
-import { digest } from "../src/documents/store";
+import { digest, documentStore } from "../src/documents/store";
+import { createSession } from "../src/platform/identity";
+import { readQuoteJob, runQuoteJob, QuoteWorkerInterrupted } from "../src/estimating/worker";
 import { crmCreate, crmBase } from "../tests/helpers/crm";
 import { estimateInput, quoteCommand } from "../tests/helpers/estimating";
 if(localConfig().database_name!=="ppo_synthetic_test")throw Error("Disposable ppo_synthetic_test only");
@@ -25,8 +27,16 @@ try {
     const o=crmCreate();await call("crm/opportunities",o);const input=estimateInput(o.id),first=await call("estimating/estimates",input),original=await call(`estimating/estimates/${input.id}`);
     const command={...crmBase(),expected_version:1,title:input.title,scope:{...input.scope,included:"SYN Exact successor retained after restart"},lines:input.lines.map(l=>({...l,quantity:"3"})),policy:input.policy},successor=await call(`estimating/estimates/${input.id}`,command),detail=await call(`estimating/estimates/${input.id}`);
     const quote=quoteCommand(detail.saved,2),prepared=await call(`estimating/estimates/${input.id}/quotes`,quote);
-    proof={input,command,quote,operations:[first,successor,prepared],original:original.saved,detail,quote_before:await call(`estimating/quotes/${quote.id}`),application_pids:[server.pid],database_starts:[await started()]};
+    proof={input,command,quote,operations:[first,successor,prepared],original:original.saved,detail,quote_before:await call(`estimating/quotes/${quote.id}`),application_pids:[server.pid],database_starts:[await started()],hashes:{} as Record<string,string>};
     assert.equal(proof.quote_before.job.state,"Pending");
+    const p=(await createSession("coordinator")).principal,{j}=await readQuoteJob(p,quote.id);
+    await assert.rejects(runQuoteJob(j.id,{afterStore:async()=>{throw new QuoteWorkerInterrupted("SYN process ends after durable output, before Ready");}}),QuoteWorkerInterrupted);
+    const stored=await documentStore().locate({...p,operation_id:j.id});assert.ok(stored);
+    const originalBundle=JSON.parse(stored.bytes.toString("utf8"));
+    await writeFile(join(root,"exact.html"),originalBundle.html);await writeFile(join(root,"exact.pdf"),Buffer.from(originalBundle.pdf_base64,"base64"));
+    proof.hashes={html:originalBundle.html_hash,pdf:originalBundle.pdf_hash};
+    // Controlled expired-lease fixture; the next phase uses a fresh worker/application/database process.
+    await database().query("UPDATE ppo.estimate_quote_jobs SET lease_until=clock_timestamp()-interval '1 second' WHERE id=$1",[j.id]);
   }else{
     proof=JSON.parse(await readFile(join(root,"proof.json"),"utf8"));assert.ok(!proof.application_pids.includes(server.pid));assert.ok(!proof.database_starts.includes(await started()));
     const detail=await call(`estimating/estimates/${proof.input.id}`);assert.deepEqual(detail.saved,proof.detail.saved);assert.deepEqual(detail.versions,proof.detail.versions);
@@ -34,9 +44,9 @@ try {
     for(const receipt of proof.operations)assert.deepEqual(await call(`operations/${receipt.operation_id}`),receipt);
     assert.deepEqual(await call("estimating/estimates",proof.input),proof.operations[0]);assert.deepEqual(await call(`estimating/estimates/${proof.input.id}`,proof.command),proof.operations[1]);assert.deepEqual(await call(`estimating/estimates/${proof.input.id}/quotes`,proof.quote),proof.operations[2]);
     const before=await call(`estimating/quotes/${proof.quote.id}`);assert.deepEqual(before.snapshot,proof.quote_before.snapshot);
-    if(phase==="recover"){assert.equal(before.job.state,"Pending");await call(`estimating/quotes/${proof.quote.id}/render`,{});}else assert.equal(before.job.state,"Ready");
-    const hashes:Record<string,string>={};for(const kind of ["html","pdf"]){const r:APIResponse=await context.request.get(`${origin}/api/v1/estimating/quotes/${proof.quote.id}/file?kind=${kind}`);assert.ok(r.ok());const bytes:Buffer=await r.body();hashes[kind]=digest(bytes);if(phase==="recover")await writeFile(join(root,`exact.${kind}`),bytes);else assert.deepEqual(bytes,await readFile(join(root,`exact.${kind}`)));}
-    if(phase==="verify")assert.deepEqual(hashes,proof.hashes);proof.hashes=hashes;proof.application_pids.push(server.pid);proof.database_starts.push(await started());
+    if(phase==="recover"){assert.equal(before.job.state,"Running");await call(`estimating/quotes/${proof.quote.id}/render`,{});}else assert.equal(before.job.state,"Ready");
+    const hashes:Record<string,string>={};for(const kind of ["html","pdf"]){const r:APIResponse=await context.request.get(`${origin}/api/v1/estimating/quotes/${proof.quote.id}/file?kind=${kind}`);assert.ok(r.ok());const bytes:Buffer=await r.body();hashes[kind]=digest(bytes);assert.deepEqual(bytes,await readFile(join(root,`exact.${kind}`)));}
+    assert.deepEqual(hashes,proof.hashes);proof.hashes=hashes;proof.application_pids.push(server.pid);proof.database_starts.push(await started());
     assert.equal((await database().query("SELECT count(*)::int AS n FROM ppo.estimate_quote_jobs WHERE revision_id=$1",[proof.quote.id])).rows[0].n,1);
   }
   await page.goto(`${origin}/estimating/estimates/${proof.input.id}`);await expect(page.getByRole("heading",{name:"Scope and cost workbook"})).toBeVisible();await expect(page.getByText(/Viewing saved version 2/)).toBeVisible();
