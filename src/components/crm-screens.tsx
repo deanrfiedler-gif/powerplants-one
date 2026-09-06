@@ -139,7 +139,7 @@ export function SalesWorklist() {
         title="Sales worklist"
         description="Owned opportunities and qualification follow-up. Fictional Enquiry → Qualified pipeline."
         action={
-          data.data?.can_create ? (
+          !data.error && data.data?.can_create ? (
             <Link className="primary-link" href="/crm/opportunities/new">
               New opportunity
             </Link>
@@ -194,7 +194,7 @@ export function SalesWorklist() {
         </label>
       </div>
       <ResourceState {...data} reload={()=>{setCursor("");data.reload();}} />
-      {data.data && (
+      {!data.error && data.data && (
         <>
           <p className="source-stamp">
             Synthetic source · As at <Stamp value={data.data.observed_at} /> ·{" "}
@@ -555,6 +555,9 @@ export function OpportunityDetail({ id }: { id: string }) {
   return (
     <>
       <ResourceState {...resource} />
+      {!!resource.error && !!resource.data && (
+        <p role="status">Previously loaded record. Its current state could not be refreshed.</p>
+      )}
       {resource.data?.items[0] && (
         <OpportunityContent
           key={id}

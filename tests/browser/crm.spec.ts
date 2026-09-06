@@ -24,7 +24,7 @@ async function noOverflow(page: Page) {
 }
 async function capture(page: Page, info: TestInfo, scenario: string) {
   await noOverflow(page);
-  const errors = ["validation", "denied", "unavailable", "revoked-activity"];
+  const errors = ["validation", "denied", "unavailable", "revoked-activity", "revoked-refresh"];
   const anchor = scenario === "loaded-sales-list"
     ? page.locator(".crm-worklist")
     : errors.includes(scenario)
@@ -337,6 +337,7 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   await page.keyboard.press("Tab");
   await expect(page.getByLabel("Stage", { exact: true })).toBeFocused();
   await capture(page, info, "reflow-320-keyboard");
+  await page.setViewportSize(info.project.use.viewport!);
   await page.route("**/api/v1/crm/opportunities?**", (route) =>
     route.fulfill({
       status: 503,
@@ -352,6 +353,8 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   await expect(page.locator('.business-error[role="alert"]')).toContainText(
     "temporarily unavailable",
   );
+  await expect(page.getByText("No permitted opportunities match this view.", {exact:true})).toHaveCount(0);
+  await expect(page.locator(".source-stamp")).toHaveCount(0);
   await capture(page, info, "unavailable");
   await page.unroute("**/api/v1/crm/opportunities?**");
   await page.route("**/api/v1/crm/opportunities?**", async (route) => {
@@ -383,13 +386,52 @@ test("CA-06/10 real CRM permission revocation clears linked Activity content aft
   await expect(page.getByText("Choose a permitted site. Your creation authority is limited to that site.",{exact:true})).toBeVisible();await expect(page.getByRole("button",{name:"Create opportunity and action"})).toBeDisabled();
   await page.getByLabel("Site",{exact:true}).selectOption(CRM.site);await page.getByLabel("Contact",{exact:true}).selectOption(CRM.person);await page.getByLabel("Opportunity owner",{exact:true}).selectOption(user);await page.getByLabel("Activity owner",{exact:true}).selectOption(user);await expect(page.getByRole("button",{name:"Create opportunity and action"})).toBeEnabled();await capture(page,info,"site-scoped-selectors");
   const i={...crmCreate(),title:"SYN Revoked opportunity private title",owner_id:user,initial_action:{...crmAction(user),summary:"SYN Revoked Activity private content"}};
-  await call(page,"crm/opportunities",i);await page.goto(`/work/${i.initial_action.id}`);
+  await call(page,"crm/opportunities",i);
+  const detail = await page.context().newPage();
+  await detail.goto(`/crm/opportunities/${i.id}`);
+  await expect(detail.getByRole("heading", {name:i.title,exact:true})).toBeVisible();
+  await detail.getByLabel("Qualification outcome", {exact:true}).fill("SYN Private proposal before revocation");
+  // Hold a real authorised server response, then let a newer request observe revocation.
+  let releaseOriginal!: () => void;
+  const originalHeld = new Promise<void>(resolve => { releaseOriginal = resolve; });
+  let originalFetched = false;
+  let intercept = true;
+  await detail.route(`**/api/v1/crm/opportunities/${i.id}`, async route => {
+    if (!intercept) { await route.continue(); return; }
+    intercept = false;
+    const response = await route.fetch();
+    expect(response.ok()).toBe(true);
+    originalFetched = true;
+    await originalHeld;
+    await route.fulfill({response});
+  });
+  await detail.evaluate(() => window.dispatchEvent(new Event("focus")));
+  await expect.poll(() => originalFetched).toBe(true);
+  await page.goto(`/work/${i.initial_action.id}`);
   await expect(page.getByRole("heading",{name:i.initial_action.summary,exact:true})).toBeVisible();
   await page.getByLabel("Completion outcome or cancellation reason",{exact:true}).fill("SYN Sensitive proposed outcome");await page.getByLabel("Reason for change",{exact:true}).fill("SYN Attempt after actual revocation");
-  await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.read'",[user]);
+  let completionRequests = 0;
+  await page.route(`**/api/v1/activities/${i.initial_action.id}/complete`,async route=>{
+    completionRequests++;
+    await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.read'",[user]);
+    await route.continue();
+  });
   await page.getByRole("button",{name:"Complete with outcome",exact:true}).click();await expect(page.locator('.business-error[role="alert"]')).toBeVisible();
+  expect(completionRequests).toBe(1);
   await expect(page.getByRole("heading",{name:i.initial_action.summary,exact:true})).toHaveCount(0);await expect(page.getByLabel("Completion outcome or cancellation reason",{exact:true})).toHaveCount(0);
   expect(await page.locator("body").innerText()).not.toContain(i.title);await capture(page,info,"revoked-activity");
   expect((await database().query("SELECT status,outcome FROM ppo.activities WHERE id=$1",[i.initial_action.id])).rows[0]).toEqual({status:"Open",outcome:null});
+  await detail.evaluate(() => window.dispatchEvent(new Event("focus")));
+  await expect(detail.locator('.business-error[role="alert"]')).toBeVisible();
+  await expect(detail.getByRole("heading",{name:i.title,exact:true})).toHaveCount(0);
+  const lateResponse = detail.waitForResponse(r => r.url().endsWith(`/crm/opportunities/${i.id}`) && r.status() === 200);
+  releaseOriginal();
+  await (await lateResponse).finished();
+  await detail.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
+  await expect(detail.getByRole("heading",{name:i.title,exact:true})).toHaveCount(0);
+  await expect(detail.getByLabel("Qualification outcome",{exact:true})).toHaveCount(0);
+  expect(await detail.locator("body").innerText()).not.toContain(i.initial_action.summary);
+  await capture(detail,info,"revoked-refresh");
+  await detail.close();
  } finally {await closeDatabase();}
 });

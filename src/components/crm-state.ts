@@ -15,14 +15,17 @@ export function useCrmResource<T>(path: string | null) {
     }>({ path: null, data: null, error: null });
   useEffect(() => {
     let live = true;
+    let latestRequest = 0;
     const load = () => {
-      if (path)
+      if (path) {
+        const request = ++latestRequest;
         void api<T>(path).then(
           (data) => {
-            if (live) setState({ path, data, error: null });
+            if (live && request === latestRequest)
+              setState({ path, data, error: null });
           },
           (error) => {
-            if (live)
+            if (live && request === latestRequest)
               setState((old) => ({
                 path,
                 data: !denied(error) && old.path === path ? old.data : null,
@@ -30,6 +33,7 @@ export function useCrmResource<T>(path: string | null) {
               }));
           },
         );
+      }
     };
     load();
     const timer = setInterval(load, 15000);
