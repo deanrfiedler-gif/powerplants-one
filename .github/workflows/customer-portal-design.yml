@@ -1,0 +1,46 @@
+name: Customer portal design assurance
+on:
+  pull_request:
+    paths:
+      - 'docs/blueprints/customer-portal-*'
+      - 'docs/delivery/customer-portal-*'
+      - 'docs/testing/customer-portal-*'
+      - '.github/workflows/customer-portal-design.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/blueprints/customer-portal-*'
+      - 'docs/delivery/customer-portal-*'
+      - 'docs/testing/customer-portal-*'
+      - '.github/workflows/customer-portal-design.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  design:
+    name: Synthetic customer portal design checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Use existing exact package and browser pins
+        run: |
+          npm install --global npm@11.19.0
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Verify design interactions and capture original views
+        env:
+          PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: node docs/blueprints/customer-portal-design-check.mjs
+      - name: Retain synthetic design evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Customer-portal-design-evidence
+          path: verification-evidence/customer-portal-design/
+          retention-days: 14

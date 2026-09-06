@@ -1,6 +1,6 @@
 document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes
 PPO-STD-001,"Naming, Identification & Information Organisation Standard",docs/standards/naming-conventions.md,r03,Adopted,Dean Fiedler - private prototype,,powerplants-one-naming-standard.md,
-BP-01,Master Business & Build Blueprint,docs/blueprints/BP-01-master-blueprint.md,r03,Working design,Dean Fiedler - private prototype,c44321e8cbbe205a482e38499016f396e2f6374d,docs/blueprints/GEN_SPC_PPABusinessPlatform_MasterBlueprint.md,
+BP-01,Master Business & Build Blueprint,docs/blueprints/BP-01-master-blueprint.md,r04,Working design with authorised private portal direction,Dean Fiedler - private prototype,c44321e8cbbe205a482e38499016f396e2f6374d,docs/blueprints/GEN_SPC_PPABusinessPlatform_MasterBlueprint.md,
 BP-02,Platform Solution Architecture,docs/architecture/BP-02-platform-architecture.md,r10,Design with bounded P01–P09 and CRM I1 implementation; actual publication in each handover,Dean Fiedler - private prototype,c44321e8cbbe205a482e38499016f396e2f6374d,,
 BP-03,CRM Functional & Build Blueprint,docs/blueprints/BP-03-crm.md,r03,Broader design proposed; I1 component-tested; publication in handover; acceptance open,Dean Fiedler - private prototype,85bd2fcc388495cc24dc2ee4f273accc49da2f24,,
 BP-04,Estimating & Quotation Functional & Build Blueprint,docs/blueprints/BP-04-estimating-quotation.md,r01,Proposed discovery/design; acceptance open,Dean Fiedler - private prototype,c3ac9b2ab9c09308f620a5b451a337eb75fe6390,,
@@ -54,3 +54,10 @@ ADR-0017,Bounded manual estimating and draft quotations,docs/decisions/ADR-0017-
 PPO-010-E1-HO,Manual estimate and draft quotation handover,docs/delivery/estimating-e1-handover.md,r01,E1 implemented; publication record governs delivery,Dean Fiedler - private prototype,94289a20fc609e47af647b29ca8170557da312bb,,
 PPO-010-E1-API,Manual estimating physical and API contract,docs/contracts/estimating-e1.md,r01,E1 implemented; publication record governs delivery,Dean Fiedler - private prototype,94289a20fc609e47af647b29ca8170557da312bb,,
 PPO-010-E2-START,Routing options and scoped discovery starter,docs/delivery/estimating-e2-starter.md,r01,E2 prepared only,Dean Fiedler - private prototype,94289a20fc609e47af647b29ca8170557da312bb,,
+
+PPO-PORTAL-DES,Customer portal design,docs/blueprints/customer-portal-design.md,r01,Authorised design/staged direction; runtime and acceptance pending,Dean Fiedler - private prototype,94289a20fc609e47af647b29ca8170557da312bb,,
+PPO-PORTAL-PLAN,Customer portal bounded implementation plan,docs/delivery/customer-portal-implementation-plan.md,r01,Authorised design/staged direction; runtime and acceptance pending,Dean Fiedler - private prototype,94289a20fc609e47af647b29ca8170557da312bb,,
+PPO-PORTAL-TEST,Customer portal acceptance procedures,docs/testing/customer-portal-acceptance.md,r01,Authorised design/staged direction; runtime and acceptance pending,Dean Fiedler - private prototype,94289a20fc609e47af647b29ca8170557da312bb,,
+PPO-PORTAL-DEC,Customer portal private direction,docs/decisions/customer-portal-direction.md,r01,Authorised design/staged direction; runtime and acceptance pending,Dean Fiedler - private prototype,94289a20fc609e47af647b29ca8170557da312bb,,
+PPO-PORTAL-CP1-START,Customer portal CP1 starter,docs/delivery/customer-portal-cp1-starter.md,r01,Authorised design/staged direction; runtime and acceptance pending,Dean Fiedler - private prototype,94289a20fc609e47af647b29ca8170557da312bb,,
+PPO-PORTAL-HO,Customer portal design handover,docs/delivery/customer-portal-handover.md,r01,Authorised design/staged direction; runtime and acceptance pending,Dean Fiedler - private prototype,94289a20fc609e47af647b29ca8170557da312bb,,
