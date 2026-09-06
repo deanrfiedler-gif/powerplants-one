@@ -66,3 +66,7 @@ One bounded live stage-metadata read refreshed ten stages across two pipeline ID
 ## Repository and publication controls
 
 The inspected repository is private with main as default branch. Branch protection was not enabled in the baseline, and a GitHub Projects board has not been provisioned. Existing Issues and the versioned backlog are used. No claim is made that checks are enforced by branch rules. See [foundation handover](delivery/foundation-handover.md) for earlier work and [package assurance](prototype/assurance.md) for this package's validation/publication status.
+
+## BP-03 I1 implementation in progress
+
+[Issue #39](https://github.com/deanrfiedler-gif/powerplants-one/issues/39) authorises only synthetic owned opportunity and qualification follow-up. [I1 handover](delivery/crm-i1-handover.md) records actual progress; it is not yet verified or merged. [ADR-0015](decisions/ADR-0015-crm-i1-owned-opportunities.md) reserves migration 0010 after P09's 0009. P09 remains separately owned in #36/#37. Full AT-25 and PPO-009 remain open; no operational transition is implied.

@@ -7,7 +7,7 @@ import { database, transaction, closeDatabase } from "../src/platform/database";
 import { localConfig } from "../src/platform/config";
 const read = (name: string) =>
   readFile(new URL(`../db/${name}`, import.meta.url), "utf8");
-export async function migrate(through = 8) {
+export async function migrate(through = 10) {
   await transaction(async (client) => {
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     await client.query(
@@ -22,8 +22,10 @@ export async function migrate(through = 8) {
       "0006-job-packs.sql",
       "0007-online-field.sql",
       "0008-offline-recovery.sql",
+      "0010-crm-opportunities.sql",
     ].entries()) {
-      const version = index + 1;
+      const version = Number(file.slice(0,4));
+      void index;
       if (version > through) break;
       const sql = await read(`migrations/${file}`),
         hash = createHash("sha256").update(sql).digest("hex");
@@ -46,7 +48,7 @@ export async function migrate(through = 8) {
     }
   });
 }
-export async function seed(through = 7) {
+export async function seed(through = 10) {
   await transaction(async (client) => {
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     for (const [version, file] of [
@@ -56,6 +58,7 @@ export async function seed(through = 7) {
       [5, "seed-p05.sql"],
       [6, "seed-p06.sql"],
       [7, "seed-p07.sql"],
+      [10, "seed-crm-i1.sql"],
     ] as const) {
       if (version > through) break;
       const prior = await client.query(

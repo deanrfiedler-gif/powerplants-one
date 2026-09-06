@@ -4,6 +4,9 @@ import { AppError } from "./errors";
 
 export type QueryClient = Pick<PoolClient, "query">;
 export type Capability =
+  | "crm.opportunity.read"
+  | "crm.opportunity.create"
+  | "crm.opportunity.edit"
   | "field.read.own"
   | "field.start.own"
   | "field.capture.own"

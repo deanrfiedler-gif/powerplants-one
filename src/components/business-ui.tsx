@@ -445,6 +445,7 @@ export function RecordLink({
       Asset: "equipment",
       Ticket: "service/tickets",
       Activity: "work",
+      Opportunity: "crm/opportunities",
     } as Record<string, string>
   )[type];
   return root ? (

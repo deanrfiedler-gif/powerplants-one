@@ -1,3 +1,4 @@
+import { crmAvailable } from "../crm/context";
 import type { Principal } from "../platform/identity";
 import { transaction } from "../platform/database";
 import { requireCapability } from "../platform/permissions";
@@ -125,7 +126,7 @@ export async function readFieldJob(p: Principal, id: string) {
       }
     const follow_ups = (
       await c.query(
-        `SELECT f.entry_id,a.id,a.summary,a.status,a.owner_id,u.display_name AS owner_name,a.due_at,a.due_needed FROM ppo.field_follow_ups f JOIN ppo.activities a ON a.id=f.activity_id JOIN ppo.users u ON u.id=a.owner_id WHERE f.workspace_id=$1 AND f.appointment_id=$3 AND ${activityVisibility("a")} ORDER BY a.created_at`,
+        `SELECT f.entry_id,a.id,a.summary,a.status,a.owner_id,u.display_name AS owner_name,a.due_at,a.due_needed FROM ppo.field_follow_ups f JOIN ppo.activities a ON a.id=f.activity_id JOIN ppo.users u ON u.id=a.owner_id WHERE f.workspace_id=$1 AND f.appointment_id=$3 AND ${activityVisibility("a", await crmAvailable(c))} ORDER BY a.created_at`,
         [p.workspace_id, p.actor_id, id],
       )
     ).rows;

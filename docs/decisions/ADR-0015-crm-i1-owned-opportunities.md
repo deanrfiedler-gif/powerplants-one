@@ -1,0 +1,21 @@
+# ADR-0015 — BP-03 I1 owned opportunities
+
+**Date:** 6 September 2026 · **Status:** Implementation in progress, verification outstanding · **Authority:** issue #39, linked to PPO-009 / #9. Private synthetic prototype only.
+
+Retain the maintained TypeScript/Next.js/PostgreSQL stack and exact dependencies. Add a CRM module rather than another account master, generic entity store, Activity lifecycle or command framework. Existing Organisation/Person/Site and the shared permanent identity/reference allocator remain authoritative. I1 is a BP-03-local sequence label.
+
+Use an immutable fictional PipelineDefinition and closed typed Enquiry/Qualified catalogue. Open remains the only close outcome; no money, probability, board, lead, close or transfer command exists. Opportunity, pipeline and event identity use the permanent registry; only Opportunity receives the reserved OPP reference. Original company, organisation, site, contact, owner and definition are fixed. A future reassociation/owner-transfer workflow must explicitly review linked actions and history.
+
+CreateOpportunity atomically writes opportunity, initial Internal CustomerContact/RelationshipReview Activity, typed links, immutable event, audit, receipt and minimal outbox. Qualification requires current owner, scoped edit, expected version, recorded need and contact or an active owned contact-identification action. Planning deliberately creates/designates an active action. Completing/cancelling the designated action leaves its exact outcome in history and derives Next action needed. No stage change or external send follows completion.
+
+Retain sharedOperation's operation/workspace lock order and existing accepted normalisation/hashes. CRM adds explicit aggregate/action locks. Foreign keys protect company/workspace relationships; deferred checks require linked designation and exact event. A typed generated Opportunity ActivityLink FK supplements the existing targets. Original links/context, terminal Activity and events remain immutable. Database constraints protect relationship integrity; server capability/actor checks remain business authority, with no database-admin access-control claim.
+
+CRM read/create/edit grants are explicit and scoped. Owner grants no access. Internal content and every linked target retain their independent permission. The current-schema Activity predicate enables the new target only when the CRM relation exists; this preserves executable accepted-schema upgrade fixtures and fails closed for unknown targets. No P08 recovery capability, cache or service-worker expansion is introduced. Operation lookup has current Opportunity authority dispatch. All non-CRM dispatch stays intact.
+
+Migration 0010 and seed receipt 10 are reserved after P09's 0009/ADR-0014. The migration extends preceding constraint and typed-identity dispatch definitions so it preserves the actual full union. P09 must be reconciled before publication, including its migration, permissions, receipt dispatch and regression. Never apply a later-arriving 0009 over an already accepted 0010 without verified ordering/reconciliation. This branch is not an accepted database upgrade until the final handover says so.
+
+The online UI retains a pending original in memory, reconciles uncertain saves through operation lookup before retrying that same intent, and requires deliberate current-version comparison. Identity switch or denied refresh unmounts sensitive context. No durability promise is made for unsaved online input across browser/process restart. The accepted journey is tested separately across application and PostgreSQL restarts.
+
+Verification, failed-run dispositions and publication identities belong in [I1 handover](../delivery/crm-i1-handover.md) and its external publication record. D-013/D-025, operational account evidence, full AT-25 and issue #9 remain open/planned. Self-review does not mean independent approval or operational acceptance.
+
+Technical sources: [PostgreSQL 16 constraints](https://www.postgresql.org/docs/16/ddl-constraints.html), [explicit locking](https://www.postgresql.org/docs/16/explicit-locking.html), [Next.js data security](https://nextjs.org/docs/app/guides/data-security). Checked 6 September 2026; application-specific integrity and visibility remain test obligations.
