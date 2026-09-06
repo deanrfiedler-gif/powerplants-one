@@ -43,7 +43,11 @@ function Input({
     <div className="report-field">
       <label htmlFor={id}>{label}</label>
       {options ? (
-        <select id={id} value={value} onChange={(e) => onChange(e.target.value)}>
+        <select
+          id={id}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        >
           {options.map((v) => (
             <option key={v} value={v}>
               {friendly(v)}
@@ -118,16 +122,24 @@ export function CompletionSubmission({
             try {
               if (localStorage.getItem("ppo-offline-marker")) {
                 const originals = await queue(identity);
-                const pending = originals.filter((x) =>
-                  x.original.appointment_id === job.id &&
-                  x.original.command !== "CustomerResponse" &&
-                  x.status.state !== "ServerSaved",
+                const pending = originals.filter(
+                  (x) =>
+                    x.original.appointment_id === job.id &&
+                    x.original.command !== "CustomerResponse" &&
+                    x.status.state !== "ServerSaved",
                 );
                 if (pending.length)
-                  throw Error("Resolve this attendance’s retained offline originals before a new online submission. Open the offline workspace and retry or review each original; no submission was sent.");
+                  throw Error(
+                    "Resolve this attendance’s retained offline originals before a new online submission. Open the offline workspace and retry or review each original; no submission was sent.",
+                  );
               }
             } catch (error) {
-              setLocalError({ message: error instanceof Error ? error.message : "The offline originals could not be checked. Verify the saved workspace before submitting." });
+              setLocalError({
+                message:
+                  error instanceof Error
+                    ? error.message
+                    : "The offline originals could not be checked. Verify the saved workspace before submitting.",
+              });
               return;
             }
             if (
@@ -189,13 +201,16 @@ export function ReportListScreen() {
       <h1>Service review and reports</h1>
       <Synthetic />
       <ErrorNotice error={r.error} />
-      <p>Recent permitted reports from a bounded 200-record window. Older reports remain linked to their original attendance.</p>
+      <p>
+        Recent permitted reports from a bounded 200-record window. Older reports
+        remain linked to their original attendance.
+      </p>
       <button onClick={r.reload}>Refresh reports</button>
       {r.loading && <p>Loading reports…</p>}
       {r.data?.items.length === 0 && (
         <p>
-          No permitted submissions appear in this recent window. Technicians submit from their
-          job’s Completion tab.
+          No permitted submissions appear in this recent window. Technicians
+          submit from their job’s Completion tab.
         </p>
       )}
       {r.data?.items.map((x) => (

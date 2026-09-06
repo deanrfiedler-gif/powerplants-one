@@ -153,6 +153,7 @@ async function submit(page: Page) {
 }
 async function review(page: Page, returned = false) {
   const fields = page.getByLabel(/Entry \d+ review reason/);
+  await expect(fields.first()).toBeVisible();
   for (let n = 0; n < (await fields.count()); n++)
     await fields
       .nth(n)
@@ -446,6 +447,13 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
           mimeType: "image/png",
           buffer: png(),
         });
+    if (value === "AcceptedWithReservations") {
+      await page.getByRole("button", { name: "Save response to presented content", exact: true }).click();
+      await expect(page.getByRole("alert").first()).toContainText("meaningful details and an owned next action");
+      await expect(page.getByRole("alert").first()).toBeFocused();
+      expect((await call(page, `reports/${reportId}`)).items[0].responses).toHaveLength(n);
+      await proof(page, info, "response-reservations-details-required");
+    }
     if (value !== "Accepted") {
       await page
         .getByLabel(

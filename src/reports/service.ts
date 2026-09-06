@@ -750,7 +750,7 @@ export async function listReports(p: Principal, input: unknown = {}) {
       }
     return {
       ...envelope(items),
-      completeness: candidates.length === 200 ? "BoundedWindow" : "Complete",
+      completeness: "BoundedWindow",
     };
   });
 }
