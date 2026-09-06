@@ -1731,6 +1731,7 @@ button:disabled {
 .crm-next-action { border-top:1px solid var(--line); padding-top:8px; }
 .crm-next-action strong { font-size:13px; display:block; margin:0 0 4px; }
 .crm-action-text { white-space:pre-wrap; overflow-wrap:anywhere; }
+.detail-section .activity-summary { overflow-wrap:anywhere; }
 .state-Overdue strong { color:#943416; }
 .state-DueNeeded strong,.state-Needed strong { color:#72500c; }
 .crm-card-source { display:block; color:var(--muted); font-size:11px; margin-top:10px; }

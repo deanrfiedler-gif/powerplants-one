@@ -112,6 +112,9 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   const marker = `SYN page ${randomUUID().slice(0, 8)}`;
   const inputs = Array.from({ length: 12 }, (_, n) => ({ ...crmCreate(), title: `${marker} ${String(n).padStart(2, "0")}`, initial_action: { ...crmAction(), summary: n === 0 ? `SYN ${"X".repeat(1983)}END OF ACTION` : "SYN Arrange follow-up" } }));
   inputs[0].title = `${marker} 00 ${"LongReference".repeat(13)}`.slice(0, 200);
+  // Put this valid long-action fixture in the canonical customer's first
+  // bounded Activity page so the shared consumer is exercised deterministically.
+  inputs[0].initial_action.id = `00000000${randomUUID().slice(8)}`;
   for (const input of inputs) await call(page, "crm/opportunities", input);
   await page.getByLabel("Search opportunities", { exact: true }).fill(marker);
   await page.getByText("Filters and sort", { exact: true }).click();
@@ -161,6 +164,15 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   await page.unroute("**/api/v1/crm/opportunities?**");
   await page.getByRole("button", { name: "Try loading again", exact: true }).click();
   await expect.poll(() => ids(page)).toHaveLength(10);
+  await page.goto(`/customers/${CRM.org}`);
+  const related = page.getByRole("link", { name: inputs[0].initial_action.summary, exact: true });
+  await expect(related).toHaveText(inputs[0].initial_action.summary);
+  await related.focus();
+  await related.evaluate(e => e.scrollIntoView({ block: "end" }));
+  await capture(page, info, "shared-customer-long-activity", false);
+  await page.setViewportSize({ width: 320, height: 844 });
+  await related.evaluate(e => e.scrollIntoView({ block: "end" }));
+  await capture(page, info, "320-shared-customer-long-activity", false);
 });
 
 test("CA-06/10/13 I2 revocation clears list, filter labels and late responses; identity switch clears search", async ({ page }, info) => {
@@ -184,8 +196,10 @@ test("CA-06/10/13 I2 revocation clears list, filter labels and late responses; i
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
   await expect.poll(() => held).toBe(true);
   await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.read'", [user]);
+  const deniedList = page.waitForResponse(r => r.url().includes("/api/v1/crm/opportunities?") && r.status() === 403);
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
-  await expect(page.locator('.business-error[role="alert"]')).toBeVisible();
+  expect((await deniedList).status()).toBe(403);
+  await expect(page.locator('.crm-workspace > .business-error[role="alert"]')).toBeVisible();
   await expect(page.getByLabel("Search opportunities", { exact: true })).toHaveCount(0);
   const late = page.waitForResponse((r) => r.url().includes("/api/v1/crm/opportunities?") && r.status() === 200);
   release(); await (await late).finished();
