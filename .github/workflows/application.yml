@@ -91,6 +91,23 @@ jobs:
             sleep 1
           done
           npm run test:http
+      - name: Offline originals across application, PostgreSQL and browser process restarts
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          node --env-file=.env.local --import tsx scripts/offline-restart-proof.ts write
+          docker restart "$PPO_POSTGRES_CONTAINER"
+          for attempt in $(seq 1 30); do
+            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx scripts/offline-restart-proof.ts accept
+          docker restart "$PPO_POSTGRES_CONTAINER"
+          for attempt in $(seq 1 30); do
+            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx scripts/offline-restart-proof.ts verify
       - name: Desktop and mobile browser checks
         run: |
           npx playwright install --with-deps chromium

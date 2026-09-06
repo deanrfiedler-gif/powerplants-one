@@ -36,7 +36,7 @@ export async function synchronise(p:Owner,onChange:()=>Promise<void>|void=()=>{}
       if(!Array.isArray(result.outcomes)||result.outcomes.length!==selected.length)throw new Error("Incomplete server outcome");
       for(const row of selected){const outcome=result.outcomes.find(x=>x.operation_id===row.original.operation_id);if(!outcome||(outcome.state==="ServerSaved"&&!outcome.receipt))throw new Error("Original receipt missing");
         await saveStatus(p,row.original.operation_id,{...outcome,code:outcome.code,message:outcome.message??`Server receipt · ${outcome.receipt?.state}`,next_attempt_at:outcome.retryable?Date.now()+Math.min(60000,1000*2**Math.min(row.status.attempts,6)):0},sender);
-        if(outcome.state==="ReviewRequired"&&["Forbidden","RecordUnavailable","AuthorityChanged","VersionConflict"].includes(outcome.code??""))await invalidateContexts(p);
+        if(outcome.state==="ReviewRequired"&&["Forbidden","RecordUnavailable","AuthorityChanged","AuthorityReviewRequired","VersionConflict"].includes(outcome.code??""))await invalidateContexts(p);
       }
       return "Batch outcomes committed on this device. Review each result; remaining batches need an explicit send.";
     }catch(e){

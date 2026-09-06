@@ -146,7 +146,8 @@ export async function syncBatch(p:Principal,input:unknown):Promise<{outcomes:Out
       pending.delete(index);progress=true;
       try {
         const {receipt}=await syncOne(p,op,transfers[op.operation_id] as string|undefined);
-        results.set(index,{operation_id:op.operation_id,state:["Rejected","Quarantined"].includes(receipt.state)?"ReviewRequired":"ServerSaved",receipt});
+        const authorityReview = ["Capture","Correct"].includes(op.command) && (await database().query("SELECT authority_state FROM ppo.field_entries WHERE workspace_id=$1 AND actor_id=$2 AND id=$3",[p.workspace_id,p.actor_id,receipt.record_id])).rows[0]?.authority_state === "ReviewRequired";
+        results.set(index,{operation_id:op.operation_id,state:authorityReview||["Rejected","Quarantined"].includes(receipt.state)?"ReviewRequired":"ServerSaved",receipt,...(authorityReview?{code:"AuthorityReviewRequired",message:"Server retained this factual evidence and its original receipt. Current authority needs owned service review; no extra work is authorised."}:{})});
       } catch(e) {failure(index,e,op.operation_id);}
     }
     if(!progress){for(const [i,op] of pending)failure(i,new AppError(409,"DependencyPending","Cyclic or unavailable dependency. Originals are retained for review."),op.operation_id);break;}

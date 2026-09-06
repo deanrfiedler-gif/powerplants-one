@@ -6,7 +6,7 @@ import {
   type TestInfo,
   type APIRequestContext,
 } from "@playwright/test";
-import { writeFile, mkdtemp } from "node:fs/promises";
+import { writeFile, readFile, mkdtemp } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
@@ -446,6 +446,14 @@ test("P08 persistent browser process restart retains two jobs and original evide
   await note(page, "SYN persistent-profile restart original");
   await save(page);
   const before = await localRows(page);
+  const workerPath="public/offline/sw.js",worker=await readFile(workerPath,"utf8");
+  try {
+    const updated=worker.replace("PPO-field-shell-","PPO-field-shell-SYN-update-");await writeFile(workerPath,updated);await context.setOffline(false);
+    await page.evaluate(async()=>{const r=await navigator.serviceWorker.getRegistration("/offline/");await r!.update();});
+    await page.waitForFunction(async()=>!!(await navigator.serviceWorker.getRegistration("/offline/"))?.waiting);
+    expect((await localRows(page)).map((x:{original:unknown})=>x.original)).toEqual(before.map((x:{original:unknown})=>x.original));
+    await writeFile(info.outputPath("P08-worker-update.json"),JSON.stringify({scenario:"Real waiting service-worker update with pending original evidence",before_sha256:createHash("sha256").update(worker).digest("hex"),after_sha256:createHash("sha256").update(updated).digest("hex"),pending:before.map((x:{original:{operation_id:string}})=>x.original.operation_id)},null,2));
+  } finally { await writeFile(workerPath,worker); }
   await context.close();
   context = await chromium.launchPersistentContext(directory, {
     headless: true,
@@ -470,4 +478,14 @@ test("P08 persistent browser process restart retains two jobs and original evide
     "ServerSaved",
   ]);
   await context.close();
+});
+
+
+test("P08 UI time conflict keeps original local evidence and keyboard recovery controls",async({page},info)=>{
+ test.setTimeout(120000);const setup=await prepared(page,info.project.name.startsWith("desktop")?"2026-12-29":"2026-12-30");await open(page,setup.appointment_id);await page.getByRole("button",{name:"Save provisional start intent",exact:true}).click();await page.getByRole("button",{name:"Send next batch / retry originals"}).click();await expect(page.locator("#queue .status")).toHaveText(["ServerSaved"]);
+ await page.getByLabel("Evidence type",{exact:true}).selectOption("Time");const now=Math.floor(Date.now()/1000)*1000-(info.project.name.startsWith("mobile")?259200000:172800000);await page.getByLabel("Actual start time (UTC)").fill(new Date(now-600000).toISOString());await page.getByLabel("Actual end time (UTC)").fill(new Date(now).toISOString());await save(page);await page.getByRole("button",{name:"Send next batch / retry originals"}).click();await expect(page.locator("#queue .status")).toHaveText(["ServerSaved","ServerSaved"]);
+ await save(page);await page.getByRole("button",{name:"Send next batch / retry originals"}).click();await expect(page.locator("#queue .status")).toHaveText(["ServerSaved","ServerSaved","Conflict"]);await expect(page.locator("#queue")).toContainText("overlaps");const originals=(await localRows(page)).map((x:{original:unknown})=>x.original);await screenshot(page,info,"time-conflict-original-retained");
+ const recovery=page.getByRole("button",{name:"Preserve original for service-owner review",exact:true});await recovery.focus();await expect(recovery).toBeFocused();await page.keyboard.press("Enter");await expect(page.locator("#queue")).toContainText("Restricted recovery receipt");await screenshot(page,info,"restricted-recovery-keyboard-focus");expect((await localRows(page)).map((x:{original:unknown})=>x.original)).toEqual(originals);
+ const own=(await localRows(page)).at(-1).status.recovery;const detail=await call(page.request,`sync/recovery/${own.case_id}`);expect(detail.normal_acceptance).toBe(false);expect(Object.keys(detail).sort()).toEqual(["case_id","disposition","normal_acceptance","operation_id","payload_hash","received_at","recovery_receipt_id"].sort());const job=(await call(page.request,`my-jobs/${setup.appointment_id}`)).items[0];expect(job.entries).toHaveLength(1);expect(job.status).toBe("InProgress");
+ await writeFile(info.outputPath("P08-exception-originals.json"),JSON.stringify({originals,case:detail,server_entry_count:job.entries.length},null,2));
 });

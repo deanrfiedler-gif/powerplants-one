@@ -13,6 +13,8 @@ const paths = execFileSync(
     "tests/database/offline.test.ts",
     "tests/helpers/offline.ts",
     "tests/browser/offline.spec.ts",
+    "tests/browser/offline-storage.spec.ts",
+    "scripts/offline-restart-proof.ts",
     "tests/http/offline.test.ts",
     "scripts/build-offline.ts",
     "scripts/format-review.ts",

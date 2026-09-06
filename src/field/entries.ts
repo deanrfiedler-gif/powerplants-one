@@ -200,6 +200,7 @@ export async function captureEntry(
         });
       }
       const needsFollow =
+        entry.authority_state === "ReviewRequired" ||
         (cmd.payload.follow_up_required !== undefined &&
           cmd.payload.follow_up_required) ||
         (cmd.payload.movement_kind !== undefined &&

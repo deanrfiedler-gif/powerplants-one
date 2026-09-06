@@ -471,12 +471,13 @@ test("P08 withdrawn pack preserves started factual capture as review-required au
   });
   assert.equal(
     (await syncBatch(q.p, { operations: [op] })).outcomes[0].state,
-    "ServerSaved",
+    "ReviewRequired",
   );
   assert.equal(
     (await fresh(q.p, q.job.id)).entries[0].authority_state,
     "ReviewRequired",
   );
+  assert.equal((await rows("SELECT count(*)::int n FROM ppo.field_follow_ups WHERE entry_id=$1", [String(op.payload.id)]))[0].n,1);
 });
 test("P08 actor-wide time overlap and immutable successor evidence remain enforced through sync", async () => {
   const q = await started(),

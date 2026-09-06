@@ -16,7 +16,7 @@ function storageError(e:unknown) {
 }
 export function openStore(version=DB_VERSION):Promise<IDBDatabase> {
   return new Promise((resolve,reject)=>{
-    if(!globalThis.indexedDB){reject(storageError(new Error("IndexedDBUnavailable")));return;}
+    if(!globalThis.indexedDB){reject(storageError(new DOMException("IndexedDBUnavailable","IndexedDBUnavailable")));return;}
     let failed=false;
     const r=indexedDB.open(DB_NAME,version);
     r.onupgradeneeded=()=>{for(const name of stores.filter(x=>version>=2||x!=="leases"))if(!r.result.objectStoreNames.contains(name))r.result.createObjectStore(name,{keyPath:"key"});};
