@@ -43,10 +43,11 @@ jobs:
           npm ls --depth=0
       - name: Install pinned controlled PDF renderer
         run: npx playwright install --with-deps chromium
-      - name: Prepare separate review copies with pinned formatter
-        run: node --import tsx scripts/format-review.ts
       - name: Static, unit and build checks
         run: npm run check
+      - name: Prepare separate review copies with pinned formatter
+        if: always()
+        run: node --import tsx scripts/format-review.ts
       - name: Configure disposable loopback database
         run: |
           cp .env.example .env.local
