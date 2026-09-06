@@ -423,6 +423,45 @@ test("P10 PT-20/PT-21 UI exact account arithmetic, filtering, partial/failure an
       ).toBeVisible();
     }
     await capture(page, info, `account-${f.toLowerCase()}`);
+    if (f === "F-01") {
+      await page.route(
+        "**/account-observations?**",
+        (route) =>
+          route.fulfill({
+            status: 503,
+            contentType: "application/json",
+            body: JSON.stringify({
+              message:
+                "SYN account refresh failed; original observation retained.",
+              retryable: true,
+            }),
+          }),
+        { times: 1 },
+      );
+      await page
+        .getByRole("button", { name: "Refresh observations", exact: true })
+        .click();
+      await expect(
+        page.getByText("Refresh failed — current total unavailable", {
+          exact: true,
+        }),
+      ).toBeVisible();
+      await expect(metric.locator("strong")).toHaveText("Unavailable");
+      await expect(
+        page
+          .getByText("Separate unapplied cash", { exact: true })
+          .locator("..")
+          .locator("strong"),
+      ).toHaveText("Unknown");
+      await expect(page.getByText(/Last good observation:/)).toContainText(
+        "600.00",
+      );
+      await capture(page, info, "account-refresh-failed-historical");
+      await page
+        .getByRole("button", { name: "Refresh observations", exact: true })
+        .click();
+      await expect(metric.locator("strong")).toHaveText("AUD 600.00");
+    }
   }
   await expect(page.getByText(/Last good observation:/)).toBeVisible();
   await identity(page, "assigned-technician");

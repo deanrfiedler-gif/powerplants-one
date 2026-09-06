@@ -56,8 +56,6 @@ jobs:
           npm run db:migrate
           npm run db:seed
           npm run db:health
-      - name: Focused P10 Finance source, processing and account proof
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/finance*.test.ts
       - name: Focused P10 desktop and phone review, allocation and reconciliation
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
@@ -76,6 +74,8 @@ jobs:
             done
             node --env-file=.env.local --import tsx scripts/finance-restart-proof.ts "$phase"
           done
+      - name: Focused P10 Finance source, processing and account proof
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/finance*.test.ts
       - name: Verify documented synthetic reset command
         run: |
           if npm run db:reset; then exit 1; fi

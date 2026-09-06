@@ -95,7 +95,8 @@ const date = (s: string | null) =>
   s
     ? new Date(s).toLocaleString("en-AU", { timeZone: "UTC" }) + " UTC"
     : "Not recorded";
-function useCommand(done: () => void) {
+type CommandReceipt = { record_id?: string; receipt_id?: string };
+function useCommand(done: (receipt?: CommandReceipt) => void) {
   const [pending, setPending] = useState<{
       path: string;
       body: Record<string, unknown>;
@@ -122,13 +123,10 @@ function useCommand(done: () => void) {
     setBusy(true);
     setError(null);
     try {
-      const r = await api<{ record_id?: string; receipt_id?: string }>(
-        path,
-        item.body,
-      );
+      const r = await api<CommandReceipt>(path, item.body);
       setPending(null);
       setReceipt(r.receipt_id ?? "Original output worker examined");
-      done();
+      done(r);
       return r;
     } catch (e) {
       setError(e);
@@ -370,7 +368,14 @@ export function FinanceForm({
       initial?.revisions[0]?.remaining_work_basis ?? "",
     ),
     [reason, setReason] = useState(""),
-    cmd = useCommand(() => {});
+    cmd = useCommand((receipt) => {
+      if (!receipt?.record_id) return;
+      if (onSaved) onSaved();
+      else {
+        router.push(`/finance/handoffs/${receipt.record_id}`);
+        router.refresh();
+      }
+    });
   const entries = new Map<string, SourceEntry>();
   for (const s of sources.data?.items ?? [])
     if ("source" in s)
@@ -426,19 +431,11 @@ export function FinanceForm({
         lines,
         treatment_basis: treatment,
         remaining_work_basis: remaining,
-      },
-      r = await cmd.send(
-        id ? `finance/handoffs/${id}/revise` : "finance/handoffs",
-        body,
-      );
-    if (r?.record_id) {
-      if (onSaved) {
-        onSaved();
-        return;
-      }
-      router.push(`/finance/handoffs/${r.record_id}`);
-      router.refresh();
-    }
+      };
+    await cmd.send(
+      id ? `finance/handoffs/${id}/revise` : "finance/handoffs",
+      body,
+    );
   }
   return (
     <Frame
@@ -672,6 +669,7 @@ export function FinanceForm({
             <label>
               Finance treatment basis
               <textarea
+                aria-label="Finance treatment basis"
                 value={treatment}
                 onChange={(e) => setTreatment(e.target.value)}
                 minLength={10}
@@ -681,6 +679,7 @@ export function FinanceForm({
             <label>
               Remaining work and dependency basis
               <textarea
+                aria-label="Remaining work and dependency basis"
                 value={remaining}
                 onChange={(e) => setRemaining(e.target.value)}
                 minLength={10}
@@ -690,6 +689,7 @@ export function FinanceForm({
             <label>
               Reason for this saved revision
               <textarea
+                aria-label="Reason for this saved revision"
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
                 minLength={10}
@@ -794,6 +794,7 @@ export function FinanceDetail({ id }: { id: string }) {
               <label>
                 Precise action / correction reason
                 <textarea
+                  aria-label="Precise action / correction reason"
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
                   placeholder="Record what was checked or exactly what needs correction."
@@ -1157,6 +1158,7 @@ export function AccountScreen({
       <Link href="/finance/handoffs">← Finance queue</Link>
       <ErrorNotice error={r.error} />
       {cmd.notice}
+      {d?.context_error && <p className={styles.warning}>{d.context_error}</p>}
       {r.loading && (
         <p role="status">Loading permitted account observations…</p>
       )}
@@ -1180,7 +1182,7 @@ export function AccountScreen({
               </select>
             </label>
             <button
-              disabled={cmd.busy || !!cmd.pending || r.loading}
+              disabled={cmd.busy || !!cmd.pending || r.loading || !!r.error}
               onClick={() =>
                 void cmd.send(`finance/accounts/${accountId}/observe`, {
                   expected_version: d.account.version,
@@ -1199,18 +1201,24 @@ export function AccountScreen({
             <div>
               <span>Supplied account balance</span>
               <strong>
-                {d.account_balance === null
+                {r.loading || r.error || d.account_balance === null
                   ? "Unavailable"
                   : `${d.account.currency} ${d.account_balance}`}
               </strong>
-              <small>{d.balance_status}</small>
+              <small>
+                {r.error
+                  ? "Refresh failed — current total unavailable"
+                  : r.loading
+                    ? "Refreshing exact source observation"
+                    : d.balance_status}
+              </small>
             </div>
             <div>
               <span>Separate unapplied cash</span>
               <strong>
-                {d.current?.unapplied_cash === null || !d.current
+                {r.loading || r.error || d.unapplied_cash === null
                   ? "Unknown"
-                  : `${d.account.currency} ${d.current.unapplied_cash}`}
+                  : `${d.account.currency} ${d.unapplied_cash}`}
               </strong>
               <small>Never netted against invoices</small>
             </div>
@@ -1303,13 +1311,16 @@ export function AccountScreen({
               No extraction recorded. Account total unavailable.
             </div>
           )}
-          {d.current?.completeness !== "Complete" && d.last_good && (
-            <p className={styles.warning}>
-              Last good observation: {d.last_good.source_balance}{" "}
-              {d.account.currency}, as at {date(d.last_good.source_as_at)}. This
-              is historical; the current total is unavailable.
-            </p>
-          )}
+          {(r.error ||
+            d.context_error ||
+            d.current?.completeness !== "Complete") &&
+            d.last_good && (
+              <p className={styles.warning}>
+                Last good observation: {d.last_good.source_balance}{" "}
+                {d.account.currency}, as at {date(d.last_good.source_as_at)}.
+                This is historical; the current total is unavailable.
+              </p>
+            )}
           <details className={styles.panel}>
             <summary>Extraction scope and retained history</summary>
             <pre>

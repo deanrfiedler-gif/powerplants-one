@@ -214,6 +214,10 @@ export async function readAccount(
       !context_error && current?.completeness === "Complete"
         ? current.source_balance
         : null,
+    unapplied_cash:
+      !context_error && current?.completeness === "Complete"
+        ? current.unapplied_cash
+        : null,
     balance_status: context_error
       ? "Current account verification unavailable; original observations retained"
       : current?.completeness === "Complete"

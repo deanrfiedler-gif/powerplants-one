@@ -310,6 +310,7 @@ test("P10 current exact account mapping changes block mutation and mark account 
     account_id: a.id,
   });
   assert.equal(account.account_balance, null);
+  assert.equal(account.unapplied_cash, null);
   assert.ok(account.context_error);
   assert.equal(account.history[0].source_balance, "600.00");
   assert.equal(
