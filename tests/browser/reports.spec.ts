@@ -266,7 +266,7 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   await proof(page, info, "report-list");
   const setup = await prepareFieldAppointment(
     (path, body) => call(page, path, body),
-    info.project.name.startsWith("mobile") ? "2026-12-19" : "2026-12-18",
+    info.project.name.startsWith("mobile") ? "2026-12-21" : "2026-12-18",
   );
   for (const profile of ["assigned-technician", "second-technician"]) {
     await identity(page, profile);

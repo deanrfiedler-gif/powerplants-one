@@ -21,10 +21,11 @@ import {
   readReportJob,
 } from "../../src/reports/worker";
 import { readOperation } from "../../src/shared/receipts";
+import { startAttendance } from "../../src/field/start";
 import { captureEntry } from "../../src/field/entries";
 import { saveCompletionDraft } from "../../src/field/completion";
 import { readFieldJob } from "../../src/field/reads";
-import { entry, draft, png, started } from "../helpers/field";
+import { entry, draft, png, started, photo, startInput } from "../helpers/field";
 import {
   submitted,
   reviewed,
@@ -624,3 +625,17 @@ test("P09 real source change during generation and corrupted original bundle can
 });
 test("P09 issued original byte removal or wrong hash is unavailable rather than regenerated",async()=>{const q=await reportIssued(),r=q.report,v=r.presentations.find((x:{kind:string})=>x.kind==="IssuedReport")!,j=r.jobs[0],path=join(process.env.PPO_DOCUMENT_DIRECTORY??join(homedir(),".ppo-synthetic-documents"),q.p.workspace_id,j.id),before=await readFile(path);await unlink(path);await assert.rejects(presentationBytes(q.p,r.id,v.id));await writeFile(path,Buffer.from("SYN wrong immutable original bytes"));await assert.rejects(presentationBytes(q.p,r.id,v.id));await writeFile(path,before,{mode:0o600});const b=await presentationBytes(q.p,r.id,v.id);assert.equal(digest(b.html),v.content_hash);assert.equal((await readReport(q.p,r.id)).items[0].issues.length,1);});
 test("P09 unsupported signature bytes are rejected without response or follow-up",async()=>{const q=await reviewed(),bytes=Buffer.from("SYN not a PNG"),cmd={...response(q.report,"AcceptedWithReservations","DraftEvidence"),signature:{sha256:digest(bytes),byte_count:bytes.length,content_base64:bytes.toString("base64")}},before=(await readReport(q.p,q.report.id)).items[0].follow_ups.length;await assert.rejects(recordResponse(q.p,q.report.id,cmd));const r=(await readReport(q.p,q.report.id)).items[0];assert.equal(r.responses.length,0);assert.equal(r.follow_ups.length,before);});
+
+test("P09 returned Complete and accepted report-only correction retain passed controls and original attendance",async()=>{
+ const q=await started(),f=await photo(q.job,q.p);await captureEntry(q.p,entry(q.job,"Photo",{attachment_id:f.id,caption:"SYN completed visual inspection"}));for(const check_id of ["SYN-SITE-CONTROLS","SYN-TASK-RESULT"])await captureEntry(q.p,entry(q.job,"Checklist",{check_id,result:"Pass",reason:null,evidence_ids:check_id==="SYN-SITE-CONTROLS"?[f.id]:[]}));
+ let j=(await readFieldJob(q.p,q.job.id)).items[0];await saveCompletionDraft(q.p,j.id,draft(j,"Complete"));j=(await readFieldJob(q.p,j.id)).items[0];const id=randomUUID(),co=await principal("coordinator");let reportVersion=0;
+ async function submitExact(end:string){j=(await readFieldJob(q.p,j.id)).items[0];await submitCompletion(q.p,j.id,{...base(),id,attendance_id:j.attendance!.id,draft_revision_id:j.draft_revisions[0].id,expected_draft_version:j.draft!.version,expected_report_version:reportVersion,expected_appointment_version:j.version,attendance_end_at:end});return (await readReport(co,id)).items[0];}
+ let r=await submitExact(new Date().toISOString());await reviewReport(co,id,decision(r,"Returned"));r=(await readReport(co,id)).items[0];reportVersion=r.version;
+ for(const accepted of [false,true]){j=(await readFieldJob(q.p,j.id)).items[0];const original=j.entries.find(e=>e.kind==="Photo"&&!e.superseded)!;await captureEntry(q.p,{...entry(j,"Photo",{attachment_id:f.id,caption:accepted?"SYN accepted-report factual caption correction":"SYN returned factual caption correction"}),expected_version:original.version},original.id);j=(await readFieldJob(q.p,j.id)).items[0];await saveCompletionDraft(q.p,j.id,draft(j,"Complete"));r=await submitExact(accepted?new Date(r.appointment.actual_end_at!).toISOString():new Date().toISOString());await reviewReport(co,id,decision(r));r=(await readReport(co,id)).items[0];assert.equal(r.appointment.status,"Completed");assert.equal(r.revisions[0].snapshot.completion.scope_outcome,"Complete");if(!accepted){await amendReport(q.p,id,{...base(),expected_version:r.version,revision_id:r.revisions[0].id});reportVersion=(await readReport(q.p,id)).items[0].version;}}
+ assert.equal((await rows("SELECT count(*)::int n FROM ppo.field_attendances"))[0].n,1);assert.equal((await rows("SELECT count(*)::int n FROM ppo.attendance_acceptances"))[0].n,1);
+});
+test("P09 all actually started crew must be accepted independently, with no invented attendance or declarations",async()=>{
+ const q=await started(),m=await principal("second-technician"),co=await principal("coordinator");let second=(await readFieldJob(m,q.job.id)).items[0];await startAttendance(m,second.id,startInput(second));
+ const ids=[];for(const p of [q.p,m]){let j=(await readFieldJob(p,q.job.id)).items[0];await saveCompletionDraft(p,j.id,draft({...j,entries:j.entries.filter(e=>e.actor_id===p.actor_id),attachments:j.attachments.filter(e=>e.actor_id===p.actor_id)}));j=(await readFieldJob(p,j.id)).items[0];const id=randomUUID();ids.push(id);await submitCompletion(p,j.id,{...base(),id,attendance_id:j.attendance!.id,draft_revision_id:j.draft_revisions[0].id,expected_draft_version:j.draft!.version,expected_report_version:0,expected_appointment_version:j.version,attendance_end_at:new Date().toISOString()});}
+ let r=(await readReport(co,ids[0])).items[0];await reviewReport(co,r.id,decision(r));assert.equal((await readReport(co,r.id)).items[0].appointment.status,"CompletedPendingReview");r=(await readReport(co,ids[1])).items[0];await reviewReport(co,r.id,decision(r));assert.equal((await readReport(co,r.id)).items[0].appointment.status,"Completed");assert.equal((await rows("SELECT count(*)::int n FROM ppo.attendance_acceptances"))[0].n,2);assert.equal((await rows("SELECT count(*)::int n FROM ppo.field_attendances"))[0].n,2);second=(await readFieldJob(m,q.job.id)).items[0];assert.ok(second.accepted_end_at);
+});

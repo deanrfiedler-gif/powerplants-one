@@ -76,7 +76,7 @@ try {
     await call(page, "local-session", { profile: "coordinator" });
     const setup = await prepareFieldAppointment(
       (path, b) => call(page, path, b),
-      "2026-12-26",
+      "2026-12-30",
     );
     for (const profile of ["assigned-technician", "second-technician"]) {
       await call(page, "local-session", { profile });

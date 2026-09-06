@@ -72,7 +72,8 @@ export function decision(
     entry_decisions: (
       r.snapshot.entries as { id: string; version: number }[]
     ).map((e) => ({
-      ...e,
+      id: e.id,
+      version: e.version,
       decision: value,
       remarks: "SYN exact factual evidence checked; no financial treatment.",
     })),
