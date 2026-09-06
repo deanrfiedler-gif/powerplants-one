@@ -2,6 +2,7 @@ import { createServer } from "node:http";
 import { randomBytes } from "node:crypto";
 import next from "next";
 import { localConfig } from "../src/platform/config";
+await import("./build-offline");
 const config = localConfig(); // Validate before preparing Next or opening any socket.
 process.env.PPO_LOCAL_GATEWAY = randomBytes(32).toString("hex");
 const app = next({ dev: true, hostname: "127.0.0.1", port: config.port });

@@ -1,6 +1,7 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { api, ErrorNotice } from "./business-ui";
+import { lockLocal } from "../offline/store";
 type Identity = {
   actor_id: string;
   workspace_id: string;
@@ -38,6 +39,7 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
     setBusy(true);
     setError(null);
     try {
+      if (localStorage.getItem("ppo-offline-marker")) await lockLocal();
       setP(await api<Identity>("local-session", { profile }));
     } catch (e) {
       setError(e);
@@ -56,7 +58,7 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
             {p?.display_name ?? "Choose a demonstration identity"}
           </strong>
           <small>
-            Changing identity clears the displayed records and unsaved forms.
+            Changing identity clears displayed records and unsaved forms. Saved offline originals stay locked to their original owner.
           </small>
         </div>
         <div className="identity-choice">
@@ -91,6 +93,7 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
         </button>
       </section>
       <ErrorNotice error={error} />
+      {p && <button className="secondary" onClick={() => { void (async()=>{try{if(localStorage.getItem("ppo-offline-marker"))await lockLocal();await api("local-session/sign-out",{});setP(null);setEpoch(x=>x+1);}catch(e){setError(e);}})();}}>Sign out</button>}
       {p ? (
         <Session.Provider value={p}>
           <div key={`${p.actor_id}:${epoch}`}>{children}</div>

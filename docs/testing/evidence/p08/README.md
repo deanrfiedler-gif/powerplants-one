@@ -1,0 +1,9 @@
+# P08 original execution and visual evidence
+
+[Handover](../../../delivery/p08-handover.md) · [External publication and final-head/main evidence](https://github.com/deanrfiedler-gif/powerplants-one/issues/34#issuecomment-5556131594) · [Review/failure provenance](manifest.json) · [Preserved review originals](https://chatgpt.com/api/library/files/libfile_e2619733cd60819198f99d3bf87e1c4b/download).
+
+The review archive contains 168 unchanged original screenshot/media/proof files from runs 34004021911, 34004451299, 34005653711 and 34005733392. Each remains bound to its actual failed run; a passing component never changes the run conclusion. The archive's per-file manifest records source head/tree, executed checkout, run/attempt, scenario, viewport where applicable, byte count and SHA-256. Original PNGs and exact operation/receipt/PostgreSQL restart facts are included. Failed screenshot views and their error context are retained; raw profiles, session/recovery tokens, Playwright traces and analysis crops are excluded.
+
+Original desktop 1440×1000 and phone 390×844 views cover current context, unsaved offline changes, committed local PNGs, uncertain original sends, Sending, server-saved Partial draft, quota refusal, persistent-browser offline navigation, identity isolation, time conflict, restricted recovery and service-owner disposition. Screenshots supplement API receipts, server record counts and exact byte retrieval. They do not promote a full PT/AT or certify accessibility, device security, owner acceptance or production readiness.
+
+The external publication record identifies the final successful review head, exact merged main, all applicable checks and preserved final originals. This separate record avoids embedding a circular final self-SHA in the repository handover. GitHub's disposable artifact retention is 14 days; the linked preserved copies remain the review source beyond that window.

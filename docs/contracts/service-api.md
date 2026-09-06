@@ -1,6 +1,6 @@
 # PP-01 — Service API, operation and event contracts
 
-**Edition:** r08 · **Status:** Internal API contract; bounded P01–P07 subsets are implemented, with component evidence recorded separately. These are Powerplants One routes, never asserted MYOB endpoints.
+**Edition:** r09 · **Status:** Internal API contract; bounded P01–P08 subsets are implemented, with component evidence recorded separately. These are Powerplants One routes, never asserted MYOB endpoints.
 
 [Architecture](../architecture/BP-02-platform-architecture.md) · [Dictionary](service-data-dictionary.md) · [Service specification](../blueprints/BP-07-service-operations.md).
 
@@ -299,3 +299,57 @@ New capabilities are `field.read.own`, `field.start.own`, `field.capture.own`, `
 The dictionary's [P07 physical amendment](service-data-dictionary.md#p07-physical-implementation-amendment) is the payload and storage contract. Online capture is accepted immutable evidence with Draft review status and a current/review-required authority marker. A scope successor or withdrawal after real start preserves factual capture against original attendance and flags review; it grants no permission to perform more work. Ordinary P05 future-booking move/cancel remains refused after start. No automatic labour, attendance for other crew, stock, billing, order/ticket closure or return booking occurs.
 
 API-C15 remains P08. API-C16/TR-11 and EVT-07 remain P09: the P07 draft endpoint does not submit a report or approve attendance. CompletionDraftSaved is a durable draft fact; AttendanceStarted, FieldEvidenceAccepted/Corrected and AttachmentInitiated/Uploaded/Finalised are persisted atomically with database state, audit and receipts. They prove no customer message or external action. Storage/database separation uses original-operation reconciliation, not a distributed transaction or destructive cleanup.
+
+## P08 implementation amendment
+
+[ADR-0013](../decisions/ADR-0013-p08-offline-recovery.md) and [P08 handover](../delivery/p08-handover.md) implement API-C15 and the offline portions of SC-09/10, DAT-08 and TR-10. Earlier delivery-point exclusions are historical; report submission/review/customer response and Finance remain absent. All paths below use `/api/v1`, the existing local server session/gateway, exact loopback Origin for JSON mutations and private/no-store responses. No client actor, timestamp, capability or cached readiness overrides current server authority.
+
+| Endpoint | Exact request / response and scope |
+|---|---|
+| POST `/sync/context/:id` | Exactly `{}`. Current `field.read.own`, assignment/record scope and `field.capture.own`; returns owner, service-audience own job DTO, original authority, `verified_at`, `expires_at`, and recovery `{id,token,expires_at}`. No Finance/internal metadata, other crew's personal entries or unrelated documents. Browser separately retrieves the exact permitted P06 issue HTML, bounded to 1 MiB. |
+| POST `/sync/operations` — API-C15 | Exactly `operations` (1–20 original envelopes) and optional `transfers` mapping original AttachmentUpload operation UUID to base64 bytes; entire JSON body at most 6 MiB. HTTP 200 means a batch was adjudicated, not that every item succeeded. Ordered `outcomes` has one result per input, including malformed entries. Top-level malformed/bounds errors are 422; normal session failure is 401. |
+| POST `/sync/recovery` | Exactly `grant_id`, `token`, `operation` and optional `content_base64` only for an original AttachmentUpload; 6 MiB bound. Active original actor, exact prior unexpired token/appointment/authority, strict original schema/hash/payload. Start/Acknowledge refused. Normal accepted originals are not duplicated. Returns only minimal restricted case receipt, never normal field acceptance. |
+| GET `/sync/recovery/:id` | Original active actor/workspace only; no normal field capability granted. Exact minimal keys: `case_id`, `operation_id`, `payload_hash`, `recovery_receipt_id`, `received_at`, `disposition`, `normal_acceptance=false`. Missing/other actor is the same 404. No envelope, job/filename, Activity contents or file bytes. |
+| GET `/sync/recovery-review`, `/:id`, `/:id/bytes` | Recorded service owner plus current scoped `service.work_order.edit`, `activity.edit`, `activity.read`. List is bounded to 100 owned candidate cases, then scope-filtered; no claim of global completeness. Detail includes original evidence, byte hash/size and dispositions; bytes are verified original private PNG only. Other case/missing shares 404 after capability checks. |
+| POST `/sync/recovery-review/:id/disposition` | Common operation/schema/reason, `disposition=RetainedForReview/ClarificationRequired`, meaningful `note` up to 2000. Same exact service owner/current scope. Append-only disposition with existing ActivityUpdated receipt/audit/outbox; no promotion into field evidence, owner reassignment or automatic closure. |
+| POST `/local-session/sign-out` | Exactly `{}`; expire current session/cookie. UI first commits an offline ownership lock. No delete of unsent originals. This remains a synthetic local identity adapter, not operational authentication. |
+
+### Original envelope and strict payloads
+
+Every original has exactly `schema_version=1`, UUID `operation_id/actor_id/workspace_id/appointment_id`, `command`, nullable UUID `target_id`, `authority`, unique UUID `depends_on` (0–30, no self dependency), nullable UUID `supersedes_operation_id`, `payload`, and lowercase 64-hex `payload_hash`. `authority` has exactly UUID `assignment_id/scope_revision_id/issue_id`, positive integer `assignment_version/schedule_version/scope_version`, and lowercase 64-hex `scope_hash/issue_hash`. The actor/workspace must match the current server principal. The payload's operation ID must be the same original ID.
+
+SHA-256 covers the UTF-8 recursively key-sorted canonical original object excluding only `payload_hash`; arrays retain their original order. Browser and server share the same implementation. Whitespace/normalisation inside original payload strings is retained in this envelope, even where an existing domain parser normalises its separate domain command. Changed envelope reuse conflicts, including changed dependencies/lineage whose resolved domain command would be identical. Existing P01–P07 canonical hashes/receipts remain exact.
+
+| Command | Payload and explicit causal reference |
+|---|---|
+| Start | Exact P07 `/appointments/:id/start` fields. Envelope authority must agree with command assignment/schedule/scope/issue versions/hash. No target. Provisional until current full-crew/authority adjudication in the actual start transaction. |
+| Acknowledge | Exact P06 acknowledgement fields; target is the exact issue UUID; assignment/version/presented hash must match original authority and current actor recipient. |
+| Capture / Correct | Exact strict P07 six-type fields. Correct target is original entry UUID; explicit local predecessor operation, when supplied, must be the accepted same actor/job entry. `attendance_id` may be an accepted UUID or exactly `{operation_id:<declared Start dependency>}`. Resolving it does not rewrite the original. |
+| AttachmentInitiate | Exact P07 initiate fields and optional declared Start reference. Stable attachment UUID is retained in `payload.id`; no target. |
+| AttachmentUpload | Common operation/schema/reason plus `expected_version`, `sha256`, `byte_count` 1–4194304. Target is original attachment UUID; original PNG base64 travels separately in `transfers`. Exact byte count/hash is checked before the existing upload/inspection command. |
+| AttachmentFinalise | Common operation/schema/reason and `expected_version`; target original attachment UUID. Upload dependency must already have accepted exact bytes; domain finalisation still verifies stored retrieval and permitted state. |
+| CompletionDraft | Exact P07 draft fields and optional declared Start reference. Local entry/attachment/predecessor operations are explicit dependencies; expected draft version and exact entry IDs/versions remain unchanged. No submit/report/review command is present. |
+
+Dependencies must resolve to accepted same-actor/same-appointment operations. The server uses stable topological order with input-order ties; cycles/missing parents return Pending/DependencyPending. An accepted finalisation dependency must specifically be Available; Rejected/Quarantined does not satisfy a child. Existing accepted server record IDs/expected versions remain domain-validated. A failed child never reverses a parent or drops independent siblings. Current permissions are reapplied before both new mutation and historical receipt recovery.
+
+### Outcomes and transaction semantics
+
+Each outcome is `{operation_id,state,receipt?,code?,message?,retryable?}`. The `receipt` is the exact existing immutable operation receipt, including its original server `accepted_at`, IDs, state, warnings and task IDs. No retry rewrites receipt time or turns a queued render receipt into a later Issued fact.
+
+| UI state | Exact meaning / next action |
+|---|---|
+| Unsaved form (outside queue) | Changes exist only in the open form. There is no durable operation/byte/receipt claim. |
+| LocalSaved | Original operation/evidence and required local Blob have completed their IndexedDB transaction. No server acceptance confirmed. |
+| Sending | Original is claimed under a recoverable sender lease and currently attempting one bounded request. No receipt confirmed. |
+| Pending | Dependency or network/response outcome is unresolved; originals remain. Explicit retry reuses the same IDs/hashes. |
+| ServerSaved | Exact normal receipt has been received and committed in local status. It proves normal factual server acceptance, not Service review, billability or closure. |
+| Conflict | OperationConflict or actor-wide TimeOverlap requires explicit correction/reconciliation. Original is unchanged and available for owned recovery where permitted. |
+| ReviewRequired | Authority/permission/version/schema needs review, an accepted factual entry has ReviewRequired authority, or a separate restricted recovery receipt exists. A normal receipt, when present, is shown separately from that review status. |
+| Failed | Validation, missing original bytes or a safe dependency/storage error prevented acceptance or certainty. No successful sibling is silently discarded. |
+
+Malformed payload/unknown fields, unsupported schema, wrong hash/media, dependency refusal, stale versions and missing/out-of-scope identities retain existing typed errors. Missing capability is Forbidden; same-404 RecordUnavailable is preserved for missing/out-of-scope records after capability checks. Network/late transaction failures use safe retryable DependencyUnavailable without raw SQL or provider paths. A stale-but-accessible capture can be retained against its immutable attendance with `AuthorityReviewRequired` and an owned follow-up; it does not authorise more work. Normal revoked receipt access remains refused even when a prior operation was accepted.
+
+Domain mutation, original sync acceptance row, audit, normal receipt and outbox are one existing locked PostgreSQL transaction. Attachment storage is deliberately separate: original operation/hash reconciles storage-success/database-failure. Restricted preservation uses a separate server-created Activity receipt and cannot consume or fake the original normal business operation. No background sender, report/Finance event consumer or external side effect is introduced.
+
+
+Normal acceptance and restricted recovery are mutually exclusive for one original under the same operation/workspace transaction locks. Once preserved into restricted recovery, replay returns RecoveryDispositionRequired without a normal receipt; changed reuse conflicts. A competing normal acceptance either wins once and blocks recovery as AlreadyAccepted, or recovery wins once and blocks normal acceptance. Neither path creates a second capture or follow-up. Direct online P07 commands also refuse the held original after current authorisation; the schema-7 upgrade path remains compatible. The browser does not offer recovery on an actively Sending row.

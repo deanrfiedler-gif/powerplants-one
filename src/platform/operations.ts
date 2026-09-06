@@ -3,6 +3,7 @@ import type { PoolClient } from "pg";
 import type { Principal } from "./identity";
 import { transaction } from "./database";
 import { AppError } from "./errors";
+import { syncContext } from "./sync-context";
 export type OperationReceipt = {
   operation_id: string;
   record_id: string;
@@ -154,8 +155,30 @@ export async function sharedOperation<T>(
         [p.workspace_id],
       );
       const context = await authorise(client); // Current scope/permission ALWAYS precedes receipt access.
+      const sync = syncContext.getStore();
+      if (sync && sync.operation_id !== input.operation_id)
+        throw new AppError(409, "OperationConflict", "The original operation identity must be retained.");
+      // P07 upgrade proof also runs these commands against schema 7. Once
+      // schema 8 exists, direct online commands cannot bypass a recovery hold.
+      if (
+        !sync &&
+        (await client.query("SELECT to_regclass('ppo.offline_recovery_cases') AS relation")).rows[0].relation &&
+        (await client.query(
+          "SELECT 1 FROM ppo.offline_recovery_cases WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3",
+          [p.workspace_id, p.actor_id, input.operation_id],
+        )).rowCount
+      )
+        throw new AppError(
+          409,
+          "RecoveryDispositionRequired",
+          "This original remains in restricted recovery; an online command cannot promote or replace it.",
+        );
+      await sync?.validate(client);
       const prior = await priorReceipt(client, p, input.operation_id, hash);
-      if (prior) return { receipt: prior, replayed: true };
+      if (prior) {
+        await sync?.accepted(client, prior);
+        return { receipt: prior, replayed: true };
+      }
       const result = await mutate(client, context);
       const receipt = await recordOperation(
         client,
@@ -171,6 +194,7 @@ export async function sharedOperation<T>(
           ...result.audit_details,
         },
       );
+      await sync?.accepted(client, receipt);
       return { receipt, replayed: false };
     });
   } catch (error) {

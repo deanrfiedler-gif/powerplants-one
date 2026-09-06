@@ -1,0 +1,321 @@
+import assert from "node:assert/strict";
+import { spawn, execFileSync } from "node:child_process";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { join } from "node:path";
+import { createHash } from "node:crypto";
+import { chromium, expect, type Page } from "@playwright/test";
+import { prepareFieldAppointment } from "../tests/helpers/field-http";
+import { base, png } from "../tests/helpers/field";
+import { database, closeDatabase } from "../src/platform/database";
+import { localConfig } from "../src/platform/config";
+import type { WireOperation, Receipt } from "../src/offline/protocol";
+if (localConfig().database_name !== "ppo_synthetic_test")
+  throw new Error("Requires guarded disposable ppo_synthetic_test.");
+const phase = process.argv[2],
+  root = join(process.env.RUNNER_TEMP ?? "/tmp", "ppo-p08-restart"),
+  proofPath = join(root, "proof.json"),
+  origin = "http://127.0.0.1:3000",
+  evidence = "verification-evidence/p08-restart";
+if (!["write", "accept", "verify"].includes(phase))
+  throw new Error("Use write, accept or verify.");
+await mkdir(root, { recursive: true });
+await mkdir(evidence, { recursive: true });
+const server = spawn(
+  process.execPath,
+  ["--env-file=.env.local", "--import", "tsx", "scripts/local-server.ts"],
+  { stdio: ["ignore", "inherit", "inherit"] },
+);
+let context:
+  Awaited<ReturnType<typeof chromium.launchPersistentContext>> | undefined;
+async function call(page: Page, path: string, body?: unknown) {
+  const r = await page.request.fetch(`${origin}/api/v1/${path}`, {
+    method: body === undefined ? "GET" : "POST",
+    headers:
+      body === undefined
+        ? {}
+        : { Origin: origin, "Content-Type": "application/json" },
+    data: body,
+  });
+  const data = await r.json();
+  assert.ok(r.ok(), JSON.stringify(data));
+  return data;
+}
+async function rows(page: Page) {
+  return page.evaluate(async () => {
+    const path = "/offline/modules/offline/store.js",
+      s = await import(path);
+    return (await s.queue((await s.ownership()).owner)) as {
+      original: WireOperation;
+      status: { state: string; receipt: Receipt };
+    }[];
+  });
+}
+async function shot(page: Page) {
+  const bytes = await page.screenshot({
+    path: `${evidence}/${phase}.png`,
+    fullPage: true,
+  });
+  await writeFile(
+    `${evidence}/${phase}.json`,
+    JSON.stringify(
+      {
+        scenario: `real application/PostgreSQL/browser restart: ${phase}`,
+        run_id: process.env.GITHUB_RUN_ID,
+        run_attempt: process.env.GITHUB_RUN_ATTEMPT,
+        source_head: process.env.PPO_SOURCE_HEAD ?? process.env.GITHUB_SHA,
+        source_tree: execFileSync("git", ["rev-parse", "HEAD^{tree}"], {
+          encoding: "utf8",
+        }).trim(),
+        executed_checkout: execFileSync("git", ["rev-parse", "HEAD"], {
+          encoding: "utf8",
+        }).trim(),
+        viewport: page.viewportSize(),
+        byte_count: bytes.length,
+        sha256: createHash("sha256").update(bytes).digest("hex"),
+      },
+      null,
+      2,
+    ),
+  );
+}
+try {
+  let ready = false;
+  for (let attempt = 0; attempt < 120; attempt++) {
+    try {
+      if ((await fetch(origin)).ok) {
+        ready = true;
+        break;
+      }
+    } catch {}
+    await new Promise((r) => setTimeout(r, 500));
+  }
+  assert.ok(ready, "Application startup failed");
+  context = await chromium.launchPersistentContext(join(root, "profile"), {
+    headless: true,
+    viewport: { width: 1440, height: 1000 },
+    baseURL: origin,
+  });
+  const page = context.pages()[0];
+  if (phase === "write") {
+    await call(page, "local-session", { profile: "coordinator" });
+    const setup = await prepareFieldAppointment(
+      (path, body) => call(page, path, body),
+      "2026-12-07",
+    );
+    for (const profile of ["assigned-technician", "second-technician"]) {
+      const actor = await call(page, "local-session", { profile }),
+        recipient = setup.pack.readiness.recipients.find(
+          (x: { user_id: string }) => x.user_id === actor.actor_id,
+        );
+      await call(
+        page,
+        `pack-issues/${setup.pack.current_issue_id}/acknowledge`,
+        {
+          ...base(),
+          assignment_id: recipient.assignment_id,
+          assignment_version: recipient.assignment_version,
+          presented_hash: setup.pack.issues[0].output_hash,
+          captured_at: new Date().toISOString(),
+        },
+      );
+    }
+    await call(page, "local-session", { profile: "assigned-technician" });
+    await page.goto("/offline/index.html");
+    await expect(page.locator("#workspace")).toBeVisible();
+    await page.waitForFunction(() => !!navigator.serviceWorker.controller);
+    await page
+      .getByLabel("Assigned job to download")
+      .selectOption(setup.appointment_id);
+    await page
+      .getByRole("button", { name: "Download selected job", exact: true })
+      .click();
+    await expect(page.locator("#notice")).toContainText(
+      "Job context and exact pack saved",
+    );
+    await context.setOffline(true);
+    await page.reload();
+    await page
+      .getByRole("button", { name: "Open saved field job", exact: true })
+      .click();
+    await page
+      .getByRole("button", {
+        name: "Save provisional start intent",
+        exact: true,
+      })
+      .click();
+    await expect(page.locator("#queue .queue-row")).toHaveCount(1);
+    await page
+      .getByLabel("Evidence type", { exact: true })
+      .selectOption("Observation");
+    await page
+      .getByLabel("Finding", { exact: true })
+      .fill(
+        "SYN evidence captured before application, PostgreSQL and browser process restart",
+      );
+    await page
+      .getByLabel("Attempted fix", { exact: true })
+      .fill("SYN inspection only");
+    await page
+      .getByLabel("Result, including unsuccessful work", { exact: true })
+      .fill("SYN uncertainty retained");
+    await page
+      .getByLabel("Capture context", { exact: true })
+      .fill("SYN original cached inspection scope");
+    await page
+      .getByRole("button", {
+        name: "Save evidence on this device",
+        exact: true,
+      })
+      .click();
+    await expect(page.locator("#queue .queue-row")).toHaveCount(2);
+    await page
+      .getByLabel("Evidence type", { exact: true })
+      .selectOption("Photo");
+    await page
+      .getByLabel("Original synthetic PNG")
+      .setInputFiles({
+        name: "SYN-process-restart.png",
+        mimeType: "image/png",
+        buffer: png(),
+      });
+    await page
+      .getByLabel("Photo caption")
+      .fill("SYN exact durable original across three processes");
+    await page
+      .getByRole("button", {
+        name: "Save evidence on this device",
+        exact: true,
+      })
+      .click();
+    await expect(page.locator("#queue .queue-row")).toHaveCount(6);
+    const originals = (await rows(page)).map((x) => x.original);
+    await writeFile(
+      proofPath,
+      JSON.stringify({ appointment_id: setup.appointment_id, originals }),
+    );
+    await shot(page);
+    console.log(
+      "P08 write: actual offline shell, original provisional start, factual observation and PNG chain committed in a persistent Chromium profile; server has accepted none.",
+    );
+  } else {
+    const proof = JSON.parse(await readFile(proofPath, "utf8"));
+    await context.setOffline(true);
+    await page.goto("/offline/index.html");
+    await expect(page.locator("#queue .queue-row")).toHaveCount(6);
+    assert.deepEqual(
+      (await rows(page)).map((x) => x.original),
+      proof.originals,
+    );
+    await context.setOffline(false);
+    if (phase === "accept") {
+      let accepted:
+        | {
+            outcomes: {
+              operation_id: string;
+              state: string;
+              receipt: Receipt;
+            }[];
+          }
+        | undefined;
+      await page.route("**/api/v1/sync/operations", async (route) => {
+        const r = await route.fetch();
+        accepted = await r.json();
+        await route.abort("failed");
+      });
+      await page
+        .getByRole("button", { name: "Send next batch / retry originals" })
+        .click();
+      await expect(page.locator("#queue")).toContainText(
+        "Server outcome is uncertain",
+      );
+      assert.ok(accepted);
+      assert.ok(
+        accepted.outcomes.every((x) => x.state === "ServerSaved"),
+        JSON.stringify(accepted),
+      );
+      await writeFile(proofPath, JSON.stringify({ ...proof, accepted }));
+      await shot(page);
+      console.log(
+        "P08 accept: after application/PostgreSQL/browser restart, originals accepted through actual HTTP; response deliberately lost before local receipt commit.",
+      );
+    } else {
+      await page
+        .getByRole("button", { name: "Send next batch / retry originals" })
+        .click();
+      await expect(page.locator("#queue .status")).toHaveText(
+        Array(6).fill("ServerSaved"),
+      );
+      const saved = await rows(page);
+      for (const row of saved)
+        assert.deepEqual(
+          row.status.receipt,
+          proof.accepted.outcomes.find(
+            (x: { operation_id: string }) =>
+              x.operation_id === row.original.operation_id,
+          ).receipt,
+        );
+      const job = (await call(page, `my-jobs/${proof.appointment_id}`))
+        .items[0];
+      assert.equal(job.entries.length, 2);
+      assert.equal(job.status, "InProgress");
+      assert.equal(job.draft, null);
+      const image = await page.request.get(
+        `${origin}/api/v1/attachments/${job.attachments[0].id}/bytes`,
+      );
+      assert.deepEqual(await image.body(), png());
+      const facts = (
+        await database().query(
+          "SELECT operation_id,payload_hash AS envelope_hash,receipt_id FROM ppo.sync_acceptances WHERE operation_id=ANY($1::uuid[]) ORDER BY operation_id",
+          [proof.originals.map((x: WireOperation) => x.operation_id)],
+        )
+      ).rows;
+      assert.equal(facts.length, 6);
+      for (const fact of facts) {
+        assert.equal(
+          fact.envelope_hash,
+          proof.originals.find(
+            (x: WireOperation) => x.operation_id === fact.operation_id,
+          ).payload_hash,
+        );
+        assert.equal(
+          fact.receipt_id,
+          proof.accepted.outcomes.find(
+            (x: { operation_id: string }) =>
+              x.operation_id === fact.operation_id,
+          ).receipt.receipt_id,
+        );
+      }
+      await writeFile(
+        `${evidence}/proof.json`,
+        JSON.stringify(
+          {
+            originals: proof.originals,
+            accepted: proof.accepted,
+            after_second_restart: saved,
+            database_facts: facts,
+            png_sha256: createHash("sha256")
+              .update(await image.body())
+              .digest("hex"),
+            appointment_status: job.status,
+            draft: job.draft,
+          },
+          null,
+          2,
+        ),
+      );
+      await writeFile(`${evidence}/original.png`, png());
+      await shot(page);
+      console.log(
+        "P08 verify: after a second application/PostgreSQL/browser restart, exact six original receipts recovered, one attendance/two captures, exact PNG bytes and PostgreSQL envelope hashes; no draft/report/closure fabricated.",
+      );
+    }
+  }
+} finally {
+  await context?.close();
+  server.kill("SIGTERM");
+  await new Promise<void>((resolve) => {
+    if (server.exitCode !== null) resolve();
+    else server.once("exit", () => resolve());
+  });
+  await closeDatabase();
+}

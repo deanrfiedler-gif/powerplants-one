@@ -180,7 +180,7 @@ test("P05 SC-07 day/week lanes, explicit filters, empty/error and keyboard focus
   await expect(page.getByRole("dialog")).toBeVisible();
   await capture(page, info, "keyboard-move-form");
   await page.getByRole("button", { name: "Close move", exact: true }).click();
-  await page.getByLabel("Starting date").fill("2026-12-15");
+  await page.getByLabel("Starting date").fill("2027-02-01");
   await expect(
     page.getByText(
       "No permitted appointments in this period. Resource evidence still applies.",
