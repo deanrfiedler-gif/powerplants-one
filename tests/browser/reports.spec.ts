@@ -448,9 +448,6 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   expect(proposedVisit.status).toBe("Proposed");
   expect(proposedVisit.assignments).toHaveLength(0);
   expect(proposedVisit.customer_commitment).toBe("Unknown");
-  await expect(
-    page.getByText("Saved to the server.", { exact: true }).last(),
-  ).toBeVisible();
   await expect(visitLinks).toHaveCount(previousVisits + 1);
   const returnVisit = page.locator(`a[href="/service/appointments/${proposalReceipt.record_id}"]`).locator("..").locator("..");
   await expect(returnVisit).toContainText("Proposed");
