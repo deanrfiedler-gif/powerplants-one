@@ -34,7 +34,7 @@ export const content = () => ({
   source_ids: [id("c2")],
   history_ids: [],
 });
-export async function confirmed(n = 9) {
+export async function confirmed(n = 9, crewIds = [id("a4", 9), id("a4", 2)]) {
   const p = await principal(),
     a = (await readAppointment(p, id("a8", n))).items[0];
   await confirmAppointment(p, a.id, {
@@ -47,8 +47,8 @@ export async function confirmed(n = 9) {
     policy_version_id: a.policy_version_id,
     scheduling_policy_id: id("a0"),
     scheduling_policy_version: 1,
-    crew: [9, 2].map((n, i) => ({
-      resource_id: id("a4", n),
+    crew: crewIds.map((resource_id, i) => ({
+      resource_id,
       resource_version: 1,
       calendar_version: 1,
       crew_role: i ? "Technician" : "Lead",
@@ -59,9 +59,9 @@ export async function confirmed(n = 9) {
   });
   return (await readAppointment(p, a.id)).items[0];
 }
-export async function prepared(n = 9, notes = content()) {
+export async function prepared(n = 9, notes = content(), crewIds?: string[]) {
   const p = await principal(),
-    a = await confirmed(n),
+    a = await confirmed(n, crewIds),
     pid = randomUUID();
   await createPack(p, {
     ...base(),
@@ -72,9 +72,9 @@ export async function prepared(n = 9, notes = content()) {
   });
   return (await readPack(p, pid)).items[0];
 }
-export async function queued(n = 9, notes = content()) {
+export async function queued(n = 9, notes = content(), crewIds?: string[]) {
   const p = await principal(),
-    pack = await prepared(n, notes);
+    pack = await prepared(n, notes, crewIds);
   await checkPack(p, pack.id, {
     ...base(),
     expected_version: pack.version,
@@ -85,8 +85,8 @@ export async function queued(n = 9, notes = content()) {
   const receipt = await requestIssue(p, pack.id, cmd);
   return { p, pack: (await readPack(p, pack.id)).items[0], cmd, receipt };
 }
-export async function issued() {
-  const q = await queued(),
+export async function issued(crewIds?: string[]) {
+  const q = await queued(9, content(), crewIds),
     job = q.pack.jobs[0];
   const result = await processRenderJob(job.id);
   if (!("issue_id" in result)) throw Error(JSON.stringify(result));

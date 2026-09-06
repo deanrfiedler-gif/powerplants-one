@@ -8,7 +8,7 @@ permissions:
   contents: read
 jobs:
   p01:
-    name: P01/P02/P03/P04/P05/P06 local application and PostgreSQL proof
+    name: P01/P02/P03/P04/P05/P06/P07 local application and PostgreSQL proof
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     services:
@@ -95,8 +95,9 @@ jobs:
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: P06-browser-document-evidence
+          name: P07-browser-field-evidence
           path: |
             test-results/
+            verification-evidence/
             playwright-report/
           retention-days: 14

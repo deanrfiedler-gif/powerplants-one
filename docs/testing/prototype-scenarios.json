@@ -92,7 +92,8 @@
         "AT-36"
       ],
       "implementation_ids": [
-        "P06"
+        "P06",
+        "P07"
       ],
       "preconditions": "Confirmed two-person appointment; checked nine-section pack and exact technical sources.",
       "steps": "Request issue; pause renderer; complete durable storage; acknowledge as first technician; try start; acknowledge as second; re-evaluate readiness and start.",
@@ -140,7 +141,7 @@
       "implementation_ids": [
         "P05"
       ],
-      "preconditions": "Two different proposed appointments both need SYN-T01 during 09:00\u201311:00; each also includes a different second technician.",
+      "preconditions": "Two different proposed appointments both need SYN-T01 during 09:00–11:00; each also includes a different second technician.",
       "steps": "Confirm both concurrently. Inspect all resource reservations. Attempt an adjacent visit whose explicit travel buffer overlaps the winning booking.",
       "expected": "Exactly one conflicting booking confirms; no partial crew reservation from loser. Adjacent core times still fail if buffer overlaps. No serial UI-only check can bypass database guard.",
       "evidence": "Concurrent database/API test, complete crew reservation sets and VAL-06.",
@@ -476,7 +477,7 @@
         "P11",
         "P12"
       ],
-      "preconditions": "Fresh deterministic synthetic seed; completed P01\u2013P12; previous PT findings dispositioned.",
+      "preconditions": "Fresh deterministic synthetic seed; completed P01–P12; previous PT findings dispositioned.",
       "steps": "Execute the full scope narrative from customer history through return visit, report reservation and Finance reconciliation; restart application/database during a safe saved stage; revisit next technician history.",
       "expected": "A complete persisted journey demonstrates preparation, controlled scheduling, useful history, field evidence and Finance outcome. All remaining limitations are labelled; no live integration/customer message claimed.",
       "evidence": "Commit/environment, walkthrough record, outputs, test results and open-defect list.",

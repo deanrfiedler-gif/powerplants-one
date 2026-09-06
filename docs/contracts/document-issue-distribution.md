@@ -1,6 +1,6 @@
 # PP-01 — Minimum document, issue and distribution contract
 
-**Edition:** r03 · **Status:** OUT-09/DAT-07/minimum DAT-11 implemented in P06; DAT-09/OUT-10/OUT-14 remain P09/P10 contracts. No actual SharePoint repository, template or retention policy has been verified in this package.
+**Edition:** r04 · **Status:** OUT-09/DAT-07/minimum DAT-11 implemented in P06; DAT-09/OUT-10/OUT-14 remain P09/P10 contracts. No actual SharePoint repository, template or retention policy has been verified in this package.
 
 [Package](../prototype/README.md) · [Dictionary](service-data-dictionary.md) · [BP-07](../blueprints/BP-07-service-operations.md).
 
@@ -97,3 +97,9 @@ GitHub working specifications use stable paths and internal edition/change metad
 ## 10. Acceptance obligations
 
 P06/P09/P10 implement selected outputs. PT-18/PT-23 verify exact hashes, source/template versions, long-content rendering, confidential-field exclusion, renamed/moved source handling, failed storage/finalisation and distinct distribution events. All full procedures remain Not run in the authored catalogue; executed P06 component evidence is recorded separately in its handover.
+
+## P07 attachment extension
+
+[ADR-0012](../decisions/ADR-0012-p07-online-field-evidence.md) extends the replaceable private P06 byte adapter to original synthetic field PNGs. Existing issued PDFs/HTML/manifests and historical P04 text evidence retain their exact bytes and identities. Attachment initiation, upload and finalisation are separate stable operations with Pending/Uploaded/Quarantined/Available/Rejected evidence. Only durable, retrieved, hash-matching inspected media can become Available. Storage success followed by database failure is reconciled with the same upload item/version/operation/hash. Retrying never replaces old bytes or creates another accepted attachment. Missing originals require owned recovery; regeneration and deletion are not recovery strategies.
+
+Each metadata, preview/download, upload/finalisation and receipt route independently checks current capability, appointment/assignment and file scope. Raw provider paths, confidential metadata and copied URLs confer no authority. Required unavailable bytes are explicit completion blockers. P07's completion draft is not OUT-10, an issued report or a customer response. [Concrete API](service-api.md#p07-implementation-amendment) and [media/identity policy](service-data-dictionary.md#p07-physical-implementation-amendment) govern this extension.

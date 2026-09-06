@@ -1,3 +1,4 @@
+import { fieldContext, entryContext, attachmentContext } from "../field/context";
 import { packContext } from "../documents/context";
 import { visibleAppointment, visibleRequest } from "../scheduling/planner";
 import { visibleWorkOrder } from "../service/work-orders";
@@ -23,7 +24,17 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.object_type === "Pack") {
+  if (r.object_type === "FieldEntry") {
+    await entryContext(client,p,r.record_id,r.command === "CorrectFieldEntry" ? "field.correct.own" : "field.capture.own");
+  } else if (r.object_type === "Attachment") {
+    await attachmentContext(client,p,r.record_id,true);
+  } else if (r.object_type === "CompletionDraft") {
+    const draft=(await client.query("SELECT appointment_id,actor_id FROM ppo.completion_drafts WHERE workspace_id=$1 AND id=$2",[p.workspace_id,r.record_id])).rows[0];
+    if(!draft || draft.actor_id!==p.actor_id) throw unavailable();
+    await fieldContext(client,p,draft.appointment_id,"field.completion.own");
+  } else if (r.object_type === "Appointment" && r.command === "StartAttendance") {
+    await fieldContext(client,p,r.record_id,"field.start.own");
+  } else if (r.object_type === "Pack") {
     const cap =
       r.command === "AcknowledgePack"
         ? "pack.acknowledge"

@@ -14,7 +14,7 @@ Record execution status in [the foundation handover](../delivery/foundation-hand
 
 ## Prototype procedures
 
-[PP-01 acceptance](prototype-acceptance.md) provides 30 detailed synthetic procedures with a [structured catalogue](prototype-scenarios.json). All remain Not run. Parent scope coverage is bounded by the [disposition register](../prototype/traceability.csv); selected tests do not establish full-enterprise acceptance.
+[PP-01 acceptance](prototype-acceptance.md) provides 30 detailed synthetic procedures with a [structured catalogue](prototype-scenarios.json). The catalogue keeps authored Not run defaults; actual full-procedure results are maintained separately in delivery evidence. Parent scope coverage is bounded by the [disposition register](../prototype/traceability.csv); selected tests do not establish full-enterprise acceptance.
 
 ## P01 component evidence
 
@@ -38,4 +38,8 @@ The [P03 screenshot index](evidence/p03/README.md) preserves 38 inspected deskto
 
 ## P06 component verification
 
-[P06 handover](../delivery/p06-handover.md) records exact runs, counts, failed-run dispositions, output/source/template hashes and manual visual inspection. PT-06/07/18/23 components are distinct from full procedures. P07 start/capture and P09/P10 report/Finance dependencies remain incomplete; all full PT/AT statuses are retained.
+[P06 handover](../delivery/p06-handover.md) records exact runs, counts, failed-run dispositions, output/source/template hashes and manual visual inspection. PT-06/07/18/23 components are distinct from full procedures. At the P06 boundary, P07 start/capture and P09/P10 report/Finance dependencies were incomplete. P07 now supplies actual start and capture; its separate execution evidence below governs PT-06.
+
+## P07 online component verification
+
+[P07 handover](../delivery/p07-handover.md) records current real PostgreSQL, HTTP/browser, migration/upgrade/seed/reset/restart and exact media/correction/draft verification, source identities and failed-run dispositions. [ADR-0012](../decisions/ADR-0012-p07-online-field-evidence.md) defines current start authority and immutable original evidence. PT-06's actual-start dependency now has a real integrated scenario. PT-13/14 review/report/return-visit steps remain P09; no invented approval or downstream closure is used. Full-procedure status requires the exact complete execution record and is separate from component counts. [P08 starter](../delivery/p08-starter-prompt.md) is prepared only.

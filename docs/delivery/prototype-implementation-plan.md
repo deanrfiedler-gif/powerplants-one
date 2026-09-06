@@ -1,6 +1,6 @@
 # PP-01 — Ordered prototype implementation plan
 
-**Edition:** r07 · **Status:** P01/P02 complete; P03 implemented with final component and publication evidence in its [handover](p03-handover.md); P04 component-verified with evidence in its [handover](p04-handover.md); P05 implemented with final verification/publication in its [handover](p05-handover.md); P06 implemented with exact verification/publication in its [handover](p06-handover.md); P07–P12 planned. All full PT procedures remain Not run; see [P01 component evidence](p01-handover.md).
+**Edition:** r08 · **Status:** P01/P02 complete; P03 implemented with final component and publication evidence in its [handover](p03-handover.md); P04 component-verified with evidence in its [handover](p04-handover.md); P05 implemented with final verification/publication in its [handover](p05-handover.md); P06 implemented with exact verification/publication in its [handover](p06-handover.md); P07 implemented with exact verification/publication in its [handover](p07-handover.md); P08–P12 planned. Full-procedure execution is recorded separately from the authored catalogue defaults.
 
 [Package](../prototype/README.md) · [Scope](../prototype/scope-and-journey.md) · [BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md).
 
@@ -71,7 +71,7 @@ No real customer message, ERP post, file migration or source cutover is hidden i
 | PPO-006 / #6 | FD-10 and selected FD-01/02/04 simulation contract | Real Finance definitions/ERP reconciliation remain D-017 |
 | PPO-007 / #7 | DAT-11 and OUT-09/10/14 issue/retention contract | Actual SharePoint/templates/retention remain unverified |
 | PPO-008 / #8 | Permissions, offline boundary, candidate measurements and recovery | Device/identity/security/NFR operational evidence still needed |
-| PPO-014 / #14 | Deterministic fixtures and 30 executable manual test procedures | All full PT procedures remain Not run; P01 component evidence is separate |
+| PPO-014 / #14 | Deterministic fixtures and 30 executable manual test procedures | Authored procedure defaults are not execution evidence; actual results are maintained in delivery handovers |
 | PPO-016 / #16 | Initial environment/release/restore/support plan | Costed hosting/support and live operating handover remain open |
 
 A completed design issue means its specified design deliverable exists, not that referenced parent requirements have been implemented. Live issue states and closing evidence are recorded separately after publication.
@@ -108,4 +108,10 @@ P04 does not deliver typed material requisitions/stock/shortage processing withi
 
 ## P06 delivery boundary and prepared P07
 
-[P06 handover](p06-handover.md) records SC-06/SC-14, DAT-07/minimum DAT-11, OUT-09, API-C08–11, TR-04–07 and EVT-04/05 components. Exact controlled files and current individual responses evolve dispatch readiness without circular preparation gates. P04/P05 source authority, reservations, contacts, receipts and all issued bytes remain. PT-06 final actual start remains P07; PT-18/23 report/Finance and integrated steps remain later. [P07 starter](p07-starter-prompt.md) prepares online technician capture only. No P07 implementation is included.
+[P06 handover](p06-handover.md) records SC-06/SC-14, DAT-07/minimum DAT-11, OUT-09, API-C08–11, TR-04–07 and EVT-04/05 components. Exact controlled files and current individual responses evolve dispatch readiness without circular preparation gates. P04/P05 source authority, reservations, contacts, receipts and all issued bytes remain. P06 originally left PT-06 final actual start to P07; PT-18/23 report/Finance and integrated steps remain later. P07 now implements that real online guard under the separately authorised increment below.
+
+## P07 delivery boundary and prepared P08
+
+[P07 handover](p07-handover.md) records SC-09/10, DAT-08, API-C12–14, online TR-09/10, typed capture/corrections, exact private PNGs and completion drafts. [ADR-0012](../decisions/ADR-0012-p07-online-field-evidence.md) preserves current P06 authority and per-actor attendance, original scope/issued evidence, actor-wide time exclusion, storage/database reconciliation and independent closure lifecycles. PT-06 is now an integrated P07 obligation; PT-13/14 reviewer/report/return steps remain P09. Actual verification/publication and acceptance status are linked from the handover, not inferred from implementation.
+
+[P08 starter](p08-starter-prompt.md) prepares bounded durable offline operation/attachment dependencies, stale-authority recovery and browser schema/quota/restart proof. P08 implementation is absent here. Report submission/customer response, Finance, hosting, production migration and live communication remain outside P07.

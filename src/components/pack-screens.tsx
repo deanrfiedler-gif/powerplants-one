@@ -100,7 +100,7 @@ type Pack = {
   readiness: {
     dispatch_hold: boolean;
     component_ready: boolean;
-    actual_start_implemented: false;
+    actual_start_implemented: boolean;
     reasons: string[];
     recipients: {
       id: string;

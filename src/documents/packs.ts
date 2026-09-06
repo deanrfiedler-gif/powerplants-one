@@ -312,11 +312,12 @@ export async function dispatchReadiness(
   c: QueryClient,
   p: Principal,
   id: string,
+  allowStarted = false,
 ) {
   const { a } = await visibleAppointment(c, p, id);
   const reasons: string[] = [];
   try {
-    await authority(c, p, id);
+    await authority(c, p, id, allowStarted);
   } catch (e) {
     if (!(e instanceof AppError)) throw e;
     reasons.push(e.message);
@@ -386,7 +387,7 @@ export async function dispatchReadiness(
   return {
     dispatch_hold: reasons.length > 0,
     component_ready: reasons.length === 0,
-    actual_start_implemented: false,
+    actual_start_implemented: true,
     reasons,
     recipients,
   };

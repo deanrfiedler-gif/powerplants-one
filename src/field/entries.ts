@@ -1,0 +1,243 @@
+import { randomUUID } from "node:crypto";
+import type { Principal } from "../platform/identity";
+import type { PoolClient } from "pg";
+import { sharedOperation } from "../platform/operations";
+import { AppError, unavailable } from "../platform/errors";
+import { insert } from "../documents/packs";
+import { sameVersion } from "../scheduling/validation";
+import {
+  authoriseActivityInput,
+  insertActivity,
+  type ActivityInput,
+} from "../activities/activities";
+import { entryCommand } from "./validation";
+import {
+  attendanceContext,
+  entryContext,
+  attribution,
+  currentCaptureState,
+  attachmentContext,
+} from "./context";
+export async function ownedFollowUp(
+  c: PoolClient,
+  p: Principal,
+  ctx: Awaited<ReturnType<typeof attendanceContext>>,
+  summary: string,
+  kind: ActivityInput["kind"] = "TechnicalFollowUp",
+) {
+  const input: ActivityInput = {
+    id: randomUUID(),
+    company_id: ctx.a.company_id,
+    site_id: ctx.a.site_id,
+    kind,
+    owner_id: ctx.w.service_owner_id,
+    summary: `${ctx.a.display_number} · ${summary}`.slice(0, 2000),
+    due_at: null,
+    due_needed: true,
+    access_class: "RestrictedService",
+    links: [{ object_type: "Site", object_id: ctx.a.site_id }],
+  };
+  await authoriseActivityInput(c, p, input);
+  await insertActivity(c, p, input);
+  return input.id;
+}
+export async function captureEntry(
+  p: Principal,
+  input: unknown,
+  sourceId?: string,
+) {
+  const cmd = entryCommand(input, sourceId);
+  return sharedOperation(
+    p,
+    cmd,
+    sourceId ? "CorrectFieldEntry" : "CaptureFieldEntry",
+    async (c) => {
+      const ctx = await attendanceContext(
+        c,
+        p,
+        cmd.appointment_id,
+        cmd.attendance_id,
+        sourceId ? "field.correct.own" : "field.capture.own",
+      );
+      if (sourceId) {
+        const source = await entryContext(c, p, sourceId, "field.correct.own");
+        if (
+          source.entry.appointment_id !== cmd.appointment_id ||
+          source.entry.attendance_id !== cmd.attendance_id
+        )
+          throw unavailable();
+      }
+      return ctx;
+    },
+    async (c, ctx) => {
+      let source = null;
+      if (sourceId) {
+        source = (await entryContext(c, p, sourceId, "field.correct.own"))
+          .entry;
+        sameVersion(source.version, cmd.expected_version!, "evidence");
+        if (
+          (
+            await c.query(
+              "SELECT 1 FROM ppo.field_entries WHERE workspace_id=$1 AND supersedes_entry_id=$2",
+              [p.workspace_id, sourceId],
+            )
+          ).rowCount
+        )
+          throw new AppError(
+            409,
+            "VersionConflict",
+            "This evidence already has a successor. Correct its latest version.",
+          );
+        if (source.kind !== cmd.kind)
+          throw new AppError(
+            422,
+            "CorrectionKindMismatch",
+            "A correction retains the original evidence type.",
+          );
+      }
+      const needsAttribution =
+        cmd.kind !== "Time" ||
+        (cmd.payload.time_kind !== undefined &&
+          cmd.payload.time_kind === "Labour");
+      await attribution(
+        c,
+        p,
+        ctx,
+        cmd.scope_item_id,
+        cmd.asset_id,
+        needsAttribution,
+      );
+      const now = (await c.query("SELECT clock_timestamp() now")).rows[0]
+        .now as Date;
+      if (Date.parse(cmd.captured_at) > now.getTime() + 300000)
+        throw new AppError(
+          422,
+          "CaptureTimeInvalid",
+          "Captured time is ahead of the server.",
+        );
+      const attachments = cmd.payload.attachment_id
+        ? [cmd.payload.attachment_id]
+        : (cmd.payload.evidence_ids ?? []);
+      for (const aid of attachments) {
+        const file = await attachmentContext(c, p, aid);
+        if (file.a.id !== ctx.a.id) throw unavailable();
+      }
+      if (cmd.payload.time_kind !== undefined) {
+        if (Date.parse(cmd.payload.end_at) > now.getTime() + 300000)
+          throw new AppError(
+            422,
+            "TimeInFuture",
+            "Actual time cannot finish in the future.",
+          );
+        const overlap = (
+          await c.query(
+            "SELECT 1 FROM ppo.field_time_ranges WHERE workspace_id=$1 AND actor_id=$2 AND root_id<>$3 AND tstzrange(start_at,end_at,'[)') && tstzrange($4::timestamptz,$5::timestamptz,'[)')",
+            [
+              p.workspace_id,
+              p.actor_id,
+              source?.root_id ?? cmd.id,
+              cmd.payload.start_at,
+              cmd.payload.end_at,
+            ],
+          )
+        ).rowCount;
+        if (overlap)
+          throw new AppError(
+            409,
+            "TimeOverlap",
+            "This interval overlaps your other recorded work. Correct the existing evidence first.",
+          );
+      }
+      const a = ctx.attendance,
+        entry = await insert(c, "field_entries", {
+          id: cmd.id,
+          workspace_id: p.workspace_id,
+          company_id: ctx.a.company_id,
+          site_id: ctx.a.site_id,
+          appointment_id: ctx.a.id,
+          actor_id: p.actor_id,
+          attendance_id: a.id,
+          assignment_id: a.assignment_id,
+          assignment_version: a.assignment_version,
+          issue_id: a.issue_id,
+          issue_hash: a.issue_hash,
+          scope_revision_id: a.scope_revision_id,
+          scope_version: a.scope_version,
+          scope_hash: a.scope_hash,
+          root_id: source?.root_id ?? cmd.id,
+          version: source ? source.version + 1 : 1,
+          supersedes_entry_id: source?.id ?? null,
+          correction_reason: source ? cmd.reason : null,
+          kind: cmd.kind,
+          scope_item_id: cmd.scope_item_id,
+          asset_id: cmd.asset_id,
+          captured_at: cmd.captured_at,
+          received_at: now,
+          authority_state: await currentCaptureState(c, p, ctx),
+          payload: cmd.payload,
+          operation_id: cmd.operation_id,
+        });
+      for (const aid of attachments)
+        await insert(c, "field_entry_attachments", {
+          workspace_id: p.workspace_id,
+          appointment_id: ctx.a.id,
+          entry_id: entry.id,
+          attachment_id: aid,
+        });
+      if (cmd.payload.time_kind !== undefined) {
+        if (source)
+          await c.query(
+            "DELETE FROM ppo.field_time_ranges WHERE workspace_id=$1 AND root_id=$2",
+            [p.workspace_id, source.root_id],
+          );
+        await insert(c, "field_time_ranges", {
+          workspace_id: p.workspace_id,
+          actor_id: p.actor_id,
+          entry_id: entry.id,
+          root_id: entry.root_id,
+          start_at: cmd.payload.start_at,
+          end_at: cmd.payload.end_at,
+        });
+      }
+      const needsFollow =
+        (cmd.payload.follow_up_required !== undefined &&
+          cmd.payload.follow_up_required) ||
+        (cmd.payload.movement_kind !== undefined &&
+          ["Required", "Removed"].includes(cmd.payload.movement_kind)) ||
+        (cmd.payload.check_id !== undefined &&
+          ["Fail", "NotPerformed"].includes(cmd.payload.result));
+      if (needsFollow) {
+        const activity = await ownedFollowUp(
+          c,
+          p,
+          ctx,
+          `Review ${cmd.kind.toLowerCase()}: ${String(cmd.payload.finding ?? cmd.payload.description ?? cmd.payload.reason ?? cmd.reason).slice(0, 400)}`,
+          cmd.payload.movement_kind !== undefined
+            ? "MaterialAction"
+            : "TechnicalFollowUp",
+        );
+        await insert(c, "field_follow_ups", {
+          workspace_id: p.workspace_id,
+          appointment_id: ctx.a.id,
+          entry_id: entry.id,
+          activity_id: activity,
+        });
+      }
+      return {
+        id: entry.id,
+        version: entry.version,
+        state: "Captured",
+        updated_at: entry.received_at,
+        audit_details: {
+          appointment_id: ctx.a.id,
+          attendance_id: a.id,
+          kind: entry.kind,
+          source_entry_id: source?.id ?? null,
+          authority_state: entry.authority_state,
+        },
+      };
+    },
+    "FieldEntry",
+    sourceId ? "FieldEvidenceCorrected" : "FieldEvidenceAccepted",
+  );
+}

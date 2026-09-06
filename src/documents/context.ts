@@ -109,10 +109,11 @@ export async function authority(
   c: QueryClient,
   p: Principal,
   appointmentId: string,
+  allowStarted = false,
 ) {
   const { a, w } = await visibleAppointment(c, p, appointmentId),
     r = await scopeDetail(c, p, w, a.scope_revision_id);
-  if (a.status !== "Confirmed" || a.actual_start_at || a.actual_end_at)
+  if ((!allowStarted && (a.status !== "Confirmed" || a.actual_start_at)) || (allowStarted && !["Confirmed", "InProgress"].includes(a.status)) || a.actual_end_at)
     fail("A confirmed, unstarted appointment is required.");
   if (
     w.status !== "Authorised" ||
@@ -153,7 +154,7 @@ export async function authority(
   }
   const members = (
     await c.query(
-      `SELECT x.*,r.name,r.user_id,r.active AS resource_active,r.effective_to,u.active AS user_active FROM ppo.assignments x JOIN ppo.resources r ON (r.workspace_id,r.id)=(x.workspace_id,x.resource_id) LEFT JOIN ppo.users u ON (u.workspace_id,u.id)=(r.workspace_id,r.user_id) WHERE x.workspace_id=$1 AND x.appointment_id=$2 AND x.active ORDER BY x.resource_id`,
+      `SELECT x.*,r.name,r.user_id,r.active AS resource_active,r.effective_from,r.effective_to,u.active AS user_active FROM ppo.assignments x JOIN ppo.resources r ON (r.workspace_id,r.id)=(x.workspace_id,x.resource_id) LEFT JOIN ppo.users u ON (u.workspace_id,u.id)=(r.workspace_id,r.user_id) WHERE x.workspace_id=$1 AND x.appointment_id=$2 AND x.active ORDER BY x.resource_id`,
       [p.workspace_id, a.id],
     )
   ).rows;
@@ -355,7 +356,7 @@ export async function snapshot(
       .join("\n\n"),
     readiness: controlText,
     site_controls: `Access: ${text(site.access_instructions)}\nBiosecurity: ${text(site.biosecurity_notes)}\n${controlText}\nStop if site access, isolation, shutdown authority or competency cannot be confirmed. Tool-preparation exceptions do not waive these controls.`,
-    completion: `${items.map((i) => `${i.sequence}. ${i.completion_requirements}`).join("\n")}\nRecord unresolved work and escalate to the preparation owner. This pack does not grant authority outside the approved scope. Field capture and actual start are not implemented in P06.`,
+    completion: `${items.map((i) => `${i.sequence}. ${i.completion_requirements}`).join("\n")}\nRecord unresolved work and escalate to the preparation owner. This pack does not grant authority outside the approved scope. Use My Jobs for online capture. Completion remains a draft; offline, reviewed reports and Finance remain incomplete.`,
   };
   const evidence = controls
     .filter((x) => x.evidence_ref)

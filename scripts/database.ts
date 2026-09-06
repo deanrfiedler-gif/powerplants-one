@@ -7,7 +7,7 @@ import { database, transaction, closeDatabase } from "../src/platform/database";
 import { localConfig } from "../src/platform/config";
 const read = (name: string) =>
   readFile(new URL(`../db/${name}`, import.meta.url), "utf8");
-export async function migrate(through = 6) {
+export async function migrate(through = 7) {
   await transaction(async (client) => {
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     await client.query(
@@ -20,6 +20,7 @@ export async function migrate(through = 6) {
       "0004-work-scope.sql",
       "0005-planner.sql",
       "0006-job-packs.sql",
+      "0007-online-field.sql",
     ].entries()) {
       const version = index + 1;
       if (version > through) break;
@@ -44,7 +45,7 @@ export async function migrate(through = 6) {
     }
   });
 }
-export async function seed(through = 6) {
+export async function seed(through = 7) {
   await transaction(async (client) => {
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     for (const [version, file] of [
@@ -53,6 +54,7 @@ export async function seed(through = 6) {
       [4, "seed-p04.sql"],
       [5, "seed-p05.sql"],
       [6, "seed-p06.sql"],
+      [7, "seed-p07.sql"],
     ] as const) {
       if (version > through) break;
       const prior = await client.query(

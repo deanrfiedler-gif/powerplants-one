@@ -1,0 +1,277 @@
+import { randomUUID } from "node:crypto";
+import type { Principal } from "../platform/identity";
+import { AppError, unavailable } from "../platform/errors";
+import { sharedOperation } from "../platform/operations";
+import { insert } from "../documents/packs";
+import { sameVersion } from "../scheduling/validation";
+import { completionCommand } from "./validation";
+import {
+  attendanceContext,
+  entryContext,
+  attachmentContext,
+  currentCaptureState,
+} from "./context";
+import { verifiedAttachmentBytes } from "./attachments";
+import { ownedFollowUp } from "./entries";
+export async function saveCompletionDraft(
+  p: Principal,
+  id: string,
+  input: unknown,
+) {
+  const cmd = completionCommand(id, input);
+  return sharedOperation(
+    p,
+    cmd,
+    "SaveCompletionDraft",
+    (c) =>
+      attendanceContext(c, p, id, cmd.attendance_id, "field.completion.own"),
+    async (c, ctx) => {
+      const draft = (
+        await c.query(
+          "SELECT * FROM ppo.completion_drafts WHERE workspace_id=$1 AND appointment_id=$2 AND actor_id=$3",
+          [p.workspace_id, id, p.actor_id],
+        )
+      ).rows[0];
+      if (draft && draft.id !== cmd.id)
+        throw new AppError(
+          409,
+          "DraftAlreadyExists",
+          "Refresh and edit your existing completion draft.",
+        );
+      sameVersion(
+        draft?.version ?? 0,
+        cmd.expected_version,
+        "completion draft",
+      );
+      const tasks = (
+        await c.query(
+          "SELECT id FROM ppo.scope_items WHERE workspace_id=$1 AND scope_revision_id=$2 ORDER BY id",
+          [p.workspace_id, ctx.attendance.scope_revision_id],
+        )
+      ).rows;
+      if (
+        tasks.length !== cmd.task_outcomes.length ||
+        tasks.some(
+          (t) => !cmd.task_outcomes.some((x) => x.scope_item_id === t.id),
+        )
+      )
+        throw new AppError(
+          422,
+          "TaskOutcomesRequired",
+          "Declare an outcome for every task in the original authorised scope.",
+        );
+      const refs = [];
+      for (const ref of cmd.entries) {
+        const { entry } = await entryContext(c, p, ref.id);
+        if (entry.appointment_id !== id) throw unavailable();
+        sameVersion(entry.version, ref.version, "referenced evidence");
+        if (
+          (
+            await c.query(
+              "SELECT 1 FROM ppo.field_entries WHERE workspace_id=$1 AND supersedes_entry_id=$2",
+              [p.workspace_id, ref.id],
+            )
+          ).rowCount
+        )
+          throw new AppError(
+            409,
+            "EvidenceSuperseded",
+            "Select the current correction for this completion draft.",
+          );
+        refs.push(entry);
+      }
+      const own = (
+        await c.query(
+          "SELECT e.id FROM ppo.field_entries e WHERE e.workspace_id=$1 AND e.appointment_id=$2 AND e.actor_id=$3 AND NOT EXISTS(SELECT 1 FROM ppo.field_entries n WHERE n.workspace_id=e.workspace_id AND n.supersedes_entry_id=e.id)",
+          [p.workspace_id, id, p.actor_id],
+        )
+      ).rows;
+      if (own.some((x) => !cmd.entries.some((e) => e.id === x.id)))
+        throw new AppError(
+          422,
+          "EvidenceSetIncomplete",
+          "Reference all of your current evidence, including unresolved and unsuccessful work.",
+        );
+      const blocks: string[] = [];
+      for (const [kind, declaration] of [
+        ["Time", cmd.time_declaration],
+        ["Material", cmd.material_declaration],
+      ]) {
+        const count = refs.filter(
+          (e) => e.kind === kind && e.actor_id === p.actor_id,
+        ).length;
+        if (declaration === "None" && count)
+          throw new AppError(
+            422,
+            "DeclarationConflict",
+            `You have ${kind.toLowerCase()} evidence; None is not accurate.`,
+          );
+        if (declaration === "AllRecorded" && !count)
+          throw new AppError(
+            422,
+            "DeclarationConflict",
+            `Record your ${kind.toLowerCase()} evidence or explicitly declare None.`,
+          );
+        if (declaration === "Incomplete")
+          blocks.push(`${kind} declaration remains incomplete.`);
+      }
+      const photoIds = new Set(cmd.required_attachment_ids);
+      for (const e of refs) {
+        for (const a of (
+          await c.query(
+            "SELECT attachment_id FROM ppo.field_entry_attachments WHERE workspace_id=$1 AND entry_id=$2",
+            [p.workspace_id, e.id],
+          )
+        ).rows)
+          photoIds.add(a.attachment_id);
+        if (e.authority_state === "ReviewRequired")
+          blocks.push(
+            "Evidence captured after an authority change requires review.",
+          );
+        if (
+          e.kind === "Checklist" &&
+          ["Fail", "NotPerformed"].includes(e.payload.result)
+        )
+          blocks.push("Failed or unperformed check requires follow-up.");
+        if (e.kind === "Observation" && e.payload.follow_up_required)
+          blocks.push("Unresolved finding requires follow-up.");
+        if (
+          e.kind === "Material" &&
+          ["Required", "Removed"].includes(e.payload.movement_kind)
+        )
+          blocks.push(
+            "Material requirement or removed item needs disposition.",
+          );
+      }
+      const attachmentStates = [];
+      for (const aid of [...photoIds].sort()) {
+        const { attachment: a } = await attachmentContext(c, p, aid);
+        if (a.appointment_id !== id) throw unavailable();
+        let available = a.status === "Available";
+        if (available)
+          try {
+            await verifiedAttachmentBytes(p, a);
+          } catch (e) {
+            if (!(e instanceof AppError)) throw e;
+            available = false;
+          }
+        attachmentStates.push({
+          id: aid,
+          version: a.version,
+          status: a.status,
+          sha256: a.content_hash,
+          verified_available: available,
+        });
+        if (!available)
+          blocks.push("A required original photo is unavailable.");
+      }
+      if ((await currentCaptureState(c, p, ctx)) !== "Current")
+        blocks.push("Current scope or pack authority requires review.");
+      for (const t of cmd.task_outcomes) {
+        if (t.outcome !== "Complete")
+          blocks.push("An authorised task remains incomplete.");
+        if (
+          !refs.some(
+            (e) =>
+              e.kind === "Checklist" &&
+              e.scope_item_id === t.scope_item_id &&
+              e.payload.check_id === "SYN-TASK-RESULT" &&
+              e.payload.result === "Pass",
+          )
+        )
+          blocks.push(
+            "A task result has not passed the synthetic completion check.",
+          );
+      }
+      if (
+        !refs.some(
+          (e) =>
+            e.kind === "Checklist" &&
+            e.payload.check_id === "SYN-SITE-CONTROLS" &&
+            e.payload.result === "Pass",
+        )
+      )
+        blocks.push(
+          "The synthetic site-controls completion check has not passed.",
+        );
+      const blockers = [...new Set(blocks)];
+      if (cmd.scope_outcome === "Complete" && blockers.length)
+        throw new AppError(
+          422,
+          "CompletionBlocked",
+          "Complete cannot conceal unresolved work or unavailable evidence.",
+          blockers.map((message) => ({ field: "scope_outcome", message })),
+        );
+      const follow =
+        cmd.scope_outcome !== "Complete" || blockers.length
+          ? await ownedFollowUp(
+              c,
+              p,
+              ctx,
+              `Completion ${cmd.scope_outcome}: ${cmd.remaining_work}`,
+            )
+          : null;
+      const saved = draft
+        ? (
+            await c.query(
+              "UPDATE ppo.completion_drafts SET version=version+1,updated_at=clock_timestamp() WHERE workspace_id=$1 AND id=$2 RETURNING *",
+              [p.workspace_id, cmd.id],
+            )
+          ).rows[0]
+        : await insert(c, "completion_drafts", {
+            id: cmd.id,
+            workspace_id: p.workspace_id,
+            company_id: ctx.a.company_id,
+            site_id: ctx.a.site_id,
+            appointment_id: id,
+            actor_id: p.actor_id,
+            version: 1,
+          });
+      const revision = await insert(c, "completion_draft_revisions", {
+        id: randomUUID(),
+        workspace_id: p.workspace_id,
+        draft_id: cmd.id,
+        version: saved.version,
+        appointment_id: id,
+        actor_id: p.actor_id,
+        attendance_id: ctx.attendance.id,
+        scope_outcome: cmd.scope_outcome,
+        work_performed: cmd.work_performed,
+        exclusions: cmd.exclusions,
+        remaining_work: cmd.remaining_work,
+        time_declaration: cmd.time_declaration,
+        material_declaration: cmd.material_declaration,
+        declaration_reason: cmd.declaration_reason,
+        task_outcomes: JSON.stringify(cmd.task_outcomes),
+        required_attachments: JSON.stringify(attachmentStates),
+        blockers: JSON.stringify(blockers),
+        follow_up_activity_id: follow,
+        operation_id: cmd.operation_id,
+      });
+      for (const ref of cmd.entries)
+        await insert(c, "completion_entry_refs", {
+          workspace_id: p.workspace_id,
+          revision_id: revision.id,
+          appointment_id: id,
+          entry_id: ref.id,
+          entry_version: ref.version,
+        });
+      return {
+        id: cmd.id,
+        version: saved.version,
+        state: "Draft",
+        updated_at: revision.received_at,
+        audit_details: {
+          appointment_id: id,
+          revision_id: revision.id,
+          scope_outcome: cmd.scope_outcome,
+          follow_up_activity_id: follow,
+          entry_count: cmd.entries.length,
+          blocker_count: blockers.length,
+        },
+      };
+    },
+    "CompletionDraft",
+    "CompletionDraftSaved",
+  );
+}

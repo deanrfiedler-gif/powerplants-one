@@ -1,6 +1,6 @@
 # PP-01 — Synthetic acceptance pack
 
-**Edition:** v01 · **Status:** 30 executable manual test procedures specified; all **Not run**. Automated tests will implement suitable portions after application code exists. No synthetic test proves a live source-system integration or operational policy.
+**Edition:** v01 · **Status:** 30 authored procedure definitions. Their Not run defaults are not an execution ledger; actual results are recorded separately in delivery handovers and exact run evidence. P07 supplies the real PT-06 integrated sequence. No synthetic test proves a live source-system integration or operational policy.
 
 [Package](../prototype/README.md) · [Implementation plan](../delivery/prototype-implementation-plan.md) · [Machine-readable cases](prototype-scenarios.json).
 
@@ -95,7 +95,7 @@ Test quantities: 90 MIN labour and 2 EA material. Finance amounts and expected b
 
 ### PT-06 — Complete pack issue and crew acknowledgement
 
-**Parent:** AT-07, AT-36 · **Build:** P06 · **Status:** Not run
+**Parent:** AT-07, AT-36 · **Build:** P06, P07 · **Catalogue default:** Not run; see [P07 execution evidence](../delivery/p07-handover.md#acceptance-boundaries-and-next-task)
 
 **Preconditions:** Confirmed two-person appointment; checked nine-section pack and exact technical sources.
 
