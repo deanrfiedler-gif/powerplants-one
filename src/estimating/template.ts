@@ -1,0 +1,23 @@
+import { readFile } from "node:fs/promises";
+import { resolve } from "node:path";
+import { digest } from "../documents/store";
+export type SafeQuote = {
+  synthetic:true; state:"Draft"; display_number:string; revision:number; title:string;
+  customer:string; site:string|null; contact:string|null;
+  scope:{included:string;excluded:string;assumptions:string};
+  items:{description:string;quantity:string|null;unit:string|null;amount:string}[];
+  total:string; currency:string; tax_basis:string; tax_calculated:false;
+};
+export const templateVersion="PPO-E1-DRAFT-r01";
+const escape=(v:string|number)=>String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]!);
+const style=`@page{size:A4;margin:18mm 16mm 20mm}*{box-sizing:border-box}body{font:11pt Verdana,sans-serif;color:#242a37;line-height:1.5;margin:0}header{background:#242a37;color:white;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px}header img{height:88px;width:auto;max-width:55%;object-fit:contain}.draft{font-weight:bold;color:#242a37;background:#62bb46;padding:7px 12px}h1{font-size:22pt;line-height:1.2}h2{font-size:13pt;border-bottom:2px solid #62bb46;padding-bottom:5px;break-after:avoid}p{white-space:pre-wrap;overflow-wrap:anywhere}section{margin-top:18px}table{border-collapse:collapse;width:100%;table-layout:fixed}th,td{padding:9px;border-bottom:1px solid #d9dde1;text-align:left;overflow-wrap:anywhere}thead{display:table-header-group}tr{break-inside:avoid}th:first-child{width:52%}th:nth-child(2){width:23%}.amount{text-align:right;font-variant-numeric:tabular-nums}.total{font-size:14pt;text-align:right;font-weight:bold}.note{background:#f0f3f5;border-left:4px solid #62bb46;padding:12px;font-size:10pt}.ref{font-size:10pt;color:#505a66}footer{font-size:9pt;margin-top:24px;border-top:1px solid #d9dde1;padding-top:8px}@media screen{body{max-width:900px;margin:auto;padding:20px}}@media(max-width:480px){body{padding:12px}header{padding:12px;flex-wrap:wrap}header img{max-width:100%}h1{font-size:19pt}th,td{padding:6px;font-size:10pt}}`;
+const layout=`<!doctype html><html lang="en-AU"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{{REFERENCE}} draft {{REVISION}}</title><style>{{STYLE}}</style></head><body><header><img src="data:image/png;base64,{{LOGO}}" alt="Powerplants Australia"><span class="draft">DRAFT · SYNTHETIC</span></header><h1>{{TITLE}}</h1><p class="ref">{{REFERENCE}} · Draft revision {{REVISION}}</p><p class="note">For private prototype review only. This draft has not been issued and is not an offer for acceptance. No customer delivery has occurred.</p><section><h2>Prepared for</h2><p>{{CUSTOMER}}</p></section><section><h2>Included scope</h2><p>{{INCLUDED}}</p></section><section><h2>Pricing</h2><table><thead><tr><th>Description</th><th>Quantity / unit</th><th class="amount">AUD</th></tr></thead><tbody>{{ROWS}}</tbody></table><p class="total">Draft total AUD {{TOTAL}}</p><p>Excluding tax. Tax has not been calculated. No approved commercial terms or validity period are attached.</p></section><section><h2>Excluded scope</h2><p>{{EXCLUDED}}</p></section><section><h2>Assumptions</h2><p>{{ASSUMPTIONS}}</p></section><footer>Powerplants One · {{REFERENCE}} · Draft revision {{REVISION}} · Synthetic review copy</footer></body></html>`;
+const rowLayout='<tr><td>{{DESCRIPTION}}</td><td>{{QUANTITY}}</td><td class="amount">{{AMOUNT}}</td></tr>';
+const fill=(definition:string,values:Record<string,string>)=>definition.replace(/\{\{([A-Z_]+)\}\}/g,(_match,key:string)=>values[key]);
+export async function quoteTemplate(s:SafeQuote) {
+  const logo=(await readFile(resolve(process.cwd(),"docs/standards/ui-assets/powerplants-logo-green-white.png"))).toString("base64");
+  const definition=JSON.stringify({version:templateVersion,layout,rowLayout,style,logo});
+  const rows=s.items.map(i=>fill(rowLayout,{DESCRIPTION:escape(i.description),QUANTITY:i.quantity?`${escape(i.quantity)} ${escape(i.unit??"")}`:"Included",AMOUNT:escape(i.amount)})).join("");
+  const html=fill(layout,{REFERENCE:escape(s.display_number),REVISION:String(s.revision),STYLE:style,LOGO:logo,TITLE:escape(s.title),CUSTOMER:escape(`${s.customer}\nSite: ${s.site??"to be confirmed"}\nContact: ${s.contact??"to be confirmed"}`),INCLUDED:escape(s.scope.included),EXCLUDED:escape(s.scope.excluded),ASSUMPTIONS:escape(s.scope.assumptions),ROWS:rows,TOTAL:escape(s.total)});
+  return {html,template_definition:definition,template_hash:digest(definition),input_hash:digest(html),template_version:templateVersion};
+}

@@ -1,4 +1,5 @@
 import { opportunityReceiptActions } from "../crm/receipt-authority";
+import { estimateContext, quoteContext } from "../estimating/context";
 import { visibleOpportunity, relationshipContext, eligibleOpportunityOwner } from "../crm/context";
 import { reportContext, ownReport } from "../reports/context";
 import {
@@ -31,7 +32,12 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.object_type === "Opportunity") {
+  if (r.object_type === "Estimate") {
+    await estimateContext(client,p,r.record_id,"estimating.edit");
+  } else if (r.object_type === "DraftQuoteRevision") {
+    await quoteContext(client,p,r.record_id,"estimating.quote.prepare");
+    await quoteContext(client,p,r.record_id);
+  } else if (r.object_type === "Opportunity") {
     const o = await visibleOpportunity(client, p, r.record_id);
     const cap = r.command === "CreateOpportunity" ? "crm.opportunity.create" : "crm.opportunity.edit";
     await relationshipContext(client,p,o,cap);
