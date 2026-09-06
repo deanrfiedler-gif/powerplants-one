@@ -17,7 +17,7 @@ The foundation maps all 78 parent requirements to one or more work packages. The
 | PPO-007 | Specify controlled documents and first-release outputs | P1 | BP-02/BP-07 | PPO-001, PPO-003 | [#7](https://github.com/deanrfiedler-gif/powerplants-one/issues/7) |
 | PPO-008 | Baseline permissions, offline scope and operational targets | P1 | BP-02/BP-07 | PPO-001 | [#8](https://github.com/deanrfiedler-gif/powerplants-one/issues/8) |
 | PPO-009 | Complete account-specific CRM parity and BP-03 scope | P2 | [BP-03](../blueprints/BP-03-crm.md) | PPO-001 | [#9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9) |
-| PPO-010 | Prepare CREMS rule evidence and BP-04 reconstruction scope | P2 | BP-04 | PPO-001 | [#10](https://github.com/deanrfiedler-gif/powerplants-one/issues/10) |
+| PPO-010 | Prepare CREMS rule evidence and BP-04 reconstruction scope | P2 | [BP-04](../blueprints/BP-04-estimating-quotation.md) | PPO-001 | [#10](https://github.com/deanrfiedler-gif/powerplants-one/issues/10) |
 | PPO-011 | Define BP-05 engineering and technical-release scope | P2 | BP-05 | PPO-001 | [#11](https://github.com/deanrfiedler-gif/powerplants-one/issues/11) |
 | PPO-012 | Define BP-06 project controls and Smartsheet transition | P2 | BP-06 | PPO-001, PPO-011 | [#12](https://github.com/deanrfiedler-gif/powerplants-one/issues/12) |
 | PPO-013 | Define BP-08 material readiness and supply-chain interfaces | P2 | BP-08 | PPO-002, PPO-006 | [#13](https://github.com/deanrfiedler-gif/powerplants-one/issues/13) |
@@ -40,3 +40,7 @@ The [requested package](../prototype/README.md) supplies the selected scope, arc
 ## PPO-009 CRM discovery contribution
 
 The [CRM handover](crm-discovery-handover.md) records BP-03, all eighteen parity items, bounded live stage evidence, proposed integration/coexistence/permissions, screens, acceptance and the [I1 starter](crm-first-increment-starter.md). Account identity, full feature/history/licence/permission evidence and owner acceptance remain incomplete; issue #9 stays open. CRM design is parallel to P09 service implementation; it changes no P01–P12 dependency order. I1–I6 are local BP-03 sequence labels only. D-013/D-025/D-026 and AT-25 are not closed by documentation publication.
+
+## PPO-010 estimating discovery contribution
+
+[BP-04 r01](../blueprints/BP-04-estimating-quotation.md) and its [handover](estimating-discovery-handover.md) start authorised source assessment and design. CRE-01–CRE-26 are mapped to evidence/gaps; a synthetic preview, arithmetic examples and future acceptance procedures support review. Issue #10 remains open for configuration/policy validation and accepted examples. [E1–E6](estimating-implementation-plan.md) are proposed local increments, not new issued requirements or implementation authority.
