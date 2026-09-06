@@ -34,6 +34,7 @@ export async function sha256(value: string | Uint8Array): Promise<string> {
 }
 export function original(wire: WireOperation): Original {
   const { payload_hash: _hash, ...value } = wire;
+  void _hash;
   return value;
 }
 export const ownerKey = (p: Owner) => `${p.workspace_id}:${p.actor_id}`;

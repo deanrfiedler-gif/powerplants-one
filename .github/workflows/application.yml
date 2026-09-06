@@ -25,6 +25,7 @@ jobs:
           --health-interval 5s --health-timeout 5s --health-retries 10
     env:
       NEXT_TELEMETRY_DISABLED: "1"
+      PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -42,6 +43,8 @@ jobs:
           npm ls --depth=0
       - name: Install pinned controlled PDF renderer
         run: npx playwright install --with-deps chromium
+      - name: Prepare separate review copies with pinned formatter
+        run: node --import tsx scripts/format-review.ts
       - name: Static, unit and build checks
         run: npm run check
       - name: Configure disposable loopback database

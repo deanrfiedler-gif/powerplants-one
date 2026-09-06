@@ -98,7 +98,7 @@ window.addEventListener("online",network);window.addEventListener("offline",netw
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&owner){void verifyOwner(owner).catch(e=>{if(e instanceof HttpFailure)wipe();});}});
 await perform(async()=>{
   if(!("serviceWorker" in navigator))throw new Error("Service workers are unavailable. Offline navigation has not been prepared.");
-  const registration=await navigator.serviceWorker.register("/offline/sw.js",{scope:"/offline/",updateViaCache:"none"});
+  const registration=(await navigator.serviceWorker.getRegistration("/offline/"))??await navigator.serviceWorker.register("/offline/sw.js",{scope:"/offline/",updateViaCache:"none"});
   registration.addEventListener("updatefound",()=>notice("A field shell update is downloading. Close other field tabs after saving; updates do not delete originals."));
   await navigator.serviceWorker.ready;
   const active=await ownership();

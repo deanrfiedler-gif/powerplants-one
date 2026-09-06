@@ -79,7 +79,7 @@ test("P08 recovery retains exact private PNG and denies inactive identity or oth
 });
 test("P08 cancelled-before-start intent never creates attendance; stale factual evidence has restricted recovery",async()=>{
  const q=await acknowledged(),p=await principal("assigned-technician"),j=await fresh(p,q.pack.appointment_id),context=await downloadContext(p,j.id,{}),start=operation(p,j,"Start",startInput(j)),capture=operation(p,j,"Capture",{...entry({...j,attendance:{id:randomUUID()}}),attendance_id:{operation_id:start.operation_id}},[start.operation_id]);
- const a=(await readAppointment(q.p,j.id)).items[0];await cancelAppointment(q.p,j.id,{...base(),expected_version:a.version});assert.notEqual((await syncBatch(p,{operations:[start,capture]})).outcomes[0].state,"ServerSaved");assert.equal((await rows("SELECT count(*)::int n FROM ppo.field_attendances"))[0].n,0);
+ const a=(await readAppointment(q.p,j.id)).items[0];await cancelAppointment(q.p,j.id,{...base(),expected_version:a.version,expected_work_order_version:a.work_order_version,expected_assignment_version:a.assignment_version});assert.notEqual((await syncBatch(p,{operations:[start,capture]})).outcomes[0].state,"ServerSaved");assert.equal((await rows("SELECT count(*)::int n FROM ppo.field_attendances"))[0].n,0);
  assert.equal((await preserveRecovery(p,{grant_id:context.recovery.id,token:context.recovery.token,operation:capture})).normal_acceptance,false);
 });
 test("P08 withdrawn pack preserves started factual capture as review-required authority, without reopening work",async()=>{
