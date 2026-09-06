@@ -93,3 +93,14 @@ This table defines scope, not a pass assertion. Exact executed layers/results an
 Application run 34019900073 attempt 1 at source head `6706c3407709b566b4455d1e4ede73952323f9fe`, tree `2261613ccbc0a4e23816300ab9cff3de66f6fd67`, passed lint/type/build, 9 unit, all 186 PostgreSQL cases, fresh migration/seed/reset and existing PostgreSQL persistence proof. HTTP passed 15/16; the new oversized-body test incorrectly expected 413 while the maintained streaming body guard returns 422 `PayloadTooLarge`. Corrected the assertion to the exact status/code and added zero-opportunity-effect proof; the guard and size limit are unchanged. Restart/browser stages after HTTP did not run. A subsequent shared UI extension removes previously loaded Activity content when its command/selector/read is denied, without changing Activity payload/lifecycle/hash semantics; a real DB revocation browser case exercises it.
 
 Final review also tightened shared read refresh handling: 401/403/404 removes previously loaded data, while ordinary conflicts/outages keep their existing recovery behaviour. CRM creation validates visible company/organisation controls before dependent unknown reasons. Scoped creation selectors now expose only a permitted company/site path; a site-limited creator must choose that site and cannot create an unknown-site or other-site opportunity. A positive site-scoped owner journey supplements the negative isolation cases. These changes need the final full rerun; no new fixture grants are installed outside the disposable tests.
+
+The CRM restart proof additionally compares `pg_postmaster_start_time()` and the separately spawned application PID across phases; a screenshot or a reused running server cannot satisfy the process-restart assertion. Within the disposable CI job only, the exact sequence is:
+
+```sh
+node --env-file=.env.local --import tsx scripts/crm-restart-proof.ts write
+docker restart "$PPO_POSTGRES_CONTAINER"
+docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test
+node --env-file=.env.local --import tsx scripts/crm-restart-proof.ts verify
+```
+
+The maintained workflow retries readiness for at most 30 one-second attempts. `PPO_POSTGRES_CONTAINER` comes from that job's own PostgreSQL service identity; it is not an operational database selector.

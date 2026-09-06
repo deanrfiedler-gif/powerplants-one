@@ -39,6 +39,11 @@ try {
     await new Promise((r) => setTimeout(r, 500));
   }
   assert.ok(ready, "Application must start");
+  assert.equal(
+    server.exitCode,
+    null,
+    "The launched application process must be running",
+  );
   browser = await chromium.launch();
   const context = await browser.newContext({
     viewport: { width: 1440, height: 1000 },
@@ -103,6 +108,10 @@ try {
     ).rows;
     proof = {
       input,
+      server_pid: server.pid,
+      database_started_at: (
+        await database().query("SELECT pg_postmaster_start_time() AS at")
+      ).rows[0].at.toISOString(),
       operations,
       db,
       detail: (await call(`crm/opportunities/${input.id}`)).items[0],
@@ -110,6 +119,17 @@ try {
     await writeFile(join(root, "proof.json"), JSON.stringify(proof));
   } else {
     proof = JSON.parse(await readFile(join(root, "proof.json"), "utf8"));
+    assert.notEqual(
+      server.pid,
+      proof.server_pid,
+      "A new application process must read the accepted journey",
+    );
+    assert.notEqual(
+      (await database().query("SELECT pg_postmaster_start_time() AS at"))
+        .rows[0].at.toISOString(),
+      proof.database_started_at,
+      "PostgreSQL must actually restart between phases",
+    );
     const o = (await call(`crm/opportunities/${proof.input.id}`)).items[0];
     assert.equal(o.version, 3);
     assert.equal(o.stage_id, "Qualified");
@@ -168,6 +188,10 @@ try {
     JSON.stringify(
       {
         phase,
+        application_pid: server.pid,
+        database_started_at: (
+          await database().query("SELECT pg_postmaster_start_time() AS at")
+        ).rows[0].at.toISOString(),
         scenario:
           "Accepted opportunity, completed outcome, qualification, successor and four receipts across actual application/PostgreSQL/browser process restart",
         source_head: process.env.PPO_SOURCE_HEAD,
