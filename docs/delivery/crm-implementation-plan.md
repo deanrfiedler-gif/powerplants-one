@@ -1,10 +1,16 @@
 # CRM — Ordered implementation sequence
 
-**Revision:** r01 · **Date:** 6 September 2026 · **Status:** Proposed sequence; no implementation authorised by the discovery session · **Parent workstream:** PPO-009 / issue #9. **Owner:** Dean Fiedler, private prototype.
+**Revision:** r02 · **Date:** 6 September 2026 · **Status:** Proposed sequence; I1 active separately; this update adds design guidance · **Parent workstream:** PPO-009 / issue #9. **Owner:** Dean Fiedler, private prototype.
 
 [BP-03](../blueprints/BP-03-crm.md) · [Parity](../blueprints/crm-parity.md) · [First implementation starter](crm-first-increment-starter.md) · [Handover](crm-discovery-handover.md).
 
 I1–I6 below are **BP-03-local sequence labels**, not new parent requirements, P13, or replacements for PP-01 P01–P12. Create at most one bounded implementation issue when its work is explicitly authorised. Keep PPO-009 open for unresolved parity and acceptance. Do not bulk-create speculative issues.
+
+## Current coordination and visual handover
+
+The discovery session itself authorised no implementation. Subsequent I1 work is active in [issue #39](https://github.com/deanrfiedler-gif/powerplants-one/issues/39) / draft [PR #40](https://github.com/deanrfiedler-gif/powerplants-one/pull/40) at this update. This r02 design amendment does not expand that scope or authorise I2. Verify actual main and both I1/P09 handovers before selecting the next slice.
+
+Read the [I2 UI guidance](crm-i2-ui-guidance.md), [shared visual specification](../standards/ui-style-specification.md) and [branded C02 Board/Grid preview](../blueprints/crm-ui-mockups/README.md) when preparing I2. The addendum complements the full I2 starter to be prepared by I1. Six reference stage labels and fictional amounts illustrate future layout; accepted stage contracts govern implementation, I1 keeps two stages/no money, and commercial displays retain I3 prerequisites.
 
 ## First slice and rationale
 

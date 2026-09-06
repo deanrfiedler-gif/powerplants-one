@@ -4,9 +4,10 @@ Start with [current status](STATUS.md) and the [First Prototype Definition & Arc
 
 | Area | Entry point |
 |---|---|
-| Standards | [Naming](standards/naming-conventions.md), [adoption](standards/naming-adoption.md), [ChatGPT instructions](standards/chatgpt-project-instructions.md) |
+| Standards | [Naming](standards/naming-conventions.md), [adoption](standards/naming-adoption.md), [ChatGPT instructions](standards/chatgpt-project-instructions.md), [shared UI](standards/ui-style-specification.md) |
 | Prototype package | [Scope, specifications, contracts, tests and ordered plan](prototype/README.md) |
 | Blueprint set | [Master and module index](blueprints/README.md) |
+| CRM UI | [Board/Grid mockups](blueprints/crm-ui-mockups/README.md), [I2 guidance](delivery/crm-i2-ui-guidance.md), [handover](delivery/crm-ui-design-handover.md) |
 | Architecture | [BP-02](architecture/BP-02-platform-architecture.md) |
 | Service | [BP-07](blueprints/BP-07-service-operations.md) |
 | Contracts | [Data](contracts/service-data-dictionary.md), [API](contracts/service-api.md), [Finance](contracts/finance-handoff.md), [documents](contracts/document-issue-distribution.md) |

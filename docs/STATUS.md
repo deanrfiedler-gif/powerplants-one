@@ -61,7 +61,13 @@ The next PP-01 task is **P09 — Review, report and customer acknowledgement**, 
 
 **PPO-009 / issue #9 is distinct from P09.** [BP-03 r01](blueprints/BP-03-crm.md), [PAR-01–PAR-18 assessment](blueprints/crm-parity.md), [synthetic screen walkthrough](blueprints/crm-screen-specification.md), [ordered CRM implementation sequence](delivery/crm-implementation-plan.md) and [first implementation starter](delivery/crm-first-increment-starter.md) are authored. The [CRM handover](delivery/crm-discovery-handover.md) links actual validation and publication evidence. No CRM application/database implementation is included.
 
-One bounded live stage-metadata read refreshed ten stages across two pipeline IDs; account identity, licence, complete visibility and actual feature usage remain unverified. Identifiable operational-record reads await account-context evidence. All parity dispositions and functional defaults remain proposed; D-013/D-025/D-026 remain open, issue #9 remains open and AT-25 remains Planned. Pipedrive retains operational writes. BP-03 I1 proposes an owned synthetic opportunity and qualification follow-up; it is prepared only and needs a subsequent implementation instruction.
+One bounded live stage-metadata read refreshed ten stages across two pipeline IDs; account identity, licence, complete visibility and actual feature usage remain unverified. Identifiable operational-record reads await account-context evidence. All parity dispositions and functional defaults remain proposed; D-013/D-025/D-026 remain open, issue #9 remains open and AT-25 remains Planned. Pipedrive retains operational writes. BP-03 I1 is now active separately under [issue #39](https://github.com/deanrfiedler-gif/powerplants-one/issues/39) / draft [PR #40](https://github.com/deanrfiedler-gif/powerplants-one/pull/40), as inspected for this handover. Merged main at the design baseline still contains no CRM application/database implementation; verify live completion before proceeding.
+
+## Shared UI and branded CRM design handover
+
+The [shared UI specification](standards/ui-style-specification.md), [branded Board/Grid preview and original captures](blueprints/crm-ui-mockups/README.md) and [visual decision](decisions/ui-brand-and-crm-layout.md) publish the supplied Powerplants identity with a Pipedrive-familiar CRM layout. The [screen specification r02](blueprints/crm-screen-specification.md) and [I2 UI guidance](delivery/crm-i2-ui-guidance.md) make this discoverable for later implementation; the [handover](delivery/crm-ui-design-handover.md) records provenance, validation and publication controls.
+
+This is documentation/design work under PPO-009, separate from active I1 and P09. I1 retains Enquiry → Qualified, Open and no money fields. The six reference stages and fictional commercial values do not expand its scope, establish account parity or pass AT-25. The full I2 starter remains an I1 completion deliverable.
 
 ## Repository and publication controls
 
