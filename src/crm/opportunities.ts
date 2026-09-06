@@ -1,3 +1,4 @@
+import { opportunityReceiptActions } from "./receipt-authority";
 import { randomUUID } from "node:crypto";
 import type { PoolClient } from "pg";
 import type { Principal } from "../platform/identity";
@@ -25,7 +26,7 @@ export async function createOpportunity(p: Principal,value: unknown) {
     const initial=actionInput(command,command.initial_action);
     await authoriseActivityInput(c,p,{...initial,links:initial.links.filter(l=>l.object_type!=="Opportunity")});
     const exists=(await c.query("SELECT 1 FROM ppo.opportunities WHERE workspace_id=$1 AND id=$2",[p.workspace_id,command.id])).rowCount;
-    if(exists) await visibleOpportunity(c,p,command.id);
+    if(exists) {await visibleOpportunity(c,p,command.id);await opportunityReceiptActions(c,p,command.id,command.operation_id);}
   },async c=>{
     const o=(await c.query(`INSERT INTO ppo.opportunities(id,workspace_id,company_id,created_by,updated_by,organisation_id,site_id,primary_person_id,site_unknown_reason,contact_unknown_reason,title,need_summary,source_channel,source_basis,owner_id,pipeline_definition_id,next_activity_id) VALUES($1,$2,$3,$4,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16) RETURNING *,stage_id AS state`,[command.id,p.workspace_id,command.company_id,p.actor_id,command.organisation_id,command.site_id,command.primary_person_id,command.site_unknown_reason,command.contact_unknown_reason,command.title,command.need_summary,command.source_channel,command.source_basis,command.owner_id,command.pipeline_definition_id,command.initial_action.id])).rows[0];
     const initial=actionInput(command,command.initial_action);
@@ -47,7 +48,7 @@ async function linkedActiveAction(c: PoolClient,p: Principal,o: OpportunityConte
 }
 export async function qualifyOpportunity(p: Principal,id:string,value:unknown) {
   const command=parseQualification(id,value);
-  return sharedOperation(p,command,"RecordQualificationAndProgress",c=>opportunityAuthority(c,p,id,"crm.opportunity.edit"),async(c,o)=>{
+  return sharedOperation(p,command,"RecordQualificationAndProgress",async c=>{const o=await opportunityAuthority(c,p,id,"crm.opportunity.edit");await opportunityReceiptActions(c,p,id,command.operation_id);return o;},async(c,o)=>{
     expected(o,command.expected_version);
     if(o.stage_id!=="Enquiry" || o.close_outcome!=="Open" || o.pipeline_definition_id!==command.pipeline_definition_id) throw new AppError(422,"CRM_PROGRESS_INVALID","Only an Open Enquiry in its original fictional pipeline can be qualified.");
     if(command.identification_activity_id) await linkedActiveAction(c,p,o,command.identification_activity_id,true);
@@ -59,7 +60,7 @@ export async function qualifyOpportunity(p: Principal,id:string,value:unknown) {
 }
 export async function planOpportunityAction(p:Principal,id:string,value:unknown) {
   const command=parsePlan(id,value);
-  return sharedOperation(p,command,"PlanOpportunityAction",c=>opportunityAuthority(c,p,id,"crm.opportunity.edit"),async(c,o)=>{
+  return sharedOperation(p,command,"PlanOpportunityAction",async c=>{const o=await opportunityAuthority(c,p,id,"crm.opportunity.edit");await opportunityReceiptActions(c,p,id,command.operation_id);return o;},async(c,o)=>{
     expected(o,command.expected_version);
     let actionId=command.activity_id;
     if(command.new_action) {

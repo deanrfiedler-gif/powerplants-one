@@ -8,7 +8,8 @@ BEGIN
   ('audit_events','ck_audit_object_type','object_type','Opportunity'),
   ('outbox_jobs','ck_outbox_kind','kind','OpportunityCreated,OpportunityQualified,OpportunityActionPlanned'),
   ('permission_grants','ck_grants_capability','capability','crm.opportunity.read,crm.opportunity.create,crm.opportunity.edit'),
-  ('reference_counters','ck_reference_type','record_type','OPP')
+  ('reference_counters','ck_reference_type','record_type','OPP'),
+  ('activity_links','activity_links_object_type_check','object_type','Opportunity')
  ) AS v(tab,con,col,added) LOOP
   SELECT pg_get_constraintdef(oid) INTO STRICT definition FROM pg_constraint WHERE conrelid=('ppo.'||item.tab)::regclass AND conname=item.con;
   EXECUTE format('ALTER TABLE ppo.%I DROP CONSTRAINT %I',item.tab,item.con);
@@ -78,8 +79,6 @@ CREATE TABLE ppo.opportunities (
 );
 CREATE TRIGGER register_identity BEFORE INSERT OR UPDATE ON ppo.opportunities FOR EACH ROW EXECUTE FUNCTION ppo.register_identity('Opportunity','OPP');
 CREATE TRIGGER opportunity_retained BEFORE DELETE ON ppo.opportunities FOR EACH ROW EXECUTE FUNCTION ppo.immutable_evidence();
-ALTER TABLE ppo.activity_links DROP CONSTRAINT activity_links_object_type_check;
-ALTER TABLE ppo.activity_links ADD CONSTRAINT activity_links_object_type_check CHECK(object_type IN ('Organisation','Site','Asset','Ticket','Opportunity'));
 ALTER TABLE ppo.activity_links ADD COLUMN opportunity_id uuid GENERATED ALWAYS AS (CASE WHEN object_type='Opportunity' THEN object_id END) STORED;
 ALTER TABLE ppo.activity_links ADD CONSTRAINT fk_activity_links_opportunity FOREIGN KEY(workspace_id,company_id,opportunity_id) REFERENCES ppo.opportunities(workspace_id,company_id,id);
 
@@ -140,6 +139,7 @@ BEGIN
  IF TG_TABLE_NAME='opportunities' THEN
   SELECT * INTO o FROM ppo.opportunities WHERE workspace_id=NEW.workspace_id AND id=NEW.id;
   IF NOT EXISTS(SELECT 1 FROM ppo.activities a JOIN ppo.activity_links l ON (l.workspace_id,l.activity_id)=(a.workspace_id,a.id) WHERE a.workspace_id=o.workspace_id AND a.id=o.next_activity_id AND l.opportunity_id=o.id) THEN RAISE EXCEPTION 'Designated action must link opportunity' USING ERRCODE='23514'; END IF;
+  IF (TG_OP='INSERT' OR NEW.next_activity_id IS DISTINCT FROM OLD.next_activity_id) AND NOT EXISTS(SELECT 1 FROM ppo.activities a WHERE a.workspace_id=o.workspace_id AND a.id=o.next_activity_id AND a.status IN ('Open','InProgress')) THEN RAISE EXCEPTION 'A new designation must be active' USING ERRCODE='23514'; END IF;
   IF NOT EXISTS(SELECT 1 FROM ppo.opportunity_events e WHERE e.workspace_id=o.workspace_id AND e.opportunity_id=o.id AND e.opportunity_version=o.version AND e.to_stage=o.stage_id AND e.pipeline_definition_id=o.pipeline_definition_id AND e.next_activity_id=o.next_activity_id AND e.need_summary=o.need_summary AND e.qualification_note IS NOT DISTINCT FROM o.qualification_note AND e.identification_activity_id IS NOT DISTINCT FROM o.identification_activity_id) THEN RAISE EXCEPTION 'Exact opportunity event required' USING ERRCODE='23514'; END IF;
  ELSE
   IF TG_TABLE_NAME='activities' THEN aid:=NEW.id; ELSE aid:=NEW.activity_id; END IF;

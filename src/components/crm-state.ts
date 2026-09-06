@@ -28,5 +28,5 @@ export function useCrmCommand(onAccepted:(r:OperationReceipt)=>void) {
   }catch(e){setError(e);const unknown=!!(e as Failure).retryable || !(e as Failure).status || ((e as Failure).status ?? 0)>=500;setUncertain(unknown);setStatus(unknown?"Save outcome uncertain — confirm the original action":"Unsaved — review the error");if(!unknown)pending.current=null;}
   finally{setBusy(false);}
  }
- return {busy,error,status,uncertain,send:async(path:string,fields:Record<string,unknown>)=>{if(pending.current)return;const intent={path,body:{operation_id:crypto.randomUUID(),schema_version:1,...fields}};pending.current=intent;await execute(intent,false);},reconcile:async()=>{if(pending.current)await execute(pending.current,true);},clearError:()=>setError(null)};
+ return {busy,error,status,uncertain,dirty:()=>{if(!busy&&!uncertain)setStatus("Unsaved");},send:async(path:string,fields:Record<string,unknown>)=>{if(pending.current)return;const intent={path,body:{operation_id:crypto.randomUUID(),schema_version:1,...fields}};pending.current=intent;await execute(intent,false);},reconcile:async()=>{if(pending.current)await execute(pending.current,true);},clearError:()=>setError(null)};
 }

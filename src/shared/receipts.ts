@@ -1,4 +1,5 @@
-import { visibleOpportunity } from "../crm/context";
+import { opportunityReceiptActions } from "../crm/receipt-authority";
+import { visibleOpportunity, relationshipContext, eligibleOpportunityOwner } from "../crm/context";
 import { fieldContext, entryContext, attachmentContext } from "../field/context";
 import { packContext } from "../documents/context";
 import { visibleAppointment, visibleRequest } from "../scheduling/planner";
@@ -28,7 +29,10 @@ export async function readOperation(
   if (r.object_type === "Opportunity") {
     const o = await visibleOpportunity(client, p, r.record_id);
     const cap = r.command === "CreateOpportunity" ? "crm.opportunity.create" : "crm.opportunity.edit";
-    if (!(await hasPermission(client,p,cap,o.company_id,o.site_id ?? undefined)) || (cap === "crm.opportunity.edit" && o.owner_id !== p.actor_id)) throw unavailable();
+    await relationshipContext(client,p,o,cap);
+    await eligibleOpportunityOwner(client,p,o);
+    if (cap === "crm.opportunity.edit" && o.owner_id !== p.actor_id) throw unavailable();
+    await opportunityReceiptActions(client,p,o.id,operation_id);
   } else if (r.object_type === "FieldEntry") {
     await entryContext(client,p,r.record_id,r.command === "CorrectFieldEntry" ? "field.correct.own" : "field.capture.own");
   } else if (r.object_type === "Attachment") {

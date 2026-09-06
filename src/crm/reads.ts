@@ -6,7 +6,7 @@ import { activityVisibility, readActivity } from "../activities/activities";
 import { envelope, page, visible, visibility } from "../shared/reads";
 import { companyContext } from "../shared/authority";
 import { choice, object, optionalId, uuid } from "../shared/validation";
-import { eligibleOpportunityOwner, opportunityVisibility, relationshipContext, visibleOpportunity, PIPELINE_ID } from "./context";
+import { eligibleOpportunityOwner, eligibleActionOwner, opportunityVisibility, relationshipContext, visibleOpportunity, PIPELINE_ID } from "./context";
 
 function nextState(alias="a") {
   return `CASE WHEN ${alias}.id IS NULL THEN 'Unavailable' WHEN ${alias}.status NOT IN ('Open','InProgress') THEN 'Needed' WHEN ${alias}.due_needed THEN 'DueNeeded' WHEN ${alias}.due_at<clock_timestamp() THEN 'Overdue' ELSE 'Upcoming' END`;
@@ -41,7 +41,7 @@ export async function listOpportunities(p:Principal,input:unknown={}) {
 // Only short identity labels are selected here. No account notes, source keys or unscoped directory.
 export async function opportunityOptions(p:Principal,input:unknown={}) {
   const c=database(),r=object(input,["kind","company_id","organisation_id","site_id","primary_person_id","opportunity_id","limit","cursor","q"]);
-  const kind=choice(r.kind,"kind",["Company","Organisation","Site","Person","Owner"]);
+  const kind=choice(r.kind,"kind",["Company","Organisation","Site","Person","Owner","ActionOwner"]);
   const company=optionalId(r.company_id,"company_id"),org=optionalId(r.organisation_id,"organisation_id"),site=optionalId(r.site_id,"site_id"),person=optionalId(r.primary_person_id,"primary_person_id");
   await requireCapability(c,p,"crm.opportunity.read");
   if(r.opportunity_id) await visibleOpportunity(c,p,uuid(r.opportunity_id,"opportunity_id"));
@@ -53,10 +53,10 @@ export async function opportunityOptions(p:Principal,input:unknown={}) {
   if(kind==="Organisation") rows=(await c.query(`SELECT x.id,x.display_name,x.display_number FROM ppo.organisations x WHERE x.workspace_id=$1 AND x.company_id=$3 AND ${visibility("Organisation","x")} ORDER BY x.id`,[p.workspace_id,p.actor_id,company])).rows;
   if(kind==="Site") rows=(await c.query(`SELECT x.id,x.display_name,x.display_number FROM ppo.sites x WHERE x.workspace_id=$1 AND x.company_id=$3 AND ${visibility("Site","x")} AND EXISTS(SELECT 1 FROM ppo.site_parties sp WHERE sp.workspace_id=x.workspace_id AND sp.site_id=x.id AND sp.organisation_id=$4 AND sp.valid_from<=CURRENT_DATE AND (sp.valid_to IS NULL OR sp.valid_to>CURRENT_DATE)) ORDER BY x.id`,[p.workspace_id,p.actor_id,company,org])).rows;
   if(kind==="Person") rows=(await c.query(`SELECT x.id,x.display_name FROM ppo.people x WHERE x.workspace_id=$1 AND x.active AND ${visibility("Person","x")} AND EXISTS(SELECT 1 FROM ppo.relationships rel WHERE rel.workspace_id=x.workspace_id AND rel.person_id=x.id AND rel.company_id=$3 AND rel.organisation_id=$4 AND rel.valid_from<=CURRENT_DATE AND (rel.valid_to IS NULL OR rel.valid_to>CURRENT_DATE)) ORDER BY x.id`,[p.workspace_id,p.actor_id,company,org])).rows;
-  if(kind==="Owner") {
+  if(kind==="Owner" || kind==="ActionOwner") {
     const context={company_id:company!,organisation_id:uuid(org,"organisation_id"),site_id:site,primary_person_id:person,owner_id:p.actor_id,pipeline_definition_id:PIPELINE_ID};
     await relationshipContext(c,p,context,"crm.opportunity.read");
-    for(const u of (await c.query("SELECT id,display_name FROM ppo.users WHERE workspace_id=$1 AND active ORDER BY id",[p.workspace_id])).rows) try {await eligibleOpportunityOwner(c,p,context,u.id);rows.push(u);}catch(e){if(!(e instanceof AppError)||![403,404].includes(e.status))throw e;}
+    for(const u of (await c.query("SELECT id,display_name FROM ppo.users WHERE workspace_id=$1 AND active ORDER BY id",[p.workspace_id])).rows) try {if(kind==="Owner")await eligibleOpportunityOwner(c,p,context,u.id);else await eligibleActionOwner(c,p,context,u.id);rows.push(u);}catch(e){if(!(e instanceof AppError)||![403,404].includes(e.status))throw e;}
   }
   rows=rows.filter(x=>(!pg.after||x.id>pg.after)&&x.display_name.toLowerCase().includes(pg.q.toLowerCase()));
   return {...envelope(rows.slice(0,pg.limit),rows.length>pg.limit?pg.cursor(rows[pg.limit-1].id):null),pipeline_definition_id:PIPELINE_ID,pipeline_label:"Fictional sales enquiry — I1"};

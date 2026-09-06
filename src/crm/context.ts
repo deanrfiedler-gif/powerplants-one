@@ -54,6 +54,12 @@ export async function eligibleOpportunityOwner(c: QueryClient,p: Principal,input
     if (!(await hasPermission(c,owner,cap,input.company_id,input.site_id ?? undefined))) throw unavailable();
   return owner;
 }
+export async function eligibleActionOwner(c:QueryClient,p:Principal,input:OpportunityContext,ownerId:string) {
+ const owner=await scopedOwner(c,p,ownerId,input.company_id,input.site_id??undefined,"activity.edit");
+ await relationshipContext(c,owner,input,"crm.opportunity.read");
+ if(!(await hasPermission(c,owner,"activity.read",input.company_id,input.site_id??undefined)))throw unavailable();
+ return owner;
+}
 export async function opportunityAuthority(c: QueryClient,p: Principal,id: string,cap: "crm.opportunity.create" | "crm.opportunity.edit",owned=true) {
   const o=await visibleOpportunity(c,p,id);
   // Shared operation already locks workspace; explicit row lock documents aggregate ownership.

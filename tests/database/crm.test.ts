@@ -127,3 +127,25 @@ test("CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and 
  await migrate();await seed();for(let n=0;n<tables.length;n++)assert.deepEqual(await rows(`SELECT * FROM ppo.${tables[n]} ORDER BY 1`),before[n]);assert.deepEqual((await rows("SELECT * FROM public.ppo_migrations WHERE version<=8 ORDER BY version")),hashes);assert.deepEqual((await createActivity(p,a)).receipt,accepted.receipt);
  const i=crmCreate();await createOpportunity(p,i);await qualifyOpportunity(p,i.id,crmQualify());await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.edit'",[p.actor_id]);const all=await effectCounts(),counter=await rows("SELECT * FROM ppo.reference_counters ORDER BY record_type");await seed();await seed();assert.deepEqual(await effectCounts(),all);assert.deepEqual(await rows("SELECT * FROM ppo.reference_counters ORDER BY record_type"),counter);assert.equal((await readOpportunity(p,i.id)).stage_id,"Qualified");assert.equal((await readOpportunity(p,i.id)).can_edit,false);
 });
+
+test("CA-06/10 each mixed Activity target controls visibility, designation content and current-permission receipts",async()=>{
+ const p=await principal(),i=crmCreate();await createOpportunity(p,i);
+ const mixed={...crmBase(),...crmAction(),summary:"SYN mixed target private action",company_id:CRM.company,site_id:CRM.site,access_class:"Internal",links:[{object_type:"Opportunity",object_id:i.id},{object_type:"Ticket",object_id:"40000000-0000-4000-8000-000000000020"}]};
+ await createActivity(p,mixed);const plan={...crmBase(),expected_version:1,activity_id:mixed.id};await planOpportunityAction(p,i.id,plan);
+ assert.equal((await readOpportunity(p,i.id)).next_activity!.id,mixed.id);
+ await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='service.ticket.read'",[p.actor_id]);
+ const o=await readOpportunity(p,i.id);assert.equal(o.next_action_state,"Unavailable");assert.equal(o.next_activity,null);assert.ok(!JSON.stringify(o).includes(mixed.id));assert.ok(!JSON.stringify(o).includes(mixed.summary));
+ assert.equal((await listActivities(p,{q:mixed.summary})).items.length,0);await assert.rejects(readActivity(p,mixed.id),code("RecordUnavailable"));await assert.rejects(readOperation(p,plan.operation_id));await assert.rejects(planOpportunityAction(p,i.id,plan));
+ // Independent Activity permission revocation also blocks the original create receipt.
+ await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='activity.edit'",[p.actor_id]);await assert.rejects(readOperation(p,i.operation_id));await assert.rejects(createOpportunity(p,i));
+});
+
+test("CA-01/08 eligible action owner needs Activity authority and CRM read, not Opportunity edit",async()=>{
+ const p=await principal(),u=randomUUID();
+ await database().query("INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1,$2,'PPO-LocalSynthetic',$3,'SYN eligible contact-action owner')",[u,p.workspace_id,randomUUID()]);
+ await database().query("INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id) SELECT workspace_id,$1,company_id,capability,scope_type,scope_id,site_id FROM ppo.permission_grants WHERE user_id=$2 AND capability NOT IN ('crm.opportunity.create','crm.opportunity.edit')",[u,p.actor_id]);
+ const args={company_id:CRM.company,organisation_id:CRM.org,site_id:CRM.site,primary_person_id:CRM.person};
+ assert.ok((await opportunityOptions(p,{...args,kind:"ActionOwner"})).items.some(x=>x.id===u));assert.ok(!(await opportunityOptions(p,{...args,kind:"Owner"})).items.some(x=>x.id===u));
+ const i={...crmCreate(),initial_action:crmAction(u)};await createOpportunity(p,i);const other={...p,actor_id:u};await activityCommand(other,i.initial_action.id,{...crmBase(),expected_version:1,outcome:"SYN permitted action owner outcome"},"complete");await assert.rejects(qualifyOpportunity(other,i.id,crmQualify()));
+ await database().query("UPDATE ppo.users SET active=false WHERE id=$1",[u]);assert.ok(!(await opportunityOptions(p,{...args,kind:"ActionOwner"})).items.some(x=>x.id===u));await assert.rejects(createOpportunity(p,{...crmCreate(),initial_action:crmAction(u)}));
+});
