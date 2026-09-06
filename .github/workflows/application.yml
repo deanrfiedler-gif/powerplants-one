@@ -57,7 +57,21 @@ jobs:
           npm run db:seed
           npm run db:health
       - name: Focused P10 Finance source, processing and account proof
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/finance.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/finance*.test.ts
+      - name: P10 original claim, unknown acceptance and exact output through three database and four application/browser restarts
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+          node --env-file=.env.local --import tsx scripts/finance-restart-proof.ts write
+          for phase in accept reconcile verify; do
+            docker restart "$PPO_POSTGRES_CONTAINER"
+            for attempt in $(seq 1 30); do
+              docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+              sleep 1
+            done
+            node --env-file=.env.local --import tsx scripts/finance-restart-proof.ts "$phase"
+          done
       - name: Verify documented synthetic reset command
         run: |
           if npm run db:reset; then exit 1; fi

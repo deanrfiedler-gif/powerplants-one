@@ -443,8 +443,12 @@ test("P10 loaded/empty/loading/error/keyboard queue states retain scope and refl
     page.getByRole("button", { name: "Refresh queue", exact: true }),
   ).toBeFocused();
   await capture(page, info, "keyboard-queue");
+  let release!: () => void;
+  const pending = new Promise<void>((resolve) => {
+    release = resolve;
+  });
   await page.route("**/api/v1/finance/handoffs?**", async (route) => {
-    await new Promise((r) => setTimeout(r, 1200));
+    await pending;
     await route.continue();
   });
   await page.getByLabel("Queue state", { exact: true }).selectOption("Draft");
@@ -452,6 +456,7 @@ test("P10 loaded/empty/loading/error/keyboard queue states retain scope and refl
     page.getByText("Loading permitted Finance work…", { exact: true }),
   ).toBeVisible();
   await capture(page, info, "loading-queue");
+  release();
   await page.unrouteAll({ behavior: "wait" });
   await identity(page, "systems");
   await expect(page.getByRole("alert")).toBeVisible();

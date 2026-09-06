@@ -122,7 +122,18 @@ export async function readFinance(
   object(input, []);
   return transaction(async (c) => {
     const ctx = await financeContext(c, p, uuid(id, "handoff_id")),
-      history: Record<string, unknown[]> = {};
+      history = {} as Record<
+        | "revisions"
+        | "reviews"
+        | "attempts"
+        | "outcomes"
+        | "reconciliations"
+        | "corrections"
+        | "events"
+        | "jobs"
+        | "issues",
+        Record<string, unknown>[]
+      >;
     for (const [key, table, order] of [
       ["revisions", "finance_revisions", "revision"],
       ["reviews", "finance_reviews", "reviewed_at"],
@@ -133,7 +144,7 @@ export async function readFinance(
       ["events", "finance_events", "version"],
       ["jobs", "finance_render_jobs", "requested_at"],
       ["issues", "finance_issues", "issued_at"],
-    ])
+    ] as const)
       history[key] = (
         await c.query(
           `SELECT * FROM ppo.${table} WHERE workspace_id=$1 AND handoff_id=$2 ORDER BY ${order} DESC`,
