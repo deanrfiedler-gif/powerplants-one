@@ -114,7 +114,8 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   inputs[0].title = `${marker} 00 ${"LongReference".repeat(13)}`.slice(0, 200);
   // Put this valid long-action fixture in the canonical customer's first
   // bounded Activity page so the shared consumer is exercised deterministically.
-  inputs[0].initial_action.id = `00000000${randomUUID().slice(8)}`;
+  const [, time, version, variant, node] = randomUUID().split("-");
+  inputs[0].initial_action.id = `00000000-${time}-${version}-${variant}-${node}`;
   for (const input of inputs) await call(page, "crm/opportunities", input);
   await page.getByLabel("Search opportunities", { exact: true }).fill(marker);
   await page.getByText("Filters and sort", { exact: true }).click();
