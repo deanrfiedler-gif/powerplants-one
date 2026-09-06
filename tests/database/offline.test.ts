@@ -341,7 +341,6 @@ test("P08 normal acceptance and restricted recovery are exclusive under competin
     syncBatch(q.p, { operations: [competing] }),
     preserveRecovery(q.p, { ...input, operation: competing }),
   ]);
-  assert.equal(normal.status, "fulfilled");
   if (normal.status !== "fulfilled") throw normal.reason;
   const outcome = normal.value.outcomes[0];
   if (outcome.state === "ServerSaved") {
