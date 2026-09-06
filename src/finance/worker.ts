@@ -353,7 +353,7 @@ export async function processFinanceJob(
       html_bytes: Buffer.byteLength(b.html),
       pdf_hash: digest(pdf),
       pdf_bytes: pdf.length,
-      filename: `${s.source.reference}_OUT-14_r${String(s.source.revision).padStart(2, "0")}.pdf`,
+      filename: `${s.source.reference}-finance-evidence-r${String(s.source.revision).padStart(2, "0")}.pdf`,
       prepared_at: s.output.prepared_at,
       browser_version: b.browser_version,
       renderer_version: b.renderer_version,
@@ -514,7 +514,10 @@ export async function financeIssueBytes(
     bytes: q.format === "pdf" ? b.pdf : Buffer.from(b.html),
     content_type:
       q.format === "pdf" ? "application/pdf" : "text/html; charset=utf-8",
-    filename: issue.manifest.filename,
+    filename:
+      q.format === "pdf"
+        ? issue.manifest.filename
+        : issue.manifest.filename.replace(/\.pdf$/, ".html"),
     sha256:
       q.format === "pdf" ? issue.manifest.pdf_hash : issue.manifest.html_hash,
   };

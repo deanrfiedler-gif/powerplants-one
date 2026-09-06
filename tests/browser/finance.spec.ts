@@ -350,6 +350,7 @@ test("P10 PT-17/PT-19 complete UI allocation, return/correction, unknown lookup,
     safe = await page.request.get(
       `/api/v1/reports/${source.report_id}/html?presentation_id=${presentation.id}`,
     );
+  expect(safe.ok()).toBe(true);
   expect(await safe.text()).not.toContain("FINANCE_PRIVATE_CANARY");
   expect(
     (
@@ -358,6 +359,15 @@ test("P10 PT-17/PT-19 complete UI allocation, return/correction, unknown lookup,
       )
     ).status(),
   ).toBe(403);
+  await call(page, "local-session", { profile: "assigned-technician" });
+  for (const path of [
+    `my-jobs/${report.appointment.id}`,
+    `sync/context/${report.appointment.id}`,
+  ]) {
+    const response = await page.request.get(`/api/v1/${path}`);
+    expect(response.ok()).toBe(true);
+    expect(await response.text()).not.toContain("FINANCE_PRIVATE_CANARY");
+  }
   expect(errors).toEqual([]);
 });
 test("P10 PT-20/PT-21 UI exact account arithmetic, filtering, partial/failure and as-at labels", async ({
@@ -502,4 +512,70 @@ test("P10 stale browser proposal shows conflict and preserves a concurrently can
   const final = await call(page, `finance/handoffs/${input.id}`);
   expect(final.handoff.status).toBe("Cancelled");
   expect(final.attempts).toHaveLength(0);
+});
+
+test("P10 lost save response keeps input and retries the exact original once through UI", async ({
+  page,
+}, info) => {
+  await page.goto("/finance/handoffs");
+  await identity(page, "finance");
+  const existing = (await call(page, "finance/handoffs")).items.find(
+      (h: { status: string }) => h.status === "Reconciled",
+    ),
+    d = await call(page, `finance/handoffs/${existing.id}`),
+    input = await httpFinanceDraft((p, b) => call(page, p, b), {
+      report_id: d.revisions[0].source_snapshot.reports[0].report_id,
+      reference: "retained exact source",
+      work_order_id: d.handoff.work_order_id,
+    });
+  await call(page, "finance/handoffs", input);
+  await page.goto(`/finance/handoffs/${input.id}`);
+  await state(page, "Draft");
+  await page
+    .getByRole("button", { name: "Revise retained draft", exact: true })
+    .click();
+  await page
+    .getByLabel("Reason for this saved revision", { exact: true })
+    .fill(
+      "SYN lost HTTP response after acceptance; retain and retry this exact original.",
+    );
+  let original: unknown;
+  await page.route(
+    `**/api/v1/finance/handoffs/${input.id}/revise`,
+    async (route) => {
+      original = route.request().postDataJSON();
+      const accepted = await route.fetch();
+      expect(accepted.status()).toBe(201);
+      await route.abort("failed");
+    },
+    { times: 1 },
+  );
+  await page
+    .getByRole("button", { name: "Save Finance draft", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Retry original action", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByLabel("Reason for this saved revision", { exact: true }),
+  ).toHaveValue(
+    "SYN lost HTTP response after acceptance; retain and retry this exact original.",
+  );
+  await capture(page, info, "accepted-save-response-lost");
+  const sent = page.waitForRequest(
+    (r) =>
+      r.url().endsWith(`/finance/handoffs/${input.id}/revise`) &&
+      r.method() === "POST",
+  );
+  await page
+    .getByRole("button", { name: "Retry original action", exact: true })
+    .click();
+  expect((await sent).postDataJSON()).toEqual(original);
+  await expect(
+    page.getByRole("button", { name: "Revise retained draft", exact: true }),
+  ).toBeVisible();
+  const final = await call(page, `finance/handoffs/${input.id}`);
+  expect(final.revisions).toHaveLength(2);
+  expect(final.attempts).toHaveLength(0);
+  await capture(page, info, "accepted-save-original-recovered");
 });

@@ -31,6 +31,7 @@ import {
   reconcileFinance,
 } from "../../src/finance/service";
 import { financeSources } from "../../src/finance/reads";
+import { observeAccount, readAccount } from "../../src/finance/accounts";
 import { readOperation } from "../../src/shared/receipts";
 import {
   requestFinanceEvidence,
@@ -289,6 +290,11 @@ test("P10 current exact account mapping changes block mutation and mark account 
         q.cmd.account_id,
       ])
     )[0];
+  await observeAccount(q.p, a.id, {
+    ...base(),
+    expected_version: a.version,
+    fixture: "F-02",
+  });
   await database().query(
     "UPDATE ppo.erp_account_mappings SET version=version+1 WHERE id=$1",
     [a.mapping_id],
@@ -300,6 +306,12 @@ test("P10 current exact account mapping changes block mutation and mark account 
     }),
     code("AccountContextChanged"),
   );
+  const account = await readAccount(q.p, a.organisation_id, {
+    account_id: a.id,
+  });
+  assert.equal(account.account_balance, null);
+  assert.ok(account.context_error);
+  assert.equal(account.history[0].source_balance, "600.00");
   assert.equal(
     (await rows("SELECT count(*)::int n FROM ppo.finance_allocation_holds"))[0]
       .n,

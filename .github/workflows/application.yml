@@ -58,6 +58,10 @@ jobs:
           npm run db:health
       - name: Focused P10 Finance source, processing and account proof
         run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/finance*.test.ts
+      - name: Focused P10 desktop and phone review, allocation and reconciliation
+        run: |
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+          npx playwright test tests/browser/finance.spec.ts --output verification-evidence/p10-focused-browser --reporter=list
       - name: P10 original claim, unknown acceptance and exact output through three database and four application/browser restarts
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}

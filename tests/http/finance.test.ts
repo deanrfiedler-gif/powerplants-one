@@ -27,7 +27,7 @@ async function call(cookie: string, path: string, body?: unknown) {
 test("P10 real HTTP Finance account source/receipt isolation, exact fields and no-store headers", async () => {
   const p = await session("finance"),
     options = await call(p, "finance/options");
-  assert.equal(options.status, 200);
+  assert.equal(options.status, 200, JSON.stringify(options.body));
   const a = options.body.accounts[0],
     input = {
       schema_version: 1,
@@ -81,7 +81,9 @@ test("P10 real HTTP Finance account source/receipt isolation, exact fields and n
 });
 test("P10 real HTTP refuses repeated/unknown fields, forged financial outcomes and cross-context accounts", async () => {
   const p = await session("finance"),
-    a = (await call(p, "finance/options")).body.accounts[0];
+    options = await call(p, "finance/options");
+  assert.equal(options.status, 200, JSON.stringify(options.body));
+  const a = options.body.accounts[0];
   for (const path of [
     "finance/options?role=Finance",
     "finance/handoffs?company_id=x",

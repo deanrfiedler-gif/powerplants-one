@@ -18,7 +18,7 @@ export function financeRoute(
     try {
       localRequest(request, command);
       const p = await identity(request),
-        params = await ctx.params,
+        params = (await ctx.params) ?? {},
         query = request.nextUrl.searchParams;
       if (command && query.size)
         throw new AppError(
