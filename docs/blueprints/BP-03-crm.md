@@ -2,15 +2,25 @@
 
 | Document control | Value |
 |---|---|
-| Revision / date | r01 / 6 September 2026 |
-| Status | Proposed design; bounded account evidence; implementation and owner acceptance outstanding |
+| Revision / date | r02 / 6 September 2026 |
+| Status | Broader design proposed; bounded I1 code under verification; owner acceptance outstanding |
 | Owner | Dean Fiedler — personal private prototype |
 | Workstream | PPO-009 / [issue #9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9); distinct from PP-01 P09 |
-| Authority | Current user instruction permits discovery, design and checked repository publication only |
-| Starting source | Main `85bd2fcc388495cc24dc2ee4f273accc49da2f24`; tree `7406ceb9b000e616410489bb66503a6e9e8c6c08` |
+| Authority | Discovery authorised design only; separate I1 invocation authorises the bounded synthetic implementation in #39 |
+| Discovery starting source | Main `85bd2fcc388495cc24dc2ee4f273accc49da2f24`; tree `7406ceb9b000e616410489bb66503a6e9e8c6c08` |
 | Parent scope | CRM-01–CRM-08 and PAR-01–PAR-18; identities and issued references preserved |
 
 [Parity and evidence](crm-parity.md) · [Screens and walkthrough](crm-screen-specification.md) · [Implementation sequence](../delivery/crm-implementation-plan.md) · [First starter](../delivery/crm-first-increment-starter.md) · [Handover and publication](../delivery/crm-discovery-handover.md).
+
+## I1 implementation amendment — verification in progress
+
+The separately authorised [I1 issue #39](https://github.com/deanrfiedler-gif/powerplants-one/issues/39) / [PR #40](https://github.com/deanrfiedler-gif/powerplants-one/pull/40) builds only owned opportunity and qualification follow-up. [I1 handover](../delivery/crm-i1-handover.md), [ADR-0015](../decisions/ADR-0015-crm-i1-owned-opportunities.md) and its external publication record govern actual delivered status. This amendment does not mark an unmerged branch complete.
+
+The concrete I1 subset is one immutable fictional Enquiry → Qualified definition, Open outcome only, existing permitted customer context, active eligible owner, atomic initial Internal CustomerContact/RelationshipReview Activity, qualification under the current owner, and deliberate next-action planning. Opportunity/OPP identity, typed configuration/event records and a real ActivityLink Opportunity FK use existing shared authority/transactions. Sales worklist, New opportunity and detail/progression/actions are responsive online screens. Completion retains its exact outcome and shows Next action needed; unknown due remains explicit. UUID/reference/title/version/stage/close remain separate.
+
+Company, organisation/site/contact links, source context and owner are fixed. No scoped manager/admin capability, PATCH, lead, board/drag, closing/reopening, transfer, reassociation, forecast/value/probability, account-plan builder, downstream handoff, file, communication, automation, export/delete or CRM offline feature is included. Those broader proposals below remain design only. P09/P10 service/report/Finance boundaries remain independent. Real operational licence/configuration evidence, D-013/D-025, owner-accepted parity and full AT-25 stay open/planned.
+
+The [concrete API](../contracts/service-api.md#bp-03-i1-opportunity-implementation-amendment) and [physical dictionary](../contracts/service-data-dictionary.md#bp-03-i1-physical-opportunity-extension) refine the candidate contracts below for I1. No PP-01 API-C/API-R number or new parent is allocated. Original discovery wireframes and historical baseline statements remain source evidence; runtime screenshots and checks have separate provenance. [I2 starter](../delivery/crm-i2-starter.md) is prepared only.
 
 ## 1. Purpose, evidence and scope
 

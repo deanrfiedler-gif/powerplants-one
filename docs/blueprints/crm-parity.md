@@ -240,3 +240,7 @@ All checked 6 September 2026. The statements below are product documentation, no
 ## 6. Coverage conclusion
 
 18/18 parity items now have outcome, evidence/limits, proposed disposition, dependency, acceptance and evidence-owner treatment. This is **register completeness**, not account parity completeness. Only PAR-03/04 have refreshed live configuration evidence; all account-use conclusions remain bounded or unknown. No item is retired, no operational decision is closed, no CRM runtime case or AT-25 is passed. Issue #9 remains open for account-context/evidence completion and owner acceptance.
+
+## I1 implementation distinction
+
+The separately authorised [I1 implementation](../delivery/crm-i1-handover.md) exercises only CRM-01/02/03 and partial CRM-08, with PAR-01/03/05/15 foundations, in a fictional owned-opportunity journey. Actual checks/publication are recorded there; this assessment does not promote an unmerged branch or a component test to parity acceptance. All PAR-01–PAR-18 dispositions and account evidence requests remain proposed/open. No new Pipedrive/account read, import, retirement or cutover follows from I1. The original E1–E5 discovery observations retain their dates and limits.

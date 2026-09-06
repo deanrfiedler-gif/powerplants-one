@@ -109,15 +109,11 @@ test("CA-01/03/04 real HTTP lost response, receipt lookup, strict commands and c
     ).status,
     422,
   );
-  assert.equal(
-    (
-      await call(cookie, "crm/opportunities", {
-        ...crmCreate(),
-        title: "x".repeat(66000),
-      })
-    ).status,
-    413,
-  );
+  const tooLarge={...crmCreate(),title:"x".repeat(66000)};
+  const rejected=await call(cookie,"crm/opportunities",tooLarge);
+  assert.equal(rejected.status,422);
+  assert.equal(rejected.body.code,"PayloadTooLarge");
+  assert.equal((await database().query("SELECT count(*)::int AS n FROM ppo.opportunities WHERE id=$1",[tooLarge.id])).rows[0].n,0);
 });
 test("CA-06/10 HTTP direct/search/filter/selector/work/receipt routes suppress another company's CRM content", async () => {
   const cookie = await session("coordinator"),

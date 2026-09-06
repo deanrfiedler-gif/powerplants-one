@@ -59,7 +59,7 @@ export async function readOpportunity(p: Principal, id: string) {
           : "Upcoming";
   const events = (
     await c.query(
-      "SELECT id,event_type,opportunity_version,from_stage,to_stage,reason,need_summary,qualification_note,next_activity_id,identification_activity_id,created_at,created_by FROM ppo.opportunity_events WHERE workspace_id=$1 AND opportunity_id=$2 ORDER BY opportunity_version",
+      "SELECT e.id,e.event_type,e.opportunity_version,e.from_stage,e.to_stage,e.reason,e.need_summary,e.qualification_note,e.next_activity_id,e.identification_activity_id,e.created_at,e.created_by,u.display_name AS actor_name FROM ppo.opportunity_events e JOIN ppo.users u ON (u.workspace_id,u.id)=(e.workspace_id,e.created_by) WHERE e.workspace_id=$1 AND e.opportunity_id=$2 ORDER BY e.opportunity_version",
       [p.workspace_id, id],
     )
   ).rows.map((e) => ({

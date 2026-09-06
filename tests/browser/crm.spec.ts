@@ -329,3 +329,28 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   ).toBeVisible();
   await capture(page, info, "loading");
 });
+
+test("CA-06/10 real CRM permission revocation clears linked Activity content after refused completion",async({page},info)=>{
+ // Private disposable DB fixture, no grant/admin route is added to the application.
+ process.loadEnvFile(".env.local");
+ const {database,closeDatabase}=await import("../../src/platform/database");
+ const {localConfig}=await import("../../src/platform/config");
+ expect(localConfig().database_name).toBe("ppo_synthetic_test");
+ const {randomBytes}=await import("node:crypto");
+ const user=randomUUID(),token=randomBytes(32).toString("hex");
+ try {
+  await database().query("INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1,$2,'PPO-LocalSynthetic',$3,'SYN Browser revocation fixture')",[user,CRM.workspace,randomUUID()]);
+  await database().query("INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id) SELECT workspace_id,$1,company_id,capability,scope_type,scope_id,site_id FROM ppo.permission_grants WHERE user_id=$2",[user,CRM.owner]);
+  await database().query("INSERT INTO ppo.sessions(token_hash,workspace_id,actor_id,expires_at) VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')",[createHash("sha256").update(token).digest("hex"),CRM.workspace,user]);
+  await page.context().addCookies([{name:"ppo_local_session",value:token,url:"http://127.0.0.1:3000",httpOnly:true,sameSite:"Strict"}]);
+  const i={...crmCreate(),title:"SYN Revoked opportunity private title",owner_id:user,initial_action:{...crmAction(user),summary:"SYN Revoked Activity private content"}};
+  await call(page,"crm/opportunities",i);await page.goto(`/work/${i.initial_action.id}`);
+  await expect(page.getByRole("heading",{name:i.initial_action.summary,exact:true})).toBeVisible();
+  await page.getByLabel("Completion outcome or cancellation reason",{exact:true}).fill("SYN Sensitive proposed outcome");await page.getByLabel("Reason for change",{exact:true}).fill("SYN Attempt after actual revocation");
+  await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.read'",[user]);
+  await page.getByRole("button",{name:"Complete with outcome",exact:true}).click();await expect(page.getByRole("alert")).toBeVisible();
+  await expect(page.getByRole("heading",{name:i.initial_action.summary,exact:true})).toHaveCount(0);await expect(page.getByLabel("Completion outcome or cancellation reason",{exact:true})).toHaveCount(0);
+  expect(await page.locator("body").innerText()).not.toContain(i.title);await capture(page,info,"revoked-activity");
+  expect((await database().query("SELECT status,outcome FROM ppo.activities WHERE id=$1",[i.initial_action.id])).rows[0]).toEqual({status:"Open",outcome:null});
+ } finally {await closeDatabase();}
+});

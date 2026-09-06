@@ -865,9 +865,13 @@ function OpportunityContent({
                 {e.from_stage ? `${e.from_stage} → ` : ""}
                 {e.to_stage} · {e.reason}
               </p>
-              {e.qualification_note && <p>{e.qualification_note}</p>}
+              <details>
+                <summary>Recorded need and qualification</summary>
+                <p className="crm-narrative">{e.need_summary}</p>
+                {e.qualification_note && <p className="crm-narrative">{e.qualification_note}</p>}
+              </details>
               <small>
-                Recorded <Stamp value={String(e.created_at)} />
+                Recorded by {e.actor_name} · <Stamp value={String(e.created_at)} />
               </small>
             </li>
           ))}

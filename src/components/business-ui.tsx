@@ -15,6 +15,9 @@ export type Failure = {
   retryable?: boolean;
   correlation_id?: string;
 };
+export function isDenied(error:unknown) {
+  return [401,403,404].includes((error as Failure)?.status ?? 0);
+}
 export async function api<T>(path: string, body?: unknown): Promise<T> {
   let response: Response;
   try {
