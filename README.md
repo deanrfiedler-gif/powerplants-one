@@ -2,7 +2,7 @@
 
 Private prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P08 implemented; verification and publication recorded in the P08 handover · **Deployment:** none.
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P09 implemented; exact verification and publication recorded in the P09 handover · **Deployment:** none.
 
 This repository is Dean's personal private prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. The complete service journey remains planned. Company ownership, production approval and external-system write authority are not implied.
 
@@ -39,7 +39,7 @@ MYOB Acumatica remains the intended authoritative ERP. SharePoint remains the in
 | `docs/decisions/` | Current decision register and architecture decision records |
 | `docs/requirements/` | All 78 parent requirements with source/release/test linkage |
 | `docs/architecture/` | BP-02 architecture recommendation, boundaries and feasibility obligations |
-| `docs/testing/` | Full acceptance catalogue, P01–P08 component evidence and dependency inventory |
+| `docs/testing/` | Full acceptance catalogue, P01–P09 component evidence and dependency inventory |
 | `docs/delivery/` | Backlog, first-release plan and foundation handover |
 | `.github/` | Issue forms, pull-request template, documentation and application assurance workflows |
 | `scripts/` | Repository assurance, local launcher, database lifecycle and persistence proof |
@@ -52,7 +52,7 @@ Follow the [exact P08 setup and run commands](docs/delivery/p08-handover.md#runt
 
 Job-pack preparation and issue are at `/service/packs`; exact documents at `/documents/:issue_id`. Install the matching Chromium renderer and retain its private output directory outside Git as described in the P06 handover.
 
-Technicians use `/my-jobs` and `/my-jobs/:id`. Riley and Morgan acknowledge and start independently. Supported fictional PNGs are registered, uploaded and verified before availability. Completion remains a draft. **Field workflow preview — report/Finance work incomplete**. The dedicated `/offline/index.html` workspace downloads up to two permitted jobs, commits original evidence and PNGs to IndexedDB, and explicitly retries bounded original operations with per-item receipts and owned exception recovery. Offline authority remains provisional.
+Technicians use `/my-jobs` and `/my-jobs/:id`. Riley and Morgan acknowledge and start independently. Supported fictional PNGs are registered, uploaded and verified before availability. Completion drafts can be submitted separately for service review at `/service/reports`. Exact reviewed HTML/PDF, owned remaining work, immutable report revisions and customer responses are available in the P09 implementation. **Field workflow preview — Finance work incomplete**. The dedicated `/offline/index.html` workspace downloads up to two permitted jobs, commits original evidence and PNGs to IndexedDB, and explicitly retries bounded original operations with per-item receipts and owned exception recovery. Offline authority remains provisional.
 
 ## Working screens
 
@@ -72,4 +72,6 @@ python3 scripts/check_naming.py
 
 The check verifies reference hashes, register counts/IDs, local Markdown links and selected repository hygiene. It is not an application, security or business-acceptance test. The GitHub workflow runs the same check with read-only repository permissions; enforcement through branch protection is a separate account/settings matter.
 
-Use [Issues](https://github.com/deanrfiedler-gif/powerplants-one/issues) for development work and [pull requests](https://github.com/deanrfiedler-gif/powerplants-one/pulls) for reviewable changes. P01–P04 are component-verified. P05 adds controlled crew confirmation/reservations, day/week planning, accessible moves, contact/change requests and cancellation. Its actual verification/publication state is recorded in the [P05 handover](docs/delivery/p05-handover.md). [P06 handover](docs/delivery/p06-handover.md) records controlled output, individual acknowledgement and current publication. [P07 handover](docs/delivery/p07-handover.md) records assigned jobs, personal actual start, typed capture, durable synthetic photos, successor corrections and completion drafts. [P08 handover](docs/delivery/p08-handover.md) records durable offline queue/recovery implementation and actual verification/publication state. [P09 scope](docs/delivery/p09-starter-prompt.md) is progressing separately in [issue #36](https://github.com/deanrfiedler-gif/powerplants-one/issues/36) / [PR #37](https://github.com/deanrfiedler-gif/powerplants-one/pull/37); this CRM design publication does not claim P09 completion. The complete PP-01 journey remains incomplete.
+Use [Issues](https://github.com/deanrfiedler-gif/powerplants-one/issues) for development work and [pull requests](https://github.com/deanrfiedler-gif/powerplants-one/pulls) for reviewable changes. P01–P04 are component-verified. P05 adds controlled crew confirmation/reservations, day/week planning, accessible moves, contact/change requests and cancellation. Its actual verification/publication state is recorded in the [P05 handover](docs/delivery/p05-handover.md). [P06 handover](docs/delivery/p06-handover.md) records controlled output, individual acknowledgement and current publication. [P07 handover](docs/delivery/p07-handover.md) records assigned jobs, personal actual start, typed capture, durable synthetic photos, successor corrections and completion drafts. [P08 handover](docs/delivery/p08-handover.md) records durable offline queue/recovery implementation and actual verification/publication state. [P09 handover](docs/delivery/p09-handover.md) records exact submission, authorised service review, controlled customer reports and content-bound responses under [issue #36](https://github.com/deanrfiedler-gif/powerplants-one/issues/36) / [PR #37](https://github.com/deanrfiedler-gif/powerplants-one/pull/37). The complete PP-01 journey remains incomplete.
+
+P09 service review and reports are implemented under [PR #37](https://github.com/deanrfiedler-gif/powerplants-one/pull/37). See the [P09 handover](docs/delivery/p09-handover.md) for exact transition, output, offline and verification limits, and the [prepared P10 starter](docs/delivery/p10-starter-prompt.md). P10 has not started.

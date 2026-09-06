@@ -4,6 +4,11 @@ import { AppError } from "./errors";
 
 export type QueryClient = Pick<PoolClient, "query">;
 export type Capability =
+  | "report.read"
+  | "report.review"
+  | "report.issue"
+  | "report.respond"
+
   | "crm.opportunity.read"
   | "crm.opportunity.create"
   | "crm.opportunity.edit"

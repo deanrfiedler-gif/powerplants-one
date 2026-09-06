@@ -1,0 +1,247 @@
+import assert from "node:assert/strict";
+import { test } from "node:test";
+import { randomUUID, createHash } from "node:crypto";
+import { prepareFieldAppointment } from "../helpers/field-http";
+import { base, startInput, draft, entry, png } from "../helpers/field";
+import { decision, response } from "../helpers/reports";
+const origin = "http://127.0.0.1:3000";
+async function session(profile: string) {
+  const r = await fetch(origin + "/api/v1/local-session", {
+    method: "POST",
+    headers: { Origin: origin, "Content-Type": "application/json" },
+    body: JSON.stringify({ profile }),
+  });
+  assert.equal(r.status, 200);
+  return r.headers.get("set-cookie")!.split(";")[0];
+}
+async function call(cookie: string, path: string, body?: unknown) {
+  const r = await fetch(origin + "/api/v1/" + path, {
+    method: body === undefined ? "GET" : "POST",
+    headers: {
+      Cookie: cookie,
+      ...(body === undefined
+        ? {}
+        : { Origin: origin, "Content-Type": "application/json" }),
+    },
+    body: body === undefined ? undefined : JSON.stringify(body),
+  });
+  return { status: r.status, body: await r.json(), headers: r.headers };
+}
+async function ok(cookie: string, path: string, body?: unknown) {
+  const r = await call(cookie, path, body);
+  assert.ok(r.status < 300, JSON.stringify(r));
+  return r.body;
+}
+test("P09 real HTTP exact submit/review/issue/response enforces strict request and customer/file scope", async () => {
+  const co = await session("coordinator"),
+    p = await session("assigned-technician"),
+    m = await session("second-technician"),
+    systems = await session("systems"),
+    setup = await prepareFieldAppointment(
+      (path, b) => ok(co, path, b),
+      "2026-12-08",
+    );
+  for (const cookie of [p, m]) {
+    const actor = await ok(cookie, "local-session"),
+      r = setup.pack.readiness.recipients.find(
+        (x: { user_id: string }) => x.user_id === actor.actor_id,
+      );
+    await ok(cookie, `pack-issues/${setup.pack.current_issue_id}/acknowledge`, {
+      ...base(),
+      assignment_id: r.assignment_id,
+      assignment_version: r.assignment_version,
+      presented_hash: setup.pack.issues[0].output_hash,
+      captured_at: new Date().toISOString(),
+    });
+  }
+  let j = (await ok(p, `my-jobs/${setup.appointment_id}`)).items[0];
+  await ok(p, `appointments/${j.id}/start`, startInput(j));
+  j = (await ok(p, `my-jobs/${j.id}`)).items[0];
+  await ok(p, "field-entries", entry(j));
+  j = (await ok(p, `my-jobs/${j.id}`)).items[0];
+  await ok(p, `appointments/${j.id}/completion-draft`, draft(j));
+  j = (await ok(p, `my-jobs/${j.id}`)).items[0];
+  const cmd = {
+    ...base(),
+    id: randomUUID(),
+    attendance_id: j.attendance.id,
+    draft_revision_id: j.draft_revisions[0].id,
+    expected_draft_version: j.draft.version,
+    expected_report_version: 0,
+    expected_appointment_version: j.version,
+    attendance_end_at: new Date().toISOString(),
+  };
+  assert.equal(
+    (
+      await call(p, `appointments/${j.id}/submit-completion`, {
+        ...cmd,
+        finance_approved: true,
+      })
+    ).status,
+    422,
+  );
+  assert.equal(
+    (await call(m, `appointments/${j.id}/submit-completion`, cmd)).status,
+    404,
+  );
+  const receipt = await ok(p, `appointments/${j.id}/submit-completion`, cmd);
+  assert.deepEqual(
+    await ok(p, `appointments/${j.id}/submit-completion`, cmd),
+    receipt,
+  );
+  let r = (await ok(co, `reports/${cmd.id}`)).items[0];
+  assert.equal(r.permitted_recipient.id, r.recipient_id);
+  assert.match(r.permitted_recipient.name, /SYN/);
+  assert.equal(
+    (await call(p, `reports/${r.id}/review`, decision(r))).status,
+    403,
+  );
+  await ok(co, `reports/${r.id}/review`, decision(r));
+  r = (await ok(co, `reports/${r.id}`)).items[0];
+  const draftPresentation = r.presentations[0];
+  await ok(
+    p,
+    `reports/${r.id}/respond`,
+    response(r, "Accepted", "DraftEvidence"),
+  );
+  await ok(co, `reports/${r.id}/issue`, {
+    ...base(),
+    expected_version: r.version,
+    revision_id: r.revisions[0].id,
+    review_id: r.reviews[0].id,
+    template_id: r.template.id,
+    template_version: r.template.version,
+  });
+  r = (await ok(co, `reports/${r.id}`)).items[0];
+  const recovered = await ok(
+    co,
+    `report-render-jobs/${r.jobs[0].id}/retry`,
+    {},
+  );
+  assert.equal(JSON.stringify(recovered).includes("store_key"), false);
+  assert.equal(recovered.output_available, true);
+  r = (await ok(co, `reports/${r.id}`)).items[0];
+  const v = r.presentations.find(
+    (x: { kind: string }) => x.kind === "IssuedReport",
+  );
+  assert.equal(r.responses[0].presentation_id, draftPresentation.id);
+  for (const kind of ["html", "pdf", "manifest"]) {
+    const response = await fetch(
+      `${origin}/api/v1/reports/${r.id}/${kind}?presentation_id=${v.id}`,
+      { headers: { Cookie: p } },
+    );
+    assert.equal(response.status, 200);
+    assert.match(response.headers.get("cache-control")!, /no-store/);
+    const bytes = Buffer.from(await response.arrayBuffer());
+    if (kind === "html")
+      assert.equal(
+        createHash("sha256").update(bytes).digest("hex"),
+        v.content_hash,
+      );
+    if (kind === "manifest") {
+      const manifest = JSON.parse(bytes.toString());
+      assert.equal(manifest.issued_at, r.issues[0].issued_at);
+      assert.ok(manifest.prepared_at);
+    }
+    if (kind !== "pdf") {
+      for (const forbidden of [
+        "store_key",
+        "item_id",
+        "content_base64",
+        "SYN exact factual evidence checked",
+        "PRIVATE_FINANCE_CANARY",
+      ])
+        assert.equal(bytes.toString().includes(forbidden), false, forbidden);
+    }
+    const denied = await fetch(
+      `${origin}/api/v1/reports/${r.id}/${kind}?presentation_id=${v.id}`,
+      { headers: { Cookie: systems } },
+    );
+    assert.ok([403, 404].includes(denied.status));
+    assert.equal(
+      (
+        await call(
+          p,
+          `reports/${randomUUID()}/manifest?presentation_id=${v.id}`,
+        )
+      ).status,
+      404,
+    );
+    assert.equal(
+      (
+        await call(
+          p,
+          `reports/${r.id}/manifest?presentation_id=${v.id}&raw=true`,
+        )
+      ).status,
+      422,
+    );
+  }
+  const bytes = png(),
+    body = {
+      ...response(r),
+      signature: {
+        sha256: createHash("sha256").update(bytes).digest("hex"),
+        byte_count: bytes.length,
+        content_base64: bytes.toString("base64"),
+      },
+    },
+    accepted = await ok(p, `reports/${r.id}/respond`, body);
+  assert.deepEqual(await ok(p, `reports/${r.id}/respond`, body), accepted);
+  assert.equal(
+    (
+      await call(p, `reports/${r.id}/respond`, {
+        ...body,
+        respondent_name: "SYN different",
+      })
+    ).status,
+    409,
+  );
+  const image = await fetch(
+    `${origin}/api/v1/customer-responses/${body.id}/signature`,
+    { headers: { Cookie: p } },
+  );
+  assert.deepEqual(Buffer.from(await image.arrayBuffer()), bytes);
+  assert.ok(
+    [403, 404].includes(
+      (
+        await fetch(
+          `${origin}/api/v1/customer-responses/${body.id}/signature`,
+          { headers: { Cookie: systems } },
+        )
+      ).status,
+    ),
+  );
+  assert.equal(
+    (
+      await call(p, `reports/${r.id}/respond`, {
+        ...response(r),
+        signature_response_id: body.id,
+      })
+    ).status,
+    422,
+  );
+  assert.equal(
+    (
+      await call(p, `reports/${r.id}/respond`, {
+        ...response(r),
+        signature: { ...body.signature, sha256: "0".repeat(64) },
+      })
+    ).status,
+    409,
+  );
+  assert.equal(
+    (
+      await call(p, `reports/${r.id}/respond`, {
+        ...response(r, "Unavailable"),
+        respondent_name: "SYN invented signer",
+      })
+    ).status,
+    422,
+  );
+  r = (await ok(co, `reports/${r.id}`)).items[0];
+  assert.equal(r.responses.length, 2);
+  assert.equal(r.appointment.status, "Completed");
+  assert.equal(r.work_order.status, "Authorised");
+  assert.equal(r.finance_state, "Not implemented — P10");
+});

@@ -1,6 +1,6 @@
 # PP-01 — Service API, operation and event contracts
 
-**Edition:** r09 · **Status:** Internal API contract; bounded P01–P08 subsets are implemented, with component evidence recorded separately. These are Powerplants One routes, never asserted MYOB endpoints.
+**Edition:** r10 · **Status:** Internal API contract; bounded P01–P09 subsets are implemented, with actual verification recorded separately. API-C19 and Finance remain P10. These are Powerplants One routes, never asserted MYOB endpoints.
 
 [Architecture](../architecture/BP-02-platform-architecture.md) · [Dictionary](service-data-dictionary.md) · [Service specification](../blueprints/BP-07-service-operations.md).
 
@@ -353,6 +353,35 @@ Domain mutation, original sync acceptance row, audit, normal receipt and outbox 
 
 
 Normal acceptance and restricted recovery are mutually exclusive for one original under the same operation/workspace transaction locks. Once preserved into restricted recovery, replay returns RecoveryDispositionRequired without a normal receipt; changed reuse conflicts. A competing normal acceptance either wins once and blocks recovery as AlreadyAccepted, or recovery wins once and blocks normal acceptance. Neither path creates a second capture or follow-up. Direct online P07 commands also refuse the held original after current authorisation; the schema-7 upgrade path remains compatible. The browser does not offer recovery on an actively Sending row.
+
+## P09 physical command and read amendment
+
+[ADR-0014](../decisions/ADR-0014-p09-service-reports.md) implements API-C16–18 only. **API-C19 is Finance handoff, P10, and is not implemented.** Every command uses strict schema 1, a stable `operation_id` and meaningful `reason`; unknown fields are refused. Same original retries return the original receipt after current authorisation. Changed reuse conflicts. Mutations, audit, receipt, outbox and owned activities share operation/workspace transaction locks.
+
+| Route / command | Required exact input and current permission |
+| --- | --- |
+| `POST /appointments/:id/submit-completion` / SubmitCompletion | Report `id`, own `attendance_id`, exact `draft_revision_id`, expected draft/report/appointment versions (report 0 only for first creation), declared `attendance_end_at`; `field.completion.own`, current field assignment and original actor. |
+| `POST /reports/:id/review` / ReviewReport | Expected report version, exact revision/source hash; Approved or Returned; every entry `{id,version,decision,remarks}`; Current or OriginalAttendanceOnly authority disposition, internal remarks, active permitted site `recipient_id` for approval. Current scoped service owner with `report.review`. |
+| `POST /reports/:id/amend` / AmendReport | Expected report version and current reviewed/issued revision. Original technician with completion permission opens a successor cycle without reopening attendance. |
+| `POST /reports/:id/issue` / RequestReportIssue | Expected report version, revision/review IDs and exact template ID/version; current scoped service owner with `report.issue`. Returns 202 and durable Queued receipt; it is not release. |
+| `POST /report-render-jobs/:id/retry` | Strict empty body; current service owner/issue permission. Bounded explicit original-job recovery, no new render identity. Worker finalisation records ReportIssued and the actual release only after byte/source/permission recheck. |
+| `POST /reports/:id/respond` / RecordCustomerResponse | New response `id`, exact `presentation_id`, `revision_id`, `presentation_kind`, `presented_hash`, expected report version, choice, stated name/role, remarks/next action, presented/captured timestamps, optional original PNG `{sha256,byte_count,content_base64}`. Current `report.respond` and report scope. |
+| `GET /reports`, `/reports/:id` | Current `report.read`; report/company/site/appointment visibility and current field assignment for technicians. Staff review DTO, revision/history, safe issue metadata and owned actions. No unscoped Systems approval. |
+| `GET /reports/:id/html`, `/pdf`, `/manifest` | Exact `presentation_id` query only; current report/file scope, durable byte verification and private no-store. Customer-facing manifest projects hashes/sizes/revision only and omits private adapter identity. DraftEvidence has no PDF. |
+| `GET /report-render-jobs/:id/output?kind=html\|pdf` | Current issue owner permission and exact retained output. Stale output remains an owned attempt and cannot be issued. |
+| `GET /customer-responses/:id/signature` | Current report/file scope; exact original protected mark and binding/hash verification. No existing response/signature transfer API. |
+
+Complete submission refuses incomplete declarations; Partial/UnableToProceed retain explicit incomplete declarations, their reasons/blockers and owned next action without inventing missing quantities. All submission outcomes refuse changed evidence/draft versions, required unavailable or wrong-hash original bytes and unowned remaining work. Submitted sets cannot be changed in place. Review refuses stale or competing sets, missing entry decisions, returned entries in an approved set and unexplained scope/pack changes. Scope changes cannot be waived to claim Complete. A stale rendered source/template/recipient remains StaleSource with owned recovery; a successor cycle is required. Source/operation/file permission failures reveal no restricted record title or provider path.
+
+Response alternatives are Accepted, AcceptedWithReservations, Declined, Unavailable and Disputed. Non-Accepted needs at least ten characters of meaningful remarks and next action, assigned to the current service owner. Unavailable refuses a respondent or signature. The HTML presentation hash, kind and revision must agree exactly. Changed content, a superseded presentation or re-upload of a prior mark bound to different content on the same report is refused. IssuedReport and DraftEvidence responses stay distinct, including after issue. A successful response changes no appointment/order/ticket/Finance state.
+
+Additive `/sync/operations` commands use unchanged P08 bounds/leases/receipts. SubmitCompletion has no separate target and can declare `draft_revision_id:{operation_id}` only with that exact CompletionDraft dependency. CustomerResponse targets the report and preserves its cached presentation/hash/version, same original actor/attendance authority and optional atomic PNG payload. No queued review or issue command exists. Unknown/stale acceptance stays local/Pending/Conflict/ReviewRequired; originals are not rebased. Lost accepted results recover the same receipt without duplicate submission/review/issue/response/mark/follow-up.
+
+Events are CompletionSubmitted, ServiceReportReviewed (decision retained), ReportCorrectionOpened, ReportIssueRequested, ReportIssued and CustomerResponseRecorded. They are internal durable facts, never evidence of email/SMS/customer delivery, Finance approval or ERP processing.
+
+P09 offline preparation requires a downloaded server-accepted attendance before submission. Provisional P08 starts/captures first synchronise and refresh their accepted context; no appointment version is guessed from a pending start. Older accepted local drafts are ignored when the downloaded server draft has a newer exact version. P09 submission/response originals remain retained after conflicts and are excluded from restricted P08 recovery actions.
+
+P09 online submission also checks retained originals in the current browser’s owner-bound P08 workspace. Unaccepted originals for the attendance (except separately bound customer responses) block a new online submission; locked/unreadable local ownership requires explicit verification. The server still validates exact accepted evidence and bytes transactionally. It cannot discover unsent evidence on another device. The report list explicitly exposes a bounded recent 200-candidate window and always labels that bounded discovery as BoundedWindow; it does not expose the number of inaccessible candidates.
 
 ## BP-03 I1 opportunity implementation amendment
 

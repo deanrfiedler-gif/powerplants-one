@@ -13,7 +13,7 @@ export async function migrate(through = 10) {
     await client.query(
       "CREATE TABLE IF NOT EXISTS public.ppo_migrations(version integer PRIMARY KEY,sha256 text NOT NULL,applied_at timestamptz NOT NULL DEFAULT clock_timestamp())",
     );
-    for (const [index, file] of [
+    for (const file of [
       "0001-foundation.sql",
       "0002-shared-foundation.sql",
       "0003-customer-intake.sql",
@@ -22,10 +22,10 @@ export async function migrate(through = 10) {
       "0006-job-packs.sql",
       "0007-online-field.sql",
       "0008-offline-recovery.sql",
+      "0009-service-reports.sql",
       "0010-crm-opportunities.sql",
-    ].entries()) {
+    ]) {
       const version = Number(file.slice(0,4));
-      void index;
       if (version > through) break;
       const sql = await read(`migrations/${file}`),
         hash = createHash("sha256").update(sql).digest("hex");
@@ -58,6 +58,7 @@ export async function seed(through = 10) {
       [5, "seed-p05.sql"],
       [6, "seed-p06.sql"],
       [7, "seed-p07.sql"],
+      [9, "seed-p09.sql"],
       [10, "seed-crm-i1.sql"],
     ] as const) {
       if (version > through) break;
@@ -68,6 +69,18 @@ export async function seed(through = 10) {
       if (prior.rowCount) continue;
       await client.query(await read(file));
       if (version === 6) await seedDocumentFiles();
+      if (version === 9) {
+        const { currentReportTemplate } =
+          await import("../src/reports/template");
+        const definition = await currentReportTemplate();
+        await client.query(
+          "INSERT INTO ppo.report_templates(id,workspace_id,version,definition,content_hash) VALUES('e1000000-0000-4000-8000-000000000001','10000000-0000-4000-8000-000000000001',1,$1,$2)",
+          [definition, createHash("sha256").update(definition).digest("hex")],
+        );
+        await client.query(
+          "INSERT INTO ppo.report_template_policy(workspace_id,template_id) VALUES('10000000-0000-4000-8000-000000000001','e1000000-0000-4000-8000-000000000001')",
+        );
+      }
       await client.query("INSERT INTO ppo.seed_receipts(version) VALUES($1)", [
         version,
       ]);

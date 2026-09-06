@@ -9,6 +9,7 @@ const SHELL = [
     "offline/client",
     "offline/store",
     "offline/protocol",
+    "reports/validation",
     "field/validation",
     "shared/validation",
     "platform/validation",

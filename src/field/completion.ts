@@ -92,6 +92,28 @@ export async function saveCompletionDraft(
           "EvidenceSetIncomplete",
           "Reference all of your current evidence, including unresolved and unsuccessful work.",
         );
+      // A factual report correction can retain a previously submitted Complete
+      // outcome. It does not grant current physical-start authority. Every task,
+      // declaration, byte and failed-control check below still applies.
+      let completeCorrectionBaseline = false;
+      if (
+        (
+          await c.query(
+            "SELECT to_regclass('ppo.attendance_acceptances') AS relation",
+          )
+        ).rows[0].relation
+      ) {
+        completeCorrectionBaseline =
+          !!(
+            await c.query(
+              "SELECT 1 FROM ppo.service_reports sr JOIN ppo.report_revisions r ON r.id=sr.current_revision_id JOIN ppo.packs k ON k.appointment_id=r.appointment_id WHERE sr.workspace_id=$1 AND sr.attendance_id=$2 AND sr.status IN ('Draft','Returned') AND r.snapshot#>>'{completion,scope_outcome}'='Complete' AND k.current_issue_id=$3 AND k.status='Issued' AND NOT k.needs_review",
+              [p.workspace_id, ctx.attendance.id, ctx.attendance.issue_id],
+            )
+          ).rowCount &&
+          ctx.w.scope_revision_id === ctx.attendance.scope_revision_id &&
+          ctx.w.authorised_scope_revision_id ===
+            ctx.attendance.scope_revision_id;
+      }
       const blocks: string[] = [];
       for (const [kind, declaration] of [
         ["Time", cmd.time_declaration],
@@ -124,9 +146,12 @@ export async function saveCompletionDraft(
           )
         ).rows)
           photoIds.add(a.attachment_id);
-        if (e.authority_state === "ReviewRequired")
+        if (
+          e.authority_state === "ReviewRequired" &&
+          !(completeCorrectionBaseline && e.supersedes_entry_id)
+        )
           blocks.push(
-            "Evidence captured after an authority change requires review.",
+            "This evidence requires review against its original attendance authority.",
           );
         if (
           e.kind === "Checklist" &&
@@ -165,8 +190,13 @@ export async function saveCompletionDraft(
         if (!available)
           blocks.push("A required original photo is unavailable.");
       }
-      if ((await currentCaptureState(c, p, ctx)) !== "Current")
-        blocks.push("Current scope or pack authority requires review.");
+      if (
+        (await currentCaptureState(c, p, ctx)) !== "Current" &&
+        !completeCorrectionBaseline
+      )
+        blocks.push(
+          "New physical capture is not currently authorised; review the original attendance context.",
+        );
       for (const t of cmd.task_outcomes) {
         if (t.outcome !== "Complete")
           blocks.push("An authorised task remains incomplete.");

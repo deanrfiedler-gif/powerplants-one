@@ -1643,6 +1643,26 @@ button:disabled {
 .field-preview{display:grid;gap:.35rem;padding:1rem 1.2rem;border-left:4px solid #3f8164;background:#eef5f1;border-radius:8px;margin:1rem 0 1.5rem}.field-preview span{font-size:.9rem;color:#415a50}.field-summary{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}.field-job-list{display:grid;gap:1rem}.field-job-card{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;border:1px solid #d6e0dc;border-radius:12px;padding:1.4rem;background:white}.field-job-card h2{margin:.6rem 0}.field-job-card small{color:#546875}.field-job-card a{overflow-wrap:anywhere}.field-start{border-top:4px solid #2e7558}.field-blockers{border-left:4px solid #b97919;background:#fff9ed}.field-tabs{display:flex;gap:.5rem;flex-wrap:wrap;position:sticky;top:0;z-index:4;padding:.7rem 0;background:#f4f7f6}.field-tabs button{min-height:44px}.field-task,.task-declaration{padding:1rem 0;border-top:1px solid #d9e2df}.field-evidence{border-top:1px solid #d4e0da;padding:1.2rem 0}.field-evidence.superseded{border-left:3px solid #a9b5af;padding-left:1rem;background:#f6f8f7}.field-values{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}.field-values>div{min-width:0}.field-values dt{text-transform:capitalize;color:#526776;font-size:.85rem}.field-values dd{margin:.2rem 0;white-space:pre-wrap;overflow-wrap:anywhere}.field-photo{display:block;max-width:100%;width:360px;height:auto;border:1px solid #cad6d0;border-radius:8px;margin:1rem 0}.photo-row{display:flex;gap:1rem;justify-content:space-between;align-items:center;padding:1rem 0;border-top:1px solid #d9e2df}.photo-row>div{min-width:0;overflow-wrap:anywhere}.hash-text{overflow-wrap:anywhere;font-size:.8rem;color:#526776}.save-state{padding:.7rem 0;color:#345d4d}.success-notice{padding:.8rem;background:#e6f4eb;border-radius:8px}.field-start fieldset,.business-card fieldset{border:0;padding:0;min-width:0}.field-job-card .button-link{display:inline-block;padding:.7rem 1rem;background:#153d52;color:white;border-radius:7px;text-decoration:none}.field-tabs:has(+ div) {scroll-margin-top:1rem}
 @media(max-width:700px){.field-job-card{grid-template-columns:1fr;gap:.5rem;padding:1rem}.field-values{grid-template-columns:1fr}.photo-row{display:grid;justify-content:stretch}.field-tabs button{flex:1 1 40%;padding:.6rem}.field-preview{padding:.85rem}.field-task h3{font-size:1rem}}
 
+.report-screen .business-card { margin:1.25rem 0; padding:1.25rem; background:#fff; border:1px solid #d6e0dc; border-radius:12px; }
+.report-screen .business-card > h2:first-child { margin-top:0; }
+.report-field { display:grid; gap:.4rem; margin:1rem 0; font-weight:600; }
+.report-field input,.report-field select,.report-field textarea { width:100%; max-width:100%; padding:.7rem; border:1px solid #6c8290; border-radius:.3rem; font:inherit; background:white; color:#142d42; }
+.report-screen fieldset { min-width:0; margin:1rem 0; border:1px solid #bccbd0; padding:1rem; }
+.report-screen dd { margin:0 0 .6rem; overflow-wrap:anywhere; white-space:pre-wrap; }
+.report-screen article { padding:1rem 0; border-bottom:1px solid #d7e0e3; }
+.report-screen article a { display:inline-block; margin:.8rem; }
+.report-screen code,.report-hash { overflow-wrap:anywhere; font-size:.8rem; }
+.report-preview { width:100%; height:650px; border:1px solid #bccbd0; background:white; }
+@media(max-width:600px){.report-preview{height:500px}.report-screen{padding:1rem}.report-screen fieldset{padding:.65rem}.report-screen .business-card{padding:1rem}}
+
+/* P09 adopts the shared brand palette without changing earlier screen contracts. */
+.report-screen { --navy:#242a37; --green:#62bb46; color:var(--navy); }
+.report-screen a { color:var(--navy); text-decoration:underline; }
+.report-screen button { color:var(--navy); background:var(--green); border-color:var(--navy); min-height:44px; }
+.report-screen button.secondary { background:#fff; color:var(--navy); }
+.report-screen button:focus-visible,.report-screen input:focus-visible,.report-screen select:focus-visible,.report-screen textarea:focus-visible { outline:3px solid var(--navy); outline-offset:3px; }
+.report-field input,.report-field select,.report-field textarea { color:#242a37; font-size:16px; }
+
 /* BP-03 I1: online sales list and fixed-context forms. */
 .crm-worklist,.crm-history{list-style:none;padding:0;margin:1rem 0;display:grid;gap:1rem}
 .crm-card,.crm-panel{background:white;border:1px solid #cbd7dc;border-radius:12px;padding:1.25rem;min-width:0;overflow-wrap:anywhere}

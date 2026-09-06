@@ -31,6 +31,9 @@ import {
 import { ownerOptions } from "../../src/shared/context";
 import { readOperation } from "../../src/shared/receipts";
 import { CRM, crmBase, crmAction, crmCreate, crmQualify } from "../helpers/crm";
+import { reportIssued, reviewed, response as reportResponse } from "../helpers/reports";
+import { recordResponse, presentationBytes, readReport } from "../../src/reports/service";
+import { readFieldJob } from "../../src/field/reads";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -570,8 +573,13 @@ test("CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and 
     await readFile("db/migrations/0001-recover.sql", "utf8"),
   );
   await database().query("DROP TABLE public.ppo_migrations");
-  await migrate(8);
-  await seed(7);
+  await migrate(9);
+  await seed(9);
+  const report = await reportIssued();
+  const response = reportResponse(report.report);
+  const responseReceipt = await recordResponse(report.reviewer, report.report.id, response);
+  const originalReport = (await readReport(report.reviewer, report.report.id)).items[0];
+  const originalBytes = await presentationBytes(report.reviewer, report.report.id, response.presentation_id);
   const p = await principal();
   const a = {
     ...crmBase(),
@@ -589,6 +597,20 @@ test("CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and 
     "outbox_jobs",
     "history_records",
     "reference_counters",
+    "service_reports",
+    "report_revisions",
+    "report_entry_refs",
+    "report_reviews",
+    "attendance_acceptances",
+    "report_cycles",
+    "report_templates",
+    "report_template_policy",
+    "report_render_jobs",
+    "report_render_attempts",
+    "report_issues",
+    "report_presentations",
+    "customer_responses",
+    "report_follow_ups",
   ];
   const before = await Promise.all(
     tables.map((t) => rows(`SELECT * FROM ppo.${t} ORDER BY 1`)),
@@ -596,6 +618,8 @@ test("CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and 
   const hashes = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
+  const identities = await rows("SELECT * FROM ppo.business_identities ORDER BY id");
+  const links = await rows("SELECT * FROM ppo.activity_links ORDER BY activity_id,object_type,object_id");
   await migrate();
   await seed();
   for (let n = 0; n < tables.length; n++)
@@ -605,11 +629,20 @@ test("CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and 
     );
   assert.deepEqual(
     await rows(
-      "SELECT * FROM public.ppo_migrations WHERE version<=8 ORDER BY version",
+      "SELECT * FROM public.ppo_migrations WHERE version<=9 ORDER BY version",
     ),
     hashes,
   );
   assert.deepEqual((await createActivity(p, a)).receipt, accepted.receipt);
+  assert.deepEqual(await readOperation(report.p, report.cmd.operation_id), report.result.receipt);
+  assert.deepEqual(await readOperation(report.reviewer, response.operation_id), responseReceipt.receipt);
+  assert.deepEqual((await recordResponse(report.reviewer, report.report.id, response)).receipt, responseReceipt.receipt);
+  assert.deepEqual(await presentationBytes(report.reviewer, report.report.id, response.presentation_id), originalBytes);
+  const preserved = (await readReport(report.reviewer, report.report.id)).items[0];
+  for (const key of ["revisions", "reviews", "issues", "presentations", "responses"] as const)
+    assert.deepEqual(preserved[key], originalReport[key]);
+  assert.deepEqual(await rows("SELECT * FROM ppo.business_identities WHERE id=ANY($1::uuid[]) ORDER BY id", [identities.map(x=>x.id)]), identities);
+  assert.deepEqual((await rows("SELECT * FROM ppo.activity_links ORDER BY activity_id,object_type,object_id")).map(row=>Object.fromEntries(Object.entries(row).filter(([key])=>key!=="opportunity_id"))), links);
   const i = crmCreate();
   await createOpportunity(p, i);
   await qualifyOpportunity(p, i.id, crmQualify());
@@ -630,6 +663,23 @@ test("CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and 
   );
   assert.equal((await readOpportunity(p, i.id)).stage_id, "Qualified");
   assert.equal((await readOpportunity(p, i.id)).can_edit, false);
+});
+
+test("CA-01/03 direct SQL cannot skip an intermediate version event or append unaccepted future history", async () => {
+  const p=await principal(), i=crmCreate();
+  await createOpportunity(p,i);
+  const futureEvent = `INSERT INTO ppo.opportunity_events(id,workspace_id,company_id,opportunity_id,created_by,updated_by,operation_id,opportunity_version,event_type,pipeline_definition_id,from_stage,to_stage,next_activity_id,reason,need_summary)
+    SELECT $1,workspace_id,company_id,id,updated_by,updated_by,$2,$3,'OpportunityActionPlanned',pipeline_definition_id,stage_id,stage_id,next_activity_id,'SYN direct SQL event challenge',need_summary FROM ppo.opportunities WHERE id=$4`;
+  await assert.rejects(transaction(async c=>{
+    await c.query("UPDATE ppo.opportunities SET version=version+1 WHERE id=$1",[i.id]);
+    await c.query("UPDATE ppo.opportunities SET version=version+1 WHERE id=$1",[i.id]);
+    await c.query(futureEvent,[randomUUID(),randomUUID(),3,i.id]);
+  }),code("23514"));
+  await assert.rejects(database().query(futureEvent,[randomUUID(),randomUUID(),2,i.id]),code("23514"));
+  const o=await readOpportunity(p,i.id);
+  assert.equal(o.version,1);
+  assert.equal(o.events.length,1);
+  assert.deepEqual(await readOperation(p,i.operation_id),(await createOpportunity(p,i)).receipt);
 });
 
 test("CA-06/10 each mixed Activity target controls visibility, designation content and current-permission receipts", async () => {
@@ -727,6 +777,25 @@ test("CA-01/08 eligible action owner needs Activity authority and CRM read, not 
   await assert.rejects(
     createOpportunity(p, { ...crmCreate(), initial_action: crmAction(u) }),
   );
+});
+
+test("CA-10 existing field and report follow-up projections obey every Opportunity target", async () => {
+  const q = await reviewed(), p = q.reviewer, i = crmCreate();
+  await createOpportunity(p, i);
+  // Adversarial persisted junctions exercise related reads, not a new report/CRM command.
+  await database().query("INSERT INTO ppo.report_follow_ups(workspace_id,report_id,activity_id,kind) VALUES($1,$2,$3,'RemainingWork')", [p.workspace_id,q.report.id,i.initial_action.id]);
+  await database().query("INSERT INTO ppo.field_follow_ups(workspace_id,appointment_id,entry_id,activity_id) SELECT workspace_id,appointment_id,id,$2 FROM ppo.field_entries WHERE appointment_id=$1 AND kind='Time' LIMIT 1", [q.job.id,i.initial_action.id]);
+  await database().query("INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id) SELECT workspace_id,$1,company_id,capability,scope_type,scope_id,site_id FROM ppo.permission_grants WHERE user_id=$2 AND capability IN ('shared.read','shared.internal.read','activity.read','crm.opportunity.read') ON CONFLICT DO NOTHING", [q.p.actor_id,p.actor_id]);
+  assert.ok((await readReport(p,q.report.id)).items[0].follow_ups.some((a:{id:string})=>a.id===i.initial_action.id));
+  assert.ok((await readFieldJob(q.p,q.job.id)).items[0].follow_ups.some((a:{id:string})=>a.id===i.initial_action.id));
+  await database().query("DELETE FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND capability='crm.opportunity.read'", [[p.actor_id,q.p.actor_id]]);
+  for (const result of [(await readReport(p,q.report.id)).items[0],(await readFieldJob(q.p,q.job.id)).items[0]]) {
+    assert.ok(!JSON.stringify(result).includes(i.initial_action.id));
+    assert.ok(!JSON.stringify(result).includes(i.initial_action.summary));
+    assert.ok(!JSON.stringify(result).includes(i.title));
+  }
+  await assert.rejects(readActivity(p,i.initial_action.id),code("RecordUnavailable"));
+  await assert.rejects(readOperation(p,i.operation_id));
 });
 
 test("CA-05/06 scoped site creator selects only permitted context and completes its owned journey",async()=>{

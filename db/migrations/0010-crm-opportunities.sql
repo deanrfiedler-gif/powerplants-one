@@ -140,7 +140,8 @@ BEGIN
   SELECT * INTO o FROM ppo.opportunities WHERE workspace_id=NEW.workspace_id AND id=NEW.id;
   IF NOT EXISTS(SELECT 1 FROM ppo.activities a JOIN ppo.activity_links l ON (l.workspace_id,l.activity_id)=(a.workspace_id,a.id) WHERE a.workspace_id=o.workspace_id AND a.id=o.next_activity_id AND l.opportunity_id=o.id) THEN RAISE EXCEPTION 'Designated action must link opportunity' USING ERRCODE='23514'; END IF;
   IF (TG_OP='INSERT' OR NEW.next_activity_id IS DISTINCT FROM OLD.next_activity_id) AND NOT EXISTS(SELECT 1 FROM ppo.activities a WHERE a.workspace_id=o.workspace_id AND a.id=o.next_activity_id AND a.status IN ('Open','InProgress')) THEN RAISE EXCEPTION 'A new designation must be active' USING ERRCODE='23514'; END IF;
-  IF NOT EXISTS(SELECT 1 FROM ppo.opportunity_events e WHERE e.workspace_id=o.workspace_id AND e.opportunity_id=o.id AND e.opportunity_version=o.version AND e.to_stage=o.stage_id AND e.pipeline_definition_id=o.pipeline_definition_id AND e.next_activity_id=o.next_activity_id AND e.need_summary=o.need_summary AND e.qualification_note IS NOT DISTINCT FROM o.qualification_note AND e.identification_activity_id IS NOT DISTINCT FROM o.identification_activity_id) THEN RAISE EXCEPTION 'Exact opportunity event required' USING ERRCODE='23514'; END IF;
+  -- Check each changed version, including intermediate writes in one SQL transaction.
+  IF NOT EXISTS(SELECT 1 FROM ppo.opportunity_events e WHERE e.workspace_id=NEW.workspace_id AND e.opportunity_id=NEW.id AND e.opportunity_version=NEW.version AND e.to_stage=NEW.stage_id AND e.pipeline_definition_id=NEW.pipeline_definition_id AND e.next_activity_id=NEW.next_activity_id AND e.need_summary=NEW.need_summary AND e.qualification_note IS NOT DISTINCT FROM NEW.qualification_note AND e.identification_activity_id IS NOT DISTINCT FROM NEW.identification_activity_id AND e.created_by=NEW.updated_by) THEN RAISE EXCEPTION 'Exact opportunity event required for every version' USING ERRCODE='23514'; END IF;
  ELSE
   IF TG_TABLE_NAME='activities' THEN aid:=NEW.id; ELSE aid:=NEW.activity_id; END IF;
   IF EXISTS(SELECT 1 FROM ppo.activity_links l JOIN ppo.activities a ON (a.workspace_id,a.id)=(l.workspace_id,l.activity_id) JOIN ppo.opportunities x ON (x.workspace_id,x.id)=(l.workspace_id,l.opportunity_id) WHERE l.workspace_id=NEW.workspace_id AND l.activity_id=aid AND (a.site_id IS DISTINCT FROM x.site_id OR a.access_class<>'Internal' OR a.company_id<>x.company_id)) THEN RAISE EXCEPTION 'Opportunity action retains exact company/site/Internal context' USING ERRCODE='23514'; END IF;
@@ -150,5 +151,22 @@ END $$;
 CREATE CONSTRAINT TRIGGER opportunity_graph AFTER INSERT OR UPDATE ON ppo.opportunities DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.check_opportunity_graph();
 CREATE CONSTRAINT TRIGGER crm_activity_context AFTER INSERT OR UPDATE ON ppo.activities DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.check_opportunity_graph();
 CREATE CONSTRAINT TRIGGER crm_link_context AFTER INSERT ON ppo.activity_links DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.check_opportunity_graph();
+CREATE FUNCTION ppo.check_opportunity_event_chain() RETURNS trigger LANGUAGE plpgsql AS $$
+DECLARE o ppo.opportunities; previous ppo.opportunity_events;
+BEGIN
+ PERFORM 1 FROM ppo.workspaces WHERE id=NEW.workspace_id FOR UPDATE;
+ SELECT * INTO STRICT o FROM ppo.opportunities WHERE workspace_id=NEW.workspace_id AND id=NEW.opportunity_id;
+ IF NEW.opportunity_version>o.version OR NEW.pipeline_definition_id<>o.pipeline_definition_id THEN
+  RAISE EXCEPTION 'Event requires an accepted opportunity version and definition' USING ERRCODE='23514';
+ END IF;
+ IF NEW.opportunity_version>1 THEN
+  SELECT * INTO previous FROM ppo.opportunity_events WHERE workspace_id=NEW.workspace_id AND opportunity_id=NEW.opportunity_id AND opportunity_version=NEW.opportunity_version-1;
+  IF previous.id IS NULL OR NEW.from_stage IS DISTINCT FROM previous.to_stage THEN
+   RAISE EXCEPTION 'Opportunity history requires its exact preceding version and stage' USING ERRCODE='23514';
+  END IF;
+ END IF;
+ RETURN NULL;
+END $$;
+CREATE CONSTRAINT TRIGGER opportunity_event_chain AFTER INSERT ON ppo.opportunity_events DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.check_opportunity_event_chain();
 CREATE INDEX ix_opportunities_scope_stage ON ppo.opportunities(workspace_id,company_id,site_id,owner_id,stage_id,id);
 CREATE INDEX ix_opportunity_events_history ON ppo.opportunity_events(workspace_id,opportunity_id,opportunity_version);
