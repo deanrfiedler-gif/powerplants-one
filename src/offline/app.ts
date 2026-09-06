@@ -103,7 +103,7 @@ document.addEventListener("visibilitychange",()=>{if(document.visibilityState===
 await perform(async()=>{
   if(!("serviceWorker" in navigator))throw new Error("Service workers are unavailable. Offline navigation has not been prepared.");
   const registration=(await navigator.serviceWorker.getRegistration("/offline/"))??await navigator.serviceWorker.register("/offline/sw.js",{scope:"/offline/",updateViaCache:"none"});
-  registration.addEventListener("updatefound",()=>notice("A field shell update is downloading. Close other field tabs after saving; updates do not delete originals."));
+  registration.addEventListener("updatefound",()=>{$("shell-update").textContent="A field shell update is downloading. Close other field tabs after saving; updates do not delete originals.";});
   await navigator.serviceWorker.ready;
   const active=await ownership();
   if(active?.locked){wipe();notice("Workspace is locked. Verify identity online to reopen only that owner’s saved work.");return;}

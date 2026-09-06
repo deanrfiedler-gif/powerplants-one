@@ -101,6 +101,7 @@ Full PT-11/PT-12/PT-24/PT-28 are not promoted by isolated component checks. PT-1
 |---|---|---|
 | 34003141922 | Lint rejected unused `_hash` bindings | Explicitly consume destructured hash variables. No runtime proof from this run. |
 | 34003393047 | Review-format helper assumed a baseline commit available in a shallow checkout | Use tracked selected paths; review copies run separately after static checks with `always()`. No runtime proof from this run. |
+| 34004451299 | 9 unit, 154 PostgreSQL, 13 HTTP and all three actual offline process-restart phases passed; 45/52 browser cases passed | Retained second-download/empty-week fixes; put shell-update notices in a separate status region so they cannot overwrite save evidence, and supply the required capture context in the new Time-conflict fixture. Real strict validation was retained. |
 | 34004021911 | 9 unit, 154 PostgreSQL and 13 HTTP cases passed; 40/44 browser cases passed | Two second-download preconditions raced an unchanged prior notice; now wait for both committed contexts and show explicit download-in-progress. Two P05 empty-week fixtures collided with new P08 dates; move only the empty period to 2027-02-01, retaining the exact empty/error/keyboard assertions. Original failures retained. |
 | 34003532547 | Static/type/unit passed; Next build could not resolve browser `.js` source imports | Use extensionless TypeScript source imports; add `.js` only in generated browser modules. No database/browser proof from this run. |
 
