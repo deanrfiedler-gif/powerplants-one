@@ -302,9 +302,12 @@
         "CRM-07",
         "CRM-08"
       ],
-      "status": "Planned",
+      "status": "In progress - bounded discovery/design; account parity and acceptance open",
       "github_issue_number": 9,
-      "github_issue_url": "https://github.com/deanrfiedler-gif/powerplants-one/issues/9"
+      "github_issue_url": "https://github.com/deanrfiedler-gif/powerplants-one/issues/9",
+      "design_contribution": "BP-03 r01, PAR-01\u2013PAR-18 evidence assessment, shared integration/coexistence, synthetic screens, acceptance and ordered CRM sequence; no runtime implementation",
+      "handover_path": "docs/delivery/crm-discovery-handover.md",
+      "first_implementation_starter_path": "docs/delivery/crm-first-increment-starter.md"
     },
     {
       "id": "PPO-010",

@@ -2,7 +2,7 @@
 
 **Updated:** 6 September 2026 · **State:** implementation and verification in progress; not published or merged. Synthetic only.
 
-[Focused issue #36](https://github.com/deanrfiedler-gif/powerplants-one/issues/36) · [Draft PR #37](https://github.com/deanrfiedler-gif/powerplants-one/pull/37) · branch `feature/p09-service-review-reports`. Final publication identities and exact run/evidence links will be recorded externally on issue #36. This repository file is not a self-SHA or merged-main assertion.
+[Focused issue #36](https://github.com/deanrfiedler-gif/powerplants-one/issues/36) · [Draft PR #37](https://github.com/deanrfiedler-gif/powerplants-one/pull/37) · branch `feature/p09-service-review-reports`. The [authoritative external verification/publication record](https://github.com/deanrfiedler-gif/powerplants-one/issues/36#issuecomment-5557392390) records the current verification state and will contain final identities and exact run/evidence links. This repository file is not a self-SHA or merged-main assertion.
 
 ## Delivered implementation and authority
 
@@ -44,8 +44,11 @@ npm run test:browser
 
 Verification is still running. No new full PT/AT pass, independent review, owner acceptance, merged-main success or production readiness is claimed here. Preserve all 236 P01–P08 cases; the two historical P07 report-table-absence assertions are replaced with business-equivalent zero-report-record and no-Finance-table assertions. The obsolete field banner assertion now states only Finance remains incomplete. Existing PT-06 remains Passed.
 
+The concurrent PPO-009 CRM design merged through PR #38 during P09 verification. Its exact main commit `ddc1a3cce769e011939e621d8d5f176542f48f8c` was fetched into the isolated P09 checkout and merged normally; BP-03, original CRM visuals, the separate CRM plan/starter and all register changes are preserved. CRM decisions remain proposed and do not broaden P09. Shared documentation conflicts were reconciled by field, retaining both workstreams. The foundation/prototype/naming checks pass after reconciliation.
+
 | Application run | Disposition |
 | --- | --- |
+| [34015564789](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34015564789) | 12 unit and 200/201 PostgreSQL cases passed, including all 160 baseline DB cases. The only failure was a new offline assertion expecting Conflict instead of the maintained ReviewRequired/VersionConflict disposition. The assertion now checks that exact code, zero response and zero acceptance; original-retention guards remain. |
 | [34012721210](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34012721210) | TypeScript rejected missing new appointment status union and nullable test end. Corrected types without changing guards or pins. |
 | [34013654466](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34013654466) | Static/unit/build passed. Database exposed asset `description` mapping and two obsolete P07 report-table assertions. Corrected mapping and retained equivalent no-report/no-Finance effects proof. |
 | [34014426568](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34014426568) | Static/unit/build and preserved baseline database cases passed; new report submissions correctly rolled back because P09 event names were missing from the strict outbox allowlist. Added those event names in migration 0009; full rerun required. |

@@ -12,6 +12,8 @@ Dean subsequently authorised **P01 — Application foundation and architecture p
 
 P01–P12 are local plan identifiers, not GitHub issue numbers or ERP references. Convert the next ready package into a focused implementation issue when beginning it; do not create a large speculative backlog of tiny tasks. Existing PPO-001–PPO-016 remain discovery/design issues and preserve their original scope.
 
+**Parallel CRM design:** PPO-009 / issue #9 now has a [BP-03 discovery handover](crm-discovery-handover.md) and a separate [proposed CRM sequence](crm-implementation-plan.md). Its local I1–I6 labels do not extend or renumber P01–P12. CRM runtime is not implemented by that design work; future shared changes must reconcile the actually delivered P09 contracts and preserve the service dependency order.
+
 ## 2. Ordered work packages
 
 | ID / outcome | Depends on | Build content | Completion evidence / PT coverage | Relative complexity |

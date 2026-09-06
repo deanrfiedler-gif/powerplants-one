@@ -143,7 +143,8 @@ test("P09 offline stale response is retained and cannot be rewritten or transfer
     revision_id: q.report.revisions[0].id,
   });
   const out = await syncBatch(q.p, { operations: [op] });
-  assert.equal(out.outcomes[0].state, "Conflict");
+  assert.equal(out.outcomes[0].state, "ReviewRequired");
+  assert.equal(out.outcomes[0].code, "VersionConflict");
   assert.equal(
     (await readReport(q.p, q.report.id)).items[0].responses.length,
     0,
