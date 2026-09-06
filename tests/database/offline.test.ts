@@ -334,7 +334,10 @@ test("P08 normal acceptance and restricted recovery are exclusive under competin
     (await syncBatch(q.p, { operations: [changed] })).outcomes[0].code,
     "OperationConflict",
   );
-  assert.equal((await rows("SELECT count(*)::int n FROM ppo.field_entries"))[0].n, 0);
+  assert.equal(
+    (await rows("SELECT count(*)::int n FROM ppo.field_entries"))[0].n,
+    0,
+  );
 
   const competing = operation(q.p, q.job, "Capture", entry(q.job));
   const [normal, recovery] = await Promise.allSettled([
@@ -345,7 +348,8 @@ test("P08 normal acceptance and restricted recovery are exclusive under competin
   const outcome = normal.value.outcomes[0];
   if (outcome.state === "ServerSaved") {
     assert.equal(recovery.status, "rejected");
-    if (recovery.status === "rejected") assert.ok(code("AlreadyAccepted")(recovery.reason));
+    if (recovery.status === "rejected")
+      assert.ok(code("AlreadyAccepted")(recovery.reason));
     assert.deepEqual(
       (await syncBatch(q.p, { operations: [competing] })).outcomes[0].receipt,
       outcome.receipt,
@@ -354,12 +358,17 @@ test("P08 normal acceptance and restricted recovery are exclusive under competin
     assert.equal(outcome.code, "RecoveryDispositionRequired");
     assert.equal(recovery.status, "fulfilled");
   }
-  const facts = (await rows(
-    "SELECT (SELECT count(*) FROM ppo.sync_acceptances WHERE operation_id=$1)::int accepted,(SELECT count(*) FROM ppo.offline_recovery_cases WHERE operation_id=$1)::int recovered",
-    [competing.operation_id],
-  ))[0];
+  const facts = (
+    await rows(
+      "SELECT (SELECT count(*) FROM ppo.sync_acceptances WHERE operation_id=$1)::int accepted,(SELECT count(*) FROM ppo.offline_recovery_cases WHERE operation_id=$1)::int recovered",
+      [competing.operation_id],
+    )
+  )[0];
   assert.equal(facts.accepted + facts.recovered, 1);
-  assert.equal((await rows("SELECT count(*)::int n FROM ppo.activities"))[0].n, before + 2);
+  assert.equal(
+    (await rows("SELECT count(*)::int n FROM ppo.activities"))[0].n,
+    before + 2,
+  );
 });
 test("P08 revoked permission blocks accepted normal receipt recovery and preserves local-only identity", async () => {
   const q = await started(),

@@ -1,8 +1,96 @@
 import assert from "node:assert/strict";
-import {test} from "node:test";
-import {randomUUID} from "node:crypto";
-import {responseCommand,submitCommand,reviewCommand} from "../../src/reports/validation";
-const base=()=>({operation_id:randomUUID(),schema_version:1,reason:"SYN exact validation challenge"});
-test("P09 strict submission rejects malformed versions, unknown fields and unbound local placeholders",()=>{const id=randomUUID(),cmd={...base(),id:randomUUID(),attendance_id:randomUUID(),draft_revision_id:randomUUID(),expected_draft_version:1,expected_report_version:0,expected_appointment_version:1,attendance_end_at:new Date().toISOString()};assert.equal(submitCommand(id,cmd).expected_report_version,0);for(const change of [{role:"Finance"},{expected_report_version:-1},{expected_appointment_version:"1"},{draft_revision_id:{operation_id:randomUUID()}},{attendance_end_at:"yesterday"},{schema_version:99}])assert.throws(()=>submitCommand(id,{...cmd,...change}));});
-test("P09 response choices retain exact context and refuse fabricated unavailable identities",()=>{const id=randomUUID(),cmd={...base(),id:randomUUID(),presentation_id:randomUUID(),revision_id:randomUUID(),presentation_kind:"IssuedReport",presented_hash:"a".repeat(64),expected_report_version:2,response:"Unavailable",respondent_name:null,respondent_role:null,remarks:"SYN respondent is unavailable",next_action:"SYN owner will arrange contact",presented_at:new Date().toISOString(),captured_at:new Date().toISOString(),signature:null};assert.equal(responseCommand(id,cmd).respondent_name,null);for(const change of [{respondent_name:"invented"},{remarks:"short"},{next_action:null},{presentation_kind:"Latest"},{signature_response_id:randomUUID()},{presented_hash:"not-hash"},{response:"Signed"}])assert.throws(()=>responseCommand(id,{...cmd,...change}));});
-test("P09 entry review refuses duplicate IDs and private override fields",()=>{const id=randomUUID(),e={id:randomUUID(),version:1,decision:"Approved",remarks:"SYN exact technical review"},cmd={...base(),expected_version:2,revision_id:randomUUID(),source_hash:"b".repeat(64),decision:"Approved",entry_decisions:[e],authority_disposition:"Current",remarks:"SYN service review only",recipient_id:randomUUID()};assert.equal(reviewCommand(id,cmd).entry_decisions.length,1);assert.throws(()=>reviewCommand(id,{...cmd,entry_decisions:[e,e]}));assert.throws(()=>reviewCommand(id,{...cmd,waive_controls:true}));assert.throws(()=>reviewCommand(id,{...cmd,entry_decisions:[{...e,reviewed_quantity:900}]}));});
+import { test } from "node:test";
+import { randomUUID } from "node:crypto";
+import {
+  responseCommand,
+  submitCommand,
+  reviewCommand,
+} from "../../src/reports/validation";
+const base = () => ({
+  operation_id: randomUUID(),
+  schema_version: 1,
+  reason: "SYN exact validation challenge",
+});
+test("P09 strict submission rejects malformed versions, unknown fields and unbound local placeholders", () => {
+  const id = randomUUID(),
+    cmd = {
+      ...base(),
+      id: randomUUID(),
+      attendance_id: randomUUID(),
+      draft_revision_id: randomUUID(),
+      expected_draft_version: 1,
+      expected_report_version: 0,
+      expected_appointment_version: 1,
+      attendance_end_at: new Date().toISOString(),
+    };
+  assert.equal(submitCommand(id, cmd).expected_report_version, 0);
+  for (const change of [
+    { role: "Finance" },
+    { expected_report_version: -1 },
+    { expected_appointment_version: "1" },
+    { draft_revision_id: { operation_id: randomUUID() } },
+    { attendance_end_at: "yesterday" },
+    { schema_version: 99 },
+  ])
+    assert.throws(() => submitCommand(id, { ...cmd, ...change }));
+});
+test("P09 response choices retain exact context and refuse fabricated unavailable identities", () => {
+  const id = randomUUID(),
+    cmd = {
+      ...base(),
+      id: randomUUID(),
+      presentation_id: randomUUID(),
+      revision_id: randomUUID(),
+      presentation_kind: "IssuedReport",
+      presented_hash: "a".repeat(64),
+      expected_report_version: 2,
+      response: "Unavailable",
+      respondent_name: null,
+      respondent_role: null,
+      remarks: "SYN respondent is unavailable",
+      next_action: "SYN owner will arrange contact",
+      presented_at: new Date().toISOString(),
+      captured_at: new Date().toISOString(),
+      signature: null,
+    };
+  assert.equal(responseCommand(id, cmd).respondent_name, null);
+  for (const change of [
+    { respondent_name: "invented" },
+    { remarks: "short" },
+    { next_action: null },
+    { presentation_kind: "Latest" },
+    { signature_response_id: randomUUID() },
+    { presented_hash: "not-hash" },
+    { response: "Signed" },
+  ])
+    assert.throws(() => responseCommand(id, { ...cmd, ...change }));
+});
+test("P09 entry review refuses duplicate IDs and private override fields", () => {
+  const id = randomUUID(),
+    e = {
+      id: randomUUID(),
+      version: 1,
+      decision: "Approved",
+      remarks: "SYN exact technical review",
+    },
+    cmd = {
+      ...base(),
+      expected_version: 2,
+      revision_id: randomUUID(),
+      source_hash: "b".repeat(64),
+      decision: "Approved",
+      entry_decisions: [e],
+      authority_disposition: "Current",
+      remarks: "SYN service review only",
+      recipient_id: randomUUID(),
+    };
+  assert.equal(reviewCommand(id, cmd).entry_decisions.length, 1);
+  assert.throws(() => reviewCommand(id, { ...cmd, entry_decisions: [e, e] }));
+  assert.throws(() => reviewCommand(id, { ...cmd, waive_controls: true }));
+  assert.throws(() =>
+    reviewCommand(id, {
+      ...cmd,
+      entry_decisions: [{ ...e, reviewed_quantity: 900 }],
+    }),
+  );
+});

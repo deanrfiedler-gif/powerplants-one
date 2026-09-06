@@ -120,14 +120,43 @@ export async function downloadContext(
       ],
     );
   });
-  const report_presentations=[];
-  if(job.report && await hasPermission(database(),p,"report.read",(await fieldContext(database(),p,id)).a.company_id,job.site.id)) {
-    const report=(await readReport(p,job.report.id)).items[0];
-    if(["Reviewed","Issued"].includes(report.status) && report.can_respond) for(const v of report.presentations.filter((v:{revision_id:string})=>v.revision_id===report.revisions[0].id).slice(0,2)) {
-      const b=await presentationBytes(p,report.id,v.id);
-      if(Buffer.byteLength(b.html)>1048576)throw new AppError(422,"ReportCacheLimit","This exact presentation exceeds the bounded offline size. Use its online presentation.");
-      report_presentations.push({id:v.id,report_id:report.id,report_version:report.version,revision_id:v.revision_id,kind:v.kind,content_hash:v.content_hash,html:b.html,created_at:v.created_at});
-    }
+  const report_presentations = [];
+  if (
+    job.report &&
+    (await hasPermission(
+      database(),
+      p,
+      "report.read",
+      (await fieldContext(database(), p, id)).a.company_id,
+      job.site.id,
+    ))
+  ) {
+    const report = (await readReport(p, job.report.id)).items[0];
+    if (["Reviewed", "Issued"].includes(report.status) && report.can_respond)
+      for (const v of report.presentations
+        .filter(
+          (v: { revision_id: string }) =>
+            v.revision_id === report.revisions[0].id,
+        )
+        .slice(0, 2)) {
+        const b = await presentationBytes(p, report.id, v.id);
+        if (Buffer.byteLength(b.html) > 1048576)
+          throw new AppError(
+            422,
+            "ReportCacheLimit",
+            "This exact presentation exceeds the bounded offline size. Use its online presentation.",
+          );
+        report_presentations.push({
+          id: v.id,
+          report_id: report.id,
+          report_version: report.version,
+          revision_id: v.revision_id,
+          kind: v.kind,
+          content_hash: v.content_hash,
+          html: b.html,
+          created_at: v.created_at,
+        });
+      }
   }
   // The existing purpose-built service DTO has no Finance or internal metadata. Retain only own captures.
   return {

@@ -147,12 +147,13 @@ export async function submitCompletion(
       sameVersion(d.version, cmd.expected_draft_version, "draft revision");
       sameVersion(d.current_version, d.version, "latest completion draft");
       if (
-        d.time_declaration === "Incomplete" ||
-        d.material_declaration === "Incomplete"
+        d.scope_outcome === "Complete" &&
+        (d.time_declaration === "Incomplete" ||
+        d.material_declaration === "Incomplete")
       )
         fail(
           "DeclarationsIncomplete",
-          "Finish your time and material declarations before submission.",
+          "A Complete claim requires finished time and material declarations. Preserve incomplete declarations with explicit partial work and an owned next action.",
         );
       const entries = (
         await c.query(

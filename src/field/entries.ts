@@ -70,11 +70,45 @@ export async function captureEntry(
       return ctx;
     },
     async (c, ctx) => {
-      if ((await c.query("SELECT to_regclass('ppo.service_reports') AS relation")).rows[0].relation) {
-        const report=(await c.query("SELECT status,revision FROM ppo.service_reports WHERE workspace_id=$1 AND attendance_id=$2",[p.workspace_id,ctx.attendance.id])).rows[0];
-        if (report && ["Submitted","Reviewed","Issued"].includes(report.status)) throw new AppError(409,"SubmissionFrozen","Return the exact submission or open an explicit report correction cycle before correcting evidence.");
-        if (!sourceId && (await c.query("SELECT 1 FROM ppo.attendance_acceptances WHERE workspace_id=$1 AND attendance_id=$2",[p.workspace_id,ctx.attendance.id])).rowCount) throw new AppError(409,"NewVisitRequired","Accepted attendance permits linked factual corrections only. Further physical work needs a separately authorised visit.");
-        if (!sourceId && report?.revision) throw new AppError(409,"NewVisitRequired","After completion submission only linked factual corrections are permitted. Further physical work needs a separately authorised visit.");
+      if (
+        (await c.query("SELECT to_regclass('ppo.service_reports') AS relation"))
+          .rows[0].relation
+      ) {
+        const report = (
+          await c.query(
+            "SELECT status,revision FROM ppo.service_reports WHERE workspace_id=$1 AND attendance_id=$2",
+            [p.workspace_id, ctx.attendance.id],
+          )
+        ).rows[0];
+        if (
+          report &&
+          ["Submitted", "Reviewed", "Issued"].includes(report.status)
+        )
+          throw new AppError(
+            409,
+            "SubmissionFrozen",
+            "Return the exact submission or open an explicit report correction cycle before correcting evidence.",
+          );
+        if (
+          !sourceId &&
+          (
+            await c.query(
+              "SELECT 1 FROM ppo.attendance_acceptances WHERE workspace_id=$1 AND attendance_id=$2",
+              [p.workspace_id, ctx.attendance.id],
+            )
+          ).rowCount
+        )
+          throw new AppError(
+            409,
+            "NewVisitRequired",
+            "Accepted attendance permits linked factual corrections only. Further physical work needs a separately authorised visit.",
+          );
+        if (!sourceId && report?.revision)
+          throw new AppError(
+            409,
+            "NewVisitRequired",
+            "After completion submission only linked factual corrections are permitted. Further physical work needs a separately authorised visit.",
+          );
       }
       let source = null;
       if (sourceId) {

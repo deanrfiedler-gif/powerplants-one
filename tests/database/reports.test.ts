@@ -470,6 +470,8 @@ test("P09 accepted attendance correction preserves old output and refuses prior 
   await assert.rejects(recordResponse(q.p,r.id,{...cmd,...base(),id:randomUUID(),expected_report_version:r.version,presentation_id:newer.id,revision_id:newer.revision_id,presented_hash:newer.content_hash,presented_at:new Date().toISOString(),captured_at:new Date().toISOString()}),code("SignatureReassociationRefused"));
   assert.deepEqual((await presentationBytes(q.p, r.id, v.id)).pdf, bytes.pdf);
   await mkdir("verification-evidence/p09", { recursive: true });
+  await writeFile("verification-evidence/p09/original-inspection.png", q.photo.bytes);
+  await writeFile("verification-evidence/p09/original-response-mark.png", png());
   for (const [name, pres] of [
     ["old", v],
     ["new", newer],
@@ -662,4 +664,23 @@ test("P09 issue authority revoked after durable storage refuses release and orig
   await assert.rejects(readReportJob(q.reviewer, job.id));
   assert.equal((await readReport(q.p, r.id)).items[0].issues.length, 0);
   assert.equal((await rows("SELECT count(*)::int n FROM ppo.report_render_attempts WHERE outcome='Durable'"))[0].n, 1);
+});
+
+test("P09 partial attendance review retains incomplete declarations without inventing missing quantities or Finance readiness", async () => {
+  const q = await started();
+  await saveCompletionDraft(q.p, q.job.id, { ...draft(q.job), time_declaration: "Incomplete", material_declaration: "Incomplete", declaration_reason: "SYN quantities remain uncertain and must be completed by the original technician." });
+  const j = (await readFieldJob(q.p, q.job.id)).items[0], id = randomUUID(), co = await principal("coordinator");
+  await submitCompletion(q.p, j.id, { ...base(), id, attendance_id: j.attendance!.id, draft_revision_id: j.draft_revisions[0].id, expected_draft_version: j.draft!.version, expected_report_version: 0, expected_appointment_version: j.version, attendance_end_at: new Date().toISOString() });
+  let r = (await readReport(co, id)).items[0];
+  await reviewReport(co, id, decision(r));
+  r = (await readReport(co, id)).items[0];
+  assert.equal(r.appointment.status, "Completed");
+  assert.equal(r.revisions[0].snapshot.completion.time_declaration, "Incomplete");
+  assert.equal(r.revisions[0].snapshot.completion.material_declaration, "Incomplete");
+  assert.equal(r.revisions[0].snapshot.entries.length, 0);
+  assert.ok(r.follow_ups.some((x: {kind: string}) => x.kind === "RemainingWork"));
+  const b = await presentationBytes(q.p, id, r.presentations[0].id);
+  assert.match(b.html, /Time declaration remains incomplete/);
+  assert.match(b.html, /Material declaration remains incomplete/);
+  assert.equal(r.finance_state, "Not implemented — P10");
 });

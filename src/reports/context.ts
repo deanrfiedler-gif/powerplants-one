@@ -130,10 +130,22 @@ export async function sourceGuard(
       [p.workspace_id, report.attendance_id],
     )
   ).rows;
-  const assets=(await c.query("SELECT DISTINCT a.id,a.version,a.identity_status FROM ppo.assets a JOIN ppo.scope_assets sa ON sa.asset_id=a.id JOIN ppo.scope_items si ON si.id=sa.scope_item_id WHERE a.workspace_id=$1 AND si.scope_revision_id=$2 ORDER BY a.id",[p.workspace_id,ctx.a.scope_revision_id])).rows;
-  const controls=(await c.query("SELECT id,criterion_code,assessment_version,outcome FROM ppo.readiness_assessments WHERE workspace_id=$1 AND scope_revision_id=$2 AND (appointment_id IS NULL OR appointment_id=$3) ORDER BY id",[p.workspace_id,ctx.a.scope_revision_id,ctx.a.id])).rows;
+  const assets = (
+    await c.query(
+      "SELECT DISTINCT a.id,a.version,a.identity_status FROM ppo.assets a JOIN ppo.scope_assets sa ON sa.asset_id=a.id JOIN ppo.scope_items si ON si.id=sa.scope_item_id WHERE a.workspace_id=$1 AND si.scope_revision_id=$2 ORDER BY a.id",
+      [p.workspace_id, ctx.a.scope_revision_id],
+    )
+  ).rows;
+  const controls = (
+    await c.query(
+      "SELECT id,criterion_code,assessment_version,outcome FROM ppo.readiness_assessments WHERE workspace_id=$1 AND scope_revision_id=$2 AND (appointment_id IS NULL OR appointment_id=$3) ORDER BY id",
+      [p.workspace_id, ctx.a.scope_revision_id, ctx.a.id],
+    )
+  ).rows;
   return {
-    assets, controls, service_owner_id:w.service_owner_id,
+    assets,
+    controls,
+    service_owner_id: w.service_owner_id,
     scope_revision_id: w.scope_revision_id,
     authorised_scope_revision_id: w.authorised_scope_revision_id,
     site_version: site.version,

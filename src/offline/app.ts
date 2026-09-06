@@ -34,7 +34,11 @@ import {
   entryCommand,
   completionCommand,
 } from "../field/validation";
-import { submitCommand, responseCommand, responseChoices } from "../reports/validation";
+import {
+  submitCommand,
+  responseCommand,
+  responseChoices,
+} from "../reports/validation";
 let owner: Owner | null = null,
   selected: CachedJob | null = null,
   dirty = false,
@@ -189,7 +193,14 @@ async function download() {
     const html = await response.text();
     if (new TextEncoder().encode(html).length > 1048576)
       throw new Error("Issued HTML exceeds the bounded offline cache size.");
-    for(const v of data.report_presentations??[]) if(new TextEncoder().encode(v.html).length>1048576 || await sha256(v.html)!==v.content_hash) throw new Error("Exact report presentation hash or size differs. No offline save is claimed.");
+    for (const v of data.report_presentations ?? [])
+      if (
+        new TextEncoder().encode(v.html).length > 1048576 ||
+        (await sha256(v.html)) !== v.content_hash
+      )
+        throw new Error(
+          "Exact report presentation hash or size differs. No offline save is claimed.",
+        );
     await cacheJob(p, { ...data, pack_html: html });
     await renderJobs();
     selected = (await contexts(p)).find((x) => x.job.id === id)!;
@@ -1086,7 +1097,12 @@ async function renderQueue() {
         ),
       );
     if (
-      !["Start", "Acknowledge", "SubmitCompletion", "CustomerResponse"].includes(op.command) &&
+      ![
+        "Start",
+        "Acknowledge",
+        "SubmitCompletion",
+        "CustomerResponse",
+      ].includes(op.command) &&
       row.status.state !== "ServerSaved" &&
       row.status.state !== "Sending" &&
       !row.status.receipt &&
@@ -1205,16 +1221,22 @@ async function review() {
         ["RetainedForReview", "ClarificationRequired"],
       ),
       note = field(a, "Disposition note", "", "textarea");
-    let pending: {
-      operation_id: string;
-      schema_version: number;
-      reason: string;
-      disposition: string;
-      note: string;
-    } | undefined;
+    let pending:
+      | {
+          operation_id: string;
+          schema_version: number;
+          reason: string;
+          disposition: string;
+          note: string;
+        }
+      | undefined;
     a.append(
       button("Record owned disposition", async () => {
-        if (!pending || pending.disposition !== disposition.value || pending.note !== note.value)
+        if (
+          !pending ||
+          pending.disposition !== disposition.value ||
+          pending.note !== note.value
+        )
           pending = {
             operation_id: crypto.randomUUID(),
             schema_version: 1,
@@ -1386,37 +1408,252 @@ await perform(async () => {
   }
 });
 
-function renderReports(box:HTMLElement) {
-  const cached=safeJob(),j=cached.job,section=element("section");
-  section.append(element("h3","Completion submission and customer response"),element("p","Offline actions remain local intents. Review and issue require the server. The cached content and versions may be stale; conflicting originals are retained without rewriting."));
-  const form=element("form"),end=field(form,"Submission attendance end (ISO timezone)",j.accepted_end_at??new Date().toISOString()),reason=field(form,"Submission reason","","textarea"),submit=element("button","Save completion submission on this device");
-  submit.type="submit";form.append(submit);section.append(form);
-  form.onsubmit=e=>{e.preventDefault();void perform(async()=>{submit.disabled=true;try{
-    safeJob();if(!j.attendance)throw new Error("Synchronise your original start and download its accepted attendance before preparing a completion submission. Your field originals remain retained.");const a=await attendance(),rows=(await queue(requireOwner())).filter(x=>x.original.appointment_id===j.id);
-    if(rows.some(x=>x.status.recovery))throw new Error("Restricted-recovery evidence cannot enter normal submission. Resolve its owned disposition online.");
-    if(rows.some(x=>x.original.command==="SubmitCompletion"&&x.status.state!=="ServerSaved"))throw new Error("An original submission is already retained. Retry that exact original first.");
-    const localDraft=rows.filter(x=>x.original.command==="CompletionDraft"&&Number(x.original.payload.expected_version)+1>=(j.draft?.version??0)).at(-1),d=j.draft_revisions[0];
-    const pending=rows.filter(x=>x.status.state!=="ServerSaved"&&["Start","Capture","Correct","AttachmentInitiate","AttachmentUpload","AttachmentFinalise","CompletionDraft"].includes(x.original.command));
-    if(!localDraft&&!d)throw new Error("Save an exact completion draft first.");
-    if(pending.length&&!localDraft)throw new Error("Unsent evidence requires a new local completion draft with exact dependencies.");
-    if(localDraft&&pending.some(x=>x.original.operation_id!==localDraft.original.operation_id&&!localDraft.original.depends_on.includes(x.original.operation_id)))throw new Error("Evidence changed after the local draft. Save a successor draft before submission.");
-    const body={id:j.report?.id??crypto.randomUUID(),attendance_id:a.id,draft_revision_id:localDraft?{operation_id:localDraft.original.operation_id}:d.id,expected_draft_version:localDraft?Number(localDraft.original.payload.expected_version)+1:j.draft!.version,expected_report_version:j.report?.version??0,expected_appointment_version:j.version,attendance_end_at:end.value,reason:reason.value};
-    submitCommand(j.id,{...body,operation_id:crypto.randomUUID(),schema_version:1,attendance_id:typeof a.id==="string"?a.id:"00000000-0000-4000-8000-000000000000",draft_revision_id:localDraft?"00000000-0000-4000-8000-000000000000":d.id});
-    await commitOperations(requireOwner(),[await make("SubmitCompletion",body,localDraft?[localDraft.original.operation_id]:a.deps)]);await renderQueue();notice("Submission intent saved on this device. No submitted report or accepted attendance is claimed until the server accepts its exact draft and dependencies.");
-  }finally{submit.disabled=false;}});};
-  for(const v of cached.report_presentations??[]) {
-    const panel=element("article"),show=element("div");panel.append(element("h4",`${v.kind} · exact cached content`),element("p",v.content_hash,"hash"),button("Present exact cached report",async()=>{
-      safeJob();if(await sha256(v.html)!==v.content_hash)throw new Error("Cached presented bytes differ. Preserve originals and recover online.");
-      show.replaceChildren();const frame=element("iframe");frame.title="Exact cached customer-safe report";frame.setAttribute("sandbox","");frame.srcdoc=v.html;frame.style.width="100%";frame.style.height="520px";show.append(frame);
-      const presentedAt=new Date().toISOString(),f=element("form"),choice=field(f,"Customer response","Accepted","text",responseChoices),name=field(f,"Stated respondent name (synthetic)"),role=field(f,"Stated respondent role"),remarks=field(f,"Response remarks / unavailable reason","","textarea"),next=field(f,"Owned next contact action","","textarea"),signature=field(f,"Optional synthetic signature PNG","","file") as HTMLInputElement,save=element("button","Save customer response on this device");signature.accept="image/png";save.type="submit";f.append(save);show.append(f);
-      f.onsubmit=e=>{e.preventDefault();void perform(async()=>{save.disabled=true;try{
-        safeJob();let mark=null;const file=signature.files?.[0];if(file&&choice.value!=="Unavailable"){if(file.size>4194304)throw new Error("Signature exceeds 4 MiB.");const bytes=new Uint8Array(await file.arrayBuffer());mark={sha256:await sha256(bytes),byte_count:file.size,content_base64:await base64(file)};}
-        const body={id:crypto.randomUUID(),presentation_id:v.id,revision_id:v.revision_id,presentation_kind:v.kind,presented_hash:v.content_hash,expected_report_version:v.report_version,response:choice.value,respondent_name:choice.value==="Unavailable"?null:name.value,respondent_role:choice.value==="Unavailable"?null:role.value,remarks:remarks.value||null,next_action:next.value||null,presented_at:presentedAt,captured_at:new Date().toISOString(),signature:mark,reason:"Synthetic offline response to exact cached presentation."};
-        responseCommand(v.report_id,{...body,operation_id:crypto.randomUUID(),schema_version:1});
-        await commitOperations(requireOwner(),[await make("CustomerResponse",body,[],v.report_id)]);await renderQueue();notice("Response and exact presentation hash saved on this device. No server acknowledgement or distribution is claimed. Retry the retained original after reconnecting.");
-      }finally{save.disabled=false;}});};
-    }));panel.append(show);section.append(panel);
+function renderReports(box: HTMLElement) {
+  const cached = safeJob(),
+    j = cached.job,
+    section = element("section");
+  section.append(
+    element("h3", "Completion submission and customer response"),
+    element(
+      "p",
+      "Offline actions remain local intents. Review and issue require the server. The cached content and versions may be stale; conflicting originals are retained without rewriting.",
+    ),
+  );
+  const form = element("form"),
+    end = field(
+      form,
+      "Submission attendance end (ISO timezone)",
+      j.accepted_end_at ?? new Date().toISOString(),
+    ),
+    reason = field(form, "Submission reason", "", "textarea"),
+    submit = element("button", "Save completion submission on this device");
+  submit.type = "submit";
+  form.append(submit);
+  section.append(form);
+  form.onsubmit = (e) => {
+    e.preventDefault();
+    void perform(async () => {
+      submit.disabled = true;
+      try {
+        safeJob();
+        if (!j.attendance)
+          throw new Error(
+            "Synchronise your original start and download its accepted attendance before preparing a completion submission. Your field originals remain retained.",
+          );
+        const a = await attendance(),
+          rows = (await queue(requireOwner())).filter(
+            (x) => x.original.appointment_id === j.id,
+          );
+        if (rows.some((x) => x.status.recovery))
+          throw new Error(
+            "Restricted-recovery evidence cannot enter normal submission. Resolve its owned disposition online.",
+          );
+        if (
+          rows.some(
+            (x) =>
+              x.original.command === "SubmitCompletion" &&
+              x.status.state !== "ServerSaved",
+          )
+        )
+          throw new Error(
+            "An original submission is already retained. Retry that exact original first.",
+          );
+        const localDraft = rows
+            .filter(
+              (x) =>
+                x.original.command === "CompletionDraft" &&
+                Number(x.original.payload.expected_version) + 1 >=
+                  (j.draft?.version ?? 0),
+            )
+            .at(-1),
+          d = j.draft_revisions[0];
+        const pending = rows.filter(
+          (x) =>
+            x.status.state !== "ServerSaved" &&
+            [
+              "Start",
+              "Capture",
+              "Correct",
+              "AttachmentInitiate",
+              "AttachmentUpload",
+              "AttachmentFinalise",
+              "CompletionDraft",
+            ].includes(x.original.command),
+        );
+        if (!localDraft && !d)
+          throw new Error("Save an exact completion draft first.");
+        if (pending.length && !localDraft)
+          throw new Error(
+            "Unsent evidence requires a new local completion draft with exact dependencies.",
+          );
+        if (
+          localDraft &&
+          pending.some(
+            (x) =>
+              x.original.operation_id !== localDraft.original.operation_id &&
+              !localDraft.original.depends_on.includes(x.original.operation_id),
+          )
+        )
+          throw new Error(
+            "Evidence changed after the local draft. Save a successor draft before submission.",
+          );
+        const body = {
+          id: j.report?.id ?? crypto.randomUUID(),
+          attendance_id: a.id,
+          draft_revision_id: localDraft
+            ? { operation_id: localDraft.original.operation_id }
+            : d.id,
+          expected_draft_version: localDraft
+            ? Number(localDraft.original.payload.expected_version) + 1
+            : j.draft!.version,
+          expected_report_version: j.report?.version ?? 0,
+          expected_appointment_version: j.version,
+          attendance_end_at: end.value,
+          reason: reason.value,
+        };
+        submitCommand(j.id, {
+          ...body,
+          operation_id: crypto.randomUUID(),
+          schema_version: 1,
+          attendance_id:
+            typeof a.id === "string"
+              ? a.id
+              : "00000000-0000-4000-8000-000000000000",
+          draft_revision_id: localDraft
+            ? "00000000-0000-4000-8000-000000000000"
+            : d.id,
+        });
+        await commitOperations(requireOwner(), [
+          await make(
+            "SubmitCompletion",
+            body,
+            localDraft ? [localDraft.original.operation_id] : a.deps,
+          ),
+        ]);
+        await renderQueue();
+        notice(
+          "Submission intent saved on this device. No submitted report or accepted attendance is claimed until the server accepts its exact draft and dependencies.",
+        );
+      } finally {
+        submit.disabled = false;
+      }
+    });
+  };
+  for (const v of cached.report_presentations ?? []) {
+    const panel = element("article"),
+      show = element("div");
+    panel.append(
+      element("h4", `${v.kind} · exact cached content`),
+      element("p", v.content_hash, "hash"),
+      button("Present exact cached report", async () => {
+        safeJob();
+        if ((await sha256(v.html)) !== v.content_hash)
+          throw new Error(
+            "Cached presented bytes differ. Preserve originals and recover online.",
+          );
+        show.replaceChildren();
+        const frame = element("iframe");
+        frame.title = "Exact cached customer-safe report";
+        frame.setAttribute("sandbox", "");
+        frame.srcdoc = v.html;
+        frame.style.width = "100%";
+        frame.style.height = "520px";
+        show.append(frame);
+        const presentedAt = new Date().toISOString(),
+          f = element("form"),
+          choice = field(
+            f,
+            "Customer response",
+            "Accepted",
+            "text",
+            responseChoices,
+          ),
+          name = field(f, "Stated respondent name (synthetic)"),
+          role = field(f, "Stated respondent role"),
+          remarks = field(
+            f,
+            "Response remarks / unavailable reason",
+            "",
+            "textarea",
+          ),
+          next = field(f, "Owned next contact action", "", "textarea"),
+          signature = field(
+            f,
+            "Optional synthetic signature PNG",
+            "",
+            "file",
+          ) as HTMLInputElement,
+          save = element("button", "Save customer response on this device");
+        signature.accept = "image/png";
+        save.type = "submit";
+        f.append(save);
+        show.append(f);
+        f.onsubmit = (e) => {
+          e.preventDefault();
+          void perform(async () => {
+            save.disabled = true;
+            try {
+              safeJob();
+              let mark = null;
+              const file = signature.files?.[0];
+              if (file && choice.value !== "Unavailable") {
+                if (file.size > 4194304)
+                  throw new Error("Signature exceeds 4 MiB.");
+                const bytes = new Uint8Array(await file.arrayBuffer());
+                mark = {
+                  sha256: await sha256(bytes),
+                  byte_count: file.size,
+                  content_base64: await base64(file),
+                };
+              }
+              const body = {
+                id: crypto.randomUUID(),
+                presentation_id: v.id,
+                revision_id: v.revision_id,
+                presentation_kind: v.kind,
+                presented_hash: v.content_hash,
+                expected_report_version: v.report_version,
+                response: choice.value,
+                respondent_name:
+                  choice.value === "Unavailable" ? null : name.value,
+                respondent_role:
+                  choice.value === "Unavailable" ? null : role.value,
+                remarks: remarks.value || null,
+                next_action: next.value || null,
+                presented_at: presentedAt,
+                captured_at: new Date().toISOString(),
+                signature: mark,
+                reason:
+                  "Synthetic offline response to exact cached presentation.",
+              };
+              responseCommand(v.report_id, {
+                ...body,
+                operation_id: crypto.randomUUID(),
+                schema_version: 1,
+              });
+              await commitOperations(requireOwner(), [
+                await make("CustomerResponse", body, [], v.report_id),
+              ]);
+              await renderQueue();
+              notice(
+                "Response and exact presentation hash saved on this device. No server acknowledgement or distribution is claimed. Retry the retained original after reconnecting.",
+              );
+            } finally {
+              save.disabled = false;
+            }
+          });
+        };
+      }),
+    );
+    panel.append(show);
+    section.append(panel);
   }
-  if(!cached.report_presentations?.length)section.append(element("p","No reviewed or issued presentation was downloaded. Complete online review and download its exact bytes before capturing an offline customer response."));
+  if (!cached.report_presentations?.length)
+    section.append(
+      element(
+        "p",
+        "No reviewed or issued presentation was downloaded. Complete online review and download its exact bytes before capturing an offline customer response.",
+      ),
+    );
   box.append(section);
 }

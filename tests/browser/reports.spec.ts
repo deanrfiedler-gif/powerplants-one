@@ -37,7 +37,6 @@ async function proof(
   name: string,
   extra: Record<string, unknown> = {},
 ) {
-  await page.evaluate(() => scrollTo(0, 0));
   await page.evaluate(
     () =>
       new Promise<void>((r) =>
@@ -50,15 +49,18 @@ async function proof(
     ),
   ).toBe(true);
   await mkdir(info.outputPath("."), { recursive: true });
+  for (const fullPage of [false, true]) {
+  const label = fullPage ? `${name}-full` : name;
   const bytes = await page.screenshot({
-    path: info.outputPath(`P09-${name}.png`),
-    fullPage: true,
+    path: info.outputPath(`P09-${label}.png`),
+    fullPage,
   });
   await writeFile(
-    info.outputPath(`P09-${name}.json`),
+    info.outputPath(`P09-${label}.json`),
     JSON.stringify(
       {
         scenario: name,
+        full_page: fullPage,
         source_head: process.env.PPO_SOURCE_HEAD ?? process.env.GITHUB_SHA,
         executed_checkout: execFileSync("git", ["rev-parse", "HEAD"], {
           encoding: "utf8",
@@ -77,6 +79,7 @@ async function proof(
       2,
     ),
   );
+  }
 }
 async function completion(page: Page) {
   await page.getByRole("button", { name: "Completion", exact: true }).click();

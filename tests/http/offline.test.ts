@@ -112,8 +112,9 @@ test("P08 real HTTP bounded sync, original receipts, malformed siblings and acto
   );
   assert.equal(
     (await call(p, "appointments/" + job.id + "/submit-completion", {})).status,
-    404,
+    422,
   );
+  assert.equal((await call(p, `my-jobs/${job.id}`)).body.items[0].report, null);
   const signed = await call(p, "local-session/sign-out", {});
   assert.equal(signed.status, 200);
   assert.equal(

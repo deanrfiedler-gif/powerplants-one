@@ -127,10 +127,9 @@ test("P07 actual online visit: independent crew start, all typed forms, durable 
     page.getByRole("heading", { name: "Current work context" }),
   ).toBeVisible();
   await expect(
-    page.getByText(
-      "Field workflow preview — Finance work incomplete",
-      { exact: true },
-    ),
+    page.getByText("Field workflow preview — Finance work incomplete", {
+      exact: true,
+    }),
   ).toBeVisible();
   await page
     .getByRole("button", {
@@ -145,7 +144,9 @@ test("P07 actual online visit: independent crew start, all typed forms, durable 
   await page
     .getByLabel("Start context")
     .fill("SYN actual start after independently reading original pack");
-  const startButton = page.getByRole("button", { name: "Record my actual start" });
+  const startButton = page.getByRole("button", {
+    name: "Record my actual start",
+  });
   await startButton.focus();
   await expect(startButton).toBeFocused();
   await startButton.press("Enter");
@@ -237,13 +238,11 @@ test("P07 actual online visit: independent crew start, all typed forms, durable 
   );
   await page.getByRole("button", { name: "Photos", exact: true }).click();
   const bytes = png();
-  await page
-    .getByLabel("Synthetic photo file")
-    .setInputFiles({
-      name: "SYN-browser-original.png",
-      mimeType: "image/png",
-      buffer: bytes,
-    });
+  await page.getByLabel("Synthetic photo file").setInputFiles({
+    name: "SYN-browser-original.png",
+    mimeType: "image/png",
+    buffer: bytes,
+  });
   await page.getByRole("button", { name: "1. Register photo" }).click();
   await expect(
     page.getByRole("button", { name: "2. Upload original bytes" }),
@@ -253,13 +252,11 @@ test("P07 actual online visit: independent crew start, all typed forms, durable 
     page.getByText("Your actual start is server-saved."),
   ).toBeVisible();
   await page.getByRole("button", { name: "Photos", exact: true }).click();
-  await page
-    .getByLabel("Synthetic photo file")
-    .setInputFiles({
-      name: "SYN-browser-original.png",
-      mimeType: "image/png",
-      buffer: bytes,
-    });
+  await page.getByLabel("Synthetic photo file").setInputFiles({
+    name: "SYN-browser-original.png",
+    mimeType: "image/png",
+    buffer: bytes,
+  });
   await page.getByRole("button", { name: "2. Upload original bytes" }).click();
   await expect(
     page.getByRole("button", { name: "3. Verify and make available" }),

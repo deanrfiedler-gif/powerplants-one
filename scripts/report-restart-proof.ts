@@ -263,7 +263,7 @@ try {
   await page.evaluate(() => scrollTo(0, 0));
   const shot = await page.screenshot({
     path: `${evidence}/${phase}.png`,
-    fullPage: true,
+    fullPage: false,
   });
   await writeFile(
     `${evidence}/${phase}.json`,
