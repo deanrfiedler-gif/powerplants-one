@@ -13,6 +13,11 @@ import {
   invalid,
 } from "../shared/validation";
 export const SALES_KINDS = ["CustomerContact", "RelationshipReview"] as const;
+function selectedId(value: unknown, field: string, name: string) {
+  if (value === "" || value === null || value === undefined)
+    invalid(field, `Choose an existing permitted ${name}.`);
+  return uuid(value, field);
+}
 export function parseAction(value: unknown) {
   const r = object(value, [
     "id",
@@ -24,7 +29,7 @@ export function parseAction(value: unknown) {
   ]);
   return {
     id: uuid(r.id, "activity_id"),
-    owner_id: uuid(r.owner_id, "activity_owner_id"),
+    owner_id: selectedId(r.owner_id, "activity_owner_id", "Activity owner"),
     kind: choice(r.kind, "kind", SALES_KINDS),
     summary: narrative(r.summary, "activity_summary", 2000),
     ...dueFields(r),
@@ -48,8 +53,8 @@ export function parseCreate(value: unknown) {
     "pipeline_definition_id",
     "initial_action",
   ]);
-  const company_id = uuid(r.company_id, "company_id"),
-    organisation_id = uuid(r.organisation_id, "organisation_id"),
+  const company_id = selectedId(r.company_id, "company_id", "company"),
+    organisation_id = selectedId(r.organisation_id, "organisation_id", "organisation"),
     site_id = optionalId(r.site_id, "site_id"),
     primary_person_id = optionalId(r.primary_person_id, "primary_person_id"),
     site_unknown_reason = optionalNarrative(
@@ -91,7 +96,7 @@ export function parseCreate(value: unknown) {
       "Other",
     ] as const),
     source_basis: narrative(r.source_basis, "source_basis", 1000),
-    owner_id: uuid(r.owner_id, "owner_id"),
+    owner_id: selectedId(r.owner_id, "owner_id", "opportunity owner"),
     pipeline_definition_id: uuid(
       r.pipeline_definition_id,
       "pipeline_definition_id",

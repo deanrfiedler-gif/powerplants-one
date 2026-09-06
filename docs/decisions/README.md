@@ -13,6 +13,8 @@
 | [ADR-0008](ADR-0008-p03-customer-intake.md) | P03 business screens, additive intake compatibility, owned follow-up and bounded triage |
 | [ADR-0004](ADR-0004-service-authority-and-offline-scope.md) | Synthetic service authority, manual Finance simulation and bounded offline scope |
 
+The [shared UI and CRM layout direction](ui-brand-and-crm-layout.md) records the supplied-brand design decision for the private prototype. It allocates no technology ADR and does not close operational CRM questions.
+
 [PP-01 decisions and evidence](../prototype/decisions-and-evidence.md) explains each operational gap. Design choices can enable synthetic work without becoming verified tenant facts or corporate approvals. Use [ADR-template](ADR-template.md) for substantive new choices; supersede old ADRs rather than deleting their history.
 
 [ADR-0009](ADR-0009-p04-work-scope-readiness.md) records exact scope/readiness authority and P04 compatibility. [ADR-0010](ADR-0010-p05-planner-controlled-changes.md) records bounded scheduling policy, atomic crew reservation, immutable source bundles and controlled consequences. These implementation decisions do not close real operational policy/retention/communication questions.

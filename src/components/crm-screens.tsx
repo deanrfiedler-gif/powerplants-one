@@ -585,7 +585,7 @@ function OpportunityContent({
     setExisting("");
     setAction(emptyAction(o.owner_id));
     reload();
-  });
+  }, "No unsaved changes");
   const context = {
     company_id: o.company_id,
     organisation_id: o.organisation_id,

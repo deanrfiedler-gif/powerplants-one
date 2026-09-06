@@ -6,7 +6,7 @@
 |---|---|---|
 | BP-01 | Master Business & Build Blueprint | Working r03 naming amendment; issued v02 source preserved |
 | BP-02 | [Platform Solution Architecture](../architecture/BP-02-platform-architecture.md) | PP-01 design recommendation authored; feasibility/implementation pending |
-| BP-03 | [CRM Functional & Build Blueprint](BP-03-crm.md) | r01 proposed journeys/shared integration; bounded [Pipedrive parity](crm-parity.md), [synthetic screens](crm-screen-specification.md) and [implementation sequence](../delivery/crm-implementation-plan.md); account parity and acceptance remain open |
+| BP-03 | [CRM Functional & Build Blueprint](BP-03-crm.md) | r01 proposed journeys/shared integration; bounded [Pipedrive parity](crm-parity.md), [synthetic screens](crm-screen-specification.md), [branded Board/Grid](crm-ui-mockups/README.md) and [implementation sequence](../delivery/crm-implementation-plan.md); account parity and acceptance remain open |
 | BP-04 | Estimating & Quotation Functional & Build Blueprint | Planned; controlled CREMS rule evidence required |
 | BP-05 | Engineering & Design Control Functional & Build Blueprint | Planned; native CAD boundary retained |
 | BP-06 | Projects & Commercial Delivery Functional & Build Blueprint | Planned; Smartsheet transition separate |

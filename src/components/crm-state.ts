@@ -47,10 +47,13 @@ export function useCrmResource<T>(path: string | null) {
     reload: () => setRevision((x) => x + 1),
   };
 }
-export function useCrmCommand(onAccepted: (r: OperationReceipt) => void) {
+export function useCrmCommand(
+  onAccepted: (r: OperationReceipt) => void,
+  initialStatus = "Unsaved",
+) {
   const [busy, setBusy] = useState(false),
     [error, setError] = useState<unknown>(null),
-    [status, setStatus] = useState("Unsaved"),
+    [status, setStatus] = useState(initialStatus),
     [uncertain, setUncertain] = useState(false);
   const pending = useRef<{
     path: string;

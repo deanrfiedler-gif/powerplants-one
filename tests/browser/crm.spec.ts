@@ -32,7 +32,7 @@ async function capture(page: Page, info: TestInfo, scenario: string) {
     : scenario === "conflict"
       ? page.getByRole("heading", { name: "Compare saved version 2 with your proposal" })
       : scenario === "uncertain-save"
-        ? page.getByRole("button", { name: "Confirm original save outcome" })
+        ? page.getByText("Save outcome uncertain — confirm the original action", { exact: true })
         : scenario === "empty"
           ? page.getByText("No permitted opportunities match this view.", { exact: true })
           : scenario === "loading"
@@ -118,6 +118,7 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
     .getByRole("button", { name: "Create opportunity and action" })
     .click();
   await expect(page.locator('.business-error[role="alert"]')).toBeFocused();
+  await expect(page.locator('.business-error[role="alert"]')).toContainText("Choose an existing permitted company.");
   await capture(page, info, "validation");
   await page
     .getByLabel("Visibility company", { exact: true })
@@ -156,6 +157,7 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await expect(
     page.getByRole("heading", { name: title, exact: true }),
   ).toBeVisible();
+  await expect(page.getByText("No unsaved changes", { exact: true })).toBeVisible();
   await capture(page, info, "saved-opportunity");
   await page.getByRole("link", { name: "Open activity", exact: true }).click();
   await expect(

@@ -63,10 +63,16 @@ The next PP-01 task is **P09 — Review, report and customer acknowledgement**, 
 
 One bounded live stage-metadata read refreshed ten stages across two pipeline IDs; account identity, licence, complete visibility and actual feature usage remain unverified. Identifiable operational-record reads await account-context evidence. All parity dispositions and functional defaults remain proposed; D-013/D-025/D-026 remain open, issue #9 remains open and AT-25 remains Planned. Pipedrive retains operational writes. BP-03 I1 subsequently received separate implementation authority; this does not accept the broader proposed parity.
 
+## Shared UI and branded CRM design handover
+
+The [shared UI specification](standards/ui-style-specification.md), [branded Board/Grid preview and original captures](blueprints/crm-ui-mockups/README.md) and [visual decision](decisions/ui-brand-and-crm-layout.md) publish the supplied Powerplants identity with a Pipedrive-familiar CRM layout. The [screen specification r02](blueprints/crm-screen-specification.md) and [I2 UI guidance](delivery/crm-i2-ui-guidance.md) make this discoverable for later implementation; the [handover](delivery/crm-ui-design-handover.md) records provenance, validation and publication controls.
+
+This is documentation/design work under PPO-009, separate from active I1 and P09. I1 retains Enquiry → Qualified, Open and no money fields. The six reference stages and fictional commercial values do not expand its scope, establish account parity or pass AT-25. The full I2 starter remains an I1 completion deliverable.
+
 ## Repository and publication controls
 
 The inspected repository is private with main as default branch. Branch protection was not enabled in the baseline, and a GitHub Projects board has not been provisioned. Existing Issues and the versioned backlog are used. No claim is made that checks are enforced by branch rules. See [foundation handover](delivery/foundation-handover.md) for earlier work and [package assurance](prototype/assurance.md) for this package's validation/publication status.
 
 ## BP-03 I1 implementation in progress
 
-[Issue #39](https://github.com/deanrfiedler-gif/powerplants-one/issues/39) authorises only synthetic owned opportunity and qualification follow-up. [I1 handover](delivery/crm-i1-handover.md) records actual progress; it is not yet verified or merged. [ADR-0015](decisions/ADR-0015-crm-i1-owned-opportunities.md) reserves migration 0010 after P09's 0009. P09 remains separately owned in #36/#37. [I2 starter](delivery/crm-i2-starter.md) prepares only controlled opportunity ownership transfer with explicit Activity impact review; I2 has not begun. Full AT-25 and PPO-009 remain open; no operational transition is implied.
+[Issue #39](https://github.com/deanrfiedler-gif/powerplants-one/issues/39) authorises only synthetic owned opportunity and qualification follow-up. [I1 handover](delivery/crm-i1-handover.md) records actual progress; it is not yet verified or merged. [ADR-0015](decisions/ADR-0015-crm-i1-owned-opportunities.md) reserves migration 0010 after P09's 0009. P09 remains separately owned in #36/#37. [I2 starter](delivery/crm-i2-starter.md) prepares only a scoped Board/Grid worklist using the accepted brand handover and I1 contracts; I2 has not begun. Full AT-25 and PPO-009 remain open; no operational transition is implied.
