@@ -243,5 +243,5 @@ test("P09 real HTTP exact submit/review/issue/response enforces strict request a
   assert.equal(r.responses.length, 2);
   assert.equal(r.appointment.status, "Completed");
   assert.equal(r.work_order.status, "Authorised");
-  assert.equal(r.finance_state, "Not implemented — P10");
+  assert.equal(r.finance_state, "Separate Finance authority required");
 });

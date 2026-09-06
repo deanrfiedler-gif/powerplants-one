@@ -870,7 +870,7 @@ export async function readReport(
           r.company_id,
           r.site_id,
         ),
-        finance_state: "Not implemented — P10",
+        finance_state: "Separate Finance authority required",
       },
     ]);
   });

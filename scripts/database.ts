@@ -7,7 +7,7 @@ import { database, transaction, closeDatabase } from "../src/platform/database";
 import { localConfig } from "../src/platform/config";
 const read = (name: string) =>
   readFile(new URL(`../db/${name}`, import.meta.url), "utf8");
-export async function migrate(through = 10) {
+export async function migrate(through = 11) {
   await transaction(async (client) => {
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     await client.query(
@@ -24,6 +24,7 @@ export async function migrate(through = 10) {
       "0008-offline-recovery.sql",
       "0009-service-reports.sql",
       "0010-crm-opportunities.sql",
+      "0011-finance-handoff.sql",
     ]) {
       const version = Number(file.slice(0,4));
       if (version > through) break;
@@ -48,7 +49,7 @@ export async function migrate(through = 10) {
     }
   });
 }
-export async function seed(through = 10) {
+export async function seed(through = 11) {
   await transaction(async (client) => {
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     for (const [version, file] of [
@@ -60,6 +61,7 @@ export async function seed(through = 10) {
       [7, "seed-p07.sql"],
       [9, "seed-p09.sql"],
       [10, "seed-crm-i1.sql"],
+      [11, "seed-p10.sql"],
     ] as const) {
       if (version > through) break;
       const prior = await client.query(
@@ -80,6 +82,10 @@ export async function seed(through = 10) {
         await client.query(
           "INSERT INTO ppo.report_template_policy(workspace_id,template_id) VALUES('10000000-0000-4000-8000-000000000001','e1000000-0000-4000-8000-000000000001')",
         );
+      }
+      if (version === 11) {
+        const { seedFinance } = await import("../src/finance/fixtures");
+        await seedFinance(client);
       }
       await client.query("INSERT INTO ppo.seed_receipts(version) VALUES($1)", [
         version,
