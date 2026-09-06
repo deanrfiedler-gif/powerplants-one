@@ -97,9 +97,9 @@ test("P06 upgrade and repeat seed preserve exact P05 SQL evidence, revoked grant
     ),
     old,
   );
-  assert.equal(
-    (await rows("SELECT count(*)::int n FROM public.ppo_migrations"))[0].n,
-    8,
+  assert.deepEqual(
+    (await rows("SELECT version FROM public.ppo_migrations ORDER BY version")).map(r=>r.version),
+    [1, 2, 3, 4, 5, 6, 7, 8, 10],
   );
   assert.equal(
     (

@@ -20,3 +20,5 @@
 [ADR-0011](ADR-0011-p06-controlled-job-packs.md) records P06 durable controlled job packs and the timestamp/recipient/owned-consequence decisions.
 
 [BP-03](../blueprints/BP-03-crm.md) records PPO-009's proposed CRM choices, shared integration boundary and coexistence design under D-013/D-025/D-026. Those decisions remain open; no new technology or operational policy is adopted. No ADR number is allocated by discovery, avoiding P09's concurrent reservation. [Parity evidence requests](../blueprints/crm-parity.md#4-smallest-useful-evidence-requests) identify the outstanding owner evidence.
+
+[ADR-0015](ADR-0015-crm-i1-owned-opportunities.md) records the separately authorised BP-03 I1 implementation, typed Opportunity Activity integration, fictional configuration and online recovery boundary. It does not close D-013/D-025 or adopt operational CRM parity. P09 retains ADR-0014.

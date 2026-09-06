@@ -43,16 +43,6 @@ jobs:
           npm ls --depth=0
       - name: Install pinned controlled PDF renderer
         run: npx playwright install --with-deps chromium
-      - name: Prepare pinned formatting review copies without changing tested checkout
-        run: |
-          python3 - <<'PYFORMAT'
-          import pathlib,subprocess
-          paths=[str(p) for root in ['src/crm','src/components','tests','scripts'] for p in pathlib.Path(root).rglob('*') if p.is_file() and ('crm' in str(p)) and p.suffix in ['.ts','.tsx']]
-          for name in paths:
-              out=pathlib.Path('verification-evidence/format-review')/name
-              out.parent.mkdir(parents=True,exist_ok=True)
-              out.write_bytes(subprocess.check_output(['node','node_modules/prettier/bin/prettier.cjs',name]))
-          PYFORMAT
       - name: Static, unit and build checks
         run: npm run check
       - name: Configure disposable loopback database

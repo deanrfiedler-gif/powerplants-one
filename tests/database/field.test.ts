@@ -87,9 +87,9 @@ test("P07 upgrade from P06 and repeat seed retain exact original issue, source, 
     ),
     before,
   );
-  assert.equal(
-    (await rows("SELECT count(*)::int n FROM public.ppo_migrations"))[0].n,
-    8,
+  assert.deepEqual(
+    (await rows("SELECT version FROM public.ppo_migrations ORDER BY version")).map(r=>r.version),
+    [1, 2, 3, 4, 5, 6, 7, 8, 10],
   );
   assert.equal(
     (
