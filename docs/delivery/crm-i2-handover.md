@@ -31,3 +31,6 @@ Pending: pinned checks, original image inspection/iteration, tested source head/
 ## Publication and next scope
 
 The external completion record will be linked here after actual merge, identifying final SHA/tree/parents and actual main workflow runs without embedding this document's own commit identity. No completion or independent approval is implied by this preparation. A next bounded starter will be prepared only after the delivered scope and remaining evidence justify it.
+
+
+Integration checkpoint: BP-04 PR #44 subsequently merged to actual main `94289a20fc609e47af647b29ca8170557da312bb`, tree `3964dac1259f8c8442bd74e1d35334d512c3c938`, parents `c3ac9b2ab9c09308f620a5b451a337eb75fe6390` and `a6e4550d12dd8130805a4cd096f67d8e41362f1f`. The exact signed main commit and tree were verified locally. I2 reconciles STATUS by retaining both workstreams and the document register by field, preserving all BP-04 design files, workflow, source manifests and acceptance dispositions. Head `795a1d3cf3dc6cd430e085fdeb6c4d93405ad4ac` conflicted with this newer main and has no runtime run claimed. P10/E1 code is not imported by this design reconciliation.

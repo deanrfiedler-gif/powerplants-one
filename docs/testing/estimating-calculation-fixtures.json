@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "status": "Proposed synthetic arithmetic; not owner-accepted CREMS or pricing policy",
+  "policy": {
+    "id": "SYN-EST-ARITHMETIC-01",
+    "currency": "AUD",
+    "tax_basis": "Excluding tax; no tax calculated",
+    "arithmetic": "Exact decimal strings; round line cost and sell to 2 places HALF_UP, then sum; round displayed percentages to 2 places HALF_UP",
+    "fx_direction": "AUD per one source-currency unit",
+    "landed_basis": "Fictional per-unit freight/duty already denominated in AUD; no other allocation",
+    "thresholds": "None supplied; not a company pricing-policy test"
+  },
+  "cases": [
+    {"id":"EF-01","purpose":"Base manual product, labour and freight",
+      "lines":[
+        {"id":"product","quantity":"2","unit":"each","cost":"100","sell":"150","discount":"0","included":true,"print":true},
+        {"id":"labour","quantity":"4","unit":"hour","cost":"50","sell":"80","discount":"0","included":true,"print":true},
+        {"id":"freight","quantity":"1","unit":"allowance","cost":"40","sell":"50","discount":"0","included":true,"print":true}],
+      "expected":{"all_cost":"440.00","included_cost":"440.00","sell":"670.00","difference":"230.00","margin_percent":"34.33","markup_percent":"52.27","printed":"670.00","hidden_allowance":"0.00"}},
+    {"id":"EF-02","purpose":"A successor changes product quantity without changing original fixture",
+      "base":"EF-01","changes":{"product":{"quantity":"3"}},
+      "expected":{"all_cost":"540.00","included_cost":"540.00","sell":"820.00","difference":"280.00","margin_percent":"34.15","markup_percent":"51.85","printed":"820.00","hidden_allowance":"0.00"}},
+    {"id":"EF-03","purpose":"Hide included labour detail; preserve total and named allowance",
+      "base":"EF-01","changes":{"labour":{"print":false}},
+      "expected":{"all_cost":"440.00","included_cost":"440.00","sell":"670.00","difference":"230.00","margin_percent":"34.33","markup_percent":"52.27","printed":"350.00","hidden_allowance":"320.00"}},
+    {"id":"EF-04","purpose":"Exclude labour from offer; original all-line cost remains distinguishable",
+      "base":"EF-01","changes":{"labour":{"included":false,"print":false}},
+      "expected":{"all_cost":"440.00","included_cost":"240.00","sell":"350.00","difference":"110.00","margin_percent":"31.43","markup_percent":"45.83","printed":"350.00","hidden_allowance":"0.00"}},
+    {"id":"EF-05","purpose":"Replace configuration discounts on included members only",
+      "base":"EF-01","changes":{"product":{"discount":"10"},"labour":{"discount":"5"},"freight":{"discount":"50","included":false}},
+      "replace_included_discount":"20",
+      "expected_discounts":{"product":"20","labour":"20","freight":"50"},
+      "expected":{"all_cost":"440.00","included_cost":"400.00","sell":"496.00","difference":"96.00","margin_percent":"19.35","markup_percent":"24.00","printed":"496.00","hidden_allowance":"0.00"}},
+    {"id":"EF-06","purpose":"Legitimate zero-price quote illustration; not an allowed below-cost estimate save",
+      "lines":[{"id":"quote-zero","quantity":"1","unit":"each","cost":"25","sell":"0","discount":"0","included":true,"print":true}],
+      "expected":{"all_cost":"25.00","included_cost":"25.00","sell":"0.00","difference":"-25.00","margin_percent":null,"markup_percent":"-100.00","printed":"0.00","hidden_allowance":"0.00"}},
+    {"id":"EF-07","purpose":"Declared fictional FX and per-unit landed arithmetic; no live rate or operational duty formula",
+      "lines":[{"id":"fx","quantity":"2","unit":"each","cost":"100","rate":"1.5","source_currency":"EUR","freight_per_unit_aud":"10","duty_per_unit_aud":"5","sell":"200","discount":"0","included":true,"print":true}],
+      "expected":{"all_cost":"330.00","included_cost":"330.00","sell":"400.00","difference":"70.00","margin_percent":"17.50","markup_percent":"21.21","printed":"400.00","hidden_allowance":"0.00"}},
+    {"id":"EF-08","purpose":"Round each extended line HALF_UP before aggregate; catches rounding-order differences",
+      "lines":[{"id":"tie-a","quantity":"3","unit":"each","cost":"0.335","sell":"0.505","discount":"0","included":true,"print":true},{"id":"tie-b","quantity":"1","unit":"each","cost":"0.335","sell":"0.505","discount":"0","included":true,"print":true}],
+      "expected":{"all_cost":"1.35","included_cost":"1.35","sell":"2.03","difference":"0.68","margin_percent":"33.50","markup_percent":"50.37","printed":"2.03","hidden_allowance":"0.00"}}
+  ],
+  "invalid_cases":[
+    {"id":"EF-09","field":"quantity","value":"0","expected":"Reject non-positive quantity"},
+    {"id":"EF-10","field":"cost","value":null,"expected":"Unknown cost is incomplete, not zero"},
+    {"id":"EF-11","field":"discount","value":"101","expected":"Reject discount outside 0 to 100"},
+    {"id":"EF-12","field":"sell","value":"NaN","expected":"Reject non-finite decimal"}
+  ]
+}
