@@ -1,4 +1,5 @@
 "use client";
+import { CompletionSubmission } from "./report-screens";
 import Link from "next/link";
 import Image from "next/image";
 import { useRef, useState } from "react";
@@ -70,6 +71,8 @@ type Task = {
   }[];
 };
 export type Job = Ref & {
+  report?: {id:string;version:number;revision:number;status:string}|null;
+  accepted_end_at?: string|null;
   reference: string;
   status: string;
   customer_name: string;
@@ -166,7 +169,7 @@ export type Job = Ref & {
   }[];
 };
 const message =
-  "Field workflow preview — report/Finance work incomplete";
+  "Field workflow preview — Finance work incomplete";
 function PreviewLabel() {
   return (
     <div className="field-preview">
@@ -1492,6 +1495,7 @@ export function FieldJobScreen({ id }: { id: string }) {
                 />
               </div>
               <div hidden={tab !== "Completion"}>
+                <CompletionSubmission key={job.report?.version??0} job={job} reload={r.reload}/>
                 <CompletionForm
                   key={job.draft?.version ?? 0}
                   job={job}
@@ -1503,8 +1507,7 @@ export function FieldJobScreen({ id }: { id: string }) {
                       Saved completion draft v{v.version} · {v.scope_outcome}
                     </h2>
                     <p>
-                      Server-saved <Stamp value={v.received_at} />. Reviewer
-                      submission is not implemented.
+                      Server-saved <Stamp value={v.received_at} />. Submission is a separate action above.
                     </p>
                     <p>{v.work_performed}</p>
                     <p>
