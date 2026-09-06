@@ -136,6 +136,7 @@ export type Job = Ref & {
   };
   attendance: {
     id: string;
+    actor_id: string;
     captured_at: string;
     received_at: string;
     authority_hash: string;
@@ -1083,8 +1084,7 @@ function CompletionForm({ job, reload }: { job: Job; reload: () => void }) {
       <h2>Prepare completion draft</h2>
       <p>
         Declare your own time and materials. Record outcomes for the authorised
-        scope and remaining work. This saves a draft; reviewer submission,
-        report and Finance workflows are incomplete.
+        scope and remaining work. This saves a draft. Use the separate submission action for review; Finance remains outside this workflow.
       </p>
       <ValidationFields error={s.error}>
         <form
@@ -1107,10 +1107,10 @@ function CompletionForm({ job, reload }: { job: Job; reload: () => void }) {
               declaration_reason: reason,
               task_outcomes: tasks,
               entries: job.entries
-                .filter((x) => !x.superseded)
+                .filter((x) => !x.superseded && x.actor_id === job.attendance?.actor_id)
                 .map((x) => ({ id: x.id, version: x.version })),
               required_attachment_ids: job.attachments
-                .filter((x) => x.status !== "Rejected")
+                .filter((x) => x.status !== "Rejected" && x.actor_id === job.attendance?.actor_id)
                 .map((x) => x.id),
               reason: "SYN save technician completion preparation",
             });
@@ -1214,7 +1214,7 @@ function CompletionForm({ job, reload }: { job: Job; reload: () => void }) {
               </div>
             ))}
             <p>
-              {job.entries.filter((x) => !x.superseded).length} current evidence
+              {job.entries.filter((x) => !x.superseded && x.actor_id === job.attendance?.actor_id).length} current evidence
               versions will be referenced exactly. Unavailable photos remain
               visible blockers. Partial work creates a service-owner follow-up
               with its due date needing resolution.

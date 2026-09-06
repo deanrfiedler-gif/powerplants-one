@@ -95,8 +95,8 @@ CREATE TABLE ppo.customer_responses (
  FOREIGN KEY(workspace_id,report_id,presentation_id,presented_hash) REFERENCES ppo.report_presentations(workspace_id,report_id,id,content_hash),
  FOREIGN KEY(workspace_id,actor_id) REFERENCES ppo.users(workspace_id,id),FOREIGN KEY(workspace_id,follow_up_activity_id) REFERENCES ppo.activities(workspace_id,id),
  CHECK(isfinite(presented_at) AND isfinite(captured_at) AND presented_at<=captured_at AND captured_at<=received_at+interval '5 minutes'),
- CHECK((response='Unavailable' AND respondent_name IS NULL AND respondent_role IS NULL AND signature_key IS NULL) OR (response<>'Unavailable' AND length(btrim(respondent_name))>0 AND length(btrim(respondent_role))>0)),
- CHECK(response='Accepted' OR (length(btrim(remarks))>=10 AND length(btrim(next_action))>=10 AND follow_up_activity_id IS NOT NULL)),
+ CHECK((response='Unavailable' AND respondent_name IS NULL AND respondent_role IS NULL AND signature_key IS NULL) OR (response<>'Unavailable' AND respondent_name IS NOT NULL AND respondent_role IS NOT NULL AND length(btrim(respondent_name))>0 AND length(btrim(respondent_role))>0)),
+ CHECK(response='Accepted' OR (remarks IS NOT NULL AND next_action IS NOT NULL AND length(btrim(remarks))>=10 AND length(btrim(next_action))>=10 AND follow_up_activity_id IS NOT NULL)),
  CHECK((signature_key IS NULL AND signature_hash IS NULL AND signature_bytes IS NULL) OR (signature_key IS NOT NULL AND signature_hash ~ '^[a-f0-9]{64}$' AND signature_bytes BETWEEN 1 AND 4194304))
 );
 CREATE TRIGGER register_identity BEFORE INSERT ON ppo.customer_responses FOR EACH ROW EXECUTE FUNCTION ppo.register_identity('CustomerResponse','');
@@ -108,6 +108,7 @@ ALTER TABLE ppo.appointments DROP CONSTRAINT ck_appointments_state;
 ALTER TABLE ppo.appointments ADD CONSTRAINT ck_appointments_state CHECK(status IN ('Proposed','Confirmed','InProgress','CompletedPendingReview','Completed','Cancelled'));
 CREATE OR REPLACE FUNCTION ppo.protect_started_appointment() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN
  IF OLD.actual_start_at IS NOT NULL AND ((NEW.actual_start_at,NEW.start_at,NEW.end_at,NEW.schedule_version,NEW.assignment_version) IS DISTINCT FROM (OLD.actual_start_at,OLD.start_at,OLD.end_at,OLD.schedule_version,OLD.assignment_version) OR (NEW.status<>OLD.status AND NOT ((OLD.status='InProgress' AND NEW.status='CompletedPendingReview') OR (OLD.status='CompletedPendingReview' AND NEW.status='Completed')))) THEN RAISE EXCEPTION 'Started attendance cannot be rewritten as a future booking' USING ERRCODE='55000'; END IF;
+ IF OLD.status='Completed' AND NEW.actual_end_at IS DISTINCT FROM OLD.actual_end_at THEN RAISE EXCEPTION 'Accepted attendance end is immutable' USING ERRCODE='55000'; END IF;
  IF NEW.status='CompletedPendingReview' AND NOT EXISTS(SELECT 1 FROM ppo.report_revisions r WHERE r.workspace_id=NEW.workspace_id AND r.appointment_id=NEW.id) THEN RAISE EXCEPTION 'Exact submission required' USING ERRCODE='23514'; END IF;
  IF NEW.status='Completed' AND (NEW.actual_end_at IS NULL OR EXISTS(SELECT 1 FROM ppo.field_attendances a WHERE a.workspace_id=NEW.workspace_id AND a.appointment_id=NEW.id AND NOT EXISTS(SELECT 1 FROM ppo.attendance_acceptances x WHERE x.workspace_id=a.workspace_id AND x.attendance_id=a.id))) THEN RAISE EXCEPTION 'All actual attendances must be accepted' USING ERRCODE='23514'; END IF; RETURN NEW; END $$;
 CREATE FUNCTION ppo.guard_report_capture() RETURNS trigger LANGUAGE plpgsql AS $$ DECLARE r ppo.service_reports; accepted boolean; BEGIN
@@ -145,3 +146,42 @@ BEGIN
  IF EXISTS(SELECT 1 FROM ppo.resource_reservations r JOIN ppo.assignments x ON x.id=r.assignment_id WHERE x.appointment_id=aid AND r.active AND NOT x.active) THEN RAISE EXCEPTION 'Released assignment cannot reserve capacity' USING ERRCODE='23514'; END IF;
  RETURN NEW;
 END $$;
+
+-- Input identity is immutable even while the bounded worker changes its lease/state.
+CREATE FUNCTION ppo.protect_report_job() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN
+ IF TG_OP='DELETE' OR (to_jsonb(NEW)-ARRAY['state','attempts','lease_token','lease_until','error_code','output_manifest','issue_id']) IS DISTINCT FROM (to_jsonb(OLD)-ARRAY['state','attempts','lease_token','lease_until','error_code','output_manifest','issue_id']) OR (OLD.state IN ('Issued','StaleSource') AND NEW IS DISTINCT FROM OLD) OR (OLD.output_manifest IS NOT NULL AND NEW.output_manifest IS DISTINCT FROM OLD.output_manifest) THEN RAISE EXCEPTION 'Original render input, durable manifest and terminal outcome are immutable' USING ERRCODE='55000'; END IF; RETURN NEW;
+END $$;
+CREATE TRIGGER protect_job BEFORE UPDATE OR DELETE ON ppo.report_render_jobs FOR EACH ROW EXECUTE FUNCTION ppo.protect_report_job();
+CREATE FUNCTION ppo.check_report_fact() RETURNS trigger LANGUAGE plpgsql AS $$
+DECLARE r ppo.service_reports; v ppo.report_revisions; review ppo.report_reviews; job ppo.report_render_jobs; issue ppo.report_issues; presentation ppo.report_presentations;
+BEGIN
+ IF TG_TABLE_NAME='report_entry_refs' THEN
+  SELECT * INTO v FROM ppo.report_revisions WHERE workspace_id=NEW.workspace_id AND id=NEW.report_revision_id;
+  IF NOT EXISTS(SELECT 1 FROM jsonb_array_elements(v.snapshot->'entries') e WHERE e->>'id'=NEW.entry_id::text AND (e->>'version')::integer=NEW.entry_version) THEN RAISE EXCEPTION 'Entry ref must belong to the sealed submitted snapshot' USING ERRCODE='23514'; END IF; RETURN NEW;
+ END IF;
+ SELECT * INTO r FROM ppo.service_reports WHERE workspace_id=NEW.workspace_id AND id=NEW.report_id;
+ IF TG_TABLE_NAME='report_revisions' THEN
+  IF r.actor_id<>NEW.actor_id OR NEW.revision<>r.revision+1 OR NEW.predecessor_id IS DISTINCT FROM r.current_revision_id OR r.status NOT IN ('Draft','Returned') OR NEW.snapshot#>>'{attendance,id}'<>r.attendance_id::text OR NOT EXISTS(SELECT 1 FROM ppo.completion_draft_revisions d WHERE d.id=NEW.draft_revision_id AND d.actor_id=NEW.actor_id AND d.attendance_id=r.attendance_id) THEN RAISE EXCEPTION 'Exact personal submission and successor lineage required' USING ERRCODE='23514'; END IF;
+ ELSIF TG_TABLE_NAME='report_reviews' THEN
+  SELECT * INTO v FROM ppo.report_revisions WHERE workspace_id=NEW.workspace_id AND id=NEW.revision_id;
+  IF r.status<>'Submitted' OR r.current_revision_id<>NEW.revision_id OR v.source_hash<>NEW.source_hash OR (SELECT jsonb_agg(jsonb_build_object('id',e.entry_id,'version',e.entry_version) ORDER BY e.entry_id) FROM ppo.report_entry_refs e WHERE e.report_revision_id=v.id) IS DISTINCT FROM (SELECT jsonb_agg(jsonb_build_object('id',e->>'id','version',(e->>'version')::integer) ORDER BY e->>'id') FROM jsonb_array_elements(NEW.entry_decisions) e) OR (NEW.decision='Approved' AND EXISTS(SELECT 1 FROM jsonb_array_elements(NEW.entry_decisions) e WHERE e->>'decision'<>'Approved')) THEN RAISE EXCEPTION 'Review requires the exact current submitted set' USING ERRCODE='23514'; END IF;
+ ELSIF TG_TABLE_NAME='attendance_acceptances' THEN
+  SELECT * INTO review FROM ppo.report_reviews WHERE workspace_id=NEW.workspace_id AND id=NEW.review_id;
+  SELECT * INTO v FROM ppo.report_revisions WHERE id=review.revision_id;
+  IF review.decision<>'Approved' OR r.attendance_id<>NEW.attendance_id OR v.attendance_end_at<>NEW.accepted_end_at THEN RAISE EXCEPTION 'Acceptance must match the reviewed actual attendance' USING ERRCODE='23514'; END IF;
+ ELSIF TG_TABLE_NAME='report_issues' THEN
+  SELECT * INTO job FROM ppo.report_render_jobs WHERE workspace_id=NEW.workspace_id AND id=NEW.render_job_id;
+  SELECT * INTO review FROM ppo.report_reviews WHERE workspace_id=NEW.workspace_id AND id=NEW.review_id;
+  IF r.status<>'Reviewed' OR r.current_revision_id<>NEW.revision_id OR review.decision<>'Approved' OR review.revision_id<>NEW.revision_id OR job.state<>'Durable' OR job.revision_id<>NEW.revision_id OR job.review_id<>NEW.review_id OR job.output_manifest IS DISTINCT FROM NEW.manifest OR NEW.output_hash<>NEW.manifest->>'pdf_hash' THEN RAISE EXCEPTION 'Issue requires the exact reviewed durable output' USING ERRCODE='23514'; END IF;
+ ELSIF TG_TABLE_NAME='report_presentations' THEN
+  IF NEW.kind='IssuedReport' THEN
+   SELECT * INTO issue FROM ppo.report_issues WHERE workspace_id=NEW.workspace_id AND id=NEW.issue_id;
+   IF issue.revision_id<>NEW.revision_id OR NEW.content_hash<>issue.manifest->>'html_hash' OR NEW.html_hash<>NEW.content_hash THEN RAISE EXCEPTION 'Presentation must bind the exact issued HTML bytes' USING ERRCODE='23514'; END IF;
+  ELSIF NEW.content_hash<>encode(sha256(convert_to(NEW.html,'UTF8')),'hex') OR NOT EXISTS(SELECT 1 FROM ppo.report_reviews WHERE workspace_id=NEW.workspace_id AND revision_id=NEW.revision_id AND decision='Approved') THEN RAISE EXCEPTION 'Draft presentation requires reviewed exact HTML' USING ERRCODE='23514'; END IF;
+ ELSIF TG_TABLE_NAME='customer_responses' THEN
+  SELECT * INTO presentation FROM ppo.report_presentations WHERE workspace_id=NEW.workspace_id AND id=NEW.presentation_id;
+  IF r.status NOT IN ('Reviewed','Issued') OR r.current_revision_id<>presentation.revision_id OR NEW.presented_at<presentation.created_at OR NEW.presented_hash<>presentation.content_hash THEN RAISE EXCEPTION 'Response requires the exact current presented content' USING ERRCODE='23514'; END IF;
+ END IF;
+ RETURN NEW;
+END $$;
+DO $$ DECLARE t text; BEGIN FOREACH t IN ARRAY ARRAY['report_revisions','report_entry_refs','report_reviews','attendance_acceptances','report_issues','report_presentations','customer_responses'] LOOP EXECUTE format('CREATE TRIGGER exact_fact BEFORE INSERT ON ppo.%I FOR EACH ROW EXECUTE FUNCTION ppo.check_report_fact()',t); END LOOP; END $$;

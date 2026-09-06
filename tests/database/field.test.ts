@@ -937,7 +937,7 @@ for (const outcome of ["Partial", "UnableToProceed"])
     assert.equal(
       (
         await rows(
-          "SELECT count(*)::int n FROM information_schema.tables WHERE table_schema='ppo' AND table_name IN ('service_reports','financial_handoffs')",
+          "SELECT ((SELECT count(*) FROM ppo.service_reports)+(SELECT count(*) FROM information_schema.tables WHERE table_schema='ppo' AND table_name='financial_handoffs'))::int AS n",
         )
       )[0].n,
       0,

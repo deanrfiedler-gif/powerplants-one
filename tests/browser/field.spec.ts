@@ -128,7 +128,7 @@ test("P07 actual online visit: independent crew start, all typed forms, durable 
   ).toBeVisible();
   await expect(
     page.getByText(
-      "Field workflow preview — report/Finance work incomplete",
+      "Field workflow preview — Finance work incomplete",
       { exact: true },
     ),
   ).toBeVisible();
