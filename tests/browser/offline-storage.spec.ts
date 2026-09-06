@@ -45,3 +45,8 @@ test("P08 retained ownership locks deny cross-actor context, originals, bytes an
   });
   expect(result.failures).toHaveLength(3);expect(result.failures.every(x=>x.includes("locked or expired"))).toBe(true);expect(result.oldDenied).toBe(true);expect(result.otherRows).toEqual([]);expect(result.otherContexts).toEqual([]);
 });
+
+
+test("P08 partial browser storage clearing is detected without a false receipt or recovery claim",async({page})=>{
+ await page.goto("/");await page.evaluate(async()=>{const path="/offline/modules/offline/store.js",s=await import(path);const db=await s.openStore();db.close();localStorage.setItem("ppo-offline-marker","present");await new Promise<void>((resolve,reject)=>{const r=indexedDB.deleteDatabase(s.DB_NAME);r.onsuccess=()=>resolve();r.onerror=()=>reject(r.error);});});await page.goto("/offline/index.html");await expect(page.locator("#notice")).toContainText("Possible eviction or clearing");await expect(page.locator("#queue .queue-row")).toHaveCount(0);await expect(page.locator("body")).not.toContainText("ServerSaved");
+});

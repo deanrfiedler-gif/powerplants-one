@@ -1,6 +1,6 @@
 # PP-01 — Ordered prototype implementation plan
 
-**Edition:** r08 · **Status:** P01/P02 complete; P03 implemented with final component and publication evidence in its [handover](p03-handover.md); P04 component-verified with evidence in its [handover](p04-handover.md); P05 implemented with final verification/publication in its [handover](p05-handover.md); P06 implemented with exact verification/publication in its [handover](p06-handover.md); P07 implemented with exact verification/publication in its [handover](p07-handover.md); P08–P12 planned. Full-procedure execution is recorded separately from the authored catalogue defaults.
+**Edition:** r09 · **Status:** P01/P02 complete; P03 implemented with final component and publication evidence in its [handover](p03-handover.md); P04 component-verified with evidence in its [handover](p04-handover.md); P05 implemented with final verification/publication in its [handover](p05-handover.md); P06 implemented with exact verification/publication in its [handover](p06-handover.md); P07 implemented with exact verification/publication in its [handover](p07-handover.md); P08 implementation/verification in progress with evidence in its [handover](p08-handover.md); P09–P12 planned. Full-procedure execution is recorded separately from the authored catalogue defaults.
 
 [Package](../prototype/README.md) · [Scope](../prototype/scope-and-journey.md) · [BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md).
 
@@ -37,7 +37,7 @@ Complexity is a relative design judgement, not a time estimate. Offline and Fina
 
 P01/P02 establish the technical core; P03–P06 establish prepared and schedulable work; P07–P10 complete field/report/Finance consequences; P11/P12 prove integration and recovery. Individual screen work may be drafted earlier, but a package cannot claim completion until its guards and dependencies are functional.
 
-An online demonstration after P07 is useful but must be labelled **Online workflow preview — offline/report/Finance work incomplete**. The first complete PP-01 demonstration is after P12. Do not silently redefine PP-01 as finished because the dashboard looks polished.
+The original P07 online demonstration label was **Online workflow preview — offline/report/Finance work incomplete**. With bounded P08 offline components, the current label is **Field workflow preview — report/Finance work incomplete**. The first complete PP-01 demonstration is after P12. Do not silently redefine PP-01 as finished because the dashboard looks polished.
 
 ## 4. P01 implementation brief
 
@@ -114,4 +114,11 @@ P04 does not deliver typed material requisitions/stock/shortage processing withi
 
 [P07 handover](p07-handover.md) records SC-09/10, DAT-08, API-C12–14, online TR-09/10, typed capture/corrections, exact private PNGs and completion drafts. [ADR-0012](../decisions/ADR-0012-p07-online-field-evidence.md) preserves current P06 authority and per-actor attendance, original scope/issued evidence, actor-wide time exclusion, storage/database reconciliation and independent closure lifecycles. PT-06 is now an integrated P07 obligation; PT-13/14 reviewer/report/return steps remain P09. Actual verification/publication and acceptance status are linked from the handover, not inferred from implementation.
 
-[P08 starter](p08-starter-prompt.md) prepares bounded durable offline operation/attachment dependencies, stale-authority recovery and browser schema/quota/restart proof. P08 implementation is absent here. Report submission/customer response, Finance, hosting, production migration and live communication remain outside P07.
+[P08 starter](p08-starter-prompt.md) prepares bounded durable offline operation/attachment dependencies, stale-authority recovery and browser schema/quota/restart proof. P08 implementation and exact verification/publication are now recorded in its handover below. Report submission/customer response, Finance, hosting, production migration and live communication remain outside P07.
+
+
+## P08 delivery boundary and prepared P09
+
+[P08 handover](p08-handover.md) and [ADR-0013](../decisions/ADR-0013-p08-offline-recovery.md) record durable owner-bound context/original/evidence/PNG stores, a narrowly scoped shell worker, strict local transaction save outcomes, bounded per-operation replay and recoverable leases, current-authority adjudication and owned restricted exception recovery. P04–P07 domain commands, issued bytes, exact original receipts and separate lifecycle boundaries remain. API-C15 does not implement report submission or approval. PT-11/PT-12/PT-24/PT-28 components have separately recorded execution evidence; full procedure status is never inferred from code or isolated checks.
+
+[P09 starter](p09-starter-prompt.md) is prepared only. It requires verified P08 publication from the external issue record, current main and exact checks before starting review/submission/report/customer-response work. Finance processing remains P10. P09–P12, hosting, operational identity/integration, production migration and customer communications are not started by P08.

@@ -43,3 +43,10 @@ The [P03 screenshot index](evidence/p03/README.md) preserves 38 inspected deskto
 ## P07 online component verification
 
 [P07 handover](../delivery/p07-handover.md) records current real PostgreSQL, HTTP/browser, migration/upgrade/seed/reset/restart and exact media/correction/draft verification, source identities and failed-run dispositions. [ADR-0012](../decisions/ADR-0012-p07-online-field-evidence.md) defines current start authority and immutable original evidence. PT-06's actual-start dependency now has a real integrated scenario. PT-13/14 review/report/return-visit steps remain P09; no invented approval or downstream closure is used. Full-procedure status requires the exact complete execution record and is separate from component counts. [P08 starter](../delivery/p08-starter-prompt.md) is prepared only.
+
+
+## P08 offline and recovery components
+
+[P08 handover](../delivery/p08-handover.md) records actual exact runtime, migration/seed/reset, full maintained checks, failed-run dispositions and final publication. The real PostgreSQL, HTTP and Chromium tests in `tests/database/offline.test.ts`, `tests/http/offline.test.ts`, `tests/browser/offline.spec.ts` and `tests/browser/offline-storage.spec.ts` exercise durable originals, PNG dependencies, current-authority/refusal/receipt recovery, IndexedDB transaction errors/upgrades, identity locks, sender claims and real offline navigation. `scripts/offline-restart-proof.ts` retains a real persistent Chromium profile across application and PostgreSQL process restarts and proves original HTTP/PostgreSQL receipts and PNG bytes. No mock replaces those storage/database/browser boundaries.
+
+Full PT-11/PT-12/PT-24/PT-28 are assessed against every written precondition and step; isolated component cases do not promote them. Existing full statuses remain. Implementation self-review is not independent review, owner acceptance or production readiness. P09 report/review/customer response and P10 Finance remain absent.

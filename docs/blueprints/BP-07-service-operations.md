@@ -196,7 +196,7 @@ Photos/readings/checklist evidence link to the visit, actor, asset/task and capt
 | Activity | Desktop online | Phone online | Disconnected behaviour |
 |---|---|---|---|
 | Customer/global search | Scoped full view | Purposeful scoped view | Only previously downloaded assigned context |
-| Schedule confirm/move | Full planner + keyboard | Limited form action if authorised; no assumed planner parity | Read cached own visit; queue change request intent only |
+| Schedule confirm/move | Full planner + keyboard | Limited form action if authorised; no assumed planner parity | Read cached own visit; use online P04/P05 commands for change requests (P08 does not queue bookings) |
 | Pack reading | Exact authorised revision | Primary workflow | Cached issue/hash/as-at; clearly last-known |
 | Pack acknowledgement/start | Authorised online command | Primary field action | Store intent against cached versions; provisional until server acceptance |
 | Time/parts/observations/checklist | Full capture | Primary quick forms | IndexedDB save; visible upload queue and per-entry state |
@@ -205,7 +205,7 @@ Photos/readings/checklist evidence link to the visit, actor, asset/task and capt
 | Customer response | Exact presented issue | Attended capture with identity/response | Cached issued report response or explicitly labelled draft evidence; never imply final review |
 | Finance/account | Authorised detailed view | Limited intentional view | No financial cache or offline processing |
 
-Sync UI values: LocalSaved, Queued, Uploading, Synced, Failed, Conflict, ReviewRequired. Synced means the server accepted the evidence record, not that Service approved it or MYOB processed it. Quarantined stale work displays ReviewRequired and is excluded from approved totals.
+P08 UI values: LocalSaved, Pending, Sending, ServerSaved, Failed, Conflict, ReviewRequired; unsaved form changes are separate. ServerSaved (the physical equivalent of the planned Synced) means the server accepted the evidence record, not that Service approved it or MYOB processed it. Quarantined stale work displays ReviewRequired and is excluded from approved totals.
 
 Cancellation/reassignment may be unknown while disconnected. The app retains original evidence and flags it on reconnect; it cannot guarantee immediate revocation or remote deletion. Expired cached data is not labelled current. Do not auto-delete unsent work on logout/expiry/upgrade; follow the controlled recovery policy. See BP-02 and PT-11/PT-12/PT-24.
 
@@ -306,3 +306,12 @@ TR-09 checks current authority and all required personal acknowledgements in the
 Online TR-10 persists exact actor-attributed capture, receipt, audit and outbox fact. Correction creates a same-type successor with expected source version and reason. Time exclusion operates across the actor's current evidence in all appointments; P07 offers no review override. Required attribution and supported units/directions are explicit. Failed fixes and uncertain equipment identity remain history. Captured/approved/billable quantities remain distinct and stock/payroll/Finance processing is absent.
 
 Completion preparation is a supporting draft command, not API-C16/TR-11. It retains exact entry versions, task/asset outcomes, declarations, unavailable-attachment blockers and owned remaining work. Complete/Partial/UnableToProceed do not close attendance, work order, ticket, reviewer workflow or Finance. PT-13/14 reviewer/return/report portions remain P09. API-C15 durable offline replay belongs to P08; open-page retry is explicitly in memory and retains the original operation/payload after an uncertain HTTP outcome.
+
+
+## P08 maintained implementation amendment
+
+SC-09/10 now link to `/offline/index.html` for up to two explicitly downloaded assigned jobs, exact stale issued HTML, typed local evidence/PNG storage, provisional personal acknowledgement/start, immutable original replay and completion drafts. The current label is **Field workflow preview — report/Finance work incomplete**, alongside **Synthetic prototype — not for operational use**. Existing P07 online pages remain available. [ADR-0013](../decisions/ADR-0013-p08-offline-recovery.md), [API-C15](../contracts/service-api.md#p08-implementation-amendment), [dictionary](../contracts/service-data-dictionary.md#p08-physical-implementation-amendment) and [handover](../delivery/p08-handover.md) govern exact states, fields, dependencies and evidence.
+
+TR-10 now retains original envelopes/hashes/bytes through offline navigation and restart, a bounded explicit sender, per-operation outcome isolation, stale authority and narrow owned exception recovery. Every local save waits for IndexedDB completion; every ServerSaved waits for a committed original server receipt. Uncertain sends, quota/abort/blocked upgrades, missing original bytes and changed reuse remain readable failures. Capture under review retains owned next action and exact originals; no new scope, booking, approved quantity, report or closure is inferred.
+
+PT-11/PT-12/PT-24/PT-28 coverage is component evidence unless every written procedure step executes. P09 submission/review/report/customer response is prepared only in the [next starter](../delivery/p09-starter-prompt.md); P10 Finance and full PP-01 remain incomplete.

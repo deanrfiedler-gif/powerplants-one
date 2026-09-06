@@ -1,3 +1,4 @@
+import { object } from "../../../../../../shared/validation";
 import type { NextRequest } from "next/server";
 import {
   identity,
@@ -13,6 +14,7 @@ export async function GET(
 ) {
   try {
     localRequest(request);
+    object(Object.fromEntries(request.nextUrl.searchParams), []);
     const p = await identity(request),
       { id } = await context.params;
     const result = await ownRecovery(p, id);

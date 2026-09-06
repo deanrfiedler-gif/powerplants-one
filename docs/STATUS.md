@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 5 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P07 online workflow component-verified; final publication evidence linked from the P07 handover. PP-01 remains incomplete.
+**Updated:** 6 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P08 implementation and verification in progress; final publication evidence linked from the P08 handover. PP-01 remains incomplete.
 
 ## Current direction
 
@@ -53,7 +53,9 @@ P04 authority and original proposals remain exact. Booking changes never clear d
 
 P07 under [issue #32](https://github.com/deanrfiedler-gif/powerplants-one/issues/32) / [PR #33](https://github.com/deanrfiedler-gif/powerplants-one/pull/33) implements SC-09/10, bounded DAT-08, API-C12–14 and online TR-09/10: current personal assignments, real P06 authority checked at actual start, strict typed field capture, durable private fictional PNGs, immutable corrections and exact completion drafts. [ADR-0012](decisions/ADR-0012-p07-online-field-evidence.md) records the physical policies and [P07 handover](delivery/p07-handover.md) records actual verification, failed runs and publication state. Current work-order/ticket/reviewer/report/Finance lifecycles remain separate.
 
-The next bounded task is **P08 — Offline queue and exception recovery**, with a [detailed prepared starter](delivery/p08-starter-prompt.md) requiring verified P07 publication first. Open-page retry is in memory only. Durable offline queues, report submission/review/customer responses, Finance, live integration, hosting and full PP-01 remain incomplete. Full PT/AT status is governed by the acceptance catalogue and exact procedure evidence; component implementation does not imply independent review, owner acceptance or production readiness.
+P08 now implements bounded offline SC-09/10 and API-C15 under [issue #34](https://github.com/deanrfiedler-gif/powerplants-one/issues/34) / [PR #35](https://github.com/deanrfiedler-gif/powerplants-one/pull/35). The [handover](delivery/p08-handover.md) and [ADR-0013](decisions/ADR-0013-p08-offline-recovery.md) record versioned IndexedDB originals/PNG bytes, explicit shell cache scope, recoverable sender leases, causal replay, exact receipts and narrow owned recovery. Local save, uncertain send, server acceptance and authority review are distinct. Current actor/assignment/full-crew/non-waivable start authority remains server-adjudicated; completion remains a technician draft.
+
+The next bounded task is **P09 — Review, report and customer acknowledgement**, with a [detailed maintained starter](delivery/p09-starter-prompt.md) requiring verified P08 publication first. P09 has not started. Report submission/review/customer responses, Finance, live integration, hosting and full PP-01 remain incomplete. The acceptance catalogue retains existing full statuses; P08 components do not imply a full PT/AT, independent review, owner acceptance or production readiness.
 
 ## Repository and publication controls
 

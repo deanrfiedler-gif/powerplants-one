@@ -1,3 +1,4 @@
+import { object } from "../../../../../shared/validation";
 import type { NextRequest } from "next/server";
 import {
   identity,
@@ -10,6 +11,7 @@ export const dynamic = "force-dynamic";
 export async function GET(request: NextRequest) {
   try {
     localRequest(request);
+    object(Object.fromEntries(request.nextUrl.searchParams), []);
     const p = await identity(request);
     const result = await listRecovery(p);
     return reply(result);

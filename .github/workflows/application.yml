@@ -10,7 +10,7 @@ jobs:
   p01:
     name: P01/P02/P03/P04/P05/P06/P07/P08 local application and PostgreSQL proof
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 40
     services:
       postgres:
         image: postgres:16.15

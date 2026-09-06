@@ -1,6 +1,6 @@
 # PP-01 — Service data and choice dictionary
 
-**Edition:** r08 · **Status:** Logical contract; P01–P07 implement bounded subsets with explicit limits below. This is not an exported CREMS/MYOB schema.
+**Edition:** r09 · **Status:** Logical contract; P01–P07 implement bounded subsets with explicit limits below. This is not an exported CREMS/MYOB schema.
 
 [BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md) · [Finance](finance-handoff.md) · [Documents](document-issue-distribution.md).
 
@@ -342,3 +342,31 @@ Numeric values remain canonical exact decimal strings (up to nine integer and si
 Attachment policy: exact PNG signature, chunk length/order/CRC, bounded inflate, exact scanline size/filter values; non-interlaced 8-bit RGB/RGBA only, maximum 4 MiB, 4096 pixels per side and 12 million pixels. Animated or embedded text/EXIF/unknown chunks are rejected. The private local P06 adapter writes immutable bytes outside Git with hash/byte-count/retrieval verification. Metadata alone stays Pending. Uploaded, Quarantined, Available and Rejected have distinct recoverable ownership and evidence; no deletion/garbage collector exists.
 
 Completion outcomes are Complete/Partial/UnableToProceed; personal time/material declarations are AllRecorded/None/Incomplete with explanation. Exact per-task outcomes must cover authorised tasks. Complete requires all task outcomes complete, valid declarations, required available attachments and mandatory checks without unresolved findings/control failures. Partial/UnableToProceed can preserve explicit blockers and owned remaining work. Saving any draft keeps attendance, work order, ticket, reviewer acceptance, report and Finance lifecycles separate. Report submission/review and approved entry sets remain DAT-09/P09, Finance DAT-10/P10; no future feature is represented by fake records.
+
+## P08 physical implementation amendment
+
+[ADR-0013](../decisions/ADR-0013-p08-offline-recovery.md), [migration 0008](../../db/migrations/0008-offline-recovery.sql) and the [API-C15 contract](service-api.md#p08-implementation-amendment) extend DAT-08 and online/offline TR-10. Existing P01–P07 migration/seed bytes, original receipts, issued evidence and all 78 parent identities remain. No DAT-09 report/review or DAT-10 Finance tables/fixtures are invented.
+
+| PostgreSQL table / fact | Exact columns and invariant |
+|---|---|
+| `sync_acceptances` | `workspace_id,actor_id,operation_id,appointment_id,envelope,payload_hash,receipt_id,received_at`. Unique original actor/operation and exact linked normal receipt; composite FK binds workspace/actor/operation/receipt. Immutable original JSON envelope excludes only its separately stored hash. Append-only update/delete guard; server validates canonical hash and dependencies under the same domain transaction. |
+| `offline_recovery_grants` | `id,workspace_id,actor_id,company_id,site_id,appointment_id,owner_id,token_hash,authority,issued_at,expires_at`. Immutable exact original actor/job/scope/issue authority and recorded service owner. Random 32-byte token stored only as SHA-256 server-side; seven-day synthetic validity. It grants only bounded evidence preservation. |
+| `offline_recovery_cases` | `id,workspace_id,actor_id,operation_id,grant_id,activity_id,receipt_id,envelope,payload_hash,byte_hash,byte_count,storage_item_id,received_at`. Unique original actor/operation; original envelope exact grant actor/job/authority checked by trigger. Evidence commands only. All byte fields null together or exact bounded PNG metadata together. Immutable case and original storage item. Activity and separate receipt record owned preservation, never normal field acceptance. |
+| `offline_recovery_dispositions` | `id,workspace_id,case_id,actor_id,disposition,reason,received_at`. Append-only RetainedForReview/ClarificationRequired with exact actor/server time. Normal scoped recorded service owner required; originals/case/bytes remain unchanged. |
+| Existing `field_follow_ups` | Accessible factual capture with ReviewRequired authority now also creates owned service follow-up once in the original capture transaction. Earlier follow-up reasons and all originals remain. No review override, approved quantity or closure. |
+
+IndexedDB name is `PPO-offline-field`; current version **2**, compatible original payload schema **1**. Browser records use explicit `workspace_id:actor_id` ownership. Context/operation/blob access checks the current durable unlocked owner and its 24-hour verified identity horizon. A local origin's developer tools or user-cleared browser disk is outside the prototype's access-security claim.
+
+| IndexedDB store | Exact retained purpose / key |
+|---|---|
+| `meta` | Key `active`: owner `{workspace_id,actor_id,display_name}` or null, verified time, locked flag and generation. Sign-out/identity change commits lock before server session mutation. |
+| `contexts` | Key owner/job: owner, last verified/expiry, exact authority/recovery grant, minimum current permitted own service Job DTO and exact issued HTML. Maximum two explicitly downloaded jobs per owner; 24-hour synthetic expiry. A locked cache does not expose normal job/title/pack views. Explicit context removal preserves original operations and bytes. |
+| `operations` | Key owner/original operation: immutable wire envelope, owner and local creation time. Hash computed before transaction; changed reuse refused. Original payload schema/dependency/lineage is never silently rewritten during replay/upgrade. |
+| `evidence` | Same original key: owner, operation ID and original factual payload, atomically committed with original and required local bytes. No claim of normal acceptance. |
+| `bytes` | Same original upload key: owner, operation ID, exact Blob, SHA-256 and byte count. Hash/size checked before transaction; metadata-only or substituted old bytes is not a durable image. |
+| `status` | Same key: owner, LocalSaved/Sending/Pending/ServerSaved/Conflict/ReviewRequired/Failed, safe message/code, attempts, next-attempt hint, exact optional normal receipt and separate optional restricted recovery metadata. Receipt commit is separate from original local save. |
+| `leases` | Owner key: sender UUID, expiry and owner generation. Thirty-second exclusive sending claim, recoverable after expiry; no permanent lock. Existing server transaction/receipt remains final duplicate-effect protection. |
+
+Version 1 uses the same first six stores; version 2 adds leases in a native upgrade transaction. Unsupported newer browser database versions block the older application explicitly; original stores are retained. Unsupported payload versions stay ReviewRequired and exportable, without invented conversion. Quota/unavailable/abort/blocked/version-change errors do not silently fall back to memory. A completed strict transaction is the browser-local durability boundary; real hardware/device guarantees remain unverified. Partial-eviction markers can warn but cannot recover erased data or prove full absence of loss.
+
+The public shell uses a SHA-256 build-derived service-worker cache name and an explicit allowlist under `/offline/`: HTML/CSS and eight generated pure TypeScript modules. No API/private business response is cached by the worker; exact permitted pack HTML is explicitly stored under owner-bound context. Updates wait for open field clients; they do not delete IndexedDB. No automatic sending/background sync, browser encryption, remote wipe or device-management claim is made.

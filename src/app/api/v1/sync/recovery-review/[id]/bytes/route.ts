@@ -1,3 +1,4 @@
+import { object } from "../../../../../../../shared/validation";
 import { NextResponse, type NextRequest } from "next/server";
 import {
   identity,
@@ -12,6 +13,7 @@ export async function GET(
 ) {
   try {
     localRequest(request);
+    object(Object.fromEntries(request.nextUrl.searchParams), []);
     const { id } = await context.params,
       bytes = await recoveryBytes(await identity(request), id);
     return new NextResponse(new Uint8Array(bytes), {

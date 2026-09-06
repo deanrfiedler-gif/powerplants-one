@@ -88,9 +88,11 @@ async function note(
     .fill("SYN original offline evidence within inspection scope");
 }
 async function save(page: Page) {
+  const before=await page.locator("#queue .queue-row").count(),increment=(await page.getByLabel("Evidence type",{exact:true}).inputValue())==="Photo"?4:1;
   await page
     .getByRole("button", { name: "Save evidence on this device", exact: true })
     .click();
+  await expect(page.locator("#queue .queue-row")).toHaveCount(before+increment);
   await expect(page.locator("#capture-form")).toContainText(
     "Saved on this device — awaiting server acceptance.",
   );
@@ -292,6 +294,9 @@ test("P08 real offline UI interruption retains typed evidence and exact PNG, ret
       2,
     ),
   );
+  await login(page.request,"second-technician");await page.reload();await expect(page.locator("#workspace")).toBeVisible();await expect(page.locator("#queue .queue-row")).toHaveCount(0);await expect(page.locator("#jobs article")).toHaveCount(0);await expect(page.locator("body")).not.toContainText("SYN-offline-evidence.png");await expect(page.locator("body")).not.toContainText(originals[0].original.operation_id);await screenshot(page,info,"identity-switch-isolation");
+  await login(page.request,"assigned-technician");await page.reload();await expect(page.locator("#queue .queue-row")).toHaveCount(8);expect((await localRows(page)).slice(0,7).map((x:{original:unknown})=>x.original)).toEqual(originals.map((x:{original:unknown})=>x.original));
+
 });
 test("P08 real IndexedDB quota/abort, multi-tab claim, identity lock and schema retention", async ({
   page,
@@ -436,6 +441,7 @@ test("P08 persistent browser process restart retains two jobs and original evide
   await page
     .getByRole("button", { name: "Download selected job", exact: true })
     .click();
+  await expect(page.locator("#jobs article")).toHaveCount(2);
   await expect(page.locator("#notice")).toContainText(
     "Job context and exact pack saved",
   );
@@ -488,4 +494,6 @@ test("P08 UI time conflict keeps original local evidence and keyboard recovery c
  const recovery=page.getByRole("button",{name:"Preserve original for service-owner review",exact:true});await recovery.focus();await expect(recovery).toBeFocused();await page.keyboard.press("Enter");await expect(page.locator("#queue")).toContainText("Restricted recovery receipt");await screenshot(page,info,"restricted-recovery-keyboard-focus");expect((await localRows(page)).map((x:{original:unknown})=>x.original)).toEqual(originals);
  const own=(await localRows(page)).at(-1).status.recovery;const detail=await call(page.request,`sync/recovery/${own.case_id}`);expect(detail.normal_acceptance).toBe(false);expect(Object.keys(detail).sort()).toEqual(["case_id","disposition","normal_acceptance","operation_id","payload_hash","received_at","recovery_receipt_id"].sort());const job=(await call(page.request,`my-jobs/${setup.appointment_id}`)).items[0];expect(job.entries).toHaveLength(1);expect(job.status).toBe("InProgress");
  await writeFile(info.outputPath("P08-exception-originals.json"),JSON.stringify({originals,case:detail,server_entry_count:job.entries.length},null,2));
+ await login(page.request,"coordinator");await page.reload();await page.getByRole("button",{name:"Load owned recovery cases",exact:true}).click();const ownedCase=page.locator("#review-cases article").filter({hasText:own.case_id});await expect(ownedCase).toBeVisible();await ownedCase.getByLabel("Owned disposition").selectOption("ClarificationRequired");await ownedCase.getByLabel("Disposition note").fill("SYN service owner will reconcile the overlapping original before any reviewed entry set");await ownedCase.getByRole("button",{name:"Record owned disposition",exact:true}).click();await expect(page.locator("#notice")).toContainText("Owned disposition recorded");await screenshot(page,info,"service-owner-disposition");
+
 });
