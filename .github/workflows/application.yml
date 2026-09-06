@@ -75,6 +75,8 @@ jobs:
             done
             node --env-file=.env.local --import tsx scripts/report-restart-proof.ts "$phase"
           done
+      - name: Focused P09 exact return proposal and customer presentation proof
+        run: npx playwright test tests/browser/reports.spec.ts --output verification-evidence/p09-focused-browser --reporter=list
       - name: Real PostgreSQL behaviour and competing transactions
         run: npm run test:db
       - name: Restore deterministic fixtures for HTTP and browser suites

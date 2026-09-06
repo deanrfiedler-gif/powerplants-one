@@ -1658,7 +1658,7 @@ button:disabled {
 /* P09 adopts the shared brand palette without changing earlier screen contracts. */
 .report-screen { --navy:#242a37; --green:#62bb46; color:var(--navy); }
 .report-screen a { color:var(--navy); text-decoration:underline; }
-.report-screen button { color:var(--navy); background:var(--green); border-color:var(--navy); min-height:44px; }
-.report-screen button.secondary { background:#fff; color:var(--navy); }
+.report-screen button:not(:disabled) { color:var(--navy); background:var(--green); border-color:var(--navy); min-height:44px; }
+.report-screen button.secondary:not(:disabled) { background:#fff; color:var(--navy); }
 .report-screen button:focus-visible,.report-screen input:focus-visible,.report-screen select:focus-visible,.report-screen textarea:focus-visible { outline:3px solid var(--navy); outline-offset:3px; }
 .report-field input,.report-field select,.report-field textarea { color:#242a37; font-size:16px; }
