@@ -7,13 +7,12 @@ import { CRM, crmCreate, crmBase, crmAction } from "../helpers/crm";
 test.describe.configure({ timeout: 120000 });
 test.use({ actionTimeout: 15000 });
 async function identity(page: Page, profile = "coordinator") {
+  if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await page.getByRole("button", { name: "Change identity", exact: true }).click();
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   await page
     .getByRole("button", { name: "Use this identity", exact: true })
     .click();
-  await expect(
-    page.getByRole("button", { name: "Use this identity", exact: true }),
-  ).toBeEnabled();
+  await expect(page.locator("#business-profile")).toBeEnabled();
 }
 async function noOverflow(page: Page) {
   expect(
@@ -26,7 +25,7 @@ async function capture(page: Page, info: TestInfo, scenario: string) {
   await noOverflow(page);
   const errors = ["validation", "denied", "unavailable", "revoked-activity", "revoked-refresh"];
   const anchor = scenario === "loaded-sales-list"
-    ? page.locator(".crm-worklist")
+    ? page.locator(".crm-worklist").first()
     : errors.includes(scenario)
     ? page.locator('.business-error[role="alert"]').first()
     : scenario === "conflict"
@@ -224,6 +223,7 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await capture(page, info, "successor-action");
   await page.goto("/crm/opportunities");
   await page.getByLabel("Search opportunities", { exact: true }).fill(title);
+  if (info.project.use.isMobile) await page.getByRole("button", { name: /^Qualified \(/ }).click();
   await expect(
     page.getByRole("link", { name: title, exact: true }),
   ).toBeVisible();

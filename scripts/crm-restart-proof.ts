@@ -115,6 +115,8 @@ try {
       operations,
       db,
       detail: (await call(`crm/opportunities/${input.id}`)).items[0],
+      worklist_items: (await call(`crm/opportunities?q=${encodeURIComponent(input.title)}&sort=Title`)).items,
+      read_cursor: (await call("crm/opportunities?limit=1")).next_cursor,
     };
     await writeFile(join(root, "proof.json"), JSON.stringify(proof));
   } else {
@@ -131,6 +133,10 @@ try {
       "PostgreSQL must actually restart between phases",
     );
     const o = (await call(`crm/opportunities/${proof.input.id}`)).items[0];
+    assert.deepEqual((await call(`crm/opportunities?q=${encodeURIComponent(proof.input.title)}&sort=Title`)).items, proof.worklist_items);
+    assert.ok(proof.read_cursor, "The accepted HTTP fixtures must provide a second record for cursor restart proof");
+    const stale = await context.request.get(origin + `/api/v1/crm/opportunities?limit=1&cursor=${encodeURIComponent(proof.read_cursor)}`);
+    assert.equal(stale.status(), 422, "Restart invalidates an ephemeral read cursor without granting access");
     assert.equal(o.version, 3);
     assert.equal(o.stage_id, "Qualified");
     assert.equal(o.close_outcome, "Open");
@@ -218,6 +224,16 @@ try {
       2,
     ),
   );
+  await page.goto(origin + "/crm/opportunities");
+  await page.getByLabel("Search opportunities", {exact:true}).fill(proof.input.title);
+  for (const view of ["Board", "Grid"]) {
+    await page.getByRole("button", {name:view,exact:true}).click();
+    await expect(page.getByRole("link", {name:proof.input.title,exact:true})).toBeVisible();
+    const image = await page.screenshot({path:`${evidence}/I2-${phase}-${view}.png`,fullPage:false});
+    const metadata = JSON.parse(await readFile(`${evidence}/${phase}.json`,"utf8"));
+    await writeFile(`${evidence}/I2-${phase}-${view}.json`,JSON.stringify({...metadata,scenario:`I2 ${view} reads the same accepted Qualified/Open opportunity across actual application and PostgreSQL restart`,sha256:createHash("sha256").update(image).digest("hex"),bytes:image.length},null,2));
+  }
+  console.log(`I2 ${phase}: Board/Grid canonical ID, exact saved worklist content and restart cursor boundary verified.`);
   console.log(
     `I1 ${phase}: real PostgreSQL and HTTP accepted opportunity, two actions, exact completed outcome, qualification/events and four immutable receipts verified. Application PID ${server.pid}.`,
   );

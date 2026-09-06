@@ -1,0 +1,31 @@
+# BP-03 I2 — Scoped Board and Grid handover
+
+**State:** implementation under verification; no merged delivery claimed. **Owner:** Dean Fiedler. **Issue:** [#43](https://github.com/deanrfiedler-gif/powerplants-one/issues/43), linked to PPO-009 / [#9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9).
+
+## Verified starting dependency
+
+Connected GitHub identifies `deanrfiedler-gif` with repository admin/maintain/push/pull metadata on the private repository. A fresh isolated checkout, branch `feature/crm-i2-scoped-board-grid`, preserves the sibling BP-04 workstream. Starting main is `c3ac9b2ab9c09308f620a5b451a337eb75fe6390`, tree `163e4a9e7dcda9b067a67ed63299afd04d20e0b1`, parents `17f1505e2708663e7d2948f2c6bafc57a409085e` and `2aa8d44bfd1dc82057a5427a20007d7d2408b890`.
+
+I1 PR #40 is merged. Its [complete external publication](https://github.com/deanrfiedler-gif/powerplants-one/issues/39#issuecomment-5557831957) identifies actual main Application run 34055031020, Documentation 34055030992 and CRM design 34055031006, all attempt 1 successful. It records 329 unique cases (12 unit, 234 database, 17 HTTP, 66 browser), four focused P09 repeats, substantive database/HTTP/browser/restart evidence, original image hashes and exact checkout/tree. This increment does not manufacture I1 acceptance or count an unmerged head as delivered.
+
+The accepted UI publications are PR #41 and audit revision #42; #42 main `6afdb9d59c05f530b01f63929e97a8a58edd3093`, tree `5003c0ddd93b2fd34b882c892c2e7ccff6de67aa`. The supplied PNG and PDF match the [original manifest](../standards/ui-assets/README.md): respectively SHA-256 `8d12f0ecc394950cd9eb66964c588efb71c8e6f445390336c245c3f6712b9694` (315,536 bytes) and `335d3049bc72783799315d4790bd56b04e928acd0e1c2c81d8099cec2f2b8fd3` (27,591,152 bytes). Original logo and relevant rendered brand pages were inspected; the complete logo is copied byte-for-byte into the application's public assets.
+
+At implementation start, PR #44 owns BP-04 discovery documentation and overlapping STATUS/register/index changes. No P10 implementation reservation was then published. Recheck current work before merge. No migration/seed/capability/numbered ADR reservation is needed by I2. All ten accepted migrations and seed bytes remain unchanged.
+
+## Implemented code under verification
+
+The [worklist decision](../decisions/crm-i2-worklist.md) defines the single scoped read contract, current grant checks, stable query window, page-derived stage counts, bounded filter selectors, Board/Grid presentation and retained I1 commands. Both views show actual Enquiry/Qualified, Open outcome, owner, organisation/site, next action with separate action owner, due status and server/source status. View preferences remain memory-only. No additional business command or migration is introduced.
+
+Shared changes include exact brand tokens, intact 88px logo, accessible compact phone navigation and a worklist identity disclosure. Full existing screens and existing I1 error/conflict/uncertain/revocation journeys must pass alongside new originals. No image is a substitute for runtime permissions or persistence evidence.
+
+## Verification ledger
+
+Local documentation assurance passes: foundation preserves four issued sources, all 78 parents and 38 Planned acceptance cases; prototype and naming checks pass. These are documentation checks only. Local engines are Node 24.19.0 / npm 11.9.0, which do not match the required 24.20.0 / 11.19.0. No local application runtime proof is claimed and no engine gate is overridden. Runtime checks will execute in the existing exact-pinned disposable CI workflow, retaining PostgreSQL 16.15 and all delivered baseline suites.
+
+New database tests cover tied sorts, query/page binding, completeness, company/site/person and read-only selector boundaries, all-target Activity visibility, actual revocation, and unchanged business/receipt/audit/reference state during reads. New HTTP tests exercise the actual route contract and revocation; browser tests exercise equivalence, keyboard switching, pagination, retained stage, 320px reflow, unavailable results, late-response revocation and shared consumers. Existing I1 restart proof additionally verifies exact worklist content and both presentations across actual application/database restart, with invalidated ephemeral cursors.
+
+Pending: pinned checks, original image inspection/iteration, tested source head/tree and run/attempt, PR review/control snapshot, checked expected-head merge, actual merged-main workflows and external final identity publication. CA-02/03/05/06/07/10/13 components will be recorded only after execution. Full AT-25 remains Planned; #9 stays open. Real mobile hardware and CRM offline operation are unverified.
+
+## Publication and next scope
+
+The external completion record will be linked here after actual merge, identifying final SHA/tree/parents and actual main workflow runs without embedding this document's own commit identity. No completion or independent approval is implied by this preparation. A next bounded starter will be prepared only after the delivered scope and remaining evidence justify it.
