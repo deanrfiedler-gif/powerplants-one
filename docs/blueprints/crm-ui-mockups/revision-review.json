@@ -1,0 +1,278 @@
+{
+  "scope": "Synthetic exported design only; not application or acceptance proof",
+  "input": "docs/blueprints/crm-board-grid-mockup.html",
+  "input_sha256": "3ef6895d64a237c5cacc144dc5006df296b06b87c0b19e138b5c3560d0ac157a",
+  "browser": "151.0.7922.34",
+  "result": "passed",
+  "failures": [],
+  "measurements": [
+    {
+      "view": "board",
+      "width": 1920,
+      "height": 1080,
+      "pageWidth": 1920,
+      "logo": 88,
+      "firstCardTop": 283.78125,
+      "firstCardBottom": 446.953125,
+      "stageTops": [
+        212.78125,
+        212.78125,
+        212.78125,
+        212.78125,
+        212.78125,
+        212.78125
+      ],
+      "fullGridRows": 0
+    },
+    {
+      "view": "grid",
+      "width": 1920,
+      "height": 1080,
+      "pageWidth": 1920,
+      "logo": 88,
+      "firstCardTop": 0,
+      "firstCardBottom": 0,
+      "stageTops": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "fullGridRows": 11
+    },
+    {
+      "view": "board",
+      "width": 1440,
+      "height": 900,
+      "pageWidth": 1440,
+      "logo": 88,
+      "firstCardTop": 283.78125,
+      "firstCardBottom": 446.953125,
+      "stageTops": [
+        212.78125,
+        212.78125,
+        212.78125,
+        212.78125,
+        212.78125,
+        212.78125
+      ],
+      "fullGridRows": 0
+    },
+    {
+      "view": "grid",
+      "width": 1440,
+      "height": 900,
+      "pageWidth": 1440,
+      "logo": 88,
+      "firstCardTop": 0,
+      "firstCardBottom": 0,
+      "stageTops": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "fullGridRows": 11
+    },
+    {
+      "view": "board",
+      "width": 1366,
+      "height": 768,
+      "pageWidth": 1366,
+      "logo": 88,
+      "firstCardTop": 283.78125,
+      "firstCardBottom": 446.953125,
+      "stageTops": [
+        212.78125,
+        212.78125,
+        212.78125,
+        212.78125,
+        212.78125,
+        212.78125
+      ],
+      "fullGridRows": 0
+    },
+    {
+      "view": "grid",
+      "width": 1366,
+      "height": 768,
+      "pageWidth": 1366,
+      "logo": 88,
+      "firstCardTop": 0,
+      "firstCardBottom": 0,
+      "stageTops": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "fullGridRows": 9
+    },
+    {
+      "view": "board",
+      "width": 1024,
+      "height": 768,
+      "pageWidth": 1024,
+      "logo": 88,
+      "firstCardTop": 283.78125,
+      "firstCardBottom": 446.953125,
+      "stageTops": [
+        212.78125,
+        212.78125,
+        212.78125,
+        212.78125,
+        212.78125,
+        212.78125
+      ],
+      "fullGridRows": 0
+    },
+    {
+      "view": "grid",
+      "width": 1024,
+      "height": 768,
+      "pageWidth": 1024,
+      "logo": 88,
+      "firstCardTop": 0,
+      "firstCardBottom": 0,
+      "stageTops": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "fullGridRows": 9
+    },
+    {
+      "view": "board",
+      "width": 768,
+      "height": 1024,
+      "pageWidth": 768,
+      "logo": 88,
+      "firstCardTop": 398.78125,
+      "firstCardBottom": 558.953125,
+      "stageTops": [
+        375.984375,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "fullGridRows": 0
+    },
+    {
+      "view": "grid",
+      "width": 768,
+      "height": 1024,
+      "pageWidth": 768,
+      "logo": 88,
+      "firstCardTop": 0,
+      "firstCardBottom": 0,
+      "stageTops": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "fullGridRows": 5
+    },
+    {
+      "view": "board",
+      "width": 390,
+      "height": 844,
+      "pageWidth": 390,
+      "logo": 88,
+      "firstCardTop": 398.78125,
+      "firstCardBottom": 558.953125,
+      "stageTops": [
+        375.984375,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "fullGridRows": 0
+    },
+    {
+      "view": "grid",
+      "width": 390,
+      "height": 844,
+      "pageWidth": 390,
+      "logo": 88,
+      "firstCardTop": 0,
+      "firstCardBottom": 0,
+      "stageTops": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "fullGridRows": 5
+    },
+    {
+      "view": "board",
+      "width": 320,
+      "height": 800,
+      "pageWidth": 320,
+      "logo": 88,
+      "firstCardTop": 416.171875,
+      "firstCardBottom": 576.34375,
+      "stageTops": [
+        393.375,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "fullGridRows": 0
+    },
+    {
+      "view": "grid",
+      "width": 320,
+      "height": 800,
+      "pageWidth": 320,
+      "logo": 88,
+      "firstCardTop": 0,
+      "firstCardBottom": 0,
+      "stageTops": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "fullGridRows": 4
+    }
+  ],
+  "audit_checks": [
+    "Seven viewport sizes: first phone card, laptop density, continuous pipeline, intact logo, page containment",
+    "Direct phone stages and retained stage selection; context-aware creation, explicit owner default, linked error focus, retained filters, out-of-view notice and scoped empty recovery",
+    "Maximum-length title/action, full grid action and owner, keyboard grid scroll, frozen heading/identity, detail focus return and visible focus",
+    "150-record uneven-stage derivative; sticky long-board headings; 200% text width check; eight static branded state examples"
+  ],
+  "stress_fixture": {
+    "records": 150,
+    "derivative_sha256": "65a6123c82698c6025807fa128d3aa64eaa18e4d01759928d17a388b038f0a3e",
+    "scope": "Temporary browser-only derivative with uneven stage populations; no backend performance claim"
+  },
+  "capture_count": 17,
+  "date": "2026-09-06",
+  "revision": "r02",
+  "base_commit": "8bc0d903cb9da100136a8a5430bac9e6883bb27d",
+  "limits": "Local selective authoring copy; no full application, server permissions, integration, screen-reader or accessibility-certification claim."
+}

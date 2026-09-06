@@ -1,6 +1,6 @@
 # Shared PPO identity and CRM layout direction
 
-**Revision:** r01 · **Date:** 6 September 2026 · **Owner:** Dean Fiedler, private prototype · **Scope:** Shared UI direction and BP-03 C02 design handover.
+**Revision:** r02 · **Date:** 6 September 2026 · **Owner:** Dean Fiedler, private prototype · **Scope:** Shared UI direction and BP-03 C02 design handover.
 
 Dean supplied the Powerplants brand PDF, Markdown transcription, complete logo and two Pipedrive Deals screenshots, then authorised a small shared PPO UI specification, Board/Grid mockups and this repository handover. Use that identity with a familiar switchable board/table workspace. The [working UI specification](../standards/ui-style-specification.md) records exact source colours, typography, logo treatment and proposed functional UI extensions.
 
@@ -9,3 +9,5 @@ The PDF is the primary brand evidence. Navy `#242a37`, green `#62bb46` and white
 Pipedrive's visible layout and stage labels are reference evidence, not a complete account inventory or accepted transition policy. Preview records are fictional. I1 retains its bounded Enquiry → Qualified / Open / no-money contract; later Board/Grid implementation follows the [I2 UI guidance](../delivery/crm-i2-ui-guidance.md). Stage, close outcome, accepted quote and ERP order remain distinct.
 
 This records a visual design decision without changing architecture, adopting a new application dependency, allocating a numbered ADR/migration, closing D-013/D-025/D-026 or marking parent requirements/AT-25 complete. PPO-009 remains open; P09 remains a separate workstream.
+
+On 6 September 2026 Dean requested an audit and then authorised its design revision. Supersede the original 6/3/2/1 board reflow with a continuous horizontal pipeline above 780 px and directly selected stage below that breakpoint. Adopt the compact header, frozen Grid heading/identity, full next action and owner, explicit creation context, wrapping and recovery rules in the working UI specification. These are visual/workflow-preview decisions only. The [r02 handover](../delivery/crm-ui-design-handover.md) preserves the audit-to-change trace and remaining implementation boundaries.

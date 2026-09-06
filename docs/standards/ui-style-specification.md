@@ -1,11 +1,11 @@
 ---
 title: Powerplants One - Shared UI style specification
-revision: r02
+revision: r03
 date: 2026-09-06
 status: Brand-derived visual direction; functional extensions proposed
 owner: Dean Fiedler
 scope: Shared visual foundation; BP-03 C02 CRM board and grid mockups
-source_commit: ddc1a3cce769e011939e621d8d5f176542f48f8c
+source_commit: 8bc0d903cb9da100136a8a5430bac9e6883bb27d
 ---
 
 # Powerplants One - Shared UI style specification
@@ -45,12 +45,12 @@ Brand colours are exact source values. UI neutrals and semantic colours are prop
 | Element | Rule |
 |---|---|
 | Typeface | Roboto; Verdana fallback. Regular 400 for body, Medium 500 for controls/cards, Bold 700 for primary headings. Light is approved by the brand but unnecessary for dense data. |
-| Type scale | Page title 26 px; detail heading 20 px; stage 15 px; body/card title 14 px; supporting text 12 px; minor metadata 11 px. Grid title/body 13 px in this compact desktop proposal. Inputs 16 px on phone. |
+| Type scale | Page title 24 px; detail heading 20 px; stage 15 px; body/card/grid title 14 px; supporting text 12–13 px. Search and form inputs 16 px on phone; compact pipeline/stage selectors use 14 px. |
 | Paragraph treatment | Normal letter spacing; left alignment; natural wrapping; no justified text, condensed type or long bold/all-capital blocks. |
 | Numeric treatment | Right-aligned values; tabular numerals; AUD and tax basis visible. Display an explicit unknown instead of zero. |
-| Spacing | 4 px base: 4 / 8 / 12 / 16 / 24 / 32. Main gutters 24 px desktop, 16 px phone. Board gap 12 px; card padding 12-13 px. |
-| Controls | 44 px minimum primary/control height. Native labels, keyboard focus and native select/input behaviour. Radii: controls 6 px, cards 8 px, dialog 10 px. |
-| Table | Compact readable rows, minimum approximately 52 px; wrapped titles when needed. Visible column headings and thin grid rules. Horizontal scrolling stays inside the table container. |
+| Spacing | 4 px base with optical adjustments. Main gutters 20 px desktop, 12 px phone. Board gap 10 px; card padding 7–10 px. Typical cards are 160–180 px high; long content expands naturally. |
+| Controls | 44 px primary/filter/form targets and all phone title targets. Dense desktop grid record buttons may use 40 px within roughly 54 px rows. This is a PPO density policy, not an accessibility certification. Native labels and visible focus. Radii: controls 6 px, cards 7 px, dialog 10 px. |
+| Table | Approximately 54 px default desktop rows; titles/references and actions wrap naturally. Freeze the opportunity identity column and header inside a bounded scroll region with opaque backgrounds and scroll padding for focus. Keep stage labels intact. |
 | Navigation | Navy rail, 112 px in desktop mockup, with icons plus labels. Shared My Work, Customers, People, Sites and Service concepts retained; CRM selected. Other domain entries remain an application navigation decision. |
 
 **Supplied logo:** use the complete transparent PNG unchanged on `#242a37`. Preserve aspect ratio and embedded transparent padding; no crop, recolour, filter, distortion, separated symbol or recreated wordmark. The file contains white lettering and corresponds to the alternate green-and-white treatment (PDF p7). The user's instruction authorises its use in these private mockups; no company-wide brand approval is claimed. Corporate distribution must follow the source's alternate-logo rules.
@@ -61,14 +61,14 @@ Use neutral line icons for application actions, always with accessible names. Th
 
 ## 4. Shared CRM workspace and view contract
 
-**Header:** product identity, scoped opportunity search and synthetic actor. **Page:** CRM breadcrumb, Opportunities title and persistent Synthetic / Design preview label. **Toolbar:** Board / Grid switch, New opportunity, pipeline, owner and next-action filters. **Context row:** Open outcome, exact matching count, known illustrative total and unknown count; one shared sort. **Footer:** completeness, fixed sample as-at, currency, tax basis and unweighted-value label.
+**Header:** one page identity, scoped search and synthetic actor; the full logo shares a compact navy identity header on phone. **Toolbar:** Board / Grid, New opportunity, selected pipeline and a collapsible Filters & sort panel. Owner, action and sort live in that panel; removable active-filter chips and Clear all stay visible when relevant. **Context:** Open outcome, matching count, known total, unknown count, AUD/ex-GST/unweighted basis and fixed sample as-at together. **Footer:** completeness and synthetic design revision.
 
 | Board | Grid |
 |---|---|
 | Lead -> Qualification -> Estimating -> Quote -> Negotiation -> Closing, from the user's screenshot, as a reference layout only. | Same filtered records, same values, same Open outcome and same opportunity detail. |
-| Stage heading, count and sum of known displayed synthetic amounts; unknown amounts stated separately. | Opportunity title and SYN-PPO reference, organisation, contact, stage, value, expected close, owner, next-action status and ERP opportunity. |
-| Card: title, organisation, contact, value, accountable-owner initials, expected close and next action. | Real semantic table; wrapped title; right-aligned amounts. Full owner available in detail. |
-| Distinguish Overdue, Next action needed, Due date needed and planned actions by text/icons as well as colour. | Show ERP reference as Unavailable; do not invent an OP number or equate it with the PPO reference. |
+| Stage heading, count and sum of known displayed synthetic amounts; unknown amounts stated separately. | Opportunity title and SYN-PPO reference, organisation, actual next action and its status, value, expected close, stage, full owner name and contact. |
+| Card: title, organisation, value, expected close, actual next action and full owner. Contact, permanent reference, age and ERP availability remain in detail. | Semantic table; wrapped title/reference and action; right-aligned amounts; full owner visible in each row. Both views use the same owner in this synthetic fixture; real Activity ownership must follow its own contract. |
+| Distinguish Overdue, Next action needed, Due date needed and planned actions by text/icons as well as colour. | ERP reference is Unavailable in detail, omitted from the default grid because all examples lack it. Do not invent an OP number or equate it with the PPO reference. |
 
 The mockup contains 18 fictional opportunities across two illustrative pipeline labels: 15 in Systems & Projects and 3 in Products & Parts. All known amounts have one fictional basis per opportunity, AUD excluding GST; sums are raw unweighted illustrative values. No quotation accuracy, forecast, probability, revenue, order or operational completeness is implied. The default shows 15 opportunities and their known total, with two not estimated.
 
@@ -78,9 +78,9 @@ The Board / Grid toggle preserves pipeline, owner, action filter, search and sor
 
 ## 5. Responsive and state rules
 
-At 1400 px and above show six board columns. From 781-1399 px use three columns with stages continuing in reading order. From 501-780 px use two; at 500 px or below use one. This is a proposed readable reflow for PPO, while the wide desktop view follows the supplied reference. Keep the grid within a horizontal scroll container and the page itself within the viewport. On phone, move the complete logo and CRM location into a horizontal navy header; filters stack below 500 px and the Board / Grid switch stays available.
+Above 780 px, maintain six stages in one horizontal sequence with 250 px minimum columns and contained horizontal scrolling; never wrap the pipeline into a second row. Sticky stage headings orient long columns. At 780 px or below, show one selected stage with a direct selector, counts and previous/next controls; retain the selection across view switches. The Grid remains available with a frozen 150 px identity column on small screens. Use bounded scrolling and keep the outer page within its viewport. Secondary filters start collapsed. At 390×844 and 320×800, show a complete initial Board card with its top at or above 420 px. At 1366×768, target at least nine complete compact Grid rows. These measured design targets do not impose clipping heights on content.
 
-Show loading, no matches, validation, unavailable, denied, saving, saved and uncertain/conflict states distinctly in implemented screens. Never translate failed loading into zero records, say Saved before durable acceptance or retain sensitive details after actor/scope changes. Preserve entered proposals safely during validation/conflict, and announce changes without moving focus unexpectedly. Only the normal, no-matches, detail and simplified create/validation states are demonstrated here. Native dialog Escape and focus return are required; essential status remains visible without hover.
+Show loading, no matches, validation, unavailable, denied, saving, saved and uncertain/conflict states distinctly in implemented screens. Never translate failed loading into zero records, say Saved before durable acceptance or retain sensitive details after actor/scope changes. Preserve entered proposals safely during validation/conflict, and announce changes without moving focus unexpectedly. Normal, no-matches with recovery, detail, temporary creation and linked field validation are interactive in the preview. Eight [branded state illustrations](../blueprints/crm-ui-mockups/states.html) additionally cover loading, no matches, validation, unavailable, changed version, changed access, saving and uncertain save; these are static design examples, not implemented server behaviour. Native dialog Escape and focus return are required; essential status remains visible without hover.
 
 ## 6. Review and handover
 
@@ -97,3 +97,7 @@ Repository references at the inspected baseline:
 Revision r01: first brand-derived shared UI proposal and C02 board/grid visual application; 6 September 2026.
 
 Revision r02: repository handover; links to [CRM screen specification](../blueprints/crm-screen-specification.md), [Board/Grid preview](../blueprints/crm-board-grid-mockup.html), [original captures](../blueprints/crm-ui-mockups/README.md) and [publication handover](../delivery/crm-ui-design-handover.md). The issued r01 conversation specification remains unchanged.
+
+Revision r03: user-authorised response to the r01 UI audit; compact shell, continuous desktop pipeline, phone stage navigation, frozen grid, complete action/owner, creation context and long-text recovery. Base `8bc0d903cb9da100136a8a5430bac9e6883bb27d`; see [r02 design handover](../delivery/crm-ui-design-handover.md). The original r01 issued outputs remain unchanged.
+
+Creation policy: prefill the specific selected pipeline; for All pipelines, default explicitly to Systems & Projects in the form. Owner defaults to the current synthetic actor Alex Lee, regardless of owner filter. Preserve pipeline, owner, action filter, search, sort and phone stage after adding. If outside the current filters, say so and offer View opportunity. Clear all removes search/owner/action criteria while retaining pipeline and sort. Required-field errors retain other input, mark the field, link its message and focus it. Never clip accepted 200-character titles or 160-character actions, including unbroken references.
