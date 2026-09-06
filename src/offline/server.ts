@@ -358,6 +358,22 @@ export async function syncOne(
       validate: async (c) => {
         await dependencies(c, p, op);
         await validateAuthority(c, p, op, b);
+        // Both paths hold the same operation/workspace locks. An original
+        // preserved for restricted review cannot also enter normal acceptance.
+        const recovery = (
+          await c.query(
+            "SELECT payload_hash FROM ppo.offline_recovery_cases WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3",
+            [p.workspace_id, p.actor_id, op.operation_id],
+          )
+        ).rows[0];
+        if (recovery)
+          throw new AppError(
+            409,
+            recovery.payload_hash === op.payload_hash
+              ? "RecoveryDispositionRequired"
+              : "OperationConflict",
+            "This original is retained in restricted recovery. Its owned disposition does not authorise normal acceptance or a replacement operation.",
+          );
         if (op.supersedes_operation_id) {
           const source = (
             await c.query(

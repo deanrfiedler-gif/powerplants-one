@@ -16,6 +16,7 @@ import {
 } from "../../src/offline/recovery";
 import { readOperation } from "../../src/shared/receipts";
 import { readFieldJob } from "../../src/field/reads";
+import { captureEntry } from "../../src/field/entries";
 import { attachmentBytes } from "../../src/field/attachments";
 import { withdrawPack, revisePack, readPack } from "../../src/documents/packs";
 import {
@@ -304,6 +305,62 @@ test("P08 missing and cyclic dependencies preserve siblings without accepting ch
   assert.equal(result.outcomes[0].code, "DependencyPending");
   assert.equal(result.outcomes[1].code, "DependencyPending");
   assert.equal(result.outcomes[2].state, "ServerSaved");
+});
+test("P08 normal acceptance and restricted recovery are exclusive under competing original-operation locks", async () => {
+  const q = await started(),
+    context = await downloadContext(q.p, q.job.id, {}),
+    op = operation(q.p, q.job, "Capture", entry(q.job)),
+    before = (await rows("SELECT count(*)::int n FROM ppo.activities"))[0].n,
+    input = {
+      grant_id: context.recovery.id,
+      token: context.recovery.token,
+      operation: op,
+    };
+  const saved = await preserveRecovery(q.p, input);
+  assert.deepEqual(await preserveRecovery(q.p, input), saved);
+  const refused = (await syncBatch(q.p, { operations: [op] })).outcomes[0];
+  assert.equal(refused.code, "RecoveryDispositionRequired");
+  assert.equal(refused.state, "ReviewRequired");
+  assert.equal(refused.receipt, undefined);
+  await assert.rejects(
+    captureEntry(q.p, op.payload),
+    code("RecoveryDispositionRequired"),
+  );
+  const changed = rehash({
+    ...op,
+    payload: { ...op.payload, reason: "SYN changed quarantined meaning" },
+  });
+  assert.equal(
+    (await syncBatch(q.p, { operations: [changed] })).outcomes[0].code,
+    "OperationConflict",
+  );
+  assert.equal((await rows("SELECT count(*)::int n FROM ppo.field_entries"))[0].n, 0);
+
+  const competing = operation(q.p, q.job, "Capture", entry(q.job));
+  const [normal, recovery] = await Promise.allSettled([
+    syncBatch(q.p, { operations: [competing] }),
+    preserveRecovery(q.p, { ...input, operation: competing }),
+  ]);
+  assert.equal(normal.status, "fulfilled");
+  if (normal.status !== "fulfilled") throw normal.reason;
+  const outcome = normal.value.outcomes[0];
+  if (outcome.state === "ServerSaved") {
+    assert.equal(recovery.status, "rejected");
+    if (recovery.status === "rejected") assert.ok(code("AlreadyAccepted")(recovery.reason));
+    assert.deepEqual(
+      (await syncBatch(q.p, { operations: [competing] })).outcomes[0].receipt,
+      outcome.receipt,
+    );
+  } else {
+    assert.equal(outcome.code, "RecoveryDispositionRequired");
+    assert.equal(recovery.status, "fulfilled");
+  }
+  const facts = (await rows(
+    "SELECT (SELECT count(*) FROM ppo.sync_acceptances WHERE operation_id=$1)::int accepted,(SELECT count(*) FROM ppo.offline_recovery_cases WHERE operation_id=$1)::int recovered",
+    [competing.operation_id],
+  ))[0];
+  assert.equal(facts.accepted + facts.recovered, 1);
+  assert.equal((await rows("SELECT count(*)::int n FROM ppo.activities"))[0].n, before + 2);
 });
 test("P08 revoked permission blocks accepted normal receipt recovery and preserves local-only identity", async () => {
   const q = await started(),

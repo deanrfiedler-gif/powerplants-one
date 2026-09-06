@@ -1085,6 +1085,7 @@ async function renderQueue() {
     if (
       !["Start", "Acknowledge"].includes(op.command) &&
       row.status.state !== "ServerSaved" &&
+      row.status.state !== "Sending" &&
       !row.status.receipt &&
       !row.status.recovery
     )
@@ -1201,15 +1202,24 @@ async function review() {
         ["RetainedForReview", "ClarificationRequired"],
       ),
       note = field(a, "Disposition note", "", "textarea");
+    let pending: {
+      operation_id: string;
+      schema_version: number;
+      reason: string;
+      disposition: string;
+      note: string;
+    } | undefined;
     a.append(
       button("Record owned disposition", async () => {
-        await api(`sync/recovery-review/${r.case_id}/disposition`, {
-          operation_id: crypto.randomUUID(),
-          schema_version: 1,
-          reason: "Synthetic owned offline evidence disposition",
-          disposition: disposition.value,
-          note: note.value,
-        });
+        if (!pending || pending.disposition !== disposition.value || pending.note !== note.value)
+          pending = {
+            operation_id: crypto.randomUUID(),
+            schema_version: 1,
+            reason: "Synthetic owned offline evidence disposition",
+            disposition: disposition.value,
+            note: note.value,
+          };
+        await api(`sync/recovery-review/${r.case_id}/disposition`, pending);
         await review();
         notice(
           "Owned disposition recorded. Original evidence and its follow-up remain retained.",

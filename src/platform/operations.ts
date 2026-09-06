@@ -158,6 +158,21 @@ export async function sharedOperation<T>(
       const sync = syncContext.getStore();
       if (sync && sync.operation_id !== input.operation_id)
         throw new AppError(409, "OperationConflict", "The original operation identity must be retained.");
+      // P07 upgrade proof also runs these commands against schema 7. Once
+      // schema 8 exists, direct online commands cannot bypass a recovery hold.
+      if (
+        !sync &&
+        (await client.query("SELECT to_regclass('ppo.offline_recovery_cases') AS relation")).rows[0].relation &&
+        (await client.query(
+          "SELECT 1 FROM ppo.offline_recovery_cases WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3",
+          [p.workspace_id, p.actor_id, input.operation_id],
+        )).rowCount
+      )
+        throw new AppError(
+          409,
+          "RecoveryDispositionRequired",
+          "This original remains in restricted recovery; an online command cannot promote or replace it.",
+        );
       await sync?.validate(client);
       const prior = await priorReceipt(client, p, input.operation_id, hash);
       if (prior) {
