@@ -1,6 +1,6 @@
 # ADR-0017 — Bounded manual estimating and draft quotations
 
-**State:** Adopted implementation direction for the authorised synthetic E1 slice; verification pending. **Parent:** PPO-010 / issue #46. **Date:** 6 September 2026.
+**State:** Adopted and implemented for the authorised synthetic E1 slice; actual verification and publication are recorded in the [handover](../delivery/estimating-e1-handover.md). **Parent:** PPO-010 / issue #46. **Date:** 6 September 2026.
 
 Dean said “Proceed” and “Continue” after the proposed sequence to complete PR #44, implement E1, verify the journey and prepare E2 only. Bring this bounded manual slice forward from the master’s Wave B for the private prototype. Preserve the P01–P12 service order, P10 #45 and I2 #43; no live or broader estimating authority is implied.
 
