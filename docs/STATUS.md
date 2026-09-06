@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 6 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P09 implemented; exact final-head/main verification and publication are recorded in the linked handover. PP-01 remains incomplete.
+**Updated:** 6 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P10 implementation and verification in progress; completed P09 publication remains authoritative. PP-01 remains incomplete.
 
 ## Current direction
 
@@ -84,6 +84,12 @@ P09 issue #36 / PR #37 implement exact completion submission, authorised review/
 ## CRM UI audit revision
 
 Dean authorised the next design revision after the published Board/Grid audit. The [r02 visual revision](delivery/crm-ui-design-handover.md) improves mobile first-record visibility, continuous desktop stage navigation, frozen grid headings/identity, full next actions/owners, creation context, validation and long text. [Updated captures and branded exception examples](blueprints/crm-ui-mockups/README.md) accompany shared UI specification r03 and I2 UI guidance r02. Original issued images and source bytes remain preserved. Verification and PR publication are recorded in the handover; this does not change I1/P09 application scope or close PPO-009/AT-25.
+
+## P10 Finance handoff and account simulation
+
+Dean separately authorised the complete bounded P10 implementation and normal checked merge, followed by P11 starter preparation only. [Issue #45](https://github.com/deanrfiedler-gif/powerplants-one/issues/45), [PR #48](https://github.com/deanrfiedler-gif/powerplants-one/pull/48), [ADR-0016](decisions/ADR-0016-p10-finance-handoff.md) and the [P10 handover](delivery/p10-handover.md) govern current work. The source prerequisite is the completed P09 external publication, subsequently preserved through CRM I1 and estimating discovery main. Earlier P10 preparation-only statements describe the P09 boundary and are superseded by this explicit authority.
+
+SC-12/SC-13, DAT-10, API-C19–22/TR-14 and restricted OUT-14 are implemented on the P10 branch and undergoing exact-runtime CI verification. Original captured quantities, exact Service approvals, allocated/billable quantities and actual synthetic target quantities remain separate. Incomplete declarations and stale sources block readiness. Account F-01–F-05 retain as-at, completeness, reversals and separate cash. All master requirement and AT completion claims remain unchanged. P11/P12 implementation, hosting and live integrations remain unstarted.
 
 ## PPO-010 estimating and quotation discovery
 

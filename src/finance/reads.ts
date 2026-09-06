@@ -108,7 +108,20 @@ export async function listFinance(p: Principal, input: unknown = {}) {
     synthetic: true,
     as_at: new Date().toISOString(),
     timezone: "UTC",
-    items: rows.slice(0, 50),
+    items: rows
+      .slice(0, 50)
+      .map((row) => ({
+        ...row,
+        age_seconds: Math.max(
+          0,
+          Math.floor(
+            (Date.now() -
+              new Date(row.submitted_at ?? row.created_at).getTime()) /
+              1000,
+          ),
+        ),
+        age_basis: row.submitted_at ? "First submission" : "Draft creation",
+      })),
     next_cursor: rows.length > 50 ? rows[49].id : null,
     due_policy: "Not defined",
     count_scope: "Current visible page only",

@@ -1,6 +1,6 @@
 # BP-02 — Platform Solution Architecture
 
-**Edition:** r10 · **Date:** 6 September 2026 · **Scope:** PP-01 synthetic planned service and BP-03 I1 opportunity prototype.
+**Edition:** r11 · **Date:** 6 September 2026 · **Scope:** PP-01 synthetic planned service and BP-03 I1 opportunity prototype.
 
 **Status:** Architecture/build contract; P01–P05 implementation and evidence are recorded in [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md), [ADR-0007](../decisions/ADR-0007-p02-shared-foundation.md), [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md), [ADR-0009](../decisions/ADR-0009-p04-work-scope-readiness.md) and [ADR-0010](../decisions/ADR-0010-p05-planner-controlled-changes.md). Not production approval. [Package index](../prototype/README.md) · [Data dictionary](../contracts/service-data-dictionary.md) · [API contracts](../contracts/service-api.md).
 
@@ -265,3 +265,7 @@ P09 review/report/customer response and P10 Finance remain absent. P08 completio
 ## BP-03 I1 bounded CRM extension
 
 The separately authorised [I1 slice](../delivery/crm-i1-handover.md) reuses the existing PostgreSQL/sharedOperation/identity/reference/permission/audit/receipt/outbox boundary. [ADR-0015](../decisions/ADR-0015-crm-i1-owned-opportunities.md) adds typed opportunity/configuration/event records and a real Opportunity Activity target. All-target Activity visibility remains authoritative across CRM, general work and field follow-up projections. No new stack dependency, account master, Pipedrive adapter, worker, hosting, cache, IndexedDB or service-worker scope is introduced. Migration 0010 is additive after the separately reserved P09 0009; final accepted ordering and regression evidence must be verified before publication. Broader BP-03 policy and parity remain proposals.
+
+## P10 Finance dependency amendment
+
+P10 preserves the modular monolith and existing durable document adapter. Its separate independently committed synthetic target boundary models possible acceptance outside the local outcome transaction, with one original correlation/input hash, a durable NotProcessed lookup fence and current-authority receipt recovery. Workspace locks conserve source-root allocations and mutations/audit/receipt/outbox. Finance-owned projections and private output remain separate from Service/customer DTOs. [ADR-0016](../decisions/ADR-0016-p10-finance-handoff.md) and the [handover](../delivery/p10-handover.md) record exact mechanisms, tests and limits. No service deployment, new framework, live endpoint or operational accounting policy is added.

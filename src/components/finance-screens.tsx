@@ -263,12 +263,18 @@ export function FinanceQueue() {
                     {r.customer_name} · {r.work_reference}
                   </p>
                   <dl>
+                    <dt>Legal company</dt>
+                    <dd>{r.company_id}</dd>
                     <dt>Account / currency</dt>
                     <dd>
                       {r.account_reference} · {r.currency}
                     </dd>
                     <dt>Owner</dt>
                     <dd>{r.owner}</dd>
+                    <dt>Age</dt>
+                    <dd>
+                      {Math.floor(r.age_seconds / 60)} minutes · {r.age_basis}
+                    </dd>
                     <dt>Submitted</dt>
                     <dd>{date(r.submitted_at)}</dd>
                     <dt>Reviewed / claimed</dt>

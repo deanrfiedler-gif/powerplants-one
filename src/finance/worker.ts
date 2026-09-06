@@ -136,6 +136,8 @@ export async function requestFinanceEvidence(
         ).rows[0],
         source: FinanceOutput = {
           reference: ctx.h.display_number,
+          work_reference: ctx.w.display_number,
+          status: ctx.h.status,
           revision: r.revision,
           company_id: ctx.h.company_id,
           customer: ctx.w.customer_name,
@@ -149,6 +151,17 @@ export async function requestFinanceEvidence(
           treatment_basis: r.treatment_basis,
           remaining_work_basis: r.remaining_work_basis,
           reconciliation_basis: recon.basis,
+          definition: {
+            id: r.definition_id,
+            version: r.definition_version,
+            policy_version: r.policy_version,
+          },
+          corrections: (
+            await c.query(
+              "SELECT id,source_revision_id,outcome_id,disposition,reason,created_at FROM ppo.finance_corrections WHERE workspace_id=$1 AND handoff_id=$2 ORDER BY created_at",
+              [p.workspace_id, id],
+            )
+          ).rows,
           lines: await financeLines(c, p, r.id),
           source_manifest: r.source_snapshot.reports.map(
             (s: {
@@ -158,6 +171,8 @@ export async function requestFinanceEvidence(
               issue_id: string;
               source_hash: string;
               issue_hash: string;
+              scope_guard: unknown;
+              completion: unknown;
             }) => ({
               report_id: s.report_id,
               revision_id: s.revision_id,
@@ -165,6 +180,8 @@ export async function requestFinanceEvidence(
               issue_id: s.issue_id,
               source_hash: s.source_hash,
               issue_hash: s.issue_hash,
+              scope_and_authority: s.scope_guard,
+              personal_completion: s.completion,
             }),
           ),
           target_evidence: outcome.evidence,

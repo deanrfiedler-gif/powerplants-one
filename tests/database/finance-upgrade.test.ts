@@ -60,7 +60,11 @@ test("P10 additive upgrade from real P09 issued originals retains exact rows, by
         "SELECT * FROM public.ppo_migrations ORDER BY version",
       )
     ).rows,
-    issue = q.report.issues[0],
+    issue = (
+      await database().query("SELECT * FROM ppo.report_issues WHERE id=$1", [
+        q.report.issues[0].id,
+      ])
+    ).rows[0],
     bytes = await readReportBundle(q.reviewer, issue.manifest);
   await migrate();
   await seed();

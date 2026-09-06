@@ -19,7 +19,9 @@ import {
   readFinance,
 } from "../helpers/finance";
 import { reportIssued } from "../helpers/reports";
-import { timePayload } from "../helpers/field";
+import { timePayload, entry } from "../helpers/field";
+import { captureEntry } from "../../src/field/entries";
+import { readFieldJob } from "../../src/field/reads";
 import {
   saveFinance,
   submitFinance,
@@ -49,6 +51,88 @@ const code =
     names.includes((e as { code: string }).code);
 const h = async (id: string) =>
   (await rows("SELECT * FROM ppo.finance_handoffs WHERE id=$1", [id]))[0];
+
+test("P10 simultaneous competing handoffs reserve one complete source quantity only", async () => {
+  const q = await financeDraft(),
+    other = { ...q.cmd, ...base(), id: randomUUID() };
+  await saveFinance(q.p, null, other);
+  const attempts = await Promise.allSettled(
+    [q.id, other.id].map(async (id) =>
+      submitFinance(q.p, id, {
+        ...base(),
+        expected_version: (await h(id)).version,
+      }),
+    ),
+  );
+  assert.equal(attempts.filter((r) => r.status === "fulfilled").length, 1);
+  assert.equal(
+    (
+      await rows(
+        "SELECT count(DISTINCT handoff_id)::int n FROM ppo.finance_allocation_holds WHERE state='Held'",
+      )
+    )[0].n,
+    1,
+  );
+  assert.deepEqual(
+    await rows(
+      "SELECT l.uom,sum(a.quantity)::text quantity FROM ppo.finance_allocation_holds a JOIN ppo.finance_lines l ON l.id=a.line_id GROUP BY l.uom ORDER BY l.uom",
+    ),
+    [
+      { uom: "EA", quantity: "2.000000" },
+      { uom: "MIN", quantity: "90.000000" },
+    ],
+  );
+});
+
+test("P10 factual material successor retains captured original and invalidates downstream exact review", async () => {
+  const q = await approvedFinance(),
+    before = (
+      await rows("SELECT * FROM ppo.field_entries WHERE kind='Material'")
+    )[0];
+  await assert.rejects(
+    database().query(
+      "UPDATE ppo.field_entries SET payload=jsonb_set(payload,'{quantity}','\"3\"') WHERE id=$1",
+      [before.id],
+    ),
+    code("55000"),
+  );
+  await amendReport(q.q.p, q.q.report.id, {
+    ...base(),
+    expected_version: q.q.report.version,
+    revision_id: q.q.report.revisions[0].id,
+  });
+  const j = (await readFieldJob(q.q.p, q.q.job.id)).items[0];
+  const correction = {
+    ...entry(j, "Material", {
+      ...before.payload,
+      quantity: "3",
+      description:
+        "SYN factual correction from two to three sleeves; original retained.",
+    }),
+    expected_version: before.version,
+  };
+  await captureEntry(q.q.p, correction, before.id);
+  assert.deepEqual(
+    (await rows("SELECT * FROM ppo.field_entries WHERE id=$1", [before.id]))[0],
+    before,
+  );
+  const successor = (
+    await rows("SELECT * FROM ppo.field_entries WHERE id=$1", [correction.id])
+  )[0];
+  assert.equal(successor.root_id, before.root_id);
+  assert.equal(successor.supersedes_entry_id, before.id);
+  assert.equal(successor.payload.quantity, "3");
+  assert.equal((await h(q.id)).status, "Returned");
+  assert.equal(
+    (await readFinance(q.p, q.id)).lines.find((l) => l.entry_id === before.id)!
+      .captured_quantity,
+    "2.000000",
+  );
+  assert.equal(
+    (await rows("SELECT count(*)::int n FROM ppo.attendance_acceptances"))[0].n,
+    1,
+  );
+});
 async function evidence(q: Awaited<ReturnType<typeof reconciledFinance>>) {
   const d = await readFinance(q.reconciler, q.id),
     cmd = {
