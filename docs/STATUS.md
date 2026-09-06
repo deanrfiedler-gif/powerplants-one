@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 6 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P10 implementation and verification in progress; completed P09 publication remains authoritative. PP-01 remains incomplete.
+**Updated:** 6 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P10 implementation retained; final GitHub execution blocked before job steps (see P10 handover); completed P09 publication remains authoritative. PP-01 remains incomplete.
 
 ## Current direction
 

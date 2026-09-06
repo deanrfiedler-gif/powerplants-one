@@ -38,7 +38,9 @@ async function capture(
   scenario: string,
   extra: Record<string, unknown> = {},
 ) {
-  await page.locator("h1").scrollIntoViewIfNeeded();
+  await page
+    .locator("h1")
+    .evaluate((heading) => heading.scrollIntoView({ block: "start" }));
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
@@ -539,9 +541,9 @@ test("P10 loaded/empty/loading/error/keyboard queue states retain scope and refl
     page.getByRole("heading", { name: "No Finance handoffs", exact: true }),
   ).toBeVisible();
   await capture(page, info, "empty-queue");
-  await page
-    .getByRole("button", { name: "Refresh queue", exact: true })
-    .focus();
+  await page.getByLabel("Queue state", { exact: true }).focus();
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Tab");
   await expect(
     page.getByRole("button", { name: "Refresh queue", exact: true }),
   ).toBeFocused();
