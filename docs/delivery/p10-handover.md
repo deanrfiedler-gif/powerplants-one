@@ -40,7 +40,7 @@ Full PT-17/PT-19/PT-20/PT-21 execution, affected dependency portions of other PT
 
 Every Finance revision identifies one legal company/customer/site/work order, one immutable synthetic account context, currency, mode, exact report/review/issue IDs, entry IDs/versions/root identities/hashes, current Finance definition/policy version, treatment basis and remaining-work basis. Source rechecks use the exact P09 review projection and private original report/PNG bytes. Personal attendance acceptance, a report customer response, a historic Draft flag and a quantity are separate facts. The source's work order may remain Authorised; P10 does not introduce closure.
 
-Supported source quantities are exact whole MIN from recorded Labour intervals and positive EA/other captured material units with Consumed or Returned direction. Fractional-minute source durations are blocked rather than rounded. Quantity commands use positive decimal strings with up to twelve whole digits and six fractional digits; conservation uses integer scaling. Direction is retained independently of magnitude; a Returned material capture never silently becomes a stock return or credit. Unsupported directions and unknown declarations remain blockers.
+Supported source quantities are exact whole MIN from recorded Labour intervals and positive EA/other captured material units with Consumed or Returned direction. Original Travel/Break/Waiting/Other time kinds have no assigned Finance basis and are blocked without reclassification. Fractional-minute source durations are blocked rather than rounded. Quantity commands use positive decimal strings with up to twelve whole digits and six fractional digits; conservation uses integer scaling. Direction is retained independently of magnitude; a Returned material capture never silently becomes a stock return or credit. Unsupported directions and unknown declarations remain blockers.
 
 | Action / physical state | Exact rule and retained evidence |
 |---|---|
@@ -100,6 +100,12 @@ npm run test:browser
 Database/HTTP/browser checks require the named disposable `ppo_synthetic_test` configuration and real app/Chromium processes. The full [application workflow](../../.github/workflows/application.yml) is the executable environment/run order, including guarded reset, all retained P09/offline/CRM process restarts and P10's four `scripts/finance-restart-proof.ts` phases. Its PostgreSQL container is restarted between write/accept/reconcile/verify; each phase starts a fresh application and persistent browser process. Local static checks and disposable CI results are reported separately.
 
 Migration 0011 and `db/seed-p10.sql` are additive; all prior migration/seed bytes remain unchanged. Fresh setup applies all eleven migrations. The upgrade proof first creates actual P09 issued records on migration 0009, then applies 0010/0011 and repeats seed, comparing original rows (including attendance/audit/receipts/outbox) and private media/report bytes exactly. Repeat seed preserves existing observations and revoked grants. Guarded reset remains explicitly limited to the disposable synthetic database; it is not an upgrade or production migration.
+
+## Additional implementation review findings
+
+The original screenshot review found checkbox controls inheriting full-width shared input styling; Finance now keeps checkboxes beside their labels. The phone account table retains contained horizontal scrolling with explicit guidance and an additional original capture of the remaining/status/reversal columns. Review also found that the initial time projection could relabel Travel/Break/Waiting/Other as Labour. The minimum F-06 guard now refuses those unassigned time bases while retaining original category/seconds/Draft history; four parameterised database cases exercise the refusal. Neither a payroll treatment nor a new billing policy was invented.
+
+Commit `08a64c6c77899178750d4b8062379886c98f9ec4`, tree `ff5d83ce4bf6ff01ea05c4e35b49a40692b60c89`, was published to the branch ref, but GitHub's PR snapshot and workflow collection had not advanced from the preceding candidate at the last read. It has no claimed CI result. Subsequent candidate verification must use its actual reflected PR head, not infer success from this ref update.
 
 ## Review and unresolved operational decisions
 

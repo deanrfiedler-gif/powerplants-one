@@ -423,6 +423,49 @@ test("P10 PT-20/PT-21 UI exact account arithmetic, filtering, partial/failure an
       ).toBeVisible();
     }
     await capture(page, info, `account-${f.toLowerCase()}`);
+    if (f === "F-03" && info.project.name.startsWith("mobile")) {
+      const table = page.getByLabel("Account transaction table", {
+        exact: true,
+      });
+      await table.focus();
+      await expect(table).toBeFocused();
+      await table.evaluate((element) => {
+        element.scrollLeft = element.scrollWidth;
+      });
+      expect(
+        await table.evaluate((element) => element.scrollLeft),
+      ).toBeGreaterThan(0);
+      await table.scrollIntoViewIfNeeded();
+      const bytes = await page.screenshot({
+        path: info.outputPath("P10-account-table-right.png"),
+      });
+      await writeFile(
+        info.outputPath("P10-account-table-right.json"),
+        JSON.stringify(
+          {
+            scenario:
+              "F-03 phone contained horizontal table reveals remaining/status/reversal columns",
+            viewport: page.viewportSize(),
+            source_head: process.env.PPO_SOURCE_HEAD,
+            executed_checkout: execFileSync("git", ["rev-parse", "HEAD"], {
+              encoding: "utf8",
+            }).trim(),
+            executed_tree: execFileSync("git", ["rev-parse", "HEAD^{tree}"], {
+              encoding: "utf8",
+            }).trim(),
+            run_id: process.env.GITHUB_RUN_ID,
+            run_attempt: process.env.GITHUB_RUN_ATTEMPT,
+            byte_count: bytes.length,
+            sha256: hash(bytes),
+          },
+          null,
+          2,
+        ),
+      );
+      await table.evaluate((element) => {
+        element.scrollLeft = 0;
+      });
+    }
     if (f === "F-01") {
       await page.route(
         "**/account-observations?**",

@@ -112,6 +112,8 @@ This amendment supersedes the preceding preparation-only status for the separate
 
 Source quantity uses exact whole MIN for supported time and the original declared material UOM/direction for Consumed/Returned. Fractional minutes and unsupported material directions block without rounding or stock inference. Positive decimal quantities use at most six places and exact scaled integers. A Draft may be incomplete; ReadyForReview must disposition every quantity of every selected report. Split allocations are permitted; multiple Billable allocations share a target group only on identical UOM/direction. Billable quantity equals that allocation; NonBillable equals zero with an explicit reason; Pending/WarrantyReview/GoodwillReview remain null and cannot approve. The captured/reviewed quantity is repeated source context on split lines and must never be summed as if each row were another source entry.
 
+The minimum F-06 source time basis is Labour only. Travel, Break, Waiting and Other remain their exact captured categories and block Finance readiness until a separately maintained treatment is defined; they are never relabelled as Labour or subtracted as automatic breaks. Fractional-minute duration is likewise retained and blocked rather than rounded.
+
 `finance_allocation_holds` reserve all allocations at submission under the workspace lock. A competing handoff cannot reserve the same root quantity. Returned retains Held; explicit revised Draft releases/transfers prior holds atomically; pre-effect Cancelled releases. Processed and reconciled quantities become Consumed, including reviewed NonBillable quantities. There is no automatic netting, tolerance, unit conversion or reuse of processed quantity.
 
 | Command boundary | Exact physical outcome |

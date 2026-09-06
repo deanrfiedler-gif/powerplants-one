@@ -1260,7 +1260,9 @@ export function AccountScreen({
                 </label>
                 <p className={styles.meta}>
                   Visible rows are a display filter. The account total comes
-                  from the declared complete source extraction.
+                  from the declared complete source extraction. Scroll this
+                  table horizontally to view all source fields on a narrow
+                  screen.
                 </p>
                 <table>
                   <thead>

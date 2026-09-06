@@ -172,6 +172,36 @@ for (const declaration of ["time_declaration", "material_declaration"] as const)
       0,
     );
   });
+for (const kind of ["Travel", "Break", "Waiting", "Other"])
+  test(`P10 captured ${kind} is never silently reclassified as Labour`, async () => {
+    const q = await reportIssued({
+        time_payload: {
+          ...timePayload(),
+          time_kind: kind,
+          note: "SYN explicit original time category; no Finance treatment assigned.",
+        },
+      }),
+      p = await principal("finance"),
+      source = (
+        await financeSources(p, q.report.revisions[0].snapshot.work.id)
+      ).items.find((s) => s.id === q.report.id)!;
+    assert.equal(source.ready, false);
+    assert.match("blocker" in source ? source.blocker : "", /Labour only/);
+    const original = (
+      await rows(
+        "SELECT payload->>'time_kind' kind, payload->>'elapsed_seconds' seconds, review_status FROM ppo.field_entries WHERE kind='Time'",
+      )
+    )[0];
+    assert.deepEqual(original, {
+      kind,
+      seconds: "5400",
+      review_status: "Draft",
+    });
+    assert.equal(
+      (await rows("SELECT count(*)::int n FROM ppo.finance_lines"))[0].n,
+      0,
+    );
+  });
 test("P10 fractional-minute capture stays exact and refuses unapproved payroll rounding", async () => {
   const t = timePayload();
   t.end_at = new Date(Date.parse(t.end_at) + 1000).toISOString();

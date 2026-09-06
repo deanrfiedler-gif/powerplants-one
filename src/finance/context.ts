@@ -312,6 +312,11 @@ export async function exactSource(
       );
     let q: string, uom: string, direction: SourceEntry["direction"];
     if (e.kind === "Time") {
+      if (e.payload.time_kind !== "Labour")
+        blocked(
+          "UnsupportedTimeBasis",
+          "This minimum fixture defines Labour only. Retain Travel, Break, Waiting or Other as captured; no financial treatment or reclassification is defined.",
+        );
       if (e.payload.elapsed_seconds % 60 !== 0)
         blocked(
           "UnsupportedQuantityBasis",
