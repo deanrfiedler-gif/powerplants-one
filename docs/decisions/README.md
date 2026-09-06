@@ -18,3 +18,5 @@
 [ADR-0009](ADR-0009-p04-work-scope-readiness.md) records exact scope/readiness authority and P04 compatibility. [ADR-0010](ADR-0010-p05-planner-controlled-changes.md) records bounded scheduling policy, atomic crew reservation, immutable source bundles and controlled consequences. These implementation decisions do not close real operational policy/retention/communication questions.
 
 [ADR-0011](ADR-0011-p06-controlled-job-packs.md) records P06 durable controlled job packs and the timestamp/recipient/owned-consequence decisions.
+
+[BP-03](../blueprints/BP-03-crm.md) records PPO-009's proposed CRM choices, shared integration boundary and coexistence design under D-013/D-025/D-026. Those decisions remain open; no new technology or operational policy is adopted. No ADR number is allocated by discovery, avoiding P09's concurrent reservation. [Parity evidence requests](../blueprints/crm-parity.md#4-smallest-useful-evidence-requests) identify the outstanding owner evidence.

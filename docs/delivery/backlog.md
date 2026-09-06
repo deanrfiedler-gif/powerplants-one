@@ -16,7 +16,7 @@ The foundation maps all 78 parent requirements to one or more work packages. The
 | PPO-006 | Define the minimum Finance handoff and trusted account view | P1 | BP-09 | PPO-001, PPO-002 | [#6](https://github.com/deanrfiedler-gif/powerplants-one/issues/6) |
 | PPO-007 | Specify controlled documents and first-release outputs | P1 | BP-02/BP-07 | PPO-001, PPO-003 | [#7](https://github.com/deanrfiedler-gif/powerplants-one/issues/7) |
 | PPO-008 | Baseline permissions, offline scope and operational targets | P1 | BP-02/BP-07 | PPO-001 | [#8](https://github.com/deanrfiedler-gif/powerplants-one/issues/8) |
-| PPO-009 | Complete account-specific CRM parity and BP-03 scope | P2 | BP-03 | PPO-001 | [#9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9) |
+| PPO-009 | Complete account-specific CRM parity and BP-03 scope | P2 | [BP-03](../blueprints/BP-03-crm.md) | PPO-001 | [#9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9) |
 | PPO-010 | Prepare CREMS rule evidence and BP-04 reconstruction scope | P2 | BP-04 | PPO-001 | [#10](https://github.com/deanrfiedler-gif/powerplants-one/issues/10) |
 | PPO-011 | Define BP-05 engineering and technical-release scope | P2 | BP-05 | PPO-001 | [#11](https://github.com/deanrfiedler-gif/powerplants-one/issues/11) |
 | PPO-012 | Define BP-06 project controls and Smartsheet transition | P2 | BP-06 | PPO-001, PPO-011 | [#12](https://github.com/deanrfiedler-gif/powerplants-one/issues/12) |
@@ -35,4 +35,8 @@ See [current status](../STATUS.md), [the first-release brief](first-release.md),
 
 ## PP-01 design package
 
-The [requested package](../prototype/README.md) now supplies the selected scope, architecture, Service, data/API, Finance/documents and synthetic procedures. See the [design issue disposition](prototype-implementation-plan.md#6-design-issue-disposition) and live issues for publication/remaining evidence. The next application work is [P01](prototype-implementation-plan.md#4-p01-implementation-brief). P01–P12 are implementation plan IDs, not additional issued GitHub numbers.
+The [requested package](../prototype/README.md) supplies the selected scope, architecture, Service, data/API, Finance/documents and synthetic procedures. See the [design issue disposition](prototype-implementation-plan.md#6-design-issue-disposition), [current status](../STATUS.md) and live issues for actual implementation/publication. P01–P12 are implementation plan IDs, not additional issued GitHub numbers.
+
+## PPO-009 CRM discovery contribution
+
+The [CRM handover](crm-discovery-handover.md) records BP-03, all eighteen parity items, bounded live stage evidence, proposed integration/coexistence/permissions, screens, acceptance and the [I1 starter](crm-first-increment-starter.md). Account identity, full feature/history/licence/permission evidence and owner acceptance remain incomplete; issue #9 stays open. CRM design is parallel to P09 service implementation; it changes no P01–P12 dependency order. I1–I6 are local BP-03 sequence labels only. D-013/D-025/D-026 and AT-25 are not closed by documentation publication.
