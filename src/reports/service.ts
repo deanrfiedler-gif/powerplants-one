@@ -818,6 +818,14 @@ export async function readReport(
       can_issue =
         ctx.w.service_owner_id === p.actor_id &&
         (await hasPermission(c, p, "report.issue", r.company_id, r.site_id));
+    let permitted_recipient: Awaited<ReturnType<typeof recipient>> | null = null;
+    if (can_review && site.primary_contact_id) {
+      try {
+        permitted_recipient = await recipient(c, p, ctx, site.primary_contact_id);
+      } catch (e) {
+        if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
+      }
+    }
     return envelope([
       {
         id: r.id,
@@ -850,6 +858,7 @@ export async function readReport(
         follow_ups,
         template,
         recipient_id: site.primary_contact_id,
+        permitted_recipient,
         can_review,
         can_issue,
         can_amend: r.actor_id === p.actor_id,

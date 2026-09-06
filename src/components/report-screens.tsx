@@ -231,6 +231,7 @@ function ReviewForm({ r, reload }: { r: Report; reload: () => void }) {
   const c = useCommand(),
     v = r.revisions[0],
     [decision, setDecision] = useState("Approved"),
+    [selectedRecipient, setSelectedRecipient] = useState(""),
     [remarks, setRemarks] = useState(""),
     [authority, setAuthority] = useState("Current"),
     [entries, setEntries] = useState(() =>
@@ -262,7 +263,7 @@ function ReviewForm({ r, reload }: { r: Report; reload: () => void }) {
             })),
             authority_disposition: authority,
             remarks,
-            recipient_id: decision === "Approved" ? r.recipient_id : null,
+            recipient_id: decision === "Approved" ? selectedRecipient || null : null,
             reason: remarks,
           })
         )
@@ -335,6 +336,17 @@ function ReviewForm({ r, reload }: { r: Report; reload: () => void }) {
         onChange={setRemarks}
         multiline
       />
+      {decision === "Approved" && (
+        <div className="report-field">
+          <label htmlFor="report-customer-audience">Customer audience</label>
+          <select id="report-customer-audience" value={selectedRecipient} onChange={(e) => setSelectedRecipient(e.target.value)}>
+            <option value="">Select the permitted site contact</option>
+            {r.permitted_recipient && <option value={r.permitted_recipient.id}>{r.permitted_recipient.name} · Site primary contact</option>}
+          </select>
+          <p>The exact reviewed report is prepared for this named contact. This selection does not send or deliver it.</p>
+          {!r.permitted_recipient && <p>No currently permitted active primary contact is available. Resolve the site contact before approving; a return remains available.</p>}
+        </div>
+      )}
       <ErrorNotice error={c.error} />
       <button disabled={c.busy}>Commit exact review</button>
     </form>
@@ -543,6 +555,38 @@ export function ReportScreen({ id }: { id: string }) {
       setError(e);
     }
   }
+  if (r && shown)
+    return (
+      <main className="business-shell report-screen">
+        <h1>Customer report presentation</h1>
+        <Synthetic />
+        <button className="secondary" onClick={() => setShown(null)}>
+          Return to staff review
+        </button>
+        <iframe
+          title="Exact customer-safe report presentation"
+          sandbox=""
+          className="report-preview"
+          srcDoc={shown.html}
+        />
+        {r.can_respond &&
+        shown.v.revision_id === r.revisions[0].id &&
+        ["Reviewed", "Issued"].includes(r.status) ? (
+          <ResponseForm
+            key={`${shown.v.id}:${shown.at}`}
+            r={{ ...r, version: shown.version }}
+            v={shown.v}
+            presentedAt={shown.at}
+            reload={reload}
+          />
+        ) : (
+          <p>
+            Historical presentation retained. A prior response or signature
+            cannot be transferred to a successor.
+          </p>
+        )}
+      </main>
+    );
   return (
     <main className="business-shell report-screen">
       <Link href="/service/reports">All service reports</Link>
@@ -561,7 +605,14 @@ export function ReportScreen({ id }: { id: string }) {
               Revision {r.revision} · {friendly(r.status)}
             </h2>
             <p>
-              Attendance: <strong>{friendly(r.appointment.status)}</strong> ·
+              Visit: <strong>{friendly(r.appointment.status)}</strong> · This
+              technician’s attendance:{" "}
+              <strong>
+                {r.reviews.some((review) => review.decision === "Approved")
+                  ? "Accepted"
+                  : "Awaiting accepted review"}
+              </strong>{" "}
+              ·
               Work order: {r.work_order.status} · Finance: {r.finance_state}
             </p>
             <p>
@@ -748,32 +799,6 @@ export function ReportScreen({ id }: { id: string }) {
               </article>
             ))}
           </section>
-          {shown && (
-            <>
-              <iframe
-                title="Exact customer-safe report presentation"
-                sandbox=""
-                className="report-preview"
-                srcDoc={shown.html}
-              />
-              {r.can_respond &&
-              shown.v.revision_id === r.revisions[0].id &&
-              ["Reviewed", "Issued"].includes(r.status) ? (
-                <ResponseForm
-                  key={`${shown.v.id}:${shown.at}`}
-                  r={{ ...r, version: shown.version }}
-                  v={shown.v}
-                  presentedAt={shown.at}
-                  reload={reload}
-                />
-              ) : (
-                <p>
-                  Historical presentation retained. A prior response or
-                  signature cannot be transferred to a successor.
-                </p>
-              )}
-            </>
-          )}
           <section className="business-card">
             <h2>Response history</h2>
             {r.responses.length === 0 && (

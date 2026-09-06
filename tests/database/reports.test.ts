@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test, beforeEach, after } from "node:test";
 import { randomUUID } from "node:crypto";
+import { execFileSync } from "node:child_process";
 import { readFile, unlink, writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { homedir } from "node:os";
@@ -55,6 +56,27 @@ const code =
   (...v: string[]) =>
   (e: unknown) =>
     v.includes((e as { code: string }).code);
+async function responseEvidence(reportId: string) {
+  return rows(`SELECT r.id,r.report_id,r.presentation_id,p.revision_id,p.kind AS presentation_kind,
+    r.presented_hash,r.response,r.respondent_name,r.respondent_role,r.remarks,r.next_action,
+    r.presented_at,r.captured_at,r.actor_id,r.received_at,r.operation_id,
+    r.signature_hash,r.signature_bytes,r.follow_up_activity_id,a.owner_id AS follow_up_owner_id
+    FROM ppo.customer_responses r JOIN ppo.report_presentations p
+    ON (p.workspace_id,p.id)=(r.workspace_id,r.presentation_id)
+    LEFT JOIN ppo.activities a ON (a.workspace_id,a.id)=(r.workspace_id,r.follow_up_activity_id)
+    WHERE r.report_id=$1 ORDER BY r.received_at,r.id`, [reportId]);
+}
+async function saveProcedureEvidence(name: string, facts: Record<string, unknown>) {
+  await mkdir("verification-evidence/p09", { recursive: true });
+  await writeFile(`verification-evidence/p09/${name}.json`, JSON.stringify({
+    scenario: name, synthetic: true,
+    source_head: process.env.PPO_SOURCE_HEAD ?? process.env.GITHUB_SHA,
+    executed_checkout: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
+    executed_tree: execFileSync("git", ["rev-parse", "HEAD^{tree}"], { encoding: "utf8" }).trim(),
+    run_id: process.env.GITHUB_RUN_ID, run_attempt: process.env.GITHUB_RUN_ATTEMPT,
+    ...facts,
+  }, null, 2));
+}
 test("P09 fresh and P08 upgrade preserve originals and repeat seed does not revive revoked report grants", async () => {
   await database().query(
     await readFile("db/migrations/0001-recover.sql", "utf8"),
@@ -195,6 +217,7 @@ test("P09 strict review fields, exact set/version and server owner permissions",
       entry_decisions: cmd.entry_decisions.map((x) => ({ ...x, version: 99 })),
     },
     { recipient_id: randomUUID() },
+    { recipient_id: null },
   ])
     await assert.rejects(
       reviewReport(q.reviewer, q.report.id, { ...cmd, ...patch }),
@@ -296,6 +319,15 @@ test("P09 all five exact responses, mandatory remarks, immutable synthetic marks
   await assert.rejects(
     database().query("UPDATE ppo.customer_responses SET response='Accepted'"),
   );
+  const evidence = await responseEvidence(q.report.id);
+  assert.deepEqual(evidence.map((r) => r.response), ["Accepted", "AcceptedWithReservations", "Declined", "Unavailable", "Disputed"]);
+  assert.ok(evidence.every((r) => r.presentation_kind === "IssuedReport"));
+  assert.equal(q.report.finance_state, "Not implemented — P10");
+  await saveProcedureEvidence("PT-15-response-alternatives", {
+    report_id: q.report.id, responses: evidence,
+    mandatory_remarks_refused: true, invented_unavailable_respondent_refused: true,
+    immutable_update_refused: true, finance_state: q.report.finance_state,
+  });
 });
 test("P09 issued bytes and every customer projection exclude private fields and filenames", async () => {
   const q = await reportIssued(),
@@ -410,6 +442,7 @@ test("P09 accepted attendance correction preserves old output and refuses prior 
       },
     };
   await recordResponse(q.p, old.id, cmd);
+  const originalResponse = await responseEvidence(old.id);
   const v = old.presentations.find(
       (x: { kind: string }) => x.kind === "IssuedReport",
     )!,
@@ -496,6 +529,22 @@ test("P09 accepted attendance correction preserves old output and refuses prior 
     code("SignatureReassociationRefused"),
   );
   assert.deepEqual((await presentationBytes(q.p, r.id, v.id)).pdf, bytes.pdf);
+  assert.deepEqual(await responseEvidence(r.id), originalResponse);
+  assert.notEqual(newer.content_hash, v.content_hash);
+  assert.equal(originalResponse[0].revision_id, old.revisions[0].id);
+  assert.ok(originalResponse.every((x) => x.revision_id !== newer.revision_id));
+  await saveProcedureEvidence("PT-16-report-revision", {
+    report_id: r.id, old_revision: old.revisions[0].revision,
+    old_revision_id: old.revisions[0].id, new_revision: r.revisions[0].revision,
+    new_revision_id: r.revisions[0].id,
+    old_presentation: { id: v.id, hash: v.content_hash },
+    new_presentation: { id: newer.id, hash: newer.content_hash },
+    responses: originalResponse, old_pdf_sha256: digest(bytes.pdf!),
+    new_pdf_sha256: digest((await presentationBytes(q.p, r.id, newer.id)).pdf!),
+    prior_content_reassociation_refused: true, prior_signature_reassociation_refused: true,
+    attendance_status: r.appointment.status, work_order_status: r.work_order.status,
+    finance_state: r.finance_state,
+  });
   await mkdir("verification-evidence/p09", { recursive: true });
   await writeFile(
     "verification-evidence/p09/original-inspection.png",

@@ -90,6 +90,8 @@ test("P09 real HTTP exact submit/review/issue/response enforces strict request a
     receipt,
   );
   let r = (await ok(co, `reports/${cmd.id}`)).items[0];
+  assert.equal(r.permitted_recipient.id, r.recipient_id);
+  assert.match(r.permitted_recipient.name, /SYN/);
   assert.equal(
     (await call(p, `reports/${r.id}/review`, decision(r))).status,
     403,

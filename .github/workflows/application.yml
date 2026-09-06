@@ -75,8 +75,6 @@ jobs:
             done
             node --env-file=.env.local --import tsx scripts/report-restart-proof.ts "$phase"
           done
-      - name: Focused P09 customer report browser proof
-        run: npx playwright test tests/browser/reports.spec.ts
       - name: Real PostgreSQL behaviour and competing transactions
         run: npm run test:db
       - name: Restore deterministic fixtures for HTTP and browser suites
@@ -124,19 +122,6 @@ jobs:
         run: |
           npx playwright install --with-deps chromium
           npm run test:browser
-      - name: Prepare exact pinned formatting copies for implementation review
-        if: always()
-        run: |
-          node --input-type=module <<'JS'
-          import { readFile, writeFile, mkdir } from 'node:fs/promises';
-          import { dirname } from 'node:path';
-          import prettier from 'prettier';
-          for (const path of ["scripts/build-offline.ts", "scripts/database.ts", "scripts/document-worker.ts", "scripts/report-restart-proof.ts", "src/app/(business)/service/reports/[id]/page.tsx", "src/app/(business)/service/reports/page.tsx", "src/app/api/v1/appointments/[id]/submit-completion/route.ts", "src/app/api/v1/customer-responses/[id]/signature/route.ts", "src/app/api/v1/report-render-jobs/[id]/output/route.ts", "src/app/api/v1/report-render-jobs/[id]/retry/route.ts", "src/app/api/v1/reports/[id]/amend/route.ts", "src/app/api/v1/reports/[id]/html/route.ts", "src/app/api/v1/reports/[id]/issue/route.ts", "src/app/api/v1/reports/[id]/manifest/route.ts", "src/app/api/v1/reports/[id]/pdf/route.ts", "src/app/api/v1/reports/[id]/respond/route.ts", "src/app/api/v1/reports/[id]/review/route.ts", "src/app/api/v1/reports/[id]/route.ts", "src/app/api/v1/reports/route.ts", "src/app/layout.tsx", "src/components/field-screens.tsx", "src/components/report-screens.tsx", "src/field/completion.ts", "src/field/entries.ts", "src/field/reads.ts", "src/offline/app.ts", "src/offline/protocol.ts", "src/offline/recovery.ts", "src/offline/server.ts", "src/offline/store.ts", "src/platform/permissions.ts", "src/reports/context.ts", "src/reports/http.ts", "src/reports/render.ts", "src/reports/service.ts", "src/reports/template.ts", "src/reports/validation.ts", "src/reports/worker.ts", "src/scheduling/planner.ts", "src/shared/receipts.ts", "tests/browser/field.spec.ts", "tests/browser/reports.spec.ts", "tests/database/field.test.ts", "tests/database/offline.test.ts", "tests/database/packs.test.ts", "tests/database/planner.test.ts", "tests/database/reports-offline.test.ts", "tests/database/reports.test.ts", "tests/helpers/reports.ts", "tests/http/reports.test.ts", "tests/unit/reports.test.ts"]) {
-            const target = 'verification-evidence/formatted-review/' + path + '.txt';
-            await mkdir(dirname(target), { recursive: true });
-            await writeFile(target, await prettier.format(await readFile(path, 'utf8'), { filepath: path }));
-          }
-          JS
       - name: Preserve synthetic visual and failure evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

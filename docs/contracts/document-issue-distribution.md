@@ -10,7 +10,7 @@
 
 Because exact bytes must be durable before the issue transaction, the file prints a **reserved issue timestamp** and issue UUID, explicitly effective only upon application release. This reserved output-preparation time is retained across recovery; it is not actual `issued_at` or evidence of release. Actual release is a later immutable database timestamp. This explicit distinction refines the general file-time requirement below without treating a queued or generated document as Issued. No PDF is edited after release to add a timestamp or signature. HTML is semantic/responsive; PDF tagging and outline are requested but PDF/UA and assistive-technology performance are not asserted.
 
-A returned/check decision is immutable, and new input requires a successor. P05/P04 changes cause immediate hold plus immutable events and owned P03 contact Activities in the same transaction. Simulated sending and limited server retrieval facts are separate from explicit responses. The source and financial canary filtering happens before HTML/PDF/manifest creation, including titles and metadata. Missing versions remain owned errors. Full report/Finance and integrated PT-18/PT-23 remain incomplete.
+A returned/check decision is immutable, and new input requires a successor. P05/P04 changes cause immediate hold plus immutable events and owned P03 contact Activities in the same transaction. Simulated sending and limited server retrieval facts are separate from explicit responses. The source and financial canary filtering happens before HTML/PDF/manifest creation, including titles and metadata. Missing versions remain owned errors. At the P06 boundary report/Finance were incomplete; P09's report amendment appears below. Finance and integrated PT-18/PT-23 remain incomplete.
 
 ## 1. Ownership and content identity
 
@@ -112,7 +112,7 @@ Original local PNG Blobs are stored atomically with immutable upload envelopes a
 
 Restricted recovery can retain exact original PNG bytes with an owned evidence case under a previously issued actor/job/authority-bound capability. Only the recorded service owner with current scoped permissions can retrieve those case bytes; the original actor's minimal case receipt grants no general file access. Sign-out/identity change locks cached views without deleting unsent originals. Operational encryption, device policy and retention remain unresolved; no operational security claim follows from browser ownership checks.
 
-P08 completion is still a technician draft. OUT-10, report review/issue/customer response and response-image semantics remain P09. OUT-14 and Finance processing remain P10. No customer communication or live SharePoint operation is introduced.
+At the P08 boundary completion remained a technician draft. P09 adds OUT-10, report review/issue/customer response and response-image semantics below. OUT-14 and Finance processing remain P10. No customer communication or live SharePoint operation is introduced.
 
 ## P09 controlled OUT-10 implementation
 
@@ -129,3 +129,5 @@ Offline preparation downloads at most two current reviewed HTML presentations pe
 Only in-app owned contact/distribution tasks and synthetic outcomes exist. No email, SMS, calendar or customer delivery integration is invoked. D-024 output branding/response acceptance, operational retention and external SharePoint interface behaviour remain unresolved. OUT-14/Finance belongs to P10; selected-output PT-18/PT-23 obligations spanning it remain incomplete.
 
 The OUT-10 template definition fingerprints the actual report renderer/projection and shared rendering/escaping source bytes. Seed 9 stores that exact definition/hash and current policy in the same seed transaction; repeat seed never rewrites it. Issue request and final release reread and compare those source fingerprints. A changed template source, even during rendering, retains a StaleSource attempt without release. Future rendering changes require an immutable successor template/policy through an authorised forward change; old issued bytes remain retrievable without regeneration.
+
+Customer presentation mode renders the verified exact HTML and response controls without staff review comments, prior response history or owned internal actions in that view. Returning to staff review is explicit. The HTML hash remains the hash of the actual sandboxed content, not of the surrounding capture controls.

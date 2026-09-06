@@ -1,6 +1,6 @@
 # P09 — Review, report and customer acknowledgement starter
 
-**Prepared:** 6 September 2026 · **State:** maintained starter only; P09 is now separately authorised under issue #36 and being verified in PR #37; see p09-handover.md. The original P08 preparation boundary below remains historical. Synthetic data only.
+**Prepared:** 6 September 2026 · **State:** maintained starter only; P09 is implemented under issue #36 / PR #37; p09-handover.md and its external publication record govern actual delivery and verification. The original P08 preparation boundary below remains historical. Synthetic data only.
 
 ## Task and live starting verification
 

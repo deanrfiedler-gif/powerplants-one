@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 6 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P09 implementation under verification; P08 remains the last published increment. PP-01 remains incomplete.
+**Updated:** 6 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P09 implemented; exact final-head/main verification and publication are recorded in the linked handover. PP-01 remains incomplete.
 
 ## Current direction
 
@@ -55,13 +55,19 @@ P07 under [issue #32](https://github.com/deanrfiedler-gif/powerplants-one/issues
 
 P08 now implements bounded offline SC-09/10 and API-C15 under [issue #34](https://github.com/deanrfiedler-gif/powerplants-one/issues/34) / [PR #35](https://github.com/deanrfiedler-gif/powerplants-one/pull/35). The [handover](delivery/p08-handover.md) and [ADR-0013](decisions/ADR-0013-p08-offline-recovery.md) record versioned IndexedDB originals/PNG bytes, explicit shell cache scope, recoverable sender leases, causal replay, exact receipts and narrow owned recovery. Local save, uncertain send, server acceptance and authority review are distinct. Current actor/assignment/full-crew/non-waivable start authority remains server-adjudicated; completion remains a technician draft.
 
-The next PP-01 task is **P09 — Review, report and customer acknowledgement**, with a [detailed maintained starter](delivery/p09-starter-prompt.md). Live inspection on 6 September 2026 found P09 progressing separately in [issue #36](https://github.com/deanrfiedler-gif/powerplants-one/issues/36) / draft [PR #37](https://github.com/deanrfiedler-gif/powerplants-one/pull/37). This CRM design update does not claim P09 completion. Finance, live integration, hosting and full PP-01 remain incomplete. The acceptance catalogue retains existing full statuses; P08 components do not imply a full PT/AT, independent review, owner acceptance or production readiness.
+P09 follows the verified P08 foundation under [issue #36](https://github.com/deanrfiedler-gif/powerplants-one/issues/36) / [PR #37](https://github.com/deanrfiedler-gif/powerplants-one/pull/37). Its [handover](delivery/p09-handover.md) and authoritative external publication record distinguish implementation, exact-head checks, normal merge and actual merged-main results. Finance, live integration, hosting and full PP-01 remain incomplete.
 
 ## Parallel CRM discovery and design
 
 **PPO-009 / issue #9 is distinct from P09.** [BP-03 r01](blueprints/BP-03-crm.md), [PAR-01–PAR-18 assessment](blueprints/crm-parity.md), [synthetic screen walkthrough](blueprints/crm-screen-specification.md), [ordered CRM implementation sequence](delivery/crm-implementation-plan.md) and [first implementation starter](delivery/crm-first-increment-starter.md) are authored. The [CRM handover](delivery/crm-discovery-handover.md) links actual validation and publication evidence. No CRM application/database implementation is included.
 
-One bounded live stage-metadata read refreshed ten stages across two pipeline IDs; account identity, licence, complete visibility and actual feature usage remain unverified. Identifiable operational-record reads await account-context evidence. All parity dispositions and functional defaults remain proposed; D-013/D-025/D-026 remain open, issue #9 remains open and AT-25 remains Planned. Pipedrive retains operational writes. BP-03 I1 proposes an owned synthetic opportunity and qualification follow-up; it is prepared only and needs a subsequent implementation instruction.
+One bounded live stage-metadata read refreshed ten stages across two pipeline IDs; account identity, licence, complete visibility and actual feature usage remain unverified. Identifiable operational-record reads await account-context evidence. All parity dispositions and functional defaults remain proposed; D-013/D-025/D-026 remain open, issue #9 remains open and AT-25 remains Planned. Pipedrive retains operational writes. BP-03 I1 is now active separately under [issue #39](https://github.com/deanrfiedler-gif/powerplants-one/issues/39) / draft [PR #40](https://github.com/deanrfiedler-gif/powerplants-one/pull/40), as inspected for this handover. Merged main at the design baseline still contains no CRM application/database implementation; verify live completion before proceeding.
+
+## Shared UI and branded CRM design handover
+
+The [shared UI specification](standards/ui-style-specification.md), [branded Board/Grid preview and original captures](blueprints/crm-ui-mockups/README.md) and [visual decision](decisions/ui-brand-and-crm-layout.md) publish the supplied Powerplants identity with a Pipedrive-familiar CRM layout. The [screen specification r02](blueprints/crm-screen-specification.md) and [I2 UI guidance](delivery/crm-i2-ui-guidance.md) make this discoverable for later implementation; the [handover](delivery/crm-ui-design-handover.md) records provenance, validation and publication controls.
+
+This is documentation/design work under PPO-009, separate from active I1 and P09. I1 retains Enquiry → Qualified, Open and no money fields. The six reference stages and fictional commercial values do not expand its scope, establish account parity or pass AT-25. The full I2 starter remains an I1 completion deliverable.
 
 ## Repository and publication controls
 
@@ -69,4 +75,4 @@ The inspected repository is private with main as default branch. Branch protecti
 
 ## P09 service review and controlled reports
 
-P09 issue #36 / draft PR #37 implement exact completion submission, authorised review/return, immutable acceptance and report correction cycles, durable customer-safe OUT-10 revisions, five explicit responses and compatible P08 local intents. [ADR-0014](decisions/ADR-0014-p09-service-reports.md) and the [P09 handover](delivery/p09-handover.md) record physical contracts, active verification, failed-run dispositions and limits. P09 is not yet published or merged. Existing full PT-06 is preserved; new full acceptance is not claimed. The [P10 starter](delivery/p10-starter-prompt.md) is prepared only; Finance and P10–P12 remain unimplemented.
+P09 issue #36 / PR #37 implement exact completion submission, authorised review/return, immutable acceptance and report correction cycles, durable customer-safe OUT-10 revisions, five explicit responses and compatible P08 local intents. [ADR-0014](decisions/ADR-0014-p09-service-reports.md) and the [P09 handover](delivery/p09-handover.md) record physical contracts, actual verification, failed-run dispositions and limits. The implementation run passed 289 cases (12 unit, 205 PostgreSQL, 14 HTTP, 58 browser) plus real restart procedures. The external publication record governs exact final-head and actual merged-main results. Existing full PT-06 is preserved; full PT-15/PT-16 disposition is recorded separately from component counts and AT/owner acceptance. The [P10 starter](delivery/p10-starter-prompt.md) is prepared only; Finance and P10–P12 remain unimplemented.
