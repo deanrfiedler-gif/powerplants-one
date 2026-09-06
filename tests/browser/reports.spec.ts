@@ -434,17 +434,25 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
         ? "2026-12-14T02:00"
         : "2026-12-11T02:00",
     );
+  const savedProposal = page.waitForResponse(
+    (r) => r.url().endsWith(`/service/work-orders/${report.work_order.id}/visits`) && r.request().method() === "POST",
+  );
   await page
     .getByRole("button", { name: "Save proposed visit", exact: true })
     .click();
-  await expect(
-    page.getByText("Saved to the server.", { exact: true }).last(),
-  ).toBeVisible();
+  const proposalResponse = await savedProposal;
+  expect(proposalResponse.status()).toBe(201);
+  const proposalReceipt = await proposalResponse.json();
+  expect(proposalReceipt.state).toBe("Proposed");
+  const proposedVisit = (await call(page, `appointments/${proposalReceipt.record_id}`)).items[0];
+  expect(proposedVisit.status).toBe("Proposed");
+  expect(proposedVisit.assignments).toHaveLength(0);
+  expect(proposedVisit.customer_commitment).toBe("Unknown");
   await expect(visitLinks).toHaveCount(previousVisits + 1);
-  const returnVisit = visitLinks.last().locator("..").locator("..");
+  const returnVisit = page.locator(`a[href="/service/appointments/${proposalReceipt.record_id}"]`).locator("..").locator("..");
   await expect(returnVisit).toContainText("Proposed");
   await returnVisit.evaluate((element) => element.scrollIntoView({ block: "start" }));
-  await proof(page, info, "owned-return-proposal");
+  await proof(page, info, "owned-return-proposal", { proposal_receipt: proposalReceipt, proposal: { id: proposedVisit.id, status: proposedVisit.status, assigned_crew: proposedVisit.assignments.length, customer_commitment: proposedVisit.customer_commitment } });
   await page.goto(`/service/reports/${reportId}`);
   await issue(page);
   await proof(page, info, "durable-issued-report");
