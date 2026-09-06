@@ -112,6 +112,27 @@ export async function currentRevision(
       sources.push(await exactSource(c, p, ctx.w, ref));
     if (hash({ ...v.source_snapshot, reports: sources }) !== v.source_hash)
       blocked("SourceChanged", "The exact Finance source snapshot changed.");
+    const entries = new Map(
+      sources.flatMap((s) => s.entries).map((e) => [e.id, e]),
+    );
+    for (const line of await financeLines(c, p, v.id)) {
+      const e = entries.get(line.entry_id);
+      if (
+        !e ||
+        e.version !== line.entry_version ||
+        e.root_entry_id !== line.root_entry_id ||
+        e.report_revision_id !== line.report_revision_id ||
+        scaled(e.quantity) !== scaled(line.captured_quantity) ||
+        scaled(e.quantity) !== scaled(line.reviewed_quantity) ||
+        e.uom !== line.uom ||
+        e.direction !== line.direction ||
+        e.source_entry_hash !== line.source_entry_hash
+      )
+        blocked(
+          "ExactAllocationSourceRequired",
+          "An allocation differs from its exact approved source entry/version/hash.",
+        );
+    }
   }
   return v;
 }
@@ -136,6 +157,11 @@ async function revision(
   cmd: ReturnType<typeof editCommand>,
 ) {
   const d = await definition(c, p);
+  if (ctx.a.currency !== d.definition.currency.code)
+    blocked(
+      "UnsupportedCurrencyBasis",
+      "The selected account currency has no independently specified Finance fixture definition.",
+    );
   if (
     d.id !== cmd.definition_id ||
     d.version !== cmd.definition_version ||
@@ -377,7 +403,13 @@ export async function reviewFinance(p: Principal, id: string, input: unknown) {
     (c) => financeContext(c, p, id, "finance.review"),
     async (c, ctx) => {
       sameVersion(ctx.h.version, cmd.expected_version);
-      if (ctx.h.status !== "ReadyForReview" || ctx.h.owner_id === p.actor_id)
+      if (
+        !(
+          ctx.h.status === "ReadyForReview" ||
+          (ctx.h.status === "Approved" && cmd.decision === "Returned")
+        ) ||
+        ctx.h.owner_id === p.actor_id
+      )
         blocked(
           "FinanceReviewRequired",
           "An independent synthetic Finance reviewer must review ReadyForReview.",
@@ -388,6 +420,28 @@ export async function reviewFinance(p: Principal, id: string, input: unknown) {
           "SourceChanged",
           "Review the exact submitted Finance revision and hash.",
         );
+      if (ctx.h.status === "Approved") {
+        await noPossibleEffect(c, p, ctx.h);
+        const approved = (
+          await c.query(
+            "SELECT id FROM ppo.finance_reviews WHERE workspace_id=$1 AND revision_id=$2 AND decision='Approved'",
+            [p.workspace_id, r.id],
+          )
+        ).rows[0];
+        return bump(
+          c,
+          p,
+          ctx.h,
+          cmd,
+          "ApprovalReturned",
+          { status: "Returned" },
+          {
+            original_review_id: approved.id,
+            source_hash: r.source_hash,
+            correction_reason: cmd.reason,
+          },
+        );
+      }
       if (
         cmd.decision === "Approved" &&
         (await financeLines(c, p, r.id)).some(
@@ -780,6 +834,16 @@ export async function recordFinanceOutcome(
           "UPDATE ppo.finance_allocation_holds SET state='Consumed' WHERE workspace_id=$1 AND handoff_id=$2 AND state='Held'",
           [p.workspace_id, id],
         );
+      await c.query(
+        "UPDATE ppo.outbox_jobs SET status=$4,error_code=$5 WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=(SELECT operation_id FROM ppo.finance_processing_attempts WHERE workspace_id=$1 AND id=$3) AND kind='FinanceProcessingClaimed'",
+        [
+          p.workspace_id,
+          p.actor_id,
+          cmd.attempt_id,
+          unknown ? "OutcomeUnknown" : "Done",
+          unknown ? "OriginalLookupRequired" : null,
+        ],
+      );
       await hooks.beforeRecord?.();
       return bump(
         c,

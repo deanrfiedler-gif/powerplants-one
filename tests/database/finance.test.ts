@@ -395,6 +395,7 @@ test("P10 pre-effect report successor invalidates readiness and retains submitte
   await amendReport(q.q.p, q.q.report.id, {
     ...base(),
     expected_version: q.q.report.version,
+    revision_id: q.q.report.revisions[0].id,
   });
   assert.equal((await h(q.id)).status, "Returned");
   assert.equal((await h(q.id)).needs_review, true);
@@ -420,6 +421,7 @@ test("P10 source correction after possible processing preserves original target 
   await amendReport(q.q.p, q.q.report.id, {
     ...base(),
     expected_version: q.q.report.version,
+    revision_id: q.q.report.revisions[0].id,
   });
   let r = await h(q.id);
   assert.equal(r.status, "ReconciliationRequired");

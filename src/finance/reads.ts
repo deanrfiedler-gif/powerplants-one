@@ -6,7 +6,7 @@ import {
   scopeSql,
 } from "../platform/permissions";
 import { AppError } from "../platform/errors";
-import { object, optionalId, uuid } from "../shared/validation";
+import { object, optionalId, uuid, choice } from "../shared/validation";
 import {
   financeContext,
   financeWork,
@@ -75,18 +75,31 @@ export async function financeSources(
   });
 }
 export async function listFinance(p: Principal, input: unknown = {}) {
-  const q = object(input, ["company_id", "site_id", "after"]),
+  const q = object(input, ["company_id", "site_id", "after", "status"]),
     c = database();
   await requireCapability(c, p, "finance.read");
   const rows = (
     await c.query(
-      `SELECT f.id,f.display_number,f.version,f.status,f.company_id,f.site_id,f.customer_id,f.account_id,f.currency,f.mode,f.needs_review,f.source_blocker,f.created_at,f.updated_at,u.display_name AS owner,w.display_number AS work_reference,o.display_name AS customer_name,a.fixture_key AS account_reference,(SELECT min(occurred_at) FROM ppo.finance_events e WHERE e.handoff_id=f.id AND e.kind='Submitted') AS submitted_at,(SELECT max(reviewed_at) FROM ppo.finance_reviews r WHERE r.handoff_id=f.id) AS reviewed_at,(SELECT max(claimed_at) FROM ppo.finance_processing_attempts t WHERE t.handoff_id=f.id) AS claimed_at FROM ppo.finance_handoffs f JOIN ppo.users u ON (u.workspace_id,u.id)=(f.workspace_id,f.owner_id) JOIN ppo.work_orders w ON (w.workspace_id,w.id)=(f.workspace_id,f.work_order_id) JOIN ppo.organisations o ON (o.workspace_id,o.id)=(f.workspace_id,f.customer_id) JOIN ppo.finance_accounts a ON (a.workspace_id,a.id)=(f.workspace_id,f.account_id) WHERE f.workspace_id=$1 AND ${scopeSql("f.company_id", "f.site_id", "finance.read")} AND ${scopeSql("f.company_id", "f.site_id", "shared.finance.read")} AND ($3::uuid IS NULL OR f.company_id=$3) AND ($4::uuid IS NULL OR f.site_id=$4) AND ($5::uuid IS NULL OR f.id>$5) ORDER BY f.id LIMIT 51`,
+      `SELECT f.id,f.display_number,f.version,f.status,f.company_id,f.site_id,f.customer_id,f.account_id,f.currency,f.mode,f.needs_review,f.source_blocker,f.created_at,f.updated_at,u.display_name AS owner,w.display_number AS work_reference,o.display_name AS customer_name,a.fixture_key AS account_reference,(SELECT min(occurred_at) FROM ppo.finance_events e WHERE e.handoff_id=f.id AND e.kind='Submitted') AS submitted_at,(SELECT max(reviewed_at) FROM ppo.finance_reviews r WHERE r.handoff_id=f.id) AS reviewed_at,(SELECT max(claimed_at) FROM ppo.finance_processing_attempts t WHERE t.handoff_id=f.id) AS claimed_at FROM ppo.finance_handoffs f JOIN ppo.users u ON (u.workspace_id,u.id)=(f.workspace_id,f.owner_id) JOIN ppo.work_orders w ON (w.workspace_id,w.id)=(f.workspace_id,f.work_order_id) JOIN ppo.organisations o ON (o.workspace_id,o.id)=(f.workspace_id,f.customer_id) JOIN ppo.finance_accounts a ON (a.workspace_id,a.id)=(f.workspace_id,f.account_id) WHERE f.workspace_id=$1 AND ${scopeSql("f.company_id", "f.site_id", "finance.read")} AND ${scopeSql("f.company_id", "f.site_id", "shared.finance.read")} AND ($3::uuid IS NULL OR f.company_id=$3) AND ($4::uuid IS NULL OR f.site_id=$4) AND ($5::uuid IS NULL OR f.id>$5) AND ($6::text IS NULL OR f.status=$6) ORDER BY f.id LIMIT 51`,
       [
         p.workspace_id,
         p.actor_id,
         optionalId(q.company_id, "company_id"),
         optionalId(q.site_id, "site_id"),
         optionalId(q.after, "after"),
+        q.status === undefined
+          ? null
+          : choice(q.status, "status", [
+              "Draft",
+              "ReadyForReview",
+              "Returned",
+              "Approved",
+              "AwaitingERP",
+              "OutcomeUnknown",
+              "ReconciliationRequired",
+              "Reconciled",
+              "Cancelled",
+            ]),
       ],
     )
   ).rows;

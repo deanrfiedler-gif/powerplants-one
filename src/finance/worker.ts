@@ -29,7 +29,7 @@ async function template(c: PoolClient, p: Principal) {
   if (
     !t ||
     t.definition !== (await currentFinanceTemplate()) ||
-    t.content_hash !== hash(t.definition)
+    t.content_hash !== digest(t.definition)
   )
     blocked(
       "TemplateUnavailable",

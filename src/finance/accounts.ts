@@ -12,7 +12,7 @@ import {
   uuid,
 } from "../shared/validation";
 import { sameVersion } from "../scheduling/validation";
-import { unavailable } from "../platform/errors";
+import { unavailable, AppError } from "../platform/errors";
 import { financeAccount, accountCurrent, hash } from "./context";
 
 export const accountFixtures = [
@@ -177,6 +177,13 @@ export async function readAccount(
     a = await financeAccount(c, p, uuid(q.account_id, "account_id"));
   if (a.organisation_id !== uuid(customerID, "customer_id"))
     throw unavailable();
+  let context_error: string | null = null;
+  try {
+    await accountCurrent(c, p, a);
+  } catch (e) {
+    if (!(e instanceof AppError)) throw e;
+    context_error = e.message;
+  }
   const runs = (
       await c.query(
         "SELECT * FROM ppo.finance_account_runs WHERE workspace_id=$1 AND account_id=$2 ORDER BY observed_at DESC,id DESC",
@@ -194,16 +201,22 @@ export async function readAccount(
       company_id: a.company_id,
       customer_id: a.organisation_id,
       currency: a.currency,
-      status: a.status,
+      status: context_error
+        ? "Historical synthetic context — re-verification required"
+        : a.status,
       verification_basis: a.verification_basis,
     },
     current,
     last_good,
     history: runs,
+    context_error,
     account_balance:
-      current?.completeness === "Complete" ? current.source_balance : null,
-    balance_status:
-      current?.completeness === "Complete"
+      !context_error && current?.completeness === "Complete"
+        ? current.source_balance
+        : null,
+    balance_status: context_error
+      ? "Current account verification unavailable; original observations retained"
+      : current?.completeness === "Complete"
         ? "Fixture source reconciled"
         : current?.completeness === "Partial"
           ? "Incomplete — account total unavailable"

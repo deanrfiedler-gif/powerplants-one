@@ -189,7 +189,11 @@ function Frame({
   );
 }
 export function FinanceQueue() {
-  const q = useResource<Queue>("finance/handoffs"),
+  const [state, setState] = useState(""),
+    [after, setAfter] = useState(""),
+    q = useResource<Queue>(
+      `finance/handoffs?${new URLSearchParams({ ...(state ? { status: state } : {}), ...(after ? { after } : {}) })}`,
+    ),
     o = useResource<Options>("finance/options");
   return (
     <Frame
@@ -197,6 +201,31 @@ export function FinanceQueue() {
       subtitle="Review exact service evidence, control the original processing action and reconcile its synthetic result."
     >
       <div className={styles.toolbar}>
+        <label>
+          Queue state
+          <select
+            value={state}
+            onChange={(e) => {
+              setState(e.target.value);
+              setAfter("");
+            }}
+          >
+            <option value="">All permitted states</option>
+            {[
+              "Draft",
+              "ReadyForReview",
+              "Returned",
+              "Approved",
+              "AwaitingERP",
+              "OutcomeUnknown",
+              "ReconciliationRequired",
+              "Reconciled",
+              "Cancelled",
+            ].map((v) => (
+              <option key={v}>{v}</option>
+            ))}
+          </select>
+        </label>
         <Link className="button" href="/finance/handoffs/new">
           Prepare handoff
         </Link>
@@ -260,7 +289,12 @@ export function FinanceQueue() {
             </div>
           )}
           {q.data.next_cursor && (
-            <p>More handoffs exist. This page is not the complete queue.</p>
+            <button
+              className="secondary"
+              onClick={() => setAfter(q.data!.next_cursor!)}
+            >
+              Next page of permitted handoffs
+            </button>
           )}
         </>
       )}
@@ -295,9 +329,11 @@ type DraftLine = {
 export function FinanceForm({
   id,
   initial,
+  onSaved,
 }: {
   id?: string;
   initial?: Detail;
+  onSaved?: () => void;
 }) {
   const router = useRouter(),
     options = useResource<Options>("finance/options"),
@@ -389,6 +425,10 @@ export function FinanceForm({
         body,
       );
     if (r?.record_id) {
+      if (onSaved) {
+        onSaved();
+        return;
+      }
       router.push(`/finance/handoffs/${r.record_id}`);
       router.refresh();
     }
@@ -684,7 +724,14 @@ export function FinanceDetail({ id }: { id: string }) {
         >
           Back to retained handoff
         </button>
-        <FinanceForm id={id} initial={d} />
+        <FinanceForm
+          id={id}
+          initial={d}
+          onSaved={() => {
+            setEditing(false);
+            r.reload();
+          }}
+        />
       </>
     );
   const act = (action: string, extra: Record<string, unknown> = {}) =>
@@ -774,10 +821,14 @@ export function FinanceDetail({ id }: { id: string }) {
                     </button>
                   )}
                 {d.capabilities["finance.review"] &&
-                  h.status === "ReadyForReview" && (
+                  ["ReadyForReview", "Approved"].includes(h.status) && (
                     <>
                       <button
-                        disabled={reason.length < 10 || !d.readiness.ready}
+                        disabled={
+                          reason.length < 10 ||
+                          !d.readiness.ready ||
+                          h.status !== "ReadyForReview"
+                        }
                         onClick={() =>
                           act("review", {
                             revision_id: h.current_revision_id,
@@ -1083,6 +1134,7 @@ export function AccountScreen({
       `customers/${customerId}/account-observations?account_id=${accountId}`,
     ),
     [fixture, setFixture] = useState("F-01"),
+    [invoiceOnly, setInvoiceOnly] = useState(false),
     cmd = useCommand(r.reload),
     d = r.data;
   return (
@@ -1177,6 +1229,18 @@ export function AccountScreen({
                 tabIndex={0}
                 aria-label="Account transaction table"
               >
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={invoiceOnly}
+                    onChange={(e) => setInvoiceOnly(e.target.checked)}
+                  />
+                  Show invoice rows only
+                </label>
+                <p className={styles.meta}>
+                  Visible rows are a display filter. The account total comes
+                  from the declared complete source extraction.
+                </p>
                 <table>
                   <thead>
                     <tr>
@@ -1187,29 +1251,36 @@ export function AccountScreen({
                     </tr>
                   </thead>
                   <tbody>
-                    {d.current.observations.map(
-                      (o: {
-                        id: string;
-                        type: string;
-                        original_amount: string;
-                        remaining_amount: string | null;
-                        status: string;
-                        reverses?: string;
-                      }) => (
-                        <tr key={o.id}>
-                          <td>
-                            {o.id}
-                            <small>{o.type}</small>
-                          </td>
-                          <td>{o.original_amount}</td>
-                          <td>{o.remaining_amount ?? "Unavailable"}</td>
-                          <td>
-                            {o.status}
-                            {o.reverses && <small>Reverses {o.reverses}</small>}
-                          </td>
-                        </tr>
-                      ),
-                    )}
+                    {d.current.observations
+                      .filter(
+                        (o: { type: string }) =>
+                          !invoiceOnly || o.type === "SyntheticInvoice",
+                      )
+                      .map(
+                        (o: {
+                          id: string;
+                          type: string;
+                          original_amount: string;
+                          remaining_amount: string | null;
+                          status: string;
+                          reverses?: string;
+                        }) => (
+                          <tr key={o.id}>
+                            <td>
+                              {o.id}
+                              <small>{o.type}</small>
+                            </td>
+                            <td>{o.original_amount}</td>
+                            <td>{o.remaining_amount ?? "Unavailable"}</td>
+                            <td>
+                              {o.status}
+                              {o.reverses && (
+                                <small>Reverses {o.reverses}</small>
+                              )}
+                            </td>
+                          </tr>
+                        ),
+                      )}
                   </tbody>
                 </table>
               </div>

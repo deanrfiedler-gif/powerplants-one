@@ -61,6 +61,11 @@ export function editCommand(id: string | null, input: unknown) {
     "definition_version",
     "policy_version",
   ]);
+  if (!id && v.expected_version !== undefined)
+    invalid(
+      "expected_version",
+      "A new handoff has no existing record version.",
+    );
   if (!Array.isArray(v.reports) || !v.reports.length || v.reports.length > 20)
     invalid("reports", "Choose 1–20 exact issued reports.");
   const reports = (v.reports as unknown[])

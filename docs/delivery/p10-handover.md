@@ -1,0 +1,28 @@
+# P10 — Finance handoff and account simulation handover
+
+**State: implementation and verification in progress. This is not a completed P10 publication or P11 readiness claim.**
+
+User authority explicitly covers bounded P10 implementation, local dependencies, additive migrations/fixtures, tests, documentation, commits, PR and normal checked merge, followed by P11 starter preparation only. Work is tracked in [issue #45](https://github.com/deanrfiedler-gif/powerplants-one/issues/45) and [draft PR #48](https://github.com/deanrfiedler-gif/powerplants-one/pull/48), branch `feature/p10-finance-handoff`, [ADR-0016](../decisions/ADR-0016-p10-finance-handoff.md). No live financial operation, customer distribution, hosting or P11/P12 implementation is authorised.
+
+## Verified prerequisite and newer main
+
+P09's completed authoritative [external publication](https://github.com/deanrfiedler-gif/powerplants-one/issues/36#issuecomment-5557392390) records final head `e23001ca62e162d0bb804f552d3371ff62a47003`, source tree `a9bcdabd3851ca72e0295bae66e1b461d2178945`, actual merged main `17f1505e2708663e7d2948f2c6bafc57a409085e`, final application/documentation runs `34027767595` / `34027767598` and actual-main runs `34030548850` / `34030548848`. Those exact runs and closed issue #36 / merged PR #37 were verified before implementation. Original evidence and review limits remain linked there and in the [P09 handover](p09-handover.md).
+
+P10 began from current main `c3ac9b2ab9c09308f620a5b451a337eb75fe6390`, tree `163e4a9e7dcda9b067a67ed63299afd04d20e0b1`, preserving CRM I1's [completed publication](https://github.com/deanrfiedler-gif/powerplants-one/issues/39#issuecomment-5557831957) and its 329 unique maintained cases. Estimating discovery PR #44 subsequently merged to `94289a20fc609e47af647b29ca8170557da312bb`, tree `3964dac1259f8c8442bd74e1d35334d512c3c938`; all 24 changed files were incorporated byte-for-byte after reading its newer decision. Its Wave B/E1 proposals do not expand P10. Parallel CRM I2 remains separate and must be rechecked before merge.
+
+## Current physical boundary
+
+Migration 0011 is additive after CRM 0010; all 0001–0010 migration/seed bytes remain unchanged. The existing ERP `Verified` prohibition is preserved. Independently specified `finance_accounts` hold `SyntheticVerified` context tied to an exact Proposed mapping/version/snapshot; these are not live ERP account verifications. No earlier-stage handoff is fabricated by the seed.
+
+Finance reads exact immutable P09 `report_reviews` decisions and `report_entry_refs` versions. Original field-entry Draft flags and quantities remain unchanged. Incomplete personal time/material declarations, changed source/authority/document dependencies, unsupported quantities and missing original bytes block Finance readiness. Full quantities from each selected report must be allocated, including non-billable portions. Exact six-place integer-scaled arithmetic never introduces floating-point rounding, tax, price, currency conversion, stock movement or operational warranty policy.
+
+Draft/ReadyForReview/Returned/Approved/AwaitingERP/OutcomeUnknown/ReconciliationRequired/Reconciled/Cancelled remain distinct. A controlled claim fixes original correlation, target line IDs, input hash and processor. The simulator commits its effect separately from outcome recording. Original lookup fences a missing result against a late effect; accepted originals are not replayed. Source changes preserve allocation/target history and require review or a linked correction request.
+
+## Verification ledger — unfinished
+
+- Exact local Node 24.20.0/npm 11.19.0 were installed and locked dependencies installed without engine changes. Local lint, typecheck, 14 unit cases and build passed for the first implementation checkpoint. Local PostgreSQL installation is blocked by OS group restrictions; real database/HTTP/browser/restart gates use authorised disposable PostgreSQL 16.15 CI.
+- First candidate head `0fb78109aac009c28e638d714cc3b85d4e6a346a`, tree `ba4e53c36d96b1f0db572b632cb157c0546fe90b`: [documentation run 34060433011](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34060433011) passed. [Application run 34060433027](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34060433027), job `101559868329`, attempt 1, passed static/build, migration/seed/reset, retained P09 real restart gates and four focused P09 browser repeats. Database result: 250 cases, 236 passed, 14 new Finance cases failed; all 234 retained database cases passed. Subsequent HTTP/browser gates were not executed by that failed run.
+- The 14 failures shared one cause: the first Finance dependency comparison omitted P09's exact reviewed audience tuple. The fix adds current active company-scoped recipient ID/name/version to the same exact guard; it does not relax the source check. A separate implementation review found and fixed the source-invalidation outbox's missing receipt link. These fixes await a successful exact-head rerun.
+- Existing migration completion assertions now include additive 0011. P09's obsolete `Not implemented — P10` label/assertions now say `Separate Finance authority required`, retaining the no-Finance-leakage boundary. No prior test case was removed.
+
+Full PT-17/PT-19/PT-20/PT-21 execution, affected dependency portions of other PT procedures, original desktop/phone/PDF inspection, remaining negative and restart gates, independent-review availability, final-head review/checks and actual merged-main publication are outstanding. No full PT/AT, owner acceptance, independent review or production-readiness claim is made here.

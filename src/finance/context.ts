@@ -52,6 +52,8 @@ export async function accountCurrent(
     m.organisation_id !== a.organisation_id ||
     m.company_id !== a.company_id ||
     hash(m) !== hash(a.mapping_snapshot) ||
+    new Date(m.valid_from) > new Date() ||
+    (m.valid_to && new Date(m.valid_to) <= new Date()) ||
     a.status !== "SyntheticVerified"
   )
     blocked(
@@ -199,6 +201,11 @@ export async function exactSource(
       "The approved entry set and issued source hashes must match exactly.",
     );
   const completion = v.snapshot.completion;
+  if (review.authority_disposition !== "Current")
+    blocked(
+      "HistoricalAuthorityOnly",
+      "This technical review accepts original attendance only. It does not establish current Finance source readiness.",
+    );
   if (
     !["AllRecorded", "None"].includes(completion.time_declaration) ||
     !["AllRecorded", "None"].includes(completion.material_declaration)
@@ -258,6 +265,17 @@ export async function exactSource(
         [p.workspace_id, a.scope_revision_id, a.id],
       )
     ).rows;
+  const audience = (
+    await c.query(
+      "SELECT u.id,u.version,u.display_name AS name FROM ppo.people u WHERE u.workspace_id=$1 AND u.id=$2 AND u.active AND EXISTS(SELECT 1 FROM ppo.person_company_contexts pc WHERE pc.workspace_id=u.workspace_id AND pc.person_id=u.id AND pc.company_id=$3)",
+      [p.workspace_id, site.primary_contact_id, w.company_id],
+    )
+  ).rows[0];
+  if (!audience || audience.id !== review.recipient_id)
+    blocked(
+      "SourceAudienceChanged",
+      "The exact reviewed report audience context changed.",
+    );
   const refs = await verifyEvidence(c, p, v.id),
     current = {
       assets,
@@ -272,6 +290,7 @@ export async function exactSource(
       schedule_version: a.schedule_version,
       pack,
       entries: refs.map((e) => ({ id: e.id, version: e.version })),
+      recipient: audience,
     };
   if (hash(current) !== hash(guard))
     blocked(
@@ -344,12 +363,14 @@ export async function exactSource(
   };
 }
 export const receiptCapability = (command: string): FinanceCapability =>
-  command.includes("Evidence")
-    ? "finance.issue"
-    : command === "ReviewFinance"
-      ? "finance.review"
-      : ["BeginFinanceProcessing", "RecordFinanceOutcome"].includes(command)
-        ? "finance.process"
-        : ["ReconcileFinance", "RequestFinanceCorrection"].includes(command)
-          ? "finance.reconcile"
-          : "finance.prepare";
+  command === "FinanceSourceInvalidated"
+    ? "finance.read"
+    : command.includes("Evidence")
+      ? "finance.issue"
+      : command === "ReviewFinance"
+        ? "finance.review"
+        : ["BeginFinanceProcessing", "RecordFinanceOutcome"].includes(command)
+          ? "finance.process"
+          : ["ReconcileFinance", "RequestFinanceCorrection"].includes(command)
+            ? "finance.reconcile"
+            : "finance.prepare";

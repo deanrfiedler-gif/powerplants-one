@@ -1,5 +1,6 @@
 import type { PoolClient } from "pg";
 import { insert } from "../documents/packs";
+import { digest } from "../documents/store";
 import { hash } from "./context";
 import { currentFinanceTemplate } from "./render";
 export async function seedFinance(c: PoolClient) {
@@ -79,7 +80,7 @@ export async function seedFinance(c: PoolClient) {
     workspace_id,
     version: 1,
     definition: template,
-    content_hash: hash(template),
+    content_hash: digest(template),
   });
   await insert(c, "finance_template_policy", {
     workspace_id,
