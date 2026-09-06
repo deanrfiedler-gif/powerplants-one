@@ -1,5 +1,5 @@
-import { ownerKey, type Owner, type Outcome } from "./protocol.js";
-import { queue, bytesFor, claim, release, saveStatus, lockLocal, invalidateContexts } from "./store.js";
+import { ownerKey, type Owner, type Outcome } from "./protocol";
+import { queue, bytesFor, claim, release, saveStatus, lockLocal, invalidateContexts } from "./store";
 export class HttpFailure extends Error { constructor(public status:number,public code:string,message:string){super(message);} }
 export async function api<T>(path:string,body?:unknown):Promise<T> {
   const response=await fetch(`/api/v1/${path}`,{method:body===undefined?"GET":"POST",credentials:"same-origin",cache:"no-store",headers:body===undefined?{}:{"Content-Type":"application/json"},body:body===undefined?undefined:JSON.stringify(body),signal:AbortSignal.timeout(15000)});

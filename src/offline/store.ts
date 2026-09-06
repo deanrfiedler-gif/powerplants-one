@@ -1,4 +1,4 @@
-import { ownerKey, sha256, canonical, original, type Owner, type WireOperation, type Outcome, type Authority } from "./protocol.js";
+import { ownerKey, sha256, canonical, original, type Owner, type WireOperation, type Outcome, type Authority } from "./protocol";
 import type { Job } from "../components/field-screens";
 export const DB_NAME="PPO-offline-field",DB_VERSION=2;
 export type CachedJob={key:string;owner:Owner;verified_at:string;expires_at:string;authority:Authority;recovery:{id:string;token:string;expires_at:string};job:Job;pack_html?:string;locked?:boolean};
@@ -19,7 +19,7 @@ export function openStore(version=DB_VERSION):Promise<IDBDatabase> {
     if(!globalThis.indexedDB){reject(storageError(new Error("IndexedDBUnavailable")));return;}
     let failed=false;
     const r=indexedDB.open(DB_NAME,version);
-    r.onupgradeneeded=()=>{for(const name of stores)if(!r.result.objectStoreNames.contains(name))r.result.createObjectStore(name,{keyPath:"key"});};
+    r.onupgradeneeded=()=>{for(const name of stores.filter(x=>version>=2||x!=="leases"))if(!r.result.objectStoreNames.contains(name))r.result.createObjectStore(name,{keyPath:"key"});};
     r.onblocked=()=>{failed=true;reject(new LocalStorageError("Database upgrade is blocked by another tab. Close other PPO tabs and reload; pending originals have not been deleted."));};
     r.onerror=()=>reject(storageError(r.error));
     r.onsuccess=()=>{if(failed){r.result.close();return;}r.result.onversionchange=()=>{r.result.close();globalThis.dispatchEvent?.(new Event("ppo-storage-update"));};resolve(r.result);};

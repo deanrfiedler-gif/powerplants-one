@@ -35,3 +35,4 @@ next-env.d.ts
 verification-evidence/
 
 public/offline/modules/
+public/offline/sw.js

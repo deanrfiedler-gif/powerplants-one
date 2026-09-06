@@ -1,7 +1,7 @@
-import { canonical, sha256, ownerKey, type Owner, type Original, type WireOperation, type Command } from "./protocol.js";
-import { ownership,unlock,lockLocal,contexts,cacheJob,removeContext,commitOperations,queue,bytesFor,saveStatus,type CachedJob,type LocalBytes } from "./store.js";
-import {api,HttpFailure,verifyOwner,synchronise,base64} from "./client.js";
-import {fieldKinds,timeKinds,materialKinds,units,readingUnits,checkIds,payload as validateField,entryCommand,completionCommand} from "../field/validation.js";
+import { canonical, sha256, ownerKey, type Owner, type Original, type WireOperation, type Command } from "./protocol";
+import { ownership,unlock,lockLocal,contexts,cacheJob,removeContext,commitOperations,queue,bytesFor,saveStatus,type CachedJob,type LocalBytes } from "./store";
+import {api,HttpFailure,verifyOwner,synchronise,base64} from "./client";
+import {fieldKinds,timeKinds,materialKinds,units,readingUnits,checkIds,payload as validateField,entryCommand,completionCommand} from "../field/validation";
 let owner:Owner|null=null,selected:CachedJob|null=null,dirty=false,sending=false;
 const $=<T extends HTMLElement=HTMLElement>(id:string)=>document.getElementById(id) as T;
 function element<K extends keyof HTMLElementTagNameMap>(tag:K,text?:string,className?:string){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(className)e.className=className;return e;}
@@ -72,6 +72,7 @@ async function renderCapture(correction?:Correction){const j=safeJob().job,box=$
     validateField(kind.value as typeof fieldKinds[number],data);
     const body={reason:reason.value,id:crypto.randomUUID(),appointment_id:j.id,attendance_id:a.id,kind:kind.value,scope_item_id:task.value||null,asset_id:asset.value||null,captured_at:new Date().toISOString(),payload:data,...(correction?{expected_version:correction.version}:{})};
     entryCommand({...body,operation_id:crypto.randomUUID(),schema_version:1,attendance_id:typeof a.id==="string"?a.id:"00000000-0000-4000-8000-000000000000"},correction?String(correction.op.payload.id):undefined);
+    if(correction)deps.push(correction.op.operation_id);
     const op=await make(correction?"Correct":"Capture",body,deps,correction?String(correction.op.payload.id):null,correction?.op.operation_id??null);ops.push(op);await commitOperations(requireOwner(),ops,files);dirty=false;state.textContent="Saved on this device — awaiting server acceptance.";await renderQueue();notice("Original evidence and any selected PNG bytes committed on this device. Server acceptance is still pending.");
   }finally{save.disabled=false;}});};
 }

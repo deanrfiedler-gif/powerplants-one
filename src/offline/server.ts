@@ -93,10 +93,16 @@ async function validateAuthority(c:PoolClient,p:Principal,op:WireOperation,b:Rec
   if(!a || canonical(a)!==canonical(op.authority)) throw new AppError(409,"AuthorityChanged","Original evidence authority differs from the accepted attendance. Preserve it for recovery.");
 }
 export async function syncOne(p:Principal,op:WireOperation,transfer?:string) {
+  const saved=(await database().query("SELECT payload_hash FROM ppo.sync_acceptances WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3",[p.workspace_id,p.actor_id,op.operation_id])).rows[0];
+  if(saved){await readOperation(p,op.operation_id);if(saved.payload_hash!==op.payload_hash)throw new AppError(409,"OperationConflict","The accepted original envelope cannot be changed, including its dependencies or lineage.");}
   const b=await resolvedPayload(p,op);
   return syncContext.run({operation_id:op.operation_id,validate:async(c)=>{
     await dependencies(c,p,op);
     await validateAuthority(c,p,op,b);
+    if(op.supersedes_operation_id){
+      const source=(await c.query("SELECT envelope FROM ppo.sync_acceptances WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3 AND appointment_id=$4",[p.workspace_id,p.actor_id,op.supersedes_operation_id,op.appointment_id])).rows[0]?.envelope;
+      if(!source || (op.command==="Correct" ? source.payload.id!==op.target_id : op.command==="CompletionDraft" ? source.command!=="CompletionDraft"||source.payload.id!==op.payload.id : true))throw new AppError(409,"LineageConflict","A successor must name its exact previously accepted original.");
+    }
     const prior=(await c.query("SELECT payload_hash FROM ppo.sync_acceptances WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3",[p.workspace_id,p.actor_id,op.operation_id])).rows[0];
     if(prior&&prior.payload_hash!==op.payload_hash) throw new AppError(409,"OperationConflict","This operation already has different original content.");
   },accepted:async(c,receipt)=>{
