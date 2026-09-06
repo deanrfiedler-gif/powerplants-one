@@ -307,6 +307,9 @@ test("P08 real offline UI interruption retains typed evidence and exact PNG, ret
   );
   await login(page.request, "second-technician");
   await page.reload();
+  await expect(page.locator("#identity")).toHaveText(
+    "SYN Morgan Technician · identity verified online",
+  );
   await expect(page.locator("#workspace")).toBeVisible();
   await expect(page.locator("#queue .queue-row")).toHaveCount(0);
   await expect(page.locator("#jobs article")).toHaveCount(0);
@@ -319,6 +322,9 @@ test("P08 real offline UI interruption retains typed evidence and exact PNG, ret
   await screenshot(page, info, "identity-switch-isolation");
   await login(page.request, "assigned-technician");
   await page.reload();
+  await expect(page.locator("#identity")).toHaveText(
+    "SYN Riley Technician · identity verified online",
+  );
   await expect(page.locator("#queue .queue-row")).toHaveCount(8);
   expect(
     (await localRows(page))

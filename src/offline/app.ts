@@ -1273,18 +1273,16 @@ $("sync").onclick = () => {
 };
 const channel = new BroadcastChannel("ppo-offline-ownership");
 channel.onmessage = async (event) => {
-  if (event.data === "locked") {
+  // A queued lock notification can arrive after a newer verified unlock.
+  // The committed ownership record, not the notification, controls visibility.
+  if (event.data !== "locked" && event.data !== "refresh") return;
+  const active = await ownership();
+  if (
+    !active?.owner ||
+    active.locked ||
+    (owner && ownerKey(active.owner) !== ownerKey(owner))
+  )
     wipe();
-  } else {
-    const active = await ownership();
-    if (
-      owner &&
-      (!active?.owner ||
-        active.locked ||
-        ownerKey(active.owner) !== ownerKey(owner))
-    )
-      wipe();
-  }
 };
 window.addEventListener("beforeunload", (e) => {
   // Saving one form does not make another form's unsaved input durable.
@@ -1351,8 +1349,10 @@ await perform(async () => {
     );
   try {
     const p = await api<Owner>("local-session");
-    if (active?.owner && ownerKey(active.owner) !== ownerKey(p))
+    if (active?.owner && ownerKey(active.owner) !== ownerKey(p)) {
+      wipe();
       await lockLocal();
+    }
     await unlock(p);
     await activate(p, true);
   } catch (e) {
