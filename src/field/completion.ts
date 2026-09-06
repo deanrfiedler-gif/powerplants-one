@@ -194,7 +194,9 @@ export async function saveCompletionDraft(
         (await currentCaptureState(c, p, ctx)) !== "Current" &&
         !completeCorrectionBaseline
       )
-        blocks.push("New physical capture is not currently authorised; review the original attendance context.");
+        blocks.push(
+          "New physical capture is not currently authorised; review the original attendance context.",
+        );
       for (const t of cmd.task_outcomes) {
         if (t.outcome !== "Complete")
           blocks.push("An authorised task remains incomplete.");

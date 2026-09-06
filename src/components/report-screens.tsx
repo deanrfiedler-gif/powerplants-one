@@ -14,6 +14,8 @@ import type { Job } from "./field-screens";
 import type { readReport } from "../reports/service";
 import { responseChoices } from "../reports/validation";
 import { sha256 } from "../offline/protocol";
+import { queue } from "../offline/store";
+import { useIdentity } from "./business-session";
 type Report = Awaited<ReturnType<typeof readReport>>["items"][number];
 type Presentation = {
   id: string;
@@ -82,7 +84,9 @@ export function CompletionSubmission({
   job: Job;
   reload: () => void;
 }) {
+  const identity = useIdentity();
   const c = useCommand(),
+    [localError, setLocalError] = useState<unknown>(null),
     [id] = useState(() => job.report?.id ?? crypto.randomUUID()),
     [end, setEnd] = useState(
       () => job.accepted_end_at ?? new Date().toISOString(),
@@ -110,6 +114,22 @@ export function CompletionSubmission({
         <form
           onSubmit={async (e) => {
             e.preventDefault();
+            setLocalError(null);
+            try {
+              if (localStorage.getItem("ppo-offline-marker")) {
+                const originals = await queue(identity);
+                const pending = originals.filter((x) =>
+                  x.original.appointment_id === job.id &&
+                  x.original.command !== "CustomerResponse" &&
+                  x.status.state !== "ServerSaved",
+                );
+                if (pending.length)
+                  throw Error("Resolve this attendance’s retained offline originals before a new online submission. Open the offline workspace and retry or review each original; no submission was sent.");
+              }
+            } catch (error) {
+              setLocalError({ message: error instanceof Error ? error.message : "The offline originals could not be checked. Verify the saved workspace before submitting." });
+              return;
+            }
             if (
               await c.send(`appointments/${job.id}/submit-completion`, {
                 id,
@@ -140,7 +160,7 @@ export function CompletionSubmission({
             onChange={setReason}
             multiline
           />
-          <ErrorNotice error={c.error} />
+          <ErrorNotice error={localError ?? c.error} />
           <button disabled={c.busy}>Submit exact evidence for review</button>
           <p role="status">{c.saved}</p>
         </form>
@@ -165,15 +185,16 @@ export function ReportListScreen() {
     }>
   >("reports");
   return (
-    <main className="business-shell">
+    <main className="business-shell report-screen">
       <h1>Service review and reports</h1>
       <Synthetic />
       <ErrorNotice error={r.error} />
+      <p>Recent permitted reports from a bounded 200-record window. Older reports remain linked to their original attendance.</p>
       <button onClick={r.reload}>Refresh reports</button>
       {r.loading && <p>Loading reports…</p>}
       {r.data?.items.length === 0 && (
         <p>
-          No completion submissions are visible. Technicians submit from their
+          No permitted submissions appear in this recent window. Technicians submit from their
           job’s Completion tab.
         </p>
       )}

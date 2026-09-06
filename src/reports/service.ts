@@ -748,7 +748,10 @@ export async function listReports(p: Principal, input: unknown = {}) {
       } catch (e) {
         if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
       }
-    return envelope(items);
+    return {
+      ...envelope(items),
+      completeness: candidates.length === 200 ? "BoundedWindow" : "Complete",
+    };
   });
 }
 export async function readReport(

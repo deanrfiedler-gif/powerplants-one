@@ -1513,12 +1513,12 @@ export function FieldJobScreen({ id }: { id: string }) {
               </div>
               <div hidden={tab !== "Completion"}>
                 <CompletionSubmission
-                  key={job.report?.version ?? 0}
+                  key={`submission-${job.report?.version ?? 0}`}
                   job={job}
                   reload={r.reload}
                 />
                 <CompletionForm
-                  key={job.draft?.version ?? 0}
+                  key={`draft-${job.draft?.version ?? 0}`}
                   job={job}
                   reload={r.reload}
                 />

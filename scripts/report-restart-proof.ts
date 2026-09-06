@@ -187,13 +187,11 @@ try {
       await page
         .getByLabel("Owned next contact action")
         .fill("SYN service owner will arrange the next fictional contact.");
-      await page
-        .getByLabel("Optional synthetic signature PNG")
-        .setInputFiles({
-          name: "SYN-restart-mark.png",
-          mimeType: "image/png",
-          buffer: png(),
-        });
+      await page.getByLabel("Optional synthetic signature PNG").setInputFiles({
+        name: "SYN-restart-mark.png",
+        mimeType: "image/png",
+        buffer: png(),
+      });
       await page
         .getByRole("button", {
           name: "Save customer response on this device",
@@ -203,7 +201,12 @@ try {
       await expect(page.locator("#notice")).toContainText(
         "Response and exact presentation hash saved",
       );
-      await expect(page.getByRole("button", { name: "Save customer response on this device", exact: true })).toBeDisabled();
+      await expect(
+        page.getByRole("button", {
+          name: "Save customer response on this device",
+          exact: true,
+        }),
+      ).toBeDisabled();
       proof.response = (await originals(page)).find(
         (x: { original: WireOperation }) =>
           x.original.command === "CustomerResponse",
@@ -257,7 +260,11 @@ try {
         )
       ).rows[0];
       assert.deepEqual(proof.database_facts, {
-        submissions: "1", reviews: "1", issues: "1", responses: "1", follow_ups: "5",
+        submissions: "1",
+        reviews: "1",
+        issues: "1",
+        responses: "1",
+        follow_ups: "5",
       });
       await writeFile(`${evidence}/proof.json`, JSON.stringify(proof, null, 2));
       await writeFile(`${evidence}/original-mark.png`, png());

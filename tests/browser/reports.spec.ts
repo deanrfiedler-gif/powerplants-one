@@ -3,7 +3,8 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { prepareFieldAppointment } from "../helpers/field-http";
-import { base, startInput, png } from "../helpers/field";
+import { base, startInput, png, draft } from "../helpers/field";
+import { operation } from "../helpers/offline";
 test.use({ actionTimeout: 15000 });
 const hash = (v: string | Buffer) =>
   createHash("sha256").update(v).digest("hex");
@@ -122,12 +123,13 @@ async function completion(page: Page) {
           ? "SYN remaining task awaits return crew and confirmed booking."
           : "SYN visual inspection attempted; identity remains uncertain.",
       );
+  const savedDrafts = page.getByRole("heading", { name: /Saved completion draft v/ });
+  const previousDrafts = await savedDrafts.count();
   await page
     .getByRole("button", { name: "Save completion draft", exact: true })
     .click();
-  await expect(
-    page.getByRole("heading", { name: /Saved completion draft v/ }).first(),
-  ).toBeVisible();
+  await expect(savedDrafts).toHaveCount(previousDrafts + 1);
+  await expect(savedDrafts.first()).toBeVisible();
 }
 async function submit(page: Page) {
   await page
@@ -140,8 +142,8 @@ async function submit(page: Page) {
     })
     .click();
   await expect(
-    page.getByRole("link", { name: "Open report review and revision history" }),
-  ).toBeVisible();
+    page.getByRole("link", { name: "Open report review and revision history" }).locator(".."),
+  ).toContainText("Submitted");
   await page
     .getByRole("link", { name: "Open report review and revision history" })
     .click();
@@ -258,21 +260,10 @@ async function saveOutputs(
   }
   return { r, v };
 }
-test("P09 complete UI return, correction, partial acceptance, return proposal, controlled revisions and five exact responses", async ({
-  page,
-}, info) => {
-  test.setTimeout(240000);
-  await page.goto("/service/reports");
-  await identity(page, "coordinator");
-  await expect(
-    page.getByRole("heading", { name: "Service review and reports" }),
-  ).toBeVisible();
-  await expect(page.getByText("Loading reports…", { exact: true })).toHaveCount(0);
-  await page.getByRole("heading", { name: "Service review and reports", exact: true }).scrollIntoViewIfNeeded();
-  await proof(page, info, "report-list");
+async function startedJob(page: Page, day: string) {
   const setup = await prepareFieldAppointment(
     (path, body) => call(page, path, body),
-    info.project.name.startsWith("mobile") ? "2026-12-10" : "2026-12-09",
+    day,
   );
   for (const profile of ["assigned-technician", "second-technician"]) {
     await identity(page, profile);
@@ -291,6 +282,28 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   await identity(page, "assigned-technician");
   const job = (await call(page, `my-jobs/${setup.appointment_id}`)).items[0];
   await call(page, `appointments/${job.id}/start`, startInput(job));
+  return (await call(page, `my-jobs/${job.id}`)).items[0];
+}
+test("P09 complete UI return, correction, partial acceptance, return proposal, controlled revisions and five exact responses", async ({
+  page,
+}, info) => {
+  test.setTimeout(240000);
+  const renderErrors: string[] = [];
+  page.on("console", (message) => {
+    if (message.type() === "error" && /Encountered two children|Each child in a list|Hydration failed|hydrated/i.test(message.text()))
+      renderErrors.push(message.text());
+  });
+  await page.goto("/service/reports");
+  await identity(page, "coordinator");
+  await expect(
+    page.getByRole("heading", { name: "Service review and reports" }),
+  ).toBeVisible();
+  await expect(page.getByText("Loading reports…", { exact: true })).toHaveCount(0);
+  await page.getByRole("heading", { name: "Service review and reports", exact: true }).scrollIntoViewIfNeeded();
+  await proof(page, info, "report-list");
+  const job = await startedJob(page,
+    info.project.name.startsWith("mobile") ? "2026-12-10" : "2026-12-09",
+  );
   await page.goto(`/my-jobs/${job.id}`);
   await page
     .getByLabel("Evidence type", { exact: true })
@@ -550,4 +563,48 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
     ),
   ).toBeVisible();
   await proof(page, info, "old-response-preserved-new-content-refused");
+  expect(renderErrors).toEqual([]);
+});
+
+test("P09 online submission refuses retained offline originals and recovers the same original through explicit sync", async ({ page, context }, info) => {
+  test.setTimeout(90000);
+  await page.goto("/service/reports");
+  await identity(page, "coordinator");
+  let job = await startedJob(page, info.project.name.startsWith("mobile") ? "2026-11-24" : "2026-11-23");
+  await call(page, `appointments/${job.id}/completion-draft`, draft(job));
+  job = (await call(page, `my-jobs/${job.id}`)).items[0];
+  const owner = await call(page, "local-session");
+  const cmd = { ...base(), id: crypto.randomUUID(), attendance_id: job.attendance.id,
+    draft_revision_id: job.draft_revisions[0].id, expected_draft_version: job.draft.version,
+    expected_report_version: 0, expected_appointment_version: job.version,
+    attendance_end_at: new Date().toISOString() };
+  const wire = operation(owner, job, "SubmitCompletion", cmd);
+  await page.goto(`/my-jobs/${job.id}`);
+  await page.getByRole("button", { name: "Completion", exact: true }).click();
+  await page.evaluate(async () => { const path = "/offline/modules/offline/store.js"; await import(path); });
+  await context.setOffline(true);
+  await page.evaluate(async ({ owner, wire }) => {
+    const path = "/offline/modules/offline/store.js", s = await import(path);
+    await s.unlock(owner); await s.commitOperations(owner, [wire]);
+  }, { owner, wire });
+  await context.setOffline(false);
+  await page.getByLabel("Submission reason", { exact: true }).fill("SYN guard must preserve the already retained original.");
+  await page.getByRole("button", { name: "Submit exact evidence for review", exact: true }).click();
+  await expect(page.getByRole("alert").first()).toContainText("retained offline originals");
+  expect((await call(page, `my-jobs/${job.id}`)).items[0].report).toBeNull();
+  const retained = await page.evaluate(async (owner) => {
+    const path = "/offline/modules/offline/store.js", s = await import(path);
+    return (await s.queue(owner)).map((x: { original: unknown; status: { state: string } }) => ({ original: x.original, state: x.status.state }));
+  }, owner);
+  expect(retained).toEqual([{ original: wire, state: "LocalSaved" }]);
+  await proof(page, info, "online-submission-local-original-refused");
+  await page.goto("/offline/index.html");
+  await expect(page.locator("#queue")).toContainText("LocalSaved");
+  await page.locator("#sync").click();
+  await expect(page.locator("#queue")).toContainText("ServerSaved");
+  const report = (await call(page, `reports/${cmd.id}`)).items[0];
+  expect(report.revisions).toHaveLength(1);
+  expect(report.status).toBe("Submitted");
+  await page.locator("#queue").scrollIntoViewIfNeeded();
+  await proof(page, info, "same-original-submission-recovered");
 });
