@@ -20,6 +20,16 @@ export type CachedJob = {
   recovery: { id: string; token: string; expires_at: string };
   job: Job;
   pack_html?: string;
+  report_presentations?: {
+    id: string;
+    report_id: string;
+    report_version: number;
+    revision_id: string;
+    kind: "IssuedReport" | "DraftEvidence";
+    content_hash: string;
+    html: string;
+    created_at: string;
+  }[];
   locked?: boolean;
 };
 export type LocalStatus = {

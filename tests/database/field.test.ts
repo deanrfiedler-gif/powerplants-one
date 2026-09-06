@@ -89,7 +89,7 @@ test("P07 upgrade from P06 and repeat seed retain exact original issue, source, 
   );
   assert.equal(
     (await rows("SELECT count(*)::int n FROM public.ppo_migrations"))[0].n,
-    8,
+    9,
   );
   assert.equal(
     (
@@ -161,7 +161,8 @@ test("PT-06 complete procedure: queued renderer is not Issued, first crew respon
       {
         procedure: "PT-06",
         status: "Passed",
-        scope: "Complete synthetic coded procedure; not independent review or owner acceptance",
+        scope:
+          "Complete synthetic coded procedure; not independent review or owner acceptance",
         provenance: {
           run_id: process.env.GITHUB_RUN_ID,
           run_attempt: process.env.GITHUB_RUN_ATTEMPT,
@@ -195,7 +196,10 @@ test("PT-06 complete procedure: queued renderer is not Issued, first crew respon
           [issue.id],
         ),
         attendance: (
-          await rows("SELECT * FROM ppo.field_attendances WHERE appointment_id=$1", [job.id])
+          await rows(
+            "SELECT * FROM ppo.field_attendances WHERE appointment_id=$1",
+            [job.id],
+          )
         )[0],
         start_receipt: accepted.receipt,
       },
@@ -410,7 +414,11 @@ for (const change of ["move", "reassign", "scope", "withdraw"] as const)
   });
 test("P07 future-effective crew can be booked and acknowledge but cannot confer current actual-start authority", async () => {
   // Publish a new fictional resource bundle; do not mutate an issued source or disable guards.
-  const original = (await rows("SELECT * FROM ppo.resources WHERE id=$1", [fixtureId("a4", 9)]))[0],
+  const original = (
+      await rows("SELECT * FROM ppo.resources WHERE id=$1", [
+        fixtureId("a4", 9),
+      ])
+    )[0],
     futureId = randomUUID(),
     futureFrom = new Date("2026-09-22T00:00:00Z");
   assert.ok(futureFrom.getTime() > Date.now());
@@ -420,32 +428,60 @@ test("P07 future-effective crew can be booked and acknowledge but cannot confer 
     name: "SYN Morgan future-effective resource",
     status: "Draft",
     effective_from: futureFrom,
-    evidence: "SYN P07 future resource eligibility; valid for the booking, not current attendance",
+    evidence:
+      "SYN P07 future resource eligibility; valid for the booking, not current attendance",
   });
-  for (const site of await rows("SELECT * FROM ppo.resource_sites WHERE resource_id=$1", [original.id]))
-    await insert(database(), "resource_sites", { ...site, resource_id: futureId });
+  for (const site of await rows(
+    "SELECT * FROM ppo.resource_sites WHERE resource_id=$1",
+    [original.id],
+  ))
+    await insert(database(), "resource_sites", {
+      ...site,
+      resource_id: futureId,
+    });
   const evidenceIds = new Map<string, string>();
-  for (const evidence of await rows("SELECT * FROM ppo.resource_evidence WHERE resource_id=$1", [original.id])) {
+  for (const evidence of await rows(
+    "SELECT * FROM ppo.resource_evidence WHERE resource_id=$1",
+    [original.id],
+  )) {
     const evidenceId = randomUUID();
     evidenceIds.set(evidence.id, evidenceId);
-    await insert(database(), "resource_evidence", { ...evidence, id: evidenceId, resource_id: futureId });
+    await insert(database(), "resource_evidence", {
+      ...evidence,
+      id: evidenceId,
+      resource_id: futureId,
+    });
   }
-  for (const skill of await rows("SELECT * FROM ppo.skill_evidence WHERE resource_id=$1", [original.id]))
+  for (const skill of await rows(
+    "SELECT * FROM ppo.skill_evidence WHERE resource_id=$1",
+    [original.id],
+  ))
     await insert(database(), "skill_evidence", {
       ...skill,
       id: randomUUID(),
       resource_id: futureId,
       evidence_ref: evidenceIds.get(skill.evidence_ref),
     });
-  await database().query("UPDATE ppo.resources SET status='Published' WHERE id=$1", [futureId]);
+  await database().query(
+    "UPDATE ppo.resources SET status='Published' WHERE id=$1",
+    [futureId],
+  );
   const q = await acknowledged([futureId, fixtureId("a4", 2)]),
     p = await principal("assigned-technician"),
     job = await fresh(p, q.pack.appointment_id);
   assert.equal(job.readiness.component_ready, true);
-  await assert.rejects(startAttendance(p, job.id, startInput(job)), code("StartBlocked"));
-  assert.equal((await rows("SELECT count(*)::int n FROM ppo.field_attendances"))[0].n, 0);
+  await assert.rejects(
+    startAttendance(p, job.id, startInput(job)),
+    code("StartBlocked"),
+  );
+  assert.equal(
+    (await rows("SELECT count(*)::int n FROM ppo.field_attendances"))[0].n,
+    0,
+  );
   assert.equal((await fresh(p, job.id)).status, "Confirmed");
-  assert.ok((await readBundle(q.p, q.pack.issues[0].manifest)).pdf.length > 1000);
+  assert.ok(
+    (await readBundle(q.p, q.pack.issues[0].manifest)).pdf.length > 1000,
+  );
 });
 for (const field of [
   "expected_version",
@@ -937,7 +973,7 @@ for (const outcome of ["Partial", "UnableToProceed"])
     assert.equal(
       (
         await rows(
-          "SELECT count(*)::int n FROM information_schema.tables WHERE table_schema='ppo' AND table_name IN ('service_reports','financial_handoffs')",
+          "SELECT ((SELECT count(*) FROM ppo.service_reports)+(SELECT count(*) FROM information_schema.tables WHERE table_schema='ppo' AND table_name='financial_handoffs'))::int AS n",
         )
       )[0].n,
       0,
@@ -1090,8 +1126,11 @@ test("P07 PT-14 component preserves two task/asset outcomes and uncertain identi
       }))
       .sort((a: { id: string }, b: { id: string }) => a.id.localeCompare(b.id)),
     cmd.task_outcomes
-      .map((t: {scope_item_id: string; outcome: string}) => ({ id: t.scope_item_id, outcome: t.outcome }))
-      .sort((a: {id:string}, b: {id:string}) => a.id.localeCompare(b.id)),
+      .map((t: { scope_item_id: string; outcome: string }) => ({
+        id: t.scope_item_id,
+        outcome: t.outcome,
+      }))
+      .sort((a: { id: string }, b: { id: string }) => a.id.localeCompare(b.id)),
   );
   assert.equal(
     saved.scope.items[1].assets[0].identity_status,

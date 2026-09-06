@@ -28,6 +28,8 @@ import {
   uploadAttachment,
   finaliseAttachment,
 } from "../field/attachments";
+import { submitCompletion, recordResponse } from "../reports/service";
+import { submitCommand, responseCommand } from "../reports/validation";
 import { saveCompletionDraft } from "../field/completion";
 import { acknowledgePack } from "../documents/packs";
 import {
@@ -150,13 +152,29 @@ function attendancePlaceholder(op: WireOperation) {
   return op.payload;
 }
 export function validatePayload(op: WireOperation) {
-  const b = attendancePlaceholder(op);
+  let b = attendancePlaceholder(op);
+  if (
+    op.command === "SubmitCompletion" &&
+    b.draft_revision_id &&
+    typeof b.draft_revision_id === "object"
+  ) {
+    const ref = object(b.draft_revision_id, ["operation_id"]),
+      id = uuid(ref.operation_id, "draft_operation_id");
+    if (!op.depends_on.includes(id))
+      throw new AppError(
+        422,
+        "InvalidDependencies",
+        "Declare the exact original completion-draft dependency.",
+      );
+    b = { ...b, draft_revision_id: zero };
+  }
   if (
     [
       "Correct",
       "AttachmentUpload",
       "AttachmentFinalise",
       "Acknowledge",
+      "CustomerResponse",
     ].includes(op.command)
   ) {
     if (!op.target_id) throw unavailable();
@@ -222,6 +240,12 @@ export function validatePayload(op: WireOperation) {
       version(x.expected_version);
       break;
     }
+    case "SubmitCompletion":
+      submitCommand(op.appointment_id, b);
+      break;
+    case "CustomerResponse":
+      responseCommand(op.target_id!, b);
+      break;
     case "CompletionDraft":
       completionCommand(op.appointment_id, b);
       break;
@@ -301,6 +325,27 @@ async function resolvedPayload(p: Principal, op: WireOperation) {
       );
     b.attendance_id = a.id;
   }
+  if (
+    op.command === "SubmitCompletion" &&
+    b.draft_revision_id &&
+    typeof b.draft_revision_id === "object"
+  ) {
+    const dependency = (b.draft_revision_id as { operation_id: string })
+      .operation_id;
+    const d = (
+      await database().query(
+        "SELECT id FROM ppo.completion_draft_revisions WHERE workspace_id=$1 AND actor_id=$2 AND appointment_id=$3 AND operation_id=$4",
+        [p.workspace_id, p.actor_id, op.appointment_id, dependency],
+      )
+    ).rows[0];
+    if (!d)
+      throw new AppError(
+        409,
+        "DependencyPending",
+        "The exact original completion draft has not been accepted.",
+      );
+    b.draft_revision_id = d.id;
+  }
   return b;
 }
 async function validateAuthority(
@@ -312,6 +357,14 @@ async function validateAuthority(
   if (["Start", "Acknowledge"].includes(op.command)) return;
   const attendanceId =
     b.attendance_id ??
+    (op.command === "CustomerResponse"
+      ? (
+          await c.query(
+            "SELECT attendance_id FROM ppo.service_reports WHERE workspace_id=$1 AND actor_id=$2 AND appointment_id=$3 AND id=$4",
+            [p.workspace_id, p.actor_id, op.appointment_id, op.target_id],
+          )
+        ).rows[0]?.attendance_id
+      : undefined) ??
     (
       await c.query(
         "SELECT attendance_id FROM ppo.field_attachments WHERE workspace_id=$1 AND actor_id=$2 AND appointment_id=$3 AND id=$4",
@@ -473,6 +526,10 @@ export async function syncOne(
         }
         case "AttachmentFinalise":
           return finaliseAttachment(p, op.target_id!, b);
+        case "SubmitCompletion":
+          return submitCompletion(p, op.appointment_id, b);
+        case "CustomerResponse":
+          return recordResponse(p, op.target_id!, b);
         case "CompletionDraft":
           return saveCompletionDraft(p, op.appointment_id, b);
       }

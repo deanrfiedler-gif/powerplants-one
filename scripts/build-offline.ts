@@ -6,6 +6,7 @@ const modules = [
   "offline/store",
   "offline/client",
   "offline/app",
+  "reports/validation",
   "field/validation",
   "shared/validation",
   "platform/validation",

@@ -1,4 +1,5 @@
 "use client";
+import { CompletionSubmission } from "./report-screens";
 import Link from "next/link";
 import Image from "next/image";
 import { useRef, useState } from "react";
@@ -70,6 +71,13 @@ type Task = {
   }[];
 };
 export type Job = Ref & {
+  report?: {
+    id: string;
+    version: number;
+    revision: number;
+    status: string;
+  } | null;
+  accepted_end_at?: string | null;
   reference: string;
   status: string;
   customer_name: string;
@@ -133,6 +141,7 @@ export type Job = Ref & {
   };
   attendance: {
     id: string;
+    actor_id: string;
     captured_at: string;
     received_at: string;
     authority_hash: string;
@@ -165,8 +174,7 @@ export type Job = Ref & {
     owner_name: string;
   }[];
 };
-const message =
-  "Field workflow preview — report/Finance work incomplete";
+const message = "Field workflow preview — Finance work incomplete";
 function PreviewLabel() {
   return (
     <div className="field-preview">
@@ -1080,8 +1088,8 @@ function CompletionForm({ job, reload }: { job: Job; reload: () => void }) {
       <h2>Prepare completion draft</h2>
       <p>
         Declare your own time and materials. Record outcomes for the authorised
-        scope and remaining work. This saves a draft; reviewer submission,
-        report and Finance workflows are incomplete.
+        scope and remaining work. This saves a draft. Use the separate
+        submission action for review; Finance remains outside this workflow.
       </p>
       <ValidationFields error={s.error}>
         <form
@@ -1104,10 +1112,17 @@ function CompletionForm({ job, reload }: { job: Job; reload: () => void }) {
               declaration_reason: reason,
               task_outcomes: tasks,
               entries: job.entries
-                .filter((x) => !x.superseded)
+                .filter(
+                  (x) =>
+                    !x.superseded && x.actor_id === job.attendance?.actor_id,
+                )
                 .map((x) => ({ id: x.id, version: x.version })),
               required_attachment_ids: job.attachments
-                .filter((x) => x.status !== "Rejected")
+                .filter(
+                  (x) =>
+                    x.status !== "Rejected" &&
+                    x.actor_id === job.attendance?.actor_id,
+                )
                 .map((x) => x.id),
               reason: "SYN save technician completion preparation",
             });
@@ -1211,10 +1226,15 @@ function CompletionForm({ job, reload }: { job: Job; reload: () => void }) {
               </div>
             ))}
             <p>
-              {job.entries.filter((x) => !x.superseded).length} current evidence
-              versions will be referenced exactly. Unavailable photos remain
-              visible blockers. Partial work creates a service-owner follow-up
-              with its due date needing resolution.
+              {
+                job.entries.filter(
+                  (x) =>
+                    !x.superseded && x.actor_id === job.attendance?.actor_id,
+                ).length
+              }{" "}
+              current evidence versions will be referenced exactly. Unavailable
+              photos remain visible blockers. Partial work creates a
+              service-owner follow-up with its due date needing resolution.
             </p>
             <button>Save completion draft</button>
           </fieldset>
@@ -1492,8 +1512,13 @@ export function FieldJobScreen({ id }: { id: string }) {
                 />
               </div>
               <div hidden={tab !== "Completion"}>
+                <CompletionSubmission
+                  key={`submission-${job.report?.version ?? 0}`}
+                  job={job}
+                  reload={r.reload}
+                />
                 <CompletionForm
-                  key={job.draft?.version ?? 0}
+                  key={`draft-${job.draft?.version ?? 0}`}
                   job={job}
                   reload={r.reload}
                 />
@@ -1503,8 +1528,8 @@ export function FieldJobScreen({ id }: { id: string }) {
                       Saved completion draft v{v.version} · {v.scope_outcome}
                     </h2>
                     <p>
-                      Server-saved <Stamp value={v.received_at} />. Reviewer
-                      submission is not implemented.
+                      Server-saved <Stamp value={v.received_at} />. Submission
+                      is a separate action above.
                     </p>
                     <p>{v.work_performed}</p>
                     <p>

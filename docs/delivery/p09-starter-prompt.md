@@ -1,6 +1,6 @@
 # P09 — Review, report and customer acknowledgement starter
 
-**Prepared:** 6 September 2026 · **State:** maintained starter only; P09 is not started or authorised by P08 publication. Synthetic data only.
+**Prepared:** 6 September 2026 · **State:** maintained starter only; P09 is implemented under issue #36 / PR #37; p09-handover.md and its external publication record govern actual delivery and verification. The original P08 preparation boundary below remains historical. Synthetic data only.
 
 ## Task and live starting verification
 
@@ -22,7 +22,7 @@ P08 stores durable immutable original command envelopes, owner-bound evidence/PN
 
 ## Bounded P09 implementation
 
-Implement SC-11 and the P09 portions of DAT-09, applicable API-C16–19 and report/response contracts, TR-11–13 and relevant events only after reading their maintained exact meanings. Reconcile any catalogue command whose current maintained contract differs; do not implement a broader command merely to fill a table. P08's completion endpoint remains a technician draft until the explicit P09 submission command exists.
+Implement SC-11 and the P09 portions of DAT-09, API-C16–18 (API-C19 is Finance/P10 and excluded) and report/response contracts, TR-11–13 and relevant events only after reading their maintained exact meanings. Reconcile any catalogue command whose current maintained contract differs; do not implement a broader command merely to fill a table. P08's completion endpoint remains a technician draft until the explicit P09 submission command exists.
 
 Define one reviewable immutable submission revision identifying exact attendance, authorised scope/issue, current accepted entry IDs/versions, attachment hashes/availability and technician declarations. Refuse required pending/failed/local-only/recovery-only evidence. New field evidence/correction after submission must have an explicit supersession/return path, never mutate the submitted or reviewed set. Current reviewer capability and scoped service ownership are mandatory; role names or Systems access are not approval authority. Separate prepared, submitted, returned, reviewed/approved and report-issued facts.
 

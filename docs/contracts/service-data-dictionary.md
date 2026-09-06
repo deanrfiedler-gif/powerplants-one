@@ -1,6 +1,6 @@
 # PP-01 — Service data and choice dictionary
 
-**Edition:** r09 · **Status:** Logical contract; P01–P07 implement bounded subsets with explicit limits below. This is not an exported CREMS/MYOB schema.
+**Edition:** r10 · **Status:** Logical and physical contract; P01–P09 implement the bounded subsets explicitly identified below. P09 runtime verification is recorded in its handover. This is not an exported CREMS/MYOB schema.
 
 [BP-02](../architecture/BP-02-platform-architecture.md) · [BP-07](../blueprints/BP-07-service-operations.md) · [Finance](finance-handoff.md) · [Documents](document-issue-distribution.md).
 
@@ -373,3 +373,29 @@ The public shell uses a SHA-256 build-derived service-worker cache name and an e
 
 
 Normal acceptance and restricted recovery are mutually exclusive for one original under the same operation/workspace transaction locks. Once preserved into restricted recovery, replay returns RecoveryDispositionRequired without a normal receipt; changed reuse conflicts. A competing normal acceptance either wins once and blocks recovery as AlreadyAccepted, or recovery wins once and blocks normal acceptance. Neither path creates a second capture or follow-up. Direct online P07 commands also refuse the held original after current authorisation; the schema-7 upgrade path remains compatible. The browser does not offer recovery on an actively Sending row.
+
+## P09 physical implementation amendment
+
+[ADR-0014](../decisions/ADR-0014-p09-service-reports.md) maps DAT-09/SC-11 to additive migration `0009-service-reports.sql`. This section supersedes earlier future-tense P09 boundaries; historical P07/P08 delivery descriptions remain evidence of their own increments. Verification state and publication are maintained in the [P09 handover](../delivery/p09-handover.md).
+
+| Physical record | Exact responsibility |
+| --- | --- |
+| `service_reports` | One original technician/actual-attendance/appointment/company/site aggregate; RPT reference; optimistic version; content revision; Draft/Submitted/Returned/Reviewed/Issued; current immutable revision/issue pointers. |
+| `report_revisions`, `report_entry_refs` | Immutable successor chain from an exact personal completion-draft revision, attendance end, scope/issue authority, declarations, task outcomes, owned remaining work, all current own entry IDs/versions and required verified attachment hashes/sizes. Canonical hash is computed from the persisted JSON representation, including timestamp strings. |
+| `report_reviews` | One immutable decision per submitted revision; current service owner; exact source hash and per-entry decisions/reasons; explicit current/original-attendance-only authority disposition. Approved review retains a customer-safe projection, named active site contact, source guard and content hash. Original field `review_status=Draft` remains unchanged; the exact approved entry-reference projection supplies reviewed evidence. |
+| `attendance_acceptances` | One immutable acceptance per actual technician attendance, exact accepted end and approving review. No order/ticket/Finance closure. |
+| `report_cycles` | Explicit technician-owned report correction initiation and predecessor; accepted attendance remains accepted. Only successor factual captures may follow a completion submission. |
+| `report_templates`, `report_template_policy` | Immutable supported template definition/version/hash plus current policy pointer/version. A policy/source change invalidates a render attempt rather than replacing its reserved output. |
+| `report_render_jobs`, `report_render_attempts` | Durable immutable original render input, reserved output identity/time, current actor/recovery owner; Queued/Running/Durable/Failed/StaleSource/Issued; two-minute recoverable worker lease and immutable attempt history. |
+| `report_issues` | Immutable exact reviewed revision, job, source/review/template manifests, recipient, released byte identities/hashes/sizes and actual release time. |
+| `report_presentations` | Exact reviewed DraftEvidence retained HTML or IssuedReport HTML from an immutable released bundle. Presented hash is SHA-256 of the HTML actually presented, not the separately hashed PDF. Draft and issued presentations never share identity or inherit responses. |
+| `customer_responses` | Immutable exact report/presentation/hash; five explicit alternatives, stated identity/role where applicable, presentation/capture/server times, capturing actor, required remarks/action, protected optional PNG and owned follow-up. |
+| `report_follow_ups` | Junction to existing owned Activities for review, remaining work, output recovery, in-app presentation/contact and response exceptions. No outgoing-message or delivery record is fabricated. |
+
+The first submission moves InProgress → CompletedPendingReview. Every already-started technician may submit their own set. An unstarted assignment is not invented attendance; new physical starts are refused. Accepted review records each attendance; the appointment becomes Completed only when all actual attendances are accepted, with their maximum exact end. Return retains the pending state. A report-only correction never reopens accepted attendance. Physical follow-up uses existing P04/P05 proposal/confirmation controls. Current work orders remain Authorised at this physical boundary; conceptual InProgress/whole-order/ticket closure is not introduced.
+
+Captured time/material quantities are immutable P07 payload facts. An approved review accepts the exact referenced quantity, with no quantity editing by a reviewer. P10 will own allocation, treatment and processing. No financial row, billable quantity, rate, stock movement, invoice, payment, tax or warranty settlement is inferred here.
+
+P08 IndexedDB remains version 2 and original envelope schema 1. Two additive command names and optional bounded `report_presentations` context preserve old records without rewriting. At most two exact current reviewed presentations per cached job (1 MiB HTML each) can be downloaded under current permissions. Their hashes are verified before saving; worker caches remain public shell only. Submission can reference a prior local completion-draft operation explicitly; the server resolves its exact accepted revision without altering the retained original envelope. Response depends on already server-reviewed/issued bytes, never queued approval or offline issuance. Restricted recovery grants do not accept P09 submission/response or grant report access.
+
+Partial/UnableToProceed P09 submissions retain Incomplete personal time/material declarations and their reasons/blockers with an owned next action. Review can accept that bounded factual attendance without completing missing declarations or creating quantities/Finance readiness. Complete remains blocked by those declarations; required unavailable evidence blocks all submission outcomes.

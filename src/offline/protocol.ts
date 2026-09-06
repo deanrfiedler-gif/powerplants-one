@@ -23,6 +23,8 @@ export const commands = [
   "AttachmentUpload",
   "AttachmentFinalise",
   "CompletionDraft",
+  "SubmitCompletion",
+  "CustomerResponse",
 ] as const;
 export type Command = (typeof commands)[number];
 export type Original = {
