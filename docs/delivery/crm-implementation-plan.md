@@ -1,6 +1,6 @@
 # CRM — Ordered implementation sequence
 
-**Revision:** r05 · **Date:** 6 September 2026 · **Status:** I1 publication complete; bounded I2 under verification · **Parent workstream:** PPO-009 / issue #9. **Owner:** Dean Fiedler, private prototype.
+**Revision:** r05 · **Date:** 6 September 2026 · **Status:** I1 publication complete; bounded I2 implemented with verification/publication in its handover · **Parent workstream:** PPO-009 / issue #9. **Owner:** Dean Fiedler, private prototype.
 
 [BP-03](../blueprints/BP-03-crm.md) · [Parity](../blueprints/crm-parity.md) · [First implementation starter](crm-first-increment-starter.md) · [Handover](crm-discovery-handover.md).
 
@@ -25,6 +25,8 @@ First slice uses one fixed, clearly fictional pipeline with Enquiry → Qualifie
 I1 is tracked by [#39](https://github.com/deanrfiedler-gif/powerplants-one/issues/39) / [PR #40](https://github.com/deanrfiedler-gif/powerplants-one/pull/40); see its [handover](crm-i1-handover.md) and [external publication](https://github.com/deanrfiedler-gif/powerplants-one/issues/39#issuecomment-5557831957) for actual verification/merge state. The first [bounded I2 starter](crm-i2-starter.md) selects a scoped Board/Grid worklist with the accepted brand direction from the broader I2 theme. It uses only I1’s two actual stages and no money fields. Owner transfer, additional stages, close/reopen, separate lead, account plans and reassociation remain later proposed work. No I2 work begins merely because that starter exists.
 
 The user subsequently invoked the bounded I2 starter. [Issue #43](https://github.com/deanrfiedler-gif/powerplants-one/issues/43) / [PR #47](https://github.com/deanrfiedler-gif/powerplants-one/pull/47) now implements its scoped Board/Grid slice; [handover](crm-i2-handover.md) and [read decision](../decisions/crm-i2-worklist.md) record verification. The broader I2 row below remains a proposed theme, not the delivered scope. P10 #45 reserves 0011/ADR-0016 and estimating E1 #46 reserves 0012/ADR-0017. I2 reserves no schema change and cannot alter those contracts.
+
+The next [controlled opportunity handover contract starter](crm-i2-ownership-contract-starter.md) is prepared only. It requires complete I2 publication and a new invocation, and bounds the next work to a reviewable authority/eligibility/history/recovery proposal. I1's immutable opportunity owner and the separate Activity owner remain unchanged until a later implementation is expressly scoped.
 
 ## Ordered increments
 

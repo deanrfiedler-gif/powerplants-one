@@ -70,7 +70,7 @@ Revision r03 adds the [audit-driven r02 Board/Grid design](../delivery/crm-ui-de
 
 ## I1 runtime evidence distinction
 
-The bounded C01/C03/C05/C07 journey is implemented in the online Sales worklist, New opportunity, Opportunity detail and existing Activity screens. The [I1 handover](../delivery/crm-i1-handover.md) records actual DB/HTTP/browser/restart checks and original 1440×1000, 390×844 and 320px runtime captures, separately from the illustrative wireframes and branded C02 preview above. I1 uses Enquiry → Qualified/Open, no commercial fields, current scoped authority and deliberate qualification/action commands. C02 Board/Grid remains prepared I2 work; C04 account-plan and later domain journeys remain proposed. Full AT-25, operational parity, real mobile hardware and CRM offline acceptance are unchanged.
+The bounded C01/C03/C05/C07 journey is implemented in the online Sales worklist, New opportunity, Opportunity detail and existing Activity screens. The [I1 handover](../delivery/crm-i1-handover.md) records actual DB/HTTP/browser/restart checks and original 1440×1000, 390×844 and 320px runtime captures, separately from the illustrative wireframes and branded C02 preview above. I1 uses Enquiry → Qualified/Open, no commercial fields, current scoped authority and deliberate qualification/action commands. C02 Board/Grid is implemented by the separately invoked I2 slice below; C04 account-plan and later domain journeys remain proposed. Full AT-25, operational parity, real mobile hardware and CRM offline acceptance are unchanged.
 
 
 ## I2 application distinction

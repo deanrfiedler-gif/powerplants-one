@@ -408,7 +408,7 @@ Identical content replays one original effect after current authority; terminal 
 
 ## BP-03 I2 scoped worklist amendment
 
-Implementation is under verification in [I2 handover](../delivery/crm-i2-handover.md) / [PR #47](https://github.com/deanrfiedler-gif/powerplants-one/pull/47). This additive read contract uses [the I2 worklist decision](../decisions/crm-i2-worklist.md), preserves every I1 command and allocates no new PP-01 interface number.
+The implemented read contract has its source-specific verification/publication in [I2 handover](../delivery/crm-i2-handover.md) / [PR #47](https://github.com/deanrfiedler-gif/powerplants-one/pull/47). This additive read contract uses [the I2 worklist decision](../decisions/crm-i2-worklist.md), preserves every I1 command and allocates no new PP-01 interface number.
 
 - GET `/api/v1/crm/opportunities` additionally accepts `sort=Reference|Title|Newest`. Reference preserves existing UUID order; Title uses case-folded C collation plus UUID; Newest uses descending creation time plus UUID. All existing filters remain strict, server scoped and cursor bound. Page size remains 1–200 (default 50).
 - Each response returns `window.as_of`, `first_page`, `has_more`, `count_basis=ReturnedPage` and the actual two stage definitions with counts of this page's permitted records. Only a first page with no continuation is Complete; every page of a longer window is Partial, including its final page. No account-wide count or commercial total is returned. Denied, missing configuration, unavailable database and failed reads carry errors rather than zero counts.

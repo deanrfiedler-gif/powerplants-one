@@ -86,7 +86,7 @@ Show loading, no matches, validation, unavailable, denied, saving, saved and unc
 
 The deliverables are this specification and reviewable board/grid mockups. Validate the actual rendered files for typography, full logo, desktop and phone fit, filter/view equivalence, known/unknown value totals, empty state, keyboard/dialog behaviour and temporary creation. Preserve actual QA evidence separately from future acceptance requirements.
 
-Next bounded implementation step: complete and verify I1, then reconcile this proposal with the [I2 UI guidance](../delivery/crm-i2-ui-guidance.md), the eventual I2 implementation starter and current shared application styles, then implement the accepted board/grid subset under the normal repository workflow. Money displays remain a separately bounded commercial design choice. The specification is ready for visual review; it is not an application release or accepted Pipedrive parity.
+The original implementation sequence required verified I1 publication, then reconciliation with the [I2 UI guidance](../delivery/crm-i2-ui-guidance.md) and current shared styles. The separately invoked [I2 handover](../delivery/crm-i2-handover.md) now records that bounded application work and its runtime evidence. Money displays remain a separately bounded commercial design choice. The specification is ready for visual review; it is not an application release or accepted Pipedrive parity.
 
 Repository references at the inspected baseline:
 

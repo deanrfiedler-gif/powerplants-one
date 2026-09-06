@@ -16,7 +16,7 @@ Test product/parts sales, planned service, equipment upgrades, major greenhouse 
 
 PP-01 demonstrates customer/site/equipment context, service intake, authorised work orders, checked/issued job packs, technician scheduling, field labour/parts/findings/photos, customer acknowledgement, reviewed reports and controlled Finance handoff/reconciliation.
 
-Follow P01–P12 in dependency order. P01–P08 cover foundation, shared data, intake, scope, scheduling, packs, field capture and bounded offline recovery. Check STATUS and delivery handovers for actual later progress. PPO-009 CRM design is separate from P09. Read BP-03 and its CRM handover/starter before an authorised CRM increment; preserve live shared contracts. Retain later domains in the backlog; build when the authorised increment is sufficiently specified.
+Follow P01–P12 in dependency order. P01–P08 cover foundation, shared data, intake, scope, scheduling, packs, field capture and bounded offline recovery. Check STATUS and delivery handovers for actual later progress. PPO-009 CRM is separate from P09. Read BP-03 and I1/I2 handovers with their external publications; verify delivery before a new starter invocation. Preserve current shared contracts. Retain later domains in the backlog; build when the authorised increment is sufficiently specified.
 
 ## 3. Sources and continuity
 

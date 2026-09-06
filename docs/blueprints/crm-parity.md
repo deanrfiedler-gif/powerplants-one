@@ -247,7 +247,7 @@ The separately authorised [I1 implementation](../delivery/crm-i1-handover.md) ex
 
 ## I1 synthetic implementation evidence
 
-The separately invoked [I1 implementation](../delivery/crm-i1-handover.md) exercises bounded Opportunity/Activity ownership, progression, persistence and permission components associated with PAR-01/03/05/15. Its successful component tests and actual publication have their own source/head/run provenance. This does not establish account configuration, change any PAR disposition to accepted, close D-013/D-025, prove migration parity or pass full AT-25. The remaining parity assessment above is proposed. I2's Board/Grid starter is preparation only.
+The separately invoked [I1 implementation](../delivery/crm-i1-handover.md) exercises bounded Opportunity/Activity ownership, progression, persistence and permission components associated with PAR-01/03/05/15. Its successful component tests and actual publication have their own source/head/run provenance. This does not establish account configuration, change any PAR disposition to accepted, close D-013/D-025, prove migration parity or pass full AT-25. The remaining parity assessment above is proposed. The Board/Grid starter was subsequently invoked; its bounded implementation and publication are distinguished below.
 
 
 ## I2 implementation distinction

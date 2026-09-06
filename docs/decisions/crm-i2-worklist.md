@@ -1,6 +1,6 @@
 # CRM I2 — One scoped opportunity worklist
 
-**State:** implementation under verification in issue [#43](https://github.com/deanrfiedler-gif/powerplants-one/issues/43). Parent PPO-009 / [#9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9). This decision uses the maintained stack; it reserves no migration, seed, ADR number or new capability.
+**State:** implemented bounded read contract in issue [#43](https://github.com/deanrfiedler-gif/powerplants-one/issues/43). Parent PPO-009 / [#9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9). This decision uses the maintained stack; it reserves no migration, seed, ADR number or new capability.
 
 ## Basis and boundary
 
@@ -30,4 +30,4 @@ The shared shell uses the exact navy/green/white brand roles and untouched suppl
 
 ## Evidence and remaining scope
 
-See the [I2 handover](../delivery/crm-i2-handover.md) for executed evidence and limitations. This document does not claim a passing test or merged delivery. P09's exact accepted suite and all I1 cases remain mandatory. Full AT-25 remains Planned and #9 remains open. Further relationship management and commercial progression need separately bounded work.
+See the [I2 handover](../delivery/crm-i2-handover.md) for executed evidence and limitations. Actual source-specific tests and merged delivery are established by the handover’s linked external publication, not by this decision’s implementation state. P09's exact accepted suite and all I1 cases remain mandatory. Full AT-25 remains Planned and #9 remains open. Further relationship management and commercial progression need separately bounded work.
