@@ -13,7 +13,6 @@ import { choice, object, optionalId, uuid } from "../shared/validation";
 import {
   eligibleOpportunityOwner,
   eligibleActionOwner,
-  opportunityVisibility,
   relationshipContext,
   visibleOpportunity,
   PIPELINE_ID,
