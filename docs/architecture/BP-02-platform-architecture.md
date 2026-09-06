@@ -265,3 +265,8 @@ P09 review/report/customer response and P10 Finance remain absent. P08 completio
 ## BP-03 I1 bounded CRM extension
 
 The separately authorised [I1 slice](../delivery/crm-i1-handover.md) reuses the existing PostgreSQL/sharedOperation/identity/reference/permission/audit/receipt/outbox boundary. [ADR-0015](../decisions/ADR-0015-crm-i1-owned-opportunities.md) adds typed opportunity/configuration/event records and a real Opportunity Activity target. All-target Activity visibility remains authoritative across CRM, general work and field follow-up projections. No new stack dependency, account master, Pipedrive adapter, worker, hosting, cache, IndexedDB or service-worker scope is introduced. Migration 0010 is additive after the separately reserved P09 0009; final accepted ordering and regression evidence must be verified before publication. Broader BP-03 policy and parity remain proposals.
+
+
+## BP-03 I2 presentation/query refinement
+
+The [I2 worklist decision](../decisions/crm-i2-worklist.md) uses the existing explicit SQL, current visibility predicates and canonical command/receipt services. Board/Grid share one authorised page and page-derived stage counts, with scoped filter labels and ephemeral signed keyset cursors that detect changed permitted windows. No schema, dependency, capability or offline platform extension is required. The [I2 handover](../delivery/crm-i2-handover.md) records shared branding and baseline regressions separately from proposed architecture and future relationship management. P10 and E1 schema reservations remain independently owned.

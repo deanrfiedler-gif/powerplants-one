@@ -35,6 +35,7 @@ export function useCrmResource<T>(path: string | null, clearOnError = false) {
         );
       }
     };
+    if (!path) queueMicrotask(() => { if (live) setState({path:null,data:null,error:null}); });
     load();
     const timer = setInterval(load, 15000);
     window.addEventListener("focus", load);

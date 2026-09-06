@@ -1,6 +1,6 @@
 # PP-01 — Service data and choice dictionary
 
-**Edition:** r11 · **Status:** Logical and physical contract; P01–P09 implement the bounded subsets explicitly identified below. P09 runtime verification is recorded in its handover. This is not an exported CREMS/MYOB schema.
+**Edition:** r12 · **Status:** Logical and physical contract; P01–P09 implement the bounded subsets explicitly identified below. P09 runtime verification is recorded in its handover. This is not an exported CREMS/MYOB schema.
 
 BP-03 I1 adds only the explicitly identified opportunity amendment below; its actual verification/publication is in the [I1 handover](../delivery/crm-i1-handover.md).
 
@@ -413,3 +413,10 @@ Opportunity fixes workspace/company, original organisation/site/contact IDs and 
 `activity_links.opportunity_id` is a generated typed column for `object_type=Opportunity`, with a real `(workspace_id, company_id, opportunity_id)` FK. Existing Organisation/Site/Asset/Ticket links retain their meaning. Opportunity-linked Activities are Internal and retain the opportunity's exact site, including explicit unknown site. Every target independently controls Activity visibility. No generic target cast, label-based linkage or ownership-derived visibility is introduced.
 
 Seed receipt 10 creates configuration and explicit CRM read/create/edit grants for eligible existing synthetic profiles only once. It creates no opportunity or action. Repeat seed preserves edits, revoked grants, counters and history. Systems/unassigned identities receive no default CRM authority. Original migration/seed/issued-source bytes and accepted operation hashes remain unchanged. Actual fresh/upgrade/restart results and current P09 migration ordering belong in the [I1 handover](../delivery/crm-i1-handover.md).
+
+
+## BP-03 I2 read projection — no physical change
+
+The [I2 decision](../decisions/crm-i2-worklist.md) adds no table, migration, fixture, identity kind or reference allocation. `WorklistItem` projects actual Opportunity identity/title/version/stage/Open outcome/stage-entry/source update, company/site/organisation context and accountable owner. Its designated Activity projection independently supplies ID, summary, due status and action owner only when every linked target remains visible. Activity completion still derives Needed without a stage command.
+
+Stage definitions come from the immutable I1 catalogue. Counts use only the returned permitted page; explicit read-window fields distinguish all results, intermediate pages and a final partial page. Ephemeral signed cursor state is process memory and client-held read metadata; it is not a business record, durable preference, offline original or permission grant. Restart invalidates the cursor while all accepted opportunity/action/event/receipt data remains durable. Actual execution belongs to the [I2 handover](../delivery/crm-i2-handover.md).

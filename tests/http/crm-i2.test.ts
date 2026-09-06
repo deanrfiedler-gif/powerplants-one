@@ -38,6 +38,11 @@ test("CA-02/05 I2 HTTP canonical IDs, sort/filter equivalence, stable windows an
   const patch = await fetch(`${origin}/api/v1/crm/opportunities/${inputs[0].id}`, { method: "PATCH", headers: { Cookie: cookie, Origin: origin, "Content-Type": "application/json" }, body: JSON.stringify({ stage_id: "Qualified" }) });
   assert.equal(patch.status, 405);
   assert.equal((await call(cookie, `crm/opportunities/${inputs[0].id}`)).body.items[0].stage_id, "Enquiry");
+  assert.equal((await call(cookie, `crm/opportunities/${inputs[0].id}/qualify`, crmQualify())).status, 200);
+  const changed = await call(cookie, `crm/opportunities?${search}&limit=2&cursor=${encodeURIComponent(first.body.next_cursor)}`);
+  assert.equal(changed.status, 409);
+  assert.equal(changed.body.code, "WorklistChanged");
+  assert.equal(changed.body.stages, undefined);
 });
 
 test("CA-06/10 I2 HTTP actual grant revocation between list/detail/selectors/counts and original receipt", async () => {

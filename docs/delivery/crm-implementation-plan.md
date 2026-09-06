@@ -1,6 +1,6 @@
 # CRM — Ordered implementation sequence
 
-**Revision:** r04 · **Date:** 6 September 2026 · **Status:** I1 implemented and component-tested; publication in its handover; bounded I2 prepared only · **Parent workstream:** PPO-009 / issue #9. **Owner:** Dean Fiedler, private prototype.
+**Revision:** r05 · **Date:** 6 September 2026 · **Status:** I1 publication complete; bounded I2 under verification · **Parent workstream:** PPO-009 / issue #9. **Owner:** Dean Fiedler, private prototype.
 
 [BP-03](../blueprints/BP-03-crm.md) · [Parity](../blueprints/crm-parity.md) · [First implementation starter](crm-first-increment-starter.md) · [Handover](crm-discovery-handover.md).
 
@@ -8,7 +8,7 @@ I1–I6 below are **BP-03-local sequence labels**, not new parent requirements, 
 
 ## Current coordination and visual handover
 
-The discovery session itself authorised no implementation. Subsequent I1 work is active in [issue #39](https://github.com/deanrfiedler-gif/powerplants-one/issues/39) / draft [PR #40](https://github.com/deanrfiedler-gif/powerplants-one/pull/40) at this update. The retained r02 design amendment does not expand that scope or authorise I2. Verify actual main and both I1/P09 handovers before selecting the next slice.
+The discovery session itself authorised no implementation. Subsequent I1 work is merged through [PR #40](https://github.com/deanrfiedler-gif/powerplants-one/pull/40), with its complete external publication linked below. The retained r02 design amendment does not expand that scope or authorise I2. Verify actual main and both I1/P09 handovers before selecting the next slice.
 
 Read the [I2 UI guidance](crm-i2-ui-guidance.md), [shared visual specification](../standards/ui-style-specification.md) and [branded C02 Board/Grid preview](../blueprints/crm-ui-mockups/README.md) when preparing I2. The addendum complements the full I2 starter to be prepared by I1. Six reference stage labels and fictional amounts illustrate future layout; accepted stage contracts govern implementation, I1 keeps two stages/no money, and commercial displays retain I3 prerequisites.
 
@@ -23,6 +23,8 @@ First slice uses one fixed, clearly fictional pipeline with Enquiry → Qualifie
 ## Current bounded work
 
 I1 is tracked by [#39](https://github.com/deanrfiedler-gif/powerplants-one/issues/39) / [PR #40](https://github.com/deanrfiedler-gif/powerplants-one/pull/40); see its [handover](crm-i1-handover.md) and [external publication](https://github.com/deanrfiedler-gif/powerplants-one/issues/39#issuecomment-5557831957) for actual verification/merge state. The first [bounded I2 starter](crm-i2-starter.md) selects a scoped Board/Grid worklist with the accepted brand direction from the broader I2 theme. It uses only I1’s two actual stages and no money fields. Owner transfer, additional stages, close/reopen, separate lead, account plans and reassociation remain later proposed work. No I2 work begins merely because that starter exists.
+
+The user subsequently invoked the bounded I2 starter. [Issue #43](https://github.com/deanrfiedler-gif/powerplants-one/issues/43) / [PR #47](https://github.com/deanrfiedler-gif/powerplants-one/pull/47) now implements its scoped Board/Grid slice; [handover](crm-i2-handover.md) and [read decision](../decisions/crm-i2-worklist.md) record verification. The broader I2 row below remains a proposed theme, not the delivered scope. P10 #45 reserves 0011/ADR-0016 and estimating E1 #46 reserves 0012/ADR-0017. I2 reserves no schema change and cannot alter those contracts.
 
 ## Ordered increments
 

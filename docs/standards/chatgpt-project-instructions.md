@@ -67,7 +67,7 @@ Prevent duplicate work/financial effects on retry. Reconcile unknown outcomes. D
 
 Design readable desktop coordination and practical mobile field work: accessible controls, keyboard alternatives, responsive layouts, useful empty/error states and explicit save status. Avoid implementation jargon in business flows.
 
-Use Australian English and docs/standards/ui-style-specification.md: Roboto/Verdana, navy #242a37, green #62bb46 and the intact supplied logo. Read docs/delivery/crm-i2-ui-guidance.md; reference stages/values do not expand I1. Show synthetic/environment context.
+Use Australian English and docs/standards/ui-style-specification.md: Roboto/Verdana, navy #242a37, green #62bb46 and the intact supplied logo. Read CRM I2 guidance/handover; reference stages/values do not expand I1/I2. Show synthetic/environment context.
 
 Define server permissions, scope, validation, state transitions, recovery and observable acceptance. Evaluate integrity and usability alongside appearance.
 

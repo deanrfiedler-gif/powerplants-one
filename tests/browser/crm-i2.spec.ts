@@ -21,8 +21,10 @@ async function identity(page: Page, profile = "coordinator") {
 async function capture(page: Page, info: TestInfo, scenario: string, top = true) {
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   if (top) await page.evaluate(() => scrollTo(0, 0));
+  const firstCard = page.locator(".crm-stage[data-selected=true] .crm-card").first();
+  const geometry = await firstCard.count() ? await firstCard.boundingBox() : null;
   const bytes = await page.screenshot({ path: info.outputPath(`I2-${scenario}.png`), fullPage: false });
-  await writeFile(info.outputPath(`I2-${scenario}.json`), JSON.stringify({ scenario, viewport: page.viewportSize(), source_head: process.env.PPO_SOURCE_HEAD, executed_checkout: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(), tree: execFileSync("git", ["rev-parse", "HEAD^{tree}"], { encoding: "utf8" }).trim(), run_id: process.env.GITHUB_RUN_ID, run_attempt: process.env.GITHUB_RUN_ATTEMPT, sha256: createHash("sha256").update(bytes).digest("hex"), bytes: bytes.length }, null, 2));
+  await writeFile(info.outputPath(`I2-${scenario}.json`), JSON.stringify({ scenario, first_card:geometry, viewport: page.viewportSize(), source_head: process.env.PPO_SOURCE_HEAD, executed_checkout: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(), tree: execFileSync("git", ["rev-parse", "HEAD^{tree}"], { encoding: "utf8" }).trim(), run_id: process.env.GITHUB_RUN_ID, run_attempt: process.env.GITHUB_RUN_ATTEMPT, sha256: createHash("sha256").update(bytes).digest("hex"), bytes: bytes.length }, null, 2));
 }
 const ids = (page: Page) => page.locator(".crm-workspace [data-opportunity-id]").evaluateAll((elements) => elements.map((e) => e.getAttribute("data-opportunity-id")));
 const snapshot = async () => Promise.all(["opportunities", "activities", "activity_links", "opportunity_events", "business_identities", "operation_receipts", "audit_events", "outbox_jobs", "reference_counters"].map(async (table) => (await database().query(`SELECT md5(coalesce(string_agg(to_jsonb(t)::text,'' ORDER BY to_jsonb(t)::text),'')) AS hash FROM ppo.${table} t`)).rows[0].hash));
@@ -30,7 +32,11 @@ const snapshot = async () => Promise.all(["opportunities", "activities", "activi
 test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone stage and business records", async ({ page }, info) => {
   await page.goto("/crm/opportunities"); await identity(page);
   const marker = `SYN ${randomUUID().slice(0, 8)}`;
+  const actionOwner = randomUUID();
+  await database().query("INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1,$2,'PPO-LocalSynthetic',$3,'SYN Action colleague')", [actionOwner, CRM.workspace, randomUUID()]);
+  await database().query("INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id) SELECT workspace_id,$1,company_id,capability,scope_type,scope_id,site_id FROM ppo.permission_grants WHERE user_id=$2 AND capability NOT IN ('crm.opportunity.create','crm.opportunity.edit')", [actionOwner, CRM.owner]);
   const inputs = ["Controls check", "Irrigation review", "Follow-up"].map((title) => ({ ...crmCreate(), title: `${marker} ${title}`, initial_action: { ...crmAction(), summary: "SYN Confirm the site visit" } }));
+  inputs[0].initial_action.owner_id = actionOwner;
   for (const input of inputs) await call(page, "crm/opportunities", input);
   await call(page, `crm/opportunities/${inputs[1].id}/qualify`, crmQualify());
   await page.getByLabel("Search opportunities", { exact: true }).fill(marker);
@@ -47,7 +53,7 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   await page.getByLabel("Next action", { exact: true }).selectOption("DueNeeded");
   await page.getByLabel("Sort", { exact: true }).selectOption("Title");
   await expect.poll(() => ids(page)).toHaveLength(3);
-  await page.locator(".crm-secondary-filters > summary").click();
+  await page.getByRole("button", { name: "Filters and sort", exact: true }).click();
   const before = await snapshot();
   const commands: string[] = [];
   page.on("request", (request) => { if (request.url().includes("/api/v1/") && request.method() !== "GET") commands.push(`${request.method()} ${request.url()}`); });
@@ -61,6 +67,7 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   expect((await ids(page)).sort()).toEqual(boardIDs);
   await expect(page.getByRole("table")).toHaveCount(1);
   await expect(page.getByRole("columnheader", { name: "Next action / action owner", exact: true })).toHaveAttribute("scope", "col");
+  await expect(page.getByText("Action owner: SYN Action colleague", { exact: true })).toBeVisible();
   await capture(page, info, "loaded-grid");
   const scroll = page.getByRole("region", { name: "Opportunity Grid — scroll for all columns", exact: true });
   await scroll.evaluate((e) => { e.scrollLeft = 350; e.scrollTop = 100; });
@@ -68,6 +75,10 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   expect(sticky.position).toBe("sticky"); expect(Math.abs(sticky.left - sticky.container)).toBeLessThan(3);
   await capture(page, info, "grid-contained-scroll");
   await page.getByRole("button", { name: "Board", exact: true }).click();
+  for (const stage of ["Enquiry", "Qualified"]) {
+    const rendered = await page.locator(`.crm-stage[aria-labelledby="board-${stage}"] [data-opportunity-id]`).evaluateAll((elements) => elements.map(e => e.getAttribute("data-opportunity-id")));
+    expect(rendered).toEqual(exact.items.filter((i: {stage_id:string}) => i.stage_id === stage).map((i: {id:string}) => i.id));
+  }
   if (info.project.use.isMobile) {
     await page.getByRole("button", { name: /^Qualified \(/ }).click();
     await page.getByRole("button", { name: "Grid", exact: true }).click();
@@ -89,14 +100,15 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
 test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error completeness", async ({ page }, info) => {
   await page.goto("/crm/opportunities"); await identity(page);
   const marker = `SYN page ${randomUUID().slice(0, 8)}`;
-  const inputs = Array.from({ length: 12 }, (_, n) => ({ ...crmCreate(), title: `${marker} ${String(n).padStart(2, "0")}`, initial_action: { ...crmAction(), summary: n === 0 ? `SYN Full action text ${"long unbroken-context ".repeat(45)}END OF ACTION` : "SYN Arrange follow-up" } }));
+  const inputs = Array.from({ length: 12 }, (_, n) => ({ ...crmCreate(), title: `${marker} ${String(n).padStart(2, "0")}`, initial_action: { ...crmAction(), summary: n === 0 ? `SYN ${"X".repeat(1983)}END OF ACTION` : "SYN Arrange follow-up" } }));
+  inputs[0].title = `${marker} 00 ${"LongReference".repeat(13)}`.slice(0, 200);
   for (const input of inputs) await call(page, "crm/opportunities", input);
   await page.getByLabel("Search opportunities", { exact: true }).fill(marker);
   await page.getByText("Filters and sort", { exact: true }).click();
   await page.getByLabel("Sort", { exact: true }).selectOption("Title");
   await page.getByLabel("Page size", { exact: true }).selectOption("10");
   await expect.poll(() => ids(page)).toHaveLength(10);
-  await page.locator(".crm-secondary-filters > summary").click();
+  await page.getByRole("button", { name: "Filters and sort", exact: true }).click();
   await page.getByRole("button", { name: "Grid", exact: true }).click();
   const first = await ids(page);
   await expect(page.locator(".crm-action-text").first()).toContainText("END OF ACTION");
@@ -107,6 +119,10 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   await capture(page, info, "320-grid-keyboard");
   await page.getByRole("button", { name: "Board", exact: true }).click();
   await capture(page, info, "320-board-long-action");
+  await page.locator(".crm-action-text").first().evaluate(e => e.scrollIntoView({block:"end"}));
+  const endVisible = await page.locator(".crm-action-text").first().evaluate(e => { const range=document.createRange(); const node=e.firstChild!; range.setStart(node,node.textContent!.length-13); range.setEnd(node,node.textContent!.length); const r=range.getBoundingClientRect(); return r.top>=0 && r.bottom<=innerHeight; });
+  expect(endVisible).toBe(true);
+  await capture(page, info, "320-long-action-end", false);
   await page.getByRole("button", { name: "Next page", exact: true }).click();
   await expect.poll(() => ids(page)).toHaveLength(2);
   const last = await ids(page);

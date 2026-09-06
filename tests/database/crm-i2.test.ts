@@ -112,6 +112,9 @@ test("CA-06/10 I2 reader selectors, company/site/person boundaries and denied id
     await assert.rejects(worklistOptions(denied, { kind: "Company" }));
     await assert.rejects(readOpportunity(denied, known.id));
   }
+  const missingDefinition = await principal("other-workspace");
+  await database().query("INSERT INTO ppo.permission_grants(workspace_id,user_id,capability,scope_type,scope_id) VALUES($1,$2,'crm.opportunity.read','Workspace',$1)", [missingDefinition.workspace_id, missingDefinition.actor_id]);
+  await assert.rejects(listOpportunities(missingDefinition), code("PipelineUnavailable"));
 });
 
 test("CA-06/10 I2 all-target Activity content, aggregates and receipts obey current grant revocation", async () => {

@@ -1680,7 +1680,7 @@ button:disabled {
 
 /* Accepted shared brand roles. Bright green is an action surface, navy its text. */
 .brand-logo { width:88px; height:88px; flex:none; object-fit:contain; }
-.brand { gap:10px; padding-bottom:24px; }
+.brand { gap:14px; padding-bottom:24px; }
 .navigation-toggle { display:none; }
 .primary-link { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:9px 16px; border:1px solid var(--navy); border-radius:6px; background:var(--green); color:var(--navy); font-weight:600; text-decoration:none; }
 :is(a,button,input,select,textarea,summary,[tabindex]):focus-visible { outline:3px solid var(--navy); outline-offset:3px; box-shadow:0 0 0 2px white; }
@@ -1744,7 +1744,7 @@ body:has(.crm-workspace) .identity-strip > div { min-width:150px; }
 body:has(.crm-workspace) main { padding-top:18px; }
 @media (max-width:780px) {
   .app-frame { display:block; }
-  .sidebar { position:relative; width:100%; display:block; padding:8px 12px; }
+  .sidebar { position:relative; width:100%; display:block; padding:12px; }
   .brand { padding:0 82px 0 0; font-size:12px; min-height:88px; }
   .brand strong { font-size:18px; }
   .brand br { display:block; }
@@ -1789,4 +1789,24 @@ body:has(.crm-workspace) main { padding-top:18px; }
   .crm-grid { min-width:1040px; }
   .crm-grid thead th:first-child { width:190px; }
   .crm-grid th,.crm-grid td { padding:10px; }
+}
+.crm-view-controls .crm-filter-toggle { margin-left:auto; min-width:0; }
+.crm-secondary-filters[hidden] { display:none; }
+.crm-grid-scroll { scroll-padding:56px 20px 20px 290px; }
+.crm-stage-heading { position:sticky; top:0; background:#edf0f3; z-index:1; }
+@media (max-width:780px) {
+  body:has(.crm-workspace) .topbar { display:none; }
+  body:has(.crm-workspace) .identity-strip { border:0; background:transparent; padding:0; }
+  .crm-worklist-heading { margin:4px 0; }
+  .crm-worklist-heading .eyebrow { display:none; }
+  .crm-view-controls { gap:6px; margin:6px 0; }
+  .crm-view-controls button { min-width:64px; padding:8px; font-size:13px; }
+  .crm-view-controls .crm-filter-toggle { font-size:12px; padding:8px 6px; }
+  .crm-primary-filters input,.crm-filter-grid :is(input,select) { font-size:16px; }
+  .crm-primary-filters select { font-size:14px; }
+  .crm-worklist-stamp { margin-top:6px; }
+  .crm-stage-heading { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); }
+  .crm-stage .crm-worklist { margin-top:0; }
+  .crm-opportunity-title { min-height:44px; }
+  .crm-grid-scroll { scroll-padding-left:200px; }
 }

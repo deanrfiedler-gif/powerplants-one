@@ -80,6 +80,7 @@ export function SalesWorklist() {
   const [filters, setFilters] = useState(initial);
   const [view, setView] = useState<"Board" | "Grid">("Board");
   const [selected, setSelected] = useState("Enquiry");
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const data = useCrmResource<Results>(`crm/opportunities?${query(filters)}`, true);
   // Clear query text, selected IDs and option-search components after current access is denied.
   const isDenied = denied(data.error);
@@ -98,6 +99,7 @@ export function SalesWorklist() {
     </header>
     <div className="crm-view-controls" role="group" aria-label="Opportunity presentation">
       {(["Board", "Grid"] as const).map((value) => <button key={value} className={view === value ? "" : "secondary"} aria-pressed={view === value} onClick={() => setView(value)}>{value}</button>)}
+      {!isDenied && <button className="secondary crm-filter-toggle" aria-expanded={filtersOpen} aria-controls="crm-filter-panel" onClick={() => setFiltersOpen(!filtersOpen)}>Filters and sort</button>}
       <small>Same permitted results · Open outcome</small>
     </div>
     {!isDenied && <>
@@ -105,7 +107,7 @@ export function SalesWorklist() {
         <Field name="sales-search" label="Search opportunities" value={filters.q} onChange={(v) => change("q", v)} />
         <SelectField name="stage" label="Stage" value={filters.stage_id} onChange={(v) => { change("stage_id", v); if (v) setSelected(v); }} options={(data.data?.stages ?? []).map((s) => ({ id: s.stage_id, display_name: s.stage_id }))} empty="All stages" />
       </div>
-      <details className="crm-secondary-filters"><summary>Filters and sort{Object.entries(filters).some(([k, v]) => !["q", "cursor", "stage_id", "sort", "limit"].includes(k) && v) || filters.sort !== "Reference" ? " · Applied" : ""}</summary>
+      <section id="crm-filter-panel" className="crm-secondary-filters" aria-label="Opportunity filters" hidden={!filtersOpen}>
         <div className="crm-filter-grid">
           {(["Company", "Site", "Owner"] as const).map((kind) => <FilterPicker key={kind} kind={kind} value={filters[kind === "Company" ? "company_id" : kind === "Site" ? "site_id" : "owner_id"]} company={filters.company_id} enabled={!data.error} set={(v) => change(kind === "Company" ? "company_id" : kind === "Site" ? "site_id" : "owner_id", v)} />)}
           <SelectField name="next-state" label="Next action" value={filters.next_action} onChange={(v) => change("next_action", v)} options={Object.entries(labels).map(([id, display_name]) => ({ id, display_name }))} empty="All action states" />
@@ -114,7 +116,7 @@ export function SalesWorklist() {
           <label className="crm-check"><input type="checkbox" checked={filters.owner_id === p.actor_id} onChange={(e) => change("owner_id", e.target.checked ? p.actor_id : "")} />Owned by me</label>
         </div>
         <button className="secondary" onClick={() => setFilters(initial)}>Clear filters</button>
-      </details>
+      </section>
     </>}
     <ErrorNotice error={data.error} />
     {data.loading && <p role="status">Loading permitted sales records…</p>}
