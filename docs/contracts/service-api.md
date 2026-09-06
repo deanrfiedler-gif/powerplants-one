@@ -1,6 +1,6 @@
 # PP-01 — Service API, operation and event contracts
 
-**Edition:** r09 · **Status:** Internal API contract; bounded P01–P08 subsets are implemented, with component evidence recorded separately. These are Powerplants One routes, never asserted MYOB endpoints.
+**Edition:** r10 · **Status:** Internal API contract; bounded P01–P09 subsets are implemented, with actual verification recorded separately. API-C19 and Finance remain P10. These are Powerplants One routes, never asserted MYOB endpoints.
 
 [Architecture](../architecture/BP-02-platform-architecture.md) · [Dictionary](service-data-dictionary.md) · [Service specification](../blueprints/BP-07-service-operations.md).
 

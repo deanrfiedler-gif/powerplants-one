@@ -68,7 +68,8 @@ export async function seed(through = 9) {
       await client.query(await read(file));
       if (version === 6) await seedDocumentFiles();
       if (version === 9) {
-        const { currentReportTemplate } = await import("../src/reports/template");
+        const { currentReportTemplate } =
+          await import("../src/reports/template");
         const definition = await currentReportTemplate();
         await client.query(
           "INSERT INTO ppo.report_templates(id,workspace_id,version,definition,content_hash) VALUES('e1000000-0000-4000-8000-000000000001','10000000-0000-4000-8000-000000000001',1,$1,$2)",

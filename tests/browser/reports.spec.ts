@@ -4,6 +4,7 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { prepareFieldAppointment } from "../helpers/field-http";
 import { base, startInput, png } from "../helpers/field";
+test.use({ actionTimeout: 15000 });
 const hash = (v: string | Buffer) =>
   createHash("sha256").update(v).digest("hex");
 async function call(page: Page, path: string, body?: unknown) {
@@ -266,6 +267,8 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   await expect(
     page.getByRole("heading", { name: "Service review and reports" }),
   ).toBeVisible();
+  await expect(page.getByText("Loading reports…", { exact: true })).toHaveCount(0);
+  await page.getByRole("heading", { name: "Service review and reports", exact: true }).scrollIntoViewIfNeeded();
   await proof(page, info, "report-list");
   const setup = await prepareFieldAppointment(
     (path, body) => call(page, path, body),

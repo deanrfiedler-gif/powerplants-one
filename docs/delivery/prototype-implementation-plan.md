@@ -39,7 +39,7 @@ Complexity is a relative design judgement, not a time estimate. Offline and Fina
 
 P01/P02 establish the technical core; P03–P06 establish prepared and schedulable work; P07–P10 complete field/report/Finance consequences; P11/P12 prove integration and recovery. Individual screen work may be drafted earlier, but a package cannot claim completion until its guards and dependencies are functional.
 
-The original P07 online demonstration label was **Online workflow preview — offline/report/Finance work incomplete**. With bounded P08 offline components, the current label is **Field workflow preview — report/Finance work incomplete**. The first complete PP-01 demonstration is after P12. Do not silently redefine PP-01 as finished because the dashboard looks polished.
+The original P07 online demonstration label was **Online workflow preview — offline/report/Finance work incomplete**. At the P08 boundary the label became **Field workflow preview — report/Finance work incomplete**. P09 uses **Field workflow preview — Finance work incomplete**, with the report verification/publication state recorded separately. The first complete PP-01 demonstration is after P12. Do not silently redefine PP-01 as finished because the dashboard looks polished.
 
 ## 4. P01 implementation brief
 
@@ -123,7 +123,7 @@ P04 does not deliver typed material requisitions/stock/shortage processing withi
 
 [P08 handover](p08-handover.md) and [ADR-0013](../decisions/ADR-0013-p08-offline-recovery.md) record durable owner-bound context/original/evidence/PNG stores, a narrowly scoped shell worker, strict local transaction save outcomes, bounded per-operation replay and recoverable leases, current-authority adjudication and owned restricted exception recovery. P04–P07 domain commands, issued bytes, exact original receipts and separate lifecycle boundaries remain. API-C15 does not implement report submission or approval. PT-11/PT-12/PT-24/PT-28 components have separately recorded execution evidence; full procedure status is never inferred from code or isolated checks.
 
-[P09 starter](p09-starter-prompt.md) is prepared only. It requires verified P08 publication from the external issue record, current main and exact checks before starting review/submission/report/customer-response work. Finance processing remains P10. P09–P12, hosting, operational identity/integration, production migration and customer communications are not started by P08.
+At the completed P08 boundary, [P09 starter](p09-starter-prompt.md) was preparation only. It requires verified P08 publication from the external issue record, current main and exact checks before starting review/submission/report/customer-response work. Finance processing remains P10. P09–P12, hosting, operational identity/integration, production migration and customer communications are not started by P08.
 
 ## P09 physical implementation and P10 preparation
 

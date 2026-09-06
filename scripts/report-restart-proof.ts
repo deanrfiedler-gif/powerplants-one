@@ -264,7 +264,11 @@ try {
     }
     await writeFile(file, JSON.stringify(proof, null, 2));
   }
-  await page.evaluate(() => scrollTo(0, 0));
+  await expect(page.locator("#workspace")).toBeVisible();
+  await expect(page.locator("#queue .queue-row").first()).toBeVisible();
+  if (phase === "respond" || phase === "verify")
+    await page.locator("#queue").scrollIntoViewIfNeeded();
+  else await page.evaluate(() => scrollTo(0, 0));
   const shot = await page.screenshot({
     path: `${evidence}/${phase}.png`,
     fullPage: false,

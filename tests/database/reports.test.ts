@@ -25,7 +25,14 @@ import { startAttendance } from "../../src/field/start";
 import { captureEntry } from "../../src/field/entries";
 import { saveCompletionDraft } from "../../src/field/completion";
 import { readFieldJob } from "../../src/field/reads";
-import { entry, draft, png, started, photo, startInput } from "../helpers/field";
+import {
+  entry,
+  draft,
+  png,
+  started,
+  photo,
+  startInput,
+} from "../helpers/field";
 import {
   submitted,
   reviewed,
@@ -393,8 +400,15 @@ test("P09 revoked review and response receipt capability returns no original rec
 test("P09 accepted attendance correction preserves old output and refuses prior response reassociation", async () => {
   const q = await reportIssued(),
     old = q.report,
-    mark=png(),
-    cmd = {...response(old),signature:{sha256:digest(mark),byte_count:mark.length,content_base64:mark.toString("base64")}};
+    mark = png(),
+    cmd = {
+      ...response(old),
+      signature: {
+        sha256: digest(mark),
+        byte_count: mark.length,
+        content_base64: mark.toString("base64"),
+      },
+    };
   await recordResponse(q.p, old.id, cmd);
   const v = old.presentations.find(
       (x: { kind: string }) => x.kind === "IssuedReport",
@@ -467,11 +481,30 @@ test("P09 accepted attendance correction preserves old output and refuses prior 
     }),
     code("PresentedContentChanged"),
   );
-  await assert.rejects(recordResponse(q.p,r.id,{...cmd,...base(),id:randomUUID(),expected_report_version:r.version,presentation_id:newer.id,revision_id:newer.revision_id,presented_hash:newer.content_hash,presented_at:new Date().toISOString(),captured_at:new Date().toISOString()}),code("SignatureReassociationRefused"));
+  await assert.rejects(
+    recordResponse(q.p, r.id, {
+      ...cmd,
+      ...base(),
+      id: randomUUID(),
+      expected_report_version: r.version,
+      presentation_id: newer.id,
+      revision_id: newer.revision_id,
+      presented_hash: newer.content_hash,
+      presented_at: new Date().toISOString(),
+      captured_at: new Date().toISOString(),
+    }),
+    code("SignatureReassociationRefused"),
+  );
   assert.deepEqual((await presentationBytes(q.p, r.id, v.id)).pdf, bytes.pdf);
   await mkdir("verification-evidence/p09", { recursive: true });
-  await writeFile("verification-evidence/p09/original-inspection.png", q.photo.bytes);
-  await writeFile("verification-evidence/p09/original-response-mark.png", png());
+  await writeFile(
+    "verification-evidence/p09/original-inspection.png",
+    q.photo.bytes,
+  );
+  await writeFile(
+    "verification-evidence/p09/original-response-mark.png",
+    png(),
+  );
   for (const [name, pres] of [
     ["old", v],
     ["new", newer],
@@ -617,68 +650,360 @@ test("P09 source snapshot canonical hash uses persisted timestamps and every exa
   );
 });
 
-test("P09 competing personal submissions and identical customer responses produce one original effect",async()=>{
- const q=await started();await saveCompletionDraft(q.p,q.job.id,draft(q.job));const j=(await readFieldJob(q.p,q.job.id)).items[0],cmd={...base(),id:randomUUID(),attendance_id:j.attendance!.id,draft_revision_id:j.draft_revisions[0].id,expected_draft_version:j.draft!.version,expected_report_version:0,expected_appointment_version:j.version,attendance_end_at:new Date().toISOString()};
- const submissions=await Promise.all([submitCompletion(q.p,j.id,cmd),submitCompletion(q.p,j.id,cmd)]);assert.deepEqual(submissions[0].receipt,submissions[1].receipt);assert.equal((await rows("SELECT count(*)::int n FROM ppo.report_revisions"))[0].n,1);
- const co=await principal("coordinator");let r=(await readReport(co,cmd.id)).items[0];await reviewReport(co,r.id,decision(r));r=(await readReport(co,r.id)).items[0];const answer=response(r,"Unavailable","DraftEvidence"),responses=await Promise.all([recordResponse(q.p,r.id,answer),recordResponse(q.p,r.id,answer)]);assert.deepEqual(responses[0].receipt,responses[1].receipt);assert.equal((await readReport(co,r.id)).items[0].responses.length,1);assert.equal((await rows("SELECT count(*)::int n FROM ppo.report_follow_ups WHERE kind='CustomerResponse'"))[0].n,1);
+test("P09 competing personal submissions and identical customer responses produce one original effect", async () => {
+  const q = await started();
+  await saveCompletionDraft(q.p, q.job.id, draft(q.job));
+  const j = (await readFieldJob(q.p, q.job.id)).items[0],
+    cmd = {
+      ...base(),
+      id: randomUUID(),
+      attendance_id: j.attendance!.id,
+      draft_revision_id: j.draft_revisions[0].id,
+      expected_draft_version: j.draft!.version,
+      expected_report_version: 0,
+      expected_appointment_version: j.version,
+      attendance_end_at: new Date().toISOString(),
+    };
+  const submissions = await Promise.all([
+    submitCompletion(q.p, j.id, cmd),
+    submitCompletion(q.p, j.id, cmd),
+  ]);
+  assert.deepEqual(submissions[0].receipt, submissions[1].receipt);
+  assert.equal(
+    (await rows("SELECT count(*)::int n FROM ppo.report_revisions"))[0].n,
+    1,
+  );
+  const co = await principal("coordinator");
+  let r = (await readReport(co, cmd.id)).items[0];
+  await reviewReport(co, r.id, decision(r));
+  r = (await readReport(co, r.id)).items[0];
+  const answer = response(r, "Unavailable", "DraftEvidence"),
+    responses = await Promise.all([
+      recordResponse(q.p, r.id, answer),
+      recordResponse(q.p, r.id, answer),
+    ]);
+  assert.deepEqual(responses[0].receipt, responses[1].receipt);
+  assert.equal((await readReport(co, r.id)).items[0].responses.length, 1);
+  assert.equal(
+    (
+      await rows(
+        "SELECT count(*)::int n FROM ppo.report_follow_ups WHERE kind='CustomerResponse'",
+      )
+    )[0].n,
+    1,
+  );
 });
-test("P09 real source change during generation and corrupted original bundle cannot issue",async()=>{
- const q=await reviewed(),r=q.report;await requestReportIssue(q.reviewer,r.id,{...base(),expected_version:r.version,revision_id:r.revisions[0].id,review_id:r.reviews[0].id,template_id:r.template.id,template_version:r.template.version});const j=(await readReport(q.reviewer,r.id)).items[0].jobs[0];const result=await processReportJob(j.id,{afterRender:async()=>{await database().query("UPDATE ppo.assets SET version=version+1,description='SYN renamed asset during output' WHERE id=$1",[q.job.scope.items[0].assets[0].id]);}});assert.equal("state" in result&&result.state,"StaleSource");assert.equal((await readReport(q.reviewer,r.id)).items[0].issues.length,0);
+test("P09 real source change during generation and corrupted original bundle cannot issue", async () => {
+  const q = await reviewed(),
+    r = q.report;
+  await requestReportIssue(q.reviewer, r.id, {
+    ...base(),
+    expected_version: r.version,
+    revision_id: r.revisions[0].id,
+    review_id: r.reviews[0].id,
+    template_id: r.template.id,
+    template_version: r.template.version,
+  });
+  const j = (await readReport(q.reviewer, r.id)).items[0].jobs[0];
+  const result = await processReportJob(j.id, {
+    afterRender: async () => {
+      await database().query(
+        "UPDATE ppo.assets SET version=version+1,description='SYN renamed asset during output' WHERE id=$1",
+        [q.job.scope.items[0].assets[0].id],
+      );
+    },
+  });
+  assert.equal("state" in result && result.state, "StaleSource");
+  assert.equal((await readReport(q.reviewer, r.id)).items[0].issues.length, 0);
 });
-test("P09 issued original byte removal or wrong hash is unavailable rather than regenerated",async()=>{const q=await reportIssued(),r=q.report,v=r.presentations.find((x:{kind:string})=>x.kind==="IssuedReport")!,j=r.jobs[0],path=join(process.env.PPO_DOCUMENT_DIRECTORY??join(homedir(),".ppo-synthetic-documents"),q.p.workspace_id,j.id),before=await readFile(path);await unlink(path);await assert.rejects(presentationBytes(q.p,r.id,v.id));await writeFile(path,Buffer.from("SYN wrong immutable original bytes"));await assert.rejects(presentationBytes(q.p,r.id,v.id));await writeFile(path,before,{mode:0o600});const b=await presentationBytes(q.p,r.id,v.id);assert.equal(digest(b.html),v.content_hash);assert.equal((await readReport(q.p,r.id)).items[0].issues.length,1);});
-test("P09 unsupported signature bytes are rejected without response or follow-up",async()=>{const q=await reviewed(),bytes=Buffer.from("SYN not a PNG"),cmd={...response(q.report,"AcceptedWithReservations","DraftEvidence"),signature:{sha256:digest(bytes),byte_count:bytes.length,content_base64:bytes.toString("base64")}},before=(await readReport(q.p,q.report.id)).items[0].follow_ups.length;await assert.rejects(recordResponse(q.p,q.report.id,cmd));const r=(await readReport(q.p,q.report.id)).items[0];assert.equal(r.responses.length,0);assert.equal(r.follow_ups.length,before);});
+test("P09 issued original byte removal or wrong hash is unavailable rather than regenerated", async () => {
+  const q = await reportIssued(),
+    r = q.report,
+    v = r.presentations.find(
+      (x: { kind: string }) => x.kind === "IssuedReport",
+    )!,
+    j = r.jobs[0],
+    path = join(
+      process.env.PPO_DOCUMENT_DIRECTORY ??
+        join(homedir(), ".ppo-synthetic-documents"),
+      q.p.workspace_id,
+      j.id,
+    ),
+    before = await readFile(path);
+  await unlink(path);
+  await assert.rejects(presentationBytes(q.p, r.id, v.id));
+  await writeFile(path, Buffer.from("SYN wrong immutable original bytes"));
+  await assert.rejects(presentationBytes(q.p, r.id, v.id));
+  await writeFile(path, before, { mode: 0o600 });
+  const b = await presentationBytes(q.p, r.id, v.id);
+  assert.equal(digest(b.html), v.content_hash);
+  assert.equal((await readReport(q.p, r.id)).items[0].issues.length, 1);
+});
+test("P09 unsupported signature bytes are rejected without response or follow-up", async () => {
+  const q = await reviewed(),
+    bytes = Buffer.from("SYN not a PNG"),
+    cmd = {
+      ...response(q.report, "AcceptedWithReservations", "DraftEvidence"),
+      signature: {
+        sha256: digest(bytes),
+        byte_count: bytes.length,
+        content_base64: bytes.toString("base64"),
+      },
+    },
+    before = (await readReport(q.p, q.report.id)).items[0].follow_ups.length;
+  await assert.rejects(recordResponse(q.p, q.report.id, cmd));
+  const r = (await readReport(q.p, q.report.id)).items[0];
+  assert.equal(r.responses.length, 0);
+  assert.equal(r.follow_ups.length, before);
+});
 
-test("P09 returned Complete and accepted report-only correction retain passed controls and original attendance",async()=>{
- const q=await started(),f=await photo(q.job,q.p);await captureEntry(q.p,entry(q.job,"Photo",{attachment_id:f.id,caption:"SYN completed visual inspection"}));for(const check_id of ["SYN-SITE-CONTROLS","SYN-TASK-RESULT"])await captureEntry(q.p,entry(q.job,"Checklist",{check_id,result:"Pass",reason:null,evidence_ids:check_id==="SYN-SITE-CONTROLS"?[f.id]:[]}));
- let j=(await readFieldJob(q.p,q.job.id)).items[0];await saveCompletionDraft(q.p,j.id,draft(j,"Complete"));j=(await readFieldJob(q.p,j.id)).items[0];const id=randomUUID(),co=await principal("coordinator");let reportVersion=0;
- async function submitExact(end:string){j=(await readFieldJob(q.p,j.id)).items[0];await submitCompletion(q.p,j.id,{...base(),id,attendance_id:j.attendance!.id,draft_revision_id:j.draft_revisions[0].id,expected_draft_version:j.draft!.version,expected_report_version:reportVersion,expected_appointment_version:j.version,attendance_end_at:end});return (await readReport(co,id)).items[0];}
- let r=await submitExact(new Date().toISOString());await reviewReport(co,id,decision(r,"Returned"));r=(await readReport(co,id)).items[0];reportVersion=r.version;
- for(const accepted of [false,true]){j=(await readFieldJob(q.p,j.id)).items[0];const original=j.entries.find(e=>e.kind==="Photo"&&!e.superseded)!;await captureEntry(q.p,{...entry(j,"Photo",{attachment_id:f.id,caption:accepted?"SYN accepted-report factual caption correction":"SYN returned factual caption correction"}),expected_version:original.version},original.id);j=(await readFieldJob(q.p,j.id)).items[0];await saveCompletionDraft(q.p,j.id,draft(j,"Complete"));r=await submitExact(accepted?new Date(r.appointment.actual_end_at!).toISOString():new Date().toISOString());await reviewReport(co,id,decision(r));r=(await readReport(co,id)).items[0];assert.equal(r.appointment.status,"Completed");assert.equal(r.revisions[0].snapshot.completion.scope_outcome,"Complete");if(!accepted){await amendReport(q.p,id,{...base(),expected_version:r.version,revision_id:r.revisions[0].id});reportVersion=(await readReport(q.p,id)).items[0].version;}}
- assert.equal((await rows("SELECT count(*)::int n FROM ppo.field_attendances"))[0].n,1);assert.equal((await rows("SELECT count(*)::int n FROM ppo.attendance_acceptances"))[0].n,1);
+test("P09 returned Complete and accepted report-only correction retain passed controls and original attendance", async () => {
+  const q = await started(),
+    f = await photo(q.job, q.p);
+  await captureEntry(
+    q.p,
+    entry(q.job, "Photo", {
+      attachment_id: f.id,
+      caption: "SYN completed visual inspection",
+    }),
+  );
+  for (const check_id of ["SYN-SITE-CONTROLS", "SYN-TASK-RESULT"])
+    await captureEntry(
+      q.p,
+      entry(q.job, "Checklist", {
+        check_id,
+        result: "Pass",
+        reason: null,
+        evidence_ids: check_id === "SYN-SITE-CONTROLS" ? [f.id] : [],
+      }),
+    );
+  let j = (await readFieldJob(q.p, q.job.id)).items[0];
+  await saveCompletionDraft(q.p, j.id, draft(j, "Complete"));
+  j = (await readFieldJob(q.p, j.id)).items[0];
+  const id = randomUUID(),
+    co = await principal("coordinator");
+  let reportVersion = 0;
+  async function submitExact(end: string) {
+    j = (await readFieldJob(q.p, j.id)).items[0];
+    await submitCompletion(q.p, j.id, {
+      ...base(),
+      id,
+      attendance_id: j.attendance!.id,
+      draft_revision_id: j.draft_revisions[0].id,
+      expected_draft_version: j.draft!.version,
+      expected_report_version: reportVersion,
+      expected_appointment_version: j.version,
+      attendance_end_at: end,
+    });
+    return (await readReport(co, id)).items[0];
+  }
+  let r = await submitExact(new Date().toISOString());
+  await reviewReport(co, id, decision(r, "Returned"));
+  r = (await readReport(co, id)).items[0];
+  reportVersion = r.version;
+  for (const accepted of [false, true]) {
+    j = (await readFieldJob(q.p, j.id)).items[0];
+    const original = j.entries.find(
+      (e) => e.kind === "Photo" && !e.superseded,
+    )!;
+    await captureEntry(
+      q.p,
+      {
+        ...entry(j, "Photo", {
+          attachment_id: f.id,
+          caption: accepted
+            ? "SYN accepted-report factual caption correction"
+            : "SYN returned factual caption correction",
+        }),
+        expected_version: original.version,
+      },
+      original.id,
+    );
+    j = (await readFieldJob(q.p, j.id)).items[0];
+    await saveCompletionDraft(q.p, j.id, draft(j, "Complete"));
+    r = await submitExact(
+      accepted
+        ? new Date(r.appointment.actual_end_at!).toISOString()
+        : new Date().toISOString(),
+    );
+    await reviewReport(co, id, decision(r));
+    r = (await readReport(co, id)).items[0];
+    assert.equal(r.appointment.status, "Completed");
+    assert.equal(r.revisions[0].snapshot.completion.scope_outcome, "Complete");
+    if (!accepted) {
+      await amendReport(q.p, id, {
+        ...base(),
+        expected_version: r.version,
+        revision_id: r.revisions[0].id,
+      });
+      reportVersion = (await readReport(q.p, id)).items[0].version;
+    }
+  }
+  assert.equal(
+    (await rows("SELECT count(*)::int n FROM ppo.field_attendances"))[0].n,
+    1,
+  );
+  assert.equal(
+    (await rows("SELECT count(*)::int n FROM ppo.attendance_acceptances"))[0].n,
+    1,
+  );
 });
-test("P09 all actually started crew must be accepted independently, with no invented attendance or declarations",async()=>{
- const q=await started(),m=await principal("second-technician"),co=await principal("coordinator");let second=(await readFieldJob(m,q.job.id)).items[0];await startAttendance(m,second.id,startInput(second));
- const ids=[];for(const p of [q.p,m]){let j=(await readFieldJob(p,q.job.id)).items[0];await saveCompletionDraft(p,j.id,draft({...j,entries:j.entries.filter(e=>e.actor_id===p.actor_id),attachments:j.attachments.filter(e=>e.actor_id===p.actor_id)}));j=(await readFieldJob(p,j.id)).items[0];const id=randomUUID();ids.push(id);await submitCompletion(p,j.id,{...base(),id,attendance_id:j.attendance!.id,draft_revision_id:j.draft_revisions[0].id,expected_draft_version:j.draft!.version,expected_report_version:0,expected_appointment_version:j.version,attendance_end_at:new Date().toISOString()});}
- let r=(await readReport(co,ids[0])).items[0];await reviewReport(co,r.id,decision(r));assert.equal((await readReport(co,r.id)).items[0].appointment.status,"CompletedPendingReview");r=(await readReport(co,ids[1])).items[0];await reviewReport(co,r.id,decision(r));assert.equal((await readReport(co,r.id)).items[0].appointment.status,"Completed");assert.equal((await rows("SELECT count(*)::int n FROM ppo.attendance_acceptances"))[0].n,2);assert.equal((await rows("SELECT count(*)::int n FROM ppo.field_attendances"))[0].n,2);second=(await readFieldJob(m,q.job.id)).items[0];assert.ok(second.accepted_end_at);
+test("P09 all actually started crew must be accepted independently, with no invented attendance or declarations", async () => {
+  const q = await started(),
+    m = await principal("second-technician"),
+    co = await principal("coordinator");
+  let second = (await readFieldJob(m, q.job.id)).items[0];
+  await startAttendance(m, second.id, startInput(second));
+  const ids = [];
+  for (const p of [q.p, m]) {
+    let j = (await readFieldJob(p, q.job.id)).items[0];
+    await saveCompletionDraft(
+      p,
+      j.id,
+      draft({
+        ...j,
+        entries: j.entries.filter((e) => e.actor_id === p.actor_id),
+        attachments: j.attachments.filter((e) => e.actor_id === p.actor_id),
+      }),
+    );
+    j = (await readFieldJob(p, j.id)).items[0];
+    const id = randomUUID();
+    ids.push(id);
+    await submitCompletion(p, j.id, {
+      ...base(),
+      id,
+      attendance_id: j.attendance!.id,
+      draft_revision_id: j.draft_revisions[0].id,
+      expected_draft_version: j.draft!.version,
+      expected_report_version: 0,
+      expected_appointment_version: j.version,
+      attendance_end_at: new Date().toISOString(),
+    });
+  }
+  let r = (await readReport(co, ids[0])).items[0];
+  await reviewReport(co, r.id, decision(r));
+  assert.equal(
+    (await readReport(co, r.id)).items[0].appointment.status,
+    "CompletedPendingReview",
+  );
+  r = (await readReport(co, ids[1])).items[0];
+  await reviewReport(co, r.id, decision(r));
+  assert.equal(
+    (await readReport(co, r.id)).items[0].appointment.status,
+    "Completed",
+  );
+  assert.equal(
+    (await rows("SELECT count(*)::int n FROM ppo.attendance_acceptances"))[0].n,
+    2,
+  );
+  assert.equal(
+    (await rows("SELECT count(*)::int n FROM ppo.field_attendances"))[0].n,
+    2,
+  );
+  second = (await readFieldJob(m, q.job.id)).items[0];
+  assert.ok(second.accepted_end_at);
 });
 
 test("P09 competing report correction and issue request respect one exact report version", async () => {
-  const q = await reviewed(), r = q.report;
+  const q = await reviewed(),
+    r = q.report;
   const attempts = await Promise.allSettled([
-    requestReportIssue(q.reviewer, r.id, { ...base(), expected_version: r.version, revision_id: r.revisions[0].id, review_id: r.reviews[0].id, template_id: r.template.id, template_version: r.template.version }),
-    amendReport(q.p, r.id, { ...base(), expected_version: r.version, revision_id: r.revisions[0].id }),
+    requestReportIssue(q.reviewer, r.id, {
+      ...base(),
+      expected_version: r.version,
+      revision_id: r.revisions[0].id,
+      review_id: r.reviews[0].id,
+      template_id: r.template.id,
+      template_version: r.template.version,
+    }),
+    amendReport(q.p, r.id, {
+      ...base(),
+      expected_version: r.version,
+      revision_id: r.revisions[0].id,
+    }),
   ]);
-  assert.equal(attempts.filter(x => x.status === "fulfilled").length, 1);
+  assert.equal(attempts.filter((x) => x.status === "fulfilled").length, 1);
   const current = (await readReport(q.reviewer, r.id)).items[0];
   assert.equal(current.appointment.status, "Completed");
   assert.equal(current.issues.length, 0);
-  assert.equal((await rows("SELECT count(*)::int n FROM ppo.attendance_acceptances"))[0].n, 1);
+  assert.equal(
+    (await rows("SELECT count(*)::int n FROM ppo.attendance_acceptances"))[0].n,
+    1,
+  );
 });
 test("P09 issue authority revoked after durable storage refuses release and original issue receipt recovery", async () => {
-  const q = await reviewed(), r = q.report, cmd = { ...base(), expected_version: r.version, revision_id: r.revisions[0].id, review_id: r.reviews[0].id, template_id: r.template.id, template_version: r.template.version };
+  const q = await reviewed(),
+    r = q.report,
+    cmd = {
+      ...base(),
+      expected_version: r.version,
+      revision_id: r.revisions[0].id,
+      review_id: r.reviews[0].id,
+      template_id: r.template.id,
+      template_version: r.template.version,
+    };
   await requestReportIssue(q.reviewer, r.id, cmd);
   const job = (await readReport(q.reviewer, r.id)).items[0].jobs[0];
-  const result = await processReportJob(job.id, { afterStore: async () => { await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='report.issue'", [q.reviewer.actor_id]); } });
+  const result = await processReportJob(job.id, {
+    afterStore: async () => {
+      await database().query(
+        "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='report.issue'",
+        [q.reviewer.actor_id],
+      );
+    },
+  });
   assert.equal("state" in result && result.state, "Failed");
   await assert.rejects(readOperation(q.reviewer, cmd.operation_id));
   await assert.rejects(readReportJob(q.reviewer, job.id));
   assert.equal((await readReport(q.p, r.id)).items[0].issues.length, 0);
-  assert.equal((await rows("SELECT count(*)::int n FROM ppo.report_render_attempts WHERE outcome='Durable'"))[0].n, 1);
+  assert.equal(
+    (
+      await rows(
+        "SELECT count(*)::int n FROM ppo.report_render_attempts WHERE outcome='Durable'",
+      )
+    )[0].n,
+    1,
+  );
 });
 
 test("P09 partial attendance review retains incomplete declarations without inventing missing quantities or Finance readiness", async () => {
   const q = await started();
-  await saveCompletionDraft(q.p, q.job.id, { ...draft(q.job), time_declaration: "Incomplete", material_declaration: "Incomplete", declaration_reason: "SYN quantities remain uncertain and must be completed by the original technician." });
-  const j = (await readFieldJob(q.p, q.job.id)).items[0], id = randomUUID(), co = await principal("coordinator");
-  await submitCompletion(q.p, j.id, { ...base(), id, attendance_id: j.attendance!.id, draft_revision_id: j.draft_revisions[0].id, expected_draft_version: j.draft!.version, expected_report_version: 0, expected_appointment_version: j.version, attendance_end_at: new Date().toISOString() });
+  await saveCompletionDraft(q.p, q.job.id, {
+    ...draft(q.job),
+    time_declaration: "Incomplete",
+    material_declaration: "Incomplete",
+    declaration_reason:
+      "SYN quantities remain uncertain and must be completed by the original technician.",
+  });
+  const j = (await readFieldJob(q.p, q.job.id)).items[0],
+    id = randomUUID(),
+    co = await principal("coordinator");
+  await submitCompletion(q.p, j.id, {
+    ...base(),
+    id,
+    attendance_id: j.attendance!.id,
+    draft_revision_id: j.draft_revisions[0].id,
+    expected_draft_version: j.draft!.version,
+    expected_report_version: 0,
+    expected_appointment_version: j.version,
+    attendance_end_at: new Date().toISOString(),
+  });
   let r = (await readReport(co, id)).items[0];
   await reviewReport(co, id, decision(r));
   r = (await readReport(co, id)).items[0];
   assert.equal(r.appointment.status, "Completed");
-  assert.equal(r.revisions[0].snapshot.completion.time_declaration, "Incomplete");
-  assert.equal(r.revisions[0].snapshot.completion.material_declaration, "Incomplete");
+  assert.equal(
+    r.revisions[0].snapshot.completion.time_declaration,
+    "Incomplete",
+  );
+  assert.equal(
+    r.revisions[0].snapshot.completion.material_declaration,
+    "Incomplete",
+  );
   assert.equal(r.revisions[0].snapshot.entries.length, 0);
-  assert.ok(r.follow_ups.some((x: {kind: string}) => x.kind === "RemainingWork"));
+  assert.ok(
+    r.follow_ups.some((x: { kind: string }) => x.kind === "RemainingWork"),
+  );
   const b = await presentationBytes(q.p, id, r.presentations[0].id);
   assert.match(b.html, /Time declaration remains incomplete/);
   assert.match(b.html, /Material declaration remains incomplete/);
@@ -686,13 +1011,38 @@ test("P09 partial attendance review retains incomplete declarations without inve
 });
 
 test("P09 actual template source changes after rendering retain the original attempt without release", async () => {
-  const q = await reviewed(), r = q.report;
-  await requestReportIssue(q.reviewer, r.id, { ...base(), expected_version: r.version, revision_id: r.revisions[0].id, review_id: r.reviews[0].id, template_id: r.template.id, template_version: r.template.version });
-  const job = (await readReport(q.reviewer, r.id)).items[0].jobs[0], path = "src/reports/render.ts", original = await readFile(path);
+  const q = await reviewed(),
+    r = q.report;
+  await requestReportIssue(q.reviewer, r.id, {
+    ...base(),
+    expected_version: r.version,
+    revision_id: r.revisions[0].id,
+    review_id: r.reviews[0].id,
+    template_id: r.template.id,
+    template_version: r.template.version,
+  });
+  const job = (await readReport(q.reviewer, r.id)).items[0].jobs[0],
+    path = "src/reports/render.ts",
+    original = await readFile(path);
   try {
-    const result = await processReportJob(job.id, { afterRender: async () => { await writeFile(path, Buffer.concat([original, Buffer.from("\n// SYN changed controlled template source during generation\n")])); } });
+    const result = await processReportJob(job.id, {
+      afterRender: async () => {
+        await writeFile(
+          path,
+          Buffer.concat([
+            original,
+            Buffer.from(
+              "\n// SYN changed controlled template source during generation\n",
+            ),
+          ]),
+        );
+      },
+    });
     assert.equal("state" in result && result.state, "StaleSource");
-    assert.equal((await readReport(q.reviewer, r.id)).items[0].issues.length, 0);
+    assert.equal(
+      (await readReport(q.reviewer, r.id)).items[0].issues.length,
+      0,
+    );
   } finally {
     await writeFile(path, original);
   }

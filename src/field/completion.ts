@@ -151,7 +151,7 @@ export async function saveCompletionDraft(
           !(completeCorrectionBaseline && e.supersedes_entry_id)
         )
           blocks.push(
-            "Evidence captured after an authority change requires review.",
+            "This evidence requires review against its original attendance authority.",
           );
         if (
           e.kind === "Checklist" &&
@@ -194,7 +194,7 @@ export async function saveCompletionDraft(
         (await currentCaptureState(c, p, ctx)) !== "Current" &&
         !completeCorrectionBaseline
       )
-        blocks.push("Current scope or pack authority requires review.");
+        blocks.push("New physical capture is not currently authorised; review the original attendance context.");
       for (const t of cmd.task_outcomes) {
         if (t.outcome !== "Complete")
           blocks.push("An authorised task remains incomplete.");

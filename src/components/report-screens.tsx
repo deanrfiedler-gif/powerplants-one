@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import Link from "next/link";
 import {
   api,
@@ -36,11 +36,12 @@ function Input({
   multiline?: boolean;
   type?: string;
 }) {
+  const id = useId();
   return (
-    <label className="report-field">
-      <span>{label}</span>
+    <div className="report-field">
+      <label htmlFor={id}>{label}</label>
       {options ? (
-        <select value={value} onChange={(e) => onChange(e.target.value)}>
+        <select id={id} value={value} onChange={(e) => onChange(e.target.value)}>
           {options.map((v) => (
             <option key={v} value={v}>
               {friendly(v)}
@@ -49,18 +50,20 @@ function Input({
         </select>
       ) : multiline ? (
         <textarea
+          id={id}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           rows={3}
         />
       ) : (
         <input
+          id={id}
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
         />
       )}
-    </label>
+    </div>
   );
 }
 function Synthetic() {
@@ -426,7 +429,8 @@ function ResponseForm({
                   if (selection === markSelection.current)
                     setFileError({ message: (error as Error).message });
                 } finally {
-                  if (selection === markSelection.current) setMarkLoading(false);
+                  if (selection === markSelection.current)
+                    setMarkLoading(false);
                 }
               }}
             />
@@ -455,7 +459,10 @@ function ResponseForm({
         value={captured}
         onChange={setCaptured}
       />
-      <p>Leave capture time blank to record the first save attempt. An uncertain retry retains that exact time.</p>
+      <p>
+        Leave capture time blank to record the first save attempt. An uncertain
+        retry retains that exact time.
+      </p>
       {markLoading && <p role="status">Checking the selected synthetic PNG…</p>}
       <ErrorNotice error={fileError ?? c.error} />
       <button disabled={c.busy || !!fileError || markLoading}>
@@ -490,8 +497,11 @@ export function ReportScreen({ id }: { id: string }) {
       );
       if (!res.ok) throw await res.json();
       const html = await res.text();
-      if (await sha256(html) !== v.content_hash)
-        throw { message: "The presented bytes differ from the exact report hash. Refresh and recover the original report." };
+      if ((await sha256(html)) !== v.content_hash)
+        throw {
+          message:
+            "The presented bytes differ from the exact report hash. Refresh and recover the original report.",
+        };
       setShown({ v, at: new Date().toISOString(), version: r!.version, html });
     } catch (e) {
       setError(e);
