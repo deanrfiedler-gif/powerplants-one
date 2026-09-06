@@ -1,6 +1,8 @@
 # PP-01 — Service API, operation and event contracts
 
-**Edition:** r10 · **Status:** Internal API contract; bounded P01–P09 subsets are implemented, with actual verification recorded separately. API-C19 and Finance remain P10. These are Powerplants One routes, never asserted MYOB endpoints.
+**Edition:** r11 · **Status:** Internal API contract; bounded P01–P09 subsets are implemented, with actual verification recorded separately. API-C19 and Finance remain P10. These are Powerplants One routes, never asserted MYOB endpoints.
+
+BP-03 I1 adds only the explicitly identified opportunity amendment below; its actual verification/publication is in the [I1 handover](../delivery/crm-i1-handover.md).
 
 [Architecture](../architecture/BP-02-platform-architecture.md) · [Dictionary](service-data-dictionary.md) · [Service specification](../blueprints/BP-07-service-operations.md).
 

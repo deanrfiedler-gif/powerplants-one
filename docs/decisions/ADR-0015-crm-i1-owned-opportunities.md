@@ -1,6 +1,6 @@
 # ADR-0015 — BP-03 I1 owned opportunities
 
-**Date:** 6 September 2026 · **Status:** Implementation in progress, verification outstanding · **Authority:** issue #39, linked to PPO-009 / #9. Private synthetic prototype only.
+**Date:** 6 September 2026 · **Status:** Implemented bounded decision; actual verification/publication in I1 handover · **Authority:** issue #39, linked to PPO-009 / #9. Private synthetic prototype only.
 
 Retain the maintained TypeScript/Next.js/PostgreSQL stack and exact dependencies. Add a CRM module rather than another account master, generic entity store, Activity lifecycle or command framework. Existing Organisation/Person/Site and the shared permanent identity/reference allocator remain authoritative. I1 is a BP-03-local sequence label.
 

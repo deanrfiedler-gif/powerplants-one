@@ -1,6 +1,6 @@
 # CRM — Pipedrive parity and evidence assessment
 
-**Revision:** r01 · **Date:** 6 September 2026 · **Status:** Bounded discovery; account context and exhaustive parity unverified · **Owner:** Dean Fiedler, private prototype · **Workstream:** PPO-009 / issue #9.
+**Revision:** r02 · **Date:** 6 September 2026 · **Status:** Bounded discovery; account context and exhaustive parity unverified · **Owner:** Dean Fiedler, private prototype · **Workstream:** PPO-009 / issue #9.
 
 [BP-03](BP-03-crm.md) owns target journeys/contracts. This register expands the original PAR-01–PAR-18 without changing their identities. All dispositions are **proposed**, not accepted. Preserve means retain the required outcome/history; improve means retain it with an evidenced improvement; integrate means keep an authoritative external capability; defer means retain it in its operational tool pending a later decision. No retirement is approved. Proposed criticality describes the impact of losing the outcome, not measured usage or an approved priority.
 
@@ -244,3 +244,7 @@ All checked 6 September 2026. The statements below are product documentation, no
 ## I1 implementation distinction
 
 The separately authorised [I1 implementation](../delivery/crm-i1-handover.md) exercises only CRM-01/02/03 and partial CRM-08, with PAR-01/03/05/15 foundations, in a fictional owned-opportunity journey. Actual checks/publication are recorded there; this assessment does not promote an unmerged branch or a component test to parity acceptance. All PAR-01–PAR-18 dispositions and account evidence requests remain proposed/open. No new Pipedrive/account read, import, retirement or cutover follows from I1. The original E1–E5 discovery observations retain their dates and limits.
+
+## I1 synthetic implementation evidence
+
+The separately invoked [I1 implementation](../delivery/crm-i1-handover.md) exercises bounded Opportunity/Activity ownership, progression, persistence and permission components associated with PAR-01/03/05/15. Its successful component tests and actual publication have their own source/head/run provenance. This does not establish account configuration, change any PAR disposition to accepted, close D-013/D-025, prove migration parity or pass full AT-25. The remaining parity assessment above is proposed. I2's Board/Grid starter is preparation only.

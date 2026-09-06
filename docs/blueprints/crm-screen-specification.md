@@ -1,6 +1,6 @@
 # CRM — Screen specification and synthetic walkthrough
 
-**Revision:** r02 · **Date:** 6 September 2026 · **Status:** Design only; no persistence, permission, integration, offline or business-acceptance claim. **Parent:** BP-03 / PPO-009. **Owner:** Dean Fiedler, private prototype.
+**Revision:** r03 · **Date:** 6 September 2026 · **Status:** Design only; no persistence, permission, integration, offline or business-acceptance claim. **Parent:** BP-03 / PPO-009. **Owner:** Dean Fiedler, private prototype.
 
 [Open the standalone wireframe source](crm-wireframes.html) · [BP-03](BP-03-crm.md) · [Implementation sequence](../delivery/crm-implementation-plan.md) · [Handover and visual evidence](../delivery/crm-discovery-handover.md).
 
@@ -65,3 +65,7 @@ The screenshot walkthrough provides reviewable appearance/state examples for CRM
 ## I1 implemented-subset distinction
 
 [BP-03 I1](../delivery/crm-i1-handover.md) implements only an online Sales worklist, New opportunity, Opportunity detail/qualification/next-action forms, and links to canonical Organisation/Person/Site and existing Activity detail/completion screens. Its physical contract is one fictional Enquiry → Qualified pipeline with Open outcome throughout, fixed customer/owner context, unknown reasons and explicit due-needed. It has no board, lead, closing/transfer, account plan, file, revenue/probability, export or CRM offline UI. Broad screen definitions and checked illustrative wireframes above remain design evidence for later work. I1's actual runtime original captures, source-head/executed-tree and browser results are separately recorded in its handover; phone emulation does not prove real hardware acceptance.
+
+## I1 runtime evidence distinction
+
+The bounded C01/C03/C05/C07 journey is implemented in the online Sales worklist, New opportunity, Opportunity detail and existing Activity screens. The [I1 handover](../delivery/crm-i1-handover.md) records actual DB/HTTP/browser/restart checks and original 1440×1000, 390×844 and 320px runtime captures, separately from the illustrative wireframes and branded C02 preview above. I1 uses Enquiry → Qualified/Open, no commercial fields, current scoped authority and deliberate qualification/action commands. C02 Board/Grid remains prepared I2 work; C04 account-plan and later domain journeys remain proposed. Full AT-25, operational parity, real mobile hardware and CRM offline acceptance are unchanged.

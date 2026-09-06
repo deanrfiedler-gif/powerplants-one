@@ -1,6 +1,6 @@
 # CRM — Ordered implementation sequence
 
-**Revision:** r03 · **Date:** 6 September 2026 · **Status:** I1 separately authorised and under verification; brand UI handover retained for bounded I2 preparation · **Parent workstream:** PPO-009 / issue #9. **Owner:** Dean Fiedler, private prototype.
+**Revision:** r04 · **Date:** 6 September 2026 · **Status:** I1 implemented and component-tested; publication in its handover; bounded I2 prepared only · **Parent workstream:** PPO-009 / issue #9. **Owner:** Dean Fiedler, private prototype.
 
 [BP-03](../blueprints/BP-03-crm.md) · [Parity](../blueprints/crm-parity.md) · [First implementation starter](crm-first-increment-starter.md) · [Handover](crm-discovery-handover.md).
 

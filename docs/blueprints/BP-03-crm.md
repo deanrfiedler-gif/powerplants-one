@@ -2,8 +2,8 @@
 
 | Document control | Value |
 |---|---|
-| Revision / date | r02 / 6 September 2026 |
-| Status | Broader design proposed; bounded I1 code under verification; owner acceptance outstanding |
+| Revision / date | r03 / 6 September 2026 |
+| Status | Broader design proposed; I1 implemented and component-tested; actual publication in handover; owner acceptance outstanding |
 | Owner | Dean Fiedler — personal private prototype |
 | Workstream | PPO-009 / [issue #9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9); distinct from PP-01 P09 |
 | Authority | Discovery authorised design only; separate I1 invocation authorises the bounded synthetic implementation in #39 |
@@ -12,7 +12,7 @@
 
 [Parity and evidence](crm-parity.md) · [Screens and walkthrough](crm-screen-specification.md) · [Implementation sequence](../delivery/crm-implementation-plan.md) · [First starter](../delivery/crm-first-increment-starter.md) · [Handover and publication](../delivery/crm-discovery-handover.md).
 
-## I1 implementation amendment — verification in progress
+## I1 implemented subset and publication evidence
 
 The separately authorised [I1 issue #39](https://github.com/deanrfiedler-gif/powerplants-one/issues/39) / [PR #40](https://github.com/deanrfiedler-gif/powerplants-one/pull/40) builds only owned opportunity and qualification follow-up. [I1 handover](../delivery/crm-i1-handover.md), [ADR-0015](../decisions/ADR-0015-crm-i1-owned-opportunities.md) and its external publication record govern actual delivered status. This amendment does not mark an unmerged branch complete.
 
