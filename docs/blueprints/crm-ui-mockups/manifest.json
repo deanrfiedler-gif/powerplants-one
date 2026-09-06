@@ -1,0 +1,45 @@
+{
+  "revision": "r01",
+  "date": "2026-09-06",
+  "scope": "Synthetic design assets; not application acceptance",
+  "base_commit": "ddc1a3cce769e011939e621d8d5f176542f48f8c",
+  "assets": [
+    {
+      "path": "docs/standards/ui-assets/powerplants-logo-green-white.png",
+      "source_filename": "GEN_LGO_PPALogoPrimaryTransparent_v01_ISS.png",
+      "bytes": 315536,
+      "sha256": "8d12f0ecc394950cd9eb66964c588efb71c8e6f445390336c245c3f6712b9694",
+      "treatment": "Original bytes preserved"
+    },
+    {
+      "path": "docs/blueprints/crm-ui-mockups/board.png",
+      "source_filename": "ppo-crm-board-mockup.png",
+      "bytes": 224794,
+      "sha256": "d2b41d32992966adaae0f0e229404938e50c367ebd183ec249d3644161b96184",
+      "treatment": "Original bytes preserved"
+    },
+    {
+      "path": "docs/blueprints/crm-ui-mockups/grid.png",
+      "source_filename": "ppo-crm-grid-mockup.png",
+      "bytes": 285778,
+      "sha256": "5be004a1d4e4aed552c4b82b78f7344bc05ecb5423f72971864290e15c392bd3",
+      "treatment": "Original bytes preserved"
+    }
+  ],
+  "brand_pdf": {
+    "filename": "PPA_BRAND_GUIDELINES_compressed.pdf",
+    "bytes": 27591152,
+    "sha256": "335d3049bc72783799315d4790bd56b04e928acd0e1c2c81d8099cec2f2b8fd3",
+    "retained_in_repository": false
+  },
+  "interactive_export": {
+    "path": "docs/blueprints/crm-board-grid-mockup.html",
+    "sha256": "ada9e0a8e8c3bfa2ad615264dc6b7aa643a1f9ff054b4a6bde1922aa5fb240b3",
+    "adaptation": "Standalone document; same fixture and UI; embedded subset of original Lucide 1.17.0 geometry replaces host icon runtime; no network/storage"
+  },
+  "capture_environment": {
+    "browser": "Chrome for Testing headless shell 151.0.7922.34",
+    "content_width": 1800,
+    "source": "Original conversation preview; export checked separately"
+  }
+}

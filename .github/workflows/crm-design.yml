@@ -4,6 +4,9 @@ on:
     paths:
       - 'docs/blueprints/BP-03-crm.md'
       - 'docs/blueprints/crm-*'
+      - 'docs/blueprints/crm-ui-mockups/**'
+      - 'docs/standards/ui-style-specification.md'
+      - 'docs/standards/ui-assets/**'
       - 'docs/delivery/crm-*'
       - '.github/workflows/crm-design.yml'
   push:
@@ -11,6 +14,9 @@ on:
     paths:
       - 'docs/blueprints/BP-03-crm.md'
       - 'docs/blueprints/crm-*'
+      - 'docs/blueprints/crm-ui-mockups/**'
+      - 'docs/standards/ui-style-specification.md'
+      - 'docs/standards/ui-assets/**'
       - 'docs/delivery/crm-*'
       - '.github/workflows/crm-design.yml'
   workflow_dispatch:
@@ -36,7 +42,9 @@ jobs:
       - name: Check standalone design and capture desktop and phone
         env:
           PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
-        run: node docs/blueprints/crm-design-check.mjs
+        run: |
+          node docs/blueprints/crm-design-check.mjs
+          node docs/blueprints/crm-ui-design-check.mjs
       - name: Retain synthetic design evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
