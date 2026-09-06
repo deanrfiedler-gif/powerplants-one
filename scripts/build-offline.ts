@@ -34,6 +34,14 @@ for (const name of modules) {
   await writeFile(filename, output);
 }
 
-for (const file of ["public/offline/index.html", "public/offline/style.css", "src/offline/worker.js"]) digest.update(await readFile(file));
-const worker = (await readFile("src/offline/worker.js", "utf8")).replace("__BUILD_HASH__", digest.digest("hex"));
+for (const file of [
+  "public/offline/index.html",
+  "public/offline/style.css",
+  "src/offline/worker.js",
+])
+  digest.update(await readFile(file));
+const worker = (await readFile("src/offline/worker.js", "utf8")).replace(
+  "__BUILD_HASH__",
+  digest.digest("hex"),
+);
 await writeFile("public/offline/sw.js", worker);

@@ -61,9 +61,14 @@ test("P08 additive P07 upgrade preserves attendance, receipt, bytes and revoked 
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(7);
   await seed(7);
-  const q = await started(), image = await photo(q.job,q.p);
-  const fileBefore = await rows("SELECT * FROM ppo.field_attachments ORDER BY id");
-  const receiptsBefore = await rows("SELECT * FROM ppo.operation_receipts ORDER BY id");
+  const q = await started(),
+    image = await photo(q.job, q.p);
+  const fileBefore = await rows(
+    "SELECT * FROM ppo.field_attachments ORDER BY id",
+  );
+  const receiptsBefore = await rows(
+    "SELECT * FROM ppo.operation_receipts ORDER BY id",
+  );
   await database().query(
     "UPDATE ppo.permission_grants SET valid_to='2026-09-01' WHERE user_id=$1 AND capability='field.start.own'",
     [q.p.actor_id],
@@ -74,9 +79,15 @@ test("P08 additive P07 upgrade preserves attendance, receipt, bytes and revoked 
   await migrate();
   await seed();
   assert.deepEqual(await rows("SELECT * FROM ppo.field_attendances"), before);
-  assert.deepEqual(await rows("SELECT * FROM ppo.field_attachments ORDER BY id"),fileBefore);
-  assert.deepEqual(await rows("SELECT * FROM ppo.operation_receipts ORDER BY id"),receiptsBefore);
-  assert.deepEqual((await attachmentBytes(q.p,image.id)).bytes,image.bytes);
+  assert.deepEqual(
+    await rows("SELECT * FROM ppo.field_attachments ORDER BY id"),
+    fileBefore,
+  );
+  assert.deepEqual(
+    await rows("SELECT * FROM ppo.operation_receipts ORDER BY id"),
+    receiptsBefore,
+  );
+  assert.deepEqual((await attachmentBytes(q.p, image.id)).bytes, image.bytes);
   assert.equal(
     (await rows("SELECT count(*)::int n FROM public.ppo_migrations"))[0].n,
     8,
@@ -487,7 +498,15 @@ test("P08 withdrawn pack preserves started factual capture as review-required au
     (await fresh(q.p, q.job.id)).entries[0].authority_state,
     "ReviewRequired",
   );
-  assert.equal((await rows("SELECT count(*)::int n FROM ppo.field_follow_ups WHERE entry_id=$1", [String(op.payload.id)]))[0].n,1);
+  assert.equal(
+    (
+      await rows(
+        "SELECT count(*)::int n FROM ppo.field_follow_ups WHERE entry_id=$1",
+        [String(op.payload.id)],
+      )
+    )[0].n,
+    1,
+  );
 });
 test("P08 actor-wide time overlap and immutable successor evidence remain enforced through sync", async () => {
   const q = await started(),
@@ -567,30 +586,239 @@ for (const table of [
   });
 }
 
+for (const change of ["reassign", "amend", "scope"] as const)
+  test(`P08 queued ${change} refuses stale start and preserves exact original evidence in owned recovery`, async () => {
+    const q = await acknowledged(),
+      p = await principal("assigned-technician"),
+      co = await principal(),
+      j = await fresh(p, q.pack.appointment_id),
+      grant = await downloadContext(p, j.id, {}),
+      start = operation(p, j, "Start", startInput(j)),
+      capture = operation(
+        p,
+        j,
+        "Capture",
+        {
+          ...entry({ ...j, attendance: { id: randomUUID() } }),
+          attendance_id: { operation_id: start.operation_id },
+        },
+        [start.operation_id],
+      );
+    const original = JSON.stringify([start, capture]),
+      issuedBytes = (await readBundle(co, q.pack.issues[0].manifest)).pdf;
+    if (change === "reassign") {
+      const a = (await readAppointment(co, j.id)).items[0];
+      await moveAppointment(co, j.id, {
+        ...base(),
+        expected_version: a.version,
+        expected_work_order_version: a.work_order_version,
+        expected_assignment_version: a.assignment_version,
+        scope_revision_id: a.scope_revision_id,
+        scope_version: a.scope_version,
+        policy_version_id: a.policy_version_id,
+        scheduling_policy_id: fixtureId("a0"),
+        scheduling_policy_version: 1,
+        start_at: new Date(
+          new Date(a.start_at).getTime() + 3600000,
+        ).toISOString(),
+        end_at: new Date(new Date(a.end_at).getTime() + 3600000).toISOString(),
+        crew: [5, 2].map((n, i) => ({
+          resource_id: fixtureId("a4", n),
+          resource_version: 1,
+          calendar_version: 1,
+          crew_role: i ? "Technician" : "Lead",
+          travel_before_minutes: 0,
+          travel_after_minutes: 0,
+          travel_reason: "SYN explicit zero for controlled reassignment",
+        })),
+      });
+    } else if (change === "amend") {
+      const pack = (await readPack(co, q.pack.id)).items[0];
+      await revisePack(co, pack.id, {
+        ...base(),
+        expected_version: pack.version,
+        content: content(),
+      });
+    } else {
+      const a = (await readAppointment(co, j.id)).items[0],
+        w = (await readWorkOrder(co, a.work_order_id)).items[0];
+      await saveWorkScope(
+        co,
+        w.id,
+        {
+          ...base(),
+          expected_version: w.version,
+          change_reason: "SYN queued old scope requires review",
+          scope: {
+            summary: "SYN successor draft only",
+            exclusions: "No intervention",
+            diagnostic_limit: "External observation only",
+            pending_account_plan: "SYN Finance review separate",
+            authority_evidence: {
+              title: "SYN draft authority",
+              content_text: "SYN proposal only",
+              source_reference: "SYN-PPO-P08",
+              source_version: "1",
+            },
+            coverage: {
+              status: "Disputed",
+              agreement_reference: null,
+              source_version: null,
+              effective_from: null,
+              effective_to: null,
+              assessment: "SYN review",
+              reason: "SYN review",
+              charging_route: "FinanceReview",
+            },
+            items: [
+              {
+                task_kind: "Inspection",
+                task_description: "SYN proposed observation",
+                expected_outcome: "Record observations",
+                completion_requirements: ["SYN stop before intervention"],
+                required_skill_codes: ["SYN-VISUAL"],
+                shutdown_condition: null,
+                access_condition: null,
+                assets: [
+                  {
+                    asset_id: fixtureId("80"),
+                    configuration_id: null,
+                    identification_plan: null,
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        true,
+      );
+    }
+    const outcomes = (await syncBatch(p, { operations: [capture, start] }))
+      .outcomes;
+    assert.notEqual(outcomes[1].state, "ServerSaved");
+    assert.equal(outcomes[0].code, "DependencyPending");
+    assert.equal(
+      (await rows("SELECT count(*)::int n FROM ppo.field_attendances"))[0].n,
+      0,
+    );
+    assert.equal(JSON.stringify([start, capture]), original);
+    await assert.rejects(
+      preserveRecovery(p, {
+        grant_id: grant.recovery.id,
+        token: "0".repeat(64),
+        operation: capture,
+      }),
+      code("RecordUnavailable"),
+    );
+    const saved = await preserveRecovery(p, {
+      grant_id: grant.recovery.id,
+      token: grant.recovery.token,
+      operation: capture,
+    });
+    assert.equal(saved.normal_acceptance, false);
+    assert.deepEqual(
+      (await readBundle(co, q.pack.issues[0].manifest)).pdf,
+      issuedBytes,
+    );
+    assert.equal(
+      (
+        await rows(
+          "SELECT envelope FROM ppo.offline_recovery_cases WHERE id=$1",
+          [saved.case_id],
+        )
+      )[0].envelope.authority.issue_hash,
+      capture.authority.issue_hash,
+    );
+  });
 
-for(const change of ["reassign","amend","scope"] as const) test(`P08 queued ${change} refuses stale start and preserves exact original evidence in owned recovery`,async()=>{
- const q=await acknowledged(),p=await principal("assigned-technician"),co=await principal(),j=await fresh(p,q.pack.appointment_id),grant=await downloadContext(p,j.id,{}),start=operation(p,j,"Start",startInput(j)),capture=operation(p,j,"Capture",{...entry({...j,attendance:{id:randomUUID()}}),attendance_id:{operation_id:start.operation_id}},[start.operation_id]);
- const original=JSON.stringify([start,capture]),issuedBytes=(await readBundle(co,q.pack.issues[0].manifest)).pdf;
- if(change==="reassign"){
-  const a=(await readAppointment(co,j.id)).items[0];await moveAppointment(co,j.id,{...base(),expected_version:a.version,expected_work_order_version:a.work_order_version,expected_assignment_version:a.assignment_version,scope_revision_id:a.scope_revision_id,scope_version:a.scope_version,policy_version_id:a.policy_version_id,scheduling_policy_id:fixtureId("a0"),scheduling_policy_version:1,start_at:new Date(new Date(a.start_at).getTime()+3600000).toISOString(),end_at:new Date(new Date(a.end_at).getTime()+3600000).toISOString(),crew:[5,2].map((n,i)=>({resource_id:fixtureId("a4",n),resource_version:1,calendar_version:1,crew_role:i?"Technician":"Lead",travel_before_minutes:0,travel_after_minutes:0,travel_reason:"SYN explicit zero for controlled reassignment"}))});
- }else if(change==="amend"){
-  const pack=(await readPack(co,q.pack.id)).items[0];await revisePack(co,pack.id,{...base(),expected_version:pack.version,content:content()});
- }else{
-  const a=(await readAppointment(co,j.id)).items[0],w=(await readWorkOrder(co,a.work_order_id)).items[0];await saveWorkScope(co,w.id,{...base(),expected_version:w.version,change_reason:"SYN queued old scope requires review",scope:{summary:"SYN successor draft only",exclusions:"No intervention",diagnostic_limit:"External observation only",pending_account_plan:"SYN Finance review separate",authority_evidence:{title:"SYN draft authority",content_text:"SYN proposal only",source_reference:"SYN-PPO-P08",source_version:"1"},coverage:{status:"Disputed",agreement_reference:null,source_version:null,effective_from:null,effective_to:null,assessment:"SYN review",reason:"SYN review",charging_route:"FinanceReview"},items:[{task_kind:"Inspection",task_description:"SYN proposed observation",expected_outcome:"Record observations",completion_requirements:["SYN stop before intervention"],required_skill_codes:["SYN-VISUAL"],shutdown_condition:null,access_condition:null,assets:[{asset_id:fixtureId("80"),configuration_id:null,identification_plan:null}]}]}},true);
- }
- const outcomes=(await syncBatch(p,{operations:[capture,start]})).outcomes;assert.notEqual(outcomes[1].state,"ServerSaved");assert.equal(outcomes[0].code,"DependencyPending");assert.equal((await rows("SELECT count(*)::int n FROM ppo.field_attendances"))[0].n,0);assert.equal(JSON.stringify([start,capture]),original);await assert.rejects(preserveRecovery(p,{grant_id:grant.recovery.id,token:"0".repeat(64),operation:capture}),code("RecordUnavailable"));const saved=await preserveRecovery(p,{grant_id:grant.recovery.id,token:grant.recovery.token,operation:capture});assert.equal(saved.normal_acceptance,false);assert.deepEqual((await readBundle(co,q.pack.issues[0].manifest)).pdf,issuedBytes);assert.equal((await rows("SELECT envelope FROM ppo.offline_recovery_cases WHERE id=$1",[saved.case_id]))[0].envelope.authority.issue_hash,capture.authority.issue_hash);
+test("P08 restricted PNG storage-success/database-failure keeps original hash and recovers one case and Activity", async () => {
+  const q = await started(),
+    grant = await downloadContext(q.p, q.job.id, {}),
+    bytes = png(),
+    op = operation(
+      q.p,
+      q.job,
+      "AttachmentUpload",
+      {
+        ...base(),
+        expected_version: 1,
+        sha256: digest(bytes),
+        byte_count: bytes.length,
+      },
+      [],
+      randomUUID(),
+    ),
+    input = {
+      grant_id: grant.recovery.id,
+      token: grant.recovery.token,
+      operation: op,
+      content_base64: bytes.toString("base64"),
+    };
+  const before = (await rows("SELECT count(*)::int n FROM ppo.activities"))[0]
+    .n;
+  await database().query(
+    "CREATE FUNCTION ppo.fail_recovery() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'SYN late recovery failure'; END $$; CREATE TRIGGER fail_recovery BEFORE INSERT ON ppo.offline_recovery_cases FOR EACH ROW EXECUTE FUNCTION ppo.fail_recovery()",
+  );
+  try {
+    await assert.rejects(preserveRecovery(q.p, input));
+    assert.equal(
+      (await rows("SELECT count(*)::int n FROM ppo.offline_recovery_cases"))[0]
+        .n,
+      0,
+    );
+    assert.equal(
+      (await rows("SELECT count(*)::int n FROM ppo.activities"))[0].n,
+      before,
+    );
+  } finally {
+    await database().query(
+      "DROP TRIGGER fail_recovery ON ppo.offline_recovery_cases; DROP FUNCTION ppo.fail_recovery()",
+    );
+  }
+  const saved = await preserveRecovery(q.p, input);
+  assert.deepEqual(await preserveRecovery(q.p, input), saved);
+  assert.deepEqual(
+    await recoveryBytes(await principal(), String(saved.case_id)),
+    bytes,
+  );
+  assert.equal(
+    (await rows("SELECT count(*)::int n FROM ppo.activities"))[0].n,
+    before + 1,
+  );
+  assert.equal(
+    (
+      await rows(
+        "SELECT count(*)::int n FROM ppo.operation_receipts WHERE operation_id=$1",
+        [op.operation_id],
+      )
+    )[0].n,
+    0,
+  );
 });
 
-test("P08 restricted PNG storage-success/database-failure keeps original hash and recovers one case and Activity",async()=>{
- const q=await started(),grant=await downloadContext(q.p,q.job.id,{}),bytes=png(),op=operation(q.p,q.job,"AttachmentUpload",{...base(),expected_version:1,sha256:digest(bytes),byte_count:bytes.length},[],randomUUID()),input={grant_id:grant.recovery.id,token:grant.recovery.token,operation:op,content_base64:bytes.toString("base64")};
- const before=(await rows("SELECT count(*)::int n FROM ppo.activities"))[0].n;await database().query("CREATE FUNCTION ppo.fail_recovery() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'SYN late recovery failure'; END $$; CREATE TRIGGER fail_recovery BEFORE INSERT ON ppo.offline_recovery_cases FOR EACH ROW EXECUTE FUNCTION ppo.fail_recovery()");
- try{await assert.rejects(preserveRecovery(q.p,input));assert.equal((await rows("SELECT count(*)::int n FROM ppo.offline_recovery_cases"))[0].n,0);assert.equal((await rows("SELECT count(*)::int n FROM ppo.activities"))[0].n,before);}finally{await database().query("DROP TRIGGER fail_recovery ON ppo.offline_recovery_cases; DROP FUNCTION ppo.fail_recovery()");}
- const saved=await preserveRecovery(q.p,input);assert.deepEqual(await preserveRecovery(q.p,input),saved);assert.deepEqual(await recoveryBytes(await principal(),String(saved.case_id)),bytes);assert.equal((await rows("SELECT count(*)::int n FROM ppo.activities"))[0].n,before+1);assert.equal((await rows("SELECT count(*)::int n FROM ppo.operation_receipts WHERE operation_id=$1",[op.operation_id]))[0].n,0);
-});
-
-
-test("P08 expired prior recovery capability cannot preserve or disclose original evidence",async()=>{
- const q=await started(),grant=await downloadContext(q.p,q.job.id,{}),expired=randomUUID(),op=operation(q.p,q.job,"Capture",entry(q.job));
- await database().query("INSERT INTO ppo.offline_recovery_grants(id,workspace_id,actor_id,company_id,site_id,appointment_id,owner_id,token_hash,authority,issued_at,expires_at) SELECT $1,workspace_id,actor_id,company_id,site_id,appointment_id,owner_id,$2,authority,clock_timestamp()-interval '8 days',clock_timestamp()-interval '1 day' FROM ppo.offline_recovery_grants WHERE id=$3",[expired,digest(Buffer.from("1".repeat(64))),grant.recovery.id]);
- await assert.rejects(preserveRecovery(q.p,{grant_id:expired,token:"1".repeat(64),operation:op}),code("RecordUnavailable"));assert.equal((await rows("SELECT count(*)::int n FROM ppo.offline_recovery_cases"))[0].n,0);assert.equal((await rows("SELECT count(*)::int n FROM ppo.field_entries"))[0].n,0);
+test("P08 expired prior recovery capability cannot preserve or disclose original evidence", async () => {
+  const q = await started(),
+    grant = await downloadContext(q.p, q.job.id, {}),
+    expired = randomUUID(),
+    op = operation(q.p, q.job, "Capture", entry(q.job));
+  await database().query(
+    "INSERT INTO ppo.offline_recovery_grants(id,workspace_id,actor_id,company_id,site_id,appointment_id,owner_id,token_hash,authority,issued_at,expires_at) SELECT $1,workspace_id,actor_id,company_id,site_id,appointment_id,owner_id,$2,authority,clock_timestamp()-interval '8 days',clock_timestamp()-interval '1 day' FROM ppo.offline_recovery_grants WHERE id=$3",
+    [expired, digest(Buffer.from("1".repeat(64))), grant.recovery.id],
+  );
+  await assert.rejects(
+    preserveRecovery(q.p, {
+      grant_id: expired,
+      token: "1".repeat(64),
+      operation: op,
+    }),
+    code("RecordUnavailable"),
+  );
+  assert.equal(
+    (await rows("SELECT count(*)::int n FROM ppo.offline_recovery_cases"))[0].n,
+    0,
+  );
+  assert.equal(
+    (await rows("SELECT count(*)::int n FROM ppo.field_entries"))[0].n,
+    0,
+  );
 });

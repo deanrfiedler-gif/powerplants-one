@@ -27,7 +27,13 @@ async function call(cookie: string, path: string, body?: unknown) {
   });
   return {
     status: r.status,
-    body: await r.text().then(text => { try { return JSON.parse(text); } catch { return { text }; } }),
+    body: await r.text().then((text) => {
+      try {
+        return JSON.parse(text);
+      } catch {
+        return { text };
+      }
+    }),
     cache: r.headers.get("cache-control"),
   };
 }

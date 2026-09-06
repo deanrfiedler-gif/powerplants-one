@@ -1,6 +1,6 @@
 # ADR-0013 — P08 durable offline evidence and restricted recovery
 
-**Date:** 6 September 2026 · **Status:** Implementation in progress, verification pending · **Authority:** P08 issue #34. Synthetic local prototype only.
+**Date:** 6 September 2026 · **Status:** Implemented for the synthetic prototype; verification/publication in P08 handover · **Authority:** P08 issue #34. Synthetic local prototype only.
 
 Retain exact dependencies and P07 domain commands. A small TypeScript-generated static field shell at `/offline/` has a service worker scoped to that directory. Its cache contains only an explicit versioned shell allowlist, never API responses, Finance pages, issued files or personal data. IndexedDB separates permitted context (at most two explicit jobs, 24-hour simulated freshness), original immutable operation envelopes, local evidence/PNG bytes and mutable sending/receipt/lease metadata. Offline start and acknowledgement remain intents. P09 response/submission/report and P10 Finance are absent.
 

@@ -1,0 +1,75 @@
+{
+  "scope": "Original P08 review/failure evidence; final exact-head/merged-main evidence is in the external publication record",
+  "archive": {
+    "filename": "P08-review-originals.zip",
+    "library_file_id": "libfile_e2619733cd60819198f99d3bf87e1c4b",
+    "byte_count": 26335645,
+    "sha256": "d10d2722465de100c433d3f34939428a8aa491cf4e9b9edf0fff6db3d213a9ef",
+    "original_files": 168,
+    "per_file_manifest": "manifest.json inside the original archive"
+  },
+  "runs": [
+    {
+      "directory": "p08-run4",
+      "run_id": 34004021911,
+      "conclusion": "failure",
+      "artifact_id": 9980605638,
+      "artifact_bytes": 76974774,
+      "artifact_sha256": "2f986b277c0336f4b6418f23714d315ddcb28b5ef32a9395989f82ac976cf909"
+    },
+    {
+      "directory": "p08-run5",
+      "run_id": 34004451299,
+      "conclusion": "failure",
+      "artifact_id": 9980762167,
+      "artifact_bytes": 81863762,
+      "artifact_sha256": "e6d30f589777cd29e830f742c9bb5d503bea1b4cd9982277de51d815cd417355"
+    },
+    {
+      "directory": "p08-run6",
+      "run_id": 34005653711,
+      "conclusion": "failure",
+      "artifact_id": 9981121009,
+      "artifact_bytes": 72379545,
+      "artifact_sha256": "3467cb380a81f2f704e01d1cd77417f950ebad4238b7b66ddb7efdbe20b59f73"
+    },
+    {
+      "directory": "p08-run7",
+      "run_id": 34005733392,
+      "conclusion": "failure",
+      "artifact_id": 9981148585,
+      "artifact_bytes": 70011280,
+      "artifact_sha256": "c922407f72b7b9d5dcbb12f70f47db9b6d12db87a369f0fa87e13cd3311fe5a5"
+    }
+  ],
+  "provenance": [
+    {
+      "run_id": "34004021911",
+      "run_attempt": "1",
+      "source_head": "669d5262ca9c71417a4e02c2a70a45944e51abb4",
+      "source_tree": "33fd0c402474658510deb2f358ea0ac133bb1e53",
+      "executed_checkout": "136e0489b6464891fbcc4b8fe9c63f9816c36d8d"
+    },
+    {
+      "run_id": "34004451299",
+      "run_attempt": "1",
+      "source_head": "154ee8aff401b5babe3404ed4dca73d76b7971e5",
+      "source_tree": "e1090106f26fafd4ab56dcf7c387aef0194f958a",
+      "executed_checkout": "7d6d09f10b189505cba77991fe46ab0e0040118f"
+    },
+    {
+      "run_id": "34005653711",
+      "run_attempt": "1",
+      "source_head": "78c6025d40b00863d11f2a90bf66eacabd28e430",
+      "source_tree": "2b95c3510435ccc6cb510f08aa084033178b6402",
+      "executed_checkout": "2b2373f2b359e4db268d0b2afe9a039a63530268"
+    },
+    {
+      "run_id": "34005733392",
+      "run_attempt": "1",
+      "source_head": "2c67e940b49abbd6038ddc002ed2c2020ca087d0",
+      "source_tree": "b1476fda4746019bad6f10b3fc4b95a9c4fdf5ef",
+      "executed_checkout": "d05b9587cbee7f9733b0026093abe907af7bfc4b"
+    }
+  ]
+}

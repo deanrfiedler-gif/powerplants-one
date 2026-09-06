@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 6 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P08 implementation and verification in progress; final publication evidence linked from the P08 handover. PP-01 remains incomplete.
+**Updated:** 6 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P08 implemented; final verification/publication evidence linked from the P08 handover. PP-01 remains incomplete.
 
 ## Current direction
 

@@ -45,9 +45,6 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Static, unit and build checks
         run: npm run check
-      - name: Prepare separate review copies with pinned formatter
-        if: always()
-        run: node --import tsx scripts/format-review.ts
       - name: Configure disposable loopback database
         run: |
           cp .env.example .env.local
