@@ -1,19 +1,160 @@
 import assert from "node:assert/strict";
-import {test,beforeEach,after} from "node:test";
-import {randomUUID} from "node:crypto";
-import {reset} from "../../scripts/database";
-import {database,closeDatabase} from "../../src/platform/database";
-import {localConfig} from "../../src/platform/config";
-import {syncBatch} from "../../src/offline/server";
-import {downloadContext,preserveRecovery} from "../../src/offline/recovery";
-import {readReport,amendReport} from "../../src/reports/service";
-import {readFieldJob} from "../../src/field/reads";
-import {started,draft,png,base} from "../helpers/field";
-import {reportIssued,response} from "../helpers/reports";
-import {operation,rehash} from "../helpers/offline";
-import {digest} from "../../src/documents/store";
-if(localConfig().database_name!=="ppo_synthetic_test")throw Error("Use disposable database");
-process.env.PPO_ALLOW_RESET="dispose-synthetic";process.env.PPO_RESET_DATABASE="ppo_synthetic_test";beforeEach(reset);after(closeDatabase);
-test("P09 offline exact draft dependency remains immutable and submission retries recover the original receipt",async()=>{const q=await started(),d=operation(q.p,q.job,"CompletionDraft",draft(q.job)),s=operation(q.p,q.job,"SubmitCompletion",{...base(),id:randomUUID(),attendance_id:q.job.attendance!.id,draft_revision_id:{operation_id:d.operation_id},expected_draft_version:1,expected_report_version:0,expected_appointment_version:q.job.version,attendance_end_at:new Date().toISOString()},[d.operation_id]);const pending=await syncBatch(q.p,{operations:[s]});assert.equal(pending.outcomes[0].code,"DependencyPending");const saved=await syncBatch(q.p,{operations:[d,s]});assert.ok(saved.outcomes.every(x=>x.state==="ServerSaved"),JSON.stringify(saved));assert.deepEqual((await syncBatch(q.p,{operations:[s]})).outcomes[0].receipt,saved.outcomes[1].receipt);const r=(await readReport(q.p,String(s.payload.id))).items[0];assert.equal(r.status,"Submitted");assert.equal(r.revisions.length,1);const original=(await database().query("SELECT envelope FROM ppo.sync_acceptances WHERE operation_id=$1",[s.operation_id])).rows[0].envelope;assert.deepEqual(original.payload.draft_revision_id,{operation_id:d.operation_id});assert.equal((await syncBatch(q.p,{operations:[rehash({...s,payload:{...s.payload,attendance_end_at:new Date().toISOString()}})]})).outcomes[0].code,"OperationConflict");});
-test("P09 offline response verifies original signature and exact cached HTML, with no widened restricted recovery",async()=>{const q=await reportIssued(),j=(await readFieldJob(q.p,q.job.id)).items[0],cache=await downloadContext(q.p,j.id,{});assert.equal(cache.report_presentations.length,2);for(const v of cache.report_presentations){assert.equal(digest(v.html),v.content_hash);assert.equal(v.html.includes("SYN exact factual evidence checked"),false);}const bytes=png(),body={...response(q.report),signature:{sha256:digest(bytes),byte_count:bytes.length,content_base64:bytes.toString("base64")}},op=operation(q.p,j,"CustomerResponse",body,[],q.report.id);const saved=await syncBatch(q.p,{operations:[op]});assert.equal(saved.outcomes[0].state,"ServerSaved",JSON.stringify(saved));assert.deepEqual((await syncBatch(q.p,{operations:[op]})).outcomes[0].receipt,saved.outcomes[0].receipt);assert.equal((await database().query("SELECT count(*)::int n FROM ppo.customer_responses")).rows[0].n,1);await assert.rejects(preserveRecovery(q.p,{grant_id:cache.recovery.id,token:cache.recovery.token,operation:op}));await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='report.respond'",[q.p.actor_id]);assert.notEqual((await syncBatch(q.p,{operations:[op]})).outcomes[0].state,"ServerSaved");});
-test("P09 offline stale response is retained and cannot be rewritten or transferred after a correction cycle",async()=>{const q=await reportIssued(),j=(await readFieldJob(q.p,q.job.id)).items[0],op=operation(q.p,j,"CustomerResponse",response(q.report),[],q.report.id);await amendReport(q.p,q.report.id,{...base(),expected_version:q.report.version,revision_id:q.report.revisions[0].id});const out=await syncBatch(q.p,{operations:[op]});assert.equal(out.outcomes[0].state,"Conflict");assert.equal((await readReport(q.p,q.report.id)).items[0].responses.length,0);assert.equal((await database().query("SELECT count(*)::int n FROM ppo.sync_acceptances WHERE operation_id=$1",[op.operation_id])).rows[0].n,0);});
+import { test, beforeEach, after } from "node:test";
+import { randomUUID } from "node:crypto";
+import { reset } from "../../scripts/database";
+import { database, closeDatabase } from "../../src/platform/database";
+import { localConfig } from "../../src/platform/config";
+import { syncBatch } from "../../src/offline/server";
+import { downloadContext, preserveRecovery } from "../../src/offline/recovery";
+import { readReport, amendReport } from "../../src/reports/service";
+import { readFieldJob } from "../../src/field/reads";
+import { started, draft, png, base } from "../helpers/field";
+import { reportIssued, response } from "../helpers/reports";
+import { operation, rehash } from "../helpers/offline";
+import { digest } from "../../src/documents/store";
+if (localConfig().database_name !== "ppo_synthetic_test")
+  throw Error("Use disposable database");
+process.env.PPO_ALLOW_RESET = "dispose-synthetic";
+process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
+beforeEach(reset);
+after(closeDatabase);
+test("P09 offline exact draft dependency remains immutable and submission retries recover the original receipt", async () => {
+  const q = await started(),
+    d = operation(q.p, q.job, "CompletionDraft", draft(q.job)),
+    s = operation(
+      q.p,
+      q.job,
+      "SubmitCompletion",
+      {
+        ...base(),
+        id: randomUUID(),
+        attendance_id: q.job.attendance!.id,
+        draft_revision_id: { operation_id: d.operation_id },
+        expected_draft_version: 1,
+        expected_report_version: 0,
+        expected_appointment_version: q.job.version,
+        attendance_end_at: new Date().toISOString(),
+      },
+      [d.operation_id],
+    );
+  const pending = await syncBatch(q.p, { operations: [s] });
+  assert.equal(pending.outcomes[0].code, "DependencyPending");
+  const saved = await syncBatch(q.p, { operations: [d, s] });
+  assert.ok(
+    saved.outcomes.every((x) => x.state === "ServerSaved"),
+    JSON.stringify(saved),
+  );
+  assert.deepEqual(
+    (await syncBatch(q.p, { operations: [s] })).outcomes[0].receipt,
+    saved.outcomes[1].receipt,
+  );
+  const r = (await readReport(q.p, String(s.payload.id))).items[0];
+  assert.equal(r.status, "Submitted");
+  assert.equal(r.revisions.length, 1);
+  const original = (
+    await database().query(
+      "SELECT envelope FROM ppo.sync_acceptances WHERE operation_id=$1",
+      [s.operation_id],
+    )
+  ).rows[0].envelope;
+  assert.deepEqual(original.payload.draft_revision_id, {
+    operation_id: d.operation_id,
+  });
+  assert.equal(
+    (
+      await syncBatch(q.p, {
+        operations: [
+          rehash({
+            ...s,
+            payload: {
+              ...s.payload,
+              attendance_end_at: new Date().toISOString(),
+            },
+          }),
+        ],
+      })
+    ).outcomes[0].code,
+    "OperationConflict",
+  );
+});
+test("P09 offline response verifies original signature and exact cached HTML, with no widened restricted recovery", async () => {
+  const q = await reportIssued(),
+    j = (await readFieldJob(q.p, q.job.id)).items[0],
+    cache = await downloadContext(q.p, j.id, {});
+  assert.equal(cache.report_presentations.length, 2);
+  for (const v of cache.report_presentations) {
+    assert.equal(digest(v.html), v.content_hash);
+    assert.equal(v.html.includes("SYN exact factual evidence checked"), false);
+  }
+  const bytes = png(),
+    body = {
+      ...response(q.report),
+      signature: {
+        sha256: digest(bytes),
+        byte_count: bytes.length,
+        content_base64: bytes.toString("base64"),
+      },
+    },
+    op = operation(q.p, j, "CustomerResponse", body, [], q.report.id);
+  const saved = await syncBatch(q.p, { operations: [op] });
+  assert.equal(saved.outcomes[0].state, "ServerSaved", JSON.stringify(saved));
+  assert.deepEqual(
+    (await syncBatch(q.p, { operations: [op] })).outcomes[0].receipt,
+    saved.outcomes[0].receipt,
+  );
+  assert.equal(
+    (
+      await database().query(
+        "SELECT count(*)::int n FROM ppo.customer_responses",
+      )
+    ).rows[0].n,
+    1,
+  );
+  await assert.rejects(
+    preserveRecovery(q.p, {
+      grant_id: cache.recovery.id,
+      token: cache.recovery.token,
+      operation: op,
+    }),
+  );
+  await database().query(
+    "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='report.respond'",
+    [q.p.actor_id],
+  );
+  assert.notEqual(
+    (await syncBatch(q.p, { operations: [op] })).outcomes[0].state,
+    "ServerSaved",
+  );
+});
+test("P09 offline stale response is retained and cannot be rewritten or transferred after a correction cycle", async () => {
+  const q = await reportIssued(),
+    j = (await readFieldJob(q.p, q.job.id)).items[0],
+    op = operation(
+      q.p,
+      j,
+      "CustomerResponse",
+      response(q.report),
+      [],
+      q.report.id,
+    );
+  await amendReport(q.p, q.report.id, {
+    ...base(),
+    expected_version: q.report.version,
+    revision_id: q.report.revisions[0].id,
+  });
+  const out = await syncBatch(q.p, { operations: [op] });
+  assert.equal(out.outcomes[0].state, "Conflict");
+  assert.equal(
+    (await readReport(q.p, q.report.id)).items[0].responses.length,
+    0,
+  );
+  assert.equal(
+    (
+      await database().query(
+        "SELECT count(*)::int n FROM ppo.sync_acceptances WHERE operation_id=$1",
+        [op.operation_id],
+      )
+    ).rows[0].n,
+    0,
+  );
+});

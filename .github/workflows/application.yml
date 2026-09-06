@@ -43,21 +43,6 @@ jobs:
           npm ls --depth=0
       - name: Install pinned controlled PDF renderer
         run: npx playwright install --with-deps chromium
-      - name: Prepare formatted review copies without changing executed sources
-        run: |
-          node --input-type=module <<'JS'
-          import {format,getFileInfo} from 'prettier';
-          import {readFile,writeFile,mkdir,readdir} from 'node:fs/promises';
-          import {dirname} from 'node:path';
-          const roots=['src/reports','src/components/report-screens.tsx','tests/helpers/reports.ts','tests/database/reports.test.ts','tests/database/reports-offline.test.ts','tests/browser/reports.spec.ts','scripts/report-restart-proof.ts'];
-          async function copy(path){
-            if(!path.includes('.')){for(const f of await readdir(path))await copy(path+'/'+f);return;}
-            const info=await getFileInfo(path);if(!info.inferredParser)return;
-            const target='verification-evidence/formatted-review/'+path;
-            await mkdir(dirname(target),{recursive:true});await writeFile(target,await format(await readFile(path,'utf8'),{filepath:path}));
-          }
-          for(const path of roots)try{await copy(path);}catch(e){if(e.code!=='ENOENT')throw e;}
-          JS
       - name: Static, unit and build checks
         run: npm run check
       - name: Configure disposable loopback database
