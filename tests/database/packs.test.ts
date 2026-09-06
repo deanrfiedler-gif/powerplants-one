@@ -99,7 +99,7 @@ test("P06 upgrade and repeat seed preserve exact P05 SQL evidence, revoked grant
   );
   assert.equal(
     (await rows("SELECT count(*)::int n FROM public.ppo_migrations"))[0].n,
-    7,
+    8,
   );
   assert.equal(
     (

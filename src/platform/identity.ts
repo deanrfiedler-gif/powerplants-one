@@ -3,6 +3,9 @@ import { database, transaction } from "./database";
 import { localConfig } from "./config";
 import { AppError } from "./errors";
 export const sessionCookie = "ppo_local_session";
+export async function endSession(token:string|undefined) {
+  if(token) await database().query("DELETE FROM ppo.sessions WHERE token_hash=$1",[tokenHash(token)]);
+}
 const tokenHash = (token: string) =>
   createHash("sha256").update(token).digest("hex");
 export type Principal = {

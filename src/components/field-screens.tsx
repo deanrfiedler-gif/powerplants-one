@@ -69,7 +69,7 @@ type Task = {
     serial: string | null;
   }[];
 };
-type Job = Ref & {
+export type Job = Ref & {
   reference: string;
   status: string;
   customer_name: string;
@@ -166,12 +166,13 @@ type Job = Ref & {
   }[];
 };
 const message =
-  "Online workflow preview — offline/report/Finance work incomplete";
+  "Field workflow preview — report/Finance work incomplete";
 function PreviewLabel() {
   return (
     <div className="field-preview">
       <strong>Synthetic prototype — not for operational use</strong>
       <span>{message}</span>
+      <a href="/offline/index.html">Open offline field workspace</a>
     </div>
   );
 }

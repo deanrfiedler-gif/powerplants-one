@@ -18,6 +18,7 @@ export default defineConfig([
   },
   globalIgnores([
     ".next/**",
+    "public/offline/modules/**",
     "node_modules/**",
     "test-results/**",
     "playwright-report/**",
