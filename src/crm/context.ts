@@ -10,6 +10,14 @@ export type OpportunityContext = {
   company_id: string; organisation_id: string; site_id: string | null;
   primary_person_id: string | null; owner_id: string; pipeline_definition_id: string;
 };
+export type Opportunity = OpportunityContext & {
+  id: string; display_number: string; version: number; synthetic: true;
+  created_at: Date; created_by: string; updated_at: Date; updated_by: string;
+  title: string; need_summary: string; source_channel: string; source_basis: string;
+  site_unknown_reason: string | null; contact_unknown_reason: string | null;
+  stage_id: "Enquiry" | "Qualified"; close_outcome: "Open"; stage_entered_at: Date;
+  next_activity_id: string; qualification_note: string | null; identification_activity_id: string | null;
+};
 // Upgrade tests intentionally exercise accepted pre-CRM schemas. Missing CRM never grants access.
 export async function crmAvailable(c: QueryClient) {
   return !!(await c.query("SELECT to_regclass('ppo.opportunities') AS relation")).rows[0].relation;
@@ -23,7 +31,7 @@ export function opportunityVisibility(alias = "o") {
     AND (${alias}.primary_person_id IS NULL OR EXISTS(SELECT 1 FROM ppo.people cp WHERE cp.workspace_id=${alias}.workspace_id AND cp.id=${alias}.primary_person_id AND ${visibility("Person", "cp")}))`;
 }
 export async function visibleOpportunity(c: QueryClient, p: Principal, id: string) {
-  const row = (await c.query(`SELECT o.* FROM ppo.opportunities o WHERE o.workspace_id=$1 AND o.id=$3 AND ${opportunityVisibility()}`, [p.workspace_id, p.actor_id, uuid(id, "id")])).rows[0];
+  const row = (await c.query<Opportunity>(`SELECT o.* FROM ppo.opportunities o WHERE o.workspace_id=$1 AND o.id=$3 AND ${opportunityVisibility()}`, [p.workspace_id, p.actor_id, uuid(id, "id")])).rows[0];
   if (!row) throw unavailable();
   return row;
 }

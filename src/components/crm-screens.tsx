@@ -15,7 +15,7 @@ function ResourceState({loading,error,reload}:{loading:boolean;error:unknown;rel
 function SaveState({command}:{command:ReturnType<typeof useCrmCommand>}) {return <><p role="status">{command.status}</p><ErrorNotice error={command.error}/>{command.uncertain&&<button onClick={()=>void command.reconcile()} disabled={command.busy}>Confirm original save outcome</button>}</>;}
 function CrmPicker({label,name,kind,value,onChange,context={}}:{label:string;name:string;kind:string;value:string;onChange:(s:string)=>void;context?:Record<string,string>}) {
  const [search,setSearch]=useState("");
- const ready=kind==="Company"||!!context.company_id;
+ const ready=kind==="Company" || (!!context.company_id && (kind==="Organisation" || !!context.organisation_id));
  const result=useCrmResource<Options>(ready?`crm/options?${query({kind,...context,q:search,limit:"100"})}`:null);
  return <div className="crm-picker"><Field name={`${name}-search`} label={`Find ${label.toLowerCase()}`} value={search} onChange={setSearch}/><SelectField name={name} label={label} value={value} onChange={onChange} options={result.data?.items??[]} empty={result.loading?"Loading…":"Choose / unknown"}/><ErrorNotice error={result.error}/>{result.data?.next_cursor&&<small>More matches exist. Refine the search.</small>}</div>;
 }
