@@ -69,6 +69,7 @@ async function seeded(page: Page) {
   const i = {
     ...crmCreate(),
     title: `SYN Browser opportunity ${randomUUID()}`,
+    initial_action: {...crmAction(), due_at:"2026-01-01T00:00:00Z", due_needed:false},
   };
   await call(page, "crm/opportunities", i);
   await page.goto(`/crm/opportunities/${i.id}`);
@@ -201,6 +202,8 @@ test("CA-02/03 real conflict retains proposed need; lost response reconciles ori
   page,
 }, info) => {
   const i = await seeded(page);
+  await expect(page.getByRole("heading",{name:"Overdue",exact:true})).toBeVisible();
+  await capture(page,info,"overdue");
   await page
     .getByLabel("Qualified customer need", { exact: true })
     .fill("SYN Safe proposed need retained after conflict");

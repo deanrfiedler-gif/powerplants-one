@@ -111,7 +111,7 @@ export function useResource<T>(path: string | null) {
             setState((previous) => ({
               path,
               revision,
-              data: previous.path === path ? previous.data : null,
+              data: !isDenied(error) && previous.path === path ? previous.data : null,
               error,
             }));
         },

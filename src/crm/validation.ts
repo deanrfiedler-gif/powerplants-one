@@ -48,7 +48,9 @@ export function parseCreate(value: unknown) {
     "pipeline_definition_id",
     "initial_action",
   ]);
-  const site_id = optionalId(r.site_id, "site_id"),
+  const company_id = uuid(r.company_id, "company_id"),
+    organisation_id = uuid(r.organisation_id, "organisation_id"),
+    site_id = optionalId(r.site_id, "site_id"),
     primary_person_id = optionalId(r.primary_person_id, "primary_person_id"),
     site_unknown_reason = optionalNarrative(
       r.site_unknown_reason,
@@ -73,8 +75,8 @@ export function parseCreate(value: unknown) {
   return {
     ...common(r),
     id: uuid(r.id, "id"),
-    company_id: uuid(r.company_id, "company_id"),
-    organisation_id: uuid(r.organisation_id, "organisation_id"),
+    company_id,
+    organisation_id,
     site_id,
     primary_person_id,
     site_unknown_reason,

@@ -18,7 +18,7 @@ import {
 } from "./business-ui";
 import { denied, useCrmCommand, useCrmResource } from "./crm-state";
 type Opportunity = Awaited<ReturnType<typeof readOpportunity>>;
-type Options = Envelope<Option> & {
+type Options = Envelope<Option & {requires_site?:boolean}> & {
   pipeline_definition_id: string;
   pipeline_label: string;
 };
@@ -79,6 +79,7 @@ function CrmPicker({
   value,
   onChange,
   context = {},
+  enabled = true,
 }: {
   label: string;
   name: string;
@@ -86,6 +87,7 @@ function CrmPicker({
   value: string;
   onChange: (s: string) => void;
   context?: Record<string, string>;
+  enabled?: boolean;
 }) {
   const [search, setSearch] = useState("");
   const ready =
@@ -93,7 +95,7 @@ function CrmPicker({
     (!!context.company_id &&
       (kind === "Organisation" || !!context.organisation_id));
   const result = useCrmResource<Options>(
-    ready
+    ready && enabled
       ? `crm/options?${query({ kind, ...context, q: search, limit: "100" })}`
       : null,
   );
@@ -191,7 +193,7 @@ export function SalesWorklist() {
           Owned by me
         </label>
       </div>
-      <ResourceState {...data} />
+      <ResourceState {...data} reload={()=>{setCursor("");data.reload();}} />
       {data.data && (
         <>
           <p className="source-stamp">
@@ -279,10 +281,12 @@ function ActionFields({
   value,
   set,
   context,
+  enabled=true,
 }: {
   value: ActionDraft;
   set: (v: ActionDraft) => void;
   context: Record<string, string>;
+  enabled?:boolean;
 }) {
   return (
     <>
@@ -297,6 +301,7 @@ function ActionFields({
         name="activity_owner_id"
         label="Activity owner"
         kind="ActionOwner"
+        enabled={enabled}
         value={value.owner_id}
         onChange={(owner_id) => set({ ...value, owner_id })}
         context={context}
@@ -350,6 +355,7 @@ export function NewOpportunity() {
     [source, setSource] = useState(""),
     [action, setAction] = useState(() => emptyAction(p.actor_id));
   const available = useCrmResource<Options>("crm/options?kind=Company");
+  const siteRequired=available.data?.items.find(x=>x.id===company)?.requires_site ?? false;
   const command = useCrmCommand((r) =>
     router.push(`/crm/opportunities/${r.record_id}`),
   );
@@ -448,7 +454,8 @@ export function NewOpportunity() {
                       onChange={setSite}
                       context={context}
                     />
-                    {!site && (
+                    {siteRequired && !site && <p role="status">Choose a permitted site. Your creation authority is limited to that site.</p>}
+                    {!site && !siteRequired && (
                       <Field
                         name="site_unknown_reason"
                         label="Why is the site unknown?"
@@ -462,6 +469,7 @@ export function NewOpportunity() {
                       name="primary_person_id"
                       label="Contact"
                       kind="Person"
+                      enabled={!siteRequired || !!site}
                       value={person}
                       onChange={setPerson}
                       context={context}
@@ -480,6 +488,7 @@ export function NewOpportunity() {
                       name="owner_id"
                       label="Opportunity owner"
                       kind="Owner"
+                      enabled={!siteRequired || !!site}
                       value={owner}
                       onChange={setOwner}
                       context={context}
@@ -528,8 +537,9 @@ export function NewOpportunity() {
                   value={action}
                   set={setAction}
                   context={context}
+                  enabled={!siteRequired || !!site}
                 />
-                <button type="submit">Create opportunity and action</button>
+                <button type="submit" disabled={siteRequired && !site}>Create opportunity and action</button>
               </fieldset>
             </form>
           </ValidationFields>
@@ -678,6 +688,7 @@ function OpportunityContent({
           </p>
         </section>
       </div>
+      {!o.can_edit && <p className="scope-note">Read only under current ownership, permissions or relationship eligibility.</p>}
       <SaveState command={command} />
       {version !== o.version && (
         <section className="crm-conflict" role="status">

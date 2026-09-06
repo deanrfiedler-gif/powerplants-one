@@ -189,6 +189,12 @@ export async function listOpportunities(p: Principal, input: unknown = {}) {
     can_create: await hasPermission(c, p, "crm.opportunity.create"),
   };
 }
+function selectorScope(company:string,site="NULL::uuid",create=false) {
+ return [scopeSql(company,site),scopeSql(company,site,"shared.internal.read"),scopeSql(company,site,"crm.opportunity.read"),...(create?[scopeSql(company,site,"crm.opportunity.create"),scopeSql(company,site,"activity.read"),scopeSql(company,site,"activity.edit")]:[])].join(" AND ");
+}
+function selectorCompanyScope(company:string,create=false) {
+ return `((${selectorScope(company,"NULL::uuid",create)}) OR EXISTS(SELECT 1 FROM ppo.sites crm_picker_site WHERE crm_picker_site.workspace_id=$1 AND crm_picker_site.company_id=${company} AND ${selectorScope("crm_picker_site.company_id","crm_picker_site.id",create)}))`;
+}
 // Only short identity labels are selected here. No account notes, source keys or unscoped directory.
 export async function opportunityOptions(p: Principal, input: unknown = {}) {
   const c = database(),
@@ -220,21 +226,12 @@ export async function opportunityOptions(p: Principal, input: unknown = {}) {
     await visibleOpportunity(c, p, uuid(r.opportunity_id, "opportunity_id"));
   if (kind !== "Company") {
     if (!company) uuid(company, "company_id");
-    await companyContext(c, p, company!, site, "crm.opportunity.read");
-    if (
-      !(await hasPermission(
-        c,
-        p,
-        "shared.internal.read",
-        company!,
-        site ?? undefined,
-      ))
-    )
-      throw new AppError(
-        404,
-        "RecordUnavailable",
-        "This record is unavailable.",
-      );
+    if(!site && ["Organisation","Site"].includes(kind)) {
+      if(!(await c.query(`SELECT 1 FROM ppo.companies x WHERE x.workspace_id=$1 AND x.id=$3 AND ${selectorCompanyScope("x.id")}`,[p.workspace_id,p.actor_id,company])).rowCount)throw new AppError(404,"RecordUnavailable","This record is unavailable.");
+    } else {
+      await companyContext(c,p,company!,site,"crm.opportunity.read");
+      if(!(await hasPermission(c,p,"shared.internal.read",company!,site??undefined)))throw new AppError(404,"RecordUnavailable","This record is unavailable.");
+    }
   }
   if (org) {
     const o = await visible(c, p, "Organisation", org);
@@ -261,26 +258,26 @@ export async function opportunityOptions(p: Principal, input: unknown = {}) {
       opportunity: r.opportunity_id,
     },
   );
-  let rows: { id: string; display_name: string; display_number?: string }[] =
+  let rows: { id: string; display_name: string; display_number?: string; requires_site?:boolean }[] =
     [];
   if (kind === "Company")
     rows = (
       await c.query(
-        `SELECT x.id,x.display_name FROM ppo.companies x WHERE x.workspace_id=$1 AND ${scopeSql("x.id", "NULL::uuid", "crm.opportunity.create")} AND ${scopeSql("x.id")} AND ${scopeSql("x.id", "NULL::uuid", "shared.internal.read")} ORDER BY x.id`,
+        `SELECT x.id,x.display_name,NOT (${selectorScope("x.id","NULL::uuid",true)}) AS requires_site FROM ppo.companies x WHERE x.workspace_id=$1 AND ${selectorCompanyScope("x.id",true)} ORDER BY x.id`,
         [p.workspace_id, p.actor_id],
       )
     ).rows;
   if (kind === "Organisation")
     rows = (
       await c.query(
-        `SELECT x.id,x.display_name,x.display_number FROM ppo.organisations x WHERE x.workspace_id=$1 AND x.company_id=$3 AND ${visibility("Organisation", "x")} ORDER BY x.id`,
+        `SELECT x.id,x.display_name,x.display_number FROM ppo.organisations x WHERE x.workspace_id=$1 AND x.company_id=$3 AND ${visibility("Organisation", "x")} AND ((${selectorScope("x.company_id")}) OR EXISTS(SELECT 1 FROM ppo.site_parties sp JOIN ppo.sites crm_org_site ON (crm_org_site.workspace_id,crm_org_site.id)=(sp.workspace_id,sp.site_id) WHERE sp.workspace_id=x.workspace_id AND sp.organisation_id=x.id AND ${selectorScope("crm_org_site.company_id","crm_org_site.id")})) ORDER BY x.id`,
         [p.workspace_id, p.actor_id, company],
       )
     ).rows;
   if (kind === "Site")
     rows = (
       await c.query(
-        `SELECT x.id,x.display_name,x.display_number FROM ppo.sites x WHERE x.workspace_id=$1 AND x.company_id=$3 AND ${visibility("Site", "x")} AND EXISTS(SELECT 1 FROM ppo.site_parties sp WHERE sp.workspace_id=x.workspace_id AND sp.site_id=x.id AND sp.organisation_id=$4 AND sp.valid_from<=CURRENT_DATE AND (sp.valid_to IS NULL OR sp.valid_to>CURRENT_DATE)) ORDER BY x.id`,
+        `SELECT x.id,x.display_name,x.display_number FROM ppo.sites x WHERE x.workspace_id=$1 AND x.company_id=$3 AND ${visibility("Site", "x")} AND ${selectorScope("x.company_id","x.id")} AND EXISTS(SELECT 1 FROM ppo.site_parties sp WHERE sp.workspace_id=x.workspace_id AND sp.site_id=x.id AND sp.organisation_id=$4 AND sp.valid_from<=CURRENT_DATE AND (sp.valid_to IS NULL OR sp.valid_to>CURRENT_DATE)) ORDER BY x.id`,
         [p.workspace_id, p.actor_id, company, org],
       )
     ).rows;

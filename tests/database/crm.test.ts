@@ -728,3 +728,14 @@ test("CA-01/08 eligible action owner needs Activity authority and CRM read, not 
     createOpportunity(p, { ...crmCreate(), initial_action: crmAction(u) }),
   );
 });
+
+test("CA-05/06 scoped site creator selects only permitted context and completes its owned journey",async()=>{
+ const p=await principal("site-observer");
+ await database().query("INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id) SELECT workspace_id,user_id,company_id,c,'Site',scope_id,site_id FROM ppo.permission_grants CROSS JOIN unnest(ARRAY['crm.opportunity.read','crm.opportunity.create','crm.opportunity.edit','shared.internal.read','activity.read','activity.edit']) c WHERE user_id=$1 AND capability='shared.read' ON CONFLICT DO NOTHING",[p.actor_id]);
+ const companies=await opportunityOptions(p,{kind:"Company"});assert.equal(companies.items.length,1);assert.equal(companies.items[0].id,CRM.company);assert.equal(companies.items[0].requires_site,true);
+ const orgs=await opportunityOptions(p,{kind:"Organisation",company_id:CRM.company});assert.ok(orgs.items.some(x=>x.id===CRM.org));assert.ok(!orgs.items.some(x=>x.id===CRM.orgB));
+ const sites=await opportunityOptions(p,{kind:"Site",company_id:CRM.company,organisation_id:CRM.org});assert.deepEqual(sites.items.map(x=>x.id),[CRM.site]);
+ const i={...crmCreate(),owner_id:p.actor_id,initial_action:crmAction(p.actor_id)};await createOpportunity(p,i);await activityCommand(p,i.initial_action.id,{...crmBase(),expected_version:1,outcome:"SYN Site-scoped contact outcome"},"complete");await qualifyOpportunity(p,i.id,crmQualify());assert.equal((await readOpportunity(p,i.id)).next_action_state,"Needed");
+ await assert.rejects(createOpportunity(p,{...crmCreate(),site_id:null,site_unknown_reason:"SYN beyond site authority",owner_id:p.actor_id,initial_action:crmAction(p.actor_id)}));
+ await assert.rejects(createOpportunity(p,{...crmCreate(),site_id:"70000000-0000-4000-8000-000000000002",owner_id:p.actor_id,initial_action:crmAction(p.actor_id)}));assert.equal((await listOpportunities(p)).items.length,1);
+});
