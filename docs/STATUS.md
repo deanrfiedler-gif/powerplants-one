@@ -92,3 +92,8 @@ Dean authorised BP-04 discovery/design on 6 September 2026. [BP-04 r01](blueprin
 This is design only. [E1 starter](delivery/estimating-first-increment-starter.md) is prepared for a later bounded instruction; no estimating application code or live integration is delivered. D-009/D-010 and issue #10 remain open; EA-01–EA-18 are Not run and master AT statuses are unchanged. Real formulas, policy thresholds, approved terms and accepted calculation examples remain evidence gaps. P01–P12 ordering and EST Wave B scope remain intact.
 
 Dean subsequently approved publishing the BP-04 package to this private repository and opening a review PR. The [handover](delivery/estimating-discovery-handover.md) preserves the earlier automatic-review block and governs current publication/check evidence. Estimating implementation remains prepared only.
+
+
+## BP-04 E1 implementation in progress
+
+Dean’s subsequent “Proceed” and “Continue” authorise the bounded manual Estimate and draft quotation slice under [issue #46](https://github.com/deanrfiedler-gif/powerplants-one/issues/46), bringing E1 forward from Wave B while retaining P01–P12 order. [ADR-0017](decisions/ADR-0017-estimating-e1.md), the [physical/API contract](contracts/estimating-e1.md) and [implementation handover](delivery/estimating-e1-handover.md) record its scope and actual verification state. Design PR #44 merged at `94289a20`; E1 code is under verification and is not yet delivered. Migration 0012 preserves Finance #45’s 0011 reservation. CRM I2 #43 / PR #47 is now active; the earlier prepared-only statements above are historical boundaries. Full BP-04, D-009/D-010, EA/AT and owner acceptance remain open.

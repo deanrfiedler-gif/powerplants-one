@@ -1,0 +1,15 @@
+# ADR-0017 — Bounded manual estimating and draft quotations
+
+**State:** Adopted implementation direction for the authorised synthetic E1 slice; verification pending. **Parent:** PPO-010 / issue #46. **Date:** 6 September 2026.
+
+Dean said “Proceed” and “Continue” after the proposed sequence to complete PR #44, implement E1, verify the journey and prepare E2 only. Bring this bounded manual slice forward from the master’s Wave B for the private prototype. Preserve the P01–P12 service order, P10 #45 and I2 #43; no live or broader estimating authority is implied.
+
+Use the existing TypeScript/PostgreSQL domain architecture, explicit capabilities, atomic operation receipts and private durable document adapter. Do not add a framework, financial library or service. E1 adopts `SYN-EST-ARITHMETIC-01` only: canonical decimal strings, integer-scaled arithmetic, HALF_UP line extensions then sum, AUD excluding tax, no tax calculation. Quantities have up to three places, money two; zero is explicit and unknown is not coerced to zero. Saved manual lines must be complete; an empty initial draft has unknown totals and cannot produce a quote.
+
+An Estimate retains one embedded immutable option UUID (A) and estimation-revision UUID (r01). These are distinct from Estimate identity, saved-version UUID and quote/revision UUID. E1 does not branch options or estimation revisions; E2 may extract those fixed identities into tables while preserving them. Every successful save creates an immutable saved version, with a predecessor and change reason. Browser proposals remain unsaved until accepted. This is simpler than implementing the general CREMS branching engine before its lock policy is resolved.
+
+One draft Quote identity per estimate retains immutable quote revisions. Each revision binds an exact saved estimate version, explicit include/print membership, captured customer-safe projection and template bytes. Hidden included detail is represented by a priced allowance; excluded lines do not contribute. No original internal cost fields enter the customer projection. Draft HTML/PDF never creates Issued, Sent or Accepted facts.
+
+Durable rendering records an immutable input, leased attempt, exact stored bundle and original recovery identity. Current authority governs commands, receipt replay, worker finalisation and every file access. A database failure after file storage recovers the original bundle; retry never silently regenerates or replaces ready bytes. Synthetic owner/reader grants are explicit; Systems and technicians gain no default access. Reads also require visibility of the linked opportunity and its current company/site/person context.
+
+Reserve migration **0012**. P10 owns 0011 / ADR-0016; E1 has no dependency on Finance schema. Reconcile the explicit migration runner in numerical order when that work arrives; preserve existing checksums and independently test current-main upgrade, reseed and restart. Full source formulas, pricing thresholds, routing, approvals, signatures, real terms, integration and production acceptance remain open under D-009/D-010 and the BP-04 evidence register.
