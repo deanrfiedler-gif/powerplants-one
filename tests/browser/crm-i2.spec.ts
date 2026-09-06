@@ -44,6 +44,14 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   await page.getByLabel("Search opportunities", { exact: true }).fill(marker);
   await expect.poll(() => ids(page)).toHaveLength(3);
   await capture(page, info, "loaded-board");
+  if (info.project.use.isMobile) {
+    const firstCard = await page.locator('.crm-stage[data-selected="true"] .crm-card').first().boundingBox();
+    expect(firstCard).not.toBeNull();
+    expect(firstCard!.y + firstCard!.height).toBeLessThanOrEqual(844);
+  }
+  expect(await page.evaluate(async () => (await document.fonts.load("16px Roboto")).length)).toBeGreaterThan(0);
+  const font = await page.request.get("/brand/Roboto-variable.ttf");
+  expect(createHash("sha256").update(await font.body()).digest("hex")).toBe("d7598e12c5dbef095ff8272cfc55da0250bd07fbdecbac8a530b9b277872a134");
   const logo = page.locator(".brand-logo");
   await expect(logo).toHaveAttribute("src", "/brand/powerplants-logo-green-white.png");
   const original = await page.request.get("/brand/powerplants-logo-green-white.png");
@@ -134,6 +142,16 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   expect(await ids(page)).toEqual(last);
   await capture(page, info, "320-final-page-grid");
   await page.setViewportSize(info.project.use.viewport!);
+  await call(page, `crm/opportunities/${inputs[0].id}/qualify`, crmQualify());
+  const changed = page.waitForResponse(r => r.url().includes("/api/v1/crm/opportunities?") && r.status() === 409);
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  expect((await changed).status()).toBe(409);
+  await expect(page.locator('.business-error[role="alert"]')).toContainText("The permitted results changed");
+  await expect(page.locator(".crm-worklist-stamp")).toHaveCount(0);
+  expect(await ids(page)).toEqual([]);
+  await capture(page, info, "grid-changed-window");
+  await page.getByRole("button", { name: "Try loading again", exact: true }).click();
+  await expect.poll(() => ids(page)).toHaveLength(10);
   await page.route("**/api/v1/crm/opportunities?**", (route) => route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ code: "DatabaseUnavailable", message: "Sales records are temporarily unavailable.", retryable: true }) }));
   await page.getByRole("button", { name: "Refresh from start", exact: true }).click();
   await expect(page.locator('.business-error[role="alert"]')).toBeVisible();
