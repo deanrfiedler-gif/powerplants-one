@@ -65,7 +65,7 @@ One bounded live stage-metadata read refreshed ten stages across two pipeline ID
 
 ## Shared UI and branded CRM design handover
 
-The [shared UI specification](standards/ui-style-specification.md), [branded Board/Grid preview and original captures](blueprints/crm-ui-mockups/README.md) and [visual decision](decisions/ui-brand-and-crm-layout.md) publish the supplied Powerplants identity with a Pipedrive-familiar CRM layout. The [screen specification r02](blueprints/crm-screen-specification.md) and [I2 UI guidance](delivery/crm-i2-ui-guidance.md) make this discoverable for later implementation; the [handover](delivery/crm-ui-design-handover.md) records provenance, validation and publication controls.
+The [shared UI specification](standards/ui-style-specification.md), [branded Board/Grid preview and original captures](blueprints/crm-ui-mockups/README.md) and [visual decision](decisions/ui-brand-and-crm-layout.md) publish the supplied Powerplants identity with a Pipedrive-familiar CRM layout. The [screen specification r03](blueprints/crm-screen-specification.md) and [I2 UI guidance](delivery/crm-i2-ui-guidance.md) make this discoverable for later implementation; the [handover](delivery/crm-ui-design-handover.md) records provenance, validation and publication controls.
 
 This is documentation/design work under PPO-009, separate from active I1 and P09. I1 retains Enquiry → Qualified, Open and no money fields. The six reference stages and fictional commercial values do not expand its scope, establish account parity or pass AT-25. The full I2 starter remains an I1 completion deliverable.
 
@@ -76,3 +76,7 @@ The inspected repository is private with main as default branch. Branch protecti
 ## P09 service review and controlled reports
 
 P09 issue #36 / PR #37 implement exact completion submission, authorised review/return, immutable acceptance and report correction cycles, durable customer-safe OUT-10 revisions, five explicit responses and compatible P08 local intents. [ADR-0014](decisions/ADR-0014-p09-service-reports.md) and the [P09 handover](delivery/p09-handover.md) record physical contracts, actual verification, failed-run dispositions and limits. The implementation run passed 289 cases (12 unit, 205 PostgreSQL, 14 HTTP, 58 browser) plus real restart procedures. The external publication record governs exact final-head and actual merged-main results. Existing full PT-06 is preserved; full PT-15/PT-16 disposition is recorded separately from component counts and AT/owner acceptance. The [P10 starter](delivery/p10-starter-prompt.md) is prepared only; Finance and P10–P12 remain unimplemented.
+
+## CRM UI audit revision
+
+Dean authorised the next design revision after the published Board/Grid audit. The [r02 visual revision](delivery/crm-ui-design-handover.md) improves mobile first-record visibility, continuous desktop stage navigation, frozen grid headings/identity, full next actions/owners, creation context, validation and long text. [Updated captures and branded exception examples](blueprints/crm-ui-mockups/README.md) accompany shared UI specification r03 and I2 UI guidance r02. Original issued images and source bytes remain preserved. Verification and PR publication are recorded in the handover; this does not change I1/P09 application scope or close PPO-009/AT-25.

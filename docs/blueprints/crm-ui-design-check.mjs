@@ -6,6 +6,7 @@ import { execFileSync } from 'node:child_process';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import assert from 'node:assert/strict';
+import { auditChecks } from './crm-ui-audit-checks.mjs';
 
 const input = 'docs/blueprints/crm-board-grid-mockup.html';
 const output = resolve(process.env.CRM_UI_OUTPUT || 'verification-evidence/crm-design/branded-ui');
@@ -45,6 +46,7 @@ try {
   await page.click('#ppo-grid-button');
   assert.deepEqual(await ids('#ppo-grid'), boardIds);
   await capture('desktop-grid.png');
+  await page.click('#ppo-filter-toggle');
   await page.selectOption('#ppo-owner', 'Alex Lee');
   await page.selectOption('#ppo-action-filter', 'overdue');
   const filteredIds = await ids('#ppo-grid');
@@ -74,7 +76,7 @@ try {
   await page.selectOption('select[name=organisation]', { label: 'Example Nursery' });
   await page.fill('input[name=action]', 'Confirm requirements');
   await page.click('#ppo-create-submit');
-  assert.equal(await page.locator('#ppo-count').innerText(), '16 opportunities');
+  assert.equal(await page.locator('#ppo-count').innerText(), '19 opportunities');
   await page.click('#ppo-grid [data-open="19"]');
   assert.match(await page.locator('#ppo-detail-body').innerText(), /Due date needed/);
   await page.keyboard.press('Escape');
@@ -98,6 +100,7 @@ try {
   await page.keyboard.press('Tab');
   assert.equal(await page.evaluate(() => document.activeElement.id), 'ppo-grid-button');
   assert.notEqual(await page.evaluate(() => getComputedStyle(document.activeElement).outlineStyle), 'none');
+  await auditChecks(page, capture, evidence, source.toString());
   assert.deepEqual(errors, []);
   assert.deepEqual(requests, []);
   assert.equal(await page.evaluate(() => localStorage.length + sessionStorage.length), 0);
