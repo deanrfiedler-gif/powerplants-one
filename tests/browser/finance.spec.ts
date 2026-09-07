@@ -521,7 +521,7 @@ test("P10 PT-20/PT-21 UI exact account arithmetic, filtering, partial/failure an
   }
   await expect(page.getByText(/Last good observation:/)).toBeVisible();
   await identity(page, "assigned-technician");
-  await expect(page.getByRole("alert")).toBeVisible();
+  await expect(page.locator('.business-error[role="alert"]')).toBeVisible();
   await expect(page.getByText("AUD 600.00", { exact: true })).toHaveCount(0);
   await capture(page, info, "account-role-denied");
 });
@@ -564,7 +564,7 @@ test("P10 loaded/empty/loading/error/keyboard queue states retain scope and refl
   release();
   await page.unrouteAll({ behavior: "wait" });
   await identity(page, "systems");
-  await expect(page.getByRole("alert")).toBeVisible();
+  await expect(page.locator('.business-error[role="alert"]')).toBeVisible();
   await capture(page, info, "queue-denied");
   await expect(page.getByText(/SYN-ACCOUNT-/)).toHaveCount(0);
 });
@@ -601,7 +601,7 @@ test("P10 stale browser proposal shows conflict and preserves a concurrently can
   await page
     .getByRole("button", { name: "Submit for Finance review", exact: true })
     .click();
-  await expect(page.getByRole("alert")).toBeVisible();
+  await expect(page.locator('.business-error[role="alert"]')).toBeVisible();
   await state(page, "Cancelled");
   await capture(page, info, "stale-exact-version");
   const final = await call(page, `finance/handoffs/${input.id}`);

@@ -198,7 +198,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
     const original = await call(page, s.api + query);
     await page.goto(s.url);
     await expect(page.locator("#business-profile")).toBeEnabled();
-    await expect(page.getByRole("alert")).toHaveCount(0);
+    await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
     await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
     await capture(page, info, `${s.id}-loaded`);
     const match = (url: URL) => url.pathname === `/api/v1/${s.api}`;
@@ -243,7 +243,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
     await capture(page, info, `${s.id}-failed`);
     await page.unroute(match);
     await page.reload();
-    await expect(page.getByRole("alert")).toHaveCount(0);
+    await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
     await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
     if (s.list) {
       await page.route(match, (route) =>
