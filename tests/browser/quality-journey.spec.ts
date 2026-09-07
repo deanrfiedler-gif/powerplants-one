@@ -375,7 +375,10 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
     page.getByLabel("Capture context", { exact: true }),
   ).toBeVisible();
   await completion(page);
-  await submit(page);
+  await submit(page, true);
+  expect(
+    (await localRows()).map((x: { original: unknown }) => x.original),
+  ).toEqual(originals);
   await identity(page, "coordinator");
   await review(page);
   const report = (await call(page, `reports/${rid}`)).items[0];

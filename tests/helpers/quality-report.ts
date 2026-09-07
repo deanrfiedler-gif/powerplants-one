@@ -55,7 +55,7 @@ export async function completion(page: Page, quantities = true) {
   await expect(savedDrafts).toHaveCount(previousDrafts + 1);
   await expect(savedDrafts.first()).toBeVisible();
 }
-export async function submit(page: Page) {
+export async function submit(page: Page, recoverOwner = false) {
   await keyType(
     page,
     page.getByLabel("Submission reason", { exact: true }),
@@ -68,6 +68,46 @@ export async function submit(page: Page) {
       exact: true,
     }),
   );
+  if (recoverOwner) {
+    await expect(page.locator('.business-error[role="alert"]')).toContainText(
+      "Cached workspace is locked or expired",
+    );
+    const opened = page.waitForEvent("popup");
+    await keyActivate(
+      page,
+      page.getByRole("link", {
+        name: "Verify saved workspace in another tab",
+        exact: true,
+      }),
+    );
+    const savedWorkspace = await opened;
+    await keyActivate(
+      savedWorkspace,
+      savedWorkspace.getByRole("button", {
+        name: "Verify identity online",
+        exact: true,
+      }),
+    );
+    await expect(savedWorkspace.locator("#notice")).toContainText(
+      "Identity verified",
+    );
+    await expect(savedWorkspace.locator("#queue .status")).toHaveText(
+      Array(5).fill("ServerSaved"),
+    );
+    await savedWorkspace.close();
+    await expect(
+      page.getByLabel("Submission reason", { exact: true }),
+    ).toHaveValue(
+      "SYN submit my exact completion evidence for authorised review.",
+    );
+    await keyActivate(
+      page,
+      page.getByRole("button", {
+        name: "Submit exact evidence for review",
+        exact: true,
+      }),
+    );
+  }
   await expect(
     page
       .getByRole("link", { name: "Open report review and revision history" })

@@ -152,13 +152,14 @@ type Schedule = Envelope<ScheduleAppointment> & {
   from: string;
   to: string;
 };
+const dayFormatter = new Intl.DateTimeFormat("en-AU", {
+  weekday: "short",
+  day: "numeric",
+  month: "short",
+  timeZone: "UTC",
+});
 const displayDay = (day: string) =>
-  new Intl.DateTimeFormat("en-AU", {
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-    timeZone: "UTC",
-  }).format(new Date(day + "T12:00:00Z"));
+  dayFormatter.format(new Date(day + "T12:00:00Z"));
 const minuteText = (n: number) =>
   `${String(Math.floor(n / 60)).padStart(2, "0")}:${String(n % 60).padStart(2, "0")}`;
 const shortTime = (iso: string, zone: string) =>
@@ -1238,8 +1239,26 @@ export function PlannerScreen() {
     setMove(null);
     setDragNotice("");
   }
-  const onDay = (iso: string, d: string) =>
-    localDateTime(iso, zone).slice(0, 10) === d;
+  // Calculate each timestamp's displayed day once for this render instead of
+  // once per appointment × resource × day. This map ends with the render.
+  const displayDates = new Map<string, string>();
+  const onDay = (iso: string, d: string) => {
+    let value = displayDates.get(iso);
+    if (value === undefined) {
+      value = localDateTime(iso, zone).slice(0, 10);
+      displayDates.set(iso, value);
+    }
+    return value === d;
+  };
+  const dayBounds = new Map(
+    days.map((d) => [
+      d,
+      {
+        start: Date.parse(utcFromLocal(d + "T00:00", zone)),
+        end: Date.parse(utcFromLocal(addDays(d, 1) + "T00:00", zone)),
+      },
+    ]),
+  );
   function drop(e: React.DragEvent, d: string, resource: Resource) {
     e.preventDefault();
     if (!usable) return;
@@ -1519,21 +1538,13 @@ export function PlannerScreen() {
                       ),
                       blocks = (r.blocks ?? []).filter(
                         (b) =>
-                          Date.parse(b.start_at) <
-                            Date.parse(
-                              utcFromLocal(addDays(d, 1) + "T00:00", zone),
-                            ) &&
-                          Date.parse(b.end_at) >
-                            Date.parse(utcFromLocal(d + "T00:00", zone)),
+                          Date.parse(b.start_at) < dayBounds.get(d)!.end &&
+                          Date.parse(b.end_at) > dayBounds.get(d)!.start,
                       ),
                       busy = (r.busy ?? []).filter(
                         (b) =>
-                          Date.parse(b.start_at) <
-                            Date.parse(
-                              utcFromLocal(addDays(d, 1) + "T00:00", zone),
-                            ) &&
-                          Date.parse(b.end_at) >
-                            Date.parse(utcFromLocal(d + "T00:00", zone)),
+                          Date.parse(b.start_at) < dayBounds.get(d)!.end &&
+                          Date.parse(b.end_at) > dayBounds.get(d)!.start,
                       ),
                       closed = (r.exceptions ?? []).filter((b) =>
                         onDay(b.start_at, d),

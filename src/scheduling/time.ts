@@ -1,14 +1,24 @@
 // Explicit IANA conversion for calendar forms. Ambiguous/nonexistent civil times are refused.
+// Reuse only the immutable locale/zone formatter, never a date result or any
+// business/permission data. Bound the map for callers with many IANA zones.
+const civilFormatters = new Map<string, Intl.DateTimeFormat>();
 export function localDateTime(iso: string, zone: string) {
-  const p = new Intl.DateTimeFormat("en-CA", {
-    timeZone: zone,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    hourCycle: "h23",
-  }).formatToParts(new Date(iso));
+  let formatter = civilFormatters.get(zone);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat("en-CA", {
+      timeZone: zone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23",
+    });
+    if (civilFormatters.size === 16)
+      civilFormatters.delete(civilFormatters.keys().next().value!);
+    civilFormatters.set(zone, formatter);
+  }
+  const p = formatter.formatToParts(new Date(iso));
   const get = (t: string) => p.find((x) => x.type === t)!.value;
   return `${get("year")}-${get("month")}-${get("day")}T${get("hour")}:${get("minute")}`;
 }

@@ -175,6 +175,19 @@ export function CompletionSubmission({
             multiline
           />
           <ErrorNotice error={localError ?? c.error} />
+          {!!localError && (
+            <p>
+              <a
+                href="/offline/index.html"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Verify saved workspace in another tab
+              </a>
+              . Keep this form open, verify your identity there and resolve any
+              pending originals, then return to submit these same details.
+            </p>
+          )}
           <button disabled={c.busy}>Submit exact evidence for review</button>
           <p role="status">{c.saved}</p>
         </form>
