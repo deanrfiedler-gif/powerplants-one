@@ -285,10 +285,14 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
     }
     // Real server-derived Systems identity; no mocked role or denial response.
     await identity(page, "systems");
+    const denied = await page.request.get(`/api/v1/${s.api}${query}`);
+    expect([403, 404], s.id).toContain(denied.status());
+    expect(denied.headers()["cache-control"]).toBe("private, no-store");
+    const deniedBody = await denied.json();
     await expect(
       page
-        .getByRole("alert")
-        .filter({ hasText: /permission|unavailable/ })
+        .locator('.business-error[role="alert"]')
+        .filter({ hasText: deniedBody.message })
         .first(),
     ).toBeVisible();
     await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
@@ -298,10 +302,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
         exact: true,
       }),
     ).toHaveCount(0);
-    const denied = await page.request.get(`/api/v1/${s.api}${query}`);
-    expect([403, 404]).toContain(denied.status());
-    expect(denied.headers()["cache-control"]).toBe("private, no-store");
-    expect(await denied.text()).not.toContain(source.report_id);
+    expect(JSON.stringify(deniedBody)).not.toContain(source.report_id);
     await capture(page, info, `${s.id}-denied`);
     proof.push({
       screen: s.id,
