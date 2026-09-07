@@ -24,6 +24,7 @@ This repository is Dean's personal private prototype. It contains the planning f
 | [CRM I2 handover](docs/delivery/crm-i2-handover.md) | Scoped Board/Grid worklist, shared brand, actual runtime evidence and external publication |
 | [Customer portal design](docs/delivery/customer-portal-handover.md) | Customer roles, support/publication contracts, clickable walkthrough and bounded CP1–CP5 readiness |
 | [First-release plan](docs/delivery/first-release.md) | Proposed planned-service journey, dependencies and readiness criteria |
+| [Projects discovery and design](docs/delivery/projects-discovery-handover.md) | BP-06 source assessment, first-increment contract and project list/detail designs; J1 prepared only |
 | [Contributing](CONTRIBUTING.md) | Branches, pull requests, validation and evidence |
 
 ## Product direction
