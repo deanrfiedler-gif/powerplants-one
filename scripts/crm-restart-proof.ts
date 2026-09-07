@@ -226,14 +226,14 @@ try {
   );
   await page.goto(origin + "/crm/opportunities");
   await page.getByLabel("Search opportunities", {exact:true}).fill(proof.input.title);
-  for (const view of ["Board", "Grid"]) {
+  for (const view of ["Board", "List"]) {
     await page.getByRole("button", {name:view,exact:true}).click();
     await expect(page.getByRole("link", {name:proof.input.title,exact:true})).toBeVisible();
     const image = await page.screenshot({path:`${evidence}/I2-${phase}-${view}.png`,fullPage:false});
     const metadata = JSON.parse(await readFile(`${evidence}/${phase}.json`,"utf8"));
     await writeFile(`${evidence}/I2-${phase}-${view}.json`,JSON.stringify({...metadata,scenario:`I2 ${view} reads the same accepted Qualified/Open opportunity across actual application and PostgreSQL restart`,sha256:createHash("sha256").update(image).digest("hex"),bytes:image.length},null,2));
   }
-  console.log(`I2 ${phase}: Board/Grid canonical ID, exact saved worklist content and restart cursor boundary verified.`);
+  console.log(`I2 ${phase}: Board/List canonical ID, exact saved worklist content and restart cursor boundary verified.`);
   console.log(
     `I1 ${phase}: real PostgreSQL and HTTP accepted opportunity, two actions, exact completed outcome, qualification/events and four immutable receipts verified. Application PID ${server.pid}.`,
   );

@@ -1,6 +1,6 @@
 # CRM — I2 UI implementation guidance
 
-**Revision:** r02 · **Date:** 6 September 2026 · **Parent:** BP-03 / PPO-009 / issue #9 · **Owner:** Dean Fiedler, private prototype · **Status:** Design input for a later authorised increment.
+**Revision:** r03 · **Date:** 6 September 2026 · **Parent:** BP-03 / PPO-009 / issue #9 · **Owner:** Dean Fiedler, private prototype · **Status:** Design input for a later authorised increment.
 
 Read this alongside the [ordered implementation plan](crm-implementation-plan.md), [shared UI specification](../standards/ui-style-specification.md), [C01–C07 screen specification](../blueprints/crm-screen-specification.md) and [Board/Grid preview and captures](../blueprints/crm-ui-mockups/README.md). This is an additive UI handover, not the full I2 implementation starter. The active I1 workstream owns its completion handover and preparation of that starter.
 
@@ -31,3 +31,7 @@ Cover actual Board/Grid record and filter equivalence; direct detail/search/coun
 Relevant mappings remain CRM-01/02/03/04/08, PAR-03/04/05/15, CA-02/03/05/06/07/10/11/13 and AT-25 components. The design screenshots and preview checks do not pass those business/runtime acceptance cases. Retain the broader I2 relationship scope in the plan; authorise a bounded implementation slice explicitly when ready.
 
 The [r02 design handover](crm-ui-design-handover.md) records the audit dispositions and exact regression evidence. Saved views, sortable headers, column resizing/reordering, bulk actions and persistence remain later work. Define bulk selection scope before exposing it; do not add nonfunctional controls to imply those capabilities.
+
+## Later accepted implementation direction
+
+Dean has now accepted r08 and requested its shared shell and CRM implementation. The [decision](../decisions/shared-ui-r08-implementation.md) supersedes this document's older minimum-column-width and horizontal-scroll presentation rule. The current application still uses its actual Enquiry → Qualified / Open definition. [Implementation handover](shared-ui-redesign-handover.md) records current verification and publication.

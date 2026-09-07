@@ -251,6 +251,7 @@ export function Field({
   multiline = false,
   type = "text",
   maxLength = 200,
+  placeholder,
   hint,
 }: {
   name: string;
@@ -262,6 +263,7 @@ export function Field({
   multiline?: boolean;
   type?: string;
   maxLength?: number;
+  placeholder?: string;
   hint?: string;
 }) {
   const error = useFieldError(validationField ?? name);
@@ -294,6 +296,7 @@ export function Field({
           aria-label={label}
           name={name}
           type={type}
+          placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           required={required}

@@ -37,3 +37,5 @@ The [shared UI and CRM layout direction](ui-brand-and-crm-layout.md) records the
 [Customer portal direction](customer-portal-direction.md) records Dean's authority to design now and implement bounded synthetic stages as their dependencies become ready. It resolves only the private portal-direction portion of D-027; the original wider decision remains open. No migration or technical ADR number is allocated by this design.
 
 The [controlled opportunity handover proposal](crm-opportunity-handover.md) records unresolved H-01–H-03 and fixed preservation constraints under #55. Design publication is authorised; policy acceptance and implementation are separate. No numbered ADR is reserved.
+
+- [Accepted r08 shared layout and CRM implementation](shared-ui-r08-implementation.md) — Dean-approved presentation mapped to existing persisted I1/I2 contracts.
