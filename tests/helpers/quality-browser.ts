@@ -22,10 +22,15 @@ export async function call(page: Page, path: string, body?: unknown) {
 export async function identity(page: Page, profile: string) {
   await expect(page.locator("#business-profile")).toBeEnabled();
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
-  await page
-    .getByRole("button", { name: "Use this identity", exact: true })
-    .focus();
-  await page.keyboard.press("Enter");
+  const changed = page.waitForResponse((r) =>
+    new URL(r.url()).pathname === "/api/v1/local-session" &&
+    r.request().method() === "POST");
+  await page.getByRole("button", { name: "Use this identity", exact: true }).press("Enter");
+  const response = await changed;
+  expect(response.ok(), await response.text()).toBe(true);
+  expect(response.headers()["cache-control"]).toBe("private, no-store");
+  const current = await response.json();
+  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true }).locator("strong")).toHaveText(current.display_name);
   await expect(page.locator("#business-profile")).toBeEnabled();
 }
 export async function capture(

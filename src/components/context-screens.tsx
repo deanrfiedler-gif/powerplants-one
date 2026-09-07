@@ -249,6 +249,7 @@ export function ContextList({
   );
 }
 function RelatedActivities({ type, id }: { type: string; id: string }) {
+  const [cursor, setCursor] = useState("");
   const r = useResource<
     Envelope<{
       id: string;
@@ -258,13 +259,14 @@ function RelatedActivities({ type, id }: { type: string; id: string }) {
       due_needed: boolean;
       due_at: string | null;
     }>
-  >(`activities?${new URLSearchParams({ object_type: type, object_id: id })}`);
+  >(`activities?${new URLSearchParams({ object_type: type, object_id: id, ...(cursor ? { cursor } : {}) })}`);
   return (
     <section className="detail-section">
       <h2>Owned follow-up</h2>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
       {r.data && !r.loading && !r.error && (
         <>
+          <p>{r.data.items.length} permitted linked activities on this page. Later pages are excluded.</p>
           {r.data.items.length === 0 ? (
             <p>No permitted linked activities have been recorded.</p>
           ) : (
@@ -285,9 +287,11 @@ function RelatedActivities({ type, id }: { type: string; id: string }) {
               </div>
             ))
           )}
-          {r.data.next_cursor && (
-            <Link href="/work">Open My Work for additional activities</Link>
-          )}
+          <div className="actions">
+            {cursor && <button className="secondary" onClick={() => setCursor("")}>First linked activities</button>}
+            {r.data.next_cursor && <button className="secondary" onClick={() => setCursor(r.data!.next_cursor!)}>Next linked activities</button>}
+            <Link href="/work">Open My Work</Link>
+          </div>
         </>
       )}
     </section>

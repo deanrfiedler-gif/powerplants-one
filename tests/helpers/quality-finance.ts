@@ -21,8 +21,8 @@ export async function financeJourney(
 ) {
   const uncertain = info.project.name.startsWith("mobile");
   const mode = uncertain ? "SyntheticApi" : "SyntheticManual";
-  await page.goto("/finance/handoffs/new");
   await identity(page, "finance");
+  await page.goto("/finance/handoffs/new");
   await page
     .getByLabel("Work order", { exact: true })
     .selectOption(source.work_order_id);

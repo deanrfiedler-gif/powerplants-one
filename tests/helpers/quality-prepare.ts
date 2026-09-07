@@ -156,12 +156,24 @@ export async function prepareJourney(page: Page, info: TestInfo) {
       { exact: true },
     ),
   ).toBeVisible();
-  await expect(
-    page.getByRole("link", {
-      name: "SYN OEM query: intermittent sensor alarm remains unresolved",
-      exact: true,
-    }),
-  ).toBeVisible();
+  // Earlier retained suites add real linked follow-ups. Traverse the current
+  // scoped pages without assuming this original must remain on page one.
+  const oem = page.getByRole("link", {
+    name: "SYN OEM query: intermittent sensor alarm remains unresolved",
+    exact: true,
+  });
+  for (let pageNumber = 0; pageNumber < 30; pageNumber++) {
+    await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
+    if (await oem.isVisible()) break;
+    const next = page.getByRole("button", { name: "Next linked activities", exact: true });
+    await expect(next).toBeVisible();
+    const result = page.waitForResponse((r) =>
+      new URL(r.url()).pathname === "/api/v1/activities" &&
+      r.request().method() === "GET");
+    await next.press("Enter");
+    expect((await result).ok()).toBe(true);
+  }
+  await expect(oem).toBeVisible();
   await capture(page, info, "journey-existing-site-and-owned-OEM-follow-up");
   await page.goto(`/equipment/${id("80")}`);
   await expect(

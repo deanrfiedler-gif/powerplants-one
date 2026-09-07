@@ -913,7 +913,7 @@ export async function readReport(
         presentations,
         responses,
         issues,
-        jobs,
+        jobs: internal_review ? jobs : [],
         follow_ups,
         template,
         recipient_id: site.primary_contact_id,

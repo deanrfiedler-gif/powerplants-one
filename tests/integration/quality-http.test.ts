@@ -49,7 +49,7 @@ test(
       if (/^reports\/[^/]+\/review$/.test(path))
         body = { ...(body as Record<string, unknown>), remarks: "SYN P11_PRIVATE_REVIEW_CANARY internal Service assessment" };
       return call(path, body);
-    }, "2026-11-17", 101);
+    }, "2027-01-11", 101);
     const input = await httpFinanceDraft(call, source, "SyntheticManual");
     input.treatment_basis += " SYN-P11-HTTP-FINANCE-PRIVATE-CANARY";
     const original = await call("finance/handoffs", input);

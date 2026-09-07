@@ -6,6 +6,9 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+defaults:
+  run:
+    shell: bash
 jobs:
   p01:
     name: P01–P11 and CRM I1–I2 local application and PostgreSQL proof

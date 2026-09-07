@@ -5,6 +5,7 @@ import { closeDatabase, database } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { readReport, reviewReport, presentationBytes } from "../../src/reports/service";
 import { readOperation } from "../../src/shared/receipts";
+import { requestReportIssue } from "../../src/reports/worker";
 import { submitted, decision, principal } from "../helpers/reports";
 
 if (localConfig().database_name !== "ppo_synthetic_test") throw Error("Disposable test database required");
@@ -16,6 +17,7 @@ after(closeDatabase);
 for (const outcome of ["Returned", "Approved"]) {
   test(`P11 ${outcome} review keeps internal narratives in current Service scope and exact corrections with their author`, async () => {
     const q = await submitted(), cmd = decision(q.report, outcome);
+    cmd.entry_decisions.sort((a, b) => a.id.localeCompare(b.id));
     cmd.remarks = "SYN P11_PRIVATE_REVIEW_CANARY internal Service assessment";
     for (const e of cmd.entry_decisions)
       e.remarks = outcome === "Returned" ? "SYN AUTHOR_CORRECTION: clarify the original finding without new physical work." : "SYN PRIVATE_APPROVAL_REASON internal assessment";
@@ -24,11 +26,22 @@ for (const outcome of ["Returned", "Approved"]) {
     const staff = (await readReport(q.reviewer, q.report.id)).items[0];
     assert.equal(staff.reviews[0].remarks, cmd.remarks);
     assert.deepEqual(staff.reviews[0].entry_decisions, cmd.entry_decisions);
+    if (outcome === "Approved") {
+      await requestReportIssue(q.reviewer, q.report.id, {
+        operation_id: crypto.randomUUID(), schema_version: 1,
+        reason: "SYN exact reviewed output preparation; queue metadata stays in Service scope.",
+        expected_version: staff.version, revision_id: staff.revisions[0].id,
+        review_id: staff.reviews[0].id, template_id: staff.template.id,
+        template_version: staff.template.version,
+      });
+      assert.equal((await readReport(q.reviewer, q.report.id)).items[0].jobs.length, 1);
+    }
     for (const p of [q.p, await principal("second-technician")]) {
       const crew = (await readReport(p, q.report.id)).items[0];
       assert.equal(crew.status, outcome === "Approved" ? "Reviewed" : "Returned");
       assert.equal(crew.can_review, false);
       assert.equal(crew.can_issue, false);
+      assert.equal(crew.jobs.length, 0, "Internal render attempts are not a crew projection");
       assert.equal("remarks" in crew.reviews[0], false);
       assert.ok(!JSON.stringify(crew).includes("P11_PRIVATE_REVIEW_CANARY"));
       assert.ok(!JSON.stringify(crew).includes("PRIVATE_APPROVAL_REASON"));
