@@ -251,15 +251,22 @@ test(
       }
     }
     await call("local-session", { profile: "assigned-technician" });
+    const technicianReport = (await call(`reports/${source.report_id}`)).items[0];
+    const issuedPresentation = technicianReport.presentations.find(
+      (p: { kind: string; issue_id: string }) => p.kind === "IssuedReport" && p.issue_id === technicianReport.issues[0].id,
+    );
+    assert.ok(issuedPresentation, "Select the exact issued presentation from the permitted report");
+    assert.equal((await response(`reports/${source.report_id}/html`)).status, 422, "A missing presentation identity must never select latest bytes implicitly");
     for (const path of [
       `reports/${source.report_id}`,
-      `reports/${source.report_id}/html`,
+      `reports/${source.report_id}/html?presentation_id=${issuedPresentation.id}`,
       "my-jobs",
       "sites/70000000-0000-4000-8000-000000000001",
     ]) {
       const output = await response(path);
       assert.equal(output.status, 200, path);
       const text = await output.text();
+      if (path.includes("/html?")) assert.equal(digest(text), issuedPresentation.content_hash);
       for (const secret of restricted) assert.ok(!text.includes(secret), path);
     }
     const otherSite = await response(
