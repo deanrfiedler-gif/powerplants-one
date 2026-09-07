@@ -65,3 +65,5 @@ Migration 0013 adds the direction/no-posting/source-definition guards. Seed 13 a
 ## Remaining delivery
 
 Verify the approved bounded treatment and complete the assigned dashboard/state/load/access/output work and evidence, then final review, normal expected-head merge and actual merged-main verification/publication. P12 starter preparation is maintained separately and grants no implementation authority. No independent review, owner acceptance, production readiness or completed P11 publication is claimed.
+
+Newer main reconciliation: CRM handover design PR #56 merged as `4a9c27d5580edc236ff22b15a65ae441c0bc69a4`, tree `ca8b1d5760072a5b19263b93b81ffff19d5038f4`. All 16 changed documents are preserved. Decision index and document-register append conflicts retain both contributions. H-01–H-03 remain unaccepted proposals; no CRM transfer is implemented. The preceding Travel head `b241209d140dcf188bb20575f2cc2baf1710f65f` had no checks because this newer-main conflict prevented the PR test merge; it is not a passing source.

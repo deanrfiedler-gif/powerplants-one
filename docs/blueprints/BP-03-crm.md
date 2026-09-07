@@ -2,7 +2,7 @@
 
 | Document control | Value |
 |---|---|
-| Revision / date | r04 / 6 September 2026 |
+| Revision / date | r05 / 7 September 2026 |
 | Status | Broader design proposed; I1 implemented and component-tested; actual publication in handover; owner acceptance outstanding |
 | Owner | Dean Fiedler — personal private prototype |
 | Workstream | PPO-009 / [issue #9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9); distinct from PP-01 P09 |
@@ -305,3 +305,9 @@ Weighted forecasts are deferred until an approved amount/currency/tax basis, opt
 CA identifiers are BP-03-local acceptance design cases defined in the [implementation plan](../delivery/crm-implementation-plan.md#acceptance-catalogue). They do not replace master AT or PP-01 PT IDs. All CA cases are **Not run**. The complete AT-25 text includes approved CRM outcomes, history, permissions, migration and automation/mobile behaviour; neither this blueprint nor its wireframes makes it pass. Existing AT/PT statuses and all 78 parent identities are preserved.
 
 The first slice is sufficiently specified for a later authorised synthetic implementation, subject to live shared-contract reconciliation. Operational pipeline/lead, licence, communication, permission, history and cutover decisions remain provisional; the [evidence requests](crm-parity.md#4-smallest-useful-evidence-requests) identify their practical impact and proposed owners.
+
+## Controlled owner handover proposal — design only
+
+The separately invoked [contract/design package](../delivery/crm-handover-design-handover.md) under #55 follows verified I2 publication. Its [decision table](../decisions/crm-opportunity-handover.md) proposes current-owner initiation with a distinct scoped own-transfer capability, immediate effect and current-authority recovery of proven original operations. H-01–H-03 await Dean; publication does not accept them. For this bounded candidate, it refines the broad manager-only transfer proposal in sections 6–7; it does not implement that manager role or a transfer grant.
+
+The [physical/interface map](../contracts/crm-opportunity-handover.md), [canonical C03 journey](crm-handover-journey.md) and [future HV matrix](../testing/crm-handover-verification.md) preserve immutable original qualification, separate Activity/estimate/Finance ownership, all-target access and accepted hashes. I1's current immutable owner remains the implemented contract. All HV cases are Not run, AT-25 remains Planned and #9 stays open. The conditional implementation starter needs policy decisions and a new invocation.
