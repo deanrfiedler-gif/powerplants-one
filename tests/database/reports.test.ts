@@ -111,7 +111,7 @@ test("P09 fresh and P08 upgrade preserve originals and repeat seed does not revi
   );
   assert.deepEqual(
     (await rows("SELECT version FROM public.ppo_migrations ORDER BY version")).map(row=>row.version),
-    [1,2,3,4,5,6,7,8,9,10,12],
+    [1,2,3,4,5,6,7,8,9,10, 11, 12],
   );
 });
 test("P09 exact submission freezes entries; duplicate original recovers same receipt; changed reuse conflicts", async () => {
@@ -139,7 +139,7 @@ test("P09 exact submission freezes entries; duplicate original recovers same rec
       [q.report.revisions[0].id],
     ),
   );
-  assert.equal(q.report.finance_state, "Not implemented — P10");
+  assert.equal(q.report.finance_state, "Separate Finance authority required");
 });
 test("P09 return comments, linked correction, successor submission and narrow attendance acceptance", async () => {
   const q = await submitted(),
@@ -322,7 +322,7 @@ test("P09 all five exact responses, mandatory remarks, immutable synthetic marks
   const evidence = await responseEvidence(q.report.id);
   assert.deepEqual(evidence.map((r) => r.response), ["Accepted", "AcceptedWithReservations", "Declined", "Unavailable", "Disputed"]);
   assert.ok(evidence.every((r) => r.presentation_kind === "IssuedReport"));
-  assert.equal(q.report.finance_state, "Not implemented — P10");
+  assert.equal(q.report.finance_state, "Separate Finance authority required");
   await saveProcedureEvidence("PT-15-response-alternatives", {
     report_id: q.report.id, responses: evidence,
     mandatory_remarks_refused: true, invented_unavailable_respondent_refused: true,
@@ -1056,7 +1056,7 @@ test("P09 partial attendance review retains incomplete declarations without inve
   const b = await presentationBytes(q.p, id, r.presentations[0].id);
   assert.match(b.html, /Time declaration remains incomplete/);
   assert.match(b.html, /Material declaration remains incomplete/);
-  assert.equal(r.finance_state, "Not implemented — P10");
+  assert.equal(r.finance_state, "Separate Finance authority required");
 });
 
 test("P09 actual template source changes after rendering retain the original attempt without release", async () => {

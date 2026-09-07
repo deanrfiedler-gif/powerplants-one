@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 6 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P09 and bounded CRM I1–I2 implemented; source-specific verification and actual main publication are recorded in their linked handovers. PP-01 remains incomplete.
+**Updated:** 7 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P09/P10, CRM I1–I2 and estimating E1 bounded implementations; exact verification/publication governed by their handovers and external records. PP-01 remains incomplete.
 
 ## Current direction
 
@@ -75,7 +75,7 @@ The inspected repository is private with main as default branch. Branch protecti
 
 ## P09 service review and controlled reports
 
-P09 issue #36 / PR #37 implement exact completion submission, authorised review/return, immutable acceptance and report correction cycles, durable customer-safe OUT-10 revisions, five explicit responses and compatible P08 local intents. [ADR-0014](decisions/ADR-0014-p09-service-reports.md) and the [P09 handover](delivery/p09-handover.md) record physical contracts, actual verification, failed-run dispositions and limits. The implementation run passed 289 cases (12 unit, 205 PostgreSQL, 14 HTTP, 58 browser) plus real restart procedures. The external publication record governs exact final-head and actual merged-main results. Existing full PT-06 is preserved; full PT-15/PT-16 disposition is recorded separately from component counts and AT/owner acceptance. The [P10 starter](delivery/p10-starter-prompt.md) is prepared only; Finance and P10–P12 remain unimplemented.
+P09 issue #36 / PR #37 implement exact completion submission, authorised review/return, immutable acceptance and report correction cycles, durable customer-safe OUT-10 revisions, five explicit responses and compatible P08 local intents. [ADR-0014](decisions/ADR-0014-p09-service-reports.md) and the [P09 handover](delivery/p09-handover.md) record physical contracts, actual verification, failed-run dispositions and limits. The implementation run passed 289 cases (12 unit, 205 PostgreSQL, 14 HTTP, 58 browser) plus real restart procedures. The external publication record governs exact final-head and actual merged-main results. Existing full PT-06 is preserved; full PT-15/PT-16 disposition is recorded separately from component counts and AT/owner acceptance. At the P09 publication boundary, the [P10 starter](delivery/p10-starter-prompt.md) was prepared only; subsequent P10 authority and implementation are recorded below.
 
 ## BP-03 I1 implementation and publication
 
@@ -85,6 +85,11 @@ P09 issue #36 / PR #37 implement exact completion submission, authorised review/
 
 Dean authorised the next design revision after the published Board/Grid audit. The [r02 visual revision](delivery/crm-ui-design-handover.md) improves mobile first-record visibility, continuous desktop stage navigation, frozen grid headings/identity, full next actions/owners, creation context, validation and long text. [Updated captures and branded exception examples](blueprints/crm-ui-mockups/README.md) accompany shared UI specification r03 and I2 UI guidance r02. Original issued images and source bytes remain preserved. Verification and PR publication are recorded in the handover; this does not change I1/P09 application scope or close PPO-009/AT-25.
 
+## P10 Finance handoff and account simulation
+
+Dean separately authorised the complete bounded P10 implementation and normal checked merge, followed by P11 starter preparation only. [Issue #45](https://github.com/deanrfiedler-gif/powerplants-one/issues/45), [PR #48](https://github.com/deanrfiedler-gif/powerplants-one/pull/48), [ADR-0016](decisions/ADR-0016-p10-finance-handoff.md) and the [P10 handover](delivery/p10-handover.md) govern current work. The source prerequisite is the completed P09 external publication, subsequently preserved through CRM I1 and estimating discovery main. Earlier P10 preparation-only statements describe the P09 boundary and are superseded by this explicit authority.
+
+SC-12/SC-13, DAT-10, API-C19–22/TR-14 and restricted OUT-14 are implemented; source-specific verification and actual-main publication are governed by the P10 handover and linked external record. Original captured quantities, exact Service approvals, allocated/billable quantities and actual synthetic target quantities remain separate. Incomplete declarations and stale sources block readiness. Account F-01–F-05 retain as-at, completeness, reversals and separate cash. All master requirement and AT completion claims remain unchanged. P11/P12 implementation, hosting and live integrations remain unstarted.
 
 ## BP-03 I2 scoped Board/Grid implementation
 

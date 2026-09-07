@@ -20,10 +20,22 @@ import {
 } from "../../src/reports/service";
 import { requestReportIssue, processReportJob } from "../../src/reports/worker";
 export { principal, base, rows };
-export async function submitted() {
+type SourceOptions = {
+  time_declaration?: "AllRecorded" | "None" | "Incomplete";
+  material_declaration?: "AllRecorded" | "None" | "Incomplete";
+  time_payload?: ReturnType<typeof timePayload>;
+  material_payload?: ReturnType<typeof materialPayload>;
+};
+export async function submitted(options: SourceOptions = {}) {
   const q = await started();
-  await captureEntry(q.p, entry(q.job, "Time", timePayload()));
-  await captureEntry(q.p, entry(q.job, "Material", materialPayload()));
+  await captureEntry(
+    q.p,
+    entry(q.job, "Time", options.time_payload ?? timePayload()),
+  );
+  await captureEntry(
+    q.p,
+    entry(q.job, "Material", options.material_payload ?? materialPayload()),
+  );
   await captureEntry(q.p, entry(q.job));
   const a = await photo(q.job, q.p);
   await captureEntry(
@@ -34,7 +46,15 @@ export async function submitted() {
     }),
   );
   let job = (await readFieldJob(q.p, q.job.id)).items[0];
-  await saveCompletionDraft(q.p, job.id, draft(job));
+  await saveCompletionDraft(q.p, job.id, {
+    ...draft(job),
+    ...(options.time_declaration
+      ? { time_declaration: options.time_declaration }
+      : {}),
+    ...(options.material_declaration
+      ? { material_declaration: options.material_declaration }
+      : {}),
+  });
   job = (await readFieldJob(q.p, job.id)).items[0];
   const cmd = {
     ...base(),
@@ -82,13 +102,13 @@ export function decision(
     recipient_id: report.recipient_id,
   };
 }
-export async function reviewed() {
-  const q = await submitted();
+export async function reviewed(options: SourceOptions = {}) {
+  const q = await submitted(options);
   await reviewReport(q.reviewer, q.report.id, decision(q.report));
   return { ...q, report: (await readReport(q.reviewer, q.report.id)).items[0] };
 }
-export async function reportIssued() {
-  const q = await reviewed(),
+export async function reportIssued(options: SourceOptions = {}) {
+  const q = await reviewed(options),
     r = q.report;
   await requestReportIssue(q.reviewer, r.id, {
     ...base(),

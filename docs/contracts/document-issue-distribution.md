@@ -1,6 +1,6 @@
 # PP-01 — Minimum document, issue and distribution contract
 
-**Edition:** r05 · **Status:** OUT-09/DAT-07/minimum DAT-11 implemented in P06; bounded DAT-09/OUT-10 implemented in P09 with verification recorded separately; OUT-14 remains a P10 contract. No actual SharePoint repository, template or retention policy has been verified in this package.
+**Edition:** r06 · **Status:** OUT-09/DAT-07/minimum DAT-11 implemented in P06; bounded DAT-09/OUT-10 in P09 and restricted OUT-14 in P10, with actual verification recorded separately. No actual SharePoint repository, template or retention policy has been verified in this package.
 
 [Package](../prototype/README.md) · [Dictionary](service-data-dictionary.md) · [BP-07](../blueprints/BP-07-service-operations.md).
 
@@ -131,3 +131,13 @@ Only in-app owned contact/distribution tasks and synthetic outcomes exist. No em
 The OUT-10 template definition fingerprints the actual report renderer/projection and shared rendering/escaping source bytes. Seed 9 stores that exact definition/hash and current policy in the same seed transaction; repeat seed never rewrites it. Issue request and final release reread and compare those source fingerprints. A changed template source, even during rendering, retains a StaleSource attempt without release. Future rendering changes require an immutable successor template/policy through an authorised forward change; old issued bytes remain retrievable without regeneration.
 
 Customer presentation mode renders the verified exact HTML and response controls without staff review comments, prior response history or owned internal actions in that view. Returning to staff review is explicit. The HTML hash remains the hash of the actual sandboxed content, not of the surrounding capture controls.
+
+## P10 controlled OUT-14 implementation
+
+OUT-14 extends the existing private write-once document adapter and durable job pattern. The Finance request binds exact Reconciled handoff/revision/review/reconciliation, source report/entry/scope/authority hashes, selected definition/policy and current template fingerprint. Queue/detail remain the review surface for unresolved work; this increment releases evidence only after reconciliation. Customer distribution is disabled.
+
+`finance_render_jobs` stores the immutable render input/hash, original operation/actor, reserved issue ID and prepared-at time. `finance_render_attempts` retain each claimed/failure/stale/issued attempt; recoverable lease is two minutes and maximum attempts five. The bundle stores exact HTML and A4 PDF with browser/renderer versions. The immutable manifest contains original adapter key/version/hash, bundle/HTML/PDF hashes and sizes, template/review/reconciliation IDs and `CurrentScopedFinance` audience. Actual `finance_issues.issued_at` is committed only after current scope/permission/source/template and private original bytes are rechecked. Prepared-at is not released-at.
+
+After storage success and database failure, retry locates the same original operation bundle before considering rendering; it never regenerates, inserts a signature or changes a reserved issue identity. A changed source/template prevents release and retains original bytes/history. Missing/wrong-hash versions fail explicitly without latest-version fallback. A revoked original issue owner cannot retry, finalise or recover the request receipt. Current Finance read scope is required for original HTML/PDF access even after issue; revoked readers and Service/Systems/technicians cannot retrieve it.
+
+Content includes work/company/customer/account/currency/mode/state, exact captured/reviewed/allocated/billable quantities and direction, reviewed treatment/remaining-work basis, actual synthetic target/line evidence, no-posting dispositions, exact source and definition/review/template references and correction requests at preparation. Repeated captured quantities on split allocations are context, not additive totals. Original target source-as-at and provider identity remain in the appendix. Long A4 pages require every-page inspection with original provenance. No tax, price, GST, payroll, stock posting, MYOB reference, live distribution or operational retention policy is invented. Actual evidence and limits belong to the [P10 handover](../delivery/p10-handover.md).

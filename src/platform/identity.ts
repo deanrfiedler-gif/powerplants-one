@@ -27,6 +27,9 @@ export async function createSession(profile: string, previous_token?: string) {
       "assigned-technician",
       "second-technician",
       "finance",
+      "finance-reviewer",
+      "finance-processor",
+      "finance-reconciler",
       "second-company",
       "workspace-observer",
     ].includes(profile)

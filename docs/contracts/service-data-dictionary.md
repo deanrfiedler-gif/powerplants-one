@@ -1,6 +1,6 @@
 # PP-01 — Service data and choice dictionary
 
-**Edition:** r12 · **Status:** Logical and physical contract; P01–P09 implement the bounded subsets explicitly identified below. P09 runtime verification is recorded in its handover. This is not an exported CREMS/MYOB schema.
+**Edition:** r13 · **Status:** Logical and physical contract; P01–P10 and CRM I1–I2 implement the bounded subsets explicitly identified below. Actual verification/publication is recorded in each handover. This is not an exported CREMS/MYOB schema.
 
 BP-03 I1 adds only the explicitly identified opportunity amendment below; its actual verification/publication is in the [I1 handover](../delivery/crm-i1-handover.md).
 
@@ -414,6 +414,25 @@ Opportunity fixes workspace/company, original organisation/site/contact IDs and 
 
 Seed receipt 10 creates configuration and explicit CRM read/create/edit grants for eligible existing synthetic profiles only once. It creates no opportunity or action. Repeat seed preserves edits, revoked grants, counters and history. Systems/unassigned identities receive no default CRM authority. Original migration/seed/issued-source bytes and accepted operation hashes remain unchanged. Actual fresh/upgrade/restart results and current P09 migration ordering belong in the [I1 handover](../delivery/crm-i1-handover.md).
 
+## P10 physical Finance extension — DAT-10/minimum DAT-11
+
+[ADR-0016](../decisions/ADR-0016-p10-finance-handoff.md), migration `0011-finance-handoff.sql` and the [Finance amendment](finance-handoff.md#p10-physical-implementation-amendment) define the current bounded records. All previous migrations, issued references and 78 parent identities remain unchanged.
+
+| Tables | Physical ownership and retained facts |
+|---|---|
+| `finance_definitions`, `finance_policy` | Immutable definition/version/hash and current policy/version; exact fixture quantity/currency basis, no operational definitions invented |
+| `finance_accounts`, `finance_account_runs` | Permanent FinanceAccount identity; immutable SyntheticVerified company/customer/mapping snapshot/currency; versioned current pointer; immutable extraction scope/as-at/cutoff/pages/count/observations/source balance/cash/reversal lineage and predecessor |
+| `finance_handoffs` | Permanent FinancialHandoff/FH identity; owner, work/company/site/customer/account/currency/mode/correlation; expected aggregate version, current revision, explicit state/processor/active attempt and source blocker |
+| `finance_revisions`, `finance_sources` | Immutable revision/predecessor, exact definition/policy, treatment/remaining-work basis and source hash; exact report/revision/review/issue references and original evidence |
+| `finance_lines` | Exact entry/root/version/source hash, captured/reviewed/allocated/billable quantities, UOM/direction, disposition/reason/target group; immutable original allocation identity |
+| `finance_allocation_holds` | Held/Consumed/Released quantities per source root and line; conserved under workspace lock; no deletion or reopening consumed allocations |
+| `finance_reviews`, `finance_events` | Exact immutable approval/return, source/definition/policy, separate actor/reason/time; required event for every aggregate version |
+| `finance_processing_attempts` | Exact revision/review/processor/original operation/correlation/input hash/target-line snapshot; attempt lineage; dispatch marker set once |
+| `finance_simulator_targets`, `finance_simulator_results` | Independently committed SyntheticServiceCharge effect with exact company/customer/account/currency/line evidence; one correlation; immutable original result/fence per attempt |
+| `finance_outcomes`, `finance_reconciliations`, `finance_corrections` | Distinct Unknown/NotProcessed/Processed observation; exact target map and no-posting dispositions; immutable linked source_revision_id/outcome correction request without actual reversal |
+| `finance_templates`, `finance_template_policy`, `finance_render_jobs`, `finance_render_attempts`, `finance_issues` | Immutable template definition; current policy; exact reserved source/input/output, recoverable two-minute lease and five-attempt bound; original manifest/provider version/hash/bytes, actual release/audience |
+
+SyntheticManual/SyntheticApi are the only physical modes. States are Draft, ReadyForReview, Approved, Returned, AwaitingERP, OutcomeUnknown, ReconciliationRequired, Reconciled and Cancelled. Quantity numerics are six-place exact values with strict API decimal strings; currency fixture values are two-place supplied AUD amounts. Null means unresolved/unavailable, not zero. A stored target and a received Processed outcome are different facts. P09's accepted attendance and original Draft field flags remain unchanged. All commands use current server-derived Finance capabilities and record scope; scope ownership grants no Finance approval.
 
 ## BP-03 I2 read projection — no physical change
 

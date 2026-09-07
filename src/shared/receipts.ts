@@ -1,4 +1,5 @@
 import { opportunityReceiptActions } from "../crm/receipt-authority";
+import { financeContext, financeAccount, receiptCapability } from "../finance/context";
 import { estimateContext, quoteContext } from "../estimating/context";
 import { visibleOpportunity, relationshipContext, eligibleOpportunityOwner } from "../crm/context";
 import { reportContext, ownReport } from "../reports/context";
@@ -32,7 +33,11 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.object_type === "Estimate") {
+  if (r.object_type === "FinancialHandoff") {
+    await financeContext(client,p,r.record_id,receiptCapability(r.command));
+  } else if (r.object_type === "FinanceAccount") {
+    await financeAccount(client,p,r.record_id);
+  } else if (r.object_type === "Estimate") {
     await estimateContext(client,p,r.record_id,"estimating.edit");
   } else if (r.object_type === "DraftQuoteRevision") {
     await quoteContext(client,p,r.record_id,"estimating.quote.prepare");
