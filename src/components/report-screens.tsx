@@ -723,18 +723,18 @@ export function ReportScreen({ id }: { id: string }) {
               id: string;
               revision_id: string;
               decision: string;
-              remarks: string;
+              remarks?: string;
               entry_decisions: {
                 id: string;
                 decision: string;
-                remarks: string;
+                remarks?: string;
               }[];
             }) => (
               <section className="business-card" key={v.id}>
                 <h2>{v.decision} review</h2>
-                <p>{v.remarks}</p>
+                {v.remarks && <p>{v.remarks}</p>}
                 {v.entry_decisions
-                  .filter((e) => e.decision === "Returned")
+                  .filter((e) => e.decision === "Returned" && e.remarks)
                   .map((e) => (
                     <p key={e.id}>
                       <strong>Returned entry:</strong> {e.remarks} ·{" "}

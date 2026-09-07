@@ -6,8 +6,9 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { financeHttpSource, httpFinanceDraft } from "../helpers/finance-http";
 import { base } from "../helpers/field";
 
-// Run after the retained HTTP suite, with its same guarded server. This case
-// creates its own dated source and never resets shared concurrent test records.
+// The full gate runs after the retained HTTP suite with its same guarded server;
+// a focused diagnostic job runs this case alone from fresh seed. It creates its
+// own dated source and never resets shared concurrent test records.
 const origin = "http://127.0.0.1:3000";
 const root = "verification-evidence/p11-http";
 const digest = (b: Uint8Array | string) =>
@@ -44,7 +45,11 @@ test(
         cookie = r.headers.get("set-cookie")!.split(";")[0];
       return value;
     }
-    const source = await financeHttpSource(call, "2026-11-17", 101);
+    const source = await financeHttpSource(async (path, body) => {
+      if (/^reports\/[^/]+\/review$/.test(path))
+        body = { ...(body as Record<string, unknown>), remarks: "SYN P11_PRIVATE_REVIEW_CANARY internal Service assessment" };
+      return call(path, body);
+    }, "2026-11-17", 101);
     const input = await httpFinanceDraft(call, source, "SyntheticManual");
     input.treatment_basis += " SYN-P11-HTTP-FINANCE-PRIVATE-CANARY";
     const original = await call("finance/handoffs", input);
@@ -112,6 +117,7 @@ test(
       targetId = r.targets[0].id;
     const restricted = [
       "SYN-P11-HTTP-FINANCE-PRIVATE-CANARY",
+      "P11_PRIVATE_REVIEW_CANARY",
       r.handoff.display_number,
       issue.id,
       targetId,
@@ -246,6 +252,7 @@ test(
     }
     await call("local-session", { profile: "assigned-technician" });
     for (const path of [
+      `reports/${source.report_id}`,
       `reports/${source.report_id}/html`,
       "my-jobs",
       "sites/70000000-0000-4000-8000-000000000001",

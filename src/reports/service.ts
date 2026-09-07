@@ -845,6 +845,11 @@ export async function readReport(
           [p.workspace_id],
         )
       ).rows[0];
+    // Reuse reportContext's current scoped Service-versus-field distinction.
+    // A report read/assignment is not access to internal review narratives.
+    const internal_review = await hasPermission(
+      c, p, "service.work_order.edit", r.company_id, r.site_id,
+    );
     const can_review =
         ctx.w.service_owner_id === p.actor_id &&
         (await hasPermission(c, p, "report.review", r.company_id, r.site_id)),
@@ -889,7 +894,22 @@ export async function readReport(
           submitted_at: v.submitted_at,
           snapshot: v.snapshot,
         })),
-        reviews,
+        reviews: internal_review ? reviews : reviews.map((v) => ({
+          id: v.id,
+          revision_id: v.revision_id,
+          decision: v.decision,
+          source_hash: v.source_hash,
+          authority_disposition: v.authority_disposition,
+          reviewed_at: v.reviewed_at,
+          entry_decisions: v.entry_decisions.map((e: { id: string; version: number; decision: string; remarks: string }) => ({
+            id: e.id,
+            version: e.version,
+            decision: e.decision,
+            // The original author needs the exact requested correction. Other
+            // crew receive factual decisions and original/corrected evidence.
+            ...(r.actor_id === p.actor_id && e.decision === "Returned" ? { remarks: e.remarks } : {}),
+          })),
+        })),
         presentations,
         responses,
         issues,

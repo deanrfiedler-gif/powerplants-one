@@ -57,61 +57,6 @@ jobs:
           npm run db:migrate
           npm run db:seed
           npm run db:health
-      - name: Focused P11 Travel guards and actual P10 current-main record upgrade
-        run: |
-          mkdir -p verification-evidence/p11-focused-db
-          python3 - <<'PY'
-          import os,json,subprocess
-          from pathlib import Path
-          Path('verification-evidence/p11-focused-db/provenance.json').write_text(json.dumps({'source_head':os.environ['PPO_SOURCE_HEAD'],'executed_checkout':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'executed_tree':subprocess.check_output(['git','rev-parse','HEAD^{tree}'],text=True).strip(),'run_id':os.environ['GITHUB_RUN_ID'],'run_attempt':os.environ['GITHUB_RUN_ATTEMPT'],'environment':'Disposable GitHub CI; exact repository pins; fresh and current-main/P10 records'},indent=2))
-          PY
-          node --env-file=.env.local --import tsx --test --test-reporter=tap --test-concurrency=1 --test-timeout=120000 tests/database/quality-travel.test.ts tests/database/quality-upgrade.test.ts tests/database/quality-planner.test.ts tests/database/quality-templates.test.ts 2>&1 | tee verification-evidence/p11-focused-db/results.tap
-      - name: Focused P11 complete selected Service and Finance journey
-        env:
-          PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-journey-browser/results.json
-        run: |
-          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
-          npx playwright test tests/browser/quality-journey.spec.ts --output verification-evidence/p11-journey-browser --reporter=list,json
-      - name: Prepare journey review diagnostics
-        if: always()
-        id: journey_review
-        run: python3 scripts/prepare-review-evidence.py
-      - name: Preserve original selected P11 journey immediately
-        if: ${{ always() && steps.journey_review.outcome == 'success' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: P11-selected-journey-evidence
-          path: |
-            verification-evidence/review-diagnostic-redactions.json
-            verification-evidence/p11-journey-browser/
-            verification-evidence/p11-focused-db/
-            verification-evidence/p11-template-db/
-            !**/trace.zip
-          retention-days: 14
-      - name: Focused P11 identity, validation and retained recovery proof
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
-        env:
-          PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-focused-browser/results.json
-        run: |
-          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
-          npx playwright test tests/browser/quality.spec.ts tests/browser/quality-states.spec.ts --output verification-evidence/p11-focused-browser --reporter=list,json
-      - name: Prepare focused review diagnostics
-        if: always()
-        id: focused_review
-        run: python3 scripts/prepare-review-evidence.py
-      - name: Preserve original focused P11 evidence immediately
-        if: ${{ always() && steps.focused_review.outcome == 'success' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: P11-focused-quality-evidence
-          path: |
-            verification-evidence/review-diagnostic-redactions.json
-            verification-evidence/p11-focused-browser/
-            verification-evidence/p11-journey-browser/
-            verification-evidence/p11-focused-db/
-            verification-evidence/p11-template-db/
-            !**/trace.zip
-          retention-days: 14
       - name: Focused P10 desktop and phone review, allocation and reconciliation
         if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         run: |
@@ -270,6 +215,201 @@ jobs:
             !**/trace.zip
           retention-days: 14
 
+  p11_quality:
+    name: P11 focused integrated quality and access proof
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: postgres:16.15
+        env:
+          POSTGRES_USER: ppo_local
+          POSTGRES_PASSWORD: ppo_disposable_ci_only
+          POSTGRES_DB: ppo_synthetic_test
+        ports:
+          - 127.0.0.1:5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ppo_local -d ppo_synthetic_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install exact package manager and locked dependencies
+        run: |
+          npm install --global npm@11.19.0
+          npm ci
+          node --version
+          npm --version
+          git rev-parse HEAD
+          npm ls --depth=0
+      - name: Install pinned controlled PDF renderer
+        run: npx playwright install --with-deps chromium
+      - name: Static, unit and build checks
+        run: npm run check
+      - name: Configure disposable loopback database
+        id: database_setup
+        run: |
+          cp .env.example .env.local
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('.env.local')
+          p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
+          PY
+          npm run db:migrate
+          npm run db:seed
+          npm run db:health
+      - name: Focused P11 Travel guards and actual P10 current-main record upgrade
+        run: |
+          mkdir -p verification-evidence/p11-focused-db
+          python3 - <<'PY'
+          import os,json,subprocess
+          from pathlib import Path
+          Path('verification-evidence/p11-focused-db/provenance.json').write_text(json.dumps({'source_head':os.environ['PPO_SOURCE_HEAD'],'executed_checkout':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'executed_tree':subprocess.check_output(['git','rev-parse','HEAD^{tree}'],text=True).strip(),'run_id':os.environ['GITHUB_RUN_ID'],'run_attempt':os.environ['GITHUB_RUN_ATTEMPT'],'environment':'Disposable GitHub CI; exact repository pins; fresh and current-main/P10 records'},indent=2))
+          PY
+          node --env-file=.env.local --import tsx --test --test-reporter=tap --test-concurrency=1 --test-timeout=120000 tests/database/quality-travel.test.ts tests/database/quality-upgrade.test.ts tests/database/quality-planner.test.ts tests/database/quality-templates.test.ts tests/database/quality-reports.test.ts 2>&1 | tee verification-evidence/p11-focused-db/results.tap
+      - name: Focused P11 complete selected Service and Finance journey
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-journey-browser/results.json
+        run: |
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+          npx playwright test tests/browser/quality-journey.spec.ts --output verification-evidence/p11-journey-browser --reporter=list,json
+      - name: Prepare journey review diagnostics
+        if: always()
+        id: journey_review
+        run: python3 scripts/prepare-review-evidence.py
+      - name: Preserve original selected P11 journey immediately
+        if: ${{ always() && steps.journey_review.outcome == 'success' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: P11-selected-journey-evidence
+          path: |
+            verification-evidence/review-diagnostic-redactions.json
+            verification-evidence/p11-journey-browser/
+            verification-evidence/p11-focused-db/
+            verification-evidence/p11-template-db/
+            !**/trace.zip
+          retention-days: 14
+      - name: Focused P11 identity, validation and retained recovery proof
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-focused-browser/results.json
+        run: |
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+          npx playwright test tests/browser/quality.spec.ts tests/browser/quality-states.spec.ts --output verification-evidence/p11-focused-browser --reporter=list,json
+      - name: Prepare focused review diagnostics
+        if: always()
+        id: focused_review
+        run: python3 scripts/prepare-review-evidence.py
+      - name: Preserve original focused P11 evidence immediately
+        if: ${{ always() && steps.focused_review.outcome == 'success' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: P11-focused-quality-evidence
+          path: |
+            verification-evidence/review-diagnostic-redactions.json
+            verification-evidence/p11-focused-browser/
+            verification-evidence/p11-journey-browser/
+            verification-evidence/p11-focused-db/
+            verification-evidence/p11-template-db/
+            !**/trace.zip
+          retention-days: 14
+
+  p11_http:
+    name: P11 focused original HTTP and output isolation proof
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: postgres:16.15
+        env:
+          POSTGRES_USER: ppo_local
+          POSTGRES_PASSWORD: ppo_disposable_ci_only
+          POSTGRES_DB: ppo_synthetic_test
+        ports:
+          - 127.0.0.1:5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ppo_local -d ppo_synthetic_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install exact package manager and locked dependencies
+        run: |
+          npm install --global npm@11.19.0
+          npm ci
+          node --version
+          npm --version
+          git rev-parse HEAD
+          npm ls --depth=0
+      - name: Install pinned controlled PDF renderer
+        run: npx playwright install --with-deps chromium
+      - name: Static, unit and build checks
+        run: npm run check
+      - name: Configure disposable loopback database
+        id: database_setup
+        run: |
+          cp .env.example .env.local
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('.env.local')
+          p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
+          PY
+          npm run db:migrate
+          npm run db:seed
+          npm run db:health
+      - name: Focused P11 original HTTP isolation from fresh synthetic seed
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        run: |
+          if npm start; then exit 1; fi
+          node --env-file=.env.local --import tsx scripts/local-server.ts > "$RUNNER_TEMP/ppo-http.log" 2>&1 &
+          ppo_server_pid=$!
+          ppo_http_cleanup() {
+            kill "$ppo_server_pid" 2>/dev/null || true
+            mkdir -p verification-evidence/http
+            cp "$RUNNER_TEMP/ppo-http.log" verification-evidence/http/server.log
+          }
+          trap ppo_http_cleanup EXIT
+          ppo_http_ready=0
+          for attempt in $(seq 1 60); do
+            kill -0 "$ppo_server_pid" 2>/dev/null || exit 1
+            if grep -Fq 'Powerplants One — local synthetic only — http://127.0.0.1:3000' "$RUNNER_TEMP/ppo-http.log" && curl --fail --silent http://127.0.0.1:3000/ > /dev/null; then
+              ppo_http_ready=1
+              break
+            fi
+            sleep 1
+          done
+          test "$ppo_http_ready" = 1
+          mkdir -p verification-evidence/p11-http
+          node --env-file=.env.local --import tsx --test --test-reporter=tap tests/integration/quality-http.test.ts 2>&1 | tee verification-evidence/p11-http/results.tap
+      - name: Prepare HTTP review diagnostics
+        if: always()
+        id: http_review
+        run: python3 scripts/prepare-review-evidence.py
+      - name: Preserve original HTTP component evidence immediately
+        if: ${{ always() && steps.http_review.outcome == 'success' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: P11-focused-HTTP-evidence
+          path: |
+            verification-evidence/review-diagnostic-redactions.json
+            verification-evidence/p11-http/
+            verification-evidence/http/
+          retention-days: 14
+
   p11_performance:
     name: P11 declared load and raw core-read performance proof
     runs-on: ubuntu-24.04
@@ -334,5 +474,7 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: P11-performance-evidence
-          path: verification-evidence/p11-performance/
+          path: |
+            verification-evidence/review-diagnostic-redactions.json
+            verification-evidence/p11-performance/
           retention-days: 14
