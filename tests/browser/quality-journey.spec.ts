@@ -11,6 +11,7 @@ import { prepareJourney, committed } from "../helpers/quality-prepare";
 import { completion, submit, review, issue } from "../helpers/quality-report";
 import { png } from "../helpers/field";
 import { financeJourney } from "../helpers/quality-finance";
+import { keyActivate, keySelect, keyType } from "../helpers/quality-keyboard";
 test.use({ actionTimeout: 15000, navigationTimeout: 60000 });
 
 test("P11 selected UI service-to-Finance journey preserves controlled booking, personal originals, exact response and reconciled Travel no-posting", async ({
@@ -435,32 +436,39 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
     presentation.content_hash,
   );
   expect(html).not.toContain("P11_PRIVATE_REVIEW_CANARY");
-  await page
-    .getByLabel("Customer response", { exact: true })
-    .selectOption("AcceptedWithReservations");
-  await page
-    .getByLabel("Stated respondent name (synthetic)")
-    .fill("SYN Casey Fictional");
-  await page
-    .getByLabel("Stated respondent role", { exact: true })
-    .fill("Fictional site contact");
-  await page
-    .getByLabel("Response remarks / reservations", { exact: true })
-    .fill(
-      "SYN accepts the exact attendance presentation with reservation: remaining label inspection requires another owned visit.",
-    );
-  await page
-    .getByLabel("Owned next action (required unless accepted)")
-    .fill(
-      "SYN service coordinator to review the proposed return and contact the fictional site.",
-    );
-  await capture(page, info, "journey-exact-reserved-response");
-  await page
-    .getByRole("button", {
+  await keySelect(
+    page,
+    page.getByLabel("Customer response", { exact: true }),
+    "AcceptedWithReservations",
+  );
+  await keyType(
+    page,
+    page.getByLabel("Stated respondent name (synthetic)"),
+    "SYN Casey Fictional",
+  );
+  await keyType(
+    page,
+    page.getByLabel("Stated respondent role", { exact: true }),
+    "Fictional site contact",
+  );
+  await keyType(
+    page,
+    page.getByLabel("Response remarks / reservations", { exact: true }),
+    "SYN accepts the exact attendance presentation with reservation: remaining label inspection requires another owned visit.",
+  );
+  await keyType(
+    page,
+    page.getByLabel("Owned next action (required unless accepted)"),
+    "SYN service coordinator to review the proposed return and contact the fictional site.",
+  );
+  await capture(page, info, "journey-keyboard-exact-reserved-response");
+  await keyActivate(
+    page,
+    page.getByRole("button", {
       name: "Save response to presented content",
       exact: true,
-    })
-    .click();
+    }),
+  );
   await expect
     .poll(
       async () =>
@@ -507,7 +515,9 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
         return_proposal: proposal,
         finance,
         completed_boundary:
-          "Service intake through exact reserved customer response and same-source Finance allocation, independent review, original unknown-outcome lookup, reconciliation and OUT-14.",
+          "Service intake through exact reserved customer response and same-source Finance allocation, independent review, desktop SyntheticManual processing / phone original unknown-outcome lookup, reconciliation and OUT-14.",
+        keyboard_scope:
+          "Native Tab/typing/select arrows/Enter: complete intake, controlled booking move, exact field submission, exact reserved report response and Finance approval. Other journey steps use labelled UI controls. No screen-reader, real-device or whole-product conformance claim.",
         p12_limit:
           "PT-30 full status remains blocked by its written completed P12 precondition; no restore or handover acceptance inferred.",
         page_errors: errors,

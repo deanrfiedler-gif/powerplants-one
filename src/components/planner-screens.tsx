@@ -1387,28 +1387,32 @@ export function PlannerScreen() {
           <div className="planner-stat-row">
             <div>
               <strong>
-                {data.items.filter((a) => a.status === "Confirmed").length}
+                {usable
+                  ? data.items.filter((a) => a.status === "Confirmed").length
+                  : "—"}
               </strong>
               <span>Confirmed visits</span>
             </div>
             <div>
               <strong>
-                {data.items.filter((a) => a.status === "Proposed").length}
+                {usable
+                  ? data.items.filter((a) => a.status === "Proposed").length
+                  : "—"}
               </strong>
               <span>Proposed · no reservation</span>
             </div>
             <div>
               <strong>
-                {
-                  data.items.filter((a) =>
-                    a.requests.some((r) => r.status === "Pending"),
-                  ).length
-                }
+                {usable
+                  ? data.items.filter((a) =>
+                      a.requests.some((r) => r.status === "Pending"),
+                    ).length
+                  : "—"}
               </strong>
               <span>Visits with pending requests</span>
             </div>
             <div>
-              <strong>{data.resources.length}</strong>
+              <strong>{usable ? data.resources.length : "—"}</strong>
               <span>Permitted resource lanes</span>
             </div>
           </div>
@@ -1416,7 +1420,9 @@ export function PlannerScreen() {
             {displayDay(day)} – {displayDay(addDays(day, days.length - 1))} ·
             Display {zone} · Observed{" "}
             <Stamp value={data.observed_at} timezone={zone} /> ·{" "}
-            {result.error ? "Last successful read" : "Complete filtered result"}
+            {usable
+              ? "Complete permitted result within this date/site/resource filter"
+              : "Last successful read · current counts unavailable"}
           </p>
           <p className="planner-legend">
             <span>Confirmed = reserved crew</span>

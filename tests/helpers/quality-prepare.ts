@@ -6,6 +6,13 @@ import {
 } from "@playwright/test";
 import { call, capture, identity, saveOriginal } from "./quality-browser";
 
+import {
+  keyActivate,
+  keyType,
+  keySelect,
+  keyAdvanceDays,
+} from "./quality-keyboard";
+
 const id = (prefix: string, n = 1) =>
   `${prefix}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 export async function committed(
@@ -171,43 +178,61 @@ export async function prepareJourney(page: Page, info: TestInfo) {
   ).toBeVisible();
   await capture(page, info, "journey-original-attributed-failed-fix");
   await page.goto("/service/tickets/new");
-  await page
-    .getByLabel("Company visibility context", { exact: true })
-    .selectOption(id("20"));
-  await page.getByLabel("Request summary", { exact: true }).fill(summary);
-  await page
-    .getByLabel("Known requester", { exact: true })
-    .selectOption(id("60"));
-  await page.getByLabel("Known site", { exact: true }).selectOption(id("70"));
-  await page
-    .getByLabel("Requester description / clarification")
-    .fill(
-      "SYN fictional caller reports repeated external display alarm after an unsuccessful earlier check.",
-    );
-  await page
-    .getByLabel("Reported symptoms / explicit symptom uncertainty")
-    .fill(
-      "SYN intermittent external display alarm; root cause and coverage remain uncertain.",
-    );
-  await page
-    .getByLabel("Operational impact", { exact: true })
-    .fill("SYN monitoring interrupted; no invented production loss.");
-  await page
-    .getByLabel("Priority rationale", { exact: true })
-    .fill("SYN assessment needed; urgency does not authorise physical work.");
-  await page
-    .getByLabel("Next action", { exact: true })
-    .fill(
-      "SYN coordinator to review limited scope, authority and exact site access.",
-    );
-  await page
-    .getByLabel("Reason for saving")
-    .fill(
-      "SYN preserve complete fictional intake before separate work authority.",
-    );
-  await page
-    .getByRole("button", { name: "Save service request", exact: true })
-    .click();
+  await keySelect(
+    page,
+    page.getByLabel("Company visibility context", { exact: true }),
+    id("20"),
+  );
+  await keyType(
+    page,
+    page.getByLabel("Request summary", { exact: true }),
+    summary,
+  );
+  await keySelect(
+    page,
+    page.getByLabel("Known requester", { exact: true }),
+    id("60"),
+  );
+  await keySelect(
+    page,
+    page.getByLabel("Known site", { exact: true }),
+    id("70"),
+  );
+  await keyType(
+    page,
+    page.getByLabel("Requester description / clarification"),
+    "SYN fictional caller reports repeated external display alarm after an unsuccessful earlier check.",
+  );
+  await keyType(
+    page,
+    page.getByLabel("Reported symptoms / explicit symptom uncertainty"),
+    "SYN intermittent external display alarm; root cause and coverage remain uncertain.",
+  );
+  await keyType(
+    page,
+    page.getByLabel("Operational impact", { exact: true }),
+    "SYN monitoring interrupted; no invented production loss.",
+  );
+  await keyType(
+    page,
+    page.getByLabel("Priority rationale", { exact: true }),
+    "SYN assessment needed; urgency does not authorise physical work.",
+  );
+  await keyType(
+    page,
+    page.getByLabel("Next action", { exact: true }),
+    "SYN coordinator to review limited scope, authority and exact site access.",
+  );
+  await keyType(
+    page,
+    page.getByLabel("Reason for saving"),
+    "SYN preserve complete fictional intake before separate work authority.",
+  );
+  await capture(page, info, "journey-keyboard-intake-ready");
+  await keyActivate(
+    page,
+    page.getByRole("button", { name: "Save service request", exact: true }),
+  );
   await expect(page).toHaveURL(/\/service\/tickets\/[a-f0-9-]{36}$/);
   const ticket = page.url().split("/").at(-1)!;
   await page
@@ -536,29 +561,41 @@ export async function prepareJourney(page: Page, info: TestInfo) {
   await identity(page, "coordinator");
   try {
     await page.goto(`/service/appointments/${aid}`);
-    await page
-      .getByRole("button", { name: "Move or reassign", exact: true })
-      .focus();
-    await page.keyboard.press("Enter");
+    await keyActivate(
+      page,
+      page.getByRole("button", { name: "Move or reassign", exact: true }),
+    );
     const move = page.getByRole("region", {
       name: "Move or reassign",
       exact: true,
     });
-    await move
-      .getByLabel("Start (site time)", { exact: true })
-      .fill(movedDay + "T10:00");
-    await move
-      .getByLabel("Finish (site time)", { exact: true })
-      .fill(movedDay + "T12:00");
-    await move
-      .getByLabel("Change reason", { exact: true })
-      .fill(
-        "SYN controlled weekday move; retain original issued bytes and require changed-date contact and successor pack.",
-      );
+    await keyAdvanceDays(
+      page,
+      move.getByLabel("Start (site time)", { exact: true }),
+      2,
+    );
+    await keyAdvanceDays(
+      page,
+      move.getByLabel("Finish (site time)", { exact: true }),
+      2,
+    );
+    await expect(
+      move.getByLabel("Start (site time)", { exact: true }),
+    ).toHaveValue(movedDay + "T10:00");
+    await expect(
+      move.getByLabel("Finish (site time)", { exact: true }),
+    ).toHaveValue(movedDay + "T12:00");
+    await keyType(
+      page,
+      move.getByLabel("Change reason", { exact: true }),
+      "SYN controlled weekday move; retain original issued bytes and require changed-date contact and successor pack.",
+    );
+    await capture(page, info, "journey-keyboard-move-ready");
     await committed(page, `appointments/${aid}/move`, () =>
-      move
-        .getByRole("button", { name: "Save proposed move", exact: true })
-        .click(),
+      keyActivate(
+        page,
+        move.getByRole("button", { name: "Save proposed move", exact: true }),
+      ),
     );
     await contact(page, aid, "Confirmed");
     await capture(page, info, "journey-controlled-move");

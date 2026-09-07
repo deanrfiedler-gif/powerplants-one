@@ -1,4 +1,5 @@
 import { expect, type Page } from "@playwright/test";
+import { keyActivate, keyType } from "./quality-keyboard";
 export async function completion(page: Page, quantities = true) {
   // A saved entry is followed by an authorised refresh. Use that new source
   // before assembling the next exact completion command.
@@ -55,15 +56,18 @@ export async function completion(page: Page, quantities = true) {
   await expect(savedDrafts.first()).toBeVisible();
 }
 export async function submit(page: Page) {
-  await page
-    .getByLabel("Submission reason", { exact: true })
-    .fill("SYN submit my exact completion evidence for authorised review.");
-  await page
-    .getByRole("button", {
+  await keyType(
+    page,
+    page.getByLabel("Submission reason", { exact: true }),
+    "SYN submit my exact completion evidence for authorised review.",
+  );
+  await keyActivate(
+    page,
+    page.getByRole("button", {
       name: "Submit exact evidence for review",
       exact: true,
-    })
-    .click();
+    }),
+  );
   await expect(
     page
       .getByRole("link", { name: "Open report review and revision history" })

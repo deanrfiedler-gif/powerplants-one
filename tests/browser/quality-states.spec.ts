@@ -233,6 +233,10 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
           exact: true,
         }),
       ).toHaveCount(0);
+      if (s.id === "SC-07")
+        await expect(page.locator(".planner-stat-row strong")).toHaveText(
+          Array(4).fill("—"),
+        );
       await capture(page, info, `${s.id}-loading`);
     } finally {
       release();

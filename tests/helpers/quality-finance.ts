@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { writeFile } from "node:fs/promises";
 import { call, capture, identity } from "./quality-browser";
+import { keyActivate, keyType } from "./quality-keyboard";
 const hash = (b: Buffer | string) =>
   createHash("sha256").update(b).digest("hex");
 async function reason(page: Page, value: string) {
@@ -18,6 +19,8 @@ export async function financeJourney(
   info: TestInfo,
   source: { work_order_id: string; report_id: string; reference: string },
 ) {
+  const uncertain = info.project.name.startsWith("mobile");
+  const mode = uncertain ? "SyntheticApi" : "SyntheticManual";
   await page.goto("/finance/handoffs/new");
   await identity(page, "finance");
   await page
@@ -26,9 +29,7 @@ export async function financeJourney(
   await page
     .getByLabel("Synthetic account", { exact: true })
     .selectOption({ index: 1 });
-  await page
-    .getByLabel("Processing mode", { exact: true })
-    .selectOption("SyntheticApi");
+  await page.getByLabel("Processing mode", { exact: true }).selectOption(mode);
   await page
     .getByRole("checkbox", { name: new RegExp(source.reference) })
     .check();
@@ -158,18 +159,21 @@ export async function financeJourney(
     .click();
   await state(page, "Ready For Review");
   await identity(page, "finance-reviewer");
-  await reason(
+  await keyType(
     page,
+    page.getByLabel("Precise action / correction reason"),
     "Approve exact F-06 revision: 60 MIN and 2 EA billable, 30 MIN non-billable; no operational treatment implied.",
   );
-  await page
-    .getByRole("button", { name: "Approve exact revision", exact: true })
-    .click();
+  await capture(page, info, "journey-keyboard-finance-review-ready");
+  await keyActivate(
+    page,
+    page.getByRole("button", { name: "Approve exact revision", exact: true }),
+  );
   await state(page, "Approved");
   await identity(page, "finance-processor");
   await page
     .getByLabel("Synthetic outcome scenario", { exact: true })
-    .selectOption("AcceptedThenTimeout");
+    .selectOption(uncertain ? "AcceptedThenTimeout" : "Accepted");
   await reason(
     page,
     "Claim the original F-07 simulator operation once; retain its exact approved source and correlation.",
@@ -188,20 +192,23 @@ export async function financeJourney(
       exact: true,
     })
     .click();
-  await state(page, "Outcome Unknown");
-  await capture(page, info, "unknown-outcome");
-  const unknown = await call(page, `finance/handoffs/${id}`);
-  expect(unknown.targets).toHaveLength(0);
-  expect(unknown.outcomes[0].outcome).toBe("Unknown");
-  await reason(
-    page,
-    "Look up the original operation and retain its independently recorded synthetic target receipt.",
-  );
-  await page
-    .getByRole("button", { name: "Look up original operation", exact: true })
-    .click();
+  if (uncertain) {
+    await state(page, "Outcome Unknown");
+    await capture(page, info, "unknown-outcome");
+    const unknown = await call(page, `finance/handoffs/${id}`);
+    expect(unknown.targets).toHaveLength(0);
+    expect(unknown.outcomes[0].outcome).toBe("Unknown");
+    await reason(
+      page,
+      "Look up the original operation and retain its independently recorded synthetic target receipt.",
+    );
+    await page
+      .getByRole("button", { name: "Look up original operation", exact: true })
+      .click();
+  }
   await state(page, "Reconciliation Required");
   const found = await call(page, `finance/handoffs/${id}`);
+  expect(found.handoff.mode).toBe(mode);
   expect(found.targets).toHaveLength(1);
   expect(
     found.targets[0].lines.map((l: { quantity: string; uom: string }) => [

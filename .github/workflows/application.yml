@@ -72,6 +72,17 @@ jobs:
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
           npx playwright test tests/browser/quality-journey.spec.ts --output verification-evidence/p11-journey-browser --reporter=list,json
+      - name: Preserve original selected P11 journey immediately
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: P11-selected-journey-evidence
+          path: |
+            verification-evidence/p11-journey-browser/
+            verification-evidence/p11-focused-db/
+            verification-evidence/p11-template-db/
+            !**/trace.zip
+          retention-days: 14
       - name: Focused P11 identity, validation and retained recovery proof
         if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
@@ -182,6 +193,7 @@ jobs:
           done
           test "$ppo_http_ready" = 1
           npm run test:http
+          node --env-file=.env.local --import tsx --test --test-reporter=tap tests/integration/quality-http.test.ts
       - name: Offline originals across application, PostgreSQL and browser process restarts
         if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
