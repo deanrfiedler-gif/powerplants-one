@@ -13,15 +13,12 @@ import { choice, object, optionalId, uuid } from "../shared/validation";
 import {
   eligibleOpportunityOwner,
   eligibleActionOwner,
-  opportunityVisibility,
   relationshipContext,
   visibleOpportunity,
   PIPELINE_ID,
 } from "./context";
 
-function nextState(alias = "a") {
-  return `CASE WHEN ${alias}.id IS NULL THEN 'Unavailable' WHEN ${alias}.status NOT IN ('Open','InProgress') THEN 'Needed' WHEN ${alias}.due_needed THEN 'DueNeeded' WHEN ${alias}.due_at<clock_timestamp() THEN 'Overdue' ELSE 'Upcoming' END`;
-}
+export { listOpportunities } from "./worklist";
 export async function readOpportunity(p: Principal, id: string) {
   const c = database(),
     o = await visibleOpportunity(c, p, id);
@@ -112,81 +109,6 @@ export async function readOpportunity(p: Principal, id: string) {
     can_edit,
     can_qualify: can_edit && o.stage_id === "Enquiry",
     observed_at: new Date().toISOString(),
-  };
-}
-export async function listOpportunities(p: Principal, input: unknown = {}) {
-  const c = database();
-  await requireCapability(c, p, "crm.opportunity.read");
-  const r = object(input, [
-    "limit",
-    "cursor",
-    "q",
-    "company_id",
-    "site_id",
-    "owner_id",
-    "stage_id",
-    "next_action",
-  ]);
-  const filters = {
-    owner_id: optionalId(r.owner_id, "owner_id"),
-    stage_id:
-      r.stage_id === undefined
-        ? null
-        : choice(r.stage_id, "stage_id", ["Enquiry", "Qualified"]),
-    next_action:
-      r.next_action === undefined
-        ? null
-        : choice(r.next_action, "next_action", [
-            "Needed",
-            "DueNeeded",
-            "Overdue",
-            "Upcoming",
-            "Unavailable",
-          ]),
-  };
-  const pg = page(
-    Object.fromEntries(
-      Object.entries(r).filter(([k]) =>
-        ["limit", "cursor", "q", "company_id", "site_id"].includes(k),
-      ),
-    ),
-    {
-      workspace: p.workspace_id,
-      actor: p.actor_id,
-      resource: "Opportunity",
-      ...filters,
-    },
-  );
-  const rows = (
-    await c.query(
-      `SELECT o.id,o.display_number,o.title,o.stage_id,o.close_outcome,o.stage_entered_at,o.version,o.owner_id,u.display_name AS owner_name,r.display_name AS organisation_name,o.updated_at,${nextState()} AS next_action_state,a.summary AS next_action_summary,a.due_at,a.due_needed
-   FROM ppo.opportunities o JOIN ppo.users u ON (u.workspace_id,u.id)=(o.workspace_id,o.owner_id) JOIN ppo.organisations r ON (r.workspace_id,r.id)=(o.workspace_id,o.organisation_id)
-   LEFT JOIN ppo.activities a ON a.workspace_id=o.workspace_id AND a.id=o.next_activity_id AND ${activityVisibility("a", true)}
-   WHERE o.workspace_id=$1 AND ${opportunityVisibility()}
-   AND ($3::uuid IS NULL OR o.company_id=$3) AND ($4::uuid IS NULL OR o.site_id=$4) AND ($5::uuid IS NULL OR o.id>$5)
-   AND (position(lower($6) in lower(o.title||' '||o.display_number||' '||r.display_name))>0)
-   AND ($7::uuid IS NULL OR o.owner_id=$7) AND ($8::text IS NULL OR o.stage_id=$8) AND ($9::text IS NULL OR ${nextState()}=$9)
-   ORDER BY o.id LIMIT $10`,
-      [
-        p.workspace_id,
-        p.actor_id,
-        pg.company_id,
-        pg.site_id,
-        pg.after,
-        pg.q,
-        filters.owner_id,
-        filters.stage_id,
-        filters.next_action,
-        pg.limit + 1,
-      ],
-    )
-  ).rows;
-  return {
-    ...envelope(
-      rows.slice(0, pg.limit),
-      rows.length > pg.limit ? pg.cursor(rows[pg.limit - 1].id) : null,
-    ),
-    can_create: await hasPermission(c, p, "crm.opportunity.create"),
   };
 }
 function selectorScope(company:string,site="NULL::uuid",create=false) {

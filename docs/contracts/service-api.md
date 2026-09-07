@@ -1,6 +1,6 @@
 # PP-01 — Service API, operation and event contracts
 
-**Edition:** r11 · **Status:** Internal API contract; bounded P01–P09 subsets are implemented, with actual verification recorded separately. API-C19 and Finance remain P10. These are Powerplants One routes, never asserted MYOB endpoints.
+**Edition:** r12 · **Status:** Internal API contract; bounded P01–P09 subsets are implemented, with actual verification recorded separately. API-C19 and Finance remain P10. These are Powerplants One routes, never asserted MYOB endpoints.
 
 BP-03 I1 adds only the explicitly identified opportunity amendment below; its actual verification/publication is in the [I1 handover](../delivery/crm-i1-handover.md).
 
@@ -401,6 +401,19 @@ The CRM slice uses BP-03-local command names, not new PP-01 API-C/API-R numbers.
 
 Common envelope is `schema_version=1`, UUID `operation_id`, nonblank bounded `reason`. Actor/workspace/time are server-derived. Unknown keys, actor/state/version/reference injection and bodies over 64 KiB fail. Title is 1–200 trimmed characters; need/qualification/action summaries 1–2000; source/unknown reasons and operation reason 1–1000. `source_channel` is fictional manual Phone/Email/Meeting/Referral/Other context, not an integration setting. Action input is UUID `id`, existing eligible `owner_id`, existing CustomerContact/RelationshipReview `kind`, `summary`, and exactly a finite `due_at` instant or `due_needed=true`. No due date is invented.
 
-Expected-version conflict is 409 `VersionConflict`; different content under an accepted operation is 409 `OperationConflict`. Valid active action and qualification guards return 422 with explicit failure codes. Unavailable and inaccessible records both return 404 `RecordUnavailable`; missing capability on a collection may return 403. All private responses retain no-store. There is no PATCH, reassociation, close/reopen, owner transfer, board, file, export/delete, lead, Finance, automation or offline CRM route.
+Expected-version conflict is 409 `VersionConflict`; different content under an accepted operation is 409 `OperationConflict`. Valid active action and qualification guards return 422 with explicit failure codes. Unavailable and inaccessible records both return 404 `RecordUnavailable`; missing capability on a collection may return 403. All private responses retain no-store. There is no PATCH, reassociation, close/reopen, owner transfer, board mutation, file, export/delete, lead, Finance, automation or offline CRM route.
 
 Identical content replays one original effect after current authority; terminal historical actions remain valid history, not a new state transition. An uncertain online save first looks up the original operation, then may retry only that exact original. The current page retains input/operation in memory; a stale version retains proposed fields and needs deliberate saved-version comparison. This is not durable offline storage for unsaved forms. Identity change or denied refresh removes sensitive visible CRM context.
+
+
+## BP-03 I2 scoped worklist amendment
+
+The implemented read contract has its source-specific verification/publication in [I2 handover](../delivery/crm-i2-handover.md) / [PR #47](https://github.com/deanrfiedler-gif/powerplants-one/pull/47). This additive read contract uses [the I2 worklist decision](../decisions/crm-i2-worklist.md), preserves every I1 command and allocates no new PP-01 interface number.
+
+- GET `/api/v1/crm/opportunities` additionally accepts `sort=Reference|Title|Newest`. Reference preserves existing UUID order; Title uses case-folded C collation plus UUID; Newest uses descending creation time plus UUID. All existing filters remain strict, server scoped and cursor bound. Page size remains 1–200 (default 50).
+- Each response returns `window.as_of`, `first_page`, `has_more`, `count_basis=ReturnedPage` and the actual two stage definitions with counts of this page's permitted records. Only a first page with no continuation is Complete; every page of a longer window is Partial, including its final page. No account-wide count or commercial total is returned. Denied, missing configuration, unavailable database and failed reads carry errors rather than zero counts.
+- The row projection adds company/site labels, visible designated Activity ID and its independently checked owner. Hidden Activity fields, including owner, due time and summary, are null together and state is Unavailable. Terminal designation yields Needed; only active actions display as the next action.
+- A signed process-local cursor binds current actor/workspace, all filters, sort, limit, creation/due boundary, position and a digest of matching permitted projections. A changed matching result returns 409 `WorklistChanged` requiring refresh from start. Newly created records after the first-page boundary appear on refresh. Invalid/mismatched/restarted cursors return 422 `InvalidData`; no cursor carries a permission or durable recovery grant.
+- GET `/api/v1/crm/worklist-options` accepts `kind=Company|Site|Owner`, optional company_id/q/limit/cursor. Bounded labels are derived from permitted opportunities, so read-only sales actors do not need creation authority. The existing `/crm/options` remains the creation/detail selector contract.
+
+Board/Grid and phone stage switching are in-memory presentation choices and emit no business command. Both open the canonical detail/create/Activity paths. Private responses remain no-store. Qualification, expected version, conflict comparison, original-operation recovery and receipt authority are unchanged.

@@ -75,7 +75,9 @@ All 18 original overview, request-form, conversation, project, article and acces
 
 Source review reconciled one contradictory sentence: CP1 is strictly text-only and uploads belong to separately verified CP2a, matching the plan, starter and Dean's bounded instruction. No stage or authority was expanded. No independent human review is claimed. Local foundation/prototype/naming checks were rerun successfully on the original source tree; subsequent contribution checks and actual-main verification remain required.
 
-Fresh main remains `1f13dd8d6f5006559152fe9d5410aed3fff64234`. P10 #48 and CRM I2 #47 are separately active; P11/P12 are absent. Migration 0011 / ADR-0016 remain reserved by P10; E1 occupies 0012 / ADR-0017. This design allocates neither. CP1 remains unready and no runtime work was started.
+At the browser-review checkpoint main remained `1f13dd8d6f5006559152fe9d5410aed3fff64234`. CRM I2 #47 subsequently merged at `47d2f31ffb101b0d5692278caf0760020b94ca37`, tree `951c3aa70c5c37714feae2d123a927333b5f34f5`. The portal branch incorporates that exact main; five shared documentation files were three-way reconciled, retaining both contributions, while every non-portal application/test/workflow/asset change is preserved from main. The original portal preview and captured source are unchanged. Current-head checks must run on this reconciled tree; older-head passes cannot stand in for them.
+
+P10 #48 and Projects discovery #52 are separately active; P11/P12 are absent. Migration 0011 / ADR-0016 remain reserved by P10; E1 occupies 0012 / ADR-0017. This design allocates neither. Projects design does not make CP4 runtime ready. CP1 remains unready and no runtime work was started.
 
 CP1 is prepared but was not ready on the inspected main: P11/P12 integrated quality and recovery are absent; P10 is still open. External membership and public conversation are CP1 implementation work. Continue CP1 under existing authority after actual readiness verification, with text-only support and real persistence/permission/restart proof. CP2/CP3/CP4/CP5 depend only on their explicitly listed owning workflows; no dates or production availability are promised.
 

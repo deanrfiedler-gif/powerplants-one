@@ -8,7 +8,7 @@ permissions:
   contents: read
 jobs:
   p01:
-    name: P01–P09 and CRM I1 local application and PostgreSQL proof
+    name: P01–P09 and CRM I1–I2 local application and PostgreSQL proof
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     services:
@@ -77,6 +77,8 @@ jobs:
           done
       - name: Focused P09 exact return proposal and customer presentation proof
         run: npx playwright test tests/browser/reports.spec.ts --output verification-evidence/p09-focused-browser --reporter=list
+      - name: Focused I2 identity, query equivalence and responsive presentation proof
+        run: npx playwright test tests/browser/crm-i2.spec.ts --output verification-evidence/i2-focused-browser --reporter=list
       - name: Real PostgreSQL behaviour and competing transactions
         run: npm run test:db
       - name: Restore deterministic fixtures for HTTP and browser suites

@@ -84,6 +84,9 @@ async function proof(
   }
 }
 async function completion(page: Page) {
+  // A saved entry is followed by an authorised refresh. Use that new source
+  // before assembling the next exact completion command.
+  await expect(page.getByText("Loading permitted records…", { exact: true })).toHaveCount(0);
   await page.getByRole("button", { name: "Completion", exact: true }).click();
   await page
     .getByLabel("Actual work performed", { exact: true })
@@ -194,9 +197,11 @@ async function review(page: Page, returned = false, commit = true) {
   ).toBeVisible();
 }
 async function issue(page: Page) {
+  const requested = page.waitForResponse((r) => /\/api\/v1\/reports\/[^/]+\/issue$/.test(r.url()) && r.request().method() === "POST");
   await page
     .getByRole("button", { name: "Request exact report issue", exact: true })
     .click();
+  expect((await requested).status()).toBe(202);
   await expect(
     page.getByRole("button", {
       name: "Generate / recover original report",
