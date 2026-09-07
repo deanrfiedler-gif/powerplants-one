@@ -4,6 +4,8 @@
 
 ## Current direction
 
+P11 is now invoked under [issue #54](https://github.com/deanrfiedler-gif/powerplants-one/issues/54), from verified main `744b6e6b89e69abdd0fbd4bfdd6ef5ae51e154f3`. P10's authoritative publication is complete. The [P11 handover](delivery/p11-handover.md) records the bounded shared access/validation/recovery checkpoint and incomplete verification. The written integrated narrative captures Travel, whose Finance treatment remains deliberately blocked by the current Labour-only contract; a concrete prototype-only decision is prepared without changing that guard. PT-27/29 and full integration/output evidence remain open; PT-30 requires P12. [P12 starter](delivery/p12-starter-prompt.md) is preparation only. The external P11 record, not this status note, will establish final publication.
+
 Dean chose to create his own private prototype and authorised the repository foundation, then explicitly requested the First Prototype Definition & Architecture package: scoped service journey, BP-02, BP-07, minimum Finance/document contracts and an ordered implementation plan.
 
 The [PP-01 package](prototype/README.md) now defines that synthetic planned-service journey. The technology design recommendation is TypeScript/Next.js with PostgreSQL, explicit domain services, a durable outbox, bounded browser offline capture and simulated source adapters. [ADR-0003](decisions/ADR-0003-prototype-architecture.md) records its scope; [ADR-0006](decisions/ADR-0006-p01-local-foundation.md) and the P01 handover record the bounded implementation proof.

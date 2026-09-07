@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ProductNavigation } from "../components/product-navigation";
+import { SessionViewBoundary } from "../components/session-view-boundary";
 import "./globals.css";
 export const metadata: Metadata = {
   title: "Powerplants One | Local prototype",
@@ -55,6 +56,7 @@ export default function RootLayout({
               <Link href="/service/packs">Job packs</Link>
               <Link href="/service/reports">Service review</Link>
               <Link href="/finance/handoffs">Finance handoffs</Link>
+              <Link href="/admin">Exceptions and recovery</Link>
               <Link href="/foundation">Foundation checks</Link>
               <details className="domains">
                 <summary>Business domains</summary>
@@ -88,7 +90,7 @@ export default function RootLayout({
               <span className="badge">Service workspace</span>
             </header>
             <main id="main" tabIndex={-1}>
-              {children}
+              <SessionViewBoundary>{children}</SessionViewBoundary>
             </main>
             <footer>
               Powerplants One · Personal private prototype{" "}

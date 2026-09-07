@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { api, ErrorNotice } from "./business-ui";
 import { usePathname } from "next/navigation";
 import { lockLocal } from "../offline/store";
+import { lockOtherBusinessViews } from "./session-signal";
 type Identity = {
   actor_id: string;
   workspace_id: string;
@@ -38,6 +39,7 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
     };
   }, []);
   async function select() {
+    lockOtherBusinessViews();
     setP(null);
     setEpoch((x) => x + 1);
     setBusy(true);
@@ -100,7 +102,7 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
         <button onClick={select} disabled={loading || busy}>
           {busy ? "Selecting…" : "Use this identity"}
         </button>
-      {p && <button className="secondary" onClick={() => { void (async()=>{try{if(localStorage.getItem("ppo-offline-marker"))await lockLocal();await api("local-session/sign-out",{});setP(null);setEpoch(x=>x+1);}catch(e){setError(e);}})();}}>Sign out</button>}
+      {p && <button className="secondary" onClick={() => { lockOtherBusinessViews(); setP(null); setEpoch(x=>x+1); void (async()=>{try{if(localStorage.getItem("ppo-offline-marker"))await lockLocal();await api("local-session/sign-out",{});}catch(e){setError(e);}})();}}>Sign out</button>}
         </div>
       </section>
       <ErrorNotice error={error} />

@@ -32,6 +32,8 @@ API-C24 exposes active activity creation/update, Open → InProgress, and owner-
 
 ## 1. Functional objective
 
+P11 checkpoint: SC-15 now has a bounded `/admin` navigation and existing-owner recovery review surface, with `/admin/recovery/:id` for original evidence and the existing P08 RetainedForReview/ClarificationRequired command. It adds no configuration publication, generic audit access, permission or Finance approval. CMP-11 matched field errors link to actual controls; bounded read windows are labelled explicitly. [P11 handover](../delivery/p11-handover.md) records remaining integration/access/output/state/load obligations and actual evidence; full P11/PP-01 is incomplete.
+
 A coordinator should be able to establish what a customer needs, authorise a clear scope, prepare the technician, reserve suitable attendance, handle changes and close the work with useful evidence. A technician should have a concise view of what to do, where, for whom, with what prerequisites, and what is already known. Finance receives reviewed quantities and exact evidence with a traceable outcome.
 
 The system distinguishes reported symptoms, suspected causes, attempted fixes, verified findings, completed work and outstanding actions. It does not generate unsupported technical diagnoses or allow a general dispatch override to bypass mandatory safety/biosecurity or customer operating controls.

@@ -1,0 +1,56 @@
+# P11 — Integrated quality, access and usability handover
+
+**Revision:** r01 · **Date:** 7 September 2026 · **State:** implementation checkpoint; P11 incomplete. **Owner:** Dean Fiedler, personal private synthetic prototype.
+
+[Issue #54](https://github.com/deanrfiedler-gif/powerplants-one/issues/54) · [Authoritative external publication](https://github.com/deanrfiedler-gif/powerplants-one/issues/54#issuecomment-5567364667) · [P11 starter](p11-starter-prompt.md) · [Ordered plan](prototype-implementation-plan.md).
+
+## Authority and verified starting point
+
+Dean invoked the maintained P11 starter. Scope covers only P11 implementation, dependencies, additive/non-destructive fixtures when needed, verification, documentation, focused issue/branch/PR and normal expected-head merge after applicable checks/review, followed by P12 starter preparation. No hosting, live integration, production migration, communication, paid change or access/rule change is included.
+
+Connected account `deanrfiedler-gif` (231005545), private repository, admin/maintain/push/triage/pull reported true. Starting main is `744b6e6b89e69abdd0fbd4bfdd6ef5ae51e154f3`, tree `48ddac2931df66828aef42be5c78b772d9267167`. Local checkout reconstructs the exact signed commit and matches that tree; no newer main or unrelated branch is reset. Branch: `feature/p11-integrated-quality`.
+
+P10 [publication](https://github.com/deanrfiedler-gif/powerplants-one/issues/45#issuecomment-5562750221) is explicitly COMPLETE. Issue #45 is closed completed; PR #48 is merged. Exact P10 contribution `216102e39969aa7480bcc11898b7fe03a6d6a671` and actual merge `655f17cfc7e68036939eeecc85b75069ccde8a5c` share tree `d151081ba6bc99d0cfa387332bed74aa0f502aaa`. All three contribution runs 34077653041/34077653129/34077653140 and all three merge runs 34088289930/34088289905/34088289950 independently read completed/success, attempt 1. Current main's Application/Documentation/CRM design/E1 runs 34088912272/34088912277/34088912289/34088912253 also read completed/success, attempt 1.
+
+Accepted CRM I1/I2, E1, unchanged issued references and design-only portal direction are preserved. During this work Projects design PR #52 merged as `ebbcac5c9e210e7742bb619da3c8518592d19f31`, tree `3deb75000c13c8eea013ff3b654745768a2015ca`. The checkpoint incorporates that exact tree and its accepted documents, including PPO-012's unchanged P01–P12 boundaries; Projects J1 remains separately prepared. Its Documentation/E1 runs 34097388155/34097388159 passed; Application 34097388077 was still running at the read. No earlier focused P11 issue/branch/PR was found. Newer decisions and main must be checked again before publication.
+
+## Implemented checkpoint
+
+- Shared business and diagnostic tabs unmount their displayed records and unsaved forms when another tab starts an identity switch or sign-out. A same-origin channel carries only `Lock`, never identity, role, data or credentials. Reload remounts the ordinary server-backed view. The signal can only remove context; all existing server authority remains required. It is not a new grant or offline persistence mechanism.
+- Shared error summaries link matched server field errors to actual controls and move keyboard focus. Shared customer creation supplies its explicit display-name/company/owner mappings and linked validation state. Unmatched errors stay textual; no nonexistent field link is fabricated.
+- `Observed` distinguishes Complete, Partial, BoundedWindow and unknown completeness. A bounded report window is no longer labelled a complete filtered result.
+- SC-15 `/admin` connects existing document, Finance and personal offline workflows, and presents only the existing current-owner P08 recovery list. Counts describe its permitted returned window, whose existing source examines at most 100 recent owned cases. There is no whole-backlog denominator or invented business metric.
+- `/admin/recovery/:id` reads the original existing owner-scoped case, source envelope and review history; records only RetainedForReview or ClarificationRequired through the existing disposition command. Current permission governs the exact-byte image route and retry. An uncertain save retains the exact command for unchanged retry. It cannot approve evidence, change an original, restore normal access, allocate quantities or execute a financial effect. Raw original detail is confined to the authorised service-owner review disclosure.
+
+No schema or grant changes, new dependency, source/template edits, policy publication commands or new server aggregation endpoint are introduced. Earlier immutable SQL/seed/issued bytes and existing operation hashes remain untouched. Normal business and restricted recovery remain separate.
+
+## Verification and limitations
+
+Current pins remain Node 24.20.0 / npm 11.19.0 / PostgreSQL 16.15 / Next.js 16.3.4 / React 19.2.8 / TypeScript 6.0.3 / Playwright 1.63.0. Exact Node/npm and locked dependencies were verified locally. Ordinary shell cloning lacked credentials; connected GitHub reads and an existing checkout supplied a hash-verified current tree. No credentials were copied into Git. Local PostgreSQL/HTTP/browser proof is not assumed from surviving files; disposable CI is required for those gates.
+
+The first local implementation checkpoint passed lint, typecheck, 20 unit cases and build; all three Python checks passed. These results are intermediate-source checks, not the final contribution or P11 acceptance. Eight authored desktop/phone browser cases in `tests/browser/quality.spec.ts` cover cross-tab business/diagnostic clearing, real current-authority reload, mapped validation focus/input retention, real recovery persistence/unchanged uncertain retry and loading/failure/empty/denied states with 320px recovery reflow. They require actual execution. Injected validation/query errors are UI component proof, not server-policy proof.
+
+Pre-publication self-review replaced separate sender/listener channel objects with one shared instance per tab, preventing a tab from locking itself during its own identity switch. An initial lint rejection of synchronous effect state was resolved with the error-summary callback ref. These dispositions are implementation review, not independent review or executed browser acceptance.
+
+Preserve P10's 434 unique cases and all newer accepted tests, including full database/HTTP/browser, focused repeated gates, fresh/upgrade/repeat seed/guarded reset and real P08/P09/P10/CRM/E1 restart proofs. Original PNG/HTML/PDF/proof records must retain exact source/checkout/tree/run/attempt/hash/size/viewport/page provenance. Final-head and actual-main runs, visual inspection and failed-run dispositions belong in the external record. Raw session traces, profiles and credentials must remain outside durable review artifacts.
+
+| Procedure | Current disposition |
+|---|---|
+| PT-01 | P11 cross-tab/recovery tests authored; retained direct access/receipt/file/search isolation gates still required on final source. No full promotion. |
+| PT-18/PT-23 | Existing exact-byte/source/template/storage recovery controls preserved. Full integrated source-movement and all-page output review remain open. |
+| PT-27 | Keyboard/validation/reflow cases authored. Declared 1,000-customer/5,000-asset/10,000-appointment/10-user benchmark, raw cold/warm timing/p95 and representative screen-reader/device evidence remain open. Viewport emulation is not real-device proof. |
+| PT-29 | Added bounded SC-15 and shared validation/window cases. Complete 15-screen state matrix remains open. |
+| PT-30 | Blocked by its written completed-P01–P12 precondition; no shorter journey is promoted. |
+| Retained full PT-06/PT-15/PT-16/PT-17/PT-19/PT-20/PT-21 | Prior full synthetic statuses remain exactly governed by P09/P10 publications. They are not erased or relabelled by this checkpoint. |
+
+## Consequential journey decision prepared for Dean
+
+[Scope narrative](../prototype/scope-and-journey.md) step 8 captures **Travel and Labour**, then step 11 sends reviewed time/material evidence to Finance. The current [Finance contract](../contracts/finance-handoff.md), ADR-0016 and `finance/context.ts` deliberately accept **Labour only**. Any Travel/Break/Waiting/Other source entry blocks readiness with UnsupportedTimeBasis; whole-source conservation prevents omitting it or calling it Labour. `tests/database/finance-boundaries.test.ts` preserves this refusal.
+
+The P11 starter explicitly requires a maintained bounded decision before extending this treatment. Proposed prototype-only resolution: support separately identified whole-minute Travel, require explicit NonBillable allocation and an explained no-posting disposition, preserve the Travel category and all original time, and prohibit a travel charge. Labour F-06 remains 90 MIN split 60 billable/30 non-billable; Travel is additional and never counted as Labour. Break/Waiting/Other and fractional minutes remain blocked. This would require a forward immutable Finance definition/schema amendment, matching source/target/conservation checks, upgrade proof and a business-equivalent replacement for the Travel refusal test. It would not define operational travel billing or payroll policy.
+
+Alternative: retain the present Labour-only contract and mark the travel-containing end-to-end narrative blocked. A separate Labour-only component journey can still be verified, but cannot stand in for the written complete flow. Neither choice is silently adopted by this checkpoint.
+
+## Remaining delivery
+
+Resolve that bounded treatment before claiming the full integrated narrative; complete the assigned dashboard/state/load/access/output work and evidence, then final review, normal expected-head merge and actual merged-main verification/publication. P12 starter preparation is maintained separately and grants no implementation authority. No independent review, owner acceptance, production readiness or completed P11 publication is claimed.

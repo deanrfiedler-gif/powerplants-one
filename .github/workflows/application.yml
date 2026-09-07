@@ -8,7 +8,7 @@ permissions:
   contents: read
 jobs:
   p01:
-    name: P01–P10 and CRM I1–I2 local application and PostgreSQL proof
+    name: P01–P11 and CRM I1–I2 local application and PostgreSQL proof
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     services:
@@ -56,6 +56,10 @@ jobs:
           npm run db:migrate
           npm run db:seed
           npm run db:health
+      - name: Focused P11 identity, validation and retained recovery proof
+        run: |
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+          npx playwright test tests/browser/quality.spec.ts --output verification-evidence/p11-focused-browser --reporter=list
       - name: Focused P10 desktop and phone review, allocation and reconciliation
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
@@ -172,7 +176,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: P10-finance-and-retained-foundation-evidence
+          name: P11-quality-and-retained-foundation-evidence
           path: |
             test-results/
             verification-evidence/

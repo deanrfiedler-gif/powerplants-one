@@ -2,7 +2,7 @@
 
 Private prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P10 implementation and verification in progress; completed P09 publication remains linked in its handover · **Deployment:** none.
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P10 publication complete; P11 implementation in progress with an unresolved integrated Travel-treatment decision · **Deployment:** none.
 
 This repository is Dean's personal private prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. The complete service journey remains planned. Company ownership, production approval and external-system write authority are not implied.
 
@@ -60,6 +60,8 @@ Job-pack preparation and issue are at `/service/packs`; exact documents at `/doc
 Technicians use `/my-jobs` and `/my-jobs/:id`. Riley and Morgan acknowledge and start independently. Supported fictional PNGs are registered, uploaded and verified before availability. Completion drafts can be submitted separately for service review at `/service/reports`. Exact reviewed HTML/PDF, owned remaining work, immutable report revisions and customer responses are available in the P09 implementation. **Field workflow preview — integrated acceptance incomplete**. The dedicated `/offline/index.html` workspace downloads up to two permitted jobs, commits original evidence and PNGs to IndexedDB, and explicitly retries bounded original operations with per-item receipts and owned exception recovery. Offline authority remains provisional.
 
 ## Working screens
+
+P11's bounded exceptions/recovery checkpoint is at `/admin`, using existing current-owner recovery permissions. Cross-tab identity changes clear displayed business and diagnostic views. [P11 handover](docs/delivery/p11-handover.md) records implemented fixes, actual verification limits and outstanding integrated work. P11 is incomplete; [P12](docs/delivery/p12-starter-prompt.md) is prepared only.
 
 Open My Work at `/work`, customer context at `/customers`, contacts at `/people`, sites at `/sites`, equipment at `/equipment`, service requests at `/service/tickets`, and work orders at `/service/work-orders`. Choose a server-backed synthetic identity. Foundation checks remain available as diagnostics. Incomplete intake retains owned unknowns; triage does not authorise work or book attendance. Activities retain explicit unknown due dates and require an outcome on completion.
 

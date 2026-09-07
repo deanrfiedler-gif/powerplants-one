@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 export type Envelope<T> = {
   items: T[];
@@ -68,21 +68,38 @@ function useFieldError(name: string) {
   return errors?.find((e) => e.field === name || e.field === canonical)
     ?.message;
 }
+function validationControl(field: string) {
+  return Array.from(document.querySelectorAll<HTMLElement>("[data-validation-field]"))
+    .find((control) => {
+      const name = control.dataset.validationField ?? "";
+      return name === field || name.replace(/-\d+$/, "").replaceAll("-", "_") === field;
+    });
+}
 export function ErrorNotice({ error }: { error: unknown }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (error) ref.current?.focus();
+  const [targets, setTargets] = useState<Record<string, string>>({});
+  const notice = useCallback((node: HTMLDivElement | null) => {
+    if (node && error) {
+      const fields = (error as Failure).field_errors ?? [];
+      setTargets(Object.fromEntries(fields.flatMap(({ field }) => {
+        const control = validationControl(field);
+        return control?.id ? [[field, control.id]] : [];
+      })));
+      node.focus();
+    }
   }, [error]);
   if (!error) return null;
   const e = error as Failure;
   return (
-    <div ref={ref} tabIndex={-1} role="alert" className="business-error">
+    <div ref={notice} tabIndex={-1} role="alert" className="business-error">
       <strong>{e.message ?? "The data could not be loaded. Try again."}</strong>
       {e.field_errors?.length ? (
         <ul>
           {e.field_errors.map((f, i) => (
             <li key={i}>
-              {friendly(f.field)}: {f.message}
+              {targets[f.field] ? <a href={`#${targets[f.field]}`} onClick={(event) => {
+                const control = validationControl(f.field);
+                if (control) { event.preventDefault(); control.focus(); }
+              }}>{friendly(f.field)}: {f.message}</a> : <>{friendly(f.field)}: {f.message}</>}
             </li>
           ))}
         </ul>
@@ -274,6 +291,7 @@ export function Field({
       {multiline ? (
         <textarea
           id={name}
+          data-validation-field={validationField ?? name}
           aria-label={label}
           name={name}
           value={value}
@@ -291,6 +309,7 @@ export function Field({
       ) : (
         <input
           id={name}
+          data-validation-field={validationField ?? name}
           aria-label={label}
           name={name}
           type={type}
@@ -349,6 +368,7 @@ export function SelectField({
       </label>
       <select
         id={name}
+        data-validation-field={validationField ?? name}
         aria-label={label}
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -427,7 +447,11 @@ export function Observed({
       (Australia/Brisbane) ·{" "}
       {envelope.completeness === "Partial"
         ? "More records available"
-        : "Complete filtered result"}
+        : envelope.completeness === "Complete"
+          ? "Complete filtered result"
+          : envelope.completeness === "BoundedWindow"
+            ? "Bounded result window — not a complete total"
+            : "Completeness unavailable"}
     </p>
   );
 }

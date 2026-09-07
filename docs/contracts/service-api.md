@@ -20,6 +20,8 @@ Local diagnostics are GET `/api/v1/health` and GET/POST `/api/v1/local-session`.
 
 ## 1. Common protocol
 
+P11's `/admin` and `/admin/recovery/:id` are UI consumers of the existing `/sync/recovery-review` list/detail/bytes/disposition routes. They create no new physical API or permission. The list's existing maximum 100 recent owned candidates is disclosed as a bounded window, with no whole-backlog count. Original review/disposition authority, current scoped receipts, immutable envelopes and exact bytes remain unchanged. The [P11 handover](../delivery/p11-handover.md) identifies the incomplete checkpoint and outstanding full procedure evidence.
+
 
 ### P06 implementation amendment
 
