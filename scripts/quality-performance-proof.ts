@@ -148,9 +148,26 @@ try {
         await Promise.all(
           pages.map(async (page, virtual_user) => {
             const at = performance.now();
+            const coreEvents: { event: string; elapsed_ms: number; status?: number; error?: string }[] = [];
+            const relevant = (request: import("@playwright/test").Request) =>
+              new URL(request.url()).pathname === view.api && request.method() === "GET";
+            const requested = (request: import("@playwright/test").Request) => {
+              if (relevant(request) && coreEvents.length < 20)
+                coreEvents.push({ event: "request", elapsed_ms: performance.now() - at });
+            };
+            const responded = (response: import("@playwright/test").Response) => {
+              if (relevant(response.request()) && coreEvents.length < 20)
+                coreEvents.push({ event: "response", elapsed_ms: performance.now() - at, status: response.status() });
+            };
+            const failed = (request: import("@playwright/test").Request) => {
+              if (relevant(request) && coreEvents.length < 20)
+                coreEvents.push({ event: "request-failed", elapsed_ms: performance.now() - at, error: request.failure()?.errorText ?? "Unknown transport failure" });
+            };
+            page.on("request", requested).on("response", responded).on("requestfailed", failed);
             let status = 0,
               rows: number | null = null,
-              error: string | null = null;
+              error: string | null = null,
+              finished = at;
             try {
               // Attach rejection handlers to both operations immediately. A
               // navigation failure must remain an original failed sample, not
@@ -192,10 +209,12 @@ try {
                     ),
                   ),
               );
+              finished = performance.now();
             } catch (e) {
+              finished = performance.now();
               error = e instanceof Error ? e.message : "Read failed";
-              if (virtual_user === 0) {
-                const name = `${viewport.name}-${view.name.replaceAll(" ", "-")}-wave-${wave}-failure`;
+              {
+                const name = `${viewport.name}-${view.name.replaceAll(" ", "-")}-wave-${wave}-user-${virtual_user}-failure`;
                 const bytes = await page
                   .screenshot({
                     path: `${root}/${name}.png`,
@@ -211,6 +230,8 @@ try {
                       viewport,
                       scenario: name,
                       error,
+                      core_events: coreEvents,
+                      diagnostic_limit: "At most 20 method/path-matched core GET event timings and statuses; no bodies, headers, query strings, cookies or session trace. Capture time is outside the completed sample.",
                       byte_count: bytes?.length ?? null,
                       sha256: bytes
                         ? createHash("sha256").update(bytes).digest("hex")
@@ -225,6 +246,8 @@ try {
                   ),
                 );
               }
+            } finally {
+              page.off("request", requested).off("response", responded).off("requestfailed", failed);
             }
             samples.push({
               viewport: viewport.name,
@@ -235,7 +258,7 @@ try {
                   : "warm repeat navigation",
               wave,
               virtual_user,
-              elapsed_ms: performance.now() - at,
+              elapsed_ms: finished - at,
               http_status: status,
               visible_rows: rows,
               error,

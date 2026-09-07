@@ -1249,7 +1249,7 @@ function EvidenceHistory({
   onCorrect,
 }: {
   job: Job;
-  onCorrect: (e: Entry) => void;
+  onCorrect?: (e: Entry) => void;
 }) {
   const p = useIdentity();
   return (
@@ -1257,8 +1257,7 @@ function EvidenceHistory({
       <h2>Saved evidence and corrections</h2>
       {!job.entries.length ? (
         <p className="empty-state">
-          No evidence has been saved. Add actual time, materials or observations
-          above.
+          No evidence has been saved for this visit.
         </p>
       ) : (
         job.entries.map((e) => (
@@ -1325,7 +1324,7 @@ function EvidenceHistory({
                 Entry {e.id} · original issue SHA-256 {e.issue_hash}
               </p>
             </details>
-            {!e.superseded && e.actor_id === p.actor_id && (
+            {onCorrect && !e.superseded && e.actor_id === p.actor_id && (
               <button className="secondary" onClick={() => onCorrect(e)}>
                 Correct this {e.kind.toLowerCase()} entry
               </button>
@@ -1473,6 +1472,7 @@ export function FieldJobScreen({ id }: { id: string }) {
             </section>
           )}
           <StartPanel job={job} reload={r.reload} />
+          {!job.attendance && <EvidenceHistory job={job} />}
           {job.attendance && (
             <>
               <nav className="field-tabs" aria-label="Field workspace sections">

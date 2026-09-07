@@ -6,7 +6,7 @@
 
 ## 1. Delivery approach
 
-P11 has been invoked under [issue #54](https://github.com/deanrfiedler-gif/powerplants-one/issues/54). Its [handover](p11-handover.md) governs current checkpoint scope, unresolved Travel-treatment dependency and actual verification/publication. The P12 starter is prepared only; the ordered P11/P12 completion boundaries remain unchanged.
+P11 has been invoked under [issue #54](https://github.com/deanrfiedler-gif/powerplants-one/issues/54). Its [handover](p11-handover.md) governs current checkpoint scope, approved ADR-0018 Travel treatment and actual verification/publication. The P12 starter is prepared only; the ordered P11/P12 completion boundaries remain unchanged.
 
 Implement one complete synthetic planned-service journey in small reviewable pull requests. Use the architecture, dictionary, commands and acceptance scenarios as one contract. Keep basic identity/permission, audit and persistence in the foundation; do not postpone them until after a visually convincing demo.
 

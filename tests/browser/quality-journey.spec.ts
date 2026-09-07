@@ -496,7 +496,12 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
   }
   await identity(page, "second-technician");
   await page.goto(`/my-jobs/${aid}`);
-  await page.getByRole("button", { name: "History", exact: true }).click();
+  await expect(
+    page.getByRole("heading", { name: "Saved evidence and corrections", exact: true }),
+  ).toBeVisible();
+  expect((await call(page, `my-jobs/${aid}`)).items[0].attendance).toBeNull();
+  await expect(page.getByRole("button", { name: /^Correct this .* entry$/ })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Save evidence online", exact: true })).toHaveCount(0);
   await expect(
     page.getByText(/original offline finding/).first(),
   ).toBeVisible();

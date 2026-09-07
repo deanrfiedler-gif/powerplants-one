@@ -427,7 +427,7 @@ export function PackScreen({ id }: { id: string }) {
             <strong>
               {p.readiness.dispatch_hold
                 ? "Dispatch held"
-                : "P06 dispatch component ready"}
+                : "Pack dispatch checks complete"}
             </strong>
             <p>
               {p.status} ·{" "}
@@ -444,8 +444,8 @@ export function PackScreen({ id }: { id: string }) {
               </ul>
             )}
             <p>
-              Actual start and field capture are P07 dependencies and are not
-              implemented.
+              Each assigned crew member records their own actual start and field
+              evidence in My Jobs after acknowledging the current issued pack.
             </p>
           </div>
           <div className="pack-toolbar">

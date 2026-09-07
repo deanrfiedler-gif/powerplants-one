@@ -1435,6 +1435,64 @@ export async function readAppointment(
     return envelope([await appointmentDetail(c, p, id)]);
   });
 }
+async function scheduleLanes(
+  c: QueryClient,
+  p: Principal,
+  ids: string[],
+  siteId: string | null,
+  period: { start_at: string; end_at: string },
+) {
+  if (!ids.length) return [];
+  const resources = (
+    await c.query(
+      `SELECT r.* FROM ppo.resources r WHERE r.workspace_id=$1 AND r.id=ANY($3::uuid[]) AND ${resourceVisibility("r", "$4::uuid")} ORDER BY r.id`,
+      [p.workspace_id, p.actor_id, ids, siteId],
+    )
+  ).rows;
+  // Preserve the former individual read's refusal if a candidate lane does not
+  // satisfy the shared current site/resource predicate.
+  if (resources.length !== ids.length) throw unavailable();
+  const calendarIds = [...new Set(resources.map((r) => r.calendar_id))];
+  const calendars = (await c.query(
+    "SELECT * FROM ppo.working_calendars WHERE workspace_id=$1 AND id=ANY($2::uuid[])",
+    [p.workspace_id, calendarIds],
+  )).rows;
+  const intervals = (await c.query(
+    "SELECT calendar_id,weekday,start_minute,end_minute FROM ppo.calendar_intervals WHERE workspace_id=$1 AND calendar_id=ANY($2::uuid[]) ORDER BY weekday,start_minute",
+    [p.workspace_id, calendarIds],
+  )).rows;
+  const skills = (await c.query(
+    "SELECT s.resource_id,s.id,s.version,s.skill_code,s.status,s.active,s.valid_from,s.valid_to,s.source_as_at,s.evidence_ref,e.content_hash,e.reviewer_id,e.reviewed_at FROM ppo.skill_evidence s LEFT JOIN ppo.resource_evidence e ON e.id=s.evidence_ref WHERE s.workspace_id=$1 AND s.resource_id=ANY($2::uuid[]) ORDER BY s.skill_code",
+    [p.workspace_id, ids],
+  )).rows;
+  const blocks = (await c.query(
+    "SELECT resource_id,id,version,start_at,end_at,kind,source_as_at FROM ppo.availability_blocks WHERE workspace_id=$1 AND resource_id=ANY($2::uuid[]) AND active AND start_at<$4 AND end_at>$3 ORDER BY start_at",
+    [p.workspace_id, ids, period.start_at, period.end_at],
+  )).rows;
+  const exceptions = (await c.query(
+    "SELECT calendar_id,id,start_at,end_at,kind,reason FROM ppo.calendar_exceptions WHERE workspace_id=$1 AND calendar_id=ANY($2::uuid[]) AND start_at<$4 AND end_at>$3 ORDER BY start_at",
+    [p.workspace_id, calendarIds, period.start_at, period.end_at],
+  )).rows;
+  const busy = (await c.query(
+    "SELECT resource_id,start_at,end_at FROM ppo.resource_reservations WHERE workspace_id=$1 AND resource_id=ANY($2::uuid[]) AND active AND start_at<$4 AND end_at>$3 ORDER BY start_at",
+    [p.workspace_id, ids, period.start_at, period.end_at],
+  )).rows;
+  const owned = (rows: Record<string, unknown>[], key: string, id: string) =>
+    rows.filter((row) => row[key] === id).map((row) =>
+      Object.fromEntries(Object.entries(row).filter(([name]) => name !== key)),
+    );
+  return resources.map((r) => ({
+    ...r,
+    calendar: {
+      ...calendars.find((calendar) => calendar.id === r.calendar_id),
+      intervals: owned(intervals, "calendar_id", r.calendar_id),
+    },
+    skills: owned(skills, "resource_id", r.id),
+    blocks: owned(blocks, "resource_id", r.id),
+    exceptions: owned(exceptions, "calendar_id", r.calendar_id),
+    busy: owned(busy, "resource_id", r.id),
+  }));
+}
 export async function readSchedule(p: Principal, input: unknown) {
   const q = object(input, [
       "from",
@@ -1494,29 +1552,7 @@ export async function readSchedule(p: Principal, input: unknown) {
     ).rows;
     if (rr.length > 50)
       blocked("site_id", "Too many resource lanes. Filter to a site.");
-    const resources = [];
-    for (const row of rr) {
-      const r = await resourceDetail(c, p, row.id, siteId ?? undefined);
-      const blocks = (
-        await c.query(
-          "SELECT id,version,start_at,end_at,kind,source_as_at FROM ppo.availability_blocks WHERE workspace_id=$1 AND resource_id=$2 AND active AND start_at<$4 AND end_at>$3 ORDER BY start_at",
-          [p.workspace_id, r.id, period.start_at, period.end_at],
-        )
-      ).rows;
-      const exceptions = (
-        await c.query(
-          "SELECT id,start_at,end_at,kind,reason FROM ppo.calendar_exceptions WHERE workspace_id=$1 AND calendar_id=$2 AND start_at<$4 AND end_at>$3 ORDER BY start_at",
-          [p.workspace_id, r.calendar_id, period.start_at, period.end_at],
-        )
-      ).rows;
-      const busy = (
-        await c.query(
-          "SELECT rr.start_at,rr.end_at FROM ppo.resource_reservations rr WHERE rr.workspace_id=$1 AND rr.resource_id=$2 AND rr.active AND rr.start_at<$4 AND rr.end_at>$3 ORDER BY rr.start_at",
-          [p.workspace_id, r.id, period.start_at, period.end_at],
-        )
-      ).rows;
-      resources.push({ ...r, blocks, exceptions, busy });
-    }
+    const resources = await scheduleLanes(c, p, rr.map((row) => row.id), siteId, period);
     return {
       ...envelope(appointments),
       resources,

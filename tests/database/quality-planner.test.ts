@@ -4,7 +4,7 @@ import { reset } from "../../scripts/database";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
-import { readAppointment, readSchedule } from "../../src/scheduling/planner";
+import { listResources, readAppointment, readSchedule } from "../../src/scheduling/planner";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
@@ -51,6 +51,24 @@ test("P11 planner summaries retain exact permitted card and booking facts withou
       individuallyVisible,
       `${profile}: no silently missing or extra cards`,
     );
+    const individualResources = (await listResources(p)).items;
+    assert.deepEqual(schedule.resources.map((r) => r.id), individualResources.map((r) => r.id));
+    for (const lane of schedule.resources) {
+      const { blocks, exceptions, busy, ...facts } = lane;
+      assert.deepEqual(facts, individualResources.find((r) => r.id === lane.id));
+      assert.deepEqual(blocks, (await database().query(
+        "SELECT id,version,start_at,end_at,kind,source_as_at FROM ppo.availability_blocks WHERE workspace_id=$1 AND resource_id=$2 AND active AND start_at<$4 AND end_at>$3 ORDER BY start_at",
+        [p.workspace_id, lane.id, period.from, period.to],
+      )).rows);
+      assert.deepEqual(exceptions, (await database().query(
+        "SELECT id,start_at,end_at,kind,reason FROM ppo.calendar_exceptions WHERE workspace_id=$1 AND calendar_id=$2 AND start_at<$4 AND end_at>$3 ORDER BY start_at",
+        [p.workspace_id, lane.calendar_id, period.from, period.to],
+      )).rows);
+      assert.deepEqual(busy, (await database().query(
+        "SELECT start_at,end_at FROM ppo.resource_reservations WHERE workspace_id=$1 AND resource_id=$2 AND active AND start_at<$4 AND end_at>$3 ORDER BY start_at",
+        [p.workspace_id, lane.id, period.from, period.to],
+      )).rows);
+    }
     for (const item of schedule.items) {
       const detail = (await readAppointment(p, item.id)).items[0];
       const { projection, requests, ...facts } = item;
