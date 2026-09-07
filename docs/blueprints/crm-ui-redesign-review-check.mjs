@@ -18,7 +18,7 @@ const evidence = {
   boundary: 'Standalone synthetic UI design checks, not application or business acceptance.'
 };
 const browser = await chromium.launch({ headless: true });
-const context = await browser.newContext({ viewport: { width: 1920, height: 1080 }, timezoneId: 'Australia/Brisbane' });
+const context = await browser.newContext({ viewport: { width: 1920, height: 1080 }, timezoneId: 'Australia/Brisbane', locale: 'en-AU' });
 const page = await context.newPage();
 page.on('pageerror', e => evidence.errors.push(e.message));
 page.on('request', request => { if (/^https?:/.test(request.url())) evidence.externalRequests.push(request.url()); });
@@ -114,6 +114,7 @@ try {
       const box = await page.locator('.stage.mobile-active .deal-card').first().boundingBox();
       evidence.measurements.push({ label: width + ' first complete Board card', ...box });
       check(width + ': first card fits the initial viewport', box.y + box.height <= 844);
+      check(width + ': first card starts by 420px', box.y <= 420);
       await capture('board-' + width);
       await page.locator('#new-opportunity').click();
       check(width + ': creation dialog fits horizontally', await page.locator('#dialog').evaluate(el => el.scrollWidth <= el.clientWidth + 1));
@@ -123,6 +124,14 @@ try {
       await page.locator('#nav-service').click();
       await page.locator('#day-mode').click();
       await noOverflow(width + ' Planner Day');
+      const layout = await page.evaluate(() => {
+        const a = document.querySelector('.date-range').getBoundingClientRect();
+        const b = document.querySelector('.mode-toggle').getBoundingClientRect();
+        return { overlap: Math.min(a.right,b.right)>Math.max(a.left,b.left) && Math.min(a.bottom,b.bottom)>Math.max(a.top,b.top), resourceWidth: document.querySelector('#resource-filter').getBoundingClientRect().width };
+      });
+      evidence.measurements.push({label: width + ' planner controls', ...layout});
+      check(width + ': planner date and mode controls do not overlap', !layout.overlap);
+      check(width + ': resource selector remains readable', layout.resourceWidth >= 130);
       await capture('planner-day-' + width);
       await page.locator('#week-mode').click();
     } else {
