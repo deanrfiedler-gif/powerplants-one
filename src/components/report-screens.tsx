@@ -6,6 +6,8 @@ import {
   useResource,
   useCommand,
   ErrorNotice,
+  ReadState,
+  isDenied,
   Stamp,
   friendly,
   type Envelope,
@@ -206,14 +208,14 @@ export function ReportListScreen() {
         remain linked to their original attendance.
       </p>
       <button onClick={r.reload}>Refresh reports</button>
-      {r.loading && <p>Loading reports…</p>}
-      {r.data?.items.length === 0 && (
+      {r.loading && <p role="status">Loading reports…</p>}
+      {!r.loading && !r.error && r.data?.items.length === 0 && (
         <p>
           No permitted submissions appear in this recent window. Technicians
           submit from their job’s Completion tab.
         </p>
       )}
-      {r.data?.items.map((x) => (
+      {!r.loading && !r.error && r.data?.items.map((x) => (
         <article className="business-card" key={x.id}>
           <h2>
             <Link href={`/service/reports/${x.id}`}>{x.reference}</Link>
@@ -555,6 +557,7 @@ export function ReportScreen({ id }: { id: string }) {
       setError(e);
     }
   }
+  if (isDenied(error) || isDenied(c.error)) return <ErrorNotice error={isDenied(error) ? error : c.error} />;
   if (r && shown)
     return (
       <main className="business-shell report-screen">
@@ -592,12 +595,13 @@ export function ReportScreen({ id }: { id: string }) {
       <Link href="/service/reports">All service reports</Link>
       <h1>{r?.reference ?? "Service report"}</h1>
       <Synthetic />
-      <ErrorNotice error={resource.error ?? error ?? c.error} />
+      <ReadState loading={resource.loading} error={resource.error} retry={reload} retained={!!r} />
+      <ErrorNotice error={error ?? c.error} />
       <button className="secondary" onClick={reload}>
         Refresh exact report
       </button>
       {!r ? (
-        <p>Loading report…</p>
+        resource.loading ? <p role="status">Loading report…</p> : null
       ) : (
         <>
           <section className="business-card">

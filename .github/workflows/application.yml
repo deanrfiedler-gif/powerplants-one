@@ -70,7 +70,7 @@ jobs:
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-focused-browser/results.json
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
-          npx playwright test tests/browser/quality.spec.ts --output verification-evidence/p11-focused-browser --reporter=list,json
+          npx playwright test tests/browser/quality.spec.ts tests/browser/quality-states.spec.ts --output verification-evidence/p11-focused-browser --reporter=list,json
       - name: Preserve original focused P11 evidence immediately
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { api, ErrorNotice, useResource, type Failure } from "./business-ui";
+import { api, ErrorNotice, ReadState, isDenied, useResource, type Failure } from "./business-ui";
 import { useIdentity } from "./business-session";
 import type {
   financeOptions,
@@ -122,6 +122,7 @@ function useCommand(done: (receipt?: CommandReceipt) => void) {
     setPending(item);
     setBusy(true);
     setError(null);
+    setReceipt(null);
     try {
       const r = await api<CommandReceipt>(path, item.body);
       setPending(null);
@@ -234,7 +235,7 @@ export function FinanceQueue() {
       </div>
       <ErrorNotice error={q.error} />
       {q.loading && <p role="status">Loading permitted Finance work…</p>}
-      {q.data && (
+      {q.data && !q.loading && !q.error && (
         <>
           <div className={styles.notice}>
             Owned Finance work · dates shown in UTC · due and overdue policy not
@@ -437,6 +438,7 @@ export function FinanceForm({
       body,
     );
   }
+  if (isDenied(cmd.error)) return <ErrorNotice error={cmd.error} />;
   return (
     <Frame
       title={id ? "Revise Finance handoff" : "Prepare Finance handoff"}
@@ -731,7 +733,8 @@ export function FinanceDetail({ id }: { id: string }) {
     cmd = useCommand(r.reload),
     d = r.data,
     h = d?.handoff,
-    locked = cmd.busy || !!cmd.pending || r.loading;
+    locked = cmd.busy || !!cmd.pending || r.loading || !!r.error;
+  if (isDenied(cmd.error)) return <ErrorNotice error={cmd.error} />;
   if (editing && d)
     return (
       <>
@@ -766,9 +769,8 @@ export function FinanceDetail({ id }: { id: string }) {
       subtitle="Original sources, approvals, operations and outcomes remain distinct and auditable."
     >
       <Link href="/finance/handoffs">← Finance queue</Link>
-      <ErrorNotice error={r.error} />
+      <ReadState loading={r.loading} error={r.error} retry={r.reload} retained={!!r.data} />
       {cmd.notice}
-      {r.loading && <p role="status">Loading exact Finance evidence…</p>}
       {d && h && (
         <>
           <div className={styles.row}>
@@ -1160,6 +1162,7 @@ export function AccountScreen({
     [invoiceOnly, setInvoiceOnly] = useState(false),
     cmd = useCommand(r.reload),
     d = r.data;
+  if (isDenied(cmd.error)) return <ErrorNotice error={cmd.error} />;
   return (
     <Frame
       title="Customer account observations"

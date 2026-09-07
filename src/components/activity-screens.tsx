@@ -99,7 +99,7 @@ export function WorkList() {
         />
       </div>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-      {r.data && !r.error && (
+      {r.data && !r.loading && !r.error && (
         <>
           <Observed envelope={r.data} />
           {r.data.items.length === 0 ? (

@@ -420,14 +420,17 @@ export function ReadState({
   loading,
   error,
   retry,
+  retained = false,
 }: {
   loading: boolean;
   error: unknown;
   retry: () => void;
+  retained?: boolean;
 }) {
   return (
     <>
       {loading && <p role="status">Loading permitted records…</p>}
+      {retained && (loading || !!error) && <p role="status">Previously loaded details are retained. Current status is unconfirmed until loading succeeds.</p>}
       <ErrorNotice error={error} />
       {!!error && (
         <button className="secondary" onClick={retry}>

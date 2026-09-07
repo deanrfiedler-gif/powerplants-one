@@ -296,7 +296,7 @@ export function MyJobsScreen() {
       />
       <PreviewLabel />
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-      {r.data && (
+      {r.data && !r.loading && !r.error && (
         <>
           <p className="read-meta">
             Current assigned jobs · Read <Stamp value={r.data.observed_at} />
@@ -1350,7 +1350,7 @@ export function FieldJobScreen({ id }: { id: string }) {
         description={
           job
             ? `${job.customer_name} · ${job.site.name}`
-            : "Loading current assigned context"
+            : r.loading ? "Loading current assigned context" : "Current assigned context is unavailable"
         }
         action={
           <button className="secondary" onClick={r.reload}>
@@ -1362,7 +1362,7 @@ export function FieldJobScreen({ id }: { id: string }) {
       <p>
         <Link href="/my-jobs">← My Jobs</Link>
       </p>
-      <ReadState loading={r.loading} error={r.error} retry={r.reload} />
+      <ReadState loading={r.loading} error={r.error} retry={r.reload} retained={!!job} />
       {job && (
         <>
           <div className="field-summary">

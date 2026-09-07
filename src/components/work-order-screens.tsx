@@ -1447,6 +1447,7 @@ export function WorkOrderDetail({ id }: { id: string }) {
     <>
       <ReadState
         loading={resource.loading}
+        retained={!!w}
         error={resource.error}
         retry={resource.reload}
       />
