@@ -357,7 +357,15 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
           }),
         }),
       );
-      await page.reload();
+      // The unavailable-record assertion starts after the actual selected
+      // read, not while the independent identity prerequisite is loading.
+      await Promise.all([
+        page.waitForResponse((response) =>
+          new URL(response.url()).pathname === `/api/v1/${s.api}` &&
+          response.request().method() === "GET" && response.status() === 404,
+          { timeout: 15000 }),
+        page.reload(),
+      ]);
       await expect(
         page
           .getByRole("alert")

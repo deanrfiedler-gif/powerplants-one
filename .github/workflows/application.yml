@@ -79,9 +79,25 @@ jobs:
           node --env-file=.env.local --import tsx scripts/crm-restart-proof.ts verify
       - name: Desktop and mobile browser checks
         if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-full-browser/results.json
         run: |
           npx playwright install --with-deps chromium
-          npm run test:browser
+          npm run test:browser -- --reporter=list,json
+      - name: Prepare retained browser review diagnostics immediately
+        if: ${{ always() && steps.database_setup.outcome == 'success' }}
+        id: browser_review
+        run: python3 scripts/prepare-review-evidence.py
+      - name: Preserve original retained browser evidence immediately
+        if: ${{ always() && steps.browser_review.outcome == 'success' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: P11-retained-browser-evidence
+          path: |
+            test-results/
+            verification-evidence/
+            !**/trace.zip
+          retention-days: 14
       - name: Focused P10 desktop and phone review, allocation and reconciliation
         if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         run: |
@@ -299,6 +315,25 @@ jobs:
             verification-evidence/p11-journey-browser/
             verification-evidence/p11-focused-db/
             verification-evidence/p11-template-db/
+            !**/trace.zip
+          retention-days: 14
+      - name: Retained P10 allocation and original-recovery cases after P11 Travel
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-retained-finance-browser/results.json
+        run: npx playwright test tests/browser/finance.spec.ts --grep 'P10 PT-17/PT-19|P10 stale browser proposal|P10 lost save response' --output verification-evidence/p11-retained-finance-browser --reporter=list,json
+      - name: Prepare retained Finance review diagnostics
+        if: always()
+        id: retained_finance_review
+        run: python3 scripts/prepare-review-evidence.py
+      - name: Preserve original retained Finance fixture evidence immediately
+        if: ${{ always() && steps.retained_finance_review.outcome == 'success' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: P11-retained-Finance-fixture-evidence
+          path: |
+            verification-evidence/review-diagnostic-redactions.json
+            verification-evidence/p11-retained-finance-browser/
             !**/trace.zip
           retention-days: 14
       - name: Focused P11 identity, validation and retained recovery proof
