@@ -155,7 +155,7 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
     assert.equal(d.readiness.code, "FinancePolicyChanged");
     await assert.rejects(
       readOperation(q.p, q.cmd.operation_id),
-      code("RecordUnavailable"),
+      code("Forbidden"),
     );
     if (state === "Approved")
       await assert.rejects(

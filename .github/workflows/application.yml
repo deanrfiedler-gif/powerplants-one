@@ -57,7 +57,14 @@ jobs:
           npm run db:seed
           npm run db:health
       - name: Focused P11 Travel guards and actual P10 current-main record upgrade
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quality-travel.test.ts tests/database/quality-upgrade.test.ts
+        run: |
+          mkdir -p verification-evidence/p11-focused-db
+          python3 - <<'PY'
+          import os,json,subprocess
+          from pathlib import Path
+          Path('verification-evidence/p11-focused-db/provenance.json').write_text(json.dumps({'source_head':os.environ['PPO_SOURCE_HEAD'],'executed_checkout':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'executed_tree':subprocess.check_output(['git','rev-parse','HEAD^{tree}'],text=True).strip(),'run_id':os.environ['GITHUB_RUN_ID'],'run_attempt':os.environ['GITHUB_RUN_ATTEMPT'],'environment':'Disposable GitHub CI; exact repository pins; fresh and current-main/P10 records'},indent=2))
+          PY
+          node --env-file=.env.local --import tsx --test --test-reporter=tap --test-concurrency=1 --test-timeout=120000 tests/database/quality-travel.test.ts tests/database/quality-upgrade.test.ts 2>&1 | tee verification-evidence/p11-focused-db/results.tap
       - name: Focused P11 identity, validation and retained recovery proof
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-focused-browser/results.json
@@ -71,6 +78,7 @@ jobs:
           name: P11-focused-quality-evidence
           path: |
             verification-evidence/p11-focused-browser/
+            verification-evidence/p11-focused-db/
             !**/trace.zip
           retention-days: 14
       - name: Focused P10 desktop and phone review, allocation and reconciliation

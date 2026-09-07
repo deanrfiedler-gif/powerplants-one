@@ -99,7 +99,7 @@ test("P06 upgrade and repeat seed preserve exact P05 SQL evidence, revoked grant
   );
   assert.deepEqual(
     (await rows("SELECT version FROM public.ppo_migrations ORDER BY version")).map(r=>r.version),
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
   );
   assert.equal(
     (

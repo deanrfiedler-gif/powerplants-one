@@ -97,7 +97,7 @@ test("P10 additive upgrade from real P09 issued originals retains exact rows, by
         "SELECT version FROM public.ppo_migrations ORDER BY version",
       )
     ).rows.map((r) => r.version),
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
   );
   assert.deepEqual(await readReportBundle(q.reviewer, issue.manifest), bytes);
   assert.equal(
