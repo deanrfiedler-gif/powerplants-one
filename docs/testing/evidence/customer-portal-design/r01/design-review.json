@@ -1,0 +1,183 @@
+{
+  "scope": "Standalone synthetic design only; no runtime authorisation, persistence or CPA acceptance",
+  "source_head": "b85bc01a14766de1e403c28d79e5a955700e19bf",
+  "source_sha256": "cb619eabe549c0ef515585e1af0ebcf1beec26d5807c215abf2dcaa92d188484",
+  "node": "v24.20.0",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 320,
+      "height": 800
+    }
+  ],
+  "captures": [
+    {
+      "file": "1440-overview-r01.png",
+      "sha256": "0a41bed85c5d8c6031ee1b95499bea71204b388ce3ab4b289a386b71767d16a7",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "file": "1440-request-form-r01.png",
+      "sha256": "86e341f8fdffc26a8c88e6c0ff96bf49bed8f2b87d6963ea502078cc2c0e307f",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "file": "1440-conversation-r01.png",
+      "sha256": "cf00e04d702797cc6a9dcd03c9af918ca7653e21f2abdd6fafcfd3ac01038c9e",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "file": "1440-project-r01.png",
+      "sha256": "eb8a63c186c72fec2b85a458f116b3c55bbf513fb6168a4bc38f56f3ea8bea04",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "file": "1440-article-r01.png",
+      "sha256": "18617157cf0058ab96c2c87fefacf240e646e5db6e2f1534e104e246b6e0f14d",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "file": "1440-access-changed-r01.png",
+      "sha256": "7dcfbfb051eb2931033bfc4754c3bb39f15de83fa81544e7cf756005e2e6af50",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "file": "390-overview-r01.png",
+      "sha256": "338843ef23117a89eea955f4257a5cb65a54273b8465d6c9ce7b7450bf3675c6",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "390-request-form-r01.png",
+      "sha256": "e10c67aba4d697badc86279eb1ad356881de0c44a2fa4a482aaea29b44bb1c02",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "390-conversation-r01.png",
+      "sha256": "a6b8145cb0e416f65e524f4550f03cdae7376f3c3552f51d8d72a7a4c745b1d7",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "390-project-r01.png",
+      "sha256": "2d35e0de3d0f27a9237322932c98a4f10823a450b7391a314ee05a7a049158d7",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "390-article-r01.png",
+      "sha256": "62b03ca64f28009bac489e64fea6f6f5b672fbf637900cb7614e9bf414a234c8",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "390-access-changed-r01.png",
+      "sha256": "e47635ffe18447f26bbd563ece0a72e6ab1a05d3acc3c6ed54bf538bf20d4656",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "320-overview-r01.png",
+      "sha256": "fbe20a9686dbd2c55be861b4af9c07f3efd45924068aafd378b07332d24e073d",
+      "viewport": {
+        "width": 320,
+        "height": 800
+      }
+    },
+    {
+      "file": "320-request-form-r01.png",
+      "sha256": "61ebdc4a7df89f6e3156f356d34ececee2cc123cd126d3b0e07e6f17c9c2a95d",
+      "viewport": {
+        "width": 320,
+        "height": 800
+      }
+    },
+    {
+      "file": "320-conversation-r01.png",
+      "sha256": "a79616ccdcedf1c4bcfcaf07d0f6b8c064d4118fa5db9e0a0311fb536e3519d6",
+      "viewport": {
+        "width": 320,
+        "height": 800
+      }
+    },
+    {
+      "file": "320-project-r01.png",
+      "sha256": "d4562a693783937fe4f603acca8bc42fab51af8c0298feb8a0360e4ab338edd8",
+      "viewport": {
+        "width": 320,
+        "height": 800
+      }
+    },
+    {
+      "file": "320-article-r01.png",
+      "sha256": "27e6172709b23ca0f287032852d935fbe183ead43665cef66d4cec631c2aa27b",
+      "viewport": {
+        "width": 320,
+        "height": 800
+      }
+    },
+    {
+      "file": "320-access-changed-r01.png",
+      "sha256": "e979856d1e1a66657f23838111b0dcd00018d0259ce277906ee263fcd8d54d3b",
+      "viewport": {
+        "width": 320,
+        "height": 800
+      }
+    }
+  ],
+  "checks": [
+    "Five-view navigation",
+    "Three-width page reflow and full logo",
+    "Scoped-design search and no-results recovery",
+    "Required and unknown-context validation",
+    "Retained form and Escape focus return",
+    "Temporary request/reply and explicit unsaved status",
+    "Plain-text rendering of markup",
+    "Reload resets mutations",
+    "Forecast and unknown-date distinction",
+    "Report illustration and focus return",
+    "Knowledge search/source/applicability",
+    "Empty versus unavailable versus access changed",
+    "Long title/description reflow",
+    "No browser storage, external requests or page errors"
+  ],
+  "result": "passed"
+}

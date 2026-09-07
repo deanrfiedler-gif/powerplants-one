@@ -1,6 +1,6 @@
 # Powerplants One — Business Operations Platform
 
-## Master Business & Build Blueprint — working r03
+## Master Business & Build Blueprint — working r04
 
 ### Scope Assurance & Development Planning Edition
 
@@ -11,14 +11,14 @@
 | Prepared for | Powerplants Australia |
 | Requested by | Dean Fiedler |
 | Document reference | PPO-BP-01 |
-| Version and date | r03 — 5 September 2026 UTC; naming/ownership amendment to issued v02 |
+| Version and date | r04 — 6 September 2026 UTC; portal direction supplement to working r03 |
 | Document status | Draft target-state blueprint; business and technical approval not yet recorded |
 | Authoring basis | User requirements, supplied CREMS materials, prior read-only account observations and selected official sources |
 | Intended audience | Executive sponsor, departmental process owners, product owner, solution architect, delivery partners and acceptance reviewers |
 | Handling | Recommended internal distribution; contains business-system design information |
 | Programme reference | PPO — user-adopted independent private-project code; unrelated SOL008/STD-001 do not govern this project |
 | Supersedes | Master Blueprint v01 as the proposed planning baseline; v01 and its audit remain preserved historical records. The CREMS current-state specification remains a separate source |
-| Change basis | v02: Audit findings F-01–F-16. r03: user adoption of independent PPO naming and ADR-0005; baseline requirement scope unchanged |
+| Change basis | v02: Audit findings F-01–F-16. r03: naming adoption. r04: [user-authorised customer portal direction](../decisions/customer-portal-direction.md); all baseline parent requirements and PP-01 boundaries preserved |
 | Working application name | Powerplants One — user-confirmed; private repository foundation and PP-01 design package delivered |
 | Authorisation represented | Current amendment implements the user-adopted naming standard in the private repository; application implementation remains a separate task |
 
@@ -284,7 +284,7 @@ The historical statement of 83 active projects is user-provided context, not a r
 | Finance visibility and controls | Core programme domain | ERP-backed transactions, definitions and controlled operational forecasts |
 | Documents, search, tasks, approvals and notifications | Shared foundation | One coherent user experience with role-appropriate views |
 | QHSE, competencies and biosecurity | Shared operational controls | Depth depends on actual activities and jurisdiction |
-| Customer/partner portals | Later candidate | Requires external-identity and information-release design |
+| Customer/partner portals | Authorised private design; bounded runtime follows verified dependencies | [Portal design](customer-portal-design.md) and [CP1–CP5 plan](../delivery/customer-portal-implementation-plan.md); external identity/information release required; no change to PP-01 |
 | Workshop/production and fleet/tool management | Conditional | Confirm business need and existing MYOB capability |
 | Telemetry, remote alarms and AI assistance | Later candidate | Separate business case, access controls and supported interfaces |
 | Full payroll/HR replacement, CAD editor, ERP ledger replacement | Excluded from initial programme scope | Integrate or retain appropriate systems |

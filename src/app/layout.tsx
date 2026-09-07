@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
+import { ProductNavigation } from "../components/product-navigation";
 import "./globals.css";
 export const metadata: Metadata = {
   title: "Powerplants One | Local prototype",
@@ -32,16 +34,14 @@ export default function RootLayout({
         <div className="app-frame">
           <aside className="sidebar">
             <Link href="/" className="brand" aria-label="Powerplants One home">
-              <span className="monogram" aria-hidden="true">
-                PPO
-              </span>
+              <Image src="/brand/powerplants-logo-green-white.png" alt="Powerplants Australia" width={88} height={88} unoptimized className="brand-logo" />
               <span>
                 Powerplants
                 <br />
                 <strong>One</strong>
               </span>
             </Link>
-            <nav aria-label="Main navigation">
+            <ProductNavigation><nav aria-label="Main navigation">
               <Link href="/">Overview</Link>
               <Link href="/work">My Work</Link>
               <Link href="/crm/opportunities">CRM Sales</Link>
@@ -54,6 +54,7 @@ export default function RootLayout({
               <Link href="/schedule">Service planner</Link>
               <Link href="/service/packs">Job packs</Link>
               <Link href="/service/reports">Service review</Link>
+              <Link href="/finance/handoffs">Finance handoffs</Link>
               <Link href="/foundation">Foundation checks</Link>
               <details className="domains">
                 <summary>Business domains</summary>
@@ -74,7 +75,7 @@ export default function RootLayout({
                   ))}
                 </ul>
               </details>
-            </nav>
+            </nav></ProductNavigation>
             <p className="sidebar-note">
               Private development
               <br />

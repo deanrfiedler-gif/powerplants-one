@@ -247,4 +247,9 @@ The separately authorised [I1 implementation](../delivery/crm-i1-handover.md) ex
 
 ## I1 synthetic implementation evidence
 
-The separately invoked [I1 implementation](../delivery/crm-i1-handover.md) exercises bounded Opportunity/Activity ownership, progression, persistence and permission components associated with PAR-01/03/05/15. Its successful component tests and actual publication have their own source/head/run provenance. This does not establish account configuration, change any PAR disposition to accepted, close D-013/D-025, prove migration parity or pass full AT-25. The remaining parity assessment above is proposed. I2's Board/Grid starter is preparation only.
+The separately invoked [I1 implementation](../delivery/crm-i1-handover.md) exercises bounded Opportunity/Activity ownership, progression, persistence and permission components associated with PAR-01/03/05/15. Its successful component tests and actual publication have their own source/head/run provenance. This does not establish account configuration, change any PAR disposition to accepted, close D-013/D-025, prove migration parity or pass full AT-25. The remaining parity assessment above is proposed. The Board/Grid starter was subsequently invoked; its bounded implementation and publication are distinguished below.
+
+
+## I2 implementation distinction
+
+The invoked [scoped Board/Grid slice](../delivery/crm-i2-handover.md) adds a bounded presentation and query contract under CRM-01/02/03/04/08 and PAR-03/04/05/15 foundations. Actual runtime checks/publication are separate from this assessment. No PAR disposition, operational pipeline mapping, Pipedrive access or full AT-25 status changes. Remaining relationship/close/commercial capabilities retain their separately bounded dependencies.

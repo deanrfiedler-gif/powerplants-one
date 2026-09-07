@@ -87,4 +87,5 @@ jobs:
           path: |
             verification-evidence/estimating-e1-*/
             test-results/
+            !**/trace.zip
           retention-days: 14

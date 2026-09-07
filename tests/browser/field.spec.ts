@@ -127,7 +127,7 @@ test("P07 actual online visit: independent crew start, all typed forms, durable 
     page.getByRole("heading", { name: "Current work context" }),
   ).toBeVisible();
   await expect(
-    page.getByText("Field workflow preview — Finance work incomplete", {
+    page.getByText("Field workflow preview — integrated acceptance incomplete", {
       exact: true,
     }),
   ).toBeVisible();

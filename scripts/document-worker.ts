@@ -1,4 +1,5 @@
 import { runReportJobs } from "../src/reports/worker";
+import { runFinanceJobs } from "../src/finance/worker";
 import { runPendingQuoteJobs } from "../src/estimating/worker";
 import { runPendingRenderJobs } from "../src/documents/worker";
 import { closeDatabase } from "../src/platform/database";
@@ -7,9 +8,10 @@ localConfig();
 try {
   const count = await runPendingRenderJobs();
   const reports = await runReportJobs();
+  const finance = await runFinanceJobs();
   await runPendingQuoteJobs();
   console.log(
-    `Examined ${count} pack and ${reports} report render intents. No external messages sent.`,
+    `Examined ${count} pack, ${reports} report and ${finance} Finance render intents. No external messages sent.`,
   );
 } catch {
   console.error(

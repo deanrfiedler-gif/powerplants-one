@@ -1,6 +1,6 @@
 # BP-07 — Service Operations Functional & Build Blueprint
 
-**Edition:** r07 · **Date:** 5 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
+**Edition:** r08 · **Date:** 5 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
 
 **Status:** Functional specification with the bounded P03–P05 SC-01–SC-05/SC-07/SC-08 implementation amendments below. Later workflows and full acceptance remain incomplete. [Package](../prototype/README.md) · [Dictionary](../contracts/service-data-dictionary.md) · [API](../contracts/service-api.md) · [Acceptance](../testing/prototype-acceptance.md).
 
@@ -319,3 +319,7 @@ PT-11/PT-12/PT-24/PT-28 coverage is component evidence unless every written proc
 ## P09 review and report implementation amendment
 
 [ADR-0014](../decisions/ADR-0014-p09-service-reports.md) and [P09 handover](../delivery/p09-handover.md) define the exact physical SC-11/DAT-09/API-C16–18/OUT-10/TR-11–13 implementation and current verification. Immutable personal submissions, per-entry review/return, separate attendance acceptance, successor corrections, durable customer-safe report issues and content-bound customer responses extend P04–P08. The appointment can become Completed while the physical work order remains Authorised with owned remaining work and an existing proposal/confirmation boundary. Conceptual whole-order/ticket closure and API-C19 Finance handoff are not silently implemented. P08 owner-bound version-2 IndexedDB and schema-1 originals remain compatible; only submission/response intents are added, with no offline approval/issue. Full acceptance, D-024 operational branding, customer delivery and live integration remain separate.
+
+## P10 Finance dependency amendment
+
+P10 adds SC-12/SC-13 and API-C19–22/TR-14 under separate Finance capabilities, as specified by the [Finance amendment](../contracts/finance-handoff.md#p10-physical-implementation-amendment). Service supplies exact Approved report review/entry references; original field Draft flags, accepted attendance, report issues/responses and remaining work stay intact. Accepted Partial/UnableToProceed with Incomplete declarations is not Finance ready. Physical work orders may remain Authorised; appointment Completed does not close work/ticket or approve billing. Exact handoff allocation, processing, unknown outcome and reconciliation stay separate. Actual full PT/component evidence and publication are in the [P10 handover](../delivery/p10-handover.md).

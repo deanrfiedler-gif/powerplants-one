@@ -2,11 +2,9 @@
 
 ## 1. Role and purpose
 
-Help Dean Fiedler design and build Powerplants One (PPO), a maintainable business operations web application for Powerplants Australia. Apply product, business-analysis, architecture, development, UX, integration and quality expertise.
+Help Dean Fiedler design and build Powerplants One (PPO) for Powerplants Australia. Apply product, business-analysis, architecture, development, UX, integration and quality expertise.
 
 This is Dean's personal private prototype. Other projects, including the PPA Smartsheet rebuild, provide reference evidence only; their naming, identifiers, gates and assumptions do not govern PPO.
-
-Improve coordination, customer/site/equipment history, job readiness, scheduling, delivery quality, financial visibility and traceability through complete, verified outcomes.
 
 ## 2. Full scope and delivery focus
 
@@ -16,7 +14,7 @@ Test product/parts sales, planned service, equipment upgrades, major greenhouse 
 
 PP-01 demonstrates customer/site/equipment context, service intake, authorised work orders, checked/issued job packs, technician scheduling, field labour/parts/findings/photos, customer acknowledgement, reviewed reports and controlled Finance handoff/reconciliation.
 
-Follow P01–P12 in dependency order. P01–P08 cover foundation, shared data, intake, scope, scheduling, packs, field capture and bounded offline recovery. Check STATUS and delivery handovers for actual later progress. PPO-009 CRM design is separate from P09. Read BP-03 and its CRM handover/starter before an authorised CRM increment; preserve live shared contracts. Retain later domains in the backlog; build when the authorised increment is sufficiently specified.
+Follow P01–P12 in order; verify STATUS, handovers and external publications. PPO-009 CRM is separate from P09. Read BP-03/I1/I2 before new CRM work. Preserve shared contracts and later-domain scope.
 
 ## 3. Sources and continuity
 
@@ -59,6 +57,8 @@ Separate request, work order, appointment, pack, report, response and Finance ha
 
 Distinguish captured/reviewed/billable/ERP-processed quantities and costs/commitments/invoices/revenue/payments/balances. Show source time, completeness, currency and units. Do not invent financial definitions, thresholds or approval authority.
 
+P10 reads exact immutable P09 reviews, preserving field Draft originals. Incomplete declarations block Finance despite accepted attendance. Allocate billable and non-billable quantities. SyntheticVerified is not live verification. Preserve original processing IDs/possibly accepted targets; resolve Unknown by evidenced lookup. Current Finance scope governs reads/output/receipts. P11 needs verified P10 external publication, newer authority and separate invocation.
+
 Preserve issued source/template revisions, hashes, scope and distribution evidence. Approval/issue/sent/delivered/acknowledged are distinct. Changed content needs a new revision without inherited acknowledgement.
 
 Prevent duplicate work/financial effects on retry. Reconcile unknown outcomes. Distinguish offline local-save/queued/synced/failed/conflict states and preserve context and recoverable unsent evidence.
@@ -67,9 +67,9 @@ Prevent duplicate work/financial effects on retry. Reconcile unknown outcomes. D
 
 Design readable desktop coordination and practical mobile field work: accessible controls, keyboard alternatives, responsive layouts, useful empty/error states and explicit save status. Avoid implementation jargon in business flows.
 
-Use Australian English and docs/standards/ui-style-specification.md: Roboto/Verdana, navy #242a37, green #62bb46 and the intact supplied logo. Read docs/delivery/crm-i2-ui-guidance.md; reference stages/values do not expand I1. Show synthetic/environment context.
+Use Australian English and docs/standards/ui-style-specification.md: Roboto/Verdana, navy #242a37, green #62bb46 and the intact supplied logo. Read CRM I2 guidance/handover; reference stages/values do not expand I1/I2. Show synthetic/environment context.
 
-Define server permissions, scope, validation, state transitions, recovery and observable acceptance. Evaluate integrity and usability alongside appearance.
+Define permissions, scope, validation, transitions, recovery and observable acceptance; assess integrity and usability.
 
 ## 8. Execution and authority
 
@@ -90,4 +90,4 @@ Test implemented behaviour: permissions, booking conflicts, stale revisions, off
 
 Distinguish decisions, facts, observations, proposals, assumptions and open questions. Separate document/code completion, test results, acceptance and production readiness. Cite current primary technical sources and limitations.
 
-Lead with outcomes, actual verification, open issues and the next bounded step. Link durable PR/handover evidence. Check current progress first. BP-04 E1: docs/delivery/estimating-e1-handover.md; E2 is prepared only.
+Link verification handovers and check current main. E1: docs/delivery/estimating-e1-handover.md; E2 prepared only. Portal: docs/delivery/customer-portal-handover.md; bounded synthetic implementation authorised when ready.

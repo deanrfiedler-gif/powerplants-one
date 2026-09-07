@@ -37,11 +37,13 @@ test("E1-DB01 atomic creation, identical races and receipt recovery retain one o
 });
 test("E1-DB02 reasoned successor, stale writers, exact predecessor and immutable original",async()=>{
   const {p,input,e}=await saved(),command={...crmBase(),expected_version:1,title:input.title,scope:input.scope,lines:input.lines.map(l=>({...l,quantity:"3"})),policy:input.policy};
-  const both=await Promise.allSettled([saveEstimate(p,e.id,command),saveEstimate(p,e.id,{...command,...crmBase()})]);
+  const commands=[command,{...command,...crmBase()}];
+  const both=await Promise.allSettled(commands.map(candidate=>saveEstimate(p,e.id,candidate)));
   assert.equal(both.filter(r=>r.status==="fulfilled").length,1);assert.equal(both.filter(r=>r.status==="rejected"&&code("VersionConflict")(r.reason)).length,1);
   const current=await readEstimate(p,e.id);assert.equal(current.version,2);assert.equal(current.saved.predecessor_id,e.saved.id);assert.equal(current.versions.length,2);
   assert.deepEqual((await readEstimate(p,e.id,{version_id:e.saved.id})).saved,e.saved);
-  assert.deepEqual((await saveEstimate(p,e.id,command)).receipt,await readOperation(p,command.operation_id));
+  const winner=commands[both.findIndex(result=>result.status==="fulfilled")];
+  assert.deepEqual((await saveEstimate(p,e.id,winner)).receipt,await readOperation(p,winner.operation_id));
   await assert.rejects(rows("UPDATE ppo.estimate_versions SET title='Overwritten' WHERE id=$1",[e.saved.id]),code("55000"));
   await assert.rejects(rows("DELETE FROM ppo.estimate_versions WHERE id=$1",[e.saved.id]),code("55000"));
   await assert.rejects(rows("UPDATE ppo.estimates SET version=version+1,owner_id=$2 WHERE id=$1",[e.id,randomUUID()]),code("55000"));

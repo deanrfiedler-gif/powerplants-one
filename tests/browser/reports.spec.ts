@@ -84,6 +84,9 @@ async function proof(
   }
 }
 async function completion(page: Page) {
+  // A saved entry is followed by an authorised refresh. Use that new source
+  // before assembling the next exact completion command.
+  await expect(page.getByText("Loading permitted records…", { exact: true })).toHaveCount(0);
   await page.getByRole("button", { name: "Completion", exact: true }).click();
   await page
     .getByLabel("Actual work performed", { exact: true })
@@ -148,9 +151,16 @@ async function submit(page: Page) {
       .getByRole("link", { name: "Open report review and revision history" })
       .locator(".."),
   ).toContainText("Submitted");
-  await page
-    .getByRole("link", { name: "Open report review and revision history" })
-    .click();
+  const reportLink = page.getByRole("link", {
+    name: "Open report review and revision history",
+  });
+  const reportId = (await reportLink.getAttribute("href"))!.split("/").at(-1);
+  const reportRead = page.waitForResponse(response =>
+    response.request().method() === "GET" &&
+    new URL(response.url()).pathname === `/api/v1/reports/${reportId}`,
+  );
+  await reportLink.click();
+  expect((await reportRead).ok()).toBe(true);
   await expect(
     page.getByRole("heading", { name: /Revision \d+ · Submitted/ }),
   ).toBeVisible();
@@ -194,9 +204,11 @@ async function review(page: Page, returned = false, commit = true) {
   ).toBeVisible();
 }
 async function issue(page: Page) {
+  const requested = page.waitForResponse((r) => /\/api\/v1\/reports\/[^/]+\/issue$/.test(r.url()) && r.request().method() === "POST");
   await page
     .getByRole("button", { name: "Request exact report issue", exact: true })
     .click();
+  expect((await requested).status()).toBe(202);
   await expect(
     page.getByRole("button", {
       name: "Generate / recover original report",

@@ -29,6 +29,9 @@ The [shared UI and CRM layout direction](ui-brand-and-crm-layout.md) records the
 
 [BP-04 discovery and sequencing](bp04-estimating-discovery.md) records the authorised PPO-010 design contribution. D-009/D-010 remain open; synthetic arithmetic and future E1–E6 scope are proposals, not adopted operational policy.
 
+[ADR-0016](ADR-0016-p10-finance-handoff.md) records P10 exact Finance source/allocation, separate processing and reconciliation authority, bounded synthetic accounts and durable OUT-14 recovery. It does not close D-005/D-006/D-017 or authorise operational accounting treatment.
 [ADR-0017](ADR-0017-estimating-e1.md) records the separately authorised manual E1 slice, exact decimal policy, immutable estimate/quote versions and durable draft output. Finance retains ADR-0016.
 
 [Projects discovery and first-increment boundary](bp06-projects-discovery.md) records the 7 September BP-06 scope; D-010/D-014/D-026 remain open.
+
+[Customer portal direction](customer-portal-direction.md) records Dean's authority to design now and implement bounded synthetic stages as their dependencies become ready. It resolves only the private portal-direction portion of D-027; the original wider decision remains open. No migration or technical ADR number is allocated by this design.

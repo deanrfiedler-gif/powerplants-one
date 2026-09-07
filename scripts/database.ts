@@ -24,6 +24,7 @@ export async function migrate(through = 12) {
       "0008-offline-recovery.sql",
       "0009-service-reports.sql",
       "0010-crm-opportunities.sql",
+      "0011-finance-handoff.sql",
       "0012-estimating-e1.sql",
     ]) {
       const version = Number(file.slice(0,4));
@@ -61,6 +62,7 @@ export async function seed(through = 12) {
       [7, "seed-p07.sql"],
       [9, "seed-p09.sql"],
       [10, "seed-crm-i1.sql"],
+      [11, "seed-p10.sql"],
       [12, "seed-estimating-e1.sql"],
     ] as const) {
       if (version > through) break;
@@ -82,6 +84,10 @@ export async function seed(through = 12) {
         await client.query(
           "INSERT INTO ppo.report_template_policy(workspace_id,template_id) VALUES('10000000-0000-4000-8000-000000000001','e1000000-0000-4000-8000-000000000001')",
         );
+      }
+      if (version === 11) {
+        const { seedFinance } = await import("../src/finance/fixtures");
+        await seedFinance(client);
       }
       await client.query("INSERT INTO ppo.seed_receipts(version) VALUES($1)", [
         version,

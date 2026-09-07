@@ -48,3 +48,9 @@ The [CRM handover](crm-discovery-handover.md) records BP-03, all eighteen parity
 ## PPO-012 bounded discovery contribution
 
 [BP-06](../blueprints/BP-06-projects-commercial-delivery.md) and its [handover](projects-discovery-handover.md) record the 7 September source assessment and J1 preparation. Issue #12 remains open; its broad PPO-011 dependency is retained for technical gates. J1 implementation requires a new invocation.
+
+
+
+## Customer portal staged work
+
+[Issue #50](https://github.com/deanrfiedler-gif/powerplants-one/issues/50) is the focused customer portal design contribution under D-027 and the existing shared/Service/Projects/document requirements. [Design](../blueprints/customer-portal-design.md), [CP1–CP5 plan](customer-portal-implementation-plan.md), [handover](customer-portal-handover.md). The initial PPO-001–PPO-016 creation snapshot and all 78 parent requirements remain unchanged. Runtime child issues are created only as their stage is ready; no P13 or eighth domain is introduced.
