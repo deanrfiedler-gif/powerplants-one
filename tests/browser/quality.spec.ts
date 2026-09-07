@@ -149,6 +149,7 @@ test("P11 PT-01/29 scoped recovery UI preserves originals and retries one uncert
   await page.getByLabel("Reason for review").fill("SYN current authority changed");
   await page.getByRole("button", { name: "Save review position" }).click();
   await expect(page.getByRole("alert").filter({ hasText: "permission" })).toBeVisible();
+  await expect(page.getByRole("status").filter({ hasText: "Review position saved to the server." })).toHaveCount(0);
   await expect(page.getByLabel("Review note")).toHaveCount(0);
   await expect(page.getByText(original.operation_id, { exact: false })).toHaveCount(0);
   await capture(page, info, "recovery-command-denied");

@@ -28,7 +28,7 @@ export function ExceptionsScreen() {
       <p>Only cases assigned to you and permitted by your current access appear here. These originals require review before any separate business action.</p>
       <ReadState loading={recovery.loading} error={recovery.error} retry={recovery.reload} />
       {recovery.data && !recovery.loading && !recovery.error && <>
-        <p className="read-meta">{recovery.data.items.length} cases in this permitted window. The source examines up to 100 recent owned cases; this is not a complete backlog total.</p>
+        <p className="read-meta">{recovery.data.items.length} {recovery.data.items.length === 1 ? "case" : "cases"} in this permitted window. The source examines up to 100 recent owned cases; this is not a complete backlog total.</p>
         {!recovery.data.items.length ? <p className="empty-state">No permitted recovery cases in this window.</p> : <div className="record-grid">
           {recovery.data.items.map((item) => <article className="record-card" key={item.case_id}>
             <h3><Link href={`/admin/recovery/${item.case_id}`}>Review retained evidence</Link></h3>
@@ -51,11 +51,11 @@ export function RecoveryScreen({ id }: { id: string }) {
     <PageHeader eyebrow="Retained field evidence" title="Review original evidence" />
     {saved && <p role="status">{saved}</p>}
     <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-    {r.data && !r.loading && !r.error && <RecoveryDetail key={id} item={r.data} reload={r.reload} saved={() => { setSaved("Review position saved to the server."); r.reload(); }} />}
+    {r.data && !r.loading && !r.error && <RecoveryDetail key={id} item={r.data} reload={r.reload} beginSave={() => setSaved("")} saved={() => { setSaved("Review position saved to the server."); r.reload(); }} />}
   </>;
 }
 
-function RecoveryDetail({ item, reload, saved }: { item: Recovery; reload: () => void; saved: () => void }) {
+function RecoveryDetail({ item, reload, beginSave, saved }: { item: Recovery; reload: () => void; beginSave: () => void; saved: () => void }) {
   const command = useCommand();
   const [disposition, setDisposition] = useState("RetainedForReview");
   const [note, setNote] = useState("");
@@ -71,7 +71,7 @@ function RecoveryDetail({ item, reload, saved }: { item: Recovery; reload: () =>
       {(item.byte_count ?? 0) > 0 && <a href={`/api/v1/sync/recovery-review/${item.case_id}/bytes`} target="_blank" rel="noreferrer">Open exact retained image ({item.byte_count} bytes)</a>}
     </details>
     <h2>Record review position</h2>
-    <form onSubmit={(event) => { event.preventDefault(); void command.send(`sync/recovery-review/${item.case_id}/disposition`, { disposition, note, reason }).then((result) => { if (result) saved(); }); }}>
+    <form onSubmit={(event) => { event.preventDefault(); beginSave(); void command.send(`sync/recovery-review/${item.case_id}/disposition`, { disposition, note, reason }).then((result) => { if (result) saved(); }); }}>
       <EnumField name="disposition" label="Review position" value={disposition} onChange={setDisposition} values={["RetainedForReview", "ClarificationRequired"]} />
       <Field name="note" label="Review note" value={note} onChange={setNote} required multiline maxLength={2000} />
       <Field name="reason" label="Reason for review" value={reason} onChange={setReason} required maxLength={1000} />
