@@ -3,6 +3,8 @@ import { writeFile } from "node:fs/promises";
 import { financeHttpSource, httpFinanceDraft } from "../helpers/finance-http";
 import { call, identity, capture } from "../helpers/quality-browser";
 
+test.use({ actionTimeout: 15000, navigationTimeout: 60000 });
+
 test("P11 PT-29 pack and report queues never turn failed reads into empty or issued claims", async ({
   page,
 }, info) => {

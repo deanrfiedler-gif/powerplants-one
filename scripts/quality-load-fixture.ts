@@ -44,7 +44,7 @@ export async function qualityLoadFixture() {
           `SYN PT-27 customer ${n}`,
         ],
       );
-    for (let n = 1; n <= 5000 - before.assets; n++)
+    for (let n = 1; n <= 5000 - before.assets; n++) {
       await c.query(
         "INSERT INTO ppo.assets(id,workspace_id,company_id,site_id,created_by,updated_by,description,identity_status,lifecycle_status) VALUES($1,$2,$3,$4,$5,$5,$6,'Unresolved','Active')",
         [
@@ -56,6 +56,18 @@ export async function qualityLoadFixture() {
           `SYN PT-27 unresolved asset ${n}`,
         ],
       );
+      await c.query(
+        "INSERT INTO ppo.asset_location_events(id,workspace_id,company_id,created_by,updated_by,asset_id,to_site_id,effective_at,reason) VALUES($1,$2,$3,$4,$4,$5,$6,'2026-09-05T00:00:00Z','SYN PT-27 initial fictional location; no physical relocation inferred')",
+        [
+          newId("e1160000", n),
+          workspace,
+          company,
+          actor,
+          newId("e1120000", n),
+          site,
+        ],
+      );
+    }
     for (let n = 1; n <= 1000; n++) {
       const wo = newId("e1130000", n),
         scope = newId("e1140000", n);

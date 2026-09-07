@@ -4,7 +4,7 @@ import {
   type Locator,
   type TestInfo,
 } from "@playwright/test";
-import { call, capture } from "./quality-browser";
+import { call, capture, identity, saveOriginal } from "./quality-browser";
 
 const id = (prefix: string, n = 1) =>
   `${prefix}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
@@ -135,6 +135,41 @@ export async function prepareJourney(page: Page, info: TestInfo) {
   const day = mobile ? "2026-11-10" : "2026-11-09";
   const movedDay = mobile ? "2026-11-12" : "2026-11-11";
   const summary = `SYN P11 integrated inspection ${info.project.name}`;
+  await page.goto(`/customers/${id("50")}`);
+  await expect(
+    page.getByRole("heading", {
+      name: "SYN Greenhouse Demonstration",
+      exact: true,
+    }),
+  ).toBeVisible();
+  await page.goto(`/sites/${id("70")}`);
+  await expect(
+    page.getByText(
+      "SYN OEM query remains unresolved; follow-up activity will be implemented in P03.",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", {
+      name: "SYN OEM query: intermittent sensor alarm remains unresolved",
+      exact: true,
+    }),
+  ).toBeVisible();
+  await capture(page, info, "journey-existing-site-and-owned-OEM-follow-up");
+  await page.goto(`/equipment/${id("80")}`);
+  await expect(
+    page.getByText(
+      "SYN cable replacement did not resolve intermittent reading; cause suspected.",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  await expect(
+    page.getByText("SYN Former Technician", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("SyntheticLegacy · 000Hist-Ab.01", { exact: true }),
+  ).toBeVisible();
+  await capture(page, info, "journey-original-attributed-failed-fix");
   await page.goto("/service/tickets/new");
   await page
     .getByLabel("Company visibility context", { exact: true })
@@ -210,7 +245,17 @@ export async function prepareJourney(page: Page, info: TestInfo) {
     .click();
   await expect(page).toHaveURL(/\/service\/work-orders\/[a-f0-9-]{36}$/);
   const wo = page.url().split("/").at(-1)!;
-  await page.getByText("Edit scope draft", { exact: true }).click();
+  const editor = page
+    .locator("details.wo-edit")
+    .filter({
+      has: page.locator("summary", { hasText: /^Edit scope draft$/ }),
+    });
+  // A newly created order already opens its empty scope editor. Do not toggle
+  // it closed; existing populated drafts can start collapsed.
+  if ((await editor.getAttribute("open")) === null) {
+    await editor.locator("summary").focus();
+    await page.keyboard.press("Enter");
+  }
   const scope = page
     .locator("form")
     .filter({ has: page.getByLabel("Scope summary", { exact: true }) });
@@ -430,65 +475,167 @@ export async function prepareJourney(page: Page, info: TestInfo) {
   expect(original.ok()).toBe(true);
   const originalBytes = await original.body();
   await capture(page, info, "journey-first-issued-pack");
-  await page.goto(`/service/appointments/${aid}`);
-  await page
-    .getByRole("button", { name: "Move or reassign", exact: true })
-    .focus();
-  await page.keyboard.press("Enter");
-  const move = page.getByRole("dialog");
-  await move
-    .getByLabel("Start (site time)", { exact: true })
-    .fill(movedDay + "T10:00");
-  await move
-    .getByLabel("Finish (site time)", { exact: true })
-    .fill(movedDay + "T12:00");
-  await move
-    .getByLabel("Change reason", { exact: true })
-    .fill(
-      "SYN controlled weekday move; retain original issued bytes and require changed-date contact and successor pack.",
+  for (const format of ["html", "pdf", "manifest"])
+    await saveOriginal(
+      page,
+      info,
+      `pack-issues/${oldPack.current_issue_id}/${format}`,
+      `P11-first-pack.${format === "manifest" ? "json" : format}`,
+      { issue_id: oldPack.current_issue_id },
     );
-  await committed(page, `appointments/${aid}/move`, () =>
-    move
-      .getByRole("button", { name: "Save proposed move", exact: true })
-      .click(),
+  for (const profile of ["assigned-technician", "second-technician"]) {
+    await identity(page, profile);
+    await page.goto(`/documents/${oldPack.current_issue_id}`);
+    await expect(
+      page.getByText("Current applicable issue", { exact: true }),
+    ).toBeVisible();
+    await page.goto(`/my-jobs/${aid}`);
+    await committed(
+      page,
+      `pack-issues/${oldPack.current_issue_id}/acknowledge`,
+      () =>
+        page
+          .getByRole("button", {
+            name: "I have read and acknowledge this exact pack",
+            exact: true,
+          })
+          .click(),
+    );
+    await capture(page, info, `journey-first-issue-ack-${profile}`);
+  }
+  const offlineContext = await page.context().browser()!.newContext({
+    baseURL: "http://127.0.0.1:3000",
+    locale: "en-AU",
+    viewport: page.viewportSize(),
+    isMobile: mobile,
+    hasTouch: mobile,
+  });
+  const offlinePage = await offlineContext.newPage();
+  offlinePage.setDefaultTimeout(15000);
+  await call(offlinePage, "local-session", { profile: "second-technician" });
+  await offlinePage.goto("/offline/index.html");
+  await expect(offlinePage.locator("#workspace")).toBeVisible();
+  await offlinePage.waitForFunction(
+    () => navigator.serviceWorker.controller !== null,
   );
-  await contact(page, aid, "Confirmed");
-  await capture(page, info, "journey-controlled-move");
-  await page.goto(`/service/packs/${pid}`);
-  await page
-    .getByRole("button", { name: "Prepare successor revision", exact: true })
+  await offlinePage.getByLabel("Assigned job to download").selectOption(aid);
+  await offlinePage
+    .getByRole("button", { name: "Download selected job", exact: true })
     .click();
-  await page
-    .getByLabel("Preparation / change reason", { exact: true })
-    .fill(
-      "SYN successor reflects controlled changed dates; original issue remains immutable.",
-    );
-  await committed(page, `packs/${pid}/amend`, () =>
-    page
-      .getByRole("button", {
-        name: "Save successor and hold dispatch",
-        exact: true,
-      })
-      .click(),
+  await expect(
+    offlinePage.getByRole("button", {
+      name: "Download selected job",
+      exact: true,
+    }),
+  ).toBeEnabled({ timeout: 45000 });
+  await expect(offlinePage.locator("#notice")).toContainText(
+    "Job context and exact pack saved",
   );
-  await issuePack(page, pid);
-  const currentPack = (await call(page, `packs/${pid}`)).items[0];
-  expect(currentPack.current_issue_id).not.toBe(oldPack.current_issue_id);
-  expect(
-    await (
-      await page.request.get(
-        `/api/v1/pack-issues/${oldPack.current_issue_id}/pdf`,
-      )
-    ).body(),
-  ).toEqual(originalBytes);
-  await capture(page, info, "journey-successor-pack-before-personal-acks");
-  return {
-    ticket,
-    work_order_id: wo,
-    appointment_id: aid,
-    pack_id: pid,
-    old_issue_id: oldPack.current_issue_id,
-    old_pack_pdf: originalBytes,
-    current_issue_id: currentPack.current_issue_id,
-  };
+  await offlineContext.setOffline(true);
+  await identity(page, "coordinator");
+  try {
+    await page.goto(`/service/appointments/${aid}`);
+    await page
+      .getByRole("button", { name: "Move or reassign", exact: true })
+      .focus();
+    await page.keyboard.press("Enter");
+    const move = page.getByRole("dialog");
+    await move
+      .getByLabel("Start (site time)", { exact: true })
+      .fill(movedDay + "T10:00");
+    await move
+      .getByLabel("Finish (site time)", { exact: true })
+      .fill(movedDay + "T12:00");
+    await move
+      .getByLabel("Change reason", { exact: true })
+      .fill(
+        "SYN controlled weekday move; retain original issued bytes and require changed-date contact and successor pack.",
+      );
+    await committed(page, `appointments/${aid}/move`, () =>
+      move
+        .getByRole("button", { name: "Save proposed move", exact: true })
+        .click(),
+    );
+    await contact(page, aid, "Confirmed");
+    await capture(page, info, "journey-controlled-move");
+    await page.goto(`/service/packs/${pid}`);
+    await page
+      .getByRole("button", { name: "Prepare successor revision", exact: true })
+      .click();
+    await page
+      .locator("#section-technical_information")
+      .fill(
+        "SYN amended technical instruction: stop the external label inspection if condensation obscures the display. Record uncertainty and obtain a separately authorised return; do not open the enclosure or infer the original diagnosis.",
+      );
+    await page
+      .getByLabel("Preparation / change reason", { exact: true })
+      .fill(
+        "SYN successor reflects controlled changed dates; original issue remains immutable.",
+      );
+    await committed(page, `packs/${pid}/amend`, () =>
+      page
+        .getByRole("button", {
+          name: "Save successor and hold dispatch",
+          exact: true,
+        })
+        .click(),
+    );
+    await issuePack(page, pid);
+    const currentPack = (await call(page, `packs/${pid}`)).items[0];
+    expect(currentPack.current_issue_id).not.toBe(oldPack.current_issue_id);
+    expect(
+      await (
+        await page.request.get(
+          `/api/v1/pack-issues/${oldPack.current_issue_id}/pdf`,
+        )
+      ).body(),
+    ).toEqual(originalBytes);
+    await capture(page, info, "journey-successor-pack-before-personal-acks");
+    for (const format of ["html", "pdf", "manifest"])
+      await saveOriginal(
+        page,
+        info,
+        `pack-issues/${currentPack.current_issue_id}/${format}`,
+        `P11-successor-pack.${format === "manifest" ? "json" : format}`,
+        {
+          issue_id: currentPack.current_issue_id,
+          predecessor_issue_id: oldPack.current_issue_id,
+        },
+      );
+    await offlinePage.reload();
+    await expect(offlinePage.locator("#jobs")).toContainText(
+      "stale reference when offline",
+    );
+    await offlinePage
+      .getByRole("button", { name: "Open saved field job", exact: true })
+      .click();
+    await offlinePage
+      .getByText("Read exact cached issued pack and history", { exact: true })
+      .click();
+    const cached = await offlinePage
+      .getByTitle("Cached issued pack — stale reference", { exact: true })
+      .getAttribute("srcdoc");
+    expect(cached).not.toContain("SYN amended technical instruction");
+    await capture(
+      offlinePage,
+      info,
+      "journey-offline-old-pack-stale-after-amendment",
+      {
+        old_issue_id: oldPack.current_issue_id,
+        new_issue_id: currentPack.current_issue_id,
+      },
+    );
+
+    return {
+      ticket,
+      work_order_id: wo,
+      appointment_id: aid,
+      pack_id: pid,
+      old_issue_id: oldPack.current_issue_id,
+      old_pack_pdf: originalBytes,
+      current_issue_id: currentPack.current_issue_id,
+    };
+  } finally {
+    await offlineContext.close();
+  }
 }

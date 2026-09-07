@@ -5,18 +5,12 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { once } from "node:events";
 import { chromium, expect, type BrowserContext } from "@playwright/test";
-import { closeDatabase } from "../src/platform/database";
+import { closeDatabase, database } from "../src/platform/database";
 import { qualityLoadFixture } from "./quality-load-fixture";
 
 const root = "verification-evidence/p11-performance";
 await mkdir(root, { recursive: true });
-const fixture = await qualityLoadFixture();
 const origin = "http://127.0.0.1:3000";
-const server = spawn(
-  process.execPath,
-  ["--env-file=.env.local", "--import", "tsx", "scripts/local-server.ts"],
-  { stdio: ["ignore", "inherit", "inherit"] },
-);
 const provenance = {
   source_head:
     process.env.PPO_SOURCE_HEAD ??
@@ -30,6 +24,43 @@ const provenance = {
   run_id: process.env.GITHUB_RUN_ID ?? null,
   run_attempt: process.env.GITHUB_RUN_ATTEMPT ?? null,
 };
+await writeFile(`${root}/provenance.json`, JSON.stringify(provenance, null, 2));
+let fixture: Awaited<ReturnType<typeof qualityLoadFixture>>;
+try {
+  fixture = await qualityLoadFixture();
+} catch (error) {
+  const rolledBack = (
+    await database().query(
+      "SELECT count(*)::int AS remaining_fixture_records FROM ppo.business_identities WHERE id::text LIKE ANY(ARRAY['e1110000-%','e1120000-%','e1130000-%','e1150000-%','e1160000-%'])",
+    )
+  ).rows[0];
+  await writeFile(
+    `${root}/fixture-failure.json`,
+    JSON.stringify(
+      {
+        ...provenance,
+        stage: "fixture transaction",
+        code: (error as { code?: string }).code ?? null,
+        failure:
+          "Declared load fixture did not commit; no timings were collected. Inspect the original CI job error.",
+        ...rolledBack,
+      },
+      null,
+      2,
+    ),
+  );
+  await closeDatabase();
+  throw error;
+}
+await writeFile(
+  `${root}/fixture.json`,
+  JSON.stringify({ ...provenance, fixture }, null, 2),
+);
+const server = spawn(
+  process.execPath,
+  ["--env-file=.env.local", "--import", "tsx", "scripts/local-server.ts"],
+  { stdio: ["ignore", "inherit", "inherit"] },
+);
 const samples: {
   viewport: string;
   view: string;

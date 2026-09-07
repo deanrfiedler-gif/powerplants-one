@@ -1,7 +1,12 @@
 import { test, expect } from "@playwright/test";
 import { writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
-import { call, identity, capture } from "../helpers/quality-browser";
+import {
+  call,
+  identity,
+  capture,
+  saveOriginal,
+} from "../helpers/quality-browser";
 import { prepareJourney, committed } from "../helpers/quality-prepare";
 import { completion, submit, review, issue } from "../helpers/quality-report";
 import { png } from "../helpers/field";
@@ -220,13 +225,11 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
   await expect(page.locator("#queue .queue-row")).toHaveCount(1);
   await page.getByLabel("Evidence type", { exact: true }).selectOption("Photo");
   const bytes = png();
-  await page
-    .getByLabel("Original synthetic PNG")
-    .setInputFiles({
-      name: "SYN-P11-original.png",
-      mimeType: "image/png",
-      buffer: bytes,
-    });
+  await page.getByLabel("Original synthetic PNG").setInputFiles({
+    name: "SYN-P11-original.png",
+    mimeType: "image/png",
+    buffer: bytes,
+  });
   await page
     .getByLabel("Photo caption")
     .fill(
@@ -383,6 +386,14 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
   const presentation = issued.presentations.find(
     (p: { kind: string }) => p.kind === "IssuedReport",
   );
+  for (const format of ["html", "pdf", "manifest"])
+    await saveOriginal(
+      page,
+      info,
+      `reports/${rid}/${format}?presentation_id=${presentation.id}`,
+      `P11-reserved-report.${format === "manifest" ? "json" : format}`,
+      { report_id: rid, presentation },
+    );
   await page
     .getByRole("button", { name: "Present Issued Report", exact: true })
     .first()
@@ -442,6 +453,7 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
     expect(denied.headers()["cache-control"]).toBe("private, no-store");
     expect(await denied.text()).not.toContain("FINANCE_PRIVATE_CANARY");
   }
+  await identity(page, "second-technician");
   await page.goto(`/my-jobs/${aid}`);
   await page.getByRole("button", { name: "History", exact: true }).click();
   await expect(
