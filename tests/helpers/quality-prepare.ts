@@ -245,11 +245,9 @@ export async function prepareJourney(page: Page, info: TestInfo) {
     .click();
   await expect(page).toHaveURL(/\/service\/work-orders\/[a-f0-9-]{36}$/);
   const wo = page.url().split("/").at(-1)!;
-  const editor = page
-    .locator("details.wo-edit")
-    .filter({
-      has: page.locator("summary", { hasText: /^Edit scope draft$/ }),
-    });
+  const editor = page.locator("details.wo-edit").filter({
+    has: page.locator("summary", { hasText: /^Edit scope draft$/ }),
+  });
   // A newly created order already opens its empty scope editor. Do not toggle
   // it closed; existing populated drafts can start collapsed.
   if ((await editor.getAttribute("open")) === null) {
@@ -372,6 +370,9 @@ export async function prepareJourney(page: Page, info: TestInfo) {
   await page
     .getByLabel("Proposed finish (device timezone)")
     .fill(day + "T02:00");
+  await page
+    .getByLabel("Preparation state", { exact: true })
+    .selectOption("Preparing");
   const receipt = await committed(
     page,
     `service/work-orders/${wo}/visits`,

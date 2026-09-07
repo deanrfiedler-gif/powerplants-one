@@ -132,7 +132,21 @@ type Appointment = {
   }[];
   actions: { can_manage: boolean; can_request: boolean; can_contact: boolean };
 };
-type Schedule = Envelope<Appointment> & {
+type ScheduleAppointment = Omit<
+  Appointment,
+  | "readiness"
+  | "authorisation_blockers"
+  | "contacts"
+  | "followups"
+  | "proposal"
+  | "history"
+  | "requests"
+> & {
+  requests: Pick<Request, "id" | "status">[];
+  projection: "ScheduleSummary";
+};
+type BookingBasis = Omit<ScheduleAppointment, "requests" | "projection">;
+type Schedule = Envelope<ScheduleAppointment> & {
   resources: Resource[];
   display_timezone: string;
   from: string;
@@ -154,7 +168,7 @@ const shortTime = (iso: string, zone: string) =>
     minute: "2-digit",
     hourCycle: "h23",
   }).format(new Date(iso));
-function VersionLine({ a }: { a: Appointment }) {
+function VersionLine({ a }: { a: BookingBasis }) {
   return (
     <p className="read-meta">
       Appointment v{a.version} · Crew v{a.assignment_version} · Schedule v
@@ -162,7 +176,7 @@ function VersionLine({ a }: { a: Appointment }) {
     </p>
   );
 }
-function bookingVersions(a: Appointment) {
+function bookingVersions(a: BookingBasis) {
   return {
     expected_version: a.version,
     expected_work_order_version: a.work_order_version,
@@ -182,7 +196,7 @@ function BookingForm({
   initialCrew,
   onClose,
 }: {
-  appointment: Appointment;
+  appointment: BookingBasis;
   mode: "confirm" | "move" | "request";
   onSaved: () => void;
   initialStart?: string;
@@ -1134,10 +1148,10 @@ function AppointmentCard({
   drag,
   onMove,
 }: {
-  a: Appointment;
+  a: ScheduleAppointment;
   zone: string;
   drag?: (event: React.DragEvent) => void;
-  onMove?: (a: Appointment) => void;
+  onMove?: (a: ScheduleAppointment) => void;
 }) {
   return (
     <article
@@ -1189,7 +1203,7 @@ export function PlannerScreen() {
     [resourceFilter, setResourceFilter] = useState(""),
     [status, setStatus] = useState(""),
     [move, setMove] = useState<{
-      a: Appointment;
+      a: ScheduleAppointment;
       start?: string;
       crew?: CrewInput;
     } | null>(null),

@@ -1186,7 +1186,7 @@ export async function listResources(p: Principal, input: unknown = {}) {
     return envelope(items);
   });
 }
-async function appointmentDetail(c: QueryClient, p: Principal, id: string) {
+async function appointmentCore(c: QueryClient, p: Principal, id: string) {
   const { a, w } = await visibleAppointment(c, p, id),
     site = await visible(c, p, "Site", a.site_id),
     r = await scopeDetail(c, p, w, a.scope_revision_id);
@@ -1198,6 +1198,63 @@ async function appointmentDetail(c: QueryClient, p: Principal, id: string) {
   ).rows;
   for (const x of assignments)
     await visibleResource(c, p, x.resource_id, a.site_id);
+  return { a, w, site, r, assignments };
+}
+function appointmentHeader({
+  a,
+  w,
+  site,
+  r,
+  assignments,
+}: Awaited<ReturnType<typeof appointmentCore>>) {
+  return {
+    ...a,
+    work_order_display_number: w.display_number,
+    work_order_version: w.version,
+    scope_summary: r.summary,
+    scope_hash: r.content_hash,
+    scope_revision: r.revision,
+    scope_review_required:
+      w.scope_revision_id !== w.authorised_scope_revision_id ||
+      a.scope_revision_id !== w.authorised_scope_revision_id ||
+      a.scope_version !== r.version,
+    site_name: site.display_name,
+    primary_contact_id: site.primary_contact_id,
+    assignments,
+  };
+}
+async function appointmentActions(
+  c: QueryClient,
+  p: Principal,
+  a: Appointment,
+) {
+  return {
+    can_manage: await hasPermission(
+      c,
+      p,
+      "schedule.manage",
+      a.company_id,
+      a.site_id,
+    ),
+    can_request: await hasPermission(
+      c,
+      p,
+      "schedule.request",
+      a.company_id,
+      a.site_id,
+    ),
+    can_contact: await hasPermission(
+      c,
+      p,
+      "schedule.contact",
+      a.company_id,
+      a.site_id,
+    ),
+  };
+}
+async function appointmentDetail(c: QueryClient, p: Principal, id: string) {
+  const core = await appointmentCore(c, p, id),
+    { a, w, r } = core;
   const contacts = (
     await c.query(
       "SELECT * FROM ppo.contact_outcomes WHERE workspace_id=$1 AND appointment_id=$2 ORDER BY created_at DESC,id",
@@ -1261,19 +1318,7 @@ async function appointmentDetail(c: QueryClient, p: Principal, id: string) {
     )
   ).rows;
   return {
-    ...a,
-    work_order_display_number: w.display_number,
-    work_order_version: w.version,
-    scope_summary: r.summary,
-    scope_hash: r.content_hash,
-    scope_revision: r.revision,
-    scope_review_required:
-      w.scope_revision_id !== w.authorised_scope_revision_id ||
-      a.scope_revision_id !== w.authorised_scope_revision_id ||
-      a.scope_version !== r.version,
-    site_name: site.display_name,
-    primary_contact_id: site.primary_contact_id,
-    assignments,
+    ...appointmentHeader(core),
     contacts,
     requests,
     followups,
@@ -1282,29 +1327,38 @@ async function appointmentDetail(c: QueryClient, p: Principal, id: string) {
     policy,
     readiness: await readiness(c, p, r, a.id),
     authorisation_blockers: await blockers(c, p, w, r),
-    actions: {
-      can_manage: await hasPermission(
-        c,
-        p,
-        "schedule.manage",
-        a.company_id,
-        a.site_id,
-      ),
-      can_request: await hasPermission(
-        c,
-        p,
-        "schedule.request",
-        a.company_id,
-        a.site_id,
-      ),
-      can_contact: await hasPermission(
-        c,
-        p,
-        "schedule.contact",
-        a.company_id,
-        a.site_id,
-      ),
-    },
+    actions: await appointmentActions(c, p, a),
+  };
+}
+async function appointmentSummary(c: QueryClient, p: Principal, id: string) {
+  const core = await appointmentCore(c, p, id);
+  // Preserve complete appointment visibility, including historical crew and
+  // contact identities. The planner has no reason to load their narratives,
+  // original snapshots or authorisation evidence for every card in a week.
+  for (const contact of (
+    await c.query(
+      "SELECT DISTINCT recipient_id FROM ppo.contact_outcomes WHERE workspace_id=$1 AND appointment_id=$2",
+      [p.workspace_id, id],
+    )
+  ).rows)
+    await visible(c, p, "Person", contact.recipient_id);
+  const requests = (
+    await c.query(
+      "SELECT id,status FROM ppo.schedule_change_requests WHERE workspace_id=$1 AND appointment_id=$2 ORDER BY created_at DESC,id",
+      [p.workspace_id, id],
+    )
+  ).rows;
+  return {
+    ...appointmentHeader(core),
+    projection: "ScheduleSummary" as const,
+    requests,
+    policy: await schedulingPolicy(
+      c,
+      p,
+      core.a.scheduling_policy_id ?? SCHEDULING_POLICY_ID,
+      false,
+    ),
+    actions: await appointmentActions(c, p, core.a),
   };
 }
 export async function readAppointment(
@@ -1367,7 +1421,7 @@ export async function readSchedule(p: Principal, input: unknown) {
     const appointments = [];
     for (const row of candidates) {
       try {
-        appointments.push(await appointmentDetail(c, p, row.id));
+        appointments.push(await appointmentSummary(c, p, row.id));
       } catch (e) {
         if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
       }
