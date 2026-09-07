@@ -41,9 +41,23 @@ test("P11 PT-01 cross-tab identity change removes business and diagnostic record
   const diagnostic = await context.newPage(); await diagnostic.goto("/foundation");
   await diagnostic.getByRole("button", { name: "Load shared context" }).click();
   await expect(diagnostic.getByText("SYN Former Technician", { exact: false })).toBeVisible();
-  await identity(page, "systems");
+  let releaseSwitch: () => void = () => {};
+  const switching = new Promise<void>(resolve => { releaseSwitch = resolve; });
+  await page.route("**/api/v1/local-session", async route => {
+    if (route.request().method() === "POST") await switching;
+    await route.continue();
+  });
+  await page.getByLabel("Identity", { exact: true }).selectOption("systems");
+  await page.getByRole("button", { name: "Use this identity", exact: true }).click();
+  try {
+    await expect(other.getByRole("heading", { name: "Refresh your identity context", exact: true })).toBeVisible();
+    await other.getByRole("button", { name: "Reload permitted view" }).click();
+    await expect(other.getByRole("link", { name: "SYN Greenhouse Demonstration", exact: true })).toHaveCount(2);
+  } finally { releaseSwitch(); }
+  await expect(page.locator("#business-profile")).toBeEnabled();
+  await page.unroute("**/api/v1/local-session");
   for (const tab of [other, diagnostic]) {
-    await expect(tab.getByRole("heading", { name: "Identity changed in another tab", exact: true })).toBeVisible();
+    await expect(tab.getByRole("heading", { name: "Refresh your identity context", exact: true })).toBeVisible();
     await expect(tab.getByText("SYN Former Technician", { exact: false })).toHaveCount(0);
     await expect(tab.getByRole("link", { name: "SYN Greenhouse Demonstration", exact: true })).toHaveCount(0);
   }

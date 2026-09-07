@@ -32,7 +32,7 @@ export function ExceptionsScreen() {
         {!recovery.data.items.length ? <p className="empty-state">No permitted recovery cases in this window.</p> : <div className="record-grid">
           {recovery.data.items.map((item) => <article className="record-card" key={item.case_id}>
             <h3><Link href={`/admin/recovery/${item.case_id}`}>Review retained evidence</Link></h3>
-            <Status value={item.dispositions.at(-1)?.disposition ?? "RetainedForReview"} />
+            <Status value={item.dispositions.at(-1)?.disposition ?? "ReviewRequired"} />
             <p>Received <Stamp value={item.received_at} /></p>
             <p>Original operation: <span className="narrative">{item.operation_id}</span></p>
           </article>)}
@@ -63,7 +63,7 @@ function RecoveryDetail({ item, reload, saved }: { item: Recovery; reload: () =>
   if (isDenied(command.error)) return <ReadState loading={false} error={command.error} retry={reload} />;
   return <ValidationFields error={command.error}>
     <p className="callout">This is retained original evidence. A review note does not approve work, restore normal access, or add these quantities to a report or Finance handoff.</p>
-    <dl className="record-summary"><div><dt>Received</dt><dd><Stamp value={item.received_at} /></dd></div><div><dt>Current review position</dt><dd><Status value={item.dispositions.at(-1)?.disposition ?? "RetainedForReview"} /></dd></div></dl>
+    <dl className="record-summary"><div><dt>Received</dt><dd><Stamp value={item.received_at} /></dd></div><div><dt>Current review position</dt><dd><Status value={item.dispositions.at(-1)?.disposition ?? "ReviewRequired"} /></dd></div></dl>
     <p><Link href={`/work/${item.activity_id}`}>Open owned follow-up</Link></p>
     <details><summary>Original evidence and source identity</summary>
       <p className="narrative">Original operation: {item.operation_id}</p><p className="narrative">Original hash: {item.payload_hash}</p>

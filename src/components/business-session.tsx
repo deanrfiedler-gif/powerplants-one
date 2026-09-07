@@ -51,6 +51,7 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
     } catch (e) {
       setError(e);
     } finally {
+      lockOtherBusinessViews();
       setBusy(false);
     }
   }
@@ -102,7 +103,7 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
         <button onClick={select} disabled={loading || busy}>
           {busy ? "Selecting…" : "Use this identity"}
         </button>
-      {p && <button className="secondary" onClick={() => { lockOtherBusinessViews(); setP(null); setEpoch(x=>x+1); void (async()=>{try{if(localStorage.getItem("ppo-offline-marker"))await lockLocal();await api("local-session/sign-out",{});}catch(e){setError(e);}})();}}>Sign out</button>}
+      {p && <button className="secondary" onClick={() => { lockOtherBusinessViews(); setP(null); setEpoch(x=>x+1); void (async()=>{try{if(localStorage.getItem("ppo-offline-marker"))await lockLocal();await api("local-session/sign-out",{});}catch(e){setError(e);}finally{lockOtherBusinessViews();}})();}}>Sign out</button>}
         </div>
       </section>
       <ErrorNotice error={error} />

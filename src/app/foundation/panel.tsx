@@ -10,10 +10,12 @@ type ApiFailure = {
   field_errors?: { field: string; message: string }[];
 };
 async function api<T>(path: string, body?: unknown): Promise<T> {
-  if (path === "local-session" && body) {
+  const changingIdentity = path === "local-session" && !!body;
+  if (changingIdentity) {
     lockOtherBusinessViews();
     if (localStorage.getItem("ppo-offline-marker")) await lockLocal();
   }
+  try {
   const response = await fetch(`/api/v1/${path}`, {
     method: body ? "POST" : "GET",
     headers: body ? { "Content-Type": "application/json" } : undefined,
@@ -23,6 +25,9 @@ async function api<T>(path: string, body?: unknown): Promise<T> {
   const value = await response.json();
   if (!response.ok) throw value;
   return value as T;
+  } finally {
+    if (changingIdentity) lockOtherBusinessViews();
+  }
 }
 export function FoundationPanel() {
   const [profile, setProfile] = useState("coordinator"),

@@ -16,8 +16,8 @@ export function SessionViewBoundary({ children }: { children: React.ReactNode })
   useEffect(() => { if (locked) notice.current?.focus(); }, [locked]);
   if (!locked) return children;
   return <div className="empty-state" ref={notice} tabIndex={-1} role="alert">
-    <h1>Identity changed in another tab</h1>
-    <p>Displayed records and unsaved forms have been cleared. Saved offline originals remain with their owner.</p>
+    <h1>Refresh your identity context</h1>
+    <p>Another tab started an identity change or sign-out. Displayed records and unsaved forms have been cleared. Saved offline originals remain with their owner.</p>
     <button onClick={() => setLocked(false)}>Reload permitted view</button>
   </div>;
 }
