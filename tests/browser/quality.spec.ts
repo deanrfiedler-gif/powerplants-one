@@ -5,6 +5,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { prepareFieldAppointment } from "../helpers/field-http";
 import { base, entry, startInput } from "../helpers/field";
 import { operation } from "../helpers/offline";
+import { identity, openIdentityControls } from "../helpers/quality-browser";
 
 test.describe.configure({ timeout: 180000 });
 async function call(page: Page, path: string, body?: unknown) {
@@ -16,12 +17,6 @@ async function call(page: Page, path: string, body?: unknown) {
   expect(response.ok(), JSON.stringify(result)).toBe(true);
   expect(response.headers()["cache-control"]).toBe("private, no-store");
   return result;
-}
-async function identity(page: Page, profile: string) {
-  await expect(page.locator("#business-profile")).toBeEnabled();
-  await page.getByLabel("Identity", { exact: true }).selectOption(profile);
-  await page.getByRole("button", { name: "Use this identity", exact: true }).click();
-  await expect(page.locator("#business-profile")).toBeEnabled();
 }
 async function capture(page: Page, info: TestInfo, scenario: string) {
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
@@ -47,6 +42,7 @@ test("P11 PT-01 cross-tab identity change removes business and diagnostic record
     if (route.request().method() === "POST") await switching;
     await route.continue();
   });
+  await openIdentityControls(page);
   await page.getByLabel("Identity", { exact: true }).selectOption("systems");
   await page.getByRole("button", { name: "Use this identity", exact: true }).click();
   try {
@@ -54,7 +50,7 @@ test("P11 PT-01 cross-tab identity change removes business and diagnostic record
     await other.getByRole("button", { name: "Reload permitted view" }).click();
     await expect(other.getByRole("link", { name: "SYN Greenhouse Demonstration", exact: true })).toHaveCount(2);
   } finally { releaseSwitch(); }
-  await expect(page.locator("#business-profile")).toBeEnabled();
+  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
   await page.unroute("**/api/v1/local-session");
   for (const tab of [other, diagnostic]) {
     await expect(tab.getByRole("heading", { name: "Refresh your identity context", exact: true })).toBeVisible();
@@ -107,7 +103,10 @@ test("P11 PT-01/29 scoped recovery UI preserves originals and retries one uncert
   const original = operation(p, job, "Capture", entry(job));
   const saved = await call(page, "sync/recovery", { grant_id: grant.recovery.id, token: grant.recovery.token, operation: original });
   expect(saved.normal_acceptance).toBe(false);
-  await page.goto("/admin"); await identity(page, "coordinator");
+  await page.goto("/customers"); await identity(page, "coordinator");
+  if (info.project.use.isMobile) await page.getByRole("button", { name: "Menu", exact: true }).press("Enter");
+  await page.getByRole("navigation", { name: "Main navigation", exact: true }).getByRole("link", { name: "Exceptions and recovery", exact: true }).press("Enter");
+  await expect(page).toHaveURL(/\/admin$/);
   await expect(page.locator(`a[href='/admin/recovery/${saved.case_id}']`)).toBeVisible();
   await capture(page, info, "recovery-loaded");
   await page.locator(`a[href='/admin/recovery/${saved.case_id}']`).click();

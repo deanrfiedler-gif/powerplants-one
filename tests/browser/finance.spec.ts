@@ -24,13 +24,15 @@ async function call(page: Page, path: string, body?: unknown) {
   return d;
 }
 async function identity(page: Page, profile: string) {
+  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
+  if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await page.getByRole("button", { name: "Change identity", exact: true }).click();
+
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   await page
     .getByRole("button", { name: "Use this identity", exact: true })
     .click();
-  await expect(
-    page.getByRole("button", { name: "Use this identity", exact: true }),
-  ).toBeEnabled();
+  await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
+  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
 }
 async function capture(
   page: Page,
@@ -521,7 +523,7 @@ test("P10 PT-20/PT-21 UI exact account arithmetic, filtering, partial/failure an
   }
   await expect(page.getByText(/Last good observation:/)).toBeVisible();
   await identity(page, "assigned-technician");
-  await expect(page.locator('.business-error[role="alert"]')).toBeVisible();
+  await expect(page.locator('.business-error[role="alert"]')).toContainText("This identity does not have the required shared-data permission.");
   await expect(page.getByText("AUD 600.00", { exact: true })).toHaveCount(0);
   await capture(page, info, "account-role-denied");
 });
@@ -564,7 +566,7 @@ test("P10 loaded/empty/loading/error/keyboard queue states retain scope and refl
   release();
   await page.unrouteAll({ behavior: "wait" });
   await identity(page, "systems");
-  await expect(page.locator('.business-error[role="alert"]')).toBeVisible();
+  await expect(page.locator('.business-error[role="alert"]')).toContainText("This identity does not have the required shared-data permission.");
   await capture(page, info, "queue-denied");
   await expect(page.getByText(/SYN-ACCOUNT-/)).toHaveCount(0);
 });

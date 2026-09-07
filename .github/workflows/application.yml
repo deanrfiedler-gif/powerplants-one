@@ -62,6 +62,26 @@ jobs:
           npm run db:migrate
           npm run db:seed
           npm run db:health
+      - name: Focused I2 identity, query equivalence and responsive presentation proof
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        run: npx playwright test tests/browser/crm-i2.spec.ts --output verification-evidence/i2-focused-browser --reporter=list
+      - name: CRM I1 accepted journey across application and PostgreSQL restarts
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          node --env-file=.env.local --import tsx scripts/crm-restart-proof.ts write
+          docker restart "$PPO_POSTGRES_CONTAINER"
+          for attempt in $(seq 1 30); do
+            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx scripts/crm-restart-proof.ts verify
+      - name: Desktop and mobile browser checks
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        run: |
+          npx playwright install --with-deps chromium
+          npm run test:browser
       - name: Focused P10 desktop and phone review, allocation and reconciliation
         if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         run: |
@@ -109,9 +129,6 @@ jobs:
       - name: Focused P09 exact return proposal and customer presentation proof
         if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         run: npx playwright test tests/browser/reports.spec.ts --output verification-evidence/p09-focused-browser --reporter=list
-      - name: Focused I2 identity, query equivalence and responsive presentation proof
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
-        run: npx playwright test tests/browser/crm-i2.spec.ts --output verification-evidence/i2-focused-browser --reporter=list
       - name: Real PostgreSQL behaviour and competing transactions
         if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         run: npm run test:db
@@ -187,23 +204,6 @@ jobs:
             sleep 1
           done
           node --env-file=.env.local --import tsx scripts/offline-restart-proof.ts verify
-      - name: CRM I1 accepted journey across application and PostgreSQL restarts
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
-        env:
-          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
-        run: |
-          node --env-file=.env.local --import tsx scripts/crm-restart-proof.ts write
-          docker restart "$PPO_POSTGRES_CONTAINER"
-          for attempt in $(seq 1 30); do
-            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
-            sleep 1
-          done
-          node --env-file=.env.local --import tsx scripts/crm-restart-proof.ts verify
-      - name: Desktop and mobile browser checks
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
-        run: |
-          npx playwright install --with-deps chromium
-          npm run test:browser
       - name: Prepare full review diagnostics
         if: always()
         id: full_review

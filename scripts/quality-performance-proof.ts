@@ -4,7 +4,7 @@ import { cpus, totalmem, freemem, loadavg, platform, release, arch } from "node:
 import { mkdir, writeFile, readFile, readdir } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { once } from "node:events";
-import { chromium, expect, type BrowserContext } from "@playwright/test";
+import { chromium, expect, type BrowserContext, type CDPSession, type Page } from "@playwright/test";
 import { closeDatabase, database } from "../src/platform/database";
 import { qualityLoadFixture } from "./quality-load-fixture";
 
@@ -89,6 +89,7 @@ const samples: {
   elapsed_ms: number;
   http_status: number;
   visible_rows: number | null;
+  core_requests_with_network_rule: number;
   error: string | null;
 }[] = [];
 let browser: Awaited<ReturnType<typeof chromium.launch>> | undefined;
@@ -152,16 +153,27 @@ try {
         contexts.push(context);
       }
       const pages = await Promise.all(contexts.map((c) => c.newPage()));
+      const networkSessions = new Map<Page, { cdp: CDPSession; ruleId: string }>();
       for (const page of pages) {
         const cdp = await page.context().newCDPSession(page);
         await cdp.send("Network.enable");
-        await cdp.send("Network.emulateNetworkConditions", {
+        const conditions = {
           offline: false,
           latency: 40,
           downloadThroughput: 1250000,
           uploadThroughput: 625000,
-          connectionType: "wifi",
+          connectionType: "wifi" as const,
+        };
+        // Chrome's documented replacement preserves both actual network
+        // throttling and navigator state. An empty pattern applies globally;
+        // no route, asset or core API is exempted from the original limits.
+        const { ruleIds } = await cdp.send("Network.emulateNetworkConditionsByRule", {
+          offline: false,
+          matchedNetworkConditions: [{ urlPattern: "", ...conditions }],
         });
+        assert.equal(ruleIds.length, 1);
+        await cdp.send("Network.overrideNetworkState", conditions);
+        networkSessions.set(page, { cdp, ruleId: ruleIds[0] });
       }
       for (let wave = 0; wave < 4; wave++) {
         resourceObservations.push({ viewport: viewport.name, view: view.name, wave, boundary: "before", observed_at: new Date().toISOString(), ...await resourceSnapshot() });
@@ -171,6 +183,24 @@ try {
             const coreEvents: { event: string; elapsed_ms: number; status?: number; error?: string }[] = [];
             const documentEvents: { event: string; elapsed_ms: number; status?: number }[] = [];
             const assets = { requested: 0, completed: 0, failed: 0 };
+            const assetEvents = new Map<import("@playwright/test").Request, {
+              path: string; type: string; requested_ms: number;
+              response_ms?: number; status?: number; completed_ms?: number; failed_ms?: number;
+            }>();
+            const { cdp, ruleId } = networkSessions.get(page)!;
+            const coreRequestIds = new Set<string>();
+            const appliedRules = new Map<string, string>();
+            const coreProtocolRequest = (event: { requestId: string; request: { url: string; method: string } }) => {
+              if (new URL(event.request.url).pathname === view.api && event.request.method === "GET") coreRequestIds.add(event.requestId);
+            };
+            const appliedRule = (event: { requestId: string; appliedNetworkConditionsId?: string }) => {
+              // Inspect only this explicit protocol field. Never retain the
+              // accompanying cookie/header data from ExtraInfo events.
+              if (event.appliedNetworkConditionsId && appliedRules.size < 100)
+                appliedRules.set(event.requestId, event.appliedNetworkConditionsId);
+            };
+            const coreRuleMatches = () => [...coreRequestIds].filter((id) => appliedRules.get(id) === ruleId).length;
+            cdp.on("Network.requestWillBeSent", coreProtocolRequest).on("Network.requestWillBeSentExtraInfo", appliedRule);
             const documentEvent = (event: string, status?: number) => {
               if (documentEvents.length < 20) documentEvents.push({ event, elapsed_ms: performance.now() - at, ...(status === undefined ? {} : { status }) });
             };
@@ -182,22 +212,30 @@ try {
             const requested = (request: import("@playwright/test").Request) => {
               if (request.isNavigationRequest() && request.frame() === page.mainFrame()) documentEvent("document-request");
               if (["script", "font", "stylesheet"].includes(request.resourceType())) assets.requested++;
+              if (["script", "font", "stylesheet"].includes(request.resourceType()) && assetEvents.size < 40 && new URL(request.url()).origin === origin)
+                assetEvents.set(request, { path: new URL(request.url()).pathname, type: request.resourceType(), requested_ms: performance.now() - at });
               if (relevant(request) && coreEvents.length < 20)
                 coreEvents.push({ event: "request", elapsed_ms: performance.now() - at });
             };
             const responded = (response: import("@playwright/test").Response) => {
               if (response.request().isNavigationRequest() && response.frame() === page.mainFrame()) documentEvent("document-response", response.status());
+              const asset = assetEvents.get(response.request());
+              if (asset) Object.assign(asset, { response_ms: performance.now() - at, status: response.status() });
               if (relevant(response.request()) && coreEvents.length < 20)
                 coreEvents.push({ event: "response", elapsed_ms: performance.now() - at, status: response.status() });
             };
             const failed = (request: import("@playwright/test").Request) => {
               if (request.isNavigationRequest() && request.frame() === page.mainFrame()) documentEvent("document-request-failed");
               if (["script", "font", "stylesheet"].includes(request.resourceType())) assets.failed++;
+              const asset = assetEvents.get(request);
+              if (asset) asset.failed_ms = performance.now() - at;
               if (relevant(request) && coreEvents.length < 20)
                 coreEvents.push({ event: "request-failed", elapsed_ms: performance.now() - at, error: request.failure()?.errorText ?? "Unknown transport failure" });
             };
             const completed = (request: import("@playwright/test").Request) => {
               if (["script", "font", "stylesheet"].includes(request.resourceType())) assets.completed++;
+              const asset = assetEvents.get(request);
+              if (asset) asset.completed_ms = performance.now() - at;
             };
             page.on("request", requested).on("response", responded).on("requestfailed", failed).on("requestfinished", completed).on("crash", crashed).on("domcontentloaded", domLoaded).on("load", loaded);
             let status = 0,
@@ -228,9 +266,10 @@ try {
                 received.headers()["cache-control"],
                 "private, no-store",
               );
-              await expect(page.locator("#business-profile")).toBeEnabled({
+              await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false", {
                 timeout: 120000,
               });
+              await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled({ timeout: 120000 });
               await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0, {
                 timeout: 120000,
               });
@@ -245,11 +284,24 @@ try {
                     ),
                   ),
               );
+              assert.ok(coreRequestIds.size > 0, "The actual core GET must be observed by Chromium");
+              assert.equal(coreRuleMatches(), coreRequestIds.size, "Every observed core GET must have the declared network rule applied");
               finished = performance.now();
             } catch (e) {
               finished = performance.now();
               error = e instanceof Error ? e.message : "Read failed";
               {
+                // Freeze observations at the failed sample boundary. Neither
+                // screenshot collection nor a later wave may change them.
+                const failureObservation = structuredClone({
+                  observed_at: new Date().toISOString(),
+                  elapsed_ms: finished - at,
+                  core_events: coreEvents,
+                  document_events: documentEvents,
+                  assets,
+                  asset_events: [...assetEvents.values()],
+                  network_rule: { rule_id: ruleId, core_requests: coreRequestIds.size, matched_core_requests: coreRuleMatches() },
+                });
                 const name = `${viewport.name}-${view.name.replaceAll(" ", "-")}-wave-${wave}-user-${virtual_user}-failure`;
                 let captureError: string | null = null;
                 const bytes = await page
@@ -270,22 +322,16 @@ try {
                       viewport,
                       scenario: name,
                       error,
-                      core_events: coreEvents,
-                      document_events: documentEvents,
-                      assets,
+                      ...failureObservation,
                       page_closed: page.isClosed(),
                       page_path: new URL(page.url()).pathname,
                       capture_error: captureError,
                       resources: await resourceSnapshot(),
-                      diagnostic_limit: "At most 20 core GET and 20 main-document lifecycle event timings/statuses; aggregate asset counts, process resident memory and cgroup counters. No process arguments, bodies, headers, query strings, cookies or session trace. Capture time is outside the completed sample.",
+                      diagnostic_limit: "Frozen failed-sample observation: at most 20 core GET and 20 main-document events, 40 same-origin asset paths/timings/statuses, aggregate counts and applied network-rule IDs. Process resident memory/cgroup counters and bounded screenshot follow outside the sample. No process arguments, bodies, headers, query strings, cookies or session trace. No unbounded DOM query is attempted against an unresponsive renderer.",
                       byte_count: bytes?.length ?? null,
                       sha256: bytes
                         ? createHash("sha256").update(bytes).digest("hex")
                         : null,
-                      business_errors: await page
-                        .locator('.business-error[role="alert"]')
-                        .allTextContents()
-                        .catch(() => []),
                     },
                     null,
                     2,
@@ -294,6 +340,7 @@ try {
               }
             } finally {
               page.off("request", requested).off("response", responded).off("requestfailed", failed).off("requestfinished", completed).off("crash", crashed).off("domcontentloaded", domLoaded).off("load", loaded);
+              cdp.off("Network.requestWillBeSent", coreProtocolRequest).off("Network.requestWillBeSentExtraInfo", appliedRule);
             }
             samples.push({
               viewport: viewport.name,
@@ -307,6 +354,7 @@ try {
               elapsed_ms: finished - at,
               http_status: status,
               visible_rows: rows,
+              core_requests_with_network_rule: coreRuleMatches(),
               error,
             });
           }),
@@ -373,7 +421,7 @@ try {
           cpu: cpus().map((c) => c.model),
           memory_bytes: totalmem(),
           network: {
-            method: "Chromium DevTools browser network emulation",
+            method: "Chromium DevTools Network.emulateNetworkConditionsByRule global empty-pattern rule plus Network.overrideNetworkState; each successful core GET verifies appliedNetworkConditionsId",
             latency_ms: 40,
             download_bytes_per_second: 1250000,
             upload_bytes_per_second: 625000,
@@ -387,7 +435,7 @@ try {
           cold_warm:
             "Each view begins with 10 fresh contexts, empty browser caches and no preceding measured navigation in those contexts. Only the first desktop visit can include first route compilation in this shared fresh server; later views/phone can reuse server modules and database/OS caches. Warm is three subsequent navigation waves in the same contexts. No OS cache flush or durable offline-storage inference.",
           boundary:
-            "Browser navigation initiation to successful core API response, enabled identity selector, completed loading, no business error and two animation frames. Authentication setup is outside the timed boundary; navigation, HTML, assets, API and rendering are inside.",
+            "Browser navigation initiation to successful core API response, settled identity region and enabled Change identity control, completed loading, no business error and two animation frames. Authentication setup is outside the timed boundary; navigation, HTML, assets, API and rendering are inside.",
           limits:
             "Headless Chromium on CI hardware with emulated viewport/network; not a real phone, screen-reader session, PDF accessibility or whole-product conformance proof. Candidate timing failures are recorded, not silently excluded. No exports or offline synchronisation in this core-read sample.",
         },

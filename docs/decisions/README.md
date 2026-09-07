@@ -38,3 +38,5 @@ The [shared UI and CRM layout direction](ui-brand-and-crm-layout.md) records the
 
 [ADR-0018](ADR-0018-p11-travel-and-integrated-quality.md) records the approved P11 synthetic whole-minute Travel/no-posting treatment and immutable policy successor. D-017 operational policy remains open.
 The [controlled opportunity handover proposal](crm-opportunity-handover.md) records unresolved H-01–H-03 and fixed preservation constraints under #55. Design publication is authorised; policy acceptance and implementation are separate. No numbered ADR is reserved.
+
+- [Accepted r08 shared layout and CRM implementation](shared-ui-r08-implementation.md) — Dean-approved presentation mapped to existing persisted I1/I2 contracts.

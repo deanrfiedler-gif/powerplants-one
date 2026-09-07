@@ -1,23 +1,13 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import Image from "next/image";
-import { ProductNavigation } from "../components/product-navigation";
+import { ProductHeader, ProductNavigation } from "../components/product-navigation";
 import { SessionViewBoundary } from "../components/session-view-boundary";
 import "./globals.css";
+import "./shared-layout.css";
 export const metadata: Metadata = {
   title: "Powerplants One | Local prototype",
   description: "Private synthetic application foundation for Powerplants One",
   robots: { index: false, follow: false },
 };
-const domains = [
-  "CRM",
-  "Estimating & Quotation",
-  "Engineering & Design Control",
-  "Projects & Commercial Delivery",
-  "Service Operations",
-  "Supply Chain Management",
-  "Finance & Commercial Controls",
-];
 export default function RootLayout({
   children,
 }: {
@@ -29,73 +19,14 @@ export default function RootLayout({
         <a className="skip-link" href="#main">
           Skip to main content
         </a>
-        <div className="environment">
-          Local prototype <span aria-hidden="true">·</span> Synthetic data only
-        </div>
         <div className="app-frame">
-          <aside className="sidebar">
-            <Link href="/" className="brand" aria-label="Powerplants One home">
-              <Image src="/brand/powerplants-logo-green-white.png" alt="Powerplants Australia" width={88} height={88} unoptimized className="brand-logo" />
-              <span>
-                Powerplants
-                <br />
-                <strong>One</strong>
-              </span>
-            </Link>
-            <ProductNavigation><nav aria-label="Main navigation">
-              <Link href="/">Overview</Link>
-              <Link href="/work">My Work</Link>
-              <Link href="/crm/opportunities">CRM Sales</Link>
-              <Link href="/estimating">Estimating &amp; quotes</Link>
-              <Link href="/my-jobs">My Jobs</Link>
-              <Link href="/customers">Customers</Link>
-              <Link href="/sites">Sites &amp; equipment</Link>
-              <Link href="/service/tickets">Service requests</Link>
-              <Link href="/service/work-orders">Work orders</Link>
-              <Link href="/schedule">Service planner</Link>
-              <Link href="/service/packs">Job packs</Link>
-              <Link href="/service/reports">Service review</Link>
-              <Link href="/finance/handoffs">Finance handoffs</Link>
-              <Link href="/admin">Exceptions and recovery</Link>
-              <Link href="/foundation">Foundation checks</Link>
-              <details className="domains">
-                <summary>Business domains</summary>
-                <ul>
-                  {domains.map((domain) => (
-                    <li key={domain}>
-                      <span aria-disabled="true">
-                        {domain}
-                        <small>
-                          {domain === "CRM"
-                            ? "Customer context"
-                            : domain === "Service Operations"
-                              ? "Work preparation"
-                              : "Planned"}
-                        </small>
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            </nav></ProductNavigation>
-            <p className="sidebar-note">
-              Private development
-              <br />
-              No live systems connected
-            </p>
-          </aside>
+          <ProductNavigation />
           <div className="workspace">
-            <header className="topbar">
-              <span>Powerplants Australia</span>
-              <span className="badge">Service workspace</span>
-            </header>
+            <ProductHeader />
             <main id="main" tabIndex={-1}>
               <SessionViewBoundary>{children}</SessionViewBoundary>
             </main>
-            <footer>
-              Powerplants One · Personal private prototype{" "}
-              <span>PP-01 service journey remains in development.</span>
-            </footer>
+
           </div>
         </div>
       </body>

@@ -199,7 +199,8 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
           : "";
     const original = await call(page, s.api + query);
     await page.goto(s.url);
-    await expect(page.locator("#business-profile")).toBeEnabled();
+    await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
+    await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
     await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
     await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
     await capture(page, info, `${s.id}-loaded`);

@@ -3,13 +3,15 @@ const company = "20000000-0000-4000-8000-000000000001",
   site = "70000000-0000-4000-8000-000000000001",
   person = "60000000-0000-4000-8000-000000000001";
 async function identity(page: Page, profile = "coordinator") {
+  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
+  if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await page.getByRole("button", { name: "Change identity", exact: true }).click();
+
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   await page
     .getByRole("button", { name: "Use this identity", exact: true })
     .click();
-  await expect(
-    page.getByRole("button", { name: "Use this identity", exact: true }),
-  ).toBeEnabled();
+  await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
+  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
 }
 async function noOverflow(page: Page) {
   expect(

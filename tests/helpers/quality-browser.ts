@@ -19,8 +19,14 @@ export async function call(page: Page, path: string, body?: unknown) {
   expect(r.headers()["cache-control"]).toBe("private, no-store");
   return d;
 }
-export async function identity(page: Page, profile: string) {
+export async function openIdentityControls(page: Page) {
+  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
+  if (!(await page.getByLabel("Identity", { exact: true }).isVisible()))
+    await page.getByRole("button", { name: "Change identity", exact: true }).press("Enter");
   await expect(page.locator("#business-profile")).toBeEnabled();
+}
+export async function identity(page: Page, profile: string) {
+  await openIdentityControls(page);
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   const changed = page.waitForResponse((r) =>
     new URL(r.url()).pathname === "/api/v1/local-session" &&
@@ -31,7 +37,8 @@ export async function identity(page: Page, profile: string) {
   expect(response.headers()["cache-control"]).toBe("private, no-store");
   const current = await response.json();
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true }).locator("strong")).toHaveText(current.display_name);
-  await expect(page.locator("#business-profile")).toBeEnabled();
+  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
+  await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
 }
 export async function capture(
   page: Page,
