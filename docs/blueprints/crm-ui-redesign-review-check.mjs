@@ -127,10 +127,13 @@ try {
       const layout = await page.evaluate(() => {
         const a = document.querySelector('.date-range').getBoundingClientRect();
         const b = document.querySelector('.mode-toggle').getBoundingClientRect();
-        return { overlap: Math.min(a.right,b.right)>Math.max(a.left,b.left) && Math.min(a.bottom,b.bottom)>Math.max(a.top,b.top), resourceWidth: document.querySelector('#resource-filter').getBoundingClientRect().width };
+        const c = document.querySelector('#resource-filter').getBoundingClientRect();
+        const d = document.querySelector('.today-button').getBoundingClientRect();
+        const overlaps = (x,y) => Math.min(x.right,y.right)>Math.max(x.left,y.left) && Math.min(x.bottom,y.bottom)>Math.max(x.top,y.top);
+        return { overlap: overlaps(a,b) || overlaps(b,c) || overlaps(c,d), resourceWidth: c.width };
       });
       evidence.measurements.push({label: width + ' planner controls', ...layout});
-      check(width + ': planner date and mode controls do not overlap', !layout.overlap);
+      check(width + ': planner date, mode and resource controls do not overlap', !layout.overlap);
       check(width + ': resource selector remains readable', layout.resourceWidth >= 130);
       await capture('planner-day-' + width);
       await page.locator('#week-mode').click();
