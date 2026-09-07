@@ -31,3 +31,8 @@ The shared shell uses the exact navy/green/white brand roles and untouched suppl
 ## Evidence and remaining scope
 
 See the [I2 handover](../delivery/crm-i2-handover.md) for executed evidence and limitations. Actual source-specific tests and merged delivery are established by the handover’s linked external publication, not by this decision’s implementation state. P09's exact accepted suite and all I1 cases remain mandatory. Full AT-25 remains Planned and #9 remains open. Further relationship management and commercial progression need separately bounded work.
+
+
+## Development restart boundary
+
+The pinned local Next.js 16.3.4 server opts out of the optional development compiler filesystem cache (`experimental.turbopackFileSystemCacheForDev: false`). Independent reconciled-head CI runs returned framework HTML 404 for the existing qualification route after earlier successful real HTTP checks and multiple server restarts; a separate E1 run did the same for quote preparation. This is a bounded compiler-cache mitigation hypothesis, not an established upstream root cause. [Next.js configuration documentation](https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopackFileSystemCache) identifies the default disk reuse and supported opt-out. The trade-off is colder compilation after restarting the local prototype. No route retry, alternate business response, engine change or assertion relaxation is introduced. Full pinned HTTP/browser and P08/P09/I1/I2/E1 restart gates must verify the configured source and actual merged main. PostgreSQL, document storage and accepted browser recovery originals remain durable; this setting neither adds nor changes CRM browser/offline caching.
