@@ -2,7 +2,7 @@
 
 Private prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P10 publication complete; P11 implementation and verification in progress; bounded Travel treatment approved · **Deployment:** none.
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P11 integrated quality implementation; exact delivery publication in its linked handover; P12 prepared only · **Deployment:** none.
 
 This repository is Dean's personal private prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. Integrated Service/Finance verification is in progress; the complete PP-01 acceptance boundary still requires P12. Company ownership, production approval and external-system write authority are not implied.
 
@@ -61,7 +61,7 @@ Technicians use `/my-jobs` and `/my-jobs/:id`. Riley and Morgan acknowledge and 
 
 ## Working screens
 
-P11's bounded exceptions/recovery checkpoint is at `/admin`, using existing current-owner recovery permissions. Cross-tab identity changes clear displayed business and diagnostic views. [P11 handover](docs/delivery/p11-handover.md) records implemented fixes, actual verification limits and outstanding integrated work. P11 is incomplete; [P12](docs/delivery/p12-starter-prompt.md) is prepared only.
+P11's bounded exceptions/recovery checkpoint is at `/admin`, using existing current-owner recovery permissions. Cross-tab identity changes clear displayed business and diagnostic views. [P11 handover](docs/delivery/p11-handover.md) records implemented fixes, actual verification limits and outstanding integrated work. Final contribution and merged-main completion are established by the handover’s authoritative external record; [P12](docs/delivery/p12-starter-prompt.md) is prepared only.
 
 Open My Work at `/work`, customer context at `/customers`, contacts at `/people`, sites at `/sites`, equipment at `/equipment`, service requests at `/service/tickets`, and work orders at `/service/work-orders`. Choose a server-backed synthetic identity. Foundation checks remain available as diagnostics. Incomplete intake retains owned unknowns; triage does not authorise work or book attendance. Activities retain explicit unknown due dates and require an outcome on completion.
 
@@ -83,4 +83,4 @@ Use [Issues](https://github.com/deanrfiedler-gif/powerplants-one/issues) for dev
 
 P09 service review and reports are implemented under [PR #37](https://github.com/deanrfiedler-gif/powerplants-one/pull/37). See the [P09 handover](docs/delivery/p09-handover.md) for exact transition, output, offline and verification limits. Separately authorised [P10 #45 / PR #48](https://github.com/deanrfiedler-gif/powerplants-one/pull/48) adds Finance handoffs at `/finance/handoffs` and restricted customer accounts reached from that queue. Use the Finance preparer, reviewer, processor and reconciler identities for their distinct actions. The [P10 handover](docs/delivery/p10-handover.md) records actual checks, failed runs, setup and remaining verification. SyntheticManual is the default; SyntheticApi is only the bounded timeout fixture. No live ERP action, customer distribution or full PP-01 acceptance is implied.
 
-P11 Travel continuation: [ADR-0018](docs/decisions/ADR-0018-p11-travel-and-integrated-quality.md) records the approved synthetic whole-minute NonBillable/no-posting treatment. Additive migrations 0013/0014 and seeds 13/14 preserve P10 originals, Finance policy history and v1 output definitions while adding the bounded Travel and branded v2 output successors. Actual verification remains in progress; see the P11 handover.
+P11 Travel continuation: [ADR-0018](docs/decisions/ADR-0018-p11-travel-and-integrated-quality.md) records the approved synthetic whole-minute NonBillable/no-posting treatment. Additive migrations 0013/0014 and seeds 13/14 preserve P10 originals, Finance policy history and v1 output definitions while adding the bounded Travel and branded v2 output successors. See the P11 handover and authoritative publication for exact verification, failed-run dispositions and remaining procedure limits.

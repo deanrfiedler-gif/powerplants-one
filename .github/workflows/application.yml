@@ -13,7 +13,9 @@ jobs:
   p01:
     name: P01–P11 and CRM I1–I2 local application and PostgreSQL proof
     runs-on: ubuntu-24.04
-    timeout-minutes: 90
+    # Full retained suites include two ten-minute-bounded P11 journeys and
+    # actual database/application/browser restarts. Keep individual deadlines.
+    timeout-minutes: 120
     services:
       postgres:
         image: postgres:16.15

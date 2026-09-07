@@ -781,7 +781,7 @@ export function ContextDetail({
               <HistoryList path={`assets/${id}/history`} />
             </>
           )}
-          {kind !== "Person" && <RelatedActivities type={kind} id={id} />}
+          {kind !== "Person" && <RelatedActivities key={`${kind}:${id}`} type={kind} id={id} />}
           <button className="secondary" onClick={r.reload}>
             Refresh context
           </button>
