@@ -240,7 +240,7 @@
     grid-template-columns: 1fr;
   }
   .toolbar {
-    align-items: stretch;
+    align-items: center;
   }
   .toolbar > * {
     max-width: 100%;
