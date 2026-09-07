@@ -1,6 +1,6 @@
 # BP-03 — Controlled opportunity handover contract starter
 
-**Revision:** r01 · **Owner:** Dean Fiedler · **State:** Prepared only. Requires completed, verified I2 publication and a new explicit invocation. Storage grants no authority. This is a bounded contract/design follow-on within the broader I2 theme, not an additional PP-01 increment or an ownership-transfer implementation approval.
+**Revision:** r02 · **Owner:** Dean Fiedler · **State:** Invoked on 7 September 2026 for design-only issue #55 after verified I2 publication. [Design handover](crm-handover-design-handover.md) and its external record govern this publication. Storage grants no further authority. This is a bounded contract/design follow-on within the broader I2 theme, not an additional PP-01 increment or an ownership-transfer implementation approval.
 
 ## Invocation and objective
 

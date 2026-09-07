@@ -1,6 +1,6 @@
 # CRM — Ordered implementation sequence
 
-**Revision:** r05 · **Date:** 6 September 2026 · **Status:** I1 publication complete; bounded I2 implemented with verification/publication in its handover · **Parent workstream:** PPO-009 / issue #9. **Owner:** Dean Fiedler, private prototype.
+**Revision:** r06 · **Date:** 7 September 2026 · **Status:** I1/I2 publication complete; controlled handover design proposed; policy and implementation outstanding · **Parent workstream:** PPO-009 / issue #9. **Owner:** Dean Fiedler, private prototype.
 
 [BP-03](../blueprints/BP-03-crm.md) · [Parity](../blueprints/crm-parity.md) · [First implementation starter](crm-first-increment-starter.md) · [Handover](crm-discovery-handover.md).
 
@@ -26,7 +26,7 @@ I1 is tracked by [#39](https://github.com/deanrfiedler-gif/powerplants-one/issue
 
 The user subsequently invoked the bounded I2 starter. [Issue #43](https://github.com/deanrfiedler-gif/powerplants-one/issues/43) / [PR #47](https://github.com/deanrfiedler-gif/powerplants-one/pull/47) now implements its scoped Board/Grid slice; [handover](crm-i2-handover.md) and [read decision](../decisions/crm-i2-worklist.md) record verification. The broader I2 row below remains a proposed theme, not the delivered scope. P10 #45 reserves 0011/ADR-0016 and estimating E1 #46 reserves 0012/ADR-0017. I2 reserves no schema change and cannot alter those contracts.
 
-The next [controlled opportunity handover contract starter](crm-i2-ownership-contract-starter.md) is prepared only. It requires complete I2 publication and a new invocation, and bounds the next work to a reviewable authority/eligibility/history/recovery proposal. I1's immutable opportunity owner and the separate Activity owner remain unchanged until a later implementation is expressly scoped.
+The [controlled opportunity handover contract starter](crm-i2-ownership-contract-starter.md) was explicitly invoked after [complete I2 publication](https://github.com/deanrfiedler-gif/powerplants-one/issues/43#issuecomment-5562200516). Its [design handover](crm-handover-design-handover.md) under #55 supplies the proposal, decisions, physical/interface map, canonical journey and future verification. H-01–H-03 await Dean; the [conditional implementation starter](crm-owner-transfer-implementation-starter.md) requires those decisions and a new invocation. I1's immutable Opportunity owner and separate Activity owner remain the application contract. No extra PP-01 increment or completed broader I2 theme is claimed.
 
 ## Ordered increments
 

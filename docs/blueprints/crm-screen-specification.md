@@ -1,6 +1,6 @@
 # CRM — Screen specification and synthetic walkthrough
 
-**Revision:** r05 · **Date:** 6 September 2026 · **Status:** Design only; no persistence, permission, integration, offline or business-acceptance claim. **Parent:** BP-03 / PPO-009. **Owner:** Dean Fiedler, private prototype.
+**Revision:** r06 · **Date:** 7 September 2026 · **Status:** Design only; no persistence, permission, integration, offline or business-acceptance claim. **Parent:** BP-03 / PPO-009. **Owner:** Dean Fiedler, private prototype.
 
 [Open the standalone wireframe source](crm-wireframes.html) · [BP-03](BP-03-crm.md) · [Implementation sequence](../delivery/crm-implementation-plan.md) · [Handover and visual evidence](../delivery/crm-discovery-handover.md).
 
@@ -76,3 +76,7 @@ The bounded C01/C03/C05/C07 journey is implemented in the online Sales worklist,
 ## I2 application distinction
 
 The separately invoked [I2 worklist](../delivery/crm-i2-handover.md) implements C02 Board/Grid over the same server-permitted page, with scoped Company/Site/Owner selectors, retained query/sort/page and canonical detail. It renders I1's actual two stages/Open outcome and separate opportunity/action owners. Counts explicitly describe the returned page; failed reads do not show zero. The intact logo/shared tokens and compact phone controls follow the accepted visual direction. Browser originals and actual permission/persistence evidence are recorded in that handover after execution. The standalone mockups, further stages, account builders and commercial fields remain proposed; no design capture passes AT-25.
+
+## C03 controlled opportunity handover proposal
+
+The [synthetic handover journey](crm-handover-journey.md) specifies an inline canonical-detail form, full current/proposed opportunity-owner comparison, separate next/identification Activity owners, deliberate reason/confirmation and stale/uncertain/revoked states. It follows the accepted shared brand and keyboard/reflow rules. This is design only under #55; H-01–H-03 remain unresolved. Original C01–C07 wireframes/assets and delivered C02 Board/Grid are preserved; the [conditional starter](../delivery/crm-owner-transfer-implementation-starter.md) grants no implementation authority.

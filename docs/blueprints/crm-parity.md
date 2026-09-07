@@ -1,6 +1,6 @@
 # CRM — Pipedrive parity and evidence assessment
 
-**Revision:** r02 · **Date:** 6 September 2026 · **Status:** Bounded discovery; account context and exhaustive parity unverified · **Owner:** Dean Fiedler, private prototype · **Workstream:** PPO-009 / issue #9.
+**Revision:** r03 · **Date:** 7 September 2026 · **Status:** Bounded discovery; account context and exhaustive parity unverified · **Owner:** Dean Fiedler, private prototype · **Workstream:** PPO-009 / issue #9.
 
 [BP-03](BP-03-crm.md) owns target journeys/contracts. This register expands the original PAR-01–PAR-18 without changing their identities. All dispositions are **proposed**, not accepted. Preserve means retain the required outcome/history; improve means retain it with an evidenced improvement; integrate means keep an authoritative external capability; defer means retain it in its operational tool pending a later decision. No retirement is approved. Proposed criticality describes the impact of losing the outcome, not measured usage or an approved priority.
 
@@ -253,3 +253,7 @@ The separately invoked [I1 implementation](../delivery/crm-i1-handover.md) exerc
 ## I2 implementation distinction
 
 The invoked [scoped Board/Grid slice](../delivery/crm-i2-handover.md) adds a bounded presentation and query contract under CRM-01/02/03/04/08 and PAR-03/04/05/15 foundations. Actual runtime checks/publication are separate from this assessment. No PAR disposition, operational pipeline mapping, Pipedrive access or full AT-25 status changes. Remaining relationship/close/commercial capabilities retain their separately bounded dependencies.
+
+## Controlled ownership proposal distinction
+
+The [handover contract design](../delivery/crm-handover-design-handover.md) is an authorised synthetic proposal under #55 after verified I2 publication. It contributes to PAR-01/03/05/15 and compares H-01–H-03 authority/effect/recovery decisions; it changes no PAR disposition, operational Q5 evidence, live visibility or accepted account policy. The original E1–E6 observations keep their dates/limits. Ownership remains immutable in the application; all transfer tests remain Not run. Full AT-25 remains Planned and #9 stays open.
