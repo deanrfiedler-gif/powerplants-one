@@ -3,7 +3,7 @@ document_id: PPO-012-HO
 revision: r01
 date: 2026-09-07
 owner: Dean Fiedler - private prototype
-status: Authored design; verification and publication recorded below
+status: Published draft design PR; implementation and acceptance open
 ---
 
 # PPO-012 / BP-06 discovery handover
@@ -42,6 +42,8 @@ All PA procedures and existing master AT statuses remain unchanged. Source engin
 
 ## Publication and next boundary
 
-Publication is pending. No remote branch/PR/merge is claimed here until actual tool evidence is recorded. The design can be reviewed independently of J1 invocation. Recommended first build timing is after verified P10–P12; a later explicit earlier invocation can record a different sequencing choice without renumbering service work.
+Published as [draft PR #52](https://github.com/deanrfiedler-gif/powerplants-one/pull/52) from `design/bp06-projects-foundation`, initial source commit `4b35145ab1da004590532ecf02a66619a49561e7` against main `1f13dd8d6f5006559152fe9d5410aed3fff64234`. The complete initial Git tree `be2210b90466cdb0a8686facafcb7636d3829e13` matched the locally checked index; every uploaded blob matched its local Git hash. This final handover amendment only records publication. Current PR head/check results are available from the linked PR; no merge or completed remote CI is claimed here.
+
+Automatic approval review initially rejected uploading the existing document register because destination ownership and scope were unverified. Read-only repository metadata confirmed the same destination is Dean's private repository with push access. The existing register was fetched and compared: 54 records unchanged, BP-06 updated, six PPO-012 records added, none removed. With that new evidence, the same upload was accepted. No alternate route or access change was used. Direct shell Git authentication was unavailable; the connected GitHub API performed the verified publication. The design can be reviewed independently of J1 invocation. Recommended first build timing is after verified P10–P12; a later explicit earlier invocation can record a different sequencing choice without renumbering service work.
 
 Open: G01–G08, issue #12 and D-010/D-014/D-026; full BP-05 technical authority and later project controls; source migration/customer publishing. J1 is prepared only. No application changes, migration, source-system write, deployment, customer communication or operational replacement occurred.
