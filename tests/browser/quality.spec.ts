@@ -58,6 +58,7 @@ test("P11 PT-01 cross-tab identity change removes business and diagnostic record
 test("P11 PT-27/29 shared validation links the actual control and retains entered values", async ({ page }, info) => {
   await page.goto("/customers/new"); await identity(page, "coordinator");
   await page.getByLabel("Company visibility context").selectOption("20000000-0000-4000-8000-000000000001");
+  await page.getByLabel("Relationship / site owner").selectOption({ label: "SYN Coordinator" });
   await page.getByLabel("Display name", { exact: true }).fill("SYN retained proposed organisation");
   await page.getByLabel("Reason for capture", { exact: true }).fill("SYN deliberate validation challenge");
   await page.route("**/api/v1/customers", async (route) => {
@@ -113,14 +114,27 @@ test("P11 PT-01/29 scoped recovery UI preserves originals and retries one uncert
   await capture(page, info, "recovery-uncertain-retained");
   await page.getByRole("button", { name: "Save review position" }).focus(); await page.keyboard.press("Enter");
   await expect(page.getByRole("listitem").filter({ hasText: note.trim() })).toHaveCount(1);
+  await expect(page.getByRole("status").filter({ hasText: "Review position saved to the server." })).toBeVisible();
   expect(requests).toHaveLength(2); expect(requests[0]).toEqual(requests[1]);
   const current = await call(page, `sync/recovery-review/${saved.case_id}`);
-  expect(current.envelope).toEqual(original); expect(current.dispositions).toHaveLength(1);
+  const { payload_hash: originalHash, ...originalEnvelope } = original;
+  expect(current.envelope).toEqual(originalEnvelope);
+  expect(current.payload_hash).toBe(originalHash);
+  expect(current.dispositions).toHaveLength(1);
   const normal = (await call(page, `appointments/${setup.appointment_id}`)).items[0];
   expect(normal.status).toBe("InProgress");
   await capture(page, info, "recovery-original-once");
   await page.setViewportSize({ width: 320, height: 844 });
   await capture(page, info, "recovery-320");
+  // Change the actual server session without the UI signal; a denied command must clear its source.
+  await call(page, "local-session", { profile: "systems" });
+  await page.getByLabel("Review note").fill("SYN this denied command must not keep the original on screen");
+  await page.getByLabel("Reason for review").fill("SYN current authority changed");
+  await page.getByRole("button", { name: "Save review position" }).click();
+  await expect(page.getByRole("alert").filter({ hasText: "permission" })).toBeVisible();
+  await expect(page.getByLabel("Review note")).toHaveCount(0);
+  await expect(page.getByText(original.operation_id, { exact: false })).toHaveCount(0);
+  await capture(page, info, "recovery-command-denied");
   await identity(page, "systems");
   await expect(page.getByRole("alert").filter({ hasText: "permission" })).toBeVisible();
   await expect(page.getByLabel("Review note")).toHaveCount(0);

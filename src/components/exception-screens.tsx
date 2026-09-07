@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { EnumField, ErrorNotice, Field, PageHeader, ReadState, Stamp, Status, useCommand, useResource } from "./business-ui";
+import { EnumField, ErrorNotice, Field, isDenied, PageHeader, ReadState, Stamp, Status, useCommand, useResource, ValidationFields } from "./business-ui";
 
 type Recovery = {
   case_id: string;
@@ -45,20 +45,23 @@ export function ExceptionsScreen() {
 
 export function RecoveryScreen({ id }: { id: string }) {
   const r = useResource<Recovery>(`sync/recovery-review/${id}`);
+  const [saved, setSaved] = useState("");
   return <>
     <Link href="/admin">← Exceptions and recovery</Link>
     <PageHeader eyebrow="Retained field evidence" title="Review original evidence" />
+    {saved && <p role="status">{saved}</p>}
     <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-    {r.data && !r.loading && !r.error && <RecoveryDetail key={id} item={r.data} reload={r.reload} />}
+    {r.data && !r.loading && !r.error && <RecoveryDetail key={id} item={r.data} reload={r.reload} saved={() => { setSaved("Review position saved to the server."); r.reload(); }} />}
   </>;
 }
 
-function RecoveryDetail({ item, reload }: { item: Recovery; reload: () => void }) {
+function RecoveryDetail({ item, reload, saved }: { item: Recovery; reload: () => void; saved: () => void }) {
   const command = useCommand();
   const [disposition, setDisposition] = useState("RetainedForReview");
   const [note, setNote] = useState("");
   const [reason, setReason] = useState("");
-  return <>
+  if (isDenied(command.error)) return <ReadState loading={false} error={command.error} retry={reload} />;
+  return <ValidationFields error={command.error}>
     <p className="callout">This is retained original evidence. A review note does not approve work, restore normal access, or add these quantities to a report or Finance handoff.</p>
     <dl className="record-summary"><div><dt>Received</dt><dd><Stamp value={item.received_at} /></dd></div><div><dt>Current review position</dt><dd><Status value={item.dispositions.at(-1)?.disposition ?? "RetainedForReview"} /></dd></div></dl>
     <p><Link href={`/work/${item.activity_id}`}>Open owned follow-up</Link></p>
@@ -68,15 +71,14 @@ function RecoveryDetail({ item, reload }: { item: Recovery; reload: () => void }
       {(item.byte_count ?? 0) > 0 && <a href={`/api/v1/sync/recovery-review/${item.case_id}/bytes`} target="_blank" rel="noreferrer">Open exact retained image ({item.byte_count} bytes)</a>}
     </details>
     <h2>Record review position</h2>
-    <form onSubmit={(event) => { event.preventDefault(); void command.send(`sync/recovery-review/${item.case_id}/disposition`, { disposition, note, reason }).then((result) => { if (result) { setNote(""); reload(); } }); }}>
+    <form onSubmit={(event) => { event.preventDefault(); void command.send(`sync/recovery-review/${item.case_id}/disposition`, { disposition, note, reason }).then((result) => { if (result) saved(); }); }}>
       <EnumField name="disposition" label="Review position" value={disposition} onChange={setDisposition} values={["RetainedForReview", "ClarificationRequired"]} />
       <Field name="note" label="Review note" value={note} onChange={setNote} required multiline maxLength={2000} />
       <Field name="reason" label="Reason for review" value={reason} onChange={setReason} required maxLength={1000} />
       <ErrorNotice error={command.error} />
-      {command.saved && <p role="status">{command.saved}</p>}
       <button disabled={command.busy}>{command.busy ? "Saving…" : "Save review position"}</button>
     </form>
     <h2>Review history</h2>
     {item.dispositions.length ? <ol>{item.dispositions.map((d, index) => <li key={index}><Status value={d.disposition} /> <Stamp value={d.received_at} /><p className="narrative">{d.reason}</p></li>)}</ol> : <p>No review position has been recorded.</p>}
-  </>;
+  </ValidationFields>;
 }

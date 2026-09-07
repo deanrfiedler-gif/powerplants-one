@@ -267,8 +267,10 @@ export function SharedCreateForm({
         work authority or verified source evidence is created.
       </p>
       <ErrorNotice error={cmd.error} />
+      {["customer", "person", "site", "asset"].includes(kind) && <ReadState loading={companies.loading} error={companies.error} retry={companies.reload} />}
+      {["customer", "site"].includes(kind) && v.company && <ReadState loading={owners.loading} error={owners.error} retry={owners.reload} />}
       <form className="form-panel" onSubmit={submit}>
-        <fieldset disabled={cmd.busy}>
+        <fieldset disabled={cmd.busy || (["customer", "person", "site", "asset"].includes(kind) && companies.loading) || (["customer", "site"].includes(kind) && !!v.company && owners.loading)}>
           <div className="form-grid">
             {["customer", "person", "site", "asset"].includes(kind) &&
               select(

@@ -68,12 +68,13 @@ function useFieldError(name: string) {
   return errors?.find((e) => e.field === name || e.field === canonical)
     ?.message;
 }
-function validationControl(field: string) {
-  return Array.from(document.querySelectorAll<HTMLElement>("[data-validation-field]"))
-    .find((control) => {
+function validationControl(field: string, scope: ParentNode = document) {
+  const matches = Array.from(scope.querySelectorAll<HTMLElement>("[data-validation-field]"))
+    .filter((control) => {
       const name = control.dataset.validationField ?? "";
       return name === field || name.replace(/-\d+$/, "").replaceAll("-", "_") === field;
     });
+  return matches.length === 1 ? matches[0] : undefined;
 }
 export function ErrorNotice({ error }: { error: unknown }) {
   const [targets, setTargets] = useState<Record<string, string>>({});
@@ -81,7 +82,7 @@ export function ErrorNotice({ error }: { error: unknown }) {
     if (node && error) {
       const fields = (error as Failure).field_errors ?? [];
       setTargets(Object.fromEntries(fields.flatMap(({ field }) => {
-        const control = validationControl(field);
+        const control = validationControl(field, node.closest("form") ?? document);
         return control?.id ? [[field, control.id]] : [];
       })));
       node.focus();
@@ -97,7 +98,7 @@ export function ErrorNotice({ error }: { error: unknown }) {
           {e.field_errors.map((f, i) => (
             <li key={i}>
               {targets[f.field] ? <a href={`#${targets[f.field]}`} onClick={(event) => {
-                const control = validationControl(f.field);
+                const control = document.getElementById(targets[f.field]);
                 if (control) { event.preventDefault(); control.focus(); }
               }}>{friendly(f.field)}: {f.message}</a> : <>{friendly(f.field)}: {f.message}</>}
             </li>
