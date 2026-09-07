@@ -174,7 +174,7 @@ export type Job = Ref & {
     owner_name: string;
   }[];
 };
-const message = "Field workflow preview — Finance work incomplete";
+const message = "Field workflow preview — integrated acceptance incomplete";
 function PreviewLabel() {
   return (
     <div className="field-preview">

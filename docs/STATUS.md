@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 6 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P10 implementation retained; final GitHub execution blocked before job steps (see P10 handover); completed P09 publication remains authoritative. PP-01 remains incomplete.
+**Updated:** 6 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P10 implemented; exact verification/publication governed by the P10 handover and linked external record; completed P09 publication remains authoritative. PP-01 remains incomplete.
 
 ## Current direction
 
@@ -75,7 +75,7 @@ The inspected repository is private with main as default branch. Branch protecti
 
 ## P09 service review and controlled reports
 
-P09 issue #36 / PR #37 implement exact completion submission, authorised review/return, immutable acceptance and report correction cycles, durable customer-safe OUT-10 revisions, five explicit responses and compatible P08 local intents. [ADR-0014](decisions/ADR-0014-p09-service-reports.md) and the [P09 handover](delivery/p09-handover.md) record physical contracts, actual verification, failed-run dispositions and limits. The implementation run passed 289 cases (12 unit, 205 PostgreSQL, 14 HTTP, 58 browser) plus real restart procedures. The external publication record governs exact final-head and actual merged-main results. Existing full PT-06 is preserved; full PT-15/PT-16 disposition is recorded separately from component counts and AT/owner acceptance. The [P10 starter](delivery/p10-starter-prompt.md) is prepared only; Finance and P10–P12 remain unimplemented.
+P09 issue #36 / PR #37 implement exact completion submission, authorised review/return, immutable acceptance and report correction cycles, durable customer-safe OUT-10 revisions, five explicit responses and compatible P08 local intents. [ADR-0014](decisions/ADR-0014-p09-service-reports.md) and the [P09 handover](delivery/p09-handover.md) record physical contracts, actual verification, failed-run dispositions and limits. The implementation run passed 289 cases (12 unit, 205 PostgreSQL, 14 HTTP, 58 browser) plus real restart procedures. The external publication record governs exact final-head and actual merged-main results. Existing full PT-06 is preserved; full PT-15/PT-16 disposition is recorded separately from component counts and AT/owner acceptance. At the P09 publication boundary, the [P10 starter](delivery/p10-starter-prompt.md) was prepared only; subsequent P10 authority and implementation are recorded below.
 
 ## BP-03 I1 implementation and publication
 

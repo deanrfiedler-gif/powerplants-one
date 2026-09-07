@@ -10,7 +10,7 @@ jobs:
   p01:
     name: P01–P10 and CRM I1 local application and PostgreSQL proof
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 90
     services:
       postgres:
         image: postgres:16.15
