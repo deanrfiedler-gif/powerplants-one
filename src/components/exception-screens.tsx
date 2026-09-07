@@ -66,7 +66,7 @@ function RecoveryDetail({ item, reload, saved }: { item: Recovery; reload: () =>
     <dl className="record-summary"><div><dt>Received</dt><dd><Stamp value={item.received_at} /></dd></div><div><dt>Current review position</dt><dd><Status value={item.dispositions.at(-1)?.disposition ?? "RetainedForReview"} /></dd></div></dl>
     <p><Link href={`/work/${item.activity_id}`}>Open owned follow-up</Link></p>
     <details><summary>Original evidence and source identity</summary>
-      <p>Original operation: {item.operation_id}</p><p>Original hash: {item.payload_hash}</p>
+      <p className="narrative">Original operation: {item.operation_id}</p><p className="narrative">Original hash: {item.payload_hash}</p>
       <pre className="recovery-original" tabIndex={0} aria-label="Original retained evidence">{JSON.stringify(item.envelope, null, 2)}</pre>
       {(item.byte_count ?? 0) > 0 && <a href={`/api/v1/sync/recovery-review/${item.case_id}/bytes`} target="_blank" rel="noreferrer">Open exact retained image ({item.byte_count} bytes)</a>}
     </details>

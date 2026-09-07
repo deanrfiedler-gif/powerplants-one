@@ -123,6 +123,9 @@ test("P11 PT-01/29 scoped recovery UI preserves originals and retries one uncert
   expect(current.dispositions).toHaveLength(1);
   const normal = (await call(page, `appointments/${setup.appointment_id}`)).items[0];
   expect(normal.status).toBe("InProgress");
+  await page.locator("summary").filter({ hasText: "Original evidence and source identity" }).click();
+  await expect(page.getByLabel("Original retained evidence")).toBeVisible();
+  await expect(page.getByLabel("Original retained evidence")).toContainText(original.operation_id);
   await capture(page, info, "recovery-original-once");
   await page.setViewportSize({ width: 320, height: 844 });
   await capture(page, info, "recovery-320");
