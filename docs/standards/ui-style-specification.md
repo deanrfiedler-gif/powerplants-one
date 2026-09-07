@@ -104,3 +104,7 @@ Creation policy: prefill the specific selected pipeline; for All pipelines, defa
 
 
 I2 application note: the [bounded implementation handover](../delivery/crm-i2-handover.md) applies these brand roles and responsive principles to the actual two-stage/Open worklist. It retains full Activity text and distinguishes action/opportunity owners; memory preferences confer no data authority. Shared-screen runtime evidence is separate from these accepted design originals. No mockup amount, owner default, pipeline or temporary model becomes a server contract.
+
+## Accepted r08 application presentation
+
+The later [r08 implementation decision](../decisions/shared-ui-r08-implementation.md) supersedes older presentation rules for wide navigation, green primary actions and minimum-width horizontally scrolling CRM columns. It preserves the existing domain, permission, source/completeness and save contracts. See the [handover](../delivery/shared-ui-redesign-handover.md) for actual verification and publication.

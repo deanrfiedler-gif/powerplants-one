@@ -6,7 +6,10 @@ import { crmCreate, crmBase } from "../helpers/crm";
 import { estimateInput, manualLines, quoteCommand } from "../helpers/estimating";
 test.describe.configure({timeout:150000});test.use({actionTimeout:15000});
 async function call(page:Page,path:string,body?:unknown){const r=await page.request.fetch(`/api/v1/${path}`,{method:body===undefined?"GET":"POST",headers:body===undefined?{}:{Origin:"http://127.0.0.1:3000","Content-Type":"application/json"},data:body});expect(r.ok(),await r.text()).toBe(true);return r.json();}
-async function identity(page:Page,profile="coordinator"){await page.getByLabel("Identity",{exact:true}).selectOption(profile);await page.getByRole("button",{name:"Use this identity",exact:true}).click();await expect(page.getByRole("button",{name:"Use this identity",exact:true})).toBeEnabled();}
+async function identity(page:Page,profile="coordinator"){
+  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
+  if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await page.getByRole("button", { name: "Change identity", exact: true }).click();
+await page.getByLabel("Identity",{exact:true}).selectOption(profile);await page.getByRole("button",{name:"Use this identity",exact:true}).click();await expect(page.getByRole("button",{name:"Use this identity",exact:true})).toBeEnabled();}
 async function opportunity(page:Page){await page.goto("/estimating");await identity(page);const o={...crmCreate(),title:`SYN Estimating browser ${randomUUID()}`};await call(page,"crm/opportunities",o);return o;}
 async function saved(page:Page){const o=await opportunity(page),input=estimateInput(o.id);await call(page,"estimating/estimates",input);await page.goto(`/estimating/estimates/${input.id}`);await expect(page.getByRole("heading",{name:"Scope and cost workbook"})).toBeVisible();return input;}
 async function capture(page:Page,info:TestInfo,name:string,anchor=".est-heading"){

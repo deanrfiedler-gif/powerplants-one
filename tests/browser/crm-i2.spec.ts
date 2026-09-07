@@ -68,7 +68,7 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   const commands: string[] = [];
   page.on("request", (request) => { if (request.url().includes("/api/v1/") && request.method() !== "GET") commands.push(`${request.method()} ${request.url()}`); });
   const boardIDs = (await ids(page)).sort();
-  const gridButton = page.getByRole("button", { name: "Grid", exact: true });
+  const gridButton = page.getByRole("button", { name: "List", exact: true });
   await gridButton.focus(); await page.keyboard.press("Enter");
   await expect(gridButton).toHaveAttribute("aria-pressed", "true");
   await expect(gridButton).toBeFocused();
@@ -79,7 +79,7 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   await expect(page.getByRole("columnheader", { name: "Next action / action owner", exact: true })).toHaveAttribute("scope", "col");
   await expect(page.getByText("Action owner: SYN Action colleague", { exact: true })).toBeVisible();
   await capture(page, info, "loaded-grid");
-  const scroll = page.getByRole("region", { name: "Opportunity Grid — scroll for all columns", exact: true });
+  const scroll = page.getByRole("region", { name: "Opportunity List — scroll for all columns", exact: true });
   await scroll.evaluate((e) => { e.scrollLeft = 350; e.scrollTop = 100; });
   const sticky = await page.locator(".crm-grid tbody th").first().evaluate((e) => ({ left: e.getBoundingClientRect().left, container: e.closest(".crm-grid-scroll")!.getBoundingClientRect().left, position: getComputedStyle(e).position }));
   expect(sticky.position).toBe("sticky"); expect(Math.abs(sticky.left - sticky.container)).toBeLessThan(3);
@@ -91,7 +91,7 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   }
   if (info.project.use.isMobile) {
     await page.getByRole("button", { name: /^Qualified \(/ }).click();
-    await page.getByRole("button", { name: "Grid", exact: true }).click();
+    await page.getByRole("button", { name: "List", exact: true }).click();
     await page.getByRole("button", { name: "Board", exact: true }).click();
     await expect(page.getByRole("button", { name: /^Qualified \(/ })).toHaveAttribute("aria-pressed", "true");
     await expect(page.getByRole("link", { name: inputs[1].title, exact: true })).toBeVisible();
@@ -99,7 +99,7 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   }
   expect(commands).toEqual([]);
   expect(await snapshot()).toEqual(before);
-  await page.getByRole("button", { name: "Grid", exact: true }).click();
+  await page.getByRole("button", { name: "List", exact: true }).click();
   await page.getByRole("link", { name: inputs[0].title, exact: true }).click();
   await expect(page).toHaveURL(new RegExp(`/crm/opportunities/${inputs[0].id}$`));
   await expect(page.getByLabel("Qualification outcome", { exact: true })).toBeVisible();
@@ -123,7 +123,7 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   await page.getByLabel("Page size", { exact: true }).selectOption("10");
   await expect.poll(() => ids(page)).toHaveLength(10);
   await page.getByRole("button", { name: "Filters and sort", exact: true }).click();
-  await page.getByRole("button", { name: "Grid", exact: true }).click();
+  await page.getByRole("button", { name: "List", exact: true }).click();
   const first = await ids(page);
   await expect(page.locator(".crm-action-text").first()).toContainText("END OF ACTION");
   await page.setViewportSize({ width: 320, height: 844 });
@@ -133,16 +133,22 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   await capture(page, info, "320-grid-keyboard");
   await page.getByRole("button", { name: "Board", exact: true }).click();
   await capture(page, info, "320-board-long-action");
-  await page.locator(".crm-action-text").first().evaluate(e => e.scrollIntoView({block:"end"}));
-  const endVisible = await page.locator(".crm-action-text").first().evaluate(e => { const range=document.createRange(); const node=e.firstChild!; range.setStart(node,node.textContent!.length-13); range.setEnd(node,node.textContent!.length); const r=range.getBoundingClientRect(); return r.top>=0 && r.bottom<=innerHeight; });
-  expect(endVisible).toBe(true);
-  await capture(page, info, "320-long-action-end", false);
+  // r08 keeps equal-height previews; the canonical Activity retains all 2,000 characters.
+  const actionLink = page.locator("a.crm-action-text").first();
+  await expect(actionLink).toHaveText(inputs[0].initial_action.summary);
+  await expect(actionLink).toHaveAttribute("href", `/work/${inputs[0].initial_action.id}`);
+  const activityPage = await page.context().newPage();
+  await activityPage.goto(`/work/${inputs[0].initial_action.id}`);
+  await expect(activityPage.getByRole("heading", { level: 1 })).toHaveText(inputs[0].initial_action.summary);
+  await activityPage.getByRole("heading", { level: 1 }).evaluate(e => e.scrollIntoView({block:"end"}));
+  await capture(activityPage, info, "320-long-action-canonical-detail", false);
+  await activityPage.close();
   await page.getByRole("button", { name: "Next page", exact: true }).click();
   await expect.poll(() => ids(page)).toHaveLength(2);
   const last = await ids(page);
   expect(new Set([...first, ...last]).size).toBe(12);
   await expect(page.locator(".crm-worklist-stamp")).toContainText("Partial — final page");
-  await page.getByRole("button", { name: "Grid", exact: true }).click();
+  await page.getByRole("button", { name: "List", exact: true }).click();
   expect(await ids(page)).toEqual(last);
   await capture(page, info, "320-final-page-grid");
   await page.setViewportSize(info.project.use.viewport!);
@@ -266,4 +272,46 @@ test("CA-13 shared brand consumers retain navigation, readable actions and origi
     }
     await capture(page, info, `shared-${path.replaceAll("/", "-") || "overview"}`);
   }
+});
+
+test("Accepted r08 shell and board retain full-width stages, fixed headers and shared scrolling", async ({ page }, info) => {
+  await page.goto("/crm/opportunities"); await identity(page);
+  const marker = `SYN r08 ${randomUUID().slice(0, 8)}`;
+  for (let n = 0; n < 10; n++) {
+    const input = { ...crmCreate(), title: `${marker} ${n} ${n === 0 ? "Long climate control and irrigation opportunity" : "Controls upgrade"}`, initial_action: { ...crmAction(), summary: n % 2 ? "SYN Confirm installation scope and arrange the next technical review" : "SYN Call customer" } };
+    await call(page, "crm/opportunities", input);
+    if (n % 2) await call(page, `crm/opportunities/${input.id}/qualify`, crmQualify());
+  }
+  await page.getByLabel("Search opportunities", { exact: true }).fill(marker);
+  await expect.poll(() => ids(page)).toHaveLength(10);
+  const board = page.locator(".crm-board-scroll");
+  const activeLink = page.getByRole("navigation", { name: "Main navigation", exact: true }).getByRole("link", { name: "CRM Sales", exact: true });
+  if (info.project.use.isMobile) await page.getByRole("button", { name: "Menu", exact: true }).click();
+  await expect(activeLink).toHaveAttribute("aria-current", "page");
+  const activeStyle = await activeLink.evaluate(e => ({ fill: getComputedStyle(e).backgroundColor, icon: getComputedStyle(e.querySelector("svg")!).color }));
+  expect(activeStyle).toEqual({ fill: "rgb(52, 60, 76)", icon: "rgb(255, 255, 255)" });
+  if (info.project.use.isMobile) await page.getByRole("button", { name: "Menu", exact: true }).click();
+  for (const width of info.project.use.isMobile ? [390, 320] : [1920, 1440, 1280, 1024]) {
+    await page.setViewportSize({ width, height: 844 });
+    await expect.poll(async () => board.evaluate(e => e.scrollWidth <= e.clientWidth + 1)).toBe(true);
+    const boxes = await page.locator('.crm-stage .crm-card:visible').evaluateAll(es => es.map(e => e.getBoundingClientRect().height));
+    expect(Math.max(...boxes) - Math.min(...boxes)).toBeLessThan(1);
+    const before = await page.locator('.crm-stage-heading:visible').evaluateAll(es => es.map(e => e.getBoundingClientRect().top));
+    const firstBefore = await page.locator('.crm-stage:visible .crm-card:first-child').evaluateAll(es => es.map(e => e.getBoundingClientRect().top));
+    await board.evaluate(e => { e.scrollTop = 210; });
+    expect(await board.evaluate(e => e.scrollTop)).toBeGreaterThan(0);
+    const after = await page.locator('.crm-stage-heading:visible').evaluateAll(es => es.map(e => e.getBoundingClientRect().top));
+    expect(after.map((y, i) => Math.abs(y - before[i]))).toEqual(before.map(() => 0));
+    const firstAfter = await page.locator('.crm-stage:visible .crm-card:first-child').evaluateAll(es => es.map(e => e.getBoundingClientRect().top));
+    firstAfter.forEach((y, i) => expect(y).toBeLessThan(firstBefore[i]));
+    await capture(page, info, `r08-${width}-shared-scroll`, false);
+    const position = await board.evaluate(e => e.scrollTop);
+    await page.getByRole("button", { name: "List", exact: true }).click();
+    await page.getByRole("button", { name: "Board", exact: true }).click();
+    expect(await board.evaluate(e => e.scrollTop)).toBe(position);
+    await board.evaluate(e => { e.scrollTop = 0; });
+  }
+  await page.locator('.crm-stage:visible .crm-owner-label').first().focus();
+  await expect(page.locator('.crm-stage:visible .crm-owner-label').first()).toBeFocused();
+  await capture(page, info, "r08-owner-keyboard-tooltip", false);
 });

@@ -56,6 +56,8 @@ jobs:
           npm run db:migrate
           npm run db:seed
           npm run db:health
+      - name: Focused I2 identity, query equivalence and responsive presentation proof
+        run: npx playwright test tests/browser/crm-i2.spec.ts --output verification-evidence/i2-focused-browser --reporter=list
       - name: Focused P10 desktop and phone review, allocation and reconciliation
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
@@ -97,8 +99,6 @@ jobs:
           done
       - name: Focused P09 exact return proposal and customer presentation proof
         run: npx playwright test tests/browser/reports.spec.ts --output verification-evidence/p09-focused-browser --reporter=list
-      - name: Focused I2 identity, query equivalence and responsive presentation proof
-        run: npx playwright test tests/browser/crm-i2.spec.ts --output verification-evidence/i2-focused-browser --reporter=list
       - name: Real PostgreSQL behaviour and competing transactions
         run: npm run test:db
       - name: Restore deterministic fixtures for HTTP and browser suites

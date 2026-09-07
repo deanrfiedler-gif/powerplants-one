@@ -1,7 +1,6 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { api, ErrorNotice } from "./business-ui";
-import { usePathname } from "next/navigation";
 import { lockLocal } from "../offline/store";
 type Identity = {
   actor_id: string;
@@ -15,7 +14,6 @@ export function useIdentity() {
   return p;
 }
 export function BusinessSession({ children }: { children: React.ReactNode }) {
-  const compact = usePathname() === "/crm/opportunities";
   const [showIdentity, setShowIdentity] = useState(false);
   const [p, setP] = useState<Identity | null>(null),
     [profile, setProfile] = useState("coordinator"),
@@ -55,18 +53,19 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
   return (
     <>
       <section
-        className={`identity-strip${compact ? " identity-compact" : ""}`}
+        className="identity-strip identity-compact"
         aria-label="Local demonstration identity"
         aria-busy={loading || busy}
+        onKeyDown={(e) => { if (e.key === "Escape" && showIdentity) { setShowIdentity(false); document.getElementById("identity-toggle")?.focus(); } }}
       >
         <div>
           <strong>
             {p?.display_name ?? "Choose a demonstration identity"}
           </strong>
-          {compact && p && <button className="secondary identity-toggle" aria-expanded={showIdentity} aria-controls="identity-controls" onClick={() => setShowIdentity(!showIdentity)}>Change identity</button>}
-          <details className="identity-help"><summary>Identity information</summary><small>Changing identity clears displayed records and unsaved forms. Saved offline originals stay locked to their original owner.</small></details>
+          {p && <button id="identity-toggle" className="secondary identity-toggle" aria-expanded={showIdentity} aria-controls="identity-controls" onClick={() => setShowIdentity(!showIdentity)}>Change identity</button>}
         </div>
-        <div id="identity-controls" className="identity-controls" hidden={!!(compact && p && !showIdentity)}>
+        <div id="identity-controls" className="identity-controls" hidden={!!(p && !showIdentity)}>
+        <p className="identity-explanation">Changing identity clears displayed records and unsaved forms. Saved offline originals stay locked to their original owner.</p>
         <div className="identity-choice">
           <label htmlFor="business-profile">Identity</label>
           <select
@@ -106,7 +105,7 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
       <ErrorNotice error={error} />
       {p ? (
         <Session.Provider value={p}>
-          <div key={`${p.actor_id}:${epoch}`}>{children}</div>
+          <div className="business-content" key={`${p.actor_id}:${epoch}`}>{children}</div>
         </Session.Provider>
       ) : (
         <p className="empty-state">

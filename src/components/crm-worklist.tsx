@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useLayoutEffect, useCallback } from "react";
+import type { CSSProperties } from "react";
+import { ProductIcon } from "./product-icons";
 import type { listOpportunities, worklistOptions, WorklistItem } from "../crm/worklist";
 import { useIdentity } from "./business-session";
 import { ErrorNotice, Field, SelectField, Stamp, Status } from "./business-ui";
@@ -41,26 +43,64 @@ function Identity({ item }: { item: WorklistItem }) {
     <p>{item.organisation_name}<br />{item.site_name ?? "Site not yet identified"}</p>
   </>;
 }
-function Board({ data, selected }: { data: Results; selected: string }) {
-  return <div className="crm-board-scroll" role="region" aria-label="Opportunity Board — stage sequence" tabIndex={0}>
-    <div className="crm-board">
-      {data.stages.map((stage) => <section key={stage.stage_id} className="crm-stage" data-selected={stage.stage_id === selected} aria-labelledby={`board-${stage.stage_id}`}>
-        <header className="crm-stage-heading"><h2 id={`board-${stage.stage_id}`}>{stage.stage_id}</h2><span>{stage.count} on this page</span></header>
+const dueDate = new Intl.DateTimeFormat("en-AU", { dateStyle: "medium", timeZone: "Australia/Brisbane" });
+function CardOwner({ name, activity = false }: { name: string; activity?: boolean }) {
+  const description = `${activity ? "Activity" : "Opportunity"} owner: ${name}`;
+  return <span className="crm-owner-label crm-help-trigger" tabIndex={0} role="group" aria-label={description} data-tooltip={description}>
+    {activity ? <ProductIcon name="person" /> : <span className="crm-avatar" aria-hidden="true">{name.replace(/^SYN\s+/, "").split(/\s+/).slice(0, 2).map(n => n[0]).join("")}</span>}
+    <span className="crm-owner-name">{name}</span>
+  </span>;
+}
+function CardAction({ item }: { item: WorklistItem }) {
+  const active = ["Upcoming", "Overdue", "DueNeeded"].includes(item.next_action_state);
+  const status = item.due_at && active ? `${item.next_action_state === "Overdue" ? "Overdue" : "Due"} · ${dueDate.format(new Date(item.due_at))}` : labels[item.next_action_state];
+  return <div className={`crm-next-action crm-card-activity state-${item.next_action_state}`}>
+    <strong><ProductIcon name="clock" /><span>{status}</span></strong>
+    {active && item.next_action_id ? <>
+      <Link className="crm-action-text" href={`/work/${item.next_action_id}`} title={item.next_action_summary ?? "Open activity"}>{item.next_action_summary}</Link>
+      <CardOwner name={item.action_owner_name ?? "Unavailable"} activity />
+    </> : <>
+      <Link className="crm-action-text" href={`/crm/opportunities/${item.id}`}>{item.next_action_state === "Needed" ? "Plan the next activity" : "Check current activity access"}</Link>
+      <span />
+    </>}
+  </div>;
+}
+function useScrollMemory() {
+  const position = useRef({ top: 0, left: 0 });
+  const read = useCallback(() => position.current, []);
+  const save = useCallback((top: number, left: number) => { position.current = { top, left }; }, []);
+  return { read, save };
+}
+function Board({ data, selected, scroll }: { data: Results; selected: string; scroll: ReturnType<typeof useScrollMemory> }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => { if (ref.current) { const saved = scroll.read(); ref.current.scrollTop = saved.top; ref.current.scrollLeft = saved.left; } }, [scroll]);
+  return <div ref={ref} className="crm-board-scroll" role="region" aria-label="Opportunity Board — stage sequence" tabIndex={0} onScroll={e => { scroll.save(e.currentTarget.scrollTop, e.currentTarget.scrollLeft); }}>
+    <div className="crm-board" style={{ "--crm-stage-count": data.stages.length } as CSSProperties}>
+      <div className="crm-board-headers">{data.stages.map(stage => <header key={stage.stage_id} className="crm-stage-heading" data-selected={stage.stage_id === selected}>
+        <h2 id={`board-${stage.stage_id}`}>{stage.stage_id}</h2><span>{stage.count} {stage.count === 1 ? "deal" : "deals"}</span>
+      </header>)}</div>
+      <div className="crm-board-columns">{data.stages.map((stage) => <section key={stage.stage_id} className="crm-stage" data-selected={stage.stage_id === selected} aria-labelledby={`board-${stage.stage_id}`}>
         <ul className="crm-worklist">
           {data.items.filter((item) => item.stage_id === stage.stage_id).map((item) => <li key={item.id} data-opportunity-id={item.id} className="crm-card">
-            <div><Identity item={item} /><p>Opportunity owner: {item.owner_name}</p></div>
-            <div className="crm-card-state"><Status value={item.stage_id} /><span>Outcome: {item.close_outcome}</span><span>Saved</span></div>
-            <Action item={item} />
-            <small className="crm-card-source">Stage entered <Stamp value={item.stage_entered_at} /></small>
+            <div className="crm-card-body">
+              <Link className="crm-opportunity-title" href={`/crm/opportunities/${item.id}`} title={item.title}>{item.title}</Link>
+              <p className="crm-card-company" title={item.organisation_name}>{item.organisation_name}</p>
+              <p className="crm-card-site" title={item.site_name ?? "Site not yet identified"}>{item.site_name ?? "Site not yet identified"}</p>
+              <CardOwner name={item.owner_name} />
+              <small className="crm-card-reference">{item.display_number} · {item.close_outcome}</small>
+            </div>
+            <CardAction item={item} />
           </li>)}
         </ul>
         {stage.count === 0 && <p className="crm-stage-empty">No {stage.stage_id.toLowerCase()} opportunities on this page.</p>}
-      </section>)}
+      </section>)}</div>
     </div>
   </div>;
 }
-function Grid({ data }: { data: Results }) {
-  return <div className="crm-grid-scroll" role="region" aria-label="Opportunity Grid — scroll for all columns" tabIndex={0}>
+function Grid({ data, scroll }: { data: Results; scroll: ReturnType<typeof useScrollMemory> }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => { if (ref.current) { const saved = scroll.read(); ref.current.scrollTop = saved.top; ref.current.scrollLeft = saved.left; } }, [scroll]);
+  return <div ref={ref} className="crm-grid-scroll" role="region" aria-label="Opportunity List — scroll for all columns" tabIndex={0} onScroll={e => { scroll.save(e.currentTarget.scrollTop, e.currentTarget.scrollLeft); }}>
     <table className="crm-grid">
       <caption>Permitted opportunities on this page · {data.items.length} rows · {data.sort} order</caption>
       <thead><tr><th scope="col">Opportunity</th><th scope="col">Opportunity owner</th><th scope="col">Stage / outcome</th><th scope="col">Next action / action owner</th><th scope="col">Saved record</th></tr></thead>
@@ -78,6 +118,7 @@ function Grid({ data }: { data: Results }) {
 export function SalesWorklist() {
   const p = useIdentity();
   const [filters, setFilters] = useState(initial);
+  const boardScroll = useScrollMemory(), gridScroll = useScrollMemory();
   const [view, setView] = useState<"Board" | "Grid">("Board");
   const [selected, setSelected] = useState("Enquiry");
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -94,19 +135,22 @@ export function SalesWorklist() {
   const refresh = () => { setFilters((old) => ({ ...old, cursor: "" })); data.reload(); };
   return <section className="crm-workspace" aria-label="Sales worklist">
     <header className="crm-worklist-heading">
-      <div><p className="eyebrow">CRM · Synthetic · Online</p><h1>Sales worklist</h1></div>
-      {!data.error && data.data?.can_create && <Link className="primary-link" href="/crm/opportunities/new">New opportunity</Link>}
+      <h1>Sales worklist</h1>
+      {!data.error && data.data?.can_create && <Link className="primary-link" href="/crm/opportunities/new" aria-label="New opportunity"><ProductIcon name="plus" />Opportunity</Link>}
     </header>
-    <div className="crm-view-controls" role="group" aria-label="Opportunity presentation">
-      {(["Board", "Grid"] as const).map((value) => <button key={value} className={view === value ? "" : "secondary"} aria-pressed={view === value} onClick={() => setView(value)}>{value}</button>)}
-      {!isDenied && <button className="secondary crm-filter-toggle" aria-expanded={filtersOpen} aria-controls="crm-filter-panel" onClick={() => setFiltersOpen(!filtersOpen)}>Filters and sort</button>}
-      <small>Same permitted results · Open outcome</small>
+    <div className="crm-toolbar"><div className="crm-view-controls" role="group" aria-label="Opportunity presentation">
+      {(["Board", "Grid"] as const).map((value) => <button key={value} className={view === value ? "" : "secondary"} aria-pressed={view === value} onClick={() => setView(value)}><ProductIcon name={value === "Board" ? "board" : "list"} />{value === "Grid" ? "List" : value}</button>)}
+      {!isDenied && <button className="secondary crm-filter-toggle" aria-expanded={filtersOpen} aria-controls="crm-filter-panel" onClick={() => setFiltersOpen(!filtersOpen)}><ProductIcon name="filter" />Filters and sort</button>}
+
     </div>
     {!isDenied && <>
       <div className="crm-primary-filters">
-        <Field name="sales-search" label="Search opportunities" value={filters.q} onChange={(v) => change("q", v)} />
+        <Field name="sales-search" label="Search opportunities" placeholder="Search opportunities" type="search" value={filters.q} onChange={(v) => change("q", v)} />
         <SelectField name="stage" label="Stage" value={filters.stage_id} onChange={(v) => { change("stage_id", v); if (v) setSelected(v); }} options={(data.data?.stages ?? []).map((s) => ({ id: s.stage_id, display_name: s.stage_id }))} empty="All stages" />
       </div>
+    </>}
+    </div>
+    {!isDenied && <>
       <section id="crm-filter-panel" className="crm-secondary-filters" aria-label="Opportunity filters" hidden={!filtersOpen}>
         <div className="crm-filter-grid">
           {(["Company", "Site", "Owner"] as const).map((kind) => <FilterPicker key={kind} kind={kind} value={filters[kind === "Company" ? "company_id" : kind === "Site" ? "site_id" : "owner_id"]} company={filters.company_id} enabled={!data.error} set={(v) => change(kind === "Company" ? "company_id" : kind === "Site" ? "site_id" : "owner_id", v)} />)}
@@ -122,14 +166,14 @@ export function SalesWorklist() {
     {data.loading && <p role="status">Loading permitted sales records…</p>}
     {data.error != null && <button className="secondary" onClick={refresh}>Try loading again</button>}
     {!data.error && data.data && <>
-      <p className="source-stamp crm-worklist-stamp">Synthetic source · As at <Stamp value={data.data.window.as_of} /> · {data.data.items.length} permitted items on this page · {data.data.completeness === "Complete" ? "All matching results" : data.data.window.has_more ? "Partial — more pages" : "Partial — final page"}</p>
+      <p className="source-stamp crm-worklist-stamp">{data.data.items.length} opportunities on this page · {data.data.completeness === "Complete" ? "All matching results" : data.data.window.has_more ? "Partial — more pages" : "Partial — final page"} · Open · As at <Stamp value={data.data.window.as_of} /></p>
       {!data.data.items.length && <p className="empty-state">No permitted opportunities match this view.</p>}
       {view === "Board" ? <>
         <div className="crm-stage-navigation" role="group" aria-label="Choose Board stage">{data.data.stages.map((stage) => <button key={stage.stage_id} aria-pressed={selected === stage.stage_id} className={selected === stage.stage_id ? "" : "secondary"} onClick={() => setSelected(stage.stage_id)}>{stage.stage_id} ({stage.count})</button>)}</div>
-        <Board data={data.data} selected={selected} />
-      </> : <Grid data={data.data} />}
+        <Board data={data.data} selected={selected} scroll={boardScroll} />
+      </> : <Grid data={data.data} scroll={gridScroll} />}
       <div className="crm-actions"><button className="secondary" onClick={refresh}>Refresh from start</button>{data.data.next_cursor && <button onClick={() => setFilters((old) => ({ ...old, cursor: data.data!.next_cursor! }))}>Next page</button>}</div>
-      <p className="crm-worklist-help">{data.data.stages[0].pipeline_label}. Open an opportunity to record qualification or plan its next Activity.</p>
+
     </>}
   </section>;
 }
