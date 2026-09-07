@@ -294,6 +294,7 @@ test("Accepted r08 shell and board retain full-width stages, fixed headers and s
   if (info.project.use.isMobile) await page.getByRole("button", { name: "Menu", exact: true }).click();
   for (const width of info.project.use.isMobile ? [390, 320] : [1920, 1440, 1280, 1024]) {
     await page.setViewportSize({ width, height: 844 });
+    if (info.project.use.isMobile) expect(await page.locator('.sidebar').evaluate(e => e.getBoundingClientRect().height)).toBe(50);
     await expect.poll(async () => board.evaluate(e => e.scrollWidth <= e.clientWidth + 1)).toBe(true);
     const boxes = await page.locator('.crm-stage .crm-card:visible').evaluateAll(es => es.map(e => e.getBoundingClientRect().height));
     expect(Math.max(...boxes) - Math.min(...boxes)).toBeLessThan(1);
@@ -315,4 +316,7 @@ test("Accepted r08 shell and board retain full-width stages, fixed headers and s
   await page.locator('.crm-stage:visible .crm-owner-label').first().focus();
   await expect(page.locator('.crm-stage:visible .crm-owner-label').first()).toBeFocused();
   await capture(page, info, "r08-owner-keyboard-tooltip", false);
+  await page.keyboard.press("Escape");
+  await expect(page.locator('.crm-stage:visible .crm-owner-label').first()).toBeFocused();
+  expect(await page.locator('.crm-stage:visible .crm-owner-label').first().evaluate(e => getComputedStyle(e, '::after').content)).toBe("none");
 });

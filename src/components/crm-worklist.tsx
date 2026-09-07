@@ -45,8 +45,9 @@ function Identity({ item }: { item: WorklistItem }) {
 }
 const dueDate = new Intl.DateTimeFormat("en-AU", { dateStyle: "medium", timeZone: "Australia/Brisbane" });
 function CardOwner({ name, activity = false }: { name: string; activity?: boolean }) {
+  const [dismissed, setDismissed] = useState(false);
   const description = `${activity ? "Activity" : "Opportunity"} owner: ${name}`;
-  return <span className="crm-owner-label crm-help-trigger" tabIndex={0} role="group" aria-label={description} data-tooltip={description}>
+  return <span className="crm-owner-label crm-help-trigger" tabIndex={0} role="group" aria-label={description} data-tooltip={description} data-dismissed={dismissed} onMouseEnter={() => setDismissed(false)} onFocus={() => setDismissed(false)} onKeyDown={e => { if (e.key === "Escape") { e.stopPropagation(); setDismissed(true); } }}>
     {activity ? <ProductIcon name="person" /> : <span className="crm-avatar" aria-hidden="true">{name.replace(/^SYN\s+/, "").split(/\s+/).slice(0, 2).map(n => n[0]).join("")}</span>}
     <span className="crm-owner-name">{name}</span>
   </span>;
