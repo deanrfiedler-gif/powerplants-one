@@ -25,3 +25,6 @@ Start with [current status](STATUS.md) and the [First Prototype Definition & Arc
 Frozen issued references remain evidence. Stable working documents evolve through commits/PRs and explicit decision records. Tests/specifications do not silently turn proposals into implemented business capabilities.
 
 [Controlled opportunity handover design](delivery/crm-handover-design-handover.md) — proposed authority/eligibility/history/recovery contract, synthetic canonical form, future verification and conditional implementation starter; H-01–H-03 remain unresolved.
+
+
+[Private Prototype Demo package](delivery/private-prototype-demo.md) defines the bounded demonstration journeys, fictional dataset recipe, tester access proposal, sourced hosting estimate and deployment/reset runbooks. Hosted execution is not implemented by this package.

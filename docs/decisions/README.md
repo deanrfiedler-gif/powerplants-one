@@ -39,3 +39,6 @@ The [shared UI and CRM layout direction](ui-brand-and-crm-layout.md) records the
 The [controlled opportunity handover proposal](crm-opportunity-handover.md) records unresolved H-01–H-03 and fixed preservation constraints under #55. Design publication is authorised; policy acceptance and implementation are separate. No numbered ADR is reserved.
 
 - [Accepted r08 shared layout and CRM implementation](shared-ui-r08-implementation.md) — Dean-approved presentation mapped to existing persisted I1/I2 contracts.
+
+
+[Private Prototype Demo scope and hosting assessment](private-prototype-demo.md) records the authorised package definition and proposed hosted evaluation; no spend, account grant or remote deployment is activated.
