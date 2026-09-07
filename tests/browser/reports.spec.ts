@@ -151,9 +151,16 @@ async function submit(page: Page) {
       .getByRole("link", { name: "Open report review and revision history" })
       .locator(".."),
   ).toContainText("Submitted");
-  await page
-    .getByRole("link", { name: "Open report review and revision history" })
-    .click();
+  const reportLink = page.getByRole("link", {
+    name: "Open report review and revision history",
+  });
+  const reportId = (await reportLink.getAttribute("href"))!.split("/").at(-1);
+  const reportRead = page.waitForResponse(response =>
+    response.request().method() === "GET" &&
+    new URL(response.url()).pathname === `/api/v1/reports/${reportId}`,
+  );
+  await reportLink.click();
+  expect((await reportRead).ok()).toBe(true);
   await expect(
     page.getByRole("heading", { name: /Revision \d+ · Submitted/ }),
   ).toBeVisible();
