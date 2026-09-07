@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import type { listOpportunities, readOpportunity } from "../crm/reads";
+import type { readOpportunity } from "../crm/reads";
 import { useIdentity } from "./business-session";
 import {
   ErrorNotice,
@@ -122,145 +122,7 @@ function CrmPicker({
     </div>
   );
 }
-export function SalesWorklist() {
-  const p = useIdentity(),
-    [search, setSearch] = useState(""),
-    [stage, setStage] = useState(""),
-    [next, setNext] = useState(""),
-    [mine, setMine] = useState(false),
-    [cursor, setCursor] = useState("");
-  const data = useCrmResource<Awaited<ReturnType<typeof listOpportunities>>>(
-    `crm/opportunities?${query({ q: search, stage_id: stage, next_action: next, owner_id: mine ? p.actor_id : "", cursor })}`,
-  );
-  return (
-    <>
-      <PageHeader
-        eyebrow="CRM · Synthetic · Online"
-        title="Sales worklist"
-        description="Owned opportunities and qualification follow-up. Fictional Enquiry → Qualified pipeline."
-        action={
-          !data.error && data.data?.can_create ? (
-            <Link className="primary-link" href="/crm/opportunities/new">
-              New opportunity
-            </Link>
-          ) : undefined
-        }
-      />
-      <div className="crm-filters">
-        <Field
-          name="sales-search"
-          label="Search opportunities"
-          value={search}
-          onChange={(v) => {
-            setSearch(v);
-            setCursor("");
-          }}
-        />
-        <SelectField
-          name="stage"
-          label="Stage"
-          value={stage}
-          onChange={(v) => {
-            setStage(v);
-            setCursor("");
-          }}
-          options={options(["Enquiry", "Qualified"])}
-          empty="All stages"
-        />
-        <SelectField
-          name="next-state"
-          label="Next action"
-          value={next}
-          onChange={(v) => {
-            setNext(v);
-            setCursor("");
-          }}
-          options={Object.entries(NEXT_LABELS).map(([id, display_name]) => ({
-            id,
-            display_name,
-          }))}
-          empty="All action states"
-        />
-        <label className="crm-check">
-          <input
-            type="checkbox"
-            checked={mine}
-            onChange={(e) => {
-              setMine(e.target.checked);
-              setCursor("");
-            }}
-          />
-          Owned by me
-        </label>
-      </div>
-      <ResourceState {...data} reload={()=>{setCursor("");data.reload();}} />
-      {!data.error && data.data && (
-        <>
-          <p className="source-stamp">
-            Synthetic source · As at <Stamp value={data.data.observed_at} /> ·{" "}
-            {data.data.items.length} permitted items on this page ·{" "}
-            {data.data.completeness}
-          </p>
-          {!data.data.items.length ? (
-            <p className="empty-state">
-              No permitted opportunities match this view.
-            </p>
-          ) : (
-            <ul className="crm-worklist">
-              {data.data.items.map((o) => (
-                <li key={o.id} className="crm-card">
-                  <div>
-                    <small>{o.display_number}</small>
-                    <h2>
-                      <Link href={`/crm/opportunities/${o.id}`}>{o.title}</Link>
-                    </h2>
-                    <p>{o.organisation_name}</p>
-                    <p>Owner: {o.owner_name}</p>
-                  </div>
-                  <div>
-                    <Status value={o.stage_id} />
-                    <span className="crm-outcome">
-                      Sales outcome: {o.close_outcome}
-                    </span>
-                    <strong>{NEXT_LABELS[o.next_action_state]}</strong>
-                    {["Upcoming", "Overdue", "DueNeeded"].includes(
-                      o.next_action_state,
-                    ) && <p>{o.next_action_summary}</p>}
-                    {o.due_at &&
-                      ["Upcoming", "Overdue"].includes(o.next_action_state) && (
-                        <p>
-                          Due <Stamp value={String(o.due_at)} /> (Brisbane)
-                        </p>
-                      )}
-                    <small>
-                      Stage entered <Stamp value={String(o.stage_entered_at)} />
-                    </small>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-          <div className="crm-actions">
-            <button
-              className="secondary"
-              onClick={() => {
-                setCursor("");
-                data.reload();
-              }}
-            >
-              Refresh from start
-            </button>
-            {data.data.next_cursor && (
-              <button onClick={() => setCursor(data.data!.next_cursor!)}>
-                Next page
-              </button>
-            )}
-          </div>
-        </>
-      )}
-    </>
-  );
-}
+export { SalesWorklist } from "./crm-worklist";
 type ActionDraft = {
   id: string;
   owner_id: string;

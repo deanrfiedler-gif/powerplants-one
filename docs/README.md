@@ -8,6 +8,7 @@ Start with [current status](STATUS.md) and the [First Prototype Definition & Arc
 | Prototype package | [Scope, specifications, contracts, tests and ordered plan](prototype/README.md) |
 | Blueprint set | [Master and module index](blueprints/README.md) |
 | CRM UI | [Board/Grid mockups](blueprints/crm-ui-mockups/README.md), [I2 guidance](delivery/crm-i2-ui-guidance.md), [handover](delivery/crm-ui-design-handover.md) |
+| CRM application | [I1 owned opportunity handover](delivery/crm-i1-handover.md), [I2 scoped Board/Grid handover](delivery/crm-i2-handover.md), [worklist decision](decisions/crm-i2-worklist.md); actual runtime/publication evidence remains separate from design originals |
 | Estimating | [BP-04](blueprints/BP-04-estimating-quotation.md), [CREMS evidence](blueprints/estimating-evidence.md), [preview](blueprints/estimating-workspace-mockup.html), [handover](delivery/estimating-discovery-handover.md) |
 | Architecture | [BP-02](architecture/BP-02-platform-architecture.md) |
 | Service | [BP-07](blueprints/BP-07-service-operations.md) |

@@ -1,6 +1,6 @@
 # CRM — Screen specification and synthetic walkthrough
 
-**Revision:** r04 · **Date:** 6 September 2026 · **Status:** Design only; no persistence, permission, integration, offline or business-acceptance claim. **Parent:** BP-03 / PPO-009. **Owner:** Dean Fiedler, private prototype.
+**Revision:** r05 · **Date:** 6 September 2026 · **Status:** Design only; no persistence, permission, integration, offline or business-acceptance claim. **Parent:** BP-03 / PPO-009. **Owner:** Dean Fiedler, private prototype.
 
 [Open the standalone wireframe source](crm-wireframes.html) · [BP-03](BP-03-crm.md) · [Implementation sequence](../delivery/crm-implementation-plan.md) · [Handover and visual evidence](../delivery/crm-discovery-handover.md).
 
@@ -70,4 +70,9 @@ Revision r03 adds the [audit-driven r02 Board/Grid design](../delivery/crm-ui-de
 
 ## I1 runtime evidence distinction
 
-The bounded C01/C03/C05/C07 journey is implemented in the online Sales worklist, New opportunity, Opportunity detail and existing Activity screens. The [I1 handover](../delivery/crm-i1-handover.md) records actual DB/HTTP/browser/restart checks and original 1440×1000, 390×844 and 320px runtime captures, separately from the illustrative wireframes and branded C02 preview above. I1 uses Enquiry → Qualified/Open, no commercial fields, current scoped authority and deliberate qualification/action commands. C02 Board/Grid remains prepared I2 work; C04 account-plan and later domain journeys remain proposed. Full AT-25, operational parity, real mobile hardware and CRM offline acceptance are unchanged.
+The bounded C01/C03/C05/C07 journey is implemented in the online Sales worklist, New opportunity, Opportunity detail and existing Activity screens. The [I1 handover](../delivery/crm-i1-handover.md) records actual DB/HTTP/browser/restart checks and original 1440×1000, 390×844 and 320px runtime captures, separately from the illustrative wireframes and branded C02 preview above. I1 uses Enquiry → Qualified/Open, no commercial fields, current scoped authority and deliberate qualification/action commands. C02 Board/Grid is implemented by the separately invoked I2 slice below; C04 account-plan and later domain journeys remain proposed. Full AT-25, operational parity, real mobile hardware and CRM offline acceptance are unchanged.
+
+
+## I2 application distinction
+
+The separately invoked [I2 worklist](../delivery/crm-i2-handover.md) implements C02 Board/Grid over the same server-permitted page, with scoped Company/Site/Owner selectors, retained query/sort/page and canonical detail. It renders I1's actual two stages/Open outcome and separate opportunity/action owners. Counts explicitly describe the returned page; failed reads do not show zero. The intact logo/shared tokens and compact phone controls follow the accepted visual direction. Browser originals and actual permission/persistence evidence are recorded in that handover after execution. The standalone mockups, further stages, account builders and commercial fields remain proposed; no design capture passes AT-25.

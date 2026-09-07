@@ -109,9 +109,14 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
   ).toBeVisible();
   await capture(page, info, "P03-identity-uncertainty.png");
   await page.goto("/work");
+  // Other browser journeys may fill the first permitted page. Select each
+  // server-side due window instead of assuming every bucket is on page one.
+  await page.getByLabel("Due date", { exact: true }).selectOption("Overdue");
   await expect(
     page.getByRole("heading", { name: "Overdue", exact: true }),
   ).toBeVisible();
+  await capture(page, info, "P03-work-overdue.png");
+  await page.getByLabel("Due date", { exact: true }).selectOption("Needed");
   await expect(
     page.getByRole("heading", { name: "Due date needed", exact: true }),
   ).toBeVisible();
@@ -123,6 +128,7 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
     fullPage: true,
   });
   await noOverflow(page);
+  await page.getByLabel("Due date", { exact: true }).selectOption("");
   await page.getByLabel("Status", { exact: true }).selectOption("Completed");
   await expect(
     page.getByText(/SYN conversation recorded as a fictional fixture/),
