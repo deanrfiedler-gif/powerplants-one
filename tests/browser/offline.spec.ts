@@ -482,6 +482,7 @@ test("P08 persistent browser process restart retains two jobs and original evide
   await page
     .getByRole("button", { name: "Save provisional start intent", exact: true })
     .click();
+  await expect(page.locator("#queue .queue-row")).toHaveCount(1);
   await context.setOffline(true);
   await note(page, "SYN persistent-profile restart original");
   await save(page);
