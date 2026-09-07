@@ -58,6 +58,21 @@ jobs:
           npm run db:health
       - name: Focused I2 identity, query equivalence and responsive presentation proof
         run: npx playwright test tests/browser/crm-i2.spec.ts --output verification-evidence/i2-focused-browser --reporter=list
+      - name: CRM I1 accepted journey across application and PostgreSQL restarts
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          node --env-file=.env.local --import tsx scripts/crm-restart-proof.ts write
+          docker restart "$PPO_POSTGRES_CONTAINER"
+          for attempt in $(seq 1 30); do
+            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx scripts/crm-restart-proof.ts verify
+      - name: Desktop and mobile browser checks
+        run: |
+          npx playwright install --with-deps chromium
+          npm run test:browser
       - name: Focused P10 desktop and phone review, allocation and reconciliation
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
@@ -153,21 +168,6 @@ jobs:
             sleep 1
           done
           node --env-file=.env.local --import tsx scripts/offline-restart-proof.ts verify
-      - name: CRM I1 accepted journey across application and PostgreSQL restarts
-        env:
-          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
-        run: |
-          node --env-file=.env.local --import tsx scripts/crm-restart-proof.ts write
-          docker restart "$PPO_POSTGRES_CONTAINER"
-          for attempt in $(seq 1 30); do
-            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
-            sleep 1
-          done
-          node --env-file=.env.local --import tsx scripts/crm-restart-proof.ts verify
-      - name: Desktop and mobile browser checks
-        run: |
-          npx playwright install --with-deps chromium
-          npm run test:browser
       - name: Preserve synthetic visual and failure evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

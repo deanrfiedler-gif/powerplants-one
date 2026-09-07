@@ -38,3 +38,9 @@ A fresh private-repository read confirms `deanrfiedler-gif/powerplants-one` and 
 Automatic approval review rejected creating a separate tracking issue as an additional disclosure outside the current authorisation. No alternate issue creation was attempted; work continues under existing #9. Repository publication remains subject to its own result and normal checks.
 
 No merge, actual-main verification, independent review, business acceptance, production readiness or deployment is claimed at this checkpoint. The next step is current-source verification and reviewable repository publication, followed by the normal checked merge and verification of actual main when permitted.
+
+## Final-source assurance follow-through
+
+At source `8eae04265afb8d70d516e4c952dcc433d1cee735`, Application run `34130347315` passed 20 unit cases, 12 focused I2 cases, 10 focused Finance browser cases, 46 focused Finance database cases, 4 focused Service browser cases, all 295 database cases and all 23 HTTP cases. Finance/Service restart, documented reset, PostgreSQL persistence and offline-original recovery proofs also passed. It then stopped because `scripts/crm-restart-proof.ts` still selected the previous visible “Grid” label. That missed harness reference is corrected to “List”; the canonical ID, saved content, cursor, restart and receipt assertions are retained. The full browser suite was not reached in that failed run.
+
+The CRM restart proof and the complete desktop/mobile browser suite now run immediately after focused I2 on the disposable seeded database. This brings the remaining UI regressions forward. The following Finance phase already explicitly resets that database; all original cases, subsequent reset boundaries, runtime pins and timeouts remain. No gate is removed or conditionally skipped. Current results and merge state are tracked in PR #59.
