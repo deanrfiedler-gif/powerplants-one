@@ -72,12 +72,17 @@ jobs:
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
           npx playwright test tests/browser/quality-journey.spec.ts --output verification-evidence/p11-journey-browser --reporter=list,json
-      - name: Preserve original selected P11 journey immediately
+      - name: Prepare journey review diagnostics
         if: always()
+        id: journey_review
+        run: python3 scripts/prepare-review-evidence.py
+      - name: Preserve original selected P11 journey immediately
+        if: ${{ always() && steps.journey_review.outcome == 'success' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: P11-selected-journey-evidence
           path: |
+            verification-evidence/review-diagnostic-redactions.json
             verification-evidence/p11-journey-browser/
             verification-evidence/p11-focused-db/
             verification-evidence/p11-template-db/
@@ -90,12 +95,17 @@ jobs:
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
           npx playwright test tests/browser/quality.spec.ts tests/browser/quality-states.spec.ts --output verification-evidence/p11-focused-browser --reporter=list,json
-      - name: Preserve original focused P11 evidence immediately
+      - name: Prepare focused review diagnostics
         if: always()
+        id: focused_review
+        run: python3 scripts/prepare-review-evidence.py
+      - name: Preserve original focused P11 evidence immediately
+        if: ${{ always() && steps.focused_review.outcome == 'success' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: P11-focused-quality-evidence
           path: |
+            verification-evidence/review-diagnostic-redactions.json
             verification-evidence/p11-focused-browser/
             verification-evidence/p11-journey-browser/
             verification-evidence/p11-focused-db/
@@ -193,7 +203,22 @@ jobs:
           done
           test "$ppo_http_ready" = 1
           npm run test:http
-          node --env-file=.env.local --import tsx --test --test-reporter=tap tests/integration/quality-http.test.ts
+          mkdir -p verification-evidence/p11-http
+          node --env-file=.env.local --import tsx --test --test-reporter=tap tests/integration/quality-http.test.ts 2>&1 | tee verification-evidence/p11-http/results.tap
+      - name: Prepare HTTP review diagnostics
+        if: always()
+        id: http_review
+        run: python3 scripts/prepare-review-evidence.py
+      - name: Preserve original HTTP component evidence immediately
+        if: ${{ always() && steps.http_review.outcome == 'success' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: P11-HTTP-evidence
+          path: |
+            verification-evidence/review-diagnostic-redactions.json
+            verification-evidence/p11-http/
+            verification-evidence/http/
+          retention-days: 14
       - name: Offline originals across application, PostgreSQL and browser process restarts
         if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
@@ -229,17 +254,20 @@ jobs:
         run: |
           npx playwright install --with-deps chromium
           npm run test:browser
-      - name: Preserve synthetic visual and failure evidence
+      - name: Prepare full review diagnostics
         if: always()
+        id: full_review
+        run: python3 scripts/prepare-review-evidence.py
+      - name: Preserve synthetic visual and failure evidence
+        if: ${{ always() && steps.full_review.outcome == 'success' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: P11-quality-and-retained-foundation-evidence
           path: |
+            verification-evidence/review-diagnostic-redactions.json
             test-results/
             verification-evidence/
-            playwright-report/
             !**/trace.zip
-            !playwright-report/data/*.zip
           retention-days: 14
 
   p11_performance:
@@ -297,8 +325,12 @@ jobs:
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
           node --env-file=.env.local --import tsx scripts/quality-performance-proof.ts
-      - name: Preserve original P11 performance samples immediately
+      - name: Prepare performance review diagnostics
         if: always()
+        id: performance_review
+        run: python3 scripts/prepare-review-evidence.py
+      - name: Preserve original P11 performance samples immediately
+        if: ${{ always() && steps.performance_review.outcome == 'success' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: P11-performance-evidence

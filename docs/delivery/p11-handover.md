@@ -1,8 +1,70 @@
 # P11 — Integrated quality, access and usability handover
 
-**Revision:** r01 · **Date:** 7 September 2026 · **State:** implementation checkpoint; P11 incomplete. **Owner:** Dean Fiedler, personal private synthetic prototype.
+**Revision:** r02 · **Date:** 7 September 2026 · **State:** implementation checkpoint; P11 incomplete. **Owner:** Dean Fiedler, personal private synthetic prototype.
 
 [Issue #54](https://github.com/deanrfiedler-gif/powerplants-one/issues/54) · [Authoritative external publication](https://github.com/deanrfiedler-gif/powerplants-one/issues/54#issuecomment-5567364667) · [P11 starter](p11-starter-prompt.md) · [Ordered plan](prototype-implementation-plan.md).
+
+## Current implementation and verification boundary
+
+This is the maintained P11 repository handover. **Delivery/publication is still incomplete.** The historical checkpoints below retain the facts at their named sources; an earlier pending or successful component statement is not the latest overall result. The authoritative issue comment supplies the final contribution and actual merged-main SHA/tree and exact completed runs when publication is complete.
+
+| Area | Current behaviour |
+|---|---|
+| Service flow | Existing intake/scope/readiness, controlled whole-crew booking, exact original/successor pack and personal acknowledgements remain separate. Visit forms take the current work-order version when input begins; edited proposals retain their original expected version for comparison. |
+| Personal evidence | Six typed captures, immutable originals/corrections, actor-wide time overlap, private PNGs and exact completion revisions remain. Current assigned crew can read permitted evidence without inventing personal attendance; capture/correction/declaration authority remains personal. |
+| Offline/submission recovery | Identity switches lock saved work and remove open business context. A refused online submission offers the existing owner-verification workspace in another tab, retains the form and requires unchanged originals to resolve before resubmission. It does not auto-unlock or delete evidence. |
+| Review and response | Original Draft entry flags are historical. Exact Approved report reviews and entry/version/hash references establish technical acceptance. HTML presentation hash, report revision and kind bind each response. Completed visits do not close an Authorised work order or ticket. |
+| Finance | ADR-0018 keeps all whole-minute Travel NonBillable/no-posting. Labour F-06 is 90 MIN allocated as 60 Billable + 30 NonBillable; material is 2 EA. Source declarations, independent Finance review, original claim/outcome, unknown lookup and evidence-backed reconciliation remain required. |
+| Access and recovery views | Server-derived identity/current grants govern every existing command/read/receipt/file. Same-origin tab signals only remove displayed context. SC-15 uses existing current-owner recovery projections/dispositions, which cannot approve Service/Finance or restore normal access. |
+| Planner and dashboards | Same current visibility predicates, full historical restrictions, bounded date/card/lane windows and repeatable-read transaction; batched summaries/lanes preserve complete common facts. Counts use the current permitted page/filter. Loading/failure removes current counts and identifies retained older data. No utilisation/cost/revenue formula is added. |
+| Outputs | Additive v2 OUT-09/10/14 definitions use complete embedded Roboto and intact logo, current source recheck and immutable original-operation storage recovery. v1 definitions, rendering sources and issued bytes remain unchanged. HTML remains within the existing offline bound or explicitly fails. |
+
+### Exact setup and maintained checks
+
+Use Node 24.20.0, npm 11.19.0 and PostgreSQL 16.15 with the unchanged lockfile; Next 16.3.4, React 19.2.8, TypeScript 6.0.3 and Playwright 1.63.0 remain pinned. Create ignored `.env.local` from `.env.example` and configure an owned loopback database and private byte directory outside Git before these commands. Full prerequisites and the original storage guards remain in [P08 setup](p08-handover.md#runtime-setup-and-recovery).
+
+```sh
+npm ci
+npx playwright install --with-deps chromium
+npm run db:migrate
+npm run db:seed
+npm run db:health
+npm run dev
+```
+
+Open `http://127.0.0.1:3000`. Production startup remains intentionally refused. The local check compiles the production build without starting or hosting it. The development compiler filesystem-cache opt-out remains intact; neither that mitigation nor the small pure Intl formatter cache is durable business/offline storage.
+
+Migrations 0013/0014 are additive: 0014 corrects the original 0013 SQL alias without rewriting applied bytes. Seed 13 adds exact Finance definition v2; seed 14 adds three v2 output definitions under guarded original-policy checks and append-only seed receipts. Repeat seed is non-destructive; unexpected newer policy state is refused, never overwritten. Preserve database records, private bytes/manifests and owner-bound browser originals together. P11 proves upgrades/restarts through retained gates; clean restore is assigned to P12.
+
+Only an explicitly disposable `ppo_synthetic_test` database may use:
+
+```sh
+PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+```
+
+Run the three Python checks, `npm run check`, `npm run test:db`, `npm run test:http` and `npm run test:browser` in the exact configured environment. HTTP tests require the real launcher; browser/restart gates start their documented separate processes. The [maintained workflow](../../.github/workflows/application.yml) preserves fresh/upgrade/repeat-seed/reset and actual P08/P09/P10/CRM/E1 database/application/browser restart gates. The additional serial HTTP command is:
+
+```sh
+node --env-file=.env.local --import tsx --test tests/integration/quality-http.test.ts
+```
+
+The declared load fixture additionally requires `PPO_BENCHMARK_FIXTURE=add-synthetic-load` on the disposable test database. `scripts/quality-performance-proof.ts` records fixture counts, exact build/browser/hardware/network, 320 raw samples, cold/warm limitations and nearest-rank p95 against the candidate 3 seconds. It does not simulate a real phone or supply a screen reader. No performance error or candidate miss may be hidden by excluding a sample.
+
+### Actual evidence and unresolved procedure limits
+
+The latest named sources and failed-run dispositions below are original evidence. Full maintained counts/conclusions still require the final contribution and actual merged main. No new full PT or AT status has been promoted. Preserve prior fully verified PT-06/PT-15/PT-16 and P10 PT-17/PT-19/PT-20/PT-21 under their original publications.
+
+| Procedure | P11 evidence boundary |
+|---|---|
+| PT-01 | Current actor/workspace/company/site/account/source/target/file/receipt isolation and revoked access remain in retained real DB/HTTP/browser gates. Cross-tab and SC-15 cases add visible-context isolation. New serial HTTP output test awaits actual full-run evidence. No blanket full pass. |
+| PT-18/PT-23 | Three actual v2 renderer families, v1 upgrade preservation, repeat seed, exact file hashes, denied/revoked Finance reads and original recovery gates. Long A4 review supplements source/provider identities; it cannot replace every written source-movement/missing-version step. |
+| PT-27 | Native keyboard intake, controlled move, submission, response and Finance approval have executed. CI viewports/network and raw timing/p95 are recorded. Candidate latency misses and unavailable representative screen-reader/real-device evidence keep the full procedure incomplete. |
+| PT-29 | Twelve focused identity/validation/recovery/state browser cases, including SC-01–15 matrix and applicable loading/error/stale/denied behaviour, have passed on recorded intermediate sources. Final source and retained shared 320px gates remain required. |
+| PT-30 | The selected Service/Finance journey executes actual commands and persistence. The continuous narrative's browser/process restart, stale concurrent move and restricted stale-original recovery are separately exercised by retained P05/P08/P09/P10 gates; this journey alone does not combine them. Written completed-P12 preconditions remain blocked. |
+
+The selected journey has two tasks on one asset and two crew acknowledgements, but only one recording technician supplies personal attendance/quantities. It does not substitute for PT-14's full two-asset fixture or infer quantities for the other crew member. Synthetic booked, captured, received and retrospective time-entry dates remain distinct. Personal completion warning snapshots remain historical source context; the exact Approved review is the technical acceptance. No operational identity verification, warranty settlement, account approval, accounting policy, distribution or production readiness follows from a response.
+
+## Historical checkpoints and original dispositions
 
 ## Authority and verified starting point
 
@@ -170,3 +232,17 @@ The next bounded optimization reads permitted resource lanes, calendars, skills,
 The `75b01a29f9dd681669a1d4932c8a600254526d29` predecessor / tree `d2a17c9f328e6737c5cff46baf6698a0899076e4` / executed `3a9fe5c495d7bfc41f15ab2c6f6a9fb1f0eb5e50` retained the same two owner-lock failures and passed the 12 focused identity/state cases. Journey artifact `10018641937`: 19,548,655 bytes / `ceb7660ca8a5a6f0ae5e5fe1b48cc2664ccff0c3ef25be1070d5089ebfc8a7f4`, retained `libfile_4959de561c8081919d4f331666047755`. Performance artifact `10018798872`: 6,767,199 bytes / `19bec024bbf00531dd88b55297d09b5392548691feecb3b9a8d2424925352b91`, retained `libfile_1662999bb2ec8191b5a1027f4cf0fcca`; all 320 samples completed with two Planner 503s and one phone Work-order timeout, and all 16 p95 groups missed the candidate. These failures remain recorded.
 
 Original `dd699d6` SC-01–15 desktop loaded captures were visually inspected at 1440×1000. The SC-06 current-screen text incorrectly said field capture was unimplemented. It now describes individual My Jobs capture after current-pack acknowledgement; the readiness label is Pack dispatch checks complete. The retained P06 browser assertion checks the same readiness predicate using that business-equivalent label. No issued template or original bytes changed. Main remains `4a9c27d5580edc236ff22b15a65ae441c0bc69a4`; PR #58 remains a separate unaccepted draft. Full retained workflow completion, current-source visual evidence and normal checked merge remain required.
+
+
+Original visual inspection checkpoint: every loaded SC-01–15 desktop 1440×1000 and phone 390×844 capture from `dd699d6` run 34120017915 was inspected. Current accepted navigation/identity disclosure and intact branding remain; the legacy shared identity selector still takes substantial phone height. PR #58's proposed global refinements are not accepted authority here. The `ef3e897` long-output run's desktop first pack (6 pages), successor pack (6), reserved report (5), SyntheticManual Finance evidence (7), and phone SyntheticApi Finance evidence (7) were inspected in full: **31 A4 pages**. No clipping/overlap observed; long narratives and quantities remain readable. Finance appendices are small/dense, and deliberately separated sections leave sparse pages, including a short note on page 3. No PDF/UA or screen-reader claim. All **140 original journey PNG/HTML/PDF/manifest proof pairs** passed independent byte-count, SHA-256, source/tree/run/attempt checks. The retained ZIP remains the original archive; inspection PNGs were rendered only for review, not substituted for its original PDFs.
+
+
+## Selected journey pass and remaining diagnostics — 7 September, 6b04f30
+
+Source `6b04f3071a0bfa1a57b8c84f2ae16a12250ede49`, tree `1b3b812ba1be3ed104f175e3799552d2080a668c`, executed checkout `bb6381c6ddbba148e163719b60026fe411a53a41` of the same tree: Application `34124371091`, attempt 1, passes the nine focused database cases and **both selected desktop/phone journeys** (486.488 seconds, zero skips/flakes). The last step proves the other currently assigned crew member, with no personal actual attendance, sees permitted original and correction history without capture/correction controls. A subsequent assertion traversing that actor's existing Service review navigation to the issued report is authored after this source and awaits execution; it is not included in this pass.
+
+Original journey artifact `10019858195` is 32,422,995 bytes, SHA-256 `228e194cf7f8585f76e47981179f865fff27444b2bd6d7c2e987548b0527aadf`, retained `libfile_0cde82c16ed481918ecf97caf81b7c30`. The original performance artifact `10019933209` is 6,769,782 bytes, SHA-256 `309e26c1a3883ee3487174fa476291a842fa441d622ddfeb5a2b8a7e1ec40b2d`, retained `libfile_cd7e815d5670819180dafdb31014f797`. Its 320 raw samples contain five phone Planner response-wait timeouts, no observed core GET events for those samples and no HTTP 503. All sixteen candidate p95 groups still miss three seconds. The failure screenshots could not complete within ten seconds; no missing image is represented as a successful capture. The next diagnostic revision records bounded main-document/crash events, aggregate asset counts, screenshot refusal and read-only process RSS/cgroup memory counters. It does not change concurrency, load, network, timeouts, assertions or business authority. Browser/resource failure is an investigation hypothesis, not an established cause.
+
+The twelve state/access cases on this source produced eleven passes and one failed phone direct Systems account-observation request (`ECONNRESET`, 363.445 seconds, zero skips/flakes). The failure returned no access decision; a transport failure is not a denial pass. Its Playwright text diagnostic unexpectedly included the disposable synthetic session cookie. The unredacted durable duplicate was removed from active handover files; the private original CI artifact has its fourteen-day expiry and the available connector does not expose artifact deletion. Review derivative `P11-focused-reviewed-run-34124371091-attempt-1.zip` (retained `libfile_561e49bde03881918f33dcaa4821b02a`) is 65,803,752 bytes, SHA-256 `d7810b046d9fbc0ed3f8cfdd8b6d34c9532dac22791f86fbc6741cdc0b1b7751`. Its manifest identifies original artifact `10020079584` (65,819,234 bytes; SHA-256 `2a5e466f8f0ad4d8fac908316e3a874ebcde32ff263a8937935e5fbf944d4ac0`) and the two redacted text files, before/after lengths and hashes. Every original PNG/HTML/PDF/proof and failure status remains unchanged. A scan of all previously retained ZIPs found no other `ppo_local_session` token values.
+
+`prepare-review-evidence.py` now removes disposable session values only from textual result/error/log diagnostics before each upload. Unexpected session material in non-diagnostic source evidence refuses upload instead of rewriting source bytes. It records each transformation's source/review hashes and provenance; original output/image bytes are untouched. Raw trace ZIPs and the generated Playwright HTML diagnostic report (which can embed raw diagnostics) are excluded from durable review uploads; original screenshots, test statuses, outputs and proof records remain available. A direct synthetic check verified failed-status preservation, session removal, unchanged issued HTML, repeat no-op and refusal to alter an unexpected source file. The HTTP component also retains its TAP result immediately after the unchanged retained HTTP suite, so its actual failure can be examined before the remaining restart/browser gates finish.

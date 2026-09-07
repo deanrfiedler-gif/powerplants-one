@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { spawn, execFileSync } from "node:child_process";
-import { cpus, totalmem, platform, release, arch } from "node:os";
-import { mkdir, writeFile } from "node:fs/promises";
+import { cpus, totalmem, freemem, loadavg, platform, release, arch } from "node:os";
+import { mkdir, writeFile, readFile, readdir } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { once } from "node:events";
 import { chromium, expect, type BrowserContext } from "@playwright/test";
@@ -11,6 +11,25 @@ import { qualityLoadFixture } from "./quality-load-fixture";
 const root = "verification-evidence/p11-performance";
 await mkdir(root, { recursive: true });
 const origin = "http://127.0.0.1:3000";
+async function resourceSnapshot() {
+  const processes: Record<string, { count: number; resident_kib: number }> = {};
+  for (const pid of (await readdir("/proc")).filter((x) => /^\d+$/.test(x))) {
+    try {
+      const name = (await readFile(`/proc/${pid}/comm`, "utf8")).trim();
+      if (!/^(node|chrome|chromium|headless_shell|postgres)/.test(name)) continue;
+      const status = await readFile(`/proc/${pid}/status`, "utf8");
+      const group = name.startsWith("node") ? "node" : name.startsWith("postgres") ? "postgres" : "chromium";
+      const item = processes[group] ??= { count: 0, resident_kib: 0 };
+      item.count++;
+      item.resident_kib += Number(status.match(/^VmRSS:\s+(\d+)/m)?.[1] ?? 0);
+    } catch { /* A process may exit between these read-only observations. */ }
+  }
+  const cgroup: Record<string, string | null> = {};
+  for (const name of ["memory.current", "memory.peak", "memory.max", "memory.events"])
+    cgroup[name] = await readFile(`/sys/fs/cgroup/${name}`, "utf8").then((x) => x.trim()).catch(() => null);
+  return { free_memory_bytes: freemem(), load_average: loadavg(), processes, cgroup };
+}
+const resourceObservations: unknown[] = [];
 const provenance = {
   source_head:
     process.env.PPO_SOURCE_HEAD ??
@@ -145,25 +164,42 @@ try {
         });
       }
       for (let wave = 0; wave < 4; wave++) {
+        resourceObservations.push({ viewport: viewport.name, view: view.name, wave, boundary: "before", observed_at: new Date().toISOString(), ...await resourceSnapshot() });
         await Promise.all(
           pages.map(async (page, virtual_user) => {
             const at = performance.now();
             const coreEvents: { event: string; elapsed_ms: number; status?: number; error?: string }[] = [];
+            const documentEvents: { event: string; elapsed_ms: number; status?: number }[] = [];
+            const assets = { requested: 0, completed: 0, failed: 0 };
+            const documentEvent = (event: string, status?: number) => {
+              if (documentEvents.length < 20) documentEvents.push({ event, elapsed_ms: performance.now() - at, ...(status === undefined ? {} : { status }) });
+            };
+            const crashed = () => documentEvent("page-crashed");
+            const domLoaded = () => documentEvent("domcontentloaded");
+            const loaded = () => documentEvent("load");
             const relevant = (request: import("@playwright/test").Request) =>
               new URL(request.url()).pathname === view.api && request.method() === "GET";
             const requested = (request: import("@playwright/test").Request) => {
+              if (request.isNavigationRequest() && request.frame() === page.mainFrame()) documentEvent("document-request");
+              if (["script", "font", "stylesheet"].includes(request.resourceType())) assets.requested++;
               if (relevant(request) && coreEvents.length < 20)
                 coreEvents.push({ event: "request", elapsed_ms: performance.now() - at });
             };
             const responded = (response: import("@playwright/test").Response) => {
+              if (response.request().isNavigationRequest() && response.frame() === page.mainFrame()) documentEvent("document-response", response.status());
               if (relevant(response.request()) && coreEvents.length < 20)
                 coreEvents.push({ event: "response", elapsed_ms: performance.now() - at, status: response.status() });
             };
             const failed = (request: import("@playwright/test").Request) => {
+              if (request.isNavigationRequest() && request.frame() === page.mainFrame()) documentEvent("document-request-failed");
+              if (["script", "font", "stylesheet"].includes(request.resourceType())) assets.failed++;
               if (relevant(request) && coreEvents.length < 20)
                 coreEvents.push({ event: "request-failed", elapsed_ms: performance.now() - at, error: request.failure()?.errorText ?? "Unknown transport failure" });
             };
-            page.on("request", requested).on("response", responded).on("requestfailed", failed);
+            const completed = (request: import("@playwright/test").Request) => {
+              if (["script", "font", "stylesheet"].includes(request.resourceType())) assets.completed++;
+            };
+            page.on("request", requested).on("response", responded).on("requestfailed", failed).on("requestfinished", completed).on("crash", crashed).on("domcontentloaded", domLoaded).on("load", loaded);
             let status = 0,
               rows: number | null = null,
               error: string | null = null,
@@ -215,13 +251,17 @@ try {
               error = e instanceof Error ? e.message : "Read failed";
               {
                 const name = `${viewport.name}-${view.name.replaceAll(" ", "-")}-wave-${wave}-user-${virtual_user}-failure`;
+                let captureError: string | null = null;
                 const bytes = await page
                   .screenshot({
                     path: `${root}/${name}.png`,
                     fullPage: true,
                     timeout: 10000,
                   })
-                  .catch(() => null);
+                  .catch((captureFailure: unknown) => {
+                    captureError = captureFailure instanceof Error ? captureFailure.message : "Capture failed";
+                    return null;
+                  });
                 await writeFile(
                   `${root}/${name}-proof.json`,
                   JSON.stringify(
@@ -231,7 +271,13 @@ try {
                       scenario: name,
                       error,
                       core_events: coreEvents,
-                      diagnostic_limit: "At most 20 method/path-matched core GET event timings and statuses; no bodies, headers, query strings, cookies or session trace. Capture time is outside the completed sample.",
+                      document_events: documentEvents,
+                      assets,
+                      page_closed: page.isClosed(),
+                      page_path: new URL(page.url()).pathname,
+                      capture_error: captureError,
+                      resources: await resourceSnapshot(),
+                      diagnostic_limit: "At most 20 core GET and 20 main-document lifecycle event timings/statuses; aggregate asset counts, process resident memory and cgroup counters. No process arguments, bodies, headers, query strings, cookies or session trace. Capture time is outside the completed sample.",
                       byte_count: bytes?.length ?? null,
                       sha256: bytes
                         ? createHash("sha256").update(bytes).digest("hex")
@@ -247,7 +293,7 @@ try {
                 );
               }
             } finally {
-              page.off("request", requested).off("response", responded).off("requestfailed", failed);
+              page.off("request", requested).off("response", responded).off("requestfailed", failed).off("requestfinished", completed).off("crash", crashed).off("domcontentloaded", domLoaded).off("load", loaded);
             }
             samples.push({
               viewport: viewport.name,
@@ -265,6 +311,8 @@ try {
             });
           }),
         );
+        resourceObservations.push({ viewport: viewport.name, view: view.name, wave, boundary: "after", observed_at: new Date().toISOString(), ...await resourceSnapshot() });
+        await writeFile(`${root}/resource-observations.json`, JSON.stringify({ ...provenance, observations: resourceObservations, limits: "Aggregate RSS includes shared pages per process and is not unique memory. Read-only /proc names/status and cgroup memory counters; no process arguments, environment or credentials." }, null, 2));
         await writeFile(
           `${root}/raw-samples.json`,
           JSON.stringify({ ...provenance, fixture, samples }, null, 2),

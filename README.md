@@ -4,7 +4,7 @@ Private prototype of an integrated business operations platform for Powerplants 
 
 **Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P10 publication complete; P11 implementation and verification in progress; bounded Travel treatment approved · **Deployment:** none.
 
-This repository is Dean's personal private prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. The complete service journey remains planned. Company ownership, production approval and external-system write authority are not implied.
+This repository is Dean's personal private prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. Integrated Service/Finance verification is in progress; the complete PP-01 acceptance boundary still requires P12. Company ownership, production approval and external-system write authority are not implied.
 
 ## Start here
 
@@ -83,4 +83,4 @@ Use [Issues](https://github.com/deanrfiedler-gif/powerplants-one/issues) for dev
 
 P09 service review and reports are implemented under [PR #37](https://github.com/deanrfiedler-gif/powerplants-one/pull/37). See the [P09 handover](docs/delivery/p09-handover.md) for exact transition, output, offline and verification limits. Separately authorised [P10 #45 / PR #48](https://github.com/deanrfiedler-gif/powerplants-one/pull/48) adds Finance handoffs at `/finance/handoffs` and restricted customer accounts reached from that queue. Use the Finance preparer, reviewer, processor and reconciler identities for their distinct actions. The [P10 handover](docs/delivery/p10-handover.md) records actual checks, failed runs, setup and remaining verification. SyntheticManual is the default; SyntheticApi is only the bounded timeout fixture. No live ERP action, customer distribution or full PP-01 acceptance is implied.
 
-P11 Travel continuation: [ADR-0018](docs/decisions/ADR-0018-p11-travel-and-integrated-quality.md) records the approved synthetic whole-minute NonBillable/no-posting treatment. Migration/seed 0013 preserves P10 originals and policy history. Actual verification remains in progress; see the P11 handover.
+P11 Travel continuation: [ADR-0018](docs/decisions/ADR-0018-p11-travel-and-integrated-quality.md) records the approved synthetic whole-minute NonBillable/no-posting treatment. Additive migrations 0013/0014 and seeds 13/14 preserve P10 originals, Finance policy history and v1 output definitions while adding the bounded Travel and branded v2 output successors. Actual verification remains in progress; see the P11 handover.

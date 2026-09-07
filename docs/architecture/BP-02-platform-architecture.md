@@ -1,6 +1,6 @@
 # BP-02 — Platform Solution Architecture
 
-**Edition:** r12 · **Date:** 7 September 2026 · **Scope:** PP-01 synthetic planned service and BP-03 I1–I2 opportunity prototype.
+**Edition:** r13 · **Date:** 7 September 2026 · **Scope:** PP-01 synthetic planned service and BP-03 I1–I2 opportunity prototype.
 
 **Status:** Architecture/build contract; P01–P05 implementation and evidence are recorded in [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md), [ADR-0007](../decisions/ADR-0007-p02-shared-foundation.md), [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md), [ADR-0009](../decisions/ADR-0009-p04-work-scope-readiness.md) and [ADR-0010](../decisions/ADR-0010-p05-planner-controlled-changes.md). Not production approval. [Package index](../prototype/README.md) · [Data dictionary](../contracts/service-data-dictionary.md) · [API contracts](../contracts/service-api.md).
 
@@ -273,3 +273,10 @@ P10 preserves the modular monolith and existing durable document adapter. Its se
 ## BP-03 I2 presentation/query refinement
 
 The [I2 worklist decision](../decisions/crm-i2-worklist.md) uses the existing explicit SQL, current visibility predicates and canonical command/receipt services. Board/Grid share one authorised page and page-derived stage counts, with scoped filter labels and ephemeral signed keyset cursors that detect changed permitted windows. No schema, dependency, capability or offline platform extension is required. The [I2 handover](../delivery/crm-i2-handover.md) records shared branding and baseline regressions separately from proposed architecture and future relationship management. P10 and E1 schema reservations remain independently owned.
+
+
+## P11 integrated quality implementation
+
+P11 retains the modular monolith, existing SQL permission projections and private original-byte adapter. The weekly ScheduleSummary and batched resource lanes avoid repeated detail queries while preserving complete common facts and current scope in one repeatable-read transaction. A bounded cache stores only immutable locale/zone formatters; per-render date calculations do not retain business or permission data across requests. The development-compiler filesystem-cache opt-out remains a separate mitigation, not a durable storage design.
+
+The existing owner-bound recovery services power SC-15 and explicit saved-workspace verification. Same-origin tab signals remove context and grant nothing. An unstarted assigned crew member can read existing permitted evidence without gaining capture/correction rights. ADR-0018 supplies only the approved whole-minute Travel NonBillable/no-posting successor. Additive guarded v2 document definitions preserve v1 rendering sources and all originals. Actual final-head/merged-main verification and performance/accessibility/restore limits are governed by the [P11 handover](../delivery/p11-handover.md); no new framework, operational authentication or live integration is introduced.

@@ -512,6 +512,14 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
     info,
     "journey-technician-original-and-correction-history",
   );
+  const menu = page.getByRole("button", { name: "Menu", exact: true });
+  if (await menu.isVisible()) await menu.click();
+  await page.getByRole("link", { name: "Service review", exact: true }).click();
+  await page.getByRole("link", { name: issued.reference, exact: true }).click();
+  await expect(page.getByRole("heading", { name: /Revision 2 · Issued/ })).toBeVisible();
+  await expect(page.getByText(/FINANCE_PRIVATE_CANARY|P11_PRIVATE_REVIEW_CANARY/)).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Commit exact review", exact: true })).toHaveCount(0);
+  await capture(page, info, "journey-next-technician-permitted-issued-report");
   await writeFile(
     info.outputPath("P11-selected-journey.json"),
     JSON.stringify(
