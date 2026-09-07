@@ -1,6 +1,6 @@
 # Shared layout and CRM — accepted r08 implementation
 
-**Revision:** r01 · **Date:** 7 September 2026 · **Owner:** Dean Fiedler · **Status:** Implemented in draft PR #59; verification in progress.
+**Revision:** r02 · **Date:** 7 September 2026 · **Owner:** Dean Fiedler · **Status:** Implemented; verification evidence recorded. Current publication and CI state: PR #59.
 
 ## Authority and source
 
@@ -35,12 +35,29 @@ At corrected-helper source `d0526b483d24338c96977198d235ace2d1935f2e`, Estimatin
 
 A fresh private-repository read confirms `deanrfiedler-gif/powerplants-one` and its existing permissions. Direct Git clone has no local credential, so source was fetched through the connected GitHub tools and every fetched blob checked against its Git SHA. Local Git is an inspection snapshot; publication commits must use the actual remote main as parent and preserve its full tree.
 
-Automatic approval review rejected creating a separate tracking issue as an additional disclosure outside the current authorisation. No alternate issue creation was attempted; work continues under existing #9. Repository publication remains subject to its own result and normal checks.
+Automatic approval review rejected creating a separate tracking issue as an additional disclosure outside the current authorisation. No alternate issue creation was attempted; work continues under existing #9. Branch commits and PR #59 were subsequently published successfully through the normal repository tools.
 
-No merge, actual-main verification, independent review, business acceptance, production readiness or deployment is claimed at this checkpoint. The next step is current-source verification and reviewable repository publication, followed by the normal checked merge and verification of actual main when permitted.
+PR #59 records publication, the merge commit and verification of the exact code published on main as those actions complete. This handover makes no independent-review, full business-acceptance, production-readiness or deployment claim.
 
 ## Final-source assurance follow-through
 
 At source `8eae04265afb8d70d516e4c952dcc433d1cee735`, Application run `34130347315` passed 20 unit cases, 12 focused I2 cases, 10 focused Finance browser cases, 46 focused Finance database cases, 4 focused Service browser cases, all 295 database cases and all 23 HTTP cases. Finance/Service restart, documented reset, PostgreSQL persistence and offline-original recovery proofs also passed. It then stopped because `scripts/crm-restart-proof.ts` still selected the previous visible “Grid” label. That missed harness reference is corrected to “List”; the canonical ID, saved content, cursor, restart and receipt assertions are retained. The full browser suite was not reached in that failed run.
 
 The CRM restart proof and the complete desktop/mobile browser suite now run immediately after focused I2 on the disposable seeded database. This brings the remaining UI regressions forward. The following Finance phase already explicitly resets that database; all original cases, subsequent reset boundaries, runtime pins and timeouts remain. No gate is removed or conditionally skipped. Current results and merge state are tracked in PR #59.
+
+## Completed implementation evidence
+
+Application run [34133998009](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34133998009), source `bc5a6e1790097d005c2c20f6892d48b70e1ba676`, passed static/unit/build checks, focused I2, the corrected CRM restart proof and the complete desktop/mobile browser suite. [Estimating E1 run 34133998073](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34133998073) and documentation assurance also passed. The remaining repeated Application phases were still running when this record was prepared; an overall success for that still-running workflow is not claimed.
+
+The database/HTTP/recovery evidence from source `8eae04265afb8d70d516e4c952dcc433d1cee735` applies to the same application code. Direct comparison of the complete remote Git trees verified identical `src`, `db`, `public`, `tests`, dependency lockfile, package/runtime pins, TypeScript/Next/Playwright configurations and runtime scripts. The only script difference is the corrected visible List label and its console message in `crm-restart-proof.ts`; that proof now passes. Other differences are documentation and CI step order. All original assertions, commands, resets and timeouts are retained.
+
+| Verified tree | Git SHA |
+| --- | --- |
+| Application source (`src`) | `15b2f750ba25ce718d40f7bd81c175f3d5c8e6ad` |
+| Database (`db`) | `d9b0c11e24df9e3b97dcaff1a93cf537e3030759` |
+| Assets (`public`) | `095ccb13a1427469e4a570e34afb692955a1f047` |
+| Tests (`tests`) | `e168a188e1446a055581464fbc88a2b48014cf09` |
+
+Original final-UI captures were inspected from run `34130347315`, artifact `10023071418`; ZIP SHA-256 `61b097ab8a37d648f98e6655fd141d9eeff8e1c346a2ff9ed6c9b3b3046b7e74`. The 1440px and 320px captures show fixed headers, shared column scrolling and the corrected compact phone header. Estimating's final 320px capture was checked from run `34130347330`, artifact `10021974580`; ZIP SHA-256 `f30cbd436622e0e373851bd09d692267bb0232eeea8209e20d5f87d4b53fc714`. The application source is unchanged in the corrected-proof revision.
+
+The final handover/status update is documentation only. Before integration, verify its executable trees remain identical to the above checked source and that documentation assurance passes. Use a normal merge with the expected PR head, then verify the actual main commit/tree. Automatically scheduled assurance continues normally; report its observed state rather than treating a pending run as passed.
