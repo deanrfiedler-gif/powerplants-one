@@ -1,5 +1,7 @@
 # Current prototype status
 
+
+P11 continuation, 7 September: Dean approved separately recorded whole-minute Travel as explicitly NonBillable/no-posting for the selected synthetic journey. ADR-0018 and migration/seed 0013 implement the bounded successor; actual verification is in progress. P11 remains incomplete; P12 remains preparation only.
 **Updated:** 7 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P09/P10, CRM I1–I2 and estimating E1 bounded implementations; exact verification/publication governed by their handovers and external records. PP-01 remains incomplete.
 
 ## Current direction

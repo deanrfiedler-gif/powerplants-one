@@ -56,6 +56,8 @@ jobs:
           npm run db:migrate
           npm run db:seed
           npm run db:health
+      - name: Focused P11 Travel guards and actual P10 current-main record upgrade
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quality-travel.test.ts tests/database/quality-upgrade.test.ts
       - name: Focused P11 identity, validation and retained recovery proof
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-focused-browser/results.json

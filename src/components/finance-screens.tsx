@@ -573,6 +573,13 @@ export function FinanceForm({
                       Captured / reviewed: {e?.quantity ?? "Unknown"} {e?.uom}
                     </span>
                   </div>
+                  {e?.direction === "Travel" && (
+                    <p>
+                      Travel stays separate from Labour. Select NonBillable and
+                      explain the no-posting disposition. This does not define
+                      staff pay or cost.
+                    </p>
+                  )}
                   <div className={styles.grid}>
                     <label>
                       Allocated quantity
@@ -599,13 +606,16 @@ export function FinanceForm({
                           })
                         }
                       >
-                        {[
-                          "Pending",
-                          "Billable",
-                          "NonBillable",
-                          "WarrantyReview",
-                          "GoodwillReview",
-                        ].map((v) => (
+                        {(e?.direction === "Travel"
+                          ? ["Pending", "NonBillable"]
+                          : [
+                              "Pending",
+                              "Billable",
+                              "NonBillable",
+                              "WarrantyReview",
+                              "GoodwillReview",
+                            ]
+                        ).map((v) => (
                           <option key={v}>{v}</option>
                         ))}
                       </select>

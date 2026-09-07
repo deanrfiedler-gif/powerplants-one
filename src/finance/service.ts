@@ -220,6 +220,14 @@ async function revision(
   for (const l of cmd.lines) {
     const e = entries.get(l.entry_id);
     if (!e) throw unavailable();
+    if (
+      e.direction === "Travel" &&
+      (l.disposition !== "NonBillable" || l.target_group !== null)
+    )
+      blocked(
+        "TravelNoPostingRequired",
+        "Travel requires an explicit NonBillable allocation and reason, with no target posting. Its actual minutes remain separate from Labour.",
+      );
     if (l.target_group) {
       const grain = `${e.uom}:${e.direction}`;
       if (groups.has(l.target_group) && groups.get(l.target_group) !== grain)

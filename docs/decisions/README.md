@@ -35,3 +35,5 @@ The [shared UI and CRM layout direction](ui-brand-and-crm-layout.md) records the
 [Projects discovery and first-increment boundary](bp06-projects-discovery.md) records the 7 September BP-06 scope; D-010/D-014/D-026 remain open.
 
 [Customer portal direction](customer-portal-direction.md) records Dean's authority to design now and implement bounded synthetic stages as their dependencies become ready. It resolves only the private portal-direction portion of D-027; the original wider decision remains open. No migration or technical ADR number is allocated by this design.
+
+[ADR-0018](ADR-0018-p11-travel-and-integrated-quality.md) records the approved P11 synthetic whole-minute Travel/no-posting treatment and immutable policy successor. D-017 operational policy remains open.
