@@ -3,7 +3,7 @@ title: Customer portal - design and staged delivery handover
 revision: r01
 date: 2026-09-06
 owner: Dean Fiedler
-status: Draft PR published; static checks passed; browser and CI verification blocked
+status: Draft PR published; design browser and visual review passed; full regression/publication pending
 source_commit: 94289a20fc609e47af647b29ca8170557da312bb
 ---
 
@@ -62,6 +62,20 @@ node docs/blueprints/customer-portal-design-check.mjs
 The browser check must emit original PNGs and a source/capture hash manifest under `verification-evidence/customer-portal-design/`, using the existing exact package/renderer. Inspect those original desktop/390px/320px captures before merging. Retain selected original images and results; do not fabricate or substitute screenshots. Existing application/E1 regression gates stay enabled. A repository check failure does not authorise runner, billing, permission or required-check changes.
 
 ## Readiness and next step
+
+### 7 September 2026 continuation: original browser evidence
+
+Fresh checks on other PPO branches demonstrated that runners could execute again. The four previously prestart-failed workflows at exact portal head `b85bc01a14766de1e403c28d79e5a955700e19bf` were retried once (attempt 2); no settings or checks were changed. [Design run 34066391012](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34066391012/attempts/2) and [documentation run 34066390954](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34066390954/attempts/2) passed. Application and E1 regression outcomes remain governed by the external publication record; this is not a merge-readiness claim.
+
+The original [design manifest](../testing/evidence/customer-portal-design/r01/design-review.json) and all 18 unmodified PNG captures are retained in the same evidence directory. Artifact `10000298806` ZIP SHA-256 is `741e7072acf89952e01e31b4ba0999524437cf89c495fcca33faf2dcc3805730`; downloaded bytes matched. Every capture was checked against the manifest. Preview SHA-256 remains `cb619eabe549c0ef515585e1af0ebcf1beec26d5807c215abf2dcaa92d188484`; no preview source or issued asset was changed in this continuation.
+
+The existing pinned browser check passed its 14 named check groups at 1440×1000, 390×844 and 320×800 using Node 24.20.0 and the existing locked Playwright/Chromium. It exercised navigation, search, field/unknown-context validation, retained input, focus return, temporary requests/replies, plain-text markup, reset on reload, report illustration, article provenance, empty/unavailable/access-changed states, long text, and absence of browser storage/external requests/page errors. This is standalone design evidence, not DB/API/restart or CPA runtime acceptance.
+
+All 18 original overview, request-form, conversation, project, article and access-changed captures were visually inspected. Text and controls reflow at all three widths; the complete logo, synthetic boundaries, date bases, public-message separation and access-loss clearing remain clear. Form captures intentionally show the validation-focused scroll position, not the whole dialog; conversation captures retain the transient unsaved-status toast. These are original interaction-state captures, not edited presentation images. Equipment/report interactions passed automated checks but have no separate captured visual-review claim. Runtime CP1 must still perform its own complete screen and permission/restart acceptance.
+
+Source review reconciled one contradictory sentence: CP1 is strictly text-only and uploads belong to separately verified CP2a, matching the plan, starter and Dean's bounded instruction. No stage or authority was expanded. No independent human review is claimed. Local foundation/prototype/naming checks were rerun successfully on the original source tree; subsequent contribution checks and actual-main verification remain required.
+
+Fresh main remains `1f13dd8d6f5006559152fe9d5410aed3fff64234`. P10 #48 and CRM I2 #47 are separately active; P11/P12 are absent. Migration 0011 / ADR-0016 remain reserved by P10; E1 occupies 0012 / ADR-0017. This design allocates neither. CP1 remains unready and no runtime work was started.
 
 CP1 is prepared but was not ready on the inspected main: P11/P12 integrated quality and recovery are absent; P10 is still open. External membership and public conversation are CP1 implementation work. Continue CP1 under existing authority after actual readiness verification, with text-only support and real persistence/permission/restart proof. CP2/CP3/CP4/CP5 depend only on their explicitly listed owning workflows; no dates or production availability are promised.
 

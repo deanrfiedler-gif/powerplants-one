@@ -96,7 +96,7 @@ Proposed routes under `/api/v1/portal`: context, permitted site/equipment select
 
 Customer status mapping for CP1 is limited to actual facts: New → Received; NeedsInformation with unanswered explicit public question → Your reply needed; Triaged → Reviewed by service team. A private clarification alone never exposes “Your reply needed”. No SLA countdown, technician assignment, In progress or Resolved label is derived merely from Ticket state. Later status projections require owning-domain transitions and published event mappings.
 
-CP1 is online only and text first. The first stage omits uploads unless CP1's safe quarantine/storage/finalisation path is fully implemented and verified. CP2 adds bounded image uploads with type/signature/size verification, private storage, quarantine and inspection, non-executable serving, recipient checks, original-byte recovery and separate Pending/Available/Rejected status. Do not reuse a technician-assignment capability for customers. Uninspected files cannot be previewed, indexed or forwarded; scanning outage means withheld availability. Photo metadata/contact details are filtered from customer publication.
+CP1 is online only and text-only; uploads are outside CP1. CP2a separately adds bounded image uploads with type/signature/size verification, private storage, quarantine and inspection, non-executable serving, recipient checks, original-byte recovery and separate Pending/Available/Rejected status. Do not reuse a technician-assignment capability for customers. Uninspected files cannot be previewed, indexed or forwarded; scanning outage means withheld availability. Photo metadata/contact details are filtered from customer publication.
 
 ## 8. Publication and customer responses
 
