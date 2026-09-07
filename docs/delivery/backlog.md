@@ -44,3 +44,7 @@ The [CRM handover](crm-discovery-handover.md) records BP-03, all eighteen parity
 ## PPO-010 estimating discovery contribution
 
 [BP-04 r01](../blueprints/BP-04-estimating-quotation.md) and its [handover](estimating-discovery-handover.md) start authorised source assessment and design. CRE-01–CRE-26 are mapped to evidence/gaps; a synthetic preview, arithmetic examples and future acceptance procedures support review. Issue #10 remains open for configuration/policy validation and accepted examples. [E1–E6](estimating-implementation-plan.md) are proposed local increments, not new issued requirements or implementation authority.
+
+## PPO-012 bounded discovery contribution
+
+[BP-06](../blueprints/BP-06-projects-commercial-delivery.md) and its [handover](projects-discovery-handover.md) record the 7 September source assessment and J1 preparation. Issue #12 remains open; its broad PPO-011 dependency is retained for technical gates. J1 implementation requires a new invocation.

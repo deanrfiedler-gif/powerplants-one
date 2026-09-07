@@ -9,6 +9,7 @@ Start with [current status](STATUS.md) and the [First Prototype Definition & Arc
 | Blueprint set | [Master and module index](blueprints/README.md) |
 | CRM UI | [Board/Grid mockups](blueprints/crm-ui-mockups/README.md), [I2 guidance](delivery/crm-i2-ui-guidance.md), [handover](delivery/crm-ui-design-handover.md) |
 | Estimating | [BP-04](blueprints/BP-04-estimating-quotation.md), [CREMS evidence](blueprints/estimating-evidence.md), [preview](blueprints/estimating-workspace-mockup.html), [handover](delivery/estimating-discovery-handover.md) |
+| Projects | [BP-06](blueprints/BP-06-projects-commercial-delivery.md), [screens](blueprints/projects-screen-specification.md), [sequence](delivery/projects-implementation-plan.md), [handover](delivery/projects-discovery-handover.md) |
 | Architecture | [BP-02](architecture/BP-02-platform-architecture.md) |
 | Service | [BP-07](blueprints/BP-07-service-operations.md) |
 | Contracts | [Data](contracts/service-data-dictionary.md), [API](contracts/service-api.md), [Finance](contracts/finance-handoff.md), [documents](contracts/document-issue-distribution.md) |

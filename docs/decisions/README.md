@@ -30,3 +30,5 @@ The [shared UI and CRM layout direction](ui-brand-and-crm-layout.md) records the
 [BP-04 discovery and sequencing](bp04-estimating-discovery.md) records the authorised PPO-010 design contribution. D-009/D-010 remain open; synthetic arithmetic and future E1–E6 scope are proposals, not adopted operational policy.
 
 [ADR-0017](ADR-0017-estimating-e1.md) records the separately authorised manual E1 slice, exact decimal policy, immutable estimate/quote versions and durable draft output. Finance retains ADR-0016.
+
+[Projects discovery and first-increment boundary](bp06-projects-discovery.md) records the 7 September BP-06 scope; D-010/D-014/D-026 remain open.

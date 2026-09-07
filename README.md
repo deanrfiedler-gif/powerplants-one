@@ -22,6 +22,7 @@ This repository is Dean's personal private prototype. It contains the planning f
 | [Estimating E1 implementation](docs/delivery/estimating-e1-handover.md) | Authorised manual estimating and exact draft quotation increment; current verification state and limits |
 | [CRM I1 handover](docs/delivery/crm-i1-handover.md) | Bounded owned opportunity implementation, actual verification/publication and prepared I2 Board/Grid starter |
 | [First-release plan](docs/delivery/first-release.md) | Proposed planned-service journey, dependencies and readiness criteria |
+| [Projects discovery and design](docs/delivery/projects-discovery-handover.md) | BP-06 source assessment, first-increment contract and project list/detail designs; J1 prepared only |
 | [Contributing](CONTRIBUTING.md) | Branches, pull requests, validation and evidence |
 
 ## Product direction

@@ -9,7 +9,7 @@
 | BP-03 | [CRM Functional & Build Blueprint](BP-03-crm.md) | r01 proposed journeys/shared integration; bounded [Pipedrive parity](crm-parity.md), [synthetic screens](crm-screen-specification.md), [branded Board/Grid](crm-ui-mockups/README.md) and [implementation sequence](../delivery/crm-implementation-plan.md); account parity and acceptance remain open |
 | BP-04 | [Estimating & Quotation Functional & Build Blueprint](BP-04-estimating-quotation.md) | r01 proposed; [26-row CREMS evidence](estimating-evidence.md), [synthetic preview](estimating-workspace-mockup.html) and [handover](../delivery/estimating-discovery-handover.md); configuration/policy and acceptance remain open |
 | BP-05 | Engineering & Design Control Functional & Build Blueprint | Planned; native CAD boundary retained |
-| BP-06 | Projects & Commercial Delivery Functional & Build Blueprint | Planned; Smartsheet transition separate |
+| BP-06 | [Projects & Commercial Delivery Functional & Build Blueprint](BP-06-projects-commercial-delivery.md) | r01 bounded discovery; [source assessment](projects-source-assessment.md), [screens](projects-screen-specification.md), [handover](../delivery/projects-discovery-handover.md); implementation and transition open |
 | BP-07 | [Service Operations Functional & Build Blueprint](BP-07-service-operations.md) | Selected planned-service prototype specified; extended lifecycle scope deferred |
 | BP-08 | Supply Chain Management Functional & Build Blueprint | Planned; first-release material readiness boundary included in BP-07 |
 | BP-09 | Finance & Commercial Controls Functional & Build Blueprint | [Minimum service/account subset](../contracts/finance-handoff.md) authored; full Finance specification planned |
