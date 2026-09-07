@@ -6,7 +6,7 @@ export function denied(error: unknown) {
   return [401, 403, 404].includes((error as Failure)?.status ?? 0);
 }
 // Online memory only. A denied/current-identity refresh unmounts sensitive forms.
-export function useCrmResource<T>(path: string | null) {
+export function useCrmResource<T>(path: string | null, clearOnError = false) {
   const [revision, setRevision] = useState(0),
     [state, setState] = useState<{
       path: string | null;
@@ -28,13 +28,14 @@ export function useCrmResource<T>(path: string | null) {
             if (live && request === latestRequest)
               setState((old) => ({
                 path,
-                data: !denied(error) && old.path === path ? old.data : null,
+                data: !clearOnError && !denied(error) && old.path === path ? old.data : null,
                 error,
               }));
           },
         );
       }
     };
+    if (!path) queueMicrotask(() => { if (live) setState({path:null,data:null,error:null}); });
     load();
     const timer = setInterval(load, 15000);
     window.addEventListener("focus", load);
@@ -43,7 +44,7 @@ export function useCrmResource<T>(path: string | null) {
       clearInterval(timer);
       window.removeEventListener("focus", load);
     };
-  }, [path, revision]);
+  }, [path, revision, clearOnError]);
   return {
     data: state.path === path ? state.data : null,
     error: state.path === path ? state.error : null,

@@ -1,6 +1,6 @@
 # BP-02 — Platform Solution Architecture
 
-**Edition:** r11 · **Date:** 6 September 2026 · **Scope:** PP-01 synthetic planned service and BP-03 I1 opportunity prototype.
+**Edition:** r12 · **Date:** 7 September 2026 · **Scope:** PP-01 synthetic planned service and BP-03 I1–I2 opportunity prototype.
 
 **Status:** Architecture/build contract; P01–P05 implementation and evidence are recorded in [ADR-0006](../decisions/ADR-0006-p01-local-foundation.md), [ADR-0007](../decisions/ADR-0007-p02-shared-foundation.md), [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md), [ADR-0009](../decisions/ADR-0009-p04-work-scope-readiness.md) and [ADR-0010](../decisions/ADR-0010-p05-planner-controlled-changes.md). Not production approval. [Package index](../prototype/README.md) · [Data dictionary](../contracts/service-data-dictionary.md) · [API contracts](../contracts/service-api.md).
 
@@ -269,3 +269,7 @@ The separately authorised [I1 slice](../delivery/crm-i1-handover.md) reuses the 
 ## P10 Finance dependency amendment
 
 P10 preserves the modular monolith and existing durable document adapter. Its separate independently committed synthetic target boundary models possible acceptance outside the local outcome transaction, with one original correlation/input hash, a durable NotProcessed lookup fence and current-authority receipt recovery. Workspace locks conserve source-root allocations and mutations/audit/receipt/outbox. Finance-owned projections and private output remain separate from Service/customer DTOs. [ADR-0016](../decisions/ADR-0016-p10-finance-handoff.md) and the [handover](../delivery/p10-handover.md) record exact mechanisms, tests and limits. No service deployment, new framework, live endpoint or operational accounting policy is added.
+
+## BP-03 I2 presentation/query refinement
+
+The [I2 worklist decision](../decisions/crm-i2-worklist.md) uses the existing explicit SQL, current visibility predicates and canonical command/receipt services. Board/Grid share one authorised page and page-derived stage counts, with scoped filter labels and ephemeral signed keyset cursors that detect changed permitted windows. No schema, dependency, capability or offline platform extension is required. The [I2 handover](../delivery/crm-i2-handover.md) records shared branding and baseline regressions separately from proposed architecture and future relationship management. P10 and E1 schema reservations remain independently owned.

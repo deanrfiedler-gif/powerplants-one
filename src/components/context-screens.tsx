@@ -271,7 +271,7 @@ function RelatedActivities({ type, id }: { type: string; id: string }) {
             r.data.items.map((a) => (
               <div className="history-card" key={a.id}>
                 <Status value={a.status} />
-                <h3>
+                <h3 className="activity-summary">
                   <Link href={`/work/${a.id}`}>{a.summary}</Link>
                 </h3>
                 <p>

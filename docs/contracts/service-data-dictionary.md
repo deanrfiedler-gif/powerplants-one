@@ -1,6 +1,6 @@
 # PP-01 — Service data and choice dictionary
 
-**Edition:** r12 · **Status:** Logical and physical contract; P01–P10 and CRM I1 implement the bounded subsets explicitly identified below. Actual verification/publication is recorded in each handover. This is not an exported CREMS/MYOB schema.
+**Edition:** r13 · **Status:** Logical and physical contract; P01–P10 and CRM I1–I2 implement the bounded subsets explicitly identified below. Actual verification/publication is recorded in each handover. This is not an exported CREMS/MYOB schema.
 
 BP-03 I1 adds only the explicitly identified opportunity amendment below; its actual verification/publication is in the [I1 handover](../delivery/crm-i1-handover.md).
 
@@ -433,3 +433,9 @@ Seed receipt 10 creates configuration and explicit CRM read/create/edit grants f
 | `finance_templates`, `finance_template_policy`, `finance_render_jobs`, `finance_render_attempts`, `finance_issues` | Immutable template definition; current policy; exact reserved source/input/output, recoverable two-minute lease and five-attempt bound; original manifest/provider version/hash/bytes, actual release/audience |
 
 SyntheticManual/SyntheticApi are the only physical modes. States are Draft, ReadyForReview, Approved, Returned, AwaitingERP, OutcomeUnknown, ReconciliationRequired, Reconciled and Cancelled. Quantity numerics are six-place exact values with strict API decimal strings; currency fixture values are two-place supplied AUD amounts. Null means unresolved/unavailable, not zero. A stored target and a received Processed outcome are different facts. P09's accepted attendance and original Draft field flags remain unchanged. All commands use current server-derived Finance capabilities and record scope; scope ownership grants no Finance approval.
+
+## BP-03 I2 read projection — no physical change
+
+The [I2 decision](../decisions/crm-i2-worklist.md) adds no table, migration, fixture, identity kind or reference allocation. `WorklistItem` projects actual Opportunity identity/title/version/stage/Open outcome/stage-entry/source update, company/site/organisation context and accountable owner. Its designated Activity projection independently supplies ID, summary, due status and action owner only when every linked target remains visible. Activity completion still derives Needed without a stage command.
+
+Stage definitions come from the immutable I1 catalogue. Counts use only the returned permitted page; explicit read-window fields distinguish all results, intermediate pages and a final partial page. Ephemeral signed cursor state is process memory and client-held read metadata; it is not a business record, durable preference, offline original or permission grant. Restart invalidates the cursor while all accepted opportunity/action/event/receipt data remains durable. Actual execution belongs to the [I2 handover](../delivery/crm-i2-handover.md).

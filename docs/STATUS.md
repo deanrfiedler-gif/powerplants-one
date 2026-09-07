@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 6 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P10 implemented; exact verification/publication governed by the P10 handover and linked external record; completed P09 publication remains authoritative. PP-01 remains incomplete.
+**Updated:** 7 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P09/P10, CRM I1–I2 and estimating E1 bounded implementations; exact verification/publication governed by their handovers and external records. PP-01 remains incomplete.
 
 ## Current direction
 
@@ -79,7 +79,7 @@ P09 issue #36 / PR #37 implement exact completion submission, authorised review/
 
 ## BP-03 I1 implementation and publication
 
-[Issue #39](https://github.com/deanrfiedler-gif/powerplants-one/issues/39) authorises only synthetic owned opportunity and qualification follow-up. [I1 handover](delivery/crm-i1-handover.md) records the implemented slice, executed component checks, failed-run dispositions and actual publication status. Final merged-main evidence belongs to its linked external record. [ADR-0015](decisions/ADR-0015-crm-i1-owned-opportunities.md) reserves migration 0010 after P09's 0009. P09 remains separately owned in #36/#37. [I2 starter](delivery/crm-i2-starter.md) prepares only a scoped Board/Grid worklist using the accepted brand handover and I1 contracts; I2 has not begun. Full AT-25 and PPO-009 remain open; no operational transition is implied.
+[Issue #39](https://github.com/deanrfiedler-gif/powerplants-one/issues/39) authorises only synthetic owned opportunity and qualification follow-up. [I1 handover](delivery/crm-i1-handover.md) records the implemented slice, executed component checks, failed-run dispositions and actual publication status. Final merged-main evidence belongs to its linked external record. [ADR-0015](decisions/ADR-0015-crm-i1-owned-opportunities.md) reserves migration 0010 after P09's 0009. P09 remains separately owned in #36/#37. [I2 starter](delivery/crm-i2-starter.md) prepares only a scoped Board/Grid worklist using the accepted brand handover and I1 contracts; the user has now invoked I2; its bounded implementation and source-specific verification/publication are recorded below. Full AT-25 and PPO-009 remain open; no operational transition is implied.
 
 ## CRM UI audit revision
 
@@ -89,7 +89,13 @@ Dean authorised the next design revision after the published Board/Grid audit. T
 
 Dean separately authorised the complete bounded P10 implementation and normal checked merge, followed by P11 starter preparation only. [Issue #45](https://github.com/deanrfiedler-gif/powerplants-one/issues/45), [PR #48](https://github.com/deanrfiedler-gif/powerplants-one/pull/48), [ADR-0016](decisions/ADR-0016-p10-finance-handoff.md) and the [P10 handover](delivery/p10-handover.md) govern current work. The source prerequisite is the completed P09 external publication, subsequently preserved through CRM I1 and estimating discovery main. Earlier P10 preparation-only statements describe the P09 boundary and are superseded by this explicit authority.
 
-SC-12/SC-13, DAT-10, API-C19–22/TR-14 and restricted OUT-14 are implemented on the P10 branch and undergoing exact-runtime CI verification. Original captured quantities, exact Service approvals, allocated/billable quantities and actual synthetic target quantities remain separate. Incomplete declarations and stale sources block readiness. Account F-01–F-05 retain as-at, completeness, reversals and separate cash. All master requirement and AT completion claims remain unchanged. P11/P12 implementation, hosting and live integrations remain unstarted.
+SC-12/SC-13, DAT-10, API-C19–22/TR-14 and restricted OUT-14 are implemented; source-specific verification and actual-main publication are governed by the P10 handover and linked external record. Original captured quantities, exact Service approvals, allocated/billable quantities and actual synthetic target quantities remain separate. Incomplete declarations and stale sources block readiness. Account F-01–F-05 retain as-at, completeness, reversals and separate cash. All master requirement and AT completion claims remain unchanged. P11/P12 implementation, hosting and live integrations remain unstarted.
+
+## BP-03 I2 scoped Board/Grid implementation
+
+[Issue #43](https://github.com/deanrfiedler-gif/powerplants-one/issues/43) / [PR #47](https://github.com/deanrfiedler-gif/powerplants-one/pull/47) implements one server-authorised opportunity query with Board/Grid presentations, retained search/filter/sort/page context, two actual stages, Open outcome and canonical I1 qualification/Activity paths. [Handover](delivery/crm-i2-handover.md) and [decision](decisions/crm-i2-worklist.md) track source-specific checks and the external publication ledger. Implementation, completed runtime checks, actual merge/main verification and business acceptance remain distinct.
+
+Shared brand tokens and intact logo, compact phone navigation/identity, page-derived counts, read-only filter selectors and explicit changed-window recovery are included. No migration, money, owner transfer, reassociation, extra stage, close/reopen, business mutation from switching or CRM offline storage is included. P10 #45 and E1 #46 reservations remain separately owned. All accepted baseline suites, issued bytes and 78 parents remain preserved. The [next controlled handover contract starter](delivery/crm-i2-ownership-contract-starter.md) is prepared only and requires verified I2 publication plus a new invocation. Full AT-25 remains Planned; #9 remains open.
 
 ## PPO-010 estimating and quotation discovery
 
