@@ -12,13 +12,12 @@ import { unavailable, AppError } from "../platform/errors";
 import { financeContext, hash, blocked } from "./context";
 import { currentRevision, financeLines, bump } from "./service";
 import { command } from "./validation";
+import { type FinanceOutput, type ReservedOutput } from "./render";
+import { supportedTemplateDefinition } from "../documents/p11-template";
 import {
-  currentFinanceTemplate,
-  financeHtml,
-  renderFinance,
-  type FinanceOutput,
-  type ReservedOutput,
-} from "./render";
+  supportedFinanceHtml,
+  supportedRenderFinance,
+} from "../documents/p11-render";
 async function template(c: PoolClient, p: Principal) {
   const t = (
     await c.query(
@@ -28,7 +27,7 @@ async function template(c: PoolClient, p: Principal) {
   ).rows[0];
   if (
     !t ||
-    t.definition !== (await currentFinanceTemplate()) ||
+    t.definition !== (await supportedTemplateDefinition("OUT-14", t.version)) ||
     t.content_hash !== digest(t.definition)
   )
     blocked(
@@ -310,7 +309,11 @@ export async function processFinanceJob(
     await financeContext(database(), p, job.handoff_id, "finance.issue");
     let stored = await documentStore().locate(ctx);
     if (!stored) {
-      const rendered = await renderFinance(s.source, s.output);
+      const rendered = await supportedRenderFinance(
+        s.source,
+        s.output,
+        s.template.version,
+      );
       await hooks.afterRender?.();
       const bundle: Bundle = {
           schema_version: 1,
@@ -331,7 +334,8 @@ export async function processFinanceJob(
     if (
       b.job_id !== id ||
       b.input_hash !== job.input_hash ||
-      b.html !== financeHtml(s.source, s.output) ||
+      b.html !==
+        (await supportedFinanceHtml(s.source, s.output, s.template.version)) ||
       !pdf.subarray(0, 5).equals(Buffer.from("%PDF-"))
     )
       blocked(

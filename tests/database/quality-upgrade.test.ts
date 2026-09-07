@@ -85,6 +85,9 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
     );
     const tables = [
       "finance_definitions",
+      "pack_templates",
+      "report_templates",
+      "finance_templates",
       "finance_handoffs",
       "finance_revisions",
       "finance_sources",
@@ -117,7 +120,7 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
       const result: Record<string, unknown> = {};
       for (const table of tables)
         result[table] = await rows(
-          `SELECT to_jsonb(t) value FROM ppo.${table} t ${table === "finance_definitions" ? "WHERE version=1" : ""} ORDER BY to_jsonb(t)::text`,
+          `SELECT to_jsonb(t) value FROM ppo.${table} t ${["finance_definitions", "pack_templates", "report_templates", "finance_templates"].includes(table) ? "WHERE version=1" : ""} ORDER BY to_jsonb(t)::text`,
         );
       return result;
     };

@@ -22,8 +22,12 @@ import {
 } from "./context";
 import { verifyEvidence } from "./service";
 import { issueCommand } from "./validation";
-import { renderReport, reportHtml, type CustomerSnapshot } from "./render";
-import { currentReportTemplate } from "./template";
+import { type CustomerSnapshot } from "./render";
+import {
+  supportedRenderReport,
+  supportedReportHtml,
+} from "../documents/p11-render";
+import { supportedTemplateDefinition } from "../documents/p11-template";
 type Output = {
   kind: "IssuedReport";
   prepared_at: string;
@@ -83,7 +87,7 @@ async function template(c: Parameters<typeof insert>[0], p: Principal) {
   ).rows[0];
   if (
     !t ||
-    t.definition !== (await currentReportTemplate()) ||
+    t.definition !== (await supportedTemplateDefinition("OUT-10", t.version)) ||
     t.content_hash !== digest(t.definition)
   )
     fail(
@@ -254,7 +258,11 @@ export async function processReportJob(
     await reportContext(database(), p, job.report_id, "report.issue");
     let stored = await documentStore().locate(ctx);
     if (!stored) {
-      const generated = await renderReport(s.source, s.output);
+      const generated = await supportedRenderReport(
+        s.source,
+        s.output,
+        s.template.version,
+      );
       await hooks.afterRender?.();
       const bundle: Bundle = {
         schema_version: 1,
@@ -281,7 +289,8 @@ export async function processReportJob(
       b.schema_version !== 1 ||
       b.job_id !== id ||
       b.input_hash !== job.input_hash ||
-      b.html !== reportHtml(s.source, s.output) ||
+      b.html !==
+        (await supportedReportHtml(s.source, s.output, s.template.version)) ||
       !pdf.subarray(0, 5).equals(Buffer.from("%PDF-"))
     )
       fail(

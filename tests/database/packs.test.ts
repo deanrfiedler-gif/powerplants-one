@@ -294,12 +294,12 @@ for (const change of [
           );
         if (change === "template") {
           await database().query(
-            "INSERT INTO ppo.pack_templates(id,workspace_id,version,name,renderer_version,definition,content_hash) SELECT $1,workspace_id,2,name,renderer_version,definition,content_hash FROM ppo.pack_templates WHERE id=$2",
-            [id("c1", 2), id("c1")],
+            "INSERT INTO ppo.pack_templates(id,workspace_id,version,name,renderer_version,definition,content_hash) SELECT $1,workspace_id,(SELECT max(version)+1 FROM ppo.pack_templates),name,renderer_version,definition,content_hash FROM ppo.pack_templates WHERE id=$2",
+            [id("c1", 99), id("c1")],
           );
           await database().query(
             "UPDATE ppo.pack_policy SET version=version+1,template_id=$1",
-            [id("c1", 2)],
+            [id("c1", 99)],
           );
         }
         if (change === "permission")

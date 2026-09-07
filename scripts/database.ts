@@ -67,6 +67,7 @@ export async function seed(through = 14) {
       [11, "seed-p10.sql"],
       [12, "seed-estimating-e1.sql"],
       [13, "seed-p11.sql"],
+      [14, "seed-p11-templates.sql"],
     ] as const) {
       if (version > through) break;
       const prior = await client.query(
@@ -95,6 +96,11 @@ export async function seed(through = 14) {
       if (version === 13) {
         const { seedP11Finance } = await import("../src/finance/p11-fixtures");
         await seedP11Finance(client);
+      }
+      if (version === 14) {
+        const { seedP11Templates } =
+          await import("../src/documents/p11-fixtures");
+        await seedP11Templates(client);
       }
       await client.query("INSERT INTO ppo.seed_receipts(version) VALUES($1)", [
         version,

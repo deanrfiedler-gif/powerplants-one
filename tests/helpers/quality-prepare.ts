@@ -540,7 +540,10 @@ export async function prepareJourney(page: Page, info: TestInfo) {
       .getByRole("button", { name: "Move or reassign", exact: true })
       .focus();
     await page.keyboard.press("Enter");
-    const move = page.getByRole("dialog");
+    const move = page.getByRole("region", {
+      name: "Move or reassign",
+      exact: true,
+    });
     await move
       .getByLabel("Start (site time)", { exact: true })
       .fill(movedDay + "T10:00");
