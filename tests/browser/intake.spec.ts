@@ -10,9 +10,8 @@ async function identity(page: Page, profile = "coordinator") {
   await page
     .getByRole("button", { name: "Use this identity", exact: true })
     .click();
-  await expect(
-    page.getByRole("button", { name: "Use this identity", exact: true }),
-  ).toBeEnabled();
+  await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
+  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
 }
 async function noOverflow(page: Page) {
   expect(

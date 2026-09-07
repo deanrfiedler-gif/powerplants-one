@@ -138,6 +138,7 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   await expect(actionLink).toHaveText(inputs[0].initial_action.summary);
   await expect(actionLink).toHaveAttribute("href", `/work/${inputs[0].initial_action.id}`);
   const activityPage = await page.context().newPage();
+  await activityPage.setViewportSize({ width: 320, height: 844 });
   await activityPage.goto(`/work/${inputs[0].initial_action.id}`);
   await expect(activityPage.getByRole("heading", { level: 1 })).toHaveText(inputs[0].initial_action.summary);
   await activityPage.getByRole("heading", { level: 1 }).evaluate(e => e.scrollIntoView({block:"end"}));

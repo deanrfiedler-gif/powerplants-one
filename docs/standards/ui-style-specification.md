@@ -1,7 +1,7 @@
 ---
 title: Powerplants One - Shared UI style specification
-revision: r03
-date: 2026-09-06
+revision: r04
+date: 2026-09-07
 status: Brand-derived visual direction; functional extensions proposed
 owner: Dean Fiedler
 scope: Shared visual foundation; BP-03 C02 CRM board and grid mockups

@@ -1,6 +1,6 @@
 # Shared layout and CRM — accepted r08 implementation
 
-**Revision:** r01 · **Date:** 7 September 2026 · **Owner:** Dean Fiedler · **Status:** Implemented locally; verification and publication in progress.
+**Revision:** r01 · **Date:** 7 September 2026 · **Owner:** Dean Fiedler · **Status:** Implemented in draft PR #59; verification in progress.
 
 ## Authority and source
 
@@ -26,6 +26,8 @@ New opportunity, qualification and next-Activity planning use the existing I1 fo
 - The accepted HTML's earlier standalone browser results do not verify this application implementation. Current-source CI and original captures must be inspected before a rendered-verification claim.
 
 ## Publication and remaining limits
+
+Draft [PR #59](https://github.com/deanrfiedler-gif/powerplants-one/pull/59) first published source `ef4bb7b479becb29f61ea47d418b0a97aa2903de`. Documentation assurance and the retained standalone design assurance passed. Application run `34128578222` passed static/build and the focused I2 suite, then failed at the Finance test identity helper; Estimating run `34128578095` passed its database, HTTP and restart proofs, then failed at the same helper assumption. Those failures are retained: the old assertion looked for the now-collapsed “Use this identity” button. The correction waits for the confirmed identity's “Change identity” control and the settled identity region. It changes no business assertion or timeout. The 320px canonical long-Activity capture also now explicitly sets that viewport on its separate page. Neither initial failed run is treated as a complete assurance pass.
 
 A fresh private-repository read confirms `deanrfiedler-gif/powerplants-one` and its existing permissions. Direct Git clone has no local credential, so source was fetched through the connected GitHub tools and every fetched blob checked against its Git SHA. Local Git is an inspection snapshot; publication commits must use the actual remote main as parent and preserve its full tree.
 
