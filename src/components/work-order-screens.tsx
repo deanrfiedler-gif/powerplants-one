@@ -1206,17 +1206,18 @@ function VisitForm({
     [windowEnd, setWindowEnd] = useState(""),
     [commitment, setCommitment] = useState("Unknown"),
     [preparation, setPreparation] = useState("Unknown"),
-    [expected, setExpected] = useState(w.version),
+    [expected, setExpected] = useState<number | null>(null),
     [id] = useState(() => crypto.randomUUID());
   const cmd = useCommand();
   return (
     <ValidationFields error={cmd.error}>
       <form
+        onChangeCapture={() => setExpected((current) => current ?? w.version)}
         onSubmit={async (e) => {
           e.preventDefault();
           const result = await cmd.send(`service/work-orders/${w.id}/visits`, {
             id,
-            expected_version: expected,
+            expected_version: expected ?? w.version,
             scope_revision_id: r.id,
             scope_version: r.version,
             start_at: start ? new Date(start).toISOString() : null,
@@ -1236,7 +1237,7 @@ function VisitForm({
       >
         <ErrorNotice error={cmd.error} />
         <ConflictReview
-          version={expected}
+          version={expected ?? w.version}
           latest={w.version}
           onAdopt={() => {
             cmd.clear();

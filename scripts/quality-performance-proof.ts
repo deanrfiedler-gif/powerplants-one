@@ -152,17 +152,21 @@ try {
               rows: number | null = null,
               error: string | null = null;
             try {
-              const response = page.waitForResponse(
-                (r) =>
-                  new URL(r.url()).pathname === view.api &&
-                  r.request().method() === "GET",
-                { timeout: 120000 },
-              );
-              await page.goto(origin + view.route, {
-                waitUntil: "domcontentloaded",
-                timeout: 120000,
-              });
-              const received = await response;
+              // Attach rejection handlers to both operations immediately. A
+              // navigation failure must remain an original failed sample, not
+              // leave a response waiter that terminates the measurement early.
+              const [received] = await Promise.all([
+                page.waitForResponse(
+                  (r) =>
+                    new URL(r.url()).pathname === view.api &&
+                    r.request().method() === "GET",
+                  { timeout: 120000 },
+                ),
+                page.goto(origin + view.route, {
+                  waitUntil: "domcontentloaded",
+                  timeout: 120000,
+                }),
+              ]);
               status = received.status();
               const body = await received.json();
               rows = Array.isArray(body.items) ? body.items.length : null;
@@ -190,6 +194,37 @@ try {
               );
             } catch (e) {
               error = e instanceof Error ? e.message : "Read failed";
+              if (virtual_user === 0) {
+                const name = `${viewport.name}-${view.name.replaceAll(" ", "-")}-wave-${wave}-failure`;
+                const bytes = await page
+                  .screenshot({
+                    path: `${root}/${name}.png`,
+                    fullPage: true,
+                    timeout: 10000,
+                  })
+                  .catch(() => null);
+                await writeFile(
+                  `${root}/${name}-proof.json`,
+                  JSON.stringify(
+                    {
+                      ...provenance,
+                      viewport,
+                      scenario: name,
+                      error,
+                      byte_count: bytes?.length ?? null,
+                      sha256: bytes
+                        ? createHash("sha256").update(bytes).digest("hex")
+                        : null,
+                      business_errors: await page
+                        .locator('.business-error[role="alert"]')
+                        .allTextContents()
+                        .catch(() => []),
+                    },
+                    null,
+                    2,
+                  ),
+                );
+              }
             }
             samples.push({
               viewport: viewport.name,

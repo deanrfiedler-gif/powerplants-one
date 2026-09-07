@@ -308,7 +308,14 @@ export function PackListScreen() {
               <h2>
                 <Link href={`/service/packs/${p.id}`}>{p.display_number}</Link>
               </h2>
-              <p>{p.status} · {p.needs_review ? "Preparation or review required" : p.status === "Issued" ? "Issued" : "Not issued"}</p>
+              <p>
+                {p.status} ·{" "}
+                {p.needs_review
+                  ? "Preparation or review required"
+                  : p.status === "Issued"
+                    ? "Issued"
+                    : "Not issued"}
+              </p>
               <Link href={`/service/appointments/${p.appointment_id}`}>
                 {p.appointment_reference ?? "Appointment"}
               </Link>
@@ -397,13 +404,21 @@ export function PackScreen({ id }: { id: string }) {
     }
   }
   const busy = working || command.busy || r.loading || !!r.error;
-  if (isDenied(command.error) || isDenied(error)) return <ErrorNotice error={isDenied(command.error) ? command.error : error} />;
+  if (isDenied(command.error) || isDenied(error))
+    return (
+      <ErrorNotice error={isDenied(command.error) ? command.error : error} />
+    );
   return (
     <div className="business-page">
       <Intro title={p?.display_number ?? "Job pack"}>
         <Link href="/service/packs">All job packs</Link>
       </Intro>
-      <ReadState loading={r.loading} error={r.error ?? error} retry={r.reload} retained={!!p} />
+      <ReadState
+        loading={r.loading}
+        error={r.error ?? error}
+        retry={r.reload}
+        retained={!!p}
+      />
       {p && (
         <>
           <div
@@ -738,17 +753,31 @@ export function DocumentScreen({ id }: { id: string }) {
       }[];
     }
   >(`pack-issues/${id}/manifest`);
+  if (isDenied(status.error) || isDenied(r.error))
+    return (
+      <ErrorNotice error={isDenied(status.error) ? status.error : r.error} />
+    );
   return (
     <div className="business-page">
       <Intro title="Exact issued job pack">
         <Link href="/service/packs">Back to job packs</Link>
       </Intro>
-      <ReadState loading={r.loading} error={r.error} retry={r.reload} retained={!!r.data} />
+      <ReadState
+        loading={r.loading}
+        error={r.error}
+        retry={r.reload}
+        retained={!!r.data}
+      />
       {r.data && (
         <>
           <h2>{r.data.filename}</h2>
-          <ErrorNotice error={status.error} />
-          {status.data && (
+          <ReadState
+            loading={status.loading}
+            error={status.error}
+            retry={status.reload}
+            retained={!!status.data}
+          />
+          {status.data && !status.loading && !status.error && (
             <p role="status">
               <strong>
                 {status.data.applicable

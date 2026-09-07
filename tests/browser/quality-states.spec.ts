@@ -256,6 +256,65 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
     await page.reload();
     await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
     await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
+    if (s.id === "SC-14") {
+      // Applicability is a separate authorised read from immutable metadata.
+      // A failed current-status read must not retain a current-use claim.
+      const statusMatch = (url: URL) =>
+        url.pathname === `/api/v1/pack-issues/${packDetail.current_issue_id}`;
+      await page.route(statusMatch, (route) =>
+        route.fulfill({
+          status: 503,
+          contentType: "application/json",
+          body: JSON.stringify({
+            code: "DependencyUnavailable",
+            message: "SYN current applicability unavailable. Retry this read.",
+            retryable: true,
+          }),
+        }),
+      );
+      await page.reload();
+      await expect(
+        page
+          .locator('.business-error[role="alert"]')
+          .filter({ hasText: "SYN current applicability unavailable" }),
+      ).toBeVisible();
+      await expect(
+        page.getByText("Current applicable issue", { exact: true }),
+      ).toHaveCount(0);
+      await expect(
+        page.getByText("Not currently applicable", { exact: true }),
+      ).toHaveCount(0);
+      await capture(page, info, "SC-14-applicability-failed-no-current-claim");
+      await page.unroute(statusMatch);
+      await page.route(statusMatch, (route) =>
+        route.fulfill({
+          status: 403,
+          contentType: "application/json",
+          body: JSON.stringify({
+            code: "Forbidden",
+            message: "SYN current issue access revoked.",
+            retryable: false,
+          }),
+        }),
+      );
+      await page.reload();
+      await expect(
+        page
+          .locator('.business-error[role="alert"]')
+          .filter({ hasText: "SYN current issue access revoked" }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("link", { name: "Download exact A4 PDF", exact: true }),
+      ).toHaveCount(0);
+      await expect(
+        page.getByRole("heading", {
+          name: packDetail.issues[0].manifest.filename,
+          exact: true,
+        }),
+      ).toHaveCount(0);
+      await capture(page, info, "SC-14-secondary-denial-clears-manifest");
+      await page.unroute(statusMatch);
+    }
     if (s.list) {
       await page.route(match, (route) =>
         route.fulfill({
