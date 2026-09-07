@@ -106,12 +106,23 @@ async function issuePack(page: Page, pid: string) {
       })
       .click(),
   );
+  const processed = page.waitForResponse(
+    (r) =>
+      /\/api\/v1\/render-jobs\/[^/]+\/retry$/.test(r.url()) &&
+      r.request().method() === "POST",
+  );
   await page
     .getByRole("button", {
       name: "Process or recover original output",
       exact: true,
     })
     .click();
+  const response = await processed;
+  expect(response.status(), await response.text()).toBe(200);
+  expect(response.headers()["cache-control"]).toBe("private, no-store");
+  const output = await response.json();
+  expect(output.state).toBe("Issued");
+  expect(output.issue_id).toBeTruthy();
   await expect(
     page.getByRole("link", { name: "Open exact issued document", exact: true }),
   ).toBeVisible({ timeout: 60000 });
@@ -279,13 +290,11 @@ export async function prepareJourney(page: Page, info: TestInfo) {
       .click(),
   );
   await page.getByText("Review a readiness criterion", { exact: true }).click();
-  const review = page
-    .locator("details")
-    .filter({
-      has: page.locator("summary", {
-        hasText: /^Review a readiness criterion$/,
-      }),
-    });
+  const review = page.locator("details").filter({
+    has: page.locator("summary", {
+      hasText: /^Review a readiness criterion$/,
+    }),
+  });
   for (const criterion of [
     "SiteControls",
     "CompetencyPlan",
@@ -330,13 +339,11 @@ export async function prepareJourney(page: Page, info: TestInfo) {
   await page
     .getByText("Review proposed visit preparation", { exact: true })
     .click();
-  const preparation = page
-    .locator("details")
-    .filter({
-      has: page.locator("summary", {
-        hasText: /^Review proposed visit preparation$/,
-      }),
-    });
+  const preparation = page.locator("details").filter({
+    has: page.locator("summary", {
+      hasText: /^Review proposed visit preparation$/,
+    }),
+  });
   await readiness(page, wo, preparation, "ToolPreparation");
   await page.goto(`/service/appointments/${aid}`);
   await contact(page, aid, "Failed");

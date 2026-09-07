@@ -2,7 +2,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { api, ErrorNotice, ReadState, isDenied, useResource, type Failure } from "./business-ui";
+import {
+  api,
+  ErrorNotice,
+  ReadState,
+  isDenied,
+  useResource,
+  type Failure,
+} from "./business-ui";
 import { useIdentity } from "./business-session";
 import type {
   financeOptions,
@@ -241,6 +248,47 @@ export function FinanceQueue() {
             Owned Finance work · dates shown in UTC · due and overdue policy not
             defined · customer distribution disabled
           </div>
+          <aside
+            className={styles.notice}
+            aria-label="Finance counts on this page"
+          >
+            <h2>Current page summary</h2>
+            <p>
+              {q.data.items.length} permitted handoffs on this page. Counts
+              below use the selected state filter and exclude later pages.
+            </p>
+            <dl>
+              <dt>Ready for review</dt>
+              <dd>
+                {
+                  q.data.items.filter((r) => r.status === "ReadyForReview")
+                    .length
+                }{" "}
+                / {q.data.items.length}
+              </dd>
+              <dt>Outcome unknown</dt>
+              <dd>
+                {
+                  q.data.items.filter((r) => r.status === "OutcomeUnknown")
+                    .length
+                }{" "}
+                / {q.data.items.length}
+              </dd>
+              <dt>Reconciliation required</dt>
+              <dd>
+                {
+                  q.data.items.filter(
+                    (r) => r.status === "ReconciliationRequired",
+                  ).length
+                }{" "}
+                / {q.data.items.length}
+              </dd>
+            </dl>
+            <p>
+              These are handoff counts. They do not calculate balances, costs,
+              utilisation or overdue work.
+            </p>
+          </aside>
           {q.data.items.length === 0 ? (
             <div className={styles.empty}>
               <h2>No Finance handoffs</h2>
@@ -769,7 +817,12 @@ export function FinanceDetail({ id }: { id: string }) {
       subtitle="Original sources, approvals, operations and outcomes remain distinct and auditable."
     >
       <Link href="/finance/handoffs">← Finance queue</Link>
-      <ReadState loading={r.loading} error={r.error} retry={r.reload} retained={!!r.data} />
+      <ReadState
+        loading={r.loading}
+        error={r.error}
+        retry={r.reload}
+        retained={!!r.data}
+      />
       {cmd.notice}
       {d && h && (
         <>

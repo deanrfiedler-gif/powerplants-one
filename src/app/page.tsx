@@ -2,7 +2,9 @@ import Link from "next/link";
 export default function Overview() {
   return (
     <>
-      <p className="eyebrow">Customer context & service intake / P03</p>
+      <p className="eyebrow">
+        Synthetic service workflow / Integrated verification
+      </p>
       <section className="hero">
         <div>
           <h1>
@@ -43,7 +45,7 @@ export default function Overview() {
             Customer, site and equipment context. A clear request, authorised
             scope and checked job pack.
           </p>
-          <span className="status-planned">Workflow planned</span>
+          <Link href="/service/work-orders">Explore work preparation</Link>
         </article>
         <article className="card">
           <span className="step">02 / Coordinate</span>
@@ -55,7 +57,7 @@ export default function Overview() {
             Technician commitments, readiness and controlled changes, with the
             right information for the field.
           </p>
-          <span className="status-planned">Workflow planned</span>
+          <Link href="/schedule">Open the service planner</Link>
         </article>
         <article className="card">
           <span className="step">03 / Complete</span>
@@ -67,7 +69,7 @@ export default function Overview() {
             Field evidence, customer acknowledgement, reviewed reports and a
             controlled Finance handoff.
           </p>
-          <span className="status-planned">Workflow planned</span>
+          <Link href="/my-jobs">Open assigned field work</Link>
         </article>
       </div>
       <section className="scope-note">
@@ -75,14 +77,16 @@ export default function Overview() {
           <h2>What you can explore today</h2>
           <p>
             Scoped customer, contact, site and equipment views; service intake
-            and triage; owned follow-up with explicit unknowns.{" "}
+            and triage; owned follow-up, controlled booking, exact issued packs,
+            personal field evidence and offline recovery. Service review and
+            synthetic Finance handoffs use separate permissions.{" "}
             <Link href="/foundation">Open foundation checks</Link> for
             diagnostics.
           </p>
         </div>
         <p>
-          Work authorisation, scheduling, documents, offline work and Finance
-          processing follow in later increments.
+          Integrated verification is in progress. The complete prototype remains
+          subject to its delivery and recovery acceptance after P12.
         </p>
       </section>
     </>

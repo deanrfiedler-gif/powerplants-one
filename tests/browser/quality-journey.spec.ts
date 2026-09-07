@@ -6,6 +6,7 @@ import { prepareJourney, committed } from "../helpers/quality-prepare";
 import { completion, submit, review, issue } from "../helpers/quality-report";
 import { png } from "../helpers/field";
 import { financeJourney } from "../helpers/quality-finance";
+test.use({ actionTimeout: 15000, navigationTimeout: 60000 });
 
 test("P11 selected UI service-to-Finance journey preserves controlled booking, personal originals, exact response and reconciled Travel no-posting", async ({
   page,

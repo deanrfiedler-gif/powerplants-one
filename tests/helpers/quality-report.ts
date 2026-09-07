@@ -141,12 +141,28 @@ export async function issue(page: Page) {
       exact: true,
     }),
   ).toBeVisible();
+  // Rendering is an asynchronous controlled command. Observe its actual result
+  // before asserting the refreshed UI; an arbitrary five-second render race
+  // does not establish whether the original output was issued.
+  const rendered = page.waitForResponse(
+    (r) =>
+      /\/api\/v1\/report-render-jobs\/[^/]+\/retry$/.test(r.url()) &&
+      r.request().method() === "POST",
+  );
   await page
     .getByRole("button", {
       name: "Generate / recover original report",
       exact: true,
     })
     .click();
+  const response = await rendered;
+  expect(response.status(), await response.text()).toBe(200);
+  expect(response.headers()["cache-control"]).toBe("private, no-store");
+  const output = await response.json();
+  expect(output.state).toBe("Issued");
+  expect(output.issue_id).toBeTruthy();
+  expect(output.output_available).toBe(true);
+  expect(output.attempts).toBeGreaterThan(0);
   await expect(
     page.getByRole("heading", { name: /Revision \d+ · Issued/ }),
   ).toBeVisible();

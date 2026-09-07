@@ -225,6 +225,12 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
       if (refresh && (await refresh.count())) await refresh.click();
       else await page.reload();
       await expect(page.getByText(/^Loading .*…$/).first()).toBeVisible();
+      await expect(
+        page.getByRole("heading", {
+          name: "Current page summary",
+          exact: true,
+        }),
+      ).toHaveCount(0);
       await capture(page, info, `${s.id}-loading`);
     } finally {
       release();
@@ -239,6 +245,9 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
       page.getByText(
         /^(No permitted (activities|service requests|submissions)|No current assigned visits|No Finance handoffs|No job packs are available)/,
       ),
+    ).toHaveCount(0);
+    await expect(
+      page.getByRole("heading", { name: "Current page summary", exact: true }),
     ).toHaveCount(0);
     await capture(page, info, `${s.id}-failed`);
     await page.unroute(match);
@@ -303,6 +312,9 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
       }),
     ).toHaveCount(0);
     expect(JSON.stringify(deniedBody)).not.toContain(source.report_id);
+    await expect(
+      page.getByRole("heading", { name: "Current page summary", exact: true }),
+    ).toHaveCount(0);
     await capture(page, info, `${s.id}-denied`);
     proof.push({
       screen: s.id,
