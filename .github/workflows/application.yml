@@ -46,6 +46,7 @@ jobs:
       - name: Static, unit and build checks
         run: npm run check
       - name: Configure disposable loopback database
+        id: database_setup
         run: |
           cp .env.example .env.local
           python3 - <<'PY'
@@ -72,6 +73,7 @@ jobs:
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
           npx playwright test tests/browser/quality-journey.spec.ts --output verification-evidence/p11-journey-browser --reporter=list,json
       - name: Focused P11 identity, validation and retained recovery proof
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-focused-browser/results.json
         run: |
@@ -90,10 +92,12 @@ jobs:
             !**/trace.zip
           retention-days: 14
       - name: Focused P10 desktop and phone review, allocation and reconciliation
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
           npx playwright test tests/browser/finance.spec.ts --output verification-evidence/p10-focused-browser --reporter=list
       - name: P10 original claim, unknown acceptance and exact output through three database and four application/browser restarts
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: |
@@ -108,14 +112,17 @@ jobs:
             node --env-file=.env.local --import tsx scripts/finance-restart-proof.ts "$phase"
           done
       - name: Focused P10 Finance source, processing and account proof
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/finance*.test.ts
       - name: Verify documented synthetic reset command
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         run: |
           if npm run db:reset; then exit 1; fi
           if PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic npm run db:reset; then exit 1; fi
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
           npm run db:health
       - name: P09 exact submission and response across three database and four application/browser restarts
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: |
@@ -129,14 +136,19 @@ jobs:
             node --env-file=.env.local --import tsx scripts/report-restart-proof.ts "$phase"
           done
       - name: Focused P09 exact return proposal and customer presentation proof
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         run: npx playwright test tests/browser/reports.spec.ts --output verification-evidence/p09-focused-browser --reporter=list
       - name: Focused I2 identity, query equivalence and responsive presentation proof
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         run: npx playwright test tests/browser/crm-i2.spec.ts --output verification-evidence/i2-focused-browser --reporter=list
       - name: Real PostgreSQL behaviour and competing transactions
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         run: npm run test:db
       - name: Restore deterministic fixtures for HTTP and browser suites
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         run: PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
       - name: Prove persistence across PostgreSQL process restart
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: |
@@ -148,6 +160,7 @@ jobs:
           done
           node --env-file=.env.local --import tsx scripts/persistence-proof.ts verify
       - name: Actual HTTP routes and startup boundary
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         run: |
           if npm start; then exit 1; fi
           node --env-file=.env.local --import tsx scripts/local-server.ts > "$RUNNER_TEMP/ppo-http.log" 2>&1 &
@@ -170,6 +183,7 @@ jobs:
           test "$ppo_http_ready" = 1
           npm run test:http
       - name: Offline originals across application, PostgreSQL and browser process restarts
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: |
@@ -187,6 +201,7 @@ jobs:
           done
           node --env-file=.env.local --import tsx scripts/offline-restart-proof.ts verify
       - name: CRM I1 accepted journey across application and PostgreSQL restarts
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: |
@@ -198,6 +213,7 @@ jobs:
           done
           node --env-file=.env.local --import tsx scripts/crm-restart-proof.ts verify
       - name: Desktop and mobile browser checks
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         run: |
           npx playwright install --with-deps chromium
           npm run test:browser

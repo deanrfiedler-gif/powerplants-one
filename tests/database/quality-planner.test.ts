@@ -31,6 +31,26 @@ test("P11 planner summaries retain exact permitted card and booking facts withou
     const p = await principal(profile),
       schedule = await readSchedule(p, period);
     assert.ok(schedule.items.length, profile);
+    const candidates = (
+      await database().query(
+        "SELECT id FROM ppo.appointments WHERE workspace_id=$1 AND start_at<$3 AND end_at>$2 ORDER BY start_at,id",
+        [p.workspace_id, period.from, period.to],
+      )
+    ).rows;
+    const individuallyVisible: string[] = [];
+    for (const row of candidates) {
+      try {
+        await readAppointment(p, row.id);
+        individuallyVisible.push(row.id);
+      } catch (error) {
+        assert.ok(denied(error), `Unexpected detail failure: ${String(error)}`);
+      }
+    }
+    assert.deepEqual(
+      schedule.items.map((a) => a.id),
+      individuallyVisible,
+      `${profile}: no silently missing or extra cards`,
+    );
     for (const item of schedule.items) {
       const detail = (await readAppointment(p, item.id)).items[0];
       const { projection, requests, ...facts } = item;

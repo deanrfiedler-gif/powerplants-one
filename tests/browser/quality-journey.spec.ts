@@ -111,6 +111,12 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
     .getByLabel("Evidence type", { exact: true })
     .selectOption("Material");
   await page
+    .getByLabel("Authorised task", { exact: true })
+    .selectOption(job.scope.items[0].id);
+  await page
+    .getByLabel("Affected asset", { exact: true })
+    .selectOption(job.scope.items[0].assets[0].id);
+  await page
     .getByLabel("Material direction", { exact: true })
     .selectOption("Consumed");
   await page
@@ -135,6 +141,12 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
     .getByLabel("Evidence type", { exact: true })
     .selectOption("Reading");
   await page
+    .getByLabel("Authorised task", { exact: true })
+    .selectOption(job.scope.items[0].id);
+  await page
+    .getByLabel("Affected asset", { exact: true })
+    .selectOption(job.scope.items[0].assets[0].id);
+  await page
     .getByLabel("Reading name", { exact: true })
     .fill("SYN external display value");
   await page.getByLabel("Numeric value", { exact: true }).fill("12.4");
@@ -158,6 +170,12 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
   await page
     .getByLabel("Evidence type", { exact: true })
     .selectOption("Checklist");
+  await page
+    .getByLabel("Authorised task", { exact: true })
+    .selectOption(job.scope.items[1].id);
+  await page
+    .getByLabel("Affected asset", { exact: true })
+    .selectOption(job.scope.items[1].assets[0].id);
   await page
     .getByLabel("Checklist result", { exact: true })
     .selectOption("NotPerformed");
@@ -202,6 +220,12 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
     .getByLabel("Evidence type", { exact: true })
     .selectOption("Observation");
   await page
+    .getByLabel("Original authorised task", { exact: true })
+    .selectOption(job.scope.items[0].id);
+  await page
+    .getByLabel("Affected asset", { exact: true })
+    .selectOption(job.scope.items[0].assets[0].id);
+  await page
     .getByLabel("Finding", { exact: true })
     .fill(
       "SYN original offline finding: label unclear and repeated alarm persists.",
@@ -224,6 +248,12 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
     .click();
   await expect(page.locator("#queue .queue-row")).toHaveCount(1);
   await page.getByLabel("Evidence type", { exact: true }).selectOption("Photo");
+  await page
+    .getByLabel("Original authorised task", { exact: true })
+    .selectOption(job.scope.items[0].id);
+  await page
+    .getByLabel("Affected asset", { exact: true })
+    .selectOption(job.scope.items[0].assets[0].id);
   const bytes = png();
   await page.getByLabel("Original synthetic PNG").setInputFiles({
     name: "SYN-P11-original.png",
