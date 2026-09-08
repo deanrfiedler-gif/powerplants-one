@@ -11,6 +11,8 @@ import { qualityLoadFixture } from "./quality-load-fixture";
 const root = "verification-evidence/p11-performance";
 await mkdir(root, { recursive: true });
 const origin = "http://127.0.0.1:3000";
+const channel = process.env.PPO_PROOF_BROWSER_CHANNEL;
+assert.ok(channel === undefined || channel === "chromium", "Only the pinned bundled Chromium comparison is supported");
 async function assetProbe(path: string) {
   // A separate post-failure server probe, never a replacement measured sample.
   const started = performance.now();
@@ -115,6 +117,7 @@ const samples: {
   core_requests_with_network_rule: number;
   error: string | null;
 }[] = [];
+const captureFailures: { viewport: string; view: string }[] = [];
 let browser: Awaited<ReturnType<typeof chromium.launch>> | undefined;
 try {
   let ready = false;
@@ -128,7 +131,7 @@ try {
     await new Promise((r) => setTimeout(r, 500));
   }
   assert.ok(ready, "The exact guarded development server must start");
-  browser = await chromium.launch();
+  browser = await chromium.launch(channel ? { channel } : {});
   const views = [
     {
       name: "Customers",
@@ -411,11 +414,15 @@ try {
           `${root}/raw-samples.json`,
           JSON.stringify({ ...provenance, fixture, samples }, null, 2),
         );
+        console.log(JSON.stringify({ event: "PT-27-wave-complete", viewport: viewport.name, view: view.name, wave, samples: samples.length, failures: samples.filter(s => s.error).length }));
       }
+      // A stalled renderer must not prevent later samples or artifact upload
+      // through an unbounded evidence screenshot. Failed captures still fail.
       const bytes = await pages[0].screenshot({
         path: `${root}/${viewport.name}-${view.name.replaceAll(" ", "-")}.png`,
         fullPage: true,
-      });
+        timeout: 10000,
+      }).catch(() => { captureFailures.push({ viewport: viewport.name, view: view.name }); return null; });
       await writeFile(
         `${root}/${viewport.name}-${view.name.replaceAll(" ", "-")}-proof.json`,
         JSON.stringify(
@@ -424,8 +431,9 @@ try {
             scenario: `PT-27 loaded ${view.name} after ten concurrent users`,
             viewport,
             full_page: true,
-            byte_count: bytes.length,
-            sha256: createHash("sha256").update(bytes).digest("hex"),
+            byte_count: bytes?.length ?? null,
+            sha256: bytes ? createHash("sha256").update(bytes).digest("hex") : null,
+            capture_failed: bytes === null,
           },
           null,
           2,
@@ -461,6 +469,7 @@ try {
         profile: {
           node: process.version,
           browser: browser.version(),
+          browser_channel: channel ?? "chromium-headless-shell (Playwright default)",
           platform: platform(),
           os_release: release(),
           arch: arch(),
@@ -487,6 +496,7 @@ try {
         },
         groups,
         samples,
+        capture_failures: captureFailures,
       },
       null,
       2,
@@ -499,6 +509,7 @@ try {
     samples.every((s) => !s.error),
     "Core read errors must be investigated; raw timings and failures retained",
   );
+  assert.equal(captureFailures.length, 0, "Selected view evidence capture must also succeed");
 } finally {
   await browser?.close();
   if (server.exitCode === null && server.signalCode === null) {
