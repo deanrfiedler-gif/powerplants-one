@@ -20,6 +20,8 @@ The next bounded diagnostic adds a document-body finish event and at most three 
 
 The original actual-main attempt-2 full job subsequently completed with 306/306 DB, 23/23 HTTP plus the serial HTTP component, guarded reset and all retained CRM/P08/P09/P10 database/application/browser/offline restart gates passed. Its 110/112 browser result remains a failure. The completed log contains the exact Finance support correlation but no underlying exception category or matching PostgreSQL error; no database/root-cause conclusion follows. This outcome is preserved independently from the repair's new runs.
 
+The first repair's focused state run later finished 10 passed / 2 failed: both desktop and phone reached a successful Finance revision save, then the new verification incorrectly treated the detail response as an `items` list. The assertion now uses the actual detail object; final persisted-treatment and source-denial assertions still require execution. The original failed run and captures remain evidence, not a full state-procedure pass.
+
 This is the maintained P11 implementation handover. The authoritative external issue record establishes whether delivery/publication is COMPLETE and supplies the exact final contribution, actual merged-main SHA/tree, completed run IDs/attempts, original evidence and review limits. Until that record is complete, this handover does not establish P12 readiness. Historical checkpoints below retain the facts at their named sources; earlier pending or successful component statements do not establish the latest overall result.
 
 | Area | Current behaviour |

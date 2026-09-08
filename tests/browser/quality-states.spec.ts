@@ -458,7 +458,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
   await page.getByRole("button", { name: "Save Finance draft", exact: true }).click();
   const receipt = await saved;
   expect(receipt.ok(), await receipt.text()).toBe(true);
-  const currentDraft = (await call(page, `finance/handoffs/${cmd.id}`)).items[0];
+  const currentDraft = await call(page, `finance/handoffs/${cmd.id}`);
   expect(currentDraft.revisions[0].treatment_basis).toBe(revisedTreatment);
   await capture(page, info, "finance-form-explicit-read-recovery-saved");
   await page.route(sourcesMatch, (route) => route.fulfill({ status: 403, contentType: "application/json",
