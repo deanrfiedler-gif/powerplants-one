@@ -1,12 +1,18 @@
 # Private Prototype Demo scope and hosting assessment
 
-**Document ID:** PPO-DEMO-DEC · **Revision:** r01 · **Date:** 7 September 2026 · **Owner:** Dean Fiedler — private prototype.
+**Document ID:** PPO-DEMO-DEC · **Revision:** r02 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler — private prototype.
 
-**State:** User-authorised package definition; hosting configuration, account assignments and spend remain proposed. Source main: `923bd9b90412c80782331b7085a6880750f12640`.
+**State:** Private hosted viewing selected by Dean; hosting account, actual configuration, tester assignments and spend remain proposed. Source main: `923bd9b90412c80782331b7085a6880750f12640`.
 
 ## User direction
 
 Dean requested a Private Prototype Demo package defining demonstrated workflows, example dataset, tester access, hosting cost, deployment instructions and reset procedure, with a narrower scope than production readiness. The [package](../delivery/private-prototype-demo.md) is the canonical definition; its [cost model](../delivery/private-prototype-demo-costs.json) preserves the pricing evidence and assumptions.
+
+## Selected viewing method — 8 September 2026
+
+Dean explicitly prefers a private hosted demo that he can open from his smartphone away from his computer and that colleagues can access independently through a link. Adopt that delivery target and retain the three synthetic commercial journeys. Local preparation/rehearsal remains a developer verification option, not a required presentation milestone for Dean. A hosted service must keep working when Dean's computer is off; a cable, screen share or tunnel to his local synthetic server does not meet this target.
+
+Carry forward the Azure assessment and itemised cost model while resolving the subscription/billing owner and Entra tenant. Choosing independent hosted access does not approve a particular paid subscription, grant anyone access, select actual colleagues or claim an environment is already deployed. Account-specific provisioning follows a concrete configuration and quote; current P11/P12 readiness work remains separately owned.
 
 ## Bounded proposal
 

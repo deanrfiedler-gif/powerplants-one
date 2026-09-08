@@ -1,12 +1,14 @@
 # Private Prototype Demo package
 
-**Document ID:** PPO-DEMO-PKG · **Revision:** r01 · **Date:** 7 September 2026 · **Owner:** Dean Fiedler — private prototype.
+**Document ID:** PPO-DEMO-PKG · **Revision:** r02 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler — private prototype.
 
 **State:** Definition and runbook prepared. Local instructions are checked against source; this package has not executed a demonstration, deployed a host or granted tester access. Hosted instructions describe the required implementation and subsequent operator sequence.
 
 **Source baseline:** private repository `deanrfiedler-gif/powerplants-one`, `main` at `923bd9b90412c80782331b7085a6880750f12640`, application/source tree recorded in its commit. [Scope decision](../decisions/private-prototype-demo.md) · [Itemised cost model and source meters](private-prototype-demo-costs.json) · [Existing architecture](../architecture/BP-02-platform-architecture.md).
 
 ## 1. Purpose and boundaries
+
+**Selected viewing method — 8 September 2026:** Dean prefers the private hosted demo so he can open PPO on his smartphone away from his computer and colleagues can use a link independently. Make authenticated hosted evaluation the delivery target. The host must run independently of Dean's computer, with persistent demo records and individual invited-user access. Local setup remains available for implementation checks and rehearsal; a local presentation or USB-connected preview is not a required user-facing milestone before hosting. The hosting account and actual cost remain unresolved; no live URL is claimed by this decision.
 
 Let a small invited group experience real persisted customer context, opportunity follow-up and manual draft estimating, then give Dean specific desktop/phone feedback. Proposed evaluation: two weeks, five invited accounts including the presenter/maintainer, no more than three concurrent users. These are sizing assumptions; no colleague has been selected or invited.
 
