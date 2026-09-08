@@ -2,6 +2,55 @@ import { expect, type Page, type TestInfo } from "@playwright/test";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { mkdir, writeFile } from "node:fs/promises";
+
+// Bounded transport/lifecycle evidence, without bodies, headers, query strings,
+// cookies, error text or raw session traces. Collection never retries navigation.
+export function recordBrowserReads(page: Page, info: TestInfo) {
+  const started = performance.now();
+  const records: Record<string, unknown>[] = [];
+  let dropped = 0;
+  const add = (record: Record<string, unknown>) => {
+    if (records.length < 3000) records.push({ ms: performance.now() - started, ...record });
+    else dropped++;
+  };
+  // Object identity links events; request objects themselves are never serialized.
+  const ids = new WeakMap<object, number>();
+  let nextId = 0;
+  page.on("request", (request) => {
+    const url = new URL(request.url());
+    if (url.origin !== "http://127.0.0.1:3000") return;
+    const id = ++nextId;
+    ids.set(request, id);
+    add({ event: "request", id, method: request.method(), resource: request.resourceType(),
+      path: url.pathname.replace(/[0-9a-f]{8}-[0-9a-f-]{27,}/gi, ":id").replace(/[0-9a-f]{64}/gi, ":hash") });
+  });
+  page.on("response", (response) => {
+    const id = ids.get(response.request());
+    if (id !== undefined) add({ event: "response", id, status: response.status() });
+  });
+  page.on("requestfinished", (request) => {
+    const id = ids.get(request);
+    if (id !== undefined) add({ event: "finished", id });
+  });
+  page.on("requestfailed", (request) => {
+    const id = ids.get(request);
+    if (id !== undefined) add({ event: "failed", id });
+  });
+  page.on("domcontentloaded", () => add({ event: "domcontentloaded" }));
+  page.on("load", () => add({ event: "load" }));
+  return async () => {
+    await mkdir(info.outputPath("."), { recursive: true });
+    await writeFile(info.outputPath("P11-read-lifecycle.json"), JSON.stringify({
+      source_head: process.env.PPO_SOURCE_HEAD,
+      executed_checkout: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
+      executed_tree: execFileSync("git", ["rev-parse", "HEAD^{tree}"], { encoding: "utf8" }).trim(),
+      run_id: process.env.GITHUB_RUN_ID, run_attempt: process.env.GITHUB_RUN_ATTEMPT,
+      scenario: info.title, viewport: page.viewportSize(), status: info.status,
+      limits: "Primary page transport events only; response status does not establish a complete body. No request bodies, headers, query strings, cookies, error text or raw traces.",
+      record_limit: 3000, dropped, records,
+    }, null, 2));
+  };
+}
 export async function call(page: Page, path: string, body?: unknown) {
   const r = await page.request.fetch(`/api/v1/${path}`, {
     method: body === undefined ? "GET" : "POST",

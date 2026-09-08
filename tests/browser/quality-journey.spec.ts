@@ -6,6 +6,7 @@ import {
   identity,
   capture,
   saveOriginal,
+  recordBrowserReads,
 } from "../helpers/quality-browser";
 import { prepareJourney, committed } from "../helpers/quality-prepare";
 import { completion, submit, review, issue } from "../helpers/quality-report";
@@ -13,6 +14,9 @@ import { png } from "../helpers/field";
 import { financeJourney } from "../helpers/quality-finance";
 import { keyActivate, keySelect, keyType } from "../helpers/quality-keyboard";
 test.use({ actionTimeout: 15000, navigationTimeout: 60000 });
+let finishReadEvidence: (() => Promise<void>) | undefined;
+test.beforeEach(({ page }, info) => { finishReadEvidence = recordBrowserReads(page, info); });
+test.afterEach(async () => { await finishReadEvidence?.(); finishReadEvidence = undefined; });
 
 test("P11 selected UI service-to-Finance journey preserves controlled booking, personal originals, exact response and reconciled Travel no-posting", async ({
   page,

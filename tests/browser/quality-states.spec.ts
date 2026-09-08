@@ -1,9 +1,12 @@
 import { test, expect } from "@playwright/test";
 import { writeFile } from "node:fs/promises";
 import { financeHttpSource, httpFinanceDraft } from "../helpers/finance-http";
-import { call, identity, capture } from "../helpers/quality-browser";
+import { call, identity, capture, recordBrowserReads } from "../helpers/quality-browser";
 
 test.use({ actionTimeout: 15000, navigationTimeout: 60000 });
+let finishReadEvidence: (() => Promise<void>) | undefined;
+test.beforeEach(({ page }, info) => { finishReadEvidence = recordBrowserReads(page, info); });
+test.afterEach(async () => { await finishReadEvidence?.(); finishReadEvidence = undefined; });
 
 test("P11 PT-29 pack and report queues never turn failed reads into empty or issued claims", async ({
   page,
@@ -422,4 +425,49 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
     info.outputPath("P11-screen-state-matrix.json"),
     JSON.stringify(proof, null, 2),
   );
+  // Reuse this exact persisted draft to prove initial read recovery, rather
+  // than fabricate a successful Finance context or a mutation receipt.
+  await call(page, "local-session", { profile: "finance" });
+  await page.goto(`/finance/handoffs/${cmd.id}`);
+  const optionsMatch = "**/api/v1/finance/options";
+  const sourcesMatch = `**/api/v1/finance/work-orders/${source.work_order_id}/sources`;
+  const unavailable = { status: 503, contentType: "application/json",
+    body: JSON.stringify({ code: "DependencyUnavailable", message: "SYN Finance read unavailable", retryable: true }) };
+  await page.route(optionsMatch, (route) => route.fulfill(unavailable));
+  await page.route(sourcesMatch, (route) => route.fulfill(unavailable));
+  await page.getByRole("button", { name: "Revise retained draft", exact: true }).click();
+  await expect(page.locator('.business-error[role="alert"]')).toContainText("SYN Finance read unavailable");
+  await expect(page.getByLabel("Finance treatment basis", { exact: true })).toHaveCount(0);
+  await capture(page, info, "finance-form-initial-read-failed");
+  await page.unroute(optionsMatch);
+  await page.getByRole("button", { name: "Retry loading", exact: true }).click();
+  const treatment = page.getByLabel("Finance treatment basis", { exact: true });
+  await expect(treatment).toHaveValue(cmd.treatment_basis);
+  await expect(treatment).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Save Finance draft", exact: true })).toBeDisabled();
+  await expect(page.getByText("No report sources exist for this work order.", { exact: true })).toHaveCount(0);
+  await capture(page, info, "finance-form-source-read-unconfirmed");
+  await page.unroute(sourcesMatch);
+  await page.getByRole("button", { name: "Retry loading", exact: true }).click();
+  await expect(treatment).toBeEnabled();
+  await expect(treatment).toHaveValue(cmd.treatment_basis);
+  const revisedTreatment = `${cmd.treatment_basis} SYN explicit read recovery retains this exact draft.`;
+  await treatment.fill(revisedTreatment);
+  await page.getByLabel("Reason for this saved revision", { exact: true }).fill("SYN verify explicit Finance context recovery against current original sources.");
+  const saved = page.waitForResponse((response) => new URL(response.url()).pathname === `/api/v1/finance/handoffs/${cmd.id}/revise` && response.request().method() === "POST");
+  await page.getByRole("button", { name: "Save Finance draft", exact: true }).click();
+  const receipt = await saved;
+  expect(receipt.ok(), await receipt.text()).toBe(true);
+  const currentDraft = (await call(page, `finance/handoffs/${cmd.id}`)).items[0];
+  expect(currentDraft.revisions[0].treatment_basis).toBe(revisedTreatment);
+  await capture(page, info, "finance-form-explicit-read-recovery-saved");
+  await page.route(sourcesMatch, (route) => route.fulfill({ status: 403, contentType: "application/json",
+    body: JSON.stringify({ code: "Forbidden", message: "SYN current source access refused", retryable: false }) }));
+  await page.getByRole("button", { name: "Revise retained draft", exact: true }).click();
+  await expect(page.locator('.business-error[role="alert"]')).toContainText("SYN current source access refused");
+  await expect(treatment).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Save Finance draft", exact: true })).toHaveCount(0);
+  await expect(page.getByText(revisedTreatment, { exact: true })).toHaveCount(0);
+  await capture(page, info, "finance-form-denied-clears-retained-draft");
+  await page.unroute(sourcesMatch);
 });
