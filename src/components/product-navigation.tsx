@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { ProductIcon, type ProductIconName } from "./product-icons";
 
 const service = [
@@ -33,6 +33,11 @@ export function ProductNavigation() {
   const path = usePathname(), current = moduleFor(path).name;
   const wide = useSyncExternalStore(subscribe, () => window.matchMedia("(min-width: 781px)").matches, () => true);
   const [expanded, setExpanded] = useState(false);
+  const dialog = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    if (!wide && expanded) dialog.current?.showModal();
+    else dialog.current?.close();
+  }, [wide, expanded]);
   const items: { label: string; icon: ProductIconName; href?: string; divider?: boolean }[] = [
     { label: "Overview", icon: "home", href: "/" }, { label: "My Work", icon: "work", href: "/work" },
     { label: "CRM Sales", icon: "sales", href: "/crm/opportunities", divider: true },
@@ -45,25 +50,39 @@ export function ProductNavigation() {
     { label: "Exceptions and recovery", icon: "warning", href: "/admin" },
     { label: "Foundation checks", icon: "settings", href: "/foundation" },
   ];
-  return <aside className="sidebar" onKeyDown={(e) => { if (e.key === "Escape" && expanded) { setExpanded(false); document.getElementById("navigation-toggle")?.focus(); } }}>
+  const navigationItems = items.map(item => <div key={item.label} className={item.divider ? "product-nav-divider" : undefined}>
+    {item.href ? <Link href={item.href} className="product-nav-item" aria-current={current === item.label ? "page" : undefined} onClick={() => setExpanded(false)} title={item.label}><ProductIcon name={item.icon} /><span>{item.label}</span></Link>
+      : <span className="product-nav-item planned-nav" aria-disabled="true" title={`${item.label} — planned`}><ProductIcon name={item.icon} /><span>{item.label} · Planned</span></span>}
+  </div>);
+  const mobile = items.filter(i=>["My Work","CRM Sales","Service","Contacts"].includes(i.label));
+  return <><aside className="sidebar" onKeyDown={(e) => { if (e.key === "Escape" && expanded) { setExpanded(false); document.getElementById("navigation-toggle")?.focus(); } }}>
     <Link href="/" className="brand" aria-label="Powerplants One home" onClick={() => setExpanded(false)}>
-      <Image src="/brand/powerplants-logo-green-white.png" alt="Powerplants Australia" width={66} height={66} unoptimized className="brand-logo" />
+      <Image src="/brand/powerplants-logo-green-white.png" alt="Powerplants Australia" width={66} height={66} unoptimized loading="eager" className="brand-logo" />
     </Link>
-    <button id="navigation-toggle" className="navigation-toggle secondary" aria-label="Menu" aria-expanded={wide || expanded} aria-controls="product-navigation" onClick={() => setExpanded(!expanded)}><ProductIcon name={expanded ? "close" : "menu"} /><span>Menu</span></button>
-    <div id="product-navigation" hidden={!wide && !expanded}>
-      <nav aria-label="Main navigation">
-        {items.map((item) => <div key={item.label} className={item.divider ? "product-nav-divider" : undefined}>
-          {item.href ? <Link href={item.href} className="product-nav-item" aria-current={current === item.label ? "page" : undefined} onClick={() => setExpanded(false)} title={item.label}><ProductIcon name={item.icon} /><span>{item.label}</span></Link>
-            : <span className="product-nav-item planned-nav" aria-disabled="true" title={`${item.label} — planned`}><ProductIcon name={item.icon} /><span>{item.label}</span></span>}
-        </div>)}
-      </nav>
+    <div id="product-navigation" hidden={!wide}>
+      <nav aria-label="Main navigation">{navigationItems}</nav>
     </div>
-  </aside>;
+  </aside>
+  <nav className="mobile-navigation" aria-label="Mobile navigation">
+    {mobile.map(item=><Link key={item.label} href={item.href!} aria-current={current===item.label?"page":undefined}><ProductIcon name={item.icon}/><span>{item.label==="CRM Sales"?"CRM":item.label}</span></Link>)}
+    <button id="navigation-toggle" type="button" aria-label="Menu" aria-haspopup="dialog" aria-expanded={expanded} onClick={()=>setExpanded(true)}><ProductIcon name="menu"/><span>More</span></button>
+  </nav>
+  <dialog ref={dialog} onKeyDown={e => {
+    if(e.key !== "Tab") return;
+    const targets = [...e.currentTarget.querySelectorAll<HTMLElement>('a[href],button:not([disabled])')];
+    const first = targets[0], last = targets.at(-1);
+    if(e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
+    if(!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
+  }} className="mobile-menu" aria-labelledby="mobile-menu-title" onCancel={()=>setExpanded(false)} onClose={()=>setExpanded(false)}>
+    <header><h2 id="mobile-menu-title">Powerplants One</h2><button type="button" aria-label="Close menu" onClick={()=>setExpanded(false)}><ProductIcon name="close"/></button></header>
+    <nav aria-label="All modules">{navigationItems}</nav>
+  </dialog></>;
 }
 export function ProductHeader() {
   const path = usePathname(), current = moduleFor(path);
   return <>
-    <header className="topbar"><div className="product-heading"><span>Powerplants One</span><span aria-hidden="true">/</span><strong>{current.name}</strong></div><span className="prototype-label">Synthetic data only</span></header>
+    <header className="topbar"><Link className="mobile-brand" href="/" aria-label="Powerplants One home"><Image src="/brand/powerplants-logo-green-white.png" alt="Powerplants Australia" width={36} height={36} unoptimized loading="eager" className="brand-logo" /></Link><div className="product-heading"><span>Powerplants One</span><span aria-hidden="true">/</span><strong>{current.name}</strong></div><span className="prototype-label">Synthetic data only</span></header>
     {!!current.tabs.length && <nav className="module-navigation" aria-label={`${current.name} navigation`}>{current.tabs.map(([href, label]) => <Link key={href} href={href} aria-current={matches(path, href) || (href === "/schedule" && matches(path, "/service/appointments")) ? "page" : undefined}>{label}</Link>)}</nav>}
+
   </>;
 }

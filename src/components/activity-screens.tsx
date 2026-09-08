@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { LocalDateTimeField, useUnsavedChanges } from "./record-ui";
 import type { readActivity } from "../activities/activities";
 import { useIdentity } from "./business-session";
 import {
@@ -241,7 +242,7 @@ function ActivityEditor({
 }) {
   const [summary, setSummary] = useState(a.summary),
     [owner, setOwner] = useState(a.owner_id),
-    [due, setDue] = useState(a.due_at?.slice(0, 16) ?? ""),
+    [due, setDue] = useState(a.due_at ?? ""),
     [needed, setNeeded] = useState(a.due_needed),
     [outcome, setOutcome] = useState(""),
     [reason, setReason] = useState(""),
@@ -250,6 +251,7 @@ function ActivityEditor({
     owners = useResource<Envelope<Option>>(
       `selectors/owners?${new URLSearchParams({ company_id: a.company_id, ...(a.site_id ? { site_id: a.site_id } : {}), purpose: "Activity", access_class: a.access_class, activity_id: a.id })}`,
     );
+  useUnsavedChanges(summary !== a.summary || owner !== a.owner_id || due !== (a.due_at ?? "") || needed !== a.due_needed || !!outcome || !!reason, cmd.busy);
   async function act(action: string) {
     const fields =
       action === "update"
@@ -257,7 +259,7 @@ function ActivityEditor({
             summary,
             owner_id: owner,
             due_needed: needed,
-            due_at: needed ? null : due ? `${due}:00Z` : null,
+            due_at: needed ? null : due || null,
           }
         : action === "complete"
           ? { outcome }
@@ -270,6 +272,8 @@ function ActivityEditor({
     );
     if (result) {
       setExpected(result.record_version);
+      setOutcome("");
+      setReason("");
       reload();
     }
   }
@@ -329,8 +333,9 @@ function ActivityEditor({
             void act("update");
           }}
         >
-          <h2>Update follow-up</h2>
+          <h2>Activity actions</h2>
           <fieldset disabled={cmd.busy}>
+            <details className="activity-update"><summary>Update follow-up</summary>
             <div className="form-grid">
               <Field
                 name="activity-summary"
@@ -362,23 +367,13 @@ function ActivityEditor({
                 Due date still needed
               </label>
               {!needed && (
-                <Field
+                <LocalDateTimeField
                   name="activity-due"
-                  label="Due instant (UTC)"
-                  type="datetime-local"
                   value={due}
                   onChange={setDue}
                   required
                 />
               )}
-              <Field
-                name="activity-reason"
-                label="Reason for change"
-                value={reason}
-                onChange={setReason}
-                required
-                maxLength={1000}
-              />
             </div>
             <ReadState
               loading={owners.loading}
@@ -397,6 +392,15 @@ function ActivityEditor({
                 </button>
               )}
             </div>
+            </details>
+              <Field
+                name="activity-reason"
+                label="Reason for change"
+                value={reason}
+                onChange={setReason}
+                required
+                maxLength={1000}
+              />
             {a.can_complete && (
               <>
                 <Field
@@ -442,6 +446,8 @@ function ActivityEditor({
           </button>
         </section>
       )}
+      {["Completed", "Cancelled"].includes(a.status) && a.links.filter(l => l.object_type === "Opportunity").map(l =>
+        <p key={l.object_id}><Link className="button" href={`/crm/opportunities/${l.object_id}`}>Return to opportunity and plan follow-up</Link></p>)}
       <button className="secondary" onClick={reload}>
         Compare current saved version
       </button>
@@ -497,7 +503,7 @@ export function ActivityCreate({
       owner_id: owner,
       summary,
       due_needed: needed,
-      due_at: needed ? null : due ? `${due}:00Z` : null,
+      due_at: needed ? null : due || null,
       access_class: access,
       links: [{ object_type: type, object_id: target }],
       reason: "Create owned synthetic follow-up",

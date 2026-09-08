@@ -5,6 +5,9 @@ export default defineConfig({
   workers: 1,
   timeout: 45000,
   use: {
+    // Exercise the pinned full Chromium implementation. The separate headless
+    // shell stalled before API execution in retained mobile browser evidence.
+    channel: "chromium",
     baseURL: "http://127.0.0.1:3000",
     locale: "en-AU",
     screenshot: "only-on-failure",
@@ -25,13 +28,13 @@ export default defineConfig({
       },
     },
   ],
-  webServer: process.env.CI
-    ? undefined
-    : {
-        command: "npm run dev",
-        url: "http://127.0.0.1:3000",
-        reuseExistingServer: true,
-        timeout: 120000,
-      },
+  // Ordinary workflow browser steps do not start an external server. Keep
+  // ownership here in CI; the separate HTTP/restart scripts own their servers.
+  webServer: {
+    command: "npm run dev",
+    url: "http://127.0.0.1:3000",
+    reuseExistingServer: !process.env.CI,
+    timeout: 120000,
+  },
   reporter: [["list"], ["html", { open: "never" }]],
 });

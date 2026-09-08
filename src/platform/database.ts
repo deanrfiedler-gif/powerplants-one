@@ -1,15 +1,24 @@
 import pg, { type PoolClient } from "pg";
 import { localConfig } from "./config";
+import { proofReadPhase } from "./proof-diagnostics";
+
+export const databasePoolLimits = Object.freeze({
+  // The declared load creates three database-backed reads for each of ten
+  // concurrent users. Keep bounded headroom without changing the 3s failure
+  // boundary or PostgreSQL's own connection limit.
+  max: 32,
+  connectionTimeoutMillis: 3000,
+  idleTimeoutMillis: 10000,
+  statement_timeout: 10000,
+});
+
 let pool: pg.Pool | undefined;
 export function database() {
   const config = localConfig();
   if (pool) return pool;
   pool = new pg.Pool({
     connectionString: config.database_url,
-    max: 8,
-    connectionTimeoutMillis: 3000,
-    idleTimeoutMillis: 10000,
-    statement_timeout: 10000,
+    ...databasePoolLimits,
     application_name: "PPO-P01",
   });
   pool.on("error", () => {
@@ -24,17 +33,24 @@ export function database() {
 export async function transaction<T>(
   work: (client: PoolClient) => Promise<T>,
 ): Promise<T> {
+  proofReadPhase("database-acquire-start");
   const client = await database().connect();
+  proofReadPhase("database-acquired");
   try {
     await client.query("BEGIN");
+    proofReadPhase("database-work-start");
     const result = await work(client);
+    proofReadPhase("database-commit-start");
     await client.query("COMMIT");
+    proofReadPhase("database-committed");
     return result;
   } catch (error) {
+    proofReadPhase("database-rollback-start");
     await client.query("ROLLBACK");
     throw error;
   } finally {
     client.release();
+    proofReadPhase("database-released");
   }
 }
 export async function closeDatabase() {

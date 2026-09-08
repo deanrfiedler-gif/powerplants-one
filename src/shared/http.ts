@@ -8,6 +8,7 @@ import {
 } from "../platform/http";
 import type { Principal } from "../platform/identity";
 import type { OperationReceipt } from "../platform/operations";
+import { proofReadPhase, proofReadRequest } from "../platform/proof-diagnostics";
 export type RouteContext = { params: Promise<{ id?: string }> };
 export function readRoute(
   work: (
@@ -16,22 +17,28 @@ export function readRoute(
     query: Record<string, string>,
   ) => Promise<unknown>,
 ) {
-  return async (request: NextRequest, context: RouteContext) => {
+  return async (request: NextRequest, context: RouteContext) => proofReadRequest(request.nextUrl.pathname, async () => {
     try {
+      proofReadPhase("route-entered");
       localRequest(request);
+      proofReadPhase("identity-start");
       const p = await identity(request),
         params = (await context.params) ?? {};
-      return reply(
-        await work(
+      proofReadPhase("service-start");
+      const value = await work(
           p,
           params.id ?? "",
           Object.fromEntries(request.nextUrl.searchParams),
-        ),
-      );
+        );
+      proofReadPhase("reply-start");
+      const response = reply(value);
+      proofReadPhase("route-complete");
+      return response;
     } catch (error) {
+      proofReadPhase("route-failed");
       return failure(error);
     }
-  };
+  });
 }
 export function commandRoute(
   work: (

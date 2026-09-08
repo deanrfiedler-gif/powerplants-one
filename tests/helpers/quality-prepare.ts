@@ -1,3 +1,4 @@
+import { observedResponse } from "./observed-response";
 import {
   expect,
   type Page,
@@ -113,18 +114,17 @@ async function issuePack(page: Page, pid: string) {
       })
       .click(),
   );
-  const processed = page.waitForResponse(
+  const response = await observedResponse(page, "pack-render",
     (r) =>
       /\/api\/v1\/render-jobs\/[^/]+\/retry$/.test(r.url()) &&
       r.request().method() === "POST",
-  );
-  await page
+    () => page
     .getByRole("button", {
       name: "Process or recover original output",
       exact: true,
     })
-    .click();
-  const response = await processed;
+    .click(),
+  );
   expect(response.status(), await response.text()).toBe(200);
   expect(response.headers()["cache-control"]).toBe("private, no-store");
   const output = await response.json();

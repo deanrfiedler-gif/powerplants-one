@@ -22,6 +22,7 @@ All routes use the existing loopback gateway/session and current company/site gr
 
 | Route under `/api/v1/` | Contract |
 |---|---|
+| `crm/opportunities/[id]/commercial` GET | Mobile CRM projection of current permitted estimate identity/version/sell total, site, exact draft quotation revision links and current creation eligibility; no query parameters or mutations |
 | `estimating/options` GET | Up to 100 currently eligible Opportunities without an Estimate; current estimator context |
 | `estimating/estimates` GET / POST | Permitted latest-first internal list / atomic CreateEstimate |
 | `estimating/estimates/[id]` GET | Current saved detail, optional exact `version_id`, history and current capabilities |
@@ -39,3 +40,7 @@ Mutation inputs are whitelisted. Business commands use the existing operation UU
 Preparation captures the PPA logo bytes, Verdana fallback and `PPO-E1-DRAFT-r01` HTML definition. The draft input is immutable. A separate two-minute leased job records attempts and retains one immutable bundle keyed by job UUID through the existing private synthetic document adapter. PDF generation uses the repository's pinned Playwright renderer with external requests blocked. The bundle binds workspace/job/revision/template/input, original HTML and PDF hashes, byte counts and browser version. A Ready job cannot be overwritten. A file acknowledgement followed by a process/database interruption recovers the stored original bundle rather than rendering another output. Missing/corrupt original bytes report unavailable while retaining the reference. Render retry is a POST, never a GET side effect. No document crosses into a live storage adapter.
 
 The UI provides scope and manual line editing, separate proposal/saved totals, saved history and exact-source draft preview/downloads. Phone context is compact and cost controls reflow. Shared identity changes unmount sensitive forms. Browser entries are online memory only; no offline-save claim is made.
+
+## Mobile CRM presentation projection
+
+The authorised mobile increment reuses `visibleOpportunity`, `relationshipContext` and `readEstimate` for the commercial read above. It requires current `estimating.read` plus underlying CRM/shared visibility. Draft quote links use the exact existing revision IDs and their current read permissions. Creation eligibility is true only when no estimate exists and the current estimator relationship permits editing. Missing/unavailable context returns the existing scoped failure; it never creates a record or exposes hidden commercial totals. See the [mobile mapping](../decisions/mobile-crm-implementation.md).

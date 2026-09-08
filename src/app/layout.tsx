@@ -3,6 +3,7 @@ import { ProductHeader, ProductNavigation } from "../components/product-navigati
 import { SessionViewBoundary } from "../components/session-view-boundary";
 import "./globals.css";
 import "./shared-layout.css";
+import "./mobile-layout.css";
 export const metadata: Metadata = {
   title: "Powerplants One | Local prototype",
   description: "Private synthetic application foundation for Powerplants One",

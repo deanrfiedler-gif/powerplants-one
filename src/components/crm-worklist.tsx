@@ -40,7 +40,7 @@ function Identity({ item }: { item: WorklistItem }) {
   return <>
     <small>{item.display_number}</small>
     <Link className="crm-opportunity-title" href={`/crm/opportunities/${item.id}`}>{item.title}</Link>
-    <p>{item.organisation_name}<br />{item.site_name ?? "Site not yet identified"}</p>
+    <p>{item.organisation_name}<br />{item.contact_name ?? "Contact not yet identified"}<br />{item.site_name ?? "Site not yet identified"}</p>
   </>;
 }
 const dueDate = new Intl.DateTimeFormat("en-AU", { dateStyle: "medium", timeZone: "Australia/Brisbane" });
@@ -87,7 +87,7 @@ function Board({ data, selected, scroll }: { data: Results; selected: string; sc
               <Link className="crm-opportunity-title" href={`/crm/opportunities/${item.id}`} title={item.title}>{item.title}</Link>
               <p className="crm-card-company" title={item.organisation_name}>{item.organisation_name}</p>
               <p className="crm-card-site" title={item.site_name ?? "Site not yet identified"}>{item.site_name ?? "Site not yet identified"}</p>
-              <CardOwner name={item.owner_name} />
+              <p className="crm-card-contact"><ProductIcon name="person" /><span>{item.contact_name ?? "Contact not yet identified"}</span></p>
               <small className="crm-card-reference">{item.display_number} · {item.close_outcome}</small>
             </div>
             <CardAction item={item} />

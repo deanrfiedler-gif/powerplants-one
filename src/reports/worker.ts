@@ -1,3 +1,4 @@
+import { proofEvent } from "../platform/proof-diagnostics";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../platform/identity";
 import type { DocumentKey } from "../adapters/contracts";
@@ -217,6 +218,9 @@ export async function processReportJob(
   } = {},
 ) {
   uuid(id, "job_id");
+  const began = Date.now();
+  const stage = (event: string) => proofEvent("report-" + event, { started_at_ms: began, elapsed_ms: Date.now() - began });
+  stage("claim-start");
   const token = randomUUID(),
     job = await transaction(async (c) => {
       const j = (
@@ -247,6 +251,7 @@ export async function processReportJob(
       return row;
     });
   if (!job) return { processed: false };
+  stage("claimed");
   const p: Principal = {
       workspace_id: job.workspace_id,
       actor_id: job.actor_id,
@@ -258,11 +263,13 @@ export async function processReportJob(
     await reportContext(database(), p, job.report_id, "report.issue");
     let stored = await documentStore().locate(ctx);
     if (!stored) {
+      stage("render-start");
       const generated = await supportedRenderReport(
         s.source,
         s.output,
         s.template.version,
       );
+      stage("render-complete");
       await hooks.afterRender?.();
       const bundle: Bundle = {
         schema_version: 1,

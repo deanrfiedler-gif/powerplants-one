@@ -1,5 +1,6 @@
 import { expect, type Page } from "@playwright/test";
 import { keyActivate, keyType } from "./quality-keyboard";
+import { observedResponse } from "./observed-response";
 export async function completion(page: Page, quantities = true) {
   // A saved entry is followed by an authorised refresh. Use that new source
   // before assembling the next exact completion command.
@@ -81,13 +82,22 @@ export async function submit(page: Page, recoverOwner = false) {
       }),
     );
     const savedWorkspace = await opened;
-    await keyActivate(
-      savedWorkspace,
-      savedWorkspace.getByRole("button", {
-        name: "Verify identity online",
-        exact: true,
-      }),
-    );
+    // Reopening checks identity and each cached job, then loads assigned jobs.
+    // Observe that final read before checking the completed recovery message.
+    const [assignedRead] = await Promise.all([
+      savedWorkspace.waitForResponse(response =>
+        response.request().method() === "GET" &&
+        new URL(response.url()).pathname === "/api/v1/my-jobs"),
+      keyActivate(
+        savedWorkspace,
+        savedWorkspace.getByRole("button", {
+          name: "Verify identity online",
+          exact: true,
+        }),
+      ),
+    ]);
+    expect(assignedRead.status(), await assignedRead.text()).toBe(200);
+    expect(assignedRead.headers()["cache-control"]).toBe("private, no-store");
     await expect(savedWorkspace.locator("#notice")).toContainText(
       "Identity verified",
     );
@@ -188,18 +198,17 @@ export async function issue(page: Page) {
   // Rendering is an asynchronous controlled command. Observe its actual result
   // before asserting the refreshed UI; an arbitrary five-second render race
   // does not establish whether the original output was issued.
-  const rendered = page.waitForResponse(
+  const response = await observedResponse(page, "report-render",
     (r) =>
       /\/api\/v1\/report-render-jobs\/[^/]+\/retry$/.test(r.url()) &&
       r.request().method() === "POST",
+    () => page
+      .getByRole("button", {
+        name: "Generate / recover original report",
+        exact: true,
+      })
+      .click(),
   );
-  await page
-    .getByRole("button", {
-      name: "Generate / recover original report",
-      exact: true,
-    })
-    .click();
-  const response = await rendered;
   expect(response.status(), await response.text()).toBe(200);
   expect(response.headers()["cache-control"]).toBe("private, no-store");
   const output = await response.json();

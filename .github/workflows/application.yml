@@ -30,6 +30,7 @@ jobs:
           --health-interval 5s --health-timeout 5s --health-retries 10
     env:
       NEXT_TELEMETRY_DISABLED: "1"
+      PPO_PROOF_DIAGNOSTICS: "1"
       PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -62,6 +63,10 @@ jobs:
           npm run db:migrate
           npm run db:seed
           npm run db:health
+      - name: Mobile CRM projections, scoped links and complete phone journey
+        run: |
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/mobile-crm.test.ts
+          npx playwright test tests/browser/mobile-crm.spec.ts tests/browser/crm.spec.ts --output verification-evidence/mobile-crm --reporter=list
       - name: Focused I2 identity, query equivalence and responsive presentation proof
         if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         run: npx playwright test tests/browser/crm-i2.spec.ts --output verification-evidence/i2-focused-browser --reporter=list
@@ -254,6 +259,7 @@ jobs:
           --health-interval 5s --health-timeout 5s --health-retries 10
     env:
       NEXT_TELEMETRY_DISABLED: "1"
+      PPO_PROOF_DIAGNOSTICS: "1"
       PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -312,6 +318,7 @@ jobs:
           name: P11-selected-journey-evidence
           path: |
             verification-evidence/review-diagnostic-redactions.json
+            verification-evidence/transport-diagnostics/
             verification-evidence/p11-journey-browser/
             verification-evidence/p11-focused-db/
             verification-evidence/p11-template-db/
@@ -355,6 +362,7 @@ jobs:
           path: |
             verification-evidence/review-diagnostic-redactions.json
             verification-evidence/p11-focused-browser/
+            verification-evidence/transport-diagnostics/
             verification-evidence/p11-journey-browser/
             verification-evidence/p11-focused-db/
             verification-evidence/p11-template-db/
@@ -379,6 +387,7 @@ jobs:
           --health-interval 5s --health-timeout 5s --health-retries 10
     env:
       NEXT_TELEMETRY_DISABLED: "1"
+      PPO_PROOF_DIAGNOSTICS: "1"
       PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -435,6 +444,9 @@ jobs:
           test "$ppo_http_ready" = 1
           mkdir -p verification-evidence/p11-http
           node --env-file=.env.local --import tsx --test --test-reporter=tap tests/integration/quality-http.test.ts 2>&1 | tee verification-evidence/p11-http/results.tap
+          mkdir -p verification-evidence/http
+          # Exercise the deterministic fixture overlap early; the full HTTP suite still runs every case.
+          node --env-file=.env.local --import tsx --test --test-reporter=tap --test-name-pattern='^P07 HTTP independent work orders' tests/http/field.test.ts 2>&1 | tee verification-evidence/http/field-fixture-isolation.tap
       - name: Prepare HTTP review diagnostics
         if: always()
         id: http_review
@@ -468,6 +480,7 @@ jobs:
           --health-interval 5s --health-timeout 5s --health-retries 10
     env:
       NEXT_TELEMETRY_DISABLED: "1"
+      PPO_PROOF_DIAGNOSTICS: "1"
       PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -500,11 +513,18 @@ jobs:
           npm run db:seed
           npm run db:health
       - name: P11 declared load, raw browser timings and cold-warm p95
+        timeout-minutes: 25
         env:
           PPO_BENCHMARK_FIXTURE: add-synthetic-load
+          PPO_NETLOG_DIRECTORY: ${{ runner.temp }}/ppo-pt27-netlog
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
           node --env-file=.env.local --import tsx scripts/quality-performance-proof.ts
+      - name: Retain allowlisted network metadata and remove raw capture
+        if: always()
+        env:
+          PPO_NETLOG_DIRECTORY: ${{ runner.temp }}/ppo-pt27-netlog
+        run: node --import tsx scripts/netlog-metadata.ts
       - name: Prepare performance review diagnostics
         if: always()
         id: performance_review
@@ -517,4 +537,79 @@ jobs:
           path: |
             verification-evidence/review-diagnostic-redactions.json
             verification-evidence/p11-performance/
+            verification-evidence/transport-diagnostics/
+          retention-days: 14
+
+  p11_browser_diagnostics:
+    name: P11 three original browser failures diagnostic replay
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: postgres:16.15
+        env:
+          POSTGRES_USER: ppo_local
+          POSTGRES_PASSWORD: ppo_disposable_ci_only
+          POSTGRES_DB: ppo_synthetic_test
+        ports:
+          - 127.0.0.1:5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ppo_local -d ppo_synthetic_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      PPO_PROOF_DIAGNOSTICS: "1"
+      PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install exact package manager and locked dependencies
+        run: |
+          npm install --global npm@11.19.0
+          npm ci
+          node --version
+          npm --version
+          git rev-parse HEAD
+          npm ls --depth=0
+      - name: Install pinned controlled PDF renderer
+        run: npx playwright install --with-deps chromium
+      - name: Static, unit and build checks
+        run: npm run check
+      - name: Configure disposable loopback database
+        id: database_setup
+        run: |
+          cp .env.example .env.local
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('.env.local')
+          p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
+          PY
+          npm run db:migrate
+          npm run db:seed
+          npm run db:health
+      - name: Replay three original phone procedures with lifecycle diagnostics
+        timeout-minutes: 25
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-failure-replay/results.json
+        run: |
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+          npx playwright test tests/browser/quality-journey.spec.ts tests/browser/quality-states.spec.ts tests/browser/reports.spec.ts --project=mobile-chromium --grep 'P11 selected UI service-to-Finance journey|P11 PT-29 all fifteen screen families|P09 complete UI return' --output verification-evidence/p11-failure-replay --reporter=list,json
+      - name: Prepare original failure replay diagnostics
+        if: always()
+        id: failure_replay_review
+        run: python3 scripts/prepare-review-evidence.py
+      - name: Preserve original failure replay evidence
+        if: ${{ always() && steps.failure_replay_review.outcome == 'success' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: P11-original-failure-replay-evidence
+          path: |
+            verification-evidence/review-diagnostic-redactions.json
+            verification-evidence/p11-failure-replay/
+            verification-evidence/transport-diagnostics/
+            !**/trace.zip
           retention-days: 14

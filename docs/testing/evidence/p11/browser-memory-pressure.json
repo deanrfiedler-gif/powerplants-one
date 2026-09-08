@@ -1,0 +1,100 @@
+{
+  "source_head": "60ca8038eecee4cb5896456c7745898f8a24c91f",
+  "executed_checkout": "a4fa1f40e401c59a783d1495550372adc42dfc32",
+  "executed_tree": "214894e0d5de81a30e59af16671c06d833c1c80d",
+  "run_id": 34213541685,
+  "job_id": 102019873006,
+  "artifact_id": 10052806168,
+  "artifact_sha256": "ebc334090ff9017ac71bb4a13a4482e1b1ef834fecb3fab6dba67ddf5d1a8a94",
+  "artifact_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34213541685/artifacts/10052806168",
+  "stats": {
+    "startTime": "2026-09-08T10:11:55.415Z",
+    "duration": 3056881.904,
+    "expected": 114,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  },
+  "server_runtime": {
+    "max_rss_bytes": 6437830656,
+    "min_system_free_bytes": 14446592,
+    "max_interval_ms": 47204.831454999745,
+    "max_system_load_1m": 40.34
+  },
+  "failures": [
+    {
+      "file": "quality-journey.spec.ts",
+      "title": "P11 selected UI service-to-Finance journey preserves controlled booking, personal originals, exact response and reconciled Travel no-posting",
+      "project": "mobile-chromium",
+      "status": "failed",
+      "started_at": "2026-09-08T10:46:33.958Z",
+      "duration_ms": 575267,
+      "error_location": {
+        "file": "tests/helpers/quality-prepare.ts",
+        "column": 23,
+        "line": 24
+      },
+      "error": "TimeoutError: page.waitForResponse: Timeout 15000ms exceeded while waiting for event \"response\"",
+      "browser_runtime": {
+        "max_interval_ms": 438945.7977720001,
+        "min_system_free_bytes": 13545472,
+        "dropped_events": 0
+      }
+    },
+    {
+      "file": "quality-states.spec.ts",
+      "title": "P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial",
+      "project": "mobile-chromium",
+      "status": "failed",
+      "started_at": "2026-09-08T10:56:47.266Z",
+      "duration_ms": 62951,
+      "error_location": {
+        "file": "tests/browser/quality-states.spec.ts",
+        "column": 53,
+        "line": 281
+      },
+      "error": "Error: expect(locator).toHaveCount(expected) failed",
+      "browser_runtime": {
+        "max_interval_ms": 2032.1104269999996,
+        "min_system_free_bytes": 59793408,
+        "dropped_events": 0
+      }
+    },
+    {
+      "file": "reports.spec.ts",
+      "title": "P09 complete UI return, correction, partial acceptance, return proposal, controlled revisions and five exact responses",
+      "project": "mobile-chromium",
+      "status": "failed",
+      "started_at": "2026-09-08T10:58:32.641Z",
+      "duration_ms": 140809,
+      "error_location": {
+        "file": "tests/browser/reports.spec.ts",
+        "column": 30,
+        "line": 60
+      },
+      "error": "TimeoutError: page.screenshot: Timeout 15000ms exceeded.",
+      "browser_runtime": {
+        "max_interval_ms": 11845.611291000008,
+        "min_system_free_bytes": 28401664,
+        "dropped_events": 0
+      }
+    },
+    {
+      "file": "work-orders.spec.ts",
+      "title": "P04 saved scope, reviewed readiness, authorisation, proposed visit and successor preserve approved evidence",
+      "project": "desktop-chromium",
+      "status": "failed",
+      "started_at": "2026-09-08T10:34:10.964Z",
+      "duration_ms": 46348,
+      "error_location": {
+        "file": "tests/browser/work-orders.spec.ts",
+        "column": 5,
+        "line": 415
+      },
+      "error": "Error: expect(locator).toBeVisible() failed"
+    }
+  ],
+  "interpretation": "Severe system memory pressure and stalled scheduled samples coincide with the long phone journey. The four assertion failures are retained individually; no claim that each has an identical cause or that the earlier load 503 exception has been classified. Runtime RSS does not identify every allocation owner.",
+  "correction_under_verification": "Enable the pinned Next.js development filesystem cache and automatic memory eviction within a process, clearing only .next/dev/cache/turbopack at every guarded server start to preserve cold process restarts. Retain all assertions, deadlines, users, samples, data rules and output fingerprint sources.",
+  "primary_reference": "https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopackMemoryEviction"
+}

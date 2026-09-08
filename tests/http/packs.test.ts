@@ -79,10 +79,16 @@ test("P06 real issued preview/download/manifest/job/receipt traversal uses curre
     other = await session("second-company");
   const packs = (await call(coordinator, "packs")).body.items;
   assert.ok(packs.length);
-  const pack = (await call(coordinator, `packs/${packs[0].id}`)).body.items[0];
+  const { readFile } = await import("node:fs/promises");
+  const proof = JSON.parse(await readFile("/tmp/ppo-p06-restart.json", "utf8"));
+  // Concurrent HTTP journeys create more packs. Inspect the exact retained
+  // restart original, independent of which mutable pack is currently newest.
+  assert.ok(packs.some((pack: { id: string }) => pack.id === proof.pack_id));
+  const pack = (await call(coordinator, `packs/${proof.pack_id}`)).body.items[0];
   const issue = pack.issues[0],
     job = pack.jobs[0];
   assert.ok(issue && job);
+  assert.equal(issue.id, proof.issue_id);
   for (const path of [
     `packs/${pack.id}`,
     `packs/${pack.id}/preview`,
@@ -134,8 +140,6 @@ test("P06 real issued preview/download/manifest/job/receipt traversal uses curre
     ).status,
     422,
   );
-  const { readFile } = await import("node:fs/promises");
-  const proof = JSON.parse(await readFile("/tmp/ppo-p06-restart.json", "utf8"));
   assert.equal(
     (await call(other, `operations/${proof.operation_id}`)).status,
     404,

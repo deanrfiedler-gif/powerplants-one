@@ -9,7 +9,7 @@ import sys
 
 
 TOKEN = re.compile(rb"ppo_local_session=[0-9a-f]{32,}", re.IGNORECASE)
-TEXT = {".json", ".md", ".txt", ".log", ".tap", ".html"}
+TEXT = {".json", ".jsonl", ".md", ".txt", ".log", ".tap", ".html"}
 
 
 def prepare(roots):

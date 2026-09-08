@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
-import { prepareFieldAppointment } from "../helpers/field-http";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { prepareIsolatedFieldAppointment } from "../helpers/isolated-field-http";
 import {
   base,
   entry,
@@ -40,7 +40,7 @@ test("P07 real HTTP visit executes start, exact photo transfer, typed evidence, 
   const co = await session("coordinator"),
     p = await session("assigned-technician"),
     m = await session("second-technician");
-  const setup = await prepareFieldAppointment(async (path, body) => {
+  const setup = await prepareIsolatedFieldAppointment(async (path, body) => {
     const r = await call(co, path, body);
     assert.ok(r.status < 300, JSON.stringify(r));
     return r.body;
@@ -207,4 +207,56 @@ test("P07 persisted start, capture, correction, attachment and draft survive Pos
     (await call(p, `operations/${proof.operation_id}`)).body,
     proof.receipt,
   );
+});
+
+test("P07 HTTP independent work orders retain checked packs while another fixture is prepared", async (t) => {
+  const co = await session("coordinator");
+  const ok = async (path: string, body?: unknown) => {
+    const result = await call(co, path, body);
+    assert.ok(result.status < 300, `${path}: ${JSON.stringify(result.body)}`);
+    assert.equal(result.headers.get("cache-control"), "private, no-store");
+    return result.body;
+  };
+  const interleaved: Awaited<ReturnType<typeof prepareIsolatedFieldAppointment>>[] = [];
+  const events: string[] = [];
+  const first = await prepareIsolatedFieldAppointment(async (path, body) => {
+    if (body !== undefined && /^packs\/[^/]+\/issue$/.test(path))
+      events.push("first issue requested");
+    const result = await ok(path, body);
+    if (body !== undefined && /^packs\/[^/]+\/check$/.test(path)) {
+      events.push("first pack checked");
+      // Force the original failure ordering, without sleeps or retrying a
+      // rejected issue: fully prepare another visit before the first issue.
+      interleaved.push(await prepareIsolatedFieldAppointment(ok, "2026-12-11"));
+      events.push("second fixture issued");
+    }
+    return result;
+  }, "2026-12-10");
+  assert.equal(interleaved.length, 1);
+  const second = interleaved[0];
+  assert.deepEqual(events, [
+    "first pack checked", "second fixture issued", "first issue requested",
+  ]);
+  assert.notEqual(first.work_order_id, second.work_order_id);
+  assert.notEqual(first.scope_revision_id, second.scope_revision_id);
+  assert.notEqual(first.pack.id, second.pack.id);
+  const originals = [];
+  for (const fixture of [first, second]) {
+    const work = (await ok(`service/work-orders/${fixture.work_order_id}`)).items[0];
+    assert.equal(work.status, "Authorised");
+    assert.equal(work.authorised_scope_revision_id, fixture.scope_revision_id);
+    assert.ok(fixture.pack.current_issue_id);
+    assert.equal(fixture.pack.issues[0].id, fixture.pack.current_issue_id);
+    originals.push({
+      work_order_id: fixture.work_order_id,
+      scope_revision_id: fixture.scope_revision_id,
+      appointment_id: fixture.appointment_id,
+      pack_id: fixture.pack.id,
+      issue_id: fixture.pack.current_issue_id,
+    });
+  }
+  const proof = { events, originals, boundary: "Actual HTTP; no shared mutable work order, sleep, retry or concurrency change." };
+  await mkdir("verification-evidence/http", { recursive: true });
+  await writeFile("verification-evidence/http/field-fixture-isolation.json", JSON.stringify(proof, null, 2) + "\n");
+  t.diagnostic(JSON.stringify(proof));
 });
