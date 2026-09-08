@@ -862,7 +862,12 @@ export function FinanceDetail({ id }: { id: string }) {
           </div>
           <section className={styles.panel}>
             <h2>Next Finance action</h2>
-            <fieldset disabled={locked}>
+            {cmd.busy && (
+              <p role="status">
+                Action in progress. Its result is not yet confirmed.
+              </p>
+            )}
+            <fieldset disabled={locked} aria-busy={cmd.busy}>
               <label>
                 Precise action / correction reason
                 <textarea

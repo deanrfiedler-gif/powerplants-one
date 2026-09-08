@@ -531,4 +531,33 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
   await expect(page.getByText(revisedTreatment, { exact: true })).toHaveCount(0);
   await capture(page, info, "finance-form-denied-clears-retained-draft");
   await page.unroute(sourcesMatch);
+  await page.getByRole("button", { name: "Back to retained handoff", exact: true }).click();
+  const actionMatch = `**/api/v1/finance/handoffs/${cmd.id}/submit`;
+  let releaseAction!: () => void;
+  const heldAction = new Promise<void>((resolve) => { releaseAction = resolve; });
+  let commands = 0;
+  await page.route(actionMatch, async (route) => {
+    commands += 1;
+    await heldAction;
+    await route.continue();
+  });
+  await page.getByLabel("Precise action / correction reason").fill(
+    "SYN verify an in-flight Finance action remains visibly unconfirmed and cannot be duplicated.",
+  );
+  const submit = page.getByRole("button", { name: "Submit for Finance review", exact: true });
+  try {
+    await submit.click();
+    await expect(page.getByRole("status").filter({ hasText: "Action in progress. Its result is not yet confirmed." })).toBeVisible();
+    await expect(submit).toBeDisabled();
+    await expect(page.getByLabel("Precise action / correction reason")).toBeDisabled();
+    await expect(page.getByRole("button", { name: "Retry original action", exact: true })).toHaveCount(0);
+    expect(commands).toBe(1);
+    await capture(page, info, "finance-action-in-flight-unconfirmed");
+  } finally {
+    releaseAction();
+  }
+  await expect(page.getByText("Ready For Review", { exact: true })).toBeVisible();
+  await expect(page.getByText("Action in progress. Its result is not yet confirmed.", { exact: true })).toHaveCount(0);
+  expect(commands).toBe(1);
+  await page.unroute(actionMatch);
 });

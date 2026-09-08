@@ -7,6 +7,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 // cookies, error text or raw session traces. Collection never retries navigation.
 export function recordBrowserReads(page: Page, info: TestInfo) {
   const started = performance.now();
+  const startedAtMs = Date.now();
   const records: Record<string, unknown>[] = [];
   let dropped = 0;
   const add = (record: Record<string, unknown>) => {
@@ -47,6 +48,7 @@ export function recordBrowserReads(page: Page, info: TestInfo) {
       run_id: process.env.GITHUB_RUN_ID, run_attempt: process.env.GITHUB_RUN_ATTEMPT,
       scenario: info.title, viewport: page.viewportSize(), status: info.status,
       browser_channel: info.project.use.channel ?? "default headless shell",
+      started_at_ms: startedAtMs,
       limits: "Primary page transport events only; response status does not establish a complete body. No request bodies, headers, query strings, cookies, error text or raw traces.",
       record_limit: 3000, dropped, records,
     }, null, 2));

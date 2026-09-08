@@ -5,7 +5,11 @@ import { createHash } from "node:crypto";
 import { prepareFieldAppointment } from "../helpers/field-http";
 import { base, startInput, png, draft } from "../helpers/field";
 import { operation } from "../helpers/offline";
+import { recordBrowserReads } from "../helpers/quality-browser";
 test.use({ actionTimeout: 15000 });
+let finishReadEvidence: (() => Promise<void>) | undefined;
+test.beforeEach(({ page }, info) => { finishReadEvidence = recordBrowserReads(page, info); });
+test.afterEach(async () => { await finishReadEvidence?.(); finishReadEvidence = undefined; });
 const hash = (v: string | Buffer) =>
   createHash("sha256").update(v).digest("hex");
 async function call(page: Page, path: string, body?: unknown) {
