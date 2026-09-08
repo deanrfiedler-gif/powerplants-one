@@ -1,10 +1,12 @@
-# Facility fields — proposed first persistence increment
+# Facility fields — approved first persistence increment
 
-**Revision:** r01 · **Prepared:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Proposed for review; no schema/UI implementation or field-policy acceptance · **Workstream:** [PPO-009 / #9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9).
+**Revision:** r02 · **Updated:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** FAC-D01–03 approved for the synthetic first increment; implementation and verification pending · **Workstream:** [PPO-009 / #9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9).
 
 The next useful facility journey is: an authorised user opens an existing permitted Site, records a Facility's structure and growing context, saves it, reloads, and sees the same details in the organisation's Sites hierarchy. It should support the greenhouse, berry and mixed-nursery scenarios named in the [mobile handover](https://github.com/deanrfiedler-gif/powerplants-one/blob/5b6b8bf73e9486858b22e7561f1ec1ece8ee59de/docs/delivery/mobile-crm-handover.md).
 
-That handover names the scenarios but the inspected repository does not provide their complete approved field dictionary. The taxonomy, field limits and change rules below are **new recommendations**, not recovered prior approvals or imported Pipedrive/CREMS fields. Dean authorised preparation while PR #61 is under verification. This document changes no tested application source and does not start implementation.
+Revision r01 introduced the taxonomy, field limits and change rules as recommendations because the handover named the scenarios without a complete field dictionary. On 8 September 2026 Dean replied, “Proceed on the basis of your recommendation,” after receiving the published proposal and the recommendation to separate structure from crop/use, allow explicitly unknown details and confirm type changes while preserving history. This accepts FAC-D01–03 below for the bounded synthetic increment. The field dictionary is an adopted PPO design decision; it is not imported Pipedrive/CREMS behaviour or a claim about a live account.
+
+This revision records that approval and the implementation sequence. PR #61's tested candidate remains fixed while its required verification completes. Facility runtime work follows its verified integration; the approved decisions do not require another approval request merely because implementation is sequenced afterward.
 
 ## Existing contract and boundaries
 
@@ -12,11 +14,11 @@ That handover names the scenarios but the inspected repository does not provide 
 
 Retain Organisation → Site → Facility through existing SiteParty relationships; do not add a copied organisation owner to Facility. A Site may have different operator, owner and bill payer. Equipment remains an Asset with its own identity and existing facility/site link. Do not copy manufacturer/model/controller records into free-text facility fields. Site address, timezone, access and biosecurity instructions remain on Site; approved job-pack controls retain their existing review process.
 
-## Recommended common fields
+## Approved common fields
 
-Keep the approved mobile shell, record tabs, controls and save/error language. Place a compact **Facility details** form within the existing Site context; show conditional fields only when relevant. Labels below are proposed product terms; stored keys and final types belong to the reviewed implementation contract.
+Keep the approved mobile shell, record tabs, controls and save/error language. Place a compact **Facility details** form within the existing Site context; show conditional fields only when relevant. The labels and rules below are adopted for this increment; stored keys and physical types must follow the existing shared-command and migration conventions.
 
-| Field | Required/default | Proposed rule |
+| Field | Required/default | Adopted rule |
 |---|---|---|
 | Site | Required, inherited from the open Site | Existing exact permitted ID; company/site cannot be changed through this increment. No name-based matching. |
 | Facility name | Required | Existing trimmed 1–200 character rule; names may repeat, identities may not. |
@@ -26,23 +28,23 @@ Keep the approved mobile shell, record tabs, controls and save/error language. P
 | Type unknown reason | Required when a user saves Unknown | Trimmed 1–1,000 characters; legacy records display “Not recorded” until reviewed and require no fabricated backfill reason. |
 | Use | Optional | Propagation, Production, Trials, Mixed, Non-growing, Unknown. Keep separate from structure and crop. |
 | Crop or crop group | Optional bounded text, 1–200 characters when supplied | Visible when use is growing, Mixed or Unknown; e.g. “Raspberries” or “Mixed nursery stock”. Informational snapshot, not a crop-cycle or variety register. |
-| Footprint area | Optional decimal square metres | Greater than zero when supplied, at most two decimal places, proposed storage `numeric(12,2)`; blank means unknown, never zero. Label m² explicitly. No automatic parent/child roll-up or inference from covered/growing area. |
+| Footprint area | Optional decimal square metres | Greater than zero when supplied, at most two decimal places, storage target `numeric(12,2)`; blank means unknown, never zero. Label m² explicitly. No automatic parent/child roll-up or inference from covered/growing area. |
 | Detail notes | Optional, up to 2,000 characters | Fictional descriptive context. Do not use these notes to replace authoritative access, safety or equipment records. |
 | Saved by / saved at / version | Server-derived | Reuse audit identity and optimistic version handling; users cannot supply an authoritative author/time. |
 
 Greenhouse includes glasshouses and other framed greenhouses; cladding below distinguishes them. “Berry” and “nursery” describe crop/use, so a berry polytunnel and a berry open growing area remain distinguishable. Unknown means not established; Other means established but outside the controlled list.
 
-## Recommended conditional fields
+## Approved conditional fields
 
 These are optional context, not technical design criteria or readiness certification. Missing applicable details show **Not recorded**. Irrelevant fields are not editable; the server rejects irrelevant submitted values rather than trusting hidden UI controls.
 
 | Structure type | Additional fields in the first increment | Limits / meaning |
 |---|---|---|
-| Greenhouse | Cladding: Glass / Plastic film / Rigid plastic / Mixed / Other / Unknown; bay count | Optional positive whole bay count, proposed maximum 10,000. Other cladding requires a 1–200 character description. No thermal/load/performance calculations. |
+| Greenhouse | Cladding: Glass / Plastic film / Rigid plastic / Mixed / Other / Unknown; bay count | Optional positive whole bay count, maximum 10,000. Other cladding requires a 1–200 character description. No thermal/load/performance calculations. |
 | Polytunnel | Tunnel count; cover: Plastic film / Net / Mixed / Other / Unknown | Optional positive whole count, same limit; Other cover requires a short description. Do not assume one tunnel equals one bay or Asset. |
 | Shade/net house | Cover: Shade cloth / Insect net / Mixed / Other / Unknown | Other requires a short description. Shade percentage, mesh aperture and certified performance are deferred until units/source requirements are agreed. |
 | Open growing area | Layout: Beds / Rows / Benches / Containers / Mixed / Other / Unknown | Other requires a short description. No cadastral area, drainage or irrigation design claim. |
-| Indoor growing room | Growing levels | Optional positive whole count, proposed maximum 100; not an automatic multiplier for footprint or yield. |
+| Indoor growing room | Growing levels | Optional positive whole count, maximum 100; not an automatic multiplier for footprint or yield. |
 | Non-growing facility | Function: Pump/equipment room / Storage / Packing / Other / Unknown | No crop field when use is Non-growing. Existing equipment appears by canonical Asset links. No plant, stock or dispatch workflow is added. |
 | Other or Unknown | No additional typed structure fields | Common fields and explicit description/reason retain useful incomplete context. |
 
@@ -65,7 +67,7 @@ The names below are proposed fixtures, not existing records or customer facts. I
 5. **Maintain current permissions on every surface.** List/search/detail/create/update/receipt/history must check current actor and site/company access. Hierarchy does not grant access; summaries include only permitted records. Identity changes clear drafts and loaded data. Do not introduce a new role or silently broaden fixture grants.
 6. **Keep scope references exact.** Existing Equipment→Facility links are preserved and cross-site assignments remain rejected. Estimate/service navigation retains existing organisation/site/Asset IDs. The current [E1 contract](../contracts/estimating-e1.md) has opportunity/site context but no general structured Facility selection. Adding Facility scope junctions, copying reviewed Facility attributes into a new estimate/work revision, or changing rendered outputs requires a separately bounded receiving-contract change; plain notes do not count as completed structured integration. Preserve those remaining mobile-handover obligations explicitly.
 
-## Proposed verification for implementation
+## Required verification for implementation
 
 | Local case | Observable result | Evidence layer |
 |---|---|---|
@@ -79,14 +81,24 @@ The names below are proposed fixtures, not existing records or customer facts. I
 
 All are prospective cases, not additional master requirements or executed evidence. Traceability: CRM-04/08, CA-05/06/10/13, AT-02/23/25 components and the existing Facility/Asset dictionary. Master AT/PT status and Projects J1 are unchanged. The existing PR #61 CI must finish on its own candidate; these cases cannot replace a failed current-head gate.
 
-## Decisions for Dean
+## Adopted decisions
 
-These three choices make the next increment concrete without reopening the approved visual design. **All remain Proposed**; “OK, do that” authorised this preparation, not an unseen field dictionary.
-
-| Decision | Recommendation | Alternative and trade-off |
+| Decision | Accepted direction | Decision state |
 |---|---|---|
-| FAC-D01 — Type and field vocabulary | Adopt the structure/use split and the common/conditional tables above for the synthetic first increment. | Amend named fields/options now; a generic custom-field builder adds unnecessary configuration and validation scope. |
-| FAC-D02 — Incomplete context | Require name/site and an explicit type or Unknown reason; allow optional technical details to remain Not recorded. | Requiring all applicable detail would force users to stop or guess before a site review. No completeness/readiness certification is proposed. |
-| FAC-D03 — Type/use changes | Require a comparison and reason; clear inapplicable active values only on explicit save and preserve their history. | Lock type after create for a smaller first release, at the cost of a separate correction process. Silent hiding or deletion is not recommended. |
+| FAC-D01 — Type and field vocabulary | Use the separate structure, use and crop meanings, with the common and conditional tables above for the synthetic first increment. | Accepted by Dean, 8 September 2026 |
+| FAC-D02 — Incomplete context | Require name/site and an explicit type or Unknown reason; optional technical details may remain Not recorded. No completeness or readiness certification follows from saving. | Accepted by Dean, 8 September 2026 |
+| FAC-D03 — Type/use changes | Show affected values and require a reason and explicit confirmation before clearing inapplicable active fields; preserve before/after history in the same save. | Accepted by Dean, 8 September 2026 |
 
-After these choices are reviewed, the next implementation can be scoped against freshly verified main and active workstream reservations. This preparation creates no database change, external connection, hosted environment, real customer record or implementation acceptance. Use the [mobile acceptance checklist](../testing/mobile-crm-acceptance-checklist.md) for the current delivered journey.
+Revision r01's Proposed states remain in Git history. Approval of these field policies does not execute the mobile owner checklist or FAC-A01–07, accept failing CI, or establish operational readiness.
+
+## Bounded implementation sequence
+
+**Outcome:** an existing actor with current scoped shared read/create/edit permissions can open a permitted Site, create or edit its Facility details, save and reload them, deliberately change type/use, and inspect the preserved history. The organisation's Sites hierarchy shows the current saved details through the same permitted record IDs.
+
+1. **Integrate the verified mobile foundation.** Complete PR #61's applicable checks, dispositions, normal merge and actual-main tree verification. Refresh main, AGENTS, the shared Facility/Asset contracts and open migration reservations. Keep facility work on its own focused branch under PPO-009 / #9. Reconcile status/register changes with the actual main without replacing another workstream's entries.
+2. **Persist the approved details and history.** Select an additive migration against that fresh state. Retain existing Facility identity, same-site parent constraints and Asset links; old rows remain valid with attributes Not recorded. Implement a bounded shared Facility update using the existing transaction, expected-version, audit/outbox and original-operation receipt patterns. Repeated seed must preserve user edits. No generic custom-field system is included.
+3. **Enforce the change rules at the server.** Validate all applicable fields and reject irrelevant values. When existing values become inapplicable, derive the affected field set from the locked current version and submitted type/use; require explicit confirmation and a reason for that exact change. An omitted hidden input alone cannot authorise clearing. Write current details and before/after audit together, or write neither. A stale version requires a fresh comparison. Unknown is explicit uncertainty; legacy absence remains Not recorded without invented history.
+4. **Complete the approved phone/desktop journey.** Reuse the existing Site context, hierarchy and mobile form components for create/edit, labelled validation, comparison, cancel/save, unsaved-draft handling, receipt reconciliation and identity clearing. The confirmation lists affected field labels and values; cancelling retains the saved version. Switching back does not resurrect historical values automatically. Scope remains shared Facility context; no new estimate/service scope junction or changed document output is included.
+5. **Verify and hand over the exact candidate.** Execute FAC-A01–07 with synthetic greenhouse, berry and mixed-nursery fixtures; retain real database/HTTP permission, competing-save, original-operation, upgrade/reseed and restart evidence plus 320/390px and desktop journeys. Run applicable unchanged regression gates, verify original output identities and hashes, and publish exact head/tree/results/failure dispositions in the review PR. Merge only after those checks and fresh head/base/review checks pass, then verify actual main. Physical-phone/owner acceptance stays a separate recorded activity.
+
+The existing [mobile acceptance checklist](../testing/mobile-crm-acceptance-checklist.md) remains ready for owner execution on an isolated permitted review instance. Every MC-A and FAC-A result remains **Not run** until performed and evidenced. No database, application, external connection, hosting or real customer record changes are made by this decision revision.

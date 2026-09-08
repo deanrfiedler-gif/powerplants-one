@@ -1,6 +1,6 @@
 # Mobile CRM acceptance checklist
 
-**Revision:** r01 · **Prepared:** 8 September 2026 · **Owner/reviewer:** Dean Fiedler · **Workstream:** [PPO-009 / #9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9).
+**Revision:** r02 · **Prepared:** 8 September 2026 · **Owner/reviewer:** Dean Fiedler · **Workstream:** [PPO-009 / #9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9).
 
 This is a ready-to-use owner walkthrough for the implemented mobile CRM journey in [PR #61](https://github.com/deanrfiedler-gif/powerplants-one/pull/61). Every owner-review result below is **Not run**. Automated evidence and the read-only engineering review are recorded separately; neither signs off this checklist for Dean.
 
@@ -47,12 +47,16 @@ Screenshots should show only synthetic content. Record a failure as: checklist I
 | Reviewed boundary | Inspected source / finding | Limit |
 |---|---|---|
 | Permissions and saved CRM intent | Candidate `src/crm/reads.ts`, `src/crm/worklist.ts`, `src/estimating/reads.ts`, `src/components/crm-state.ts` and `src/components/session-view-boundary.tsx`: Commercial checks estimating capability plus current opportunity/relationship access; counts derive from permitted records; original pending command is retained for reconciliation; identity lock unmounts displayed business forms. | Source review, supported by existing tests; no independent-review or exhaustive security claim. |
-| Facility context | `src/shared/commands.ts`, `src/shared/reads.ts` and migration `0002-shared-foundation.sql`: Facility create checks parent/site/company visibility; composite keys and graph guard preserve same-site, acyclic hierarchy. Current projection exposes name/site/parent. | Type/common/conditional-field persistence is still future work, specified in the [proposal](../decisions/facility-field-proposal.md). |
+| Facility context | `src/shared/commands.ts`, `src/shared/reads.ts` and migration `0002-shared-foundation.sql`: Facility create checks parent/site/company visibility; composite keys and graph guard preserve same-site, acyclic hierarchy. Current projection exposes name/site/parent. | Type/common/conditional-field persistence is still future work, specified in the [approved field decision](../decisions/facility-field-proposal.md). |
 | Browser/load harness | Candidate `playwright.config.ts` and `scripts/quality-performance-proof.ts`: Playwright owns ordinary CI browser server startup; load uses ten browser processes, ten concurrent users, four waves, 320 samples and global network rules including assets. | This reviews the harness correction; it does not establish every upstream Chromium cause. Reported earlier local single-factor experiments lack linked retained scripts/results for independent inspection. |
 | Generation lifecycle | Candidate `tests/helpers/observed-response.ts`, pack/report callers and PR ledger: original response bounds restored; metadata records request, click and response timing without payloads. | A reproduced pack failure involved a 12.877-second browser launch and HTTP completion at 15.972 seconds. Original report failure remains unexplained. A later pass cannot erase either observation. |
 | Diagnostic retention | Candidate `scripts/netlog-metadata.ts`: event/source names and numeric metadata are allowlisted; asset paths restricted; raw capture remains outside upload roots and is removed after preparation. Fixed failure categories avoid raw parser fragments; all ten capture files are required. | Bounded metadata is not a raw trace. Existing redaction/unit checks and exact-head capture evidence remain necessary. |
 
 At preparation, [load job 101991214641](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34204653360/job/101991214641) passed **320/320 reads**, **640 rule-matched core GETs** and all captures on the proposed tree. Its verified [artifact 10047577181](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34204653360/artifacts/10047577181) SHA-256 is `a0a1948a53b3b1bb1d9673f6b6fb749f2eb99a2e163f56040443983910297d8c`. All sixteen candidate 3,000 ms p95 groups remained unmet, approximately 7.35–19.51 seconds; this is separate from the passing failed-read gate. Documentation, E1 and focused HTTP had passed; focused quality and full regression were still running. This is a dated snapshot, not a current completion claim. [PR #61's ledger](https://github.com/deanrfiedler-gif/powerplants-one/pull/61) governs subsequent results and merge.
+
+## Facility decision approval, 8 September 2026
+
+Dean accepted FAC-D01–03 in the separate [field decision](../decisions/facility-field-proposal.md): structure/use/crop separation, explicit unknowns and confirmed type/use changes with retained history. That approval advances the next increment's policy decisions; it does not mark any current mobile walkthrough result as passed. Facility runtime work follows verified PR #61 integration on its own branch.
 
 ## Acceptance record
 
