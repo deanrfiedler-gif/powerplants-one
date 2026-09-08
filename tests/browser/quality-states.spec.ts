@@ -560,4 +560,23 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
   await expect(page.getByText("Action in progress. Its result is not yet confirmed.", { exact: true })).toHaveCount(0);
   expect(commands).toBe(1);
   await page.unroute(actionMatch);
+  // Retire only this case's never-processed handoff through the real command.
+  // Leaving it ReadyForReview contaminates the retained P10 empty-queue case
+  // when the next viewport runs against the same persistent database.
+  await page.getByLabel("Precise action / correction reason").fill(
+    "SYN retire this test-owned, never-processed handoff after verifying its original submit; preserve its history.",
+  );
+  const cancelled = page.waitForResponse((response) =>
+    new URL(response.url()).pathname === `/api/v1/finance/handoffs/${cmd.id}/cancel` &&
+    response.request().method() === "POST");
+  await page.getByRole("button", { name: "Cancel before effects", exact: true }).click();
+  const cancellation = await cancelled;
+  expect(cancellation.ok(), await cancellation.text()).toBe(true);
+  await expect(page.getByText("Cancelled", { exact: true })).toBeVisible();
+  const retired = await call(page, `finance/handoffs/${cmd.id}`);
+  expect(retired.handoff.id).toBe(cmd.id);
+  expect(retired.handoff.status).toBe("Cancelled");
+  expect(retired.handoff.active_attempt_id).toBeNull();
+  expect(retired.outcomes).toHaveLength(0);
+  await capture(page, info, "finance-status-fixture-cancelled-without-effects");
 });

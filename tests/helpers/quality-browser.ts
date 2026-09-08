@@ -1,4 +1,4 @@
-import { expect, type Page, type TestInfo } from "@playwright/test";
+import { expect, type Page, type Request, type TestInfo } from "@playwright/test";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { mkdir, writeFile } from "node:fs/promises";
@@ -11,8 +11,17 @@ export function recordBrowserReads(page: Page, info: TestInfo) {
   const records: Record<string, unknown>[] = [];
   let dropped = 0;
   const add = (record: Record<string, unknown>) => {
-    if (records.length < 3000) records.push({ ms: performance.now() - started, ...record });
+    if (records.length < 3000) records.push({ ms: performance.now() - started, observed_at_ms: Date.now(), ...record });
     else dropped++;
+  };
+  // Browser resource timings differ from when this worker observes an event.
+  // Keep only the pinned API's numeric fields; -1 remains unavailable.
+  const resourceTiming = (request: Request) => {
+    const t = request.timing();
+    return { startTime: t.startTime, domainLookupStart: t.domainLookupStart,
+      domainLookupEnd: t.domainLookupEnd, connectStart: t.connectStart,
+      secureConnectionStart: t.secureConnectionStart, connectEnd: t.connectEnd,
+      requestStart: t.requestStart, responseStart: t.responseStart, responseEnd: t.responseEnd };
   };
   // Object identity links events; request objects themselves are never serialized.
   const ids = new WeakMap<object, number>();
@@ -31,11 +40,11 @@ export function recordBrowserReads(page: Page, info: TestInfo) {
   });
   page.on("requestfinished", (request) => {
     const id = ids.get(request);
-    if (id !== undefined) add({ event: "finished", id });
+    if (id !== undefined) add({ event: "finished", id, resource_timing: resourceTiming(request) });
   });
   page.on("requestfailed", (request) => {
     const id = ids.get(request);
-    if (id !== undefined) add({ event: "failed", id });
+    if (id !== undefined) add({ event: "failed", id, resource_timing: resourceTiming(request) });
   });
   page.on("domcontentloaded", () => add({ event: "domcontentloaded" }));
   page.on("load", () => add({ event: "load" }));
@@ -49,7 +58,7 @@ export function recordBrowserReads(page: Page, info: TestInfo) {
       scenario: info.title, viewport: page.viewportSize(), status: info.status,
       browser_channel: info.project.use.channel ?? "default headless shell",
       started_at_ms: startedAtMs,
-      limits: "Primary page transport events only; response status does not establish a complete body. No request bodies, headers, query strings, cookies, error text or raw traces.",
+      limits: "Primary page transport events only; response status does not establish a complete body. ms/observed_at_ms record worker observation; resource_timing contains browser-reported numeric timing fields, startTime is epoch milliseconds and other fields are relative milliseconds (-1 unavailable). These clocks and server finish are distinct observations, not proof of an upstream cause. No request bodies, headers, query strings, cookies, error text or raw traces.",
       record_limit: 3000, dropped, records,
     }, null, 2));
   };
