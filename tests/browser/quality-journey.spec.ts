@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../helpers/browser-lifecycle";
 import { writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import {

@@ -1,7 +1,8 @@
 import { createServer } from "node:http";
 import { randomBytes } from "node:crypto";
 import { localConfig } from "../src/platform/config";
-import { proofEvent, proofPath } from "../src/platform/proof-diagnostics";
+import { proofDiagnosticsEnabled, proofEvent, proofPath, proofRequest as withProofRequest } from "../src/platform/proof-diagnostics";
+import { runtimeSampler } from "../src/platform/proof-runtime";
 const config = localConfig(); // Refuse unsafe configuration before build work or Next initialisation.
 await import("./build-offline");
 const { default: next } = await import("next");
@@ -49,13 +50,19 @@ const server = createServer((req, res) => {
     "Permissions-Policy",
     "camera=(), microphone=(), geolocation=()",
   );
-  void handler(req, res).catch(() => {
+  void withProofRequest({ request_id: requestId, path }, () => handler(req, res)).catch(() => {
     proofEvent("http-handler-rejected", { request_id: requestId, path, elapsed_ms: performance.now() - received });
     if (!res.headersSent) res.writeHead(500);
     res.end("Unable to load this page.");
   });
 });
 server.requestTimeout = 15000;
+if (proofDiagnosticsEnabled()) {
+  const sample = runtimeSampler();
+  const heartbeat = setInterval(() => proofEvent("server-runtime", sample()), 2000);
+  heartbeat.unref();
+  server.once("close", () => clearInterval(heartbeat));
+}
 server.listen(config.port, "127.0.0.1", () =>
   console.log(`Powerplants One — local synthetic only — ${config.origin}`),
 );

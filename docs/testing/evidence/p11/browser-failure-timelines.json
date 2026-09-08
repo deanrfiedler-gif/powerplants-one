@@ -1,0 +1,250 @@
+{
+  "source_head": "5b6b8bf73e9486858b22e7561f1ec1ece8ee59de",
+  "executed_checkout": "5309fd0330006033245588287b29837706b6460b",
+  "executed_tree": "5d21fa7b5aa4d005a979e67b08884046a04dd7ce",
+  "run_id": 34204653360,
+  "run_attempt": 1,
+  "artifact_id": 10049379888,
+  "artifact_sha256": "23b1b4fdd945f7805fd31f71ea946ee7f5458b82d2d55bd1bd06a8ad501355f1",
+  "artifact_checksum_verified": true,
+  "browser_results": {
+    "passed": 115,
+    "failed": 3,
+    "skipped": 0,
+    "flaky": 0
+  },
+  "events": [
+    {
+      "at_ms": 1788858805073,
+      "pid": 8851,
+      "sequence": 23054,
+      "event": "http-received",
+      "request_id": 11528,
+      "path": "/api/v1/report-render-jobs/:id/retry",
+      "method": "POST"
+    },
+    {
+      "at_ms": 1788858805784,
+      "pid": 8851,
+      "sequence": 128,
+      "event": "report-claim-start",
+      "started_at_ms": 1788858805784,
+      "elapsed_ms": 0
+    },
+    {
+      "at_ms": 1788858805793,
+      "pid": 8851,
+      "sequence": 129,
+      "event": "report-claimed",
+      "started_at_ms": 1788858805784,
+      "elapsed_ms": 9
+    },
+    {
+      "at_ms": 1788858805824,
+      "pid": 8851,
+      "sequence": 130,
+      "event": "report-render-start",
+      "started_at_ms": 1788858805784,
+      "elapsed_ms": 40
+    },
+    {
+      "at_ms": 1788858827153,
+      "pid": 8851,
+      "sequence": 131,
+      "event": "report-render-complete",
+      "started_at_ms": 1788858805784,
+      "elapsed_ms": 21369
+    },
+    {
+      "at_ms": 1788858827678,
+      "pid": 8851,
+      "sequence": 23055,
+      "event": "http-finished",
+      "request_id": 11528,
+      "path": "/api/v1/report-render-jobs/:id/retry",
+      "elapsed_ms": 22605.72755700024,
+      "status": 200
+    },
+    {
+      "at_ms": 1788858983139,
+      "pid": 8851,
+      "sequence": 25030,
+      "event": "http-received",
+      "request_id": 12516,
+      "path": "/api/v1/my-jobs/:id",
+      "method": "GET"
+    },
+    {
+      "at_ms": 1788858983532,
+      "pid": 8851,
+      "sequence": 25031,
+      "event": "http-finished",
+      "request_id": 12516,
+      "path": "/api/v1/my-jobs/:id",
+      "elapsed_ms": 393.3899280000478,
+      "status": 200
+    },
+    {
+      "at_ms": 1788858983600,
+      "pid": 8851,
+      "sequence": 25032,
+      "event": "http-received",
+      "request_id": 12517,
+      "path": "/my-jobs/:id",
+      "method": "GET"
+    },
+    {
+      "at_ms": 1788858984256,
+      "pid": 8851,
+      "sequence": 25033,
+      "event": "http-finished",
+      "request_id": 12517,
+      "path": "/my-jobs/:id",
+      "elapsed_ms": 655.7802939997055,
+      "status": 200
+    },
+    {
+      "at_ms": 1788859242259,
+      "pid": 8851,
+      "sequence": 25074,
+      "event": "http-received",
+      "request_id": 12538,
+      "path": "/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_1mojsay._.js",
+      "method": "GET"
+    },
+    {
+      "at_ms": 1788859243511,
+      "pid": 8851,
+      "sequence": 25075,
+      "event": "http-finished",
+      "request_id": 12538,
+      "path": "/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_1mojsay._.js",
+      "elapsed_ms": 1256.1441899999045,
+      "status": 200
+    },
+    {
+      "at_ms": 1788859244376,
+      "pid": 8851,
+      "sequence": 25076,
+      "event": "http-received",
+      "request_id": 12539,
+      "path": "/api/v1/local-session",
+      "method": "GET"
+    },
+    {
+      "at_ms": 1788859244381,
+      "pid": 8851,
+      "sequence": 25077,
+      "event": "http-received",
+      "request_id": 12540,
+      "path": "/api/v1/local-session",
+      "method": "GET"
+    },
+    {
+      "at_ms": 1788859244518,
+      "pid": 8851,
+      "sequence": 25078,
+      "event": "http-finished",
+      "request_id": 12540,
+      "path": "/api/v1/local-session",
+      "elapsed_ms": 136.96876899991184,
+      "status": 200
+    },
+    {
+      "at_ms": 1788859244526,
+      "pid": 8851,
+      "sequence": 25079,
+      "event": "http-finished",
+      "request_id": 12539,
+      "path": "/api/v1/local-session",
+      "elapsed_ms": 149.81488499976695,
+      "status": 200
+    },
+    {
+      "at_ms": 1788859244568,
+      "pid": 8851,
+      "sequence": 25080,
+      "event": "http-received",
+      "request_id": 12541,
+      "path": "/api/v1/my-jobs/:id",
+      "method": "GET"
+    },
+    {
+      "at_ms": 1788859244579,
+      "pid": 8851,
+      "sequence": 25081,
+      "event": "http-received",
+      "request_id": 12542,
+      "path": "/api/v1/my-jobs/:id",
+      "method": "GET"
+    },
+    {
+      "at_ms": 1788859245324,
+      "pid": 8851,
+      "sequence": 25082,
+      "event": "http-finished",
+      "request_id": 12541,
+      "path": "/api/v1/my-jobs/:id",
+      "elapsed_ms": 755.8884280002676,
+      "status": 200
+    },
+    {
+      "at_ms": 1788859245360,
+      "pid": 8851,
+      "sequence": 25083,
+      "event": "http-finished",
+      "request_id": 12542,
+      "path": "/api/v1/my-jobs/:id",
+      "elapsed_ms": 781.3874599998817,
+      "status": 200
+    },
+    {
+      "at_ms": 1788859418379,
+      "pid": 8851,
+      "sequence": 26050,
+      "event": "http-received",
+      "request_id": 13026,
+      "path": "/api/v1/reports/:id/:other",
+      "method": "POST"
+    },
+    {
+      "at_ms": 1788859419258,
+      "pid": 8851,
+      "sequence": 26051,
+      "event": "http-finished",
+      "request_id": 13026,
+      "path": "/api/v1/reports/:id/:other",
+      "elapsed_ms": 878.8653079997748,
+      "status": 409
+    },
+    {
+      "at_ms": 1788859419314,
+      "pid": 8851,
+      "sequence": 26052,
+      "event": "http-received",
+      "request_id": 13027,
+      "path": "/api/v1/reports/:id",
+      "method": "GET"
+    },
+    {
+      "at_ms": 1788859472503,
+      "pid": 8851,
+      "sequence": 26053,
+      "event": "http-closed-incomplete",
+      "request_id": 13027,
+      "path": "/api/v1/reports/:id",
+      "elapsed_ms": 53188.84853899991
+    }
+  ],
+  "observations": {
+    "report_render": "Request 11528 completed HTTP 200 after 22605.73ms; rendering span was 21329ms. Original 15000ms response wait failed. Inner renderer phase cause remains unmeasured.",
+    "my_jobs": "SC-10 setup API 12516 completed in 393.39ms and document 12517 in 655.78ms. Initial static requests finished by 09:16:25.145Z. A later HMR-client script request began 09:20:42.259Z; page identity and detail reads followed at 09:20:44Z. Gateway completion does not establish browser receipt or consumption.",
+    "report_read": "After refusal POST 13026 completed HTTP 409, GET 13027 reached the gateway at 09:23:39.314Z and closed incomplete after 53188.85ms. No route/database phase timing exists in this artifact; this is not proof of a 53s query."
+  },
+  "limitations": [
+    "Temporal correlation uses ordered test execution, redacted paths and same-process request IDs; raw record IDs are deliberately absent.",
+    "Raw traces were excluded and were not inspected.",
+    "No server heartbeat, route-phase, query-stage or per-page network lifecycle was captured in this original run.",
+    "Original failures remain failures; no source fix, retry pass or root cause is established by these excerpts."
+  ]
+}

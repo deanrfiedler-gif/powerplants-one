@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../helpers/browser-lifecycle";
 import { writeFile } from "node:fs/promises";
 import { financeHttpSource, httpFinanceDraft } from "../helpers/finance-http";
 import { call, identity, capture } from "../helpers/quality-browser";

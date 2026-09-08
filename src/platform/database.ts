@@ -1,5 +1,6 @@
 import pg, { type PoolClient } from "pg";
 import { localConfig } from "./config";
+import { proofReadPhase } from "./proof-diagnostics";
 let pool: pg.Pool | undefined;
 export function database() {
   const config = localConfig();
@@ -24,17 +25,24 @@ export function database() {
 export async function transaction<T>(
   work: (client: PoolClient) => Promise<T>,
 ): Promise<T> {
+  proofReadPhase("database-acquire-start");
   const client = await database().connect();
+  proofReadPhase("database-acquired");
   try {
     await client.query("BEGIN");
+    proofReadPhase("database-work-start");
     const result = await work(client);
+    proofReadPhase("database-commit-start");
     await client.query("COMMIT");
+    proofReadPhase("database-committed");
     return result;
   } catch (error) {
+    proofReadPhase("database-rollback-start");
     await client.query("ROLLBACK");
     throw error;
   } finally {
     client.release();
+    proofReadPhase("database-released");
   }
 }
 export async function closeDatabase() {

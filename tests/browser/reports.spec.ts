@@ -1,5 +1,6 @@
 import { observedResponse } from "../helpers/observed-response";
-import { test, expect, type Page, type TestInfo } from "@playwright/test";
+import type { Page, TestInfo } from "@playwright/test";
+import { test, expect, observeApiCall } from "../helpers/browser-lifecycle";
 import { mkdir, writeFile } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -10,7 +11,7 @@ test.use({ actionTimeout: 15000 });
 const hash = (v: string | Buffer) =>
   createHash("sha256").update(v).digest("hex");
 async function call(page: Page, path: string, body?: unknown) {
-  const r = await page.request.fetch(`/api/v1/${path}`, {
+  const r = await observeApiCall(page, `/api/v1/${path}`, () => page.request.fetch(`/api/v1/${path}`, {
     method: body === undefined ? "GET" : "POST",
     headers:
       body === undefined
@@ -20,7 +21,7 @@ async function call(page: Page, path: string, body?: unknown) {
             "Content-Type": "application/json",
           },
     data: body,
-  });
+  }));
   const d = await r.json();
   expect(r.ok(), JSON.stringify(d)).toBeTruthy();
   return d;
