@@ -513,9 +513,15 @@ jobs:
         timeout-minutes: 25
         env:
           PPO_BENCHMARK_FIXTURE: add-synthetic-load
+          PPO_NETLOG_DIRECTORY: ${{ runner.temp }}/ppo-pt27-netlog
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
           node --env-file=.env.local --import tsx scripts/quality-performance-proof.ts
+      - name: Retain allowlisted network metadata and remove raw capture
+        if: always()
+        env:
+          PPO_NETLOG_DIRECTORY: ${{ runner.temp }}/ppo-pt27-netlog
+        run: node --import tsx scripts/netlog-metadata.ts
       - name: Prepare performance review diagnostics
         if: always()
         id: performance_review

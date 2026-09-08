@@ -7,12 +7,13 @@ import { once } from "node:events";
 import { chromium, expect, type BrowserContext, type CDPSession, type Page } from "@playwright/test";
 import { closeDatabase, database } from "../src/platform/database";
 import { qualityLoadFixture } from "./quality-load-fixture";
+import { netlogDirectory } from "./netlog-metadata";
 
 const root = "verification-evidence/p11-performance";
 await mkdir(root, { recursive: true });
 const origin = "http://127.0.0.1:3000";
-// The controlled comparison retains the shell's failed observations. Select
-// pinned full Chromium for the same globally throttled 320-sample contract.
+// Both Chromium implementations have reproduced the stall. Keep the current
+// selection fixed while observing the internal network pipeline.
 const channel = "chromium";
 async function assetProbe(path: string) {
   // A separate post-failure server probe, never a replacement measured sample.
@@ -132,7 +133,17 @@ try {
     await new Promise((r) => setTimeout(r, 500));
   }
   assert.ok(ready, "The exact guarded development server must start");
-  browser = await chromium.launch({ channel });
+  const netlog = netlogDirectory();
+  if (netlog) await mkdir(netlog, { recursive: true, mode: 0o700 });
+  browser = await chromium.launch({ channel, ...(netlog ? { args: [
+    `--log-net-log=${netlog}/network.json`,
+    "--net-log-max-size-mb=64",
+    "--net-log-duration=1380",
+  ] } : {}) });
+  await writeFile(`${root}/network-capture-boundary.json`, JSON.stringify({
+    ...provenance, enabled: Boolean(netlog), browser: browser.version(), channel,
+    capture: "Default Strip private information mode; maximum 64 MiB plus constants, automatic flush after 1380 seconds. Raw NetLog stays outside all upload roots; only separately allowlisted metadata is retained. Capture does not change throttling or any sample deadline.",
+  }, null, 2));
   const views = [
     {
       name: "Customers",
