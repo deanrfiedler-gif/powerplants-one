@@ -1,0 +1,39 @@
+name: Email and Calendar design assurance
+on:
+  pull_request:
+    paths:
+      - 'docs/blueprints/email-calendar*'
+      - 'docs/blueprints/email-calendar-prototype/**'
+      - 'docs/delivery/email-calendar*'
+      - 'docs/decisions/email-calendar*'
+      - '.github/workflows/email-calendar-design.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/blueprints/email-calendar*'
+      - 'docs/blueprints/email-calendar-prototype/**'
+      - 'docs/delivery/email-calendar*'
+      - 'docs/decisions/email-calendar*'
+      - '.github/workflows/email-calendar-design.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  design:
+    name: Synthetic Email and Calendar model checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Check syntax and synthetic projections
+        run: |
+          node --check docs/blueprints/email-calendar-prototype/app.js
+          node --check docs/blueprints/email-calendar-prototype/fixtures.js
+          node docs/blueprints/email-calendar-prototype/check.mjs
+      - name: Export self-contained offline prototype
+        run: python3 docs/blueprints/email-calendar-prototype/export.py /tmp/ppo-email-calendar-prototype.html

@@ -1,0 +1,87 @@
+{
+  "suite": "EC r01 synthetic model and projection checks",
+  "browser_qa": false,
+  "server_security_test": false,
+  "cases": [
+    {
+      "name": "Owner sees five Inbox conversations and one Sent conversation",
+      "status": "passed"
+    },
+    {
+      "name": "Record access alone grants no email rows or counts",
+      "status": "passed"
+    },
+    {
+      "name": "Explicit record linking does not share the conversation",
+      "status": "passed"
+    },
+    {
+      "name": "A selected share reveals exactly one message",
+      "status": "passed"
+    },
+    {
+      "name": "Unselected attachment filename is absent from recipient projection",
+      "status": "passed"
+    },
+    {
+      "name": "Explicit attachment inclusion permits its filename",
+      "status": "passed"
+    },
+    {
+      "name": "Hidden earlier content cannot be found by recipient search",
+      "status": "passed"
+    },
+    {
+      "name": "Other linked record names do not leak through an allowed share",
+      "status": "passed"
+    },
+    {
+      "name": "Revoked target access removes rows, content and attachment",
+      "status": "passed"
+    },
+    {
+      "name": "Restored target access respects the existing specific share",
+      "status": "passed"
+    },
+    {
+      "name": "Unlinking withdraws dependent shares without deleting the source",
+      "status": "passed"
+    },
+    {
+      "name": "Share command remains specific to one message and excludes attachments by default",
+      "status": "passed"
+    },
+    {
+      "name": "Follow-up survives view changes once and appears as a separate internal agenda item",
+      "status": "passed"
+    },
+    {
+      "name": "Entered follow-up text is escaped when rendered",
+      "status": "passed"
+    },
+    {
+      "name": "Colleague agenda reveals Busy without event subject, location or people",
+      "status": "passed"
+    },
+    {
+      "name": "Revoked availability disappears",
+      "status": "passed"
+    },
+    {
+      "name": "Expired and disconnected connections hide source content",
+      "status": "passed"
+    },
+    {
+      "name": "Reset restores fictional defaults",
+      "status": "passed"
+    },
+    {
+      "name": "All screen render functions return complete labelled main content",
+      "status": "passed"
+    },
+    {
+      "name": "No external requests or browser persistence in prototype source",
+      "status": "passed"
+    }
+  ]
+}
