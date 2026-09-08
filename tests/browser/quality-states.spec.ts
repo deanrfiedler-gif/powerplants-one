@@ -190,232 +190,259 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
   ];
   const proof: unknown[] = [];
   for (const s of matrix) {
-    await call(page, "local-session", { profile: s.profile });
-    const query =
-      s.id === "SC-13"
-        ? `?account_id=${cmd.account_id}`
-        : s.id === "SC-07"
-          ? "?from=2026-09-20T14:00:00Z&to=2026-09-27T14:00:00Z&timezone=Australia%2FBrisbane"
-          : "";
-    const original = await call(page, s.api + query);
-    await page.goto(s.url);
-    await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
-    await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
-    await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
-    await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
-    if (s.id === "SC-08") {
-      await expect(page.getByRole("banner").getByText("Service", { exact: true })).toBeVisible();
-      await expect(page.getByRole("navigation", { name: "Service navigation", exact: true })
-        .getByRole("link", { name: "Service planner", exact: true })).toHaveAttribute("aria-current", "page");
-    }
-    if (s.id === "SC-14") {
-      await expect(page.getByRole("banner").getByText("Documents", { exact: true })).toBeVisible();
-    }
-    await capture(page, info, `${s.id}-loaded`);
-    const match = (url: URL) => url.pathname === `/api/v1/${s.api}`;
-    let release: () => void = () => {};
-    const wait = new Promise<void>((r) => {
-      release = r;
-    });
-    await page.route(match, async (route) => {
-      await wait;
-      await route.fulfill({
-        status: 503,
-        contentType: "application/json",
-        body: JSON.stringify({
-          code: "DependencyUnavailable",
-          message: `SYN ${s.id} current read unavailable. Retry loading.`,
-          retryable: true,
-        }),
+    await test.step(`${s.id}: ${s.url}`, async () => {
+      await call(page, "local-session", { profile: s.profile });
+      const query =
+        s.id === "SC-13"
+          ? `?account_id=${cmd.account_id}`
+          : s.id === "SC-07"
+            ? "?from=2026-09-20T14:00:00Z&to=2026-09-27T14:00:00Z&timezone=Australia%2FBrisbane"
+            : "";
+      const original = await call(page, s.api + query);
+      const loadedRead = page.waitForResponse((response) =>
+        new URL(response.url()).pathname === `/api/v1/${s.api}` &&
+        response.request().method() === "GET" && response.status() === 200,
+        { timeout: 60000 });
+      // The screen contract is the authorised read and rendered state. A dev
+      // document's unrelated load event is not the selected record's readiness.
+      await Promise.all([
+        loadedRead,
+        page.goto(s.url, { waitUntil: "domcontentloaded" }),
+      ]);
+      await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
+      await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
+      await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
+      await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
+      if (s.id === "SC-08") {
+        await expect(page.getByRole("banner").getByText("Service", { exact: true })).toBeVisible();
+        await expect(page.getByRole("navigation", { name: "Service navigation", exact: true })
+          .getByRole("link", { name: "Service planner", exact: true })).toHaveAttribute("aria-current", "page");
+      }
+      if (s.id === "SC-14") {
+        await expect(page.getByRole("banner").getByText("Documents", { exact: true })).toBeVisible();
+      }
+      await capture(page, info, `${s.id}-loaded`);
+      const match = (url: URL) => url.pathname === `/api/v1/${s.api}`;
+      let release: () => void = () => {};
+      const wait = new Promise<void>((r) => {
+        release = r;
       });
-    });
-    try {
-      const refresh = s.refresh
-        ? page.getByRole("button", { name: s.refresh, exact: true })
-        : null;
-      if (refresh && (await refresh.count())) await refresh.click();
-      else await page.reload();
-      await expect(page.getByText(/^Loading .*…$/).first()).toBeVisible();
-      await expect(
-        page.getByRole("heading", {
-          name: "Current page summary",
-          exact: true,
-        }),
-      ).toHaveCount(0);
-      if (s.id === "SC-07")
-        await expect(page.locator(".planner-stat-row strong")).toHaveText(
-          Array(4).fill("—"),
-        );
-      await capture(page, info, `${s.id}-loading`);
-    } finally {
-      release();
-    }
-    await expect(
-      page
-        .getByRole("alert")
-        .filter({ hasText: `SYN ${s.id} current read unavailable` }),
-    ).toBeVisible();
-    await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
-    await expect(
-      page.getByText(
-        /^(No permitted (activities|service requests|submissions)|No current assigned visits|No Finance handoffs|No job packs are available)/,
-      ),
-    ).toHaveCount(0);
-    await expect(
-      page.getByRole("heading", { name: "Current page summary", exact: true }),
-    ).toHaveCount(0);
-    await capture(page, info, `${s.id}-failed`);
-    await page.unroute(match);
-    await page.reload();
-    await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
-    await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
-    if (s.id === "SC-14") {
-      // Applicability is a separate authorised read from immutable metadata.
-      // A failed current-status read must not retain a current-use claim.
-      const statusMatch = (url: URL) =>
-        url.pathname === `/api/v1/pack-issues/${packDetail.current_issue_id}`;
-      await page.route(statusMatch, (route) =>
-        route.fulfill({
+      await page.route(match, async (route) => {
+        await wait;
+        await route.fulfill({
           status: 503,
           contentType: "application/json",
           body: JSON.stringify({
             code: "DependencyUnavailable",
-            message: "SYN current applicability unavailable. Retry this read.",
+            message: `SYN ${s.id} current read unavailable. Retry loading.`,
             retryable: true,
           }),
-        }),
-      );
-      await page.reload();
-      await expect(
-        page
-          .locator('.business-error[role="alert"]')
-          .filter({ hasText: "SYN current applicability unavailable" }),
-      ).toBeVisible();
-      await expect(
-        page.getByText("Current applicable issue", { exact: true }),
-      ).toHaveCount(0);
-      await expect(
-        page.getByText("Not currently applicable", { exact: true }),
-      ).toHaveCount(0);
-      await capture(page, info, "SC-14-applicability-failed-no-current-claim");
-      await page.unroute(statusMatch);
-      await page.route(statusMatch, (route) =>
-        route.fulfill({
-          status: 403,
-          contentType: "application/json",
-          body: JSON.stringify({
-            code: "Forbidden",
-            message: "SYN current issue access revoked.",
-            retryable: false,
+        });
+      });
+      try {
+        const refresh = s.refresh
+          ? page.getByRole("button", { name: s.refresh, exact: true })
+          : null;
+        if (refresh && (await refresh.count())) await refresh.click();
+        else await page.reload({ waitUntil: "domcontentloaded" });
+        await expect(page.getByText(/^Loading .*…$/).first()).toBeVisible();
+        await expect(
+          page.getByRole("heading", {
+            name: "Current page summary",
+            exact: true,
           }),
-        }),
-      );
-      await page.reload();
-      await expect(
-        page
-          .locator('.business-error[role="alert"]')
-          .filter({ hasText: "SYN current issue access revoked" }),
-      ).toBeVisible();
-      await expect(
-        page.getByRole("link", { name: "Download exact A4 PDF", exact: true }),
-      ).toHaveCount(0);
-      await expect(
-        page.getByRole("heading", {
-          name: packDetail.issues[0].manifest.filename,
-          exact: true,
-        }),
-      ).toHaveCount(0);
-      await capture(page, info, "SC-14-secondary-denial-clears-manifest");
-      await page.unroute(statusMatch);
-    }
-    if (s.list) {
-      await page.route(match, (route) =>
-        route.fulfill({
-          status: 200,
-          contentType: "application/json",
-          body: JSON.stringify({ ...original, items: [], next_cursor: null }),
-        }),
-      );
-      await page.reload();
-      await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
-      await expect(
-        page
-          .getByText(/No (permitted|current assigned|Finance handoffs)/)
-          .first(),
-      ).toBeVisible();
-      await capture(page, info, `${s.id}-empty`);
-      await page.unroute(match);
-    } else {
-      await page.route(match, (route) =>
-        route.fulfill({
-          status: 404,
-          contentType: "application/json",
-          body: JSON.stringify({
-            code: "RecordUnavailable",
-            message: "The requested record is unavailable to this identity.",
-            retryable: false,
-          }),
-        }),
-      );
-      // The unavailable-record assertion starts after the actual selected
-      // read, not while the independent identity prerequisite is loading.
-      await Promise.all([
-        page.waitForResponse((response) =>
-          new URL(response.url()).pathname === `/api/v1/${s.api}` &&
-          response.request().method() === "GET" && response.status() === 404,
-          { timeout: 15000 }),
-        page.reload(),
-      ]);
+        ).toHaveCount(0);
+        if (s.id === "SC-07")
+          await expect(page.locator(".planner-stat-row strong")).toHaveText(
+            Array(4).fill("—"),
+          );
+        await capture(page, info, `${s.id}-loading`);
+      } finally {
+        release();
+      }
       await expect(
         page
           .getByRole("alert")
-          .filter({ hasText: "requested record is unavailable" }),
+          .filter({ hasText: `SYN ${s.id} current read unavailable` }),
       ).toBeVisible();
-      await capture(page, info, `${s.id}-unavailable-record`);
+      await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
+      await expect(
+        page.getByText(
+          /^(No permitted (activities|service requests|submissions)|No current assigned visits|No Finance handoffs|No job packs are available)/,
+        ),
+      ).toHaveCount(0);
+      await expect(
+        page.getByRole("heading", { name: "Current page summary", exact: true }),
+      ).toHaveCount(0);
+      await capture(page, info, `${s.id}-failed`);
       await page.unroute(match);
-    }
-    // Real server-derived Systems identity; no mocked role or denial response.
-    await identity(page, "systems");
-    const denied = await page.request.get(`/api/v1/${s.api}${query}`);
-    expect([403, 404], s.id).toContain(denied.status());
-    expect(denied.headers()["cache-control"]).toBe("private, no-store");
-    const deniedBody = await denied.json();
-    await expect(
-      page
-        .locator('.business-error[role="alert"]')
-        .filter({ hasText: deniedBody.message })
-        .first(),
-    ).toBeVisible();
-    await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
-    await expect(
-      page.getByRole("heading", {
-        name: "SYN Greenhouse Demonstration",
-        exact: true,
-      }),
-    ).toHaveCount(0);
-    expect(JSON.stringify(deniedBody)).not.toContain(source.report_id);
-    await expect(
-      page.getByRole("heading", { name: "Current page summary", exact: true }),
-    ).toHaveCount(0);
-    await capture(page, info, `${s.id}-denied`);
-    proof.push({
-      screen: s.id,
-      route: s.url,
-      read: s.api,
-      profile: s.profile,
-      states: [
-        "loaded",
-        "loading",
-        "failed",
-        "recovered",
-        s.list ? "empty permitted result" : "unavailable detail record",
-        "actual Systems denial",
-      ],
-      empty_detail_basis: s.list
-        ? null
-        : "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
-      limits:
-        "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim.",
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
+      await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
+      if (s.id === "SC-14") {
+        // Applicability is a separate authorised read from immutable metadata.
+        // A failed current-status read must not retain a current-use claim.
+        const statusMatch = (url: URL) =>
+          url.pathname === `/api/v1/pack-issues/${packDetail.current_issue_id}`;
+        await page.route(statusMatch, (route) =>
+          route.fulfill({
+            status: 503,
+            contentType: "application/json",
+            body: JSON.stringify({
+              code: "DependencyUnavailable",
+              message: "SYN current applicability unavailable. Retry this read.",
+              retryable: true,
+            }),
+          }),
+        );
+        await page.reload({ waitUntil: "domcontentloaded" });
+        await expect(
+          page
+            .locator('.business-error[role="alert"]')
+            .filter({ hasText: "SYN current applicability unavailable" }),
+        ).toBeVisible();
+        await expect(
+          page.getByText("Current applicable issue", { exact: true }),
+        ).toHaveCount(0);
+        await expect(
+          page.getByText("Not currently applicable", { exact: true }),
+        ).toHaveCount(0);
+        await capture(page, info, "SC-14-applicability-failed-no-current-claim");
+        await page.unroute(statusMatch);
+        await page.route(statusMatch, (route) =>
+          route.fulfill({
+            status: 403,
+            contentType: "application/json",
+            body: JSON.stringify({
+              code: "Forbidden",
+              message: "SYN current issue access revoked.",
+              retryable: false,
+            }),
+          }),
+        );
+        await page.reload({ waitUntil: "domcontentloaded" });
+        await expect(
+          page
+            .locator('.business-error[role="alert"]')
+            .filter({ hasText: "SYN current issue access revoked" }),
+        ).toBeVisible();
+        await expect(
+          page.getByRole("link", { name: "Download exact A4 PDF", exact: true }),
+        ).toHaveCount(0);
+        await expect(
+          page.getByRole("heading", {
+            name: packDetail.issues[0].manifest.filename,
+            exact: true,
+          }),
+        ).toHaveCount(0);
+        await capture(page, info, "SC-14-secondary-denial-clears-manifest");
+        await page.unroute(statusMatch);
+      }
+      if (s.list) {
+        await page.route(match, (route) =>
+          route.fulfill({
+            status: 200,
+            contentType: "application/json",
+            body: JSON.stringify({ ...original, items: [], next_cursor: null }),
+          }),
+        );
+        await page.reload({ waitUntil: "domcontentloaded" });
+        await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
+        await expect(
+          page
+            .getByText(/No (permitted|current assigned|Finance handoffs)/)
+            .first(),
+        ).toBeVisible();
+        await capture(page, info, `${s.id}-empty`);
+        await page.unroute(match);
+      } else {
+        let unavailableRequested = false;
+        let releaseUnavailable: () => void = () => {};
+        const unavailableReady = new Promise<void>((resolve) => {
+          releaseUnavailable = resolve;
+        });
+        await page.route(match, async (route) => {
+          unavailableRequested = true;
+          await unavailableReady;
+          await route.fulfill({
+            status: 404,
+            contentType: "application/json",
+            body: JSON.stringify({
+              code: "RecordUnavailable",
+              message: "The requested record is unavailable to this identity.",
+              retryable: false,
+            }),
+          });
+        });
+        // The unavailable-record assertion starts after the actual selected
+        // read, not while the independent identity prerequisite is loading.
+        try {
+          await page.reload({ waitUntil: "domcontentloaded" });
+          await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true }))
+            .toHaveAttribute("aria-busy", "false");
+          await expect.poll(() => unavailableRequested, {
+            timeout: 15000, message: `${s.id}: selected record read requested`,
+          }).toBe(true);
+          const unavailableResponse = page.waitForResponse((response) =>
+            new URL(response.url()).pathname === `/api/v1/${s.api}` &&
+            response.request().method() === "GET" && response.status() === 404,
+            { timeout: 15000 });
+          releaseUnavailable();
+          await unavailableResponse;
+        } finally {
+          releaseUnavailable();
+        }
+        await expect(
+          page
+            .getByRole("alert")
+            .filter({ hasText: "requested record is unavailable" }),
+        ).toBeVisible();
+        await capture(page, info, `${s.id}-unavailable-record`);
+        await page.unroute(match);
+      }
+      // Real server-derived Systems identity; no mocked role or denial response.
+      await identity(page, "systems");
+      const denied = await page.request.get(`/api/v1/${s.api}${query}`);
+      expect([403, 404], s.id).toContain(denied.status());
+      expect(denied.headers()["cache-control"]).toBe("private, no-store");
+      const deniedBody = await denied.json();
+      await expect(
+        page
+          .locator('.business-error[role="alert"]')
+          .filter({ hasText: deniedBody.message })
+          .first(),
+      ).toBeVisible();
+      await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
+      await expect(
+        page.getByRole("heading", {
+          name: "SYN Greenhouse Demonstration",
+          exact: true,
+        }),
+      ).toHaveCount(0);
+      expect(JSON.stringify(deniedBody)).not.toContain(source.report_id);
+      await expect(
+        page.getByRole("heading", { name: "Current page summary", exact: true }),
+      ).toHaveCount(0);
+      await capture(page, info, `${s.id}-denied`);
+      proof.push({
+        screen: s.id,
+        route: s.url,
+        read: s.api,
+        profile: s.profile,
+        states: [
+          "loaded",
+          "loading",
+          "failed",
+          "recovered",
+          s.list ? "empty permitted result" : "unavailable detail record",
+          "actual Systems denial",
+        ],
+        empty_detail_basis: s.list
+          ? null
+          : "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+        limits:
+          "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim.",
+      });
     });
   }
   await writeFile(
