@@ -99,7 +99,7 @@ test("P06 upgrade and repeat seed preserve exact P05 SQL evidence, revoked grant
   );
   assert.deepEqual(
     (await rows("SELECT version FROM public.ppo_migrations ORDER BY version")).map(r=>r.version),
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
   );
   assert.equal(
     (
@@ -294,12 +294,12 @@ for (const change of [
           );
         if (change === "template") {
           await database().query(
-            "INSERT INTO ppo.pack_templates(id,workspace_id,version,name,renderer_version,definition,content_hash) SELECT $1,workspace_id,2,name,renderer_version,definition,content_hash FROM ppo.pack_templates WHERE id=$2",
-            [id("c1", 2), id("c1")],
+            "INSERT INTO ppo.pack_templates(id,workspace_id,version,name,renderer_version,definition,content_hash) SELECT $1,workspace_id,(SELECT max(version)+1 FROM ppo.pack_templates),name,renderer_version,definition,content_hash FROM ppo.pack_templates WHERE id=$2",
+            [id("c1", 99), id("c1")],
           );
           await database().query(
             "UPDATE ppo.pack_policy SET version=version+1,template_id=$1",
-            [id("c1", 2)],
+            [id("c1", 99)],
           );
         }
         if (change === "permission")

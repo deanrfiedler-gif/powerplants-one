@@ -10,6 +10,7 @@ import { packContext, snapshot, fail } from "./context";
 import { insert, bumpPack, issueEvent } from "./packs";
 import { documentStore, digest } from "./store";
 import { renderPack, type PackSnapshot } from "./render";
+import { supportedRenderPack } from "./p11-render";
 type Bundle = {
   schema_version: 1;
   job_id: string;
@@ -139,7 +140,7 @@ export async function processRenderJob(
     await packContext(database(), p, job.pack_id, "pack.issue");
     let stored = await documentStore().locate(ctx);
     if (!stored) {
-      const generated = await (hooks.render ?? renderPack)(
+      const generated = await (hooks.render ?? supportedRenderPack)(
         job.render_snapshot.source,
         job.render_snapshot,
       );

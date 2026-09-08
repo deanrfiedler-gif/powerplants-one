@@ -6,6 +6,8 @@ import {
   useResource,
   useCommand,
   ErrorNotice,
+  ReadState,
+  isDenied,
   Stamp,
   friendly,
   type Envelope,
@@ -173,6 +175,19 @@ export function CompletionSubmission({
             multiline
           />
           <ErrorNotice error={localError ?? c.error} />
+          {!!localError && (
+            <p>
+              <a
+                href="/offline/index.html"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Verify saved workspace in another tab
+              </a>
+              . Keep this form open, verify your identity there and resolve any
+              pending originals, then return to submit these same details.
+            </p>
+          )}
           <button disabled={c.busy}>Submit exact evidence for review</button>
           <p role="status">{c.saved}</p>
         </form>
@@ -206,24 +221,26 @@ export function ReportListScreen() {
         remain linked to their original attendance.
       </p>
       <button onClick={r.reload}>Refresh reports</button>
-      {r.loading && <p>Loading reports…</p>}
-      {r.data?.items.length === 0 && (
+      {r.loading && <p role="status">Loading reports…</p>}
+      {!r.loading && !r.error && r.data?.items.length === 0 && (
         <p>
           No permitted submissions appear in this recent window. Technicians
           submit from their job’s Completion tab.
         </p>
       )}
-      {r.data?.items.map((x) => (
-        <article className="business-card" key={x.id}>
-          <h2>
-            <Link href={`/service/reports/${x.id}`}>{x.reference}</Link>
-          </h2>
-          <p>
-            {x.appointment_reference} · revision {x.revision} ·{" "}
-            {friendly(x.status)}
-          </p>
-        </article>
-      ))}
+      {!r.loading &&
+        !r.error &&
+        r.data?.items.map((x) => (
+          <article className="business-card" key={x.id}>
+            <h2>
+              <Link href={`/service/reports/${x.id}`}>{x.reference}</Link>
+            </h2>
+            <p>
+              {x.appointment_reference} · revision {x.revision} ·{" "}
+              {friendly(x.status)}
+            </p>
+          </article>
+        ))}
     </main>
   );
 }
@@ -263,7 +280,8 @@ function ReviewForm({ r, reload }: { r: Report; reload: () => void }) {
             })),
             authority_disposition: authority,
             remarks,
-            recipient_id: decision === "Approved" ? selectedRecipient || null : null,
+            recipient_id:
+              decision === "Approved" ? selectedRecipient || null : null,
             reason: remarks,
           })
         )
@@ -339,12 +357,29 @@ function ReviewForm({ r, reload }: { r: Report; reload: () => void }) {
       {decision === "Approved" && (
         <div className="report-field">
           <label htmlFor="report-customer-audience">Customer audience</label>
-          <select id="report-customer-audience" value={selectedRecipient} onChange={(e) => setSelectedRecipient(e.target.value)}>
+          <select
+            id="report-customer-audience"
+            value={selectedRecipient}
+            onChange={(e) => setSelectedRecipient(e.target.value)}
+          >
             <option value="">Select the permitted site contact</option>
-            {r.permitted_recipient && <option value={r.permitted_recipient.id}>{r.permitted_recipient.name} · Site primary contact</option>}
+            {r.permitted_recipient && (
+              <option value={r.permitted_recipient.id}>
+                {r.permitted_recipient.name} · Site primary contact
+              </option>
+            )}
           </select>
-          <p>The exact reviewed report is prepared for this named contact. This selection does not send or deliver it.</p>
-          {!r.permitted_recipient && <p>No currently permitted active primary contact is available. Resolve the site contact before approving; a return remains available.</p>}
+          <p>
+            The exact reviewed report is prepared for this named contact. This
+            selection does not send or deliver it.
+          </p>
+          {!r.permitted_recipient && (
+            <p>
+              No currently permitted active primary contact is available.
+              Resolve the site contact before approving; a return remains
+              available.
+            </p>
+          )}
         </div>
       )}
       <ErrorNotice error={c.error} />
@@ -525,6 +560,7 @@ export function ReportScreen({ id }: { id: string }) {
     r = resource.data?.items[0],
     c = useCommand(),
     [reason, setReason] = useState(""),
+    [rendering, setRendering] = useState<string | null>(null),
     [shown, setShown] = useState<{
       v: Presentation;
       at: string;
@@ -555,6 +591,8 @@ export function ReportScreen({ id }: { id: string }) {
       setError(e);
     }
   }
+  if (isDenied(error) || isDenied(c.error))
+    return <ErrorNotice error={isDenied(error) ? error : c.error} />;
   if (r && shown)
     return (
       <main className="business-shell report-screen">
@@ -592,12 +630,20 @@ export function ReportScreen({ id }: { id: string }) {
       <Link href="/service/reports">All service reports</Link>
       <h1>{r?.reference ?? "Service report"}</h1>
       <Synthetic />
-      <ErrorNotice error={resource.error ?? error ?? c.error} />
+      <ReadState
+        loading={resource.loading}
+        error={resource.error}
+        retry={reload}
+        retained={!!r}
+      />
+      <ErrorNotice error={error ?? c.error} />
       <button className="secondary" onClick={reload}>
         Refresh exact report
       </button>
       {!r ? (
-        <p>Loading report…</p>
+        resource.loading ? (
+          <p role="status">Loading report…</p>
+        ) : null
       ) : (
         <>
           <section className="business-card">
@@ -612,8 +658,7 @@ export function ReportScreen({ id }: { id: string }) {
                   ? "Accepted"
                   : "Awaiting accepted review"}
               </strong>{" "}
-              ·
-              Work order: {r.work_order.status} · Finance: {r.finance_state}
+              · Work order: {r.work_order.status} · Finance: {r.finance_state}
             </p>
             <p>
               <Link href={`/my-jobs/${r.appointment.id}`}>
@@ -678,18 +723,18 @@ export function ReportScreen({ id }: { id: string }) {
               id: string;
               revision_id: string;
               decision: string;
-              remarks: string;
+              remarks?: string;
               entry_decisions: {
                 id: string;
                 decision: string;
-                remarks: string;
+                remarks?: string;
               }[];
             }) => (
               <section className="business-card" key={v.id}>
                 <h2>{v.decision} review</h2>
-                <p>{v.remarks}</p>
+                {v.remarks && <p>{v.remarks}</p>}
                 {v.entry_decisions
-                  .filter((e) => e.decision === "Returned")
+                  .filter((e) => e.decision === "Returned" && e.remarks)
                   .map((e) => (
                     <p key={e.id}>
                       <strong>Returned entry:</strong> {e.remarks} ·{" "}
@@ -708,7 +753,12 @@ export function ReportScreen({ id }: { id: string }) {
                 is not issuance.
               </p>
               <button
-                disabled={c.busy}
+                disabled={
+                  c.busy ||
+                  rendering !== null ||
+                  resource.loading ||
+                  !!resource.error
+                }
                 onClick={async () => {
                   const v = r.revisions[0],
                     review = r.reviews.find(
@@ -749,18 +799,33 @@ export function ReportScreen({ id }: { id: string }) {
                 {r.can_issue &&
                   !["Issued", "StaleSource"].includes(j.state) && (
                     <button
+                      disabled={
+                        rendering !== null ||
+                        resource.loading ||
+                        !!resource.error
+                      }
                       onClick={async () => {
+                        setError(null);
+                        setRendering(j.id);
                         try {
                           await api(`report-render-jobs/${j.id}/retry`, {});
                           reload();
                         } catch (e) {
                           setError(e);
+                        } finally {
+                          setRendering(null);
                         }
                       }}
                     >
                       Generate / recover original report
                     </button>
                   )}
+                {rendering === j.id && (
+                  <p role="status">
+                    Preparing the original report. Issuance is not confirmed
+                    until processing completes.
+                  </p>
+                )}
                 {j.state === "StaleSource" && (
                   <p>
                     Open a correction cycle and submit a successor. This owned

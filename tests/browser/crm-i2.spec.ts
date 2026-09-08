@@ -180,6 +180,7 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
       && url.searchParams.get("object_id") === CRM.org;
   });
   await page.goto(`/customers/${CRM.org}`);
+  await page.getByRole("tab", { name: "Timeline", exact: true }).click();
   expect((await relatedRead).ok()).toBe(true);
   const related = page.locator(`a[href="/work/${inputs[0].initial_action.id}"]`);
   await expect(related).toHaveText(inputs[0].initial_action.summary);

@@ -11,11 +11,11 @@ import { scopeDetail, blockers, readiness } from "../service/work-orders";
 import { visible } from "../shared/reads";
 import { canonical } from "../platform/operations";
 import { documentStore, digest } from "./store";
+import { type PackSnapshot, rendererVersion } from "./render";
 import {
-  type PackSnapshot,
-  rendererVersion,
-  templateDefinition,
-} from "./render";
+  completionInstructions,
+  supportedTemplateDefinition,
+} from "./p11-template";
 import type { PackInput } from "./validation";
 export const fail = (message: string, code = "PackNotReady"): never => {
   throw new AppError(422, code, message);
@@ -113,7 +113,11 @@ export async function authority(
 ) {
   const { a, w } = await visibleAppointment(c, p, appointmentId),
     r = await scopeDetail(c, p, w, a.scope_revision_id);
-  if ((!allowStarted && (a.status !== "Confirmed" || a.actual_start_at)) || (allowStarted && !["Confirmed", "InProgress"].includes(a.status)) || a.actual_end_at)
+  if (
+    (!allowStarted && (a.status !== "Confirmed" || a.actual_start_at)) ||
+    (allowStarted && !["Confirmed", "InProgress"].includes(a.status)) ||
+    a.actual_end_at
+  )
     fail("A confirmed, unstarted appointment is required.");
   if (
     w.status !== "Authorised" ||
@@ -238,7 +242,9 @@ export async function snapshot(
   if (
     !template ||
     template.renderer_version !== rendererVersion ||
-    template.definition !== templateDefinition
+    template.definition !==
+      (await supportedTemplateDefinition("OUT-09", template.version)) ||
+    template.content_hash !== digest(template.definition)
   )
     fail("The exact supported template is unavailable.", "TemplateUnavailable");
   const sources: PackSnapshot["sources"] = [];
@@ -356,7 +362,7 @@ export async function snapshot(
       .join("\n\n"),
     readiness: controlText,
     site_controls: `Access: ${text(site.access_instructions)}\nBiosecurity: ${text(site.biosecurity_notes)}\n${controlText}\nStop if site access, isolation, shutdown authority or competency cannot be confirmed. Tool-preparation exceptions do not waive these controls.`,
-    completion: `${items.map((i) => `${i.sequence}. ${i.completion_requirements}`).join("\n")}\nRecord unresolved work and escalate to the preparation owner. This pack does not grant authority outside the approved scope. Use My Jobs for online capture. Completion remains a draft; offline, reviewed reports and Finance remain incomplete.`,
+    completion: `${items.map((i) => `${i.sequence}. ${i.completion_requirements}`).join("\n")}\nRecord unresolved work and escalate to the preparation owner. This pack does not grant authority outside the approved scope. ${template.version === 1 ? "Use My Jobs for online capture. Completion remains a draft; offline, reviewed reports and Finance remain incomplete." : completionInstructions}`,
   };
   const evidence = controls
     .filter((x) => x.evidence_ref)

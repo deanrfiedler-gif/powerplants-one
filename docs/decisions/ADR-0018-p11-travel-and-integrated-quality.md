@@ -1,0 +1,19 @@
+# ADR-0018 — P11 separate synthetic Travel treatment
+
+**Date:** 7 September 2026 · **State:** bounded user decision approved; implementation and verification in progress. **Authority:** Dean's “OK. Proceed on that basis.” following the professional recommendation, recorded in [P11 issue #54](https://github.com/deanrfiedler-gif/powerplants-one/issues/54#issuecomment-5567364667).
+
+The selected PP-01 journey captures Travel and Labour before handing the exact reviewed report set to Finance. ADR-0016 deliberately defined Labour only. Omitting Travel or relabelling it would break whole-source conservation and the original factual record.
+
+For this private synthetic P11 journey, retain Travel separately in exact whole MIN. Every Travel allocation must be explicitly NonBillable, with a reason and no target group or accounting posting. Separate Finance review approves that disposition against the exact source evidence. Labour F-06 remains 90 MIN allocated 60 Billable and 30 NonBillable; Travel is additional. NonBillable does not mean zero cost or unpaid staff time. No rate, payroll, tax, expense, margin or operational charging policy is established.
+
+Break, Waiting, Other and fractional minutes remain blocked without reclassification or rounding. A future agreed treatment, including billable or partly billable Travel, requires a successor policy; original entries, allocations, approvals, processing evidence and issued bytes remain immutable.
+
+Migration 0013 extends the Finance line direction and adds a database no-posting constraint. Its original-entry guard derives the actual time category and verifies the exact revision's Travel definition. Seed 13 appends definition v2 and advances only the expected original P10 synthetic policy; it refuses an unexpected newer policy instead of overwriting it. Earlier seed/migration bytes and grants are untouched. Current-policy checks block stale unprocessed commands; original lookup still preserves possibly processed evidence. A policy successor never grants replay, cancellation or rewriting of a possible effect.
+
+The application projects Travel only under the exact maintained treatment, rejects Billable/Pending/review-only Travel allocations and requires full source conservation before submission. The preparation UI requires an explicit NonBillable selection and reason. The target projection contains only Billable lines; Travel remains in the reviewed no-posting reconciliation set. The existing immutable OUT-14 format already presents direction, captured/reviewed/allocated/billable quantities and reasons separately; no output template version is changed by this decision.
+
+The previous Travel refusal case is replaced by stronger business-equivalent evidence: original Travel remains Travel/Draft, exact minutes are fully reserved and consumed, charge/reclassification/omission fail, and no Travel target exists. Other category and fractional-minute refusals stay in place. Upgrade proof must begin with P10/current-main records, preserve original definitions/reviews/receipts/bytes and verify repeat seed and revoked grants.
+
+Alternative considered: retain Labour-only Finance and leave the written full journey blocked. Dean selected the bounded Travel treatment. This decision enables synthetic integration verification; it is not itself a passed PT/AT, owner acceptance or completed P11 publication. The [P11 handover](../delivery/p11-handover.md) records actual proof and remaining obligations. PT-30 retains its P12 precondition. P12 implementation, live systems and customer distribution remain outside this authority.
+
+Failed disposable CI exposed an ambiguous SQL variable in 0013. Forward migration 0014 changes only that variable name and preserves already-executed migration bytes. The original failure and actual rerun results belong in the P11 handover/publication.

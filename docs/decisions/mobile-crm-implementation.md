@@ -2,7 +2,7 @@
 
 **Revision:** r01 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **Parent:** PPO-009 / issue #9.
 
-Dean approved the r05.1 mobile direction and explicitly authorised implementation in the working app, one complete CRM journey first, followed by shared presentation across implemented modules. This applies the approved visual language to current persisted contracts. It supersedes r08's card owner emphasis and mobile navigation presentation; desktop r08 remains the layout baseline.
+Dean approved the r05.1 mobile direction and explicitly authorised implementation in the working app, one complete CRM journey first, followed by shared presentation across implemented modules. This applies the approved visual language to current persisted contracts. It supersedes r08's card owner emphasis and mobile navigation presentation; desktop r08 remains the layout baseline. Estimating primary actions adopt the shared navy/white treatment, superseding their earlier green fill; green remains an accent.
 
 | Approved interaction | Application mapping | Authority and persistence |
 | --- | --- | --- |

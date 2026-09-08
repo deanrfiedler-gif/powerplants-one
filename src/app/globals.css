@@ -1819,3 +1819,5 @@ body:has(.crm-workspace) main { padding-top:18px; }
   .crm-opportunity-title { min-height:44px; }
   .crm-grid-scroll { scroll-padding-left:160px; }
 }
+/* Retained originals are a bounded staff-review surface, never page-wide overflow. */
+.recovery-original { max-width: 100%; max-height: 28rem; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; padding: 1rem; background: var(--surface, #f4f6f8); }

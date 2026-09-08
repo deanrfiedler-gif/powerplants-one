@@ -88,7 +88,9 @@ async function proof(
 async function completion(page: Page) {
   // A saved entry is followed by an authorised refresh. Use that new source
   // before assembling the next exact completion command.
-  await expect(page.getByText("Loading permitted records…", { exact: true })).toHaveCount(0);
+  await expect(
+    page.getByText("Loading permitted records…", { exact: true }),
+  ).toHaveCount(0);
   await page.getByRole("button", { name: "Completion", exact: true }).click();
   await page
     .getByLabel("Actual work performed", { exact: true })
@@ -157,9 +159,10 @@ async function submit(page: Page) {
     name: "Open report review and revision history",
   });
   const reportId = (await reportLink.getAttribute("href"))!.split("/").at(-1);
-  const reportRead = page.waitForResponse(response =>
-    response.request().method() === "GET" &&
-    new URL(response.url()).pathname === `/api/v1/reports/${reportId}`,
+  const reportRead = page.waitForResponse(
+    (response) =>
+      response.request().method() === "GET" &&
+      new URL(response.url()).pathname === `/api/v1/reports/${reportId}`,
   );
   await reportLink.click();
   expect((await reportRead).ok()).toBe(true);
@@ -187,7 +190,9 @@ async function review(page: Page, returned = false, commit = true) {
       .selectOption("Returned");
   }
   if (!returned)
-    await page.getByLabel("Customer audience", { exact: true }).selectOption({ index: 1 });
+    await page
+      .getByLabel("Customer audience", { exact: true })
+      .selectOption({ index: 1 });
   await page
     .getByLabel("Review remarks (internal)", { exact: true })
     .fill(
@@ -206,7 +211,11 @@ async function review(page: Page, returned = false, commit = true) {
   ).toBeVisible();
 }
 async function issue(page: Page) {
-  const requested = page.waitForResponse((r) => /\/api\/v1\/reports\/[^/]+\/issue$/.test(r.url()) && r.request().method() === "POST");
+  const requested = page.waitForResponse(
+    (r) =>
+      /\/api\/v1\/reports\/[^/]+\/issue$/.test(r.url()) &&
+      r.request().method() === "POST",
+  );
   await page
     .getByRole("button", { name: "Request exact report issue", exact: true })
     .click();
@@ -217,12 +226,28 @@ async function issue(page: Page) {
       exact: true,
     }),
   ).toBeVisible();
+  // Rendering is an asynchronous controlled command. Observe its actual result
+  // before asserting the refreshed UI; an arbitrary five-second render race
+  // does not establish whether the original output was issued.
+  const rendered = page.waitForResponse(
+    (r) =>
+      /\/api\/v1\/report-render-jobs\/[^/]+\/retry$/.test(r.url()) &&
+      r.request().method() === "POST",
+  );
   await page
     .getByRole("button", {
       name: "Generate / recover original report",
       exact: true,
     })
     .click();
+  const response = await rendered;
+  expect(response.status(), await response.text()).toBe(200);
+  expect(response.headers()["cache-control"]).toBe("private, no-store");
+  const output = await response.json();
+  expect(output.state).toBe("Issued");
+  expect(output.issue_id).toBeTruthy();
+  expect(output.output_available).toBe(true);
+  expect(output.attempts).toBeGreaterThan(0);
   await expect(
     page.getByRole("heading", { name: /Revision \d+ · Issued/ }),
   ).toBeVisible();
@@ -372,7 +397,9 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   await submit(page);
   const reportId = page.url().split("/").at(-1)!;
   await identity(page, "coordinator");
-  await expect(page.getByLabel("Customer audience", { exact: true })).toHaveValue("");
+  await expect(
+    page.getByLabel("Customer audience", { exact: true }),
+  ).toHaveValue("");
   await page
     .getByRole("button", { name: "Commit exact review", exact: true })
     .click();
@@ -383,16 +410,28 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   await review(staleReview, false, false);
   await review(page, true);
   await proof(page, info, "returned-entry-reason");
-  const staleResult = staleReview.waitForResponse((r) => r.url().endsWith(`/reports/${reportId}/review`) && r.request().method() === "POST");
-  await staleReview.getByRole("button", { name: "Commit exact review", exact: true }).click();
+  const staleResult = staleReview.waitForResponse(
+    (r) =>
+      r.url().endsWith(`/reports/${reportId}/review`) &&
+      r.request().method() === "POST",
+  );
+  await staleReview
+    .getByRole("button", { name: "Commit exact review", exact: true })
+    .click();
   const refusedReview = await staleResult;
   expect(refusedReview.status()).toBe(409);
   const conflict = await refusedReview.json();
   expect(conflict.code).toBe("VersionConflict");
-  await expect(staleReview.getByRole("alert").first()).toContainText(conflict.message);
+  await expect(staleReview.getByRole("alert").first()).toContainText(
+    conflict.message,
+  );
   await expect(staleReview.getByRole("alert").first()).toBeFocused();
-  expect((await call(page, `reports/${reportId}`)).items[0].reviews).toHaveLength(1);
-  await proof(staleReview, info, "stale-review-conflict", { refusal: conflict });
+  expect(
+    (await call(page, `reports/${reportId}`)).items[0].reviews,
+  ).toHaveLength(1);
+  await proof(staleReview, info, "stale-review-conflict", {
+    refusal: conflict,
+  });
   await staleReview.close();
   await identity(page, "assigned-technician");
   await page
@@ -420,9 +459,13 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   await submit(page);
   await identity(page, "coordinator");
   await review(page);
-  await page.getByRole("heading", { name: /Revision \d+ · Reviewed/ }).evaluate((element) => element.scrollIntoView({ block: "start" }));
+  await page
+    .getByRole("heading", { name: /Revision \d+ · Reviewed/ })
+    .evaluate((element) => element.scrollIntoView({ block: "start" }));
   await proof(page, info, "accepted-attendance-partial-work");
-  await page.getByRole("heading", { name: "Owned actions", exact: true }).evaluate((element) => element.scrollIntoView({ block: "start" }));
+  await page
+    .getByRole("heading", { name: "Owned actions", exact: true })
+    .evaluate((element) => element.scrollIntoView({ block: "start" }));
   await proof(page, info, "owned-remaining-actions");
   let report = (await call(page, `reports/${reportId}`)).items[0];
   expect(report.appointment.status).toBe("Completed");
@@ -431,7 +474,9 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
     .getByRole("link", { name: "Remaining work and return proposal" })
     .click();
   const visitLinks = page.locator('a[href^="/service/appointments/"]');
-  await expect(page.getByRole("heading", { name: "Planned visits", exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Planned visits", exact: true }),
+  ).toBeVisible();
   const previousVisits = await visitLinks.count();
   await page.getByText("Propose a visit", { exact: true }).click();
   await page
@@ -449,7 +494,9 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
         : "2026-12-11T02:00",
     );
   const savedProposal = page.waitForResponse(
-    (r) => r.url().endsWith(`/service/work-orders/${report.work_order.id}/visits`) && r.request().method() === "POST",
+    (r) =>
+      r.url().endsWith(`/service/work-orders/${report.work_order.id}/visits`) &&
+      r.request().method() === "POST",
   );
   await page
     .getByRole("button", { name: "Save proposed visit", exact: true })
@@ -458,15 +505,30 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   expect(proposalResponse.status()).toBe(201);
   const proposalReceipt = await proposalResponse.json();
   expect(proposalReceipt.state).toBe("Proposed");
-  const proposedVisit = (await call(page, `appointments/${proposalReceipt.record_id}`)).items[0];
+  const proposedVisit = (
+    await call(page, `appointments/${proposalReceipt.record_id}`)
+  ).items[0];
   expect(proposedVisit.status).toBe("Proposed");
   expect(proposedVisit.assignments).toHaveLength(0);
   expect(proposedVisit.customer_commitment).toBe("Unknown");
   await expect(visitLinks).toHaveCount(previousVisits + 1);
-  const returnVisit = page.locator(`a[href="/service/appointments/${proposalReceipt.record_id}"]`).locator("..").locator("..");
+  const returnVisit = page
+    .locator(`a[href="/service/appointments/${proposalReceipt.record_id}"]`)
+    .locator("..")
+    .locator("..");
   await expect(returnVisit).toContainText("Proposed");
-  await returnVisit.evaluate((element) => element.scrollIntoView({ block: "start" }));
-  await proof(page, info, "owned-return-proposal", { proposal_receipt: proposalReceipt, proposal: { id: proposedVisit.id, status: proposedVisit.status, assigned_crew: proposedVisit.assignments.length, customer_commitment: proposedVisit.customer_commitment } });
+  await returnVisit.evaluate((element) =>
+    element.scrollIntoView({ block: "start" }),
+  );
+  await proof(page, info, "owned-return-proposal", {
+    proposal_receipt: proposalReceipt,
+    proposal: {
+      id: proposedVisit.id,
+      status: proposedVisit.status,
+      assigned_crew: proposedVisit.assignments.length,
+      customer_commitment: proposedVisit.customer_commitment,
+    },
+  });
   await page.goto(`/service/reports/${reportId}`);
   await issue(page);
   await proof(page, info, "durable-issued-report");
@@ -493,7 +555,9 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
       .getAttribute("srcdoc");
     expect(hash(presentedHtml!)).toBe(old.v.content_hash);
     await expect(page.getByText(/SYN PRIVATE_REVIEW_CANARY/)).toHaveCount(0);
-    await expect(page.getByRole("heading", { name: "Response history", exact: true })).toHaveCount(0);
+    await expect(
+      page.getByRole("heading", { name: "Response history", exact: true }),
+    ).toHaveCount(0);
     await page
       .getByLabel("Customer response", { exact: true })
       .selectOption(value);
@@ -544,7 +608,9 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
           "SYN service coordinator to contact the fictional site and arrange a proposal.",
         );
     }
-    await page.getByRole("heading", { name: "Record customer response", exact: true }).evaluate((element) => element.scrollIntoView({ block: "start" }));
+    await page
+      .getByRole("heading", { name: "Record customer response", exact: true })
+      .evaluate((element) => element.scrollIntoView({ block: "start" }));
     await proof(page, info, `response-${value}-presented`);
     await page
       .getByRole("button", {
@@ -560,8 +626,12 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
       .toBe(n + 1);
   }
   report = (await call(page, `reports/${reportId}`)).items[0];
-  await expect(page.getByRole("heading", { name: /^Disputed ·/ })).toBeVisible();
-  await page.getByRole("heading", { name: "Response history", exact: true }).evaluate((element) => element.scrollIntoView({ block: "start" }));
+  await expect(
+    page.getByRole("heading", { name: /^Disputed ·/ }),
+  ).toBeVisible();
+  await page
+    .getByRole("heading", { name: "Response history", exact: true })
+    .evaluate((element) => element.scrollIntoView({ block: "start" }));
   await proof(page, info, "five-responses-retained");
   const prior = report.responses.find(
     (x: { signature_hash: string | null }) => x.signature_hash,

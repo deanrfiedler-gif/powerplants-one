@@ -100,9 +100,34 @@ export function WorkList() {
         />
       </div>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-      {r.data && !r.error && (
+      {r.data && !r.loading && !r.error && (
         <>
           <Observed envelope={r.data} />
+          <aside className="callout" aria-label="Activity counts on this page">
+            <h2>Current page summary</h2>
+            <p>
+              {
+                r.data.items.filter(
+                  (a) => !["Completed", "Cancelled"].includes(a.status),
+                ).length
+              }{" "}
+              open actions / {r.data.items.length} permitted activities on this
+              page.{" "}
+              {
+                r.data.items.filter(
+                  (a) =>
+                    !["Completed", "Cancelled"].includes(a.status) &&
+                    a.due_needed,
+                ).length
+              }{" "}
+              open actions need a due date.
+            </p>
+            <p>
+              Counts use the selected owner, status, type, due-date and search
+              filters. Later pages and records outside your current access are
+              excluded.
+            </p>
+          </aside>
           {r.data.items.length === 0 ? (
             <p className="empty-state">
               No permitted activities match these filters.
@@ -255,7 +280,9 @@ function ActivityEditor({
   // Permission loss removes previously loaded content and unsaved context.
   // Lifecycle payloads and retained-input handling for ordinary conflicts stay unchanged.
   if (isDenied(cmd.error) || isDenied(owners.error))
-    return <ErrorNotice error={isDenied(cmd.error) ? cmd.error : owners.error} />;
+    return (
+      <ErrorNotice error={isDenied(cmd.error) ? cmd.error : owners.error} />
+    );
   return (
     <>
       <PageHeader eyebrow="SC-01 / Activity" title={a.summary} />

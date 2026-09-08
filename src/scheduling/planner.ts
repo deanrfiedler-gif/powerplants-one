@@ -17,7 +17,7 @@ import {
   visibleActivity,
   type ActivityInput,
 } from "../activities/activities";
-import { visible, envelope } from "../shared/reads";
+import { visible, visibility, envelope } from "../shared/reads";
 import {
   common,
   commonKeys,
@@ -115,12 +115,17 @@ export async function visibleResource(
   await requireCapability(c, p, "schedule.read");
   const r = (
     await c.query(
-      `SELECT r.* FROM ppo.resources r WHERE r.workspace_id=$1 AND r.id=$3 AND EXISTS(SELECT 1 FROM ppo.resource_sites rs JOIN ppo.sites s ON (s.workspace_id,s.id)=(rs.workspace_id,rs.site_id) WHERE rs.workspace_id=r.workspace_id AND rs.resource_id=r.id AND ${scopeSql("s.company_id", "s.id", "schedule.read")} AND ${scopeSql("s.company_id", "s.id")} AND ($4::uuid IS NULL OR s.id=$4))`,
+      `SELECT r.* FROM ppo.resources r WHERE r.workspace_id=$1 AND r.id=$3 AND ${resourceVisibility("r", "$4::uuid")}`,
       [p.workspace_id, p.actor_id, uuid(id, "resource_id"), siteId ?? null],
     )
   ).rows[0];
   if (!r) throw unavailable();
   return r;
+}
+// The same current-grant predicate serves individual and batched planner reads.
+// Aliases and expressions are internal constants, never request input.
+function resourceVisibility(alias: string, siteExpression: string) {
+  return `EXISTS(SELECT 1 FROM ppo.resource_sites rs JOIN ppo.sites s ON (s.workspace_id,s.id)=(rs.workspace_id,rs.site_id) WHERE rs.workspace_id=${alias}.workspace_id AND rs.resource_id=${alias}.id AND ${scopeSql("s.company_id", "s.id", "schedule.read")} AND ${scopeSql("s.company_id", "s.id")} AND (${siteExpression} IS NULL OR s.id=${siteExpression}))`;
 }
 async function insert(
   c: QueryClient,
@@ -1186,7 +1191,7 @@ export async function listResources(p: Principal, input: unknown = {}) {
     return envelope(items);
   });
 }
-async function appointmentDetail(c: QueryClient, p: Principal, id: string) {
+async function appointmentCore(c: QueryClient, p: Principal, id: string) {
   const { a, w } = await visibleAppointment(c, p, id),
     site = await visible(c, p, "Site", a.site_id),
     r = await scopeDetail(c, p, w, a.scope_revision_id);
@@ -1198,6 +1203,63 @@ async function appointmentDetail(c: QueryClient, p: Principal, id: string) {
   ).rows;
   for (const x of assignments)
     await visibleResource(c, p, x.resource_id, a.site_id);
+  return { a, w, site, r, assignments };
+}
+function appointmentHeader({
+  a,
+  w,
+  site,
+  r,
+  assignments,
+}: Awaited<ReturnType<typeof appointmentCore>>) {
+  return {
+    ...a,
+    work_order_display_number: w.display_number,
+    work_order_version: w.version,
+    scope_summary: r.summary,
+    scope_hash: r.content_hash,
+    scope_revision: r.revision,
+    scope_review_required:
+      w.scope_revision_id !== w.authorised_scope_revision_id ||
+      a.scope_revision_id !== w.authorised_scope_revision_id ||
+      a.scope_version !== r.version,
+    site_name: site.display_name,
+    primary_contact_id: site.primary_contact_id,
+    assignments,
+  };
+}
+async function appointmentActions(
+  c: QueryClient,
+  p: Principal,
+  a: Appointment,
+) {
+  return {
+    can_manage: await hasPermission(
+      c,
+      p,
+      "schedule.manage",
+      a.company_id,
+      a.site_id,
+    ),
+    can_request: await hasPermission(
+      c,
+      p,
+      "schedule.request",
+      a.company_id,
+      a.site_id,
+    ),
+    can_contact: await hasPermission(
+      c,
+      p,
+      "schedule.contact",
+      a.company_id,
+      a.site_id,
+    ),
+  };
+}
+async function appointmentDetail(c: QueryClient, p: Principal, id: string) {
+  const core = await appointmentCore(c, p, id),
+    { a, w, r } = core;
   const contacts = (
     await c.query(
       "SELECT * FROM ppo.contact_outcomes WHERE workspace_id=$1 AND appointment_id=$2 ORDER BY created_at DESC,id",
@@ -1261,19 +1323,7 @@ async function appointmentDetail(c: QueryClient, p: Principal, id: string) {
     )
   ).rows;
   return {
-    ...a,
-    work_order_display_number: w.display_number,
-    work_order_version: w.version,
-    scope_summary: r.summary,
-    scope_hash: r.content_hash,
-    scope_revision: r.revision,
-    scope_review_required:
-      w.scope_revision_id !== w.authorised_scope_revision_id ||
-      a.scope_revision_id !== w.authorised_scope_revision_id ||
-      a.scope_version !== r.version,
-    site_name: site.display_name,
-    primary_contact_id: site.primary_contact_id,
-    assignments,
+    ...appointmentHeader(core),
     contacts,
     requests,
     followups,
@@ -1282,30 +1332,97 @@ async function appointmentDetail(c: QueryClient, p: Principal, id: string) {
     policy,
     readiness: await readiness(c, p, r, a.id),
     authorisation_blockers: await blockers(c, p, w, r),
-    actions: {
-      can_manage: await hasPermission(
-        c,
-        p,
-        "schedule.manage",
-        a.company_id,
-        a.site_id,
-      ),
-      can_request: await hasPermission(
-        c,
-        p,
-        "schedule.request",
-        a.company_id,
-        a.site_id,
-      ),
-      can_contact: await hasPermission(
-        c,
-        p,
-        "schedule.contact",
-        a.company_id,
-        a.site_id,
-      ),
-    },
+    actions: await appointmentActions(c, p, a),
   };
+}
+async function scheduleSummaries(c: QueryClient, p: Principal, ids: string[]) {
+  if (!ids.length) return [];
+  // Read the bounded candidate set together. Every predicate below uses the
+  // same source-of-truth scope projections as the individual detail read,
+  // including historical scope assets, crew and customer contact identities.
+  // No authority or business facts are cached across requests.
+  const rows = (
+    await c.query<
+      Appointment & {
+        work_order_display_number: string;
+        work_order_version: number;
+        scope_summary: string;
+        scope_hash: string;
+        scope_revision: number;
+        scope_review_required: boolean;
+        site_name: string;
+        primary_contact_id: string | null;
+        can_manage: boolean;
+        can_request: boolean;
+        can_contact: boolean;
+      }
+    >(
+      `SELECT a.*,w.display_number AS work_order_display_number,w.version AS work_order_version,
+        sr.summary AS scope_summary,sr.content_hash AS scope_hash,sr.revision AS scope_revision,
+        (w.scope_revision_id IS DISTINCT FROM w.authorised_scope_revision_id OR
+         a.scope_revision_id IS DISTINCT FROM w.authorised_scope_revision_id OR a.scope_version<>sr.version) AS scope_review_required,
+        site.display_name AS site_name,site.primary_contact_id,
+        ${scopeSql("a.company_id", "a.site_id", "schedule.manage")} AS can_manage,
+        ${scopeSql("a.company_id", "a.site_id", "schedule.request")} AS can_request,
+        ${scopeSql("a.company_id", "a.site_id", "schedule.contact")} AS can_contact
+       FROM ppo.appointments a
+       JOIN ppo.work_orders w ON (w.workspace_id,w.id)=(a.workspace_id,a.work_order_id)
+       JOIN ppo.sites site ON (site.workspace_id,site.id)=(a.workspace_id,a.site_id)
+       JOIN ppo.scope_revisions sr ON (sr.workspace_id,sr.work_order_id,sr.id)=(a.workspace_id,w.id,a.scope_revision_id)
+       WHERE a.workspace_id=$1 AND a.id=ANY($3::uuid[])
+         AND ${scopeSql("a.company_id", "a.site_id", "schedule.read")}
+         AND ${orderVisibility("w")} AND ${visibility("Site", "site")}
+         AND NOT EXISTS(
+           SELECT 1 FROM ppo.scope_revisions history
+           JOIN ppo.scope_assets sa ON (sa.workspace_id,sa.scope_revision_id)=(history.workspace_id,history.id)
+           WHERE history.workspace_id=w.workspace_id AND history.work_order_id=w.id
+             AND NOT EXISTS(SELECT 1 FROM ppo.assets asset WHERE (asset.workspace_id,asset.id)=(sa.workspace_id,sa.asset_id) AND ${visibility("Asset", "asset")})
+         )
+         AND NOT EXISTS(
+           SELECT 1 FROM ppo.assignments crew WHERE crew.workspace_id=a.workspace_id AND crew.appointment_id=a.id
+             AND NOT EXISTS(SELECT 1 FROM ppo.resources resource WHERE (resource.workspace_id,resource.id)=(crew.workspace_id,crew.resource_id) AND ${resourceVisibility("resource", "a.site_id")})
+         )
+         AND NOT EXISTS(
+           SELECT 1 FROM ppo.contact_outcomes contact WHERE contact.workspace_id=a.workspace_id AND contact.appointment_id=a.id
+             AND NOT EXISTS(SELECT 1 FROM ppo.people person WHERE (person.workspace_id,person.id)=(contact.workspace_id,contact.recipient_id) AND ${visibility("Person", "person")})
+         )
+       ORDER BY a.start_at,a.id`,
+      [p.workspace_id, p.actor_id, ids],
+    )
+  ).rows;
+  const permitted = rows.map((a) => a.id);
+  const assignments = (
+    await c.query(
+      "SELECT x.*,r.name,r.base_timezone FROM ppo.assignments x JOIN ppo.resources r ON (r.workspace_id,r.id)=(x.workspace_id,x.resource_id) WHERE x.workspace_id=$1 AND x.appointment_id=ANY($2::uuid[]) ORDER BY x.assignment_version DESC,x.resource_id",
+      [p.workspace_id, permitted],
+    )
+  ).rows;
+  const requests = (
+    await c.query<{ appointment_id: string; id: string; status: string }>(
+      "SELECT appointment_id,id,status FROM ppo.schedule_change_requests WHERE workspace_id=$1 AND appointment_id=ANY($2::uuid[]) ORDER BY created_at DESC,id",
+      [p.workspace_id, permitted],
+    )
+  ).rows;
+  // Published policy versions are immutable. This local map merely assembles
+  // this one repeatable-read response; every new request reads them again.
+  const policies = new Map<
+    string,
+    Awaited<ReturnType<typeof schedulingPolicy>>
+  >();
+  for (const id of new Set(
+    rows.map((a) => a.scheduling_policy_id ?? SCHEDULING_POLICY_ID),
+  ))
+    policies.set(id, await schedulingPolicy(c, p, id, false));
+  return rows.map(({ can_manage, can_request, can_contact, ...a }) => ({
+    ...a,
+    projection: "ScheduleSummary" as const,
+    assignments: assignments.filter((x) => x.appointment_id === a.id),
+    requests: requests
+      .filter((x) => x.appointment_id === a.id)
+      .map(({ id, status }) => ({ id, status })),
+    policy: policies.get(a.scheduling_policy_id ?? SCHEDULING_POLICY_ID)!,
+    actions: { can_manage, can_request, can_contact },
+  }));
 }
 export async function readAppointment(
   p: Principal,
@@ -1317,6 +1434,64 @@ export async function readAppointment(
     await c.query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ");
     return envelope([await appointmentDetail(c, p, id)]);
   });
+}
+async function scheduleLanes(
+  c: QueryClient,
+  p: Principal,
+  ids: string[],
+  siteId: string | null,
+  period: { start_at: string; end_at: string },
+) {
+  if (!ids.length) return [];
+  const resources = (
+    await c.query(
+      `SELECT r.* FROM ppo.resources r WHERE r.workspace_id=$1 AND r.id=ANY($3::uuid[]) AND ${resourceVisibility("r", "$4::uuid")} ORDER BY r.id`,
+      [p.workspace_id, p.actor_id, ids, siteId],
+    )
+  ).rows;
+  // Preserve the former individual read's refusal if a candidate lane does not
+  // satisfy the shared current site/resource predicate.
+  if (resources.length !== ids.length) throw unavailable();
+  const calendarIds = [...new Set(resources.map((r) => r.calendar_id))];
+  const calendars = (await c.query(
+    "SELECT * FROM ppo.working_calendars WHERE workspace_id=$1 AND id=ANY($2::uuid[])",
+    [p.workspace_id, calendarIds],
+  )).rows;
+  const intervals = (await c.query(
+    "SELECT calendar_id,weekday,start_minute,end_minute FROM ppo.calendar_intervals WHERE workspace_id=$1 AND calendar_id=ANY($2::uuid[]) ORDER BY weekday,start_minute",
+    [p.workspace_id, calendarIds],
+  )).rows;
+  const skills = (await c.query(
+    "SELECT s.resource_id,s.id,s.version,s.skill_code,s.status,s.active,s.valid_from,s.valid_to,s.source_as_at,s.evidence_ref,e.content_hash,e.reviewer_id,e.reviewed_at FROM ppo.skill_evidence s LEFT JOIN ppo.resource_evidence e ON e.id=s.evidence_ref WHERE s.workspace_id=$1 AND s.resource_id=ANY($2::uuid[]) ORDER BY s.skill_code",
+    [p.workspace_id, ids],
+  )).rows;
+  const blocks = (await c.query(
+    "SELECT resource_id,id,version,start_at,end_at,kind,source_as_at FROM ppo.availability_blocks WHERE workspace_id=$1 AND resource_id=ANY($2::uuid[]) AND active AND start_at<$4 AND end_at>$3 ORDER BY start_at",
+    [p.workspace_id, ids, period.start_at, period.end_at],
+  )).rows;
+  const exceptions = (await c.query(
+    "SELECT calendar_id,id,start_at,end_at,kind,reason FROM ppo.calendar_exceptions WHERE workspace_id=$1 AND calendar_id=ANY($2::uuid[]) AND start_at<$4 AND end_at>$3 ORDER BY start_at",
+    [p.workspace_id, calendarIds, period.start_at, period.end_at],
+  )).rows;
+  const busy = (await c.query(
+    "SELECT resource_id,start_at,end_at FROM ppo.resource_reservations WHERE workspace_id=$1 AND resource_id=ANY($2::uuid[]) AND active AND start_at<$4 AND end_at>$3 ORDER BY start_at",
+    [p.workspace_id, ids, period.start_at, period.end_at],
+  )).rows;
+  const owned = (rows: Record<string, unknown>[], key: string, id: string) =>
+    rows.filter((row) => row[key] === id).map((row) =>
+      Object.fromEntries(Object.entries(row).filter(([name]) => name !== key)),
+    );
+  return resources.map((r) => ({
+    ...r,
+    calendar: {
+      ...calendars.find((calendar) => calendar.id === r.calendar_id),
+      intervals: owned(intervals, "calendar_id", r.calendar_id),
+    },
+    skills: owned(skills, "resource_id", r.id),
+    blocks: owned(blocks, "resource_id", r.id),
+    exceptions: owned(exceptions, "calendar_id", r.calendar_id),
+    busy: owned(busy, "resource_id", r.id),
+  }));
 }
 export async function readSchedule(p: Principal, input: unknown) {
   const q = object(input, [
@@ -1364,14 +1539,11 @@ export async function readSchedule(p: Principal, input: unknown) {
     ).rows;
     if (candidates.length > 200)
       blocked("from", "Too many appointments. Narrow the date or site filter.");
-    const appointments = [];
-    for (const row of candidates) {
-      try {
-        appointments.push(await appointmentDetail(c, p, row.id));
-      } catch (e) {
-        if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
-      }
-    }
+    const appointments = await scheduleSummaries(
+      c,
+      p,
+      candidates.map((row) => row.id),
+    );
     const rr = (
       await c.query(
         `SELECT DISTINCT r.id FROM ppo.resources r JOIN ppo.resource_sites rs ON (rs.workspace_id,rs.resource_id)=(r.workspace_id,r.id) WHERE r.workspace_id=$1 AND ${scopeSql("r.company_id", "rs.site_id", "schedule.read")} AND ${scopeSql("r.company_id", "rs.site_id")} AND ($3::uuid IS NULL OR rs.site_id=$3) AND ($4::uuid IS NULL OR r.id=$4) ORDER BY r.id LIMIT 51`,
@@ -1380,29 +1552,7 @@ export async function readSchedule(p: Principal, input: unknown) {
     ).rows;
     if (rr.length > 50)
       blocked("site_id", "Too many resource lanes. Filter to a site.");
-    const resources = [];
-    for (const row of rr) {
-      const r = await resourceDetail(c, p, row.id, siteId ?? undefined);
-      const blocks = (
-        await c.query(
-          "SELECT id,version,start_at,end_at,kind,source_as_at FROM ppo.availability_blocks WHERE workspace_id=$1 AND resource_id=$2 AND active AND start_at<$4 AND end_at>$3 ORDER BY start_at",
-          [p.workspace_id, r.id, period.start_at, period.end_at],
-        )
-      ).rows;
-      const exceptions = (
-        await c.query(
-          "SELECT id,start_at,end_at,kind,reason FROM ppo.calendar_exceptions WHERE workspace_id=$1 AND calendar_id=$2 AND start_at<$4 AND end_at>$3 ORDER BY start_at",
-          [p.workspace_id, r.calendar_id, period.start_at, period.end_at],
-        )
-      ).rows;
-      const busy = (
-        await c.query(
-          "SELECT rr.start_at,rr.end_at FROM ppo.resource_reservations rr WHERE rr.workspace_id=$1 AND rr.resource_id=$2 AND rr.active AND rr.start_at<$4 AND rr.end_at>$3 ORDER BY rr.start_at",
-          [p.workspace_id, r.id, period.start_at, period.end_at],
-        )
-      ).rows;
-      resources.push({ ...r, blocks, exceptions, busy });
-    }
+    const resources = await scheduleLanes(c, p, rr.map((row) => row.id), siteId, period);
     return {
       ...envelope(appointments),
       resources,

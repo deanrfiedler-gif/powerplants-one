@@ -47,7 +47,7 @@ export function LookupField({ name, label, value, onChange, search, onSearch, op
   const choose = (o: Option) => { setSelected(o); onChange(o.id); onSearch(""); setOpen(false); setActive(-1); input.current?.focus(); };
   return <div className="field lookup-field" onBlur={e => { if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false); }}>
     <label htmlFor={name}>{label}</label>
-    <input ref={input} id={name} name={name} role="combobox" aria-autocomplete="list"
+    <input ref={input} id={name} name={name} data-validation-field={name} role="combobox" aria-autocomplete="list"
       aria-expanded={open} aria-controls={list} autoComplete="off"
       aria-activedescendant={open && !loading && !error && active >= 0 && options[active] ? `${list}-${active}` : undefined}
       aria-invalid={!!fieldError} aria-describedby={`${unique}-hint${fieldError ? ` ${unique}-error` : ""}`} value={value ? (chosen ? optionLabel(chosen) : "") : search}

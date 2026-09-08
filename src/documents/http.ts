@@ -14,14 +14,15 @@ import { unavailable } from "../platform/errors";
 import { object, uuid } from "../shared/validation";
 import type { RouteContext } from "../shared/http";
 import { issueContext, packContext } from "./context";
-import { packHtml, type PackSnapshot } from "./render";
+import { type PackSnapshot } from "./render";
+import { supportedPackHtml } from "./p11-render";
 import { readBundle, retryRenderJob, readRenderJob } from "./worker";
 import { requestIssue } from "./packs";
 const fileHeaders = {
   "Cache-Control": "private, no-store",
   "X-Content-Type-Options": "nosniff",
   "Content-Security-Policy":
-    "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'",
+    "default-src 'none'; style-src 'unsafe-inline'; font-src data:; img-src data:; base-uri 'none'; form-action 'none'; frame-ancestors 'self'",
   "Referrer-Policy": "no-referrer",
 };
 export function issueFile(kind: "pdf" | "html" | "manifest") {
@@ -113,9 +114,12 @@ export async function previewPack(request: NextRequest, context: RouteContext) {
       ))
     )
       throw unavailable();
-    return new NextResponse(packHtml(r.snapshot as PackSnapshot), {
-      headers: { ...fileHeaders, "Content-Type": "text/html; charset=utf-8" },
-    });
+    return new NextResponse(
+      await supportedPackHtml(r.snapshot as PackSnapshot),
+      {
+        headers: { ...fileHeaders, "Content-Type": "text/html; charset=utf-8" },
+      },
+    );
   } catch (e) {
     return failure(e);
   }

@@ -265,7 +265,7 @@ test("P06 complete workbench preparation, check, queued output, exact document a
     .getByRole("button", { name: /Acknowledge this exact issue/ })
     .click();
   await expect(
-    page.getByText("P06 dispatch component ready", { exact: true }),
+    page.getByText("Pack dispatch checks complete", { exact: true }),
   ).toBeVisible();
   await capture(page, info, "two-responses-ready");
   await identity(page, "coordinator");

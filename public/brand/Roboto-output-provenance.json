@@ -1,0 +1,35 @@
+{
+  "purpose": "Complete lossless WOFF container for self-contained P11 outputs within the retained 1 MiB offline presentation bound. No glyph subset; accepted UI TTF and original logo unchanged.",
+  "converter": "fontTools 4.61.1; standard-library zlib; recalcTimestamp=False; no additional runtime dependency",
+  "source": {
+    "path": "public/brand/Roboto-variable.ttf",
+    "byte_count": 488584,
+    "sha256": "d7598e12c5dbef095ff8272cfc55da0250bd07fbdecbac8a530b9b277872a134"
+  },
+  "output": {
+    "path": "public/brand/Roboto-variable.woff",
+    "byte_count": 280272,
+    "sha256": "f6338970a62542e9a9f46ebd5a1e1c776425021edae07ce043f959b3ea97a87d"
+  },
+  "glyph_count": 1326,
+  "unicode_mappings": 927,
+  "verified_equal": [
+    "complete glyph order",
+    "complete Unicode cmap",
+    "horizontal metrics",
+    "all glyph coordinates, endpoints and flags",
+    "repeat conversion exact bytes"
+  ],
+  "verified_equal_tables": [
+    "fvar",
+    "gvar",
+    "HVAR",
+    "avar",
+    "STAT",
+    "GDEF",
+    "GPOS",
+    "GSUB",
+    "name",
+    "OS/2"
+  ]
+}

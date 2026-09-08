@@ -33,7 +33,9 @@ import {
   revisionCommand,
   responseCommand,
 } from "./validation";
-import { customerSnapshot, reportHtml } from "./render";
+import { customerSnapshot } from "./render";
+import { supportedReportHtml } from "../documents/p11-render";
+import { supportedTemplateDefinition } from "../documents/p11-template";
 
 export async function verifyEvidence(
   c: QueryClient,
@@ -503,7 +505,37 @@ export async function reviewReport(p: Principal, id: string, input: unknown) {
             "UPDATE ppo.appointments SET status='Completed',actual_end_at=(SELECT max(x.accepted_end_at) FROM ppo.attendance_acceptances x JOIN ppo.field_attendances a ON a.id=x.attendance_id WHERE a.workspace_id=$1 AND a.appointment_id=$2),dispatch_hold=true,version=version+1,updated_by=$3,updated_at=clock_timestamp() WHERE workspace_id=$1 AND id=$2",
             [p.workspace_id, ctx.a.id, p.actor_id],
           );
-        const html = reportHtml(customer!, { kind: "DraftEvidence" });
+        const presentationTemplate = (
+          await c.query(
+            "SELECT t.* FROM ppo.report_templates t JOIN ppo.report_template_policy p ON (p.workspace_id,p.template_id)=(t.workspace_id,t.id) WHERE t.workspace_id=$1",
+            [p.workspace_id],
+          )
+        ).rows[0];
+        if (
+          !presentationTemplate ||
+          presentationTemplate.definition !==
+            (await supportedTemplateDefinition(
+              "OUT-10",
+              presentationTemplate.version,
+            )) ||
+          presentationTemplate.content_hash !==
+            digest(presentationTemplate.definition)
+        )
+          fail(
+            "TemplateUnavailable",
+            "The exact supported report template is unavailable.",
+          );
+        const html = await supportedReportHtml(
+          customer!,
+          {
+            kind: "DraftEvidence",
+            template_hash:
+              presentationTemplate.version === 1
+                ? undefined
+                : presentationTemplate.content_hash,
+          },
+          presentationTemplate.version,
+        );
         await insert(c, "report_presentations", {
           id: randomUUID(),
           workspace_id: p.workspace_id,
@@ -813,16 +845,27 @@ export async function readReport(
           [p.workspace_id],
         )
       ).rows[0];
+    // Reuse reportContext's current scoped Service-versus-field distinction.
+    // A report read/assignment is not access to internal review narratives.
+    const internal_review = await hasPermission(
+      c, p, "service.work_order.edit", r.company_id, r.site_id,
+    );
     const can_review =
         ctx.w.service_owner_id === p.actor_id &&
         (await hasPermission(c, p, "report.review", r.company_id, r.site_id)),
       can_issue =
         ctx.w.service_owner_id === p.actor_id &&
         (await hasPermission(c, p, "report.issue", r.company_id, r.site_id));
-    let permitted_recipient: Awaited<ReturnType<typeof recipient>> | null = null;
+    let permitted_recipient: Awaited<ReturnType<typeof recipient>> | null =
+      null;
     if (can_review && site.primary_contact_id) {
       try {
-        permitted_recipient = await recipient(c, p, ctx, site.primary_contact_id);
+        permitted_recipient = await recipient(
+          c,
+          p,
+          ctx,
+          site.primary_contact_id,
+        );
       } catch (e) {
         if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
       }
@@ -851,11 +894,26 @@ export async function readReport(
           submitted_at: v.submitted_at,
           snapshot: v.snapshot,
         })),
-        reviews,
+        reviews: internal_review ? reviews : reviews.map((v) => ({
+          id: v.id,
+          revision_id: v.revision_id,
+          decision: v.decision,
+          source_hash: v.source_hash,
+          authority_disposition: v.authority_disposition,
+          reviewed_at: v.reviewed_at,
+          entry_decisions: v.entry_decisions.map((e: { id: string; version: number; decision: string; remarks: string }) => ({
+            id: e.id,
+            version: e.version,
+            decision: e.decision,
+            // The original author needs the exact requested correction. Other
+            // crew receive factual decisions and original/corrected evidence.
+            ...(r.actor_id === p.actor_id && e.decision === "Returned" ? { remarks: e.remarks } : {}),
+          })),
+        })),
         presentations,
         responses,
         issues,
-        jobs,
+        jobs: internal_review ? jobs : [],
         follow_ups,
         template,
         recipient_id: site.primary_contact_id,

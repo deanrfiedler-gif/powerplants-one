@@ -87,6 +87,28 @@ async function reason(page: Page, text: string) {
 async function state(page: Page, text: string) {
   await expect(page.getByText(text, { exact: true }).first()).toBeVisible();
 }
+async function retainedF06Source(page: Page) {
+  const list = await call(page, "finance/handoffs");
+  for (const existing of list.items.filter(
+    (h: { status: string }) => h.status === "Reconciled",
+  )) {
+    const d = await call(page, `finance/handoffs/${existing.id}`);
+    const reports = d.revisions[0].source_snapshot.reports;
+    if (reports.length !== 1) continue;
+    const report = reports[0];
+    const entries: { direction: string; uom: string; quantity: string }[] = report.entries;
+    if (entries.length === 2 &&
+      entries.some((e) => e.direction === "Labour" && e.uom === "MIN" && e.quantity === "90") &&
+      entries.some((e) => e.direction === "Consumed" && e.uom === "EA" && e.quantity === "2")) {
+      return {
+        report_id: report.report_id,
+        reference: "retained exact F-06 source",
+        work_order_id: d.handoff.work_order_id,
+      };
+    }
+  }
+  throw Error("The retained reconciled F-06 Labour/material fixture is required; a later P11 Travel source cannot substitute for it.");
+}
 test("P10 PT-17/PT-19 complete UI allocation, return/correction, unknown lookup, reconciliation and OUT-14", async ({
   page,
 }, info) => {
@@ -575,16 +597,7 @@ test("P10 stale browser proposal shows conflict and preserves a concurrently can
 }, info) => {
   await page.goto("/finance/handoffs");
   await identity(page, "finance");
-  const list = await call(page, "finance/handoffs"),
-    existing = list.items.find(
-      (h: { status: string }) => h.status === "Reconciled",
-    ),
-    d = await call(page, `finance/handoffs/${existing.id}`),
-    source = {
-      report_id: d.revisions[0].source_snapshot.reports[0].report_id,
-      reference: "retained source",
-      work_order_id: d.handoff.work_order_id,
-    },
+  const source = await retainedF06Source(page),
     input = await httpFinanceDraft((p, b) => call(page, p, b), source);
   await call(page, "finance/handoffs", input);
   await page.goto(`/finance/handoffs/${input.id}`);
@@ -616,15 +629,8 @@ test("P10 lost save response keeps input and retries the exact original once thr
 }, info) => {
   await page.goto("/finance/handoffs");
   await identity(page, "finance");
-  const existing = (await call(page, "finance/handoffs")).items.find(
-      (h: { status: string }) => h.status === "Reconciled",
-    ),
-    d = await call(page, `finance/handoffs/${existing.id}`),
-    input = await httpFinanceDraft((p, b) => call(page, p, b), {
-      report_id: d.revisions[0].source_snapshot.reports[0].report_id,
-      reference: "retained exact source",
-      work_order_id: d.handoff.work_order_id,
-    });
+  const source = await retainedF06Source(page),
+    input = await httpFinanceDraft((p, b) => call(page, p, b), source);
   await call(page, "finance/handoffs", input);
   await page.goto(`/finance/handoffs/${input.id}`);
   await state(page, "Draft");

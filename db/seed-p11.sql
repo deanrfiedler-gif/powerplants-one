@@ -1,0 +1,2 @@
+-- ADR-0018 / P11: seedP11Finance appends one immutable synthetic definition.
+-- No grants, accounts, source records, handoffs or accounting effects are seeded.

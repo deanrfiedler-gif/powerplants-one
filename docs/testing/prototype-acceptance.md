@@ -4,6 +4,8 @@
 
 [Package](../prototype/README.md) · [Implementation plan](../delivery/prototype-implementation-plan.md) · [Machine-readable cases](prototype-scenarios.json).
 
+Current execution sources: [P09 full PT-06/PT-15/PT-16](../delivery/p09-handover.md), [P10 full PT-17/PT-19/PT-20/PT-21](../delivery/p10-handover.md), and [P11 integrated quality and explicit remaining limits](../delivery/p11-handover.md). The authored definitions and all thirty identities below remain unchanged; a later component result does not erase an earlier verified full status or confer a new one.
+
 ## 1. Test environment and evidence
 
 Use an isolated database, synthetic file store, simulated source adapters and independent test sessions. Record commit, dependency versions, environment, seed revision, browser/device/network, actor/grants, UTC start/end, expected versus observed result, screenshots/outputs where relevant, database/API evidence, defect IDs and reviewer. Redact confidential diagnostics. A pass requires the specified outcome, not merely an HTTP 200 or attractive screenshot.

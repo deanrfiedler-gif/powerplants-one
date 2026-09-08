@@ -188,7 +188,7 @@ export function ContextList({
         hint="Names remain separate records. Equipment search also checks reference, model and serial."
       />
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-      {r.data && !r.error && (
+      {r.data && !r.loading && !r.error && (
         <>
           <Observed envelope={r.data} />
           {r.data.items.length === 0 ? (
@@ -251,6 +251,7 @@ export function ContextList({
   );
 }
 function RelatedActivities({ type, id }: { type: string; id: string }) {
+  const [cursor, setCursor] = useState("");
   const r = useResource<
     Envelope<{
       id: string;
@@ -260,13 +261,14 @@ function RelatedActivities({ type, id }: { type: string; id: string }) {
       due_needed: boolean;
       due_at: string | null;
     }>
-  >(`activities?${new URLSearchParams({ object_type: type, object_id: id })}`);
+  >(`activities?${new URLSearchParams({ object_type: type, object_id: id, ...(cursor ? { cursor } : {}) })}`);
   return (
     <section className="detail-section">
       <h2>Owned follow-up</h2>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-      {r.data && !r.error && (
+      {r.data && !r.loading && !r.error && (
         <>
+          <p>{r.data.items.length} permitted linked activities on this page. Later pages are excluded.</p>
           {r.data.items.length === 0 ? (
             <p>No permitted linked activities have been recorded.</p>
           ) : (
@@ -287,9 +289,11 @@ function RelatedActivities({ type, id }: { type: string; id: string }) {
               </div>
             ))
           )}
-          {r.data.next_cursor && (
-            <Link href="/work">Open My Work for additional activities</Link>
-          )}
+          <div className="actions">
+            {cursor && <button className="secondary" onClick={() => setCursor("")}>First linked activities</button>}
+            {r.data.next_cursor && <button className="secondary" onClick={() => setCursor(r.data!.next_cursor!)}>Next linked activities</button>}
+            <Link href="/work">Open My Work</Link>
+          </div>
         </>
       )}
     </section>
@@ -308,7 +312,7 @@ function HistoryList({ path }: { path: string }) {
         original attribution. A previous attempt is not proof of resolution.
       </p>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-      {r.data && !r.error && (
+      {r.data && !r.loading && !r.error && (
         <>
           {r.data.items.length === 0 ? (
             <p>No permitted history has been recorded.</p>
@@ -372,7 +376,7 @@ function DuplicateCandidates({ record }: { record: Shared }) {
     <section className="detail-section">
       <h2>Possible duplicate organisations</h2>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-      {r.data && !r.error && (
+      {r.data && !r.loading && !r.error && (
         <>
           {r.data.items.filter((x) => x.id !== record.id).length === 0 ? (
             <p>No other permitted matching names were found in this page.</p>
@@ -428,7 +432,7 @@ export function ContextDetail({
               ? "Sites"
               : "Customers"}
       </Link>
-      <ReadState loading={r.loading} error={r.error} retry={r.reload} />
+      <ReadState loading={r.loading} error={r.error} retry={r.reload} retained={!!o} />
       {o && (
         <>
           <PageHeader
@@ -547,7 +551,7 @@ export function ContextDetail({
                 </article>) : <p>No permitted site relationships are available.</p>}
               </RecordPanel>
               <RecordPanel id="organisation" tab="timeline" value={tab}>
-                {tab === "timeline" && <RelatedActivities type={kind} id={id}/>}
+                {tab === "timeline" && <RelatedActivities key={`${kind}:${id}`} type={kind} id={id}/>}
               </RecordPanel>
             </>
           )}
@@ -788,7 +792,7 @@ export function ContextDetail({
               <HistoryList path={`assets/${id}/history`} />
             </>
           )}
-          {kind !== "Person" && kind !== "Organisation" && <RelatedActivities type={kind} id={id} />}
+          {kind !== "Person" && kind !== "Organisation" && <RelatedActivities key={`${kind}:${id}`} type={kind} id={id} />}
           <button className="secondary" onClick={r.reload}>
             Refresh context
           </button>
