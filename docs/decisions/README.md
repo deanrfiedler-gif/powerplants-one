@@ -40,3 +40,6 @@ The [shared UI and CRM layout direction](ui-brand-and-crm-layout.md) records the
 The [controlled opportunity handover proposal](crm-opportunity-handover.md) records unresolved H-01–H-03 and fixed preservation constraints under #55. Design publication is authorised; policy acceptance and implementation are separate. No numbered ADR is reserved.
 
 - [Accepted r08 shared layout and CRM implementation](shared-ui-r08-implementation.md) — Dean-approved presentation mapped to existing persisted I1/I2 contracts.
+
+
+The [PPO Assistant direction and architecture decision](ppo-assistant-direction.md) records Dean's 8 September 2026 instruction to prepare the bounded customer CRM assistant specification. It brings AI design forward under D-027; provider-funded evaluation, implementation and operational authority remain separate. No numbered ADR or migration is reserved.

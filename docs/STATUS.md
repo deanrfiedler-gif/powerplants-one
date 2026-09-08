@@ -138,3 +138,10 @@ Current P10/E1 publication is complete in their own linked external records; P11
 ## Accepted r08 shared layout and CRM implementation
 
 Dean accepted the r08 design review and authorised implementation of the shared shell and CRM, followed directly by verification/publication. The [decision](decisions/shared-ui-r08-implementation.md) and [handover](delivery/shared-ui-redesign-handover.md) record current-source work and validation. Compact navigation/header/identity, responsive Board/List, fixed directional stage headers and equal-height Activity cards use the existing Enquiry → Qualified / Open contract. P11 #54/#57 remains separate. No commercial schema, live integration or operational transition is added; implementation evidence and the current publication/CI outcome are recorded in [PR #59](https://github.com/deanrfiedler-gif/powerplants-one/pull/59).
+
+
+## PPO Assistant design — 8 September 2026
+
+Dean authorised the next design/specification deliverable for AI search, task assistance and summaries. The [PPO Assistant specification](blueprints/ppo-assistant-specification.md), [direction/architecture decision](decisions/ppo-assistant-direction.md) and [handover](delivery/ppo-assistant-handover.md) define a bounded customer CRM search → source-linked summary → reviewed opportunity/initial Activity journey, with voice, email and wider knowledge as later slices. This brings D-027 AI design forward while preserving P01–P12, all 78 parents and operational authority boundaries.
+
+The source baseline is main `b3597f79413f87b9b2f1ce75a66a2addefbb0e34`; #61/#62/#63/#60 remain separately owned. P11 publication remains governed by #54/#63. This contribution is documentation only: AI1 runtime, 20 assistant acceptance procedures and live-model evaluation are Not run. It provisions no paid API, model, real data, microphone, hosting or integration. Exact publication/check evidence belongs to the handover and design PR.

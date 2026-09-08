@@ -9,6 +9,7 @@ Start with [current status](STATUS.md) and the [First Prototype Definition & Arc
 | Blueprint set | [Master and module index](blueprints/README.md) |
 | CRM UI | [Board/Grid mockups](blueprints/crm-ui-mockups/README.md), [I2 guidance](delivery/crm-i2-ui-guidance.md), [handover](delivery/crm-ui-design-handover.md) |
 | CRM application | [I1 owned opportunity handover](delivery/crm-i1-handover.md), [I2 scoped Board/Grid handover](delivery/crm-i2-handover.md), [worklist decision](decisions/crm-i2-worklist.md); actual runtime/publication evidence remains separate from design originals |
+| PPO Assistant | [Pilot specification](blueprints/ppo-assistant-specification.md), [direction/architecture](decisions/ppo-assistant-direction.md), [handover](delivery/ppo-assistant-handover.md); design only, runtime/model acceptance pending |
 | Estimating | [BP-04](blueprints/BP-04-estimating-quotation.md), [CREMS evidence](blueprints/estimating-evidence.md), [preview](blueprints/estimating-workspace-mockup.html), [handover](delivery/estimating-discovery-handover.md) |
 | Projects | [BP-06](blueprints/BP-06-projects-commercial-delivery.md), [screens](blueprints/projects-screen-specification.md), [sequence](delivery/projects-implementation-plan.md), [handover](delivery/projects-discovery-handover.md) |
 | Customer portal | [Design](blueprints/customer-portal-design.md), [walkthrough](blueprints/customer-portal-mockup.html), [stages](delivery/customer-portal-implementation-plan.md), [handover](delivery/customer-portal-handover.md) |
