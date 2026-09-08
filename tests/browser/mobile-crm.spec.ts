@@ -35,7 +35,16 @@ test("mobile CRM completion, Brisbane follow-up and record links persist through
   await page.screenshot({path:info.outputPath("mobile-crm-details.png")});
   const estimate = estimateInput(input.id);
   await call(page,"estimating/estimates",estimate);
-  await page.getByRole("tab",{name:"Commercial",exact:true}).click();
+  // The tab starts an authorised read. Assert its actual result before the
+  // unchanged UI postcondition; a still-pending read is not an absent link.
+  const [commercialRead] = await Promise.all([
+    page.waitForResponse(response => response.request().method() === "GET" &&
+      new URL(response.url()).pathname === `/api/v1/crm/opportunities/${input.id}/commercial`),
+    page.getByRole("tab",{name:"Commercial",exact:true}).click(),
+  ]);
+  expect(commercialRead.status(), await commercialRead.text()).toBe(200);
+  expect(commercialRead.headers()["cache-control"]).toBe("private, no-store");
+  expect((await commercialRead.json()).estimate.id).toBe(estimate.id);
   await expect(page.locator(`a[href="/estimating/estimates/${estimate.id}"]`)).toBeVisible();
   const commercial = await call(page,`crm/opportunities/${input.id}/commercial`);
   expect(commercial.estimate.id).toBe(estimate.id);

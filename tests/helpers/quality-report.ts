@@ -82,13 +82,22 @@ export async function submit(page: Page, recoverOwner = false) {
       }),
     );
     const savedWorkspace = await opened;
-    await keyActivate(
-      savedWorkspace,
-      savedWorkspace.getByRole("button", {
-        name: "Verify identity online",
-        exact: true,
-      }),
-    );
+    // Reopening checks identity and each cached job, then loads assigned jobs.
+    // Observe that final read before checking the completed recovery message.
+    const [assignedRead] = await Promise.all([
+      savedWorkspace.waitForResponse(response =>
+        response.request().method() === "GET" &&
+        new URL(response.url()).pathname === "/api/v1/my-jobs"),
+      keyActivate(
+        savedWorkspace,
+        savedWorkspace.getByRole("button", {
+          name: "Verify identity online",
+          exact: true,
+        }),
+      ),
+    ]);
+    expect(assignedRead.status(), await assignedRead.text()).toBe(200);
+    expect(assignedRead.headers()["cache-control"]).toBe("private, no-store");
     await expect(savedWorkspace.locator("#notice")).toContainText(
       "Identity verified",
     );
