@@ -30,11 +30,39 @@ async function assetProbe(path: string) {
 }
 async function protocolProbe(cdp: CDPSession) {
   let timer: ReturnType<typeof setTimeout> | undefined;
+  // Renderer liveness plus its own document/visibility/online view; no DOM
+  // content, storage or identity is read.
+  const expression = "JSON.stringify({ ready_state: document.readyState, visibility: document.visibilityState, online: navigator.onLine })";
+  // Two bounded fetches issued by the stalled renderer itself: the same host
+  // shares the stalled context's socket pool; the alternate loopback host name
+  // uses a fresh pool. Only completion and elapsed time are recorded.
+  const fetchExpression = `(async () => {
+    const probe = async (url) => {
+      const started = performance.now(); const control = new AbortController();
+      const timer = setTimeout(() => control.abort(), 5000);
+      try { const r = await fetch(url, { mode: "no-cors", cache: "no-store", credentials: "omit", signal: control.signal }); return { completed: true, type: r.type, ms: Math.round(performance.now() - started) }; }
+      catch { return { completed: false, ms: Math.round(performance.now() - started) }; }
+      finally { clearTimeout(timer); }
+    };
+    const [same_host, other_host] = await Promise.all([probe("${origin}/brand/powerplants-logo-green-white.png"), probe("http://localhost:3000/brand/powerplants-logo-green-white.png")]);
+    return JSON.stringify({ same_host, other_host });
+  })()`;
   try {
-    return await Promise.race([
-      cdp.send("Runtime.evaluate", { expression: "1", returnByValue: true, timeout: 2000 }).then(r => ({ renderer_replied: r.result.value === 1 })),
+    const state = await Promise.race([
+      cdp.send("Runtime.evaluate", { expression, returnByValue: true, timeout: 2000 }).then(r => ({
+        renderer_replied: typeof r.result.value === "string",
+        ...(typeof r.result.value === "string" ? { renderer_state: JSON.parse(r.result.value) as { ready_state: string; visibility: string; online: boolean } } : {}),
+      })),
       new Promise<{ renderer_replied: false }>(resolve => { timer = setTimeout(() => resolve({ renderer_replied: false }), 5000); }),
     ]);
+    if (!state.renderer_replied) return state;
+    clearTimeout(timer);
+    const fetches = await Promise.race([
+      cdp.send("Runtime.evaluate", { expression: fetchExpression, awaitPromise: true, returnByValue: true, timeout: 7000 })
+        .then(r => (typeof r.result.value === "string" ? JSON.parse(r.result.value) as { same_host: unknown; other_host: unknown } : null)),
+      new Promise<null>(resolve => { timer = setTimeout(() => resolve(null), 9000); }),
+    ]).catch(() => null);
+    return { ...state, renderer_fetch_probe: fetches };
   } catch { return { renderer_replied: false }; }
   finally { clearTimeout(timer); }
 }
@@ -120,7 +148,17 @@ const samples: {
   error: string | null;
 }[] = [];
 const captureFailures: { viewport: string; view: string }[] = [];
-let browser: Awaited<ReturnType<typeof chromium.launch>> | undefined;
+// One Chromium browser process per virtual user. Retained evidence (PR #61,
+// runs 34181075215/34193761221/34198376281 and single-factor reproduction on
+// the same pins) showed that when ten DevTools-instrumented, network-throttled
+// pages shared one browser process, an individual page intermittently stopped
+// receiving responses the network service had already reported and the
+// server had already finished; the same procedure without network emulation,
+// without Network.enable on the observation session, or with a process per
+// virtual user completed every sample. Conditions, rules, assertions, samples
+// and concurrency are unchanged; only the process boundary between virtual
+// users is.
+const browsers: Awaited<ReturnType<typeof chromium.launch>>[] = [];
 try {
   let ready = false;
   for (let n = 0; n < 120; n++) {
@@ -135,14 +173,14 @@ try {
   assert.ok(ready, "The exact guarded development server must start");
   const netlog = netlogDirectory();
   if (netlog) await mkdir(netlog, { recursive: true, mode: 0o700 });
-  browser = await chromium.launch({ channel, ...(netlog ? { args: [
-    `--log-net-log=${netlog}/network.json`,
+  browsers.push(...await Promise.all(Array.from({ length: 10 }, (_, user) => chromium.launch({ channel, ...(netlog ? { args: [
+    `--log-net-log=${netlog}/network-user-${user}.json`,
     "--net-log-max-size-mb=64",
     "--net-log-duration=1380",
-  ] } : {}) });
+  ] } : {}) }))));
   await writeFile(`${root}/network-capture-boundary.json`, JSON.stringify({
-    ...provenance, enabled: Boolean(netlog), browser: browser.version(), channel,
-    capture: "Default Strip private information mode; maximum 64 MiB plus constants, automatic flush after 1380 seconds. Raw NetLog stays outside all upload roots; only separately allowlisted metadata is retained. Capture does not change throttling or any sample deadline.",
+    ...provenance, enabled: Boolean(netlog), browser: browsers[0].version(), channel, browser_processes: browsers.length,
+    capture: "Default Strip private information mode per virtual-user browser process; maximum 64 MiB plus constants each, automatic flush after 1380 seconds. Raw NetLog stays outside all upload roots; only separately allowlisted metadata is retained. Capture does not change throttling or any sample deadline.",
   }, null, 2));
   const views = [
     {
@@ -177,7 +215,7 @@ try {
   ]) {
     for (const view of views) {
       for (let user = 0; user < 10; user++) {
-        const context = await browser.newContext({
+        const context = await browsers[user].newContext({
           viewport: { width: viewport.width, height: viewport.height },
           locale: "en-AU",
           isMobile: viewport.name === "phone",
@@ -227,7 +265,10 @@ try {
             }>();
             const { cdp, ruleId } = networkSessions.get(page)!;
             const coreRequestIds = new Set<string>();
-            const protocolAssets = new Map<string, { path: string; type: string; requested_ms: number; response_ms?: number; status?: number; received_bytes: number; encoded_bytes?: number; completed_ms?: number; failed_ms?: number }>();
+            // response_ms/received_bytes are reported by the renderer; extra_response_ms is the
+            // network service's own headers-received report, so a gap between them localises
+            // a stall to delivery between the network service and the renderer.
+            const protocolAssets = new Map<string, { path: string; type: string; requested_ms: number; response_ms?: number; status?: number; extra_response_ms?: number; extra_status?: number; received_bytes: number; encoded_bytes?: number; completed_ms?: number; failed_ms?: number }>();
             const appliedRules = new Map<string, string>();
             const coreProtocolRequest = (event: { requestId: string; type?: string; request: { url: string; method: string } }) => {
               if (new URL(event.request.url).pathname === view.api && event.request.method === "GET") coreRequestIds.add(event.requestId);
@@ -238,6 +279,11 @@ try {
             const protocolResponse = (event: { requestId: string; response: { status: number } }) => {
               const item = protocolAssets.get(event.requestId);
               if (item) Object.assign(item, { response_ms: performance.now() - at, status: event.response.status });
+            };
+            const protocolResponseExtra = (event: { requestId: string; statusCode: number }) => {
+              // Only the status code and timing are retained from ExtraInfo; headers are never read.
+              const item = protocolAssets.get(event.requestId);
+              if (item) Object.assign(item, { extra_response_ms: performance.now() - at, extra_status: event.statusCode });
             };
             const protocolData = (event: { requestId: string; dataLength: number }) => {
               const item = protocolAssets.get(event.requestId); if (item) item.received_bytes += event.dataLength;
@@ -256,7 +302,7 @@ try {
             };
             const coreRuleMatches = () => [...coreRequestIds].filter((id) => appliedRules.get(id) === ruleId).length;
             cdp.on("Network.requestWillBeSent", coreProtocolRequest).on("Network.requestWillBeSentExtraInfo", appliedRule);
-            cdp.on("Network.responseReceived", protocolResponse).on("Network.dataReceived", protocolData).on("Network.loadingFinished", protocolFinished).on("Network.loadingFailed", protocolFailed);
+            cdp.on("Network.responseReceived", protocolResponse).on("Network.responseReceivedExtraInfo", protocolResponseExtra).on("Network.dataReceived", protocolData).on("Network.loadingFinished", protocolFinished).on("Network.loadingFailed", protocolFailed);
             const documentEvent = (event: string, status?: number) => {
               if (documentEvents.length < 20) documentEvents.push({ event, elapsed_ms: performance.now() - at, ...(status === undefined ? {} : { status }) });
             };
@@ -401,7 +447,7 @@ try {
             } finally {
               page.off("request", requested).off("response", responded).off("requestfailed", failed).off("requestfinished", completed).off("crash", crashed).off("domcontentloaded", domLoaded).off("load", loaded);
               cdp.off("Network.requestWillBeSent", coreProtocolRequest).off("Network.requestWillBeSentExtraInfo", appliedRule);
-              cdp.off("Network.responseReceived", protocolResponse).off("Network.dataReceived", protocolData).off("Network.loadingFinished", protocolFinished).off("Network.loadingFailed", protocolFailed);
+              cdp.off("Network.responseReceived", protocolResponse).off("Network.responseReceivedExtraInfo", protocolResponseExtra).off("Network.dataReceived", protocolData).off("Network.loadingFinished", protocolFinished).off("Network.loadingFailed", protocolFailed);
             }
             samples.push({
               viewport: viewport.name,
@@ -480,8 +526,9 @@ try {
         fixture,
         profile: {
           node: process.version,
-          browser: browser.version(),
+          browser: browsers[0].version(),
           browser_channel: channel,
+          browser_processes: browsers.length,
           platform: platform(),
           os_release: release(),
           arch: arch(),
@@ -498,7 +545,7 @@ try {
           build:
             "Pinned Next.js guarded development server after successful production compilation check. Development compiler filesystem cache remains disabled. Production hosting/start remains prohibited.",
           concurrency:
-            "10 independent browser contexts and server-issued sessions per view wave; role-appropriate existing synthetic Coordinator or assigned Technician identity. These are 10 virtual users, not 10 distinct staff identities.",
+            "10 independent Chromium browser processes (one per virtual user, each with its own network service and DevTools sessions), each opening a fresh context and server-issued session per view wave; role-appropriate existing synthetic Coordinator or assigned Technician identity. These are 10 virtual users, not 10 distinct staff identities.",
           cold_warm:
             "Each view begins with 10 fresh contexts, empty browser caches and no preceding measured navigation in those contexts. Only the first desktop visit can include first route compilation in this shared fresh server; later views/phone can reuse server modules and database/OS caches. Warm is three subsequent navigation waves in the same contexts. No OS cache flush or durable offline-storage inference.",
           boundary:
@@ -523,7 +570,7 @@ try {
   );
   assert.equal(captureFailures.length, 0, "Selected view evidence capture must also succeed");
 } finally {
-  await browser?.close();
+  await Promise.all(browsers.map((b) => b.close()));
   if (server.exitCode === null && server.signalCode === null) {
     const stopped = once(server, "exit");
     server.kill("SIGTERM");

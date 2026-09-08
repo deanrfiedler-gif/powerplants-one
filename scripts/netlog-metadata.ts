@@ -1,4 +1,4 @@
-import { readFile, writeFile, mkdir, rm, stat } from "node:fs/promises";
+import { readFile, readdir, writeFile, mkdir, rm, stat } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { isAbsolute, relative, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -68,11 +68,7 @@ export function netlogDirectory() {
   return directory;
 }
 
-async function prepare() {
-  const directory = netlogDirectory();
-  if (!directory) throw new Error("NetLog diagnostic directory is required");
-  const path = resolve(directory, "network.json");
-  const output = "verification-evidence/p11-performance/netlog-metadata.json";
+async function prepareCapture(path: string) {
   let result: RecordValue = { status: "unavailable" };
   try {
     const info = await stat(path);
@@ -82,11 +78,31 @@ async function prepare() {
     const bytes = await readFile(path);
     result = { raw_byte_count: bytes.length, raw_sha256: createHash("sha256").update(bytes).digest("hex"), status: "invalid-or-incomplete" };
     result = { ...result, ...netlogMetadata(JSON.parse(bytes.toString("utf8"))), status: "prepared" };
+  } catch (error) {
+    result = { ...result, failure: error instanceof Error ? error.message.slice(0, 120) : "Capture unavailable" };
+  }
+  return result;
+}
+
+async function prepare() {
+  const directory = netlogDirectory();
+  if (!directory) throw new Error("NetLog diagnostic directory is required");
+  const output = "verification-evidence/p11-performance/netlog-metadata.json";
+  // The load proof runs one browser process per virtual user, each with its
+  // own bounded capture file; a single legacy capture name is also accepted.
+  let result: RecordValue = { status: "unavailable", captures: [] };
+  try {
+    const names = (await readdir(directory).catch(() => [] as string[]))
+      .filter((name) => /^network(-user-\d{1,2})?\.json$/.test(name)).sort();
+    const captures: RecordValue[] = [];
+    for (const name of names) captures.push({ capture: name, ...(await prepareCapture(resolve(directory, name))) });
+    result = { status: captures.length && captures.every((c) => c.status === "prepared") ? "prepared" : captures.length ? "partial" : "unavailable", captures };
+    if (result.status !== "prepared") throw new Error("NetLog capture incomplete");
   } finally {
     await mkdir("verification-evidence/p11-performance", { recursive: true });
     await writeFile(output, JSON.stringify(result, null, 2) + "\n");
-    // Chromium may also create bounded temporary fragments alongside this
-    // file. The dedicated directory is never an upload root.
+    // Chromium may also create bounded temporary fragments alongside these
+    // files. The dedicated directory is never an upload root.
     await rm(directory, { recursive: true, force: true });
   }
 }
