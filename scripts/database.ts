@@ -7,7 +7,7 @@ import { database, transaction, closeDatabase } from "../src/platform/database";
 import { localConfig } from "../src/platform/config";
 const read = (name: string) =>
   readFile(new URL(`../db/${name}`, import.meta.url), "utf8");
-export async function migrate(through = 14) {
+export async function migrate(through = 15) {
   await transaction(async (client) => {
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     await client.query(
@@ -28,6 +28,7 @@ export async function migrate(through = 14) {
       "0012-estimating-e1.sql",
       "0013-p11-travel.sql",
       "0014-p11-travel-guard-repair.sql",
+      "0015-email-calendar.sql",
     ]) {
       const version = Number(file.slice(0, 4));
       if (version > through) break;
@@ -52,7 +53,7 @@ export async function migrate(through = 14) {
     }
   });
 }
-export async function seed(through = 14) {
+export async function seed(through = 15) {
   await transaction(async (client) => {
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     for (const [version, file] of [
@@ -68,6 +69,7 @@ export async function seed(through = 14) {
       [12, "seed-estimating-e1.sql"],
       [13, "seed-p11.sql"],
       [14, "seed-p11-templates.sql"],
+      [15, "seed-email-calendar.sql"],
     ] as const) {
       if (version > through) break;
       const prior = await client.query(
@@ -101,6 +103,10 @@ export async function seed(through = 14) {
         const { seedP11Templates } =
           await import("../src/documents/p11-fixtures");
         await seedP11Templates(client);
+      }
+      if (version === 15) {
+        const { seedEmailProvider } = await import("../src/email/provider");
+        await seedEmailProvider(client);
       }
       await client.query("INSERT INTO ppo.seed_receipts(version) VALUES($1)", [
         version,

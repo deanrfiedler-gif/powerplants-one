@@ -16,6 +16,7 @@ function moduleFor(path: string) {
   if (matches(path, "/service") || service.some(([href]) => matches(path, href))) return { name: "Service", tabs: service };
   if (customers.some(([href]) => matches(path, href))) return { name: "Customers", tabs: customers };
   if (path.startsWith("/crm/")) return { name: "CRM Sales", tabs: [] };
+  if (matches(path, "/email") || matches(path, "/calendar")) return { name: "Email & Calendar", tabs: [["/email", "Email"], ["/calendar", "Calendar"]] };
   if (matches(path, "/estimating")) return { name: "Estimating", tabs: [] };
   if (matches(path, "/finance")) return { name: "Finance", tabs: [] };
   if (matches(path, "/people")) return { name: "Contacts", tabs: [] };
@@ -36,6 +37,7 @@ export function ProductNavigation() {
   const items: { label: string; icon: ProductIconName; href?: string; divider?: boolean }[] = [
     { label: "Overview", icon: "home", href: "/" }, { label: "My Work", icon: "work", href: "/work" },
     { label: "CRM Sales", icon: "sales", href: "/crm/opportunities", divider: true },
+    { label: "Email & Calendar", icon: "mail", href: "/email" },
     { label: "Estimating", icon: "estimate", href: "/estimating" },
     { label: "Engineering", icon: "engineering" }, { label: "Projects", icon: "projects" },
     { label: "Service", icon: "service", href: "/schedule" }, { label: "Supply Chain", icon: "supply" },

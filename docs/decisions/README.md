@@ -42,3 +42,5 @@ The [controlled opportunity handover proposal](crm-opportunity-handover.md) reco
 - [Accepted r08 shared layout and CRM implementation](shared-ui-r08-implementation.md) — Dean-approved presentation mapped to existing persisted I1/I2 contracts.
 
 - [Email & Calendar design direction](email-calendar-design.md) — user-authorised synthetic design; selected-message sharing and a proposed read-only Microsoft pilot under CRM-03/PAR-06.
+
+- [ADR-0020 — Persisted synthetic Email & Calendar journey](ADR-0020-email-calendar-synthetic-journey.md).
