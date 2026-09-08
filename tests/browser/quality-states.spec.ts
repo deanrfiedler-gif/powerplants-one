@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Response } from "@playwright/test";
 import { writeFile } from "node:fs/promises";
 import { financeHttpSource, httpFinanceDraft } from "../helpers/finance-http";
 import { call, identity, capture, recordBrowserReads } from "../helpers/quality-browser";
@@ -360,15 +360,27 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
           }),
         }),
       );
-      // The unavailable-record assertion starts after the actual selected
-      // read, not while the independent identity prerequisite is loading.
-      await Promise.all([
-        page.waitForResponse((response) =>
+      // Observe before reloading so an early response is retained. Navigation
+      // keeps its 60-second limit; the separate 15-second business-read window
+      // begins after load, rather than expiring during document/asset loading.
+      let observedUnavailableRead = false;
+      const recordUnavailableRead = (response: Response) => {
+        if (
           new URL(response.url()).pathname === `/api/v1/${s.api}` &&
-          response.request().method() === "GET" && response.status() === 404,
-          { timeout: 15000 }),
-        page.reload(),
-      ]);
+          response.request().method() === "GET" &&
+          response.status() === 404
+        ) observedUnavailableRead = true;
+      };
+      page.on("response", recordUnavailableRead);
+      try {
+        await page.reload();
+        await expect.poll(() => observedUnavailableRead, {
+          timeout: 15000,
+          message: `${s.id}: exact unavailable-record GET after navigation`,
+        }).toBe(true);
+      } finally {
+        page.off("response", recordUnavailableRead);
+      }
       await expect(
         page
           .getByRole("alert")
