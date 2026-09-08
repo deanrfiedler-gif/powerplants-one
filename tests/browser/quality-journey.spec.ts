@@ -24,13 +24,27 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
   await call(page, "local-session", { profile: "coordinator" });
   const source = await prepareJourney(page, info);
   const aid = source.appointment_id;
+  const openPersonalJob = async () => {
+    // Wait for this actor's actual job read, then exercise the rendered
+    // controls. An unrelated document load event is not job readiness.
+    await Promise.all([
+      page.waitForResponse((response) =>
+        new URL(response.url()).pathname === `/api/v1/my-jobs/${aid}` &&
+        response.request().method() === "GET" && response.status() === 200,
+        { timeout: 60000 }),
+      page.goto(`/my-jobs/${aid}`, { waitUntil: "domcontentloaded" }),
+    ]);
+    await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true }))
+      .toHaveAttribute("aria-busy", "false");
+    await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
+  };
   for (const profile of ["assigned-technician", "second-technician"]) {
     await identity(page, profile);
     await page.goto(`/documents/${source.current_issue_id}`);
     await expect(
       page.getByText("Current applicable issue", { exact: true }),
     ).toBeVisible();
-    await page.goto(`/my-jobs/${aid}`);
+    await openPersonalJob();
     await committed(
       page,
       `pack-issues/${source.current_issue_id}/acknowledge`,
@@ -45,7 +59,7 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
     await capture(page, info, `journey-personal-ack-${profile}`);
   }
   await identity(page, "assigned-technician");
-  await page.goto(`/my-jobs/${aid}`);
+  await openPersonalJob();
   await page
     .getByLabel("Start context", { exact: true })
     .fill(
