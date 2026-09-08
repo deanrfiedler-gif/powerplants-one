@@ -19,3 +19,17 @@ TypeScript and focused lint were checked locally. PostgreSQL, restart, actual ro
 ## Limits
 
 Fictional adapter only: no Graph credentials, consent, Outlook invitations, email sending or sync. Emails remain owner-only; sharing settings and real mailbox retention/disconnect behaviour are deferred. Calendar uses Australia/Brisbane for this bounded slice. One follow-up per email, up to 100 visible items per source; no attachments, recurring-event editor or automatic matching. Fixtures are deliberately dated 8–9 September 2026. The prepared read-only Microsoft test-mailbox pilot follows this journey's acceptance.
+
+## Route and data contract
+
+| Route | Purpose | Server authority |
+| --- | --- | --- |
+| `GET /api/v1/email` | Private bounded inbox/search | Owner, email read, internal and linked-record visibility |
+| `GET /api/v1/email/:id` | Open private email | Same current authority; no sharing implied by link |
+| `GET /api/v1/email/:id/options` | Explicit opportunity choices | Email edit and same-company visible opportunities |
+| `POST /api/v1/email/:id/link` | Save selected opportunity | Current authority, expected version and original operation identity |
+| `POST /api/v1/email/:id/follow-up` | Create one internal Activity | Current email, opportunity, Activity and owner scope; atomic save |
+| `GET /api/v1/calendar?day=YYYY-MM-DD` | Personal Brisbane day | Own meetings and Activities with current per-record scopes |
+| `GET /api/v1/operations/:id` | Recover original outcome | Original actor plus current record and command permissions |
+
+All routes retain the application's local gateway, session, origin and no-store response controls. Email and calendar data are not added to the offline service-worker cache. No source body is copied to audit/outbox payloads; the operation stores a hash and record identity. Uncertain responses retain the same in-memory operation ID for an unchanged retry. Reload re-reads the committed source association; this slice does not persist unsent form drafts.

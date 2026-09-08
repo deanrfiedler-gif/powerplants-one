@@ -91,6 +91,13 @@ test("EC persisted private email, explicit link, atomic follow-up, opportunity h
     JSON.stringify(opportunity.actions).includes(m.body_text),
     false,
   );
+  for (const table of ["audit_events", "outbox_jobs"]) {
+    const evidence = await database().query(
+      `SELECT * FROM ppo.${table} WHERE operation_id=$1`,
+      [f.operation_id],
+    );
+    assert.equal(JSON.stringify(evidence.rows).includes(m.body_text), false);
+  }
   assert.deepEqual(await readOperation(p, f.operation_id), results[0].receipt);
   await assert.rejects(
     createEmailFollowup(p, message, { ...f, summary: "Changed" }),
@@ -119,6 +126,21 @@ test("EC owner privacy, workspace boundaries and invalid link never reveal email
       code("RecordUnavailable"),
     );
   }
+  const owner = await principal(),
+    colleague = await principal("observer");
+  await database().query(
+    `INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id,valid_from,valid_to) SELECT workspace_id,$2,company_id,capability,scope_type,scope_id,site_id,valid_from,valid_to FROM ppo.permission_grants WHERE user_id=$1 ON CONFLICT DO NOTHING`,
+    [owner.actor_id, colleague.actor_id],
+  );
+  await assert.rejects(
+    readEmail(colleague, message),
+    code("RecordUnavailable"),
+  );
+  assert.equal((await listEmail(colleague, {})).items.length, 0);
+  assert.equal(
+    (await readCalendar(colleague, { day: "2026-09-08" })).meetings.length,
+    0,
+  );
   const { p, o } = await linked();
   const other = crmCreate();
   await createOpportunity(p, other);

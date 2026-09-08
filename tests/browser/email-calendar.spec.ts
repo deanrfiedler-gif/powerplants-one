@@ -86,7 +86,7 @@ test("EC complete journey, reload, calendar navigation, details, narrow layout a
   const m = await call(page, `email/${message}`),
     saved = await call(page, `crm/opportunities/${o.id}`);
   expect(
-    saved.actions.filter((a: { id: string }) => a.id === m.followup_id),
+    saved.items[0].actions.filter((a: { id: string }) => a.id === m.followup_id),
   ).toHaveLength(1);
   await page.goto(`/crm/opportunities/${o.id}`);
   await expect(
@@ -211,12 +211,7 @@ test("EC accepted r02 demo: date navigation, timeline, details and phone sheet",
   await page.getByLabel("Calendar date", { exact: true }).fill("2026-09-09");
   await page.getByRole("button", { name: "Show date", exact: true }).click();
   await expect(page.locator("#selected-day")).toContainText("9");
-  await page
-    .getByRole("button", {
-      name: "Return to sample day, 8 September 2026",
-      exact: true,
-    })
-    .click();
+  await page.locator('[data-action="calendar-day"][data-day="2026-09-08"]').click();
   await page.getByRole("button", { name: "Agenda", exact: true }).click();
   await expect(page.locator(".agenda-list")).toBeVisible();
 });
