@@ -3,6 +3,7 @@
 import argparse
 import base64
 import re
+import html as html_escape
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -24,6 +25,8 @@ def export(destination):
     assert '<script src=' not in html and 'href="styles.css"' not in html
     assert 'data:font/woff;base64,' in html and 'data:image/png;base64,' in html
     assert '../../../public/' not in html and '../../standards/ui-assets/' not in html
+    licence = (ROOT / "public/brand/Roboto-OFL.txt").read_text()
+    html = html.replace("</body>", '<template id="roboto-licence">' + html_escape.escape(licence) + "</template></body>")
     path = Path(destination)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(html)

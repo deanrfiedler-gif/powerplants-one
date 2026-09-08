@@ -2,8 +2,8 @@
   "revision": "r01",
   "base_commit": "b3597f79413f87b9b2f1ce75a66a2addefbb0e34",
   "standalone_filename": "ppo-email-calendar-prototype.html",
-  "bytes": 870092,
-  "sha256": "3d7a2cce7249cf090381903493a12be68efd890fa74f7ece2d921072f5dcae70",
+  "bytes": 874591,
+  "sha256": "e0f8e0e92fabf907dcfa4c94b4f929383584840534a7c37530282d007827f421",
   "browser_review": "Blocked by environment: ERR_BLOCKED_BY_CLIENT",
   "live_microsoft": "Not run",
   "local_foundation": "176 unavailable historical file links; every destination exists in the inspected upstream tree; full-tree CI required"
