@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import type { assistantTurn, customerSummary, searchCustomers, recentProposals, ProposalView } from '../assistant/service';
-import { ASSISTANT_LABEL } from '../assistant/simulated';
+import { ASSISTANT_LABEL, normaliseDueAt } from '../assistant/simulated';
 import { api, ErrorNotice, Field, SelectField, Stamp, PageHeader, ValidationFields, useResource, isDenied, type Failure } from './business-ui';
 import { CrmPicker } from './crm-screens';
 import './assistant.css';
@@ -25,7 +25,7 @@ function restore(v:ProposalView):Draft {
   return {...blank(),company_id:c.company_id,organisation_id:c.organisation_id,site_id:c.site_id??'',primary_person_id:c.primary_person_id??'',site_unknown_reason:c.site_unknown_reason??'',contact_unknown_reason:c.contact_unknown_reason??'',title:c.title,need_summary:c.need_summary,source_channel:c.source_channel,source_basis:c.source_basis,owner_id:c.owner_id,activity_owner:c.initial_action.owner_id,action_kind:c.initial_action.kind,action_summary:c.initial_action.summary,due_choice:c.initial_action.due_needed?'unknown':'known',due_at:c.initial_action.due_at??''};
 }
 function values(d:Draft) {
-  return {company_id:d.company_id,organisation_id:d.organisation_id,site_id:d.site_id||null,primary_person_id:d.primary_person_id||null,site_unknown_reason:d.site_id?null:d.site_unknown_reason,contact_unknown_reason:d.primary_person_id?null:d.contact_unknown_reason,title:d.title,need_summary:d.need_summary,source_channel:d.source_channel,source_basis:d.source_basis,owner_id:d.owner_id,initial_action:{owner_id:d.activity_owner,kind:d.action_kind,summary:d.action_summary,due_needed:d.due_choice==='unknown',due_at:d.due_choice==='known'?d.due_at:null}};
+  return {company_id:d.company_id,organisation_id:d.organisation_id,site_id:d.site_id||null,primary_person_id:d.primary_person_id||null,site_unknown_reason:d.site_id?null:d.site_unknown_reason,contact_unknown_reason:d.primary_person_id?null:d.contact_unknown_reason,title:d.title,need_summary:d.need_summary,source_channel:d.source_channel,source_basis:d.source_basis,owner_id:d.owner_id,initial_action:{owner_id:d.activity_owner,kind:d.action_kind,summary:d.action_summary,due_needed:d.due_choice==='unknown',due_at:d.due_choice==='known'?(normaliseDueAt(d.due_at)??d.due_at):null}};
 }
 export function AssistantScreen({initialProposal=''}:{initialProposal?:string}) {
   const mode=useResource<{mode:'off'|'simulated'}>('assistant/status');

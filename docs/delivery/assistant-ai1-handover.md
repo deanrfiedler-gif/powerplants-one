@@ -31,13 +31,17 @@ Chat and summary contents are memory-only and clear on view unmount or identity 
 
 ## Verification and publication
 
-Initial local checks passed TypeScript, focused ESLint and three parser behaviour cases using exact Node 24.20.0 and repository dependencies. PostgreSQL and the pinned browser are provided by the focused CI job; local static checks are not substituted for them. Local build and full checks are recorded separately in the final PR checkpoint, including failures.
+Local TypeScript, full ESLint, all 23 then-existing unit cases, the production build and prototype/naming checks passed using exact Node 24.20.0 and the repository pins. A fourth parser/date case and an exact saved-date browser assertion were then added for explicit-offset conversion. The first build attempt rejected an out-of-root dependency symlink; copying the identical verified dependencies into this checkout resolved that environment issue. The build retains the existing report-template dynamic filesystem tracing warning. Local foundation reports omitted historical evidence images in this partial materialisation; the unchanged full-checkout documentation workflow passed.
+
+Initial CI [34190477299](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34190477299) passed seven AI1 PostgreSQL cases and 33 retained CRM database cases. Its restart save succeeded, then an overly broad alert assertion matched the framework route announcer as well as the application error. The assertion was scoped to the assistant conversation and rerun. No application grant/command check was relaxed. Exact subsequent head/tree, all runtime results and final evidence remain in the [implementation PR #67](https://github.com/deanrfiedler-gif/powerplants-one/pull/67).
+
+Six local layout-fixture captures at 1440/390/320 px were inspected for the welcome and prepared review states, with the existing brand assets and without horizontal overflow in the fixture assertions. This supplemental run used a locally available Chromium 143 binary and mocked API replies; it is visual evidence only, not pinned-browser or database journey proof. CI uses the repository-pinned browser and actual HTTP/database services. No real-device, screen-reader or software-keyboard proof is inferred.
 
 The focused workflow is `.github/workflows/assistant-ai1.yml`. Its commands cover:
 
 | Evidence | Command / scope | AIA coverage contribution |
 | --- | --- | --- |
-| Parser | `npm run test:unit` | Explicit simulation, bounded interpretation; parts of AIA-01/04/08 |
+| Parser | `npm run test:unit` | Explicit simulation, bounded interpretation and explicit-offset UTC conversion; parts of AIA-03/08/09/10/16 |
 | Database | `node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/assistant/database.test.ts` | No prepare-time domain effects, atomic concurrent confirmation, strict fields, hash/expiry/edit/selection changes, current grants, tenant isolation, rollback, off-mode recovery, citations/cursors/inert narrative, retention and upgrade |
 | Retained CRM | `tests/database/crm.test.ts` and `crm-i2.test.ts` | Reused command and read regressions |
 | HTTP | `tests/assistant/http.test.ts` against the actual gateway | Same-origin/auth/no-store/strict body, reviewed confirmation, original receipt and sign-out |

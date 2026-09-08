@@ -1,4 +1,13 @@
 export const ASSISTANT_LABEL = 'Simulated assistant · Synthetic data only';
+// An explicit offset is a user choice. Convert it to the CRM command's UTC format;
+// never infer a timezone, relative date or invalid calendar day.
+export function normaliseDueAt(value: string): string | null {
+  const match = value.match(/^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d{1,3})?(Z|[+-](\d{2}):(\d{2}))$/);
+  if (!match || +match[2]>23 || +match[3]>59 || +match[4]>59 || (match[6] && (+match[6]>14 || +match[7]>59 || (+match[6]===14 && +match[7]!==0)))) return null;
+  const day = new Date(match[1]+'T00:00:00.000Z'), result = new Date(value);
+  if (!Number.isFinite(day.getTime()) || day.toISOString().slice(0,10)!==match[1] || !Number.isFinite(result.getTime())) return null;
+  return result.toISOString();
+}
 export type ParsedRequest = {
   kind: 'customers' | 'opportunities' | 'summary' | 'create' | 'help';
   query: string;

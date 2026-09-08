@@ -24,13 +24,16 @@ test('AI1 desktop and phone: customer search, grounded context, edited review an
   await page.getByLabel('Primary contact',{exact:true}).selectOption(CRM.person);
   await page.getByLabel('Opportunity owner',{exact:true}).selectOption(CRM.owner);
   await page.getByLabel('Follow-up owner',{exact:true}).selectOption(CRM.owner);
-  await page.getByLabel('Follow-up due date',{exact:true}).selectOption('unknown');
+  const knownDate=info.project.name==='desktop-chromium';
+  await page.getByLabel('Follow-up due date',{exact:true}).selectOption(knownDate?'known':'unknown');
+  if(knownDate)await page.getByLabel('Due date and time with UTC offset',{exact:true}).fill('2026-09-15T09:00:00+10:00');
   await page.getByRole('button',{name:'Prepare review',exact:true}).click();
   await expect(page.getByRole('heading',{name:'Review opportunity',exact:true})).toBeFocused();
   await page.getByRole('button',{name:'Edit and review again',exact:true}).click();
   await page.getByLabel('Opportunity title',{exact:true}).fill(title+' edited');
   await page.getByRole('button',{name:'Prepare review',exact:true}).click();
   await expect(page.locator('.assistant-review-details')).toContainText(title+' edited');
+  await expect(page.locator('.assistant-review-details')).toContainText(knownDate?'2026-09-14T23:00:00.000Z':'Due date needed');
   const proposalURL=page.url(),id=new URL(proposalURL).searchParams.get('proposal')!;
   expect((await database().query('SELECT count(*)::int n FROM ppo.opportunities WHERE title=$1',[title+' edited'])).rows[0].n).toBe(0);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
@@ -44,6 +47,8 @@ test('AI1 desktop and phone: customer search, grounded context, edited review an
   await page.reload();
   await expect(page.getByRole('heading',{name:'Opportunity saved',exact:true})).toBeVisible();
   expect((await database().query('SELECT count(*)::int n FROM ppo.opportunities WHERE title=$1',[title+' edited'])).rows[0].n).toBe(1);
+  const action=(await database().query('SELECT a.due_at,a.due_needed FROM ppo.opportunities o JOIN ppo.activities a ON a.workspace_id=o.workspace_id AND a.id=o.next_activity_id WHERE o.title=$1',[title+' edited'])).rows[0];
+  expect(action.due_needed).toBe(!knownDate);expect(action.due_at?.toISOString()??null).toBe(knownDate?'2026-09-14T23:00:00.000Z':null);
   expect(await page.evaluate(()=>[...Object.keys(localStorage),...Object.keys(sessionStorage)].filter(k=>/assistant|proposal|chat/i.test(k)))).toEqual([]);
   await page.screenshot({path:info.outputPath('AI1-recovered-save.png'),fullPage:true});
   await identity(page,'second-company');
