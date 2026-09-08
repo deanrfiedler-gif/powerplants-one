@@ -43,3 +43,9 @@ Before publication, P11 merged into main at `b3597f79413f87b9b2f1ce75a66a2addefb
 
 
 The reconciled local source passed lint, TypeScript, all 20 unit tests and production build. Naming assurance passed with 86 document records and PP-01 assurance retained all 78 parent dispositions. A repeated twelve-view fixture browser review passed at 320/390/1440px with no document overflow or browser errors; refreshed board, Organisation and Estimating captures were inspected. This is UI-only evidence and does not replace disposable-database CI. The reviewable `ppo-mobile-crm-main-ready.patch` applies to main `b3597f79`; it includes the mobile changes while preserving the merged P11 baseline. Publication, combined backend/browser regression, normal merge and actual-main verification remain blocked/pending.
+
+## Explicit publication and final verification
+
+Dean explicitly authorised uploading `ppo-mobile-crm-main-ready.patch` to `deanrfiedler-gif/powerplants-one`, updating PR #61, completing verification and merging when checks pass. Publication succeeded at `ffa1728825e91beefcab9177487a21110b5b6f5d`, tree `f74b806be292f9987815ae45c869da56fe2b1567`, preserving both prior mobile history and P11 main. The earlier publication blocks above are historical. Integration review also aligned the retained P11 recovery keyboard test with the phone All modules menu; its recovery/original/permission assertions remain unchanged.
+
+The [PR #61 publication record](https://github.com/deanrfiedler-gif/powerplants-one/pull/61) is authoritative for subsequent exact-head CI outcomes, normal merge and actual merged-main checks. These run results are recorded externally to avoid changing the tested source merely to append its own final commit ID. No fixture capture counts as PostgreSQL persistence or permission evidence. Physical-phone review and operational acceptance remain separate.

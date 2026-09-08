@@ -105,7 +105,7 @@ test("P11 PT-01/29 scoped recovery UI preserves originals and retries one uncert
   expect(saved.normal_acceptance).toBe(false);
   await page.goto("/customers"); await identity(page, "coordinator");
   if (info.project.use.isMobile) await page.getByRole("button", { name: "Menu", exact: true }).press("Enter");
-  await page.getByRole("navigation", { name: "Main navigation", exact: true }).getByRole("link", { name: "Exceptions and recovery", exact: true }).press("Enter");
+  await page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "Main navigation", exact: true }).getByRole("link", { name: "Exceptions and recovery", exact: true }).press("Enter");
   await expect(page).toHaveURL(/\/admin$/);
   await expect(page.locator(`a[href='/admin/recovery/${saved.case_id}']`)).toBeVisible();
   await capture(page, info, "recovery-loaded");
