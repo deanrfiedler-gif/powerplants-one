@@ -11,8 +11,9 @@ import { qualityLoadFixture } from "./quality-load-fixture";
 const root = "verification-evidence/p11-performance";
 await mkdir(root, { recursive: true });
 const origin = "http://127.0.0.1:3000";
-const channel = process.env.PPO_PROOF_BROWSER_CHANNEL;
-assert.ok(channel === undefined || channel === "chromium", "Only the pinned bundled Chromium comparison is supported");
+// The controlled comparison retains the shell's failed observations. Select
+// pinned full Chromium for the same globally throttled 320-sample contract.
+const channel = "chromium";
 async function assetProbe(path: string) {
   // A separate post-failure server probe, never a replacement measured sample.
   const started = performance.now();
@@ -131,7 +132,7 @@ try {
     await new Promise((r) => setTimeout(r, 500));
   }
   assert.ok(ready, "The exact guarded development server must start");
-  browser = await chromium.launch(channel ? { channel } : {});
+  browser = await chromium.launch({ channel });
   const views = [
     {
       name: "Customers",
@@ -469,7 +470,7 @@ try {
         profile: {
           node: process.version,
           browser: browser.version(),
-          browser_channel: channel ?? "chromium-headless-shell (Playwright default)",
+          browser_channel: channel,
           platform: platform(),
           os_release: release(),
           arch: arch(),
