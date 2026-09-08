@@ -444,6 +444,9 @@ jobs:
           test "$ppo_http_ready" = 1
           mkdir -p verification-evidence/p11-http
           node --env-file=.env.local --import tsx --test --test-reporter=tap tests/integration/quality-http.test.ts 2>&1 | tee verification-evidence/p11-http/results.tap
+          mkdir -p verification-evidence/http
+          # Exercise the deterministic fixture overlap early; the full HTTP suite still runs every case.
+          node --env-file=.env.local --import tsx --test --test-reporter=tap --test-name-pattern='^P07 HTTP independent work orders' tests/http/field.test.ts 2>&1 | tee verification-evidence/http/field-fixture-isolation.tap
       - name: Prepare HTTP review diagnostics
         if: always()
         id: http_review
