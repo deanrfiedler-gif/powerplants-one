@@ -1,4 +1,4 @@
-import { observedResponse, RENDER_LEASE_MS } from "../helpers/observed-response";
+import { observedResponse } from "../helpers/observed-response";
 import { test, expect, type Page, type TestInfo } from "@playwright/test";
 import { mkdir, writeFile } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
@@ -240,7 +240,6 @@ async function issue(page: Page) {
       exact: true,
     })
     .click(),
-    { timeout: RENDER_LEASE_MS },
   );
   expect(response.status(), await response.text()).toBe(200);
   expect(response.headers()["cache-control"]).toBe("private, no-store");

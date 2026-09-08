@@ -1,4 +1,4 @@
-import { observedResponse, RENDER_LEASE_MS } from "./observed-response";
+import { observedResponse } from "./observed-response";
 import {
   expect,
   type Page,
@@ -124,7 +124,6 @@ async function issuePack(page: Page, pid: string) {
       exact: true,
     })
     .click(),
-    { timeout: RENDER_LEASE_MS },
   );
   expect(response.status(), await response.text()).toBe(200);
   expect(response.headers()["cache-control"]).toBe("private, no-store");

@@ -179,8 +179,8 @@ try {
     "--net-log-duration=1380",
   ] } : {}) }))));
   await writeFile(`${root}/network-capture-boundary.json`, JSON.stringify({
-    ...provenance, enabled: Boolean(netlog), browser: browsers[0].version(), channel, browser_processes: browsers.length,
-    capture: "Default Strip private information mode per virtual-user browser process; maximum 64 MiB plus constants each, automatic flush after 1380 seconds. Raw NetLog stays outside all upload roots; only separately allowlisted metadata is retained. Capture does not change throttling or any sample deadline.",
+    ...provenance, observed_at: new Date().toISOString(), enabled: Boolean(netlog), browser: browsers[0].version(), channel, browser_processes: browsers.length,
+    capture: "Default Strip private information mode per virtual-user browser process; maximum 64 MiB plus constants each, automatic flush after 1380 seconds. Raw NetLog stays outside all upload roots; streamed allowlisted metadata aggregates packet events and preserves per-source lifecycles. Capture does not change throttling or any sample deadline.",
   }, null, 2));
   const views = [
     {

@@ -1,6 +1,6 @@
 import { expect, type Page } from "@playwright/test";
 import { keyActivate, keyType } from "./quality-keyboard";
-import { observedResponse, RENDER_LEASE_MS } from "./observed-response";
+import { observedResponse } from "./observed-response";
 export async function completion(page: Page, quantities = true) {
   // A saved entry is followed by an authorised refresh. Use that new source
   // before assembling the next exact completion command.
@@ -199,7 +199,6 @@ export async function issue(page: Page) {
         exact: true,
       })
       .click(),
-    { timeout: RENDER_LEASE_MS },
   );
   expect(response.status(), await response.text()).toBe(200);
   expect(response.headers()["cache-control"]).toBe("private, no-store");
