@@ -1,4 +1,4 @@
-import { test, expect, type Response } from "@playwright/test";
+import { test, expect, type Page, type Request, type Response } from "@playwright/test";
 import { writeFile } from "node:fs/promises";
 import { financeHttpSource, httpFinanceDraft } from "../helpers/finance-http";
 import { call, identity, capture, recordBrowserReads } from "../helpers/quality-browser";
@@ -7,6 +7,51 @@ test.use({ actionTimeout: 15000, navigationTimeout: 60000 });
 let finishReadEvidence: (() => Promise<void>) | undefined;
 test.beforeEach(({ page }, info) => { finishReadEvidence = recordBrowserReads(page, info); });
 test.afterEach(async () => { await finishReadEvidence?.(); finishReadEvidence = undefined; });
+
+async function navigateSiteWithCompletedReads(
+  page: Page,
+  siteId: string,
+  navigate: () => Promise<unknown>,
+) {
+  // Site details mount history and owned activities after their own read.
+  // Require all three real bodies before asserting the settled screen. Keep
+  // navigation and the subsequent five-second UI assertion separate.
+  const required = new Set([
+    `/api/v1/sites/${siteId}`,
+    `/api/v1/sites/${siteId}/history`,
+    `/api/v1/activities?${new URLSearchParams({ object_type: "Site", object_id: siteId })}`,
+  ]);
+  const responses = new WeakMap<Request, { key: string; response: Response }>();
+  const completed = new Map<string, Response>();
+  const observeResponse = (response: Response) => {
+    const url = new URL(response.url());
+    const key = url.pathname + url.search;
+    if (url.origin === "http://127.0.0.1:3000" &&
+        response.request().method() === "GET" && required.has(key)) {
+      responses.set(response.request(), { key, response });
+    }
+  };
+  const observeFinished = (request: Request) => {
+    const observed = responses.get(request);
+    if (observed) completed.set(observed.key, observed.response);
+  };
+  page.on("response", observeResponse);
+  page.on("requestfinished", observeFinished);
+  try {
+    await navigate();
+    await expect.poll(() => completed.size, {
+      timeout: 15000,
+      message: "SC-03: site, attributed history and exact site-linked activities bodies complete",
+    }).toBe(required.size);
+    for (const [key, response] of completed) {
+      expect(response.status(), key).toBe(200);
+      expect(response.headers()["cache-control"], key).toBe("private, no-store");
+    }
+  } finally {
+    page.off("response", observeResponse);
+    page.off("requestfinished", observeFinished);
+  }
+}
 
 test("P11 PT-29 pack and report queues never turn failed reads into empty or issued claims", async ({
   page,
@@ -201,7 +246,9 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
           ? "?from=2026-09-20T14:00:00Z&to=2026-09-27T14:00:00Z&timezone=Australia%2FBrisbane"
           : "";
     const original = await call(page, s.api + query);
-    await page.goto(s.url);
+    if (s.id === "SC-03")
+      await navigateSiteWithCompletedReads(page, s.api.slice("sites/".length), () => page.goto(s.url));
+    else await page.goto(s.url);
     await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
     await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
     await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
@@ -269,7 +316,9 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
     ).toHaveCount(0);
     await capture(page, info, `${s.id}-failed`);
     await page.unroute(match);
-    await page.reload();
+    if (s.id === "SC-03")
+      await navigateSiteWithCompletedReads(page, s.api.slice("sites/".length), () => page.reload());
+    else await page.reload();
     await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
     await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
     if (s.id === "SC-14") {
