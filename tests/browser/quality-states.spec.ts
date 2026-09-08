@@ -1,4 +1,5 @@
 import { test, expect } from "../helpers/browser-lifecycle";
+import type { Request, Response } from "@playwright/test";
 import { writeFile } from "node:fs/promises";
 import { financeHttpSource, httpFinanceDraft } from "../helpers/finance-http";
 import { call, identity, capture } from "../helpers/quality-browser";
@@ -403,12 +404,37 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
       // Assert the screen's real server-derived Systems denial. Observing the
       // selected read avoids introducing a second auxiliary request beside the
       // UI request whose response and rendered error form this contract.
-      const deniedRead = page.waitForResponse((response) =>
-        new URL(response.url()).pathname === `/api/v1/${s.api}` &&
-        response.request().method() === "GET" &&
-        [403, 404].includes(response.status()));
-      await identity(page, "systems");
-      const denied = await deniedRead;
+      // Only requests started after the accepted identity change may satisfy it.
+      let identityAccepted = false;
+      const currentReads = new WeakSet<Request>();
+      const acceptedIdentity = (response: Response) => {
+        if (new URL(response.url()).pathname === "/api/v1/local-session" &&
+            response.request().method() === "POST" && response.status() === 200)
+          identityAccepted = true;
+      };
+      const currentRead = (request: Request) => {
+        if (identityAccepted && request.method() === "GET" &&
+            new URL(request.url()).pathname === `/api/v1/${s.api}`)
+          currentReads.add(request);
+      };
+      page.on("response", acceptedIdentity).on("request", currentRead);
+      let denied: Response;
+      try {
+        [denied] = await Promise.all([
+          page.waitForResponse(response => currentReads.has(response.request())),
+          identity(page, "systems"),
+        ]);
+      } finally {
+        page.off("response", acceptedIdentity).off("request", currentRead);
+      }
+      const deniedQuery = new URL(denied.url()).searchParams;
+      for (const [key, value] of new URLSearchParams(query)) {
+        const actual = deniedQuery.get(key);
+        expect(actual, `${s.id}: ${key}`).not.toBeNull();
+        if (key === "from" || key === "to")
+          expect(Date.parse(actual!), `${s.id}: ${key}`).toBe(Date.parse(value));
+        else expect(actual, `${s.id}: ${key}`).toBe(value);
+      }
       expect([403, 404], s.id).toContain(denied.status());
       expect(denied.headers()["cache-control"]).toBe("private, no-store");
       const deniedBody = await denied.json();
@@ -435,6 +461,8 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
         route: s.url,
         read: s.api,
         profile: s.profile,
+        denied_status: denied.status(),
+        denial_source: "Browser GET after accepted identity POST",
         states: [
           "loaded",
           "loading",
