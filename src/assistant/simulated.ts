@@ -25,9 +25,9 @@ export function parseSimulatedRequest(message: string): ParsedRequest {
     result.explanation = 'Choose the existing customer, then review the fields below. The simulation proposes only recognised title/requirement or labelled fields. Check the original request: names, source, owners, dates, values and other details are not inferred or silently saved. Nothing has been created.';
   } else if (/^(show|find|search)\b/i.test(text) && /\b(opportunities|deals)\b/i.test(text)) {
     result.kind = 'opportunities'; result.mine = /\bmy\b/i.test(text);
-    if (/next action|follow.up needed/i.test(text)) result.next_action = 'Needed';
+    if (/overdue/i.test(text)) result.next_action = 'Overdue';
     else if (/due date needed/i.test(text)) result.next_action = 'DueNeeded';
-    else if (/overdue/i.test(text)) result.next_action = 'Overdue';
+    else if (/next action needed|follow.up needed/i.test(text)) result.next_action = 'Needed';
     result.explanation = 'Showing the first permitted worklist page. The visible filters describe this simulation’s interpretation; this is not a search of every database field.';
   } else if (/^(find|search)\b/i.test(text)) {
     result.kind = 'customers';

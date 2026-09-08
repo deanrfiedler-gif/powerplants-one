@@ -18,6 +18,8 @@ test('AI1 labelled source and follow-up stay literal, without invented owners or
 test('AI1 supported worklist filters and customer search are bounded and visible',()=>{
   const p=parseSimulatedRequest('Show my opportunities with next action needed');
   assert.equal(p.kind,'opportunities');assert.equal(p.mine,true);assert.equal(p.next_action,'Needed');
+  assert.equal(parseSimulatedRequest('Show my opportunities with overdue next action').next_action,'Overdue');
+  assert.equal(parseSimulatedRequest('Show opportunities with next action due date needed').next_action,'DueNeeded');
   assert.equal(parseSimulatedRequest('Summarise the customer').kind,'summary');
   assert.equal(parseSimulatedRequest('Find customer SYN Growers').query,'SYN Growers');
   assert.equal(parseSimulatedRequest('Find '+ 'x'.repeat(300)).query.length,200);

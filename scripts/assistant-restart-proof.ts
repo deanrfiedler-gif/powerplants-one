@@ -40,7 +40,7 @@ try {
       await page.route(`**/assistant/proposals/${original.id}/confirm`,async route=>{const response=await route.fetch();assert.ok(response.ok(),await response.text());accepted=true;await route.abort('failed');});
       await page.getByRole('button',{name:'Retry original submission',exact:true}).click();
       await expect.poll(()=>accepted).toBe(true);
-      await expect(page.getByRole('alert')).toBeVisible();
+      await expect(page.locator('.assistant-conversation').getByRole('alert')).toBeVisible();
     } else {
       await expect(page.getByRole('heading',{name:'Assistant is switched off',exact:true})).toBeVisible();
       await expect(page.getByRole('heading',{name:'Opportunity saved',exact:true})).toBeVisible();
