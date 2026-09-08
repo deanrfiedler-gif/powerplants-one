@@ -1,0 +1,45 @@
+.assistant-screen { max-width: 1500px; margin: 0 auto; }
+.assistant-mode { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; padding:14px 20px; margin-bottom:24px; border:1px solid #bdcfbe; border-radius:8px; background:#edf5ea; font-size:14px; }
+.assistant-mode strong { display:flex; align-items:center; gap:9px; }
+.assistant-dot { width:8px; height:8px; flex:none; border-radius:50%; background:#356526; }
+.assistant-grid { display:grid; grid-template-columns:minmax(300px,400px) minmax(0,1fr); gap:24px; align-items:start; }
+.assistant-card { background:white; border:1px solid var(--line); border-radius:10px; padding:26px; min-width:0; }
+.assistant-conversation { position:sticky; top:20px; }
+.assistant-workspace { display:grid; gap:20px; min-width:0; }
+.assistant-screen fieldset { border:0; padding:0; margin:0; min-width:0; }
+.assistant-screen textarea { width:100%; font:inherit; line-height:1.5; resize:vertical; padding:12px; border:1px solid #9bafaf; border-radius:5px; }
+.assistant-screen textarea:focus-visible { outline:3px solid #bb771d; outline-offset:3px; }
+.assistant-screen .field { margin-bottom:18px; }
+.assistant-screen .field input,.assistant-screen .field select { margin-bottom:0; }
+.assistant-screen small { display:block; color:var(--muted); }
+.assistant-prompts { display:grid; gap:8px; margin:22px 0 28px; }
+.assistant-prompts button { text-align:left; justify-content:space-between; font-size:14px; font-weight:500; padding:12px 14px; gap:16px; }
+.assistant-request,.assistant-reply,.assistant-suggestion { margin:20px 0; padding:16px; border-radius:6px; background:var(--paper); overflow-wrap:anywhere; }
+.assistant-request p { white-space:pre-wrap; }
+.assistant-reply { border-left:3px solid var(--green); }
+.assistant-request p:last-child,.assistant-reply p:last-child,.assistant-suggestion p:last-child { margin-bottom:0; }
+.assistant-status { margin-top:18px; }
+.assistant-records,.assistant-facts { list-style:none; padding:0; margin:0 0 20px; }
+.assistant-records li { display:flex; justify-content:space-between; align-items:center; gap:18px; border-top:1px solid var(--line); padding:16px 0; overflow-wrap:anywhere; }
+.assistant-records li>div { min-width:0; }
+.assistant-records button { flex:none; }
+.assistant-records button[aria-pressed=true] { background:#edf5ea; border-color:#356526; }
+.assistant-facts li { padding:16px 0; border-bottom:1px solid var(--line); overflow-wrap:anywhere; }
+.assistant-facts a { font-weight:600; }
+.assistant-facts p { margin:6px 0; white-space:pre-wrap; }
+.assistant-welcome { min-height:450px; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; padding:48px; }
+.assistant-welcome-icon { width:54px; height:54px; background:#edf5ea; border-radius:12px; font-size:32px; text-align:center; margin-bottom:24px; }
+.assistant-welcome p { max-width:550px; color:var(--muted); }
+.assistant-steps { display:flex; gap:20px; flex-wrap:wrap; padding-top:24px; margin-top:12px; border-top:1px solid var(--line); font-size:13px; font-weight:600; }
+.assistant-actions { display:flex; gap:12px; flex-wrap:wrap; }
+.assistant-review-details { margin:20px 0; }
+.assistant-review-details>div { display:grid; grid-template-columns:160px minmax(0,1fr); gap:16px; padding:12px 0; border-bottom:1px solid var(--line); }
+.assistant-review-details dt { color:var(--muted); }
+.assistant-review-details dd { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; }
+.assistant-review>button,.assistant-review>p { margin-top:14px; margin-right:10px; }
+.assistant-recent { margin-top:24px; }
+.assistant-section-heading { display:flex; justify-content:space-between; align-items:center; gap:20px; }
+.assistant-section-heading h2 { margin-bottom:12px; }
+.assistant-screen code { overflow-wrap:anywhere; }
+@media(max-width:1100px) { .assistant-grid { grid-template-columns:1fr; } .assistant-conversation { position:static; } .assistant-welcome { min-height:300px; padding:28px; } }
+@media(max-width:600px) { .assistant-card { padding:18px; } .assistant-mode { padding:14px; } .assistant-records li,.assistant-section-heading { align-items:flex-start; flex-direction:column; gap:10px; } .assistant-review-details>div { grid-template-columns:1fr; gap:4px; } .assistant-screen button { max-width:100%; white-space:normal; } .assistant-screen .eyebrow { letter-spacing:1px; } }

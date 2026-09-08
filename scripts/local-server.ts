@@ -7,6 +7,8 @@ const { default: next } = await import("next");
 process.env.PPO_LOCAL_GATEWAY = randomBytes(32).toString("hex");
 const app = next({ dev: true, hostname: "127.0.0.1", port: config.port });
 await app.prepare();
+const { startAssistantRetention } = await import('../src/assistant/retention');
+const stopAssistantRetention = startAssistantRetention();
 const handler = app.getRequestHandler();
 const server = createServer((req, res) => {
   const peer = req.socket.remoteAddress;
@@ -53,6 +55,7 @@ server.listen(config.port, "127.0.0.1", () =>
 for (const signal of ["SIGTERM", "SIGINT"] as const)
   process.on(signal, () =>
     server.close(() => {
+      stopAssistantRetention();
       void app.close().then(() => process.exit(0));
     }),
   );

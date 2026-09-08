@@ -72,7 +72,7 @@ function SaveState({ command }: { command: ReturnType<typeof useCrmCommand> }) {
     </>
   );
 }
-function CrmPicker({
+export function CrmPicker({
   label,
   name,
   kind,

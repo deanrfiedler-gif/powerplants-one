@@ -1,0 +1,107 @@
+name: AI1 simulated assistant assurance
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+defaults:
+  run:
+    shell: bash
+jobs:
+  assistant:
+    name: AI1 PostgreSQL, HTTP, responsive journey and restart proof
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    services:
+      postgres:
+        image: postgres:16.15
+        env:
+          POSTGRES_USER: ppo_local
+          POSTGRES_PASSWORD: ppo_disposable_ci_only
+          POSTGRES_DB: ppo_synthetic_test
+        ports: [127.0.0.1:5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U ppo_local -d ppo_synthetic_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install repository pins
+        run: |
+          npm install --global npm@11.19.0
+          npm ci
+          npx playwright install --with-deps chromium
+          node --version
+          npm --version
+          npm ls --depth=0
+      - name: Static and unit checks
+        run: |
+          npm run lint
+          npm run typecheck
+          npm run test:unit
+      - name: Configure isolated synthetic database
+        run: |
+          cp .env.example .env.local
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('.env.local')
+          p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test').replace('PPO_ASSISTANT_MODE=off','PPO_ASSISTANT_MODE=simulated'))
+          PY
+          mkdir -p verification-evidence/ai1
+          git rev-parse HEAD > verification-evidence/ai1/executed-checkout.txt
+          git rev-parse HEAD^{tree} > verification-evidence/ai1/executed-tree.txt
+          npm run db:migrate
+          npm run db:seed
+      - name: PostgreSQL permission, atomicity, expiry, retention and recovery proof
+        run: node --env-file=.env.local --import tsx --test --test-reporter=tap --test-concurrency=1 --test-timeout=120000 tests/assistant/database.test.ts 2>&1 | tee verification-evidence/ai1/database.tap
+      - name: Retained canonical CRM database behaviour
+        run: node --env-file=.env.local --import tsx --test --test-reporter=tap --test-concurrency=1 --test-timeout=120000 tests/database/crm.test.ts tests/database/crm-i2.test.ts 2>&1 | tee verification-evidence/ai1/retained-crm.tap
+      - name: Original save through two PostgreSQL and three app/browser process starts
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+          node --env-file=.env.local --import tsx scripts/assistant-restart-proof.ts write
+          for phase in accept verify; do
+            docker restart "$PPO_POSTGRES_CONTAINER"
+            for attempt in $(seq 1 30); do
+              docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+              sleep 1
+            done
+            node --env-file=.env.local --import tsx scripts/assistant-restart-proof.ts "$phase"
+          done
+      - name: Actual HTTP route boundaries and recovery
+        run: |
+          node --env-file=.env.local --import tsx scripts/local-server.ts > "$RUNNER_TEMP/ppo-ai1-http.log" 2>&1 &
+          ppo_ai1_server_pid=$!
+          trap 'kill "$ppo_ai1_server_pid" 2>/dev/null || true; cp "$RUNNER_TEMP/ppo-ai1-http.log" verification-evidence/ai1/http-server.log' EXIT
+          ppo_ai1_ready=0
+          for attempt in $(seq 1 90); do
+            kill -0 "$ppo_ai1_server_pid" 2>/dev/null || exit 1
+            if curl --fail --silent http://127.0.0.1:3000/ > /dev/null; then ppo_ai1_ready=1; break; fi
+            sleep 1
+          done
+          test "$ppo_ai1_ready" = 1
+          node --env-file=.env.local --import tsx --test tests/assistant/http.test.ts 2>&1 | tee verification-evidence/ai1/http.tap
+      - name: Desktop and phone reviewed journey, lost response and identity change
+        run: npx playwright test --config playwright.assistant.config.ts --output verification-evidence/ai1/browser
+      - name: Build
+        run: npm run build
+      - name: Preserve synthetic evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: AI1-simulated-assistant-evidence
+          path: |
+            verification-evidence/ai1/
+            !**/trace.zip
+          retention-days: 14

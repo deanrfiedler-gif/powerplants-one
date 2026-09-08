@@ -81,6 +81,15 @@ function expected(o: { version: number }, value: number) {
       "This opportunity changed. Keep your proposal and compare the current saved version before trying again.",
     );
 }
+export async function validateOpportunityCreation(c: PoolClient, p: Principal, command: ReturnType<typeof parseCreate>) {
+  await relationshipContext(c, p, command, "crm.opportunity.create");
+  await eligibleOpportunityOwner(c, p, command);
+  const initial = actionInput(command, command.initial_action);
+  await authoriseActivityInput(c, p, {
+    ...initial,
+    links: initial.links.filter((l) => l.object_type !== "Opportunity"),
+  });
+}
 export async function createOpportunity(p: Principal, value: unknown) {
   const command = parseCreate(value);
   return sharedOperation(
@@ -88,14 +97,7 @@ export async function createOpportunity(p: Principal, value: unknown) {
     command,
     "CreateOpportunity",
     async (c) => {
-      await relationshipContext(c, p, command, "crm.opportunity.create");
-      await eligibleOpportunityOwner(c, p, command);
-      // The new target does not exist yet; validate its existing context first.
-      const initial = actionInput(command, command.initial_action);
-      await authoriseActivityInput(c, p, {
-        ...initial,
-        links: initial.links.filter((l) => l.object_type !== "Opportunity"),
-      });
+      await validateOpportunityCreation(c, p, command);
       const exists = (
         await c.query(
           "SELECT 1 FROM ppo.opportunities WHERE workspace_id=$1 AND id=$2",

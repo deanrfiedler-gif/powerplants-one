@@ -42,3 +42,7 @@ The [controlled opportunity handover proposal](crm-opportunity-handover.md) reco
 - [Accepted r08 shared layout and CRM implementation](shared-ui-r08-implementation.md) — Dean-approved presentation mapped to existing persisted I1/I2 contracts.
 
 - [Email & Calendar design direction](email-calendar-design.md) — user-authorised synthetic design; selected-message sharing and a proposed read-only Microsoft pilot under CRM-03/PAR-06.
+
+The [PPO Assistant direction and architecture decision](ppo-assistant-direction.md) records Dean's 8 September 2026 instruction to prepare the bounded customer CRM assistant specification. It brings AI design forward under D-027; provider-funded evaluation, implementation and operational authority remain separate. No numbered ADR or migration is reserved.
+
+The [AI1 implementation decision](assistant-ai1-implementation.md) records the newly authorised local simulated journey, canonical reviewed creation and durable actor-owned recovery; provider/account/budget selection remains separate.

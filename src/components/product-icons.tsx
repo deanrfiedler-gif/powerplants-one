@@ -1,4 +1,5 @@
 const paths = {
+  chat: "M3 4h18v13H9l-6 4z M7 9h10 M7 13h6",
   home: "m3 10 9-7 9 7v10H3z M9 20v-7h6v7",
   work: "M8 4H5v17h14V4h-3 M8 3h8v4H8z M8 12h8 M8 16h5",
   sales: "M3 7h18v14H3z M8 7V3h8v4 M3 12l9 4 9-4 M10 12h4",

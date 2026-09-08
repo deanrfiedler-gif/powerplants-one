@@ -7,7 +7,7 @@ import { database, transaction, closeDatabase } from "../src/platform/database";
 import { localConfig } from "../src/platform/config";
 const read = (name: string) =>
   readFile(new URL(`../db/${name}`, import.meta.url), "utf8");
-export async function migrate(through = 14) {
+export async function migrate(through = 16) {
   await transaction(async (client) => {
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     await client.query(
@@ -28,6 +28,9 @@ export async function migrate(through = 14) {
       "0012-estimating-e1.sql",
       "0013-p11-travel.sql",
       "0014-p11-travel-guard-repair.sql",
+      // 0015 is reserved by the independent Email & Calendar branch (#64).
+      // This additive table has no dependency on it; retain both on integration.
+      "0016-assistant-proposals.sql",
     ]) {
       const version = Number(file.slice(0, 4));
       if (version > through) break;

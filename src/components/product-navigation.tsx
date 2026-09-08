@@ -13,6 +13,7 @@ const service = [
 const customers = [["/customers", "Customers"], ["/sites", "Sites"], ["/equipment", "Equipment"]];
 const matches = (path: string, href: string) => path === href || (href !== "/" && path.startsWith(href + "/"));
 function moduleFor(path: string) {
+  if (matches(path, "/assistant")) return { name: "Assistant", tabs: [] };
   if (matches(path, "/service") || service.some(([href]) => matches(path, href))) return { name: "Service", tabs: service };
   if (customers.some(([href]) => matches(path, href))) return { name: "Customers", tabs: customers };
   if (path.startsWith("/crm/")) return { name: "CRM Sales", tabs: [] };
@@ -35,6 +36,7 @@ export function ProductNavigation() {
   const [expanded, setExpanded] = useState(false);
   const items: { label: string; icon: ProductIconName; href?: string; divider?: boolean }[] = [
     { label: "Overview", icon: "home", href: "/" }, { label: "My Work", icon: "work", href: "/work" },
+    { label: "Assistant", icon: "chat", href: "/assistant" },
     { label: "CRM Sales", icon: "sales", href: "/crm/opportunities", divider: true },
     { label: "Estimating", icon: "estimate", href: "/estimating" },
     { label: "Engineering", icon: "engineering" }, { label: "Projects", icon: "projects" },
