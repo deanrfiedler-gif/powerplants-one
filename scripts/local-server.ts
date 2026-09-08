@@ -1,9 +1,18 @@
 import { createServer } from "node:http";
 import { randomBytes } from "node:crypto";
+import { rm } from "node:fs/promises";
+import { join } from "node:path";
 import { localConfig } from "../src/platform/config";
 import { proofDiagnosticsEnabled, proofEvent, proofPath, proofRequest as withProofRequest } from "../src/platform/proof-diagnostics";
 import { runtimeSampler } from "../src/platform/proof-runtime";
 const config = localConfig(); // Refuse unsafe configuration before build work or Next initialisation.
+// Keep every process restart cold while allowing Turbopack to evict compiler
+// memory to disk during this process. This path contains only derived dev
+// compilation data; database records and retained evidence live elsewhere.
+await rm(join(process.cwd(), ".next", "dev", "cache", "turbopack"), {
+  recursive: true,
+  force: true,
+});
 await import("./build-offline");
 const { default: next } = await import("next");
 process.env.PPO_LOCAL_GATEWAY = randomBytes(32).toString("hex");

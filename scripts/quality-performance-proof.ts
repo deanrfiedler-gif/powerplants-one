@@ -543,7 +543,7 @@ try {
               "same disposable CI runner; loopback PostgreSQL 16.15",
           },
           build:
-            "Pinned Next.js guarded development server after successful production compilation check. Development compiler filesystem cache remains disabled. Production hosting/start remains prohibited.",
+            "Pinned Next.js guarded development server after successful production compilation check. The development compiler cache is cleared at every server start; filesystem snapshots within that process allow automatic compiler memory eviction. Production hosting/start remains prohibited.",
           concurrency:
             "10 independent Chromium browser processes (one per virtual user, each with its own network service and DevTools sessions), each opening a fresh context and server-issued session per view wave; role-appropriate existing synthetic Coordinator or assigned Technician identity. These are 10 virtual users, not 10 distinct staff identities.",
           cold_warm:
