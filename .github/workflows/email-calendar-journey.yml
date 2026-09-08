@@ -53,6 +53,8 @@ jobs:
           p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
           PYENV
           node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/email-calendar.test.ts
+      - name: Retained upgrade paths reach schema 15 without rewriting originals
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern=upgrade tests/database/planner.test.ts tests/database/packs.test.ts tests/database/field.test.ts tests/database/offline.test.ts tests/database/finance-upgrade.test.ts
       - name: Retain follow-up through PostgreSQL and process restart
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}

@@ -14,7 +14,14 @@ Start with `npm run dev`, choose Coordinator, and open Email & Calendar. Open a 
 
 ## Verification
 
-TypeScript and focused lint were checked locally. PostgreSQL, restart, actual route and desktop/mobile journey checks are defined in `.github/workflows/email-calendar-journey.yml`; execution results are pending. The workflow retains screenshots and restart evidence, uses a disposable PostgreSQL service, and exercises duplicate retries, changed payloads, rollback and permission revocation. No local browser pass is claimed.
+The [dedicated assurance run at implementation commit `8898439`](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34188501282) passed pinned-runtime lint/type checks, 20 unit checks, four PostgreSQL cases, the database/process restart proof and four desktop/mobile browser cases. The browser cases exercised both the working journey and the unchanged exported r02 HTML demo: calendar navigation, event details, mobile sheets, narrow layouts, a lost accepted response, reload and denied identity. Browser test selectors were corrected to use the CRM envelope, distinguish command errors from the Next route announcer, and use the mobile week strip. The opportunity selector's accessible label was corrected in the application.
+
+Screenshots and restart evidence are retained in the run's Email-Calendar-journey-evidence artifact. The current scratch environment could not download that archive (HTTP 403); automated geometry/interaction checks and Dean's separate visual acceptance are the evidence, not an additional manual screenshot inspection.
+
+PR #62 was merged as `b489a8c` after its documentation/29 model checks, Dean's acceptance and the subsequent static-demo browser proof. Its broader retained application run had one timeout on an unchanged mobile service-report presentation button (111/112 browser cases passed); all other stages passed and that job was rerun. No full-application green result is claimed for that run.
+
+The implementation is published in [PR #64](https://github.com/deanrfiedler-gif/powerplants-one/pull/64), branch `feature/email-calendar-journey`. Five existing upgrade assertions now explicitly include migration 0015; a focused check reruns those upgrade paths without changing their original-row/checksum assertions. The broader application suite remains a separate pre-merge result. The PR check list is the current execution record; this document's proof link identifies the tested implementation rather than asserting a future run passed.
+
 
 ## Limits
 

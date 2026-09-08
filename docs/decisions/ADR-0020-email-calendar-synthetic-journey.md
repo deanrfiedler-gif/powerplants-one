@@ -1,6 +1,6 @@
 # ADR-0020 — Persisted synthetic Email & Calendar journey
 
-**Date:** 8 September 2026 · **State:** implementation authorised by Dean; verification in progress.
+**Date:** 8 September 2026 · **State:** implementation authorised by Dean; dedicated journey verification passed, final upgrade/application assurance tracked in PR #64.
 
 Dean accepted the r02 demo on desktop and mobile and authorised completing PR #62 and the first working email → explicit opportunity link → internal follow-up journey. His acceptance is distinct from automated browser verification.
 

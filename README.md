@@ -26,6 +26,7 @@ This repository is Dean's personal private prototype. It contains the planning f
 | [First-release plan](docs/delivery/first-release.md) | Proposed planned-service journey, dependencies and readiness criteria |
 | [Projects discovery and design](docs/delivery/projects-discovery-handover.md) | BP-06 source assessment, first-increment contract and project list/detail designs; J1 prepared only |
 | [Email & Calendar design](docs/blueprints/email-calendar-integration.md) | Synthetic inbox, record linking, privacy, agenda and first read-only Microsoft pilot preparation |
+| [Working Email & Calendar journey](docs/delivery/email-calendar-journey-handover.md) | Private fictional email, explicit opportunity link, persisted internal follow-up and calendar; PR #64 |
 | [Contributing](CONTRIBUTING.md) | Branches, pull requests, validation and evidence |
 
 ## Product direction
