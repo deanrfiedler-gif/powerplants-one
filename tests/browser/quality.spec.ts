@@ -107,6 +107,16 @@ test("P11 PT-01/29 scoped recovery UI preserves originals and retries one uncert
   if (info.project.use.isMobile) await page.getByRole("button", { name: "Menu", exact: true }).press("Enter");
   await page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "Main navigation", exact: true }).getByRole("link", { name: "Exceptions and recovery", exact: true }).press("Enter");
   await expect(page).toHaveURL(/\/admin$/);
+  if (info.project.use.isMobile) {
+    const viewport = page.viewportSize()!;
+    await page.setViewportSize({ width: 320, height: viewport.height });
+    const heading = await page.locator(".topbar .product-heading").boundingBox();
+    const identityButton = await page.getByRole("button", { name: "Change identity", exact: true }).boundingBox();
+    expect(heading).not.toBeNull(); expect(identityButton).not.toBeNull();
+    expect(heading!.x + heading!.width).toBeLessThanOrEqual(identityButton!.x);
+    await capture(page, info, "recovery-header-320");
+    await page.setViewportSize(viewport);
+  }
   await expect(page.locator(`a[href='/admin/recovery/${saved.case_id}']`)).toBeVisible();
   await capture(page, info, "recovery-loaded");
   await page.locator(`a[href='/admin/recovery/${saved.case_id}']`).click();

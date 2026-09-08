@@ -47,7 +47,7 @@
   .mobile-navigation [aria-current=page] { background:#343c4c; box-shadow:inset 0 3px var(--green); }
   .topbar,body:has(.crm-workspace) .topbar { min-height:48px; padding:10px 12px; }
   .topbar { position:relative; justify-content:flex-start; gap:16px; }
-  .product-heading { font-size:16px; display:block; align-self:flex-start; margin-top:5px; }
+  .product-heading { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; font-size:16px; display:block; align-self:flex-start; margin-top:5px; }
   .topbar .prototype-label { display:block; position:absolute; left:72px; top:39px; font-size:10px; line-height:15px; }
   .mobile-brand { display:flex; align-items:center; justify-content:center; min-width:44px; min-height:44px; background:var(--navy); border-radius:6px; }
   .mobile-brand .brand-logo { display:block; width:36px; height:36px; object-fit:contain; max-width:none; }
