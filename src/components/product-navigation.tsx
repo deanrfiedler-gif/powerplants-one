@@ -13,13 +13,15 @@ const service = [
 const customers = [["/customers", "Customers"], ["/sites", "Sites"], ["/equipment", "Equipment"]];
 const matches = (path: string, href: string) => path === href || (href !== "/" && path.startsWith(href + "/"));
 function moduleFor(path: string) {
-  if (service.some(([href]) => matches(path, href))) return { name: "Service", tabs: service };
+  if (matches(path, "/service") || service.some(([href]) => matches(path, href))) return { name: "Service", tabs: service };
   if (customers.some(([href]) => matches(path, href))) return { name: "Customers", tabs: customers };
   if (path.startsWith("/crm/")) return { name: "CRM Sales", tabs: [] };
   if (matches(path, "/estimating")) return { name: "Estimating", tabs: [] };
   if (matches(path, "/finance")) return { name: "Finance", tabs: [] };
   if (matches(path, "/people")) return { name: "Contacts", tabs: [] };
   if (matches(path, "/work")) return { name: "My Work", tabs: [] };
+  if (matches(path, "/admin")) return { name: "Exceptions and recovery", tabs: [] };
+  if (matches(path, "/documents")) return { name: "Documents", tabs: [] };
   return { name: path === "/" ? "Overview" : "Foundation checks", tabs: [] };
 }
 const subscribe = (changed: () => void) => {
@@ -40,6 +42,7 @@ export function ProductNavigation() {
     { label: "Finance", icon: "finance", href: "/finance/handoffs" },
     { label: "Customers", icon: "customers", href: "/customers", divider: true },
     { label: "Contacts", icon: "person", href: "/people" },
+    { label: "Exceptions and recovery", icon: "warning", href: "/admin" },
     { label: "Foundation checks", icon: "settings", href: "/foundation" },
   ];
   return <aside className="sidebar" onKeyDown={(e) => { if (e.key === "Escape" && expanded) { setExpanded(false); document.getElementById("navigation-toggle")?.focus(); } }}>
@@ -61,6 +64,6 @@ export function ProductHeader() {
   const path = usePathname(), current = moduleFor(path);
   return <>
     <header className="topbar"><div className="product-heading"><span>Powerplants One</span><span aria-hidden="true">/</span><strong>{current.name}</strong></div><span className="prototype-label">Synthetic data only</span></header>
-    {!!current.tabs.length && <nav className="module-navigation" aria-label={`${current.name} navigation`}>{current.tabs.map(([href, label]) => <Link key={href} href={href} aria-current={matches(path, href) ? "page" : undefined}>{label}</Link>)}</nav>}
+    {!!current.tabs.length && <nav className="module-navigation" aria-label={`${current.name} navigation`}>{current.tabs.map(([href, label]) => <Link key={href} href={href} aria-current={matches(path, href) || (href === "/schedule" && matches(path, "/service/appointments")) ? "page" : undefined}>{label}</Link>)}</nav>}
   </>;
 }

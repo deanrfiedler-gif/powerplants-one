@@ -10,6 +10,7 @@ import {
   PageHeader,
   ReadState,
   SelectField,
+  ValidationFields,
   useCommand,
   useResource,
   type Envelope,
@@ -103,6 +104,7 @@ export function SharedCreateForm({
     <Field
       key={key}
       name={"shared-" + key}
+      validationField={key === "name" ? (kind === "asset" ? "description" : "display_name") : key}
       label={label}
       value={v[key] ?? ""}
       onChange={(value) => set(key, value)}
@@ -121,6 +123,7 @@ export function SharedCreateForm({
     <SelectField
       key={key}
       name={"shared-" + key}
+      validationField={key === "company" ? (kind === "person" ? "company_ids" : "company_id") : key === "owner" ? "owner_id" : key}
       label={label}
       value={v[key] ?? ""}
       onChange={(value) => set(key, value)}
@@ -253,7 +256,7 @@ export function SharedCreateForm({
     history: "Record attributed technical context",
   };
   return (
-    <>
+    <ValidationFields error={cmd.error}>
       <Link href="/customers">← Customer context</Link>
       <PageHeader
         eyebrow="Synthetic context / Record capture"
@@ -264,8 +267,10 @@ export function SharedCreateForm({
         work authority or verified source evidence is created.
       </p>
       <ErrorNotice error={cmd.error} />
+      {["customer", "person", "site", "asset"].includes(kind) && <ReadState loading={companies.loading} error={companies.error} retry={companies.reload} />}
+      {["customer", "site"].includes(kind) && v.company && <ReadState loading={owners.loading} error={owners.error} retry={owners.reload} />}
       <form className="form-panel" onSubmit={submit}>
-        <fieldset disabled={cmd.busy}>
+        <fieldset disabled={cmd.busy || (["customer", "person", "site", "asset"].includes(kind) && companies.loading) || (["customer", "site"].includes(kind) && !!v.company && owners.loading)}>
           <div className="form-grid">
             {["customer", "person", "site", "asset"].includes(kind) &&
               select(
@@ -537,6 +542,6 @@ export function SharedCreateForm({
           </p>
         </section>
       )}
-    </>
+    </ValidationFields>
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ProductHeader, ProductNavigation } from "../components/product-navigation";
+import { SessionViewBoundary } from "../components/session-view-boundary";
 import "./globals.css";
 import "./shared-layout.css";
 export const metadata: Metadata = {
@@ -23,7 +24,7 @@ export default function RootLayout({
           <div className="workspace">
             <ProductHeader />
             <main id="main" tabIndex={-1}>
-              {children}
+              <SessionViewBoundary>{children}</SessionViewBoundary>
             </main>
 
           </div>

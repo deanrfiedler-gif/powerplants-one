@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import type { DraftCommand, Receipt, TicketView } from "../../service/tickets";
+import { lockOtherBusinessViews } from "../../components/session-signal";
+import { lockLocal } from "../../offline/store";
 const ticketId = "40000000-0000-4000-8000-000000000001";
 type ApiFailure = {
   code: string;
@@ -8,6 +10,12 @@ type ApiFailure = {
   field_errors?: { field: string; message: string }[];
 };
 async function api<T>(path: string, body?: unknown): Promise<T> {
+  const changingIdentity = path === "local-session" && !!body;
+  if (changingIdentity) {
+    lockOtherBusinessViews();
+    if (localStorage.getItem("ppo-offline-marker")) await lockLocal();
+  }
+  try {
   const response = await fetch(`/api/v1/${path}`, {
     method: body ? "POST" : "GET",
     headers: body ? { "Content-Type": "application/json" } : undefined,
@@ -17,6 +25,9 @@ async function api<T>(path: string, body?: unknown): Promise<T> {
   const value = await response.json();
   if (!response.ok) throw value;
   return value as T;
+  } finally {
+    if (changingIdentity) lockOtherBusinessViews();
+  }
 }
 export function FoundationPanel() {
   const [profile, setProfile] = useState("coordinator"),

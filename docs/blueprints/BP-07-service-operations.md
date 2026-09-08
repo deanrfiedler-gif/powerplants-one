@@ -1,6 +1,6 @@
 # BP-07 — Service Operations Functional & Build Blueprint
 
-**Edition:** r08 · **Date:** 5 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
+**Edition:** r09 · **Date:** 7 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
 
 **Status:** Functional specification with the bounded P03–P05 SC-01–SC-05/SC-07/SC-08 implementation amendments below. Later workflows and full acceptance remain incomplete. [Package](../prototype/README.md) · [Dictionary](../contracts/service-data-dictionary.md) · [API](../contracts/service-api.md) · [Acceptance](../testing/prototype-acceptance.md).
 
@@ -31,6 +31,8 @@ Intake permits owned explicit unknowns and New/NeedsInformation draft editing. T
 API-C24 exposes active activity creation/update, Open → InProgress, and owner-only completion/cancellation with outcome/reason. Links are limited to implemented Organisation/Site/Asset/Ticket targets and independently checked on every read. CustomerContact is a task record, not delivery/acknowledgement evidence. Appointment-dependent ContactOutcome, work-order creation/linking, later ticket states, approved scope, issued reports and future appointments remain deferred. Broader SC-04/PT-25 references below do not expand the ordered P03 boundary. Full procedures remain Not run.
 
 ## 1. Functional objective
+
+P11 checkpoint: SC-15 now has a bounded `/admin` navigation and existing-owner recovery review surface, with `/admin/recovery/:id` for original evidence and the existing P08 RetainedForReview/ClarificationRequired command. It adds no configuration publication, generic audit access, permission or Finance approval. CMP-11 matched field errors link to actual controls; bounded read windows are labelled explicitly. [P11 handover](../delivery/p11-handover.md) records remaining integration/access/output/state/load obligations and actual evidence; full P11/PP-01 is incomplete.
 
 A coordinator should be able to establish what a customer needs, authorise a clear scope, prepare the technician, reserve suitable attendance, handle changes and close the work with useful evidence. A technician should have a concise view of what to do, where, for whom, with what prerequisites, and what is already known. Finance receives reviewed quantities and exact evidence with a traceable outcome.
 
@@ -323,3 +325,10 @@ PT-11/PT-12/PT-24/PT-28 coverage is component evidence unless every written proc
 ## P10 Finance dependency amendment
 
 P10 adds SC-12/SC-13 and API-C19–22/TR-14 under separate Finance capabilities, as specified by the [Finance amendment](../contracts/finance-handoff.md#p10-physical-implementation-amendment). Service supplies exact Approved report review/entry references; original field Draft flags, accepted attendance, report issues/responses and remaining work stay intact. Accepted Partial/UnableToProceed with Incomplete declarations is not Finance ready. Physical work orders may remain Authorised; appointment Completed does not close work/ticket or approve billing. Exact handoff allocation, processing, unknown outcome and reconciliation stay separate. Actual full PT/component evidence and publication are in the [P10 handover](../delivery/p10-handover.md).
+
+
+## P11 integrated quality and access amendment
+
+The [P11 handover](../delivery/p11-handover.md) records the integrated Service/Finance journey, actual component results and full-procedure limits. Current granted records and original receipts/files remain server-scoped; UI identity changes clear old context, failures retain recoverable input without false current status, and dashboard counts describe only their current permitted page/filter. The planner retains controlled whole-crew reservations and original source/version checks while batching its read projection. Assigned crew can read permitted original/corrected evidence without inventing personal attendance.
+
+Exact reviewed report content and its customer response remain separate from billing or whole-project acceptance. ADR-0018 retains separate whole-minute Travel as entirely NonBillable/no-posting; Labour F-06 and unsupported time-kind/fractional-minute guards remain. New branded template versions preserve every original byte and source identity. PT-30 depends on P12, and timing/device/screen-reader evidence has explicit limits. No closure, operational billing, customer distribution or parallel CRM/estimating/portal implementation is added by P11.

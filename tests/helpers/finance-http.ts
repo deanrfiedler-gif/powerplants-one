@@ -88,8 +88,18 @@ export async function httpFinanceDraft(
     r = data.items.find((r: { id: string }) => r.id === source.report_id),
     s = r.source;
   if (!r.ready) throw Error(JSON.stringify(r));
-  const t = s.entries.find((e: { uom: string }) => e.uom === "MIN"),
-    m = s.entries.find((e: { uom: string }) => e.uom === "EA");
+  // This retained F-06 helper requires its original Labour/material fixture.
+  // A later P11 source may also contain MIN Travel; unit alone is not a basis.
+  const t = s.entries.find(
+      (e: { uom: string; direction: string }) =>
+        e.uom === "MIN" && e.direction === "Labour",
+    ),
+    m = s.entries.find(
+      (e: { uom: string; direction: string }) =>
+        e.uom === "EA" && e.direction === "Consumed",
+    );
+  if (s.entries.length !== 2 || t?.quantity !== "90" || m?.quantity !== "2")
+    throw Error("F-06 requires the exact 90 MIN Labour and 2 EA consumed source; other quantities or Travel need their own explicit treatment.");
   return {
     ...base(),
     id: randomUUID(),

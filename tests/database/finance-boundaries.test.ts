@@ -1,3 +1,4 @@
+import type { SourceEntry } from "../../src/finance/context";
 import assert from "node:assert/strict";
 import { test, beforeEach, after } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -185,8 +186,15 @@ for (const kind of ["Travel", "Break", "Waiting", "Other"])
       source = (
         await financeSources(p, q.report.revisions[0].snapshot.work.id)
       ).items.find((s) => s.id === q.report.id)!;
-    assert.equal(source.ready, false);
-    assert.match("blocker" in source ? source.blocker : "", /Labour only/);
+    if (kind === "Travel") {
+      // ADR-0018 supersedes only the unsupported-treatment refusal. Keep the
+      // original category, exact seconds and immutable Draft evidence assertion.
+      assert.equal(source.ready, true);
+      assert.equal("source" in source && source.source?.entries.find((e: SourceEntry) => e.uom === "MIN")?.direction, "Travel");
+    } else {
+      assert.equal(source.ready, false);
+      assert.match("blocker" in source ? source.blocker : "", /Labour only/);
+    }
     const original = (
       await rows(
         "SELECT payload->>'time_kind' kind, payload->>'elapsed_seconds' seconds, review_status FROM ppo.field_entries WHERE kind='Time'",

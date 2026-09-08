@@ -622,11 +622,17 @@ test("CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and 
   const links = await rows("SELECT * FROM ppo.activity_links ORDER BY activity_id,object_type,object_id");
   await migrate();
   await seed();
-  for (let n = 0; n < tables.length; n++)
-    assert.deepEqual(
-      await rows(`SELECT * FROM ppo.${tables[n]} ORDER BY 1`),
-      before[n],
-    );
+  for (let n = 0; n < tables.length; n++) {
+    const current = await rows(`SELECT * FROM ppo.${tables[n]} ORDER BY 1`);
+    if (tables[n] === "report_templates") {
+      // P11 adds a separately identified immutable template; every original
+      // definition remains exact. Existing issued/response bytes below remain.
+      assert.deepEqual(current.filter(x => x.version === 1), before[n]);
+      assert.deepEqual(current.map(x => x.version).sort(), [1, 2]);
+    } else if (tables[n] === "report_template_policy") {
+      assert.deepEqual(before[n].map(x => ({ ...x, version: x.version + 1, template_id: "e1000000-0000-4000-8000-000000000002" })), current);
+    } else assert.deepEqual(current, before[n]);
+  }
   assert.deepEqual(
     await rows(
       "SELECT * FROM public.ppo_migrations WHERE version<=9 ORDER BY version",

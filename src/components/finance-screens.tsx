@@ -2,7 +2,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { api, ErrorNotice, useResource, type Failure } from "./business-ui";
+import {
+  api,
+  ErrorNotice,
+  ReadState,
+  isDenied,
+  useResource,
+  type Failure,
+} from "./business-ui";
 import { useIdentity } from "./business-session";
 import type {
   financeOptions,
@@ -122,6 +129,7 @@ function useCommand(done: (receipt?: CommandReceipt) => void) {
     setPending(item);
     setBusy(true);
     setError(null);
+    setReceipt(null);
     try {
       const r = await api<CommandReceipt>(path, item.body);
       setPending(null);
@@ -234,12 +242,53 @@ export function FinanceQueue() {
       </div>
       <ErrorNotice error={q.error} />
       {q.loading && <p role="status">Loading permitted Finance work…</p>}
-      {q.data && (
+      {q.data && !q.loading && !q.error && (
         <>
           <div className={styles.notice}>
             Owned Finance work · dates shown in UTC · due and overdue policy not
             defined · customer distribution disabled
           </div>
+          <aside
+            className={styles.notice}
+            aria-label="Finance counts on this page"
+          >
+            <h2>Current page summary</h2>
+            <p>
+              {q.data.items.length} permitted handoffs on this page. Counts
+              below use the selected state filter and exclude later pages.
+            </p>
+            <dl>
+              <dt>Ready for review</dt>
+              <dd>
+                {
+                  q.data.items.filter((r) => r.status === "ReadyForReview")
+                    .length
+                }{" "}
+                / {q.data.items.length}
+              </dd>
+              <dt>Outcome unknown</dt>
+              <dd>
+                {
+                  q.data.items.filter((r) => r.status === "OutcomeUnknown")
+                    .length
+                }{" "}
+                / {q.data.items.length}
+              </dd>
+              <dt>Reconciliation required</dt>
+              <dd>
+                {
+                  q.data.items.filter(
+                    (r) => r.status === "ReconciliationRequired",
+                  ).length
+                }{" "}
+                / {q.data.items.length}
+              </dd>
+            </dl>
+            <p>
+              These are handoff counts. They do not calculate balances, costs,
+              utilisation or overdue work.
+            </p>
+          </aside>
           {q.data.items.length === 0 ? (
             <div className={styles.empty}>
               <h2>No Finance handoffs</h2>
@@ -437,6 +486,7 @@ export function FinanceForm({
       body,
     );
   }
+  if (isDenied(cmd.error)) return <ErrorNotice error={cmd.error} />;
   return (
     <Frame
       title={id ? "Revise Finance handoff" : "Prepare Finance handoff"}
@@ -573,6 +623,13 @@ export function FinanceForm({
                       Captured / reviewed: {e?.quantity ?? "Unknown"} {e?.uom}
                     </span>
                   </div>
+                  {e?.direction === "Travel" && (
+                    <p>
+                      Travel stays separate from Labour. Select NonBillable and
+                      explain the no-posting disposition. This does not define
+                      staff pay or cost.
+                    </p>
+                  )}
                   <div className={styles.grid}>
                     <label>
                       Allocated quantity
@@ -599,13 +656,16 @@ export function FinanceForm({
                           })
                         }
                       >
-                        {[
-                          "Pending",
-                          "Billable",
-                          "NonBillable",
-                          "WarrantyReview",
-                          "GoodwillReview",
-                        ].map((v) => (
+                        {(e?.direction === "Travel"
+                          ? ["Pending", "NonBillable"]
+                          : [
+                              "Pending",
+                              "Billable",
+                              "NonBillable",
+                              "WarrantyReview",
+                              "GoodwillReview",
+                            ]
+                        ).map((v) => (
                           <option key={v}>{v}</option>
                         ))}
                       </select>
@@ -721,7 +781,8 @@ export function FinanceDetail({ id }: { id: string }) {
     cmd = useCommand(r.reload),
     d = r.data,
     h = d?.handoff,
-    locked = cmd.busy || !!cmd.pending || r.loading;
+    locked = cmd.busy || !!cmd.pending || r.loading || !!r.error;
+  if (isDenied(cmd.error)) return <ErrorNotice error={cmd.error} />;
   if (editing && d)
     return (
       <>
@@ -756,9 +817,13 @@ export function FinanceDetail({ id }: { id: string }) {
       subtitle="Original sources, approvals, operations and outcomes remain distinct and auditable."
     >
       <Link href="/finance/handoffs">← Finance queue</Link>
-      <ErrorNotice error={r.error} />
+      <ReadState
+        loading={r.loading}
+        error={r.error}
+        retry={r.reload}
+        retained={!!r.data}
+      />
       {cmd.notice}
-      {r.loading && <p role="status">Loading exact Finance evidence…</p>}
       {d && h && (
         <>
           <div className={styles.row}>
@@ -1150,6 +1215,7 @@ export function AccountScreen({
     [invoiceOnly, setInvoiceOnly] = useState(false),
     cmd = useCommand(r.reload),
     d = r.data;
+  if (isDenied(cmd.error)) return <ErrorNotice error={cmd.error} />;
   return (
     <Frame
       title="Customer account observations"

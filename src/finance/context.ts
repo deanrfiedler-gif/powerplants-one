@@ -130,6 +130,13 @@ export type SourceRef = {
   review_id: string;
   issue_id: string;
 };
+// ADR-0018: this exact synthetic treatment grants no billing or payroll policy.
+export const travelBasis = {
+  duration: "WholeMinutes",
+  uom: "MIN",
+  disposition: "NonBillable",
+  posting: "Prohibited",
+} as const;
 export type SourceEntry = {
   id: string;
   version: number;
@@ -137,7 +144,7 @@ export type SourceEntry = {
   report_revision_id: string;
   quantity: string;
   uom: string;
-  direction: "Labour" | "Consumed" | "Returned";
+  direction: "Labour" | "Travel" | "Consumed" | "Returned";
   source_entry_hash: string;
   description: string;
 };
@@ -312,10 +319,15 @@ export async function exactSource(
       );
     let q: string, uom: string, direction: SourceEntry["direction"];
     if (e.kind === "Time") {
-      if (e.payload.time_kind !== "Labour")
+      const travel = e.payload.time_kind === "Travel";
+      const approvedTravel =
+        travel &&
+        hash((await definition(c, p)).definition.quantity.travel ?? null) ===
+          hash(travelBasis);
+      if (e.payload.time_kind !== "Labour" && !approvedTravel)
         blocked(
           "UnsupportedTimeBasis",
-          "This minimum fixture defines Labour only. Retain Travel, Break, Waiting or Other as captured; no financial treatment or reclassification is defined.",
+          "The current definition supports Labour only unless the exact P11 non-billable Travel treatment is active. Break, Waiting and Other remain blocked without reclassification.",
         );
       if (e.payload.elapsed_seconds % 60 !== 0)
         blocked(
@@ -324,7 +336,7 @@ export async function exactSource(
         );
       q = String(e.payload.elapsed_seconds / 60);
       uom = "MIN";
-      direction = "Labour";
+      direction = travel ? "Travel" : "Labour";
     } else {
       if (!["Consumed", "Returned"].includes(e.payload.movement_kind))
         blocked(

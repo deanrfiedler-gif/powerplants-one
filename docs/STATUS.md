@@ -1,8 +1,12 @@
 # Current prototype status
 
+
+P11 continuation, 7 September: Dean approved separately recorded whole-minute Travel as explicitly NonBillable/no-posting for the selected synthetic journey. ADR-0018 and migration/seed 0013 implement the bounded successor; the P11 handover and authoritative external record govern exact verification and delivery completion. P12 remains preparation only.
 **Updated:** 7 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P09/P10, CRM I1–I2 and estimating E1 bounded implementations; exact verification/publication governed by their handovers and external records. PP-01 remains incomplete.
 
 ## Current direction
+
+P11 is implemented under [issue #54](https://github.com/deanrfiedler-gif/powerplants-one/issues/54) / [PR #57](https://github.com/deanrfiedler-gif/powerplants-one/pull/57), preserving verified P10 and later accepted main. The [P11 handover](delivery/p11-handover.md) and [authoritative publication](https://github.com/deanrfiedler-gif/powerplants-one/issues/54#issuecomment-5567364667) establish exact final-head/actual-main checks, original evidence and completion. Implemented work includes current-grant review/receipt/file isolation, scoped activity pages/counts, planner query batching, identity/input/offline recovery, honest state handling, complete selected synthetic UI journeys and immutable branded v2 outputs. ADR-0018 keeps whole-minute Travel entirely NonBillable/no-posting; Labour F-06 remains unchanged. Recorded intermediate evidence includes eleven DB cases, two desktop/phone journeys, twelve state/identity cases and one HTTP component passed; all 320 load reads passed on named sources with unresolved variability and all candidate p95 groups missed. Final full regression is a separate mandatory publication gate. Prior full PT statuses remain; no PT-30/P12, screen-reader, real-device, independent review, owner acceptance or production claim follows from these components. [P12 starter](delivery/p12-starter-prompt.md) requires completed verified P11 publication and separate invocation.
 
 Dean chose to create his own private prototype and authorised the repository foundation, then explicitly requested the First Prototype Definition & Architecture package: scoped service journey, BP-02, BP-07, minimum Finance/document contracts and an ordered implementation plan.
 
