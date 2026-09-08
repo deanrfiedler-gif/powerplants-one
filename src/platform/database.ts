@@ -2,6 +2,9 @@ import pg, { type PoolClient } from "pg";
 import { localConfig } from "./config";
 import { proofReadPhase } from "./proof-diagnostics";
 let pool: pg.Pool | undefined;
+export function proofDatabaseState() {
+  return { pool_total: pool?.totalCount ?? 0, pool_idle: pool?.idleCount ?? 0, pool_waiting: pool?.waitingCount ?? 0 };
+}
 export function database() {
   const config = localConfig();
   if (pool) return pool;
@@ -25,9 +28,9 @@ export function database() {
 export async function transaction<T>(
   work: (client: PoolClient) => Promise<T>,
 ): Promise<T> {
-  proofReadPhase("database-acquire-start");
+  proofReadPhase("database-acquire-start", proofDatabaseState());
   const client = await database().connect();
-  proofReadPhase("database-acquired");
+  proofReadPhase("database-acquired", proofDatabaseState());
   try {
     await client.query("BEGIN");
     proofReadPhase("database-work-start");
@@ -42,7 +45,7 @@ export async function transaction<T>(
     throw error;
   } finally {
     client.release();
-    proofReadPhase("database-released");
+    proofReadPhase("database-released", proofDatabaseState());
   }
 }
 export async function closeDatabase() {

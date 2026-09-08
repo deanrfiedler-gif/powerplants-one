@@ -9,6 +9,7 @@ import {
 import type { Principal } from "../platform/identity";
 import type { OperationReceipt } from "../platform/operations";
 import { proofReadPhase, proofReadRequest } from "../platform/proof-diagnostics";
+import { proofDatabaseState } from "../platform/database";
 export type RouteContext = { params: Promise<{ id?: string }> };
 export function readRoute(
   work: (
@@ -21,7 +22,7 @@ export function readRoute(
     try {
       proofReadPhase("route-entered");
       localRequest(request);
-      proofReadPhase("identity-start");
+      proofReadPhase("identity-start", proofDatabaseState());
       const p = await identity(request),
         params = (await context.params) ?? {};
       proofReadPhase("service-start");

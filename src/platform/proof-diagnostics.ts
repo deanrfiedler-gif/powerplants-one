@@ -18,20 +18,46 @@ const diagnosticGlobal = globalThis as typeof globalThis & {
 };
 const scope = diagnosticGlobal[scopeKey] ??= new AsyncLocalStorage<ProofRequest>();
 let routeId = 0;
+const tracedRead = (path: string) => /^\/api\/v1\/(?:(?:reports|my-jobs)\/:id|schedule|sites)$/.test(path);
 export const proofDiagnosticsEnabled = () => enabled;
 export function proofRequest<T>(request: ProofRequest, work: () => T): T {
   return enabled ? scope.run(request, work) : work();
 }
 export function proofReadRequest<T>(path: string, work: () => T): T {
   const safePath = proofPath(path);
-  if (!enabled || !/^\/api\/v1\/(reports|my-jobs)\/:id$/.test(safePath)) return work();
+  if (!enabled || !tracedRead(safePath)) return work();
   // A fallback route ID makes missing gateway-context propagation observable.
   return scope.run({ request_id: 0, ...scope.getStore(), path: safePath, route_id: ++routeId }, work);
 }
-export function proofReadPhase(phase: string) {
+export function proofReadPhase(phase: string, fields: Record<string, number> = {}) {
   const current = scope.getStore();
-  if (enabled && current && /^\/api\/v1\/(reports|my-jobs)\/:id$/.test(current.path))
-    proofEvent("read-phase", { phase });
+  if (enabled && current && tracedRead(current.path))
+    proofEvent("read-phase", { phase, ...fields });
+}
+
+// Compare known driver constants; never retain arbitrary exception text/codes.
+// pg-pool distinguishes a queued checkout expiry from a new connection expiry.
+export function dependencyFailureCategory(error: unknown): string {
+  try {
+    if (!error || typeof error !== "object") return "unclassified";
+    const value = error as { message?: unknown; code?: unknown };
+    if (value.message === "timeout exceeded when trying to connect") return "pool-checkout-timeout";
+    if (value.message === "Connection terminated due to connection timeout") return "connection-start-timeout";
+    switch (value.code) {
+      case "ECONNREFUSED": return "connection-refused";
+      case "ECONNRESET": return "connection-reset";
+      case "ETIMEDOUT": return "connection-timeout";
+      case "57014": return "query-cancelled";
+      case "53300": return "connection-limit";
+      case "57P01": return "database-shutdown";
+      case "40P01": return "deadlock";
+      case "40001": return "serialization-failure";
+      default: return "unclassified";
+    }
+  } catch { return "unclassified"; }
+}
+export function proofDependencyFailure(error: unknown, fields: Record<string, number>) {
+  if (enabled) proofEvent("dependency-failed", { category: dependencyFailureCategory(error), ...fields });
 }
 export function proofEvent(event: string, fields: Record<string, string | number | boolean | null> = {}) {
   if (!enabled || count > limit) return;

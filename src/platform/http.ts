@@ -4,6 +4,8 @@ import { NextResponse, type NextRequest } from "next/server";
 import { localConfig } from "./config";
 import { AppError } from "./errors";
 import { resolveIdentity, sessionCookie } from "./identity";
+import { proofDatabaseState } from "./database";
+import { proofDependencyFailure } from "./proof-diagnostics";
 export function localRequest(request: NextRequest, mutation = false) {
   const config = localConfig(),
     expected = process.env.PPO_LOCAL_GATEWAY,
@@ -76,8 +78,10 @@ export function failure(error: unknown) {
           "The local database is unavailable. Check setup and try again.",
         );
   // No connection strings, payloads, SQL or stack traces in client errors/log evidence.
-  if (!(error instanceof AppError))
+  if (!(error instanceof AppError)) {
+    proofDependencyFailure(error, proofDatabaseState());
     console.error(JSON.stringify({ correlation_id, code: e.code }));
+  }
   return reply(
     {
       code: e.code,
