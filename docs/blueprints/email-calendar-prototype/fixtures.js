@@ -1,5 +1,5 @@
 /* EC r01: fictional design fixtures. No operational messages or addresses. */
-const EC_FIXTURES = {
+globalThis.EC_FIXTURES = {
   records: [
     {
       id: "opp-irrigation",
