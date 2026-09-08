@@ -27,7 +27,7 @@ Local verification of the eight-file documentation contribution:
 - All 20 new-document local links resolve; AIA-01–AIA-20 are unique and map only to existing parent IDs. All three illustrative cost scenarios and the Brisbane/UTC example were checked.
 - `git diff --check` passed. The change contains three new documents and five index/status/register updates; no runtime, issued reference, original requirement wording or workflow edits.
 
-The final publication record belongs to the design PR, including exact head/tree, check URLs and any failure dispositions. This file does not claim its own future commit hash. Local and CI evidence is updated before delivery; unrun broader application checks are not assistant acceptance.
+The final publication record belongs to [PR #65](https://github.com/deanrfiedler-gif/powerplants-one/pull/65), including exact head/tree, check URLs and any failure dispositions. This file does not claim its own future commit hash. Local and CI evidence is updated before delivery; unrun broader application checks are not assistant acceptance.
 
 ## Next bounded step
 
