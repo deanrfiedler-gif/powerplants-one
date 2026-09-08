@@ -1,6 +1,6 @@
 # Email & Calendar synthetic prototype
 
-**Revision:** r01 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Clickable design artifact. No Microsoft connection, external messages, backend or durable business data.
+**Revision:** r02 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Clickable design artifact. No Microsoft connection, external messages, backend or durable business data.
 
 Open [index.html](index.html) from a local copy of the repository. It loads the adjacent JavaScript/CSS and existing PPO brand assets. To make one offline downloadable HTML file:
 
@@ -10,9 +10,22 @@ python3 docs/blueprints/email-calendar-prototype/export.py /tmp/ppo-email-calend
 
 The export embeds the existing logo and Roboto font bytes, performs no downloads and requires no web server or Azure account. Download the exported HTML and open it in a current desktop browser. A mobile attachment preview may not execute JavaScript; a later authorised hosted demo is the appropriate route for an independent smartphone link.
 
-## Review journey
+## Calendar refinement review — r02
 
-1. Stay in **Preview as Alex · Owner**. Open **Irrigation upgrade — scope confirmation**.
+The demo now opens on **Calendar**. Start with Tuesday 8 September 2026.
+
+1. Compare **Day** and **Agenda**. Day positions the meetings against hour lines; Agenda shows wrapping titles and context.
+2. Select Wednesday **9** in the week strip. The internal follow-up appears under **Due this day**, without a fabricated meeting duration.
+3. Tap the month/year to choose a date, or use the arrows to move a week. The filter control selects Outlook or PPO Activities; **Clear filter** restores both.
+4. Tap a meeting for its full title, date, time, source and related record. On a narrow screen this uses a bottom sheet.
+5. Switch the preview account to Jordan. The calendar shows only shared Busy periods. Revoking availability in Settings hides these periods and their week indicators.
+6. Open **Email** to continue the original record-linking and sharing journey below. Settings → Reset sample data restores Alex’s inbox; reloading opens the revised Calendar.
+
+The red line is explicitly labelled **Sample · 9:45** on 8 September. It is a fixed fictional time, not the current clock. The provided screenshot informs layout only; no real appointments were copied.
+
+## Email review journey
+
+1. Open **Email** and stay in **Preview as Alex · Owner**. Open **Irrigation upgrade — scope confirmation**.
 2. Choose **Choose a record**. The same contact belongs to two opportunities. Select **Irrigation upgrade**, then **Save links**. The conversation stays private.
 3. Choose **Plan follow-up**, enter **Confirm site visit details**, select a Brisbane due time, then **Create follow-up**. It is a PPO Activity simulation with no invitation.
 4. On Casey's latest message, choose **Share this message**, keep the irrigation record and Jordan selected, leave the attachment unchecked, then **Share selected message**.

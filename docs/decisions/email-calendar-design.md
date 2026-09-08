@@ -1,6 +1,6 @@
 # Email & Calendar design direction
 
-**Revision:** r01 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** User-authorised design and synthetic prototype; live policy/implementation proposed.
+**Revision:** r02 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** User-authorised design and synthetic prototype; live policy/implementation proposed.
 
 Dean requested Outlook email/calendar integration similar to his Pipedrive screenshot, then explicitly authorised the next bounded design and synthetic prototype. This covers desktop/mobile screens, record linking, privacy settings and preparation of a first Microsoft pilot. Repository publication is within the normal requested project workflow; company mailbox access, sending, consent changes and deployment are outside this increment.
 
@@ -11,3 +11,7 @@ Microsoft Graph v1.0 is the proposed future provider adapter within ADR-0003/BP-
 Use the supplied brand and maintained r08 desktop presentation, and the accepted mobile design mapping inspected in open PR #61. This separate documentation preview does not modify that PR or claim its publication. P11 on inspected main and P12 preparation retain their existing boundaries.
 
 The [pilot](../delivery/email-calendar-microsoft-pilot.md) proposes one company-approved test mailbox, delegated read permissions, bounded history/window and owner-only live visibility. Its detailed sharing/free-busy model is exercised synthetically first. Current user authority enables design publication, not closure of D-025/D-020/D-012, full AT-25 or a corporate retention policy. Actual results and limitations are in the [handover](../delivery/email-calendar-handover.md).
+
+## Mobile calendar refinement, r02
+
+Dean requested an audit and professional refinement of the HTML demo using his Pipedrive mobile calendar screenshot. Apply the compact week/date navigation, Day/Agenda presentation, time-proportional meetings, distinct due Activities and mobile bottom sheets described in the design. Preserve the supplied brand and the existing integration/privacy boundary. This is a revision of the synthetic demo in PR #62, not a live calendar implementation or a change to mobile CRM PR #61. Visual acceptance remains outstanding because the supported review browser blocks the preview address.

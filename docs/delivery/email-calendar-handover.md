@@ -1,6 +1,6 @@
 # Email & Calendar design handover
 
-**Revision:** r01 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Design and synthetic prototype prepared for review; browser visual verification and live integration remain outstanding.
+**Revision:** r02 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Design and synthetic prototype prepared for review; browser visual verification and live integration remain outstanding.
 
 ## Delivered scope
 
@@ -21,8 +21,8 @@ Read AGENTS, README, STATUS, adopted naming/UI specifications, BP-03/PAR-06, ADR
 | Check | Actual result / limitation |
 |---|---|
 | JavaScript syntax | Passed for app and fixtures |
-| Synthetic model/projection checks | 20 cases passed ([evidence](../testing/evidence/email-calendar-design/r01/model-checks.json)); selected-message isolation, no sharing from linking alone, hidden attachment metadata, search isolation, target revocation, unlink withdrawal, distinct follow-up, escaping, private agenda, disconnect and reset |
-| Single-file HTML export | Generated with embedded existing logo/font; no remote dependency. Export: 874,596 bytes; SHA-256 `f776a7c7b72120192b505429d7dc6574770d5c0ed76c60623290f67bdc29a2f7`. [Artifact evidence](../testing/evidence/email-calendar-design/r01/artifact.json). |
+| Synthetic model/projection checks | 29 cases passed ([evidence](../testing/evidence/email-calendar-design/r02/model-checks.json)); selected-message isolation, no sharing from linking alone, hidden attachment metadata, search isolation, target revocation, unlink withdrawal, distinct follow-up, escaping, private agenda, disconnect and reset |
+| Single-file HTML export | Generated with embedded existing logo/font; no remote dependency. Export: 896,957 bytes; SHA-256 `2aeb7615e79530a246210d19d1fbb7e54e90e091e0f045ad97ae834b787e15d6`. [Artifact evidence](../testing/evidence/email-calendar-design/r02/artifact.json). |
 | Brand source review | PDF palette page and supplied logo visually inspected; existing r08/mobile mapping reviewed |
 | Browser preview | Environment blocked the internal preview address with `net::ERR_BLOCKED_BY_CLIENT`; preview service reported running. No browser interactions, responsive screenshots or visual screen pass are claimed. |
 | Repository foundation / prototype / naming | PP-01 passed (78 parent dispositions); naming passed (88 document records). Local foundation reported 176 missing historical image/SVG links in the partial source projection; every destination was confirmed present in the exact upstream tree. No new-document link error. Full-tree CI outcome remains in the PR. |
@@ -41,3 +41,24 @@ Next: finish the browser review of this concrete artifact, then implement one pe
 ### GitHub review evidence
 
 [Draft PR #62](https://github.com/deanrfiedler-gif/powerplants-one/pull/62) was opened from `design/email-calendar-prototype`. On initial source commit `b603038770c619694b39223d42c81c9cadd55cc7`, full-tree [documentation assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34181663051) and [Email & Calendar model assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34181663045) passed. This resolves the local projection-only foundation limitation for that source. The export amendment embeds the existing Roboto licence. Documentation and model assurance also passed on `ed8fe4777e427567d7d0c0d6daf68a78747ee1df`. Broader application workflows exposed an unused cross-script fixture declaration in the new prototype; the fixture now explicitly uses `globalThis`, and focused ESLint plus all 20 model checks pass locally. The PR records the resulting final CI status. Browser visual review remains blocked, so no merge or UI acceptance is claimed.
+
+## r02 mobile calendar and demo audit
+
+**Basis:** source/layout review of the actual r01 HTML/CSS/JavaScript, supplied Pipedrive mobile calendar screenshot, retained Powerplants palette/logo/font and existing privacy model. The screenshot was inspected; its real appointments and customer details were not copied. Browser visual review was attempted again through the supported preview and returned `ERR_BLOCKED_BY_CLIENT`. No rendered mobile/desktop screenshot, touch/keyboard or screen-reader pass is claimed.
+
+| Finding in r01 | Applied refinement in r02 |
+|---|---|
+| Agenda cards concealed empty time and meeting duration | Day timeline with proportional times/durations; retain Agenda for full wrapping context |
+| Two-date dropdown gave little week context | Monday-first seven-day strip, month/year date picker and previous/next week navigation |
+| Created follow-ups could fall outside the two selectable dates | Date picker reaches other dates; date/view/filter state stays coherent |
+| Internal due times could be mistaken for booked appointments | Separate Due this day section without invented duration |
+| Repeated badges and explanatory panels competed with the schedule | Compact source legend, restrained blue/green/grey event styles and details on tap |
+| Phone header could wrap awkwardly at 320px | Remove fixed title minimum width and tighten header/identity spacing |
+| Mobile navigation and dialogs lacked a consistent app treatment | Navy navigation matching the desktop rail; native modal bottom sheets with scrolling bodies and visible actions |
+| Calendar privacy checks were spread across views | Reuse the permitted calendar projection for timeline, Agenda, week indicators and event-detail entry; deny internal details to the colleague and all source details after expiry |
+| No representation of overlapping/very short meetings | Separate columns for two overlaps; readable Agenda fallback for short or denser meetings |
+| Calendar refinement was hard to find in the download | Open Calendar on load; Email remains available in navigation |
+
+**Verification:** all 29 model/projection cases pass, including the original email-sharing checks and new calendar navigation, ordering, duration, overlap, filter, date-validation and privacy cases. Focused repository ESLint passes. The self-contained export retains the logo/font/licence and no external requests or durable storage. Full-tree documentation CI is tracked on PR #62; broad application workflows are separate from visual acceptance. Historical r01 evidence remains unchanged.
+
+**Remaining review:** open the exported file in a real browser at 320/390/768/1440px and 200% enlargement; inspect the first calendar viewport, long/full event details, narrow overlap rows, week navigation, mobile bottom-sheet scrolling, focus restoration, the Inbox → link → follow-up → share journey and desktop compatibility. The fixed line reads Sample · 9:45 and must not be described as the current time. Only that browser review can establish final visual acceptance.

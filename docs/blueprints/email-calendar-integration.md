@@ -1,6 +1,6 @@
 # Email & Calendar integration design
 
-**Revision:** r01 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Proposed design with a synthetic interaction prototype; no live integration.
+**Revision:** r02 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Proposed design with a synthetic interaction prototype; no live integration.
 
 **Workstream:** PPO-009 / [issue #9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9), CRM-03 and PAR-06. Supporting parents: CRM-01/02/06/08, NFR-01/02/03/05/08/09/10/11/12. D-025, D-020 and D-012 remain operational evidence gaps. This increment does not change the 78 parent requirements, PP-01 P01–P12 order or AT-25 status.
 
@@ -41,13 +41,19 @@ Read-only describes Microsoft effects. Explicit record linking and follow-up are
 | EC-S03 Link record | Searchable modal, type/reference/customer shown for each candidate | Native contained modal with full-width controls | Ambiguous contact; no permitted candidate; explicit checked selection; unlink consequence |
 | EC-S04 Message sharing | Review the exact message, one target record and named eligible colleague | Same review fields, no hover-dependent actions | Private default, attachment opt-in, no eligible colleague, withdraw share |
 | EC-S05 Record Email tab | Existing record title/context, Emails and Details views | Same information in stacked sections | Only authorised conversations contribute subjects, rows and counts |
-| EC-S06 Agenda | Date selector, source-labelled entries, source/meaning sidebar | Date selector and time/title/source cards | Private/busy, recurring occurrence, separate internal Activity, stale sync |
+| EC-S06 Calendar | Month/year date picker, Monday-first week strip, Day/Agenda toggle, source filters, timed meetings and separate due Activities | Compact week navigation; edge-to-edge timeline; event-detail bottom sheet; same Agenda alternative | Empty/filter states, private/busy, recurring occurrence, overlapping meetings, separate internal Activity, stale sync |
 | EC-S07 Settings | Connection and privacy panels; explicit prototype controls | Single-column panels | Simulated ready/paused/expired/error/disconnected; revoke access; reset |
 | EC-S08 Pilot plan | Compact read-only summary and acceptance sequence | Same content with natural wrapping | Prepared / Not connected; no fake sign-in or live action |
 
 Use 44px primary/phone controls, visible keyboard focus, native labels and native modal focus containment. Body messages use 16px. Secondary row metadata uses 13–14px. At 620px and below, the navigation becomes a four-item bottom bar. Context is not hidden behind tooltips. Source dates include a year in full views; inbox rows use compact dates, with full dates in the conversation. The intended verification widths are 320, 390, 768 and 1440px, including 200% enlargement. These are targets, not a conformance claim.
 
 Default UI actions are navy/white; green identifies selection or successful local outcomes. The Pipedrive screenshot's full compose/outbox/drafts surface is reserved for a later sending stage. Current actionable controls must work within this preview's limited model.
+
+### Calendar refinement, r02
+
+Following Dean’s supplied Pipedrive mobile calendar reference, the preview opens on Calendar. The visible month includes the year, and the week strip preserves the chosen day across Day/Agenda and source-filter changes. Timed Outlook meetings use proportional positions/durations; due-only PPO Activities appear in a separate section so they do not imply booked time. Two overlapping meetings use separate columns. Very short meetings or groups exceeding two columns fall back to wrapping Agenda rows. Long timeline titles can be opened for complete details; colour is supplemented by text/icons and accessible names. A fixed sample-time line is labelled as synthetic.
+
+The mobile header is more compact, the navy bottom navigation matches the desktop rail, and native dialogs use a bottom-sheet layout. No floating add-event action is introduced while calendar writes remain unavailable. The original Inbox, record-linking, follow-up and privacy flows remain available. See the [r02 audit](../delivery/email-calendar-handover.md#r02-mobile-calendar-and-demo-audit) for actual evidence and the outstanding visual-review limitation.
 
 ## 4. Record-linking contract
 
