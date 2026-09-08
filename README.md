@@ -25,6 +25,7 @@ This repository is Dean's personal private prototype. It contains the planning f
 | [Customer portal design](docs/delivery/customer-portal-handover.md) | Customer roles, support/publication contracts, clickable walkthrough and bounded CP1–CP5 readiness |
 | [First-release plan](docs/delivery/first-release.md) | Proposed planned-service journey, dependencies and readiness criteria |
 | [Projects discovery and design](docs/delivery/projects-discovery-handover.md) | BP-06 source assessment, first-increment contract and project list/detail designs; J1 prepared only |
+| [Email & Calendar design](docs/blueprints/email-calendar-integration.md) | Synthetic inbox, record linking, privacy, agenda and first read-only Microsoft pilot preparation |
 | [Contributing](CONTRIBUTING.md) | Branches, pull requests, validation and evidence |
 
 ## Product direction
