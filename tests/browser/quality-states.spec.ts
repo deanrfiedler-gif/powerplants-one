@@ -400,9 +400,15 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
         await capture(page, info, `${s.id}-unavailable-record`);
         await page.unroute(match);
       }
-      // Real server-derived Systems identity; no mocked role or denial response.
+      // Assert the screen's real server-derived Systems denial. Observing the
+      // selected read avoids introducing a second auxiliary request beside the
+      // UI request whose response and rendered error form this contract.
+      const deniedRead = page.waitForResponse((response) =>
+        new URL(response.url()).pathname === `/api/v1/${s.api}` &&
+        response.request().method() === "GET" &&
+        [403, 404].includes(response.status()));
       await identity(page, "systems");
-      const denied = await page.request.get(`/api/v1/${s.api}${query}`);
+      const denied = await deniedRead;
       expect([403, 404], s.id).toContain(denied.status());
       expect(denied.headers()["cache-control"]).toBe("private, no-store");
       const deniedBody = await denied.json();
