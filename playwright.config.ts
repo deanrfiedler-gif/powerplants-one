@@ -28,11 +28,15 @@ export default defineConfig({
       },
     },
   ],
-  webServer: {
-    command: "npm run dev",
-    url: "http://127.0.0.1:3000",
-    reuseExistingServer: !process.env.CI,
-    timeout: 120000,
-  },
+  // CI alone does not establish an externally started server. Only opt out
+  // when the invoking harness actually owns that server's lifecycle.
+  webServer: process.env.PPO_BROWSER_SERVER_EXTERNAL === "1"
+    ? undefined
+    : {
+        command: "npm run dev",
+        url: "http://127.0.0.1:3000",
+        reuseExistingServer: !process.env.CI,
+        timeout: 120000,
+      },
   reporter: [["list"], ["html", { open: "never" }]],
 });

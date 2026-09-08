@@ -81,6 +81,7 @@ jobs:
         if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-full-browser/results.json
+          PLAYWRIGHT_LIST_PRINT_FAILURES_INLINE: "1"
         run: |
           npx playwright install --with-deps chromium
           npm run test:browser -- --reporter=list,json
