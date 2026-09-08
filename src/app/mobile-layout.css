@@ -26,7 +26,7 @@
 .facility-list { margin:12px 0 0; padding:0; list-style:none; border-top:1px solid var(--line); }
 .facility-list li { padding:12px 0; border-bottom:1px solid var(--line); }
 .facility-list small { display:block; color:var(--muted); }
-.mobile-navigation,.mobile-brand { display:none; }
+.mobile-navigation,.mobile-brand,.mobile-environment { display:none; }
 .mobile-menu { width:min(440px,calc(100vw - 24px)); max-height:calc(100dvh - 32px); padding:16px; border:0; border-radius:12px; color:#fff; background:var(--navy); }
 .mobile-menu::backdrop { background:#151b2966; }
 .mobile-menu header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
@@ -46,7 +46,9 @@
   .mobile-navigation .product-icon { width:23px; height:23px; }
   .mobile-navigation [aria-current=page] { background:#343c4c; box-shadow:inset 0 3px var(--green); }
   .topbar,body:has(.crm-workspace) .topbar { min-height:48px; padding:10px 12px; }
-  .product-heading { font-size:16px; }
+  .product-heading { font-size:16px; display:block; }
+  .product-heading .mobile-environment { display:block; font-size:10px; font-weight:400; color:var(--muted); margin-top:2px; }
+  .topbar .prototype-label { display:none; }
   .mobile-brand { display:flex; align-items:center; justify-content:center; min-width:44px; min-height:44px; background:var(--navy); border-radius:6px; }
   .mobile-brand .brand-logo { display:block; width:36px; height:36px; object-fit:contain; max-width:none; }
   .workspace:has(.identity-strip) .topbar { min-height:64px; padding-bottom:10px; padding-right:124px; }

@@ -384,7 +384,7 @@ export function NewOpportunity() {
                 <h2>Initial next action</h2>
                 <ActionFields
                   value={action}
-                  set={setAction}
+                  set={(value) => { setAction(value); command.dirty(); }}
                   context={context}
                   enabled={!siteRequired || !!site}
                 />
@@ -673,7 +673,7 @@ function OpportunityContent({
                 {mode === "New" ? (
                   <ActionFields
                     value={action}
-                    set={setAction}
+                    set={(value) => { setAction(value); command.dirty(); }}
                     context={context}
                   />
                 ) : (

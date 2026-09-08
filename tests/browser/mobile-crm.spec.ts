@@ -1,5 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import { CRM, crmCreate } from "../helpers/crm";
+import { estimateInput } from "../helpers/estimating";
 test.describe.configure({ timeout:120000 });
 async function call(page:Page,path:string,body?:unknown) {
   const r=await page.request.fetch(`/api/v1/${path}`,{method:body===undefined?"GET":"POST",headers:body===undefined?{}:{Origin:"http://127.0.0.1:3000"},data:body});
@@ -32,6 +33,12 @@ test("mobile CRM completion, Brisbane follow-up and record links persist through
   await expect(page.getByText("Requirements and scope",{exact:true})).toBeVisible();
   await expect(page.locator(`a[href="/sites/${CRM.site}"]`)).toBeVisible();
   await page.screenshot({path:info.outputPath("mobile-crm-details.png")});
+  const estimate = estimateInput(input.id);
+  await call(page,"estimating/estimates",estimate);
+  await page.getByRole("tab",{name:"Commercial",exact:true}).click();
+  await expect(page.locator(`a[href="/estimating/estimates/${estimate.id}"]`)).toBeVisible();
+  const commercial = await call(page,`crm/opportunities/${input.id}/commercial`);
+  expect(commercial.estimate.id).toBe(estimate.id);
   await page.getByRole("tab",{name:"Timeline",exact:true}).focus();
   await page.keyboard.press("ArrowRight");
   await expect(page.getByRole("tab",{name:"Details",exact:true})).toBeFocused();

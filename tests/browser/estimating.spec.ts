@@ -12,7 +12,7 @@ async function identity(page:Page,profile="coordinator"){
 await page.getByLabel("Identity",{exact:true}).selectOption(profile);await page.getByRole("button",{name:"Use this identity",exact:true}).click();await expect(page.getByRole("button",{name:"Change identity",exact:true})).toBeEnabled();await expect(page.getByRole("region",{name:"Local demonstration identity",exact:true})).toHaveAttribute("aria-busy","false");}
 async function opportunity(page:Page){await page.goto("/estimating");await identity(page);const o={...crmCreate(),title:`SYN Estimating browser ${randomUUID()}`};await call(page,"crm/opportunities",o);return o;}
 async function saved(page:Page){const o=await opportunity(page),input=estimateInput(o.id);await call(page,"estimating/estimates",input);await page.goto(`/estimating/estimates/${input.id}`);await expect(page.getByRole("heading",{name:"Scope and cost workbook"})).toBeVisible();return input;}
-async function capture(page:Page,info:TestInfo,name:string,anchor=".est-heading"){
+async function capture(page:Page,info:TestInfo,name:string,anchor=".business-heading"){
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   await page.locator(anchor).first().evaluate(e=>e.scrollIntoView({block:"start"}));
   const bytes=await page.screenshot({path:info.outputPath(`E1-${name}.png`)});

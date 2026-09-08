@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { LocalDateTimeField } from "./record-ui";
+import { LocalDateTimeField, useUnsavedChanges } from "./record-ui";
 import type { readActivity } from "../activities/activities";
 import { useIdentity } from "./business-session";
 import {
@@ -226,6 +226,7 @@ function ActivityEditor({
     owners = useResource<Envelope<Option>>(
       `selectors/owners?${new URLSearchParams({ company_id: a.company_id, ...(a.site_id ? { site_id: a.site_id } : {}), purpose: "Activity", access_class: a.access_class, activity_id: a.id })}`,
     );
+  useUnsavedChanges(summary !== a.summary || owner !== a.owner_id || due !== (a.due_at ?? "") || needed !== a.due_needed || !!outcome || !!reason, cmd.busy);
   async function act(action: string) {
     const fields =
       action === "update"
@@ -246,6 +247,8 @@ function ActivityEditor({
     );
     if (result) {
       setExpected(result.record_version);
+      setOutcome("");
+      setReason("");
       reload();
     }
   }

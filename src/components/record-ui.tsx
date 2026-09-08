@@ -40,6 +40,7 @@ export function LookupField({ name, label, value, onChange, search, onSearch, op
   const input = useRef<HTMLInputElement>(null);
   const unique = useId(), list = `${unique}-results`;
   const fieldError = useFieldError(name);
+  useEffect(() => { if(open && active >= 0) document.getElementById(`${list}-${active}`)?.scrollIntoView({block:"nearest"}); }, [open,active,list]);
   const found = options.find(o => o.id === value);
   const chosen = found ?? (selected?.id === value ? selected : null);
   const optionLabel = (o: Option) => `${o.display_name ?? o.description ?? "Record"}${o.display_number ? ` · ${o.display_number}` : ""}`;
@@ -77,7 +78,7 @@ export function LocalDateTimeField({ name, label = "Due date and time", value, o
   const display = invalid?.raw ?? (value ? localDateTime(value, timezone) : "");
   return <div>
     <Field name={name} label={label} type="datetime-local" value={display} required={required}
-      hint={`${timezone.replaceAll("_", " ")} · saved as an exact instant`}
+      hint={timezone.replaceAll("_", " ")}
       onChange={raw => {
         try { const iso = raw ? utcFromLocal(raw, timezone) : ""; setInvalid(null); onChange(iso); }
         catch (e) { setInvalid({ raw, message: (e as Error).message }); onChange(""); }
