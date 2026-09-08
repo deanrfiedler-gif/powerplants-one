@@ -10,6 +10,7 @@ import {
 } from "./render";
 import { reportHtml, renderReport } from "../reports/render";
 import { financeHtml, renderFinance } from "../finance/render";
+import { proofEvent } from "../platform/proof-diagnostics";
 
 async function branded(html: string) {
   const [font, logo] = await Promise.all([
@@ -33,14 +34,21 @@ async function branded(html: string) {
     : prepared.replace("<body>", "<body>" + mark);
 }
 async function renderBranded(html: string, reference: string, context: string) {
+  const renderAt = Date.now();
+  const stage = (event: string) => proofEvent(`render-${event}`, { render_at_ms: renderAt, elapsed_ms: Date.now() - renderAt });
+  stage("launch-start");
   const browser = await chromium.launch();
+  stage("launch-complete");
   try {
     const page = await browser.newPage();
+    stage("page-created");
     await page.route("**/*", (r) => r.abort());
     await page.setContent(html, { waitUntil: "load" });
+    stage("content-loaded");
     await page.evaluate(() => document.fonts.ready);
     if (!(await page.evaluate(() => document.fonts.check('16px "PPO Roboto"'))))
       throw Error("Complete output font did not load");
+    stage("fonts-ready");
     const pdf = await page.pdf({
       format: "A4",
       printBackground: true,
@@ -54,6 +62,7 @@ async function renderBranded(html: string, reference: string, context: string) {
     });
     if (!pdf.subarray(0, 5).equals(Buffer.from("%PDF-")))
       throw Error("Invalid PDF");
+    stage("pdf-complete");
     return {
       html,
       pdf,
@@ -61,7 +70,9 @@ async function renderBranded(html: string, reference: string, context: string) {
       renderer_version: rendererVersion,
     };
   } finally {
+    stage("close-start");
     await browser.close();
+    stage("close-complete");
   }
 }
 export async function supportedPackHtml(

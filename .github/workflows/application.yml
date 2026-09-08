@@ -30,6 +30,7 @@ jobs:
           --health-interval 5s --health-timeout 5s --health-retries 10
     env:
       NEXT_TELEMETRY_DISABLED: "1"
+      PPO_PROOF_DIAGNOSTICS: "1"
       PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -258,6 +259,7 @@ jobs:
           --health-interval 5s --health-timeout 5s --health-retries 10
     env:
       NEXT_TELEMETRY_DISABLED: "1"
+      PPO_PROOF_DIAGNOSTICS: "1"
       PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -383,6 +385,7 @@ jobs:
           --health-interval 5s --health-timeout 5s --health-retries 10
     env:
       NEXT_TELEMETRY_DISABLED: "1"
+      PPO_PROOF_DIAGNOSTICS: "1"
       PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -472,6 +475,7 @@ jobs:
           --health-interval 5s --health-timeout 5s --health-retries 10
     env:
       NEXT_TELEMETRY_DISABLED: "1"
+      PPO_PROOF_DIAGNOSTICS: "1"
       PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -521,4 +525,5 @@ jobs:
           path: |
             verification-evidence/review-diagnostic-redactions.json
             verification-evidence/p11-performance/
+            verification-evidence/transport-diagnostics/
           retention-days: 14

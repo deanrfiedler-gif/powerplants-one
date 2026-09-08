@@ -11,6 +11,29 @@ import { qualityLoadFixture } from "./quality-load-fixture";
 const root = "verification-evidence/p11-performance";
 await mkdir(root, { recursive: true });
 const origin = "http://127.0.0.1:3000";
+async function assetProbe(path: string) {
+  // A separate post-failure server probe, never a replacement measured sample.
+  const started = performance.now();
+  try {
+    const response = await fetch(origin + path, { signal: AbortSignal.timeout(5000) });
+    let bytes = 0;
+    for await (const part of response.body ?? []) {
+      bytes += part.byteLength;
+      if (bytes > 16 * 1024 * 1024) return { path, status: response.status, bytes, capped: true, elapsed_ms: performance.now() - started };
+    }
+    return { path, status: response.status, bytes, complete: true, elapsed_ms: performance.now() - started };
+  } catch { return { path, complete: false, elapsed_ms: performance.now() - started }; }
+}
+async function protocolProbe(cdp: CDPSession) {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      cdp.send("Runtime.evaluate", { expression: "1", returnByValue: true, timeout: 2000 }).then(r => ({ renderer_replied: r.result.value === 1 })),
+      new Promise<{ renderer_replied: false }>(resolve => { timer = setTimeout(() => resolve({ renderer_replied: false }), 5000); }),
+    ]);
+  } catch { return { renderer_replied: false }; }
+  finally { clearTimeout(timer); }
+}
 async function resourceSnapshot() {
   const processes: Record<string, { count: number; resident_kib: number }> = {};
   for (const pid of (await readdir("/proc")).filter((x) => /^\d+$/.test(x))) {
@@ -189,9 +212,26 @@ try {
             }>();
             const { cdp, ruleId } = networkSessions.get(page)!;
             const coreRequestIds = new Set<string>();
+            const protocolAssets = new Map<string, { path: string; type: string; requested_ms: number; response_ms?: number; status?: number; received_bytes: number; encoded_bytes?: number; completed_ms?: number; failed_ms?: number }>();
             const appliedRules = new Map<string, string>();
-            const coreProtocolRequest = (event: { requestId: string; request: { url: string; method: string } }) => {
+            const coreProtocolRequest = (event: { requestId: string; type?: string; request: { url: string; method: string } }) => {
               if (new URL(event.request.url).pathname === view.api && event.request.method === "GET") coreRequestIds.add(event.requestId);
+              const url = new URL(event.request.url);
+              if (url.origin === origin && ["Document", "Stylesheet", "Script", "Font"].includes(event.type ?? "") && protocolAssets.size < 60)
+                protocolAssets.set(event.requestId, { path: url.pathname, type: event.type!, requested_ms: performance.now() - at, received_bytes: 0 });
+            };
+            const protocolResponse = (event: { requestId: string; response: { status: number } }) => {
+              const item = protocolAssets.get(event.requestId);
+              if (item) Object.assign(item, { response_ms: performance.now() - at, status: event.response.status });
+            };
+            const protocolData = (event: { requestId: string; dataLength: number }) => {
+              const item = protocolAssets.get(event.requestId); if (item) item.received_bytes += event.dataLength;
+            };
+            const protocolFinished = (event: { requestId: string; encodedDataLength: number }) => {
+              const item = protocolAssets.get(event.requestId); if (item) Object.assign(item, { completed_ms: performance.now() - at, encoded_bytes: event.encodedDataLength });
+            };
+            const protocolFailed = (event: { requestId: string }) => {
+              const item = protocolAssets.get(event.requestId); if (item) item.failed_ms = performance.now() - at;
             };
             const appliedRule = (event: { requestId: string; appliedNetworkConditionsId?: string }) => {
               // Inspect only this explicit protocol field. Never retain the
@@ -201,6 +241,7 @@ try {
             };
             const coreRuleMatches = () => [...coreRequestIds].filter((id) => appliedRules.get(id) === ruleId).length;
             cdp.on("Network.requestWillBeSent", coreProtocolRequest).on("Network.requestWillBeSentExtraInfo", appliedRule);
+            cdp.on("Network.responseReceived", protocolResponse).on("Network.dataReceived", protocolData).on("Network.loadingFinished", protocolFinished).on("Network.loadingFailed", protocolFailed);
             const documentEvent = (event: string, status?: number) => {
               if (documentEvents.length < 20) documentEvents.push({ event, elapsed_ms: performance.now() - at, ...(status === undefined ? {} : { status }) });
             };
@@ -300,9 +341,12 @@ try {
                   document_events: documentEvents,
                   assets,
                   asset_events: [...assetEvents.values()],
+                  protocol_assets: [...protocolAssets.entries()].map(([id, asset]) => ({ ...asset, declared_rule_applied: appliedRules.get(id) === ruleId })),
                   network_rule: { rule_id: ruleId, core_requests: coreRequestIds.size, matched_core_requests: coreRuleMatches() },
                 });
                 const name = `${viewport.name}-${view.name.replaceAll(" ", "-")}-wave-${wave}-user-${virtual_user}-failure`;
+                const stalledPaths = [...new Set(failureObservation.asset_events.filter(a => a.completed_ms === undefined && a.path.startsWith("/_next/static/")).map(a => a.path))].slice(0, 3);
+                const [serverProbes, rendererProbe] = await Promise.all([Promise.all(stalledPaths.map(assetProbe)), protocolProbe(cdp)]);
                 let captureError: string | null = null;
                 const bytes = await page
                   .screenshot({
@@ -323,6 +367,7 @@ try {
                       scenario: name,
                       error,
                       ...failureObservation,
+                      post_failure_probes: { server_assets: serverProbes, renderer: rendererProbe, boundary: "After the sample was frozen; at most three independent Node asset GETs and one bounded renderer probe. These do not replace, retry or exempt any measured browser request." },
                       page_closed: page.isClosed(),
                       page_path: new URL(page.url()).pathname,
                       capture_error: captureError,
@@ -341,6 +386,7 @@ try {
             } finally {
               page.off("request", requested).off("response", responded).off("requestfailed", failed).off("requestfinished", completed).off("crash", crashed).off("domcontentloaded", domLoaded).off("load", loaded);
               cdp.off("Network.requestWillBeSent", coreProtocolRequest).off("Network.requestWillBeSentExtraInfo", appliedRule);
+              cdp.off("Network.responseReceived", protocolResponse).off("Network.dataReceived", protocolData).off("Network.loadingFinished", protocolFinished).off("Network.loadingFailed", protocolFailed);
             }
             samples.push({
               viewport: viewport.name,

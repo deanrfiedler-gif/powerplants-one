@@ -1,3 +1,4 @@
+import { observedResponse } from "../helpers/observed-response";
 import { test, expect, type Page, type TestInfo } from "@playwright/test";
 import { mkdir, writeFile } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
@@ -229,18 +230,17 @@ async function issue(page: Page) {
   // Rendering is an asynchronous controlled command. Observe its actual result
   // before asserting the refreshed UI; an arbitrary five-second render race
   // does not establish whether the original output was issued.
-  const rendered = page.waitForResponse(
+  const response = await observedResponse(page, "report-render",
     (r) =>
       /\/api\/v1\/report-render-jobs\/[^/]+\/retry$/.test(r.url()) &&
       r.request().method() === "POST",
-  );
-  await page
+    () => page
     .getByRole("button", {
       name: "Generate / recover original report",
       exact: true,
     })
-    .click();
-  const response = await rendered;
+    .click(),
+  );
   expect(response.status(), await response.text()).toBe(200);
   expect(response.headers()["cache-control"]).toBe("private, no-store");
   const output = await response.json();
