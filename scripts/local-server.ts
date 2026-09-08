@@ -2,10 +2,20 @@ import { createServer } from "node:http";
 import { randomBytes } from "node:crypto";
 import { localConfig } from "../src/platform/config";
 const config = localConfig(); // Refuse unsafe configuration before build work or Next initialisation.
+// Explicit diagnostic profile; the maintained default remains Turbopack.
+const compiler = process.env.PPO_DEV_COMPILER ?? "turbopack";
+if (!["turbopack", "webpack"].includes(compiler))
+  throw Error("PPO_DEV_COMPILER must be turbopack or webpack.");
 await import("./build-offline");
 const { default: next } = await import("next");
 process.env.PPO_LOCAL_GATEWAY = randomBytes(32).toString("hex");
-const app = next({ dev: true, hostname: "127.0.0.1", port: config.port });
+const app = next({
+  dev: true,
+  hostname: "127.0.0.1",
+  port: config.port,
+  ...(compiler === "webpack" ? { webpack: true } : {}),
+});
+console.log(`P11 development compiler profile: ${compiler}`);
 await app.prepare();
 const handler = app.getRequestHandler();
 const server = createServer((req, res) => {

@@ -1,6 +1,6 @@
 # P11 — Integrated quality, access and usability handover
 
-**Revision:** r07 · **Date:** 8 September 2026 · **State:** implementation and repair handover; exact delivery/publication state governed by the linked authoritative external record. **Owner:** Dean Fiedler, personal private synthetic prototype.
+**Revision:** r08 · **Date:** 8 September 2026 · **State:** implementation and repair handover; exact delivery/publication state governed by the linked authoritative external record. **Owner:** Dean Fiedler, personal private synthetic prototype.
 
 [Issue #54](https://github.com/deanrfiedler-gif/powerplants-one/issues/54) · [Repair PR #63](https://github.com/deanrfiedler-gif/powerplants-one/pull/63) · [Authoritative external publication](https://github.com/deanrfiedler-gif/powerplants-one/issues/54#issuecomment-5567364667) · [P11 starter](p11-starter-prompt.md) · [Ordered plan](prototype-implementation-plan.md).
 
@@ -47,6 +47,14 @@ This is the maintained P11 implementation handover. The authoritative external i
 | Planner and dashboards | Same current visibility predicates, full historical restrictions, bounded date/card/lane windows and repeatable-read transaction; batched summaries/lanes preserve complete common facts. Counts use the current permitted page/filter. Linked activities have first/next navigation under the exact object/actor-bound cursor, resetting when the object changes. Loading/failure removes current counts and identifies retained older data. No utilisation/cost/revenue formula is added. |
 | Outputs | Additive v2 OUT-09/10/14 definitions use complete embedded Roboto and intact logo, current source recheck and immutable original-operation storage recovery. v1 definitions, rendering sources and issued bytes remain unchanged. HTML remains within the existing offline bound or explicitly fails. |
 
+### Controlled development-compiler comparison
+
+The full bundled Chromium profile did not establish a complete fix. On source `73ed3a8c5a7c484a31e5146587394afaa2c9106f`, 111 retained browser cases passed and the phone state fixture timed out after 15 seconds while invoking the original report worker before opening the page. On reconciled source `8327c930df3c66b47a28747b81524cb710e626bd`, two of 320 load samples failed: cold phone Planner users 8/9 completed the document body, but none of 17 assets completed and no core GET began. Bounded post-failure control GETs returned the same permitted planner data with status 200 in 243–272 ms, plus document/script bytes. Those controls bypass renderer throttling and do not replace the failures. No database, browser or compiler root cause is established; exact original evidence is in the external record.
+
+The existing guarded custom launcher now accepts the explicit diagnostic `PPO_DEV_COMPILER=webpack`; unset remains Turbopack, and unknown values are refused before build work. The pinned Next.js 16.3.4 package types and implementation, and its [custom-server documentation](https://nextjs.org/docs/app/guides/custom-server), expose `webpack: true`. This changes the development compiler only. All loopback/host/origin/gateway/production guards, source permissions, renderer files, immutable outputs, pins, migrations and restart contracts remain unchanged. The existing Turbopack filesystem-cache opt-out remains in place and is not business/offline storage.
+
+One additional disposable CI job runs the same maintained load command with webpack. Its fixture, ten concurrent contexts, two viewports, all-traffic network conditions, 320 samples, deadlines and success assertions are unchanged. The four retained application jobs continue with the existing default. Raw proof records identify the selected compiler; webpack timings form a separate profile and are not pooled with Turbopack results. The comparison is diagnostic preparation, not acceptance or permission to replace a failed retained gate. Its actual result and any evidence-supported next decision belong in the authoritative record.
+
 ### Exact setup and maintained checks
 
 Use Node 24.20.0, npm 11.19.0 and PostgreSQL 16.15 with the unchanged lockfile; Next 16.3.4, React 19.2.8, TypeScript 6.0.3 and Playwright 1.63.0 remain pinned. Create ignored `.env.local` from `.env.example` and configure an owned loopback database and private byte directory outside Git before these commands. Full prerequisites and the original storage guards remain in [P08 setup](p08-handover.md#runtime-setup-and-recovery).
@@ -59,6 +67,8 @@ npm run db:seed
 npm run db:health
 npm run dev
 ```
+
+For the explicitly labelled compiler comparison only, use `PPO_DEV_COMPILER=webpack npm run dev`; ordinary `npm run dev` retains Turbopack.
 
 Open `http://127.0.0.1:3000`. Production startup remains intentionally refused. The local check compiles the production build without starting or hosting it. The development compiler filesystem-cache opt-out remains intact; neither that mitigation nor the small pure Intl formatter cache is durable business/offline storage.
 

@@ -452,6 +452,7 @@ try {
         profile: {
           node: process.version,
           browser: browser.version(),
+          development_compiler: process.env.PPO_DEV_COMPILER ?? "turbopack",
           browser_execution: "Pinned Playwright bundled full Chromium, channel chromium, unified headless mode. Earlier unset-channel headless-shell samples are a separate profile, not pooled with this series.",
           platform: platform(),
           os_release: release(),
