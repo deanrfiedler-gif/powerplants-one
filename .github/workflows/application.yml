@@ -520,6 +520,8 @@ jobs:
           retention-days: 14
 
   p11_compiler_comparison:
+    # Bounded hypothesis comparison; retained assurance jobs still run on PR/main.
+    if: github.event_name == 'workflow_dispatch'
     name: P11 controlled webpack development-compiler comparison
     runs-on: ubuntu-24.04
     timeout-minutes: 30
