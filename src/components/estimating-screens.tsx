@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { estimatingOptions, listEstimates, readEstimate, readQuote } from "../estimating/reads";
 import { arithmeticPolicy, calculate, quoteAmounts, type CostLine, type QuoteChoice } from "../estimating/math";
 import { parseLines } from "../estimating/validation";
-import { ErrorNotice, Field, SelectField, ValidationFields, api } from "./business-ui";
+import { ErrorNotice, Field, SelectField, ValidationFields, api, PageHeader, Status } from "./business-ui";
 import { denied, useCrmResource, useCrmCommand } from "./crm-state";
 import "./estimating.css";
 type Detail=Awaited<ReturnType<typeof readEstimate>>;
@@ -22,7 +22,7 @@ function CommandState({command}:{command:ReturnType<typeof useCrmCommand>}) {
   return <><p role="status">{command.status}</p><ErrorNotice error={displayError}/>{command.uncertain&&<button disabled={command.busy} onClick={()=>void command.reconcile()}>Confirm original save outcome</button>}</>;
 }
 function Heading({title,children}:{title:string;children?:React.ReactNode}) {
-  return <header className="est-heading"><div><p className="est-eyebrow">Estimating &amp; quotation · Synthetic</p><h1>{title}</h1></div>{children}</header>;
+  return <PageHeader eyebrow="Estimating · Synthetic" title={title} action={children}/>;
 }
 export function EstimateList() {
   const data=useCrmResource<Awaited<ReturnType<typeof listEstimates>>>("estimating/estimates");
@@ -43,7 +43,7 @@ export function NewEstimate() {
   return <div className="est-screen"><Link href="/estimating">All estimates</Link><Heading title="New estimate"/><ResourceState {...data}/>{data.data&&<NewEstimateForm options={data.data}/>}</div>;
 }
 function NewEstimateForm({options}:{options:Options}) {
-  const router=useRouter(),[opportunity,setOpportunity]=useState(""),[draft,setDraft]=useState<Draft>({title:"",scope:{included:"",excluded:"",assumptions:""},lines:[]}),[reason,setReason]=useState("");
+  const router=useRouter(), params=useSearchParams(), [opportunity,setOpportunity]=useState(()=>options.items.some(o=>o.id===params.get("opportunity"))?params.get("opportunity")!:""),[draft,setDraft]=useState<Draft>({title:"",scope:{included:"",excluded:"",assumptions:""},lines:[]}),[reason,setReason]=useState("");
   const command=useCrmCommand(r=>router.push(`/estimating/estimates/${r.record_id}`));
   if(denied(command.error))return <ErrorNotice error={command.error}/>;
   const frozen=command.busy||command.uncertain;
@@ -53,7 +53,7 @@ export function EstimateDetail({id}:{id:string}) {
   const [selected,setSelected]=useState<string|null>(null),[accepted,setAccepted]=useState(0),[epoch,setEpoch]=useState(0),[pending,setPending]=useState<"estimate"|"quote"|null>(null);
   const lock=(kind:"estimate"|"quote",active:boolean)=>setPending(current=>active?kind:current===kind?null:current);
   const data=useCrmResource<Detail>(`estimating/estimates/${id}${selected?`?version_id=${selected}`:""}`),d=data.data;
-  return <div className="est-screen"><Link href="/estimating">All estimates</Link><ResourceState {...data}/>{d&&<><Heading title={d.saved.title}><span className="est-draft">Draft · {d.display_number}</span></Heading><p className="est-context">{d.context.customer} · {d.context.site??"Site to be confirmed"} · Estimator {d.context.owner}</p><div className="est-actions"><Link href={`/crm/opportunities/${d.opportunity.id}`}>{d.opportunity.display_number} · Opportunity and follow-up</Link><a href="#estimate-work">Edit scope</a><a href="#estimate-lines">Edit cost lines</a></div><p>Option A · Estimation revision r01 · Viewing saved version {d.saved.version} · Current version {d.version}</p><div className="est-saved" aria-label="Saved totals"><strong>Saved cost {money(d.totals.cost)}</strong><strong>Saved sell {money(d.totals.sell)}</strong><span>Excluding tax</span></div><details className="est-panel"><summary>Saved versions and change reasons ({d.versions.length})</summary>{d.versions.map(v=><p key={v.id}><button className="secondary" disabled={pending!==null} onClick={()=>setSelected(v.id)}>View version {v.version}</button> {v.reason} <small>{new Date(v.created_at).toLocaleString("en-AU")}</small></p>)}<button className="secondary" disabled={pending!==null} onClick={()=>setSelected(null)}>View current version</button></details>{accepted>d.version?<p role="status">Save accepted. Loading the exact saved version…</p>:<EstimateEditor key={`${id}:${selected??"current"}:${epoch}`} detail={d} blocked={pending==="quote"} onPending={active=>lock("estimate",active)} onAccepted={version=>{setAccepted(version);setSelected(null);setEpoch(x=>x+1);data.reload();}}/>}<PrepareDraft key={`quote:${id}:${selected??"current"}:${epoch}`} detail={d} blocked={pending==="estimate"} onPending={active=>lock("quote",active)}/><section className="est-panel"><h2>Draft quotation history</h2>{!d.quotes.length?<p>No draft quotations available.</p>:d.quotes.map(q=><p key={q.id}><Link href={`/estimating/quotes/${q.id}`}>{q.display_number} · Draft revision {q.version}</Link> · {q.render_state}</p>)}</section></>}</div>;
+  return <div className="est-screen"><Link href="/estimating">All estimates</Link><ResourceState {...data}/>{d&&<><Heading title={d.saved.title}><span><Status value="Draft"/> · {d.display_number}</span></Heading><p className="est-context">{d.context.customer} · {d.context.site??"Site to be confirmed"} · Estimator {d.context.owner}</p><div className="est-actions"><Link href={`/crm/opportunities/${d.opportunity.id}`}>{d.opportunity.display_number} · Opportunity and follow-up</Link><a href="#estimate-work">Edit scope</a><a href="#estimate-lines">Edit cost lines</a></div><p>Option A · Estimation revision r01 · Viewing saved version {d.saved.version} · Current version {d.version}</p><div className="est-saved" aria-label="Saved totals"><strong>Saved cost {money(d.totals.cost)}</strong><strong>Saved sell {money(d.totals.sell)}</strong><span>Excluding tax</span></div><details className="est-panel"><summary>Saved versions and change reasons ({d.versions.length})</summary>{d.versions.map(v=><p key={v.id}><button className="secondary" disabled={pending!==null} onClick={()=>setSelected(v.id)}>View version {v.version}</button> {v.reason} <small>{new Date(v.created_at).toLocaleString("en-AU")}</small></p>)}<button className="secondary" disabled={pending!==null} onClick={()=>setSelected(null)}>View current version</button></details>{accepted>d.version?<p role="status">Save accepted. Loading the exact saved version…</p>:<EstimateEditor key={`${id}:${selected??"current"}:${epoch}`} detail={d} blocked={pending==="quote"} onPending={active=>lock("estimate",active)} onAccepted={version=>{setAccepted(version);setSelected(null);setEpoch(x=>x+1);data.reload();}}/>}<PrepareDraft key={`quote:${id}:${selected??"current"}:${epoch}`} detail={d} blocked={pending==="estimate"} onPending={active=>lock("quote",active)}/><section className="est-panel"><h2>Draft quotation history</h2>{!d.quotes.length?<p>No draft quotations available.</p>:d.quotes.map(q=><p key={q.id}><Link href={`/estimating/quotes/${q.id}`}>{q.display_number} · Draft revision {q.version}</Link> · {q.render_state}</p>)}</section></>}</div>;
 }
 function EstimateEditor({detail:d,onAccepted,blocked,onPending}:{detail:Detail;onAccepted:(version:number)=>void;blocked:boolean;onPending:(active:boolean)=>void}) {
   const [draft,setDraft]=useState<Draft>({title:d.saved.title,scope:d.saved.scope,lines:d.saved.lines}),[reason,setReason]=useState(""),[base,setBase]=useState(d.version),[baseSaved]=useState(d.saved.version);

@@ -1,0 +1,90 @@
+/* Approved mobile direction applied to saved PPO records. Desktop r08 remains the baseline. */
+.record-tablist { display:flex; gap:4px; overflow:auto; border-bottom:1px solid var(--line); margin:16px 0; scroll-padding:12px; }
+.record-tablist button { flex:1; min-width:max-content; min-height:44px; border:0; border-bottom:3px solid transparent; border-radius:0; background:#fff; color:var(--muted); padding:10px 16px; }
+.record-tablist button[aria-selected=true] { color:var(--navy); border-bottom-color:#347e2c; font-weight:700; }
+.record-tablist button:hover { background:#eef0f4; color:var(--navy); }
+.record-panel[hidden], [hidden] { display:none !important; }
+.record-panel { min-width:0; }
+.status-chip.tone-neutral { background:#eef0f4; color:#48515e; }
+.status-chip.tone-info { background:#edf4fc; color:#235584; }
+.status-chip.tone-success { background:#edf6e8; color:#335d2b; }
+.status-chip.tone-attention { background:#fff4db; color:#795600; }
+.status-chip.tone-danger { background:#fdefed; color:#a32822; }
+.lookup-field { position:relative; }
+.lookup-results { border:1px solid #7a8594; border-radius:8px; background:white; margin-top:4px; max-height:240px; overflow:auto; scroll-padding:6px; }
+.lookup-results ul { list-style:none; margin:0; padding:4px; }
+.lookup-results button { width:100%; min-height:44px; text-align:left; justify-content:flex-start; background:white; color:var(--navy); border:0; border-radius:4px; white-space:normal; overflow-wrap:anywhere; }
+.lookup-results button:is(:hover,[data-active=true],[aria-selected=true]) { background:#eef0f4; color:var(--navy); }
+.lookup-results p { margin:4px 12px 10px; color:var(--muted); font-size:12px; }
+.crm-card-contact { display:flex; align-items:center; gap:6px; color:var(--navy); font-size:12px; min-width:0; }
+.crm-card-contact span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.crm-card-contact .product-icon { width:16px; height:16px; }
+.site-summary { display:flex; align-items:center; justify-content:space-between; gap:12px; border:1px solid var(--line); border-radius:8px; padding:16px; margin:16px 0; }
+.site-summary p { margin:0; }
+.site-card { border:1px solid var(--line); border-radius:8px; margin:12px 0; padding:16px; }
+.site-card h3 { margin:0 0 8px; }
+.facility-list { margin:12px 0 0; padding:0; list-style:none; border-top:1px solid var(--line); }
+.facility-list li { padding:12px 0; border-bottom:1px solid var(--line); }
+.facility-list small { display:block; color:var(--muted); }
+.mobile-navigation,.mobile-brand { display:none; }
+.mobile-menu { width:min(440px,calc(100vw - 24px)); max-height:calc(100dvh - 32px); padding:16px; border:0; border-radius:12px; color:#fff; background:var(--navy); }
+.mobile-menu::backdrop { background:#151b2966; }
+.mobile-menu header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.mobile-menu h2 { color:white; font-size:20px; }
+.mobile-menu nav { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.mobile-menu .product-nav-item { display:flex; align-items:center; gap:10px; padding:12px; min-height:48px; text-decoration:none; color:white; border-radius:6px; }
+.mobile-menu a:hover,.mobile-menu a[aria-current=page] { color:white; background:#343c4c; }
+.mobile-menu .planned-nav { color:#c1c8d2; font-size:12px; }
+.mobile-menu :focus-visible,.mobile-navigation :focus-visible { outline:3px solid white; outline-offset:-4px; box-shadow:none; }
+@media(max-width:780px) {
+  body { font-size:16px; }
+  .app-frame { display:block; height:100dvh; padding-bottom:calc(64px + env(safe-area-inset-bottom)); }
+  .app-frame > .sidebar { display:none; }
+  .workspace { height:100%; }
+  .mobile-navigation { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); position:fixed; inset:auto 0 0; z-index:40; min-height:64px; padding:0 4px env(safe-area-inset-bottom); background:var(--navy); }
+  .mobile-navigation :is(a,button) { display:flex; flex-direction:column; justify-content:center; align-items:center; gap:4px; min-width:0; min-height:64px; font-size:11px; line-height:1.2; color:#fff; background:transparent; text-decoration:none; padding:8px 2px; border:0; border-radius:0; }
+  .mobile-navigation .product-icon { width:23px; height:23px; }
+  .mobile-navigation [aria-current=page] { background:#343c4c; box-shadow:inset 0 3px var(--green); }
+  .topbar,body:has(.crm-workspace) .topbar { min-height:48px; padding:10px 12px; }
+  .product-heading { font-size:16px; }
+  .mobile-brand { display:flex; align-items:center; justify-content:center; min-width:44px; min-height:44px; background:var(--navy); border-radius:6px; }
+  .mobile-brand .brand-logo { display:block; width:36px; height:36px; object-fit:contain; max-width:none; }
+  .workspace:has(.identity-strip) .topbar { min-height:64px; padding-bottom:10px; padding-right:124px; }
+  .identity-strip,body:has(.crm-workspace) .identity-strip { top:10px; left:auto; right:12px; }
+  .identity-strip>div:first-child>strong { display:none; }
+  .identity-strip .identity-toggle,body:has(.crm-workspace) .identity-strip .identity-toggle { min-height:44px; padding:8px; font-size:12px; }
+  .identity-controls:not([hidden]) { top:46px; max-height:calc(100dvh - 185px); }
+  .identity-strip .identity-controls :is(button,select) { min-height:44px; }
+  main { scroll-padding-block:16px 84px; padding:16px 12px 24px; }
+  .business-heading { align-items:flex-start; flex-wrap:wrap; }
+  .business-heading h1 { font-size:24px; overflow-wrap:anywhere; }
+  .business-heading .lede { font-size:14px; }
+  button,.button,.primary-link,.module-navigation a,.record-tabs a,summary { min-height:44px; }
+  .module-navigation a { display:flex; align-items:center; font-size:13px; }
+  .field :is(input,select,textarea),input,select,textarea { font-size:16px; min-height:44px; border-color:#7a8594; max-width:100%; }
+  input[type=checkbox],input[type=radio] { min-height:20px; min-width:20px; width:20px; }
+  :is(.crm-check,.check-field,.est-choice label) { min-height:44px; display:flex; align-items:center; gap:10px; }
+  .form-panel,.crm-panel { padding:16px; }
+  .crm-detail-grid { grid-template-columns:minmax(0,1fr); }
+  .crm-status-row { font-size:14px; }
+  .crm-worklist-heading h1 { font-size:22px; }
+  .crm-worklist-heading .primary-link,.crm-view-controls button,.crm-stage-navigation button,.crm-workspace>.crm-actions button { min-height:44px; font-size:13px; }
+  .crm-primary-filters :is(input,select) { min-height:44px; font-size:16px; }
+  .crm-worklist-stamp { font-size:12px; }
+  .crm-secondary-filters { max-height:40dvh; }
+  .crm-stage .crm-card { grid-template-rows:auto auto; }
+  .crm-card-body { grid-template-rows:auto auto auto auto auto; padding:14px; gap:7px; }
+  .crm-card .crm-opportunity-title { font-size:17px; min-height:44px; -webkit-line-clamp:3; }
+  .crm-card .crm-card-company,.crm-card .crm-card-site,.crm-card-contact { font-size:14px; }
+  .crm-card .crm-card-activity { grid-template-rows:auto auto auto; padding:12px 14px; gap:6px; }
+  .crm-card-activity .crm-action-text { font-size:15px; min-height:44px; }
+  .crm-card .crm-card-activity strong,.crm-card-activity .crm-owner-label { font-size:13px; }
+  .crm-owner-label[tabindex] { min-height:44px; }
+  .crm-card-reference { font-size:12px; }
+  .site-summary { flex-wrap:wrap; }
+  .record-tablist button { padding:10px; font-size:15px; }
+  .context-grid,.form-grid { grid-template-columns:minmax(0,1fr); }
+  .context-grid dd,.record-panel p { overflow-wrap:anywhere; }
+  .est-actions a { display:inline-flex; min-height:44px; align-items:center; }
+}
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; transition:none !important; } }

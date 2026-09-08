@@ -62,7 +62,7 @@ export function ValidationFields({
     </ValidationContext.Provider>
   );
 }
-function useFieldError(name: string) {
+export function useFieldError(name: string) {
   const errors = useContext(ValidationContext)?.field_errors;
   const canonical = name.replace(/-\d+$/, "").replaceAll("-", "_");
   return errors?.find((e) => e.field === name || e.field === canonical)
@@ -211,13 +211,11 @@ export function Stamp({
   );
 }
 export function Status({ value }: { value: string }) {
-  return (
-    <span
-      className={`status-chip ${["NeedsInformation", "Unresolved", "Disputed", "Urgent"].includes(value) ? "attention" : ""}`}
-    >
-      {friendly(value)}
-    </span>
-  );
+  const tone = ["Completed","Confirmed","Approved","Authorised","Issued"].includes(value) ? "success"
+    : ["NeedsInformation","Unresolved","Disputed","DueNeeded","Planned","Proposed"].includes(value) ? "attention"
+    : ["Urgent","Overdue","Failed","Error"].includes(value) ? "danger"
+    : ["Open","InProgress","Enquiry","Qualified","Sent"].includes(value) ? "info" : "neutral";
+  return <span className={`status-chip tone-${tone}`}>{friendly(value)}</span>;
 }
 export function PageHeader({
   eyebrow,

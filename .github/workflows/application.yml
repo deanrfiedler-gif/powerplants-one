@@ -56,6 +56,10 @@ jobs:
           npm run db:migrate
           npm run db:seed
           npm run db:health
+      - name: Mobile CRM projections, scoped links and complete phone journey
+        run: |
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/mobile-crm.test.ts
+          npx playwright test tests/browser/mobile-crm.spec.ts tests/browser/crm.spec.ts --output verification-evidence/mobile-crm --reporter=list
       - name: Focused I2 identity, query equivalence and responsive presentation proof
         run: npx playwright test tests/browser/crm-i2.spec.ts --output verification-evidence/i2-focused-browser --reporter=list
       - name: CRM I1 accepted journey across application and PostgreSQL restarts

@@ -134,3 +134,7 @@ Current P10/E1 publication is complete in their own linked external records; P11
 ## Accepted r08 shared layout and CRM implementation
 
 Dean accepted the r08 design review and authorised implementation of the shared shell and CRM, followed directly by verification/publication. The [decision](decisions/shared-ui-r08-implementation.md) and [handover](delivery/shared-ui-redesign-handover.md) record current-source work and validation. Compact navigation/header/identity, responsive Board/List, fixed directional stage headers and equal-height Activity cards use the existing Enquiry → Qualified / Open contract. P11 #54/#57 remains separate. No commercial schema, live integration or operational transition is added; implementation evidence and the current publication/CI outcome are recorded in [PR #59](https://github.com/deanrfiedler-gif/powerplants-one/pull/59).
+
+## Mobile CRM journey implementation
+
+Dean authorised the approved mobile design in the working application on 8 September 2026. The [mapping decision](decisions/mobile-crm-implementation.md) and [handover](delivery/mobile-crm-handover.md) describe the shared shell, contact-led search/cards, record tabs, Activity completion/follow-up, commercial links and Organisation Sites overview. Existing domain commands and permissions remain authoritative. Local presentation/unit checks and disposable-database CI evidence are distinguished in the handover. Facility type attributes and Projects J1 remain explicit runtime gaps; P11 and the private demo contribution remain separate.

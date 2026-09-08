@@ -52,7 +52,7 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   expect(await page.evaluate(async () => (await document.fonts.load("16px Roboto")).length)).toBeGreaterThan(0);
   const font = await page.request.get("/brand/Roboto-variable.ttf");
   expect(createHash("sha256").update(await font.body()).digest("hex")).toBe("d7598e12c5dbef095ff8272cfc55da0250bd07fbdecbac8a530b9b277872a134");
-  const logo = page.locator(".brand-logo");
+  const logo = page.locator(".brand-logo:visible");
   await expect(logo).toHaveAttribute("src", "/brand/powerplants-logo-green-white.png");
   const original = await page.request.get("/brand/powerplants-logo-green-white.png");
   expect(createHash("sha256").update(await original.body()).digest("hex")).toBe("8d12f0ecc394950cd9eb66964c588efb71c8e6f445390336c245c3f6712b9694");
@@ -102,6 +102,7 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   await page.getByRole("button", { name: "List", exact: true }).click();
   await page.getByRole("link", { name: inputs[0].title, exact: true }).click();
   await expect(page).toHaveURL(new RegExp(`/crm/opportunities/${inputs[0].id}$`));
+  await page.getByRole("tab",{name:"Details",exact:true}).click();
   await expect(page.getByLabel("Qualification outcome", { exact: true })).toBeVisible();
   await page.reload();
   await expect(page.getByRole("heading", { name: inputs[0].title, exact: true })).toBeVisible();
@@ -264,12 +265,12 @@ test("CA-13 shared brand consumers retain navigation, readable actions and origi
     await page.goto(path);
     if (path !== "/") await identity(page);
     await expect(page.locator("h1")).toContainText(title);
-    await expect(page.locator(".brand-logo")).toBeVisible();
+    await expect(page.locator(".brand-logo:visible")).toBeVisible();
     if (info.project.use.isMobile) {
       await page.getByRole("button", { name: "Menu", exact: true }).click();
-      await expect(page.getByRole("navigation", { name: "Main navigation", exact: true })).toBeVisible();
+      await expect(page.getByRole("dialog",{name:"Powerplants One"})).toBeVisible();
       await expect(page.getByRole("link", { name: "CRM Sales", exact: true })).toBeVisible();
-      await page.getByRole("button", { name: "Menu", exact: true }).click();
+      await page.getByRole("button", { name: "Close menu", exact: true }).click();
     }
     await capture(page, info, `shared-${path.replaceAll("/", "-") || "overview"}`);
   }
@@ -286,18 +287,18 @@ test("Accepted r08 shell and board retain full-width stages, fixed headers and s
   await page.getByLabel("Search opportunities", { exact: true }).fill(marker);
   await expect.poll(() => ids(page)).toHaveLength(10);
   const board = page.locator(".crm-board-scroll");
-  const activeLink = page.getByRole("navigation", { name: "Main navigation", exact: true }).getByRole("link", { name: "CRM Sales", exact: true });
+  const activeLink = page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "Main navigation", exact: true }).getByRole("link", { name: "CRM Sales", exact: true });
   if (info.project.use.isMobile) await page.getByRole("button", { name: "Menu", exact: true }).click();
   await expect(activeLink).toHaveAttribute("aria-current", "page");
   const activeStyle = await activeLink.evaluate(e => ({ fill: getComputedStyle(e).backgroundColor, icon: getComputedStyle(e.querySelector("svg")!).color }));
   expect(activeStyle).toEqual({ fill: "rgb(52, 60, 76)", icon: "rgb(255, 255, 255)" });
-  if (info.project.use.isMobile) await page.getByRole("button", { name: "Menu", exact: true }).click();
+  if (info.project.use.isMobile) await page.getByRole("button", { name: "Close menu", exact: true }).click();
   for (const width of info.project.use.isMobile ? [390, 320] : [1920, 1440, 1280, 1024]) {
     await page.setViewportSize({ width, height: 844 });
-    if (info.project.use.isMobile) expect(await page.locator('.sidebar').evaluate(e => e.getBoundingClientRect().height)).toBe(50);
+    if (info.project.use.isMobile) await expect(page.getByRole('navigation',{name:'Mobile navigation'})).toBeVisible();
     await expect.poll(async () => board.evaluate(e => e.scrollWidth <= e.clientWidth + 1)).toBe(true);
     const boxes = await page.locator('.crm-stage .crm-card:visible').evaluateAll(es => es.map(e => e.getBoundingClientRect().height));
-    expect(Math.max(...boxes) - Math.min(...boxes)).toBeLessThan(1);
+    if (!info.project.use.isMobile) expect(Math.max(...boxes) - Math.min(...boxes)).toBeLessThan(1);
     const before = await page.locator('.crm-stage-heading:visible').evaluateAll(es => es.map(e => e.getBoundingClientRect().top));
     const firstBefore = await page.locator('.crm-stage:visible .crm-card:first-child').evaluateAll(es => es.map(e => e.getBoundingClientRect().top));
     await board.evaluate(e => { e.scrollTop = 210; });

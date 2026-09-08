@@ -192,8 +192,8 @@ export async function opportunityOptions(p: Principal, input: unknown = {}) {
   if (kind === "Organisation")
     rows = (
       await c.query(
-        `SELECT x.id,x.display_name,x.display_number FROM ppo.organisations x WHERE x.workspace_id=$1 AND x.company_id=$3 AND ${visibility("Organisation", "x")} AND ((${selectorScope("x.company_id")}) OR EXISTS(SELECT 1 FROM ppo.site_parties sp JOIN ppo.sites crm_org_site ON (crm_org_site.workspace_id,crm_org_site.id)=(sp.workspace_id,sp.site_id) WHERE sp.workspace_id=x.workspace_id AND sp.organisation_id=x.id AND ${selectorScope("crm_org_site.company_id","crm_org_site.id")})) ORDER BY x.id`,
-        [p.workspace_id, p.actor_id, company],
+        `SELECT x.id,x.display_name,x.display_number FROM ppo.organisations x WHERE x.workspace_id=$1 AND x.company_id=$3 AND ${visibility("Organisation", "x")} AND ((${selectorScope("x.company_id")}) OR EXISTS(SELECT 1 FROM ppo.site_parties sp JOIN ppo.sites crm_org_site ON (crm_org_site.workspace_id,crm_org_site.id)=(sp.workspace_id,sp.site_id) WHERE sp.workspace_id=x.workspace_id AND sp.organisation_id=x.id AND ${selectorScope("crm_org_site.company_id","crm_org_site.id")})) AND ($4::uuid IS NULL OR x.id>$4) AND position(lower($5) in lower(x.display_name||' '||x.display_number))>0 ORDER BY x.id LIMIT $6`,
+        [p.workspace_id, p.actor_id, company, pg.after, pg.q, pg.limit+1],
       )
     ).rows;
   if (kind === "Site")
@@ -238,7 +238,7 @@ export async function opportunityOptions(p: Principal, input: unknown = {}) {
   rows = rows.filter(
     (x) =>
       (!pg.after || x.id > pg.after) &&
-      x.display_name.toLowerCase().includes(pg.q.toLowerCase()),
+      `${x.display_name} ${x.display_number ?? ""}`.toLowerCase().includes(pg.q.toLowerCase()),
   );
   return {
     ...envelope(

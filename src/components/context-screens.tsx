@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { RecordTabs, RecordPanel } from "./record-ui";
 import {
   Field,
   Observed,
@@ -43,6 +44,7 @@ type Shared = Option & {
   contacts?: Contact[];
   affiliations?: Affiliation[];
   sites?: Shared[];
+  site_summary?: {sites:number;facilities:number;basis:string};
   mappings?: {
     id: string;
     mapping_status: string;
@@ -402,6 +404,7 @@ export function ContextDetail({
   kind: "Organisation" | "Person" | "Site" | "Asset";
   id: string;
 }) {
+  const [tab, setTab] = useState("details");
   const path = {
       Organisation: "customers",
       Person: "people",
@@ -440,6 +443,11 @@ export function ContextDetail({
           </div>
           {kind === "Organisation" && (
             <>
+              <RecordTabs id="organisation" label="Organisation sections" value={tab} onChange={setTab}
+                tabs={[{id:"details",label:"Details"},{id:"sites",label:"Sites"},{id:"timeline",label:"Timeline"}]} />
+              <RecordPanel id="organisation" tab="details" value={tab}>
+              <div className="site-summary"><p><strong>{o.site_summary?.sites ?? o.sites?.length ?? 0} linked sites · {o.site_summary?.facilities ?? 0} facilities / growing areas</strong><br/><small>Permitted records</small></p>
+                <button className="secondary" onClick={()=>{setTab("sites");document.getElementById("organisation-tab-sites")?.focus();}}>View sites</button></div>
               <dl className="context-grid">
                 <SummaryPair label="Legal name">
                   {o.legal_name ?? "Unknown"}
@@ -500,20 +508,6 @@ export function ContextDetail({
                 )}
               </section>
               <section className="detail-section">
-                <h2>Sites</h2>
-                {o.sites?.length ? (
-                  o.sites.map((s) => (
-                    <p key={s.id}>
-                      <RecordLink type="Site" id={s.id}>
-                        {s.display_name} · {s.display_number}
-                      </RecordLink>
-                    </p>
-                  ))
-                ) : (
-                  <p>No permitted site relationships are available.</p>
-                )}
-              </section>
-              <section className="detail-section">
                 <h2>ERP mapping status</h2>
                 <p>
                   An organisation is not automatically an ERP debtor account.
@@ -538,6 +532,23 @@ export function ContextDetail({
                 )}
               </section>
               <DuplicateCandidates record={o} />
+              </RecordPanel>
+              <RecordPanel id="organisation" tab="sites" value={tab}>
+                <h2>Sites and growing areas</h2>
+                {o.sites?.length ? o.sites.map(s=><article className="site-card" key={s.id}>
+                  <h3><RecordLink type="Site" id={s.id}>{s.display_name}</RecordLink></h3>
+                  <p>{s.display_number} · {s.location_description ?? "Location details not supplied"}</p>
+                  {s.address && <p>{Object.values(s.address).filter(Boolean).join(", ")}</p>}
+                  <h4>Facilities / growing areas ({s.facilities?.items.length ?? 0})</h4>
+                  {s.facilities?.items.length ? <ul className="facility-list">{s.facilities.items.map(f=><li key={f.id}><strong>{f.name}</strong>
+                    {f.parent_facility_id && <small>Within {s.facilities?.items.find(parent=>parent.id===f.parent_facility_id)?.name ?? "a related facility"}</small>}
+                  </li>)}</ul> : <p>No facilities recorded in this view.</p>}
+                  <p><Link className="button secondary" href={`/sites/${s.id}`}>Open site and equipment</Link></p>
+                </article>) : <p>No permitted site relationships are available.</p>}
+              </RecordPanel>
+              <RecordPanel id="organisation" tab="timeline" value={tab}>
+                {tab === "timeline" && <RelatedActivities type={kind} id={id}/>}
+              </RecordPanel>
             </>
           )}
           {kind === "Person" && (
@@ -777,7 +788,7 @@ export function ContextDetail({
               <HistoryList path={`assets/${id}/history`} />
             </>
           )}
-          {kind !== "Person" && <RelatedActivities type={kind} id={id} />}
+          {kind !== "Person" && kind !== "Organisation" && <RelatedActivities type={kind} id={id} />}
           <button className="secondary" onClick={r.reload}>
             Refresh context
           </button>

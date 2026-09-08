@@ -18,6 +18,7 @@ export type WorklistItem = {
   company_id: string; company_name: string; organisation_name: string;
   site_id: string | null; site_name: string | null;
   owner_id: string; owner_name: string;
+  primary_person_id: string | null; contact_name: string | null;
   next_action_state: "Unavailable" | "Needed" | "DueNeeded" | "Overdue" | "Upcoming";
   next_action_id: string | null; next_action_summary: string | null;
   action_owner_id: string | null; action_owner_name: string | null;
@@ -61,13 +62,14 @@ export async function listOpportunities(p: Principal, input: unknown = {}) {
     `WITH permitted AS MATERIALIZED (
       SELECT o.id,o.display_number,o.title,o.stage_id,o.close_outcome,o.stage_entered_at,o.updated_at,o.version,
         o.company_id,co.display_name AS company_name,r.display_name AS organisation_name,o.site_id,s.display_name AS site_name,
-        o.owner_id,u.display_name AS owner_name,a.id AS next_action_id,a.summary AS next_action_summary,a.owner_id AS action_owner_id,au.display_name AS action_owner_name,a.due_at,a.due_needed,a.version AS action_version,
+        o.primary_person_id,pe.display_name AS contact_name,o.owner_id,u.display_name AS owner_name,a.id AS next_action_id,a.summary AS next_action_summary,a.owner_id AS action_owner_id,au.display_name AS action_owner_name,a.due_at,a.due_needed,a.version AS action_version,
         CASE WHEN a.id IS NULL THEN 'Unavailable' WHEN a.status NOT IN ('Open','InProgress') THEN 'Needed' WHEN a.due_needed THEN 'DueNeeded' WHEN a.due_at<$10::timestamptz THEN 'Overdue' ELSE 'Upcoming' END AS next_action_state,
         ${sortKey} AS sort_key
       FROM ppo.opportunities o JOIN ppo.companies co ON (co.workspace_id,co.id)=(o.workspace_id,o.company_id)
       JOIN ppo.users u ON (u.workspace_id,u.id)=(o.workspace_id,o.owner_id)
       JOIN ppo.organisations r ON (r.workspace_id,r.id)=(o.workspace_id,o.organisation_id)
       LEFT JOIN ppo.sites s ON (s.workspace_id,s.id)=(o.workspace_id,o.site_id)
+      LEFT JOIN ppo.people pe ON (pe.workspace_id,pe.id)=(o.workspace_id,o.primary_person_id)
       LEFT JOIN ppo.activities a ON (a.workspace_id,a.id)=(o.workspace_id,o.next_activity_id) AND ${activityVisibility("a", true)}
       LEFT JOIN ppo.users au ON (au.workspace_id,au.id)=(a.workspace_id,a.owner_id)
       WHERE o.workspace_id=$1 AND ${opportunityVisibility()}
