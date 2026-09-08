@@ -301,9 +301,7 @@ export function EmailCalendar({ initialDay }: { initialDay: string }) {
   const [day, updateDay] = useState(initialDay),
     [view, setView] = useState<"day" | "agenda">("day"),
     [source, setSource] = useState("all"),
-    [selected, setSelected] = useState<CalendarEvent | CalendarActivity | null>(
-      null,
-    );
+    [selectedId, setSelectedId] = useState<string | null>(null);
   const modal = useRef<HTMLDialogElement>(null),
     opener = useRef<HTMLElement | null>(null);
   const r = useResource<{
@@ -311,6 +309,10 @@ export function EmailCalendar({ initialDay }: { initialDay: string }) {
     activities: CalendarActivity[];
     truncated: boolean;
   }>(`calendar?day=${day}`);
+  const selected = [
+    ...(r.data?.meetings ?? []),
+    ...(r.data?.activities ?? []),
+  ].find((item) => item.id === selectedId);
   const setDay = (value: string) => {
     updateDay(value);
     window.history.replaceState(
@@ -331,7 +333,7 @@ export function EmailCalendar({ initialDay }: { initialDay: string }) {
     activities = source === "meetings" ? [] : (r.data?.activities ?? []);
   function open(e: CalendarEvent | CalendarActivity) {
     opener.current = document.activeElement as HTMLElement;
-    setSelected(e);
+    setSelectedId(e.id);
     modal.current?.showModal();
   }
   const minutes = (s: string) =>
@@ -452,7 +454,11 @@ export function EmailCalendar({ initialDay }: { initialDay: string }) {
           </div>
           <label>
             Show
-            <select aria-label="Show" value={source} onChange={(e) => setSource(e.target.value)}>
+            <select
+              aria-label="Show"
+              value={source}
+              onChange={(e) => setSource(e.target.value)}
+            >
               <option value="all">All items</option>
               <option value="meetings">Meetings</option>
               <option value="activities">Activities</option>

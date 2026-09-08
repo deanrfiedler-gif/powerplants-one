@@ -72,7 +72,7 @@ test("EC complete journey, reload, calendar navigation, details, narrow layout a
   await page
     .getByRole("button", { name: "Create follow-up", exact: true })
     .click();
-  await expect(page.getByRole("alert")).toContainText("could not be confirmed");
+  await expect(page.locator('.business-error[role="alert"]')).toContainText("could not be confirmed");
   await page
     .getByRole("button", { name: "Create follow-up", exact: true })
     .click();
@@ -152,7 +152,7 @@ test("EC complete journey, reload, calendar navigation, details, narrow layout a
   await page.goto(`/email/${message}`);
   await identity(page, "systems");
   await expect(page.locator(".ec-body")).toHaveCount(0);
-  await expect(page.getByRole("alert").first()).toContainText("unavailable");
+  await expect(page.locator('.business-error[role="alert"]').first()).toContainText("unavailable");
   const denied = await page.request.get(`/api/v1/email/${message}`);
   expect(denied.status()).toBe(404);
   const hostile = await page.request.post(`/api/v1/email/${message}/link`, {
@@ -160,4 +160,63 @@ test("EC complete journey, reload, calendar navigation, details, narrow layout a
     data: {},
   });
   expect(hostile.status()).toBe(403);
+});
+
+test("EC accepted r02 demo: date navigation, timeline, details and phone sheet", async ({
+  page,
+}, info) => {
+  const { pathToFileURL } = await import("node:url");
+  const { resolve } = await import("node:path");
+  const { execFileSync } = await import("node:child_process");
+  const exported = info.outputPath("accepted-r02-demo.html");
+  execFileSync("python3", [
+    resolve("docs/blueprints/email-calendar-prototype/export.py"),
+    exported,
+  ]);
+  await page.goto(pathToFileURL(exported).href);
+  await page
+    .locator('[data-action="nav"][data-view="calendar"]:visible')
+    .first()
+    .click();
+  await expect(page.locator(".week-strip")).toBeVisible();
+  await expect(page.locator(".timeline-event").first()).toBeVisible();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: info.outputPath("accepted-r02-calendar.png"),
+    fullPage: true,
+  });
+  await page.locator(".timeline-event").first().click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  const box = await page.getByRole("dialog").boundingBox();
+  expect(box!.x).toBeGreaterThanOrEqual(0);
+  expect(box!.x + box!.width).toBeLessThanOrEqual(
+    page.viewportSize()!.width + 1,
+  );
+  await page.screenshot({
+    path: info.outputPath("accepted-r02-event-details.png"),
+  });
+  await page.getByRole("button", { name: "Close dialog", exact: true }).click();
+  await page.getByRole("button", { name: "Next week", exact: true }).click();
+  await expect(page.locator("#selected-day")).toContainText("15");
+  await page
+    .getByRole("button", { name: "Previous week", exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: "Choose calendar date", exact: true })
+    .click();
+  await page.getByLabel("Calendar date", { exact: true }).fill("2026-09-09");
+  await page.getByRole("button", { name: "Show date", exact: true }).click();
+  await expect(page.locator("#selected-day")).toContainText("9");
+  await page
+    .getByRole("button", {
+      name: "Return to sample day, 8 September 2026",
+      exact: true,
+    })
+    .click();
+  await page.getByRole("button", { name: "Agenda", exact: true }).click();
+  await expect(page.locator(".agenda-list")).toBeVisible();
 });
