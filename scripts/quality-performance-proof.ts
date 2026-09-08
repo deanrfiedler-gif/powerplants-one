@@ -16,9 +16,9 @@ async function resourceSnapshot() {
   for (const pid of (await readdir("/proc")).filter((x) => /^\d+$/.test(x))) {
     try {
       const name = (await readFile(`/proc/${pid}/comm`, "utf8")).trim();
-      if (!/^(node|chrome|chromium|headless_shell|postgres)/.test(name)) continue;
+      if (!/^(node|MainThread|next-server|chrome|chromium|headless_shell|postgres)/.test(name)) continue;
       const status = await readFile(`/proc/${pid}/status`, "utf8");
-      const group = name.startsWith("node") ? "node" : name.startsWith("postgres") ? "postgres" : "chromium";
+      const group = /^(node|MainThread|next-server)/.test(name) ? "node" : name.startsWith("postgres") ? "postgres" : "chromium";
       const item = processes[group] ??= { count: 0, resident_kib: 0 };
       item.count++;
       item.resident_kib += Number(status.match(/^VmRSS:\s+(\d+)/m)?.[1] ?? 0);
@@ -233,6 +233,7 @@ try {
                 coreEvents.push({ event: "request-failed", elapsed_ms: performance.now() - at, error: request.failure()?.errorText ?? "Unknown transport failure" });
             };
             const completed = (request: import("@playwright/test").Request) => {
+              if (request.isNavigationRequest() && request.frame() === page.mainFrame()) documentEvent("document-finished");
               if (["script", "font", "stylesheet"].includes(request.resourceType())) assets.completed++;
               const asset = assetEvents.get(request);
               if (asset) asset.completed_ms = performance.now() - at;
@@ -314,6 +315,33 @@ try {
                     captureError = captureFailure instanceof Error ? captureFailure.message : "Capture failed";
                     return null;
                   });
+                // Independent control reads occur only AFTER the failed sample
+                // is frozen. They do not traverse the page renderer or its CDP
+                // throttling, and cannot turn the failed measurement into a pass.
+                const assetPath = [...assetEvents.values()].find((asset) =>
+                  asset.type === "script" && asset.path.startsWith("/_next/static/"))?.path;
+                const probes = [
+                  { kind: "core-api", path: view.api },
+                  { kind: "document", path: view.route },
+                  ...(assetPath ? [{ kind: "requested-script", path: assetPath }] : []),
+                ];
+                const controlReads = await Promise.all(probes.map(async (probe) => {
+                  const began = performance.now();
+                  try {
+                    const response = await page.context().request.get(origin + probe.path, {
+                      timeout: 5000, maxRetries: 0, maxRedirects: 0,
+                    });
+                    try {
+                      const body = await response.body();
+                      return { kind: probe.kind, elapsed_ms: performance.now() - began,
+                        status: response.status(), byte_count: body.length,
+                        sha256: createHash("sha256").update(body).digest("hex") };
+                    } finally { await response.dispose(); }
+                  } catch {
+                    return { kind: probe.kind, elapsed_ms: performance.now() - began,
+                      unavailable: true };
+                  }
+                }));
                 await writeFile(
                   `${root}/${name}-proof.json`,
                   JSON.stringify(
@@ -326,6 +354,8 @@ try {
                       page_closed: page.isClosed(),
                       page_path: new URL(page.url()).pathname,
                       capture_error: captureError,
+                      post_failure_control_reads: controlReads,
+                      control_read_limit: "At most three concurrent 5-second GETs using the same server-issued browser-context session through APIRequestContext, outside renderer/CDP throttling and after the failed timing boundary. No retry, redirect, body, URL query, cookie or header is retained. These observations never replace the failed sample and may warm server caches before later waves.",
                       resources: await resourceSnapshot(),
                       diagnostic_limit: "Frozen failed-sample observation: at most 20 core GET and 20 main-document events, 40 same-origin asset paths/timings/statuses, aggregate counts and applied network-rule IDs. Process resident memory/cgroup counters and bounded screenshot follow outside the sample. No process arguments, bodies, headers, query strings, cookies or session trace. No unbounded DOM query is attempted against an unresponsive renderer.",
                       byte_count: bytes?.length ?? null,
