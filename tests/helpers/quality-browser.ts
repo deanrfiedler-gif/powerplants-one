@@ -46,6 +46,7 @@ export function recordBrowserReads(page: Page, info: TestInfo) {
       executed_tree: execFileSync("git", ["rev-parse", "HEAD^{tree}"], { encoding: "utf8" }).trim(),
       run_id: process.env.GITHUB_RUN_ID, run_attempt: process.env.GITHUB_RUN_ATTEMPT,
       scenario: info.title, viewport: page.viewportSize(), status: info.status,
+      browser_channel: info.project.use.channel ?? "default headless shell",
       limits: "Primary page transport events only; response status does not establish a complete body. No request bodies, headers, query strings, cookies, error text or raw traces.",
       record_limit: 3000, dropped, records,
     }, null, 2));

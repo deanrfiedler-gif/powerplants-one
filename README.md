@@ -1,5 +1,7 @@
 # Powerplants One
 
+P11's [repair PR #63](https://github.com/deanrfiedler-gif/powerplants-one/pull/63) adds explicit Finance context-read recovery and bounded browser diagnostics after the original merged-main verification failed. The [handover](docs/delivery/p11-handover.md) and its authoritative external publication establish the latest exact-head and actual-main result; the original PR #57 merge alone does not enable P12.
+
 Private prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance.
 
 **Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P11 integrated quality implementation; exact delivery publication in its linked handover; P12 prepared only · **Deployment:** none.

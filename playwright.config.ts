@@ -5,6 +5,9 @@ export default defineConfig({
   workers: 1,
   timeout: 45000,
   use: {
+    // Use the pinned bundled full Chromium browser's headless mode for UI
+    // assurance; preserve every case/deadline and record this profile change.
+    channel: "chromium",
     baseURL: "http://127.0.0.1:3000",
     locale: "en-AU",
     screenshot: "only-on-failure",

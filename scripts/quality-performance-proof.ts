@@ -105,7 +105,7 @@ try {
     await new Promise((r) => setTimeout(r, 500));
   }
   assert.ok(ready, "The exact guarded development server must start");
-  browser = await chromium.launch();
+  browser = await chromium.launch({ channel: "chromium" });
   const views = [
     {
       name: "Customers",
@@ -123,6 +123,13 @@ try {
       name: "Planner",
       route: "/schedule",
       api: "/api/v1/schedule",
+      // Same initial seven-day Brisbane period as the planner UI. An omitted
+      // range only tests validation (422), not the permitted planner read.
+      controlApi: "/api/v1/schedule?" + new URLSearchParams({
+        from: "2026-09-20T14:00:00.000Z",
+        to: "2026-09-27T14:00:00.000Z",
+        timezone: "Australia/Brisbane",
+      }).toString(),
       profile: "coordinator",
     },
     {
@@ -321,7 +328,7 @@ try {
                 const assetPath = [...assetEvents.values()].find((asset) =>
                   asset.type === "script" && asset.path.startsWith("/_next/static/"))?.path;
                 const probes = [
-                  { kind: "core-api", path: view.api },
+                  { kind: "core-api", path: view.controlApi ?? view.api },
                   { kind: "document", path: view.route },
                   ...(assetPath ? [{ kind: "requested-script", path: assetPath }] : []),
                 ];
@@ -445,6 +452,7 @@ try {
         profile: {
           node: process.version,
           browser: browser.version(),
+          browser_execution: "Pinned Playwright bundled full Chromium, channel chromium, unified headless mode. Earlier unset-channel headless-shell samples are a separate profile, not pooled with this series.",
           platform: platform(),
           os_release: release(),
           arch: arch(),
