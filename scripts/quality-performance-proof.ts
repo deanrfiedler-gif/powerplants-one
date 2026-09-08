@@ -8,6 +8,10 @@ import { chromium, expect, type BrowserContext, type CDPSession, type Page } fro
 import { closeDatabase, database } from "../src/platform/database";
 import { qualityLoadFixture } from "./quality-load-fixture";
 
+// Each virtual user normally owns a browser process/network service. Keep the
+// original shared-process profile explicitly available for comparison.
+const browserProcessCount = process.env.PPO_LOAD_BROWSER_PROCESSES ?? "10";
+assert.ok(["1", "10"].includes(browserProcessCount), "PPO_LOAD_BROWSER_PROCESSES must be 1 or 10");
 const root = "verification-evidence/p11-performance";
 await mkdir(root, { recursive: true });
 const origin = "http://127.0.0.1:3000";
@@ -92,7 +96,7 @@ const samples: {
   core_requests_with_network_rule: number;
   error: string | null;
 }[] = [];
-let browser: Awaited<ReturnType<typeof chromium.launch>> | undefined;
+const browsers: Awaited<ReturnType<typeof chromium.launch>>[] = [];
 try {
   let ready = false;
   for (let n = 0; n < 120; n++) {
@@ -105,7 +109,10 @@ try {
     await new Promise((r) => setTimeout(r, 500));
   }
   assert.ok(ready, "The exact guarded development server must start");
-  browser = await chromium.launch({ channel: "chromium" });
+  // Retain each handle immediately so a later launch failure still closes
+  // the processes already started. Launching remains outside measured waves.
+  for (let n = 0; n < Number(browserProcessCount); n++)
+    browsers.push(await chromium.launch({ channel: "chromium" }));
   const views = [
     {
       name: "Customers",
@@ -146,7 +153,7 @@ try {
   ]) {
     for (const view of views) {
       for (let user = 0; user < 10; user++) {
-        const context = await browser.newContext({
+        const context = await browsers[user % browsers.length].newContext({
           viewport: { width: viewport.width, height: viewport.height },
           locale: "en-AU",
           isMobile: viewport.name === "phone",
@@ -451,7 +458,8 @@ try {
         fixture,
         profile: {
           node: process.version,
-          browser: browser.version(),
+          browser: browsers[0].version(),
+          browser_processes: browsers.length,
           development_compiler: process.env.PPO_DEV_COMPILER ?? "turbopack",
           browser_execution: "Pinned Playwright bundled full Chromium, channel chromium, unified headless mode. Earlier unset-channel headless-shell samples are a separate profile, not pooled with this series.",
           platform: platform(),
@@ -470,7 +478,7 @@ try {
           build:
             "Pinned Next.js guarded development server after successful production compilation check. Development compiler filesystem cache remains disabled. Production hosting/start remains prohibited.",
           concurrency:
-            "10 independent browser contexts and server-issued sessions per view wave; role-appropriate existing synthetic Coordinator or assigned Technician identity. These are 10 virtual users, not 10 distinct staff identities.",
+            `${browsers.length} Chromium browser process(es); ten fresh contexts and server-issued sessions per view wave, ${browsers.length === 10 ? "one process and network service per virtual user" : "original shared-process comparison"}. Role-appropriate existing synthetic Coordinator or assigned Technician identity. These are 10 virtual users, not 10 distinct staff identities.`,
           cold_warm:
             "Each view begins with 10 fresh contexts, empty browser caches and no preceding measured navigation in those contexts. Only the first desktop visit can include first route compilation in this shared fresh server; later views/phone can reuse server modules and database/OS caches. Warm is three subsequent navigation waves in the same contexts. No OS cache flush or durable offline-storage inference.",
           boundary:
@@ -493,7 +501,7 @@ try {
     "Core read errors must be investigated; raw timings and failures retained",
   );
 } finally {
-  await browser?.close();
+  await Promise.all(browsers.map((browser) => browser.close()));
   if (server.exitCode === null && server.signalCode === null) {
     const stopped = once(server, "exit");
     server.kill("SIGTERM");
