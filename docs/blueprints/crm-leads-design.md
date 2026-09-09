@@ -3,7 +3,7 @@
 | Document control | Value |
 |---|---|
 | Document ID | PPO-009-LEADS-DES |
-| Revision / date | r01 / 9 September 2026 |
+| Revision / date | r02 / 9 September 2026 |
 | Status | Design and synthetic preview; application implementation pending |
 | Owner | Dean Fiedler |
 | Workstream | PPO-009 / issue #9; CRM-01, CRM-02, CRM-03, CRM-08 |
@@ -29,11 +29,29 @@ Current main still documents and implements Enquiry → Qualified / Open. PR #75
 | Toolbar | Active / Archived / Disqualified / Converted view; owner, status and source filters; date-added or title sort. Status selector is active-status only and disabled for terminal views. Clear filters preserves selected lifecycle view. |
 | Desktop list | Lead title; organisation/contact; owner; status; source; next activity with due date; date added. Title is a keyboard-accessible link. One vertical scroll region and a sticky table heading; no per-row scrolling. |
 | Row detail | Desktop right-side dialog; full-screen dialog on phone. Title/reference, state, owner, organisation/contact/site, enquiry and source, notes/history, next activity and conversion action. Close returns focus to the originating row. |
-| Mobile list | Same ordered records rendered as compact border-separated rows: title, organisation, status, owner and next activity/date. Secondary source/contact/date-added remain in the detail view. No Kanban or hidden conversion action. |
+| Mobile list | Single white app bar: back, sort, Inbox/lifecycle selector, search and filter. Full-width three-line rows show title, organisation/contact and status/activity due or attention text. Owner and full next-activity title remain in the preserved detail; owner is also announced with each row. Floating + Lead. No bottom navigation on Leads. |
 | New lead | Title, owner and enquiry summary required; source defaults explicitly to Manual. Existing permitted organisation/contact optional at capture; supplied unverified organisation/contact text remains an enquiry detail, never a silently created shared master. Optional next action; otherwise show Next action needed. |
 | Converted lead | Read-only source history with a permitted Open deal link; excluded from Active. Missing authority to the deal shows Linked deal unavailable without leaking its title. |
 
 Search covers permitted lead title, enquiry and linked visible organisation/contact; source/owner/status use bounded selectors. Stable sort includes an ID tie-breaker. Runtime pagination must label returned-page counts and preserve filter/sort/scroll on detail return. Failed reads must never become zero leads. No forecast totals appear on Leads. Values remain optional detail information for a later commercial extension; unknown is not zero.
+
+### Mobile refinement r02
+
+Dean requested a phone layout similar to the two supplied Pipedrive screenshots, retaining the individual lead detail styling and focusing this increment on Leads. These images are user-supplied visual references, not an observation of a live account; their customer content and image files are not redistributed. The example records remain synthetic.
+
+At 700px and below, the Leads page replaces the navigation rail, product/profile bar, heading and persistent filter rows with a single sticky white toolbar. The back button opens the existing Deals destination preview; a runtime direct link should use a safe CRM fallback and preserve the originating destination rather than blindly exiting browser history. The selected Active view reads **Inbox** on phone, with Archived, Disqualified and Converted available in the same native selector. The selected view, count and data are shared with desktop.
+
+Search opens one labelled field beneath the app bar. Cancel clears and closes it. Sort opens a compact sheet with newest, oldest and title order. Filters open a bottom sheet with owner, status and source; **Show leads** applies the choices, while Cancel/Escape restores the previous filters. Clear filters preserves the lifecycle view. A small indicator marks applied filters. The native dialog contains focus and returns it to the triggering control. Responsive resizing restores the controls to the desktop toolbar without duplicating IDs or losing committed selections.
+
+Rows begin immediately below a compact count/preview strip, with no outer cards or horizontal scroll. Each complete row is one keyboard-accessible button: title, organisation/contact and a quiet status plus due/attention line. Long titles and company names truncate in the list and remain complete in accessible text and the existing detail. Overdue, unknown due and missing next action remain distinct; warning symbols supplement explicit text. A green 58px floating add button has a navy plus and accommodates the device safe area. A true empty Inbox and a filtered no-match state have different copy and retain a clear recovery action. No Android status bar or system-navigation imitation is included.
+
+The lead drawer, full-screen phone detail, notes, activity information and conversion form retain their r01 layout and behavior. Desktop layout remains the same apart from the revision marker. The phone workflow remains a standalone in-memory demonstration, not a delivered runtime page.
+
+### Future mobile bottom navigation direction — design note only
+
+For top-level CRM destinations such as Deals, propose five stable items: **My work, Deals, Activities, Contacts, More**. Use the existing navy background, white outline icons and short text labels, with a green selected indicator and a lighter navy selected tile. Selection must not rely on colour alone. Keep targets at least 44px and include bottom safe-area padding. Put the create button above the bar, separate from destination selection, so its action always belongs to the current page.
+
+Leads remains a secondary inbox with a top-left back button and no bottom bar; record detail keeps its existing full-screen presentation. Hide top-level navigation while a modal or keyboard takes focus. This is a proposed direction for a later Deals design review, not new navigation delivered or an expansion of this Leads increment. Final destination labels and More contents should be reconciled with the current application before implementation.
 
 ## 3. State and qualification
 
@@ -161,3 +179,9 @@ Dean explicitly approved publishing this synthetic design package to the public 
 ### First remote preview verification
 
 [Draft PR #82](https://github.com/deanrfiedler-gif/powerplants-one/pull/82) published source `dfc6df91bfa6741e9b7ab66ce3de31b632560c6e` with tree matching local preparation. [Run 34399774385](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34399774385) passed the existing 147-view wireframe and 17-capture branded checks. The new journey captured the desktop list/detail/conversion/deal and verified source Activity preservation, but stopped at the exact View selector. The correction adds explicit accessible names to native select controls without changing the assertions, timeout or business flow. Artifact 10122998212 retains the original evidence; corrected-source and phone verification remain pending.
+
+### r01 verified baseline and r02 follow-up
+
+The accessible-select correction at `9cad225387ccaa319435aa09ea1d44ed74d35159` passed [CRM design run 34400198070](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34400198070). Its 12 desktop/phone list, detail, conversion and deal screenshots were visually reviewed; exact HTML and screenshot hashes are retained in the run artifact. This supersedes the pending corrected-source statement above. It proves the synthetic design journey only.
+
+The r02 mobile refinement extends the same focused check with compact row/header placement, floating add, back navigation, sort, filter apply/cancel/Escape, search, true-empty and no-match screens, and responsive control relocation. Current-source run IDs and rendered review are recorded in [draft PR #82](https://github.com/deanrfiedler-gif/powerplants-one/pull/82) after execution. Application acceptance LC-01–LC-10 remains Not run.

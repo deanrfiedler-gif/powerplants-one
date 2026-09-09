@@ -1,6 +1,6 @@
 # Dedicated Leads workspace
 
-**Document ID:** PPO-009-LEADS-DEC · **Revision:** r01 · **Date:** 9 September 2026  
+**Document ID:** PPO-009-LEADS-DEC · **Revision:** r02 · **Date:** 9 September 2026
 **Status:** User-directed design; application implementation pending  
 **Owner:** Dean Fiedler · **Scope:** PPO-009 / CRM-01, CRM-02, CRM-03, CRM-08
 
@@ -17,3 +17,7 @@ Existing Enquiry-stage opportunities remain unchanged, visible and editable thro
 Already-qualified enquiries may be entered directly as deals, with the same qualification and next-action checks in the future implementation. Operational thresholds, source import, live communications and deployment are outside this design. These choices do not close account parity or full AT-25.
 
 The [design and implementation boundary](../blueprints/crm-leads-design.md) owns fields, interaction, conversion preservation, future verification and current handover. The [synthetic preview](../blueprints/crm-leads-preview.html) is in-memory only. This file records a product decision, not a claim of runtime delivery.
+
+## Mobile refinement
+
+Dean subsequently requested a Pipedrive-like mobile Leads presentation with a top-left back button and preservation of the existing individual lead detail. Revision r02 replaces the phone navigation shell with a compact Inbox toolbar, full-width list rows, optional search, sort/filter sheets and a floating add button. Desktop and detail layouts are retained. Leads has no bottom navigation; a proposed navy five-destination bar for a later Deals review is documented in the design. This request continues the synthetic design scope and does not authorise runtime implementation or deployment.

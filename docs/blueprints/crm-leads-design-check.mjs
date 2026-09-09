@@ -28,6 +28,36 @@ try {
     await page.evaluate(() => document.fonts.ready);
     assert.equal(await page.locator('#count').innerText(), '7');
     await capture('list');
+    if (width < 700) {
+      assert.equal(await page.locator('.rail').isVisible(), false);
+      assert.equal(await page.locator('.mobile-header').isVisible(), true);
+      const row = await page.locator('.mobile-row').first().boundingBox();
+      assert(row.y <= 110 && row.height <= 110, 'Compact phone inbox must show records immediately');
+      const add = await page.locator('#add-lead').boundingBox();
+      assert(add.width >= 44 && add.height >= 44 && add.y + add.height <= height, 'Reachable floating add');
+      await page.getByRole('button', {name:'Back to Deals',exact:true}).click();
+      assert(await page.locator('#deals-page').isVisible());
+      await page.getByRole('button', {name:'Open Leads',exact:true}).click();
+      assert.equal(await page.locator('#count').innerText(), '7');
+      await page.getByRole('button', {name:'Sort leads',exact:true}).click();
+      await page.getByLabel('Sort', {exact:true}).selectOption('title');
+      await capture('sort');
+      await page.getByRole('button', {name:'Done',exact:true}).click();
+      assert.equal(await page.locator('.mobile-row').first().getAttribute('aria-label'), 'Climate monitoring review');
+      await page.getByRole('button', {name:'Sort leads',exact:true}).click();
+      await page.getByLabel('Sort', {exact:true}).selectOption('new');
+      await page.getByRole('button', {name:'Done',exact:true}).click();
+      await page.getByRole('button', {name:'Filters',exact:true}).click();
+      await page.getByLabel('Owner', {exact:true}).selectOption('Alex Lee');
+      await capture('filters');
+      await page.getByRole('button', {name:'Cancel',exact:true}).filter({visible:true}).click();
+      assert.equal(await page.locator('#count').innerText(), '7');
+      assert.equal(await page.evaluate(() => document.activeElement.id), 'mobile-filter');
+      await page.getByRole('button', {name:'Filters',exact:true}).click();
+      await page.getByLabel('Source', {exact:true}).selectOption('Referral');
+      await page.keyboard.press('Escape');
+      assert.equal(await page.locator('#count').innerText(), '7');
+    }
     const openFirst = () => page.getByRole('button', { name: 'Irrigation controls upgrade', exact: true }).filter({ visible: true }).click();
     await openFirst();
     assert.equal(await page.getByRole('dialog', { name: 'Irrigation controls upgrade' }).count(), 1);
@@ -37,7 +67,7 @@ try {
     await page.getByRole('button', { name: 'Cancel', exact: true }).filter({ visible: true }).click();
     assert(await page.locator('#detail').isVisible());
     await page.keyboard.press('Escape');
-    assert.equal(await page.evaluate(() => document.activeElement.textContent.trim()), 'Irrigation controls upgrade');
+    assert.equal(await page.evaluate(() => document.activeElement.getAttribute('aria-label') || document.activeElement.textContent.trim()), 'Irrigation controls upgrade');
     await openFirst();
     await page.getByRole('button', { name: 'Convert to deal', exact: true }).click();
     await page.getByRole('button', { name: 'Convert to deal', exact: true }).click();
@@ -53,14 +83,31 @@ try {
     await page.getByRole('button', { name: 'Leads', exact: true }).click();
     await page.getByLabel('View', { exact: true }).selectOption('Converted');
     assert.equal(await page.locator('#count').innerText(), '1');
+    if (width < 700) await page.getByRole('button', {name:'Search leads',exact:true}).click();
     await page.getByLabel('Search leads', { exact: true }).fill('no such enquiry');
     assert.equal(await page.locator('#count').innerText(), '0');
-    if (width < 700) await page.getByRole('button', { name: 'Filters', exact: true }).click();
+    if (width < 700) { await capture('no-matches'); await page.getByRole('button', { name: 'Filters', exact: true }).click(); }
     await page.getByRole('button', { name: 'Clear filters', exact: true }).click();
     assert.equal(await page.locator('#count').innerText(), '1');
+    if (width < 700) {
+      await page.getByRole('button', {name:'Show leads',exact:true}).click();
+      await page.getByRole('button', {name:'Cancel',exact:true}).filter({visible:true}).click();
+      assert.equal(await page.locator('#mobile-search-toggle').getAttribute('aria-expanded'), 'false');
+    }
     await page.getByLabel('View', { exact: true }).selectOption('Active');
+    if (width < 700) await page.getByRole('button', {name:'Filters',exact:true}).click();
     await page.getByLabel('Owner', { exact: true }).selectOption('Alex Lee');
     assert.equal(await page.locator('#count').innerText(), '3');
+    if (width < 700) {
+      await page.getByRole('button', {name:'Show leads',exact:true}).click();
+      assert(await page.locator('#mobile-filter').evaluate(el => el.classList.contains('filter-on')));
+      await page.getByRole('button', {name:'Search leads',exact:true}).click();
+      await page.getByLabel('Search leads', {exact:true}).fill('Climate');
+      assert.equal(await page.locator('#count').innerText(), '1');
+      await capture('search');
+      await page.getByRole('button', {name:'Cancel',exact:true}).filter({visible:true}).click();
+      assert.equal(await page.locator('#count').innerText(), '3');
+    }
     await page.getByRole('button', { name: '+ Lead', exact: true }).click();
     await page.getByLabel('Lead title', { exact: true }).fill('Synthetic test enquiry');
     await page.getByLabel('Customer requirement', { exact: true }).filter({ visible: true }).fill('Clarify a new synthetic requirement.');
@@ -80,8 +127,24 @@ try {
     await page.getByLabel('Reason', { exact: true }).fill('Synthetic customer has resumed the discussion.');
     await page.getByRole('button', { name: 'Reopen', exact: true }).click();
     assert((await page.locator('#detail-pill').innerText()).includes('New'));
+    await page.getByRole('button', {name:'Close lead',exact:true}).click();
+    if (width < 700) {
+      // Exercise a truly empty inbox using only this in-memory synthetic fixture.
+      await page.evaluate(() => { leads=[]; clearFilters(); render(); });
+      assert.equal(await page.locator('#count').innerText(), '0');
+      assert((await page.locator('#mobile').innerText()).includes('No active leads'));
+      await capture('empty-inbox');
+      await page.getByRole('button', {name:'+ Lead',exact:true}).click();
+      assert(await page.locator('#new-lead').isVisible());
+      await page.getByRole('button', {name:'Cancel',exact:true}).filter({visible:true}).click();
+      assert.equal(await page.evaluate(() => document.activeElement.id), 'add-lead');
+      await page.setViewportSize({width:1440,height:900});
+      assert(await page.getByLabel('Owner', {exact:true}).isVisible());
+      await page.setViewportSize({width,height});
+      assert(await page.locator('.mobile-header').isVisible());
+    }
     assert.deepEqual(errors, []);
-    evidence.viewports.push({width,height,result:'passed',checks:'List; detail; conversion; cancel/Escape/focus; original activity history/owner/date; retained converted source; search/clear/owner filter; capture unknowns; invalid conversion; archive/unarchive; reasoned disqualification/reopen; no horizontal overflow or page errors'});
+    evidence.viewports.push({width,height,result:'passed',checks:'List; compact phone toolbar/rows/FAB; back; sort; filter apply/cancel/Escape; search; empty inbox; responsive resize; detail; conversion; cancel/Escape/focus; original activity history/owner/date; retained converted source; search/clear/owner filter; capture unknowns; invalid conversion; archive/unarchive; reasoned disqualification/reopen; no horizontal overflow or page errors'});
     await page.close();
   }
 } finally {
