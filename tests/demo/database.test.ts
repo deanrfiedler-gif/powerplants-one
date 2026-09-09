@@ -113,7 +113,7 @@ test("each invited tester retains a private mailbox, CRM follow-up and calendar 
     expected_version: 2,
     activity_id: randomUUID(),
     summary: "SYN Confirm invitation journey",
-    due_at: `${day}T23:30:00+10:00`,
+    due_at: new Date(`${day}T23:30:00+10:00`).toISOString(),
   };
   await createEmailFollowup(p, message, follow);
   assert.equal((await createEmailFollowup(p, message, follow)).replayed, true);
