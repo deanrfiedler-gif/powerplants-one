@@ -157,3 +157,7 @@ The attempted push of `docs/crm-leads-design` was rejected by automatic approval
 ### Public publication approved
 
 Dean explicitly approved publishing this synthetic design package to the public `deanrfiedler-gif/powerplants-one` repository and opening a draft PR for verification. This supersedes the earlier publication hold; the hold remains recorded as history. The authority covers the prepared package, focused verification and corrections, not application implementation or deployment. Actual publication and rendered results remain to be recorded after execution.
+
+### First remote preview verification
+
+[Draft PR #82](https://github.com/deanrfiedler-gif/powerplants-one/pull/82) published source `dfc6df91bfa6741e9b7ab66ce3de31b632560c6e` with tree matching local preparation. [Run 34399774385](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34399774385) passed the existing 147-view wireframe and 17-capture branded checks. The new journey captured the desktop list/detail/conversion/deal and verified source Activity preservation, but stopped at the exact View selector. The correction adds explicit accessible names to native select controls without changing the assertions, timeout or business flow. Artifact 10122998212 retains the original evidence; corrected-source and phone verification remain pending.
