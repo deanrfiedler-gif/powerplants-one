@@ -1,4 +1,10 @@
-import { test, expect, type Page } from "@playwright/test";
+import {
+  test,
+  expect,
+  type Frame,
+  type Page,
+  type Request,
+} from "@playwright/test";
 import { crmCreate } from "../helpers/crm";
 import type { DirectoryView } from "../../src/crm/directory";
 test.describe.configure({ timeout: 120000 });
@@ -183,21 +189,39 @@ test("desktop directory tables and mobile lists share saved, scoped queries", as
   await expect(
     page.getByText("View saved for your account.", { exact: true }),
   ).toBeVisible();
+  await expect(savedView).toHaveValue(viewName);
   // Observe the real reload read, so a missing preset fails at its source.
-  const [viewsResponse] = await Promise.all([
-    page.waitForResponse((response) => {
-      const url = new URL(response.url());
-      return (
-        response.request().method() === "GET" &&
-        url.pathname === "/api/v1/crm/directory/views" &&
-        url.searchParams.get("kind") === "people"
-      );
-    }),
-    page.reload(),
-  ]);
-  expect(viewsResponse.status()).toBe(200);
-  const persisted: { version: number; views: DirectoryView[] } =
-    await viewsResponse.json();
+  // Exclude a save-time refresh or poll belonging to the outgoing document.
+  let reloadCommitted = false;
+  const reloadRequests = new Set<Request>();
+  const onNavigation = (frame: Frame) => {
+    if (frame === page.mainFrame()) reloadCommitted = true;
+  };
+  const onRequest = (request: Request) => {
+    if (reloadCommitted) reloadRequests.add(request);
+  };
+  page.on("framenavigated", onNavigation);
+  page.on("request", onRequest);
+  let persisted: { version: number; views: DirectoryView[] };
+  try {
+    const [viewsResponse] = await Promise.all([
+      page.waitForResponse((response) => {
+        const url = new URL(response.url());
+        return (
+          reloadRequests.has(response.request()) &&
+          response.request().method() === "GET" &&
+          url.pathname === "/api/v1/crm/directory/views" &&
+          url.searchParams.get("kind") === "people"
+        );
+      }),
+      page.reload(),
+    ]);
+    expect(viewsResponse.status()).toBe(200);
+    persisted = await viewsResponse.json();
+  } finally {
+    page.off("framenavigated", onNavigation);
+    page.off("request", onRequest);
+  }
   expect(persisted.version).toBeGreaterThan(0);
   expect(persisted.views.find((view) => view.name === viewName)).toEqual({
     name: viewName,

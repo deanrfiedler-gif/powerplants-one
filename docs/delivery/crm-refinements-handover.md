@@ -38,6 +38,8 @@ The same original head also exposed an E1 upgrade assertion comparing pre-migrat
 
 Local lint, TypeScript, 33 unit cases and build passed during this correction. Fresh corrected-head CI remains required; other retained I2/restart/full-suite failures on the original head remain under review. No merge or complete application acceptance is claimed.
 
+Follow-up head `b68bb8eedaade0ddecff8bb826299be14ff65377`, [run 34301846559](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34301846559), passed all four database cases and three of four browser journeys, including mobile directory persistence. Both projects found the corrected label. Desktop failed the new response-body assertion because its observer could capture a save-time preferences GET from the outgoing document. The observer now admits only requests started after the reload commits to the main frame and removes its listeners afterwards; preset-content, exact label, restored presentation and original deadlines remain. E1's corrected database and HTTP components also passed on this head; full assurance is still separate.
+
 ## Remaining contract boundaries
 
 Only Enquiry and Qualified currently exist. A drop uses the selected stage form because qualification evidence is mandatory. New stage/outcome/handover contracts, organisation/site/owner reassociation, the full facility taxonomy, multiple person phone/email channels, job-title/person-record-owner fields, arbitrary attachments, quote issue/acceptance and live integration remain separate work. Existing site/facility hierarchy and person affiliation roles are retained. The Pipedrive export informed field concepts without being imported.
