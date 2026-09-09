@@ -21,6 +21,7 @@ test("hosted header, populated board, filtering and independent card targets", a
   await expect(
     page.getByLabel("Search opportunities", { exact: true }),
   ).toBeVisible();
+  await expect(page.getByText("Synthetic data only", { exact: true })).toBeVisible();
   const geometry = await page.evaluate(() => {
     const header = document.querySelector(".topbar")!.getBoundingClientRect();
     const account = document
@@ -53,7 +54,18 @@ test("hosted header, populated board, filtering and independent card targets", a
   if (info.project.name === "desktop") expect(geometry.railFits).toBe(true);
   expect(new Set(geometry.cardHeights).size).toBe(1);
   expect(geometry.cardHeights[0]).toBeLessThan(290);
+  await expect(page.locator(".crm-stage-heading:visible")).toHaveCount(
+    info.project.name === "desktop" ? 2 : 1,
+  );
   await page.screenshot({ path: info.outputPath("populated-board.png") });
+  await page.getByLabel("Sort", { exact: true }).selectOption("Title");
+  await expect(page.locator(".crm-card:visible").first()).toContainText(
+    "Automated fertigation system",
+  );
+  await page.getByLabel("Sort", { exact: true }).selectOption("Reference");
+  await expect(page.locator(".crm-card:visible").first()).toContainText(
+    "Glasshouse climate control upgrade",
+  );
   const card = page.locator(".crm-card:visible").first();
   await expect(card.locator(".crm-card-close")).toContainText("30 Oct 2026");
   await expect(card.locator(".crm-card-activity")).toHaveAttribute(
@@ -79,7 +91,7 @@ test("hosted header, populated board, filtering and independent card targets", a
     .getByLabel("Search opportunities", { exact: true })
     .fill("Glasshouse");
   await expect(page.locator(".crm-worklist-stamp")).toContainText(
-    "1 opportunities",
+    "1 opportunity",
   );
   await page.getByRole("button", { name: "List", exact: true }).click();
   await expect(page.locator("tbody tr")).toHaveCount(1);

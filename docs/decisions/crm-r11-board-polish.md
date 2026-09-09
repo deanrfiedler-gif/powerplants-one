@@ -39,7 +39,14 @@ existing PR #73 is a separate dependency. The deployed image remains
   full browser and restart checks remain. Two retained browser selectors follow
   moved content: the contact card area and page-completeness footer.
 - Local lint, type checking, 39 unit tests and the application build pass.
-- This workspace browser blocks local URLs/HTML previews. Rendered comparison
-  awaits GitHub screenshots; no visual pass or Azure update is claimed.
+- This workspace browser blocks local URLs/HTML previews. GitHub screenshot
+  artifacts supply rendered review evidence instead. First-run screenshots were
+  inspected at 1440/390/320px; the review found and corrected duplicate mobile
+  stage headings, wrapped hosted controls and a cramped local identity selector.
+- The first GitHub run passed CRM database/browser refinement journeys and
+  application/database restart proof. Retained I2 checks exposed the moved Sort
+  control's missing explicit accessible label; it is corrected. The component
+  fixture now keeps access denied after filters clear, matching revoked access.
+  Final-source reruns and human review of corrected screenshots remain pending.
 - Exact GitHub execution results belong in the correction PR. Keep it a draft
   until the available evidence is reviewed.

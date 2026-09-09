@@ -73,6 +73,8 @@ const envelope = (items: unknown[]) => ({
   observed_at: "2026-09-09T00:00:00Z",
   completeness: "Complete",
 });
+// Revoked access stays revoked when the worklist clears its search filters.
+let accessDenied = false;
 window.fetch = async (input) => {
   const url = new URL(String(input), "http://fixture.invalid");
   let data: unknown;
@@ -85,13 +87,12 @@ window.fetch = async (input) => {
   else if (url.pathname.includes("worklist-options")) data = envelope([]);
   else if (url.pathname.endsWith("/crm/opportunities")) {
     const search = (url.searchParams.get("q") ?? "").toLowerCase();
-    if (search === "denied")
+    if (search === "denied") accessDenied = true;
+    if (accessDenied)
       return new Response(
         JSON.stringify({
-          error: {
-            code: "PermissionDenied",
-            message: "This identity cannot read opportunities.",
-          },
+          code: "PermissionDenied",
+          message: "This identity cannot read opportunities.",
         }),
         { status: 403 },
       );
