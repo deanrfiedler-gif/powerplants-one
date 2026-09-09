@@ -52,6 +52,10 @@ MYOB Acumatica remains the intended authoritative ERP. SharePoint remains the in
 
 Application code is in `src/`, explicit SQL migrations and fixtures are in `db/`, and runtime checks are in `tests/`. See [P08 setup, verification and handover](docs/delivery/p08-handover.md) and [ADR-0006](docs/decisions/ADR-0006-p01-local-foundation.md) for the local-only implementation and limits.
 
+## Private hosted demo preparation
+
+The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separate hosted runtime, owner setup, tester access and image updates. The GitHub connection check passed; actual deployment and live sign-in acceptance remain pending. Local development continues using the commands below.
+
 ## Run the local application
 
 Follow the [exact P08 setup and run commands](docs/delivery/p08-handover.md#runtime-setup-and-recovery): Node 24.20.0, npm 11.19.0, PostgreSQL 16.15, `npm ci`, ignored local configuration, migration/seed and `npm run dev`. Open `http://127.0.0.1:3000`. Production startup is intentionally refused. The handover includes test, reset and recovery commands.

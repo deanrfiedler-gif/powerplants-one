@@ -1,5 +1,7 @@
 # Current prototype status
 
+9 September hosted-demo continuation: GitHub OIDC login and the exact tenant/subscription/resource-group read passed in [run 34310429878](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34310429878). Dean authorised preparing the hosted app next. The [Azure private demo package](delivery/azure-private-demo.md) adds an explicit hosted runtime, individual Entra sign-in, expiring tester mapping, private Blob persistence, separate operator setup and image updates. Local guards remain. Code validation and remote CI are separate from unexecuted Azure provisioning, live sign-in and phone acceptance. Earlier connection-pending entries below are historical.
+
 
 P11 continuation, 7 September: Dean approved separately recorded whole-minute Travel as explicitly NonBillable/no-posting for the selected synthetic journey. ADR-0018 and migration/seed 0013 implement the bounded successor; the P11 handover and authoritative external record govern exact verification and delivery completion. P12 remains preparation only.
 **Updated:** 7 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P09/P10, CRM I1–I2 and estimating E1 bounded implementations; exact verification/publication governed by their handovers and external records. PP-01 remains incomplete.

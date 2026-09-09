@@ -1,11 +1,11 @@
 import "server-only";
 import { randomUUID, timingSafeEqual } from "node:crypto";
 import { NextResponse, type NextRequest } from "next/server";
-import { localConfig } from "./config";
+import { runtimeConfig } from "./config";
 import { AppError } from "./errors";
 import { resolveIdentity, sessionCookie } from "./identity";
 export function localRequest(request: NextRequest, mutation = false) {
-  const config = localConfig(),
+  const config = runtimeConfig(),
     expected = process.env.PPO_LOCAL_GATEWAY,
     actual = request.headers.get("x-ppo-local-gateway");
   if (

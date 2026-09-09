@@ -14,7 +14,7 @@ export function useIdentity() {
   if (!p) throw Error("Business session is required");
   return p;
 }
-export function BusinessSession({ children }: { children: React.ReactNode }) {
+export function BusinessSession({ children, hosted = false }: { children: React.ReactNode; hosted?: boolean }) {
   const [showIdentity, setShowIdentity] = useState(false);
   const [p, setP] = useState<Identity | null>(null),
     [profile, setProfile] = useState("coordinator"),
@@ -37,6 +37,7 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
     };
   }, []);
   async function select() {
+    if (hosted) return;
     lockOtherBusinessViews();
     setP(null);
     setEpoch((x) => x + 1);
@@ -55,6 +56,11 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
   }
   return (
     <>
+      {hosted ? <section className="identity-strip identity-compact" aria-label="Private demo account">
+        <strong>{p?.display_name ?? "Private prototype"}</strong>
+        <span>Fictional records</span>
+        {p ? <form action="/auth/logout" method="post" onSubmit={() => lockOtherBusinessViews()}><button className="secondary">Sign out</button></form> : <a href="/auth/login">Sign in with Microsoft</a>}
+      </section> : <>
       <section
         className="identity-strip identity-compact"
         aria-label="Local demonstration identity"
@@ -105,6 +111,7 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
       {p && <button className="secondary" onClick={() => { lockOtherBusinessViews(); setP(null); setEpoch(x=>x+1); void (async()=>{try{if(localStorage.getItem("ppo-offline-marker"))await lockLocal();await api("local-session/sign-out",{});}catch(e){setError(e);}finally{lockOtherBusinessViews();}})();}}>Sign out</button>}
         </div>
       </section>
+      </>}
       <ErrorNotice error={error} />
       {p ? (
         <Session.Provider value={p}>
@@ -112,7 +119,7 @@ export function BusinessSession({ children }: { children: React.ReactNode }) {
         </Session.Provider>
       ) : (
         <p className="empty-state">
-          {loading ? "Loading demonstration identity…" : "Select an identity to load its permitted business records."}
+          {loading ? "Loading demonstration identity…" : hosted ? "Sign in with your invited Microsoft account." : "Select an identity to load its permitted business records."}
         </p>
       )}
     </>
