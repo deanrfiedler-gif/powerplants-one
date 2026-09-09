@@ -25,3 +25,5 @@ Local foundation/prototype/naming assurance and `git diff --check` passed on 9 S
 ## Continuation
 
 Review the four-screen journey and keep/adopt/cancel behaviour. Obtain one real package's rule and source evidence, then prepare its bounded application integration against current E1 and the questionnaire/source contracts. Main is unchanged until a normal reviewed merge; this contribution ends at a reviewable design PR. No independent human review or business acceptance is claimed.
+
+Initial design run [34347239009](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34347239009) at `a46c5cac` passed existing estimating design/model checks and the new baseline/labour interactions. Its wizard browser check stopped at the manual-adjustment selector: the wrapping select label included option text and did not match its intended exact accessible name. The correction adds explicit accessible names to the three select controls; assertions and timeouts are unchanged. The initial failure remains recorded, and corrected-head verification is pending.
