@@ -855,7 +855,7 @@
 }
 
 /* The full Activity link owns keyboard focus; its owner help remains accessible. */
-.crm-card-activity:focus-visible .crm-help-trigger:not([data-dismissed=true])::after {
+.crm-card-activity:focus .crm-help-trigger:not([data-dismissed=true])::after {
   content: attr(data-tooltip);
   position: absolute;
   bottom: 100%;
