@@ -388,6 +388,8 @@ body:has(.crm-workspace) .header-account .identity-hosted {
     padding: 8px 12px;
   }
   .topbar .product-heading {
+    grid-column: 2;
+    grid-row: 1;
     margin: 2px 0 0;
     align-self: start;
     font-size: 16px;

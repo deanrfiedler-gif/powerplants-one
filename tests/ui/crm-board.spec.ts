@@ -30,6 +30,8 @@ test("hosted header, populated board, filtering and independent card targets", a
     const search = document
       .querySelector(".crm-header-search")!
       .getBoundingClientRect();
+    const heading = document.querySelector<HTMLElement>(".product-heading")!;
+    const headingBounds = heading.getBoundingClientRect();
     const rail = document.querySelector(".sidebar")!;
     const cards = [...document.querySelectorAll(".crm-card")].filter(
       (e) => e.getBoundingClientRect().width > 0,
@@ -37,6 +39,11 @@ test("hosted header, populated board, filtering and independent card targets", a
     return {
       pageFits: document.documentElement.scrollWidth <= innerWidth,
       railFits: rail.scrollWidth <= rail.clientWidth,
+      headingFits:
+        heading.scrollWidth <= heading.clientWidth &&
+        headingBounds.width >= 100 &&
+        headingBounds.top >= header.top &&
+        headingBounds.top < search.bottom,
       accountInside:
         account.top >= header.top &&
         account.bottom <= header.bottom &&
@@ -49,6 +56,7 @@ test("hosted header, populated board, filtering and independent card targets", a
     };
   });
   expect(geometry.pageFits).toBe(true);
+  expect(geometry.headingFits).toBe(true);
   expect(geometry.accountInside).toBe(true);
   expect(geometry.noOverlap).toBe(true);
   if (info.project.name === "desktop") expect(geometry.railFits).toBe(true);
