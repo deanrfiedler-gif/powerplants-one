@@ -95,7 +95,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
     {
       id: "SC-02",
       url: "/customers",
-      api: "customers",
+      api: "crm/directory",
       profile: "coordinator",
       list: true,
     },
@@ -194,6 +194,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
     await test.step(`${s.id}: ${s.url}`, async () => {
       await call(page, "local-session", { profile: s.profile });
       const query =
+        s.id === "SC-02" ? "?kind=organisations" :
         s.id === "SC-13"
           ? `?account_id=${cmd.account_id}`
           : s.id === "SC-07"

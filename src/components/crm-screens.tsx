@@ -2,7 +2,9 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { LookupField, LocalDateTimeField, RecordTabs, RecordPanel } from "./record-ui";
-import { OpportunityCommercial } from "./opportunity-commercial";
+import { DealDialog, DealInformation, DealScope, dealAmount, dealClose, type DealMode } from "./crm-deal-controls";
+import { ProductIcon } from "./product-icons";
+import { OpportunityCommercial, OpportunityFiles } from "./opportunity-commercial";
 import { useRouter } from "next/navigation";
 import type { readOpportunity } from "../crm/reads";
 import { useIdentity } from "./business-session";
@@ -424,6 +426,7 @@ function OpportunityContent({
   opportunity: Opportunity;
   reload: () => void;
 }) {
+  const [dialog, setDialog] = useState<DealMode | null>(null), [targetStage,setTargetStage] = useState<string | undefined>();
   const [tab, setTab] = useState("timeline"),
     [version, setVersion] = useState(o.version),
     [need, setNeed] = useState(o.need_summary),
@@ -452,17 +455,17 @@ function OpportunityContent({
   if (denied(command.error)) return <ErrorNotice error={command.error} />;
   return (
     <>
-      <PageHeader
-        eyebrow={`${o.display_number} · Synthetic · Online`}
-        title={o.title}
-        description={`${o.organisation_name} · ${o.site_name ?? "Site to be confirmed"}`}
-      />
-      <Link href="/crm/opportunities">Back to sales worklist</Link>
-      <div className="crm-status-row">
-        <Status value={o.stage_id} />
-        <span>Sales outcome: {o.close_outcome}</span>
-        <span>Primary contact: {o.contact_name ?? "Not yet identified"}</span>
+      <div className="crm-deal-page-heading">
+        <Link className="crm-back-link" href="/crm/opportunities">← Back to sales worklist</Link>
+        <PageHeader eyebrow={`${o.display_number} · ${o.close_outcome}`} title={o.title}
+          description={`${o.organisation_name} · ${o.site_name ?? "Site to be confirmed"}`}
+          action={o.can_edit ? <button className="secondary crm-main-edit" aria-label="Edit deal information" onClick={() => setDialog("information")}><ProductIcon name="edit"/><span>Edit deal</span></button> : undefined} />
+        <div className="crm-deal-key-facts"><strong>{dealAmount(o.value_amount)}</strong><span>AUD, excl. GST</span><span>Expected close: {dealClose(o.expected_close_date)}</span><span>Customer contact: {o.contact_name ?? "Not yet identified"}</span><span>Deal owner: {o.owner_name}</span></div>
+        <div className="crm-stage-track" aria-label="Deal stage">
+          {["Enquiry", "Qualified"].map(stage => <button key={stage} className={o.stage_id === stage ? "current" : ""} aria-current={o.stage_id === stage ? "step" : undefined} disabled={!o.can_edit} onClick={() => {setTargetStage(stage);setDialog("stage");}}>{stage}{o.stage_id === stage && <span>Current stage</span>}</button>)}
+        </div>
       </div>
+      {dialog && <DealDialog id={o.id} mode={dialog} targetStage={targetStage} onClose={() => {setDialog(null);setTargetStage(undefined);}} onSaved={() => {setDialog(null);setTargetStage(undefined);reload();}}/>}
 
       {!o.can_edit && <p className="scope-note">Read only under current ownership, permissions or relationship eligibility.</p>}
       <SaveState command={command} />
@@ -492,7 +495,7 @@ function OpportunityContent({
         </button>
       )}
       <RecordTabs id="opportunity" label="Opportunity sections" value={tab} onChange={setTab}
-        tabs={[{id:"timeline",label:"Timeline"},{id:"details",label:"Details"},{id:"commercial",label:"Commercial"}]} />
+        tabs={[{id:"timeline",label:"Timeline"},{id:"details",label:"Details"},{id:"commercial",label:"Commercial"},{id:"files",label:"Files"}]} />
       <RecordPanel id="opportunity" tab="details" value={tab}>
 
       <p className="source-stamp">
@@ -501,44 +504,9 @@ function OpportunityContent({
         <Stamp value={o.stage_entered_at} /> · As at{" "}
         <Stamp value={o.observed_at} />
       </p>
-      <div className="crm-detail-grid">
-        <section className="crm-panel">
-          <h2>Customer context</h2>
-          <dl>
-            <dt>Organisation</dt>
-            <dd>
-              <Link href={`/customers/${o.organisation_id}`}>
-                {o.organisation_name}
-              </Link>
-            </dd>
-            <dt>Site</dt>
-            <dd>
-              {o.site_id ? (
-                <Link href={`/sites/${o.site_id}`}>{o.site_name}</Link>
-              ) : (
-                <>Unknown — {o.site_unknown_reason}</>
-              )}
-            </dd>
-            <dt>Contact</dt>
-            <dd>
-              {o.primary_person_id ? (
-                <Link href={`/people/${o.primary_person_id}`}>
-                  {o.contact_name}
-                </Link>
-              ) : (
-                <>Unknown — {o.contact_unknown_reason}</>
-              )}
-            </dd>
-            <dt>Opportunity owner</dt><dd>{o.owner_name}</dd>
-            <dt>Requirements and scope</dt>
-            <dd className="crm-narrative">{o.need_summary}</dd>
-            <dt>Source</dt>
-            <dd>
-              {o.source_channel} · {o.source_basis}
-            </dd>
-          </dl>
-        </section>
-      </div>
+      <DealInformation o={o} onEdit={() => setDialog("information")} onStage={() => setDialog("stage")} />
+      <section className="crm-panel"><h2>Site and source</h2><dl className="crm-facts"><dt>Site</dt><dd>{o.site_id ? <Link href={`/sites/${o.site_id}`}>{o.site_name}</Link> : o.site_unknown_reason}</dd><dt>Organisation sites and facilities</dt><dd><Link href={`/customers/${o.organisation_id}`}>View organisation context</Link></dd><dt>Source</dt><dd>{o.source_channel} · {o.source_basis}</dd></dl></section>
+      <DealScope o={o} onEdit={() => setDialog("scope")} />
               {o.can_edit && <ValidationFields error={command.error}>
             {o.can_qualify && (
               <form
@@ -730,6 +698,9 @@ function OpportunityContent({
                   ? "Opportunity created"
                   : e.event_type === "OpportunityQualified"
                     ? "Qualification recorded"
+                    : e.event_type === "OpportunityInformationEdited" ? "Deal information updated"
+                    : e.event_type === "OpportunityScopeEdited" ? "Requirements and scope updated"
+                    : e.event_type === "OpportunityStageChanged" ? "Deal stage changed"
                     : "Next action planned"}{" "}
                 · Version {e.opportunity_version}
               </strong>
@@ -752,6 +723,9 @@ function OpportunityContent({
       </RecordPanel>
       <RecordPanel id="opportunity" tab="commercial" value={tab}>
         {tab === "commercial" && <OpportunityCommercial id={o.id} />}
+      </RecordPanel>
+      <RecordPanel id="opportunity" tab="files" value={tab}>
+        {tab === "files" && <OpportunityFiles id={o.id} />}
       </RecordPanel>
     </>
   );

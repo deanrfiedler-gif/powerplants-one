@@ -262,7 +262,7 @@ test("CA-06/13 initial identity must settle before an actor can switch", async (
 });
 
 test("CA-13 shared brand consumers retain navigation, readable actions and original identity controls", async ({ page }, info) => {
-  for (const [path, title] of [["/", "A connected view"], ["/customers", "Customers"], ["/work", "Owned follow-up"], ["/service/reports", "Service review"]]) {
+  for (const [path, title] of [["/", "A connected view"], ["/customers", "Organisations"], ["/work", "Owned follow-up"], ["/service/reports", "Service review"]]) {
     await page.goto(path);
     if (path !== "/") await identity(page);
     await expect(page.locator("h1")).toContainText(title);

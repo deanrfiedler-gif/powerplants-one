@@ -529,8 +529,9 @@ test("CA-01/05 real FK, deferred designation, immutable config/context/events an
     ),
     code("23514"),
   );
+  // Core information now has a dedicated audited command. Raw unaudited edits still fail.
+  await assert.rejects(database().query("UPDATE ppo.opportunities SET title='rewritten',version=version+1"), code("23514"));
   for (const sql of [
-    "UPDATE ppo.opportunities SET owner_id=created_by,title='rewritten',version=version+1",
     "UPDATE ppo.opportunity_events SET reason='rewritten'",
     "DELETE FROM ppo.crm_pipeline_definitions",
     "UPDATE ppo.crm_stage_definitions SET ordinal=ordinal",

@@ -147,7 +147,7 @@ export async function createOpportunity(p: Principal, value: unknown) {
     "OpportunityCreated",
   );
 }
-async function linkedActiveAction(
+export async function linkedActiveAction(
   c: PoolClient,
   p: Principal,
   o: OpportunityContext & { id: string },
