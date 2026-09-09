@@ -149,7 +149,7 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   await expect.poll(() => ids(page)).toHaveLength(2);
   const last = await ids(page);
   expect(new Set([...first, ...last]).size).toBe(12);
-  await expect(page.locator(".crm-worklist-stamp")).toContainText("Partial — final page");
+  await expect(page.locator(".crm-page-context")).toContainText("Page counts and values · final page");
   await page.getByRole("button", { name: "List", exact: true }).click();
   expect(await ids(page)).toEqual(last);
   await capture(page, info, "320-final-page-grid");

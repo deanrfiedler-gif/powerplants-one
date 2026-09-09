@@ -1,4 +1,5 @@
 const paths = {
+  search: "M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15 M16 16l5 5",
   mail: "M3 5h18v14H3z M3 5l9 8 9-8",
   edit: "m15 4 5 5 M3 21l5-1L21 7l-5-5L3 15z",
   home: "m3 10 9-7 9 7v10H3z M9 20v-7h6v7",
