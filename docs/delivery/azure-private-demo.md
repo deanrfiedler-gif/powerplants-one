@@ -1,6 +1,8 @@
 # Azure private demo deployment
 
-**Document ID:** PPO-DEMO-RUNTIME · **Revision:** r04 · **Date:** 9 September 2026 · **Owner:** Dean Fiedler · **State:** Core infrastructure provisioned; image build rejected by ACR Tasks; alternate bootstrap prepared; app acceptance pending.
+**Document ID:** PPO-DEMO-RUNTIME · **Revision:** r05 · **Date:** 9 September 2026 · **Owner:** Dean Fiedler · **State:** Core infrastructure and uploaded image confirmed; database-create CLI correction prepared; app acceptance pending.
+
+**Latest owner-run result:** Docker build/push succeeded for source `5ce4d20f6d897ed2e9e9da9496130c2bb706a0cd`. Cloud Shell resolved `ppodemo90deea5d.azurecr.io/ppo-demo@sha256:3b5744dd9830449fc4e5ce0f3dc102c0f0f455e6a2358a36b3b00865a09ae4dd`, then failed at database creation. The operator used `--database-name`, while Azure's `postgres flexible-server db create` requires `--name`. The [database argument correction](#database-create-argument-correction) lets the owner update the deployment helper and reuse that existing image. Earlier ACR-rejection statements below describe the preceding attempt.
 
 **Current owner-run result:** Dean successfully configured and provisioned the Australia East demo with suffix `90deea5d`. Azure returned the Web redirect URI `https://ca-ppo-demo-90deea5d.ashyglacier-e6fb2158.australiaeast.azurecontainerapps.io/auth/callback`. He then authorised initial private bootstrap from the pinned integration checkout while full application regression remained in progress. The registry returned `TasksOperationsNotAllowed` before creating a build run. This establishes a remote-build restriction, not its billing/offer cause and not an application build failure. No running app or live sign-in acceptance has been established. Use the [Docker Desktop build procedure](#acr-tasks-rejected-build-with-docker-desktop) below; preserve the existing private Cloud Shell settings.
 
@@ -160,9 +162,29 @@ git status --short
 python3 infra/azure-demo/ppo_operator.py bootstrap ../ppo-demo-settings.local.json --use-existing-image
 ```
 
-`git status --short` must be empty. The new command uses the renamed script, so it needs no `-P`. It looks up only `ppo-demo:<current HEAD>` in the registry recorded in the existing deployment outputs, validates its SHA-256 digest and uses the same digest for operator, worker and web. Missing/inaccessible images stop before database/storage mutations. A matching tag is an operator-controlled source convention, not independent attestation of image contents; the clean checkout and recorded build commit remain essential. Bootstrap still runs the same database setup, access reconciliation and private storage steps. It does not silently fall back to ACR Tasks.
+`git status --short` must be empty. The new command uses the renamed script, so it needs no `-P`. By default it looks up only `ppo-demo:<current HEAD>` in the registry recorded in the existing deployment outputs, validates its SHA-256 digest and uses the same digest for operator, worker and web. The explicit `--image-commit` option below allows a reviewed ancestor image after a helper-only correction. Missing/inaccessible images stop before database/storage mutations. A matching tag is an operator-controlled source convention, not independent attestation of image contents; the clean checkout and recorded build commit remain essential. Bootstrap still runs the same database setup, access reconciliation and private storage steps. It does not silently fall back to ACR Tasks.
 
-Local verification: all 12 operator tests pass, including existing-image lookup, normal build behaviour, rejection of malformed/missing digests, refusal before downstream mutations, option/action validation and secret-safe error messages. Cloud push, actual digest resolution and resumed bootstrap remain owner-run verification. The routine GitHub update workflow still uses ACR Tasks; this alternative covers initial bootstrap and explicitly requested operator bootstrap/reset runs. Do not use bootstrap for ordinary UI updates.
+Local verification: all 16 operator tests pass, including existing-image lookup, normal build behaviour, rejection of malformed/missing digests, refusal before downstream mutations, option/action validation, ancestor image selection, Azure's documented database argument contract and secret-safe error messages. Cloud push and digest resolution are now confirmed by the owner's output; resumed database creation and downstream deployment remain unverified. The routine GitHub update workflow still uses ACR Tasks; this alternative covers initial bootstrap and explicitly requested operator bootstrap/reset runs. Do not use bootstrap for ordinary UI updates.
+
+### Database-create argument correction
+
+The uploaded application's source `5ce4d20f6d897ed2e9e9da9496130c2bb706a0cd` now has all eight workflows passing, including [full Application assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34328878974) and [Azure demo preparation](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34328878861). These checks are separate from actual Azure deployment; fresh checks for the helper correction remain pending.
+
+The failure after `Creating the demo database` exposed an operator defect: [Azure CLI's database-create command](https://learn.microsoft.com/en-us/cli/azure/postgres/flexible-server/db#az-postgres-flexible-server-db-create) requires `--name`. The previous `--database-name` belongs to other command contexts and does not satisfy this required argument. A regression against the documented argument contract fails before the correction and passes after it; the earlier definition/image-lookup tests did not reach a successful database-create call. The owner's underlying stderr was suppressed, so the complete Azure response was not captured. No database/server deletion or firewall change is justified by this failure.
+
+For this helper-only fix, preserve the already uploaded application image. In Cloud Shell, use the exact helper commit from the handoff, then reuse the known application source:
+
+```bash
+cd ~/ppo-demo-deployment/powerplants-one
+git fetch origin feature/demo-email-crm-integration
+git checkout --detach REPLACE_WITH_OPERATOR_FIX_COMMIT
+git status --short
+python3 infra/azure-demo/ppo_operator.py bootstrap ../ppo-demo-settings.local.json \
+  --use-existing-image \
+  --image-commit 5ce4d20f6d897ed2e9e9da9496130c2bb706a0cd
+```
+
+Run each line successfully before the next; the status must be empty. `--image-commit` accepts only a full lowercase commit SHA, only with `bootstrap --use-existing-image`, and only when that commit is present in the checked-out helper's history. It prints both source commits, resolves the selected image in the same demo registry, and uses one fixed digest throughout bootstrap. It does not retag/rebuild the image or change its migrations and application code. Record both commits when using this option; it is an explicit reuse of the reviewed older image, not a release of the newer checkout's application changes. Existing private settings, Entra registration, database epoch, registry and provisioned infrastructure remain in use.
 
 ## 5. Add or remove testers
 

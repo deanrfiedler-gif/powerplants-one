@@ -106,6 +106,16 @@ def bootstrap_image(out, head, use_existing):
     return image
 
 
+def image_source_commit(head, requested):
+    if requested is None:
+        return head
+    result = subprocess.run(["git", "merge-base", "--is-ancestor", requested, head],
+                            text=True, capture_output=True, check=False)
+    if result.returncode:
+        raise OperatorActionError("The selected image commit must exist in this checkout's history. Fetch the reviewed source before bootstrap.")
+    return requested
+
+
 def definition(settings, out, image, blob_key, kind, operation="setup"):
     db = f"ppo_demo_{settings['epoch']}"
     admin = kind == "operator"
@@ -174,9 +184,15 @@ def main():
     parser.add_argument("settings", type=Path)
     parser.add_argument("--use-existing-image", action="store_true",
                         help="Bootstrap from this checkout's existing ppo-demo:<commit> image in the demo registry, without ACR Tasks.")
+    parser.add_argument("--image-commit", help="Reuse an explicitly selected full ancestor commit's image with --use-existing-image after an operator-only fix.")
     args = parser.parse_args()
     if args.use_existing_image and args.action != "bootstrap":
         parser.error("--use-existing-image is only valid with bootstrap")
+    if args.image_commit is not None:
+        if args.action != "bootstrap" or not args.use_existing_image:
+            parser.error("--image-commit requires bootstrap --use-existing-image")
+        if not re.fullmatch(r"[a-f0-9]{40}", args.image_commit):
+            parser.error("--image-commit requires a full lowercase 40-character Git commit")
     os.chdir(ROOT)
     if args.action == "configure":
         configure(args.settings)
@@ -214,9 +230,11 @@ def main():
         image = az("containerapp", "job", "show", "--resource-group", GROUP,
                    "--name", f"job-ppo-operator-{settings['suffix']}", "--query", "properties.template.containers[0].image")
     if args.action == "bootstrap":
-        image = bootstrap_image(out, head, args.use_existing_image)
+        image_head = image_source_commit(head, args.image_commit)
+        print(f"Operator source: {head}; application image source: {image_head}", flush=True)
+        image = bootstrap_image(out, image_head, args.use_existing_image)
         print("Creating the demo database.", flush=True)
-        az("postgres", "flexible-server", "db", "create", "--resource-group", GROUP, "--server-name", out["databaseServer"], "--database-name", f"ppo_demo_{settings['epoch']}")
+        az("postgres", "flexible-server", "db", "create", "--resource-group", GROUP, "--server-name", out["databaseServer"], "--name", f"ppo_demo_{settings['epoch']}")
     print("Reading the private storage credential.", flush=True)
     blob_key = az("storage", "account", "keys", "list", "--resource-group", GROUP, "--account-name", out["storageAccount"])[0]["value"]
     if args.action == "bootstrap":

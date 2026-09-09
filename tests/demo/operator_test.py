@@ -1,3 +1,4 @@
+import argparse
 import importlib.util
 import json
 from pathlib import Path
@@ -32,6 +33,17 @@ class CommandLineTests(unittest.TestCase):
         )
         self.assertEqual(result.returncode, 2)
         self.assertIn("only valid with bootstrap", result.stderr)
+
+    def test_image_commit_requires_existing_image_mode_and_a_full_commit(self):
+        for options in [["--image-commit", "a" * 40],
+                        ["--use-existing-image", "--image-commit", "main"],
+                        ["--use-existing-image", "--image-commit", "a" * 39],
+                        ["--use-existing-image", "--image-commit", "A" * 40]]:
+            with self.subTest(options=options):
+                result = subprocess.run([sys.executable, "-E", spec.origin, "bootstrap", "/missing/settings.json", *options],
+                                        text=True, capture_output=True, timeout=10)
+                self.assertEqual(result.returncode, 2)
+                self.assertIn("--image-commit requires", result.stderr)
 
 
 class BootstrapImageTests(unittest.TestCase):
@@ -104,6 +116,80 @@ class BootstrapImageTests(unittest.TestCase):
                 operator.az("storage", "container", "create", "--account-key", "synthetic-private-key")
         self.assertIn("az storage container", str(caught.exception))
         self.assertNotIn("synthetic-private", str(caught.exception))
+
+    def test_bootstrap_uses_documented_database_arguments_and_one_image_for_all_containers(self):
+        self._check_successful_bootstrap()
+
+    def test_operator_fix_can_reuse_the_existing_ancestor_image_for_the_whole_bootstrap(self):
+        self._check_successful_bootstrap("c" * 40)
+
+    def test_image_commit_must_be_available_in_the_operator_history(self):
+        ancestor = "c" * 40
+        with patch.object(operator.subprocess, "run", return_value=subprocess.CompletedProcess([], 0)) as git:
+            self.assertEqual(operator.image_source_commit(self.head, None), self.head)
+            git.assert_not_called()
+            self.assertEqual(operator.image_source_commit(self.head, ancestor), ancestor)
+            self.assertEqual(git.call_args.args[0], ["git", "merge-base", "--is-ancestor", ancestor, self.head])
+        for exit_code in [1, 128]:
+            with self.subTest(exit_code=exit_code), \
+                 patch.object(operator.subprocess, "run", return_value=subprocess.CompletedProcess([], exit_code)):
+                with self.assertRaises(operator.OperatorActionError):
+                    operator.image_source_commit(self.head, ancestor)
+
+    def _check_successful_bootstrap(self, image_commit=None):
+        # Azure's public db-create contract requires --name, not the parent
+        # flexible-server command's --database-name option.
+        database_cli = argparse.ArgumentParser()
+        for flag in ["--resource-group", "--server-name", "--name"]:
+            database_cli.add_argument(flag, required=True)
+        settings = {"subscription_id": "subscription", "tenant_id": "tenant", "epoch": "20260909",
+                    "suffix": "aabbccdd", "admin_password": "synthetic-admin", "app_password": "synthetic-runtime",
+                    "client_secret": "synthetic-client", "client_id": "client", "testers": []}
+        outputs = {**self.out, "databaseServer": "pg-demo", "databaseHost": "pg-demo.postgres.database.azure.com",
+                   "storageAccount": "demo", "demoOrigin": "https://demo.azurecontainerapps.io",
+                   "environmentId": "/synthetic/environment", "pullIdentityId": "/synthetic/identity"}
+        database_requests = []
+        image_requests = []
+
+        def fake_az(*args):
+            if args[:2] == ("account", "show"):
+                return {"id": "subscription", "tenantId": "tenant"}
+            if args[:2] == ("group", "show"):
+                return {}
+            if args[:3] == ("acr", "repository", "show"):
+                image_requests.append(args[args.index("--image") + 1])
+                return self.digest
+            if args[:4] == ("postgres", "flexible-server", "db", "create"):
+                database_requests.append(database_cli.parse_args(args[4:]))
+                return {}
+            if args[:4] == ("storage", "account", "keys", "list"):
+                return [{"value": "synthetic-blob"}]
+            if args[:3] == ("storage", "container", "create"):
+                return {}
+            if args[:3] == ("containerapp", "job", "start"):
+                return {"name": "synthetic-execution"}
+            self.fail("Unexpected Azure operation: " + str(args[:4]))
+
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "settings.json"
+            path.write_text(json.dumps(settings))
+            argv = [spec.origin, "bootstrap", str(path), "--use-existing-image"]
+            if image_commit:
+                argv.extend(["--image-commit", image_commit])
+            with patch.object(sys, "argv", argv), \
+                 patch.object(operator, "validate"), patch.object(operator, "outputs", return_value=outputs), \
+                 patch.object(operator.subprocess, "check_output", side_effect=[self.head, ""]), \
+                 patch.object(operator.subprocess, "run", return_value=subprocess.CompletedProcess([], 0)), \
+                 patch.object(operator, "az", side_effect=fake_az), \
+                 patch.object(operator, "apply_container") as apply, patch.object(operator, "wait_job") as wait:
+                operator.main()
+        self.assertEqual(len(database_requests), 1)
+        self.assertEqual(image_requests, ["ppo-demo:" + (image_commit or self.head)])
+        self.assertEqual(vars(database_requests[0]), {"resource_group": operator.GROUP, "server_name": "pg-demo", "name": "ppo_demo_20260909"})
+        self.assertEqual([c.args[1] for c in apply.call_args_list], ["operator", "worker", "web"])
+        images = [c.args[0]["properties"]["template"]["containers"][0]["image"] for c in apply.call_args_list]
+        self.assertEqual(images, ["demo.azurecr.io/ppo-demo@" + self.digest] * 3)
+        wait.assert_called_once_with("job-ppo-operator-aabbccdd", "synthetic-execution")
 
 
 class DefinitionTests(unittest.TestCase):

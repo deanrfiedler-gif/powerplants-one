@@ -55,7 +55,7 @@ Application code is in `src/`, explicit SQL migrations and fixtures are in `db/`
 
 ## Private hosted demo preparation
 
-The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separate hosted runtime, owner setup, tester access and image updates. The GitHub connection check and owner-run core provisioning succeeded. ACR Tasks rejected the image build; the runbook now includes a Docker Desktop build/push and existing-image bootstrap path. App deployment and live sign-in acceptance remain pending. Local development continues using the commands below.
+The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separate hosted runtime, owner setup, tester access and image updates. The GitHub connection check, owner-run core provisioning and Docker Desktop image upload succeeded. A database-create argument error is corrected in the operator, with explicit reuse of the uploaded image. App startup and live sign-in acceptance remain pending. Local development continues using the commands below.
 
 ## Run the local application
 
