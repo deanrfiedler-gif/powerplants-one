@@ -1,0 +1,237 @@
+{
+  "browser": "152.0.7977.0",
+  "scope": "Local synthetic HTML design interactions only; no application/database/access-control acceptance",
+  "results": [
+    {
+      "width": 1366,
+      "check": "Portfolio counts and width",
+      "result": "passed"
+    },
+    {
+      "width": 1366,
+      "check": "Open canonical detail",
+      "result": "passed"
+    },
+    {
+      "width": 1366,
+      "check": "Reasoned update changes forecast and history",
+      "result": "passed"
+    },
+    {
+      "width": 1366,
+      "check": "Activity completion preserves blocker and health",
+      "result": "passed"
+    },
+    {
+      "width": 1366,
+      "check": "Explicit milestone resolution preserves project assessment",
+      "result": "passed"
+    },
+    {
+      "width": 1366,
+      "check": "Explicit unknown due date and independent owner",
+      "result": "passed"
+    },
+    {
+      "width": 1366,
+      "check": "Add owned milestone",
+      "result": "passed"
+    },
+    {
+      "width": 1366,
+      "check": "Return preserves register search",
+      "result": "passed"
+    },
+    {
+      "width": 1366,
+      "check": "Conflicting update retains proposal",
+      "result": "passed"
+    },
+    {
+      "width": 1366,
+      "check": "Uncertain response recovered once",
+      "result": "passed"
+    },
+    {
+      "width": 1366,
+      "check": "Future scope mode",
+      "result": "passed"
+    },
+    {
+      "width": 1366,
+      "check": "Reviewed handover links once without duplicate",
+      "result": "passed"
+    },
+    {
+      "width": 1366,
+      "check": "Unavailable states clear content and avoid false counts",
+      "result": "passed"
+    },
+    {
+      "width": 1366,
+      "check": "Create with scoped selectors and escaped narrative",
+      "result": "passed"
+    },
+    {
+      "width": 1366,
+      "check": "Reload resets temporary state",
+      "result": "passed"
+    },
+    {
+      "width": 390,
+      "check": "Portfolio counts and width",
+      "result": "passed"
+    },
+    {
+      "width": 390,
+      "check": "First mobile project card position",
+      "y": 390.765625
+    },
+    {
+      "width": 390,
+      "check": "Open canonical detail",
+      "result": "passed"
+    },
+    {
+      "width": 390,
+      "check": "Reasoned update changes forecast and history",
+      "result": "passed"
+    },
+    {
+      "width": 390,
+      "check": "Activity completion preserves blocker and health",
+      "result": "passed"
+    },
+    {
+      "width": 390,
+      "check": "Explicit milestone resolution preserves project assessment",
+      "result": "passed"
+    },
+    {
+      "width": 390,
+      "check": "Explicit unknown due date and independent owner",
+      "result": "passed"
+    },
+    {
+      "width": 390,
+      "check": "Add owned milestone",
+      "result": "passed"
+    },
+    {
+      "width": 390,
+      "check": "Return preserves register search",
+      "result": "passed"
+    },
+    {
+      "width": 390,
+      "check": "Conflicting update retains proposal",
+      "result": "passed"
+    },
+    {
+      "width": 390,
+      "check": "Uncertain response recovered once",
+      "result": "passed"
+    },
+    {
+      "width": 390,
+      "check": "Future scope mode",
+      "result": "passed"
+    },
+    {
+      "width": 390,
+      "check": "Reviewed handover links once without duplicate",
+      "result": "passed"
+    },
+    {
+      "width": 390,
+      "check": "Unavailable states clear content and avoid false counts",
+      "result": "passed"
+    },
+    {
+      "width": 390,
+      "check": "Create with scoped selectors and escaped narrative",
+      "result": "passed"
+    },
+    {
+      "width": 390,
+      "check": "Reload resets temporary state",
+      "result": "passed"
+    },
+    {
+      "width": 320,
+      "check": "Portfolio counts and width",
+      "result": "passed"
+    },
+    {
+      "width": 320,
+      "check": "Open canonical detail",
+      "result": "passed"
+    },
+    {
+      "width": 320,
+      "check": "Reasoned update changes forecast and history",
+      "result": "passed"
+    },
+    {
+      "width": 320,
+      "check": "Activity completion preserves blocker and health",
+      "result": "passed"
+    },
+    {
+      "width": 320,
+      "check": "Explicit milestone resolution preserves project assessment",
+      "result": "passed"
+    },
+    {
+      "width": 320,
+      "check": "Explicit unknown due date and independent owner",
+      "result": "passed"
+    },
+    {
+      "width": 320,
+      "check": "Add owned milestone",
+      "result": "passed"
+    },
+    {
+      "width": 320,
+      "check": "Return preserves register search",
+      "result": "passed"
+    },
+    {
+      "width": 320,
+      "check": "Conflicting update retains proposal",
+      "result": "passed"
+    },
+    {
+      "width": 320,
+      "check": "Uncertain response recovered once",
+      "result": "passed"
+    },
+    {
+      "width": 320,
+      "check": "Future scope mode",
+      "result": "passed"
+    },
+    {
+      "width": 320,
+      "check": "Reviewed handover links once without duplicate",
+      "result": "passed"
+    },
+    {
+      "width": 320,
+      "check": "Unavailable states clear content and avoid false counts",
+      "result": "passed"
+    },
+    {
+      "width": 320,
+      "check": "Create with scoped selectors and escaped narrative",
+      "result": "passed"
+    },
+    {
+      "width": 320,
+      "check": "Reload resets temporary state",
+      "result": "passed"
+    }
+  ],
+  "pageErrors": []
+}
