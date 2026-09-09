@@ -27,3 +27,5 @@ Frozen issued references remain evidence. Stable working documents evolve throug
 [Controlled opportunity handover design](delivery/crm-handover-design-handover.md) — proposed authority/eligibility/history/recovery contract, synthetic canonical form, future verification and conditional implementation starter; H-01–H-03 remain unresolved.
 
 [Azure demo connection setup](delivery/azure-demo-connection.md) — portal steps and a manually triggered read-only GitHub connection check; live Azure setup and hosted application access remain pending.
+
+[Leads workspace design](blueprints/crm-leads-design.md) — dedicated list, detail panel, synthetic qualified conversion and preservation of existing Enquiry deals.

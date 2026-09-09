@@ -1,6 +1,6 @@
 # CRM — Ordered implementation sequence
 
-**Revision:** r06 · **Date:** 7 September 2026 · **Status:** I1/I2 publication complete; controlled handover design proposed; policy and implementation outstanding · **Parent workstream:** PPO-009 / issue #9. **Owner:** Dean Fiedler, private prototype.
+**Revision:** r07 · **Date:** 9 September 2026 · **Status:** I1/I2 publication complete; controlled handover design proposed; policy and implementation outstanding · **Parent workstream:** PPO-009 / issue #9. **Owner:** Dean Fiedler, private prototype.
 
 [BP-03](../blueprints/BP-03-crm.md) · [Parity](../blueprints/crm-parity.md) · [First implementation starter](crm-first-increment-starter.md) · [Handover](crm-discovery-handover.md).
 
@@ -83,3 +83,7 @@ The catalogue below defines the complete cases. I1 component execution and faile
 | CA-16 Complete parity review | Accepted account inventory including residual add-ons; walk required journeys and history with permitted/unpermitted actors | Every used outcome accepted or explicitly retained/deferred/retired by approval; reports reconcile; automation/mobile/history demonstrated. Owner records acceptance; no missing feature dismissed from absent sample | Full AT-25 plus linked acceptance; I6 |
 
 Full AT-25, read from BP-01 section 26.4 and `acceptance-scenarios.csv`, rehearses approved pipeline/activity/relationship/automation/mobile outcomes; requires accepted outcomes for every used capability, separate stage/close/ERP states, preserved activities/history/permissions through migration and controlled duplicate notification/automation retries. The I1 cases are components only. Preserve all existing AT/PT statuses; no parent or full scenario is passed by this plan.
+
+## Dedicated Leads design addition — 9 September 2026
+
+The [Leads design](../blueprints/crm-leads-design.md) is the user-invoked bounded design for the previously deferred separate inbox. It defines the proposed capture/follow-up/conversion slice, LC-01–LC-10 runtime acceptance and existing Enquiry compatibility. The next implementation must reconcile current source and active CRM changes; no schema number, new parent requirement or P01–P12 dependency is allocated. Earlier lead deferrals describe the original I1 boundary, not a rejection of this current direction.

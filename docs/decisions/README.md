@@ -45,3 +45,5 @@ The [controlled opportunity handover proposal](crm-opportunity-handover.md) reco
 - [Mobile CRM implementation](mobile-crm-implementation.md): approved mobile mapping to current components, persisted commands and permissions.
 
 [Azure demo connection preparation](azure-demo-connection.md) records the dedicated Reader identity, GitHub OIDC environment/branch boundary and separate hosted application work.
+
+[Dedicated Leads direction](crm-leads-direction.md) records the user-selected list-only inbox and qualified conversion; implementation pending.

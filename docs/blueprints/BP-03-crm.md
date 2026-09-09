@@ -2,7 +2,7 @@
 
 | Document control | Value |
 |---|---|
-| Revision / date | r05 / 7 September 2026 |
+| Revision / date | r06 / 9 September 2026 |
 | Status | Broader design proposed; I1 implemented and component-tested; actual publication in handover; owner acceptance outstanding |
 | Owner | Dean Fiedler — personal private prototype |
 | Workstream | PPO-009 / [issue #9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9); distinct from PP-01 P09 |
@@ -311,3 +311,7 @@ The first slice is sufficiently specified for a later authorised synthetic imple
 The separately invoked [contract/design package](../delivery/crm-handover-design-handover.md) under #55 follows verified I2 publication. Its [decision table](../decisions/crm-opportunity-handover.md) proposes current-owner initiation with a distinct scoped own-transfer capability, immediate effect and current-authority recovery of proven original operations. H-01–H-03 await Dean; publication does not accept them. For this bounded candidate, it refines the broad manager-only transfer proposal in sections 6–7; it does not implement that manager role or a transfer grant.
 
 The [physical/interface map](../contracts/crm-opportunity-handover.md), [canonical C03 journey](crm-handover-journey.md) and [future HV matrix](../testing/crm-handover-verification.md) preserve immutable original qualification, separate Activity/estimate/Finance ownership, all-target access and accepted hashes. I1's current immutable owner remains the implemented contract. All HV cases are Not run, AT-25 remains Planned and #9 stays open. The conditional implementation starter needs policy decisions and a new invocation.
+
+## Dedicated Leads direction — 9 September 2026
+
+Dean selected a dedicated list-only Leads workspace and qualified conversion into Deals, and authorised its bounded design. The [decision](../decisions/crm-leads-direction.md) and [design/preview handover](crm-leads-design.md) supersede the earlier open choice about whether PPO should have a separate inbox. New, Contacting and Nurturing are active lead statuses; Converted retains an immutable source link. Existing Enquiry/Qualified opportunities remain unchanged. This is design only; I1/I2 application contracts and runtime acceptance are unchanged.
