@@ -47,6 +47,12 @@ existing PR #73 is a separate dependency. The deployed image remains
   application/database restart proof. Retained I2 checks exposed the moved Sort
   control's missing explicit accessible label; it is corrected. The component
   fixture now keeps access denied after filters clear, matching revoked access.
-  Final-source reruns and human review of corrected screenshots remain pending.
+  The retained keyboard journey now verifies the revised header/filter tab order
+  while preserving its Stage, paging, long-text and persistence assertions.
+- All six component checks pass at `4442d297`; corrected desktop, 390px and
+  320px screenshots were inspected. Current presentation bytes match that run.
+  The [screenshot artifact](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34346372433/artifacts/10101872656)
+  contains synthetic fixture evidence. Fresh retained I2/full checks remain a
+  draft-PR gate; this is not live Azure or business acceptance.
 - Exact GitHub execution results belong in the correction PR. Keep it a draft
   until the available evidence is reviewed.

@@ -130,7 +130,18 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   await page.setViewportSize({ width: 320, height: 844 });
   await page.getByLabel("Search opportunities", { exact: true }).focus();
   await page.keyboard.press("Tab");
+  // r11 moves search into the shared header and Stage into the Filters panel.
+  await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeFocused();
+  const filterToggle = page.getByRole("button", { name: "Filters and sort", exact: true });
+  await filterToggle.focus();
+  await page.keyboard.press("Enter");
+  await expect(filterToggle).toHaveAttribute("aria-expanded", "true");
+  await page.getByLabel("Next action", { exact: true }).focus();
+  await page.keyboard.press("Tab");
   await expect(page.getByLabel("Stage", { exact: true })).toBeFocused();
+  await filterToggle.focus();
+  await page.keyboard.press("Enter");
+  await expect(filterToggle).toHaveAttribute("aria-expanded", "false");
   await capture(page, info, "320-grid-keyboard");
   await page.getByRole("button", { name: "Board", exact: true }).click();
   await capture(page, info, "320-board-long-action");
