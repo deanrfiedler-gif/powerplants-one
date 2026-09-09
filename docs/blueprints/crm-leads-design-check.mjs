@@ -113,6 +113,42 @@ try {
       assert.equal(await page.locator('#count').innerText(), '3');
     }
     await page.getByRole('button', { name: '+ Lead', exact: true }).click();
+    await capture('new-lead');
+    const newDialog = page.getByRole('dialog', {name:'New lead',exact:true});
+    if (width < 700) {
+      await page.getByLabel('Customer requirement', {exact:true}).filter({visible:true}).fill('A detailed synthetic requirement that grows within the form body without a nested scrollbar. '.repeat(15));
+      const headerBefore=await newDialog.locator('.dialog-head').boundingBox();
+      const footerBefore=await newDialog.locator('.dialog-foot').boundingBox();
+      const backgroundY=await page.evaluate(() => window.scrollY);
+      await page.locator('#new-fields').evaluate(el => {el.scrollTop=el.scrollHeight;});
+      const headerAfter=await newDialog.locator('.dialog-head').boundingBox();
+      const footerAfter=await newDialog.locator('.dialog-foot').boundingBox();
+      assert.deepEqual(headerAfter,headerBefore,'Add Lead header must stay in place');
+      assert.deepEqual(footerAfter,footerBefore,'Add Lead actions must stay in place');
+      assert.equal(await page.evaluate(() => window.scrollY),backgroundY,'Background stays put');
+      assert(await page.locator('#new-fields').evaluate(el => el.scrollTop>0),'Form body scrolls');
+      assert(await newDialog.evaluate(el => el.scrollHeight<=el.clientHeight+1),'Outer popup has no scrolling');
+      assert(await page.locator('#new-need').evaluate(el => el.scrollHeight<=el.clientHeight+2),'Requirement grows without its own scrollbar');
+      await capture('new-lead-scrolled');
+      await page.setViewportSize({width,height:440});
+      await page.waitForFunction(() => document.getElementById('new-lead').getBoundingClientRect().bottom <= 441);
+      await page.locator('#new-contact').focus();
+      const field=await page.locator('#new-contact').boundingBox();
+      const shortHeader=await newDialog.locator('.dialog-head').boundingBox();
+      const shortFooter=await newDialog.locator('.dialog-foot').boundingBox();
+      assert(field.y>=shortHeader.y+shortHeader.height && field.y+field.height<=shortFooter.y,'Focused field stays clear of header and actions');
+      assert(shortFooter.y+shortFooter.height<=441,'Actions fit reduced visible height');
+      await capture('new-lead-short');
+      await newDialog.getByRole('button',{name:'Cancel',exact:true}).click();
+      assert.equal(await page.evaluate(() => document.activeElement.id),'add-lead');
+      assert.equal(await page.evaluate(() => document.documentElement.classList.contains('creating-lead')),false);
+      await page.setViewportSize({width,height});
+      await page.getByRole('button',{name:'+ Lead',exact:true}).click();
+      assert.equal(await page.locator('#new-fields').evaluate(el=>el.scrollTop),0);
+      await page.keyboard.press('Escape');
+      assert.equal(await page.evaluate(() => document.documentElement.classList.contains('creating-lead')),false);
+      await page.getByRole('button',{name:'+ Lead',exact:true}).click();
+    }
     await page.getByLabel('Lead title', { exact: true }).fill('Synthetic test enquiry');
     await page.getByLabel('Customer requirement', { exact: true }).filter({ visible: true }).fill('Clarify a new synthetic requirement.');
     await page.getByRole('button', { name: 'Create lead', exact: true }).click();
@@ -148,7 +184,7 @@ try {
       assert(await page.locator('.mobile-header').isVisible());
     }
     assert.deepEqual(errors, []);
-    evidence.viewports.push({width,height,result:'passed',checks:'List; compact phone toolbar/rows/FAB; back; sort; filter apply/cancel/Escape; search; empty inbox; responsive resize; detail; conversion; cancel/Escape/focus; original activity history/owner/date; retained converted source; search/clear/owner filter; capture unknowns; invalid conversion; archive/unarchive; reasoned disqualification/reopen; no horizontal overflow or page errors'});
+    evidence.viewports.push({width,height,result:'passed',checks:'List; Add Lead single scroll/fixed header and footer/expanding text/reduced viewport/cancel and Escape; compact phone toolbar/rows/FAB; back; sort; filter apply/cancel/Escape; search; empty inbox; responsive resize; detail; conversion; cancel/Escape/focus; original activity history/owner/date; retained converted source; search/clear/owner filter; capture unknowns; invalid conversion; archive/unarchive; reasoned disqualification/reopen; no horizontal overflow or page errors'});
     await page.close();
   }
 } finally {

@@ -47,6 +47,12 @@ Rows begin immediately below a compact count/preview strip, with no outer cards 
 
 The lead drawer, full-screen phone detail, notes, activity information and conversion form retain their r01 layout and behavior. Desktop layout remains the same apart from the revision marker. The phone workflow remains a standalone in-memory demonstration, not a delivered runtime page.
 
+### Add Lead scrolling refinement
+
+Dean found the Add Lead popup scrolling clunky. Its container now uses a fixed header and action footer around one independently scrolling form body. The outer dialog and background page do not scroll. On phone the form fills the available visual viewport; viewport resize/offset updates accommodate browser chrome and keyboard space. Desktop retains a centred dialog. The requirement textarea grows with its content so it does not introduce a second scrolling surface. The phone header is compact, with a close control; Cancel and Create lead remain available below the form. Owner and source share a row to reduce avoidable vertical space. Escape, close and cancel restore the floating add control’s focus.
+
+The preview check verifies long-input scrolling, stationary header/footer, locked background and reachable final fields/actions at full and reduced phone heights. Reduced-height browser verification is not a physical keyboard/device test. The existing lead information panel and conversion form are unaffected.
+
 ### Future mobile bottom navigation direction — design note only
 
 For top-level CRM destinations such as Deals, propose five stable items: **My work, Deals, Activities, Contacts, More**. Use the existing navy background, white outline icons and short text labels, with a green selected indicator and a lighter navy selected tile. Selection must not rely on colour alone. Keep targets at least 44px and include bottom safe-area padding. Put the create button above the bar, separate from destination selection, so its action always belongs to the current page.
