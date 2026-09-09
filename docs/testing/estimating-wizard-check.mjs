@@ -1,0 +1,33 @@
+import assert from 'node:assert/strict';
+import {defaults, generate, totals, editInstallation, compare, apply, quote} from '../blueprints/estimating-wizard-model.mjs';
+const original = generate(defaults);
+assert.deepEqual(totals(original.lines), {cost:176000,sell:244000});
+const edited = editInstallation(original,5.5,'Extra access and cable routing time');
+assert.deepEqual(totals(edited.lines),{cost:188000,sell:262000});
+const proposed = generate({...defaults,positions:6});
+assert.deepEqual(totals(proposed.lines),{cost:211000,sell:292000});
+const untouched = JSON.stringify(edited);
+assert.ok(compare(edited, proposed).some(r=>r.key==='installation'&&r.requiresChoice));
+assert.throws(()=>apply(edited,proposed),/Resolve/);
+assert.equal(JSON.stringify(edited),untouched);
+const kept = apply(edited,proposed,{installation:'keep'});
+assert.deepEqual(totals(kept.lines),{cost:215000,sell:298000});
+assert.equal(apply(edited,proposed,{installation:'generated'}).lines.find(l=>l.key==='installation').quantity,5);
+const noInstall = generate({...defaults,installation:false});
+assert.throws(()=>apply(edited,noInstall),/Resolve/);
+assert.ok(!apply(edited,noInstall,{installation:'generated'}).lines.some(l=>l.key==='installation'));
+assert.ok(quote(apply(edited,noInstall,{installation:'keep'})).scope.includes('Installation labour'));
+for (const value of [0,17,NaN,1.1]) assert.throws(()=>generate({...defaults,positions:value}));
+for (const hours of [0,0.1,41,NaN]) assert.throws(()=>editInstallation(original,hours,'Reason'));
+assert.throws(()=>editInstallation(original,5,''));
+for (const input of [{...defaults,gateway:'unknown'},{...defaults,freight:'unknown'}]) {
+ const incomplete=generate(input);assert.equal(incomplete.blockers.length,1);assert.throws(()=>quote(incomplete));
+}
+const safe=quote(kept);
+assert.equal(safe.total,298000);
+assert.equal(safe.total,safe.lines.reduce((sum,l)=>sum+l.amount,0));
+assert.ok(safe.scope.includes('6 demonstration sensors'));
+assert.ok(!JSON.stringify(safe).includes('Extra access'));
+for (const line of safe.lines) assert.deepEqual(Object.keys(line).sort(),['amount','description','quantity','unit']);
+assert.equal(original.lines.find(l=>l.key==='installation').quantity,4);
+console.log('PASS: baseline, manual edit, rerun choices/removal, immutable originals, missing inputs, bounds and customer projection. Design model only.');

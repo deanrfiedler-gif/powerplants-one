@@ -6,6 +6,8 @@ P11 continuation, 7 September: Dean approved separately recorded whole-minute Tr
 
 ## Current direction
 
+9 September guided estimating: Dean authorised the first supply-and-installation wizard design. The [synthetic sensor-package design](blueprints/estimating-wizard-design.md) and [clickable preview](blueprints/estimating-wizard-mockup.html) show requirements, generated costs, estimator labour adjustment, protected rerun and a customer-safe quotation draft. The [decision/handover](decisions/estimating-wizard-pilot.md) records exact source and verification. This is design only; E1 runtime remains manual, no E2/E5 implementation or operational formula approval is implied, and issue #10 / existing EA/AT statuses remain open.
+
 9 September Azure connection correction: the [setup guide r02](delivery/azure-demo-connection.md) adds the numeric GitHub owner/repository IDs and corrects the expected federated subject to GitHub's immutable format for this newly created repository. The earlier name-only subject is superseded. Metadata and documented default-format verification do not establish a successful Azure login; live connection execution remains pending.
 
 9 September Azure demo setup: Dean supplied the resource-group and tenant screenshots after creating his subscription and budget. The [connection guide](delivery/azure-demo-connection.md) and [decision](decisions/azure-demo-connection.md) prepare a manually triggered GitHub OIDC check using a dedicated managed identity with Reader access to the demo group. Live identity/federation setup and the Azure check remain pending. No hosting resources, remote application access or tester accounts have been created by this change; the application's local-only identity restrictions remain in force.

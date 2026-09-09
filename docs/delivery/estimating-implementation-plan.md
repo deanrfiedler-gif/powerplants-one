@@ -42,3 +42,7 @@ D-009/D-010 do not close because a synthetic slice works. Accepted production fo
 ## 4. Subsequent E1 invocation
 
 Dean's later “Proceed” and “Continue” supply the bounded E1 authority and sequencing decision described above. [ADR-0017](../decisions/ADR-0017-estimating-e1.md) adopts the manual synthetic policy; [E1 handover](estimating-e1-handover.md) records implementation, observed component evidence and the authoritative final publication link for issue #46 / PR #49. The approved design is merged and verified. [E2 starter](estimating-e2-starter.md) prepares the next bounded task only; route precedence, option locks and questionnaire compatibility must be resolved for its chosen synthetic scope when separately invoked. The original discovery boundary remains historical evidence, not a request to re-authorise already instructed E1 work.
+
+## Guided estimating design addition — 9 September 2026
+
+Dean authorised a [first guided estimating package design](../blueprints/estimating-wizard-design.md), with [decision and handover](../decisions/estimating-wizard-pilot.md). The synthetic preview connects requirements to generated lines, protected manual adjustments and a quotation draft. It does not start E2 or E5, change the specialist Screen Systems scope, or implement a new costing service. A future template integration must explicitly reconcile E2 questionnaire snapshots, E3 source provenance and E1 exact saved-version/output contracts; no new sequence label or master parent is allocated.
