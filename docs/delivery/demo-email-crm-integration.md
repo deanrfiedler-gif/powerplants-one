@@ -1,6 +1,6 @@
 # Private demo integration handover
 
-**Document ID:** PPO-DEMO-INTEGRATION · **Revision:** r01 · **Date:** 9 September 2026 · **Owner:** Dean Fiedler · **State:** Implementation prepared; combined CI and cloud acceptance pending.
+**Document ID:** PPO-DEMO-INTEGRATION · **Revision:** r02 · **Date:** 9 September 2026 · **Owner:** Dean Fiedler · **State:** Implementation prepared; combined CI and cloud acceptance pending.
 
 This review branch combines PRs #64, #69 and #72 under the [integration decision](../decisions/demo-email-crm-integration.md). Their individual component checks do not establish a working combined deployment. Their source PRs remain available; this integration has not been merged or hosted.
 
@@ -51,3 +51,11 @@ Initial published source `774f62a034f9c7b5d81bb9ac4353bf86a79b503b` failed stati
 Source `4b0380912949a45a29bc74e5590f78f052c98ba0` passed the focused [Email/Calendar](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34318717772) and [CRM refinements](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34318717916) workflows. Its new demo test submitted an offset timestamp to the UTC-only Activity command; the fixture was corrected with `toISOString()` without changing the validator. Source `a519fd69497876cb259d45d0846f770d63550d46` then passed the invited-identity database case and both desktop/mobile combined UI journeys in [Azure demo run 34318959628](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34318959628).
 
 The full suite also reports retained I2/restart failures, so the focused CRM workflow now includes those exact existing procedures and their existing deadlines. Owner help is shown whenever the full Activity link receives focus, including programmatic focus after a pointer action, matching the old focus-triggered behaviour. The restart assertion now inspects the visible current-stage control and still requires Qualified; the earlier PR #69 run 34302205682 had selected a hidden Qualified edit control inside the new Details panel. Exact persistence, receipts, source versions and actual restart assertions remain. Fresh focused and broader results must be checked; these corrections do not establish complete application acceptance.
+
+## Deployment preflight and streamed heading correction
+
+Dean confirmed completing the sign-in registration, credential and user-access steps and requested Azure deployment on 9 September. At source `a05f05c890b281207f5c6b65dee22be54122cd35`, the focused Email/Calendar, CRM (including retained I2 and real restart), Azure preparation, estimating and documentation/design workflows passed. All four separate P11 application jobs passed. The main job's full browser suite passed 127/128 cases in [run 34319402650, job 102362492042](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34319402650/job/102362492042).
+
+The remaining mobile CA-13 failure occurred at the shared heading assertion: `locator('h1')` briefly matched both `Loading your workspace…` and `A connected view` during the initial streamed page transition. The single-element assertion failed on ambiguity. The correction retries one atomic array assertion requiring exactly one heading containing the expected title, then explicitly checks its visibility. All four routes, title expectations, brand/menu assertions, viewport coverage and original deadlines remain; there is no fixed sleep, removed procedure or application change. Fresh corrected-source CI is required.
+
+Direct Azure access was unavailable in this session: the portal returned HTTP 502 on the initial attempt and one reload, and no authenticated local Azure CLI was available. The owner can prepare persistent Bash Cloud Shell and confirm the selected subscription/resource group while corrected-source checks run. Provisioning, merge, live sign-in and phone acceptance have not been performed. The settings and secret Value remain with the owner.
