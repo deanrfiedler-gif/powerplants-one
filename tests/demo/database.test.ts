@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { after, before, test } from "node:test";
+import { after, before, beforeEach, test } from "node:test";
 import { createHash, randomBytes, randomUUID } from "node:crypto";
 import {
   database,
@@ -45,6 +45,12 @@ before(async () => {
     { object_id: first, expires_at },
     { object_id: second, expires_at },
   ]);
+});
+
+// Each case begins with current invitations; revocation in one case must not
+// leave the next case with an intentionally disabled actor.
+beforeEach(async () => {
+  await reconcileTesters(tenant, [{ object_id: first, expires_at }, { object_id: second, expires_at }]);
 });
 
 test("each invited tester retains a private mailbox, CRM follow-up and calendar across reconciliation", async () => {

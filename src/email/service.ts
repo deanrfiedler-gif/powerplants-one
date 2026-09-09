@@ -228,6 +228,15 @@ export async function createEmailFollowup(
     "EmailFollowUpCreated",
   );
 }
+// Use the database's clock for the hosted request's default calendar date,
+// consistently with grant expiry and the other persisted time-based reads.
+export async function calendarToday(): Promise<string> {
+  const result = await database().query<{ day: string }>(
+    "SELECT to_char(clock_timestamp() AT TIME ZONE 'Australia/Brisbane','YYYY-MM-DD') AS day",
+  );
+  return result.rows[0].day;
+}
+
 export async function readCalendar(
   p: Principal,
   query: Record<string, string>,
