@@ -2,7 +2,7 @@
 
 Private prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P11 integrated quality implementation; exact delivery publication in its linked handover; P12 prepared only · **Deployment:** none.
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P11 integrated quality implementation; exact delivery publication in its linked handover; P12 prepared only · **Deployment:** Azure demo infrastructure provisioned; app bootstrap pending.
 
 This repository is Dean's personal private prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. Integrated Service/Finance verification is in progress; the complete PP-01 acceptance boundary still requires P12. Company ownership, production approval and external-system write authority are not implied.
 
@@ -55,7 +55,7 @@ Application code is in `src/`, explicit SQL migrations and fixtures are in `db/`
 
 ## Private hosted demo preparation
 
-The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separate hosted runtime, owner setup, tester access and image updates. The GitHub connection check passed; actual deployment and live sign-in acceptance remain pending. Local development continues using the commands below.
+The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separate hosted runtime, owner setup, tester access and image updates. The GitHub connection check and owner-run core provisioning succeeded. ACR Tasks rejected the image build; the runbook now includes a Docker Desktop build/push and existing-image bootstrap path. App deployment and live sign-in acceptance remain pending. Local development continues using the commands below.
 
 ## Run the local application
 

@@ -1,6 +1,8 @@
 # Azure private demo runtime
 
-**Document ID:** PPO-DEMO-RUNTIME-DEC · **Revision:** r02 · **Date:** 9 September 2026 · **Owner:** Dean Fiedler · **Status:** Implementation in progress.
+**Document ID:** PPO-DEMO-RUNTIME-DEC · **Revision:** r03 · **Date:** 9 September 2026 · **Owner:** Dean Fiedler · **Status:** Infrastructure provisioned; local image-build alternative prepared; app acceptance pending.
+
+9 September owner execution: Dean subsequently authorised provisioning and initial private bootstrap. Core infrastructure was created successfully in the existing group; `az acr build` was rejected with `TasksOperationsNotAllowed` before a run was queued. The exact subscription/offer cause is unresolved. Use the owner's existing Docker Desktop to build the selected clean source and authenticated Docker push to the existing ACR. The explicit bootstrap flag verifies that commit's image tag, resolves it to a fixed digest and preserves the existing database, storage and tester setup sequence. This uses normal registry permissions and does not broaden GitHub Reader access, enable registry admin credentials or publish the image publicly. A Microsoft support case can address the separate ACR Tasks restriction; a registry SKU upgrade is not justified by this error alone. The [runbook](../delivery/azure-private-demo.md#acr-tasks-rejected-build-with-docker-desktop) records the procedure and remaining live verification. Earlier preparation-only statements below describe the original decision.
 
 Dean authorised the next hosted-demo preparation after the successful [connection check](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34310429878). This increment prepares deployment code and a reviewable PR. It does not execute paid Azure provisioning or invite colleagues.
 

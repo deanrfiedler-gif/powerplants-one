@@ -1,9 +1,11 @@
 import importlib.util
+import json
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import call, patch
 
 spec = importlib.util.spec_from_file_location("ppo_operator", Path(__file__).resolve().parents[2] / "infra/azure-demo/ppo_operator.py")
 operator = importlib.util.module_from_spec(spec)
@@ -21,6 +23,87 @@ class CommandLineTests(unittest.TestCase):
         )
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("{configure,plan,provision,bootstrap,testers}", result.stdout)
+        self.assertIn("--use-existing-image", result.stdout)
+
+    def test_existing_image_option_is_rejected_for_other_actions_before_azure_access(self):
+        result = subprocess.run(
+            [sys.executable, "-E", spec.origin, "configure", "/missing/settings.json", "--use-existing-image"],
+            text=True, capture_output=True, timeout=10,
+        )
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("only valid with bootstrap", result.stderr)
+
+
+class BootstrapImageTests(unittest.TestCase):
+    def setUp(self):
+        self.head = "a" * 40
+        self.digest = "sha256:" + "b" * 64
+        self.out = {"registryName": "demo", "registryServer": "demo.azurecr.io"}
+
+    def test_existing_image_uses_only_the_selected_commit_and_pins_its_digest(self):
+        with patch.object(operator, "az", return_value=self.digest) as azure:
+            image = operator.bootstrap_image(self.out, self.head, True)
+        azure.assert_called_once_with("acr", "repository", "show", "--name", "demo",
+                                      "--image", "ppo-demo:" + self.head, "--query", "digest")
+        self.assertEqual(image, "demo.azurecr.io/ppo-demo@" + self.digest)
+
+    def test_normal_bootstrap_still_builds_before_resolving_the_same_tag(self):
+        with patch.object(operator, "az", side_effect=[None, self.digest]) as azure:
+            image = operator.bootstrap_image(self.out, self.head, False)
+        self.assertEqual(azure.call_args_list, [
+            call("acr", "build", "--registry", "demo", "--image", "ppo-demo:" + self.head,
+                 "--file", "infra/azure-demo/Dockerfile", "--no-logs", "."),
+            call("acr", "repository", "show", "--name", "demo", "--image", "ppo-demo:" + self.head, "--query", "digest"),
+        ])
+        self.assertEqual(image, "demo.azurecr.io/ppo-demo@" + self.digest)
+
+    def test_missing_or_malformed_digest_is_refused(self):
+        for digest in [None, {}, "", "latest", "sha256:abc", self.digest + "\n"]:
+            with self.subTest(digest=digest), patch.object(operator, "az", return_value=digest):
+                with self.assertRaises(operator.OperatorActionError):
+                    operator.bootstrap_image(self.out, self.head, True)
+
+    def test_failed_image_lookup_stops_before_any_database_or_storage_operation(self):
+        commands = []
+
+        def fake_az(*args):
+            commands.append(args)
+            if args[:2] == ("account", "show"):
+                return {"id": "subscription", "tenantId": "tenant"}
+            if args[:2] == ("group", "show"):
+                return {}
+            if args[:3] == ("acr", "repository", "show"):
+                raise operator.OperatorActionError("Image lookup failed.")
+            self.fail("Unexpected Azure operation: " + str(args[:3]))
+
+        with tempfile.TemporaryDirectory() as folder:
+            settings = Path(folder) / "settings.json"
+            settings.write_text(json.dumps({"subscription_id": "subscription", "tenant_id": "tenant"}))
+            with patch.object(sys, "argv", [spec.origin, "bootstrap", str(settings), "--use-existing-image"]), \
+                 patch.object(operator, "validate"), patch.object(operator, "outputs", return_value=self.out), \
+                 patch.object(operator.subprocess, "check_output", side_effect=[self.head, ""]), \
+                 patch.object(operator, "az", side_effect=fake_az):
+                with self.assertRaisesRegex(operator.OperatorActionError, "Image lookup failed"):
+                    operator.main()
+        self.assertEqual([args[:2] for args in commands], [("account", "show"), ("group", "show"), ("acr", "repository")])
+
+    def test_tasks_rejection_is_actionable_without_revealing_azure_output(self):
+        failure = subprocess.CompletedProcess([], 1, stdout="synthetic-private-output",
+                                              stderr="(TasksOperationsNotAllowed) synthetic-private-token")
+        with patch.object(operator.subprocess, "run", return_value=failure):
+            with self.assertRaises(operator.OperatorActionError) as caught:
+                operator.az("acr", "build", "--registry", "demo")
+        self.assertIn("TasksOperationsNotAllowed", str(caught.exception))
+        self.assertIn("--use-existing-image", str(caught.exception))
+        self.assertNotIn("synthetic-private", str(caught.exception))
+
+    def test_other_azure_errors_hide_arguments_and_raw_output(self):
+        failure = subprocess.CompletedProcess([], 1, stdout="synthetic-private-output", stderr="synthetic-private-token")
+        with patch.object(operator.subprocess, "run", return_value=failure):
+            with self.assertRaises(operator.OperatorActionError) as caught:
+                operator.az("storage", "container", "create", "--account-key", "synthetic-private-key")
+        self.assertIn("az storage container", str(caught.exception))
+        self.assertNotIn("synthetic-private", str(caught.exception))
 
 
 class DefinitionTests(unittest.TestCase):

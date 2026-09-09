@@ -1,6 +1,8 @@
 # Azure private demo deployment
 
-**Document ID:** PPO-DEMO-RUNTIME · **Revision:** r03 · **Date:** 9 September 2026 · **Owner:** Dean Fiedler · **State:** Prepared implementation; cloud deployment and invited-user acceptance not executed.
+**Document ID:** PPO-DEMO-RUNTIME · **Revision:** r04 · **Date:** 9 September 2026 · **Owner:** Dean Fiedler · **State:** Core infrastructure provisioned; image build rejected by ACR Tasks; alternate bootstrap prepared; app acceptance pending.
+
+**Current owner-run result:** Dean successfully configured and provisioned the Australia East demo with suffix `90deea5d`. Azure returned the Web redirect URI `https://ca-ppo-demo-90deea5d.ashyglacier-e6fb2158.australiaeast.azurecontainerapps.io/auth/callback`. He then authorised initial private bootstrap from the pinned integration checkout while full application regression remained in progress. The registry returned `TasksOperationsNotAllowed` before creating a build run. This establishes a remote-build restriction, not its billing/offer cause and not an application build failure. No running app or live sign-in acceptance has been established. Use the [Docker Desktop build procedure](#acr-tasks-rejected-build-with-docker-desktop) below; preserve the existing private Cloud Shell settings.
 
 The [GitHub-to-Azure connection check passed](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34310429878) on main `f8035b5c55251da4da52430adf2f83094feccd6b`. This package adds the hosted runtime, individual Entra sign-in, expiring tester mapping, private Blob adapter, infrastructure template, operator commands and a separate image-update workflow. [Decision](../decisions/azure-private-demo.md). No paid resources or invitations are created by merging these files.
 
@@ -99,11 +101,68 @@ The command prints the exact Web redirect URI ending **`/auth/callback`**. Copy 
 python3 infra/azure-demo/ppo_operator.py bootstrap ../ppo-demo-settings.local.json
 ```
 
-This builds the checked-out source in ACR, creates the epoch's database and private Blob container, runs the operator setup job, waits for success, then creates/updates the web app and scheduled draft-recovery job. Runtime containers receive a distinct database role with no schema/access-administration rights. The operator job retains its own admin credential; do not give ordinary testers Azure access to it. Each command suppresses raw credential-bearing responses. Use the Azure deployment/job status and sanitised application logs to diagnose failures; do not enable debug logging or share private generated settings.
+This builds the checked-out source in ACR, resolves its commit tag to a fixed image digest, creates the epoch's database and private Blob container, runs the operator setup job, waits for success, then creates/updates the web app and scheduled draft-recovery job. Runtime containers receive a distinct database role with no schema/access-administration rights. The operator job retains its own admin credential; do not give ordinary testers Azure access to it. Each command suppresses raw credential-bearing responses. Safe stage messages identify progress; an ACR Tasks rejection names the known code and the existing-image option. Use the Azure deployment/job status and sanitised application logs to diagnose other failures; do not enable debug logging or share private generated settings.
 
 The final printed HTTPS address is the link to open in Chrome/Safari/Edge on another computer or phone. Dean's local computer and Docker Desktop can be off. Initial users must sign in and be both assigned in Entra and present in the app's tester list. The server rejects a local profile selection and all business requests without an active invited session. It does not trust an email domain or client-supplied identity headers.
 
 Before sharing the link, verify: an anonymous browser sees sign-in and cannot read CRM APIs; the invited owner can sign in; a non-allowlisted account is denied; a new opportunity/Activity survives reload and an app restart; draft bytes survive worker/app restart and match the retained revision; removing a tester blocks an existing session; the phone journey is usable. Record the deployment SHA, epoch, time and outcomes in the PR. These live checks have **not yet run**.
+
+### ACR Tasks rejected: build with Docker Desktop
+
+Microsoft documents a pause on [ACR Tasks using Azure free credits](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-tasks-overview). The owner's `TasksOperationsNotAllowed` error does not prove which subscription condition caused it. A [support request](https://azure.microsoft.com/en-au/support/create-ticket/) can establish that cause; a registry SKU upgrade is not an evidenced fix. The supported alternative is to [build locally and push using Docker](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-get-started-docker-cli), using the owner's existing Azure permissions. The GitHub Reader identity remains unchanged.
+
+Use the exact full source commit in the deployment handoff on both machines. This build must include the new `--use-existing-image` option; the old `f0898b7` checkout does not. The steps below create a separate Windows checkout and keep credentials/settings in Cloud Shell. Run each command group successfully before proceeding to the next. If Git reports an existing destination or local changes, preserve that work and choose an unused build folder.
+
+**On Windows, open Docker Desktop and wait for its Linux engine to run.** Open a local PowerShell window. Check `docker version`, `git --version` and `az version`. If Azure CLI is missing, install it with `winget install --exact --id Microsoft.AzureCLI`, then close and reopen PowerShell ([Microsoft installation instructions](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows)). Cloud Shell has Azure CLI, but it does not provide the local Docker engine needed for this build.
+
+```powershell
+$PpoDemoCommit = 'REPLACE_WITH_FULL_DEPLOYMENT_COMMIT'
+git clone --config core.autocrlf=false --branch feature/demo-email-crm-integration --single-branch https://github.com/deanrfiedler-gif/powerplants-one.git "$env:USERPROFILE\ppo-demo-image-build"
+if ($LASTEXITCODE -ne 0) { throw 'Clone did not complete; preserve existing folders.' }
+Set-Location "$env:USERPROFILE\ppo-demo-image-build"
+git checkout --detach $PpoDemoCommit
+if ($LASTEXITCODE -ne 0) { throw 'The selected source commit could not be checked out.' }
+if (git status --porcelain) { throw 'Use a clean build checkout.' }
+```
+
+Sign in as the same owner who provisioned the demo. Use normal interactive Microsoft sign-in; do not use the web application's client secret or enable registry admin credentials.
+
+```powershell
+az login
+az account set --subscription 'PPO Prototype Demo'
+az account show --query '{Subscription:name,Status:state}' --output table
+az acr login --name ppodemo90deea5d
+```
+
+After the account is correct and registry login succeeds, build and push. Obtain the actual registry hostname from Azure rather than assuming its format. `core.autocrlf=false` in the new clone preserves source/migration bytes for the Linux build. No local database or local app configuration is needed.
+
+```powershell
+$PpoDemoSha = (git rev-parse HEAD).Trim()
+if ($PpoDemoSha -ne $PpoDemoCommit) { throw 'Source commit mismatch.' }
+$PpoDemoRegistry = (az acr show --name ppodemo90deea5d --resource-group rg-ppo-demo-aue --query loginServer --output tsv).Trim()
+if ($LASTEXITCODE -ne 0 -or -not $PpoDemoRegistry) { throw 'Could not read the registry hostname.' }
+$PpoDemoImage = "$PpoDemoRegistry/ppo-demo:$PpoDemoSha"
+docker build --platform linux/amd64 --label "org.opencontainers.image.revision=$PpoDemoSha" --file infra/azure-demo/Dockerfile --tag $PpoDemoImage .
+if ($LASTEXITCODE -ne 0) { throw 'Image build failed; do not push or bootstrap.' }
+docker push $PpoDemoImage
+if ($LASTEXITCODE -ne 0) { throw 'Image push failed; do not bootstrap.' }
+```
+
+The existing demo owner normally has the registry access required by the current RBAC registry configuration. If login/push is denied, inspect that error and the actual assignment before changing permissions. A local build uses Windows computer resources; the pushed image still incurs ordinary ACR storage charges. It does not invoke ACR Tasks or require the computer to host the running demo.
+
+**Return to the Azure Cloud Shell Bash window.** Replace the placeholder below with the same full commit used on Windows, then run each line successfully. Do not overwrite/recreate `../ppo-demo-settings.local.json`.
+
+```bash
+cd ~/ppo-demo-deployment/powerplants-one
+git fetch origin feature/demo-email-crm-integration
+git checkout --detach REPLACE_WITH_FULL_DEPLOYMENT_COMMIT
+git status --short
+python3 infra/azure-demo/ppo_operator.py bootstrap ../ppo-demo-settings.local.json --use-existing-image
+```
+
+`git status --short` must be empty. The new command uses the renamed script, so it needs no `-P`. It looks up only `ppo-demo:<current HEAD>` in the registry recorded in the existing deployment outputs, validates its SHA-256 digest and uses the same digest for operator, worker and web. Missing/inaccessible images stop before database/storage mutations. A matching tag is an operator-controlled source convention, not independent attestation of image contents; the clean checkout and recorded build commit remain essential. Bootstrap still runs the same database setup, access reconciliation and private storage steps. It does not silently fall back to ACR Tasks.
+
+Local verification: all 12 operator tests pass, including existing-image lookup, normal build behaviour, rejection of malformed/missing digests, refusal before downstream mutations, option/action validation and secret-safe error messages. Cloud push, actual digest resolution and resumed bootstrap remain owner-run verification. The routine GitHub update workflow still uses ACR Tasks; this alternative covers initial bootstrap and explicitly requested operator bootstrap/reset runs. Do not use bootstrap for ordinary UI updates.
 
 ## 5. Add or remove testers
 
@@ -139,6 +198,6 @@ At the end of evaluation, remove app tester access and the deployment federation
 
 ## Verification and current limits
 
-Local lint, type/unit/build checks and focused operator-definition tests are recorded in the PR. The `Azure demo preparation checks` workflow additionally exercises a disposable PostgreSQL identity/CRM persistence case, compiles Bicep and builds the container. Existing full application checks remain unchanged. Local PostgreSQL/Docker are unavailable in this execution environment, so those checks require CI. Azure provisioning, actual OIDC exchange, Blob integration, post-deployment startup, costs and invited phone/desktop acceptance remain unverified until executed. Prepared code is not a published demo URL or P12/production acceptance.
+Local lint, type/unit/build checks and focused operator-definition tests are recorded in the PR. The `Azure demo preparation checks` workflow additionally exercises a disposable PostgreSQL identity/CRM persistence case, compiles Bicep and builds the container. Existing full application checks remain unchanged. Local PostgreSQL/Docker are unavailable in this execution environment, so those checks require CI. Core provisioning is confirmed by Dean's Cloud Shell result. Actual OIDC exchange, Blob integration, post-deployment startup, billed cost and invited phone/desktop acceptance remain unverified until executed. Prepared code and provisioned infrastructure do not establish a working app or P12/production acceptance.
 
 Sources: [Microsoft authorization code flow](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow), [redirect URI setup](https://learn.microsoft.com/en-us/entra/identity-platform/reply-url), [Container Apps networking](https://learn.microsoft.com/en-us/azure/container-apps/vnet-custom), [jobs](https://learn.microsoft.com/en-us/azure/container-apps/jobs), [OIDC client](https://github.com/panva/openid-client). Dependencies added: `openid-client` 6.8.8 and `@azure/storage-blob` 12.33.0, exact versions/lockfile retained; runtime remains Node 24.20.0/npm 11.19.0.

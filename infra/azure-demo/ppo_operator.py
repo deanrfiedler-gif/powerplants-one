@@ -17,11 +17,25 @@ GROUP = "rg-ppo-demo-aue"
 ROOT = Path(__file__).resolve().parents[2]
 
 
+class OperatorActionError(RuntimeError):
+    """A deliberately safe operator message; never includes raw Azure output."""
+
+
 def az(*args):
     result = subprocess.run(["az", *args, "--output", "json", "--only-show-errors"],
                             text=True, capture_output=True, check=False)
     if result.returncode:
-        raise RuntimeError("Azure command failed (details may contain secrets). Inspect the corresponding resource's deployment/execution status in Azure.")
+        if args[:2] == ("acr", "build") and "TasksOperationsNotAllowed" in result.stderr:
+            raise OperatorActionError(
+                "Azure rejected the image build (TasksOperationsNotAllowed). "
+                "Build and push this checkout with Docker Desktop, then run bootstrap with "
+                "--use-existing-image. See docs/delivery/azure-private-demo.md."
+            )
+        # Only show the fixed CLI command group, never arguments, stdout or stderr.
+        raise OperatorActionError(
+            f"Azure operation 'az {' '.join(args[:2])}' failed. "
+            "Inspect that resource's deployment/execution status in Azure; private values are not printed."
+        )
     return json.loads(result.stdout) if result.stdout.strip() else None
 
 
@@ -72,6 +86,24 @@ def configure(path):
 def outputs():
     value = az("deployment", "group", "show", "--resource-group", GROUP, "--name", "ppo-demo-core")
     return {k: v["value"] for k, v in value["properties"]["outputs"].items()}
+
+
+def bootstrap_image(out, head, use_existing):
+    tag = f"ppo-demo:{head}"
+    if use_existing:
+        print("Checking the existing registry image for this source commit.", flush=True)
+    else:
+        print("Building the reviewed application image. This can take several minutes.", flush=True)
+        az("acr", "build", "--registry", out["registryName"], "--image", tag,
+           "--file", "infra/azure-demo/Dockerfile", "--no-logs", ".")
+    # Require the selected checkout's tag in this demo's registry before changing
+    # the database or storage. All three containers then use the same immutable image.
+    digest = az("acr", "repository", "show", "--name", out["registryName"], "--image", tag, "--query", "digest")
+    if not isinstance(digest, str) or not re.fullmatch(r"sha256:[a-f0-9]{64}", digest):
+        raise OperatorActionError("The selected source image has no valid registry digest. Build and push this checkout before bootstrap.")
+    image = f"{out['registryServer']}/ppo-demo@{digest}"
+    print(f"Using image {image}", flush=True)
+    return image
 
 
 def definition(settings, out, image, blob_key, kind, operation="setup"):
@@ -140,7 +172,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=["configure", "plan", "provision", "bootstrap", "testers"])
     parser.add_argument("settings", type=Path)
+    parser.add_argument("--use-existing-image", action="store_true",
+                        help="Bootstrap from this checkout's existing ppo-demo:<commit> image in the demo registry, without ACR Tasks.")
     args = parser.parse_args()
+    if args.use_existing_image and args.action != "bootstrap":
+        parser.error("--use-existing-image is only valid with bootstrap")
     os.chdir(ROOT)
     if args.action == "configure":
         configure(args.settings)
@@ -178,11 +214,13 @@ def main():
         image = az("containerapp", "job", "show", "--resource-group", GROUP,
                    "--name", f"job-ppo-operator-{settings['suffix']}", "--query", "properties.template.containers[0].image")
     if args.action == "bootstrap":
-        print("Building the reviewed application image. This can take several minutes.")
-        az("acr", "build", "--registry", out["registryName"], "--image", f"ppo-demo:{head}", "--file", "infra/azure-demo/Dockerfile", "--no-logs", ".")
+        image = bootstrap_image(out, head, args.use_existing_image)
+        print("Creating the demo database.", flush=True)
         az("postgres", "flexible-server", "db", "create", "--resource-group", GROUP, "--server-name", out["databaseServer"], "--database-name", f"ppo_demo_{settings['epoch']}")
+    print("Reading the private storage credential.", flush=True)
     blob_key = az("storage", "account", "keys", "list", "--resource-group", GROUP, "--account-name", out["storageAccount"])[0]["value"]
     if args.action == "bootstrap":
+        print("Preparing the private demo file container.", flush=True)
         # Secret account key is passed through the process environment, not command arguments.
         previous = os.environ.get("AZURE_STORAGE_KEY")
         os.environ["AZURE_STORAGE_KEY"] = blob_key
@@ -192,12 +230,14 @@ def main():
             if previous is None: os.environ.pop("AZURE_STORAGE_KEY", None)
             else: os.environ["AZURE_STORAGE_KEY"] = previous
     operator = definition(settings, out, image, blob_key, "operator", "setup" if args.action == "bootstrap" else "testers")
+    print("Preparing and starting the database setup job.", flush=True)
     apply_container(operator, "operator")
     execution = az("containerapp", "job", "start", "--resource-group", GROUP, "--name", operator["name"])
     print("Waiting for the operator job to finish.")
     wait_job(operator["name"], execution["name"])
     if args.action == "bootstrap":
         for kind in ["worker", "web"]:
+            print(f"Starting the demo {kind}.", flush=True)
             value = definition(settings, out, image, blob_key, kind)
             apply_container(value, kind)
         print("Demo deployed. Verify sign-in, denied access, saved records and draft recovery before sharing:")
@@ -209,5 +249,7 @@ def main():
 if __name__ == "__main__":
     try:
         main()
+    except OperatorActionError as error:
+        raise SystemExit(str(error))
     except (KeyError, ValueError, RuntimeError, OSError, json.JSONDecodeError):
         raise SystemExit("Operator action did not complete. Check the selected subscription, settings and Azure resource status. Private values are not printed.")
