@@ -6,6 +6,8 @@ P11 continuation, 7 September: Dean approved separately recorded whole-minute Tr
 
 ## Current direction
 
+9 September estimating E2: Dean invoked the design and rules package before implementation. The [three proposed policies](decisions/estimating-e2-rules.md) specify ordered routing with explicit unknowns, one selected alternative with Draft-state locks, and ten scoped questions. The [walkthrough and handover](delivery/estimating-e2-design-handover.md) include worked cases and E1-original preservation. Concrete policy review is pending; no E2 runtime or broad EA/AT acceptance is claimed.
+
 9 September Azure connection correction: the [setup guide r02](delivery/azure-demo-connection.md) adds the numeric GitHub owner/repository IDs and corrects the expected federated subject to GitHub's immutable format for this newly created repository. The earlier name-only subject is superseded. Metadata and documented default-format verification do not establish a successful Azure login; live connection execution remains pending.
 
 9 September Azure demo setup: Dean supplied the resource-group and tenant screenshots after creating his subscription and budget. The [connection guide](delivery/azure-demo-connection.md) and [decision](decisions/azure-demo-connection.md) prepare a manually triggered GitHub OIDC check using a dedicated managed identity with Reader access to the demo group. Live identity/federation setup and the Azure check remain pending. No hosting resources, remote application access or tester accounts have been created by this change; the application's local-only identity restrictions remain in force.

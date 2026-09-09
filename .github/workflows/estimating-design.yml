@@ -43,10 +43,13 @@ jobs:
         run: |
           python3 docs/testing/estimating-design-check.py
           node docs/blueprints/estimating-design-check.mjs
+          node docs/testing/estimating-e2-design-check.mjs
       - name: Retain synthetic design evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: Estimating-design-evidence
-          path: verification-evidence/estimating-design/
+          path: |
+            verification-evidence/estimating-design/
+            verification-evidence/estimating-e2-design/
           retention-days: 14
