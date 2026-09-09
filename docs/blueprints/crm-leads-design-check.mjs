@@ -34,6 +34,10 @@ try {
       const row = await page.locator('.mobile-row').first().boundingBox();
       assert(row.y <= 110 && row.height <= 110, 'Compact phone inbox must show records immediately');
       const add = await page.locator('#add-lead').boundingBox();
+      await page.evaluate(() => window.scrollTo(0,document.body.scrollHeight));
+      const lastRow=await page.locator('.mobile-row').last().boundingBox();
+      assert(lastRow.y+lastRow.height <= add.y, 'Last lead can scroll clear of the floating add');
+      await page.evaluate(() => window.scrollTo(0,0));
       assert(add.width >= 44 && add.height >= 44 && add.y + add.height <= height, 'Reachable floating add');
       await page.getByRole('button', {name:'Back to Deals',exact:true}).click();
       assert(await page.locator('#deals-page').isVisible());
@@ -87,7 +91,7 @@ try {
     await page.getByLabel('Search leads', { exact: true }).fill('no such enquiry');
     assert.equal(await page.locator('#count').innerText(), '0');
     if (width < 700) { await capture('no-matches'); await page.getByRole('button', { name: 'Filters', exact: true }).click(); }
-    await page.getByRole('button', { name: 'Clear filters', exact: true }).click();
+    await (width < 700 ? page.getByRole('dialog', {name:'Filter leads',exact:true}) : page.locator('.toolbar')).getByRole('button', { name: 'Clear filters', exact: true }).click();
     assert.equal(await page.locator('#count').innerText(), '1');
     if (width < 700) {
       await page.getByRole('button', {name:'Show leads',exact:true}).click();
