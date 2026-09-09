@@ -19,11 +19,11 @@ Start with [current status](STATUS.md) and the [First Prototype Definition & Arc
 | Decisions | [ADR index](decisions/README.md), [29 decisions](decisions/decision-register.csv), [PP-01 evidence](prototype/decisions-and-evidence.md) |
 | Requirements | [78-parent register](requirements/requirements.csv), [prototype disposition](prototype/traceability.csv) |
 | Acceptance | [Master test guidance](testing/README.md), [30 prototype procedures](testing/prototype-acceptance.md) |
-| Delivery | [P01–P12 implementation plan](delivery/prototype-implementation-plan.md), [P04 handover](delivery/p04-handover.md), [P05 starter](delivery/p05-starter-prompt.md), [discovery backlog](delivery/backlog.md) |
-| Assurance | [Package review/check evidence](prototype/assurance.md), [foundation handover](delivery/foundation-handover.md) |
+| Delivery | [P01–P12 implementation plan](delivery/prototype-implementation-plan.md), [P11 handover](delivery/p11-handover.md), [P12 preparation](delivery/p12-starter-prompt.md), [discovery backlog](delivery/backlog.md) |
+| Assurance | [Package review/check evidence](prototype/assurance.md), [foundation handover](delivery/foundation-handover.md), [repository housekeeping](delivery/repository-housekeeping.md) |
 
 Frozen issued references remain evidence. Stable working documents evolve through commits/PRs and explicit decision records. Tests/specifications do not silently turn proposals into implemented business capabilities.
 
 [Controlled opportunity handover design](delivery/crm-handover-design-handover.md) — proposed authority/eligibility/history/recovery contract, synthetic canonical form, future verification and conditional implementation starter; H-01–H-03 remain unresolved.
 
-[Azure demo connection setup](delivery/azure-demo-connection.md) — portal steps and a manually triggered read-only GitHub connection check; live Azure setup and hosted application access remain pending.
+[Azure demo connection setup](delivery/azure-demo-connection.md) — portal steps and a manually triggered read-only GitHub connection check, verified on 9 September. See [current status](STATUS.md) for the separate private demo implementation and verification boundary.
