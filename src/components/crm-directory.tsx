@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { api, ErrorNotice, Field, PageHeader, Stamp } from "./business-ui";
 import { denied, useCrmResource } from "./crm-state";
 import type {
@@ -53,6 +53,7 @@ const defaults = {
   limit: "25",
 };
 export function CrmDirectory({ kind }: { kind: DirectoryKind }) {
+  const controlId = useId();
   const [filters, setFilters] = useState(defaults),
     [settled, setSettled] = useState(""),
     [page, setPage] = useState(1),
@@ -235,9 +236,15 @@ export function CrmDirectory({ kind }: { kind: DirectoryKind }) {
           </Link>
         ))}
       </nav>
-      <ErrorNotice error={result.error} />
-      <ErrorNotice error={views.error} />
-      <ErrorNotice error={saveError} />
+      {locked ? (
+        <ErrorNotice error={[result.error, views.error, saveError].find(denied)} />
+      ) : (
+        <>
+          <ErrorNotice error={result.error} />
+          <ErrorNotice error={views.error} />
+          <ErrorNotice error={saveError} />
+        </>
+      )}
       {!locked && (
         <>
           <div className="crm-directory-toolbar">
@@ -253,9 +260,10 @@ export function CrmDirectory({ kind }: { kind: DirectoryKind }) {
                   : "Name, reference, sector or owner"
               }
             />
-            <label>
-              Status
+            <div className="crm-directory-select">
+              <label htmlFor={`${controlId}-status`}>Status</label>
               <select
+                id={`${controlId}-status`}
                 value={filters.status}
                 onChange={(e) => change("status", e.target.value)}
               >
@@ -267,10 +275,11 @@ export function CrmDirectory({ kind }: { kind: DirectoryKind }) {
                   <option key={x}>{x}</option>
                 ))}
               </select>
-            </label>
-            <label>
-              Saved view
+            </div>
+            <div className="crm-directory-select">
+              <label htmlFor={`${controlId}-saved-view`}>Saved view</label>
               <select
+                id={`${controlId}-saved-view`}
                 value={selectedView}
                 onChange={(e) => apply(e.target.value)}
               >
@@ -279,7 +288,7 @@ export function CrmDirectory({ kind }: { kind: DirectoryKind }) {
                   <option key={v.name}>{v.name}</option>
                 ))}
               </select>
-            </label>
+            </div>
             <button
               className="secondary"
               aria-expanded={controls}
@@ -507,9 +516,12 @@ export function CrmDirectory({ kind }: { kind: DirectoryKind }) {
                     Math.ceil(result.data.total / Number(filters.limit)),
                   )}
                 </span>
-                <label>
-                  Rows per page
+                <div className="crm-directory-select">
+                  <label htmlFor={`${controlId}-page-size`}>
+                    Rows per page
+                  </label>
                   <select
+                    id={`${controlId}-page-size`}
                     value={filters.limit}
                     onChange={(e) => change("limit", e.target.value)}
                   >
@@ -517,7 +529,7 @@ export function CrmDirectory({ kind }: { kind: DirectoryKind }) {
                       <option key={n}>{n}</option>
                     ))}
                   </select>
-                </label>
+                </div>
                 <button
                   className="secondary"
                   disabled={page === 1}

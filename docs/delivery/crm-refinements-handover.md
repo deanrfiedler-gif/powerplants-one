@@ -26,6 +26,18 @@ Local review also corrected full-width card activation, mobile record link label
 
 A branch or green component test alone is not merged-main publication or complete business acceptance.
 
+## PR #69 saved-view and retained assurance correction
+
+The first published head `b3f9ad5790c839a4153fe6bc2e042bfbbd2413cb` failed the two directory browser cases in [CRM refinements run 34300208951](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34300208951), job 102305313920. Both stopped at the exact `Saved view` label lookup; both deal journeys and all four database cases passed. The logged information/scope/NaN rejections belong to the passing negative database test.
+
+Saved views are implemented, not deferred. The select was nested inside its label, so Playwright 1.63.0's label-text matcher also collected its descendant option text. `Saved view` therefore did not match exactly, even with only the default option. Asynchronous option loading alone does not explain this defect; `selectOption` already waits for the requested option after resolving its control. The artifact ZIP remains attached to the original run; local materialisation returned HTTP 403, so this diagnosis uses the exact source and job log, not a claim to have inspected its screenshots or trace.
+
+Directory selects now use separate visible labels and unique React IDs. The browser case retains the exact locator and 120-second deadline, checks its accessible name, saves non-default filters/page size/columns, observes the real GET after reload, verifies the stored preset and applies it to the UI. No persistence assertion is removed.
+
+The same original head also exposed an E1 upgrade assertion comparing pre-migration whole rows against a schema with new fields: [run 34300208908](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34300208908), job 102305313893, E1-DB10. The assertion now includes only the exact added opportunity defaults and null historical event snapshot, retaining full equality for all existing fields, original events, receipts, activity links, outbox rows and migration hashes. P11 job 102305314313 also showed duplicate permission alerts from simultaneous directory/preferences denials; the locked directory now presents one denial and continues to hide its business content and controls. The retained identity test is unchanged.
+
+Local lint, TypeScript, 33 unit cases and build passed during this correction. Fresh corrected-head CI remains required; other retained I2/restart/full-suite failures on the original head remain under review. No merge or complete application acceptance is claimed.
+
 ## Remaining contract boundaries
 
 Only Enquiry and Qualified currently exist. A drop uses the selected stage form because qualification evidence is mandatory. New stage/outcome/handover contracts, organisation/site/owner reassociation, the full facility taxonomy, multiple person phone/email channels, job-title/person-record-owner fields, arbitrary attachments, quote issue/acceptance and live integration remain separate work. Existing site/facility hierarchy and person affiliation roles are retained. The Pipedrive export informed field concepts without being imported.

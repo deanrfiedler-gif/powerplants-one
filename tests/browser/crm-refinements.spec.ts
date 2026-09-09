@@ -1,5 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import { crmCreate } from "../helpers/crm";
+import type { DirectoryView } from "../../src/crm/directory";
 test.describe.configure({ timeout: 120000 });
 async function call(page: Page, path: string, body?: unknown) {
   const r = await page.request.fetch(`/api/v1/${path}`, {
@@ -151,6 +152,11 @@ test("desktop directory tables and mobile lists share saved, scoped queries", as
   await expect(
     page.getByRole("heading", { name: "People", exact: true }),
   ).toBeVisible();
+  const savedView = page.getByLabel("Saved view", { exact: true });
+  await expect(savedView).toBeVisible();
+  await expect(savedView).toHaveAccessibleName("Saved view");
+  await page.getByLabel("Status", { exact: true }).selectOption("Active");
+  await page.getByLabel("Rows per page", { exact: true }).selectOption("50");
   if (info.project.use.isMobile) {
     await expect(page.locator(".crm-directory-mobile")).toBeVisible();
     await expect(page.locator(".crm-directory-table-scroll")).not.toBeVisible();
@@ -170,17 +176,64 @@ test("desktop directory tables and mobile lists share saved, scoped queries", as
   await page
     .getByRole("button", { name: "Columns and views", exact: true })
     .click();
-  await page
-    .getByLabel("View name", { exact: true })
-    .fill(`SYN Contact view ${info.project.name}`);
+  await page.getByRole("checkbox", { name: "Phone", exact: true }).uncheck();
+  const viewName = `SYN Contact view ${info.project.name}`;
+  await page.getByLabel("View name", { exact: true }).fill(viewName);
   await page.getByRole("button", { name: "Save view", exact: true }).click();
   await expect(
     page.getByText("View saved for your account.", { exact: true }),
   ).toBeVisible();
-  await page.reload();
-  await page
-    .getByLabel("Saved view", { exact: true })
-    .selectOption(`SYN Contact view ${info.project.name}`);
+  // Observe the real reload read, so a missing preset fails at its source.
+  const [viewsResponse] = await Promise.all([
+    page.waitForResponse((response) => {
+      const url = new URL(response.url());
+      return (
+        response.request().method() === "GET" &&
+        url.pathname === "/api/v1/crm/directory/views" &&
+        url.searchParams.get("kind") === "people"
+      );
+    }),
+    page.reload(),
+  ]);
+  expect(viewsResponse.status()).toBe(200);
+  const persisted: { version: number; views: DirectoryView[] } =
+    await viewsResponse.json();
+  expect(persisted.version).toBeGreaterThan(0);
+  expect(persisted.views.find((view) => view.name === viewName)).toEqual({
+    name: viewName,
+    q: "",
+    status: "Active",
+    mine: "false",
+    sort: "name",
+    direction: info.project.use.isMobile ? "asc" : "desc",
+    limit: "50",
+    columns: [
+      "name",
+      "organisations",
+      "email",
+      "preference",
+      "status",
+      "deals",
+    ],
+  });
+  await expect(savedView).toHaveAccessibleName("Saved view");
+  await expect(savedView).toHaveValue("");
+  await savedView.selectOption(viewName);
+  await expect(savedView).toHaveValue(viewName);
+  await expect(page.getByLabel("Status", { exact: true })).toHaveValue(
+    "Active",
+  );
+  await expect(page.getByLabel("Rows per page", { exact: true })).toHaveValue(
+    "50",
+  );
+  if (!info.project.use.isMobile) {
+    await expect(page.locator('th[aria-sort="descending"]')).toContainText(
+      "Name",
+    );
+    await expect(
+      page.getByRole("columnheader", { name: "Phone", exact: true }),
+    ).toHaveCount(0);
+  }
   await page.screenshot({ path: info.outputPath("crm-people-directory.png") });
   await page.goto("/customers");
   await expect(

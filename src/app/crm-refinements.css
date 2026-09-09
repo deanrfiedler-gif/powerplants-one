@@ -429,6 +429,9 @@
 .crm-directory-toolbar label {
   font-size: 13px;
 }
+.crm-directory-select {
+  min-width: 0;
+}
 .crm-directory-toolbar :is(input, select),
 .crm-directory-pagination select {
   margin: 4px 0 0;
@@ -601,10 +604,12 @@
 .crm-directory-pagination > span {
   margin-right: auto;
 }
-.crm-directory-pagination label {
+.crm-directory-pagination .crm-directory-select {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+.crm-directory-pagination label {
   font-weight: 400;
 }
 .crm-directory-pagination select {
@@ -820,7 +825,7 @@
   .crm-directory-pagination > span {
     flex: 1 0 100%;
   }
-  .crm-directory-pagination label {
+  .crm-directory-pagination .crm-directory-select {
     flex: 1 0 100%;
   }
 }
