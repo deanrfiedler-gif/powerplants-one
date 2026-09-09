@@ -1,11 +1,26 @@
 import importlib.util
 from pathlib import Path
+import subprocess
+import sys
 import unittest
 from unittest.mock import patch
 
-spec = importlib.util.spec_from_file_location("ppo_operator", Path(__file__).resolve().parents[2] / "infra/azure-demo/operator.py")
+spec = importlib.util.spec_from_file_location("ppo_operator", Path(__file__).resolve().parents[2] / "infra/azure-demo/ppo_operator.py")
 operator = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(operator)
+
+
+class CommandLineTests(unittest.TestCase):
+    def test_direct_entrypoint_starts_in_a_fresh_interpreter(self):
+        # Import-based tests preload standard-library modules and can hide a
+        # script filename that shadows one of them during ordinary CLI startup.
+        result = subprocess.run(
+            [sys.executable, "-E", spec.origin, "--help"],
+            cwd=Path(__file__).resolve().parents[2],
+            text=True, capture_output=True, timeout=10,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("{configure,plan,provision,bootstrap,testers}", result.stdout)
 
 
 class DefinitionTests(unittest.TestCase):
