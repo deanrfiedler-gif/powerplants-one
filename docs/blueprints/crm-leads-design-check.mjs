@@ -83,7 +83,7 @@ try {
     await page.getByRole('button', { name: 'Leads', exact: true }).click();
     await page.getByLabel('View', { exact: true }).selectOption('Converted');
     assert.equal(await page.locator('#count').innerText(), '1');
-    if (width < 700) await page.getByRole('button', {name:'Search leads',exact:true}).click();
+    if (width < 700) await page.getByRole('button', {name:'Open lead search',exact:true}).click();
     await page.getByLabel('Search leads', { exact: true }).fill('no such enquiry');
     assert.equal(await page.locator('#count').innerText(), '0');
     if (width < 700) { await capture('no-matches'); await page.getByRole('button', { name: 'Filters', exact: true }).click(); }
@@ -101,7 +101,7 @@ try {
     if (width < 700) {
       await page.getByRole('button', {name:'Show leads',exact:true}).click();
       assert(await page.locator('#mobile-filter').evaluate(el => el.classList.contains('filter-on')));
-      await page.getByRole('button', {name:'Search leads',exact:true}).click();
+      await page.getByRole('button', {name:'Open lead search',exact:true}).click();
       await page.getByLabel('Search leads', {exact:true}).fill('Climate');
       assert.equal(await page.locator('#count').innerText(), '1');
       await capture('search');
@@ -139,7 +139,7 @@ try {
       await page.getByRole('button', {name:'Cancel',exact:true}).filter({visible:true}).click();
       assert.equal(await page.evaluate(() => document.activeElement.id), 'add-lead');
       await page.setViewportSize({width:1440,height:900});
-      assert(await page.getByLabel('Owner', {exact:true}).isVisible());
+      await page.getByLabel('Owner', {exact:true}).waitFor({state:'visible'});
       await page.setViewportSize({width,height});
       assert(await page.locator('.mobile-header').isVisible());
     }
