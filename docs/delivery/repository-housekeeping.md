@@ -12,23 +12,23 @@ Inspected main: `f8035b5c55251da4da52430adf2f83094feccd6b`, tree `524de59ff42ef1
 - Correct current public/private wording in README, AGENTS, CONTRIBUTING and the copy-ready project instructions. Preserve historical ADRs, adopted naming wording and issued source snapshots.
 - Record merged mobile PR #61, successful Azure connection verification, the still-failed current-main diagnostic job and the separately passing #73 integration head.
 - Refresh the documentation index and affected register records. No source, SQL, fixtures, dependencies, tests or workflow bytes change.
-- Retire only the exact 27 branch tips below after live remote revalidation and confirming their commits remain ancestors of main. Active and unique branches remain.
+- Retired only the exact 27 branch tips below after live remote revalidation and confirming their commits remain ancestors of main. Active and unique branches remain.
 
 ## Validation and publication
 
-The contribution passed foundation (four issued sources, all 78 requirements and 1,358 local links), prototype (all 78 parent dispositions), naming (93 document records; copy-ready instructions 7,937 characters) and whitespace checks locally. The resulting PR records the published source and CI outcomes. No new application-test result is inferred from a documentation edit.
+The contribution passed foundation (four issued sources, all 78 requirements and 1,358 local links), prototype (all 78 parent dispositions), naming (93 document records; copy-ready instructions 7,937 characters) and whitespace checks locally. [PR #80](https://github.com/deanrfiedler-gif/powerplants-one/pull/80) records the published source and CI outcomes. Initial publication `786a06b543ebfdd0a741d8bd36732ac1adc3b069` passed [Documentation assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34347528430). The final retirement-record update receives its own check; initial-head results are not substitutes. No new application-test result is inferred from a documentation edit.
 
-**Branch retirement outcome:** pending execution; the list below is the revalidated candidate set. No PRs have been closed as superseded by this contribution.
+**Branch retirement outcome:** complete. All 27 listed refs were deleted on 9 September 2026. Final remote verification at `2026-09-09T11:58:35.257887+00:00` found none of those refs, no unrelated branch missing, unchanged main and all 27 saved commits still ancestors of main. 21 remote branches remained, including this housekeeping branch and concurrent new design work. No PRs were closed as superseded.
 
 ## Branch preservation and retirement method
 
-The first audit found 44 remote branches including main, 27 main-merged candidates and 13 open PRs. At continuation, Quotation Builder branch/PR #77 also exists and #75 has advanced; both are preserved. Counts describe dated observations, not ongoing invariants.
+The first audit found 44 remote branches including main, 27 main-merged candidates and 13 open PRs. During continuation, Quotation Builder #77, estimating E2 design #78 and wizard pilot #79 also appeared, and #75 advanced; all are preserved. Counts describe dated observations, not ongoing invariants.
 
 The 27 candidate tips are full ancestors of inspected main. Their full commit IDs and commit links below preserve recoverability through main after branch removal. A scan of maintained tracked Markdown, CSV, JSON, HTML and YAML found no blob/tree/commits links targeting those branch names. External discussion links have not been exhaustively rewritten; these commit links remain the recovery map for historical branch URLs.
 
-Re-read remote heads immediately before deletion, require an unchanged tip and a current-main ancestry proof, and use an expected-tip lease for each ref. A changed tip is excluded rather than forced. Confirm remote absence afterward and confirm the saved commits still resolve through main. This changes ref names only; it neither deletes commit history nor shrinks repository content.
+Remote tips were re-read and compared with the preserved SHA list before each retirement group; ancestry was checked against unchanged main. The connected GitHub actions have no ref-deletion operation and local Git has no authenticated push, so retirement used the signed-in GitHub branch UI. Each uniquely named row had to show zero commits ahead before deletion; GitHub then displayed Deleted/Restore. This UI route does not supply a client-side expected-tip lease. A final remote-head comparison and commit-ancestry check establish the outcome. This changes ref names only; it neither deletes commit history nor shrinks repository content.
 
-| Retired branch candidate | Preserved commit |
+| Retired branch | Preserved commit |
 |---|---|
 | `design/bp06-projects-foundation` | [52f0ab1fef609701ab9b4fd8bfbfb650a1c24bea](https://github.com/deanrfiedler-gif/powerplants-one/commit/52f0ab1fef609701ab9b4fd8bfbfb650a1c24bea) |
 | `design/email-calendar-prototype` | [ee5aa5f79176b0d6be692157ce0d450b72a5cae9](https://github.com/deanrfiedler-gif/powerplants-one/commit/ee5aa5f79176b0d6be692157ce0d450b72a5cae9) |
@@ -67,7 +67,7 @@ These are review dispositions, not approval to close or merge the PRs.
 | #64 Email/Calendar, #69 CRM, #72 Azure | Exact heads are ancestors of #73 at `93828dd898b55af8b8d2361983a8f554160d369d`. Resolve through that accepted integration before retiring their branches. |
 | #73 integration | All eight current-head workflows passed, including [Application assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34336965713). Draft/unmerged; review, publication and deployed-source evidence remain its own workstream. |
 | #75 r11 polish | Active; targets #73's branch and has advanced since the audit. Preserve it and its UI evidence. |
-| #77 Quotation Builder | Newly published design contribution; preserve unchanged. |
+| #77 Quotation Builder / #78 E2 design / #79 wizard | New design contributions; preserve unchanged. |
 | #63 P11 repair / issue #54 | Retain unresolved Finance recovery, test and handover differences. A main merge elsewhere does not establish complete P11 publication. |
 | #71 retry / #74 CA-13 assertion | Retain pending semantic review. #73 already addresses CA-13 with a different assertion, making #74 a possible later supersession candidate. |
 | #65 assistant design / #67 runtime | Three design files are byte-identical in #67, but #65 is not a commit ancestor. Preserve index/register differences and migration 0016 before consolidation. |
