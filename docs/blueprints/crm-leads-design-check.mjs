@@ -130,6 +130,8 @@ try {
       assert(await newDialog.evaluate(el => el.scrollHeight<=el.clientHeight+1),'Outer popup has no scrolling');
       assert(await page.locator('#new-need').evaluate(el => el.scrollHeight<=el.clientHeight+2),'Requirement grows without its own scrollbar');
       await capture('new-lead-scrolled');
+      await page.setViewportSize({width:width===390?320:390,height});
+      await page.waitForFunction(() => {const field=document.getElementById('new-need');return field.scrollHeight<=field.clientHeight+2;});
       await page.setViewportSize({width,height:440});
       await page.waitForFunction(() => document.getElementById('new-lead').getBoundingClientRect().bottom <= 441);
       await page.locator('#new-contact').focus();
