@@ -89,3 +89,5 @@ PPO-009-EMAIL-PILOT,First Microsoft Email and Calendar pilot,docs/delivery/email
 PPO-009-EMAIL-HO,Email and Calendar design handover,docs/delivery/email-calendar-handover.md,r02,Design and synthetic prototype; live integration not implemented,Dean Fiedler - private prototype,b3597f79413f87b9b2f1ce75a66a2addefbb0e34,,
 PPO-UI-MOBILE-DEC,Mobile CRM implementation,docs/decisions/mobile-crm-implementation.md,r01,Working implementation decision,Dean Fiedler - private prototype,923bd9b90412c80782331b7085a6880750f12640,,
 PPO-UI-MOBILE-HO,Mobile CRM implementation handover,docs/delivery/mobile-crm-handover.md,r01,Implementation with verification in progress,Dean Fiedler - private prototype,923bd9b90412c80782331b7085a6880750f12640,,
+PPO-DEMO-AZURE-CONNECTION,Azure demo connection setup,docs/delivery/azure-demo-connection.md,r01,Prepared; live setup and verification pending,Dean Fiedler - prototype owner,fab85c568f8b72dfe19c7ef1dd6195ba1f340d14,,
+PPO-DEMO-AZURE-CONNECTION-DEC,Azure demo connection preparation,docs/decisions/azure-demo-connection.md,r01,Implementation choice; live setup pending,Dean Fiedler - prototype owner,fab85c568f8b72dfe19c7ef1dd6195ba1f340d14,,
