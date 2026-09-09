@@ -1,0 +1,74 @@
+name: Azure demo connection check
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  check:
+    name: Verify Azure demo connection (read only)
+    if: github.repository == 'deanrfiedler-gif/powerplants-one' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    environment: ppo-demo
+    permissions:
+      id-token: write
+    env:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+      AZURE_CORE_OUTPUT: none
+    steps:
+      - name: Validate configured target
+        shell: bash
+        run: |
+          set -euo pipefail
+          guid='^[[:xdigit:]]{8}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{12}$'
+          for key in AZURE_CLIENT_ID AZURE_TENANT_ID AZURE_SUBSCRIPTION_ID; do
+            if [[ ! "${!key}" =~ $guid ]]; then
+              echo "::error::$key is missing or invalid in the ppo-demo environment."
+              exit 1
+            fi
+          done
+          if [[ "$AZURE_RESOURCE_GROUP" != "rg-ppo-demo-aue" ]]; then
+            echo "::error::AZURE_RESOURCE_GROUP must be rg-ppo-demo-aue."
+            exit 1
+          fi
+
+      - name: Sign in using GitHub federation
+        uses: azure/login@7184910d9eb2b1c5e48f7073824a90609bb9b6d6 # v2.3.1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Verify subscription, tenant and resource group
+        shell: bash
+        run: |
+          set -euo pipefail
+          connected_subscription=$(az account show --query id --output tsv)
+          connected_tenant=$(az account show --query tenantId --output tsv)
+          subscription_state=$(az account show --query state --output tsv)
+          if [[ "${connected_subscription,,}" != "${AZURE_SUBSCRIPTION_ID,,}" ||
+                "${connected_tenant,,}" != "${AZURE_TENANT_ID,,}" ||
+                "$subscription_state" != "Enabled" ]]; then
+            echo "::error::The connected Azure account does not match the configured active target."
+            exit 1
+          fi
+          group_id=$(az group show --subscription "$AZURE_SUBSCRIPTION_ID" \
+            --name "$AZURE_RESOURCE_GROUP" --query id --output tsv)
+          expected_scope="/subscriptions/$AZURE_SUBSCRIPTION_ID/resourceGroups/$AZURE_RESOURCE_GROUP"
+          if [[ "${group_id,,}" != "${expected_scope,,}" ]]; then
+            echo "::error::Azure did not return the expected resource group."
+            exit 1
+          fi
+          {
+            echo "### Azure demo connection verified"
+            echo ""
+            echo "- The configured subscription is active and belongs to the configured tenant."
+            echo "- GitHub can read the configured rg-ppo-demo-aue resource group."
+            echo "- This run created no Azure resources and deployed no application."
+            echo "- Hosting, application sign-in and tester access remain separate work."
+          } >> "$GITHUB_STEP_SUMMARY"

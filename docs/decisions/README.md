@@ -43,3 +43,5 @@ The [controlled opportunity handover proposal](crm-opportunity-handover.md) reco
 
 - [Email & Calendar design direction](email-calendar-design.md) — user-authorised synthetic design; selected-message sharing and a proposed read-only Microsoft pilot under CRM-03/PAR-06.
 - [Mobile CRM implementation](mobile-crm-implementation.md): approved mobile mapping to current components, persisted commands and permissions.
+
+[Azure demo connection preparation](azure-demo-connection.md) records the dedicated Reader identity, GitHub OIDC environment/branch boundary and separate hosted application work.
