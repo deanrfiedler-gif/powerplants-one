@@ -14,7 +14,7 @@ const numeric = (value: unknown) =>
 const symbol = (value: string) => /^[A-Z][A-Z0-9_]{0,100}$/.test(value);
 const eventLimit = 100000;
 const scalarKeys = ["byte_count", "net_error", "os_error", "status_code", "content_length", "priority", "load_flags", "result"] as const;
-const aggregateOnly = new Set(["SOCKET_BYTES_RECEIVED", "SOCKET_BYTES_SENT", "SSL_SOCKET_BYTES_RECEIVED", "SSL_SOCKET_BYTES_SENT", "URL_REQUEST_JOB_BYTES_READ", "URL_REQUEST_JOB_FILTERED_BYTES_READ", "HTTP_TRANSACTION_READ_BODY"]);
+const aggregateOnly = new Set(["SOCKET_BYTES_RECEIVED", "SOCKET_BYTES_SENT", "SSL_SOCKET_BYTES_RECEIVED", "SSL_SOCKET_BYTES_SENT", "URL_REQUEST_JOB_BYTES_READ", "URL_REQUEST_JOB_FILTERED_BYTES_READ", "URL_REQUEST_JOB_BYTES_SENT", "SOCKET_POOL_USAGE", "DISK_CACHE_ENTRY_IMPL", "COOKIE_INCLUSION_STATUS", "COOKIE_STORE_COOKIE"]);
 
 // Export metadata only. Never spread input objects, stringify raw parameters,
 // retain headers/bytes, or copy arbitrary string fields into review artifacts.
@@ -99,7 +99,7 @@ function collector(constants: RecordValue) {
         truncated: structural > eventLimit || sourceOverflow > 0,
         events: structural > eventLimit ? [...events.slice(position), ...events.slice(0, position)] : events,
         source_summaries: [...summaries.values()],
-        boundary: "Allowlisted event/source/phase symbols, numeric times/dependencies/byte counts/status/errors, and same-origin static asset paths only. No headers, cookies, credentials, bodies, raw bytes, query strings, external URLs or arbitrary parameter strings. Source IDs are not per-user identifiers. At most 100 stages, 16 dependencies and eight errors per source; capture overhead and all caps remain diagnostic limitations.",
+        boundary: "Allowlisted event/source/phase symbols, numeric times/dependencies/byte counts/status/errors, and same-origin static asset paths only. No headers, cookies, credentials, bodies, or user identifiers",
       };
     },
   };
@@ -195,4 +195,4 @@ async function prepare() {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href)
-  await prepare().catch(() => { console.error("NetLog metadata preparation failed; raw capture excluded and failure status retained"); process.exitCode = 1; });
+  await prepare().catch((error) => { console.error("NetLog metadata preparation failed:", error.message || error); process.exitCode = 1; });
