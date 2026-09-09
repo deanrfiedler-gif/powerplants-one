@@ -45,6 +45,7 @@ if (!process.argv.includes('--model-only')) {
     await page.goto(pathToFileURL(path.join(root, htmlPath)).href);
     const contains = async (selector, text) => assert.ok((await page.locator(selector).innerText()).includes(text), text);
     const capture = async name => {
+      await page.evaluate(() => scrollTo(0, 0));
       await page.screenshot({ path: path.join(evidence, `${name}.png`), fullPage: true });
       report.screenshots.push({ file: `${name}.png`, sha256: hash(path.join(evidence, `${name}.png`)) });
     };
@@ -68,6 +69,9 @@ if (!process.argv.includes('--model-only')) {
     await page.locator('[data-step="scope"]').click();
     assert.equal(await page.locator('#Q08').count(), 0);
     await page.locator('#Q07').selectOption('Yes'); assert.equal(await page.locator('#Q08').count(), 1);
+    await page.locator('#Q08').fill('Synthetic on-site scope');
+    await page.locator('#Q07').selectOption('No'); await page.locator('#Q07').selectOption('Yes');
+    assert.equal(await page.locator('#Q08').inputValue(), '');
     await page.locator('#Q09').selectOption('Customer'); assert.equal(await page.locator('#Q10').count(), 0);
     await page.locator('[data-system="ProductSupply"]').uncheck(); assert.equal(await page.locator('#Q06').count(), 0);
     await page.locator('[data-system="ProductSupply"]').check(); assert.equal(await page.locator('#Q06').inputValue(), '');
@@ -96,6 +100,8 @@ if (!process.argv.includes('--model-only')) {
     }
     await page.locator('[data-step="scope"]').click();
     await page.locator('#Q01').fill('SYN long scope description '.repeat(60));
+    await contains('#scope-status', 'Proposed scope');
+    await contains('#Q01 + small', 'Proposal needs confirmation');
     await fits('320-long-scope'); await capture('phone-320-scope');
     await page.locator('[data-step="route"]').focus(); await page.keyboard.press('Enter');
     await contains('#route-result', 'Express'); await page.keyboard.press('Tab');

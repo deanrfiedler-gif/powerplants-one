@@ -20,7 +20,13 @@ Dean can adopt E2-D01, E2-D02 and E2-D03 for the named r01 synthetic policies, o
 
 ## Verification record
 
-Validation is recorded after the targeted checks and visual inspection complete. Runtime, database, permission, persistence, customer-output and business acceptance cases in the E2 plan remain **Not run**. The preview makes no external calls, uses fictional data, stores nothing and resets on reload.
+Publication: [review PR #78](https://github.com/deanrfiedler-gif/powerplants-one/pull/78). Its maintained description records the final design verification and owner-review state; it does not establish policy adoption.
+
+Initial contribution `9e03779684460606d7a2e052e66f2e6e886853c5`, tree `e26c1eba35f1ee568ae61ba0415c74ad32c5d260`: documentation [34347023133](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34347023133) and design [34347023394](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34347023394), attempt 1, passed. E2's 29 routing fixtures and seven grouped standalone browser procedures passed; eight original screenshots were hash-checked. Executed merge checkout `4fbd60cf478f4003614ff2d108f61804b6ffbb77`, Chromium 153.0.8010.12. Artifact 10102139313: 2,190,190 bytes, SHA-256 `ffcf8853d354873982e65aa2ca7c21a0f9bfe05d9b7c9dec9014b2d093520092`.
+
+Manual inspection covered desktop route/options, 390px options, 320px comparison/unknown/long scope. It identified a dirty label that updated only on blur and a scrolled capture position. The follow-up marks edits immediately, clears newly restored conditional answers, labels the independent Option A scope example explicitly and captures from the top. Existing assertions remain, with checks added for these concrete findings. Final rendered results are recorded in PR #78 after that follow-up completes. A five-row CSV-width correction and the copy-ready instruction length correction are documentation-only.
+
+Local foundation/prototype/naming checks and the model fixtures passed. Local browser installation failed due cache locks and download timeout/502 responses; rendered evidence comes from the pinned GitHub workflow, not a local browser claim. Runtime, database, permission, persistence, customer-output and business acceptance cases in the E2 plan remain **Not run**. The preview makes no external calls, uses fictional data, stores nothing and resets on reload.
 
 ## Next implementation boundary
 
