@@ -8,7 +8,7 @@ The six-page `projects-starter-design-r02.pdf` uses actual browser captures. Des
 
 ## Reproduce the review
 
-`review-check.cjs` requires Playwright from the repository or `CODEX_PRIMARY_RUNTIME_NODE_MODULES`. Set `REVIEW_CHROMIUM_PATH` if using a separately provided Chromium. Run `node review-check.cjs` from this directory. It writes 12 captures and `review-check-results.json`. The checked-in result records Chromium 152.0.7977.0, 45 passing checks at 1366 × 900, 390 × 844 and 320 × 844, and zero uncaught page errors.
+`review-check.mjs` requires Playwright from the repository or `CODEX_PRIMARY_RUNTIME_NODE_MODULES`. Set `REVIEW_CHROMIUM_PATH` if using a separately provided Chromium. Run `node review-check.mjs` from this directory. It writes 12 captures and `review-check-results.json`. The checked-in result records Chromium 152.0.7977.0, 45 passing checks at 1366 × 900, 390 × 844 and 320 × 844, and zero uncaught page errors.
 
 `render-review.py` uses Python reportlab, Pillow and fontTools, plus the existing repository Roboto font. Run `python3 render-review.py` to rebuild the PDF from these captures. These are optional design-review tools; they add no application dependency.
 

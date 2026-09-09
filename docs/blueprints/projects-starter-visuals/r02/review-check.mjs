@@ -1,6 +1,9 @@
-const fs=require('fs'),assert=require('assert');
-const {chromium}=require(process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES ? process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES+'/playwright' : 'playwright');
-const dir=__dirname;
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
+const {chromium}=await import(process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES ? process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES+'/playwright/index.mjs' : 'playwright');
+const dir=path.dirname(fileURLToPath(import.meta.url));
 (async()=>{const browser=await chromium.launch({headless:true,executablePath:process.env.REVIEW_CHROMIUM_PATH || undefined,args:['--no-sandbox','--disable-dev-shm-usage','--no-zygote']});let errors=[],results=[];
 for(const width of [1366,390,320]){const page=await browser.newPage({viewport:{width,height:width===1366?900:844}});page.on('pageerror',e=>errors.push(e.message));page.on('dialog',d=>d.accept());await page.goto('file://'+dir+'/projects-design-review-r02.html');await page.evaluate(()=>document.fonts.ready);const choose=async(id,value)=>{if(!await page.locator(id).isVisible())await page.getByRole('button',{name:'Review tools',exact:true}).click();await page.locator(id).selectOption(value);if(width<781&&await page.locator('.review.reviewopen').count())await page.getByRole('button',{name:'Review tools',exact:true}).click()};
 const check=async name=>{assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'outer overflow '+name);results.push({width,check:name,result:'passed'})};
