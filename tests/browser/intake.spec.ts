@@ -37,7 +37,7 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
   await page.goto("/customers");
   await identity(page);
   await expect(
-    page.getByRole("heading", { name: "Customers", exact: true }),
+    page.getByRole("heading", { name: "Organisations", exact: true }),
   ).toBeVisible();
   await expect(
     page.getByRole("link", {

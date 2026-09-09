@@ -135,8 +135,8 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   await page.getByRole("button", { name: "Board", exact: true }).click();
   await capture(page, info, "320-board-long-action");
   // r08 keeps equal-height previews; the canonical Activity retains all 2,000 characters.
-  const actionLink = page.locator("a.crm-action-text").first();
-  await expect(actionLink).toHaveText(inputs[0].initial_action.summary);
+  const actionLink = page.locator("a.crm-card-activity").first();
+  await expect(actionLink.locator(".crm-action-text")).toHaveText(inputs[0].initial_action.summary);
   await expect(actionLink).toHaveAttribute("href", `/work/${inputs[0].initial_action.id}`);
   const activityPage = await page.context().newPage();
   await activityPage.setViewportSize({ width: 320, height: 844 });
@@ -262,7 +262,7 @@ test("CA-06/13 initial identity must settle before an actor can switch", async (
 });
 
 test("CA-13 shared brand consumers retain navigation, readable actions and original identity controls", async ({ page }, info) => {
-  for (const [path, title] of [["/", "A connected view"], ["/customers", "Customers"], ["/work", "Owned follow-up"], ["/service/reports", "Service review"]]) {
+  for (const [path, title] of [["/", "A connected view"], ["/customers", "Organisations"], ["/work", "Owned follow-up"], ["/service/reports", "Service review"]]) {
     await page.goto(path);
     if (path !== "/") await identity(page);
     await expect(page.locator("h1")).toContainText(title);
@@ -315,10 +315,13 @@ test("Accepted r08 shell and board retain full-width stages, fixed headers and s
     expect(await board.evaluate(e => e.scrollTop)).toBe(position);
     await board.evaluate(e => { e.scrollTop = 0; });
   }
-  await page.locator('.crm-stage:visible .crm-owner-label').first().focus();
-  await expect(page.locator('.crm-stage:visible .crm-owner-label').first()).toBeFocused();
+  const activityBand = page.locator('.crm-stage:visible a.crm-card-activity').first();
+  await activityBand.focus();
+  await expect(activityBand).toHaveAccessibleDescription(/^Activity owner:/);
+  expect(await activityBand.locator('.crm-owner-label').evaluate(e => getComputedStyle(e, '::after').content)).toContain('Activity owner:');
+  await expect(activityBand).toBeFocused();
   await capture(page, info, "r08-owner-keyboard-tooltip", false);
   await page.keyboard.press("Escape");
-  await expect(page.locator('.crm-stage:visible .crm-owner-label').first()).toBeFocused();
+  await expect(activityBand).toBeFocused();
   expect(await page.locator('.crm-stage:visible .crm-owner-label').first().evaluate(e => getComputedStyle(e, '::after').content)).toBe("none");
 });

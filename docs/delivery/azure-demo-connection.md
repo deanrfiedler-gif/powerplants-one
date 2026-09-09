@@ -3,9 +3,9 @@
 | Field | Value |
 |---|---|
 | Document ID | PPO-DEMO-AZURE-CONNECTION |
-| Revision | r02 |
+| Revision | r03 |
 | Date | 9 September 2026 |
-| Status | Prepared; owner setup and live connection verification pending |
+| Status | Connection verified; hosted app preparation separately in progress |
 | Owner | Dean Fiedler — prototype owner |
 
 The next step is to connect this GitHub repository to the demo resource group. This prepares a repeatable delivery path while application development continues. The connection check is deliberately limited to reading Azure account/resource-group metadata.
@@ -126,3 +126,7 @@ To retire this connection, remove **github-ppo-demo-read** from the identity's f
 - [Microsoft: Azure budgets](https://learn.microsoft.com/en-us/azure/cost-management-billing/costs/tutorial-acm-create-budgets)
 
 Source review: 9 September 2026. Local validation can check the workflow structure and shell guards; only an actual successful Azure workflow run proves this account connection. No Azure action has been executed by preparing these repository files.
+
+## Verified connection — 9 September 2026
+
+[Run 34310429878](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34310429878) passed on main `f8035b5c55251da4da52430adf2f83094feccd6b`. Login used the immutable subject recorded above; subscription, tenant, active state and exact resource group matched. This observed token supersedes earlier unverified-default notes. The CLI version warning was caused by output suppression before the successful login; this revision lets the pinned login step read JSON while retaining suppressed output elsewhere. [Hosted demo implementation](../delivery/azure-private-demo.md) remains separate from this read-only connection proof.

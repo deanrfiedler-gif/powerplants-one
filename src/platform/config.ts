@@ -1,3 +1,9 @@
+import { demoConfig } from "./demo-config";
+
+export function runtimeConfig(env: Record<string, string | undefined> = process.env) {
+  return env.PPO_ENV === "azure-demo" ? demoConfig(env) : localConfig(env);
+}
+
 export function localConfig(
   env: Record<string, string | undefined> = process.env,
 ) {

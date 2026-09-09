@@ -2,7 +2,9 @@ import { createHash, randomBytes } from "node:crypto";
 import { database, transaction } from "./database";
 import { localConfig } from "./config";
 import { AppError } from "./errors";
-export const sessionCookie = "ppo_local_session";
+import { demoConfig, isHostedDemo } from "./demo-config";
+import type { QueryClient } from "./permissions";
+export const sessionCookie = isHostedDemo() ? "__Host-ppo_demo_session" : "ppo_local_session";
 export async function endSession(token:string|undefined) {
   if(token) await database().query("DELETE FROM ppo.sessions WHERE token_hash=$1",[tokenHash(token)]);
 }
@@ -77,6 +79,7 @@ export async function createSession(profile: string, previous_token?: string) {
 export async function resolveIdentity(
   token: string | undefined,
 ): Promise<Principal> {
+  if (isHostedDemo()) return resolveDemoIdentity(token);
   localConfig();
   if (!token || !/^[a-f0-9]{64}$/.test(token))
     throw new AppError(
@@ -96,5 +99,25 @@ export async function resolveIdentity(
       "AuthenticationRequired",
       "Your local session has expired. Choose an identity again.",
     );
+  return result.rows[0];
+}
+
+async function resolveDemoIdentity(token: string | undefined): Promise<Principal> {
+  const config = demoConfig();
+  return readInvitedSession(database(), token, config.tenant_id);
+}
+
+export async function readInvitedSession(client: QueryClient, token: string | undefined, tenant: string): Promise<Principal> {
+  if (!token || !/^[a-f0-9]{64}$/.test(token))
+    throw new AppError(401, "AuthenticationRequired", "Sign in to the private demo.");
+  const result = await client.query(
+    `SELECT u.id AS actor_id,u.workspace_id,u.display_name
+     FROM ppo.sessions s JOIN ppo.users u ON (u.workspace_id,u.id)=(s.workspace_id,s.actor_id)
+     JOIN ppo.demo_testers t ON (t.workspace_id,t.user_id)=(u.workspace_id,u.id)
+     WHERE s.token_hash=$1 AND s.expires_at>clock_timestamp() AND u.active
+     AND u.issuer='PPO-EntraDemo' AND t.tenant_id=$2 AND t.enabled AND t.expires_at>clock_timestamp()`,
+    [tokenHash(token), tenant],
+  );
+  if (!result.rows[0]) throw new AppError(401, "AuthenticationRequired", "Your demo access has expired or been removed. Sign in again or contact the demo owner.");
   return result.rows[0];
 }

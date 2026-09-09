@@ -26,6 +26,7 @@ This repository is Dean's personal private prototype. It contains the planning f
 | [First-release plan](docs/delivery/first-release.md) | Proposed planned-service journey, dependencies and readiness criteria |
 | [Projects discovery and design](docs/delivery/projects-discovery-handover.md) | BP-06 source assessment, first-increment contract and project list/detail designs; J1 prepared only |
 | [Email & Calendar design](docs/blueprints/email-calendar-integration.md) | Synthetic inbox, record linking, privacy, agenda and first read-only Microsoft pilot preparation |
+| [Working Email & Calendar journey](docs/delivery/email-calendar-journey-handover.md) | Private fictional email, explicit opportunity link, persisted internal follow-up and calendar; PR #64 |
 | [Contributing](CONTRIBUTING.md) | Branches, pull requests, validation and evidence |
 
 ## Product direction
@@ -51,6 +52,10 @@ MYOB Acumatica remains the intended authoritative ERP. SharePoint remains the in
 | `scripts/` | Repository assurance, local launcher, database lifecycle and persistence proof |
 
 Application code is in `src/`, explicit SQL migrations and fixtures are in `db/`, and runtime checks are in `tests/`. See [P08 setup, verification and handover](docs/delivery/p08-handover.md) and [ADR-0006](docs/decisions/ADR-0006-p01-local-foundation.md) for the local-only implementation and limits.
+
+## Private hosted demo preparation
+
+The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separate hosted runtime, owner setup, tester access and image updates. The GitHub connection check passed; actual deployment and live sign-in acceptance remain pending. Local development continues using the commands below.
 
 ## Run the local application
 
