@@ -54,7 +54,7 @@ try {
       assert.equal(await page.locator('#count').innerText(), '7');
       assert.equal(await page.evaluate(() => document.activeElement.id), 'mobile-filter');
       await page.getByRole('button', {name:'Filters',exact:true}).click();
-      await page.getByLabel('Source', {exact:true}).selectOption('Referral');
+      await page.getByRole('dialog', {name:'Filter leads',exact:true}).getByLabel('Source', {exact:true}).selectOption('Referral');
       await page.keyboard.press('Escape');
       assert.equal(await page.locator('#count').innerText(), '7');
     }
