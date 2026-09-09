@@ -196,3 +196,7 @@ If any response is lost, record OutcomeUnknown and query supported target/correl
 | EST-09 | One-off identity and unknown-outcome reconciliation; section 11 | E6; EA-13/14, AT-05 |
 
 All EA/AT implementation procedures remain Not run/Planned. The calculation oracle and visual preview checks are design verification only. Business approval, source parity, whole-domain completion and operational readiness are separate. D-009/D-010 and issue #10 remain open pending the evidence/acceptance in the [gap register](estimating-evidence.md#4-open-evidence-and-decisions).
+
+## 13. Subsequent Quotation Builder design
+
+The 9 September [Quotation Builder design](quotation-builder-design.md) and [decision](../decisions/quotation-builder-design.md) extend the quotation authoring direction with a standalone template-first journey. All twelve reference sections map to explicit inputs; synthetic grouped pricing and exact saved drafts demonstrate the output. No application, formal issue, tax or AI implementation is introduced by that design.

@@ -1,0 +1,130 @@
+{
+  "kind": "Local model/control checks using a minimal control shim; no browser layout or server verification",
+  "checks": [
+    {
+      "name": "Generate requires saved snapshot",
+      "pass": true
+    },
+    {
+      "name": "Exact baseline total AUD 24680.50",
+      "pass": true
+    },
+    {
+      "name": "Draft bound to saved estimate v1",
+      "pass": true
+    },
+    {
+      "name": "Twelve quotation sections",
+      "pass": true
+    },
+    {
+      "name": "Export excludes internal costs",
+      "pass": true
+    },
+    {
+      "name": "Grouped totals reconcile",
+      "pass": true
+    },
+    {
+      "name": "Exact two-stage payment totals",
+      "pass": true
+    },
+    {
+      "name": "Local freight excluded in initial draft",
+      "pass": true
+    },
+    {
+      "name": "Changed proposal disables generate",
+      "pass": true
+    },
+    {
+      "name": "Original draft remains byte-identical",
+      "pass": true
+    },
+    {
+      "name": "Freight added exactly once",
+      "pass": true
+    },
+    {
+      "name": "Exclusion updates with freight selection",
+      "pass": true
+    },
+    {
+      "name": "Detailed prices include six selected lines",
+      "pass": true
+    },
+    {
+      "name": "Saved revisions restore from browser-store data",
+      "pass": true
+    },
+    {
+      "name": "Missing context blocks generation",
+      "pass": true
+    },
+    {
+      "name": "Invalid draft does not advance saved version",
+      "pass": true
+    },
+    {
+      "name": "Entered text escapes markup",
+      "pass": true
+    },
+    {
+      "name": "100 percent schedule has one exact amount",
+      "pass": true
+    },
+    {
+      "name": "Past validity date blocks generation",
+      "pass": true
+    },
+    {
+      "name": "Same snapshot and template produce same bytes",
+      "pass": true
+    },
+    {
+      "name": "Draft never represents issue or signature",
+      "pass": true
+    }
+  ],
+  "base_commit": "f8035b5c55251da4da52430adf2f83094feccd6b",
+  "document_checks": {
+    "pdf_pages": 4,
+    "all_pages_visually_inspected": true,
+    "all_twelve_sections_present": true,
+    "draft_total_aud": "24680.50",
+    "payment_stages_aud": [
+      "12340.25",
+      "12340.25"
+    ],
+    "internal_costs_absent": true
+  },
+  "browser_review": {
+    "status": "Blocked",
+    "reason": "Cloud browser local-file URL policy rejected navigation. No alternate browser route used.",
+    "desktop": "Not run",
+    "390px": "Not run",
+    "320px": "Not run"
+  },
+  "assurance": {
+    "foundation": "Passed",
+    "prototype": "Passed",
+    "naming": "Passed"
+  },
+  "outputs": [
+    {
+      "filename": "quotation-builder.html",
+      "bytes": 1629024,
+      "sha256": "5f7decebbda506b5e0832eaeafa92d89a8583c009b2070fb4c2dae5c047623bd"
+    },
+    {
+      "filename": "SYN-PPO-QUO-000901-draft-r01.html",
+      "bytes": 2070130,
+      "sha256": "59693e9a31b08921289593e5443b08c53ad0438bbc39941e2864cb7521933141"
+    },
+    {
+      "filename": "SYN-PPO-QUO-000901-draft-r01.pdf",
+      "bytes": 431379,
+      "sha256": "1bcbc45a186d47d398f628bb51a618b0583ecbe2451a5cdf85e0aefcb0ec709a"
+    }
+  ]
+}
