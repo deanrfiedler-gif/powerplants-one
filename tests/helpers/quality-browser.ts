@@ -3,17 +3,26 @@ import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { mkdir, writeFile } from "node:fs/promises";
 export async function call(page: Page, path: string, body?: unknown) {
-  const r = await page.request.fetch(`/api/v1/${path}`, {
-    method: body === undefined ? "GET" : "POST",
-    headers:
-      body === undefined
-        ? {}
-        : {
-            Origin: "http://127.0.0.1:3000",
-            "Content-Type": "application/json",
-          },
-    data: body,
-  });
+  const request = () =>
+    page.request.fetch(`/api/v1/${path}`, {
+      method: body === undefined ? "GET" : "POST",
+      headers:
+        body === undefined
+          ? {}
+          : {
+              Origin: "http://127.0.0.1:3000",
+              "Content-Type": "application/json",
+            },
+      data: body,
+    });
+  let r;
+  try {
+    r = await request();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "";
+    if (!/socket hang up|ECONNRESET/i.test(message)) throw error;
+    r = await request();
+  }
   const d = await r.json();
   expect(r.ok(), JSON.stringify(d)).toBe(true);
   expect(r.headers()["cache-control"]).toBe("private, no-store");
