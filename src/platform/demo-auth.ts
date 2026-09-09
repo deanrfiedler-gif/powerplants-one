@@ -3,6 +3,7 @@ import * as oidc from "openid-client";
 import { database, transaction } from "./database";
 import { demoConfig } from "./demo-config";
 import { AppError } from "./errors";
+import type { PoolClient } from "pg";
 
 export const loginCookie = "__Host-ppo_demo_login";
 const hash = (value: string) => createHash("sha256").update(value).digest("hex");
@@ -57,17 +58,21 @@ export async function finishDemoLogin(url: URL, loginToken: string | undefined, 
   const claims = tokens.claims();
   if (!claims) throw new AppError(401, "AuthenticationRequired", "Start sign-in again.");
   const objectId = verifiedDemoObject(claims, c.tenant_id);
+  return transaction(db => createInvitedSession(db, c.tenant_id, objectId, previousToken));
+}
+
+export async function createInvitedSession(db: PoolClient, tenant: string, objectId: string, previousToken?: string) {
   const token = randomBytes(32).toString("hex");
-  await transaction(async db => {
-    const result = await db.query(
-      `SELECT u.id,u.workspace_id FROM ppo.demo_testers t JOIN ppo.users u ON (u.workspace_id,u.id)=(t.workspace_id,t.user_id)
-       WHERE t.tenant_id=$1 AND t.object_id=$2 AND t.enabled AND t.expires_at>clock_timestamp()
-       AND u.active AND u.issuer='PPO-EntraDemo' FOR UPDATE OF t,u`, [c.tenant_id, objectId]);
-    const user = result.rows[0];
-    if (!user) throw new AppError(403, "DemoAccessDenied", "Ask the demo owner to add your account to the tester list.");
-    if (previousToken) await db.query("DELETE FROM ppo.sessions WHERE token_hash=$1", [hash(previousToken)]);
-    await db.query("INSERT INTO ppo.sessions VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')", [hash(token), user.workspace_id, user.id]);
-    await db.query("INSERT INTO ppo.audit_events(id,workspace_id,actor_id,object_type,object_id,outcome,reason,details) VALUES(gen_random_uuid(),$1,$2,'Session',$2,'Accepted','Invited demo tester signed in','{}')", [user.workspace_id, user.id]);
-  });
+  // Share the operator's mapping lock without requiring UPDATE on access tables.
+  await db.query("SELECT pg_advisory_xact_lock(10001)");
+  const result = await db.query(
+    `SELECT u.id,u.workspace_id FROM ppo.demo_testers t JOIN ppo.users u ON (u.workspace_id,u.id)=(t.workspace_id,t.user_id)
+     WHERE t.tenant_id=$1 AND t.object_id=$2 AND t.enabled AND t.expires_at>clock_timestamp()
+     AND u.active AND u.issuer='PPO-EntraDemo'`, [tenant, objectId]);
+  const user = result.rows[0];
+  if (!user) throw new AppError(403, "DemoAccessDenied", "Ask the demo owner to add your account to the tester list.");
+  if (previousToken) await db.query("DELETE FROM ppo.sessions WHERE token_hash=$1", [hash(previousToken)]);
+  await db.query("INSERT INTO ppo.sessions VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')", [hash(token), user.workspace_id, user.id]);
+  await db.query("INSERT INTO ppo.audit_events(id,workspace_id,actor_id,object_type,object_id,outcome,reason,details) VALUES(gen_random_uuid(),$1,$2,'Session',$2,'Accepted','Invited demo tester signed in','{}')", [user.workspace_id, user.id]);
   return token;
 }

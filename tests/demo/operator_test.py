@@ -1,6 +1,7 @@
 import importlib.util
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 spec = importlib.util.spec_from_file_location("ppo_operator", Path(__file__).resolve().parents[2] / "infra/azure-demo/operator.py")
 operator = importlib.util.module_from_spec(spec)
@@ -42,6 +43,25 @@ class DefinitionTests(unittest.TestCase):
         for patch in [{"suffix": "bad;command"}, {"epoch": "production/db"}, {"subscription_id": "default"}]:
             with self.assertRaises(ValueError):
                 operator.validate({**s, **patch})
+
+    def test_existing_operator_is_updated_and_private_file_is_removed_on_failure(self):
+        value = operator.definition(self.settings, self.out, "image", "synthetic-blob", "operator", "testers")
+        private_path = None
+
+        def fake_az(*args):
+            nonlocal private_path
+            if args[:3] == ("containerapp", "job", "list"):
+                return [value["name"]]
+            self.assertEqual(args[:3], ("containerapp", "job", "update"))
+            private_path = Path(args[args.index("--yaml") + 1])
+            self.assertEqual(private_path.stat().st_mode & 0o777, 0o600)
+            raise RuntimeError("simulated Azure failure")
+
+        with patch.object(operator, "az", side_effect=fake_az):
+            with self.assertRaises(RuntimeError):
+                operator.apply_container(value, "operator")
+        self.assertIsNotNone(private_path)
+        self.assertFalse(private_path.exists())
 
 
 if __name__ == "__main__":

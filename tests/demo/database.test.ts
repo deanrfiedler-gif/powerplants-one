@@ -5,7 +5,8 @@ import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { createSession, readInvitedSession } from "../../src/platform/identity";
 import { reset } from "../../scripts/database";
-import { migrateDemo, reconcileTesters, demoCapabilities } from "../../scripts/demo-database";
+import { migrateDemo, reconcileTesters, demoCapabilities, grantRuntimePrivileges } from "../../scripts/demo-database";
+import { createInvitedSession } from "../../src/platform/demo-auth";
 import { hasPermission } from "../../src/platform/permissions";
 import { createOpportunity } from "../../src/crm/opportunities";
 import { readOpportunity } from "../../src/crm/reads";
@@ -33,6 +34,27 @@ test("hosted identity mapping, persisted CRM and immediate removal stay scoped",
   await db.query("INSERT INTO ppo.sessions VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')", [hash, u.workspace_id, u.id]);
   const p = await readInvitedSession(db, token, tenant);
   assert.equal(p.actor_id, u.id);
+  // Exercise the real sign-in SQL as a role that cannot alter users or tester grants.
+  const role = `ppo_demo_test_${randomBytes(6).toString("hex")}`;
+  const client = await db.connect();
+  try {
+    await client.query(`CREATE ROLE ${role}`);
+    await grantRuntimePrivileges(client, "ppo_synthetic_test", role);
+    await client.query("BEGIN");
+    await client.query(`SET LOCAL ROLE ${role}`);
+    const session = await createInvitedSession(client, tenant, first);
+    assert.equal((await readInvitedSession(client, session, tenant)).actor_id, p.actor_id);
+    await client.query("COMMIT");
+    await client.query("BEGIN");
+    await client.query(`SET LOCAL ROLE ${role}`);
+    await assert.rejects(client.query("UPDATE ppo.demo_testers SET enabled=true"), /permission denied/);
+    await client.query("ROLLBACK");
+  } finally {
+    await client.query("ROLLBACK");
+    await client.query(`DROP OWNED BY ${role}`);
+    await client.query(`DROP ROLE ${role}`);
+    client.release();
+  }
   for (const cap of demoCapabilities) assert.equal(await hasPermission(db, p, cap, CRM.company), true);
   for (const cap of ["finance.read", "service.scope.authorise", "pack.issue"] as const)
     assert.equal(await hasPermission(db, p, cap, CRM.company), false);
@@ -54,5 +76,6 @@ test("hosted identity mapping, persisted CRM and immediate removal stay scoped",
   await reconcileTesters(tenant, [{ object_id: second, expires_at }]);
   await assert.rejects(readInvitedSession(database(), token, tenant));
   assert.equal((await database().query("SELECT 1 FROM ppo.sessions WHERE token_hash=$1", [hash])).rowCount, 0);
+  assert.equal(await hasPermission(database(), p, "crm.opportunity.edit", CRM.company), false);
   assert.equal((await database().query("SELECT owner_id FROM ppo.opportunities WHERE id=$1", [proposal.id])).rows[0].owner_id, p.actor_id);
 });

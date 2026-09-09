@@ -128,6 +128,14 @@ def wait_job(name, execution):
     raise RuntimeError("Operator job still running; inspect its result before retrying.")
 
 
+def apply_container(value, kind):
+    command = ["containerapp"] if kind == "web" else ["containerapp", "job"]
+    existing = az(*command, "list", "--resource-group", GROUP, "--query", "[].name")
+    action = "update" if value["name"] in existing else "create"
+    with private_json(value) as file:
+        az(*command, action, "--resource-group", GROUP, "--name", value["name"], "--yaml", file)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=["configure", "plan", "provision", "bootstrap", "testers"])
@@ -151,7 +159,8 @@ def main():
                   "databaseAdminPassword": {"value": settings["admin_password"]}}}
         with private_json(params) as file:
             result = az("deployment", "group", "what-if" if args.action == "plan" else "create", "--resource-group", GROUP,
-                        "--name", "ppo-demo-core", "--template-file", "infra/azure-demo/main.bicep", "--parameters", f"@{file}")
+                        "--name", "ppo-demo-core", "--template-file", "infra/azure-demo/main.bicep", "--parameters", f"@{file}",
+                        *(["--no-pretty-print"] if args.action == "plan" else []))
         if args.action == "plan":
             print("Review these proposed resource changes and the pricing calculator before provisioning:")
             for change in result.get("changes", []):
@@ -162,9 +171,12 @@ def main():
         return
     out = outputs()
     head = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
-    if subprocess.run(["git", "diff", "--quiet", "HEAD"]).returncode:
+    if subprocess.check_output(["git", "status", "--porcelain"], text=True).strip():
         raise ValueError("Use a clean, reviewed checkout for deployment.")
     image = f"{out['registryServer']}/ppo-demo:{head}"
+    if args.action == "testers":
+        image = az("containerapp", "job", "show", "--resource-group", GROUP,
+                   "--name", f"job-ppo-operator-{settings['suffix']}", "--query", "properties.template.containers[0].image")
     if args.action == "bootstrap":
         print("Building the reviewed application image. This can take several minutes.")
         az("acr", "build", "--registry", out["registryName"], "--image", f"ppo-demo:{head}", "--file", "infra/azure-demo/Dockerfile", "--no-logs", ".")
@@ -180,17 +192,14 @@ def main():
             if previous is None: os.environ.pop("AZURE_STORAGE_KEY", None)
             else: os.environ["AZURE_STORAGE_KEY"] = previous
     operator = definition(settings, out, image, blob_key, "operator", "setup" if args.action == "bootstrap" else "testers")
-    with private_json(operator) as file:
-        az("containerapp", "job", "create", "--resource-group", GROUP, "--name", operator["name"], "--yaml", file)
+    apply_container(operator, "operator")
     execution = az("containerapp", "job", "start", "--resource-group", GROUP, "--name", operator["name"])
     print("Waiting for the operator job to finish.")
     wait_job(operator["name"], execution["name"])
     if args.action == "bootstrap":
         for kind in ["worker", "web"]:
             value = definition(settings, out, image, blob_key, kind)
-            with private_json(value) as file:
-                command = ["containerapp", "create"] if kind == "web" else ["containerapp", "job", "create"]
-                az(*command, "--resource-group", GROUP, "--name", value["name"], "--yaml", file)
+            apply_container(value, kind)
         print("Demo deployed. Verify sign-in, denied access, saved records and draft recovery before sharing:")
         print(out["demoOrigin"])
     else:

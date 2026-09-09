@@ -61,7 +61,7 @@ resource logs 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
   name: 'log-ppo-demo-${suffix}'
   location: location
   tags: tags
-  properties: { sku: { name: 'PerGB2018' }, retentionInDays: 30, workspaceCapping: { dailyQuotaGb: 0.1 } }
+  properties: { sku: { name: 'PerGB2018' }, retentionInDays: 30, workspaceCapping: { dailyQuotaGb: json('0.1') } }
 }
 resource environment 'Microsoft.App/managedEnvironments@2024-03-01' = {
   name: 'cae-ppo-demo-${suffix}'

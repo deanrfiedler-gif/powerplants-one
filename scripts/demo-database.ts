@@ -50,6 +50,7 @@ export async function reconcileTesters(tenant: string, entries: ReturnType<typeo
     await c.query("SELECT pg_advisory_xact_lock(10001)");
     // Removed entries lose existing sessions immediately; retained actor IDs stay stable.
     await c.query("UPDATE ppo.demo_testers SET enabled=false WHERE tenant_id=$1", [tenant]);
+    await c.query("UPDATE ppo.users u SET active=false FROM ppo.demo_testers t WHERE (u.workspace_id,u.id)=(t.workspace_id,t.user_id) AND t.tenant_id=$1", [tenant]);
     for (const e of entries) {
       const subject = `${tenant}/${e.object_id}`;
       const user = await c.query(
@@ -77,15 +78,19 @@ async function runtimeRole() {
     if (!(await db.query("SELECT 1 FROM pg_roles WHERE rolname=$1", [role])).rowCount)
       await db.query(`CREATE ROLE ${pg.escapeIdentifier(role)} LOGIN PASSWORD ${pg.escapeLiteral(password)}`);
     // Existing password is retained. Rotation is an explicit operator action.
-    const name = pg.escapeIdentifier(role);
-    await db.query(`REVOKE ALL ON DATABASE ${pg.escapeIdentifier(c.database_name)} FROM PUBLIC`);
-    await db.query(`GRANT CONNECT ON DATABASE ${pg.escapeIdentifier(c.database_name)} TO ${name}`);
-    await db.query(`GRANT USAGE ON SCHEMA ppo TO ${name}`);
-    await db.query(`GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA ppo TO ${name}`);
-    await db.query(`GRANT USAGE,SELECT ON ALL SEQUENCES IN SCHEMA ppo TO ${name}`);
-    await db.query(`REVOKE INSERT,UPDATE,DELETE ON ppo.users,ppo.permission_grants,ppo.demo_testers,ppo.seed_receipts FROM ${name}`);
-    await db.query(`REVOKE CREATE ON SCHEMA public FROM PUBLIC`);
+    await grantRuntimePrivileges(db, c.database_name, role);
   });
+}
+
+export async function grantRuntimePrivileges(db: pg.PoolClient, databaseName: string, role: string) {
+  const name = pg.escapeIdentifier(role);
+  await db.query(`REVOKE ALL ON DATABASE ${pg.escapeIdentifier(databaseName)} FROM PUBLIC`);
+  await db.query(`GRANT CONNECT ON DATABASE ${pg.escapeIdentifier(databaseName)} TO ${name}`);
+  await db.query(`GRANT USAGE ON SCHEMA ppo TO ${name}`);
+  await db.query(`GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA ppo TO ${name}`);
+  await db.query(`GRANT USAGE,SELECT ON ALL SEQUENCES IN SCHEMA ppo TO ${name}`);
+  await db.query(`REVOKE INSERT,UPDATE,DELETE ON ppo.users,ppo.permission_grants,ppo.demo_testers,ppo.seed_receipts FROM ${name}`);
+  await db.query(`REVOKE CREATE ON SCHEMA public FROM PUBLIC`);
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
