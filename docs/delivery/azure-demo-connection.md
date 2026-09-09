@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Document ID | PPO-DEMO-AZURE-CONNECTION |
-| Revision | r01 |
+| Revision | r02 |
 | Date | 9 September 2026 |
 | Status | Prepared; owner setup and live connection verification pending |
 | Owner | Dean Fiedler — prototype owner |
@@ -58,15 +58,21 @@ Open **id-ppo-demo-github-read → Settings → Federated credentials → Add Cr
 | Setting | Value |
 |---|---|
 | Organisation / owner | deanrfiedler-gif |
+| Organisation ID / Owner ID | 231005545 |
 | Repository | powerplants-one |
+| Repository ID | 1357680346 |
 | Entity type | Environment |
 | Environment | ppo-demo |
 | Credential name | github-ppo-demo-read |
 | Issuer | https://token.actions.githubusercontent.com |
 | Audience | api://AzureADTokenExchange |
-| Subject identifier | repo:deanrfiedler-gif/powerplants-one:environment:ppo-demo |
+| Subject identifier | repo:deanrfiedler-gif@231005545/powerplants-one@1357680346:environment:ppo-demo |
 
 Check the automatically generated issuer, audience and subject against the table, then select **Add**. No client password or client secret is created.
+
+**r02 correction:** The previous guide omitted the Organisation ID and Repository ID fields and used the older name-only subject. GitHub applies immutable subjects by default to repositories created after 15 July 2026. This repository was created on 4 September 2026; its numeric owner and repository IDs above were verified using GitHub repository metadata. Although Azure labels the field Organisation ID, this repository belongs to a personal GitHub account, so use its numeric owner ID. It is separate from the Azure tenant ID.
+
+The subject above is the expected current default for the `ppo-demo` environment, derived from that repository metadata and GitHub's documented format. The connected GitHub tool cannot read the repository's OIDC customisation endpoint, so a custom subject override has not been ruled out and no live token has been observed. If Azure generates a different subject, compare the names, numeric IDs and Environment selection; if the connection later reports a mismatch, inspect the repository's OIDC settings before changing trust. Do not reuse the superseded name-only subject. The [GitHub OIDC reference](https://docs.github.com/en/actions/reference/security/oidc#immutable-subject-claims) and [Microsoft migration guidance](https://learn.microsoft.com/en-us/entra/workload-id/workload-identities-github-immutable-subjects) describe the new format.
 
 ## 5. Store the three IDs in GitHub
 
@@ -98,7 +104,7 @@ The workflow runs only when manually requested on main in this repository. It us
 | Workflow absent from Actions | The workflow must be on main before its manual run button is available. |
 | Job skipped or environment rejects it | Select main and confirm the environment permits only the main branch. |
 | Missing or invalid configuration | Check environment name, three secret names/GUID values and the resource-group variable. |
-| No matching federated identity | Compare owner, repo, environment, issuer, audience and subject exactly; allow a few minutes for newly created trust to propagate, then rerun. |
+| No matching federated identity | Compare owner/name and numeric ID, repo/name and numeric ID, environment, issuer, audience and subject exactly; check any GitHub OIDC customisation; allow a few minutes for newly created trust to propagate, then rerun. |
 | Azure login finds no accessible subscription, or group read is denied | Check the Client ID and Reader assignment on the intended group, subscription and tenant; allow new IAM grants time to propagate. |
 | Managed identity creation/role assignment denied | Confirm the selected subscription and directory. The setup needs identity-creation and role-assignment rights; the workflow identity itself remains Reader. |
 
