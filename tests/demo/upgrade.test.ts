@@ -1,12 +1,13 @@
 import assert from "node:assert/strict";
 import { after, beforeEach, test } from "node:test";
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { database, closeDatabase, transaction } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { migrate, seed } from "../../scripts/database";
 import { migrateDemo, demoWorkspace, demoCompany, grantRuntimePrivileges } from "../../scripts/demo-database";
 import { upgradeExistingDemo } from "../../scripts/demo-upgrade";
+import { migrationFiles } from "../../scripts/migration-registry";
 import { seedTesterMailbox } from "../../scripts/demo-mailbox";
 import { createInvitedSession } from "../../src/platform/demo-auth";
 import { readInvitedSession } from "../../src/platform/identity";
@@ -85,6 +86,36 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   assert.deepEqual(await rows("ppo.permission_grants"), retained);
   assert.deepEqual(await ledger(), migrated);
   assert.deepEqual(await rows("ppo.seed_receipts"), receipts);
+});
+
+test("a baseline executed from Windows CRLF SQL upgrades without rewriting historical checksums", async () => {
+  const db = database();
+  const readWindows = async (file: string) => (await readFile(new URL(`../../db/${file}`, import.meta.url), "utf8"))
+    .replace(/\r\n/g, "\n").replace(/\n/g, "\r\n");
+  const digest = (sql: string) => createHash("sha256").update(sql).digest("hex");
+  await db.query(await readFile(new URL("../../db/migrations/0001-recover.sql", import.meta.url), "utf8"));
+  await db.query("DROP TABLE public.ppo_migrations,public.ppo_demo_migrations");
+  await db.query("CREATE TABLE public.ppo_migrations(version integer PRIMARY KEY,sha256 text NOT NULL,applied_at timestamptz NOT NULL DEFAULT clock_timestamp())");
+  for (const file of migrationFiles.filter(file => Number(file.slice(0, 4)) <= 17)) {
+    const sql = await readWindows(`migrations/${file}`);
+    await db.query(sql);
+    await db.query("INSERT INTO public.ppo_migrations(version,sha256) VALUES($1,$2)", [Number(file.slice(0, 4)), digest(sql)]);
+  }
+  await seed(17);
+  const identity = await readWindows("demo/0001-identity.sql");
+  await db.query(identity);
+  await db.query("CREATE TABLE public.ppo_demo_migrations(version integer PRIMARY KEY,sha256 text NOT NULL)");
+  await db.query("INSERT INTO public.ppo_demo_migrations VALUES(1,$1)", [digest(identity)]);
+  await transaction(c => grantRuntimePrivileges(c, name, role));
+  const baseline = await ledger(), identities = await rows("public.ppo_demo_migrations");
+  await upgradeExistingDemo(name, tenant, true);
+  await upgradeExistingDemo(name, tenant, false);
+  await upgradeExistingDemo(name, tenant, true);
+  const final = await ledger();
+  assert.deepEqual(final.filter(r => r.row.version <= 17), baseline);
+  assert.deepEqual(await rows("public.ppo_demo_migrations"), identities);
+  assert.equal(final.length, baseline.length + 2);
+  assert.ok((await db.query("SELECT to_regclass('ppo.projects') AS relation")).rows[0].relation);
 });
 
 test("an old conflicting Gantt-18 ledger is refused before any migrations, seeds or grants change", async () => {
