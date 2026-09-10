@@ -4,6 +4,7 @@ import { opportunityReceiptActions } from "../crm/receipt-authority";
 import { financeContext, financeAccount, receiptCapability } from "../finance/context";
 import { estimateContext, quoteContext } from "../estimating/context";
 import { visibleOpportunity, relationshipContext, eligibleOpportunityOwner } from "../crm/context";
+import { authoriseProjectReceipt } from "../projects/service";
 import { reportContext, ownReport } from "../reports/context";
 import {
   fieldContext,
@@ -53,6 +54,8 @@ export async function readOperation(
   } else if (r.object_type === "DraftQuoteRevision") {
     await quoteContext(client,p,r.record_id,"estimating.quote.prepare");
     await quoteContext(client,p,r.record_id);
+  } else if (r.object_type === "Project") {
+    await authoriseProjectReceipt(client, p, r.record_id, r.command);
   } else if (r.object_type === "Opportunity") {
     const o = await visibleOpportunity(client, p, r.record_id);
     const cap = r.command === "CreateOpportunity" ? "crm.opportunity.create" : "crm.opportunity.edit";
