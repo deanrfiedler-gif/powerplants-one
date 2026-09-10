@@ -2,7 +2,7 @@
 
 Private prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P11 integrated quality implementation; exact delivery publication in its linked handover; P12 prepared only · **Deployment:** none.
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P11 integrated quality implementation; exact delivery publication in its linked handover; P12 prepared only · **Deployment:** Azure demo infrastructure provisioned; app bootstrap pending.
 
 This repository is Dean's personal private prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. Integrated Service/Finance verification is in progress; the complete PP-01 acceptance boundary still requires P12. Company ownership, production approval and external-system write authority are not implied.
 
@@ -14,7 +14,7 @@ This repository is Dean's personal private prototype. It contains the planning f
 | [Adopted naming standard](docs/standards/naming-conventions.md) | Powerplants One / PPO naming, references, revisions and implementation rules |
 | [ChatGPT project instructions](docs/standards/chatgpt-project-instructions.md) | Copy-ready instructions for the dedicated design and development project |
 | [Current project status](docs/STATUS.md) | What exists, what remains planned and how recent user decisions relate to the issued blueprint |
-| [Master Blueprint — working r04](docs/blueprints/BP-01-master-blueprint.md) | Scope Assurance & Development Planning Edition: seven domains, 78 parent requirements and release contracts |
+| [Master Blueprint — working r05](docs/blueprints/BP-01-master-blueprint.md) | Scope Assurance & Development Planning Edition: seven domains, 78 parent requirements and release contracts |
 | [Documentation index](docs/README.md) | Where specifications, decisions, requirements and acceptance records belong |
 | [Development backlog](docs/delivery/backlog.md) | Initial discovery/design work packages and their live GitHub issue links |
 | [CRM blueprint and discovery handover](docs/delivery/crm-discovery-handover.md) | PPO-009 parallel CRM design, bounded Pipedrive evidence, synthetic wireframes and first implementation starter; account parity remains open |
@@ -26,6 +26,7 @@ This repository is Dean's personal private prototype. It contains the planning f
 | [First-release plan](docs/delivery/first-release.md) | Proposed planned-service journey, dependencies and readiness criteria |
 | [Projects discovery and design](docs/delivery/projects-discovery-handover.md) | BP-06 source assessment, first-increment contract and project list/detail designs; J1 prepared only |
 | [Email & Calendar design](docs/blueprints/email-calendar-integration.md) | Synthetic inbox, record linking, privacy, agenda and first read-only Microsoft pilot preparation |
+| [Working Email & Calendar journey](docs/delivery/email-calendar-journey-handover.md) | Private fictional email, explicit opportunity link, persisted internal follow-up and calendar; PR #64 |
 | [Contributing](CONTRIBUTING.md) | Branches, pull requests, validation and evidence |
 
 ## Product direction
@@ -51,6 +52,10 @@ MYOB Acumatica remains the intended authoritative ERP. SharePoint remains the in
 | `scripts/` | Repository assurance, local launcher, database lifecycle and persistence proof |
 
 Application code is in `src/`, explicit SQL migrations and fixtures are in `db/`, and runtime checks are in `tests/`. See [P08 setup, verification and handover](docs/delivery/p08-handover.md) and [ADR-0006](docs/decisions/ADR-0006-p01-local-foundation.md) for the local-only implementation and limits.
+
+## Private hosted demo preparation
+
+The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separate hosted runtime, owner setup, tester access and image updates. The GitHub connection check, owner-run core provisioning and Docker Desktop image upload succeeded. A database-create argument error is corrected in the operator, with explicit reuse of the uploaded image. App startup and live sign-in acceptance remain pending. Local development continues using the commands below.
 
 ## Run the local application
 

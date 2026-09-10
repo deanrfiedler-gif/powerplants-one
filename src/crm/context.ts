@@ -40,6 +40,9 @@ export type Opportunity = OpportunityContext & {
   next_activity_id: string;
   qualification_note: string | null;
   identification_activity_id: string | null;
+  value_amount: string | null;
+  expected_close_date: string | null;
+  scope_details: Record<string, string | null>;
 };
 // Upgrade tests intentionally exercise accepted pre-CRM schemas. Missing CRM never grants access.
 export async function crmAvailable(c: QueryClient) {
@@ -62,7 +65,7 @@ export async function visibleOpportunity(
 ) {
   const row = (
     await c.query<Opportunity>(
-      `SELECT o.* FROM ppo.opportunities o WHERE o.workspace_id=$1 AND o.id=$3 AND ${opportunityVisibility()}`,
+      `SELECT o.*,to_jsonb(o)->>'expected_close_date' AS expected_close_date FROM ppo.opportunities o WHERE o.workspace_id=$1 AND o.id=$3 AND ${opportunityVisibility()}`,
       [p.workspace_id, p.actor_id, uuid(id, "id")],
     )
   ).rows[0];

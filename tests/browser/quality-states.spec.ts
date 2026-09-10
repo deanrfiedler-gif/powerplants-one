@@ -95,7 +95,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
     {
       id: "SC-02",
       url: "/customers",
-      api: "customers",
+      api: "crm/directory",
       profile: "coordinator",
       list: true,
     },
@@ -192,8 +192,10 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
   const proof: unknown[] = [];
   for (const s of matrix) {
     await test.step(`${s.id}: ${s.url}`, async () => {
+      const screenLoading = page.locator("main").getByText(/^Loading .*…$/);
       await call(page, "local-session", { profile: s.profile });
       const query =
+        s.id === "SC-02" ? "?kind=organisations" :
         s.id === "SC-13"
           ? `?account_id=${cmd.account_id}`
           : s.id === "SC-07"
@@ -213,7 +215,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
       await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
       await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
       await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
-      await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
+      await expect(screenLoading).toHaveCount(0);
       if (s.id === "SC-08") {
         await expect(page.getByRole("banner").getByText("Service", { exact: true })).toBeVisible();
         await expect(page.getByRole("navigation", { name: "Service navigation", exact: true })
@@ -246,7 +248,14 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
           : null;
         if (refresh && (await refresh.count())) await refresh.click();
         else await page.reload({ waitUntil: "domcontentloaded" });
-        await expect(page.getByText(/^Loading .*…$/).first()).toBeVisible();
+        await expect
+          .poll(async () => {
+            for (let i = 0; i < (await screenLoading.count()); i++) {
+              if (await screenLoading.nth(i).isVisible()) return true;
+            }
+            return false;
+          })
+          .toBe(true);
         await expect(
           page.getByRole("heading", {
             name: "Current page summary",
@@ -266,7 +275,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
           .getByRole("alert")
           .filter({ hasText: `SYN ${s.id} current read unavailable` }),
       ).toBeVisible();
-      await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
+      await expect(screenLoading).toHaveCount(0);
       await expect(
         page.getByText(
           /^(No permitted (activities|service requests|submissions)|No current assigned visits|No Finance handoffs|No job packs are available)/,
@@ -279,7 +288,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
       await page.unroute(match);
       await page.reload({ waitUntil: "domcontentloaded" });
       await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
-      await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
+      await expect(screenLoading).toHaveCount(0);
       if (s.id === "SC-14") {
         // Applicability is a separate authorised read from immutable metadata.
         // A failed current-status read must not retain a current-use claim.
@@ -348,7 +357,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
           }),
         );
         await page.reload({ waitUntil: "domcontentloaded" });
-        await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
+        await expect(screenLoading).toHaveCount(0);
         await expect(
           page
             .getByText(/No (permitted|current assigned|Finance handoffs)/)
@@ -444,7 +453,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
           .filter({ hasText: deniedBody.message })
           .first(),
       ).toBeVisible();
-      await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
+      await expect(screenLoading).toHaveCount(0);
       await expect(
         page.getByRole("heading", {
           name: "SYN Greenhouse Demonstration",

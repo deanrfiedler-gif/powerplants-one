@@ -23,3 +23,8 @@ export function OpportunityCommercial({ id }: { id: string }) {
     <p className="scope-note">Draft quotations have not been issued or accepted.</p></>}
   </section>;
 }
+
+export function OpportunityFiles({id}:{id:string}) {
+  const r = useCrmResource<Awaited<ReturnType<typeof opportunityCommercial>>>(`crm/opportunities/${id}/commercial`, true);
+  return <section className="crm-panel"><h2>Deal documents</h2><ErrorNotice error={r.error}/>{r.loading && <p role="status">Loading permitted documents…</p>}{!!r.error && <button className="secondary" onClick={r.reload}>Retry documents</button>}{r.data && <>{r.data.quotes.length ? <ul className="crm-document-list">{r.data.quotes.map(q=><li key={q.id}><div><strong>{q.display_number}</strong><p>Draft quotation · revision {q.version}</p></div><Link className="secondary button" href={`/estimating/quotes/${q.id}`}>Open document</Link></li>)}</ul> : <p className="empty-state">No linked quotations are available. Create an estimate in Commercial to prepare a draft quotation.</p>}<p className="scope-note">Open a document to check its generation status and available PDF or HTML output.</p></>}</section>;
+}

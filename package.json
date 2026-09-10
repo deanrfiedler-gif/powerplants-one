@@ -26,12 +26,14 @@
     "documents:worker": "node --env-file=.env.local --import tsx scripts/document-worker.ts"
   },
   "dependencies": {
+    "@azure/storage-blob": "12.33.0",
     "next": "16.3.4",
+    "openid-client": "6.8.8",
     "pg": "8.23.0",
+    "playwright": "1.63.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "server-only": "0.0.1",
-    "playwright": "1.63.0"
+    "server-only": "0.0.1"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "16.3.4",

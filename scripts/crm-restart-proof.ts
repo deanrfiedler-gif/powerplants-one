@@ -182,9 +182,9 @@ try {
   await expect(
     page.getByRole("heading", { name: proof.input.title, exact: true }),
   ).toBeVisible();
-  await expect(
-    page.getByText("Qualified", { exact: true }).first(),
-  ).toBeVisible();
+  const currentStage = page.locator('.crm-stage-track [aria-current="step"]');
+  await expect(currentStage).toBeVisible();
+  await expect(currentStage).toContainText("Qualified");
   const bytes = await page.screenshot({
     path: `${evidence}/${phase}.png`,
     fullPage: false,

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import type { DraftCommand, Receipt, TicketView } from "../../service/tickets";
-import { lockOtherBusinessViews } from "../../components/session-signal";
+import { lockOtherBusinessViews, sessionReadyEvent } from "../../components/session-signal";
 import { lockLocal } from "../../offline/store";
 const ticketId = "40000000-0000-4000-8000-000000000001";
 type ApiFailure = {
@@ -156,6 +156,7 @@ export function FoundationPanel() {
         profile,
       });
       setActor(p.display_name);
+      window.dispatchEvent(new Event(sessionReadyEvent));
       await load();
       setMessage("Request loaded from PostgreSQL.");
     } catch (e) {
