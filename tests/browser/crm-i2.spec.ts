@@ -302,7 +302,7 @@ test("Accepted r08 shell and board retain full-width stages, fixed headers and s
   await page.getByLabel("Search opportunities", { exact: true }).fill(marker);
   await expect.poll(() => ids(page)).toHaveLength(10);
   const board = page.locator(".crm-board-scroll");
-  const activeLink = page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "Main navigation", exact: true }).getByRole("link", { name: "CRM Sales", exact: true });
+  const activeLink = page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "Main navigation", exact: true }).getByRole("link", { name: info.project.use.isMobile ? "CRM Sales" : "Sales / CRM", exact: true });
   if (info.project.use.isMobile) await page.getByRole("button", { name: "Menu", exact: true }).click();
   await expect(activeLink).toHaveAttribute("aria-current", "page");
   const activeStyle = await activeLink.evaluate(e => ({ fill: getComputedStyle(e).backgroundColor, icon: getComputedStyle(e.querySelector("svg")!).color }));

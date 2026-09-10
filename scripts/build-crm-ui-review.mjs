@@ -42,6 +42,7 @@ const styles = await Promise.all(
     "mobile-layout.css",
     "crm-refinements.css",
     "crm-board-polish.css",
+    "desktop-shell.css",
   ].map((f) => readFile("src/app/" + f, "utf8")),
 );
 await writeFile(
