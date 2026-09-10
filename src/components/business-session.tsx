@@ -76,7 +76,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
         <div className="hosted-account-summary"><strong title={p?.display_name}>{p?.display_name ?? "Private prototype"}</strong><button id="hosted-account-toggle" className="ppo-account-toggle" aria-label="Account" aria-expanded={showIdentity} aria-controls="hosted-account-controls" onClick={toggleAccount}><span className="account-avatar" aria-hidden="true">{initials}</span></button></div>
         <div id="hosted-account-controls" className="ppo-hosted-account-controls" data-open={showIdentity}>
           <strong className="ppo-account-name">{p?.display_name ?? "Private prototype"}</strong>
-          {p ? <form action="/auth/logout" method="post" onSubmit={() => lockOtherBusinessViews()}><button className="secondary">Sign out</button></form> : <a href="/auth/login">Sign in with Microsoft</a>}
+          {p ? <form action="/auth/logout" method="post" onSubmit={() => lockOtherBusinessViews()}><button className="secondary">Sign out</button></form> : <a href="/login">Sign in with Microsoft</a>}
         </div>
       </section> : <>
       <section

@@ -97,3 +97,4 @@ CRM-UI-REFINEMENTS,CRM Desktop and Mobile Refinements,docs/decisions/crm-desktop
 CRM-UI-HANDOVER,CRM Refinements Implementation Handover,docs/delivery/crm-refinements-handover.md,r01,Implementation verification in progress,Dean Fiedler - private prototype,fab85c568f8b72dfe19c7ef1dd6195ba1f340d14,,
 PPO-DEMO-INTEGRATION,Private demo integration handover,docs/delivery/demo-email-crm-integration.md,r02,Combined implementation; verification in progress,Dean Fiedler - prototype owner,f8035b5c55251da4da52430adf2f83094feccd6b,,
 PPO-DEMO-INTEGRATION-DEC,Private demo Email and CRM integration,docs/decisions/demo-email-crm-integration.md,r01,Authorised implementation,Dean Fiedler - prototype owner,f8035b5c55251da4da52430adf2f83094feccd6b,,
+PPO-LOGIN-INTEGRATION,Approved login r02 integration,docs/decisions/login-r02-integration.md,r01,Implemented locally; publication pending,Dean Fiedler - prototype owner,ec7fa6912c4976dd30bc3976e0eeb306eba143b0,,

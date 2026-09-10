@@ -22,6 +22,8 @@ P11 continuation, 7 September: Dean approved separately recorded whole-minute Tr
 
 ## Current direction
 
+10 September login implementation: Dean approved r02 and requested app integration. The [integration decision](decisions/login-r02-integration.md) records the branded signed-out gateway, native Microsoft handoff, bounded recovery states and local `/login` entry. It is stacked on desktop shell #84; local static/unit/build and 15 browser checks pass; public issue/PR publication is blocked by automatic approval review pending explicit permission. Existing authentication/authorisation, local-only controls and fictional-record markers remain. No Azure deployment or live tenant acceptance is claimed.
+
 9 September Azure connection correction: the [setup guide r02](delivery/azure-demo-connection.md) adds the numeric GitHub owner/repository IDs and corrects the expected federated subject to GitHub's immutable format for this newly created repository. The earlier name-only subject is superseded. Metadata and documented default-format verification do not establish a successful Azure login; live connection execution remains pending.
 
 9 September Azure demo setup: Dean supplied the resource-group and tenant screenshots after creating his subscription and budget. The [connection guide](delivery/azure-demo-connection.md) and [decision](decisions/azure-demo-connection.md) prepare a manually triggered GitHub OIDC check using a dedicated managed identity with Reader access to the demo group. Live identity/federation setup and the Azure check remain pending. No hosting resources, remote application access or tester accounts have been created by this change; the application's local-only identity restrictions remain in force.
