@@ -63,6 +63,8 @@ Follow the [exact P08 setup and run commands](docs/delivery/p08-handover.md#runt
 
 Job-pack preparation and issue are at `/service/packs`; exact documents at `/documents/:issue_id`. Install the matching Chromium renderer and retain its private output directory outside Git as described in the P06 handover.
 
+Field operations use `/service/technicians`: the [approved r04 design](docs/decisions/field-technicians-design.md) presents current permitted visits, technicians and preparation flags, with controlled record links. See the [integration handover](docs/delivery/field-technicians-handover.md) for verification/publication status.
+
 Technicians use `/my-jobs` and `/my-jobs/:id`. Riley and Morgan acknowledge and start independently. Supported fictional PNGs are registered, uploaded and verified before availability. Completion drafts can be submitted separately for service review at `/service/reports`. Exact reviewed HTML/PDF, owned remaining work, immutable report revisions and customer responses are available in the P09 implementation. **Field workflow preview — integrated acceptance incomplete**. The dedicated `/offline/index.html` workspace downloads up to two permitted jobs, commits original evidence and PNGs to IndexedDB, and explicitly retries bounded original operations with per-item receipts and owned exception recovery. Offline authority remains provisional.
 
 ## Working screens

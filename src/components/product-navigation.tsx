@@ -6,7 +6,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { ProductIcon, type ProductIconName } from "./product-icons";
 
 const service = [
-  ["/schedule", "Service planner"], ["/service/tickets", "Service requests"],
+  ["/schedule", "Service planner"], ["/service/technicians", "Field technicians"], ["/service/tickets", "Service requests"],
   ["/service/work-orders", "Work orders"], ["/service/packs", "Job packs"],
   ["/service/reports", "Service review"], ["/my-jobs", "My Jobs"],
 ];

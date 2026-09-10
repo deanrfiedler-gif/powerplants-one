@@ -6,6 +6,7 @@ import "./shared-layout.css";
 import "./mobile-layout.css";
 import "./crm-refinements.css";
 import "./crm-board-polish.css";
+import "./field-technicians.css";
 export const metadata: Metadata = {
   title: "Powerplants One | Private prototype",
   description: "Private synthetic application foundation for Powerplants One",
