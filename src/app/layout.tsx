@@ -9,6 +9,7 @@ import "./crm-board-polish.css";
 import "./desktop-shell.css";
 import "./leads.css";
 import "./projects-gantt.css";
+import "./engineering.css";
 export const metadata: Metadata = {
   title: "Powerplants One | Private prototype",
   description: "Private synthetic application foundation for Powerplants One",

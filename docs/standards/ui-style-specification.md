@@ -108,3 +108,7 @@ I2 application note: the [bounded implementation handover](../delivery/crm-i2-ha
 ## Accepted r08 application presentation
 
 The later [r08 implementation decision](../decisions/shared-ui-r08-implementation.md) supersedes older presentation rules for wide navigation, green primary actions and minimum-width horizontally scrolling CRM columns. It preserves the existing domain, permission, source/completeness and save contracts. See the [handover](../delivery/shared-ui-redesign-handover.md) for actual verification and publication.
+
+## Engineering r02 adoption — 10 September 2026
+
+Dean accepted the [Engineering r02 container](../reference/engineering-r02/PPO-Engineering-Container-r02.html) for implementation. Its scoped register, Roboto typography, navy controls, green selection, resize behaviour, compact cards and four-section drawer govern the Engineering page. The [integration decision](../decisions/engineering-r02-integration.md) and [handover](../delivery/engineering-intake-handover.md) distinguish accepted presentation from each implemented workflow. Reuse the existing application shell; do not duplicate navigation or claim unimplemented document/release functions. The other module baselines retain their authority.

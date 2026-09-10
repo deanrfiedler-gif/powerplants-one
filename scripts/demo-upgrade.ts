@@ -6,14 +6,14 @@ import { migrationFiles, seedFiles, latestMigrationVersion } from "./migration-r
 import { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-runtime";
 
 const additions = ["crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert",
-  "project.read", "project.create", "project.edit"];
+  "project.read", "project.create", "project.edit", "engineering.read", "engineering.create", "engineering.edit"];
 const read = (file: string) => readFile(new URL(`../db/${file}`, import.meta.url), "utf8");
 const hash = (sql: string) => createHash("sha256").update(sql).digest("hex");
 
 // A deliberately bounded existing-demo upgrade, not a second bootstrap path.
 // Every database change shares one transaction, including grants and receipts.
 export async function upgradeExistingDemo(databaseName: string, tenant: string, apply: boolean) {
-  if (latestMigrationVersion !== 19) throw Error("Review the existing-demo upgrade for this release.");
+  if (latestMigrationVersion !== 20) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
     version: Number(file.slice(0, 4)), sql: await read(`migrations/${file}`),
   })));
@@ -46,7 +46,7 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
         await db.query(m.sql);
         await db.query("INSERT INTO public.ppo_migrations(version,sha256) VALUES($1,$2)", [m.version, hash(m.sql)]);
       }
-      // Only the two additive fixture-grant seeds; never replay old fixture data.
+      // Only the additive fixture-grant seeds; never replay old fixture data.
       for (const [version, file] of seedFiles.filter(([v]) => v > 17)) {
         if (receipts.rows.some(row => row.version === version)) continue;
         await db.query(await read(file));
@@ -75,7 +75,7 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
       INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_id,valid_from,valid_to)
       VALUES($1,$2,$3,$4,$3,clock_timestamp(),$5) ON CONFLICT DO NOTHING`,
     [demoWorkspace, row.user_id, demoCompany, row.cap, row.expires_at]);
-    for (const table of ["ppo.lead_candidates", "ppo.projects"]) {
+    for (const table of ["ppo.lead_candidates", "ppo.projects", "ppo.engineering_packages"]) {
       for (const privilege of ["SELECT", "INSERT", "UPDATE", "DELETE"]) {
         const access = await db.query("SELECT has_table_privilege($1,$2,$3) AS allowed", [role, table, privilege]);
         if (!access.rows[0].allowed) throw Error("Runtime role needs the explicit database upgrade.");
@@ -87,5 +87,6 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
     await db.query(`SET LOCAL ROLE ${pg.escapeIdentifier(role)}`);
     await db.query("SELECT id FROM ppo.lead_candidates LIMIT 0");
     await db.query("SELECT id FROM ppo.projects LIMIT 0");
+    await db.query("SELECT id FROM ppo.engineering_packages LIMIT 0");
   });
 }

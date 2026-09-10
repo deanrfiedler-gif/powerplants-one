@@ -19,6 +19,7 @@ export const migrationFiles = [
   "0017-crm-ui-refinements.sql",
   "0018-crm-leads.sql",
   "0019-projects-gantt.sql",
+  "0020-engineering-intake.sql",
 ] as const;
 export const seedFiles = [
   [2, "seed.sql"],
@@ -36,8 +37,9 @@ export const seedFiles = [
   [15, "seed-email-calendar.sql"],
   [18, "seed-crm-leads.sql"],
   [19, "seed-projects-gantt.sql"],
+  [20, "seed-engineering-intake.sql"],
 ] as const;
-export const latestMigrationVersion = 19;
+export const latestMigrationVersion = 20;
 
 export function validateMigrationRegistry(
   files: readonly string[],

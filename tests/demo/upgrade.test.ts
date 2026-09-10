@@ -72,8 +72,8 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   assert.equal((await readInvitedSession(database(), token, tenant)).actor_id, actor.actor_id);
   const grants = await rows("ppo.permission_grants");
   for (const old of oldGrants) assert.ok(grants.some(g => JSON.stringify(g) === JSON.stringify(old)));
-  const additions = (await database().query("SELECT * FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND (capability LIKE 'crm.lead.%' OR capability LIKE 'project.%')", [users])).rows;
-  assert.equal(additions.length, 7);
+  const additions = (await database().query("SELECT * FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND (capability LIKE 'crm.lead.%' OR capability LIKE 'project.%' OR capability LIKE 'engineering.%')", [users])).rows;
+  assert.equal(additions.length, 10);
   assert.ok(additions.every(g => g.user_id === users[0] && g.company_id === demoCompany && g.scope_type === "Company" && g.scope_id === demoCompany));
   const limit = (await database().query("SELECT valid_to FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.edit'", [users[0]])).rows[0].valid_to;
   assert.ok(additions.every(g => g.valid_to.getTime() <= limit.getTime()));

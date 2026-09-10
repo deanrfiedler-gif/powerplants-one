@@ -28,6 +28,20 @@
       "bytes": 82486,
       "purpose": "Exact user-adopted PPO-STD-001 r02; adopted by user on 5 September 2026; working r03 records repository adoption",
       "original_path": "powerplants-one-naming-standard.md"
+    },
+    {
+      "path": "docs/reference/engineering-r02/PPO-Engineering-Container-r02.html",
+      "sha256": "52a7d24705ba3faf5f7ce87e33ccd09b641ca2b3b5e7e592975ec949552665b4",
+      "bytes": 456757,
+      "purpose": "Exact Engineering r02 container accepted by Dean Fiedler on 10 September 2026",
+      "original_path": "PPO-Engineering-Container-r02.html"
+    },
+    {
+      "path": "docs/reference/engineering-r02/PPO-Engineering-Audit-r02.md",
+      "sha256": "9ef7e02691b681f72b56d3f720f0b68e2134e4f743a51a0dbc53e574a2b256c7",
+      "bytes": 19755,
+      "purpose": "Retained audit accompanying the accepted Engineering r02 design",
+      "original_path": "PPO-Engineering-Audit-r02.md"
     }
   ]
 }
