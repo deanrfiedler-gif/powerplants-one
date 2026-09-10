@@ -15,9 +15,9 @@ test("hosted header, populated board, filtering and independent card targets", a
   await expect(page.locator(".crm-worklist-stamp")).toContainText(
     "$538,500.50 known · 1 not estimated",
   );
-  await expect(
-    page.getByRole("button", { name: "Sign out", exact: true }),
-  ).toBeVisible();
+  if (info.project.name === "desktop") await page.getByRole("button", { name: "Account", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Sign out", exact: true })).toBeVisible();
+  if (info.project.name === "desktop") await page.keyboard.press("Escape");
   await expect(
     page.getByLabel("Search opportunities", { exact: true }),
   ).toBeVisible();

@@ -117,6 +117,7 @@ function Grid({ data, scroll }: { data: Results; scroll: ReturnType<typeof useSc
 }
 
 export function SalesWorklist() {
+  const desktop = useDesktopCRM();
   const p = useIdentity();
   const [dialog,setDialog]=useState<{id:string;mode:"snapshot"|"stage";stage?:string;undo?:StageUndo}|null>(null),[undo,setUndo]=useState<StageUndo|null>(null),[feedback,setFeedback]=useState("");
 
@@ -137,15 +138,17 @@ export function SalesWorklist() {
   const change = (key: keyof typeof initial, value: string) => setFilters((old) => ({ ...old, [key]: value, cursor: "", ...(key === "company_id" ? { site_id: "" } : {}) }));
   const saved=(receipt:OperationReceipt,old:DealRecord,stage:boolean)=>{setDialog(null);if(stage){setUndo({id:old.id,version:receipt.record_version,stage_id:old.stage_id,qualification_note:old.qualification_note,identification_activity_id:old.identification_activity_id});setFeedback(`${old.title} moved to ${receipt.state}.`);}setFilters(old=>({...old,cursor:""}));data.reload();};
   const refresh = () => { setFilters((old) => ({ ...old, cursor: "" })); data.reload(); };
+  const scopedSearch = !isDenied && <label className="crm-header-search"><ProductIcon name="search"/><span className="sr-only">Search opportunities</span><input name="sales-search" type="search" placeholder="Search opportunities" value={filters.q} onChange={e => change("q", e.target.value)}/></label>;
   const totals = data.data ? valueSummary(data.data.items) : null;
   return <section className="crm-workspace" aria-label="Sales worklist">
     <h1 className="sr-only">Sales worklist</h1>
-    <HeaderContent slot="search">{!isDenied && <label className="crm-header-search"><ProductIcon name="search"/><span className="sr-only">Search opportunities</span><input name="sales-search" type="search" placeholder="Search opportunities" value={filters.q} onChange={e => change("q", e.target.value)}/></label>}</HeaderContent>
+    {!desktop && <HeaderContent slot="search">{scopedSearch}</HeaderContent>}
     <div className="crm-toolbar"><div className="crm-view-controls" role="group" aria-label="Opportunity presentation">
       {(["Board", "Grid"] as const).map((value) => <button key={value} className={view === value ? "" : "secondary"} aria-pressed={view === value} onClick={() => setView(value)}><ProductIcon name={value === "Board" ? "board" : "list"} />{value === "Grid" ? "List" : value}</button>)}
     </div>
     {!data.error && data.data?.can_create && <Link className="primary-link crm-new-opportunity" href="/crm/opportunities/new" aria-label="New opportunity"><ProductIcon name="plus" />Opportunity</Link>}
     {!isDenied && <>
+      {desktop && scopedSearch}
       <span className="crm-pipeline-label"><ProductIcon name="sales"/>Sales pipeline</span>
       <button className="secondary crm-filter-toggle" aria-expanded={filtersOpen} aria-controls="crm-filter-panel" onClick={() => setFiltersOpen(!filtersOpen)}><ProductIcon name="filter" /><span>Filters<span className="sr-only"> and sort</span></span></button>
       <label className="crm-sort"><span className="sr-only">Sort</span><select aria-label="Sort" value={filters.sort} onChange={e => change("sort", e.target.value)}><option value="Reference">Reference order</option><option value="Title">Title A–Z</option><option value="Newest">Newest first</option></select></label>

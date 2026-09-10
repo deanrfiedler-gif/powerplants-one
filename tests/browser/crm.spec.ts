@@ -26,6 +26,10 @@ async function noOverflow(page: Page) {
     ),
   ).toBe(true);
 }
+async function waitForCompactSearch(page: Page) {
+  await expect(page.locator("#header-search input[name='sales-search']")).toHaveCount(1);
+  await expect(page.locator(".crm-toolbar input[name='sales-search']")).toHaveCount(0);
+}
 async function capture(page: Page, info: TestInfo, scenario: string) {
   await noOverflow(page);
   const errors = ["validation", "denied", "unavailable", "revoked-activity", "revoked-refresh"];
@@ -338,6 +342,7 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   await expect(page.locator(".crm-stage-empty").first()).toBeVisible();
   await capture(page, info, "empty");
   await page.setViewportSize({ width: 320, height: 844 });
+  await waitForCompactSearch(page);
   await noOverflow(page);
   await page.getByLabel("Search opportunities", { exact: true }).focus();
   await page.keyboard.press("Tab");

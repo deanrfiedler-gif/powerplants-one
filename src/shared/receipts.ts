@@ -1,8 +1,10 @@
 import { emailContext } from "../email/service";
+import { leadReceiptAuthority } from "../crm/leads/receipt-authority";
 import { opportunityReceiptActions } from "../crm/receipt-authority";
 import { financeContext, financeAccount, receiptCapability } from "../finance/context";
 import { estimateContext, quoteContext } from "../estimating/context";
 import { visibleOpportunity, relationshipContext, eligibleOpportunityOwner } from "../crm/context";
+import { authoriseProjectReceipt } from "../projects/service";
 import { reportContext, ownReport } from "../reports/context";
 import {
   fieldContext,
@@ -41,6 +43,8 @@ export async function readOperation(
       const activity = await visibleActivity(client,p,message.followup_id);
       if (!(await hasPermission(client,p,"activity.edit",activity.company_id,activity.site_id ?? undefined))) throw unavailable();
     }
+  } else if (r.object_type === "Lead") {
+    await leadReceiptAuthority(client,p,r.record_id,r.command);
   } else if (r.object_type === "FinancialHandoff") {
     await financeContext(client,p,r.record_id,receiptCapability(r.command));
   } else if (r.object_type === "FinanceAccount") {
@@ -50,6 +54,8 @@ export async function readOperation(
   } else if (r.object_type === "DraftQuoteRevision") {
     await quoteContext(client,p,r.record_id,"estimating.quote.prepare");
     await quoteContext(client,p,r.record_id);
+  } else if (r.object_type === "Project") {
+    await authoriseProjectReceipt(client, p, r.record_id, r.command);
   } else if (r.object_type === "Opportunity") {
     const o = await visibleOpportunity(client, p, r.record_id);
     const cap = r.command === "CreateOpportunity" ? "crm.opportunity.create" : "crm.opportunity.edit";

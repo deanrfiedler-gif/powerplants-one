@@ -91,7 +91,7 @@ jobs:
           npm run db:health
       - name: CRM refinement database and browser journeys
         run: |
-          node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/crm-refinements.test.ts
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/crm-refinements.test.ts tests/database/desktop-shell.test.ts
           npx playwright test tests/browser/crm-refinements.spec.ts --output verification-evidence/crm-refinements --reporter=list
       - name: Retained I2 keyboard and long-text checks
         if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
