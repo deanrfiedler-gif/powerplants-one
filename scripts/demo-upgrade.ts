@@ -19,6 +19,7 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   })));
   const identityHash = hash(await read("demo/0001-identity.sql"));
   await transaction(async db => {
+    if (!apply) await db.query("SET TRANSACTION READ ONLY");
     await db.query("SELECT pg_advisory_xact_lock(10001)");
     const role = `${databaseName}_app`;
     if ((await db.query("SELECT current_database() AS name")).rows[0].name !== databaseName ||
@@ -74,7 +75,7 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
       INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_id,valid_from,valid_to)
       VALUES($1,$2,$3,$4,$3,clock_timestamp(),$5) ON CONFLICT DO NOTHING`,
     [demoWorkspace, row.user_id, demoCompany, row.cap, row.expires_at]);
-    for (const table of ["ppo.leads", "ppo.projects"]) {
+    for (const table of ["ppo.lead_candidates", "ppo.projects"]) {
       for (const privilege of ["SELECT", "INSERT", "UPDATE", "DELETE"]) {
         const access = await db.query("SELECT has_table_privilege($1,$2,$3) AS allowed", [role, table, privilege]);
         if (!access.rows[0].allowed) throw Error("Runtime role needs the explicit database upgrade.");
@@ -84,7 +85,7 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
     const identityAccess = await db.query("SELECT has_table_privilege($1,'ppo.demo_testers','UPDATE') AS allowed", [role]);
     if (identityAccess.rows[0].allowed) throw Error("Runtime role has unexpected identity privileges.");
     await db.query(`SET LOCAL ROLE ${pg.escapeIdentifier(role)}`);
-    await db.query("SELECT id FROM ppo.leads LIMIT 0");
+    await db.query("SELECT id FROM ppo.lead_candidates LIMIT 0");
     await db.query("SELECT id FROM ppo.projects LIMIT 0");
   });
 }

@@ -92,7 +92,7 @@ test("an old conflicting Gantt-18 ledger is refused before any migrations, seeds
   const before = await Promise.all([ledger(), rows("ppo.seed_receipts"), rows("ppo.permission_grants")]);
   await assert.rejects(upgradeExistingDemo(name, tenant, true), /incompatible migration/);
   assert.deepEqual(await Promise.all([ledger(), rows("ppo.seed_receipts"), rows("ppo.permission_grants")]), before);
-  assert.equal((await database().query("SELECT to_regclass('ppo.leads') AS relation")).rows[0].relation, null);
+  assert.equal((await database().query("SELECT to_regclass('ppo.lead_candidates') AS relation")).rows[0].relation, null);
 });
 
 test("a late privilege failure rolls back schema, seed receipts and grant additions together", async () => {
