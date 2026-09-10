@@ -5,7 +5,7 @@ on:
       operation:
         description: Check prerequisites first; deploy only after release and database review
         type: choice
-        options: [check, deploy]
+        options: [check, deploy, upgrade-and-deploy]
         default: check
         required: true
 permissions: {}
@@ -28,8 +28,9 @@ jobs:
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       AZURE_CORE_OUTPUT: none
-      DOCKER_CONFIG: ${{ runner.temp }}/ppo-docker
     steps:
+      - name: Set runner registry credential directory
+        run: echo "DOCKER_CONFIG=$RUNNER_TEMP/ppo-docker" >> "$GITHUB_ENV"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
@@ -120,7 +121,7 @@ jobs:
             echo 'Check mode builds/pushes no image and changes no Azure resource or application data.'
           } >> "$GITHUB_STEP_SUMMARY"
       - name: Build and push the selected main commit on GitHub
-        if: inputs.operation == 'deploy'
+        if: inputs.operation == 'deploy' || inputs.operation == 'upgrade-and-deploy'
         id: image
         env:
           PPO_REGISTRY: ${{ steps.target.outputs.registry }}
@@ -140,8 +141,17 @@ jobs:
             echo "Source: $GITHUB_SHA"
             echo "Image: $PPO_REGISTRY/ppo-demo@$digest"
           } >> "$GITHUB_STEP_SUMMARY"
+      - name: Verify or upgrade the existing demo database
+        if: inputs.operation == 'deploy' || inputs.operation == 'upgrade-and-deploy'
+        env:
+          PPO_IMAGE: ${{ steps.image.outputs.ref }}
+          PPO_OPERATION: ${{ inputs.operation }}
+        run: |
+          set -euo pipefail
+          python3 infra/azure-demo/run_database_operation.py "$AZURE_RESOURCE_GROUP" "$PPO_DEMO_SUFFIX" "$PPO_IMAGE" "$PPO_OPERATION"
+          echo "Database operation succeeded: $PPO_OPERATION. Existing records and invitation expiry dates retained." >> "$GITHUB_STEP_SUMMARY"
       - name: Update web and draft worker images
-        if: inputs.operation == 'deploy'
+        if: inputs.operation == 'deploy' || inputs.operation == 'upgrade-and-deploy'
         env:
           PPO_IMAGE: ${{ steps.image.outputs.ref }}
           PPO_FQDN: ${{ steps.target.outputs.fqdn }}
@@ -164,10 +174,10 @@ jobs:
             echo "Open https://$PPO_FQDN and sign in with an invited account."
             echo 'The selected web revision is ready; the worker is configured with the same digest.'
             echo 'Health passed and anonymous CRM API access was refused. Verify a saved record and draft after sign-in.'
-            echo 'No database migration, seeding, tester grant or reset was run.'
+            echo 'The database gate passed before rollout. No reset or tester invitation reconciliation was run.'
           } >> "$GITHUB_STEP_SUMMARY"
       - name: Record incomplete deployment
-        if: failure() && inputs.operation == 'deploy'
+        if: failure() && (inputs.operation == 'deploy' || inputs.operation == 'upgrade-and-deploy')
         run: |
           {
             echo '### Deployment did not complete'
@@ -177,4 +187,4 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
       - name: Remove runner registry credentials
         if: always()
-        run: rm -rf -- "$DOCKER_CONFIG"
+        run: rm -rf -- "$RUNNER_TEMP/ppo-docker"
