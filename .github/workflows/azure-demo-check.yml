@@ -1,7 +1,7 @@
 name: Azure demo preparation checks
 on:
   pull_request:
-    paths: ['infra/azure-demo/**', 'src/platform/**', 'src/documents/**', 'scripts/demo-*.ts', 'db/demo/**', 'tests/demo/**', 'tests/unit/azure-demo.test.ts', 'package*.json', '.github/workflows/azure-demo-*.yml']
+    paths: ['infra/azure-demo/**', 'src/platform/**', 'src/login/**', 'src/documents/**', 'scripts/demo-*.ts', 'db/demo/**', 'tests/demo/**', 'tests/unit/azure-demo.test.ts', 'tests/unit/login.test.ts', 'package*.json', '.github/workflows/azure-demo-*.yml']
   workflow_dispatch:
 permissions:
   contents: read

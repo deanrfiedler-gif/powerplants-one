@@ -56,3 +56,32 @@ existing PR #73 is a separate dependency. The deployed image remains
   draft-PR gate; this is not live Azure or business acceptance.
 - Exact GitHub execution results belong in the correction PR. Keep it a draft
   until the available evidence is reviewed.
+
+
+## 10 September — reconcile with merged main
+
+Dean requested reconciliation and verification of PR #75 after explicitly
+approving and completing PR #73's merge. The correction source is
+`5fc78c5de67b060032d6821bca00f17a72f1c71a`; merged main is
+`1de7821a380514712e93babd4766fc32a62f76e9`. A two-parent merge preserves
+both histories. The sole conflict is the leading status note; both records
+remain, with this current reconciliation entry above them. Main's approved
+CRM Feature Report r02, BP-03 scope, instructions and document register remain
+unchanged. The correction PR now targets main as its completed dependency.
+
+Application, migration, dependency, asset, test and workflow bytes remain
+identical to the correction source. This includes the later `5fc78c5` browser
+assertion repair: empty results are verified by the zero-result count and
+stage-empty state; keyboard checks follow search → account and the opened
+filter panel → Stage. Unavailable results must still clear empty-stage and
+source-stamp content. These changes follow the rendered interface and retain
+permission, paging, long-text and persistence coverage.
+
+The local foundation, prototype and naming checks verify the reconciled
+repository. Fresh pinned-runtime CI, current-source screenshots and exact
+publication status are recorded in [PR #75](https://github.com/deanrfiedler-gif/powerplants-one/pull/75).
+Earlier component evidence remains historical. Keep the PR draft until this
+evidence is reviewed; passing presentation checks alone does not establish
+complete application assurance. A merge decision follows the concrete verified
+revision. This reconciliation does not include PR #84's shell, PR #86's login,
+a six-stage pipeline migration or an Azure deployment.
