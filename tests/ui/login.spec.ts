@@ -69,6 +69,9 @@ test("recovery copy and real form destinations are bounded and do not expose det
 
 test("pending navigation announces progress and rejects duplicate keyboard submissions", async ({ page }) => {
   await serve(page);
+  type Submission = { busy: string | null; disabled: string | null; announcement: string | null; prevented: boolean };
+  const submissions: Submission[] = [];
+  await page.exposeFunction("observeLoginSubmission", (submission: Submission) => submissions.push(submission));
   let attempts = 0, release!: () => void;
   const held = new Promise<void>(resolve => { release = resolve; });
   await page.route(url => url.origin === origin && url.pathname === "/auth/login", async route => {
@@ -77,14 +80,30 @@ test("pending navigation announces progress and rejects duplicate keyboard submi
   });
   try {
     await page.goto(origin + "/login");
+    // Observe after the application's submit listener, while the current document
+    // is stable. Evaluating the page after navigation starts can wait for the very
+    // response this test holds. The observer does not alter submission behaviour.
+    await page.evaluate(() => {
+      document.getElementById("signin-form")!.addEventListener("submit", event => {
+        const report = (window as unknown as { observeLoginSubmission: (submission: Submission) => Promise<void> }).observeLoginSubmission;
+        void report({
+          busy: document.getElementById("sign-in")!.getAttribute("aria-busy"),
+          disabled: document.getElementById("sign-in")!.getAttribute("aria-disabled"),
+          announcement: document.getElementById("announcer")!.textContent,
+          prevented: event.defaultPrevented,
+        });
+      });
+    });
     const action = page.locator("#sign-in");
     await action.focus(); await page.keyboard.press("Enter");
-    // Locator assertions wait for navigation; inspect the still-visible document
-    // while this test deliberately holds the response before navigation commits.
-    const pending = await page.evaluate(() => ({ busy: document.getElementById("sign-in")!.getAttribute("aria-busy"), disabled: document.getElementById("sign-in")!.getAttribute("aria-disabled"), announcement: document.getElementById("announcer")!.textContent }));
+    await expect.poll(() => submissions.length).toBe(1);
+    const pending = submissions[0];
     expect(pending.busy).toBe("true"); expect(pending.disabled).toBe("true"); expect(pending.announcement).toContain("Opening Microsoft");
+    expect(pending.prevented).toBe(false);
     await expect.poll(() => attempts).toBe(1);
     await page.keyboard.press("Enter");
+    await expect.poll(() => submissions.length).toBe(2);
+    expect(submissions[1].prevented).toBe(true);
     release();
     await expect(page.getByText("Synthetic handoff completed")).toBeVisible();
     expect(attempts).toBe(1);
