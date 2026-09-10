@@ -1,5 +1,6 @@
 import pg, { type PoolClient } from "pg";
-import { localConfig } from "./config";
+import { runtimeConfig } from "./config";
+import { isHostedDemo } from "./demo-config";
 import { proofReadPhase } from "./proof-diagnostics";
 
 export const databasePoolLimits = Object.freeze({
@@ -14,11 +15,12 @@ export const databasePoolLimits = Object.freeze({
 
 let pool: pg.Pool | undefined;
 export function database() {
-  const config = localConfig();
+  const config = runtimeConfig();
   if (pool) return pool;
   pool = new pg.Pool({
     connectionString: config.database_url,
     ...databasePoolLimits,
+    ...(isHostedDemo() ? { ssl: { rejectUnauthorized: true, minVersion: "TLSv1.2" as const }, max: 8 } : {}),
     application_name: "PPO-P01",
   });
   pool.on("error", () => {

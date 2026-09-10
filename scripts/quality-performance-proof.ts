@@ -186,7 +186,8 @@ try {
     {
       name: "Customers",
       route: "/customers",
-      api: "/api/v1/customers",
+      // The accepted directory now loads through the CRM directory read.
+      api: "/api/v1/crm/directory",
       profile: "coordinator",
     },
     {

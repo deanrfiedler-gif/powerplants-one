@@ -136,7 +136,19 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
     await seed();
     await migrate();
     await seed();
-    assert.deepEqual(await originals(), before);
+    const afterUpgrade = await originals();
+    const originalGrants = before.permission_grants as { value: Record<string, unknown> }[];
+    const upgradedGrants = afterUpgrade.permission_grants as { value: Record<string, unknown> }[];
+    const originalIds = new Set(originalGrants.map(g => g.value.id));
+    // Every old grant remains byte-for-byte, including the deliberately revoked one.
+    assert.deepEqual(upgradedGrants.filter(g => originalIds.has(g.value.id)), originalGrants);
+    const added = upgradedGrants.filter(g => !originalIds.has(g.value.id));
+    const expected = originalGrants.filter(g => g.value.user_id === "30000000-0000-4000-8000-000000000001" && g.value.capability === "shared.edit")
+      .flatMap(g => ["email.read", "email.edit"].map(capability => ({ ...g.value, capability })));
+    const grantShape = (g: Record<string, unknown>) => Object.fromEntries(Object.entries(g).filter(([k]) => k !== "id"));
+    const sorted = (gs: Record<string, unknown>[]) => gs.map(g => JSON.stringify(grantShape(g))).sort();
+    assert.deepEqual(sorted(added.map(g => g.value)), sorted(expected));
+    assert.deepEqual({ ...afterUpgrade, permission_grants: originalGrants }, before);
     assert.deepEqual(
       await rows(
         "SELECT * FROM public.ppo_migrations WHERE version<=12 ORDER BY version",

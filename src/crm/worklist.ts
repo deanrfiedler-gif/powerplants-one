@@ -2,7 +2,7 @@ import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import { database } from "../platform/database";
 import { AppError } from "../platform/errors";
 import type { Principal } from "../platform/identity";
-import { hasPermission, requireCapability } from "../platform/permissions";
+import { hasPermission, requireCapability, scopeSql } from "../platform/permissions";
 import { activityVisibility } from "../activities/activities";
 import { envelope, page } from "../shared/reads";
 import { choice, invalid, object, optionalId } from "../shared/validation";
@@ -23,6 +23,7 @@ export type WorklistItem = {
   next_action_id: string | null; next_action_summary: string | null;
   action_owner_id: string | null; action_owner_name: string | null;
   due_at: string | null; due_needed: boolean | null;
+  value_amount: string | null; expected_close_date: string | null; can_edit: boolean;
 };
 
 export async function listOpportunities(p: Principal, input: unknown = {}) {
@@ -60,7 +61,7 @@ export async function listOpportunities(p: Principal, input: unknown = {}) {
   const descending = filters.sort === "Newest";
   const result = (await c.query<{ stamp: string; items: (WorklistItem & { sort_key: string; action_version: number | null })[] }>(
     `WITH permitted AS MATERIALIZED (
-      SELECT o.id,o.display_number,o.title,o.stage_id,o.close_outcome,o.stage_entered_at,o.updated_at,o.version,
+      SELECT o.id,o.display_number,o.title,o.stage_id,o.close_outcome,o.stage_entered_at,o.updated_at,o.version,to_jsonb(o)->>'value_amount' AS value_amount,to_jsonb(o)->>'expected_close_date' AS expected_close_date,(o.owner_id=$2 AND ${scopeSql("o.company_id","o.site_id","crm.opportunity.edit")}) AS can_edit,
         o.company_id,co.display_name AS company_name,r.display_name AS organisation_name,o.site_id,s.display_name AS site_name,
         o.primary_person_id,pe.display_name AS contact_name,o.owner_id,u.display_name AS owner_name,a.id AS next_action_id,a.summary AS next_action_summary,a.owner_id AS action_owner_id,au.display_name AS action_owner_name,a.due_at,a.due_needed,a.version AS action_version,
         CASE WHEN a.id IS NULL THEN 'Unavailable' WHEN a.status NOT IN ('Open','InProgress') THEN 'Needed' WHEN a.due_needed THEN 'DueNeeded' WHEN a.due_at<$10::timestamptz THEN 'Overdue' ELSE 'Upcoming' END AS next_action_state,
