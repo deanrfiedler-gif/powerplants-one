@@ -571,6 +571,7 @@ function OpportunityContent({
         </ValidationFields>}
       </RecordPanel>
       <RecordPanel id="opportunity" tab="timeline" value={tab}>
+      {o.source_lead && <section><h3>Source lead</h3><Link href={`/crm/leads/${o.source_lead.id}`}>{o.source_lead.display_number}</Link>{o.source_lead.events.filter(e=>e.note).map(e=><article key={e.id}><p style={{whiteSpace:"pre-wrap"}}>{e.note}</p><small>{e.actor_name} · {new Date(e.created_at).toLocaleString("en-AU")}</small></article>)}</section>}
 
         <section className="crm-panel">
           <h2>{NEXT_LABELS[o.next_action_state]}</h2>

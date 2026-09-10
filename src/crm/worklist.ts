@@ -1,3 +1,4 @@
+import { leadsAvailable } from "./leads/context";
 import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import { database } from "../platform/database";
 import { AppError } from "../platform/errors";
@@ -71,7 +72,7 @@ export async function listOpportunities(p: Principal, input: unknown = {}) {
       JOIN ppo.organisations r ON (r.workspace_id,r.id)=(o.workspace_id,o.organisation_id)
       LEFT JOIN ppo.sites s ON (s.workspace_id,s.id)=(o.workspace_id,o.site_id)
       LEFT JOIN ppo.people pe ON (pe.workspace_id,pe.id)=(o.workspace_id,o.primary_person_id)
-      LEFT JOIN ppo.activities a ON (a.workspace_id,a.id)=(o.workspace_id,o.next_activity_id) AND ${activityVisibility("a", true)}
+      LEFT JOIN ppo.activities a ON (a.workspace_id,a.id)=(o.workspace_id,o.next_activity_id) AND ${activityVisibility("a", true, await leadsAvailable(c))}
       LEFT JOIN ppo.users au ON (au.workspace_id,au.id)=(a.workspace_id,a.owner_id)
       WHERE o.workspace_id=$1 AND ${opportunityVisibility()}
         AND ($3::uuid IS NULL OR o.company_id=$3) AND ($4::uuid IS NULL OR o.site_id=$4)

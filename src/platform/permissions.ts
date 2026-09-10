@@ -22,6 +22,10 @@ export type Capability =
   | "report.issue"
   | "report.respond"
 
+  | "crm.lead.read"
+  | "crm.lead.create"
+  | "crm.lead.edit"
+  | "crm.lead.convert"
   | "crm.opportunity.read"
   | "crm.opportunity.create"
   | "crm.opportunity.edit"

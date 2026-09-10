@@ -1,3 +1,4 @@
+import { listLeads } from "../crm/leads/reads";
 import type { Principal } from "../platform/identity";
 import { database } from "../platform/database";
 import { object } from "../shared/validation";
@@ -21,6 +22,7 @@ export async function shellContext(p: Principal, input: unknown): Promise<ShellC
 }
 export async function shellSearch(p: Principal, input: unknown) {
   return collectSearch(searchQuery(input), [
+    { kind: "Lead", path: "/crm/leads", label: "title", read: q => listLeads(p, q) },
     { kind: "Opportunity", path: "/crm/opportunities", label: "title", read: q => listOpportunities(p, q) },
     { kind: "Customer", path: "/customers", label: "display_name", read: q => listShared(p, "Organisation", q) },
     { kind: "Contact", path: "/people", label: "display_name", read: q => listShared(p, "Person", q) },

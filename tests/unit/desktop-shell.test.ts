@@ -38,3 +38,9 @@ test("quick add requires both read and create permission and orders the current 
   assert.equal(actions.find(action => action.id === "contact")?.href, "/customers/new?kind=person");
   assert.ok(!actions.some(action => ["project", "lead", "estimate"].includes(action.id)));
 });
+
+test("Lead quick add requires lead read and create grants", () => {
+  assert.deepEqual(actionsForCapabilities(new Set(["crm.lead.read"])), []);
+  assert.deepEqual(actionsForCapabilities(new Set(["crm.lead.create"])), []);
+  assert.equal(actionsForCapabilities(new Set(["crm.lead.read", "crm.lead.create"]))[0].href, "/crm/leads?create=1");
+});
