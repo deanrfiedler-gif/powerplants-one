@@ -107,7 +107,10 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
       .fill(input.title);
     await card.dragTo(page.locator('[data-drop-stage="Qualified"]'));
   } else {
-    await page.locator(".crm-stage-track button").last().click();
+    await page
+      .locator(".crm-stage-track")
+      .getByRole("button", { name: "Qualified", exact: true })
+      .click();
   }
   dialog = page.getByRole("dialog", { name: "Change deal stage", exact: true });
   await expect(dialog).toBeVisible();
@@ -117,8 +120,19 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
   await dialog
     .getByLabel("Qualification outcome", { exact: true })
     .fill("SYN Need and contact confirmed");
+  const persistedRead = info.project.use.isMobile
+    ? page.waitForResponse((response) => {
+        const url = new URL(response.url());
+        return (
+          response.request().method() === "GET" &&
+          url.pathname === `/api/v1/crm/opportunities/${input.id}` &&
+          response.status() === 200
+        );
+      })
+    : null;
   await dialog.getByRole("button", { name: "Save stage", exact: true }).click();
   await expect(dialog).not.toBeVisible();
+  if (persistedRead) await (await persistedRead).finished();
   let record = (await call(page, `crm/opportunities/${input.id}`)).items[0];
   expect(record.stage_id).toBe("Qualified");
   expect(record.value_amount).toBe("12345.67");
