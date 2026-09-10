@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { after, beforeEach, test } from "node:test";
 import { randomUUID } from "node:crypto";
+import { readFile } from "node:fs/promises";
 import { database, closeDatabase, transaction } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { migrate, seed } from "../../scripts/database";
@@ -21,7 +22,7 @@ let users: string[];
 
 beforeEach(async () => {
   const db = database();
-  await db.query("DROP SCHEMA IF EXISTS ppo CASCADE");
+  await db.query(await readFile(new URL("../../db/migrations/0001-recover.sql", import.meta.url), "utf8"));
   await db.query("DROP TABLE IF EXISTS public.ppo_migrations,public.ppo_demo_migrations");
   await migrate(17); await seed(17); await migrateDemo();
   if (!(await db.query("SELECT 1 FROM pg_roles WHERE rolname=$1", [role])).rowCount)
@@ -41,8 +42,10 @@ beforeEach(async () => {
   }
 });
 after(async () => {
-  await database().query(`DROP OWNED BY ${role}`);
-  await database().query(`DROP ROLE ${role}`);
+  if ((await database().query("SELECT 1 FROM pg_roles WHERE rolname=$1", [role])).rowCount) {
+    await database().query(`DROP OWNED BY ${role}`);
+    await database().query(`DROP ROLE ${role}`);
+  }
   // The following demo-browser job uses this disposable database too.
   // Restore the current schema after the deliberately rolled-back upgrade case.
   await migrate(); await seed();
