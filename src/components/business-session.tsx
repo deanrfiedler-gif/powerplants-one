@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { api, ErrorNotice } from "./business-ui";
 import { lockLocal } from "../offline/store";
 import { lockOtherBusinessViews } from "./session-signal";
+import { HeaderContent } from "./header-content";
 type Identity = {
   actor_id: string;
   workspace_id: string;
@@ -56,9 +57,9 @@ export function BusinessSession({ children, hosted = false }: { children: React.
   }
   return (
     <>
-      {hosted ? <section className="identity-strip identity-compact" aria-label="Private demo account">
-        <strong>{p?.display_name ?? "Private prototype"}</strong>
-        <span>Fictional records</span>
+      <HeaderContent slot="account">
+      {hosted ? <section className="identity-strip identity-compact identity-hosted" aria-label="Private demo account">
+        <div className="hosted-account-summary"><strong title={p?.display_name}>{p?.display_name ?? "Private prototype"}</strong><span className="account-avatar" aria-hidden="true">{(p?.display_name ?? "PPO").split(/\s+/).filter(Boolean).slice(-2).map(word => word[0]).join("")}</span></div>
         {p ? <form action="/auth/logout" method="post" onSubmit={() => lockOtherBusinessViews()}><button className="secondary">Sign out</button></form> : <a href="/auth/login">Sign in with Microsoft</a>}
       </section> : <>
       <section
@@ -112,6 +113,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
         </div>
       </section>
       </>}
+      </HeaderContent>
       <ErrorNotice error={error} />
       {p ? (
         <Session.Provider value={p}>
