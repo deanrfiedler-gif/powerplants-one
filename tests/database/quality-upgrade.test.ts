@@ -137,14 +137,54 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
     await migrate();
     await seed();
     const afterUpgrade = await originals();
+    const appliedVersions = new Set(
+      (
+        await rows("SELECT version FROM public.ppo_migrations ORDER BY version")
+      ).map(({ version }) => version as number),
+    );
+    const leadUsers = new Set(
+      (
+        await rows(
+          "SELECT id FROM ppo.users WHERE active AND subject_id IN ('coordinator','second-company') ORDER BY id",
+        )
+      ).map(({ id }) => String(id)),
+    );
     const originalGrants = before.permission_grants as { value: Record<string, unknown> }[];
     const upgradedGrants = afterUpgrade.permission_grants as { value: Record<string, unknown> }[];
     const originalIds = new Set(originalGrants.map(g => g.value.id));
     // Every old grant remains byte-for-byte, including the deliberately revoked one.
     assert.deepEqual(upgradedGrants.filter(g => originalIds.has(g.value.id)), originalGrants);
     const added = upgradedGrants.filter(g => !originalIds.has(g.value.id));
-    const expected = originalGrants.filter(g => g.value.user_id === "30000000-0000-4000-8000-000000000001" && g.value.capability === "shared.edit")
-      .flatMap(g => ["email.read", "email.edit"].map(capability => ({ ...g.value, capability })));
+    const expected = [
+      ...originalGrants
+        .filter(
+          g =>
+            g.value.user_id === "30000000-0000-4000-8000-000000000001" &&
+            g.value.capability === "shared.edit",
+        )
+        .flatMap(g =>
+          ["email.read", "email.edit"].map(capability => ({
+            ...g.value,
+            capability,
+          })),
+        ),
+      ...(appliedVersions.has(18)
+        ? originalGrants
+            .filter(
+              g =>
+                g.value.capability === "crm.opportunity.edit" &&
+                leadUsers.has(String(g.value.user_id)),
+            )
+            .flatMap(g =>
+              [
+                "crm.lead.read",
+                "crm.lead.create",
+                "crm.lead.edit",
+                "crm.lead.convert",
+              ].map(capability => ({ ...g.value, capability })),
+            )
+        : []),
+    ];
     const grantShape = (g: Record<string, unknown>) => Object.fromEntries(Object.entries(g).filter(([k]) => k !== "id"));
     const sorted = (gs: Record<string, unknown>[]) => gs.map(g => JSON.stringify(grantShape(g))).sort();
     assert.deepEqual(sorted(added.map(g => g.value)), sorted(expected));
