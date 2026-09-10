@@ -1,6 +1,6 @@
 # Private demo Email and CRM integration
 
-**Document ID:** PPO-DEMO-INTEGRATION-DEC · **Revision:** r01 · **Date:** 9 September 2026 · **Owner:** Dean Fiedler · **Status:** Authorised implementation; combined verification in progress.
+**Document ID:** PPO-DEMO-INTEGRATION-DEC · **Revision:** r02 · **Date:** 10 September 2026 · **Owner:** Dean Fiedler · **Status:** Authorised integration; main reconciliation and verification tracked in PR #73.
 
 Dean asked whether Email and the other elements had been folded into the new UI, then authorised proceeding with integration while the demo sign-in registration is prepared. Combine the existing Email/Calendar implementation (PR #64, `f951199941ab121cf3fabea263ff896997d4be34`), CRM desktop/mobile refinements (PR #69, `04c2d95f8f8c4438363c8c3eab82f8ba22c3088d`) and Azure demo preparation (PR #72, `370b3ed0bd8d4b5b7936c4016f35c780f5ce92ee`) on the current main foundation `f8035b5c55251da4da52430adf2f83094feccd6b`. Preserve their histories and original migration bytes. Publication is a reviewable integration PR, not a claim that those changes are deployed.
 
@@ -11,3 +11,11 @@ Messages remain accessible only to their owner under current permissions. Explic
 Retained upgrade assertions explicitly include migrations 0015 and 0017 while 0016 remains reserved for the separate Assistant branch. The P11 upgrade test compares every original grant exactly, and separately verifies the precise additive email grant set. The accepted Activity-band link now owns keyboard focus and describes its owner; dismissible owner help remains available. Existing full-text/href/focus/deadline assertions remain. The load harness observes the actual CRM directory GET used by the accepted Customers screen, with its original 320 reads, throttling, deadlines and candidate p95 thresholds unchanged; prior timings are not a controlled comparison with this changed screen.
 
 The [integration handover](../delivery/demo-email-crm-integration.md) records the bounded journey, tests and deployment limits. No paid Azure provisioning, real mailbox connection, tester invitation, remote merge or production activation is part of this preparation.
+
+## 10 September — reconcile the first integration PR
+
+Dean asked to progress point 1 of the ordered integration list: [PR #73](https://github.com/deanrfiedler-gif/powerplants-one/pull/73), before #75, #84 and #86. This authorises reconciling this existing branch with current main, publishing the reviewable correction and progressing its checks/review and normal merge when verified. The original preparation-only boundary above describes the earlier task; this continuation does not deploy an image or change cloud access.
+
+Merge main `3c155c71bed214298627c108f5f52b5f916096ff` into integration source `93828dd898b55af8b8d2361983a8f554160d369d` with both parents retained. Main adds the approved CRM r02 scope through #83; preserve its full report, BP-01 r05, BP-03 r06 scope, priorities and deferrals. Preserve the branch's implemented CRM refinement note, private Email/Calendar controls and newer Azure connection/runtime records. Resolve the document-register append conflict by retaining both sets of distinct records and the branch's newer Azure revisions. Reconcile the project-guidance wording without removing workflow controls, and keep it within the existing 8,000-character limit.
+
+This reconciliation changes documentation only. Application, migrations, tests, dependencies, infrastructure, workflows, assets and output templates remain byte-identical to the already verified integration source. Final-source CI, visual-review evidence and merge disposition belong to the [handover](../delivery/demo-email-crm-integration.md#10-september--main-reconciliation) and PR #73. The later stacked branches are not updated by this contribution.
