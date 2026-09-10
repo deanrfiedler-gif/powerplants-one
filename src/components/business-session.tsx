@@ -43,9 +43,11 @@ export function BusinessSession({ children, hosted = false }: { children: React.
   useEffect(() => {
     const outside = (event: Event) => { if (!account.current?.contains(event.target as Node)) setShowIdentity(false); };
     const other = (event: Event) => { if ((event as CustomEvent).detail !== "account") setShowIdentity(false); };
-    document.addEventListener("pointerdown", outside); document.addEventListener("focusin", outside);
+    // A late page alert may move focus; keep the identity selector open until
+    // an explicit outside click or Escape, especially while initial reads settle.
+    document.addEventListener("pointerdown", outside);
     window.addEventListener(shellPanelEvent, other);
-    return () => { document.removeEventListener("pointerdown", outside); document.removeEventListener("focusin", outside); window.removeEventListener(shellPanelEvent, other); };
+    return () => { document.removeEventListener("pointerdown", outside); window.removeEventListener(shellPanelEvent, other); };
   }, []);
   const toggleAccount = () => { openShellPanel("account"); setShowIdentity(!showIdentity); };
   const initials = (p?.display_name ?? "PPO").split(/\s+/).filter(Boolean).slice(-2).map(word => word[0]).join("");
