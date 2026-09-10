@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import { demoConfig } from "../../src/platform/demo-config";
 import { localConfig } from "../../src/platform/config";
 import { demoRequestAllowed, readCookie, secureCookie } from "../../src/platform/demo-request";
@@ -7,7 +9,7 @@ import { verifiedDemoObject } from "../../src/platform/demo-auth";
 import { testerInput, demoCapabilities } from "../../scripts/demo-database";
 
 const tenant = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
-const env = { NODE_ENV: "production", PPO_ENV: "azure-demo", PPO_EXPOSURE: "https", PPO_IDENTITY: "entra",
+const env = { NODE_ENV: "production" as const, PPO_ENV: "azure-demo", PPO_EXPOSURE: "https", PPO_IDENTITY: "entra",
   PPO_DEMO_ORIGIN: "https://ca-ppo-demo-example.region.azurecontainerapps.io",
   DATABASE_URL: "postgresql://synthetic:fictional@pg-ppo-demo-example.postgres.database.azure.com/ppo_demo_20260909",
   PPO_ENTRA_TENANT_ID: tenant, PPO_ENTRA_CLIENT_ID: "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb", PPO_ENTRA_CLIENT_SECRET: "synthetic-client-secret-only",
@@ -61,3 +63,19 @@ test("tester grants are distinct, expiring and limited to Company A commercial j
   assert.ok(["crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert"].every(cap => (demoCapabilities as readonly string[]).includes(cap)));
   assert.equal(demoCapabilities.some(c => /finance|service|schedule|pack|report|field/.test(c)), false);
 });
+
+for (const operation of ["upgrade", "verify"]) {
+  test(`operator CLI ${operation} loads and reaches the database without an import deadlock`, () => {
+    const result = spawnSync(process.execPath, ["--import", "tsx", "--import",
+      "./tests/helpers/demo-operator-probe.mjs", "scripts/demo-database.ts", operation], {
+      cwd: fileURLToPath(new URL("../../", import.meta.url)),
+      env: { PATH: process.env.PATH, ...env }, encoding: "utf8", timeout: 15000,
+    });
+    assert.equal(result.error, undefined);
+    assert.equal(result.signal, null);
+    assert.equal(result.status, 1, result.stderr);
+    assert.match(result.stdout, /SYN_OPERATOR_DATABASE_REACHED/);
+    assert.match(result.stderr, /Demo database operation failed; no credentials or SQL printed/);
+    assert.doesNotMatch(result.stderr, /unsettled top-level await|SYN operator probe stops|fictional/);
+  });
+}
