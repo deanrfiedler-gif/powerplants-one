@@ -22,6 +22,7 @@ export default defineConfig([
     "node_modules/**",
     "test-results/**",
     "playwright-report/**",
+    "verification-evidence/crm-ui/**",
     "next-env.d.ts",
   ]),
 ]);

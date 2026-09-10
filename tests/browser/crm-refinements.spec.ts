@@ -46,7 +46,7 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
     await page.keyboard.press("Escape");
     await expect(snapshot).not.toBeVisible();
     await expect(card.locator(".crm-card-body")).toBeFocused();
-    await card.locator(".crm-card-site").click();
+    await card.locator(".crm-card-contact").click();
     await page
       .getByRole("link", { name: "Open full deal", exact: true })
       .click();
