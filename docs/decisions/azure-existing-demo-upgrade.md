@@ -26,3 +26,9 @@ Shared workspace/company constants and the unchanged runtime-grant function now 
 Two subprocess regression cases launch the operator entry point with both `upgrade` and `verify`. A test-only preload intercepts PostgreSQL connection acquisition before any network access, proving startup reaches the database and the CLI retains sanitized error handling. Both cases reproduced the original exit code 13 and unsettled-await warning before the repair, and pass after it. This startup proof complements the native PostgreSQL upgrade/retention/rollback tests; it does not claim a live database upgrade.
 
 Publication, pinned-runtime CI and a new Azure rollout remain separate evidence recorded in the repair PR.
+
+## 10 September — safe operator diagnostics
+
+PR #106 removed the confirmed startup import cycle and passed the native Azure preparation suite. Retry [34484176805](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34484176805) reached the operator error handler but stopped before web/worker rollout. Its blanket exception message did not identify the second blocker.
+
+The operator now emits fixed stage labels and an allowlist of diagnostic labels/SQLSTATE codes. Unknown exception messages, query text, details, parameters and credentials remain suppressed. This is diagnostic instrumentation only: no migration, privilege, transaction or configuration rule changes. Unit cases verify both useful classification and suppression of synthetic sensitive error fields. The retry and its result will be recorded in the PR.

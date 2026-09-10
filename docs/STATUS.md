@@ -1,5 +1,7 @@
 # Current prototype status
 
+10 September operator diagnostics: the startup import fix passed Azure preparation checks and was merged in PR #106. Its live retry reached normal error handling but failed the database gate. [Safe stage/error diagnostics](decisions/azure-existing-demo-upgrade.md#10-september--safe-operator-diagnostics) identify that next blocker without exposing SQL or credentials; live rollout remains incomplete.
+
 10 September Azure operator startup repair: the [import-cycle correction](decisions/azure-existing-demo-upgrade.md#10-september--operator-cli-import-cycle-repair) separates shared runtime definitions from the CLI after the first upgrade rollout exited during module loading. Subprocess tests reproduce the original failure and verify both command paths reach database acquisition after the repair. Live rollout remains pending.
 
 10 September Azure release blockers: the [existing-demo repair](decisions/azure-existing-demo-upgrade.md) fixes the invalid job-level runner context and adds explicit `upgrade-and-deploy` ahead of web/worker rollout. The bounded transactional upgrade preserves records, current identities, invitation limits and revoked grants while installing Leads 18 / Projects 19 and the missing Company A capabilities. Baseline is `f97148b`; local workflow validation and 32 Python helper cases pass. Native PostgreSQL/image CI, publication and the authenticated Azure execution remain separately tracked in the repair PR. No live upgrade is claimed by this preparation.

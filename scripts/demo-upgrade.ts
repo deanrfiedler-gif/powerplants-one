@@ -13,18 +13,22 @@ const hash = (sql: string) => createHash("sha256").update(sql).digest("hex");
 // A deliberately bounded existing-demo upgrade, not a second bootstrap path.
 // Every database change shares one transaction, including grants and receipts.
 export async function upgradeExistingDemo(databaseName: string, tenant: string, apply: boolean) {
+  console.log("Demo upgrade stage: load-release");
   if (latestMigrationVersion !== 19) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
     version: Number(file.slice(0, 4)), sql: await read(`migrations/${file}`),
   })));
   const identityHash = hash(await read("demo/0001-identity.sql"));
+  console.log("Demo upgrade stage: connect");
   await transaction(async db => {
+    console.log("Demo upgrade stage: validate-target");
     if (!apply) await db.query("SET TRANSACTION READ ONLY");
     await db.query("SELECT pg_advisory_xact_lock(10001)");
     const role = `${databaseName}_app`;
     if ((await db.query("SELECT current_database() AS name")).rows[0].name !== databaseName ||
         !(await db.query("SELECT 1 FROM pg_roles WHERE rolname=$1", [role])).rowCount)
       throw Error("The existing database and runtime role must match.");
+    console.log("Demo upgrade stage: migration-history");
     const installed = await db.query("SELECT version,sha256 FROM public.ppo_migrations ORDER BY version");
     if (installed.rows.some(row => !migrations.some(m => m.version === row.version)))
       throw Error("Unknown migration history; preserve and review this database.");
@@ -33,9 +37,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
       if (prior ? prior.sha256 !== hash(m.sql) : m.version <= 17 || !apply)
         throw Error("Missing baseline or incompatible migration; preserve and review this database.");
     }
+    console.log("Demo upgrade stage: identity-history");
     const identities = await db.query("SELECT version,sha256 FROM public.ppo_demo_migrations");
     if (identities.rowCount !== 1 || identities.rows[0].version !== 1 || identities.rows[0].sha256 !== identityHash)
       throw Error("Existing hosted identity migration must match.");
+    console.log("Demo upgrade stage: seed-history");
     const receipts = await db.query("SELECT version FROM ppo.seed_receipts");
     if (receipts.rows.some(row => !seedFiles.some(([version]) => version === row.version)) ||
         receipts.rows.some(row => !installed.rows.some(m => m.version === row.version)) ||
@@ -43,17 +49,21 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
       throw Error("Missing baseline or unknown seed receipts; preserve this database.");
     if (apply) {
       for (const m of migrations.filter(m => !installed.rows.some(row => row.version === m.version))) {
+        console.log(`Demo upgrade stage: apply-migration-${m.version}`);
         await db.query(m.sql);
         await db.query("INSERT INTO public.ppo_migrations(version,sha256) VALUES($1,$2)", [m.version, hash(m.sql)]);
       }
       // Only the two additive fixture-grant seeds; never replay old fixture data.
       for (const [version, file] of seedFiles.filter(([v]) => v > 17)) {
         if (receipts.rows.some(row => row.version === version)) continue;
+        console.log(`Demo upgrade stage: apply-seed-${version}`);
         await db.query(await read(file));
         await db.query("INSERT INTO ppo.seed_receipts(version) VALUES($1)", [version]);
       }
+      console.log("Demo upgrade stage: runtime-grants");
       await grantRuntimePrivileges(db, databaseName, role);
     }
+    console.log("Demo upgrade stage: tester-capabilities");
     const missing = await db.query(`
       SELECT t.user_id,cap,least(t.expires_at,g.valid_to,r.valid_to) AS expires_at
       FROM ppo.demo_testers t
@@ -75,6 +85,7 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
       INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_id,valid_from,valid_to)
       VALUES($1,$2,$3,$4,$3,clock_timestamp(),$5) ON CONFLICT DO NOTHING`,
     [demoWorkspace, row.user_id, demoCompany, row.cap, row.expires_at]);
+    console.log("Demo upgrade stage: verify-privileges");
     for (const table of ["ppo.lead_candidates", "ppo.projects"]) {
       for (const privilege of ["SELECT", "INSERT", "UPDATE", "DELETE"]) {
         const access = await db.query("SELECT has_table_privilege($1,$2,$3) AS allowed", [role, table, privilege]);
@@ -84,8 +95,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
     // Exercise the restricted role: the upgrade must not make identity writable.
     const identityAccess = await db.query("SELECT has_table_privilege($1,'ppo.demo_testers','UPDATE') AS allowed", [role]);
     if (identityAccess.rows[0].allowed) throw Error("Runtime role has unexpected identity privileges.");
+    console.log("Demo upgrade stage: exercise-runtime-role");
     await db.query(`SET LOCAL ROLE ${pg.escapeIdentifier(role)}`);
     await db.query("SELECT id FROM ppo.lead_candidates LIMIT 0");
     await db.query("SELECT id FROM ppo.projects LIMIT 0");
+    console.log("Demo upgrade stage: commit");
   });
 }
