@@ -30,6 +30,10 @@ async function capture(page: Page, info: TestInfo, scenario: string, top = true)
 }
 const ids = (page: Page) => page.locator(".crm-workspace [data-opportunity-id]").evaluateAll((elements) => elements.map((e) => e.getAttribute("data-opportunity-id")));
 const snapshot = async () => Promise.all(["opportunities", "activities", "activity_links", "opportunity_events", "business_identities", "operation_receipts", "audit_events", "outbox_jobs", "reference_counters"].map(async (table) => (await database().query(`SELECT md5(coalesce(string_agg(to_jsonb(t)::text,'' ORDER BY to_jsonb(t)::text),'')) AS hash FROM ppo.${table} t`)).rows[0].hash));
+async function waitForCompactSearch(page: Page) {
+  await expect(page.locator("#header-search input[name='sales-search']")).toHaveCount(1);
+  await expect(page.locator(".crm-toolbar input[name='sales-search']")).toHaveCount(0);
+}
 
 test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone stage and business records", async ({ page }, info) => {
   await page.goto("/crm/opportunities"); await identity(page);
@@ -128,6 +132,7 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   const first = await ids(page);
   await expect(page.locator(".crm-action-text").first()).toContainText("END OF ACTION");
   await page.setViewportSize({ width: 320, height: 844 });
+  await waitForCompactSearch(page);
   await page.getByLabel("Search opportunities", { exact: true }).focus();
   await page.keyboard.press("Tab");
   // r11 moves search into the shared header and Stage into the Filters panel.
@@ -302,7 +307,7 @@ test("Accepted r08 shell and board retain full-width stages, fixed headers and s
   await page.getByLabel("Search opportunities", { exact: true }).fill(marker);
   await expect.poll(() => ids(page)).toHaveLength(10);
   const board = page.locator(".crm-board-scroll");
-  const activeLink = page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "Main navigation", exact: true }).getByRole("link", { name: "CRM Sales", exact: true });
+  const activeLink = page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "Main navigation", exact: true }).getByRole("link", { name: info.project.use.isMobile ? "CRM Sales" : "Sales / CRM", exact: true });
   if (info.project.use.isMobile) await page.getByRole("button", { name: "Menu", exact: true }).click();
   await expect(activeLink).toHaveAttribute("aria-current", "page");
   const activeStyle = await activeLink.evaluate(e => ({ fill: getComputedStyle(e).backgroundColor, icon: getComputedStyle(e.querySelector("svg")!).color }));

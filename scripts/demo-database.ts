@@ -11,8 +11,10 @@ import { demoConfig } from "../src/platform/demo-config";
 export const demoWorkspace = "10000000-0000-4000-8000-000000000001";
 export const demoCompany = "20000000-0000-4000-8000-000000000001";
 export const demoCapabilities = ["shared.read", "shared.internal.read", "activity.read", "activity.edit",
-  "crm.opportunity.read", "crm.opportunity.create", "crm.opportunity.edit", "estimating.read", "estimating.edit",
-  "estimating.quote.read", "estimating.quote.prepare", "email.read", "email.edit"] as const;
+  "crm.opportunity.read", "crm.opportunity.create", "crm.opportunity.edit",
+  "crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert", "estimating.read", "estimating.edit",
+  "estimating.quote.read", "estimating.quote.prepare", "email.read", "email.edit",
+  "project.read", "project.create", "project.edit"] as const;
 
 export function testerInput(value: unknown, now = Date.now()) {
   if (!Array.isArray(value) || value.length > 5) throw Error("Provide zero to five invited tester entries.");

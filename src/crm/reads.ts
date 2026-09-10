@@ -1,3 +1,5 @@
+import { readLead } from "./leads/reads";
+import { leadsAvailable } from "./leads/context";
 import type { Principal } from "../platform/identity";
 import { database } from "../platform/database";
 import { AppError } from "../platform/errors";
@@ -37,7 +39,7 @@ export async function readOpportunity(p: Principal, id: string) {
   ).rows[0];
   const visibleActions = (
     await c.query(
-      `SELECT a.id FROM ppo.activities a WHERE a.workspace_id=$1 AND ${activityVisibility("a", true)} AND EXISTS(SELECT 1 FROM ppo.activity_links l WHERE l.workspace_id=a.workspace_id AND l.activity_id=a.id AND l.opportunity_id=$3) ORDER BY a.created_at,a.id`,
+      `SELECT a.id FROM ppo.activities a WHERE a.workspace_id=$1 AND ${activityVisibility("a", true, await leadsAvailable(c))} AND EXISTS(SELECT 1 FROM ppo.activity_links l WHERE l.workspace_id=a.workspace_id AND l.activity_id=a.id AND l.opportunity_id=$3) ORDER BY a.created_at,a.id`,
       [p.workspace_id, p.actor_id, id],
     )
   ).rows;
@@ -79,7 +81,13 @@ export async function readOpportunity(p: Principal, id: string) {
     } catch (e) {
       if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
     }
+  let source_lead: {id:string;display_number:string;events:Awaited<ReturnType<typeof readLead>>["events"]}|null=null;
+  if(await leadsAvailable(c)) {
+    const source=(await c.query("SELECT lead_id FROM ppo.lead_conversions WHERE workspace_id=$1 AND opportunity_id=$2",[p.workspace_id,id])).rows[0];
+    if(source) try {const lead=await readLead(p,source.lead_id);source_lead={id:lead.id,display_number:lead.display_number,events:lead.events};} catch(e) {if(!(e instanceof AppError)||![403,404].includes(e.status))throw e;}
+  }
   return {
+    source_lead,
     id: o.id,
     display_number: o.display_number,
     version: o.version,

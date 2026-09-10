@@ -52,7 +52,7 @@ export async function finishDemoLogin(url: URL, loginToken: string | undefined, 
   const a = attempt.rows[0];
   if (!a) throw new AppError(401, "LoginExpired", "Start sign-in again.");
   const config = await client(), c = demoConfig();
-  const tokens = await oidc.authorizationCodeGrant(config, url, {
+  const tokens = await exchangeDemoAuthorization(config, url, {
     expectedState: a.state, expectedNonce: a.nonce, pkceCodeVerifier: a.verifier, idTokenExpected: true,
   });
   const claims = tokens.claims();
@@ -75,4 +75,16 @@ export async function createInvitedSession(db: PoolClient, tenant: string, objec
   await db.query("INSERT INTO ppo.sessions VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')", [hash(token), user.workspace_id, user.id]);
   await db.query("INSERT INTO ppo.audit_events(id,workspace_id,actor_id,object_type,object_id,outcome,reason,details) VALUES(gen_random_uuid(),$1,$2,'Session',$2,'Accepted','Invited demo tester signed in','{}')", [user.workspace_id, user.id]);
   return token;
+}
+
+export async function exchangeDemoAuthorization(config: oidc.Configuration, url: URL, checks: Parameters<typeof oidc.authorizationCodeGrant>[2]) {
+  try {
+    return await oidc.authorizationCodeGrant(config, url, checks);
+  } catch (error) {
+    // The library validates state before classifying an authorization error.
+    // Never interpret raw callback descriptions or state/nonce failures as cancellation.
+    if (error instanceof oidc.AuthorizationResponseError && error.error === "access_denied")
+      throw new AppError(401, "LoginCancelled", "Sign-in was cancelled.");
+    throw error;
+  }
 }

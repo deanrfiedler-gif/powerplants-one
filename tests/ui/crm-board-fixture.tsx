@@ -84,6 +84,18 @@ window.fetch = async (input) => {
       workspace_id: CRM.workspace,
       display_name: "SYN Demo tester with a long display name",
     };
+  else if (url.pathname.endsWith("/shell/context")) data = {
+    display_name: "SYN Demo tester with a long display name",
+    actions: [
+      { id: "opportunity", label: "Opportunity", module: "CRM Sales", href: "/crm/opportunities/new" },
+      { id: "activity", label: "Activity", module: "My Work", href: "/work/new" },
+      { id: "contact", label: "Contact", module: "Contacts", href: "/customers/new?kind=person" },
+    ],
+  };
+  else if (url.pathname.endsWith("/shell/search")) data = {
+    items: records.filter(record => record.title.toLowerCase().includes((url.searchParams.get("q") ?? "").toLowerCase())).map(record => ({ id: record.id, kind: "Opportunity", label: record.title, reference: record.display_number, href: `/crm/opportunities/${record.id}` })),
+    has_more: false, limit_per_type: 5,
+  };
   else if (url.pathname.includes("worklist-options")) data = envelope([]);
   else if (url.pathname.endsWith("/crm/opportunities")) {
     const search = (url.searchParams.get("q") ?? "").toLowerCase();

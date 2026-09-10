@@ -22,6 +22,11 @@ const paths = {
   warning: "m12 3 10 18H2z M12 9v5 M12 17v1",
   menu: "M3 6h18 M3 12h18 M3 18h18",
   close: "m5 5 14 14 M5 19 19 5",
+  more: "M5 11a1 1 0 1 0 0 2 1 1 0 0 0 0-2 M12 11a1 1 0 1 0 0 2 1 1 0 0 0 0-2 M19 11a1 1 0 1 0 0 2 1 1 0 0 0 0-2",
+  help: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20 M9 8a3 3 0 1 1 5 2c-1 1-2 1-2 4 M12 17h.01",
+  bell: "M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9 M9 21h6 M12 1v1",
+  sites: "M12 22s8-8 8-13a8 8 0 0 0-16 0c0 5 8 13 8 13 M12 6a3 3 0 1 0 0 6 3 3 0 0 0 0-6",
+  documents: "M5 2h9l5 5v15H5z M14 2v6h5 M8 12h8 M8 16h8",
 };
 export type ProductIconName = keyof typeof paths;
 export function ProductIcon({ name }: { name: ProductIconName }) {
