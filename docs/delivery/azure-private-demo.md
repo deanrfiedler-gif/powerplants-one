@@ -206,6 +206,8 @@ The manually dispatched [update workflow](../../.github/workflows/azure-demo-dep
 
 Retain the separate deployment identity `id-ppo-demo-github-deploy`, with the same verified issuer/audience/immutable environment subject as the [Reader connection](azure-demo-connection.md#4-link-the-identity-to-this-github-environment). Its documented initial assignment is Contributor on **rg-ppo-demo-aue only**, for existing app/job updates and registry access. Do not replace or broaden the Reader identity. The identity needs registry push/pull and web/job update rights; check the registry's actual RBAC/ABAC permission mode if access fails. Successful registry login or read access alone does not prove push rights. This change creates no identities, role assignments, federated credentials or GitHub settings.
 
+Keep environment variable **PPO_DEMO_SUFFIX** set to the generated settings `suffix`. If it is temporarily blank, the workflow falls back to discovering one matching suffix shared by the existing demo app, worker job and registry in `rg-ppo-demo-aue`, and refuses ambiguous or missing matches.
+
 In **Settings → Environments → ppo-demo**, verify:
 
 | Setting | Required value/source |
