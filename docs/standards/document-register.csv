@@ -1,4 +1,6 @@
 document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes
+PPO-012-GANTT-DEC,Approved Projects Gantt integration,docs/decisions/projects-gantt-integration.md,r01,Authorised bounded integration,Dean Fiedler - prototype owner,6e2951e49f41e2b980da6885357230ef310f8198,,
+PPO-012-GANTT-HO,Projects Gantt integration handover,docs/delivery/projects-gantt-integration.md,r01,Committed locally; publication approval pending,Dean Fiedler - prototype owner,6e2951e49f41e2b980da6885357230ef310f8198,,
 PPO-STD-001,"Naming, Identification & Information Organisation Standard",docs/standards/naming-conventions.md,r03,Adopted,Dean Fiedler - private prototype,,powerplants-one-naming-standard.md,
 BP-01,Master Business & Build Blueprint,docs/blueprints/BP-01-master-blueprint.md,r05,Working design with accepted CRM r02 scope and prior portal direction,Dean Fiedler - private prototype,,docs/blueprints/GEN_SPC_PPABusinessPlatform_MasterBlueprint.md,
 BP-02,Platform Solution Architecture,docs/architecture/BP-02-platform-architecture.md,r13,Bounded P11 quality implementation; exact verification and publication in handover,Dean Fiedler - private prototype,c44321e8cbbe205a482e38499016f396e2f6374d,,

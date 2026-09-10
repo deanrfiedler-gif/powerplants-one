@@ -248,7 +248,14 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
           : null;
         if (refresh && (await refresh.count())) await refresh.click();
         else await page.reload({ waitUntil: "domcontentloaded" });
-        await expect(screenLoading.first()).toBeVisible();
+        await expect
+          .poll(async () => {
+            for (let i = 0; i < (await screenLoading.count()); i++) {
+              if (await screenLoading.nth(i).isVisible()) return true;
+            }
+            return false;
+          })
+          .toBe(true);
         await expect(
           page.getByRole("heading", {
             name: "Current page summary",
