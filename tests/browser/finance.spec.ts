@@ -28,9 +28,14 @@ async function identity(page: Page, profile: string) {
   if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await page.getByRole("button", { name: "Change identity", exact: true }).click();
 
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
+  const selected = page.waitForResponse((response) =>
+    response.url().endsWith("/api/v1/local-session") &&
+    response.request().method() === "POST",
+  );
   await page
     .getByRole("button", { name: "Use this identity", exact: true })
     .click();
+  await selected;
   await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
 }
