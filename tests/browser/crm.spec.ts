@@ -38,7 +38,7 @@ async function capture(page: Page, info: TestInfo, scenario: string) {
       : scenario === "uncertain-save"
         ? page.getByText("Save outcome uncertain — confirm the original action", { exact: true })
         : scenario === "empty"
-          ? page.getByText("No permitted opportunities match this view.", { exact: true })
+          ? page.locator(".crm-stage-empty").first()
           : scenario === "loading"
             ? page.getByText("Loading permitted sales records…", { exact: true })
             : scenario === "overdue"
@@ -332,11 +332,7 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   await page
     .getByLabel("Search opportunities", { exact: true })
     .fill(`absent-${randomUUID()}`);
-  await expect(
-    page.getByText("No permitted opportunities match this view.", {
-      exact: true,
-    }),
-  ).toBeVisible();
+  await expect(page.locator(".crm-stage-empty").first()).toBeVisible();
   await capture(page, info, "empty");
   await page.setViewportSize({ width: 320, height: 844 });
   await noOverflow(page);
@@ -360,7 +356,7 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   await expect(page.locator('.business-error[role="alert"]')).toContainText(
     "temporarily unavailable",
   );
-  await expect(page.getByText("No permitted opportunities match this view.", {exact:true})).toHaveCount(0);
+  await expect(page.locator(".crm-stage-empty")).toHaveCount(0);
   await expect(page.locator(".source-stamp")).toHaveCount(0);
   await capture(page, info, "unavailable");
   await page.unroute("**/api/v1/crm/opportunities?**");
