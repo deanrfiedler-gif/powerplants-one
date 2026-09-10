@@ -5,6 +5,8 @@ import type { CSSProperties } from "react";
 import { DealDialog, dealAmount, dealClose, useDesktopCRM, type DealRecord, type StageUndo } from "./crm-deal-controls";
 import type { OperationReceipt } from "../platform/operations";
 import { ProductIcon } from "./product-icons";
+import { HeaderContent } from "./header-content";
+import { valueSummary } from "../crm/value-summary";
 import type { listOpportunities, worklistOptions, WorklistItem } from "../crm/worklist";
 import { useIdentity } from "./business-session";
 import { ErrorNotice, Field, SelectField, Stamp, Status } from "./business-ui";
@@ -45,7 +47,7 @@ function Identity({ item }: { item: WorklistItem }) {
     <p>{item.organisation_name}<br />{item.contact_name ?? "Contact not yet identified"}<br />{item.site_name ?? "Site not yet identified"}</p>
   </>;
 }
-const dueDate = new Intl.DateTimeFormat("en-AU", { dateStyle: "medium", timeZone: "Australia/Brisbane" });
+const dueDate = new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "short", timeZone: "Australia/Brisbane" });
 function CardAction({ item }: { item: WorklistItem }) {
   const [dismissed, setDismissed] = useState(false);
   const ownerDescription = `Activity owner: ${item.action_owner_name ?? "Not assigned"}`;
@@ -73,7 +75,7 @@ function Board({ data, selected, scroll, onOpen, onMove }: { data: Results; sele
   return <div ref={ref} className="crm-board-scroll" role="region" aria-label="Opportunity Board — stage sequence" tabIndex={0} onScroll={e => { scroll.save(e.currentTarget.scrollTop, e.currentTarget.scrollLeft); }}>
     <div className="crm-board" style={{ "--crm-stage-count": data.stages.length } as CSSProperties}>
       <div className="crm-board-headers">{data.stages.map(stage => <header key={stage.stage_id} className="crm-stage-heading" data-selected={stage.stage_id === selected}>
-        <h2 id={`board-${stage.stage_id}`}>{stage.stage_id}</h2><span>{stage.count} {stage.count === 1 ? "deal" : "deals"}</span>
+        <h2 id={`board-${stage.stage_id}`}>{stage.stage_id}</h2><div className="crm-stage-total"><span>{valueSummary(data.items.filter(item => item.stage_id === stage.stage_id)).formatted} known</span><span>{stage.count} {stage.count === 1 ? "deal" : "deals"}</span></div>
       </header>)}</div>
       <div className="crm-board-columns">{data.stages.map((stage) => <section key={stage.stage_id} className="crm-stage" data-selected={stage.stage_id === selected} data-drop-stage={stage.stage_id} data-drop-active={destination===stage.stage_id}
         onDragOver={e=>{if(!desktop||!drag.current)return;e.preventDefault();e.dataTransfer.dropEffect="move";setDestination(stage.stage_id);const node=ref.current,bounds=node?.getBoundingClientRect();if(node&&bounds){if(e.clientY<bounds.top+75)node.scrollTop-=12;else if(e.clientY>bounds.bottom-40)node.scrollTop+=12;if(e.clientX<bounds.left+40)node.scrollLeft-=12;else if(e.clientX>bounds.right-40)node.scrollLeft+=12;}}}
@@ -83,12 +85,10 @@ function Board({ data, selected, scroll, onOpen, onMove }: { data: Results; sele
             onDragStart={e=>{if(!desktop||!item.can_edit||(e.target as HTMLElement).closest(".crm-card-activity")){e.preventDefault();return;}drag.current=item.id;e.dataTransfer.effectAllowed="move";e.dataTransfer.setData("text/x-ppo-opportunity",item.id);}} onDragEnd={endDrag}>
             <Link className="crm-card-body crm-opportunity-title" href={`/crm/opportunities/${item.id}`} aria-label={item.title} draggable={false}
               onClick={e=>{if(Date.now()<suppress.current){e.preventDefault();return;}if(desktop&&!e.ctrlKey&&!e.metaKey&&!e.shiftKey&&!e.altKey){e.preventDefault();onOpen(item.id);}}}>
-              <span className="crm-card-title">{item.title}</span>
+              <span className="crm-card-heading"><span className="crm-card-title">{item.title}</span>{["Needed", "DueNeeded"].includes(item.next_action_state) && <span className="crm-card-warning" title={labels[item.next_action_state]} aria-label={labels[item.next_action_state]}><ProductIcon name="warning"/></span>}</span>
               <span className="crm-card-company" title={item.organisation_name}>{item.organisation_name}</span>
-              <span className="crm-card-value"><strong>{dealAmount(item.value_amount)}</strong><span>{dealClose(item.expected_close_date)}</span></span>
-              <span className="crm-card-contact"><ProductIcon name="person"/><span>{item.contact_name??"Contact not yet identified"}</span></span>
-              <span className="crm-card-site" title={item.site_name??"Site not yet identified"}>{item.site_name??"Site not yet identified"}</span>
-              <small className="crm-card-reference">{item.display_number} · {item.close_outcome}</small>
+              <span className="crm-card-value"><strong>{dealAmount(item.value_amount)}</strong><span className="crm-card-close"><ProductIcon name="service"/>{dealClose(item.expected_close_date)}</span></span>
+              <span className="crm-card-contact" title={`Customer contact: ${item.contact_name??"Not yet identified"}`}><ProductIcon name="person"/><span>{item.contact_name??"Contact not yet identified"}</span></span>
             </Link>
             <CardAction item={item} />
           </li>)}
@@ -137,21 +137,18 @@ export function SalesWorklist() {
   const change = (key: keyof typeof initial, value: string) => setFilters((old) => ({ ...old, [key]: value, cursor: "", ...(key === "company_id" ? { site_id: "" } : {}) }));
   const saved=(receipt:OperationReceipt,old:DealRecord,stage:boolean)=>{setDialog(null);if(stage){setUndo({id:old.id,version:receipt.record_version,stage_id:old.stage_id,qualification_note:old.qualification_note,identification_activity_id:old.identification_activity_id});setFeedback(`${old.title} moved to ${receipt.state}.`);}setFilters(old=>({...old,cursor:""}));data.reload();};
   const refresh = () => { setFilters((old) => ({ ...old, cursor: "" })); data.reload(); };
+  const totals = data.data ? valueSummary(data.data.items) : null;
   return <section className="crm-workspace" aria-label="Sales worklist">
-    <header className="crm-worklist-heading">
-      <h1>Sales worklist</h1>
-      {!data.error && data.data?.can_create && <Link className="primary-link" href="/crm/opportunities/new" aria-label="New opportunity"><ProductIcon name="plus" />Opportunity</Link>}
-    </header>
+    <h1 className="sr-only">Sales worklist</h1>
+    <HeaderContent slot="search">{!isDenied && <label className="crm-header-search"><ProductIcon name="search"/><span className="sr-only">Search opportunities</span><input name="sales-search" type="search" placeholder="Search opportunities" value={filters.q} onChange={e => change("q", e.target.value)}/></label>}</HeaderContent>
     <div className="crm-toolbar"><div className="crm-view-controls" role="group" aria-label="Opportunity presentation">
       {(["Board", "Grid"] as const).map((value) => <button key={value} className={view === value ? "" : "secondary"} aria-pressed={view === value} onClick={() => setView(value)}><ProductIcon name={value === "Board" ? "board" : "list"} />{value === "Grid" ? "List" : value}</button>)}
-      {!isDenied && <button className="secondary crm-filter-toggle" aria-expanded={filtersOpen} aria-controls="crm-filter-panel" onClick={() => setFiltersOpen(!filtersOpen)}><ProductIcon name="filter" />Filters and sort</button>}
-
     </div>
+    {!data.error && data.data?.can_create && <Link className="primary-link crm-new-opportunity" href="/crm/opportunities/new" aria-label="New opportunity"><ProductIcon name="plus" />Opportunity</Link>}
     {!isDenied && <>
-      <div className="crm-primary-filters">
-        <Field name="sales-search" label="Search opportunities" placeholder="Search opportunities" type="search" value={filters.q} onChange={(v) => change("q", v)} />
-        <SelectField name="stage" label="Stage" value={filters.stage_id} onChange={(v) => { change("stage_id", v); if (v) setSelected(v); }} options={(data.data?.stages ?? []).map((s) => ({ id: s.stage_id, display_name: s.stage_id }))} empty="All stages" />
-      </div>
+      <span className="crm-pipeline-label"><ProductIcon name="sales"/>Sales pipeline</span>
+      <button className="secondary crm-filter-toggle" aria-expanded={filtersOpen} aria-controls="crm-filter-panel" onClick={() => setFiltersOpen(!filtersOpen)}><ProductIcon name="filter" /><span>Filters<span className="sr-only"> and sort</span></span></button>
+      <label className="crm-sort"><span className="sr-only">Sort</span><select aria-label="Sort" value={filters.sort} onChange={e => change("sort", e.target.value)}><option value="Reference">Reference order</option><option value="Title">Title A–Z</option><option value="Newest">Newest first</option></select></label>
     </>}
     </div>
     {!isDenied && <>
@@ -159,7 +156,7 @@ export function SalesWorklist() {
         <div className="crm-filter-grid">
           {(["Company", "Site", "Owner"] as const).map((kind) => <FilterPicker key={kind} kind={kind} value={filters[kind === "Company" ? "company_id" : kind === "Site" ? "site_id" : "owner_id"]} company={filters.company_id} enabled={!data.error} set={(v) => change(kind === "Company" ? "company_id" : kind === "Site" ? "site_id" : "owner_id", v)} />)}
           <SelectField name="next-state" label="Next action" value={filters.next_action} onChange={(v) => change("next_action", v)} options={Object.entries(labels).map(([id, display_name]) => ({ id, display_name }))} empty="All action states" />
-          <label className="field">Sort<select aria-label="Sort" value={filters.sort} onChange={(e) => change("sort", e.target.value)}><option value="Reference">Stable record order</option><option value="Title">Title A–Z</option><option value="Newest">Newest first</option></select></label>
+          <SelectField name="stage" label="Stage" value={filters.stage_id} onChange={(v) => { change("stage_id", v); if (v) setSelected(v); }} options={(data.data?.stages ?? []).map((s) => ({ id: s.stage_id, display_name: s.stage_id }))} empty="All stages" />
           <label className="field">Page size<select aria-label="Page size" value={filters.limit} onChange={(e) => change("limit", e.target.value)}><option value="10">10 records</option><option value="25">25 records</option><option value="50">50 records</option></select></label>
           <label className="crm-check"><input type="checkbox" checked={filters.owner_id === p.actor_id} onChange={(e) => change("owner_id", e.target.checked ? p.actor_id : "")} />Owned by me</label>
         </div>
@@ -172,13 +169,12 @@ export function SalesWorklist() {
     {data.loading && <p role="status">Loading permitted sales records…</p>}
     {data.error != null && <button className="secondary" onClick={refresh}>Try loading again</button>}
     {!data.error && data.data && <>
-      <p className="source-stamp crm-worklist-stamp">{data.data.items.length} opportunities on this page · {data.data.completeness === "Complete" ? "All matching results" : data.data.window.has_more ? "Partial — more pages" : "Partial — final page"} · Open · As at <Stamp value={data.data.window.as_of} /></p>
-      {!data.data.items.length && <p className="empty-state">No permitted opportunities match this view.</p>}
+      <div className="source-stamp crm-worklist-stamp"><strong>{data.data.items.length} {data.data.items.length === 1 ? "opportunity" : "opportunities"}{data.data.completeness === "Complete" ? "" : " on this page"}</strong><span>{totals?.formatted} known{totals?.unknown ? ` · ${totals.unknown} not estimated` : ""}</span><span className="crm-summary-basis">Open · AUD, excl. GST</span></div>
       {view === "Board" ? <>
         <div className="crm-stage-navigation" role="group" aria-label="Choose Board stage">{data.data.stages.map((stage) => <button key={stage.stage_id} aria-pressed={selected === stage.stage_id} className={selected === stage.stage_id ? "" : "secondary"} onClick={() => setSelected(stage.stage_id)}>{stage.stage_id} ({stage.count})</button>)}</div>
         <Board data={data.data} selected={selected} scroll={boardScroll} onOpen={id=>setDialog({id,mode:"snapshot"})} onMove={(id,stage)=>setDialog({id,mode:"stage",stage})} />
       </> : <Grid data={data.data} scroll={gridScroll} />}
-      <div className="crm-actions"><button className="secondary" onClick={refresh}>Refresh from start</button>{data.data.next_cursor && <button onClick={() => setFilters((old) => ({ ...old, cursor: data.data!.next_cursor! }))}>Next page</button>}</div>
+      <div className="crm-actions"><span className="crm-page-context">{data.data.completeness === "Complete" ? "All matching results" : data.data.window.has_more ? "Page counts and values · more pages" : "Page counts and values · final page"} · As at <Stamp value={data.data.window.as_of} /></span><button className="secondary" onClick={refresh}>Refresh from start</button>{data.data.next_cursor && <button onClick={() => setFilters((old) => ({ ...old, cursor: data.data!.next_cursor! }))}>Next page</button>}</div>
 
     </>}
   </section>;

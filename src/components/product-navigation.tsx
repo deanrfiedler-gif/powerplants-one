@@ -82,8 +82,9 @@ export function ProductNavigation() {
 }
 export function ProductHeader() {
   const path = usePathname(), current = moduleFor(path);
+  const opportunities = path === "/crm/opportunities";
   return <>
-    <header className="topbar"><Link className="mobile-brand" href="/" aria-label="Powerplants One home"><Image src="/brand/powerplants-logo-green-white.png" alt="Powerplants Australia" width={36} height={36} unoptimized loading="eager" className="brand-logo" /></Link><div className="product-heading"><span>Powerplants One</span><span aria-hidden="true">/</span><strong>{current.name}</strong></div><span className="prototype-label">Synthetic data only</span></header>
+    <header className="topbar"><Link className="mobile-brand" href="/" aria-label="Powerplants One home"><Image src="/brand/powerplants-logo-green-white.png" alt="Powerplants Australia" width={36} height={36} unoptimized loading="eager" className="brand-logo" /></Link><div className="product-heading"><span>{opportunities ? "Sales" : "Powerplants One"}</span><span aria-hidden="true">/</span><strong>{opportunities ? "Opportunities" : current.name}</strong></div><div className="header-tools"><div id="header-search"/><span className="prototype-label">Synthetic data only</span><div id="header-account" className="header-account"/></div></header>
     {!!current.tabs.length && <nav className="module-navigation" aria-label={`${current.name} navigation`}>{current.tabs.map(([href, label]) => <Link key={href} href={href} aria-current={matches(path, href) || (href === "/schedule" && matches(path, "/service/appointments")) ? "page" : undefined}>{label}</Link>)}</nav>}
 
   </>;
