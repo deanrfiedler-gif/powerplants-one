@@ -28,6 +28,20 @@
       "bytes": 82486,
       "purpose": "Exact user-adopted PPO-STD-001 r02; adopted by user on 5 September 2026; working r03 records repository adoption",
       "original_path": "powerplants-one-naming-standard.md"
+    },
+    {
+      "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r02.html",
+      "sha256": "fe2ded4a0cd9813c06e666499cc9842691e73c95be9b9e18f2aae9bf59c262fd",
+      "bytes": 446869,
+      "purpose": "Exact Job Pack design r02 accepted by Dean Fiedler on 10 September 2026; fictional standalone preview, not issued work instructions",
+      "original_path": "powerplants-one-job-pack-r02.html"
+    },
+    {
+      "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-audit-r02.md",
+      "sha256": "288545ac2d3be72da7a1085e3bc775f80a2e82ad28b6d402182e64669ed0249f",
+      "bytes": 12075,
+      "purpose": "Original Job Pack r02 audit preserved unchanged; later user design acceptance is recorded in docs/decisions/job-pack-design.md",
+      "original_path": "powerplants-one-job-pack-audit-r02.md"
     }
   ]
 }

@@ -51,3 +51,5 @@ The [controlled opportunity handover proposal](crm-opportunity-handover.md) reco
 - [ADR-0020 — Persisted synthetic Email & Calendar journey](ADR-0020-email-calendar-synthetic-journey.md).
 
 - [Private demo Email and CRM integration](demo-email-crm-integration.md) — shared desktop/mobile journey, individual fictional mailboxes and retained access boundaries.
+
+- [Approved Job Pack r02](job-pack-design.md) — exact accepted full-page Service design and integration boundary.
