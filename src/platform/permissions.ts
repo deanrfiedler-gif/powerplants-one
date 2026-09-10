@@ -4,6 +4,9 @@ import { AppError } from "./errors";
 
 export type QueryClient = Pick<PoolClient, "query">;
 export type Capability =
+  | "project.read"
+  | "project.create"
+  | "project.edit"
   | "email.read"
   | "email.edit"
   | "finance.read"

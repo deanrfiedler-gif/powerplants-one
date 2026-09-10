@@ -7,6 +7,7 @@ import { listActivities } from "../activities/activities";
 import { listTickets } from "../service/intake";
 import { actionsForCapabilities, type ShellContext } from "./model";
 import { collectSearch, searchQuery } from "./search";
+import { listProjects } from "../projects/service";
 
 export async function shellContext(p: Principal, input: unknown): Promise<ShellContext> {
   object(input, []);
@@ -21,6 +22,7 @@ export async function shellContext(p: Principal, input: unknown): Promise<ShellC
 }
 export async function shellSearch(p: Principal, input: unknown) {
   return collectSearch(searchQuery(input), [
+    { kind: "Project", path: "/projects", label: "title", read: q => listProjects(p, q) },
     { kind: "Opportunity", path: "/crm/opportunities", label: "title", read: q => listOpportunities(p, q) },
     { kind: "Customer", path: "/customers", label: "display_name", read: q => listShared(p, "Organisation", q) },
     { kind: "Contact", path: "/people", label: "display_name", read: q => listShared(p, "Person", q) },

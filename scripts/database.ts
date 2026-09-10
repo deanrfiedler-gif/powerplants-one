@@ -7,7 +7,7 @@ import { database, transaction, closeDatabase } from "../src/platform/database";
 import { localConfig } from "../src/platform/config";
 const read = (name: string) =>
   readFile(new URL(`../db/${name}`, import.meta.url), "utf8");
-export async function migrate(through = 17) {
+export async function migrate(through = 18) {
   await transaction(async (client) => {
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     await client.query(
@@ -31,6 +31,7 @@ export async function migrate(through = 17) {
       "0015-email-calendar.sql",
       // 0016 remains reserved by the separate Assistant branch.
       "0017-crm-ui-refinements.sql",
+      "0018-projects-gantt.sql",
     ]) {
       const version = Number(file.slice(0, 4));
       if (version > through) break;
@@ -55,7 +56,7 @@ export async function migrate(through = 17) {
     }
   });
 }
-export async function seed(through = 17) {
+export async function seed(through = 18) {
   await transaction(async (client) => {
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     for (const [version, file] of [
@@ -72,6 +73,7 @@ export async function seed(through = 17) {
       [13, "seed-p11.sql"],
       [14, "seed-p11-templates.sql"],
       [15, "seed-email-calendar.sql"],
+      [18, "seed-projects-gantt.sql"],
     ] as const) {
       if (version > through) break;
       const prior = await client.query(

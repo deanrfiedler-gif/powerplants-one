@@ -29,7 +29,7 @@ test("approved shell fits laptop, desktop and compact viewports with persistent 
     await page.screenshot({ path: info.outputPath(`shell-${width}x${height}.png`) });
     await page.getByRole("button", { name: "More", exact: true }).click();
     await expect(page.getByRole("navigation", { name: "More navigation" })).toBeVisible();
-    for (const label of ["Sales / CRM", "Estimating & Quotation", "Engineering — planned", "Projects — planned", "Service", "Supply Chain — planned", "Finance"]) {
+    for (const label of ["Sales / CRM", "Estimating & Quotation", "Engineering — planned", "Projects", "Service", "Supply Chain — planned", "Finance"]) {
       const target = page.getByRole("navigation", { name: "Main navigation", exact: true }).getByLabel(label, { exact: true });
       await target.hover();
       await expect(page.getByRole("tooltip")).toHaveText(label);
