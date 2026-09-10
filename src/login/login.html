@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en-AU"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="robots" content="noindex,nofollow"><title>Sign in · Powerplants One</title><style>{{STYLE}}</style></head>
+<body><div id="ppo-login"><a class="skip-link" href="#main">Skip to sign in</a>
+<div class="page">
+  <aside class="brand" aria-label="Powerplants One">
+    <img class="logo" src="{{LOGO}}" width="140" height="140" alt="Powerplants">
+    <div class="mobile-name" aria-hidden="true">Powerplants <span>One</span></div>
+    <div class="brand-copy">
+      <p class="product">Powerplants<span>One.</span></p>
+      <div class="brand-rule" aria-hidden="true"></div>
+      <p class="tagline">Your vision,<br>powered by our solutions.</p>
+    </div>
+    <div class="brand-footer">Powerplants Australia</div>
+  </aside>
+  <main class="signin" id="main" tabindex="-1">
+    <div class="top"><span class="environment">{{ENVIRONMENT}}</span></div>
+    <section class="content" aria-labelledby="welcome">
+      <p class="eyebrow">Powerplants One</p>
+      <h1 id="welcome">Welcome back</h1>
+      <p class="intro">{{INTRO}}</p>
+      <div class="feedback" id="notice" role="region" aria-labelledby="notice-title" data-tone="{{TONE}}" {{NOTICE_HIDDEN}}>
+        <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6m0 4h.01"/></svg>
+        <div><strong id="notice-title">{{NOTICE_TITLE}}</strong><p id="notice-message">{{NOTICE_MESSAGE}}</p></div>
+      </div>
+      <form class="signin-form" action="/auth/login" method="get" id="signin-form"><button class="primary" id="sign-in" type="submit" aria-describedby="handoff-note" {{DISABLED}}>
+        <img class="microsoft-symbol" src="{{MICROSOFT}}" width="21" height="21" alt="" aria-hidden="true">
+        <span class="spinner" id="pending-icon" aria-hidden="true" hidden></span>
+        <span id="sign-in-label">{{ACTION}}</span>
+      </button>
+      </form>
+      {{LOCAL_ENTRY}}
+      <p class="sr-only" id="announcer" role="status" aria-live="polite" aria-atomic="true"></p>
+      <p class="handoff-note" id="handoff-note"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>{{HANDOFF}}</span></p>
+      <div class="access"><h2>New to Powerplants One?</h2><p>Ask your administrator to arrange access.</p></div>
+      <button class="help" id="help" type="button" aria-haspopup="dialog" hidden><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 2-2.5 2-2.5 4m0 3h.01"/></svg>Need help signing in?</button>
+    </section>
+    <footer class="page-footer"><span>© {{YEAR}} Powerplants Australia</span><span aria-hidden="true">·</span><span>Powerplants One</span></footer>
+  </main>
+</div>
+<dialog id="help-dialog" aria-labelledby="help-title">
+ <div class="dialog-layout">
+  <div class="dialog-header"><h2 id="help-title">Help signing in</h2><button class="close" type="button" data-close aria-label="Close sign-in help"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+  <div class="dialog-body">
+   <p>Use the work account that has been given access to Powerplants One.</p>
+   <details open><summary>I need access</summary><p>Ask your Powerplants One administrator to arrange access for your work account. If you do not know who to contact, ask your manager.</p></details>
+   <details><summary>Microsoft shows the wrong account</summary><p>Choose another account on the Microsoft sign-in screen, then select the work account that has access to Powerplants One.</p></details>
+   <details><summary>I forgot my password</summary><p>Use the recovery options on the Microsoft sign-in screen, or contact your organisation’s IT support.</p></details>
+   <details><summary>My access has been denied</summary><p>Check that you selected the correct work account. If access is still denied, contact your Powerplants One administrator. Signing in to Microsoft does not automatically grant access to this app.</p></details>
+   <p class="dialog-note">Access is managed by the Powerplants One administrator. Microsoft handles your account password and verification.</p>
+  </div>
+  <div class="dialog-actions"><button class="primary" type="button" data-close>Back to sign in</button></div>
+ </div>
+</dialog>
+<noscript><section class="noscript-note" aria-label="Help signing in">
+   <p>Use the work account that has been given access to Powerplants One.</p>
+   <details open><summary>I need access</summary><p>Ask your Powerplants One administrator to arrange access for your work account. If you do not know who to contact, ask your manager.</p></details>
+   <details><summary>Microsoft shows the wrong account</summary><p>Choose another account on the Microsoft sign-in screen, then select the work account that has access to Powerplants One.</p></details>
+   <details><summary>I forgot my password</summary><p>Use the recovery options on the Microsoft sign-in screen, or contact your organisation’s IT support.</p></details>
+   <details><summary>My access has been denied</summary><p>Check that you selected the correct work account. If access is still denied, contact your Powerplants One administrator. Signing in to Microsoft does not automatically grant access to this app.</p></details>
+   <p class="dialog-note">Access is managed by the Powerplants One administrator. Microsoft handles your account password and verification.</p>
+  </section></noscript>
+<script>{{SCRIPT}}</script></div></body></html>

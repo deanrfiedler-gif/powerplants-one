@@ -5,6 +5,7 @@ import { join } from "node:path";
 import { localConfig } from "../src/platform/config";
 import { proofDiagnosticsEnabled, proofEvent, proofPath, proofRequest as withProofRequest } from "../src/platform/proof-diagnostics";
 import { runtimeSampler } from "../src/platform/proof-runtime";
+import { sendLoginPage } from "../src/login/login-page";
 const config = localConfig(); // Refuse unsafe configuration before build work or Next initialisation.
 // Keep every process restart cold while allowing Turbopack to evict compiler
 // memory to disk during this process. This path contains only derived dev
@@ -43,6 +44,11 @@ const server = createServer((req, res) => {
     });
     res.end("Local synthetic access only.");
     return;
+  }
+  // The same approved page is available locally; Microsoft access remains hosted-only.
+  const loginPath = (req.url ?? "/").split("?", 1)[0];
+  if (req.method === "GET" && ["/login", "/auth/login"].includes(loginPath)) {
+    sendLoginPage(res, "ready", 200, true); return;
   }
   const requestId = ++proofRequest;
   const received = performance.now();
