@@ -469,10 +469,16 @@ export function FieldTechniciansScreen() {
     returnFocus.current = target;
     setSelected(id);
   };
-  const close = () => {
-    setSelected(null);
-    returnFocus.current?.focus();
-  };
+  const close = () => setSelected(null);
+  // Focus returns to the opening record link only after the modal drawer has
+  // left the document. While a modal <dialog> is open the rest of the page is
+  // inert, so focusing the opener synchronously inside close() is a no-op.
+  useEffect(() => {
+    if (selected !== null) return;
+    const target = returnFocus.current;
+    returnFocus.current = null;
+    target?.focus();
+  }, [selected]);
   const teamVisits = (r: Resource) =>
     filterVisits(visits, { ...blank(), person: r.id });
   const selectPerson = (r: Resource) => {

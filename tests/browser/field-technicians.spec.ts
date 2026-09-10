@@ -92,7 +92,9 @@ test("failed refresh clears rows and counts; a denied identity hides prior recor
     }),
   );
   await page.getByRole("button", { name: "Refresh", exact: true }).click();
-  await expect(page.getByRole("alert")).toContainText("SYN unavailable read");
+  await expect(
+    page.locator("#ppo-field-technicians").getByRole("alert"),
+  ).toContainText("SYN unavailable read");
   await expect(
     page.getByRole("table", { name: "Scheduled service visits", exact: true }),
   ).toHaveCount(0);
@@ -116,5 +118,7 @@ test("failed refresh clears rows and counts; a denied identity hides prior recor
     page.getByRole("table", { name: "Scheduled service visits", exact: true }),
   ).toHaveCount(0);
   await expect(page.getByRole("dialog")).toHaveCount(0);
-  await expect(page.getByRole("alert")).toBeVisible();
+  await expect(
+    page.locator("#ppo-field-technicians").getByRole("alert"),
+  ).toBeVisible();
 });
