@@ -1,8 +1,42 @@
 """Run the existing operator with the selected release, preserving its secrets."""
 import re
 import sys
+import time
 
 from ppo_operator import az, wait_job
+
+
+def report_failure(group, suffix, execution):
+    """Read the failed execution's durable logs; print only bounded diagnostics."""
+    # Query excludes every application row, secret and arbitrary exception detail.
+    query = ("ContainerAppConsoleLogs_CL "
+             f"| where ContainerGroupName_s startswith '{execution}-' "
+             "| where TimeGenerated > ago(1h) "
+             "| project TimeGenerated, Log_s | order by TimeGenerated asc | take 100")
+    allowed = re.compile(
+        r"(?:Demo (?:operator|upgrade) stage: [a-z0-9-]{1,50}|"
+        r"Operator failure code: [a-zA-Z0-9-]{1,60}|"
+        r"Demo migration mismatch: version=[0-9]{1,4} expected=[a-f0-9]{64} stored=(?:[a-f0-9]{64}|missing|invalid))")
+    try:
+        workspace = az("monitor", "log-analytics", "workspace", "show", "-g", group,
+                       "-n", "log-ppo-demo-" + suffix, "--query", "customerId")
+        if not isinstance(workspace, str) or not re.fullmatch(r"[a-fA-F0-9-]{36}", workspace):
+            raise RuntimeError("No log workspace.")
+        for attempt in range(3):
+            rows = az("monitor", "log-analytics", "query", "--workspace", workspace,
+                      "--analytics-query", query)
+            lines = [row.get("Log_s") for row in rows if isinstance(row, dict)] if isinstance(rows, list) else []
+            safe = [line for line in lines if isinstance(line, str) and allowed.fullmatch(line)]
+            if safe:
+                print("Retained operator diagnostics:", flush=True)
+                for line in safe:
+                    print(line, flush=True)
+                return
+            if attempt < 2:
+                time.sleep(10)
+    except (RuntimeError, ValueError, TypeError, KeyError):
+        pass
+    print("Operator diagnostics are not available yet; inspect this execution in Azure Logs.", flush=True)
 
 
 def run(group, suffix, image, operation):
@@ -44,7 +78,11 @@ def run(group, suffix, image, operation):
     if not re.fullmatch(re.escape(name) + r"-[a-z0-9-]+", execution.get("name", "")):
         raise RuntimeError("No valid execution receipt; inspect the operator before retrying.")
     print(f"Database {command} execution: {execution['name']}", flush=True)
-    wait_job(name, execution["name"])
+    try:
+        wait_job(name, execution["name"])
+    except RuntimeError:
+        report_failure(group, suffix, execution["name"])
+        raise
 
 
 if __name__ == "__main__":

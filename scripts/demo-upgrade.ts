@@ -34,8 +34,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
       throw Error("Unknown migration history; preserve and review this database.");
     for (const m of migrations) {
       const prior = installed.rows.find(row => row.version === m.version);
-      if (prior ? prior.sha256 !== hash(m.sql) : m.version <= 17 || !apply)
+      if (prior ? prior.sha256 !== hash(m.sql) : m.version <= 17 || !apply) {
+        const stored = prior ? (/^[a-f0-9]{64}$/.test(prior.sha256) ? prior.sha256 : "invalid") : "missing";
+        console.error(`Demo migration mismatch: version=${m.version} expected=${hash(m.sql)} stored=${stored}`);
         throw Error("Missing baseline or incompatible migration; preserve and review this database.");
+      }
     }
     console.log("Demo upgrade stage: identity-history");
     const identities = await db.query("SELECT version,sha256 FROM public.ppo_demo_migrations");

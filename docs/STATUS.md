@@ -1,5 +1,7 @@
 # Current prototype status
 
+10 September migration-history blocker: [run 34485559770](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34485559770) failed before upgrade writes with `incompatible-migration-history`. A [bounded failure receipt](decisions/azure-existing-demo-upgrade.md#10-september--migration-mismatch-receipt) reports the exact version/checksum mismatch through GitHub. The database history remains protected and live rollout incomplete.
+
 10 September operator diagnostics: the startup import fix passed Azure preparation checks and was merged in PR #106. Its live retry reached normal error handling but failed the database gate. [Safe stage/error diagnostics](decisions/azure-existing-demo-upgrade.md#10-september--safe-operator-diagnostics) identify that next blocker without exposing SQL or credentials; live rollout remains incomplete.
 
 10 September Azure operator startup repair: the [import-cycle correction](decisions/azure-existing-demo-upgrade.md#10-september--operator-cli-import-cycle-repair) separates shared runtime definitions from the CLI after the first upgrade rollout exited during module loading. Subprocess tests reproduce the original failure and verify both command paths reach database acquisition after the repair. Live rollout remains pending.

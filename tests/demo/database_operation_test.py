@@ -1,4 +1,6 @@
 import importlib.util
+import contextlib
+import io
 from pathlib import Path
 import sys
 import unittest
@@ -58,8 +60,32 @@ class DatabaseOperationTests(unittest.TestCase):
         self.assertFalse(any("update" in c or "start" in c for c in self.calls))
 
     def test_failed_database_job_propagates_failure(self):
-        with self.assertRaisesRegex(RuntimeError, "Failed"):
-            self.exercise(failed=True)
+        with patch.object(operation, "report_failure") as report:
+            with self.assertRaisesRegex(RuntimeError, "Failed"):
+                self.exercise(failed=True)
+            report.assert_called_once_with("rg-ppo-demo-aue", "synthetic", "job-ppo-operator-synthetic-abc123")
+
+    def test_failure_receipt_filters_private_logs_and_uses_exact_execution(self):
+        safe = "Demo migration mismatch: version=17 expected=" + "a" * 64 + " stored=" + "b" * 64
+        private = "SYN private credential or SQL"
+        output = io.StringIO()
+        with patch.object(operation, "az", side_effect=["aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+                [{"Log_s": safe}, {"Log_s": private}, {"Log_s": "Demo upgrade stage: connect\n" + private},
+                 {"Log_s": "Operator failure code: postgres-42501"}, {"Log_s": "Demo migration mismatch: " + private}]]) as az:
+            with contextlib.redirect_stdout(output):
+                operation.report_failure("rg-ppo-demo-aue", "synthetic", "job-ppo-operator-synthetic-abc123")
+        self.assertIn(safe, output.getvalue())
+        self.assertIn("postgres-42501", output.getvalue())
+        self.assertNotIn(private, output.getvalue())
+        self.assertIn("startswith 'job-ppo-operator-synthetic-abc123-'", az.call_args.args[-1])
+
+    def test_diagnostic_lookup_failure_does_not_expose_azure_exception(self):
+        output = io.StringIO()
+        with patch.object(operation, "az", side_effect=RuntimeError("SYN private")):
+            with contextlib.redirect_stdout(output):
+                operation.report_failure("rg-ppo-demo-aue", "synthetic", "job-ppo-operator-synthetic-abc123")
+        self.assertNotIn("SYN private", output.getvalue())
+        self.assertIn("not available yet", output.getvalue())
 
     def test_other_registry_is_rejected_before_azure_calls(self):
         with patch.object(operation, "az") as az:
