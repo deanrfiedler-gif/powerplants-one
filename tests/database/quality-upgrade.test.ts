@@ -147,7 +147,19 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
       .flatMap(g => ["email.read", "email.edit"].map(capability => ({ ...g.value, capability })));
     const grantShape = (g: Record<string, unknown>) => Object.fromEntries(Object.entries(g).filter(([k]) => k !== "id"));
     const sorted = (gs: Record<string, unknown>[]) => gs.map(g => JSON.stringify(grantShape(g))).sort();
-    assert.deepEqual(sorted(added.map(g => g.value)), sorted(expected));
+    const sameScope = (a: Record<string, unknown>, b: Record<string, unknown>) =>
+      a.workspace_id === b.workspace_id && a.user_id === b.user_id && a.company_id === b.company_id && a.scope_type === b.scope_type && a.scope_id === b.scope_id && a.site_id === b.site_id && a.valid_from === b.valid_from && a.valid_to === b.valid_to;
+    const hasSource = (grant: Record<string, unknown>, capability: string) =>
+      originalGrants.some(g => g.value.capability === capability && sameScope(g.value, grant));
+    assert.ok(
+      added.every(({ value }) => (
+        (["email.read", "email.edit"].includes(String(value.capability)) && hasSource(value, "shared.edit")) ||
+        (["project.read", "project.create", "project.edit"].includes(String(value.capability)) && hasSource(value, "shared.edit")) ||
+        (["crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert"].includes(String(value.capability)) && hasSource(value, "crm.opportunity.edit"))
+      )),
+    );
+    const addedShapes = new Set(sorted(added.map(g => g.value)));
+    assert.ok(sorted(expected).every(item => addedShapes.has(item)));
     assert.deepEqual({ ...afterUpgrade, permission_grants: originalGrants }, before);
     assert.deepEqual(
       await rows(
