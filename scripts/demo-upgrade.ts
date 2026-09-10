@@ -10,6 +10,15 @@ const additions = ["crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lea
 const read = (file: string) => readFile(new URL(`../db/${file}`, import.meta.url), "utf8");
 const hash = (sql: string) => createHash("sha256").update(sql).digest("hex");
 
+// The original Windows-built demo recorded CRLF bytes. Recognize only that
+// exact alternate encoding for the reviewed baseline; never rewrite its ledger.
+export function existingDemoChecksumMatches(sql: string, checksum: unknown, legacyWindows = false) {
+  if (checksum === hash(sql)) return true;
+  if (!legacyWindows) return false;
+  const lf = sql.replace(/\r\n/g, "\n");
+  return checksum === hash(lf) || checksum === hash(lf.replace(/\n/g, "\r\n"));
+}
+
 // A deliberately bounded existing-demo upgrade, not a second bootstrap path.
 // Every database change shares one transaction, including grants and receipts.
 export async function upgradeExistingDemo(databaseName: string, tenant: string, apply: boolean) {
@@ -18,7 +27,7 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   const migrations = await Promise.all(migrationFiles.map(async file => ({
     version: Number(file.slice(0, 4)), sql: await read(`migrations/${file}`),
   })));
-  const identityHash = hash(await read("demo/0001-identity.sql"));
+  const identitySql = await read("demo/0001-identity.sql");
   console.log("Demo upgrade stage: connect");
   await transaction(async db => {
     console.log("Demo upgrade stage: validate-target");
@@ -34,7 +43,7 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
       throw Error("Unknown migration history; preserve and review this database.");
     for (const m of migrations) {
       const prior = installed.rows.find(row => row.version === m.version);
-      if (prior ? prior.sha256 !== hash(m.sql) : m.version <= 17 || !apply) {
+      if (prior ? !existingDemoChecksumMatches(m.sql, prior.sha256, m.version <= 17) : m.version <= 17 || !apply) {
         const stored = prior ? (/^[a-f0-9]{64}$/.test(prior.sha256) ? prior.sha256 : "invalid") : "missing";
         console.error(`Demo migration mismatch: version=${m.version} expected=${hash(m.sql)} stored=${stored}`);
         throw Error("Missing baseline or incompatible migration; preserve and review this database.");
@@ -42,7 +51,8 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
     }
     console.log("Demo upgrade stage: identity-history");
     const identities = await db.query("SELECT version,sha256 FROM public.ppo_demo_migrations");
-    if (identities.rowCount !== 1 || identities.rows[0].version !== 1 || identities.rows[0].sha256 !== identityHash)
+    if (identities.rowCount !== 1 || identities.rows[0].version !== 1 ||
+        !existingDemoChecksumMatches(identitySql, identities.rows[0].sha256, true))
       throw Error("Existing hosted identity migration must match.");
     console.log("Demo upgrade stage: seed-history");
     const receipts = await db.query("SELECT version FROM ppo.seed_receipts");

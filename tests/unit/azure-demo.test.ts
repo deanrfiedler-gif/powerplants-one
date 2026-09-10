@@ -8,6 +8,9 @@ import { demoRequestAllowed, readCookie, secureCookie } from "../../src/platform
 import { verifiedDemoObject } from "../../src/platform/demo-auth";
 import { testerInput, demoCapabilities } from "../../scripts/demo-database";
 import { operatorFailureCode } from "../../scripts/demo-diagnostics";
+import { existingDemoChecksumMatches } from "../../scripts/demo-upgrade";
+import { createHash } from "node:crypto";
+import { readFile } from "node:fs/promises";
 
 const tenant = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
 const env = { NODE_ENV: "production" as const, PPO_ENV: "azure-demo", PPO_EXPOSURE: "https", PPO_IDENTITY: "entra",
@@ -63,6 +66,19 @@ test("tester grants are distinct, expiring and limited to Company A commercial j
     assert.throws(() => testerInput(value, now));
   assert.ok(["crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert"].every(cap => (demoCapabilities as readonly string[]).includes(cap)));
   assert.equal(demoCapabilities.some(c => /finance|service|schedule|pack|report|field/.test(c)), false);
+});
+
+test("legacy Windows migration bytes match the observed baseline without accepting changed SQL", async () => {
+  const sql = await readFile(new URL("../../db/migrations/0001-foundation.sql", import.meta.url), "utf8");
+  const lf = sql.replace(/\r\n/g, "\n"), crlf = lf.replace(/\n/g, "\r\n");
+  const digest = (value: string) => createHash("sha256").update(value).digest("hex");
+  assert.equal(digest(lf), "6817290d78e6493a8b266ddfdef1c5a2806683516e9f397c5c6fa3a8d8e1aaf4");
+  assert.equal(digest(crlf), "dbfbff684617c70fde38840f4a81fd450492d3d8fef1e6399c6a94e59ecba2ca");
+  assert.equal(existingDemoChecksumMatches(lf, digest(crlf), true), true);
+  assert.equal(existingDemoChecksumMatches(crlf, digest(lf), true), true);
+  assert.equal(existingDemoChecksumMatches(lf, digest(crlf)), false);
+  for (const value of [digest(crlf + "\r\nSELECT 1;"), digest(lf.trim()), "b".repeat(64), null])
+    assert.equal(existingDemoChecksumMatches(lf, value, true), false);
 });
 
 test("operator diagnostics allow only fixed labels and never expose exception contents", () => {
