@@ -106,7 +106,11 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
       await reconcileTesters(c.tenant_id, testers);
     }
     else if (command === "testers") await reconcileTesters(c.tenant_id, testerInput(JSON.parse(process.env.PPO_DEMO_TESTERS ?? "")));
-    else throw Error("Use setup or testers. Reset requires a new database/storage epoch.");
+    else if (command === "upgrade" || command === "verify") {
+      const { upgradeExistingDemo } = await import("./demo-upgrade");
+      await upgradeExistingDemo(c.database_name, c.tenant_id, command === "upgrade");
+    }
+    else throw Error("Use setup, testers, upgrade or verify. Reset requires a new database/storage epoch.");
     console.log("Demo database operation completed.");
   } catch { console.error("Demo database operation failed; no credentials or SQL printed. Check the operator configuration and retained database state."); process.exitCode = 1; }
   finally { await closeDatabase(); }
