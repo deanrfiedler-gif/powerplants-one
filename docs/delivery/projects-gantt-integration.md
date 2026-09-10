@@ -49,6 +49,6 @@ The dedicated `Projects Gantt assurance` workflow uses PostgreSQL 16.15 and pinn
 
 ## Applying after review
 
-Integrate the #73 → #75 → #84 stack before this change, preserving those modules. Use the established application build and additive migration/seed runner on the chosen environment. Migration 0018 and the explicit Project capabilities must be present before using the new routes. For hosted invited testers, use the existing bounded tester reconciliation operation to apply the new Company A capabilities with their existing expiry. This handover does not execute those environment changes.
+Integrate the #73 → #75 → #84 stack before this change, preserving those modules. Use the established application build and additive migration/seed runner on the chosen environment. Migration 0019 and the explicit Project capabilities must be present before using the new routes. For hosted invited testers, use the existing bounded tester reconciliation operation to apply the new Company A capabilities with their existing expiry. This handover does not execute those environment changes.
 
 Current project/task data is retained across migration/seed reruns; existing migrations are checksum protected. There is no destructive rollback script. If rollout is paused, keep the database and use a forward correction; do not drop accepted project history.

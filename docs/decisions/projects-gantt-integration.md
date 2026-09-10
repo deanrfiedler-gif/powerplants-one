@@ -24,7 +24,7 @@ The existing Projects package is design-only. The latest invocation brings forwa
 - FS warns when a successor starts before the next Mon–Fri day after predecessor finish; SS warns when it starts before predecessor start. Weekend dates may be retained. Dependencies never auto-reschedule, and no holiday calendar or resource reservation is implied.
 - Owner assignment does not send a message, invite a contact, grant access or create a shared customer record. External owners must have a current permitted customer affiliation. Unavailable external identity details are masked, and the editor requires an explicit replacement/clear decision.
 
-Migration `0018-projects-gantt.sql` was chosen after checking the base and concurrent Assistant/facility branches. `0016` remains reserved for Assistant; `0017` remains CRM. All applied migration and prior seed bytes are preserved. The new seed grants only explicit synthetic coordinator scopes and creates no project. Demo tester reconciliation includes the three bounded project capabilities; this change does not run reconciliation or change an existing hosted tester.
+Migration `0019-projects-gantt.sql` preserves the new additive chain after the stacked base branch introduced Leads at `0018`. `0016` remains reserved for Assistant; `0017` remains CRM. All applied migration and prior seed bytes are preserved. The new seed grants only explicit synthetic coordinator scopes and creates no project. Demo tester reconciliation includes the three bounded project capabilities; this change does not run reconciliation or change an existing hosted tester.
 
 ## Approved interaction contract
 

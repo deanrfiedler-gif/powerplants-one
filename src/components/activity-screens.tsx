@@ -446,6 +446,7 @@ function ActivityEditor({
           </button>
         </section>
       )}
+      {["Completed", "Cancelled"].includes(a.status) && a.links.filter(l => l.object_type === "Lead").map(l => <p key={l.object_id}><Link href={`/crm/leads/${l.object_id}`}>Return to lead and plan follow-up</Link></p>)}
       {["Completed", "Cancelled"].includes(a.status) && a.links.filter(l => l.object_type === "Opportunity").map(l =>
         <p key={l.object_id}><Link className="button" href={`/crm/opportunities/${l.object_id}`}>Return to opportunity and plan follow-up</Link></p>)}
       <button className="secondary" onClick={reload}>

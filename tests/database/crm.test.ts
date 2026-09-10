@@ -649,7 +649,18 @@ test("CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and 
   for (const key of ["revisions", "reviews", "issues", "presentations", "responses"] as const)
     assert.deepEqual(preserved[key], originalReport[key]);
   assert.deepEqual(await rows("SELECT * FROM ppo.business_identities WHERE id=ANY($1::uuid[]) ORDER BY id", [identities.map(x=>x.id)]), identities);
-  assert.deepEqual((await rows("SELECT * FROM ppo.activity_links ORDER BY activity_id,object_type,object_id")).map(row=>Object.fromEntries(Object.entries(row).filter(([key])=>key!=="opportunity_id"))), links);
+  assert.deepEqual(
+    (
+      await rows("SELECT * FROM ppo.activity_links ORDER BY activity_id,object_type,object_id")
+    ).map((row) =>
+      Object.fromEntries(
+        Object.entries(row).filter(
+          ([key]) => key !== "opportunity_id" && key !== "lead_id",
+        ),
+      ),
+    ),
+    links,
+  );
   const i = crmCreate();
   await createOpportunity(p, i);
   await qualifyOpportunity(p, i.id, crmQualify());
