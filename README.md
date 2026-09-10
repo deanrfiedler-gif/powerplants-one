@@ -1,10 +1,10 @@
 # Powerplants One
 
-Private prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance.
+Personal prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance. The repository is public; the application, data and hosted demo remain private and synthetic.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P11 integrated quality implementation; exact delivery publication in its linked handover; P12 prepared only · **Deployment:** Azure demo infrastructure provisioned; app bootstrap pending.
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01–P11 merged; P12 prepared only; PP-01 incomplete · **Deployment:** private Azure demo runs `main` `cb358405` (upgrade-and-deploy, 10 September 2026); owner sign-in check on the new image pending · **Current state:** [docs/STATUS.md](docs/STATUS.md)
 
-This repository is Dean's personal private prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. Integrated Service/Finance verification is in progress; the complete PP-01 acceptance boundary still requires P12. Company ownership, production approval and external-system write authority are not implied.
+This repository is Dean's personal prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. Integrated Service/Finance verification is in progress; the complete PP-01 acceptance boundary still requires P12. Company ownership, production approval and external-system write authority are not implied.
 
 ## Start here
 
