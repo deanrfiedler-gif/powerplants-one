@@ -1,0 +1,61 @@
+name: Azure demo preparation checks
+on:
+  pull_request:
+    paths: ['infra/azure-demo/**', 'src/platform/**', 'src/login/**', 'src/documents/**', 'scripts/demo-*.ts', 'db/demo/**', 'tests/demo/**', 'tests/unit/azure-demo.test.ts', 'tests/unit/login.test.ts', 'package*.json', '.github/workflows/azure-demo-*.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  demo:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: postgres:16.15
+        env:
+          POSTGRES_USER: ppo_local
+          POSTGRES_PASSWORD: ppo_disposable_ci_only
+          POSTGRES_DB: ppo_synthetic_test
+        ports: ['127.0.0.1:5432:5432']
+        options: --health-cmd "pg_isready -U ppo_local -d ppo_synthetic_test" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      PPO_ENV: local-synthetic
+      PPO_EXPOSURE: loopback
+      PPO_IDENTITY: synthetic
+      DATABASE_URL: postgresql://ppo_local:ppo_disposable_ci_only@127.0.0.1:5432/ppo_synthetic_test
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.20.0
+          cache: npm
+      - run: npm install --global npm@11.19.0 && npm ci
+      - run: npm run lint && npm run typecheck && npm run test:unit
+      - name: Verify hosted identity mapping against disposable PostgreSQL
+        run: node --import tsx --test tests/demo/database.test.ts
+      - name: Desktop and phone UI with individual invited actor fixtures
+        run: |
+          python3 - <<'PYENV'
+          import os
+          from pathlib import Path
+          Path('.env.local').write_text('\n'.join(f'{key}={os.environ[key]}' for key in ['PPO_ENV','PPO_EXPOSURE','PPO_IDENTITY','DATABASE_URL']) + '\n')
+          PYENV
+          npx playwright install --with-deps chromium
+          npx playwright test --config=playwright.demo.config.ts --output verification-evidence/demo-integration --reporter=list
+      - name: Retain synthetic integration screenshots
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Private-demo-integration-screenshots
+          path: verification-evidence/demo-integration/**/*.png
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Compile infrastructure without an Azure sign-in
+        run: az bicep build --file infra/azure-demo/main.bicep --outfile /tmp/ppo-demo-template.json
+      - name: Check operator definitions
+        run: python3 -m unittest discover -s tests/demo -p '*_test.py'
+      - name: Build the compiled demo container without cloud credentials
+        run: docker build --file infra/azure-demo/Dockerfile --tag ppo-demo-check .
