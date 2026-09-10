@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import pg from "pg";
 import { transaction } from "../src/platform/database";
 import { migrationFiles, seedFiles, latestMigrationVersion } from "./migration-registry";
-import { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-database";
+import { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-runtime";
 
 const additions = ["crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert",
   "project.read", "project.create", "project.edit"];

@@ -15,3 +15,14 @@ An original Gantt-under-18 checksum or other unknown history fails before any ch
 Verification covers executable deployment-helper failure paths, native PostgreSQL retention/retry/rollback checks in Azure preparation CI, and the existing compiled image build. Local native PostgreSQL installation is unavailable in this executor; native database and image results must come from CI. Live release and invited-user acceptance are separate from code checks and are recorded in the PR/run receipt.
 
 References: [GitHub expression context availability](https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#context-availability), [Azure Container Apps job CLI](https://learn.microsoft.com/en-us/cli/azure/containerapp/job?view=azure-cli-latest), [combined migration decision](leads-projects-integration.md).
+
+
+## 10 September — operator CLI import-cycle repair
+
+Deployment run [34481576319](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34481576319) built and pushed the release but stopped before web/worker rollout. The Azure operator console reported an unsettled top-level await while the CLI dynamically imported `demo-upgrade`. That module imported shared constants and grants back from the awaiting CLI, preventing module evaluation from completing. The upgrade function was never invoked.
+
+Shared workspace/company constants and the unchanged runtime-grant function now live in `scripts/demo-runtime.ts`, which does not import the CLI. Existing CLI exports remain compatible with callers. Migration SQL, transaction boundaries, grant restrictions, invitation limits and runtime security configuration are unchanged.
+
+Two subprocess regression cases launch the operator entry point with both `upgrade` and `verify`. A test-only preload intercepts PostgreSQL connection acquisition before any network access, proving startup reaches the database and the CLI retains sanitized error handling. Both cases reproduced the original exit code 13 and unsettled-await warning before the repair, and pass after it. This startup proof complements the native PostgreSQL upgrade/retention/rollback tests; it does not claim a live database upgrade.
+
+Publication, pinned-runtime CI and a new Azure rollout remain separate evidence recorded in the repair PR.

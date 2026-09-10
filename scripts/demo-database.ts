@@ -7,9 +7,9 @@ import { migrate, seed } from "./database";
 import { transaction, closeDatabase } from "../src/platform/database";
 import { seedTesterMailbox } from "./demo-mailbox";
 import { demoConfig } from "../src/platform/demo-config";
+import { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-runtime";
 
-export const demoWorkspace = "10000000-0000-4000-8000-000000000001";
-export const demoCompany = "20000000-0000-4000-8000-000000000001";
+export { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-runtime";
 export const demoCapabilities = ["shared.read", "shared.internal.read", "activity.read", "activity.edit",
   "crm.opportunity.read", "crm.opportunity.create", "crm.opportunity.edit",
   "crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert", "estimating.read", "estimating.edit",
@@ -84,17 +84,6 @@ async function runtimeRole() {
     // Existing password is retained. Rotation is an explicit operator action.
     await grantRuntimePrivileges(db, c.database_name, role);
   });
-}
-
-export async function grantRuntimePrivileges(db: pg.PoolClient, databaseName: string, role: string) {
-  const name = pg.escapeIdentifier(role);
-  await db.query(`REVOKE ALL ON DATABASE ${pg.escapeIdentifier(databaseName)} FROM PUBLIC`);
-  await db.query(`GRANT CONNECT ON DATABASE ${pg.escapeIdentifier(databaseName)} TO ${name}`);
-  await db.query(`GRANT USAGE ON SCHEMA ppo TO ${name}`);
-  await db.query(`GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA ppo TO ${name}`);
-  await db.query(`GRANT USAGE,SELECT ON ALL SEQUENCES IN SCHEMA ppo TO ${name}`);
-  await db.query(`REVOKE INSERT,UPDATE,DELETE ON ppo.users,ppo.permission_grants,ppo.demo_testers,ppo.seed_receipts FROM ${name}`);
-  await db.query(`REVOKE CREATE ON SCHEMA public FROM PUBLIC`);
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
