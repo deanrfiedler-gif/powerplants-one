@@ -32,3 +32,19 @@ test("shell search and quick add preserve tenant, company and current-grant boun
   assert.deepEqual((await shellSearch(p, { q: input.id })).items, []);
   assert.ok(!(await shellContext(p, {})).actions.some(action => action.id === "opportunity"));
 });
+
+test("Leads participate in shell search and quick add only within current grants", async () => {
+  const { createLead } = await import("../../src/crm/leads/service");
+  const { leadCreate } = await import("../helpers/leads");
+  const p = await principal(), lead = leadCreate();
+  await createLead(p, lead);
+  const query = { q: lead.title };
+  assert.ok((await shellSearch(p, query)).items.some(item => item.href === `/crm/leads/${lead.id}`));
+  assert.ok((await shellContext(p, {})).actions.some(action => action.id === "lead"));
+  for (const profile of ["second-company", "other-workspace", "systems"]) {
+    assert.ok(!(await shellSearch(await principal(profile), query)).items.some(item => item.id === lead.id));
+  }
+  await database().query("DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='crm.lead.read'", [p.workspace_id, p.actor_id]);
+  assert.ok(!(await shellSearch(p, query)).items.some(item => item.id === lead.id));
+  assert.ok(!(await shellContext(p, {})).actions.some(action => action.id === "lead"));
+});

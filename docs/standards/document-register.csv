@@ -97,3 +97,9 @@ CRM-UI-REFINEMENTS,CRM Desktop and Mobile Refinements,docs/decisions/crm-desktop
 CRM-UI-HANDOVER,CRM Refinements Implementation Handover,docs/delivery/crm-refinements-handover.md,r01,Implementation verification in progress,Dean Fiedler - private prototype,fab85c568f8b72dfe19c7ef1dd6195ba1f340d14,,
 PPO-DEMO-INTEGRATION,Private demo integration handover,docs/delivery/demo-email-crm-integration.md,r02,Combined implementation; verification in progress,Dean Fiedler - prototype owner,f8035b5c55251da4da52430adf2f83094feccd6b,,
 PPO-DEMO-INTEGRATION-DEC,Private demo Email and CRM integration,docs/decisions/demo-email-crm-integration.md,r01,Authorised implementation,Dean Fiedler - prototype owner,f8035b5c55251da4da52430adf2f83094feccd6b,,
+PPO-009-LEADS-DEC,Dedicated Leads workspace,docs/decisions/crm-leads-direction.md,r02,UI design approved; implementation pending,Dean Fiedler,f8035b5c55251da4da52430adf2f83094feccd6b,,
+PPO-009-LEADS-DES,Leads workspace and qualification design,docs/blueprints/crm-leads-design.md,r02,UI design approved; implementation contract proposed,Dean Fiedler,f8035b5c55251da4da52430adf2f83094feccd6b,,
+PPO-009-LEADS-PREVIEW,Leads synthetic conversion preview,docs/blueprints/crm-leads-preview.html,r02,Approved UI reference; in-memory synthetic design,Dean Fiedler,f8035b5c55251da4da52430adf2f83094feccd6b,,
+PPO-009-LEADS-IMPL,Manual Leads implementation,docs/decisions/crm-leads-runtime.md,r01,Implementation under verification,Dean Fiedler,f8035b5c55251da4da52430adf2f83094feccd6b,,
+
+PPO-009-LEADS-DESKTOP,Approved desktop Leads interior,docs/blueprints/crm-leads-desktop-preview.html,r04,Approved interaction reference; application integration under verification,Dean Fiedler,6e2951e49f41e2b980da6885357230ef310f8198,,

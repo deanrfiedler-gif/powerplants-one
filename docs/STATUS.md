@@ -208,3 +208,15 @@ Pinned Next.js 16.3.4 requires its development filesystem cache for compiler mem
 ## Email & Calendar first persisted journey — 8 September 2026
 
 Dean accepted the refined r02 design on desktop and mobile and authorised the first working synthetic journey. Implementation uses private seeded correspondence, an explicit opportunity link and an internal Activity persisted in PostgreSQL, shown in opportunity history and the calendar. [ADR-0020](decisions/ADR-0020-email-calendar-synthetic-journey.md) and [implementation handover](delivery/email-calendar-journey-handover.md) record the boundary and verification. The dedicated assurance run passed the desktop/mobile app and exported-demo cases, four PostgreSQL cases, 20 unit checks and database restart proof. PR #62 is merged; the working journey is in PR #64 with final upgrade and broader application assurance tracked there. Automated browser checks and Dean’s visual acceptance are distinct evidence. Microsoft remains disconnected.
+Dean approved the current [Leads UI reference](decisions/crm-leads-direction.md#approved-ui-reference), including the refined Add Lead form, at preview commit `6dd76b22c2cf8348f0b0ee45a158237e86d9816e`. The UI is the accepted implementation reference; application delivery remains pending.
+
+## Manual Leads runtime implementation — 10 September 2026
+
+Dean authorised proceeding from the approved Leads UI to the durable synthetic journey. The isolated `feature/crm-leads` branch adds manual Leads, retained events, follow-up and atomic qualified-deal conversion, with the approved responsive interface. See [implementation decision](decisions/crm-leads-runtime.md). Verification is in progress; no runtime acceptance, merge or deployment is claimed. The standalone approved UI reference is unchanged.
+
+Local Leads verification: lint/typecheck/build and 32 unit tests passed; eight supplemental SQL cases passed on temporary PGlite. Native PostgreSQL and browser/UI acceptance remain pending. GitHub publication of the implementation payload was blocked by automatic approval review, so no runtime PR or deployment is claimed. The exact limitation and required gates are recorded in the implementation decision.
+
+
+## Approved desktop Leads integration — 10 September 2026
+
+Dean approved the final desktop interior, including quiet light dividers and green resize indicators on interaction, and authorised integration. The [implementation decision](decisions/crm-leads-runtime.md#approved-desktop-integration--10-september-2026) records the shell #84 base, preserved phone design, native React/API integration, independent remembered column widths and exact verification limits. The feature remains on its dedicated integration branch pending repository checks; no deployment or production use is claimed.

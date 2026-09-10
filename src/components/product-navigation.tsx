@@ -17,7 +17,7 @@ const matches = (path: string, href: string) => path === href || (href !== "/" &
 function moduleFor(path: string) {
   if (matches(path, "/service") || service.some(([href]) => matches(path, href))) return { name: "Service", tabs: service };
   if (customers.some(([href]) => matches(path, href))) return { name: "Customers", tabs: customers };
-  if (path.startsWith("/crm/")) return { name: "CRM Sales", tabs: [] };
+  if (path.startsWith("/crm/")) return { name: "CRM Sales", tabs: [["/crm/leads","Leads"],["/crm/opportunities","Deals"]] };
   if (matches(path, "/email") || matches(path, "/calendar")) return { name: "Email & Calendar", tabs: [] };
   if (matches(path, "/estimating")) return { name: "Estimating", tabs: [] };
   if (matches(path, "/finance")) return { name: "Finance", tabs: [] };

@@ -58,5 +58,6 @@ test("tester grants are distinct, expiring and limited to Company A commercial j
   for (const value of [[entry, entry], [{ ...entry, expires_at: "2026-09-08T00:00:00Z" }],
     [{ ...entry, expires_at: "2027-01-01T00:00:00Z" }], [{ ...entry, role: "Owner" }], [{ ...entry, object_id: "email@example.invalid" }]])
     assert.throws(() => testerInput(value, now));
+  assert.ok(["crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert"].every(cap => (demoCapabilities as readonly string[]).includes(cap)));
   assert.equal(demoCapabilities.some(c => /finance|service|schedule|pack|report|field/.test(c)), false);
 });
