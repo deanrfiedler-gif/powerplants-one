@@ -120,7 +120,8 @@ test("E1-DB10 current-main upgrade and repeated seed preserve accepted CRM origi
   for(let i=0;i<tables.length;i++){
     const expected=before[i].map(row=>tables[i]==="opportunities"
       ?{...row,value_amount:null,expected_close_date:null,scope_details:{}}
-      :tables[i]==="opportunity_events"?{...row,record_snapshot:null}:row);
+      :tables[i]==="opportunity_events"?{...row,record_snapshot:null}
+      :tables[i]==="activity_links"?{...row,lead_id:null}:row);
     assert.deepEqual(await rows(`SELECT * FROM ppo.${tables[i]} ORDER BY 1`),expected);
   }
   assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version<=10 ORDER BY version"),hashes);assert.deepEqual(await readOperation(p,o.operation_id),accepted.receipt);
