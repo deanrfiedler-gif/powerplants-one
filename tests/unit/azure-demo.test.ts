@@ -7,6 +7,7 @@ import { localConfig } from "../../src/platform/config";
 import { demoRequestAllowed, readCookie, secureCookie } from "../../src/platform/demo-request";
 import { verifiedDemoObject } from "../../src/platform/demo-auth";
 import { testerInput, demoCapabilities } from "../../scripts/demo-database";
+import { operatorFailureCode } from "../../scripts/demo-diagnostics";
 
 const tenant = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
 const env = { NODE_ENV: "production" as const, PPO_ENV: "azure-demo", PPO_EXPOSURE: "https", PPO_IDENTITY: "entra",
@@ -64,6 +65,16 @@ test("tester grants are distinct, expiring and limited to Company A commercial j
   assert.equal(demoCapabilities.some(c => /finance|service|schedule|pack|report|field/.test(c)), false);
 });
 
+test("operator diagnostics allow only fixed labels and never expose exception contents", () => {
+  const secret = "SYN secret credential and SQL detail";
+  assert.equal(operatorFailureCode(new Error(secret)), "unclassified");
+  assert.equal(operatorFailureCode({ message: secret, code: "42501" }), "unclassified");
+  assert.equal(operatorFailureCode(Object.assign(new Error(secret), { code: secret })), "unclassified");
+  assert.equal(operatorFailureCode(Object.assign(new Error(secret), { code: "42501", detail: secret, query: secret })), "postgres-42501");
+  assert.equal(operatorFailureCode(Object.assign(new Error(secret), { code: "ENOTFOUND" })), "connection-ENOTFOUND");
+  assert.equal(operatorFailureCode(new Error("Existing hosted identity migration must match.")), "identity-history-mismatch");
+});
+
 for (const operation of ["upgrade", "verify"]) {
   test(`operator CLI ${operation} loads and reaches the database without an import deadlock`, () => {
     const result = spawnSync(process.execPath, ["--import", "tsx", "--import",
@@ -76,6 +87,7 @@ for (const operation of ["upgrade", "verify"]) {
     assert.equal(result.status, 1, result.stderr);
     assert.match(result.stdout, /SYN_OPERATOR_DATABASE_REACHED/);
     assert.match(result.stderr, /Demo database operation failed; no credentials or SQL printed/);
+    assert.match(result.stderr, /Operator failure code: unclassified/);
     assert.doesNotMatch(result.stderr, /unsettled top-level await|SYN operator probe stops|fictional/);
   });
 }
