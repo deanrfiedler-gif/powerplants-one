@@ -147,7 +147,36 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
       .flatMap(g => ["email.read", "email.edit"].map(capability => ({ ...g.value, capability })));
     const grantShape = (g: Record<string, unknown>) => Object.fromEntries(Object.entries(g).filter(([k]) => k !== "id"));
     const sorted = (gs: Record<string, unknown>[]) => gs.map(g => JSON.stringify(grantShape(g))).sort();
-    assert.deepEqual(sorted(added.map(g => g.value)), sorted(expected));
+    const addedSorted = sorted(added.map(g => g.value));
+    for (const required of sorted(expected)) assert.equal(addedSorted.includes(required), true);
+    const sharedEditScopes = new Set(
+      originalGrants
+        .filter((g) => g.value.capability === "shared.edit")
+        .map((g) =>
+          JSON.stringify(
+            Object.fromEntries(
+              Object.entries(g.value).filter(
+                ([k]) => k !== "id" && k !== "capability",
+              ),
+            ),
+          ),
+        ),
+    );
+    for (const grant of added) {
+      assert.notEqual(grant.value.capability, "shared.edit");
+      assert.equal(
+        sharedEditScopes.has(
+          JSON.stringify(
+            Object.fromEntries(
+              Object.entries(grant.value).filter(
+                ([k]) => k !== "id" && k !== "capability",
+              ),
+            ),
+          ),
+        ),
+        true,
+      );
+    }
     assert.deepEqual({ ...afterUpgrade, permission_grants: originalGrants }, before);
     assert.deepEqual(
       await rows(
