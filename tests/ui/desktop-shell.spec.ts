@@ -46,7 +46,7 @@ test("global search is independent of page filtering, keyboard selection and qui
   const search = page.getByRole("combobox", { name: "Search Powerplants One" });
   await page.keyboard.press("Control+k"); await expect(search).toBeFocused();
   await search.fill("upgrade");
-  const options = page.getByRole("option"); await expect(options).toHaveCount(2);
+  const options = page.locator("#shell-search-list").getByRole("option"); await expect(options).toHaveCount(2);
   await search.press("ArrowUp"); await expect(options.last()).toHaveAttribute("aria-selected", "true");
   await search.press("ArrowDown"); await expect(options.first()).toHaveAttribute("aria-selected", "true");
   await expect(page.getByLabel("Search opportunities", { exact: true })).toHaveValue("");
@@ -64,7 +64,7 @@ test("global search is independent of page filtering, keyboard selection and qui
 });
 test("identity lock clears results and rejects a late response even if transport ignores abort", async ({ page }) => {
   const search = page.getByRole("combobox", { name: "Search Powerplants One" });
-  await search.fill("upgrade"); await expect(page.getByRole("option")).toHaveCount(2);
+  await search.fill("upgrade"); await expect(page.locator("#shell-search-list").getByRole("option")).toHaveCount(2);
   await page.evaluate(() => {
     const original = window.fetch;
     window.fetch = (input, init) => String(input).includes("/shell/search") ? new Promise(resolve => {
@@ -79,5 +79,5 @@ test("identity lock clears results and rejects a late response even if transport
   await page.evaluate(() => (window as unknown as { resolveShellSearch: () => void }).resolveShellSearch());
   await search.focus();
   await expect(page.getByText("SYN Late private result", { exact: true })).toHaveCount(0);
-  await expect(page.getByRole("option")).toHaveCount(0);
+  await expect(page.locator("#shell-search-list").getByRole("option")).toHaveCount(0);
 });

@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { beforeEach, after, test } from "node:test";
+import { beforeEach, afterEach, after, test } from "node:test";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
@@ -11,7 +11,8 @@ import { crmCreate } from "../helpers/crm";
 if (localConfig().database_name !== "ppo_synthetic_test") throw Error("Only disposable ppo_synthetic_test");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
 process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
-beforeEach(reset); after(closeDatabase);
+// Restore revoked grants before subsequent browser suites reuse this disposable database.
+beforeEach(reset); afterEach(reset); after(closeDatabase);
 const principal = async (profile = "coordinator") => (await createSession(profile)).principal;
 
 test("shell search and quick add preserve tenant, company and current-grant boundaries", async () => {

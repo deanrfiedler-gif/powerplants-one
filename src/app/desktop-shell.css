@@ -30,7 +30,7 @@
   .ppo-more-link small { margin-left: auto; font-size: 11px; }
   .ppo-more-link:is(:hover,[aria-current=page]) { background: #edf2f7; color: #242a37; }
   .ppo-more-panel > footer { padding: 12px 24px; border-top: 1px solid #e2e6ec; font-size: 11px; color: #667181; }
-  .topbar.ppo-shell-header, body:has(.crm-workspace) .topbar.ppo-shell-header { position: relative; display: grid; grid-template-columns: minmax(115px, 1fr) minmax(260px, 530px) auto auto; align-items: center; gap: 20px; height: 64px; min-height: 64px; padding: 0 28px; background: white; border-bottom: 1px solid #e2e6ec; overflow: visible; z-index: 60; }
+  .topbar.ppo-shell-header, body:has(.crm-workspace) .topbar.ppo-shell-header { position: relative; display: grid; grid-template-columns: minmax(115px, 1fr) minmax(260px, 530px) minmax(88px, 1fr) auto; align-items: center; gap: 20px; height: 64px; min-height: 64px; padding: 0 28px; background: white; border-bottom: 1px solid #e2e6ec; overflow: visible; z-index: 60; }
   .ppo-shell-header .product-heading { gap: 12px; min-width: 0; font-size: 15px; }
   .ppo-shell-header .product-heading strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .ppo-shell-controls { display: contents; }
@@ -42,7 +42,7 @@
   .ppo-global-search:focus-within { outline: 2px solid #075bb5; outline-offset: 2px; }
   .ppo-global-search input::placeholder { color: #667181; }
   .ppo-global-search kbd { padding: 4px 5px; border: 1px solid #e2e6ec; border-radius: 4px; color: #667181; white-space: nowrap; font-size: 11px; font-family: inherit; }
-  .ppo-header-utilities { display: flex; align-items: center; gap: 8px; }
+  .ppo-header-utilities { display: flex; justify-content: flex-end; align-items: center; gap: 8px; }
   .ppo-top-action { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; min-height: 0; flex-shrink: 0; margin: 0; padding: 0; background: transparent; border: 0; border-radius: 50%; color: #636f80; }
   .ppo-top-action .product-icon { width: 23px; height: 23px; }
   .ppo-top-action:is(:hover,[aria-expanded=true]) { background: #eef1f5; color: #242a37; }
@@ -55,7 +55,7 @@
   .ppo-shell-header:has(#header-account:not(:empty)) .ppo-account-fallback { display: none; }
   .ppo-shell-header .header-tools { grid-column: 4; grid-row: 1; }
   .ppo-shell-header:not(:has(#header-account:not(:empty))) .header-tools { border: 0; padding: 0; }
-  .ppo-header-panel { position: absolute; top: 72px; right: 20px; z-index: 80; width: 380px; max-width: calc(100vw - 124px); max-height: calc(100dvh - 90px); overflow-y: auto; overscroll-behavior: contain; border: 1px solid #dde3ea; border-radius: 10px; background: white; color: #242a37; box-shadow: 0 12px 38px #1c2c4726; font-size: 14px; overflow-wrap: anywhere; }
+  .ppo-header-panel { position: fixed; top: 72px; right: 20px; z-index: 80; width: 380px; max-width: calc(100vw - 124px); max-height: calc(100dvh - 90px); overflow-y: auto; overscroll-behavior: contain; border: 1px solid #dde3ea; border-radius: 10px; background: white; color: #242a37; box-shadow: 0 12px 38px #1c2c4726; font-size: 14px; overflow-wrap: anywhere; }
   .ppo-search-panel { width: 550px; right: 190px; }
   .ppo-quick-panel { width: 330px; right: 150px; }
   .ppo-header-panel > header { position: sticky; top: 0; z-index: 1; }

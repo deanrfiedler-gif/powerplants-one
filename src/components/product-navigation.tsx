@@ -44,13 +44,20 @@ function ProductNavigationView({ path, wide }: { path: string; wide: boolean }) 
   const [more, setMore] = useState(false);
   const [tip, setTip] = useState<{ label: string; top: number } | null>(null);
   const morePanel = useRef<HTMLElement>(null), moreToggle = useRef<HTMLButtonElement>(null);
+  const tipTarget = useRef<HTMLElement | null>(null);
   const tipTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const showTip = (label: string, target: HTMLElement) => {
     if (tipTimer.current) clearTimeout(tipTimer.current);
+    tipTarget.current = target;
     const rect = target.getBoundingClientRect();
     setTip({ label, top: Math.max(8, Math.min(window.innerHeight - 42, rect.top + rect.height / 2 - 18)) });
   };
-  const hideTip = () => { tipTimer.current = setTimeout(() => setTip(null), 160); };
+  const hideTip = () => {
+    if (tipTimer.current) clearTimeout(tipTimer.current);
+    tipTimer.current = setTimeout(() => {
+      if (!tipTarget.current?.matches(":hover,:focus-visible") && !document.getElementById("shell-nav-tooltip")?.matches(":hover")) setTip(null);
+    }, 160);
+  };
   useEffect(() => {
     if (more) morePanel.current?.querySelector<HTMLButtonElement>("button")?.focus();
   }, [more]);
