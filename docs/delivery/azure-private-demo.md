@@ -1,6 +1,6 @@
 # Azure private demo deployment
 
-**Document ID:** PPO-DEMO-RUNTIME · **Revision:** r05 · **Date:** 9 September 2026 · **Owner:** Dean Fiedler · **State:** Core infrastructure and uploaded image confirmed; database-create CLI correction prepared; app acceptance pending.
+**Document ID:** PPO-DEMO-RUNTIME · **Revision:** r06 · **Date:** 10 September 2026 · **Owner:** Dean Fiedler · **State:** GitHub runner update workflow prepared; live deployment prerequisites and app acceptance remain unverified.
 
 **Latest owner-run result:** Docker build/push succeeded for source `5ce4d20f6d897ed2e9e9da9496130c2bb706a0cd`. Cloud Shell resolved `ppodemo90deea5d.azurecr.io/ppo-demo@sha256:3b5744dd9830449fc4e5ce0f3dc102c0f0f455e6a2358a36b3b00865a09ae4dd`, then failed at database creation. The operator used `--database-name`, while Azure's `postgres flexible-server db create` requires `--name`. The [database argument correction](#database-create-argument-correction) lets the owner update the deployment helper and reuse that existing image. Earlier ACR-rejection statements below describe the preceding attempt.
 
@@ -164,7 +164,7 @@ python3 infra/azure-demo/ppo_operator.py bootstrap ../ppo-demo-settings.local.js
 
 `git status --short` must be empty. The new command uses the renamed script, so it needs no `-P`. By default it looks up only `ppo-demo:<current HEAD>` in the registry recorded in the existing deployment outputs, validates its SHA-256 digest and uses the same digest for operator, worker and web. The explicit `--image-commit` option below allows a reviewed ancestor image after a helper-only correction. Missing/inaccessible images stop before database/storage mutations. A matching tag is an operator-controlled source convention, not independent attestation of image contents; the clean checkout and recorded build commit remain essential. Bootstrap still runs the same database setup, access reconciliation and private storage steps. It does not silently fall back to ACR Tasks.
 
-Local verification: all 16 operator tests pass, including existing-image lookup, normal build behaviour, rejection of malformed/missing digests, refusal before downstream mutations, option/action validation, ancestor image selection, Azure's documented database argument contract and secret-safe error messages. Cloud push and digest resolution are now confirmed by the owner's output; resumed database creation and downstream deployment remain unverified. The routine GitHub update workflow still uses ACR Tasks; this alternative covers initial bootstrap and explicitly requested operator bootstrap/reset runs. Do not use bootstrap for ordinary UI updates.
+Local verification: all 16 operator tests pass, including existing-image lookup, normal build behaviour, rejection of malformed/missing digests, refusal before downstream mutations, option/action validation, ancestor image selection, Azure's documented database argument contract and secret-safe error messages. Cloud push and digest resolution are now confirmed by the owner's output; resumed database creation and downstream deployment remain unverified. The routine GitHub update workflow now uses Docker on its GitHub runner (section 6); this Docker Desktop alternative covers initial bootstrap and explicitly requested operator bootstrap/reset runs. Do not use bootstrap for ordinary UI updates.
 
 ### Database-create argument correction
 
@@ -200,13 +200,58 @@ Entries omitted from this list are disabled and their sessions removed; retained
 
 ## 6. Routine app updates
 
-Continue editing locally. Merge reviewed changes normally; run the full regression when its applicable checks require it. A deployment is needed only when you want colleagues to see a new hosted version.
+The manually dispatched [update workflow](../../.github/workflows/azure-demo-deploy.yml) builds Docker images on GitHub's Ubuntu runner and pushes to the existing private Azure Container Registry. It no longer invokes ACR Tasks, the service that returned `TasksOperationsNotAllowed`. The app remains on Azure Container Apps. Merging a PR does not deploy it. No Docker Desktop session is required for routine updates after this workflow is available on main.
 
-For GitHub updates, create **a separate** managed identity `id-ppo-demo-github-deploy`, with the same verified GitHub issuer/audience/immutable environment subject as the Reader connection. Assign **Contributor on rg-ppo-demo-aue only** for this bounded first deployment workflow (covers the reviewed app/job update and ACR build operations). Keep its trust restricted to the `ppo-demo` environment/main. Do not broaden or replace the Reader identity. Contributor cannot assign roles; bootstrap remains the owner's action.
+### One-time prerequisites
 
-Add environment secret **AZURE_DEMO_DEPLOY_CLIENT_ID** with this new identity's Client ID. Add environment variable **PPO_DEMO_SUFFIX** with the generated settings `suffix`. Retain the existing subscription/tenant secrets and resource-group variable. Then use **Actions → Update Azure private demo → Run workflow → main**. Its summary gives the URL and source SHA. This workflow changes images and checks anonymous access is refused; it does not run database migrations, seeds, resets or grant testers access. If a change adds migrations, complete its explicit operator migration procedure before updating the app.
+Retain the separate deployment identity `id-ppo-demo-github-deploy`, with the same verified issuer/audience/immutable environment subject as the [Reader connection](azure-demo-connection.md#4-link-the-identity-to-this-github-environment). Its documented initial assignment is Contributor on **rg-ppo-demo-aue only**, for existing app/job updates and registry access. Do not replace or broaden the Reader identity. The identity needs registry push/pull and web/job update rights; check the registry's actual RBAC/ABAC permission mode if access fails. Successful registry login or read access alone does not prove push rights. This change creates no identities, role assignments, federated credentials or GitHub settings.
 
-For an image rollback, use **Container App → Revisions and replicas** to restore the recorded previously working revision and restore the worker's matching image tag. Verify compatibility with the current database first. Image rollback does not undo schema/data changes. Do not use the infrastructure provision command for ordinary UI refinements.
+In **Settings → Environments → ppo-demo**, verify:
+
+| Setting | Required value/source |
+|---|---|
+| Deployment branches and tags | Selected branch `main` only; retain the existing restriction |
+| Secret `AZURE_DEMO_DEPLOY_CLIENT_ID` | Deployment identity Client ID, distinct from the Reader Client ID |
+| Secret `AZURE_TENANT_ID` | Existing verified demo tenant |
+| Secret `AZURE_SUBSCRIPTION_ID` | Existing verified PPO Prototype Demo subscription |
+| Variable `AZURE_RESOURCE_GROUP` | `rg-ppo-demo-aue` |
+| Variable `PPO_DEMO_SUFFIX` | `90deea5d` for the existing owner-provisioned demo |
+
+Initial bootstrap must have completed: `ca-ppo-demo-90deea5d`, `job-ppo-worker-90deea5d` and the registry repository must exist. The web app must retain its Single revision mode. The workflow refuses missing resources or changed revision mode and creates neither. The latest recorded bootstrap failure is historical evidence, not proof of current live state.
+
+### Check the connection before releasing
+
+1. After this PR is merged, open **Actions → Update Azure private demo → Run workflow**.
+2. Select branch **main**, choose operation **check** (the default), then run it.
+3. Inspect its summary and any failed step. It verifies configured ID formats, deployment identity sign-in, the exact active subscription/tenant, registry metadata, existing web/worker image references, Single revision mode, and registry authentication/read access.
+4. Retain the run URL. Check mode builds/pushes no image, changes no Azure resource and touches no application data. Authentication creates temporary credentials only on the runner; these are removed afterwards. It cannot verify IAM write permissions without exercising writes, database compatibility, Entra tester access or business acceptance.
+
+A missing deployment identity secret is a setup failure, not an ACR build error. If resources are absent, finish the separately authorised initial bootstrap; do not use routine updates to create them. If registry authentication is denied, inspect the deployment identity's actual permissions and federation before proposing any permission change.
+
+### Release a reviewed update
+
+1. Merge the intended changes into main and confirm the applicable checks passed for the selected source. This workflow does not run the full application regression or automatically establish release acceptance.
+2. Compare the deployed source with the proposed release for database/runtime requirements. This is an **image-only** update. It does not inspect the live database, run migrations, seed data, change the epoch, reconcile testers or update the operator job. The existing operator offers setup/testers operations, not a standalone routine migration action. If new migrations or runtime configuration are needed, prepare and verify that explicit release procedure first; do not substitute bootstrap or local `db:reset` for it.
+3. Open the same workflow, choose **main** and operation **deploy**. It builds the selected run's full source commit for Linux/amd64, with a source label. Tags include source SHA, run ID and attempt so repeated runs do not overwrite the same tag. Docker build/push failures stop before any app update.
+4. The workflow resolves the pushed image to a validated SHA-256 digest and updates the web app. It waits for the latest revision to be ready, healthy and using that exact digest; an old healthy revision cannot pass the check. It then configures the worker with the same digest and verifies the saved worker image.
+5. The HTTPS health endpoint must return 200 and the anonymous CRM API must return 401, without following redirects. The summary records source SHA, new digest, previous web/worker image references and the existing app URL.
+6. Sign in with an invited account, exercise the changed screen, verify an existing saved record and a new save/reload, and check draft output. Check a scheduled worker execution separately. Updating its configuration is not evidence of a completed worker run, and `/healthz` is not a database or sign-in acceptance check.
+
+The selected source is the commit recorded on the workflow run, not necessarily a later main head. Keep that run URL as the deployment receipt. Deployment still uses GitHub runner minutes and ordinary registry/storage/compute usage; removing ACR Tasks is not a claim of zero cost.
+
+### Failure and rollback
+
+Build or push failure leaves app images unchanged. A web readiness failure does not advance the worker. A later worker or smoke-check failure can leave a partial update; the summary explicitly says deployment did not complete. Inspect both actual images and the failed step before retrying. No automatic rollback is attempted and existing scheduled worker executions may finish using the old image.
+
+For an image rollback, restore the recorded previously working web revision using **Container App → Revisions and replicas**, and restore the worker's recorded prior image. Confirm database compatibility first. Image rollback does not undo schema/data changes. Do not use infrastructure provisioning or reset for ordinary UI refinements.
+
+### Verification of this change — 10 September 2026
+
+Inspected main `1de7821a380514712e93babd4766fc32a62f76e9` and its tree `33d9845204506acf8825e5d4d1a67d358c24791f`. Available manual GitHub run history includes the successful Reader connection check but no execution of the update workflow. The connector does not expose environment secrets/settings or a live Azure session; actual deployment identity configuration, IAM, registry access and current app readiness remain unverified. No Azure deployment or permission change was executed in preparing this change.
+
+Local verification: 26 Python cases pass, including the existing 16 operator cases, five revision cases and five executable build-shell/syntax cases. Tests exercise build/push failure stopping, invalid digest rejection, run-specific image selection and refusal of old/unhealthy revisions. Foundation, prototype and naming checks pass. Docker/Azure CLI are unavailable locally; actual image build is covered by the existing Azure demo preparation CI job after publication. Mocks and syntax checks do not establish live Azure success. Final PR checks and publication are recorded in the linked PR, separately from the first authenticated check/deploy run.
+
+Primary references reviewed 10 September 2026: [Microsoft Docker build/push](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-get-started-docker-cli), [registry identity permissions](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-authentication-managed-identity), [Container Apps revisions](https://learn.microsoft.com/en-us/azure/container-apps/revisions), [revision CLI](https://learn.microsoft.com/en-us/cli/azure/containerapp/revision#az-containerapp-revision-show).
 
 ## 7. Reset and retirement
 
