@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs=require('node:fs');
 const path=require('node:path');
 const {create}=require('./quotation-builder-control-shim.cjs');
-const root=path.resolve(__dirname,'../..');
 const html=fs.readFileSync(path.join(__dirname,'quotation-builder.html'),'utf8').replace('<script src="quotation-builder.js"></script>','<script>'+fs.readFileSync(path.join(__dirname,'quotation-builder.js'),'utf8')+'</script>');
 const dom=create(html);
 const w=dom.window,d=w.document;

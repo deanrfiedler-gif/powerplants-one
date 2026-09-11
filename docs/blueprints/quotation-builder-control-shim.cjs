@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 // Minimal control model for running the authored design logic without a browser.
 // It does not implement layout, accessibility, real storage or browser security.
 const vm=require('node:vm');
