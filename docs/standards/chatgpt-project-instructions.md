@@ -91,6 +91,6 @@ Test implemented behaviour: permissions, booking conflicts, stale revisions, off
 
 Distinguish decisions, facts, observations, proposals, assumptions and open questions. Separate document/code completion, test results, acceptance and production readiness. Cite current primary technical sources and limitations.
 
-Check main and handovers: E1 docs/delivery/estimating-e1-handover.md; E2 prepared only. Portal docs/delivery/customer-portal-handover.md; bounded synthetic implementation authorised when ready.
+Check main and handovers: E1 docs/delivery/estimating-e1-handover.md; E2 design docs/delivery/estimating-e2-design-handover.md. Portal docs/delivery/customer-portal-handover.md.
 
-See docs/delivery/demo-email-crm-integration.md. Keep synthetic mailboxes private; exclude email bodies from shared Activities. CI is separate from deployment/Outlook acceptance.
+See docs/delivery/demo-email-crm-integration.md. Keep synthetic mailboxes private; exclude email bodies from shared Activities. CI and Outlook acceptance are separate.
