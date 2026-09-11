@@ -7,6 +7,9 @@ This file is a snapshot of the current state, kept short enough to read in one s
 ## 1. Stage in one paragraph
 
 Powerplants One is Dean's personal synthetic prototype of a seven-domain operations platform. The PP-01 planned-service journey (P01–P11) is implemented and merged; P12 (recovery, restore and owner demonstration) is prepared only, so **PP-01 is not complete**. Bounded slices of CRM, Estimating, Projects and Email/Calendar are merged alongside it. A private Azure demo runs the current `main`. MYOB Acumatica, SharePoint, Pipedrive, Smartsheet and native CAD retain their operational roles; every external interface in the application is a simulated adapter. Company ownership, production approval and external write authority are not implied by anything below.
+9 September guided estimating: Dean authorised the first supply-and-installation wizard design. The [synthetic sensor-package design](blueprints/estimating-wizard-design.md) and [clickable preview](blueprints/estimating-wizard-mockup.html) show requirements, generated costs, estimator labour adjustment, protected rerun and a customer-safe quotation draft. The [decision/handover](decisions/estimating-wizard-pilot.md) records exact source and verification. This is design only; E1 runtime remains manual, no E2/E5 implementation or operational formula approval is implied, and issue #10 / existing EA/AT statuses remain open.
+
+9 September Azure connection correction: the [setup guide r02](delivery/azure-demo-connection.md) adds the numeric GitHub owner/repository IDs and corrects the expected federated subject to GitHub's immutable format for this newly created repository. The earlier name-only subject is superseded. Metadata and documented default-format verification do not establish a successful Azure login; live connection execution remains pending.
 
 ## 2. Baseline, verification and hosting
 
