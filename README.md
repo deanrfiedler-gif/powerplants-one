@@ -23,6 +23,7 @@ This repository is Dean's personal prototype. It contains the planning foundatio
 | [CRM I1 handover](docs/delivery/crm-i1-handover.md) | Bounded owned opportunity implementation and actual verification/publication |
 | [CRM I2 handover](docs/delivery/crm-i2-handover.md) | Scoped Board/Grid worklist, shared brand, actual runtime evidence and external publication |
 | [Customer portal design](docs/delivery/customer-portal-handover.md) | Customer roles, support/publication contracts, clickable walkthrough and bounded CP1–CP5 readiness |
+| [Private Prototype Demo package](docs/delivery/private-prototype-demo.md) | Three online demonstration journeys, fictional data recipe, tester access proposal, itemised hosting estimate and deployment/reset runbooks; hosting not implemented |
 | [First-release plan](docs/delivery/first-release.md) | Proposed planned-service journey, dependencies and readiness criteria |
 | [Projects discovery and design](docs/delivery/projects-discovery-handover.md) | BP-06 source assessment, first-increment contract and project list/detail designs; J1 prepared only |
 | [Email & Calendar design](docs/blueprints/email-calendar-integration.md) | Synthetic inbox, record linking, privacy, agenda and first read-only Microsoft pilot preparation |

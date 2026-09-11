@@ -2,7 +2,7 @@
 
 Revision: r01 · Date: 10 September 2026 · Owner: Dean Fiedler
 
-Status: Implemented and checked locally; public repository publication blocked by automatic approval review.
+Status: Implemented and checked locally; the initial automatic approval block is historical, and later user-authorised publication remains tracked separately from this decision note.
 
 ## Decision and scope
 

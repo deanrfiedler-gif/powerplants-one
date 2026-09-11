@@ -196,3 +196,7 @@ If any response is lost, record OutcomeUnknown and query supported target/correl
 | EST-09 | One-off identity and unknown-outcome reconciliation; section 11 | E6; EA-13/14, AT-05 |
 
 All EA/AT implementation procedures remain Not run/Planned. The calculation oracle and visual preview checks are design verification only. Business approval, source parity, whole-domain completion and operational readiness are separate. D-009/D-010 and issue #10 remain open pending the evidence/acceptance in the [gap register](estimating-evidence.md#4-open-evidence-and-decisions).
+
+## E2 design continuation — 9 September 2026
+
+The [E2 decision package](../decisions/estimating-e2-rules.md), [detailed design](estimating-e2-design.md) and [receiving contract](../contracts/estimating-e2-design.md) now make the synthetic G02/G03/G04 choices reviewable. These candidate rules deliberately require known service prepayment and permit Draft-only alternatives, with their differences from the guide recorded explicitly. Policy adoption and runtime implementation remain pending. The original general BP-04 proposal and source dispositions above remain historical context; E1 actual delivery is governed by its handover/publication.
