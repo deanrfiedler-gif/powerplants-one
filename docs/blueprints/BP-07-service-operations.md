@@ -44,6 +44,11 @@ The system distinguishes reported symptoms, suspected causes, attempted fixes, v
 
 ## 2. Navigation and visual design requirements
 
+### Approved full Job Pack presentation — 10 September 2026
+
+Dean has approved the audited full-page Job Pack r02. The [approval decision](../decisions/job-pack-design.md) and [exact HTML baseline](../reference/ui/job-pack/powerplants-one-job-pack-r02.html) now govern the SC-06 presentation: nine pack sections, guided preparation, revision history, source-aware readiness and print choices, with 24 px desktop / 16 px mobile outer padding. The full page continues from a selected job's Job pack drawer section using the existing canonical pack identity. This is design acceptance; the original audit's browser/print checks and application integration remain separate. Existing P06 commands, exact sources, issue/acknowledgement, dispatch and work-authority guards remain authoritative.
+
+
 Initial navigation: **My Work, Customers & Sites, Service Requests, Work Orders, Schedule, My Jobs, Finance Handoffs, Documents, Administration**. Menu visibility follows permissions; hidden navigation is not a server security control. Future module names must not appear as working features until there is usable functionality.
 
 Use one visual system: readable typography, consistent spacing, restrained colour, clear data hierarchy, labelled status chips, accessible forms and a persistent record context header. Record headers show customer/site, primary identity, operational state, owner, current revision and the next permitted action. A secondary information area shows history, related records and source-as-at. Show an obvious synthetic-environment label without placing implementation jargon in ordinary task flows.
