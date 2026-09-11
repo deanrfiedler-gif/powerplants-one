@@ -116,6 +116,7 @@ Dean accepted the [Engineering r02 container](../reference/engineering-r02/PPO-E
 ## Accepted Service Job Pack r02
 
 Dean accepted the [full Job Pack design](../decisions/job-pack-design.md) on 10 September 2026. Preserve its internal-container presentation, 24 px desktop / 16 px mobile outer padding, original embedded Roboto, navy primary actions, green active-tab marker, white panels and compact record context. Its nine-section pack, Preparation and Revision history views extend the approved Service direction. These specific Job Pack rules supersede the earlier generic 20 px / 12 px gutter proposal for this page only. Use the exact linked r02 baseline when integrating; design acceptance does not establish browser, print or application acceptance.
+
 ## Approved Service field-operations container
 
 [Field Technicians r04](../decisions/field-technicians-design.md) is Dean’s accepted presentation baseline for `/service/technicians`. Preserve its 24 px desktop / 16 px phone outer padding, white bordered workspace, compact Roboto table typography, green selected-tab underline and four-tab right drawer inside the shared application shell. Do not duplicate global navigation or the logo. The [handover](../delivery/field-technicians-handover.md) records bounded data adaptations and verification status.

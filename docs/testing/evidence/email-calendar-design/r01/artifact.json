@@ -1,5 +1,6 @@
 {
   "revision": "r01",
+  "superseded_by": "../r02/artifact.json",
   "base_commit": "b3597f79413f87b9b2f1ce75a66a2addefbb0e34",
   "standalone_filename": "ppo-email-calendar-prototype.html",
   "bytes": 874596,

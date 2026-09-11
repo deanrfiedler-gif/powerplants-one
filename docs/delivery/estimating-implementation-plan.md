@@ -42,3 +42,7 @@ D-009/D-010 do not close because a synthetic slice works. Accepted production fo
 ## 4. Subsequent E1 invocation
 
 Dean's later “Proceed” and “Continue” supply the bounded E1 authority and sequencing decision described above. [ADR-0017](../decisions/ADR-0017-estimating-e1.md) adopts the manual synthetic policy; [E1 handover](estimating-e1-handover.md) records implementation, observed component evidence and the authoritative final publication link for issue #46 / PR #49. The approved design is merged and verified. [E2 starter](estimating-e2-starter.md) prepares the next bounded task only; route precedence, option locks and questionnaire compatibility must be resolved for its chosen synthetic scope when separately invoked. The original discovery boundary remains historical evidence, not a request to re-authorise already instructed E1 work.
+
+## E2 design invocation — 9 September 2026
+
+Dean has invoked the bounded design and rules step. [E2-D01–03](../decisions/estimating-e2-rules.md) and the [design handover](estimating-e2-design-handover.md) replace the earlier prepared-only status for design. They do not yet resolve operational G02/G03/G04 or authorise runtime implementation without adoption of the concrete synthetic policy package. E3–E6 remain unchanged.

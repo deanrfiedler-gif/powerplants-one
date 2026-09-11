@@ -1,0 +1,433 @@
+{
+  "document_id": "PPO-DEMO-COST",
+  "revision": "r01",
+  "date": "2026-09-07",
+  "status": "Planning estimate; no purchase or subscription quote",
+  "source_commit": "923bd9b90412c80782331b7085a6880750f12640",
+  "region": "australiaeast",
+  "price_basis": "Public USD Consumption retail meters retrieved 2026-09-07; no reservations or free grants deducted.",
+  "currency_conversion": {
+    "aud_per_usd": "1.50",
+    "status": "Explicit planning assumption, not a current exchange-rate quote"
+  },
+  "tax_basis": "All estimates exclude GST and other applicable taxes; tax-inclusive illustration uses 10% only.",
+  "sizing": {
+    "invited_testers": 5,
+    "peak_concurrent_users": 3,
+    "web_vcpu": 1,
+    "web_memory_gib": 2,
+    "web_min_replicas": 1,
+    "web_max_replicas": 1,
+    "active_hours": 120,
+    "idle_hours": 610,
+    "worker_hours": 5,
+    "database": "B1MS, PostgreSQL 16 compatible patch, no HA",
+    "availability": "Best effort; no production SLA"
+  },
+  "lines": [
+    {
+      "component": "Web active CPU",
+      "quantity": "432000",
+      "unit": "1 Second",
+      "unit_price_usd": "3.4e-05",
+      "meter_id": "013772f8-63db-52a2-9c69-f2ae9012ef09",
+      "subtotal_usd": "14.688000",
+      "assumption": "One replica; 1 vCPU; 120 active hours/month."
+    },
+    {
+      "component": "Web active memory",
+      "quantity": "864000",
+      "unit": "1 GiB Second",
+      "unit_price_usd": "4e-06",
+      "meter_id": "c35c8b99-9953-57cc-a67f-75365d560cb5",
+      "subtotal_usd": "3.456000",
+      "assumption": "2 GiB; 120 active hours/month."
+    },
+    {
+      "component": "Web idle CPU",
+      "quantity": "2196000",
+      "unit": "1 Second",
+      "unit_price_usd": "4e-06",
+      "meter_id": "d8b5c482-6b8b-5cd9-baea-9bba06a00b27",
+      "subtotal_usd": "8.784000",
+      "assumption": "1 vCPU; 610 idle hours/month; total month 730 hours."
+    },
+    {
+      "component": "Web idle memory",
+      "quantity": "4392000",
+      "unit": "1 GiB Second",
+      "unit_price_usd": "4e-06",
+      "meter_id": "53c781b2-7598-580c-86ac-d0563f272ed8",
+      "subtotal_usd": "17.568000",
+      "assumption": "2 GiB; 610 idle hours/month."
+    },
+    {
+      "component": "Worker CPU",
+      "quantity": "18000",
+      "unit": "1 Second",
+      "unit_price_usd": "3.4e-05",
+      "meter_id": "013772f8-63db-52a2-9c69-f2ae9012ef09",
+      "subtotal_usd": "0.612000",
+      "assumption": "1 vCPU; 5 aggregate job hours/month; no permanently running poller."
+    },
+    {
+      "component": "Worker memory",
+      "quantity": "36000",
+      "unit": "1 GiB Second",
+      "unit_price_usd": "4e-06",
+      "meter_id": "c35c8b99-9953-57cc-a67f-75365d560cb5",
+      "subtotal_usd": "0.144000",
+      "assumption": "2 GiB; 5 aggregate job hours/month."
+    },
+    {
+      "component": "Requests",
+      "quantity": "0.1",
+      "unit": "1M",
+      "unit_price_usd": "0.4",
+      "meter_id": "02f3fee4-2c9c-53f1-b98d-49eb425e0cf6",
+      "subtotal_usd": "0.04",
+      "assumption": "100,000 requests; free grant not deducted."
+    },
+    {
+      "component": "PostgreSQL compute",
+      "quantity": "730",
+      "unit": "1 Hour",
+      "unit_price_usd": "0.026",
+      "meter_id": "11d339d1-2ed1-5e21-85bd-2349157adfa5",
+      "subtotal_usd": "18.980",
+      "assumption": "Burstable B1MS; continuously provisioned; no HA or replica."
+    },
+    {
+      "component": "PostgreSQL storage",
+      "quantity": "32",
+      "unit": "1 GB/Month",
+      "unit_price_usd": "0.138",
+      "meter_id": "61d63589-b712-54b9-9346-6977b4b5a24a",
+      "subtotal_usd": "4.416",
+      "assumption": "32 GB billed storage assumption; verify supported storage choice in subscription."
+    },
+    {
+      "component": "Extra database backup storage",
+      "quantity": "32",
+      "unit": "1 GB/Month",
+      "unit_price_usd": "0.095",
+      "meter_id": "0b0a7bd8-085b-5917-8f19-179062d42e2e",
+      "subtotal_usd": "3.040",
+      "assumption": "Conservative allowance for 32 GB chargeable above included backup capacity; 7-day retention proposed."
+    },
+    {
+      "component": "Image registry",
+      "quantity": "30.41666666666666666666666667",
+      "unit": "1/Day",
+      "unit_price_usd": "0.1666",
+      "meter_id": "5c9e7a65-5784-494c-9718-7749d4075dd9",
+      "subtotal_usd": "5.067416666666666666666666667",
+      "assumption": "730/24 billed days; build in GitHub, not paid registry build tasks; stay within included image storage."
+    },
+    {
+      "component": "Private blob capacity",
+      "quantity": "5",
+      "unit": "1 GB/Month",
+      "unit_price_usd": "0.02",
+      "meter_id": "2f968df1-9a17-4398-bcfb-ad8bf7922321",
+      "subtotal_usd": "0.10",
+      "assumption": "5 GB including current files and retained reset exports; non-HNS; no anonymous access."
+    },
+    {
+      "component": "Blob write operations",
+      "quantity": "10",
+      "unit": "10K",
+      "unit_price_usd": "0.055",
+      "meter_id": "b1d1445b-213f-499a-bb19-070a2d50248a",
+      "subtotal_usd": "0.550",
+      "assumption": "100,000 writes; 10 units of 10,000."
+    },
+    {
+      "component": "Blob reads",
+      "quantity": "10",
+      "unit": "10K",
+      "unit_price_usd": "0.0044",
+      "meter_id": "f31037d2-678a-4472-9f84-d084817f69f4",
+      "subtotal_usd": "0.0440",
+      "assumption": "100,000 reads; 10 units of 10,000."
+    },
+    {
+      "component": "Log ingestion",
+      "quantity": "2",
+      "unit": "1 GB",
+      "unit_price_usd": "3.34",
+      "meter_id": "0d435df8-9c75-482e-a894-cd65c2160c7a",
+      "subtotal_usd": "6.68",
+      "assumption": "2 GB at marginal paid rate; shared free allowance not deducted; 30-day retention."
+    },
+    {
+      "component": "Secrets operations",
+      "quantity": "1",
+      "unit": "10K",
+      "unit_price_usd": "0.03",
+      "meter_id": "0f824807-2376-435c-95c9-f992b67a07b0",
+      "subtotal_usd": "0.03",
+      "assumption": "10,000 standard operations; no paid certificates or HSM."
+    },
+    {
+      "component": "Network egress",
+      "quantity": "10",
+      "unit": "1 GB",
+      "unit_price_usd": "0.12",
+      "meter_id": "fe167397-a38d-43c3-9bb3-8e2907e56a41",
+      "subtotal_usd": "1.20",
+      "assumption": "10 GB at paid marginal rate; shared free allowance not deducted."
+    }
+  ],
+  "totals": {
+    "subtotal_usd": "85.40",
+    "subtotal_aud": "128.10",
+    "contingency_percent": "25",
+    "monthly_aud_with_contingency_ex_gst": "160.12",
+    "illustrative_monthly_aud_with_10_percent_gst": "176.14",
+    "proposed_monthly_review_budget_aud_ex_gst": "200.00"
+  },
+  "sensitivities": {
+    "all_730_web_hours_active_aud_with_contingency_ex_gst": "283.65",
+    "replace_B1MS_with_B2S_aud_with_contingency_ex_gst": "266.89",
+    "base_at_aud_per_usd_1_40": "149.45",
+    "base_at_aud_per_usd_1_70": "181.47"
+  },
+  "excluded_or_zero_by_design": [
+    "Development, migration and support labour",
+    "New Microsoft licences or paid support plans",
+    "CI minutes beyond existing allowance and artifact storage",
+    "Custom domain and paid certificates; use provider HTTPS hostname",
+    "HA, replicas, multi-region, paid SLA",
+    "NAT gateway, VPN, private endpoints, Front Door, dedicated workload profiles and planned-maintenance features",
+    "Always-on separate staging environment",
+    "Customer messaging and live integrations"
+  ],
+  "cost_controls": [
+    "Review spend at AUD 100, 150 and 200 per month; alerts are not a hard spending cap.",
+    "One web replica maximum; worker aggregate run/time limit and log-volume review.",
+    "Delete approved demo resources after the agreed retention/end date; stopping web compute does not stop database and storage charges."
+  ],
+  "limitations": [
+    "AUD API tiny-unit values appeared rounded to zero; USD preview API values used instead. Zero AUD values were not treated as free.",
+    "Sizing is unbenchmarked; confirm subscription SKU capacity, PostgreSQL compatibility, networking and actual quote before purchasing.",
+    "No private-endpoint/maintenance management charge in this external-HTTPS Consumption-only configuration; reprice if those features are selected.",
+    "Round only the final sum; displayed row amounts may differ by a cent from their sum."
+  ],
+  "sources": [
+    {
+      "query_url": "https://prices.azure.com/api/retail/prices?%24filter=serviceName+eq+%27Azure+Container+Apps%27+and+armRegionName+eq+%27australiaeast%27&currencyCode=USD&api-version=2023-01-01-preview",
+      "meterId": "013772f8-63db-52a2-9c69-f2ae9012ef09",
+      "meterName": "Standard vCPU Active Usage",
+      "productName": "Azure Container Apps",
+      "skuName": "Standard",
+      "unitOfMeasure": "1 Second",
+      "retailPrice": 3.4e-05,
+      "currencyCode": "USD",
+      "armRegionName": "australiaeast",
+      "effectiveStartDate": "2022-06-01T00:00:00Z",
+      "tierMinimumUnits": 0.0
+    },
+    {
+      "query_url": "https://prices.azure.com/api/retail/prices?%24filter=serviceName+eq+%27Azure+Container+Apps%27+and+armRegionName+eq+%27australiaeast%27&currencyCode=USD&api-version=2023-01-01-preview",
+      "meterId": "c35c8b99-9953-57cc-a67f-75365d560cb5",
+      "meterName": "Standard Memory Active Usage",
+      "productName": "Azure Container Apps",
+      "skuName": "Standard",
+      "unitOfMeasure": "1 GiB Second",
+      "retailPrice": 4e-06,
+      "currencyCode": "USD",
+      "armRegionName": "australiaeast",
+      "effectiveStartDate": "2022-06-01T00:00:00Z",
+      "tierMinimumUnits": 0.0
+    },
+    {
+      "query_url": "https://prices.azure.com/api/retail/prices?%24filter=serviceName+eq+%27Azure+Container+Apps%27+and+armRegionName+eq+%27australiaeast%27&currencyCode=USD&api-version=2023-01-01-preview",
+      "meterId": "d8b5c482-6b8b-5cd9-baea-9bba06a00b27",
+      "meterName": "Standard vCPU Idle Usage",
+      "productName": "Azure Container Apps",
+      "skuName": "Standard",
+      "unitOfMeasure": "1 Second",
+      "retailPrice": 4e-06,
+      "currencyCode": "USD",
+      "armRegionName": "australiaeast",
+      "effectiveStartDate": "2022-06-01T00:00:00Z",
+      "tierMinimumUnits": 0.0
+    },
+    {
+      "query_url": "https://prices.azure.com/api/retail/prices?%24filter=serviceName+eq+%27Azure+Container+Apps%27+and+armRegionName+eq+%27australiaeast%27&currencyCode=USD&api-version=2023-01-01-preview",
+      "meterId": "53c781b2-7598-580c-86ac-d0563f272ed8",
+      "meterName": "Standard Memory Idle Usage",
+      "productName": "Azure Container Apps",
+      "skuName": "Standard",
+      "unitOfMeasure": "1 GiB Second",
+      "retailPrice": 4e-06,
+      "currencyCode": "USD",
+      "armRegionName": "australiaeast",
+      "effectiveStartDate": "2022-06-01T00:00:00Z",
+      "tierMinimumUnits": 0.0
+    },
+    {
+      "query_url": "https://prices.azure.com/api/retail/prices?%24filter=serviceName+eq+%27Azure+Container+Apps%27+and+armRegionName+eq+%27australiaeast%27&currencyCode=USD&api-version=2023-01-01-preview",
+      "meterId": "02f3fee4-2c9c-53f1-b98d-49eb425e0cf6",
+      "meterName": "Standard Requests",
+      "productName": "Azure Container Apps",
+      "skuName": "Standard",
+      "unitOfMeasure": "1M",
+      "retailPrice": 0.4,
+      "currencyCode": "USD",
+      "armRegionName": "australiaeast",
+      "effectiveStartDate": "2022-06-01T00:00:00Z",
+      "tierMinimumUnits": 0.0
+    },
+    {
+      "query_url": "https://prices.azure.com/api/retail/prices?%24filter=serviceName+eq+%27Azure+Database+for+PostgreSQL%27+and+armRegionName+eq+%27australiaeast%27&currencyCode=USD&api-version=2023-01-01-preview",
+      "meterId": "11d339d1-2ed1-5e21-85bd-2349157adfa5",
+      "meterName": "B1MS",
+      "productName": "Azure Database for PostgreSQL Flexible Server Burstable BS Series Compute",
+      "skuName": "B1MS",
+      "unitOfMeasure": "1 Hour",
+      "retailPrice": 0.026,
+      "currencyCode": "USD",
+      "armRegionName": "australiaeast",
+      "effectiveStartDate": "2021-12-01T00:00:00Z",
+      "tierMinimumUnits": 0.0
+    },
+    {
+      "query_url": "https://prices.azure.com/api/retail/prices?%24filter=serviceName+eq+%27Azure+Database+for+PostgreSQL%27+and+armRegionName+eq+%27australiaeast%27&currencyCode=USD&api-version=2023-01-01-preview",
+      "meterId": "61d63589-b712-54b9-9346-6977b4b5a24a",
+      "meterName": "Storage Data Stored",
+      "productName": "Azure Database for PostgreSQL Flex Server Storage",
+      "skuName": "Storage",
+      "unitOfMeasure": "1 GB/Month",
+      "retailPrice": 0.138,
+      "currencyCode": "USD",
+      "armRegionName": "australiaeast",
+      "effectiveStartDate": "2021-06-01T00:00:00Z",
+      "tierMinimumUnits": 0.0
+    },
+    {
+      "query_url": "https://prices.azure.com/api/retail/prices?%24filter=serviceName+eq+%27Azure+Database+for+PostgreSQL%27+and+armRegionName+eq+%27australiaeast%27&currencyCode=USD&api-version=2023-01-01-preview",
+      "meterId": "0b0a7bd8-085b-5917-8f19-179062d42e2e",
+      "meterName": "Backup Storage LRS Data Stored",
+      "productName": "Azure Database for PostgreSQL Flexible Server Backup Storage",
+      "skuName": "Backup Storage LRS",
+      "unitOfMeasure": "1 GB/Month",
+      "retailPrice": 0.095,
+      "currencyCode": "USD",
+      "armRegionName": "australiaeast",
+      "effectiveStartDate": "2021-06-01T00:00:00Z",
+      "tierMinimumUnits": 0.0
+    },
+    {
+      "query_url": "https://prices.azure.com/api/retail/prices?%24filter=serviceName+eq+%27Container+Registry%27+and+armRegionName+eq+%27australiaeast%27&currencyCode=USD&api-version=2023-01-01-preview",
+      "meterId": "5c9e7a65-5784-494c-9718-7749d4075dd9",
+      "meterName": "Basic Registry Unit",
+      "productName": "Container Registry",
+      "skuName": "Basic",
+      "unitOfMeasure": "1/Day",
+      "retailPrice": 0.1666,
+      "currencyCode": "USD",
+      "armRegionName": "australiaeast",
+      "effectiveStartDate": "2018-01-01T00:00:00Z",
+      "tierMinimumUnits": 0.0
+    },
+    {
+      "query_url": "https://prices.azure.com/api/retail/prices?%24filter=serviceName+eq+%27Storage%27+and+armRegionName+eq+%27australiaeast%27&currencyCode=USD&api-version=2023-01-01-preview",
+      "meterId": "2f968df1-9a17-4398-bcfb-ad8bf7922321",
+      "meterName": "Hot LRS Data Stored",
+      "productName": "General Block Blob v2",
+      "skuName": "Hot LRS",
+      "unitOfMeasure": "1 GB/Month",
+      "retailPrice": 0.02,
+      "currencyCode": "USD",
+      "armRegionName": "australiaeast",
+      "effectiveStartDate": "2017-02-03T00:00:00Z",
+      "tierMinimumUnits": 0.0
+    },
+    {
+      "query_url": "https://prices.azure.com/api/retail/prices?%24filter=serviceName+eq+%27Storage%27+and+armRegionName+eq+%27australiaeast%27&currencyCode=USD&api-version=2023-01-01-preview",
+      "meterId": "b1d1445b-213f-499a-bb19-070a2d50248a",
+      "meterName": "Hot LRS Write Operations",
+      "productName": "General Block Blob v2",
+      "skuName": "Hot LRS",
+      "unitOfMeasure": "10K",
+      "retailPrice": 0.055,
+      "currencyCode": "USD",
+      "armRegionName": "australiaeast",
+      "effectiveStartDate": "2016-06-01T00:00:00Z",
+      "tierMinimumUnits": 0.0
+    },
+    {
+      "query_url": "https://prices.azure.com/api/retail/prices?%24filter=serviceName+eq+%27Storage%27+and+armRegionName+eq+%27australiaeast%27&currencyCode=USD&api-version=2023-01-01-preview",
+      "meterId": "f31037d2-678a-4472-9f84-d084817f69f4",
+      "meterName": "Hot Read Operations",
+      "productName": "General Block Blob v2",
+      "skuName": "Hot LRS",
+      "unitOfMeasure": "10K",
+      "retailPrice": 0.0044,
+      "currencyCode": "USD",
+      "armRegionName": "australiaeast",
+      "effectiveStartDate": "2016-06-01T00:00:00Z",
+      "tierMinimumUnits": 0.0
+    },
+    {
+      "query_url": "https://prices.azure.com/api/retail/prices?%24filter=serviceName+eq+%27Log+Analytics%27+and+armRegionName+eq+%27australiaeast%27&currencyCode=USD&api-version=2023-01-01-preview",
+      "meterId": "0d435df8-9c75-482e-a894-cd65c2160c7a",
+      "meterName": "Analytics Logs Data Ingestion",
+      "productName": "Log Analytics",
+      "skuName": "Analytics Logs",
+      "unitOfMeasure": "1 GB",
+      "retailPrice": 3.34,
+      "currencyCode": "USD",
+      "armRegionName": "australiaeast",
+      "effectiveStartDate": "2018-02-01T00:00:00Z",
+      "tierMinimumUnits": 5.0
+    },
+    {
+      "query_url": "https://prices.azure.com/api/retail/prices?%24filter=serviceName+eq+%27Key+Vault%27+and+armRegionName+eq+%27australiaeast%27&currencyCode=USD&api-version=2023-01-01-preview",
+      "meterId": "0f824807-2376-435c-95c9-f992b67a07b0",
+      "meterName": "Operations",
+      "productName": "Key Vault",
+      "skuName": "Standard",
+      "unitOfMeasure": "10K",
+      "retailPrice": 0.03,
+      "currencyCode": "USD",
+      "armRegionName": "australiaeast",
+      "effectiveStartDate": "2015-08-01T00:00:00Z",
+      "tierMinimumUnits": 0.0
+    },
+    {
+      "query_url": "https://prices.azure.com/api/retail/prices?%24filter=serviceName+eq+%27Bandwidth%27+and+armRegionName+eq+%27australiaeast%27&currencyCode=USD&api-version=2023-01-01-preview",
+      "meterId": "fe167397-a38d-43c3-9bb3-8e2907e56a41",
+      "meterName": "Standard Data Transfer Out",
+      "productName": "Rtn Preference: MGN",
+      "skuName": "Standard",
+      "unitOfMeasure": "1 GB",
+      "retailPrice": 0.12,
+      "currencyCode": "USD",
+      "armRegionName": "australiaeast",
+      "effectiveStartDate": "2022-05-01T00:00:00Z",
+      "tierMinimumUnits": 100.0
+    },
+    {
+      "query_url": "https://prices.azure.com/api/retail/prices?%24filter=serviceName+eq+%27Azure+Database+for+PostgreSQL%27+and+armRegionName+eq+%27australiaeast%27&currencyCode=USD&api-version=2023-01-01-preview",
+      "meterId": "61f77944-2857-5f81-af62-7ef4b53cba52",
+      "meterName": "B2S",
+      "productName": "Azure Database for PostgreSQL Flexible Server Burstable BS Series Compute",
+      "skuName": "B2S",
+      "unitOfMeasure": "1 Hour",
+      "retailPrice": 0.104,
+      "currencyCode": "USD",
+      "armRegionName": "australiaeast",
+      "effectiveStartDate": "2021-06-01T00:00:00Z",
+      "tierMinimumUnits": 0.0
+    }
+  ],
+  "billing_references": [
+    "https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azure-retail-prices",
+    "https://learn.microsoft.com/en-us/azure/container-apps/billing",
+    "https://azure.microsoft.com/en-us/pricing/details/container-apps/",
+    "https://azure.microsoft.com/en-us/pricing/details/postgresql/flexible-server/"
+  ]
+}
