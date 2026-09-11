@@ -1,16 +1,16 @@
 ---
 document_id: PPO-010-E2-START
-revision: r01
-date: 2026-09-06
+revision: r02
+date: 2026-09-09
 owner: Dean Fiedler - private prototype
-status: Prepared only; E1 verification and a later explicit invocation required
+status: Design invoked; concrete policy adoption and runtime implementation pending
 ---
 
 # BP-04 E2 — Routing, options and scoped discovery starter
 
-This file prepares the next increment. Its creation does not start E2 or resolve a source/policy question. Verify [E1's actual publication](estimating-e1-handover.md) before invoking it. E2 remains local to the [BP-04 sequence](estimating-implementation-plan.md), under PPO-010, with no change to the 78 master parent IDs or P01–P12 service order.
+The initial r01 prepared the next increment. Dean has now invoked the E2 design and rules package before implementation. The [decision package](../decisions/estimating-e2-rules.md) and [design handover](estimating-e2-design-handover.md) record that bounded authority and the concrete policies awaiting review. [E1's completed publication](https://github.com/deanrfiedler-gif/powerplants-one/pull/49#issuecomment-5562344440) satisfies its historical verification dependency; it is not a fresh check of current code. E2 remains local to the [BP-04 sequence](estimating-implementation-plan.md), under PPO-010, with no change to the 78 master parent IDs or P01–P12 service order.
 
-## Objective on a later invocation
+## Runtime objective after concrete policy adoption
 
 Implement only a concretely adopted synthetic E2 route/option/scoping journey: a permitted estimator determines a versioned Full/Express route, records alternatives and one explicit selected basis, scopes supported facilities/systems, and answers a bounded versioned questionnaire. Save immutable scope/answer snapshots that can feed a later manual estimate without changing any E1 estimate version or draft quotation. Do not build specialist formulas, costing approvals, formal issue, customer responses or live integrations in E2.
 
