@@ -97,7 +97,7 @@ test("P10 additive upgrade from real P09 issued originals retains exact rows, by
         "SELECT version FROM public.ppo_migrations ORDER BY version",
       )
     ).rows.map((r) => r.version),
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19],
   );
   assert.deepEqual(await readReportBundle(q.reviewer, issue.manifest), bytes);
   assert.equal(
@@ -198,7 +198,7 @@ test("P10 arrival after already-applied E1 0012 retains exact estimating origina
   assert.deepEqual(
     (
       await database().query(
-        "SELECT * FROM public.ppo_migrations WHERE version<>11 ORDER BY version",
+        "SELECT * FROM public.ppo_migrations WHERE version<=12 AND version<>11 ORDER BY version",
       )
     ).rows,
     hashes,

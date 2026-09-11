@@ -21,7 +21,7 @@ The [shared UI and CRM layout direction](ui-brand-and-crm-layout.md) records the
 
 [ADR-0011](ADR-0011-p06-controlled-job-packs.md) records P06 durable controlled job packs and the timestamp/recipient/owned-consequence decisions.
 
-[BP-03](../blueprints/BP-03-crm.md) records PPO-009's proposed CRM choices, shared integration boundary and coexistence design under D-013/D-025/D-026. Those decisions remain open; no new technology or operational policy is adopted. No ADR number is allocated by discovery, avoiding P09's concurrent reservation. [Parity evidence requests](../blueprints/crm-parity.md#4-smallest-useful-evidence-requests) identify the outstanding owner evidence.
+[BP-03](../blueprints/BP-03-crm.md) records PPO-009's proposed CRM choices, shared integration boundary and coexistence design under D-013/D-025/D-026. [Accepted CRM report r02](crm-approved-scope.md) now governs product scope and priorities. Operational decisions remain open; no new technology or unspecified operating policy is adopted. No ADR number is allocated by discovery, avoiding P09's concurrent reservation. [Parity evidence requests](../blueprints/crm-parity.md#4-smallest-useful-evidence-requests) identify the outstanding owner evidence.
 
 [ADR-0014](ADR-0014-p09-service-reports.md) records exact P09 submissions, service review, narrow attendance acceptance, durable customer-safe reports and content-bound responses. P10 Finance authority remains separate.
 
@@ -36,9 +36,23 @@ The [shared UI and CRM layout direction](ui-brand-and-crm-layout.md) records the
 
 [Customer portal direction](customer-portal-direction.md) records Dean's authority to design now and implement bounded synthetic stages as their dependencies become ready. It resolves only the private portal-direction portion of D-027; the original wider decision remains open. No migration or technical ADR number is allocated by this design.
 
+[ADR-0018](ADR-0018-p11-travel-and-integrated-quality.md) records the approved P11 synthetic whole-minute Travel/no-posting treatment and immutable policy successor. D-017 operational policy remains open.
 The [controlled opportunity handover proposal](crm-opportunity-handover.md) records unresolved H-01–H-03 and fixed preservation constraints under #55. Design publication is authorised; policy acceptance and implementation are separate. No numbered ADR is reserved.
 
 - [Accepted r08 shared layout and CRM implementation](shared-ui-r08-implementation.md) — Dean-approved presentation mapped to existing persisted I1/I2 contracts.
 
-
 [Private Prototype Demo scope and hosting assessment](private-prototype-demo.md) records the authorised package definition and proposed hosted evaluation; no spend, account grant or remote deployment is activated.
+
+- [Email & Calendar design direction](email-calendar-design.md) — user-authorised synthetic design; selected-message sharing and a proposed read-only Microsoft pilot under CRM-03/PAR-06.
+- [Mobile CRM implementation](mobile-crm-implementation.md): approved mobile mapping to current components, persisted commands and permissions.
+
+[Azure demo connection preparation](azure-demo-connection.md) records the dedicated Reader identity, GitHub OIDC environment/branch boundary and separate hosted application work.
+
+[Azure private demo runtime](azure-private-demo.md) — individual sign-in, cloud configuration, deployment and reset preparation; live acceptance pending.
+
+- [ADR-0020 — Persisted synthetic Email & Calendar journey](ADR-0020-email-calendar-synthetic-journey.md). ADR-0019 was never allocated; the sequence runs ADR-0018 → ADR-0020 and the gap is intentional-by-omission, not a missing file.
+- [Private demo Email and CRM integration](demo-email-crm-integration.md) — shared desktop/mobile journey, individual fictional mailboxes and retained access boundaries.
+- [Approved Job Pack r02](job-pack-design.md) — exact accepted full-page Service design and integration boundary.
+- [CI browser suite route warm-up](ci-browser-warm-up.md) — harness-only decision: compile every route before the first assertion window; no deadline, retry or product change.
+- [CI browser suite against the compiled application](ci-compiled-browser-suite.md) — additional workflow drives the unchanged suite against `npm run build` output under the unchanged synthetic-identity guard (`NODE_ENV=test`); production startup remains refused.
+[Field Technicians r04](field-technicians-design.md) records Dean’s approved Service presentation, frozen source and bounded application mapping. Design approval does not grant dispatch, merge or production acceptance.

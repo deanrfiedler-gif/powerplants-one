@@ -1,0 +1,98 @@
+{
+  "source_head": "e2b7b41b7996366525bb50db33409b571ea85d8a",
+  "executed_checkout": "790324344c07e6b771a950fadf52091481216699",
+  "executed_tree": "968be21a891c60c801c84183d79cd388bcb5d20a",
+  "run_id": 34264208660,
+  "job_id": 102189379990,
+  "artifact_id": 10072465352,
+  "artifact_sha256": "901d1a2490359edad2adb302b850327b997f6bd60dc00d32443b758812524350",
+  "artifact_bytes": 120069181,
+  "artifact_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34264208660/artifacts/10072465352",
+  "stats": {
+    "expected": 116,
+    "unexpected": 2,
+    "skipped": 0,
+    "flaky": 0,
+    "retries": 0,
+    "duration_ms": 1726233.256
+  },
+  "server_runtime": {
+    "pid": 8661,
+    "max_rss_bytes": 3926302720,
+    "min_system_free_bytes": 1693999104,
+    "max_interval_ms": 2337.9683610000648,
+    "max_load_1m": 10.24
+  },
+  "failures": [
+    {
+      "file": "tests/browser/mobile-crm.spec.ts",
+      "line": 39,
+      "project": "desktop-chromium",
+      "duration_ms": 25805,
+      "assertion_timeout_ms": 5000,
+      "assertion": "Exact new estimate link is visible",
+      "captured_ui": "Loading permitted commercial records…",
+      "requests": [
+        {
+          "request_id": 2431,
+          "event": "http-closed-incomplete",
+          "elapsed_ms": 5629.256934000005
+        },
+        {
+          "request_id": 2432,
+          "event": "http-closed-incomplete",
+          "elapsed_ms": 5628.304984999995
+        }
+      ],
+      "limitation": "Both Commercial GETs were pending at browser teardown. Sanitized paths and the retained artifact do not classify their internal compilation/database split."
+    },
+    {
+      "file": "tests/helpers/quality-report.ts",
+      "line": 92,
+      "project": "desktop-chromium",
+      "duration_ms": 132815,
+      "assertion_timeout_ms": 5000,
+      "assertion": "Saved-workspace notice contains Identity verified",
+      "captured_ui": "Identity panel says verified online; notice still says workspace locked.",
+      "requests": [
+        {
+          "request_id": 4165,
+          "path": "/api/v1/local-session",
+          "status": 200,
+          "elapsed_ms": 3333.727702000062
+        },
+        {
+          "request_id": 4167,
+          "path": "/api/v1/my-jobs/:id",
+          "status": 200,
+          "elapsed_ms": 1683.7553909999551
+        },
+        {
+          "request_id": 4168,
+          "path": "/api/v1/my-jobs",
+          "status": 200,
+          "elapsed_ms": 801.7778249999974
+        }
+      ],
+      "interpretation": "The original five-second final-message assertion overlapped the existing sequential identity, cached-job and assigned-job reads."
+    }
+  ],
+  "correction": {
+    "tests": "Observe specific authorised responses before the original UI postconditions. Add status/cache-policy and exact Commercial estimate-ID checks.",
+    "ui": "Disable identity verification until shell startup settles and during an in-flight verification. Show pending, completion and failure notices.",
+    "regression": "One isolated shell/IndexedDB browser procedure in both viewports, with explicitly synthetic held HTTP responses. Real ownership and original-byte acceptance still require the complete selected journey.",
+    "preserved": "Existing assertions and timeout values, all load users/samples/captures, permission and data rules, and nine controlled-output fingerprint inputs.",
+    "local_validation": "Lint, TypeScript, 29 unit tests and build passed on Node 24.19.0. No local Chromium/PostgreSQL or integration pass.",
+    "verification": "Full CI on the resulting commit is required before merge."
+  },
+  "other_current_components": {
+    "independent_checks_passed": 6,
+    "original_phone_replay": "3/3; also all three passed inside this full browser suite",
+    "load_samples_passed": 320,
+    "captures": 10,
+    "candidate_three_second_p95_groups_met": 0,
+    "candidate_three_second_p95_groups_total": 16
+  },
+  "limits": "Raw trace ZIPs are absent. Response-aware functional postconditions do not establish production latency acceptance or classify every prior failure."
+}
+

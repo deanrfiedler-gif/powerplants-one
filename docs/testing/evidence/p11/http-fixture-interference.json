@@ -1,0 +1,65 @@
+{
+  "source_head": "1b9660ad6a1b91b9aae8adae5926cb190f6fc985",
+  "executed_checkout": "a1d9e444c8ee0cd5b69046f354ef8a7452fb6e96",
+  "executed_tree": "51047381d0d74767270213f69696a87bc3fe5363",
+  "run_id": 34269603077,
+  "run_attempt": 1,
+  "job_id": 102207536187,
+  "http_artifact": {
+    "id": 10075413034,
+    "sha256": "d3afce3006b49073c864971784646d48f945ddbd816bf75c30101c66c90c08b2",
+    "independently_verified": true
+  },
+  "final_artifact": {
+    "id": 10075442899,
+    "sha256": "12ac4a8942f2d367abe265b0cb187462aeca1cd030dcf4cd35cd8b72b3bd48a3",
+    "independently_verified": true
+  },
+  "http_result": {
+    "tests": 23,
+    "passed": 22,
+    "failed": 1,
+    "skipped": 0,
+    "duration_ms": 79756.075672,
+    "failure": "P07 real HTTP visit executes start, exact photo transfer, typed evidence, correction and a Partial completion draft",
+    "location": "tests/http/field.test.ts:45 via tests/helpers/field-http.ts:91",
+    "response": {"status": 422, "code": "StaleSource", "message": "The checked source changed. Prepare and check a new revision."},
+    "subsequent_p11_http_component": "Not run after preceding command failure"
+  },
+  "shared_work_order_id": "a9000000-0000-4000-8000-000000000001",
+  "failed_pack_id": "f3e6223e-f7a2-4f45-8265-aa3e8088c162",
+  "server_log_order": [
+    {"file": "http/server.log", "line_1_based": 222, "event": "Failed pack check completed", "status": 201},
+    {"file": "http/server.log", "line_1_based": 224, "event": "Another visit created on shared work order", "status": 201},
+    {"file": "http/server.log", "line_1_based": 229, "event": "Another readiness assessment on shared work order", "status": 200},
+    {"file": "http/server.log", "line_1_based": 256, "event": "Original checked pack issue rejected", "status": 422}
+  ],
+  "source_findings": [
+    "tests/http/field.test.ts, offline.test.ts and reports.test.ts invoke prepareFieldAppointment against the same seeded work order and scope.",
+    "npm test:http runs Node test files concurrently.",
+    "proposeVisit and assessWorkReadiness increment work-order version.",
+    "The checked pack snapshot includes work.version and requestIssue rejects a changed digest."
+  ],
+  "interpretation": "Supported shared-fixture interference; the stale-source guard correctly prevents issuing a changed checked source.",
+  "limits": "The retained archive does not contain a database snapshot diff for the rejected issue. Source version increments and the intervening successful commands are retained; fresh CI must exercise the deterministic corrected interleaving.",
+  "correction": {
+    "fixture": "Separate work order and approved scope for each mutating HTTP journey, created through actual HTTP commands with the original single-task synthetic treatment.",
+    "regression": "Finish another isolated fixture between first pack check and first issue; verify distinct work/scope/pack originals and successful exact issues.",
+    "retained_output_selection": "Read exact pack_id/issue_id from the preceding P06 restart proof instead of the global newest pack.",
+    "unchanged": ["application stale-source and permission guards", "original assertions", "test file concurrency", "load users/samples/rules", "all deadline values", "browser and restart default prerequisite", "controlled renderer and fingerprint sources"],
+    "local_validation": "Focused ESLint and TypeScript pass. No local PostgreSQL/Chromium integration pass."
+  },
+  "current_browser_confirmation": {
+    "source_head": "af38ca653b8084dde901564646b5fcb4f891c6da",
+    "executed_tree": "33909cf8e837355f465e440b4aacc82e39552254",
+    "run_id": 34273068199,
+    "artifact_id": 10075510736,
+    "sha256": "09e70df928a0d29f445495ef4a3c8a96e5245baf59cfff3e74726d0becf54903",
+    "passed": 120,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "duration_ms": 1205714.1570000001
+  },
+  "publication_gate": "Complete fresh corrected-head checks, normal verified merge and actual merged-main verification. Earlier/current intermediate passes do not substitute."
+}

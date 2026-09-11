@@ -111,7 +111,7 @@ test("P09 fresh and P08 upgrade preserve originals and repeat seed does not revi
   );
   assert.deepEqual(
     (await rows("SELECT version FROM public.ppo_migrations ORDER BY version")).map(row=>row.version),
-    [1,2,3,4,5,6,7,8,9,10, 11, 12],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19],
   );
 });
 test("P09 exact submission freezes entries; duplicate original recovers same receipt; changed reuse conflicts", async () => {

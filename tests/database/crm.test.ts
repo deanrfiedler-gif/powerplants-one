@@ -529,8 +529,9 @@ test("CA-01/05 real FK, deferred designation, immutable config/context/events an
     ),
     code("23514"),
   );
+  // Core information now has a dedicated audited command. Raw unaudited edits still fail.
+  await assert.rejects(database().query("UPDATE ppo.opportunities SET title='rewritten',version=version+1"), code("23514"));
   for (const sql of [
-    "UPDATE ppo.opportunities SET owner_id=created_by,title='rewritten',version=version+1",
     "UPDATE ppo.opportunity_events SET reason='rewritten'",
     "DELETE FROM ppo.crm_pipeline_definitions",
     "UPDATE ppo.crm_stage_definitions SET ordinal=ordinal",
@@ -622,11 +623,17 @@ test("CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and 
   const links = await rows("SELECT * FROM ppo.activity_links ORDER BY activity_id,object_type,object_id");
   await migrate();
   await seed();
-  for (let n = 0; n < tables.length; n++)
-    assert.deepEqual(
-      await rows(`SELECT * FROM ppo.${tables[n]} ORDER BY 1`),
-      before[n],
-    );
+  for (let n = 0; n < tables.length; n++) {
+    const current = await rows(`SELECT * FROM ppo.${tables[n]} ORDER BY 1`);
+    if (tables[n] === "report_templates") {
+      // P11 adds a separately identified immutable template; every original
+      // definition remains exact. Existing issued/response bytes below remain.
+      assert.deepEqual(current.filter(x => x.version === 1), before[n]);
+      assert.deepEqual(current.map(x => x.version).sort(), [1, 2]);
+    } else if (tables[n] === "report_template_policy") {
+      assert.deepEqual(before[n].map(x => ({ ...x, version: x.version + 1, template_id: "e1000000-0000-4000-8000-000000000002" })), current);
+    } else assert.deepEqual(current, before[n]);
+  }
   assert.deepEqual(
     await rows(
       "SELECT * FROM public.ppo_migrations WHERE version<=9 ORDER BY version",
@@ -642,7 +649,18 @@ test("CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and 
   for (const key of ["revisions", "reviews", "issues", "presentations", "responses"] as const)
     assert.deepEqual(preserved[key], originalReport[key]);
   assert.deepEqual(await rows("SELECT * FROM ppo.business_identities WHERE id=ANY($1::uuid[]) ORDER BY id", [identities.map(x=>x.id)]), identities);
-  assert.deepEqual((await rows("SELECT * FROM ppo.activity_links ORDER BY activity_id,object_type,object_id")).map(row=>Object.fromEntries(Object.entries(row).filter(([key])=>key!=="opportunity_id"))), links);
+  assert.deepEqual(
+    (
+      await rows("SELECT * FROM ppo.activity_links ORDER BY activity_id,object_type,object_id")
+    ).map((row) =>
+      Object.fromEntries(
+        Object.entries(row).filter(
+          ([key]) => key !== "opportunity_id" && key !== "lead_id",
+        ),
+      ),
+    ),
+    links,
+  );
   const i = crmCreate();
   await createOpportunity(p, i);
   await qualifyOpportunity(p, i.id, crmQualify());

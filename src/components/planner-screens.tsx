@@ -18,7 +18,7 @@ import {
 } from "./business-ui";
 import { addDays, localDateTime, utcFromLocal } from "../scheduling/time";
 import type { CrewInput } from "../scheduling/validation";
-type Resource = {
+export type Resource = {
   id: string;
   name: string;
   version: number;
@@ -53,7 +53,7 @@ type Request = {
   created_by: string;
   expected_schedule_version: number;
 };
-type Appointment = {
+export type Appointment = {
   id: string;
   display_number: string;
   version: number;
@@ -132,19 +132,34 @@ type Appointment = {
   }[];
   actions: { can_manage: boolean; can_request: boolean; can_contact: boolean };
 };
-type Schedule = Envelope<Appointment> & {
+export type ScheduleAppointment = Omit<
+  Appointment,
+  | "readiness"
+  | "authorisation_blockers"
+  | "contacts"
+  | "followups"
+  | "proposal"
+  | "history"
+  | "requests"
+> & {
+  requests: Pick<Request, "id" | "status">[];
+  projection: "ScheduleSummary";
+};
+type BookingBasis = Omit<ScheduleAppointment, "requests" | "projection">;
+export type Schedule = Envelope<ScheduleAppointment> & {
   resources: Resource[];
   display_timezone: string;
   from: string;
   to: string;
 };
+const dayFormatter = new Intl.DateTimeFormat("en-AU", {
+  weekday: "short",
+  day: "numeric",
+  month: "short",
+  timeZone: "UTC",
+});
 const displayDay = (day: string) =>
-  new Intl.DateTimeFormat("en-AU", {
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-    timeZone: "UTC",
-  }).format(new Date(day + "T12:00:00Z"));
+  dayFormatter.format(new Date(day + "T12:00:00Z"));
 const minuteText = (n: number) =>
   `${String(Math.floor(n / 60)).padStart(2, "0")}:${String(n % 60).padStart(2, "0")}`;
 const shortTime = (iso: string, zone: string) =>
@@ -154,7 +169,7 @@ const shortTime = (iso: string, zone: string) =>
     minute: "2-digit",
     hourCycle: "h23",
   }).format(new Date(iso));
-function VersionLine({ a }: { a: Appointment }) {
+function VersionLine({ a }: { a: BookingBasis }) {
   return (
     <p className="read-meta">
       Appointment v{a.version} · Crew v{a.assignment_version} · Schedule v
@@ -162,7 +177,7 @@ function VersionLine({ a }: { a: Appointment }) {
     </p>
   );
 }
-function bookingVersions(a: Appointment) {
+function bookingVersions(a: BookingBasis) {
   return {
     expected_version: a.version,
     expected_work_order_version: a.work_order_version,
@@ -182,7 +197,7 @@ function BookingForm({
   initialCrew,
   onClose,
 }: {
-  appointment: Appointment;
+  appointment: BookingBasis;
   mode: "confirm" | "move" | "request";
   onSaved: () => void;
   initialStart?: string;
@@ -1134,10 +1149,10 @@ function AppointmentCard({
   drag,
   onMove,
 }: {
-  a: Appointment;
+  a: ScheduleAppointment;
   zone: string;
   drag?: (event: React.DragEvent) => void;
-  onMove?: (a: Appointment) => void;
+  onMove?: (a: ScheduleAppointment) => void;
 }) {
   return (
     <article
@@ -1189,7 +1204,7 @@ export function PlannerScreen() {
     [resourceFilter, setResourceFilter] = useState(""),
     [status, setStatus] = useState(""),
     [move, setMove] = useState<{
-      a: Appointment;
+      a: ScheduleAppointment;
       start?: string;
       crew?: CrewInput;
     } | null>(null),
@@ -1224,8 +1239,26 @@ export function PlannerScreen() {
     setMove(null);
     setDragNotice("");
   }
-  const onDay = (iso: string, d: string) =>
-    localDateTime(iso, zone).slice(0, 10) === d;
+  // Calculate each timestamp's displayed day once for this render instead of
+  // once per appointment × resource × day. This map ends with the render.
+  const displayDates = new Map<string, string>();
+  const onDay = (iso: string, d: string) => {
+    let value = displayDates.get(iso);
+    if (value === undefined) {
+      value = localDateTime(iso, zone).slice(0, 10);
+      displayDates.set(iso, value);
+    }
+    return value === d;
+  };
+  const dayBounds = new Map(
+    days.map((d) => [
+      d,
+      {
+        start: Date.parse(utcFromLocal(d + "T00:00", zone)),
+        end: Date.parse(utcFromLocal(addDays(d, 1) + "T00:00", zone)),
+      },
+    ]),
+  );
   function drop(e: React.DragEvent, d: string, resource: Resource) {
     e.preventDefault();
     if (!usable) return;
@@ -1373,28 +1406,32 @@ export function PlannerScreen() {
           <div className="planner-stat-row">
             <div>
               <strong>
-                {data.items.filter((a) => a.status === "Confirmed").length}
+                {usable
+                  ? data.items.filter((a) => a.status === "Confirmed").length
+                  : "—"}
               </strong>
               <span>Confirmed visits</span>
             </div>
             <div>
               <strong>
-                {data.items.filter((a) => a.status === "Proposed").length}
+                {usable
+                  ? data.items.filter((a) => a.status === "Proposed").length
+                  : "—"}
               </strong>
               <span>Proposed · no reservation</span>
             </div>
             <div>
               <strong>
-                {
-                  data.items.filter((a) =>
-                    a.requests.some((r) => r.status === "Pending"),
-                  ).length
-                }
+                {usable
+                  ? data.items.filter((a) =>
+                      a.requests.some((r) => r.status === "Pending"),
+                    ).length
+                  : "—"}
               </strong>
               <span>Visits with pending requests</span>
             </div>
             <div>
-              <strong>{data.resources.length}</strong>
+              <strong>{usable ? data.resources.length : "—"}</strong>
               <span>Permitted resource lanes</span>
             </div>
           </div>
@@ -1402,7 +1439,9 @@ export function PlannerScreen() {
             {displayDay(day)} – {displayDay(addDays(day, days.length - 1))} ·
             Display {zone} · Observed{" "}
             <Stamp value={data.observed_at} timezone={zone} /> ·{" "}
-            {result.error ? "Last successful read" : "Complete filtered result"}
+            {usable
+              ? "Complete permitted result within this date/site/resource filter"
+              : "Last successful read · current counts unavailable"}
           </p>
           <p className="planner-legend">
             <span>Confirmed = reserved crew</span>
@@ -1499,21 +1538,13 @@ export function PlannerScreen() {
                       ),
                       blocks = (r.blocks ?? []).filter(
                         (b) =>
-                          Date.parse(b.start_at) <
-                            Date.parse(
-                              utcFromLocal(addDays(d, 1) + "T00:00", zone),
-                            ) &&
-                          Date.parse(b.end_at) >
-                            Date.parse(utcFromLocal(d + "T00:00", zone)),
+                          Date.parse(b.start_at) < dayBounds.get(d)!.end &&
+                          Date.parse(b.end_at) > dayBounds.get(d)!.start,
                       ),
                       busy = (r.busy ?? []).filter(
                         (b) =>
-                          Date.parse(b.start_at) <
-                            Date.parse(
-                              utcFromLocal(addDays(d, 1) + "T00:00", zone),
-                            ) &&
-                          Date.parse(b.end_at) >
-                            Date.parse(utcFromLocal(d + "T00:00", zone)),
+                          Date.parse(b.start_at) < dayBounds.get(d)!.end &&
+                          Date.parse(b.end_at) > dayBounds.get(d)!.start,
                       ),
                       closed = (r.exceptions ?? []).filter((b) =>
                         onDay(b.start_at, d),

@@ -6,15 +6,20 @@ export async function prepareFieldAppointment(
     body?: unknown,
   ) => Promise<Awaited<ReturnType<Response["json"]>>>,
   day: string,
+  source = {
+    work_order_id: id("a9"),
+    scope_revision_id: id("aa"),
+    scope_version: 1,
+  },
 ) {
-  const order = (await call(`service/work-orders/${id("a9")}`)).items[0],
+  const order = (await call(`service/work-orders/${source.work_order_id}`)).items[0],
     aid = crypto.randomUUID();
   await call(`service/work-orders/${order.id}/visits`, {
     ...base(),
     id: aid,
     expected_version: order.version,
-    scope_revision_id: id("aa"),
-    scope_version: 1,
+    scope_revision_id: source.scope_revision_id,
+    scope_version: source.scope_version,
     start_at: day + "T00:00:00Z",
     end_at: day + "T02:00:00Z",
     customer_commitment: "Proposed",
@@ -25,8 +30,8 @@ export async function prepareFieldAppointment(
     ...base(),
     expected_version: a.work_order_version,
     assessment: {
-      scope_revision_id: id("aa"),
-      scope_version: 1,
+      scope_revision_id: source.scope_revision_id,
+      scope_version: source.scope_version,
       appointment_id: aid,
       criterion_code: "ToolPreparation",
       outcome: "Pass",

@@ -1,3 +1,4 @@
+import { proofEvent } from "../platform/proof-diagnostics";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../platform/identity";
 import type { DocumentKey } from "../adapters/contracts";
@@ -22,8 +23,12 @@ import {
 } from "./context";
 import { verifyEvidence } from "./service";
 import { issueCommand } from "./validation";
-import { renderReport, reportHtml, type CustomerSnapshot } from "./render";
-import { currentReportTemplate } from "./template";
+import { type CustomerSnapshot } from "./render";
+import {
+  supportedRenderReport,
+  supportedReportHtml,
+} from "../documents/p11-render";
+import { supportedTemplateDefinition } from "../documents/p11-template";
 type Output = {
   kind: "IssuedReport";
   prepared_at: string;
@@ -83,7 +88,7 @@ async function template(c: Parameters<typeof insert>[0], p: Principal) {
   ).rows[0];
   if (
     !t ||
-    t.definition !== (await currentReportTemplate()) ||
+    t.definition !== (await supportedTemplateDefinition("OUT-10", t.version)) ||
     t.content_hash !== digest(t.definition)
   )
     fail(
@@ -213,6 +218,9 @@ export async function processReportJob(
   } = {},
 ) {
   uuid(id, "job_id");
+  const began = Date.now();
+  const stage = (event: string) => proofEvent("report-" + event, { started_at_ms: began, elapsed_ms: Date.now() - began });
+  stage("claim-start");
   const token = randomUUID(),
     job = await transaction(async (c) => {
       const j = (
@@ -243,6 +251,7 @@ export async function processReportJob(
       return row;
     });
   if (!job) return { processed: false };
+  stage("claimed");
   const p: Principal = {
       workspace_id: job.workspace_id,
       actor_id: job.actor_id,
@@ -254,7 +263,13 @@ export async function processReportJob(
     await reportContext(database(), p, job.report_id, "report.issue");
     let stored = await documentStore().locate(ctx);
     if (!stored) {
-      const generated = await renderReport(s.source, s.output);
+      stage("render-start");
+      const generated = await supportedRenderReport(
+        s.source,
+        s.output,
+        s.template.version,
+      );
+      stage("render-complete");
       await hooks.afterRender?.();
       const bundle: Bundle = {
         schema_version: 1,
@@ -281,7 +296,8 @@ export async function processReportJob(
       b.schema_version !== 1 ||
       b.job_id !== id ||
       b.input_hash !== job.input_hash ||
-      b.html !== reportHtml(s.source, s.output) ||
+      b.html !==
+        (await supportedReportHtml(s.source, s.output, s.template.version)) ||
       !pdf.subarray(0, 5).equals(Buffer.from("%PDF-"))
     )
       fail(

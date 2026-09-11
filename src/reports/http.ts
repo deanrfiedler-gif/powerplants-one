@@ -25,7 +25,7 @@ const headers = {
   "Cache-Control": "private, no-store",
   "X-Content-Type-Options": "nosniff",
   "Content-Security-Policy":
-    "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'",
+    "default-src 'none'; style-src 'unsafe-inline'; font-src data:; img-src data:; base-uri 'none'; form-action 'none'; frame-ancestors 'self'",
   "Referrer-Policy": "no-referrer",
 };
 export function reportFile(kind: "html" | "pdf" | "manifest") {

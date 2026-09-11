@@ -50,7 +50,7 @@ export function financeRoute(
             "Cache-Control": "no-store, private",
             "Content-Disposition": `inline; filename="${b.filename}"`,
             "Content-Security-Policy":
-              "default-src 'none'; style-src 'unsafe-inline'; frame-ancestors 'self'",
+              "default-src 'none'; style-src 'unsafe-inline'; font-src data:; img-src data:; base-uri 'none'; form-action 'none'; frame-ancestors 'self'",
             "X-Content-Type-Options": "nosniff",
             "X-Content-SHA256": b.sha256,
           },
