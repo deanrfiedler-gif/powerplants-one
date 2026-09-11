@@ -145,7 +145,7 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
     const added = upgradedGrants.filter(g => !originalIds.has(g.value.id));
     const expected = originalGrants.filter(g => g.value.user_id === "30000000-0000-4000-8000-000000000001" && g.value.capability === "shared.edit")
       .flatMap(g => ["email.read", "email.edit"].map(capability => ({ ...g.value, capability })));
-    // The combined 0018 Leads / 0019 Projects seeds add only these capabilities
+    // The combined 0018 Leads / 0019 Projects / 0020 Engineering seeds add only these capabilities
     // to the two existing synthetic coordinator scopes. Keep an exact allowlist:
     // an unrelated new grant must fail, even if its scope matches an old grant.
     const coordinatorIds = new Set([
@@ -158,7 +158,7 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
         .flatMap(g => ["crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert"]
           .map(capability => ({ ...g.value, capability }))),
       ...coordinatorGrants.filter(g => g.value.capability === "shared.edit")
-        .flatMap(g => ["project.read", "project.create", "project.edit"]
+        .flatMap(g => ["project.read", "project.create", "project.edit", "engineering.read", "engineering.create", "engineering.edit"]
           .map(capability => ({ ...g.value, capability }))),
     );
     const grantShape = (g: Record<string, unknown>) => Object.fromEntries(Object.entries(g).filter(([k]) => k !== "id"));
