@@ -1,0 +1,494 @@
+{
+  "policy": "SYN-E2-ROUTE-r01",
+  "status": "Proposed synthetic examples; not adopted operational rules",
+  "cases": [
+    {
+      "id": "R01-engineering",
+      "input": {
+        "engineering_required": "Yes",
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R01",
+        "route": "Full",
+        "category": "Project",
+        "question": null
+      }
+    },
+    {
+      "id": "R02-engineering-unknown",
+      "input": {
+        "engineering_required": "Unknown",
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R02",
+        "route": "NeedsClarification",
+        "category": null,
+        "question": "engineering_required"
+      }
+    },
+    {
+      "id": "R03-project-management",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "Yes",
+        "scope_settled": "Yes",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R03",
+        "route": "Full",
+        "category": "Project",
+        "question": null
+      }
+    },
+    {
+      "id": "R04-management-unknown",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "Unknown",
+        "scope_settled": "Yes",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R04",
+        "route": "NeedsClarification",
+        "category": null,
+        "question": "project_management_required"
+      }
+    },
+    {
+      "id": "R05-scope-open",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "No",
+        "scope_settled": "No",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R05",
+        "route": "Full",
+        "category": "Project",
+        "question": null
+      }
+    },
+    {
+      "id": "R06-scope-unknown",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "No",
+        "scope_settled": "Unknown",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R06",
+        "route": "NeedsClarification",
+        "category": null,
+        "question": "scope_settled"
+      }
+    },
+    {
+      "id": "R07-kind-unknown",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "Unknown",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R07",
+        "route": "NeedsClarification",
+        "category": null,
+        "question": "enquiry_kind"
+      }
+    },
+    {
+      "id": "R08-defined-supply",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R08",
+        "route": "Express",
+        "category": "SalesOrderCandidate",
+        "question": null
+      }
+    },
+    {
+      "id": "R09-undefined-supply",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "No",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R09",
+        "route": "Full",
+        "category": "Project",
+        "question": null
+      }
+    },
+    {
+      "id": "R10-supply-unknown",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "Unknown",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R10",
+        "route": "NeedsClarification",
+        "category": null,
+        "question": "supply_defined"
+      }
+    },
+    {
+      "id": "R11-service-prepaid",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "ServiceRepair",
+        "supply_defined": "Yes",
+        "prepayment_required": "Yes"
+      },
+      "expected": {
+        "rule": "R11",
+        "route": "Express",
+        "category": "SalesOrderCandidate",
+        "question": null
+      }
+    },
+    {
+      "id": "R12-service-not-prepaid",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "ServiceRepair",
+        "supply_defined": "Yes",
+        "prepayment_required": "No"
+      },
+      "expected": {
+        "rule": "R12",
+        "route": "Express",
+        "category": "ServiceOrderCandidate",
+        "question": null
+      }
+    },
+    {
+      "id": "R13-service-unknown",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "ServiceRepair",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R13",
+        "route": "NeedsClarification",
+        "category": null,
+        "question": "prepayment_required"
+      }
+    },
+    {
+      "id": "overlap-engineering-management",
+      "input": {
+        "engineering_required": "Yes",
+        "project_management_required": "Yes",
+        "scope_settled": "No",
+        "enquiry_kind": "Unknown",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R01",
+        "route": "Full",
+        "category": "Project",
+        "question": null
+      }
+    },
+    {
+      "id": "overlap-management-open-scope",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "Yes",
+        "scope_settled": "No",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R03",
+        "route": "Full",
+        "category": "Project",
+        "question": null
+      }
+    },
+    {
+      "id": "earlier-unknown-blocks-later-yes",
+      "input": {
+        "engineering_required": "Unknown",
+        "project_management_required": "Yes",
+        "scope_settled": "Yes",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R02",
+        "route": "NeedsClarification",
+        "category": null,
+        "question": "engineering_required"
+      }
+    },
+    {
+      "id": "irrelevant-prepayment-no",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "Yes",
+        "prepayment_required": "No"
+      },
+      "expected": {
+        "rule": "R08",
+        "route": "Express",
+        "category": "SalesOrderCandidate",
+        "question": null
+      }
+    },
+    {
+      "id": "irrelevant-prepayment-yes",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "Yes",
+        "prepayment_required": "Yes"
+      },
+      "expected": {
+        "rule": "R08",
+        "route": "Express",
+        "category": "SalesOrderCandidate",
+        "question": null
+      }
+    },
+    {
+      "id": "irrelevant-supply-unknown",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "ServiceRepair",
+        "supply_defined": "Unknown",
+        "prepayment_required": "No"
+      },
+      "expected": {
+        "rule": "R12",
+        "route": "Express",
+        "category": "ServiceOrderCandidate",
+        "question": null
+      }
+    },
+    {
+      "id": "missing-engineering_required",
+      "input": {
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R02",
+        "route": "NeedsClarification",
+        "category": null,
+        "question": "engineering_required"
+      }
+    },
+    {
+      "id": "missing-project_management_required",
+      "input": {
+        "engineering_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R04",
+        "route": "NeedsClarification",
+        "category": null,
+        "question": "project_management_required"
+      }
+    },
+    {
+      "id": "missing-scope_settled",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "No",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R06",
+        "route": "NeedsClarification",
+        "category": null,
+        "question": "scope_settled"
+      }
+    },
+    {
+      "id": "missing-enquiry_kind",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R07",
+        "route": "NeedsClarification",
+        "category": null,
+        "question": "enquiry_kind"
+      }
+    },
+    {
+      "id": "missing-supply_defined",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "DefinedSupply",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "R10",
+        "route": "NeedsClarification",
+        "category": null,
+        "question": "supply_defined"
+      }
+    },
+    {
+      "id": "missing-prepayment",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "ServiceRepair",
+        "supply_defined": "Yes"
+      },
+      "expected": {
+        "rule": "R13",
+        "route": "NeedsClarification",
+        "category": null,
+        "question": "prepayment_required"
+      }
+    },
+    {
+      "id": "invalid-enum",
+      "input": {
+        "engineering_required": "maybe",
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "Invalid",
+        "route": "Invalid",
+        "category": null,
+        "question": "engineering_required"
+      }
+    },
+    {
+      "id": "invalid-boolean",
+      "input": {
+        "engineering_required": true,
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "Invalid",
+        "route": "Invalid",
+        "category": null,
+        "question": "engineering_required"
+      }
+    },
+    {
+      "id": "invalid-unused-input",
+      "input": {
+        "engineering_required": "Yes",
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": 0,
+        "prepayment_required": "Unknown"
+      },
+      "expected": {
+        "rule": "Invalid",
+        "route": "Invalid",
+        "category": null,
+        "question": "supply_defined"
+      }
+    },
+    {
+      "id": "unsupported-extra-field",
+      "input": {
+        "engineering_required": "No",
+        "project_management_required": "No",
+        "scope_settled": "Yes",
+        "enquiry_kind": "DefinedSupply",
+        "supply_defined": "Yes",
+        "prepayment_required": "Unknown",
+        "amount": "10000"
+      },
+      "expected": {
+        "rule": "Invalid",
+        "route": "Invalid",
+        "category": null,
+        "question": null
+      }
+    }
+  ]
+}

@@ -46,3 +46,7 @@ Dean's later “Proceed” and “Continue” supply the bounded E1 authority an
 ## Guided estimating design addition — 9 September 2026
 
 Dean authorised a [first guided estimating package design](../blueprints/estimating-wizard-design.md), with [decision and handover](../decisions/estimating-wizard-pilot.md). The synthetic preview connects requirements to generated lines, protected manual adjustments and a quotation draft. It does not start E2 or E5, change the specialist Screen Systems scope, or implement a new costing service. A future template integration must explicitly reconcile E2 questionnaire snapshots, E3 source provenance and E1 exact saved-version/output contracts; no new sequence label or master parent is allocated.
+
+## E2 design invocation — 9 September 2026
+
+Dean has invoked the bounded design and rules step. [E2-D01–03](../decisions/estimating-e2-rules.md) and the [design handover](estimating-e2-design-handover.md) replace the earlier prepared-only status for design. They do not yet resolve operational G02/G03/G04 or authorise runtime implementation without adoption of the concrete synthetic policy package. E3–E6 remain unchanged.
