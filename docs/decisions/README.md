@@ -53,3 +53,4 @@ The [controlled opportunity handover proposal](crm-opportunity-handover.md) reco
 - [Private demo Email and CRM integration](demo-email-crm-integration.md) — shared desktop/mobile journey, individual fictional mailboxes and retained access boundaries.
 
 - [CI browser suite route warm-up](ci-browser-warm-up.md) — harness-only decision: compile every route before the first assertion window; no deadline, retry or product change.
+- [CI browser suite against the compiled application](ci-compiled-browser-suite.md) — additional workflow drives the unchanged suite against `npm run build` output under the unchanged synthetic-identity guard (`NODE_ENV=test`); production startup remains refused.
