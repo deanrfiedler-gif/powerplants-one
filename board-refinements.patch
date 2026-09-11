@@ -1,8 +1,13 @@
 diff --git a/src/app/crm-board-polish.css b/src/app/crm-board-polish.css
 --- a/src/app/crm-board-polish.css
 +++ b/src/app/crm-board-polish.css
-@@ -182,7 +182,8 @@ body:has(.crm-workspace) .header-account .identity-hosted {
+@@ -180,9 +180,13 @@ body:has(.crm-workspace) .header-account .identity-hosted {
+ .crm-board {
+   display: flex;
    flex-direction: column;
++  /* globals.css sets gap:16px for its two-column grid board; as a flex
++     column that became a row gap under the stage headings. */
++  gap: 0;
  }
  .crm-board-headers {
 -  padding-top: 8px;
@@ -11,7 +16,7 @@ diff --git a/src/app/crm-board-polish.css b/src/app/crm-board-polish.css
    flex: none;
  }
  .crm-board-columns {
-@@ -192,8 +193,16 @@ body:has(.crm-workspace) .header-account .identity-hosted {
+@@ -192,8 +196,8 @@ body:has(.crm-workspace) .header-account .identity-hosted {
  .crm-board-headers .crm-stage-heading {
    display: block;
    height: auto;
@@ -19,18 +24,10 @@ diff --git a/src/app/crm-board-polish.css b/src/app/crm-board-polish.css
 -  padding: 8px 12px 8px 17px;
 +  min-height: 52px;
 +  padding: 7px 12px 7px 17px;
-+}
-+/* Drag feedback marks the heading as well as the column, outer edge only. */
-+.crm-stage-heading[data-drop-active="true"]::before {
-+  background: #dcecd4;
-+}
-+.crm-stage-heading[data-drop-active="true"] {
-+  outline: 2px solid #4d863b;
-+  outline-offset: -2px;
  }
  .crm-stage-heading h2 {
    font-size: 16px;
-@@ -215,18 +224,19 @@ body:has(.crm-workspace) .header-account .identity-hosted {
+@@ -215,18 +219,19 @@ body:has(.crm-workspace) .header-account .identity-hosted {
    gap: 7px;
  }
  .crm-stage .crm-card {
@@ -54,7 +51,7 @@ diff --git a/src/app/crm-board-polish.css b/src/app/crm-board-polish.css
  }
  .crm-card-heading {
    display: flex;
-@@ -266,16 +276,30 @@ body:has(.crm-workspace) .header-account .identity-hosted {
+@@ -266,16 +271,30 @@ body:has(.crm-workspace) .header-account .identity-hosted {
    height: 14px;
  }
  .crm-card-warning {
@@ -89,7 +86,7 @@ diff --git a/src/app/crm-board-polish.css b/src/app/crm-board-polish.css
    gap: 4px;
    height: auto;
    min-height: 0;
-@@ -318,6 +342,34 @@ body:has(.crm-workspace) .header-account .identity-hosted {
+@@ -318,6 +337,34 @@ body:has(.crm-workspace) .header-account .identity-hosted {
  }
  .crm-card .crm-owner-label {
    font-size: 12px;
@@ -152,15 +149,6 @@ diff --git a/src/components/crm-worklist.tsx b/src/components/crm-worklist.tsx
    </Link>;
  }
  function useScrollMemory() {
-@@ -74,7 +74,7 @@ function Board({ data, selected, scroll, onOpen, onMove }: { data: Results; sele
-   useLayoutEffect(() => { if (ref.current) { const saved = scroll.read(); ref.current.scrollTop = saved.top; ref.current.scrollLeft = saved.left; } }, [scroll]);
-   return <div ref={ref} className="crm-board-scroll" role="region" aria-label="Opportunity Board — stage sequence" tabIndex={0} onScroll={e => { scroll.save(e.currentTarget.scrollTop, e.currentTarget.scrollLeft); }}>
-     <div className="crm-board" style={{ "--crm-stage-count": data.stages.length } as CSSProperties}>
--      <div className="crm-board-headers">{data.stages.map(stage => <header key={stage.stage_id} className="crm-stage-heading" data-selected={stage.stage_id === selected}>
-+      <div className="crm-board-headers">{data.stages.map(stage => <header key={stage.stage_id} className="crm-stage-heading" data-selected={stage.stage_id === selected} data-drop-active={destination===stage.stage_id}>
-         <h2 id={`board-${stage.stage_id}`}>{stage.stage_id}</h2><div className="crm-stage-total"><span>{valueSummary(data.items.filter(item => item.stage_id === stage.stage_id)).formatted} known</span><span>{stage.count} {stage.count === 1 ? "deal" : "deals"}</span></div>
-       </header>)}</div>
-       <div className="crm-board-columns">{data.stages.map((stage) => <section key={stage.stage_id} className="crm-stage" data-selected={stage.stage_id === selected} data-drop-stage={stage.stage_id} data-drop-active={destination===stage.stage_id}
 @@ -85,11 +85,12 @@ function Board({ data, selected, scroll, onOpen, onMove }: { data: Results; sele
              onDragStart={e=>{if(!desktop||!item.can_edit||(e.target as HTMLElement).closest(".crm-card-activity")){e.preventDefault();return;}drag.current=item.id;e.dataTransfer.effectAllowed="move";e.dataTransfer.setData("text/x-ppo-opportunity",item.id);}} onDragEnd={endDrag}>
              <Link className="crm-card-body crm-opportunity-title" href={`/crm/opportunities/${item.id}`} aria-label={item.title} draggable={false}
@@ -223,3 +211,72 @@ diff --git a/src/components/crm-worklist.tsx b/src/components/crm-worklist.tsx
        </> : <Grid data={data.data} scroll={gridScroll} />}
        <div className="crm-actions"><span className="crm-page-context">{data.data.completeness === "Complete" ? "All matching results" : data.data.window.has_more ? "Page counts and values · more pages" : "Page counts and values · final page"} · As at <Stamp value={data.data.window.as_of} /></span><button className="secondary" onClick={refresh}>Refresh from start</button>{data.data.next_cursor && <button onClick={() => setFilters((old) => ({ ...old, cursor: data.data!.next_cursor! }))}>Next page</button>}</div>
  
+diff --git a/src/components/product-icons.tsx b/src/components/product-icons.tsx
+--- a/src/components/product-icons.tsx
++++ b/src/components/product-icons.tsx
+@@ -6,6 +6,11 @@ const paths = {
+   work: "M8 4H5v17h14V4h-3 M8 3h8v4H8z M8 12h8 M8 16h5",
+   sales: "M3 7h18v14H3z M8 7V3h8v4 M3 12l9 4 9-4 M10 12h4",
+   leads: "M3 4h18l-7 8.5V21l-4-2.5v-10z",
++  pulse: "M2 12h4l2.5-7 4 14 2.5-7H22",
++  deals: "M12 2v20 M16.5 6.5A3.5 3.5 0 0 0 13 5h-1.5a3.25 3.25 0 0 0 0 6.5h1a3.25 3.25 0 0 1 0 6.5H11a3.5 3.5 0 0 1-3.5-2.5",
++  calendar: "M4 5h16v16H4z M8 2v6 M16 2v6 M4 10h16 M8 14h2 M12 14h2 M8 18h2 M12 18h2",
++  products: "M2 8h20v12H2z M2 8l3-4h14l3 4 M12 4v16",
++  insights: "M4 20V11 M10 20V4 M16 20v-6 M2 20h20",
+   estimate: "M5 2h14v20H5z M8 6h8 M8 11h1 M12 11h1 M16 11h1 M8 15h1 M12 15h1 M16 15h1 M8 19h1 M12 19h1 M16 19h1",
+   engineering: "m3 17 14-14 4 4L7 21z M13 7l4 4 M10 10l2 2 M7 13l4 4",
+   projects: "M3 5h7l2 3h9v13H3z",
+diff --git a/src/components/product-navigation.tsx b/src/components/product-navigation.tsx
+--- a/src/components/product-navigation.tsx
++++ b/src/components/product-navigation.tsx
+@@ -18,8 +18,9 @@ function moduleFor(path: string) {
+   if (matches(path, "/service") || service.some(([href]) => matches(path, href))) return { name: "Service", tabs: service };
+   if (customers.some(([href]) => matches(path, href))) return { name: "Customers", tabs: customers };
+   if (matches(path, "/crm/leads")) return { name: "Leads", tabs: [] };
+-  if (path.startsWith("/crm/")) return { name: "CRM Sales", tabs: [] };
+-  if (matches(path, "/email") || matches(path, "/calendar")) return { name: "Email & Calendar", tabs: [] };
++  if (path.startsWith("/crm/")) return { name: "Deals", tabs: [] };
++  if (matches(path, "/email")) return { name: "Inbox", tabs: [] };
++  if (matches(path, "/calendar")) return { name: "Activities", tabs: [] };
+   if (matches(path, "/estimating")) return { name: "Estimating", tabs: [] };
+   if (matches(path, "/projects")) return { name: "Projects", tabs: [] };
+   if (matches(path, "/finance")) return { name: "Finance", tabs: [] };
+@@ -95,15 +96,26 @@ function ProductNavigationView({ path, wide }: { path: string; wide: boolean })
+     {item.href ? <Link href={item.href} className="product-nav-item" aria-current={current === item.label ? "page" : undefined} onClick={() => setExpanded(false)} title={item.label}><ProductIcon name={item.icon} /><span>{item.label}</span></Link>
+       : <span className="product-nav-item planned-nav" aria-disabled="true" title={`${item.label} — planned`}><ProductIcon name={item.icon} /><span>{item.label} · Planned</span></span>}
+   </div>);
+-  const mobile = items.filter(i=>["My Work","CRM Sales","Service","Contacts"].includes(i.label));
+-  const primary = items.filter(item => ["Leads", "CRM Sales", "Estimating", "Engineering", "Projects", "Service", "Supply Chain", "Finance"].includes(item.label));
+-  const railLabel = (label: string) => label === "CRM Sales" ? "Sales / CRM" : label === "Estimating" ? "Estimating & Quotation" : label;
++  const mobile = items.filter(i=>["My Work","CRM Sales","Contacts"].includes(i.label));
++  // The rail carries the Sales section. Every other module lives under More.
++  const primary: { label: string; icon: ProductIconName; href?: string }[] = [
++    { label: "Pulse", icon: "pulse" },
++    { label: "Leads", icon: "leads", href: "/crm/leads" },
++    { label: "Deals", icon: "deals", href: "/crm/opportunities" },
++    { label: "Inbox", icon: "mail", href: "/email" },
++    { label: "Activities", icon: "calendar", href: "/calendar" },
++    { label: "Contacts", icon: "customers", href: "/customers" },
++    { label: "Products", icon: "products" },
++    { label: "Insights", icon: "insights" },
++  ];
++  const railLabel = (label: string) => label;
+   const groups: { title: string; links: { label: string; icon: ProductIconName; href?: string }[] }[] = [
+     { title: "My workspace", links: items.filter(item => ["My Work", "Email & Calendar"].includes(item.label)) },
+     { title: "Customer information", links: [
+       { label: "Customers", icon: "customers", href: "/customers" }, { label: "Contacts", icon: "person", href: "/people" },
+       { label: "Sites", icon: "sites", href: "/sites" }, { label: "Equipment", icon: "supply", href: "/equipment" },
+     ] },
++    { title: "Other modules", links: items.filter(item => ["Estimating", "Engineering", "Projects", "Service", "Supply Chain", "Finance"].includes(item.label)) },
+     { title: "Shared resources", links: [{ label: "Documents", icon: "documents" }, { label: "Service reports", icon: "list", href: "/service/reports" }] },
+     { title: "Administration & support", links: items.filter(item => ["Exceptions and recovery", "Foundation checks"].includes(item.label)) },
+   ];
+@@ -134,7 +146,7 @@ function ProductNavigationView({ path, wide }: { path: string; wide: boolean })
+   </section>
+   <div id="shell-nav-tooltip" className="ppo-nav-tooltip" role="tooltip" hidden={!tip || !wide} style={{ top: tip?.top }} onPointerEnter={() => { if (tipTimer.current) clearTimeout(tipTimer.current); }} onPointerLeave={hideTip}>{tip?.label}</div>
+   <nav className="mobile-navigation" aria-label="Mobile navigation">
+-    {mobile.map(item=><Link key={item.label} href={item.href!} aria-current={current===item.label?"page":undefined}><ProductIcon name={item.icon}/><span>{item.label==="CRM Sales"?"CRM":item.label}</span></Link>)}
++    {mobile.map(item=><Link key={item.label} href={item.href!} aria-current={current===(item.label==="CRM Sales"?"Deals":item.label)?"page":undefined}><ProductIcon name={item.icon}/><span>{item.label==="CRM Sales"?"Deals":item.label}</span></Link>)}
+     <button id="navigation-toggle" type="button" aria-label="Menu" aria-haspopup="dialog" aria-expanded={expanded} onClick={()=>setExpanded(true)}><ProductIcon name="menu"/><span>More</span></button>
+   </nav>
+   <dialog ref={dialog} onKeyDown={e => {
