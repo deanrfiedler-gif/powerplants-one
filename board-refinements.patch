@@ -1,0 +1,225 @@
+diff --git a/src/app/crm-board-polish.css b/src/app/crm-board-polish.css
+--- a/src/app/crm-board-polish.css
++++ b/src/app/crm-board-polish.css
+@@ -182,7 +182,8 @@ body:has(.crm-workspace) .header-account .identity-hosted {
+   flex-direction: column;
+ }
+ .crm-board-headers {
+-  padding-top: 8px;
++  padding-top: 6px;
++  padding-bottom: 0;
+   flex: none;
+ }
+ .crm-board-columns {
+@@ -192,8 +193,16 @@ body:has(.crm-workspace) .header-account .identity-hosted {
+ .crm-board-headers .crm-stage-heading {
+   display: block;
+   height: auto;
+-  min-height: 62px;
+-  padding: 8px 12px 8px 17px;
++  min-height: 52px;
++  padding: 7px 12px 7px 17px;
++}
++/* Drag feedback marks the heading as well as the column, outer edge only. */
++.crm-stage-heading[data-drop-active="true"]::before {
++  background: #dcecd4;
++}
++.crm-stage-heading[data-drop-active="true"] {
++  outline: 2px solid #4d863b;
++  outline-offset: -2px;
+ }
+ .crm-stage-heading h2 {
+   font-size: 16px;
+@@ -215,18 +224,19 @@ body:has(.crm-workspace) .header-account .identity-hosted {
+   gap: 7px;
+ }
+ .crm-stage .crm-card {
++  position: relative;
+   display: grid;
+-  grid-template-rows: 158px 108px;
++  grid-template-rows: auto auto;
+   border-color: #d8dee6;
+   box-shadow: 0 1px 2px #242a370a;
+ }
+ .crm-card .crm-card-body.crm-opportunity-title {
+   display: grid;
+-  grid-template-rows: 42px 21px 24px 27px;
+-  gap: 4px;
++  grid-template-rows: auto auto auto auto;
++  gap: 5px;
+   height: auto;
+   min-height: 0;
+-  padding: 10px 10px 8px;
++  padding: 10px 34px 9px 10px;
+ }
+ .crm-card-heading {
+   display: flex;
+@@ -266,16 +276,30 @@ body:has(.crm-workspace) .header-account .identity-hosted {
+   height: 14px;
+ }
+ .crm-card-warning {
+-  flex: none;
++  position: absolute;
++  top: 6px;
++  right: 6px;
++  z-index: 2;
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  width: 28px;
++  height: 28px;
++  border-radius: 6px;
+   color: #865900;
+ }
++.crm-card-warning:hover,
++.crm-card-warning:focus-visible {
++  background: #fff5df;
++  color: #6b4700;
++}
+ .crm-card-warning .product-icon {
+-  width: 20px;
+-  height: 20px;
++  width: 19px;
++  height: 19px;
+ }
+ .crm-card .crm-card-activity {
+   display: grid;
+-  grid-template-rows: 19px 35px 20px;
++  grid-template-rows: auto auto auto;
+   gap: 4px;
+   height: auto;
+   min-height: 0;
+@@ -318,6 +342,34 @@ body:has(.crm-workspace) .header-account .identity-hosted {
+ }
+ .crm-card .crm-owner-label {
+   font-size: 12px;
++  display: flex;
++  align-items: center;
++  gap: 6px;
++  min-width: 0;
++}
++/* An initials circle means a PPO user, matching the shell account control.
++   The customer contact keeps the outline glyph: it is a record, not a user. */
++.crm-owner-avatar {
++  display: inline-flex;
++  align-items: center;
++  justify-content: center;
++  flex: none;
++  width: 20px;
++  height: 20px;
++  border-radius: 50%;
++  background: #dfe4ea;
++  color: #3f4855;
++  font-size: 9px;
++  font-weight: 600;
++  letter-spacing: 0.02em;
++}
++.crm-card .crm-card-activity.state-Overdue .crm-owner-avatar {
++  background: #f7dcd9;
++  color: #8c2018;
++}
++.crm-card .crm-card-activity:is(.state-Needed, .state-DueNeeded) .crm-owner-avatar {
++  background: #f4e4c0;
++  color: #6b4700;
+ }
+ .crm-page-context {
+   margin-right: auto;
+diff --git a/src/components/crm-worklist.tsx b/src/components/crm-worklist.tsx
+--- a/src/components/crm-worklist.tsx
++++ b/src/components/crm-worklist.tsx
+@@ -5,7 +5,6 @@ import type { CSSProperties } from "react";
+ import { DealDialog, dealAmount, dealClose, useDesktopCRM, type DealRecord, type StageUndo } from "./crm-deal-controls";
+ import type { OperationReceipt } from "../platform/operations";
+ import { ProductIcon } from "./product-icons";
+-import { HeaderContent } from "./header-content";
+ import { valueSummary } from "../crm/value-summary";
+ import type { listOpportunities, worklistOptions, WorklistItem } from "../crm/worklist";
+ import { useIdentity } from "./business-session";
+@@ -47,6 +46,7 @@ function Identity({ item }: { item: WorklistItem }) {
+     <p>{item.organisation_name}<br />{item.contact_name ?? "Contact not yet identified"}<br />{item.site_name ?? "Site not yet identified"}</p>
+   </>;
+ }
++const initials = (name: string) => name.split(/\s+/).filter(Boolean).slice(-2).map(w => w[0]).join("").toUpperCase();
+ const dueDate = new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "short", timeZone: "Australia/Brisbane" });
+ function CardAction({ item }: { item: WorklistItem }) {
+   const [dismissed, setDismissed] = useState(false);
+@@ -56,7 +56,7 @@ function CardAction({ item }: { item: WorklistItem }) {
+   return <Link className={`crm-next-action crm-card-activity state-${item.next_action_state}`} draggable={false} aria-describedby={`crm-owner-${item.id}`} onFocus={() => setDismissed(false)} onKeyDown={e => { if (e.key === "Escape") { e.stopPropagation(); setDismissed(true); } }} href={active&&item.next_action_id?`/work/${item.next_action_id}`:`/crm/opportunities/${item.id}?section=timeline&activity=new`}>
+     <strong><ProductIcon name="clock"/><span>{status}</span></strong>
+     <span className="crm-action-text">{active?item.next_action_summary:item.next_action_state==="Needed"?"Plan the next activity":"Check current activity access"}</span>
+-    <span id={`crm-owner-${item.id}`} className="crm-owner-label crm-help-trigger" aria-label={ownerDescription} data-tooltip={ownerDescription} data-dismissed={dismissed} onMouseEnter={() => setDismissed(false)}><ProductIcon name="person"/><span>{item.action_owner_name??"Not assigned"}</span></span>
++    <span id={`crm-owner-${item.id}`} className="crm-owner-label crm-help-trigger" aria-label={ownerDescription} data-tooltip={ownerDescription} data-dismissed={dismissed} onMouseEnter={() => setDismissed(false)}><span className="crm-owner-avatar" aria-hidden="true">{initials(item.action_owner_name ?? "?")}</span><span>{item.action_owner_name??"Not assigned"}</span></span>
+   </Link>;
+ }
+ function useScrollMemory() {
+@@ -74,7 +74,7 @@ function Board({ data, selected, scroll, onOpen, onMove }: { data: Results; sele
+   useLayoutEffect(() => { if (ref.current) { const saved = scroll.read(); ref.current.scrollTop = saved.top; ref.current.scrollLeft = saved.left; } }, [scroll]);
+   return <div ref={ref} className="crm-board-scroll" role="region" aria-label="Opportunity Board — stage sequence" tabIndex={0} onScroll={e => { scroll.save(e.currentTarget.scrollTop, e.currentTarget.scrollLeft); }}>
+     <div className="crm-board" style={{ "--crm-stage-count": data.stages.length } as CSSProperties}>
+-      <div className="crm-board-headers">{data.stages.map(stage => <header key={stage.stage_id} className="crm-stage-heading" data-selected={stage.stage_id === selected}>
++      <div className="crm-board-headers">{data.stages.map(stage => <header key={stage.stage_id} className="crm-stage-heading" data-selected={stage.stage_id === selected} data-drop-active={destination===stage.stage_id}>
+         <h2 id={`board-${stage.stage_id}`}>{stage.stage_id}</h2><div className="crm-stage-total"><span>{valueSummary(data.items.filter(item => item.stage_id === stage.stage_id)).formatted} known</span><span>{stage.count} {stage.count === 1 ? "deal" : "deals"}</span></div>
+       </header>)}</div>
+       <div className="crm-board-columns">{data.stages.map((stage) => <section key={stage.stage_id} className="crm-stage" data-selected={stage.stage_id === selected} data-drop-stage={stage.stage_id} data-drop-active={destination===stage.stage_id}
+@@ -85,11 +85,12 @@ function Board({ data, selected, scroll, onOpen, onMove }: { data: Results; sele
+             onDragStart={e=>{if(!desktop||!item.can_edit||(e.target as HTMLElement).closest(".crm-card-activity")){e.preventDefault();return;}drag.current=item.id;e.dataTransfer.effectAllowed="move";e.dataTransfer.setData("text/x-ppo-opportunity",item.id);}} onDragEnd={endDrag}>
+             <Link className="crm-card-body crm-opportunity-title" href={`/crm/opportunities/${item.id}`} aria-label={item.title} draggable={false}
+               onClick={e=>{if(Date.now()<suppress.current){e.preventDefault();return;}if(desktop&&!e.ctrlKey&&!e.metaKey&&!e.shiftKey&&!e.altKey){e.preventDefault();onOpen(item.id);}}}>
+-              <span className="crm-card-heading"><span className="crm-card-title">{item.title}</span>{["Needed", "DueNeeded"].includes(item.next_action_state) && <span className="crm-card-warning" title={labels[item.next_action_state]} aria-label={labels[item.next_action_state]}><ProductIcon name="warning"/></span>}</span>
++              <span className="crm-card-heading"><span className="crm-card-title">{item.title}</span></span>
+               <span className="crm-card-company" title={item.organisation_name}>{item.organisation_name}</span>
+               <span className="crm-card-value"><strong>{dealAmount(item.value_amount)}</strong><span className="crm-card-close"><ProductIcon name="service"/>{dealClose(item.expected_close_date)}</span></span>
+               <span className="crm-card-contact" title={`Customer contact: ${item.contact_name??"Not yet identified"}`}><ProductIcon name="person"/><span>{item.contact_name??"Contact not yet identified"}</span></span>
+             </Link>
++            {["Needed", "DueNeeded"].includes(item.next_action_state) && <Link className="crm-card-warning" href={`/crm/opportunities/${item.id}?section=timeline&activity=new`} draggable={false} title={`${labels[item.next_action_state]} \u2014 plan an activity`} aria-label={`${labels[item.next_action_state]} for ${item.title}. Plan an activity`}><ProductIcon name="warning"/></Link>}
+             <CardAction item={item} />
+           </li>)}
+         </ul>
+@@ -117,14 +118,13 @@ function Grid({ data, scroll }: { data: Results; scroll: ReturnType<typeof useSc
+ }
+ 
+ export function SalesWorklist() {
+-  const desktop = useDesktopCRM();
+   const p = useIdentity();
+   const [dialog,setDialog]=useState<{id:string;mode:"snapshot"|"stage";stage?:string;undo?:StageUndo}|null>(null),[undo,setUndo]=useState<StageUndo|null>(null),[feedback,setFeedback]=useState("");
+ 
+   const [filters, setFilters] = useState(initial);
+   const boardScroll = useScrollMemory(), gridScroll = useScrollMemory();
+   const [view, setView] = useState<"Board" | "Grid">("Board");
+-  const [selected, setSelected] = useState("Enquiry");
++  const [selected, setSelected] = useState("");
+   const [filtersOpen, setFiltersOpen] = useState(false);
+   const data = useCrmResource<Results>(`crm/opportunities?${query(filters)}`, true);
+   // Clear query text, selected IDs and option-search components after current access is denied.
+@@ -138,17 +138,17 @@ export function SalesWorklist() {
+   const change = (key: keyof typeof initial, value: string) => setFilters((old) => ({ ...old, [key]: value, cursor: "", ...(key === "company_id" ? { site_id: "" } : {}) }));
+   const saved=(receipt:OperationReceipt,old:DealRecord,stage:boolean)=>{setDialog(null);if(stage){setUndo({id:old.id,version:receipt.record_version,stage_id:old.stage_id,qualification_note:old.qualification_note,identification_activity_id:old.identification_activity_id});setFeedback(`${old.title} moved to ${receipt.state}.`);}setFilters(old=>({...old,cursor:""}));data.reload();};
+   const refresh = () => { setFilters((old) => ({ ...old, cursor: "" })); data.reload(); };
+-  const scopedSearch = !isDenied && <label className="crm-header-search"><ProductIcon name="search"/><span className="sr-only">Search opportunities</span><input name="sales-search" type="search" placeholder="Search opportunities" value={filters.q} onChange={e => change("q", e.target.value)}/></label>;
++  const stageIds: string[] = data.data?.stages.map(s => s.stage_id) ?? [];
++  // Never assume a stage name: fall back to the first stage the server returns.
++  const activeStage = stageIds.includes(selected) ? selected : (stageIds[0] ?? "");
+   const totals = data.data ? valueSummary(data.data.items) : null;
+   return <section className="crm-workspace" aria-label="Sales worklist">
+     <h1 className="sr-only">Sales worklist</h1>
+-    {!desktop && <HeaderContent slot="search">{scopedSearch}</HeaderContent>}
+     <div className="crm-toolbar"><div className="crm-view-controls" role="group" aria-label="Opportunity presentation">
+       {(["Board", "Grid"] as const).map((value) => <button key={value} className={view === value ? "" : "secondary"} aria-pressed={view === value} onClick={() => setView(value)}><ProductIcon name={value === "Board" ? "board" : "list"} />{value === "Grid" ? "List" : value}</button>)}
+     </div>
+     {!data.error && data.data?.can_create && <Link className="primary-link crm-new-opportunity" href="/crm/opportunities/new" aria-label="New opportunity"><ProductIcon name="plus" />Opportunity</Link>}
+     {!isDenied && <>
+-      {desktop && scopedSearch}
+       <span className="crm-pipeline-label"><ProductIcon name="sales"/>Sales pipeline</span>
+       <button className="secondary crm-filter-toggle" aria-expanded={filtersOpen} aria-controls="crm-filter-panel" onClick={() => setFiltersOpen(!filtersOpen)}><ProductIcon name="filter" /><span>Filters<span className="sr-only"> and sort</span></span></button>
+       <label className="crm-sort"><span className="sr-only">Sort</span><select aria-label="Sort" value={filters.sort} onChange={e => change("sort", e.target.value)}><option value="Reference">Reference order</option><option value="Title">Title A–Z</option><option value="Newest">Newest first</option></select></label>
+@@ -174,8 +174,8 @@ export function SalesWorklist() {
+     {!data.error && data.data && <>
+       <div className="source-stamp crm-worklist-stamp"><strong>{data.data.items.length} {data.data.items.length === 1 ? "opportunity" : "opportunities"}{data.data.completeness === "Complete" ? "" : " on this page"}</strong><span>{totals?.formatted} known{totals?.unknown ? ` · ${totals.unknown} not estimated` : ""}</span><span className="crm-summary-basis">Open · AUD, excl. GST</span></div>
+       {view === "Board" ? <>
+-        <div className="crm-stage-navigation" role="group" aria-label="Choose Board stage">{data.data.stages.map((stage) => <button key={stage.stage_id} aria-pressed={selected === stage.stage_id} className={selected === stage.stage_id ? "" : "secondary"} onClick={() => setSelected(stage.stage_id)}>{stage.stage_id} ({stage.count})</button>)}</div>
+-        <Board data={data.data} selected={selected} scroll={boardScroll} onOpen={id=>setDialog({id,mode:"snapshot"})} onMove={(id,stage)=>setDialog({id,mode:"stage",stage})} />
++        <div className="crm-stage-navigation" role="group" aria-label="Choose Board stage">{data.data.stages.map((stage) => <button key={stage.stage_id} aria-pressed={activeStage === stage.stage_id} className={activeStage === stage.stage_id ? "" : "secondary"} onClick={() => setSelected(stage.stage_id)}>{stage.stage_id} ({stage.count})</button>)}</div>
++        <Board data={data.data} selected={activeStage} scroll={boardScroll} onOpen={id=>setDialog({id,mode:"snapshot"})} onMove={(id,stage)=>setDialog({id,mode:"stage",stage})} />
+       </> : <Grid data={data.data} scroll={gridScroll} />}
+       <div className="crm-actions"><span className="crm-page-context">{data.data.completeness === "Complete" ? "All matching results" : data.data.window.has_more ? "Page counts and values · more pages" : "Page counts and values · final page"} · As at <Stamp value={data.data.window.as_of} /></span><button className="secondary" onClick={refresh}>Refresh from start</button>{data.data.next_cursor && <button onClick={() => setFilters((old) => ({ ...old, cursor: data.data!.next_cursor! }))}>Next page</button>}</div>
+ 
