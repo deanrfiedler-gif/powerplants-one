@@ -18,3 +18,4 @@ Retain frozen source bytes. Record new design decisions separately. Future worki
 ## Accepted Service design reference
 
 [Job Pack r02 HTML](ui/job-pack/powerplants-one-job-pack-r02.html) and its [original audit](ui/job-pack/powerplants-one-job-pack-audit-r02.md) are preserved unchanged following Dean’s 10 September 2026 design acceptance. The [decision](../decisions/job-pack-design.md) records that acceptance separately from outstanding application and browser/print verification. Exact hashes are in the source manifest.
+[Field Technicians r04](powerplants-one-field-technicians-r04.html) — exact accepted standalone presentation; illustrative records remain examples. [Approval and application mapping](../decisions/field-technicians-design.md).

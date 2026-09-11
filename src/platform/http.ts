@@ -2,7 +2,7 @@ import "server-only";
 import { randomUUID, timingSafeEqual } from "node:crypto";
 import { NextResponse, type NextRequest } from "next/server";
 import { runtimeConfig } from "./config";
-import { AppError } from "./errors";
+import { AppError, unexpectedFailureCategory } from "./errors";
 import { resolveIdentity, sessionCookie } from "./identity";
 export function localRequest(request: NextRequest, mutation = false) {
   const config = runtimeConfig(),
@@ -73,11 +73,11 @@ export function failure(error: unknown) {
       : new AppError(
           503,
           "DependencyUnavailable",
-          "The local database is unavailable. Check setup and try again.",
+          "The request could not be completed. Try again using the recovery controls, or retain the support reference if the problem continues.",
         );
   // No connection strings, payloads, SQL or stack traces in client errors/log evidence.
   if (!(error instanceof AppError))
-    console.error(JSON.stringify({ correlation_id, code: e.code }));
+    console.error(JSON.stringify({ correlation_id, code: e.code, category: unexpectedFailureCategory(error) }));
   return reply(
     {
       code: e.code,

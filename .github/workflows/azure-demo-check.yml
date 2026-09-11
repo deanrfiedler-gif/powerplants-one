@@ -33,9 +33,16 @@ jobs:
           node-version: 24.20.0
           cache: npm
       - run: npm install --global npm@11.19.0 && npm ci
+      - name: Validate deployment workflow expressions
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location https://github.com/rhysd/actionlint/releases/download/v1.7.7/actionlint_1.7.7_linux_amd64.tar.gz --output "$RUNNER_TEMP/actionlint.tar.gz"
+          echo "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757  $RUNNER_TEMP/actionlint.tar.gz" | sha256sum --check
+          tar -xzf "$RUNNER_TEMP/actionlint.tar.gz" -C "$RUNNER_TEMP" actionlint
+          "$RUNNER_TEMP/actionlint" -shellcheck='' .github/workflows/azure-demo-deploy.yml .github/workflows/azure-demo-check.yml
       - run: npm run lint && npm run typecheck && npm run test:unit
       - name: Verify hosted identity mapping against disposable PostgreSQL
-        run: node --import tsx --test tests/demo/database.test.ts
+        run: node --import tsx --test --test-concurrency=1 tests/demo/database.test.ts tests/demo/upgrade.test.ts
       - name: Desktop and phone UI with individual invited actor fixtures
         run: |
           python3 - <<'PYENV'
