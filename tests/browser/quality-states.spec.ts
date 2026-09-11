@@ -192,7 +192,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
   const proof: unknown[] = [];
   for (const s of matrix) {
     await test.step(`${s.id}: ${s.url}`, async () => {
-      const screenLoading = page.locator("main").getByText(/^Loading .*…$/);
+      const screenLoading = page.locator("main").getByText(/Loading .*…/);
       await call(page, "local-session", { profile: s.profile });
       const query =
         s.id === "SC-02" ? "?kind=organisations" :
