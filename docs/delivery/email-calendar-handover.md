@@ -36,7 +36,7 @@ Known review limits: full layout/keyboard/phone QA must be completed in an avail
 
 This work is intended for a dedicated design branch and reviewable PR under PPO-009 / #9. The PR's actual commit/check state is the publication record; no merged-main or independent review claim follows from this handover alone.
 
-Next: finish the browser review of this concrete artifact, then implement one persisted synthetic Email → Opportunity link → internal follow-up journey using the retained server services and a synthetic provider adapter. Add real Microsoft reads only after the pilot's named-account, authentication, retention and consent prerequisites are verified and that live step is authorised. No live account setup, purchase, deployment or company message is required to review the current package.
+Next from this design package was the persisted synthetic Email → Opportunity link → internal follow-up journey, now implemented separately in [PR #64](https://github.com/deanrfiedler-gif/powerplants-one/pull/64) and [ADR-0020](../decisions/ADR-0020-email-calendar-synthetic-journey.md). Any later step is real Microsoft reads only after the pilot's named-account, authentication, retention and consent prerequisites are verified and that live step is authorised. No live account setup, purchase, deployment or company message is required to review the current package.
 
 ### GitHub review evidence
 
