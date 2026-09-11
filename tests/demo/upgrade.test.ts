@@ -113,7 +113,16 @@ test("a baseline executed from Windows CRLF SQL upgrades without rewriting histo
   await upgradeExistingDemo(name, tenant, true);
   const final = await ledger();
   assert.deepEqual(final.filter(r => r.row.version <= 17), baseline);
-  assert.deepEqual(await rows("public.ppo_demo_migrations"), identities);
+  // The hosted track now carries 0002 (Gmail connection): the CRLF identity
+  // baseline row must survive with its original checksum, and version 2 must be
+  // recorded once with the LF digest of its source.
+  const demoLedger = await rows("public.ppo_demo_migrations");
+  assert.deepEqual(demoLedger.filter(r => r.row.version === 1), identities);
+  assert.deepEqual(demoLedger.map(r => r.row.version).sort(), [1, 2]);
+  assert.equal(
+    demoLedger.find(r => r.row.version === 2)?.row.sha256,
+    digest(await readFile(new URL("../../db/demo/0002-gmail-connection.sql", import.meta.url), "utf8")),
+  );
   assert.equal(final.length, baseline.length + 2);
   assert.ok((await db.query("SELECT to_regclass('ppo.projects') AS relation")).rows[0].relation);
 });
