@@ -20,7 +20,7 @@ Powerplants One is Dean's personal synthetic prototype of a seven-domain operati
 | Hosted Azure demo | **Deployed from `cb358405`** (now 14 merges behind `main`) by manual run 34526927716 (`upgrade-and-deploy`, 10 September 2026 20:31 UTC, owner-confirmed). Database upgraded in place to migration 19 with records and invitations retained; `/healthz` returned 200 and anonymous CRM API access returned 401. **Pending (deferred by owner):** sign-in on the new image, then a saved Leads record, Gantt schedule and Finance draft confirmed after reload; a fresh `upgrade-and-deploy` to carry the 11 September merges. | [Run 34526927716](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34526927716) · [Runbook](delivery/azure-private-demo.md) · [Upgrade decision](decisions/azure-existing-demo-upgrade.md) |
 | Branch protection | **Not enabled — recommended now.** Three merges in two days went past a red or unfinished check (#110 with its full job running; #80 with Documentation red; #111/#97 as their full jobs completed). Require at least Documentation assurance and Application assurance on `main`; add the compiled suite after its five-run record. | Repository settings (owner) |
 | Browser-suite stalls | Root cause: cold dev-server route compilation inside 5 s assertion windows (#113). Warm-up merged (#114, `d42c9f4`); compiled suite merged (#115, `62b8652`). Acceptance in progress: warm-up needs three consecutive green full runs, compiled suite five; no first-desktop-pass stall observed since. | [#113](https://github.com/deanrfiedler-gif/powerplants-one/issues/113) · [Warm-up](decisions/ci-browser-warm-up.md) · [Compiled suite](decisions/ci-compiled-browser-suite.md) |
-| Migrations | 0001–0019 registered; 0016 reserved for the Assistant branch; 0020 proposed by PR #108 | `scripts/migration-registry.ts` |
+| Migrations | Local track 0001–0019 registered; 0016 reserved for the Assistant branch; 0020 proposed by PR #108. Separate hosted-only track `db/demo`: 0001 identity applied; 0002 Gmail connection proposed on PR #117 and **not applied to the hosted database** | `scripts/migration-registry.ts` |
 
 ## 3. Domain state
 
@@ -35,13 +35,13 @@ Powerplants One is Dean's personal synthetic prototype of a seven-domain operati
 | Projects & Commercial Delivery | Gantt r10 register, manual multi-year schedules (migration 0019). [Handover](delivery/projects-gantt-integration.md) | — | r02 interactive review published (#81) | J1–J5 acceptance; Smartsheet transition (#12) |
 | Supply Chain Management | Nothing | — | — | PPO-013 (#13) |
 | Finance & Commercial Controls | P10 handoffs, allocations, synthetic targets, reconciliation, restricted OUT-14; stale-context guard on handoff screens (#111, `2988dde`). [P10 handover](delivery/p10-handover.md) | — | — | Real Finance definitions (D-017); MYOB evidence (#2) |
-| Shared platform | Workspace/identity/grants/audit/receipts/outbox, desktop shell r05, login r02, Entra sign-in for the hosted demo; private demo package defined (#60); repository housekeeping record (#80) | — | Customer portal CP1–CP5 (#50/#51) | — |
+| Shared platform | Workspace/identity/grants/audit/receipts/outbox, desktop shell r05, login r02, Entra sign-in for the hosted demo; private demo package defined (#60); repository housekeeping record (#80) | Gmail connection schema and hosted migration track — PR #117 (draft; [ADR-0021](decisions/ADR-0021-gmail-first-real-provider.md)); schema and operator scripts only | Customer portal CP1–CP5 (#50/#51) | Gmail OAuth routes, sync worker, message display, purge and negative-authorisation tests |
 
 ## 4. Open work and dispositions
 
 | Group | Items | Next action |
 |---|---|---|
-| Feature integration | #108 Engineering r02 (draft, migration 0020) | Fix from its three short job logs (leads, Email/Calendar, own job); merge only on green full and compiled runs; keep human-gated |
+| Feature integration | #108 Engineering r02 (draft, migration 0020); #117 Gmail connection schema (draft, hosted track 0002) | #108: fix from its three short job logs (leads, Email/Calendar, own job); merge only on green full and compiled runs; keep human-gated. #117: land the schema and operator changes before any Google configuration, then build OAuth, sync, display and purge in separate reviewed slices |
 | Design adoption (docs) | #79 guided estimating wizard (draft) | Merge on green; it inherited the instructions-length failure corrected by #118 |
 | Merged 11 September | #111 Finance guard, #97 Field Technicians r04, #112 STATUS snapshot, #114 route warm-up, #115 compiled suite, #104 Job Pack r02, #78 E2 routing, #60 demo package, #116 STATUS note, #80 housekeeping, #81 Projects r02 review, #68 Facility fields, #65 Assistant design, #77 quotation builder, #118 instructions length | — |
 | Closed as superseded | #58, #82, #63, #67 and the automated CI-fix set #71 #74 #87 #93–#96 #98–#102 | — |
@@ -51,7 +51,7 @@ Shared conflict points for any rebase: `docs/STATUS.md`, `docs/standards/documen
 
 ## 5. Decision state
 
-D-003 is resolved for this personal prototype (Powerplants One, PPO, independent naming). D-004/D-022/D-029 are partially resolved; the other 25 master decisions remain open. [Current evidence treatment](prototype/decisions-and-evidence.md) separates useful design detail from operational closure evidence. The ADR sequence runs ADR-0001–0018 and ADR-0020; ADR-0019 was never allocated. Dean owns prototype decisions; proposed department roles assign no employees and establish no corporate sponsorship.
+D-003 is resolved for this personal prototype (Powerplants One, PPO, independent naming). D-004/D-022/D-029 are partially resolved; the other 25 master decisions remain open. [Current evidence treatment](prototype/decisions-and-evidence.md) separates useful design detail from operational closure evidence. The ADR sequence runs ADR-0001–0018, ADR-0020 and ADR-0021 (proposed on PR #117); ADR-0019 was never allocated. Dean owns prototype decisions; proposed department roles assign no employees and establish no corporate sponsorship.
 
 ## 6. Boundaries that still hold
 
