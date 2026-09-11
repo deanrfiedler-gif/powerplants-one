@@ -43,6 +43,8 @@ jobs:
         run: |
           python3 docs/testing/estimating-design-check.py
           node docs/blueprints/estimating-design-check.mjs
+          node docs/testing/estimating-wizard-check.mjs
+          node docs/testing/estimating-wizard-browser-check.mjs
           node docs/testing/estimating-e2-design-check.mjs
       - name: Retain synthetic design evidence
         if: always()

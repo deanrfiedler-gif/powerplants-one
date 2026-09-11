@@ -44,7 +44,7 @@ const ledger = () =>
   rows("SELECT * FROM public.ppo_migrations ORDER BY version");
 
 test("fresh combined installation retains both registries and both domains through repeat migration and seed", async () => {
-  await atVersion(19);
+  await atVersion(20);
   await exerciseBoth();
 });
 
@@ -132,7 +132,7 @@ async function exerciseBoth() {
   const hashes = await ledger();
   assert.deepEqual(
     hashes.filter((r) => r.version >= 18).map((r) => r.version),
-    [18, 19],
+    [18, 19, 20],
   );
   assert.deepEqual(
     (
@@ -140,7 +140,7 @@ async function exerciseBoth() {
         "SELECT version FROM ppo.seed_receipts WHERE version>=18 ORDER BY version",
       )
     ).map((r) => r.version),
-    [18, 19],
+    [18, 19, 20],
   );
   await migrate();
   await seed();

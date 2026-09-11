@@ -2,6 +2,7 @@ import type { Capability } from "../platform/permissions";
 
 export type QuickAction = { id: string; label: string; href: string; module: string };
 const actions: (QuickAction & { requires: Capability[] })[] = [
+  { id: "engineering", label: "Engineering request", href: "/engineering?create=1", module: "Engineering", requires: ["engineering.read", "engineering.create"] },
   { id: "lead", label: "Lead", href: "/crm/leads?create=1", module: "CRM Sales", requires: ["crm.lead.read", "crm.lead.create"] },
   { id: "project", label: "Project", href: "/projects/new", module: "Projects", requires: ["project.read", "project.create"] },
   { id: "opportunity", label: "Opportunity", href: "/crm/opportunities/new", module: "CRM Sales", requires: ["crm.opportunity.read", "crm.opportunity.create"] },

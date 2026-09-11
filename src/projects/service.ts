@@ -29,7 +29,7 @@ type ProjectRow = Omit<Project, "updated_at" | "can_edit"> & {
 const projectSelect = `SELECT p.*,p.target_date::text AS target_date,o.display_name AS customer_name,s.display_name AS site_name,s.timezone,u.display_name AS coordinator_name FROM ppo.projects p JOIN ppo.organisations o ON (o.workspace_id,o.id)=(p.workspace_id,p.organisation_id) JOIN ppo.sites s ON (s.workspace_id,s.id)=(p.workspace_id,p.site_id) JOIN ppo.users u ON (u.workspace_id,u.id)=(p.workspace_id,p.coordinator_id)`;
 const projectVisibility = () =>
   `${scopeSql("p.company_id", "p.site_id", "project.read")} AND ${scopeSql("p.company_id", "p.site_id")} AND ${scopeSql("p.company_id", "p.site_id", "shared.internal.read")} AND ${visibility("Organisation", "o")} AND ${visibility("Site", "s")}`;
-async function projectRow(
+export async function projectRow(
   c: QueryClient,
   p: Principal,
   id: string,

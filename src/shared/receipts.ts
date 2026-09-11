@@ -1,3 +1,4 @@
+import { engineeringRow } from "../engineering/service";
 import { emailContext } from "../email/service";
 import { leadReceiptAuthority } from "../crm/leads/receipt-authority";
 import { opportunityReceiptActions } from "../crm/receipt-authority";
@@ -54,6 +55,8 @@ export async function readOperation(
   } else if (r.object_type === "DraftQuoteRevision") {
     await quoteContext(client,p,r.record_id,"estimating.quote.prepare");
     await quoteContext(client,p,r.record_id);
+  } else if (r.object_type === "EngineeringPackage") {
+    await engineeringRow(client, p, r.record_id, r.command === "CreateEngineeringRequest" ? "engineering.create" : "engineering.edit");
   } else if (r.object_type === "Project") {
     await authoriseProjectReceipt(client, p, r.record_id, r.command);
   } else if (r.object_type === "Opportunity") {

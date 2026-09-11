@@ -1,0 +1,76 @@
+name: Engineering intake assurance
+on:
+  pull_request:
+    paths:
+      - "src/engineering/**"
+      - "src/projects/**"
+      - "src/components/engineering*.tsx"
+      - "src/app/**/engineering/**"
+      - "src/app/engineering.css"
+      - "src/shared/receipts.ts"
+      - "src/shell/**"
+      - "db/**"
+      - "scripts/database.ts"
+      - "scripts/migration-registry.ts"
+      - "tests/**/engineering*"
+      - ".github/workflows/engineering.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  engineering:
+    name: Engineering r02 intake, history and scoped persistence
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: postgres:16.15
+        env:
+          POSTGRES_USER: ppo_local
+          POSTGRES_PASSWORD: ppo_disposable_ci_only
+          POSTGRES_DB: ppo_synthetic_test
+        ports:
+          - 127.0.0.1:5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ppo_local -d ppo_synthetic_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install pinned tools and run static assurance
+        run: |
+          npm install --global npm@11.19.0
+          npm ci
+          npx playwright install --with-deps chromium
+          npm run check
+      - name: Configure disposable database
+        run: |
+          cp .env.example .env.local
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('.env.local')
+          p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
+          PY
+          npm run db:migrate
+          npm run db:seed
+          npm run db:health
+      - name: Scoped commands, evidence, concurrency and additive upgrade
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/engineering.test.ts tests/database/quality-upgrade.test.ts tests/database/desktop-shell.test.ts
+      - name: Real HTTP and saved desktop and phone journeys
+        run: npx playwright test tests/browser/engineering.spec.ts --output verification-evidence/engineering-browser --reporter=list
+      - name: Retain bounded synthetic verification evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Engineering-r02-review
+          path: |
+            verification-evidence/engineering-browser
+            !**/trace.zip
+          if-no-files-found: ignore
+          retention-days: 14

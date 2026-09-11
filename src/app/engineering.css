@@ -1,0 +1,232 @@
+#ppo-engineering{--navy:#242a37;--green:#62bb46;--muted:#667181;--line:#e1e5eb;--surface:#f6f7f9;--bg:#f5f6f8;--focus:#365d8b;box-sizing:border-box;position:relative;isolation:isolate;display:flex;flex-direction:column;width:100%;min-width:0;height:var(--ppo-engineering-height,100dvh);min-height:570px;padding:24px;color:var(--navy);background:var(--bg);font:14px/1.45 Roboto,Verdana,sans-serif;color-scheme:light;container-type:inline-size}
+#ppo-engineering *,#ppo-engineering *::before,#ppo-engineering *::after{box-sizing:border-box}
+#ppo-engineering :is(h1,h2,h3,h4,p){margin:0}
+#ppo-engineering :is(button,input,select,textarea){font:inherit;color:inherit;margin:0}
+#ppo-engineering button{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:8px 13px;border:1px solid #cdd3dc;border-radius:6px;background:#fff;cursor:pointer;line-height:1.4}
+#ppo-engineering button:hover{background:#f0f2f5}
+#ppo-engineering button:disabled{cursor:default;opacity:.5}
+#ppo-engineering .eng-primary{background:var(--navy);border-color:var(--navy);color:#fff;font-weight:500}
+#ppo-engineering .eng-primary:hover{background:#343c4c}
+#ppo-engineering .eng-quiet{border-color:transparent;background:transparent}
+#ppo-engineering .eng-link{padding:0;min-height:24px;border:0;background:transparent;color:#365c7d;text-align:left;justify-content:flex-start}
+#ppo-engineering .eng-link:hover{background:transparent;text-decoration:underline;text-underline-offset:3px}
+#ppo-engineering :focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+#ppo-engineering [hidden]{display:none!important}
+#ppo-engineering .eng-sr{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+#ppo-engineering svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;flex:none}
+#ppo-engineering .eng-row{display:flex;align-items:center;gap:8px;min-width:0}
+#ppo-engineering .eng-muted{color:var(--muted)}
+#ppo-engineering .eng-meta{font-size:13px;color:var(--muted)}
+#ppo-engineering .eng-heading{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:23px;flex:none}
+#ppo-engineering h1{font-size:28px;line-height:1.2;font-weight:600;letter-spacing:-.45px}
+#ppo-engineering .eng-total{border-radius:20px;background:#e9edf2;color:#5f6a7a;min-width:27px;text-align:center;padding:3px 8px;margin-left:3px;font-size:14px}
+#ppo-engineering .eng-heading p{margin-top:7px;color:var(--muted);font-size:14px}
+#ppo-engineering .eng-heading-actions{display:flex;align-items:center;gap:20px}
+#ppo-engineering .eng-heading-actions .eng-primary{padding-inline:19px;min-height:40px}
+#ppo-engineering .eng-views{display:flex;align-items:stretch;gap:26px;border-bottom:1px solid #dce1e7;flex:none;min-height:43px}
+#ppo-engineering .eng-views button{border:0;border-bottom:3px solid transparent;border-radius:0;padding:0 1px 12px;min-height:42px;background:transparent;color:var(--muted);gap:8px;white-space:nowrap}
+#ppo-engineering .eng-views button[aria-selected=true]{color:var(--navy);border-bottom-color:var(--green);font-weight:600}
+#ppo-engineering .eng-count{display:inline-block;min-width:20px;text-align:center;background:#e9edf2;color:#5f6a7a;padding:1px 5px;border-radius:4px;font-size:12px;font-weight:400}
+#ppo-engineering [aria-selected=true] .eng-count{background:#edf5e9;color:#3d692f}
+#ppo-engineering .eng-stamp{display:flex;align-items:center;gap:6px;margin-left:auto;font-size:12px;color:var(--muted);padding-bottom:10px;white-space:nowrap}
+#ppo-engineering .eng-stamp svg{width:14px;height:14px}
+#ppo-engineering .eng-workspace{margin-top:16px;display:flex;flex:1;min-height:0;flex-direction:column;border:1px solid #dce2e9;border-radius:8px;background:white;overflow:hidden;box-shadow:0 1px 2px #14243e03}
+#ppo-engineering .eng-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);flex:none}
+#ppo-engineering :is(input,select,textarea){border:1px solid #cbd2dc;border-radius:6px;padding:9px 11px;min-height:39px;background:white;max-width:100%;font-weight:400;outline-offset:2px}
+#ppo-engineering input::placeholder,#ppo-engineering textarea::placeholder{color:#727d8d}
+#ppo-engineering .eng-search{position:relative;flex:1;max-width:355px;min-width:180px}
+#ppo-engineering .eng-search>svg{position:absolute;left:11px;top:11px;color:#7a8493;width:17px;height:17px}
+#ppo-engineering .eng-search input{padding-left:37px;width:100%}
+#ppo-engineering .eng-toolbar select{min-width:158px;max-width:205px}
+#ppo-engineering .eng-sort{display:flex;align-items:center;gap:7px;margin-left:auto;color:var(--muted)}
+#ppo-engineering .eng-sort select{border-color:transparent;padding-left:4px;min-width:146px;color:#4e5b6c}
+#ppo-engineering .eng-clear{font-size:13px;padding-inline:8px}
+#ppo-engineering .eng-context{display:flex;align-items:center;gap:13px;min-height:41px;padding:7px 16px;background:#fcfcfd;border-bottom:1px solid var(--line);flex-wrap:wrap;font-size:13px;color:var(--muted);flex:none}
+#ppo-engineering .eng-context strong{color:var(--navy);font-weight:500}
+#ppo-engineering .eng-context .eng-sep{height:13px;border-left:1px solid #ccd3dd}
+#ppo-engineering .eng-attention{margin-left:auto!important;color:#8a5a13!important;border:1px solid #eeddbd!important;background:#fff7e8!important;min-height:27px!important;padding:3px 8px!important;font-size:13px!important;border-radius:4px!important}
+#ppo-engineering .eng-attention[aria-pressed=true]{box-shadow:inset 0 0 0 1px #8a5a13}
+#ppo-engineering .eng-attention svg{height:15px;width:15px}
+#ppo-engineering .eng-scroll{flex:1;min-height:0;overflow:auto;scrollbar-width:thin;scrollbar-color:#b6bec8 #f4f6f8;overscroll-behavior:contain;scroll-padding:54px 12px 10px}
+#ppo-engineering table{width:100%;min-width:1140px;border-spacing:0;border-collapse:separate;table-layout:fixed;background:white}
+#ppo-engineering th{position:sticky;top:0;z-index:1;background:var(--surface);border-bottom:1px solid var(--line);border-right:1px solid var(--line);text-align:left;padding:13px 15px;color:#667181;font-size:13px;font-weight:500;line-height:1.35}
+#ppo-engineering th:last-child{border-right:0}
+#ppo-engineering td{padding:17px 15px;border-bottom:1px solid #e9ecf1;vertical-align:middle;overflow-wrap:anywhere;line-height:1.4;font-size:14px}
+#ppo-engineering td:first-child{border-left:3px solid transparent;padding-left:13px}
+#ppo-engineering tbody tr{cursor:pointer}
+#ppo-engineering tbody tr:hover{background:#f8fafb}
+#ppo-engineering tbody tr.eng-selected{background:#f3f7f1}
+#ppo-engineering tbody tr.eng-selected td:first-child{border-left-color:var(--green)}
+#ppo-engineering .eng-package-link{font-size:15px;font-weight:500;color:var(--navy);line-height:1.4;min-height:24px;text-align:left;padding:0;display:block;border:0;background:none;border-radius:2px;overflow-wrap:anywhere}
+#ppo-engineering .eng-package-link:hover{background:none;text-decoration:underline;text-underline-offset:3px}
+#ppo-engineering .eng-cell-sub{display:block;font-size:13px;color:var(--muted);margin-top:5px;line-height:1.4}
+#ppo-engineering .eng-person{display:flex;gap:8px;align-items:center;min-width:0}
+#ppo-engineering .eng-avatar{display:inline-grid;place-items:center;flex:none;width:29px;height:29px;border-radius:50%;font-size:12px;font-weight:500;background:#e9edf3;color:#46586e}
+#ppo-engineering .eng-avatar.green{background:#e9f2e4;color:#406137}
+#ppo-engineering .eng-avatar.teal{background:#e1f1f1;color:#176969}
+#ppo-engineering .eng-avatar.lilac{background:#f0edf6;color:#756089}
+#ppo-engineering .eng-status{display:inline-flex;align-items:center;gap:5px;max-width:100%;padding:4px 8px;border-radius:5px;font-size:13px;font-weight:500;background:#edf1f7;color:#4d607b;line-height:1.35}
+#ppo-engineering .eng-status.review{background:#eaf0f8;color:#405c85}
+#ppo-engineering .eng-status.design{background:#e4f2f0;color:#26746e}
+#ppo-engineering .eng-status.wait{background:#fff2d9;color:#80530e}
+#ppo-engineering .eng-status.ready{background:#edf5e9;color:#466c3c}
+#ppo-engineering .eng-status.released{background:#e9f3e5;color:#37682c}
+#ppo-engineering .eng-status svg{width:13px;height:13px}
+#ppo-engineering .eng-progress-label{font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}
+#ppo-engineering .eng-progress-label span{color:var(--muted);font-size:13px}
+#ppo-engineering .eng-progress{height:4px;background:#e9edf1;border-radius:3px;max-width:88px;margin-top:8px;overflow:hidden}
+#ppo-engineering .eng-progress i{display:block;height:100%;background:#8ebdc0;border-radius:3px}
+#ppo-engineering .eng-progress.complete i{background:#88bc74}
+#ppo-engineering .eng-date{font-variant-numeric:tabular-nums}
+#ppo-engineering .eng-overdue{color:#9b5220}
+#ppo-engineering .eng-next{font-size:14px;line-height:1.4}
+#ppo-engineering .eng-next-sub{display:flex;align-items:center;gap:5px;margin-top:5px;color:var(--muted);font-size:13px}
+#ppo-engineering .eng-next-sub svg{height:13px;width:13px}
+#ppo-engineering .eng-resizer{position:absolute;right:-5px;top:0;height:100%;width:10px;min-height:0;padding:0;border:0;border-radius:0;background:transparent;cursor:col-resize;touch-action:none;z-index:3}
+#ppo-engineering .eng-resizer::after{content:'';position:absolute;width:2px;left:4px;top:8px;bottom:8px;background:transparent}
+#ppo-engineering .eng-resizer:hover,#ppo-engineering .eng-resizer:focus-visible{background:transparent}
+#ppo-engineering .eng-resizer:hover::after,#ppo-engineering .eng-resizer:focus-visible::after,#ppo-engineering .eng-resizer.eng-dragging::after{background:var(--green)}
+#ppo-engineering .eng-list-foot{padding:10px 16px;display:flex;gap:16px;justify-content:space-between;align-items:center;border-top:1px solid var(--line);font-size:13px;color:var(--muted);min-height:45px;flex:none}
+#ppo-engineering .eng-list-foot button{font-size:13px;padding:1px 0;min-height:24px}
+#ppo-engineering .eng-page-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:12px;color:var(--muted);font-size:12px;flex:none}
+#ppo-engineering .eng-page-foot button{font-size:12px;min-height:22px;padding:0}
+#ppo-engineering .eng-empty{padding:64px 24px;text-align:center;color:var(--muted)}
+#ppo-engineering .eng-empty>svg{height:32px;width:32px;color:#8b97a6}
+#ppo-engineering .eng-empty h2{font-size:20px;color:var(--navy);margin:12px 0 8px;font-weight:500}
+#ppo-engineering .eng-empty p{margin-bottom:16px}
+#ppo-engineering .eng-cards{display:none}
+#ppo-engineering dialog{font:inherit;color:var(--navy);border:1px solid #dce2e9;padding:0;max-width:calc(100vw - 32px);max-height:calc(100dvh - 32px);width:600px;border-radius:9px;background:white;box-shadow:0 12px 50px #242a3738;overflow:hidden}
+#ppo-engineering dialog[open]{display:flex;flex-direction:column}
+#ppo-engineering dialog::backdrop{background:#242a3733}
+#ppo-engineering dialog.eng-drawer{position:fixed;inset:var(--eng-drawer-top,0px) var(--eng-drawer-right,0px) auto auto;width:min(750px,100vw);max-width:100vw;height:var(--eng-drawer-height,100dvh);max-height:100dvh;margin:0;border-radius:0;border:0;border-left:1px solid #dce2e9;box-shadow:-8px 0 35px #242a3726}
+#ppo-engineering .eng-dialog-head{padding:23px 25px 20px;border-bottom:1px solid var(--line);position:relative;flex:none}
+#ppo-engineering .eng-dialog-head h2{font-size:23px;line-height:1.3;font-weight:600;letter-spacing:-.25px;margin:7px 36px 8px 0;overflow-wrap:anywhere}
+#ppo-engineering .eng-dialog-head p{color:var(--muted);font-size:14px;margin-top:5px}
+#ppo-engineering .eng-close{position:absolute;right:17px;top:18px;min-height:34px;width:34px;padding:7px;border:0;background:none}
+#ppo-engineering .eng-dialog-tabs{display:flex;gap:22px;padding:13px 25px 0;border-bottom:1px solid var(--line);flex:none;overflow-x:auto}
+#ppo-engineering .eng-dialog-tabs button{white-space:nowrap;border:0;border-bottom:3px solid transparent;border-radius:0;background:none;padding:0 0 11px;color:var(--muted);min-height:32px}
+#ppo-engineering .eng-dialog-tabs button[aria-selected=true]{color:var(--navy);border-bottom-color:var(--navy);font-weight:500}
+#ppo-engineering .eng-dialog-body{padding:24px 25px;min-height:0;overflow-y:auto;flex:1;overscroll-behavior:contain;scrollbar-width:thin}
+#ppo-engineering .eng-dialog-foot{display:flex;align-items:center;justify-content:flex-end;gap:9px;padding:15px 25px;border-top:1px solid var(--line);flex:none;flex-wrap:wrap;background:white}
+#ppo-engineering .eng-dialog-foot>span{margin-right:auto;font-size:12px;color:var(--muted)}
+#ppo-engineering .eng-facts{display:grid;grid-template-columns:1fr 1fr;gap:19px 24px;margin-bottom:25px}
+#ppo-engineering .eng-fact>span{display:block;color:var(--muted);font-size:13px;margin-bottom:5px}
+#ppo-engineering .eng-fact strong{font-weight:500;overflow-wrap:anywhere}
+#ppo-engineering .eng-section{margin-top:25px}
+#ppo-engineering .eng-section:first-child{margin-top:0}
+#ppo-engineering h3{font-size:15px;line-height:1.4;font-weight:600;margin-bottom:11px}
+#ppo-engineering .eng-section p{font-size:15px;line-height:1.6;overflow-wrap:anywhere}
+#ppo-engineering .eng-section-label{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:11px}
+#ppo-engineering .eng-section-label h3{margin:0}
+#ppo-engineering .eng-next-box{border:1px solid var(--line);border-left:3px solid var(--green);border-radius:6px;padding:15px 17px;margin:22px 0}
+#ppo-engineering .eng-next-box.warn{border-left-color:#d2a351;background:#fffdf8}
+#ppo-engineering .eng-next-box>span{display:block;color:var(--muted);font-size:13px;margin-bottom:6px}
+#ppo-engineering .eng-next-box strong{font-weight:500;display:block;font-size:15px}
+#ppo-engineering .eng-next-box p{font-size:13px;color:var(--muted);margin-top:7px}
+#ppo-engineering .eng-note{background:#f6f7f9;border:1px solid #e1e5eb;border-radius:6px;padding:13px 15px;font-size:14px;line-height:1.6;color:#566273}
+#ppo-engineering .eng-note.amber{background:#fffbf1;border-color:#eddfbe;color:#805c25}
+#ppo-engineering .eng-note.green{background:#f1f7ee;border-color:#d6e6cf;color:#406337}
+#ppo-engineering .eng-note strong{display:block;font-weight:500;color:inherit;margin-bottom:3px}
+#ppo-engineering .eng-checklist{display:grid;gap:12px}
+#ppo-engineering .eng-check-item{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#455164}
+#ppo-engineering .eng-check-item svg{margin-top:1px;color:#648b56;width:17px;height:17px}
+#ppo-engineering .eng-check-item.wait svg{color:#a77c34}
+#ppo-engineering .eng-doc{border:1px solid var(--line);border-radius:6px;padding:15px;margin-bottom:12px;display:grid;grid-template-columns:35px 1fr auto;gap:11px;align-items:start}
+#ppo-engineering .eng-file-icon{display:grid;place-items:center;width:34px;height:40px;background:#f0f3f7;border-radius:5px;color:#62748a}
+#ppo-engineering .eng-file-icon svg{width:21px;height:21px}
+#ppo-engineering .eng-doc-title{font-weight:500;font-size:15px;line-height:1.4}
+#ppo-engineering .eng-doc small{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+#ppo-engineering .eng-doc .eng-link{font-size:13px;margin-top:7px}
+#ppo-engineering .eng-doc .eng-status{font-size:12px}
+#ppo-engineering .eng-doc-caption{font-size:14px;color:var(--muted);margin-bottom:17px;line-height:1.6}
+#ppo-engineering .eng-event{position:relative;margin-left:5px;padding:0 0 22px 21px;border-left:1px solid #dce1e8}
+#ppo-engineering .eng-event::before{content:'';position:absolute;left:-4px;top:5px;width:7px;height:7px;background:#b8c3d0;border-radius:50%}
+#ppo-engineering .eng-event:last-child{padding-bottom:0}
+#ppo-engineering .eng-event strong{font-size:14px;font-weight:500;display:block}
+#ppo-engineering .eng-event small{display:block;color:var(--muted);font-size:12px;margin:4px 0 6px}
+#ppo-engineering .eng-event p{font-size:14px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+#ppo-engineering .eng-field{display:flex;flex-direction:column;gap:7px;font-size:14px;font-weight:500}
+#ppo-engineering .eng-field input,#ppo-engineering .eng-field select,#ppo-engineering .eng-field textarea{width:100%}
+#ppo-engineering .eng-field textarea{resize:vertical;min-height:104px;line-height:1.5}
+#ppo-engineering .eng-fields{display:grid;gap:19px}
+#ppo-engineering .eng-two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+#ppo-engineering .eng-form{display:flex;flex-direction:column;min-height:0;flex:1}
+#ppo-engineering .eng-form .eng-dialog-body{max-height:65dvh}
+#ppo-engineering .eng-form-hint{font-size:13px;color:var(--muted);font-weight:400}
+#ppo-engineering .eng-comment-form{display:grid;gap:10px;margin-bottom:28px}
+#ppo-engineering .eng-comment-form button{justify-self:end}
+#ppo-engineering .eng-source-path{overflow-wrap:anywhere;font-size:13px;color:#566273;padding:13px 15px;background:#f6f7f9;border:1px solid var(--line);border-radius:5px}
+#ppo-engineering .eng-toast{position:absolute;left:50%;bottom:62px;transform:translateX(-50%);background:var(--navy);color:white;padding:12px 18px;border-radius:7px;font-size:14px;box-shadow:0 5px 20px #242a3726;z-index:8;max-width:calc(100% - 32px);text-align:center}
+@container(max-width:1220px){#ppo-engineering .eng-toolbar{gap:8px}#ppo-engineering .eng-search{max-width:290px}#ppo-engineering .eng-toolbar select{min-width:140px}#ppo-engineering td{padding-inline:12px}#ppo-engineering .eng-person{gap:6px}}
+#ppo-engineering[data-compact=true]{padding:18px;min-height:640px}#ppo-engineering[data-compact=true] .eng-heading-actions>.eng-meta{display:none}#ppo-engineering[data-compact=true] .eng-views{gap:20px;overflow-x:auto}#ppo-engineering[data-compact=true] .eng-stamp{display:none}#ppo-engineering[data-compact=true] .eng-search{max-width:none;flex-basis:100%}#ppo-engineering[data-compact=true] .eng-sort{margin-left:0}#ppo-engineering[data-compact=true] .eng-context .eng-context-secondary,#ppo-engineering[data-compact=true] .eng-context .eng-sep{display:none}#ppo-engineering[data-compact=true] .eng-scroll table{display:none}#ppo-engineering[data-compact=true] .eng-cards{display:block;padding:0 14px}#ppo-engineering[data-compact=true] .eng-mobile-card{padding:18px 0;border-bottom:1px solid var(--line)}#ppo-engineering[data-compact=true] .eng-mobile-head{display:flex;justify-content:space-between;gap:15px;align-items:start}#ppo-engineering[data-compact=true] .eng-mobile-card .eng-package-link{font-size:16px}#ppo-engineering[data-compact=true] .eng-mobile-facts{display:flex;gap:20px;flex-wrap:wrap;margin-top:13px;font-size:14px}#ppo-engineering[data-compact=true] .eng-mobile-action{margin-top:13px;padding:11px 12px;background:#f6f8fa;border-radius:5px;font-size:14px}#ppo-engineering[data-compact=true] .eng-list-foot #eng-reset-columns{display:none}#ppo-engineering[data-compact=true] .eng-page-foot{font-size:12px}#ppo-engineering[data-compact=true] .eng-heading p{font-size:13px}#ppo-engineering[data-compact=true] h1{font-size:26px}
+#ppo-engineering[data-phone=true]{padding:16px 12px}#ppo-engineering[data-phone=true] .eng-heading{gap:12px;margin-bottom:19px}#ppo-engineering[data-phone=true] .eng-heading p{max-width:220px}#ppo-engineering[data-phone=true] .eng-heading-actions .eng-primary{padding-inline:12px}#ppo-engineering[data-phone=true] .eng-views{gap:18px}#ppo-engineering[data-phone=true] .eng-toolbar{padding:12px}#ppo-engineering[data-phone=true] .eng-toolbar select{max-width:none;min-width:0;flex:1;width:calc(50% - 5px)}#ppo-engineering[data-phone=true] .eng-sort{flex:1}#ppo-engineering[data-phone=true] .eng-sort select{width:auto}#ppo-engineering[data-phone=true] .eng-context{padding-inline:12px;gap:7px}#ppo-engineering[data-phone=true] .eng-list-foot{padding-inline:12px;font-size:12px}#ppo-engineering[data-phone=true] .eng-dialog-head,#ppo-engineering[data-phone=true] .eng-dialog-body,#ppo-engineering[data-phone=true] .eng-dialog-foot{padding:19px 18px}#ppo-engineering[data-phone=true] .eng-dialog-tabs{padding-inline:18px;gap:18px}#ppo-engineering[data-phone=true] .eng-two{grid-template-columns:1fr}#ppo-engineering[data-phone=true] .eng-facts{gap:17px 14px}#ppo-engineering[data-phone=true] .eng-dialog-head h2{font-size:21px}#ppo-engineering[data-phone=true] .eng-doc{grid-template-columns:29px 1fr;gap:9px}#ppo-engineering[data-phone=true] .eng-doc>.eng-status{grid-column:2;justify-self:start}#ppo-engineering[data-phone=true] .eng-doc .eng-file-icon{width:29px}#ppo-engineering[data-phone=true] .eng-dialog-foot>span{flex-basis:100%}#ppo-engineering[data-phone=true] .eng-page-foot>span:last-child{display:none}
+@media(prefers-reduced-motion:reduce){#ppo-engineering *{scroll-behavior:auto!important}}
+
+/* r02: preserve the approved visual language; clarify document control and improve embedded layouts. */
+#ppo-engineering td{padding-block:14px}
+#ppo-engineering .eng-status{font-size:14px}
+#ppo-engineering .eng-progress-label{font-size:14px}
+#ppo-engineering .eng-revision-sub{display:block;font-size:12px;color:var(--muted);margin-top:5px}
+#ppo-engineering .eng-next-date{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+#ppo-engineering .eng-next-date.overdue{color:#9b5220}
+#ppo-engineering .eng-version-pair{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-bottom:24px;background:#fcfcfd}
+#ppo-engineering .eng-version-pair>div{padding:14px 16px}
+#ppo-engineering .eng-version-pair>div+div{border-left:1px solid var(--line);background:#f4f8f1}
+#ppo-engineering .eng-version-pair span{display:block;color:var(--muted);font-size:13px;margin-bottom:5px}
+#ppo-engineering .eng-version-pair strong{display:block;font-size:16px;font-weight:500}
+#ppo-engineering .eng-version-pair small{display:block;font-size:13px;color:#5c6a58;margin-top:4px}
+#ppo-engineering .eng-version-pair .eng-link{font-size:13px;margin-top:6px}
+#ppo-engineering .eng-fact .eng-person{font-weight:400}
+#ppo-engineering .eng-query{border:1px solid var(--line);border-radius:6px;padding:16px;margin-bottom:13px}
+#ppo-engineering .eng-query-head{display:flex;gap:12px;justify-content:space-between;align-items:start;margin-bottom:9px}
+#ppo-engineering .eng-query h3{margin:4px 0 0;font-size:15px}
+#ppo-engineering .eng-query p{font-size:14px;line-height:1.55;color:#526073}
+#ppo-engineering .eng-query-meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:13px;color:var(--muted)}
+#ppo-engineering .eng-draft-status{font-size:13px;color:#536c4b;min-height:20px}
+#ppo-engineering .eng-dialog-tabs{gap:20px}
+#ppo-engineering .eng-dialog-tabs .eng-count{margin-left:1px}
+#ppo-engineering .eng-manifest-line{display:grid;grid-template-columns:20px 1fr auto;gap:9px;padding:12px 0;border-bottom:1px solid var(--line)}
+#ppo-engineering .eng-manifest-line strong{font-weight:500;font-size:14px;display:block}
+#ppo-engineering .eng-manifest-line small{font-size:12px;color:var(--muted);display:block;margin-top:4px}
+#ppo-engineering .eng-check-item.pending svg{color:#a77c34}
+#ppo-engineering .eng-state-note{padding:10px 12px;border-radius:5px;background:#f0f6ec;color:#416436;font-size:14px;margin-bottom:16px}
+#ppo-engineering .eng-form-hint{line-height:1.5}
+#ppo-engineering .eng-doc-title{overflow-wrap:anywhere}
+#ppo-engineering .eng-fact>strong{font-size:14px}
+#ppo-engineering .eng-doc .eng-file-icon{align-self:start}
+#ppo-engineering .eng-request-status{font-size:13px;color:#536c4b}
+#ppo-engineering[data-compact=true]{padding:18px;min-height:570px}
+#ppo-engineering[data-phone=true]{padding:16px 12px}
+#ppo-engineering[data-phone=true] .eng-version-pair{grid-template-columns:1fr}
+#ppo-engineering[data-phone=true] .eng-version-pair>div+div{border-left:0;border-top:1px solid var(--line)}
+#ppo-engineering[data-phone=true] .eng-dialog-tabs{gap:17px}
+#ppo-engineering[data-phone=true] .eng-toolbar>select{flex:1 1 calc(50% - 5px);width:calc(50% - 5px)}
+#ppo-engineering[data-phone=true] .eng-sort{flex:1 0 100%;justify-content:flex-end}
+#ppo-engineering[data-phone=true] .eng-sort select{flex:0 1 auto;width:auto}
+#ppo-engineering[data-phone=true] .eng-section-label{flex-wrap:wrap}
+#ppo-engineering[data-phone=true] .eng-manifest-line{grid-template-columns:20px minmax(0,1fr) auto}
+#ppo-engineering .eng-manifest-line strong{overflow-wrap:anywhere}
+#ppo-engineering[data-phone=true] .eng-person{flex-wrap:nowrap}
+#ppo-engineering[data-phone=true] .eng-mobile-head{flex-wrap:wrap}
+#ppo-engineering[data-phone=true] .eng-mobile-head>.eng-status{font-size:13px}
+
+/* The shared shell owns navigation and branding. This retains the accepted container spacing. */
+#main:has(#ppo-engineering){padding:0}
+#ppo-engineering{height:calc(100dvh - 64px);min-height:640px;font-family:Roboto,Verdana,sans-serif}
+#ppo-engineering .eng-dialog-head h2:focus{outline:none}
+#ppo-engineering .eng-fields input,#ppo-engineering .eng-fields textarea,#ppo-engineering .eng-fields select{width:100%}
+#ppo-engineering .eng-fields .field{margin:0}
+#ppo-engineering fieldset{border:0;padding:0;margin:0;min-width:0;display:grid;gap:16px}
+#ppo-engineering .eng-coordination{margin-top:20px;padding:16px;border:1px solid var(--line);border-radius:6px}
+#ppo-engineering .eng-section p{white-space:pre-wrap}
+#ppo-engineering .eng-meta-link{display:block;color:#42627d;font-size:13px;margin-top:6px;text-decoration:underline}
+#ppo-engineering .eng-package-link{max-width:100%;overflow-wrap:anywhere;text-align:left}
+#ppo-engineering .eng-pagination{display:flex;align-items:center;gap:14px}
+#ppo-engineering button:disabled{opacity:.55;cursor:default}
+#ppo-engineering .eng-saved{padding:10px;background:#eef6e9;color:#355c2d;border-radius:5px;font-size:14px}
+#ppo-engineering .eng-select{display:grid;gap:6px;font-size:14px;font-weight:500}
+#ppo-engineering .eng-toolbar label:not(.eng-search){display:flex;align-items:center;gap:8px}
+#ppo-engineering[data-phone=true] .eng-toolbar .eng-filter-label{flex:1 1 calc(50% - 5px)}
+#ppo-engineering[data-phone=true] .eng-toolbar .eng-filter-label select{width:100%}
+#ppo-engineering[data-phone=true] .eng-list-foot{align-items:flex-start;gap:8px;flex-wrap:wrap}
+#ppo-engineering[data-phone=true] .eng-facts{grid-template-columns:1fr}
