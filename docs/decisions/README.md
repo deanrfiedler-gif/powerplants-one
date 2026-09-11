@@ -51,6 +51,7 @@ The [controlled opportunity handover proposal](crm-opportunity-handover.md) reco
 [Azure private demo runtime](azure-private-demo.md) — individual sign-in, cloud configuration, deployment and reset preparation; live acceptance pending.
 
 - [ADR-0020 — Persisted synthetic Email & Calendar journey](ADR-0020-email-calendar-synthetic-journey.md). ADR-0019 was never allocated; the sequence runs ADR-0018 → ADR-0020 and the gap is intentional-by-omission, not a missing file.
+- [ADR-0021 — Gmail as the first real mail provider, on the hosted-only schema track](ADR-0021-gmail-first-real-provider.md). Real correspondence gets its own `db/demo` tables; migration 0015's synthetic guards on `ppo.email_messages` are preserved, not relaxed. It authorises schema and operator scripts only: no Google project, client, secret, route, sync code, deployment or connection.
 - [Private demo Email and CRM integration](demo-email-crm-integration.md) — shared desktop/mobile journey, individual fictional mailboxes and retained access boundaries.
 - [Approved Job Pack r02](job-pack-design.md) — exact accepted full-page Service design and integration boundary.
 - [CI browser suite route warm-up](ci-browser-warm-up.md) — harness-only decision: compile every route before the first assertion window; no deadline, retry or product change.
