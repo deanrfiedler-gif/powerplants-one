@@ -1,3 +1,4 @@
+import { leadsAvailable } from "../crm/leads/context";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../platform/identity";
 import { database, transaction } from "../platform/database";
@@ -843,7 +844,7 @@ export async function readReport(
     proofReadPhase("report-follow-ups-start");
     const follow_ups = (
       await c.query(
-        `SELECT a.id,a.summary,a.status,a.owner_id,a.due_needed,u.display_name AS owner_name,f.kind FROM ppo.report_follow_ups f JOIN ppo.activities a ON a.id=f.activity_id JOIN ppo.users u ON u.id=a.owner_id WHERE f.workspace_id=$1 AND f.report_id=$3 AND ${activityVisibility("a", await crmAvailable(c))} ORDER BY f.created_at`,
+        `SELECT a.id,a.summary,a.status,a.owner_id,a.due_needed,u.display_name AS owner_name,f.kind FROM ppo.report_follow_ups f JOIN ppo.activities a ON a.id=f.activity_id JOIN ppo.users u ON u.id=a.owner_id WHERE f.workspace_id=$1 AND f.report_id=$3 AND ${activityVisibility("a", await crmAvailable(c), await leadsAvailable(c))} ORDER BY f.created_at`,
         [p.workspace_id, p.actor_id, id],
       )
     ).rows;
