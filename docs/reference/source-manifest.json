@@ -28,6 +28,13 @@
       "bytes": 82486,
       "purpose": "Exact user-adopted PPO-STD-001 r02; adopted by user on 5 September 2026; working r03 records repository adoption",
       "original_path": "powerplants-one-naming-standard.md"
+    },
+    {
+      "path": "docs/reference/powerplants-one-field-technicians-r04.html",
+      "sha256": "b4d15630d89f0a74b795b9b2af6b83d9c4874d0e31d7e503f93d386a6555a704",
+      "bytes": 429584,
+      "purpose": "Exact field technicians r04 standalone HTML accepted by Dean Fiedler on 10 September 2026. Presentation baseline; illustrative records and memory-only notes are not application records.",
+      "original_path": "output/powerplants-one-field-technicians-r04.html"
     }
   ]
 }

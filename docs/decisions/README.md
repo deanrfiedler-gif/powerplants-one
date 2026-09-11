@@ -54,3 +54,4 @@ The [controlled opportunity handover proposal](crm-opportunity-handover.md) reco
 
 - [CI browser suite route warm-up](ci-browser-warm-up.md) — harness-only decision: compile every route before the first assertion window; no deadline, retry or product change.
 - [CI browser suite against the compiled application](ci-compiled-browser-suite.md) — additional workflow drives the unchanged suite against `npm run build` output under the unchanged synthetic-identity guard (`NODE_ENV=test`); production startup remains refused.
+[Field Technicians r04](field-technicians-design.md) records Dean’s approved Service presentation, frozen source and bounded application mapping. Design approval does not grant dispatch, merge or production acceptance.
