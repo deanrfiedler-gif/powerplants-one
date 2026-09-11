@@ -18,6 +18,7 @@ Powerplants One is Dean's personal synthetic prototype of a seven-domain operati
 | Documentation checks | `check_foundation`, `check_prototype`, `check_naming` pass at `cb358405` (78 parents, 29 decisions, 30 PT procedures, 12 packages, 109 document records) | Local run, 11 September 2026 |
 | Hosted Azure demo | **Deployed from `cb358405`** by manual run 34526927716 (`upgrade-and-deploy`, 10 September 2026 20:31 UTC, owner-confirmed). Database upgraded in place to migration 19 with records and invitations retained; `/healthz` returned 200 and anonymous CRM API access returned 401. **Pending:** owner sign-in on the new image, then a saved Leads record, Gantt schedule and Finance draft confirmed after reload. | [Run 34526927716](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34526927716) · [Runbook](delivery/azure-private-demo.md) · [Upgrade decision](decisions/azure-existing-demo-upgrade.md) |
 | Branch protection | Not enabled. Checks are advisory; PR #110 merged while its full job was still running. | Repository settings |
+| Browser-suite stalls | Two desktop-only first-pass stalls on 10 September (runs 34534398231, 34536514657) traced to cold dev-server route compilation inside 5 s assertion windows. Harness warm-up proposed; deadlines unchanged. | [Decision](decisions/ci-browser-warm-up.md) |
 | Migrations | 0001–0019 registered; 0016 reserved for the Assistant branch; 0020 proposed by PR #108 | `scripts/migration-registry.ts` |
 
 ## 3. Domain state
