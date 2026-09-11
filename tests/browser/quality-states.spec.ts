@@ -194,7 +194,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
     await test.step(`${s.id}: ${s.url}`, async () => {
       const screenLoading = page
         .locator("main")
-        .getByText(/(?:^|\s)Loading .*…$/);
+        .getByText(/^(?:Loading .*…|.*\sLoading permitted records…)$/);
       await call(page, "local-session", { profile: s.profile });
       const query =
         s.id === "SC-02" ? "?kind=organisations" :
