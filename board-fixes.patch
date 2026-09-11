@@ -1,0 +1,53 @@
+--- a/src/app/crm-board-polish.css
++++ b/src/app/crm-board-polish.css
+@@ -218,9 +218,9 @@
+ .crm-stage-total span {
+   font-size: 12px;
+ }
+-/* The first card sits level with the bottom of the heading container. */
++/* The first card sits just under the heading container. */
+ .crm-stage .crm-worklist {
+-  padding: 0 6px 12px;
++  padding: 4px 6px 12px;
+   gap: 7px;
+ }
+ .crm-stage .crm-card {
+@@ -306,6 +306,25 @@
+   padding: 9px 10px;
+   background: #edf6ef;
+   border-top-color: #dce0e5;
++  /* The strip is a button now, so the global button rule applies: green fill,
++     navy border, 46px min-height, centred bold content. Undo all of it and
++     leave background to the state classes, which set it for every state. */
++  width: 100%;
++  border-left: 0;
++  border-right: 0;
++  border-bottom: 0;
++  border-radius: 0 0 7px 7px;
++  min-height: 0;
++  font: inherit;
++  font-weight: 400;
++  text-align: left;
++  justify-content: start;
++  align-items: start;
++  color: inherit;
++}
++.crm-save-status {
++  color: var(--muted);
++  font-size: 12px;
+ }
+ .crm-card .crm-card-activity.state-Overdue {
+   background: #fff1f1;
+--- a/src/components/crm-worklist.tsx
++++ b/src/components/crm-worklist.tsx
+@@ -64,8 +64,8 @@
+   useEffect(() => { ref.current?.showModal(); }, []);
+   const active = ["Upcoming", "Overdue", "DueNeeded"].includes(item.next_action_state);
+   return <dialog ref={ref} className="crm-dialog" aria-labelledby="crm-activity-title" onClose={onClose} onCancel={onClose}>
+-    <header className="crm-dialog-header"><h2 id="crm-activity-title">{active ? item.next_action_summary : labels[item.next_action_state]}</h2></header>
+-    <div className="crm-dialog-body">
++    <header className="crm-dialog-head"><h2 id="crm-activity-title">{active ? item.next_action_summary : labels[item.next_action_state]}</h2></header>
++    <div className="crm-dialog-scroll">
+       <p className="crm-snapshot-caption">Next activity for {item.title}</p>
+       <dl className="crm-snapshot-grid">
+         <div><dt>Status</dt><dd>{labels[item.next_action_state]}</dd></div>
