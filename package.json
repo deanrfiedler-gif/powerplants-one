@@ -10,6 +10,7 @@
   "packageManager": "npm@11.19.0",
   "scripts": {
     "dev": "node --env-file=.env.local --import tsx scripts/local-server.ts",
+    "serve:compiled": "node --env-file=.env.local --import tsx scripts/local-server.ts --compiled",
     "build": "node --import tsx scripts/build-offline.ts && next build",
     "start": "node scripts/reject-production.mjs",
     "lint": "eslint .",

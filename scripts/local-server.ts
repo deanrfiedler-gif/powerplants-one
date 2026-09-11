@@ -1,23 +1,35 @@
 import { createServer } from "node:http";
 import { randomBytes } from "node:crypto";
+import { existsSync } from "node:fs";
 import { rm } from "node:fs/promises";
 import { join } from "node:path";
 import { localConfig } from "../src/platform/config";
 import { proofDiagnosticsEnabled, proofEvent, proofPath, proofRequest as withProofRequest } from "../src/platform/proof-diagnostics";
 import { runtimeSampler } from "../src/platform/proof-runtime";
 import { sendLoginPage } from "../src/login/login-page";
+// `--compiled` serves the completed `npm run build` output instead of the
+// Turbopack development server. It is the same compiled application the hosted
+// image runs, but still the loopback synthetic-identity launcher: NODE_ENV
+// defaults to "test", which Next accepts for a custom server and localConfig()
+// treats as non-production. Production or shared startup remains refused.
+const compiled = process.argv.includes("--compiled");
+// Next types NODE_ENV read-only; the assignment is intentional and only a default.
+if (compiled) (process.env as Record<string, string | undefined>).NODE_ENV ??= "test";
 const config = localConfig(); // Refuse unsafe configuration before build work or Next initialisation.
-// Keep every process restart cold while allowing Turbopack to evict compiler
-// memory to disk during this process. This path contains only derived dev
-// compilation data; database records and retained evidence live elsewhere.
-await rm(join(process.cwd(), ".next", "dev", "cache", "turbopack"), {
-  recursive: true,
-  force: true,
-});
+if (compiled && !existsSync(join(process.cwd(), ".next", "BUILD_ID")))
+  throw new Error("Compiled mode requires a completed `npm run build` in this checkout.");
+// Keep every development restart cold while allowing Turbopack to evict
+// compiler memory to disk during this process. This path contains only derived
+// dev compilation data; database records and retained evidence live elsewhere.
+if (!compiled)
+  await rm(join(process.cwd(), ".next", "dev", "cache", "turbopack"), {
+    recursive: true,
+    force: true,
+  });
 await import("./build-offline");
 const { default: next } = await import("next");
 process.env.PPO_LOCAL_GATEWAY = randomBytes(32).toString("hex");
-const app = next({ dev: true, hostname: "127.0.0.1", port: config.port });
+const app = next({ dev: !compiled, hostname: "127.0.0.1", port: config.port });
 await app.prepare();
 const handler = app.getRequestHandler();
 let proofRequest = 0;
@@ -79,7 +91,9 @@ if (proofDiagnosticsEnabled()) {
   server.once("close", () => clearInterval(heartbeat));
 }
 server.listen(config.port, "127.0.0.1", () =>
-  console.log(`Powerplants One — local synthetic only — ${config.origin}`),
+  console.log(
+    `Powerplants One — local synthetic only — ${config.origin}${compiled ? " · compiled build" : ""}`,
+  ),
 );
 for (const signal of ["SIGTERM", "SIGINT"] as const)
   process.on(signal, () =>
