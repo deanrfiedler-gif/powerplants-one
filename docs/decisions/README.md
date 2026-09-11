@@ -51,3 +51,5 @@ The [controlled opportunity handover proposal](crm-opportunity-handover.md) reco
 - [ADR-0020 — Persisted synthetic Email & Calendar journey](ADR-0020-email-calendar-synthetic-journey.md). ADR-0019 was never allocated; the sequence runs ADR-0018 → ADR-0020 and the gap is intentional-by-omission, not a missing file.
 
 - [Private demo Email and CRM integration](demo-email-crm-integration.md) — shared desktop/mobile journey, individual fictional mailboxes and retained access boundaries.
+
+- [CI browser suite route warm-up](ci-browser-warm-up.md) — harness-only decision: compile every route before the first assertion window; no deadline, retry or product change.
