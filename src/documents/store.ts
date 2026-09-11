@@ -9,6 +9,8 @@ import type {
   DocumentStoreAdapter,
 } from "../adapters/contracts";
 import { AppError } from "../platform/errors";
+import { isHostedDemo } from "../platform/demo-config";
+import { DemoBlobStore } from "./blob-store";
 export const digest = (bytes: string | Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
 const uuidPattern =
@@ -157,4 +159,4 @@ export class LocalSyntheticDocumentStore implements DocumentStoreAdapter {
     return saved.key;
   }
 }
-export const documentStore = () => new LocalSyntheticDocumentStore();
+export const documentStore = () => isHostedDemo() ? new DemoBlobStore() : new LocalSyntheticDocumentStore();

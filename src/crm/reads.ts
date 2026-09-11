@@ -1,3 +1,5 @@
+import { readLead } from "./leads/reads";
+import { leadsAvailable } from "./leads/context";
 import type { Principal } from "../platform/identity";
 import { database } from "../platform/database";
 import { AppError } from "../platform/errors";
@@ -37,7 +39,7 @@ export async function readOpportunity(p: Principal, id: string) {
   ).rows[0];
   const visibleActions = (
     await c.query(
-      `SELECT a.id FROM ppo.activities a WHERE a.workspace_id=$1 AND ${activityVisibility("a", true)} AND EXISTS(SELECT 1 FROM ppo.activity_links l WHERE l.workspace_id=a.workspace_id AND l.activity_id=a.id AND l.opportunity_id=$3) ORDER BY a.created_at,a.id`,
+      `SELECT a.id FROM ppo.activities a WHERE a.workspace_id=$1 AND ${activityVisibility("a", true, await leadsAvailable(c))} AND EXISTS(SELECT 1 FROM ppo.activity_links l WHERE l.workspace_id=a.workspace_id AND l.activity_id=a.id AND l.opportunity_id=$3) ORDER BY a.created_at,a.id`,
       [p.workspace_id, p.actor_id, id],
     )
   ).rows;
@@ -79,7 +81,13 @@ export async function readOpportunity(p: Principal, id: string) {
     } catch (e) {
       if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
     }
+  let source_lead: {id:string;display_number:string;events:Awaited<ReturnType<typeof readLead>>["events"]}|null=null;
+  if(await leadsAvailable(c)) {
+    const source=(await c.query("SELECT lead_id FROM ppo.lead_conversions WHERE workspace_id=$1 AND opportunity_id=$2",[p.workspace_id,id])).rows[0];
+    if(source) try {const lead=await readLead(p,source.lead_id);source_lead={id:lead.id,display_number:lead.display_number,events:lead.events};} catch(e) {if(!(e instanceof AppError)||![403,404].includes(e.status))throw e;}
+  }
   return {
+    source_lead,
     id: o.id,
     display_number: o.display_number,
     version: o.version,
@@ -101,6 +109,10 @@ export async function readOpportunity(p: Principal, id: string) {
     stage_entered_at: o.stage_entered_at.toISOString(),
     updated_at: o.updated_at.toISOString(),
     qualification_note: o.qualification_note,
+    identification_activity_id: o.identification_activity_id,
+    value_amount: o.value_amount ?? null,
+    expected_close_date: o.expected_close_date ?? null,
+    scope_details: o.scope_details ?? {},
     ...context,
     next_action_state,
     next_activity: designated,
@@ -192,8 +204,8 @@ export async function opportunityOptions(p: Principal, input: unknown = {}) {
   if (kind === "Organisation")
     rows = (
       await c.query(
-        `SELECT x.id,x.display_name,x.display_number FROM ppo.organisations x WHERE x.workspace_id=$1 AND x.company_id=$3 AND ${visibility("Organisation", "x")} AND ((${selectorScope("x.company_id")}) OR EXISTS(SELECT 1 FROM ppo.site_parties sp JOIN ppo.sites crm_org_site ON (crm_org_site.workspace_id,crm_org_site.id)=(sp.workspace_id,sp.site_id) WHERE sp.workspace_id=x.workspace_id AND sp.organisation_id=x.id AND ${selectorScope("crm_org_site.company_id","crm_org_site.id")})) ORDER BY x.id`,
-        [p.workspace_id, p.actor_id, company],
+        `SELECT x.id,x.display_name,x.display_number FROM ppo.organisations x WHERE x.workspace_id=$1 AND x.company_id=$3 AND ${visibility("Organisation", "x")} AND ((${selectorScope("x.company_id")}) OR EXISTS(SELECT 1 FROM ppo.site_parties sp JOIN ppo.sites crm_org_site ON (crm_org_site.workspace_id,crm_org_site.id)=(sp.workspace_id,sp.site_id) WHERE sp.workspace_id=x.workspace_id AND sp.organisation_id=x.id AND ${selectorScope("crm_org_site.company_id","crm_org_site.id")})) AND ($4::uuid IS NULL OR x.id>$4) AND position(lower($5) in lower(x.display_name||' '||x.display_number))>0 ORDER BY x.id LIMIT $6`,
+        [p.workspace_id, p.actor_id, company, pg.after, pg.q, pg.limit+1],
       )
     ).rows;
   if (kind === "Site")
@@ -238,7 +250,7 @@ export async function opportunityOptions(p: Principal, input: unknown = {}) {
   rows = rows.filter(
     (x) =>
       (!pg.after || x.id > pg.after) &&
-      x.display_name.toLowerCase().includes(pg.q.toLowerCase()),
+      `${x.display_name} ${x.display_number ?? ""}`.toLowerCase().includes(pg.q.toLowerCase()),
   );
   return {
     ...envelope(

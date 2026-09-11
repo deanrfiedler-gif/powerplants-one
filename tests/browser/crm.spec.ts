@@ -3,6 +3,10 @@ import { createHash, randomUUID } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { writeFile } from "node:fs/promises";
 import { CRM, crmCreate, crmBase, crmAction } from "../helpers/crm";
+async function pick(page: Page, label: string, id: string) {
+  await page.getByRole("combobox", {name:label,exact:true}).click();
+  await page.locator(`[role="option"][data-record-id="${id}"]`).click();
+}
 // Each case covers a multi-command journey; individual controls must still respond promptly.
 test.describe.configure({ timeout: 120000 });
 test.use({ actionTimeout: 15000 });
@@ -22,6 +26,10 @@ async function noOverflow(page: Page) {
     ),
   ).toBe(true);
 }
+async function waitForCompactSearch(page: Page) {
+  await expect(page.locator("#header-search input[name='sales-search']")).toHaveCount(1);
+  await expect(page.locator(".crm-toolbar input[name='sales-search']")).toHaveCount(0);
+}
 async function capture(page: Page, info: TestInfo, scenario: string) {
   await noOverflow(page);
   const errors = ["validation", "denied", "unavailable", "revoked-activity", "revoked-refresh"];
@@ -34,7 +42,7 @@ async function capture(page: Page, info: TestInfo, scenario: string) {
       : scenario === "uncertain-save"
         ? page.getByText("Save outcome uncertain — confirm the original action", { exact: true })
         : scenario === "empty"
-          ? page.getByText("No permitted opportunities match this view.", { exact: true })
+          ? page.locator(".crm-worklist-stamp").first()
           : scenario === "loading"
             ? page.getByText("Loading permitted sales records…", { exact: true })
             : scenario === "overdue"
@@ -123,12 +131,10 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await page
     .getByLabel("Visibility company", { exact: true })
     .selectOption(CRM.company);
-  await page.getByLabel("Organisation", { exact: true }).selectOption(CRM.org);
-  await page.getByLabel("Site", { exact: true }).selectOption(CRM.site);
-  await page.getByLabel("Contact", { exact: true }).selectOption(CRM.person);
-  await page
-    .getByLabel("Opportunity owner", { exact: true })
-    .selectOption(CRM.owner);
+  await pick(page, "Organisation", CRM.org);
+  await pick(page, "Site", CRM.site);
+  await pick(page, "Contact", CRM.person);
+  await pick(page, "Opportunity owner", CRM.owner);
   const title = `SYN ${info.project.name} controls upgrade for a very long growing-area description and staged qualification ${randomUUID()}`;
   await page.getByLabel("Opportunity title", { exact: true }).fill(title);
   await page
@@ -139,9 +145,9 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await page
     .getByLabel("Source context (synthetic)", { exact: true })
     .fill("SYN Manually recorded fictional conversation");
-  await page
-    .getByLabel("Activity owner", { exact: true })
-    .selectOption(CRM.owner);
+  if (await page.getByRole("tab",{name:"Timeline",exact:true}).count()) await page.getByRole("tab",{name:"Timeline",exact:true}).click();
+  await pick(page, "Activity owner", CRM.owner);
+  if (await page.getByRole("tab",{name:"Timeline",exact:true}).count()) await page.getByRole("tab",{name:"Timeline",exact:true}).click();
   await page
     .getByLabel("Action purpose", { exact: true })
     .fill("SYN Call to clarify the irrigation controls need");
@@ -189,6 +195,7 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
     ),
   ).toBeVisible();
   await capture(page, info, "next-action-needed");
+  await page.getByRole("tab", {name:"Details",exact:true}).click();
   await page
     .getByLabel("Qualification outcome", { exact: true })
     .fill(
@@ -200,9 +207,9 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await expect(
     page.getByText("Qualified", { exact: true }).first(),
   ).toBeVisible();
-  await page
-    .getByLabel("Activity owner", { exact: true })
-    .selectOption(CRM.owner);
+  if (await page.getByRole("tab",{name:"Timeline",exact:true}).count()) await page.getByRole("tab",{name:"Timeline",exact:true}).click();
+  await pick(page, "Activity owner", CRM.owner);
+  if (await page.getByRole("tab",{name:"Timeline",exact:true}).count()) await page.getByRole("tab",{name:"Timeline",exact:true}).click();
   await page
     .getByLabel("Action purpose", { exact: true })
     .fill("SYN Arrange a technical discovery conversation");
@@ -237,9 +244,11 @@ test("CA-02/03 real conflict retains proposed need; lost response reconciles ori
   const i = await seeded(page);
   await expect(page.getByRole("heading",{name:"Overdue",exact:true})).toBeVisible();
   await capture(page,info,"overdue");
+  await page.getByRole("tab", {name:"Details",exact:true}).click();
   await page
     .getByLabel("Qualified customer need", { exact: true })
     .fill("SYN Safe proposed need retained after conflict");
+  await page.getByRole("tab", {name:"Details",exact:true}).click();
   await page
     .getByLabel("Qualification outcome", { exact: true })
     .fill("SYN Proposed qualification note");
@@ -309,6 +318,7 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   page,
 }, info) => {
   const i = await seeded(page);
+  await page.getByRole("tab", {name:"Details",exact:true}).click();
   await page
     .getByLabel("Qualification outcome", { exact: true })
     .fill("SYN Sensitive unsaved proposal");
@@ -326,18 +336,33 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   await page
     .getByLabel("Search opportunities", { exact: true })
     .fill(`absent-${randomUUID()}`);
-  await expect(
-    page.getByText("No permitted opportunities match this view.", {
-      exact: true,
-    }),
-  ).toBeVisible();
+  await expect(page.locator(".crm-worklist-stamp strong")).toHaveText(
+    "0 opportunities",
+  );
+  await expect(page.locator(".crm-stage-empty").first()).toBeVisible();
   await capture(page, info, "empty");
   await page.setViewportSize({ width: 320, height: 844 });
+  await waitForCompactSearch(page);
   await noOverflow(page);
   await page.getByLabel("Search opportunities", { exact: true }).focus();
   await page.keyboard.press("Tab");
+  await expect(
+    page.getByRole("button", { name: "Change identity", exact: true }),
+  ).toBeFocused();
+  const filterToggle = page.getByRole("button", {
+    name: "Filters and sort",
+    exact: true,
+  });
+  await filterToggle.focus();
+  await page.keyboard.press("Enter");
+  await expect(filterToggle).toHaveAttribute("aria-expanded", "true");
+  await page.getByLabel("Next action", { exact: true }).focus();
+  await page.keyboard.press("Tab");
   await expect(page.getByLabel("Stage", { exact: true })).toBeFocused();
   await capture(page, info, "reflow-320-keyboard");
+  await filterToggle.focus();
+  await page.keyboard.press("Enter");
+  await expect(filterToggle).toHaveAttribute("aria-expanded", "false");
   await page.setViewportSize(info.project.use.viewport!);
   await page.route("**/api/v1/crm/opportunities?**", (route) =>
     route.fulfill({
@@ -354,7 +379,7 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   await expect(page.locator('.business-error[role="alert"]')).toContainText(
     "temporarily unavailable",
   );
-  await expect(page.getByText("No permitted opportunities match this view.", {exact:true})).toHaveCount(0);
+  await expect(page.locator(".crm-stage-empty")).toHaveCount(0);
   await expect(page.locator(".source-stamp")).toHaveCount(0);
   await capture(page, info, "unavailable");
   await page.unroute("**/api/v1/crm/opportunities?**");
@@ -383,14 +408,15 @@ test("CA-06/10 real CRM permission revocation clears linked Activity content aft
   await database().query("INSERT INTO ppo.sessions(token_hash,workspace_id,actor_id,expires_at) VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')",[createHash("sha256").update(token).digest("hex"),CRM.workspace,user]);
   await page.context().addCookies([{name:"ppo_local_session",value:token,url:"http://127.0.0.1:3000",httpOnly:true,sameSite:"Strict"}]);
   await page.goto("/crm/opportunities/new");await expect(page.getByRole("heading",{name:"New opportunity",exact:true})).toBeVisible();
-  await page.getByLabel("Visibility company",{exact:true}).selectOption(CRM.company);await page.getByLabel("Organisation",{exact:true}).selectOption(CRM.org);
+  await page.getByLabel("Visibility company",{exact:true}).selectOption(CRM.company);await pick(page, "Organisation", CRM.org);
   await expect(page.getByText("Choose a permitted site. Your creation authority is limited to that site.",{exact:true})).toBeVisible();await expect(page.getByRole("button",{name:"Create opportunity and action"})).toBeDisabled();
-  await page.getByLabel("Site",{exact:true}).selectOption(CRM.site);await page.getByLabel("Contact",{exact:true}).selectOption(CRM.person);await page.getByLabel("Opportunity owner",{exact:true}).selectOption(user);await page.getByLabel("Activity owner",{exact:true}).selectOption(user);await expect(page.getByRole("button",{name:"Create opportunity and action"})).toBeEnabled();await capture(page,info,"site-scoped-selectors");
+  await pick(page, "Site", CRM.site);await pick(page, "Contact", CRM.person);await pick(page, "Opportunity owner", user);await pick(page, "Activity owner", user);await expect(page.getByRole("button",{name:"Create opportunity and action"})).toBeEnabled();await capture(page,info,"site-scoped-selectors");
   const i={...crmCreate(),title:"SYN Revoked opportunity private title",owner_id:user,initial_action:{...crmAction(user),summary:"SYN Revoked Activity private content"}};
   await call(page,"crm/opportunities",i);
   const detail = await page.context().newPage();
   await detail.goto(`/crm/opportunities/${i.id}`);
   await expect(detail.getByRole("heading", {name:i.title,exact:true})).toBeVisible();
+  await detail.getByRole("tab", {name:"Details",exact:true}).click();
   await detail.getByLabel("Qualification outcome", {exact:true}).fill("SYN Private proposal before revocation");
   // Hold a real authorised server response, then let a newer request observe revocation.
   let releaseOriginal!: () => void;

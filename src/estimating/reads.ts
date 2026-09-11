@@ -41,3 +41,25 @@ export async function readQuote(p:Principal,id:string) {
     job:{state:j.state,attempts:j.attempts,error_code:j.error_code,output_available:j.state==="Ready",hashes:j.manifest?{html:j.manifest.html_hash,pdf:j.manifest.pdf_hash}:null},
     attempt_history:(await c.query("SELECT attempt,outcome,code,happened_at FROM ppo.estimate_quote_attempts WHERE job_id=$1 ORDER BY id",[j.id])).rows};
 }
+
+// Small, permission-checked projection for the CRM Commercial tab.
+export async function opportunityCommercial(p: Principal, id: string, query: Record<string,string> = {}) {
+  object(query, []);
+  const c = database();
+  await requireCapability(c, p, "estimating.read");
+  const o = await visibleOpportunity(c, p, id);
+  await relationshipContext(c, p, o, "estimating.read");
+  const row = (await c.query<{id:string}>("SELECT id FROM ppo.estimates WHERE workspace_id=$1 AND opportunity_id=$2", [p.workspace_id,id])).rows[0];
+  const d = row ? await readEstimate(p, row.id) : null;
+  let can_create = false;
+  if (!row && await hasPermission(c,p,"estimating.edit",o.company_id,o.site_id??undefined)) {
+    try { await relationshipContext(c,p,o,"estimating.edit"); can_create=true; }
+    catch(e) { if (!(e instanceof AppError) || ![403,404].includes(e.status)) throw e; }
+  }
+  return {
+    estimate: d ? {id:d.id,display_number:d.display_number,state:d.state,title:d.saved.title,version:d.saved.version,sell_total:d.saved.sell_total} : null,
+    site_name: d?.context.site ?? null,
+    quotes: d?.quotes.map(q=>({id:String(q.id),display_number:String(q.display_number),version:Number(q.version)})) ?? [],
+    can_create,
+  };
+}

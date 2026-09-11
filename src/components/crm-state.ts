@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { useUnsavedChanges } from "./record-ui";
 import { api, type Failure } from "./business-ui";
 import type { OperationReceipt } from "../platform/operations";
 export function denied(error: unknown) {
@@ -57,10 +58,12 @@ export function useCrmCommand(
   initialStatus = "Unsaved",
   onPendingChange?: (pending: boolean) => void,
 ) {
+  const [changed, setChanged] = useState(false);
   const [busy, setBusy] = useState(false),
     [error, setError] = useState<unknown>(null),
     [status, setStatus] = useState(initialStatus),
     [uncertain, setUncertain] = useState(false);
+  useUnsavedChanges(changed, busy || uncertain);
   const pending = useRef<{
     path: string;
     body: Record<string, unknown>;
@@ -88,6 +91,7 @@ export function useCrmCommand(
       setUncertain(false);
       onPendingChange?.(false);
       setStatus("Saved to the server");
+      setChanged(false);
       onAccepted(receipt);
     } catch (e) {
       setError(e);
@@ -113,7 +117,7 @@ export function useCrmCommand(
     status,
     uncertain,
     dirty: () => {
-      if (!busy && !uncertain) setStatus("Unsaved");
+      if (!busy && !uncertain) { setStatus("Unsaved"); setChanged(true); }
     },
     send: async (path: string, fields: Record<string, unknown>) => {
       if (pending.current) return;

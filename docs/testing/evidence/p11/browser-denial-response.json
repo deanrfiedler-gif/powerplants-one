@@ -1,0 +1,142 @@
+{
+  "source_head": "1b9660ad6a1b91b9aae8adae5926cb190f6fc985",
+  "executed_checkout": "a1d9e444c8ee0cd5b69046f354ef8a7452fb6e96",
+  "executed_tree": "51047381d0d74767270213f69696a87bc3fe5363",
+  "run_id": 34269603077,
+  "job_id": 102207535943,
+  "artifact_id": 10073726524,
+  "artifact_bytes": 42883222,
+  "artifact_sha256": "262e807693ff43dc1b9d414bf06e4f4787931fea623635e67933fb6701035add",
+  "artifact_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34269603077/artifacts/10073726524",
+  "focused_results": {
+    "expected": 11,
+    "unexpected": 1,
+    "skipped": 0,
+    "flaky": 0,
+    "retries": 0
+  },
+  "full_browser": {
+    "artifact_id": 10074233937,
+    "artifact_bytes": 126347324,
+    "artifact_sha256": "3b3b4dd0831ee22627668d248ad9a743ec9a0e3c4a0443dd76885faba0aca819",
+    "result": "120 passed, zero failed, skipped, flaky or retried",
+    "reported_duration": "21.9 minutes",
+    "limit": "The passing browser stage does not override the independently failed focused matrix or replace later regression stages."
+  },
+  "selected_journeys_passed": 2,
+  "retained_finance_cases_passed": 6,
+  "failure": {
+    "file": "tests/browser/quality-states.spec.ts",
+    "line": 405,
+    "project": "desktop-chromium",
+    "screen": "SC-04",
+    "started_at": "2026-09-08T19:42:47.291Z",
+    "duration_ms": 51010,
+    "error": "apiRequestContext.get: read ECONNRESET",
+    "probe": "Additional API-client GET after the real UI identity switch.",
+    "captured_ui": "SYN Systems; This identity cannot read service requests.; no service record displayed."
+  },
+  "browser_events": [
+    {
+      "request_id": 416,
+      "event": "request",
+      "elapsed_ms": 50216,
+      "path": "/api/v1/local-session",
+      "method": "POST"
+    },
+    {
+      "request_id": 416,
+      "event": "response",
+      "elapsed_ms": 50226,
+      "status": 200
+    },
+    {
+      "request_id": 417,
+      "event": "request",
+      "elapsed_ms": 50243,
+      "path": "/api/v1/service/:other/:id",
+      "method": "GET"
+    },
+    {
+      "request_id": 418,
+      "event": "request",
+      "elapsed_ms": 50244,
+      "path": "/api/v1/service/:other/:id",
+      "method": "GET"
+    },
+    {
+      "request_id": 417,
+      "event": "response",
+      "elapsed_ms": 50284,
+      "status": 403
+    },
+    {
+      "request_id": 418,
+      "event": "response",
+      "elapsed_ms": 50285,
+      "status": 403
+    },
+    {
+      "request_id": 417,
+      "event": "request-finished",
+      "elapsed_ms": 50287
+    },
+    {
+      "request_id": 418,
+      "event": "request-finished",
+      "elapsed_ms": 50287
+    },
+    {
+      "event": "test-end",
+      "elapsed_ms": 50367,
+      "status": "failed"
+    }
+  ],
+  "gateway": {
+    "pid": 14009,
+    "requests_received": 2573,
+    "requests_finished": 2573,
+    "incomplete_responses": 0,
+    "handler_rejections": 0,
+    "identity_request": {
+      "request_id": 535,
+      "status": 200,
+      "elapsed_ms": 12.51469399999769
+    },
+    "browser_reads": [
+      {
+        "request_id": 536,
+        "status": 403,
+        "elapsed_ms": 40.18847499999538
+      },
+      {
+        "request_id": 537,
+        "status": 403,
+        "elapsed_ms": 40.765824000001885
+      }
+    ],
+    "extra_probe": "No additional matching received event is present at failure."
+  },
+  "interpretation": "The browser received and displayed the real Systems denial before the separate API-client probe failed. The exact socket-reset mechanism remains unclassified; no server shutdown, permission failure or memory stall is established.",
+  "correction": {
+    "boundary": "Observe a selected browser GET whose request starts after the real identity POST returns 200. Track request objects so older in-flight responses cannot satisfy the check.",
+    "assertions": "Retain 403/404, private/no-store, matching visible denial, no loading and sensitive-data absence assertions; verify selected query values and retain denied status/source per screen.",
+    "independent_http": "Remove the extra API-client probe from this UI-state assertion. Independent database and HTTP permission suites remain.",
+    "unchanged": "Application behavior, permissions, timeout values, retries, test counts, load profiles and all controlled-output fingerprint inputs.",
+    "local_validation": "Focused ESLint and TypeScript pass on Node 24.19.0. No local browser/DB pass. Fresh full CI and actual-main verification are required."
+  },
+  "current_load": {
+    "artifact_id": 10073528954,
+    "sha256": "a7f2073f379e2006a5414068ff3327201882775c41459b21b7db289b4b7c8b75",
+    "unique_successful_samples": 320,
+    "rule_verified_core_gets_per_sample": 2,
+    "browser_processes": 10,
+    "complete_capture_set": true,
+    "capture_failures": 0,
+    "cpu_count": 4,
+    "memory_bytes": 16766410752,
+    "candidate_p95_groups_met": 0,
+    "candidate_p95_groups_total": 16,
+    "comparison_limit": "Earlier load runner had two CPUs and 8323969024 bytes RAM. Cross-run timings are not a controlled comparison."
+  }
+}

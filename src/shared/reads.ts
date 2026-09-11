@@ -323,11 +323,20 @@ export async function customerContext(p: Principal, id: string) {
       [p.workspace_id, p.actor_id, id],
     )
   ).rows;
+  const facilities = (await client.query<{id:string;site_id:string;name:string;parent_facility_id:string|null}>(
+    `SELECT f.id,f.site_id,f.name,f.parent_facility_id FROM ppo.facilities f
+      WHERE f.workspace_id=$1 AND f.site_id=ANY($3::uuid[]) AND ${visibility("Facility","f")} ORDER BY f.name,f.id`,
+    [p.workspace_id,p.actor_id,sites.map(s=>s.id)],
+  )).rows;
   const mappings = companyRead ? await mappingViews(p, id) : [];
   return {
     ...(await project(client, p, "Organisation", org)),
     contacts,
-    sites: await Promise.all(sites.map((s) => project(client, p, "Site", s))),
+    site_summary: { sites: sites.length, facilities: facilities.length, basis: "Permitted linked sites" },
+    sites: await Promise.all(sites.map(async (s) => ({
+      ...await project(client, p, "Site", s),
+      facilities: envelope(facilities.filter(f=>f.site_id===s.id)),
+    }))),
     mappings: mappings.map((m) => ({
       id: m.id,
       version: m.version,

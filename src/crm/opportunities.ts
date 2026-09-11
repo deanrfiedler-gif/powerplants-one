@@ -43,7 +43,7 @@ function actionInput(
     ],
   };
 }
-async function event(
+export async function opportunityEvent(
   c: PoolClient,
   p: Principal,
   o: Record<string, unknown>,
@@ -134,7 +134,7 @@ export async function createOpportunity(p: Principal, value: unknown) {
       const initial = actionInput(command, command.initial_action);
       await authoriseActivityInput(c, p, initial);
       await insertActivity(c, p, initial);
-      await event(c, p, o, command, "OpportunityCreated", null);
+      await opportunityEvent(c, p, o, command, "OpportunityCreated", null);
       return {
         ...o,
         audit_details: {
@@ -147,7 +147,7 @@ export async function createOpportunity(p: Principal, value: unknown) {
     "OpportunityCreated",
   );
 }
-async function linkedActiveAction(
+export async function linkedActiveAction(
   c: PoolClient,
   p: Principal,
   o: OpportunityContext & { id: string },
@@ -240,7 +240,7 @@ export async function qualifyOpportunity(
           ],
         )
       ).rows[0];
-      await event(c, p, next, command, "OpportunityQualified", "Enquiry");
+      await opportunityEvent(c, p, next, command, "OpportunityQualified", "Enquiry");
       return {
         ...next,
         audit_details: {
@@ -284,7 +284,7 @@ export async function planOpportunityAction(
           [actionId, p.actor_id, p.workspace_id, id],
         )
       ).rows[0];
-      await event(c, p, next, command, "OpportunityActionPlanned", o.stage_id);
+      await opportunityEvent(c, p, next, command, "OpportunityActionPlanned", o.stage_id);
       return {
         ...next,
         audit_details: {

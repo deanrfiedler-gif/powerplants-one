@@ -50,7 +50,7 @@ try {
     assert.equal((await database().query("SELECT count(*)::int AS n FROM ppo.estimate_quote_jobs WHERE revision_id=$1",[proof.quote.id])).rows[0].n,1);
   }
   await page.goto(`${origin}/estimating/estimates/${proof.input.id}`);await expect(page.getByRole("heading",{name:"Scope and cost workbook"})).toBeVisible();await expect(page.getByText(/Viewing saved version 2/)).toBeVisible();
-  await page.locator(".est-heading").evaluate(e=>e.scrollIntoView({block:"start"}));const screenshot=await page.screenshot({path:`${evidence}/${phase}.png`});
+  await page.locator(".business-heading").evaluate(e=>e.scrollIntoView({block:"start"}));const screenshot=await page.screenshot({path:`${evidence}/${phase}.png`});
   await writeFile(join(root,"proof.json"),JSON.stringify(proof));
   await writeFile(`${evidence}/${phase}.json`,JSON.stringify({phase,source_head:process.env.PPO_SOURCE_HEAD,checkout:execFileSync("git",["rev-parse","HEAD"],{encoding:"utf8"}).trim(),tree:execFileSync("git",["rev-parse","HEAD^{tree}"],{encoding:"utf8"}).trim(),run_id:process.env.GITHUB_RUN_ID,node:process.version,browser:browser.version(),database:(await database().query("SELECT version() AS version")).rows[0].version,application_pids:proof.application_pids,database_starts:proof.database_starts,operations:proof.operations.map((r:{operation_id:string})=>r.operation_id),hashes:proof.hashes??null,screenshot_sha256:digest(screenshot)},null,2));
   console.log(`E1 ${phase}: exact estimate predecessors, three original receipts, pending/ready draft and process identities verified.`);

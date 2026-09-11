@@ -1,152 +1,71 @@
 # Current prototype status
 
-
-P11 continuation, 7 September: Dean approved separately recorded whole-minute Travel as explicitly NonBillable/no-posting for the selected synthetic journey. ADR-0018 and migration/seed 0013 implement the bounded successor; the P11 handover and authoritative external record govern exact verification and delivery completion. P12 remains preparation only.
-**Updated:** 7 September 2026 · **Owner:** Dean Fiedler · **Repository:** personal/private · **Stage:** P09/P10, CRM I1–I2 and estimating E1 bounded implementations; exact verification/publication governed by their handovers and external records. PP-01 remains incomplete.
-
-## Current direction
-
-P11 is implemented under [issue #54](https://github.com/deanrfiedler-gif/powerplants-one/issues/54) / [PR #57](https://github.com/deanrfiedler-gif/powerplants-one/pull/57), preserving verified P10 and later accepted main. The [P11 handover](delivery/p11-handover.md) and [authoritative publication](https://github.com/deanrfiedler-gif/powerplants-one/issues/54#issuecomment-5567364667) establish exact final-head/actual-main checks, original evidence and completion. Implemented work includes current-grant review/receipt/file isolation, scoped activity pages/counts, planner query batching, identity/input/offline recovery, honest state handling, complete selected synthetic UI journeys and immutable branded v2 outputs. ADR-0018 keeps whole-minute Travel entirely NonBillable/no-posting; Labour F-06 remains unchanged. Recorded intermediate evidence includes eleven DB cases, two desktop/phone journeys, twelve state/identity cases and one HTTP component passed; all 320 load reads passed on named sources with unresolved variability and all candidate p95 groups missed. Final full regression is a separate mandatory publication gate. Prior full PT statuses remain; no PT-30/P12, screen-reader, real-device, independent review, owner acceptance or production claim follows from these components. [P12 starter](delivery/p12-starter-prompt.md) requires completed verified P11 publication and separate invocation.
-
-Dean chose to create his own private prototype and authorised the repository foundation, then explicitly requested the First Prototype Definition & Architecture package: scoped service journey, BP-02, BP-07, minimum Finance/document contracts and an ordered implementation plan.
-
-The [PP-01 package](prototype/README.md) now defines that synthetic planned-service journey. The technology design recommendation is TypeScript/Next.js with PostgreSQL, explicit domain services, a durable outbox, bounded browser offline capture and simulated source adapters. [ADR-0003](decisions/ADR-0003-prototype-architecture.md) records its scope; [ADR-0006](decisions/ADR-0006-p01-local-foundation.md) and the P01 handover record the bounded implementation proof.
-
-Dean has now adopted the independent [PPO-STD-001 naming standard](standards/naming-conventions.md) and authorised its repository implementation. [ADR-0005](decisions/ADR-0005-project-naming-adoption.md) records Powerplants One / PPO, the stable master path, removal of the other project's STD-001 dependency and the scoped contract alignment. The [ChatGPT project instructions](standards/chatgpt-project-instructions.md) are maintained in the repository for the dedicated project.
-
-## What exists
-
-- Adopted naming r02 preserved exactly, with working r03 adoption edition, document/exception registers and naming checks.
-- Master working document with stable filename and an unchanged issued v02 baseline; preserved v01/audit references.
-- Original 78-parent requirement index, 29 decision register, 38 master acceptance scenarios and 16 linked discovery/design issues.
-- PP-01 scope, BP-02, BP-07, complete selected data/choice and API contracts, Finance/document contracts, decision/evidence treatment and implementation plan.
-- Fifteen screens, twelve reusable components, all sixteen master TR transitions, twenty service rules, twenty-four validation messages, twenty-six command families and ten read contracts.
-- Thirty synthetic acceptance procedures and structured catalogue; twelve ordered implementation work packages.
-- All 78 parents dispositioned: 24 Core, 25 Partial, 29 Deferred within this prototype. These are scope classifications, not completed requirements.
-- Repository documentation checks for source hashes, baseline registers, local links and package traceability; actual check evidence in package assurance/publication records.
-
-## Implemented foundation and remaining scope
-
-P01 adds a runnable local shell, strict synthetic identity, draft-ticket command, SQL migration/fixtures, reservation experiment and automated checks. [P01 handover](delivery/p01-handover.md) records exact versions, commands, execution limits and current verification/publication state. No operational source integration, migrated dataset, hosted environment or production service exists. At the P01 boundary all 30 full PT procedures were Not run; subsequent executions are recorded separately in delivery evidence.
-
-No paid service, repository visibility/membership change, source-system transaction, customer message or migration is performed by P01. MYOB and SharePoint configuration/authority remain unverified. Pipedrive, Smartsheet and native CAD retain their existing roles.
-
-## Decision state
-
-D-003 is resolved for this personal prototype: Powerplants One, PPO and its independent naming standard are user-adopted. D-004/D-022/D-029 remain partially resolved. The other 25 master decisions remain open. Corporate programme designation, if ever requested, would be a new scoped decision rather than a dependency on another project. [Current evidence treatment](prototype/decisions-and-evidence.md) distinguishes useful design detail from operational closure evidence.
-
-Dean owns private prototype decisions. Proposed department roles do not assign employees, approve an organisation chart or establish corporate sponsorship. PPO is the adopted local project code; GEN remains only in preserved historical source names. SOL008 and the other project's STD-001 are outside this project's naming authority.
-
-## P02 and P03 delivery
-
-P02 is implemented and component-verified under [issue #22](https://github.com/deanrfiedler-gif/powerplants-one/issues/22) and [PR #23](https://github.com/deanrfiedler-gif/powerplants-one/pull/23). The [P02 handover](delivery/p02-handover.md) records current verification/merge evidence, exact commands and limitations. [ADR-0007](decisions/ADR-0007-p02-shared-foundation.md) covers typed shared records, P01 migration, scope boundaries, immutable history, atomic references and non-destructive seed. This does not resolve operational ownership, department authority or live account verification.
-
-P03 delivers SC-01–SC-04 business views, owned Activity/ActivityLink, additive intake mapping, bounded TR-01 transitions and API-C24 extensions under [issue #24](https://github.com/deanrfiedler-gif/powerplants-one/issues/24) and [PR #25](https://github.com/deanrfiedler-gif/powerplants-one/pull/25). [ADR-0008](decisions/ADR-0008-p03-customer-intake.md) records the compatibility and permission decisions; the [P03 handover](delivery/p03-handover.md) records exact commands, actual checks, limitations and publication status. The final implementation run passed 4 unit, 29 PostgreSQL, 4 HTTP and 12 Chromium cases; 38 desktop/mobile captures were inspected and retained. There is no independent-review claim.
-
-## P04 delivery and next dependency
-
-P04 under [issue #26](https://github.com/deanrfiedler-gif/powerplants-one/issues/26) and [PR #27](https://github.com/deanrfiedler-gif/powerplants-one/pull/27) implements SC-05: explicit ticket junction, scoped work orders, immutable approved revisions, items/assets/identification limits, manual synthetic authority, distinct coverage, server-controlled readiness and Proposed visits. [ADR-0009](decisions/ADR-0009-p04-work-scope-readiness.md) defines the small physical/contract amendments, including the known-site identification boundary and no financial disposition. The [P04 handover](delivery/p04-handover.md) is the actual test/visual/publication record; independent review and owner acceptance are not implied.
-
-## P05 and P06 delivery
-
-P05 under [issue #28](https://github.com/deanrfiedler-gif/powerplants-one/issues/28) / [PR #29](https://github.com/deanrfiedler-gif/powerplants-one/pull/29) implements SC-07/SC-08 and bounded TR-03/08/16: typed fictional crew/calendar/skills/availability, explicit travel reservations, controlled confirmation/moves/requests/cancellation, manual/simulated contact and owned follow-up. The [P05 handover](delivery/p05-handover.md) records actual verification, failed-run dispositions, source/merge evidence and limitations; [ADR-0010](decisions/ADR-0010-p05-planner-controlled-changes.md) records the conservative synthetic policy and immutable source bundles.
-
-P04 authority and original proposals remain exact. Booking changes never clear dispatch hold, create customer acknowledgement or financial disposition. P05 originally recorded preparation/review consequences without fabricated pack records. P06 now evolves that hold through actual issue and individual response evidence under [issue #30](https://github.com/deanrfiedler-gif/powerplants-one/issues/30) / [PR #31](https://github.com/deanrfiedler-gif/powerplants-one/pull/31). [P06 handover](delivery/p06-handover.md) records exact verification, original source/output provenance, failed runs and publication; [ADR-0011](decisions/ADR-0011-p06-controlled-job-packs.md) records the material choices. Nine-section preparation/check is possible while dispatch is held. Durable render recovery never silently changes old bytes or promotes queued output to Issued. Changes/withdrawal create owned contact Activities and require current crew response before component clearance.
-
-## P07 online field workflow
-
-P07 under [issue #32](https://github.com/deanrfiedler-gif/powerplants-one/issues/32) / [PR #33](https://github.com/deanrfiedler-gif/powerplants-one/pull/33) implements SC-09/10, bounded DAT-08, API-C12–14 and online TR-09/10: current personal assignments, real P06 authority checked at actual start, strict typed field capture, durable private fictional PNGs, immutable corrections and exact completion drafts. [ADR-0012](decisions/ADR-0012-p07-online-field-evidence.md) records the physical policies and [P07 handover](delivery/p07-handover.md) records actual verification, failed runs and publication state. Current work-order/ticket/reviewer/report/Finance lifecycles remain separate.
-
-P08 now implements bounded offline SC-09/10 and API-C15 under [issue #34](https://github.com/deanrfiedler-gif/powerplants-one/issues/34) / [PR #35](https://github.com/deanrfiedler-gif/powerplants-one/pull/35). The [handover](delivery/p08-handover.md) and [ADR-0013](decisions/ADR-0013-p08-offline-recovery.md) record versioned IndexedDB originals/PNG bytes, explicit shell cache scope, recoverable sender leases, causal replay, exact receipts and narrow owned recovery. Local save, uncertain send, server acceptance and authority review are distinct. Current actor/assignment/full-crew/non-waivable start authority remains server-adjudicated; completion remains a technician draft.
-
-P09 follows the verified P08 foundation under [issue #36](https://github.com/deanrfiedler-gif/powerplants-one/issues/36) / [PR #37](https://github.com/deanrfiedler-gif/powerplants-one/pull/37). Its [handover](delivery/p09-handover.md) and authoritative external publication record distinguish implementation, exact-head checks, normal merge and actual merged-main results. Finance, live integration, hosting and full PP-01 remain incomplete.
-
-## Parallel CRM discovery and design
-
-**PPO-009 / issue #9 is distinct from P09.** [BP-03](blueprints/BP-03-crm.md), [PAR-01–PAR-18 assessment](blueprints/crm-parity.md), [synthetic screen walkthrough](blueprints/crm-screen-specification.md), [ordered CRM implementation sequence](delivery/crm-implementation-plan.md) and [first implementation starter](delivery/crm-first-increment-starter.md) are authored. The [CRM handover](delivery/crm-discovery-handover.md) links actual validation and publication evidence. That discovery delivered design only. The separately authorised I1 implementation and its actual verification/publication are recorded below.
-
-One bounded live stage-metadata read refreshed ten stages across two pipeline IDs; account identity, licence, complete visibility and actual feature usage remain unverified. Identifiable operational-record reads await account-context evidence. All parity dispositions and functional defaults remain proposed; D-013/D-025/D-026 remain open, issue #9 remains open and AT-25 remains Planned. Pipedrive retains operational writes. BP-03 I1 subsequently received separate implementation authority; this does not accept the broader proposed parity.
-
-## Shared UI and branded CRM design handover
-
-The [shared UI specification](standards/ui-style-specification.md), [branded Board/Grid preview and original captures](blueprints/crm-ui-mockups/README.md) and [visual decision](decisions/ui-brand-and-crm-layout.md) publish the supplied Powerplants identity with a Pipedrive-familiar CRM layout. The [screen specification](blueprints/crm-screen-specification.md) and [I2 UI guidance](delivery/crm-i2-ui-guidance.md) make this discoverable for later implementation; the [handover](delivery/crm-ui-design-handover.md) records provenance, validation and publication controls.
-
-This is documentation/design work under PPO-009, separate from active I1 and P09. I1 retains Enquiry → Qualified, Open and no money fields. The six reference stages and fictional commercial values do not expand its scope, establish account parity or pass AT-25. The maintained I2 starter is prepared by I1 and requires a new invocation before implementation.
-
-## Repository and publication controls
-
-The inspected repository is private with main as default branch. Branch protection was not enabled in the baseline, and a GitHub Projects board has not been provisioned. Existing Issues and the versioned backlog are used. No claim is made that checks are enforced by branch rules. See [foundation handover](delivery/foundation-handover.md) for earlier work and [package assurance](prototype/assurance.md) for this package's validation/publication status.
-
-## P09 service review and controlled reports
-
-P09 issue #36 / PR #37 implement exact completion submission, authorised review/return, immutable acceptance and report correction cycles, durable customer-safe OUT-10 revisions, five explicit responses and compatible P08 local intents. [ADR-0014](decisions/ADR-0014-p09-service-reports.md) and the [P09 handover](delivery/p09-handover.md) record physical contracts, actual verification, failed-run dispositions and limits. The implementation run passed 289 cases (12 unit, 205 PostgreSQL, 14 HTTP, 58 browser) plus real restart procedures. The external publication record governs exact final-head and actual merged-main results. Existing full PT-06 is preserved; full PT-15/PT-16 disposition is recorded separately from component counts and AT/owner acceptance. At the P09 publication boundary, the [P10 starter](delivery/p10-starter-prompt.md) was prepared only; subsequent P10 authority and implementation are recorded below.
-
-## BP-03 I1 implementation and publication
-
-[Issue #39](https://github.com/deanrfiedler-gif/powerplants-one/issues/39) authorises only synthetic owned opportunity and qualification follow-up. [I1 handover](delivery/crm-i1-handover.md) records the implemented slice, executed component checks, failed-run dispositions and actual publication status. Final merged-main evidence belongs to its linked external record. [ADR-0015](decisions/ADR-0015-crm-i1-owned-opportunities.md) reserves migration 0010 after P09's 0009. P09 remains separately owned in #36/#37. [I2 starter](delivery/crm-i2-starter.md) prepares only a scoped Board/Grid worklist using the accepted brand handover and I1 contracts; the user has now invoked I2; its bounded implementation and source-specific verification/publication are recorded below. Full AT-25 and PPO-009 remain open; no operational transition is implied.
-
-## CRM UI audit revision
-
-Dean authorised the next design revision after the published Board/Grid audit. The [r02 visual revision](delivery/crm-ui-design-handover.md) improves mobile first-record visibility, continuous desktop stage navigation, frozen grid headings/identity, full next actions/owners, creation context, validation and long text. [Updated captures and branded exception examples](blueprints/crm-ui-mockups/README.md) accompany shared UI specification r03 and I2 UI guidance r02. Original issued images and source bytes remain preserved. Verification and PR publication are recorded in the handover; this does not change I1/P09 application scope or close PPO-009/AT-25.
-
-## P10 Finance handoff and account simulation
-
-Dean separately authorised the complete bounded P10 implementation and normal checked merge, followed by P11 starter preparation only. [Issue #45](https://github.com/deanrfiedler-gif/powerplants-one/issues/45), [PR #48](https://github.com/deanrfiedler-gif/powerplants-one/pull/48), [ADR-0016](decisions/ADR-0016-p10-finance-handoff.md) and the [P10 handover](delivery/p10-handover.md) govern current work. The source prerequisite is the completed P09 external publication, subsequently preserved through CRM I1 and estimating discovery main. Earlier P10 preparation-only statements describe the P09 boundary and are superseded by this explicit authority.
-
-SC-12/SC-13, DAT-10, API-C19–22/TR-14 and restricted OUT-14 are implemented; source-specific verification and actual-main publication are governed by the P10 handover and linked external record. Original captured quantities, exact Service approvals, allocated/billable quantities and actual synthetic target quantities remain separate. Incomplete declarations and stale sources block readiness. Account F-01–F-05 retain as-at, completeness, reversals and separate cash. All master requirement and AT completion claims remain unchanged. P11/P12 implementation, hosting and live integrations remain unstarted.
-
-## BP-03 I2 scoped Board/Grid implementation
-
-[Issue #43](https://github.com/deanrfiedler-gif/powerplants-one/issues/43) / [PR #47](https://github.com/deanrfiedler-gif/powerplants-one/pull/47) implements one server-authorised opportunity query with Board/Grid presentations, retained search/filter/sort/page context, two actual stages, Open outcome and canonical I1 qualification/Activity paths. [Handover](delivery/crm-i2-handover.md) and [decision](decisions/crm-i2-worklist.md) track source-specific checks and the external publication ledger. Implementation, completed runtime checks, actual merge/main verification and business acceptance remain distinct.
-
-Shared brand tokens and intact logo, compact phone navigation/identity, page-derived counts, read-only filter selectors and explicit changed-window recovery are included. No migration, money, owner transfer, reassociation, extra stage, close/reopen, business mutation from switching or CRM offline storage is included. P10 #45 and E1 #46 reservations remain separately owned. All accepted baseline suites, issued bytes and 78 parents remain preserved. The [next controlled handover contract starter](delivery/crm-i2-ownership-contract-starter.md) is prepared only and requires verified I2 publication plus a new invocation. Full AT-25 remains Planned; #9 remains open.
-
-## PPO-010 estimating and quotation discovery
-
-Dean authorised BP-04 discovery/design on 6 September 2026. [BP-04 r01](blueprints/BP-04-estimating-quotation.md), [CRE-01–CRE-26 evidence](blueprints/estimating-evidence.md), [synthetic costing/quotation preview](blueprints/estimating-workspace-mockup.html), [18 future acceptance procedures](testing/estimating-acceptance.md) and [E1–E6 sequence](delivery/estimating-implementation-plan.md) are authored. [Handover](delivery/estimating-discovery-handover.md) records source provenance and actual validation/publication. The design recognises merged CRM I1 while preserving its existing scope.
-
-This is design only. [E1 starter](delivery/estimating-first-increment-starter.md) is prepared for a later bounded instruction; no estimating application code or live integration is delivered. D-009/D-010 and issue #10 remain open; EA-01–EA-18 are Not run and master AT statuses are unchanged. Real formulas, policy thresholds, approved terms and accepted calculation examples remain evidence gaps. P01–P12 ordering and EST Wave B scope remain intact.
-
-Dean subsequently approved publishing the BP-04 package to this private repository and opening a review PR. The [handover](delivery/estimating-discovery-handover.md) preserves the earlier automatic-review block and governs current publication/check evidence. Estimating implementation remains prepared only.
-
-
-## BP-04 E1 implementation and publication
-
-Dean’s subsequent “Proceed” and “Continue” authorise the bounded manual Estimate and draft quotation slice under [issue #46](https://github.com/deanrfiedler-gif/powerplants-one/issues/46), bringing E1 forward from Wave B while retaining P01–P12 order. [ADR-0017](decisions/ADR-0017-estimating-e1.md), the [physical/API contract](contracts/estimating-e1.md) and [implementation handover](delivery/estimating-e1-handover.md) record its implemented scope and component verification. Design PR #44 merged at `94289a20` and all actual-main checks passed. E1's focused run passed 29 unique cases and separate real restart recovery; its [authoritative publication record](https://github.com/deanrfiedler-gif/powerplants-one/pull/49#issuecomment-5562344440) governs final-head checks, merge and actual-main delivery. The [E2 starter](delivery/estimating-e2-starter.md) is prepared only. Migration 0012 preserves Finance #45’s 0011 reservation. CRM I2 #43 / PR #47 is active; the earlier prepared-only statements above are historical boundaries. Full BP-04, D-009/D-010, EA/AT and owner acceptance remain open.
-
-
-## PPO-012 Projects discovery and first-increment design
-
-Dean invoked the next bounded BP-06 discovery/design step on 7 September 2026. [BP-06 r01](blueprints/BP-06-projects-commercial-delivery.md), [bounded Smartsheet assessment](blueprints/projects-source-assessment.md), [list/detail screen designs](blueprints/projects-screen-specification.md), [J1–J5 sequence](delivery/projects-implementation-plan.md) and [future acceptance procedures](testing/projects-acceptance.md) are authored. The [handover](delivery/projects-discovery-handover.md) governs actual checks and publication; the [decision](decisions/bp06-projects-discovery.md) preserves authority and dependencies.
-
-J1 proposes a synthetic project register, manually dated milestones and owned shared Activities. Its [starter](delivery/projects-first-increment-starter.md) is prepared only. Suggested timing is after verified P10–P12; no implementation or mandatory new dependency is created here. Full Projects remains Wave C, PPO-011 remains required for technical gates, and issue #12 / D-010/D-014/D-026 / master acceptance stay open. No application, migration, source write or customer output is delivered.
-
-## Customer portal design and staged direction
-
-Dean authorised customer portal design now and bounded implementation as supporting workflows become ready. [Issue #50](https://github.com/deanrfiedler-gif/powerplants-one/issues/50), the [design](blueprints/customer-portal-design.md), [synthetic walkthrough](blueprints/customer-portal-mockup.html), [CP1–CP5 plan](delivery/customer-portal-implementation-plan.md) and [handover](delivery/customer-portal-handover.md) record this work. [CP1 starter](delivery/customer-portal-cp1-starter.md) is prepared under existing authority, with current readiness verification required.
-
-At inspected main 94289a20, P10 #48, CRM I2 #47 and estimating E1 #49 were open; P11/P12 were not delivered. CP1 runtime is therefore pending its listed core dependencies. The design adds no application, external identity, real customer access or integration. CPA-01–CPA-16 remain Not run. Seven domains, all 78 parent IDs and P01–P12 order remain intact; D-027 has a bounded private direction decision, not full operational closure.
-
-Portal publication update (7 September): [draft PR #51](https://github.com/deanrfiedler-gif/powerplants-one/pull/51) preserves E1 and CRM I2 merged main `47d2f31f`. Local documentation and standalone browser checks pass; all 18 original desktop/390px/320px captures were visually inspected and retained. Earlier prestart failures remain documented in the [handover](delivery/customer-portal-handover.md). Current-head full regression, normal merge and actual-main verification remain pending. The authorised continuation checks readiness without bypassing checks or activating real access; P11/P12 still gate CP1.
-
-## Controlled opportunity handover contract — design only
-
-I2 publication is verified complete on main `744b6e6b89e69abdd0fbd4bfdd6ef5ae51e154f3`; the [external I2 record](https://github.com/deanrfiedler-gif/powerplants-one/issues/43#issuecomment-5562200516) supersedes earlier pending delivery notes. Dean separately invoked the handover-contract starter. [Issue #55 design handover](delivery/crm-handover-design-handover.md) publishes the [policy proposal](decisions/crm-opportunity-handover.md), physical/interface map, synthetic canonical form and 22 prospective verification cases. H-01–H-03 remain unresolved; the implementation starter is conditional and uninvoked. Opportunity ownership remains immutable in the application. Full AT-25 stays Planned and #9 stays open.
-
-Current P10/E1 publication is complete in their own linked external records; P11 #54 is separately active. Preserve P11, Projects and portal work under their own authority. This CRM contribution changes no application/schema/seed/grant, stage, Activity/estimate/Finance owner or operational access.
-
-## Accepted r08 shared layout and CRM implementation
-
-Dean accepted the r08 design review and authorised implementation of the shared shell and CRM, followed directly by verification/publication. The [decision](decisions/shared-ui-r08-implementation.md) and [handover](delivery/shared-ui-redesign-handover.md) record current-source work and validation. Compact navigation/header/identity, responsive Board/List, fixed directional stage headers and equal-height Activity cards use the existing Enquiry → Qualified / Open contract. P11 #54/#57 remains separate. No commercial schema, live integration or operational transition is added; implementation evidence and the current publication/CI outcome are recorded in [PR #59](https://github.com/deanrfiedler-gif/powerplants-one/pull/59).
-
-## Email and Calendar design, 8 September 2026
-
-Dean authorised an [Email & Calendar design and synthetic prototype](blueprints/email-calendar-integration.md) under PPO-009 / CRM-03 / PAR-06. It provides desktop/mobile inbox, thread, record-linking, selected-message privacy, internal follow-up and calendar scenarios, plus a [first Microsoft pilot plan](delivery/email-calendar-microsoft-pilot.md). The [handover](delivery/email-calendar-handover.md) records actual checks and the browser-review limitation. No live Outlook integration, Microsoft consent change, sending, invitation, database migration or deployment is implemented. This design does not change existing runtime or open mobile PR #61; operational D-025/D-020/D-012 and full AT-25 remain open.
-
-Email & Calendar r02 (8 September): Dean’s mobile calendar reference has been applied to the separate synthetic HTML demo: week/date navigation, Day/Agenda views, source filters, time-proportional meetings, due-only Activities and mobile bottom sheets. The [audit and handover](delivery/email-calendar-handover.md#r02-mobile-calendar-and-demo-audit) records 29 passing model/projection cases and the browser-preview limitation. PR #62 remains the publication record; no merge, live Outlook connection or visual acceptance is claimed.
-
-## Mobile acceptance and Facility-field preparation, 8 September 2026
-
-Dean authorised preparation while [PR #61](https://github.com/deanrfiedler-gif/powerplants-one/pull/61) remains under verification. The [mobile acceptance checklist](testing/mobile-crm-acceptance-checklist.md) defines the owner walkthrough, engineer-assisted failure checks and a dated read-only source/evidence review; all owner-review cases remain Not run. The [Facility-field decision](decisions/facility-field-proposal.md) records Dean's 8 September approval of FAC-D01–03: separate structure/use/crop vocabulary, explicit unknown details and confirmed clearing of inapplicable values with preserved history. Revision r02 adopts the common/conditional rules and scopes the next create/edit/reload/history journey. Facility runtime work follows verified PR #61 integration; implementation and FAC-A01–07 remain Not run.
-
-This is a separate documentation contribution under PPO-009 / #9. It changes no PR #61 candidate source, approved UI, database, grant or workstream branch. PR #61's ledger governs current verification and merge; the documents do not claim full AT-25, physical-phone or operational acceptance.
+**Updated:** 11 September 2026 · **Owner:** Dean Fiedler · **Repository:** `deanrfiedler-gif/powerplants-one`, **public** visibility, default branch `main` · **Baseline commit:** `cb358405fd1837d70f92774fdf4db9e4dbe485e5` · **Naming:** [PPO-STD-001](standards/naming-conventions.md) / [ADR-0005](decisions/ADR-0005-project-naming-adoption.md)
+
+This file is a snapshot of the current state, kept short enough to read in one sitting. It is not the evidence record: exact verification, run IDs, hashes and publication results remain in each package's handover, decision record and authoritative external record. The chronological entries that previously lived here are retained unchanged in [STATUS-log.md](STATUS-log.md). Update this file by replacing rows, not by appending narrative.
+
+## 1. Stage in one paragraph
+
+Powerplants One is Dean's personal synthetic prototype of a seven-domain operations platform. The PP-01 planned-service journey (P01–P11) is implemented and merged; P12 (recovery, restore and owner demonstration) is prepared only, so **PP-01 is not complete**. Bounded slices of CRM, Estimating, Projects and Email/Calendar are merged alongside it. A private Azure demo runs the current `main`. MYOB Acumatica, SharePoint, Pipedrive, Smartsheet and native CAD retain their operational roles; every external interface in the application is a simulated adapter. Company ownership, production approval and external write authority are not implied by anything below.
+
+## 2. Baseline, verification and hosting
+
+| Item | State | Evidence |
+|---|---|---|
+| `main` head | `cb358405` (merge of PR #110, 10 September 2026) | [Commits](https://github.com/deanrfiedler-gif/powerplants-one/commits/main/) |
+| Full Application assurance | Last completed run **passed** on `355c015` (run 34487144248, 1 h 9 m, 9 evidence artifacts). Run 34525656699 on `cb358405` was in progress when this snapshot was written; `cb358405` differs from `355c015` only in the Azure operator Python code. | [Run 34487144248](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34487144248) · [Run 34525656699](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34525656699) |
+| Focused workflows on `main` | Documentation, CRM refinements, Estimating E1, Email/Calendar journey, CRM Leads, Azure preparation checks all passed on `cb358405` | Actions history for the merge commit |
+| Documentation checks | `check_foundation`, `check_prototype`, `check_naming` pass at `cb358405` (78 parents, 29 decisions, 30 PT procedures, 12 packages, 109 document records) | Local run, 11 September 2026 |
+| Hosted Azure demo | **Deployed from `cb358405`** by manual run 34526927716 (`upgrade-and-deploy`, 10 September 2026 20:31 UTC, owner-confirmed). Database upgraded in place to migration 19 with records and invitations retained; `/healthz` returned 200 and anonymous CRM API access returned 401. **Pending:** owner sign-in on the new image, then a saved Leads record, Gantt schedule and Finance draft confirmed after reload. | [Run 34526927716](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34526927716) · [Runbook](delivery/azure-private-demo.md) · [Upgrade decision](decisions/azure-existing-demo-upgrade.md) |
+| Branch protection | Not enabled. Checks are advisory; PR #110 merged while its full job was still running. | Repository settings |
+| Browser-suite stalls | Two desktop-only first-pass stalls on 10 September (runs 34534398231, 34536514657) traced to cold dev-server route compilation inside 5 s assertion windows. Harness warm-up proposed; deadlines unchanged. A separate compiled-application browser workflow is proposed as an additional signal; the identity guard is unchanged. | [Warm-up](decisions/ci-browser-warm-up.md) · [Compiled suite](decisions/ci-compiled-browser-suite.md) |
+| Migrations | 0001–0019 registered; 0016 reserved for the Assistant branch; 0020 proposed by PR #108 | `scripts/migration-registry.ts` |
+
+## 3. Domain state
+
+"Merged" means on `main` with its package's recorded component evidence. No row implies independent review, owner acceptance of a business outcome, or production readiness.
+
+| Domain | Merged on `main` | On a branch / PR | Design only | Not started |
+|---|---|---|---|---|
+| Service Operations (PP-01) | P01–P11: intake, work orders, scope/readiness, planner and reservations, job packs and acknowledgement, online and offline field capture, review and reports, Travel per [ADR-0018](decisions/ADR-0018-p11-travel-and-integrated-quality.md). [P11 handover](delivery/p11-handover.md) | Field Technicians r04 — PR #97 (draft, needs rebase; only the full P01–P11 job failed) | Job Pack r02 — PR #104 (docs adoption) | P12 — [starter](delivery/p12-starter-prompt.md) prepared only |
+| CRM | I1 opportunities, I2 Board/List, r08 shell, r11 board polish, mobile journey, manual Leads with qualified-deal conversion (migration 0018), Email & Calendar persisted journey (migration 0015). Approved scope: [CRM report r02](decisions/crm-approved-scope.md) | — | Opportunity handover contract (#55); Assistant AI1 (#65 design, #67 stale implementation, reserved migration 0016) | Parity beyond Enquiry → Qualified / Open; owner transfer; PPO-009 (#9) |
+| Estimating & Quotation | E1 manual estimate and exact draft quotation (migration 0012). [E1 handover](delivery/estimating-e1-handover.md) | — | E2 routing (#78), guided wizard (#79), quotation builder (#77) | E3–E6; real CREMS formulas and thresholds (D-009/D-010, #10) |
+| Engineering & Design Control | Nothing | Engineering r02 intake — PR #108 (draft, migration 0020, its own workflow and four others failing; not ready) | r02 accepted (decision on the PR branch only) | BP-05 scope (#11) |
+| Projects & Commercial Delivery | Gantt r10 register, manual multi-year schedules (migration 0019). [Handover](delivery/projects-gantt-integration.md) | — | r02 interactive review (#81) | J1–J5 acceptance; Smartsheet transition (#12) |
+| Supply Chain Management | Nothing | — | — | PPO-013 (#13) |
+| Finance & Commercial Controls | P10 handoffs, allocations, synthetic targets, reconciliation, restricted OUT-14. [P10 handover](delivery/p10-handover.md) | Stale-context guard for Finance handoff screens — [PR #111](https://github.com/deanrfiedler-gif/powerplants-one/pull/111) (re-applied from superseded draft #63; awaiting pinned-toolchain CI) | — | Real Finance definitions (D-017); MYOB evidence (#2) |
+| Shared platform | Workspace/identity/grants/audit/receipts/outbox, desktop shell r05, login r02, Entra sign-in for the hosted demo | — | Customer portal CP1–CP5 (#50/#51) | — |
+
+## 4. Open work and dispositions
+
+| Group | Items | Next action |
+|---|---|---|
+| Feature integration | #111 Finance guard; #97 Field Technicians; #108 Engineering | Merge #111 after full CI is green on its head; rebase #97 after it lands; repair #108 on its branch until its own job passes, then rebase |
+| Design adoption (docs) | #104 Job Pack r02; #81 Projects r02; #78 E2; #77 quotation builder; #79 wizard; #68 facility fields; #60 demo package; #80 housekeeping | Rebase each on current `main`; expect conflicts in `docs/STATUS.md` and `docs/standards/document-register.csv` |
+| Superseded | #58 (→ #59), #82 (→ #88), #63 (→ #111), #67 (stale; branch retained), Copilot CI-fix set #71 #74 #87 #93 #94 #95 #96 #98 #99 #100 #101 #102 (full job now passes on `main`) | Closed with a one-line disposition on each |
+| Issues | #85 closed against merged PR #86; #54 P11 remains the authoritative publication record; PPO-002/009/010/011/012/013/015/016 remain discovery records | — |
+
+Shared conflict points for any rebase: `docs/STATUS.md`, `docs/standards/document-register.csv`, `tests/browser/quality-states.spec.ts`. Any PR that adds a migration must reconcile against 0019 and the reserved 0016 in `scripts/migration-registry.ts`.
+
+## 5. Decision state
+
+D-003 is resolved for this personal prototype (Powerplants One, PPO, independent naming). D-004/D-022/D-029 are partially resolved; the other 25 master decisions remain open. [Current evidence treatment](prototype/decisions-and-evidence.md) separates useful design detail from operational closure evidence. The ADR sequence runs ADR-0001–0018 and ADR-0020; ADR-0019 was never allocated. Dean owns prototype decisions; proposed department roles assign no employees and establish no corporate sponsorship.
+
+## 6. Boundaries that still hold
+
+- Synthetic data and adapters only. No live MYOB, SharePoint, Pipedrive, Smartsheet or CAD integration, migration, customer communication or ERP posting exists.
+- The hosted demo is a private tester environment with individual Entra sign-in, not a production service. Production startup is refused by the application.
+- All 78 parent requirement IDs, issued baseline bytes and the P01–P12 order are preserved. Scope dispositions (24 Core, 25 Partial, 29 Deferred) are classifications, not completions.
+- Full PT procedure status is recorded only when every written precondition and step has been executed; component counts in handovers are not parent-case passes.
+
+## 7. Where to look next
+
+| Question | Document |
+|---|---|
+| What is the selected first journey and its contracts? | [PP-01 package](prototype/README.md) |
+| What is the ordered build and what is done? | [Implementation plan](delivery/prototype-implementation-plan.md) |
+| What is the architecture and its limits? | [BP-02](architecture/BP-02-platform-architecture.md), [ADR-0003](decisions/ADR-0003-prototype-architecture.md) |
+| What are the seven domains and 78 parents? | [BP-01 master blueprint](blueprints/BP-01-master-blueprint.md) |
+| Which decisions exist? | [Decision control](decisions/README.md) |
+| How do I run and verify locally? | README and the [P11 handover](delivery/p11-handover.md) |
+| What happened before 11 September 2026? | [STATUS-log.md](STATUS-log.md) |

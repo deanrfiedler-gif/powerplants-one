@@ -1,6 +1,10 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { LookupField, LocalDateTimeField, RecordTabs, RecordPanel } from "./record-ui";
+import { DealDialog, DealInformation, DealScope, dealAmount, dealClose, type DealMode } from "./crm-deal-controls";
+import { ProductIcon } from "./product-icons";
+import { OpportunityCommercial, OpportunityFiles } from "./opportunity-commercial";
 import { useRouter } from "next/navigation";
 import type { readOpportunity } from "../crm/reads";
 import { useIdentity } from "./business-session";
@@ -89,32 +93,23 @@ function CrmPicker({
   context?: Record<string, string>;
   enabled?: boolean;
 }) {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(""), [settled, setSettled] = useState("");
+  useEffect(() => { const timer = setTimeout(() => setSettled(search), 200); return () => clearTimeout(timer); }, [search]);
   const ready =
     kind === "Company" ||
     (!!context.company_id &&
       (kind === "Organisation" || !!context.organisation_id));
   const result = useCrmResource<Options>(
     ready && enabled
-      ? `crm/options?${query({ kind, ...context, q: search, limit: "100" })}`
+      ? `crm/options?${query({ kind, ...context, q: settled, limit: "20" })}`
       : null,
   );
+  if (denied(result.error)) return <ErrorNotice error={result.error} />;
   return (
     <div className="crm-picker">
-      <Field
-        name={`${name}-search`}
-        label={`Find ${label.toLowerCase()}`}
-        value={search}
-        onChange={setSearch}
-      />
-      <SelectField
-        name={name}
-        label={label}
-        value={value}
-        onChange={onChange}
-        options={result.data?.items ?? []}
-        empty={result.loading ? "Loading…" : "Choose / unknown"}
-      />
+      <LookupField name={name} label={label} value={value} onChange={onChange}
+        search={search} onSearch={setSearch} options={result.data?.items ?? []}
+        loading={result.loading || settled !== search} more={!!result.data?.next_cursor} error={!!result.error} />
       <ErrorNotice error={result.error} />
       {result.data?.next_cursor && (
         <small>More matches exist. Refine the search.</small>
@@ -188,14 +183,8 @@ function ActionFields({
         Due date needed
       </label>
       {!value.due_needed && (
-        <Field
-          name="due_at"
-          label="Due instant (UTC)"
-          value={value.due_at}
-          onChange={(due_at) => set({ ...value, due_at })}
-          hint="Example: 2026-09-12T00:00:00Z. This is a planned action, not a message or invitation."
-          required
-        />
+        <LocalDateTimeField name="due_at" value={value.due_at}
+          onChange={(due_at) => set({ ...value, due_at })} />
       )}
     </>
   );
@@ -397,7 +386,7 @@ export function NewOpportunity() {
                 <h2>Initial next action</h2>
                 <ActionFields
                   value={action}
-                  set={setAction}
+                  set={(value) => { setAction(value); command.dirty(); }}
                   context={context}
                   enabled={!siteRequired || !!site}
                 />
@@ -437,7 +426,9 @@ function OpportunityContent({
   opportunity: Opportunity;
   reload: () => void;
 }) {
-  const [version, setVersion] = useState(o.version),
+  const [dialog, setDialog] = useState<DealMode | null>(null), [targetStage,setTargetStage] = useState<string | undefined>();
+  const [tab, setTab] = useState("timeline"),
+    [version, setVersion] = useState(o.version),
     [need, setNeed] = useState(o.need_summary),
     [note, setNote] = useState(""),
     [identification, setIdentification] = useState(""),
@@ -464,95 +455,18 @@ function OpportunityContent({
   if (denied(command.error)) return <ErrorNotice error={command.error} />;
   return (
     <>
-      <PageHeader
-        eyebrow={`${o.display_number} · Synthetic · Online`}
-        title={o.title}
-        description="Fictional sales enquiry — I1. Relationship context is fixed for this slice."
-      />
-      <Link href="/crm/opportunities">Back to sales worklist</Link>
-      <div className="crm-status-row">
-        <Status value={o.stage_id} />
-        <span>Sales outcome: {o.close_outcome}</span>
-        <span>Owner: {o.owner_name}</span>
+      <div className="crm-deal-page-heading">
+        <Link className="crm-back-link" href="/crm/opportunities">← Back to sales worklist</Link>
+        <PageHeader eyebrow={`${o.display_number} · ${o.close_outcome}`} title={o.title}
+          description={`${o.organisation_name} · ${o.site_name ?? "Site to be confirmed"}`}
+          action={o.can_edit ? <button className="secondary crm-main-edit" aria-label="Edit deal information" onClick={() => setDialog("information")}><ProductIcon name="edit"/><span>Edit deal</span></button> : undefined} />
+        <div className="crm-deal-key-facts"><strong>{dealAmount(o.value_amount)}</strong><span>AUD, excl. GST</span><span>Expected close: {dealClose(o.expected_close_date)}</span><span>Customer contact: {o.contact_name ?? "Not yet identified"}</span><span>Deal owner: {o.owner_name}</span></div>
+        <div className="crm-stage-track" aria-label="Deal stage">
+          {["Enquiry", "Qualified"].map(stage => <button key={stage} className={o.stage_id === stage ? "current" : ""} aria-current={o.stage_id === stage ? "step" : undefined} disabled={!o.can_edit} onClick={() => {setTargetStage(stage);setDialog("stage");}}>{stage}{o.stage_id === stage && <span>Current stage</span>}</button>)}
+        </div>
       </div>
-      <p className="source-stamp">
-        Saved version {o.version} · Source updated{" "}
-        <Stamp value={o.updated_at} /> · Stage entered{" "}
-        <Stamp value={o.stage_entered_at} /> · As at{" "}
-        <Stamp value={o.observed_at} />
-      </p>
-      <div className="crm-detail-grid">
-        <section className="crm-panel">
-          <h2>Customer context</h2>
-          <dl>
-            <dt>Organisation</dt>
-            <dd>
-              <Link href={`/customers/${o.organisation_id}`}>
-                {o.organisation_name}
-              </Link>
-            </dd>
-            <dt>Site</dt>
-            <dd>
-              {o.site_id ? (
-                <Link href={`/sites/${o.site_id}`}>{o.site_name}</Link>
-              ) : (
-                <>Unknown — {o.site_unknown_reason}</>
-              )}
-            </dd>
-            <dt>Contact</dt>
-            <dd>
-              {o.primary_person_id ? (
-                <Link href={`/people/${o.primary_person_id}`}>
-                  {o.contact_name}
-                </Link>
-              ) : (
-                <>Unknown — {o.contact_unknown_reason}</>
-              )}
-            </dd>
-            <dt>Customer need</dt>
-            <dd className="crm-narrative">{o.need_summary}</dd>
-            <dt>Source</dt>
-            <dd>
-              {o.source_channel} · {o.source_basis}
-            </dd>
-          </dl>
-        </section>
-        <section className="crm-panel">
-          <h2>{NEXT_LABELS[o.next_action_state]}</h2>
-          {o.next_activity &&
-          ["Open", "InProgress"].includes(o.next_activity.status) ? (
-            <>
-              <p>{o.next_activity.summary}</p>
-              <p>Owner: {o.next_activity.owner_name}</p>
-              <p>
-                {o.next_activity.due_needed ? (
-                  "Due date needed"
-                ) : (
-                  <>
-                    Due <Stamp value={o.next_activity.due_at} /> (Brisbane)
-                  </>
-                )}
-              </p>
-              <Link
-                className="primary-link"
-                href={`/work/${o.next_activity.id}`}
-              >
-                Open activity
-              </Link>
-            </>
-          ) : (
-            <p>
-              {o.next_action_state === "Unavailable"
-                ? "The linked action is unavailable under current permissions."
-                : "The last designated action is finished. Plan or deliberately select an active next action."}
-            </p>
-          )}
-          <p>
-            Activity completion records its outcome. Qualification is a separate
-            decision.
-          </p>
-        </section>
-      </div>
+      {dialog && <DealDialog id={o.id} mode={dialog} targetStage={targetStage} onClose={() => {setDialog(null);setTargetStage(undefined);}} onSaved={() => {setDialog(null);setTargetStage(undefined);reload();}}/>}
+
       {!o.can_edit && <p className="scope-note">Read only under current ownership, permissions or relationship eligibility.</p>}
       <SaveState command={command} />
       {version !== o.version && (
@@ -580,9 +494,20 @@ function OpportunityContent({
           Load current saved version for comparison
         </button>
       )}
-      {o.can_edit && (
-        <ValidationFields error={command.error}>
-          <div className="crm-detail-grid">
+      <RecordTabs id="opportunity" label="Opportunity sections" value={tab} onChange={setTab}
+        tabs={[{id:"timeline",label:"Timeline"},{id:"details",label:"Details"},{id:"commercial",label:"Commercial"},{id:"files",label:"Files"}]} />
+      <RecordPanel id="opportunity" tab="details" value={tab}>
+
+      <p className="source-stamp">
+        Saved version {o.version} · Source updated{" "}
+        <Stamp value={o.updated_at} /> · Stage entered{" "}
+        <Stamp value={o.stage_entered_at} /> · As at{" "}
+        <Stamp value={o.observed_at} />
+      </p>
+      <DealInformation o={o} onEdit={() => setDialog("information")} onStage={() => setDialog("stage")} />
+      <section className="crm-panel"><h2>Site and source</h2><dl className="crm-facts"><dt>Site</dt><dd>{o.site_id ? <Link href={`/sites/${o.site_id}`}>{o.site_name}</Link> : o.site_unknown_reason}</dd><dt>Organisation sites and facilities</dt><dd><Link href={`/customers/${o.organisation_id}`}>View organisation context</Link></dd><dt>Source</dt><dd>{o.source_channel} · {o.source_basis}</dd></dl></section>
+      <DealScope o={o} onEdit={() => setDialog("scope")} />
+              {o.can_edit && <ValidationFields error={command.error}>
             {o.can_qualify && (
               <form
                 className="crm-panel"
@@ -643,6 +568,47 @@ function OpportunityContent({
                 </fieldset>
               </form>
             )}
+        </ValidationFields>}
+      </RecordPanel>
+      <RecordPanel id="opportunity" tab="timeline" value={tab}>
+      {o.source_lead && <section><h3>Source lead</h3><Link href={`/crm/leads/${o.source_lead.id}`}>{o.source_lead.display_number}</Link>{o.source_lead.events.filter(e=>e.note).map(e=><article key={e.id}><p style={{whiteSpace:"pre-wrap"}}>{e.note}</p><small>{e.actor_name} · {new Date(e.created_at).toLocaleString("en-AU")}</small></article>)}</section>}
+
+        <section className="crm-panel">
+          <h2>{NEXT_LABELS[o.next_action_state]}</h2>
+          {o.next_activity &&
+          ["Open", "InProgress"].includes(o.next_activity.status) ? (
+            <>
+              <p>{o.next_activity.summary}</p>
+              <p>Owner: {o.next_activity.owner_name}</p>
+              <p>
+                {o.next_activity.due_needed ? (
+                  "Due date needed"
+                ) : (
+                  <>
+                    Due <Stamp value={o.next_activity.due_at} /> (Brisbane)
+                  </>
+                )}
+              </p>
+              <Link
+                className="primary-link"
+                href={`/work/${o.next_activity.id}`}
+              >
+                Open activity
+              </Link>
+            </>
+          ) : (
+            <p>
+              {o.next_action_state === "Unavailable"
+                ? "The linked action is unavailable under current permissions."
+                : "The last designated action is finished. Plan or deliberately select an active next action."}
+            </p>
+          )}
+          <p>
+            Activity completion records its outcome. Qualification is a separate
+            decision.
+          </p>
+        </section>
+              {o.can_edit && <ValidationFields error={command.error}>
             <form
               className="crm-panel"
               onChange={command.dirty}
@@ -665,6 +631,7 @@ function OpportunityContent({
             >
               <fieldset disabled={command.busy || command.uncertain}>
                 <legend>Plan next action</legend>
+                <p>Add a separate follow-up or designate an existing activity. Existing activities retain their status.</p>
                 <SelectField
                   name="action-mode"
                   label="Action choice"
@@ -675,7 +642,7 @@ function OpportunityContent({
                 {mode === "New" ? (
                   <ActionFields
                     value={action}
-                    set={setAction}
+                    set={(value) => { setAction(value); command.dirty(); }}
                     context={context}
                   />
                 ) : (
@@ -695,9 +662,7 @@ function OpportunityContent({
                 </button>
               </fieldset>
             </form>
-          </div>
-        </ValidationFields>
-      )}
+        </ValidationFields>}
       <section className="crm-panel">
         <h2>Activity history</h2>
         {o.actions.length ? (
@@ -734,6 +699,9 @@ function OpportunityContent({
                   ? "Opportunity created"
                   : e.event_type === "OpportunityQualified"
                     ? "Qualification recorded"
+                    : e.event_type === "OpportunityInformationEdited" ? "Deal information updated"
+                    : e.event_type === "OpportunityScopeEdited" ? "Requirements and scope updated"
+                    : e.event_type === "OpportunityStageChanged" ? "Deal stage changed"
                     : "Next action planned"}{" "}
                 · Version {e.opportunity_version}
               </strong>
@@ -753,6 +721,13 @@ function OpportunityContent({
           ))}
         </ol>
       </section>
+      </RecordPanel>
+      <RecordPanel id="opportunity" tab="commercial" value={tab}>
+        {tab === "commercial" && <OpportunityCommercial id={o.id} />}
+      </RecordPanel>
+      <RecordPanel id="opportunity" tab="files" value={tab}>
+        {tab === "files" && <OpportunityFiles id={o.id} />}
+      </RecordPanel>
     </>
   );
 }

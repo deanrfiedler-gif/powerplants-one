@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { randomUUID, createHash } from "node:crypto";
-import { prepareFieldAppointment } from "../helpers/field-http";
+import { prepareIsolatedFieldAppointment } from "../helpers/isolated-field-http";
 import { base, startInput, draft, entry, png } from "../helpers/field";
 import { decision, response } from "../helpers/reports";
 const origin = "http://127.0.0.1:3000";
@@ -37,7 +37,7 @@ test("P09 real HTTP exact submit/review/issue/response enforces strict request a
     p = await session("assigned-technician"),
     m = await session("second-technician"),
     systems = await session("systems"),
-    setup = await prepareFieldAppointment(
+    setup = await prepareIsolatedFieldAppointment(
       (path, b) => ok(co, path, b),
       "2026-12-08",
     );
