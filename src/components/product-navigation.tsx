@@ -17,7 +17,8 @@ const matches = (path: string, href: string) => path === href || (href !== "/" &
 function moduleFor(path: string) {
   if (matches(path, "/service") || service.some(([href]) => matches(path, href))) return { name: "Service", tabs: service };
   if (customers.some(([href]) => matches(path, href))) return { name: "Customers", tabs: customers };
-  if (path.startsWith("/crm/")) return { name: "CRM Sales", tabs: [["/crm/leads","Leads"],["/crm/opportunities","Deals"]] };
+  if (matches(path, "/crm/leads")) return { name: "Leads", tabs: [] };
+  if (path.startsWith("/crm/")) return { name: "CRM Sales", tabs: [] };
   if (matches(path, "/email") || matches(path, "/calendar")) return { name: "Email & Calendar", tabs: [] };
   if (matches(path, "/estimating")) return { name: "Estimating", tabs: [] };
   if (matches(path, "/projects")) return { name: "Projects", tabs: [] };
@@ -78,7 +79,8 @@ function ProductNavigationView({ path, wide }: { path: string; wide: boolean }) 
   }, [wide, expanded]);
   const items: { label: string; icon: ProductIconName; href?: string; divider?: boolean }[] = [
     { label: "Overview", icon: "home", href: "/" }, { label: "My Work", icon: "work", href: "/work" },
-    { label: "CRM Sales", icon: "sales", href: "/crm/opportunities", divider: true },
+    { label: "Leads", icon: "leads", href: "/crm/leads", divider: true },
+    { label: "CRM Sales", icon: "sales", href: "/crm/opportunities" },
     { label: "Email & Calendar", icon: "mail", href: "/email" },
     { label: "Estimating", icon: "estimate", href: "/estimating" },
     { label: "Engineering", icon: "engineering" }, { label: "Projects", icon: "projects", href: "/projects" },
@@ -94,7 +96,7 @@ function ProductNavigationView({ path, wide }: { path: string; wide: boolean }) 
       : <span className="product-nav-item planned-nav" aria-disabled="true" title={`${item.label} — planned`}><ProductIcon name={item.icon} /><span>{item.label} · Planned</span></span>}
   </div>);
   const mobile = items.filter(i=>["My Work","CRM Sales","Service","Contacts"].includes(i.label));
-  const primary = items.filter(item => ["CRM Sales", "Estimating", "Engineering", "Projects", "Service", "Supply Chain", "Finance"].includes(item.label));
+  const primary = items.filter(item => ["Leads", "CRM Sales", "Estimating", "Engineering", "Projects", "Service", "Supply Chain", "Finance"].includes(item.label));
   const railLabel = (label: string) => label === "CRM Sales" ? "Sales / CRM" : label === "Estimating" ? "Estimating & Quotation" : label;
   const groups: { title: string; links: { label: string; icon: ProductIconName; href?: string }[] }[] = [
     { title: "My workspace", links: items.filter(item => ["My Work", "Email & Calendar"].includes(item.label)) },
