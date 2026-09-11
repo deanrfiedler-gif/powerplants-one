@@ -23,44 +23,51 @@ test("accepted container creates a real request; an uncertain note retries once 
   await call(page, "projects", project);
   await page.goto("/engineering");
   await page.getByRole("button", { name: "＋ Request", exact: true }).click();
-  const dialog = page.getByRole("dialog");
+  const requestDialog = page.getByRole("dialog");
   const title = `SYN Engineering ${info.project.name} ${Date.now()}`;
-  await dialog.getByLabel("Work package title", { exact: true }).fill(title);
-  await dialog
+  await requestDialog
+    .getByLabel("Work package title", { exact: true })
+    .fill(title);
+  await requestDialog
     .getByRole("combobox", { name: "Project", exact: true })
     .fill(project.title);
-  await dialog.locator(`[data-record-id="${project.id}"]`).click();
-  await dialog
+  await requestDialog.locator(`[data-record-id="${project.id}"]`).click();
+  await requestDialog
     .getByLabel("Design brief", { exact: true })
     .fill("SYN Confirm pump access and pipework arrangement.");
-  await dialog
+  await requestDialog
     .getByRole("combobox", { name: "Assigned engineer", exact: true })
     .fill("SYN");
-  await dialog.locator(`[data-record-id="${CRM.owner}"]`).click();
-  await dialog
+  await requestDialog.locator(`[data-record-id="${CRM.owner}"]`).click();
+  await requestDialog
     .getByLabel("Package required by", { exact: true })
     .fill("2028-03-31");
-  await dialog
+  await requestDialog
     .getByLabel("Next action due", { exact: true })
     .fill("2028-03-20");
-  await dialog
+  await requestDialog
     .getByRole("button", { name: "Create request", exact: true })
     .click();
-  await expect(dialog.getByRole("heading").first()).toHaveText(title);
+  const packageDialog = page.getByRole("dialog").filter({
+    has: page.getByRole("button", { name: "Close package", exact: true }),
+  });
+  await expect(packageDialog.getByRole("heading").first()).toHaveText(title);
   const list = await call(page, `engineering?q=${encodeURIComponent(title)}`);
   expect(list.items).toHaveLength(1);
   const id = list.items[0].id;
-  await dialog
+  await packageDialog
     .getByRole("tab", { name: "Review & history", exact: true })
     .click();
   const note = "SYN Retain a service clearance check for the design review.";
-  await dialog.getByLabel("Add a review note", { exact: true }).fill(note);
-  await dialog.getByRole("tab", { name: "Deliverables", exact: true }).click();
-  await dialog
+  await packageDialog.getByLabel("Add a review note", { exact: true }).fill(note);
+  await packageDialog
+    .getByRole("tab", { name: "Deliverables", exact: true })
+    .click();
+  await packageDialog
     .getByRole("tab", { name: "Review & history", exact: true })
     .click();
   await expect(
-    dialog.getByLabel("Add a review note", { exact: true }),
+    packageDialog.getByLabel("Add a review note", { exact: true }),
   ).toHaveValue(note);
   let operation = "";
   await page.route(
@@ -72,17 +79,23 @@ test("accepted container creates a real request; an uncertain note retries once 
     },
     { times: 1 },
   );
-  await dialog.getByRole("button", { name: "Add note", exact: true }).click();
+  await packageDialog
+    .getByRole("button", { name: "Add note", exact: true })
+    .click();
   await expect(
-    dialog.getByRole("button", { name: "Retry original note" }),
+    packageDialog.getByRole("button", { name: "Retry original note" }),
   ).toBeVisible();
   await expect(
-    dialog.getByRole("button", { name: "Close package" }),
+    packageDialog.getByRole("button", { name: "Close package" }),
   ).toBeDisabled();
-  await dialog.getByRole("button", { name: "Retry original note" }).click();
-  await expect(dialog.getByText("Note saved.", { exact: true })).toBeVisible();
+  await packageDialog
+    .getByRole("button", { name: "Retry original note" })
+    .click();
+  await expect(
+    packageDialog.getByText("Note saved.", { exact: true }),
+  ).toBeVisible();
   await page.goto(`/engineering/${id}`);
-  await expect(dialog.getByRole("heading").first()).toHaveText(title);
+  await expect(packageDialog.getByRole("heading").first()).toHaveText(title);
   const saved = await call(page, `engineering/${id}`);
   expect(saved.package.version).toBe(2);
   expect(saved.events).toHaveLength(2);
