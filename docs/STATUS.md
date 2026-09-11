@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 11 September 2026 · **Owner:** Dean Fiedler · **Repository:** `deanrfiedler-gif/powerplants-one`, **public** visibility, default branch `main` · **Baseline commit:** `912731917094965184c75fbd932efcdc50e272f9` · **Naming:** [PPO-STD-001](standards/naming-conventions.md) / [ADR-0005](decisions/ADR-0005-project-naming-adoption.md)
+**Updated:** 11 September 2026 · **Owner:** Dean Fiedler · **Repository:** `deanrfiedler-gif/powerplants-one`, **public** visibility, default branch `main` · **Baseline commit:** `5542239e547a7eddc079363a989bedf68caf793f` · **Naming:** [PPO-STD-001](standards/naming-conventions.md) / [ADR-0005](decisions/ADR-0005-project-naming-adoption.md)
 
 This file is a snapshot of the current state, kept short enough to read in one sitting. It is not the evidence record: exact verification, run IDs, hashes and publication results remain in each package's handover, decision record and authoritative external record. The chronological entries that previously lived here are retained unchanged in [STATUS-log.md](STATUS-log.md). Update this file by replacing rows, not by appending narrative.
 
@@ -12,7 +12,7 @@ Powerplants One is Dean's personal synthetic prototype of a seven-domain operati
 
 | Item | State | Evidence |
 |---|---|---|
-| `main` head | `9127319` (merge of PR #118, 11 September 2026); 14 pull requests merged on 11 September | [Commits](https://github.com/deanrfiedler-gif/powerplants-one/commits/main/) |
+| `main` head | `5542239` (merge of PR #79, 11 September 2026); 16 pull requests merged on 11 September | [Commits](https://github.com/deanrfiedler-gif/powerplants-one/commits/main/) |
 | Full Application assurance | Last verified green head: `2e020a3` (PR #115 final head, run 34558038593, 1 h 21 m) with the route warm-up active. Every merge since has re-run it on `main`; per-route compile timings are in the `[warm-up]` block of each browser step. | [Run 34558038593](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34558038593) |
 | Compiled application browser assurance | **Live** since PR #115 (`62b8652`). First run: all 140 cases green in 12 min 8 s, build to evidence (run 34558038706). Acceptance: five consecutive clean runs, then decide whether it replaces the development-server browser step. | [Run 34558038706](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34558038706) · [Decision](decisions/ci-compiled-browser-suite.md) |
 | Focused workflows on `main` | Documentation, CRM refinements, Estimating E1, Email/Calendar journey, CRM Leads, Projects Gantt, demo and Azure preparation checks run on every push. PR #118 restored the Documentation check after PR #80 took the copy-ready instructions to 8,001 characters (limit 8,000; now 7,872). | Actions history |
@@ -30,7 +30,7 @@ Powerplants One is Dean's personal synthetic prototype of a seven-domain operati
 |---|---|---|---|---|
 | Service Operations (PP-01) | P01–P11: intake, work orders, scope/readiness, planner and reservations, job packs and acknowledgement, online and offline field capture, review and reports, Travel per [ADR-0018](decisions/ADR-0018-p11-travel-and-integrated-quality.md); Field Technicians r04 (#97, `79de842`, with the drawer focus-return fix). [P11 handover](delivery/p11-handover.md) | — | Job Pack r02 adopted (#104) | P12 — [starter](delivery/p12-starter-prompt.md) prepared only |
 | CRM | I1 opportunities, I2 Board/List, r08 shell, r11 board polish, mobile journey, manual Leads with qualified-deal conversion (migration 0018), Email & Calendar persisted journey (migration 0015). Approved scope: [CRM report r02](decisions/crm-approved-scope.md) | — | Opportunity handover contract (#55); Assistant design adopted (#65; #67 implementation closed stale, migration 0016 still reserved); Facility fields and mobile acceptance preparation (#68) | Parity beyond Enquiry → Qualified / Open; owner transfer; PPO-009 (#9) |
-| Estimating & Quotation | E1 manual estimate and exact draft quotation (migration 0012). [E1 handover](delivery/estimating-e1-handover.md) | — | E2 routing adopted (#78); quotation builder adopted (#77); guided wizard — PR #79 (draft, docs) | E3–E6; real CREMS formulas and thresholds (D-009/D-010, #10) |
+| Estimating & Quotation | E1 manual estimate and exact draft quotation (migration 0012). [E1 handover](delivery/estimating-e1-handover.md) | — | E2 routing adopted (#78); quotation builder adopted (#77); guided wizard adopted (#79, `5542239`): [design](blueprints/estimating-wizard-design.md), [preview](blueprints/estimating-wizard-mockup.html), [decision](decisions/estimating-wizard-pilot.md) — design only; E1 runtime remains manual | E3–E6; real CREMS formulas and thresholds (D-009/D-010, #10) |
 | Engineering & Design Control | Nothing | Engineering r02 intake — PR #108 (draft, migration 0020; rebased on current `main`; shell component-review expectation corrected; leads, Email/Calendar and its own job still red pending their logs) | r02 accepted (decision on the PR branch only) | BP-05 scope (#11) |
 | Projects & Commercial Delivery | Gantt r10 register, manual multi-year schedules (migration 0019). [Handover](delivery/projects-gantt-integration.md) | — | r02 interactive review published (#81) | J1–J5 acceptance; Smartsheet transition (#12) |
 | Supply Chain Management | Nothing | — | — | PPO-013 (#13) |
@@ -42,8 +42,8 @@ Powerplants One is Dean's personal synthetic prototype of a seven-domain operati
 | Group | Items | Next action |
 |---|---|---|
 | Feature integration | #108 Engineering r02 (draft, migration 0020) | Fix from its three short job logs (leads, Email/Calendar, own job); merge only on green full and compiled runs; keep human-gated |
-| Design adoption (docs) | #79 guided estimating wizard (draft) | Merge on green; it inherited the instructions-length failure corrected by #118 |
-| Merged 11 September | #111 Finance guard, #97 Field Technicians r04, #112 STATUS snapshot, #114 route warm-up, #115 compiled suite, #104 Job Pack r02, #78 E2 routing, #60 demo package, #116 STATUS note, #80 housekeeping, #81 Projects r02 review, #68 Facility fields, #65 Assistant design, #77 quotation builder, #118 instructions length | — |
+| Design adoption (docs) | — | — |
+| Merged 11 September | #111 Finance guard, #97 Field Technicians r04, #112 STATUS snapshot, #114 route warm-up, #115 compiled suite, #104 Job Pack r02, #78 E2 routing, #60 demo package, #116 STATUS note, #80 housekeeping, #81 Projects r02 review, #68 Facility fields, #65 Assistant design, #77 quotation builder, #118 instructions length, #119 STATUS refresh, #79 guided wizard design | — |
 | Closed as superseded | #58, #82, #63, #67 and the automated CI-fix set #71 #74 #87 #93–#96 #98–#102 | — |
 | Issues | #113 CI stall class — open until the warm-up (3) and compiled (5) acceptance counts are met; #85 closed against #86; #54 P11 authoritative record; PPO-002/009/010/011/012/013/015/016 remain discovery records | — |
 
