@@ -1,4 +1,4 @@
-# Contributing to the private prototype
+# Contributing to the personal prototype
 
 Dean is the prototype owner. Departmental owner roles in the master blueprint are proposed reviewers, not people automatically invited to this repository.
 
@@ -29,7 +29,7 @@ GitHub filenames such as `README.md`, `AGENTS.md`, workflows and issue forms fol
 
 ## Data handling
 
-Keep operational MYOB exports, customer files, personal information and credentials in authorised systems. Prefer synthetic fixtures. A private repository still needs controlled membership, token handling and an appropriate future support/ownership plan.
+Keep operational MYOB exports, customer files, personal information and credentials in authorised systems. Prefer synthetic fixtures. The source repository is public. Keep hosted demo access, token handling and operational documents separate from source publication.
 
 ## Validation
 
