@@ -2,15 +2,63 @@
 
 | Document control | Value |
 |---|---|
-| Revision / date | r05 / 7 September 2026 |
-| Status | Broader design proposed; I1 implemented and component-tested; actual publication in handover; owner acceptance outstanding |
+| Revision / date | r06 / 10 September 2026 |
+| Status | r02 product scope and priorities accepted; delivery evidence remains in I1/I2 and later handovers; operating-policy details outstanding |
 | Owner | Dean Fiedler — personal private prototype |
 | Workstream | PPO-009 / [issue #9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9); distinct from PP-01 P09 |
-| Authority | Discovery authorised design only; separate I1 invocation authorises the bounded synthetic implementation in #39 |
+| Authority | Current user approval adopts report r02 into design/GitHub; prior bounded implementation authority and evidence remain separate |
 | Discovery starting source | Main `85bd2fcc388495cc24dc2ee4f273accc49da2f24`; tree `7406ceb9b000e616410489bb66503a6e9e8c6c08` |
 | Parent scope | CRM-01–CRM-08 and PAR-01–PAR-18; identities and issued references preserved |
 
 [Parity and evidence](crm-parity.md) · [Screens and walkthrough](crm-screen-specification.md) · [Implementation sequence](../delivery/crm-implementation-plan.md) · [First starter](../delivery/crm-first-increment-starter.md) · [Handover and publication](../delivery/crm-discovery-handover.md).
+
+## 0. Approved CRM scope — report r02
+
+**UD, 10 September 2026:** Dean accepted [Powerplants One CRM Feature Report r02](../reference/crm-feature-report-r02.md) and instructed its incorporation into this blueprint and GitHub. The [approval decision](../decisions/crm-approved-scope.md) records provenance and interpretation. This section supersedes earlier provisional product-scope statements where they conflict. Historical I1/I2 boundaries, dated observations and unresolved operating-policy choices retain their meaning.
+
+### Current-stage exclusions
+
+| Deferred area | Excluded now | Retained boundary |
+|---|---|---|
+| Lead capture and prospecting | Web forms, chatbots/live chat, prospect databases, visitor identification and external enrichment | Manually entered leads, qualification, disqualification/on-hold review and conversion |
+| Proposals and electronic signatures | CRM proposal generation and signature collection | Estimate links/status/exact revision and sales value context; BP-04 scope remains separate |
+| Marketing | Campaigns, bulk marketing and marketing subscription management | Individual correspondence, customer classification and relationship follow-up |
+| Subscription limits | Vendor subscription comparisons, plan tiers and capacity/entitlement tables | PPO permissions, integrity, performance and integration constraints still apply |
+
+The four deferrals are agreed scope choices, not account-use findings or permanent retirement. Further evidence may shape migration and retained-tool arrangements; it does not make these features prerequisites for the current PPO CRM build.
+
+### Accepted feature baseline and traceability
+
+The report's full detail remains authoritative design input; this matrix gives the build implications and existing requirement links. “Essential”, “Next” and “Later” are priorities, not delivered-status claims.
+
+| r02 section / priority | Accepted PPO behaviour | Existing traceability |
+|---|---|---|
+| 1 Scope / throughout | Complete a usable enquiry-to-opportunity journey first; keep fields, pipeline configuration and worklists proportionate | CRM-01–08; PAR-01–18 |
+| 2 Customers / Essential | Shared organisation/person/site/equipment context; distinguish legal/billing party from physical site; retain unknowns, source and duplicate-review decisions | CRM-01/04/06; PAR-01/07/09 |
+| 3 Manual leads / Essential | Separate Leads page; owned manual entry, qualification and on-hold reason/review date; conversion preserves original identity, notes and activities and returns the same opportunity on retry | CRM-02; PAR-02/16 |
+| 4 Opportunities / Essential | One canonical opportunity across views; validated stage changes through every entry point; distinct no-future-action, overdue, stale and long-in-stage signals; won/lost reasons, reopen and archive history | CRM-02; PAR-03/04 |
+| 5 Desktop / Essential | Retain accepted navy/green/Roboto direction; consistent Board/Grid filters, sort and context; clear owners and activity indicators; one page scroll, keyboard access, normal-zoom usability and explicit small-viewport fallback | CRM-02/03/08; PAR-03/05/12/15 |
+| 6 Activities and ownership / Essential | Reuse shared Activity; call/meeting/visit/technical and supplier follow-up; distinguish date-only from timed work and opportunity owner from activity owner; preview eligible transfer and unfinished work, explicitly choose activity reassignment, preserve previous owner/time/reason | CRM-02/03; PAR-05/15 |
+| 7 History and communication / Essential history; Next integration | Dated author/source history, separate occurrence and entry time, corrections preserve originals; permission-checked document links; deliberate private-versus-filed individual messages, visible draft/queued/sent/failed states and retry deduplication | CRM-03/08; PAR-05/06/16 |
+| 8 Products and values / Essential context; Next links | Shared catalogue/source keys; currency, value basis and review date; unknown is not zero; exact active estimate/revision references, no silent forecast overwrite or duplicate pricing/accounting master | CRM-05/06; PAR-08/09/13 |
+| 9 Reporting / Next | Defined, scoped and drillable pipeline/action/overdue/stale/won-lost/closing measures; as-at date, missing-value bucket, currency and probability basis; explicit cohorts and historical ownership for trends | CRM-02/08; PAR-04/12 |
+| 10 Mobile / Essential | Preserve accepted Leads/add/detail layout and shared actions; touch alternatives to hover, keyboard-safe forms, recorded call outcomes; online save/recovery truthfully represented, offline durability only if separately built and tested | CRM-03/08; PAR-05/14/15 |
+| 11 Data and integrations / Foundation throughout; controlled migration later | Stable source IDs and reviewed duplicates; MYOB accounting and SharePoint document authority; source audit, synthetic mapping, then separately authorised import with preview/reconciliation and repeat-safe effects | CRM-01/06/08; PAR-01/09/16/18 |
+| 12 Access and history / Essential | Existing role/record scope and action permissions across views, search, counts, exports, documents and AI; check current authority on save, retain change history and recovery evidence | CRM-01/08; PAR-15/16 |
+| 13 Automation / Later | A few named internal rules with explicit triggers, conditions, ownership, deduplicated effects and visible retry outcomes; repeatable activities before automatic email; general rule builder deferred | CRM-03/08; PAR-05/11 |
+| 14 AI / Later | Source-linked summaries and proposed activities with human review; no autonomous owner/stage/value/probability or commitment changes; permission-scoped sources, manual notes before live recording/transcription | CRM-03/08; PAR-06/15/18 |
+| 15 Module handover / Next | Linked Estimating/Projects/Service requests with receiving owner or queue, status, source snapshot and unresolved issues; won does not imply delivery readiness; preserve distinct sales, project and work assignees | CRM-05/06/07; PAR-08/09/10/13 |
+| 16 Delivery / throughout | Map approved behaviour to actual application evidence; implement and verify complete synthetic journeys, including adverse cases, before claiming completion | CRM-01–08; existing CA-01–16 and AT-25 |
+
+Internal activities/calendar come before Outlook integration; selected individual/shared-inbox integration follows its separate design and provider constraints. Group-wide mail, advanced scoring, arbitrary dashboard design, general workflow builders and live meeting capture remain later considerations. Existing accepted desktop/mobile decisions control presentation details; illustration amounts and reference stage names never establish implemented financial fields or operational pipeline rules.
+
+### Acceptance of remaining work
+
+Use the report's section 16 synthetic greenhouse-controls upgrade journey: select an existing customer/site/contact, record and qualify a manual lead, assign technical clarification, convert once, use consistent Board/Grid views, hand over ownership with an explicit activity choice, link an estimate and create a delivery request with a receiving responsibility. Reload and repeat permitted actions on desktop and mobile to confirm persistence and consistent history.
+
+Each bounded implementation must demonstrate the applicable failures: unknown value/date, inactive or ineligible owner, denied/revoked access, stale concurrent edit, failed/uncertain save, archived record and repeated conversion/handover. Reports must reconcile to permitted underlying records; retry must not duplicate an opportunity, activity or receiving request. These are planned outcomes mapped to existing CA/AT identifiers, not new passed test results.
+
+Policy decisions still needed include operational stage/qualification rules, required fields, precise transfer authority/effective timing (#55 H-01–H-03), forecast definitions and provider/receiving contracts. Decide these in the relevant bounded work; general scope acceptance does not choose unspecified policies. See the [delivery priorities](../delivery/crm-implementation-plan.md#approved-r02-priorities-for-remaining-work).
 
 ## I1 implemented subset and publication evidence
 
@@ -30,14 +78,14 @@ The maintained [master, section 09](BP-01-master-blueprint.md#09-crm-capability-
 
 UD: parallel CRM design is authorised alongside P09. OBS: one live Pipedrive metadata read returned ten stages across two pipeline IDs; account/tenant identity and complete access cannot be verified through the exposed connector. No new customer/deal/person/communication sample was read. SRC: the master records an earlier 60-open-deal sample, with no exhaustive-use claim. DOC: vendor documentation explains capability, never this account's licence or configuration.
 
-D-013 (parity/history), D-025 (communications), D-011 (identity), D-020 (access), D-026 (migration) and D-028 (aftercare/group scope) remain open. This package selects a reviewable synthetic design, not operational closure. All proposed preserve/improve/integrate/defer dispositions require later outcome acceptance. No retirement is selected.
+D-013 (parity/history), D-025 (communications), D-011 (identity), D-020 (access), D-026 (migration) and D-028 (aftercare/group scope) remain open. This package selects a reviewable synthetic design, not operational closure. Current product priorities and the four deferrals are accepted in section 0; account-specific mappings and operational transition outcomes still require evidence and acceptance. No retirement is selected.
 
 ## 2. Product boundaries and practical defaults
 
 | Concern | Proposed default and reason | Approval/evidence still needed |
 |---|---|---|
 | First useful journey | Existing permitted organisation → owned Open opportunity → explicit next action → recorded qualification and stage change | Synthetic vertical slice can proceed under a later implementation instruction |
-| Separate leads | Design a separate qualification inbox/LeadCandidate for later evidence-led scope; do not add it to the first slice | Actual separate Pipedrive Lead use, conversion and disqualification examples |
+| Separate leads | Accepted manual Leads/qualification/conversion scope under r02; outside historical I1 | Exact fields and conversion rules for the next bounded build; source-account usage remains migration evidence, not a prerequisite for product inclusion |
 | Pipelines | Immutable versioned definitions; first slice uses one explicitly fictional two-stage definition, Enquiry → Qualified | Operational pipeline names, entry/exit criteria and mapping acceptance |
 | Accountability | One accountable owner, one designated next Activity or an owned next-action-needed state; other activities allowed | Manager delegation and escalation policy |
 | Sales activity | Reuse Activity; first slice uses existing CustomerContact or RelationshipReview. Call/meeting/visit channel detail is a later typed extension | Used types, recurrence and communication rules |
@@ -56,7 +104,7 @@ Common journey contract: the server derives actor/workspace/time; requires curre
 
 **Actors:** sales contributor, opportunity owner; manager for later reassignment. **Preconditions:** active synthetic identity with `crm.opportunity.create`, shared read and relevant activity authority; existing permitted organisation in one visibility company. **Inputs:** short title, source channel/basis, customer need, accountable owner, optional contact/site with explicit unknown reasons, and next action with a due instant or due-needed flag. No legal account or order is inferred from the selected organisation.
 
-**Transition:** create Open at the configured entry stage. A later LeadCandidate journey would use New → Qualifying → Qualified/Disqualified; conversion creates exactly one opportunity and immutable source conversion link, rather than renaming a lead into a deal. Lead use remains OPEN and outside the first slice.
+**Transition:** create Open at the configured entry stage. The accepted manual LeadCandidate journey includes qualification, disqualification and on-hold review; exact state labels remain a design detail. Conversion creates exactly one opportunity and immutable source conversion link, rather than renaming a lead into a deal. This remains outside historical I1; separate Pipedrive lead usage is still an open migration question.
 
 **Rules:** duplicate candidates are advisory until reviewed; same name/email never merges identities. Qualification records a need, an accountable next action and either a permitted contact or an owned plan to identify that contact. Unknown budget, authority or timing stays unknown and visible, without invented zero values. Operational qualification gates require sales acceptance.
 
@@ -311,3 +359,7 @@ The first slice is sufficiently specified for a later authorised synthetic imple
 The separately invoked [contract/design package](../delivery/crm-handover-design-handover.md) under #55 follows verified I2 publication. Its [decision table](../decisions/crm-opportunity-handover.md) proposes current-owner initiation with a distinct scoped own-transfer capability, immediate effect and current-authority recovery of proven original operations. H-01–H-03 await Dean; publication does not accept them. For this bounded candidate, it refines the broad manager-only transfer proposal in sections 6–7; it does not implement that manager role or a transfer grant.
 
 The [physical/interface map](../contracts/crm-opportunity-handover.md), [canonical C03 journey](crm-handover-journey.md) and [future HV matrix](../testing/crm-handover-verification.md) preserve immutable original qualification, separate Activity/estimate/Finance ownership, all-target access and accepted hashes. I1's current immutable owner remains the implemented contract. All HV cases are Not run, AT-25 remains Planned and #9 stays open. The conditional implementation starter needs policy decisions and a new invocation.
+
+## 9 September 2026 — approved desktop/mobile refinement implementation
+
+The [CRM refinement decision](../decisions/crm-desktop-mobile-refinements.md) supersedes the first slice's presentation-only boundary for title/contact editing, optional AUD value/expected close, structured requirements and reversible Enquiry/Qualified changes. Strict dedicated commands and migration 0017 preserve original context, ownership, Activity links, exact history and receipt authority. The six-stage reference, sales close/handover, facility taxonomy and source integrations remain separate increments. Desktop snapshots/tables and mobile full-deal/lists use current permitted records. See the [handover](../delivery/crm-refinements-handover.md) for actual verification and publication; parent IDs and issued sources remain unchanged.

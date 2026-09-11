@@ -478,6 +478,7 @@ export function RecordLink({
       Ticket: "service/tickets",
       Activity: "work",
       Opportunity: "crm/opportunities",
+      Lead: "crm/leads",
     } as Record<string, string>
   )[type];
   return root ? (

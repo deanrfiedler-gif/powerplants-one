@@ -30,6 +30,10 @@ async function capture(page: Page, info: TestInfo, scenario: string, top = true)
 }
 const ids = (page: Page) => page.locator(".crm-workspace [data-opportunity-id]").evaluateAll((elements) => elements.map((e) => e.getAttribute("data-opportunity-id")));
 const snapshot = async () => Promise.all(["opportunities", "activities", "activity_links", "opportunity_events", "business_identities", "operation_receipts", "audit_events", "outbox_jobs", "reference_counters"].map(async (table) => (await database().query(`SELECT md5(coalesce(string_agg(to_jsonb(t)::text,'' ORDER BY to_jsonb(t)::text),'')) AS hash FROM ppo.${table} t`)).rows[0].hash));
+async function waitForCompactSearch(page: Page) {
+  await expect(page.locator("#header-search input[name='sales-search']")).toHaveCount(1);
+  await expect(page.locator(".crm-toolbar input[name='sales-search']")).toHaveCount(0);
+}
 
 test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone stage and business records", async ({ page }, info) => {
   await page.goto("/crm/opportunities"); await identity(page);
@@ -128,15 +132,27 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   const first = await ids(page);
   await expect(page.locator(".crm-action-text").first()).toContainText("END OF ACTION");
   await page.setViewportSize({ width: 320, height: 844 });
+  await waitForCompactSearch(page);
   await page.getByLabel("Search opportunities", { exact: true }).focus();
   await page.keyboard.press("Tab");
+  // r11 moves search into the shared header and Stage into the Filters panel.
+  await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeFocused();
+  const filterToggle = page.getByRole("button", { name: "Filters and sort", exact: true });
+  await filterToggle.focus();
+  await page.keyboard.press("Enter");
+  await expect(filterToggle).toHaveAttribute("aria-expanded", "true");
+  await page.getByLabel("Next action", { exact: true }).focus();
+  await page.keyboard.press("Tab");
   await expect(page.getByLabel("Stage", { exact: true })).toBeFocused();
+  await filterToggle.focus();
+  await page.keyboard.press("Enter");
+  await expect(filterToggle).toHaveAttribute("aria-expanded", "false");
   await capture(page, info, "320-grid-keyboard");
   await page.getByRole("button", { name: "Board", exact: true }).click();
   await capture(page, info, "320-board-long-action");
   // r08 keeps equal-height previews; the canonical Activity retains all 2,000 characters.
-  const actionLink = page.locator("a.crm-action-text").first();
-  await expect(actionLink).toHaveText(inputs[0].initial_action.summary);
+  const actionLink = page.locator("a.crm-card-activity").first();
+  await expect(actionLink.locator(".crm-action-text")).toHaveText(inputs[0].initial_action.summary);
   await expect(actionLink).toHaveAttribute("href", `/work/${inputs[0].initial_action.id}`);
   const activityPage = await page.context().newPage();
   await activityPage.setViewportSize({ width: 320, height: 844 });
@@ -149,7 +165,7 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   await expect.poll(() => ids(page)).toHaveLength(2);
   const last = await ids(page);
   expect(new Set([...first, ...last]).size).toBe(12);
-  await expect(page.locator(".crm-worklist-stamp")).toContainText("Partial — final page");
+  await expect(page.locator(".crm-page-context")).toContainText("Page counts and values · final page");
   await page.getByRole("button", { name: "List", exact: true }).click();
   expect(await ids(page)).toEqual(last);
   await capture(page, info, "320-final-page-grid");
@@ -262,10 +278,13 @@ test("CA-06/13 initial identity must settle before an actor can switch", async (
 });
 
 test("CA-13 shared brand consumers retain navigation, readable actions and original identity controls", async ({ page }, info) => {
-  for (const [path, title] of [["/", "A connected view"], ["/customers", "Customers"], ["/work", "Owned follow-up"], ["/service/reports", "Service review"]]) {
+  for (const [path, title] of [["/", "A connected view"], ["/customers", "Organisations"], ["/work", "Owned follow-up"], ["/service/reports", "Service review"]]) {
     await page.goto(path);
     if (path !== "/") await identity(page);
-    await expect(page.locator("h1")).toContainText(title);
+    // Streaming navigation briefly retains both the loading and page headings.
+    // Retry the complete one-heading/title condition before inspecting the shell.
+    await expect(page.locator("h1")).toHaveText([new RegExp(title)]);
+    await expect(page.locator("h1")).toBeVisible();
     await expect(page.locator(".brand-logo:visible")).toBeVisible();
     if (info.project.use.isMobile) {
       await page.getByRole("button", { name: "Menu", exact: true }).click();
@@ -288,7 +307,7 @@ test("Accepted r08 shell and board retain full-width stages, fixed headers and s
   await page.getByLabel("Search opportunities", { exact: true }).fill(marker);
   await expect.poll(() => ids(page)).toHaveLength(10);
   const board = page.locator(".crm-board-scroll");
-  const activeLink = page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "Main navigation", exact: true }).getByRole("link", { name: "CRM Sales", exact: true });
+  const activeLink = page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "Main navigation", exact: true }).getByRole("link", { name: info.project.use.isMobile ? "CRM Sales" : "Sales / CRM", exact: true });
   if (info.project.use.isMobile) await page.getByRole("button", { name: "Menu", exact: true }).click();
   await expect(activeLink).toHaveAttribute("aria-current", "page");
   const activeStyle = await activeLink.evaluate(e => ({ fill: getComputedStyle(e).backgroundColor, icon: getComputedStyle(e.querySelector("svg")!).color }));
@@ -315,10 +334,13 @@ test("Accepted r08 shell and board retain full-width stages, fixed headers and s
     expect(await board.evaluate(e => e.scrollTop)).toBe(position);
     await board.evaluate(e => { e.scrollTop = 0; });
   }
-  await page.locator('.crm-stage:visible .crm-owner-label').first().focus();
-  await expect(page.locator('.crm-stage:visible .crm-owner-label').first()).toBeFocused();
+  const activityBand = page.locator('.crm-stage:visible a.crm-card-activity').first();
+  await activityBand.focus();
+  await expect(activityBand).toHaveAccessibleDescription(/^Activity owner:/);
+  expect(await activityBand.locator('.crm-owner-label').evaluate(e => getComputedStyle(e, '::after').content)).toContain('Activity owner:');
+  await expect(activityBand).toBeFocused();
   await capture(page, info, "r08-owner-keyboard-tooltip", false);
   await page.keyboard.press("Escape");
-  await expect(page.locator('.crm-stage:visible .crm-owner-label').first()).toBeFocused();
+  await expect(activityBand).toBeFocused();
   expect(await page.locator('.crm-stage:visible .crm-owner-label').first().evaluate(e => getComputedStyle(e, '::after').content)).toBe("none");
 });
