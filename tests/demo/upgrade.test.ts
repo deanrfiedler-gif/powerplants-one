@@ -114,7 +114,7 @@ test("a baseline executed from Windows CRLF SQL upgrades without rewriting histo
   const final = await ledger();
   assert.deepEqual(final.filter(r => r.row.version <= 17), baseline);
   assert.deepEqual(await rows("public.ppo_demo_migrations"), identities);
-  assert.equal(final.length, baseline.length + 2);
+  assert.equal(final.length, baseline.length + 3);
   assert.ok((await db.query("SELECT to_regclass('ppo.projects') AS relation")).rows[0].relation);
 });
 
