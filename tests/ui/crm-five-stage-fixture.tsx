@@ -15,7 +15,7 @@ const CRM = {
   person: "60000000-0000-4000-8000-000000000001",
 };
 
-// Component-only fixture for the proposed five-stage pipeline. No database,
+// Component-only fixture for the accepted five-stage pipeline. No database,
 // Microsoft login or external requests. Keep the real React components/CSS;
 // replace only framework navigation and API.
 //
@@ -23,17 +23,17 @@ const CRM = {
 // deliberately typed "Enquiry" | "Qualified" because that is what the database
 // and the read contract actually supply. This fixture widens the field locally
 // rather than relaxing the domain type, so the contract stays honest while the
-// proposed layout can be reviewed. See docs/decisions/crm-pipeline-stage-model.md.
+// accepted layout can be reviewed. See docs/decisions/crm-pipeline-stage-model.md.
 type ReviewItem = Omit<WorklistItem, "stage_id"> & { stage_id: string };
-const STAGES = ["Qualified", "Scoping", "Quoting", "Negotiation", "Closing"];
+const STAGES = ["Discovery", "Scoping", "Quoting", "Negotiation", "Closing"];
 
 type Seed = [string, string, string, string | null, string, string, WorklistItem["next_action_state"], string];
 // title, organisation, stage, value, expected close, contact, action state, next action
 const seeds: Seed[] = [
-  ["Glasshouse climate control upgrade", "Fernbank Growers", "Qualified", "68500.00", "2026-10-30", "Jamie Rivers", "Upcoming", "Confirm the existing controller"],
-  ["Propagation bench irrigation", "Cedar Vale Nursery", "Qualified", null, "2026-11-13", "Morgan Avery", "Upcoming", "Arrange a site discussion"],
-  ["Substrate monitoring trial", "Greenhaven Research", "Qualified", "14600.00", "2026-10-16", "Drew Linden", "Needed", "Plan the next activity"],
-  ["Replacement circulation fans", "Silverleaf Produce", "Qualified", "8200.00", "2026-09-25", "Robin Ellis", "Upcoming", "Confirm quantities and dimensions"],
+  ["Glasshouse climate control upgrade", "Fernbank Growers", "Discovery", "68500.00", "2026-10-30", "Jamie Rivers", "Upcoming", "Confirm the existing controller"],
+  ["Propagation bench irrigation", "Cedar Vale Nursery", "Discovery", null, "2026-11-13", "Morgan Avery", "Upcoming", "Arrange a site discussion"],
+  ["Substrate monitoring trial", "Greenhaven Research", "Discovery", "14600.00", "2026-10-16", "Drew Linden", "Needed", "Plan the next activity"],
+  ["Replacement circulation fans", "Silverleaf Produce", "Discovery", "8200.00", "2026-09-25", "Robin Ellis", "Upcoming", "Confirm quantities and dimensions"],
   ["Automated fertigation system", "Fernbank Growers", "Scoping", "127500.50", "2026-11-27", "Jamie Rivers", "Overdue", "Review water analysis"],
   ["Growing-room lighting", "Banksia Seedlings", "Scoping", "48300.00", "2026-10-23", "Sasha Wells", "Upcoming", "Confirm crop and lighting hours"],
   ["Screen drive replacement", "Cedar Vale Nursery", "Scoping", null, "2026-10-09", "Morgan Avery", "DueNeeded", "Confirm drive specifications"],
