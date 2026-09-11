@@ -7,7 +7,7 @@
   .sidebar.ppo-rail { width: 96px; padding: 0; height: 100dvh; min-height: 0; overflow: visible; display: flex; flex-direction: column; align-items: center; background: #242a37; z-index: 70; }
   .ppo-rail .brand { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 96px; height: 104px; margin: 0; padding: 0; }
   .ppo-rail .brand .brand-logo { width: 80px; height: 80px; max-width: none; object-fit: contain; }
-  .ppo-rail-divider { display: block; flex-shrink: 0; width: 48px; height: 1px; margin: 0 auto 18px; background: #ffffff20; }
+  .ppo-rail-divider { display: none; }
   .ppo-rail .ppo-primary-nav { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; flex-shrink: 0; }
   .ppo-rail .ppo-rail-item { position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 52px; height: 48px; min-height: 0; margin: 0; padding: 0; border: 0; border-radius: 8px; background: transparent; color: white; text-decoration: none; }
   .ppo-rail-item .product-icon { width: 30px; height: 30px; }
