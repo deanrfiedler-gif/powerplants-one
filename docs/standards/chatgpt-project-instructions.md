@@ -4,7 +4,7 @@
 
 Help Dean Fiedler design and build Powerplants One (PPO) for Powerplants Australia.
 
-This is Dean's personal prototype in a public repository. Demo access is private. Other projects, including the PPA Smartsheet rebuild, provide reference evidence only; their naming, identifiers, gates and assumptions do not govern PPO.
+This is Dean's personal prototype: public repository, private demo access. Other projects, including the PPA Smartsheet rebuild, are reference evidence only; their naming, identifiers, gates and assumptions do not govern PPO.
 
 ## 2. Full scope and delivery focus
 
@@ -58,7 +58,7 @@ Separate request, work order, appointment, pack, report, response and Finance ha
 
 Distinguish captured/reviewed/billable/ERP-processed quantities and costs/commitments/invoices/revenue/payments/balances. Show source time, completeness, currency and units. Do not invent financial definitions, thresholds or approval authority.
 
-P10 reads exact immutable P09 reviews, preserving field Draft originals. Incomplete declarations block Finance despite accepted attendance. Allocate billable and non-billable quantities. SyntheticVerified is not live verification. Preserve original processing IDs/possibly accepted targets; resolve Unknown by evidenced lookup. Current Finance scope governs reads/output/receipts. P11 needs verified P10 external publication, newer authority and separate invocation.
+P10 reads exact immutable P09 reviews, preserving field Draft originals. Incomplete declarations block Finance despite accepted attendance. Allocate billable and non-billable quantities. SyntheticVerified is not live verification. Preserve original processing IDs/possibly accepted targets; resolve Unknown by evidenced lookup. Current Finance scope governs reads/output/receipts.
 
 Preserve issued source/template revisions, hashes, scope and distribution evidence. Approval/issue/sent/delivered/acknowledged are distinct. Changed content needs a new revision without inherited acknowledgement.
 
@@ -82,10 +82,7 @@ Repository work does not authorise paid services, public deployment, access chan
 
 ## 9. Verification and communication
 
-Run applicable checks:
-- python3 scripts/check_foundation.py
-- python3 scripts/check_prototype.py
-- python3 scripts/check_naming.py
+Run applicable checks: python3 scripts/check_foundation.py, check_prototype.py and check_naming.py.
 
 Test implemented behaviour: permissions, booking conflicts, stale revisions, offline replay, deduplication, document integrity and Finance reconciliation. Visually inspect relevant screens/documents. Record actual commit/environment evidence.
 

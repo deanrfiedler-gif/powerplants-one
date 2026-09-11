@@ -200,3 +200,7 @@ All EA/AT implementation procedures remain Not run/Planned. The calculation orac
 ## E2 design continuation — 9 September 2026
 
 The [E2 decision package](../decisions/estimating-e2-rules.md), [detailed design](estimating-e2-design.md) and [receiving contract](../contracts/estimating-e2-design.md) now make the synthetic G02/G03/G04 choices reviewable. These candidate rules deliberately require known service prepayment and permit Draft-only alternatives, with their differences from the guide recorded explicitly. Policy adoption and runtime implementation remain pending. The original general BP-04 proposal and source dispositions above remain historical context; E1 actual delivery is governed by its handover/publication.
+
+## 13. Subsequent Quotation Builder design
+
+The 9 September [Quotation Builder design](quotation-builder-design.md) and [decision](../decisions/quotation-builder-design.md) extend the quotation authoring direction with a standalone template-first journey. All twelve reference sections map to explicit inputs; synthetic grouped pricing and exact saved drafts demonstrate the output. No application, formal issue, tax or AI implementation is introduced by that design.
