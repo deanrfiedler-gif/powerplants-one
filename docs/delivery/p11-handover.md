@@ -1,6 +1,6 @@
 # P11 — Integrated quality, access and usability handover
 
-**Revision:** r05 · **Date:** 7 September 2026 · **State:** implementation handover; exact verification and publication governed by the linked external record. **Owner:** Dean Fiedler, personal private synthetic prototype.
+**Revision:** r05 · **Date:** 8 September 2026 · **State:** implementation handover; exact verification and publication governed by the linked external record. **Owner:** Dean Fiedler, personal private synthetic prototype.
 
 [Issue #54](https://github.com/deanrfiedler-gif/powerplants-one/issues/54) · [Authoritative external publication](https://github.com/deanrfiedler-gif/powerplants-one/issues/54#issuecomment-5567364667) · [P11 starter](p11-starter-prompt.md) · [Ordered plan](prototype-implementation-plan.md).
 

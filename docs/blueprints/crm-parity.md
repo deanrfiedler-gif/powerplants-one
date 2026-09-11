@@ -1,13 +1,18 @@
 # CRM — Pipedrive parity and evidence assessment
 
-**Revision:** r03 · **Date:** 7 September 2026 · **Status:** Bounded discovery; account context and exhaustive parity unverified · **Owner:** Dean Fiedler, private prototype · **Workstream:** PPO-009 / issue #9.
+**Revision:** r04 · **Date:** 10 September 2026 · **Status:** r02 product scope accepted; account context and exhaustive operational parity unverified · **Owner:** Dean Fiedler, private prototype · **Workstream:** PPO-009 / issue #9.
 
-[BP-03](BP-03-crm.md) owns target journeys/contracts. This register expands the original PAR-01–PAR-18 without changing their identities. All dispositions are **proposed**, not accepted. Preserve means retain the required outcome/history; improve means retain it with an evidenced improvement; integrate means keep an authoritative external capability; defer means retain it in its operational tool pending a later decision. No retirement is approved. Proposed criticality describes the impact of losing the outcome, not measured usage or an approved priority.
+[BP-03](BP-03-crm.md) owns target journeys/contracts. This register expands the original PAR-01–PAR-18 without changing their identities. The r02 product scope and deferrals are **accepted**; remaining account-specific mappings and operational transition dispositions are proposed. Preserve means retain the required outcome/history; improve means retain it with an evidenced improvement; integrate means keep an authoritative external capability; defer means retain it in its operational tool pending a later decision. No retirement is approved. Proposed criticality describes the impact of losing the outcome, not measured usage or an approved priority.
+
+## Current accepted product scope
+
+The [r02 approval](../decisions/crm-approved-scope.md) and [BP-03 section 0](BP-03-crm.md#0-approved-crm-scope--report-r02) govern current product priorities and four agreed deferrals. Earlier discovery observations retain their dates. Manual Leads/qualification/conversion are included regardless of whether Pipedrive separate-lead use is later established. Capture/prospecting, CRM proposal generation/signing, marketing and vendor subscription comparisons are deferred. Account inventory remains relevant to preservation/transition, without reopening these current-stage scope choices or blocking unrelated synthetic work.
 
 ## 1. Evidence ledger
 
 | Evidence ID | Date / source | Actual scope and confidence | Limit |
 |---|---|---|---|
+| E7 — Accepted product scope | 10 September 2026; Dean approves report r02 and blueprint/GitHub incorporation | Direct authority for current PPO capabilities, priorities and four deferrals | Does not establish account usage, settle unspecified operating policies or prove implementation |
 | E1 — User direction | 6 September 2026 current PPO-009 instruction | High confidence in authorised scope, synthetic-only boundary, required CRM outcomes and Pipedrive retention | Does not supply account configuration or accept proposed business rules |
 | E2 — Maintained baseline | Inspected 6 September 2026; BP-01 sections 3.3, 9 and sources SRC-04/SRC-17; source at main `85bd2fcc388495cc24dc2ee4f273accc49da2f24` | High confidence in what the maintained record says: earlier two pipeline IDs, ten stages and 60 recently updated open deals; varied service/upgrade/automation/facility pursuits | Original observation date and account identity not independently established here. No source-wide counts, lead/add-on/licence conclusions or newly read deal sample |
 | E3 — Live stage metadata | 6 September 2026; authorised Pipedrive MCP BETA `getstages`, `limit=30`, no filter | Successful read; 10 returned rows, 2 distinct pipeline IDs (1, 6), `next_cursor=null`; all nondeleted, ageing enabled. High confidence in returned values | Only one endpoint and its visible scope. Account/current-user/tenant identity, pipeline names, licence, invisible/empty pipelines and actual usage unknown. Matching E2 is consistency evidence, not proof of account identity |
@@ -55,7 +60,7 @@ Each item includes outcome, dated evidence/scope/confidence, usage/users/critica
 - **Evidence:** E3 stage label Lead and E6 Leads API, 6 September; high confidence in label/product distinction; actual separate-lead use unknown. No lead read/conversion executed.
 - **Use/users/criticality:** unknown lead usage/volumes; Sales; high if used. Absence from deal sample is not non-use.
 - **Fields/history:** lead UUID, linked person/organisation, source/channel, owner, archive/disqualification, conversion target/status/time; inherited deal custom-field keys where applicable.
-- **Disposition:** Preserve qualification; defer separate LeadCandidate implementation pending evidence, retain Pipedrive. Dependencies D-013, shared identity, accepted conversion rules. **Acceptance:** CA-03/15/16, AT-25; one lead conversion, preserved original ID and retry result, failed/unknown conversion owned.
+- **Disposition:** Accepted manual LeadCandidate/qualification/conversion under E7; implementation follows a bounded build. Retain operational Pipedrive pending transition acceptance. Dependencies D-013, shared identity, accepted conversion rules. **Acceptance:** CA-03/15/16, AT-25; one lead conversion, preserved original ID and retry result, failed/unknown conversion owned.
 - **Open:** Q1/Q3; owner walkthrough showing whether Leads inbox is used and one redacted converted/disqualified example. No need for all leads to design first slice.
 
 ### PAR-03 — Deals, pipelines, stages and close outcomes / CRM-02
@@ -154,7 +159,7 @@ Each item includes outcome, dated evidence/scope/confidence, usage/users/critica
 - **Evidence:** E4/E6, 6 September; product, document, e-signature and pricing usage/entitlement unknown; no connector read for them exposed.
 - **Use/users/criticality:** Sales/Estimating/Commercial, actual adoption/volume unknown; high where issued offers depend on it.
 - **Fields/history:** item/provider/company key, unit/currency/price-source date, product-deal links, exact quote/template/issue revisions, customer response and attachment IDs.
-- **Disposition:** Integrate with MYOB/Estimating/SharePoint; retain used source feature until accepted. Dependencies D-009/D-010/D-012/D-013/D-024. **Acceptance:** CA-09/11/15, AT-20/26/36; exact issued bytes and separate response survive.
+- **Disposition:** Integrate catalogue and exact estimate/quotation/document references with MYOB/Estimating/SharePoint. E7 defers CRM proposal generation and electronic signatures; preserve source history and retain operational tools pending transition acceptance. Dependencies D-009/D-010/D-012/D-013/D-024. **Acceptance:** CA-09/11/15, AT-20/26/36; exact issued bytes and separate response survive.
 - **Open:** Q6/Q8; used product/document feature list and one redacted source-to-quote walkthrough, including external e-signature if used.
 
 ### PAR-14 — Mobile sales and poor connection / CRM-08
@@ -190,7 +195,7 @@ Each item includes outcome, dated evidence/scope/confidence, usage/users/critica
 - **Evidence:** E4/E6, 6 September; licence/add-on/configuration reads unavailable. Product catalogue does not establish purchase or use.
 - **Use/users/criticality:** unknown; Sales/Systems/Commercial; criticality unassessed until owner identifies business dependence.
 - **Fields/history:** add-on identity/vendor/plan, accountable owner, inbound source/consent, records/files/communication links, export and workflow dependencies.
-- **Disposition:** Defer target build pending inventory; preserve current operational tool. Split any identified used add-on into a named child entry under PAR-17, without new parent requirements. Dependencies D-013/D-025/D-020.
+- **Disposition:** E7 explicitly defers lead capture/prospecting, CRM proposals/e-signatures and marketing for the current stage; vendor subscription comparisons are excluded from PPO feature requirements. Preserve current operational tools and required history; inventory supports later transition, not a condition for accepting these deferrals. Split any identified used add-on into a named child entry under PAR-17, without new parent requirements. Dependencies D-013/D-025/D-020.
 - **Acceptance:** CA-14/15/16, AT-25; evidence for each used campaign/form/chat/prospecting/enrichment/document/e-signature capability and approved consent/retention handling.
 - **Open:** Q8; redacted billing/features and installed-app/settings list, with owner-marked used/unused/unknown. No purchase or activation.
 
@@ -243,7 +248,7 @@ All checked 6 September 2026. The statements below are product documentation, no
 
 ## I1 implementation distinction
 
-The separately authorised [I1 implementation](../delivery/crm-i1-handover.md) exercises only CRM-01/02/03 and partial CRM-08, with PAR-01/03/05/15 foundations, in a fictional owned-opportunity journey. Actual checks/publication are recorded there; this assessment does not promote an unmerged branch or a component test to parity acceptance. All PAR-01–PAR-18 dispositions and account evidence requests remain proposed/open. No new Pipedrive/account read, import, retirement or cutover follows from I1. The original E1–E5 discovery observations retain their dates and limits.
+The separately authorised [I1 implementation](../delivery/crm-i1-handover.md) exercises only CRM-01/02/03 and partial CRM-08, with PAR-01/03/05/15 foundations, in a fictional owned-opportunity journey. Actual checks/publication are recorded there; this assessment does not promote an unmerged branch or a component test to parity acceptance. The r02 decision now accepts current product scope and deferrals; account-specific evidence requests and operational parity outcomes remain open. No new Pipedrive/account read, import, retirement or cutover follows from I1. The original E1–E5 discovery observations retain their dates and limits.
 
 ## I1 synthetic implementation evidence
 

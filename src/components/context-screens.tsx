@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { CrmDirectory } from "./crm-directory";
 import { useState } from "react";
 import { RecordTabs, RecordPanel } from "./record-ui";
 import {
@@ -143,7 +144,10 @@ const lists = {
     endpoint: "assets",
   },
 } as const;
-export function ContextList({
+export function ContextList({section="customers"}:{section?:keyof typeof lists}) {
+  return section==="customers" || section==="people" ? <CrmDirectory key={section} kind={section==="people"?"people":"organisations"}/> : <LegacyContextList section={section}/>;
+}
+function LegacyContextList({
   section = "customers",
 }: {
   section?: keyof typeof lists;

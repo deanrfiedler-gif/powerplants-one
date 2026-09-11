@@ -1,8 +1,12 @@
 # BP-07 — Service Operations Functional & Build Blueprint
 
-**Edition:** r09 · **Date:** 7 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
+**Edition:** r10 · **Date:** 10 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
 
 **Status:** Functional specification with the bounded P03–P05 SC-01–SC-05/SC-07/SC-08 implementation amendments below. Later workflows and full acceptance remain incomplete. [Package](../prototype/README.md) · [Dictionary](../contracts/service-data-dictionary.md) · [API](../contracts/service-api.md) · [Acceptance](../testing/prototype-acceptance.md).
+
+## Approved field technicians presentation — 10 September 2026
+
+Dean accepted [Field Technicians r04](../decisions/field-technicians-design.md). `/service/technicians` applies its padded container, Visits/Technicians/Needs preparation tables and visit drawer to existing SC-07/SC-08 reads and SC-09/SC-10 links. Controlled service state and permissions remain server-owned. The [integration handover](../delivery/field-technicians-handover.md) separates approved design from source verification, browser acceptance and publication. Historical implementation amendments below retain their original delivery boundaries.
 
 ## P05 implementation amendment
 
@@ -39,6 +43,11 @@ A coordinator should be able to establish what a customer needs, authorise a cle
 The system distinguishes reported symptoms, suspected causes, attempted fixes, verified findings, completed work and outstanding actions. It does not generate unsupported technical diagnoses or allow a general dispatch override to bypass mandatory safety/biosecurity or customer operating controls.
 
 ## 2. Navigation and visual design requirements
+
+### Approved full Job Pack presentation — 10 September 2026
+
+Dean has approved the audited full-page Job Pack r02. The [approval decision](../decisions/job-pack-design.md) and [exact HTML baseline](../reference/ui/job-pack/powerplants-one-job-pack-r02.html) now govern the SC-06 presentation: nine pack sections, guided preparation, revision history, source-aware readiness and print choices, with 24 px desktop / 16 px mobile outer padding. The full page continues from a selected job's Job pack drawer section using the existing canonical pack identity. This is design acceptance; the original audit's browser/print checks and application integration remain separate. Existing P06 commands, exact sources, issue/acknowledgement, dispatch and work-authority guards remain authoritative.
+
 
 Initial navigation: **My Work, Customers & Sites, Service Requests, Work Orders, Schedule, My Jobs, Finance Handoffs, Documents, Administration**. Menu visibility follows permissions; hidden navigation is not a server security control. Future module names must not appear as working features until there is usable functionality.
 

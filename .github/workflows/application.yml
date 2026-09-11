@@ -328,7 +328,11 @@ jobs:
         if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-retained-finance-browser/results.json
-        run: npx playwright test tests/browser/finance.spec.ts --grep 'P10 PT-17/PT-19|P10 stale browser proposal|P10 lost save response' --output verification-evidence/p11-retained-finance-browser --reporter=list,json
+        run: |
+          # The preceding upgrade proof deliberately revokes grants and may fail
+          # before its normal cleanup. Retained browser evidence owns fresh fixtures.
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+          npx playwright test tests/browser/finance.spec.ts --grep 'P10 PT-17/PT-19|P10 stale browser proposal|P10 lost save response' --output verification-evidence/p11-retained-finance-browser --reporter=list,json
       - name: Prepare retained Finance review diagnostics
         if: always()
         id: retained_finance_review
