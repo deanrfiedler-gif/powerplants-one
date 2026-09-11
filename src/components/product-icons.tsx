@@ -5,6 +5,7 @@ const paths = {
   home: "m3 10 9-7 9 7v10H3z M9 20v-7h6v7",
   work: "M8 4H5v17h14V4h-3 M8 3h8v4H8z M8 12h8 M8 16h5",
   sales: "M3 7h18v14H3z M8 7V3h8v4 M3 12l9 4 9-4 M10 12h4",
+  leads: "M3 4h18l-7 8.5V21l-4-2.5v-10z",
   estimate: "M5 2h14v20H5z M8 6h8 M8 11h1 M12 11h1 M16 11h1 M8 15h1 M12 15h1 M16 15h1 M8 19h1 M12 19h1 M16 19h1",
   engineering: "m3 17 14-14 4 4L7 21z M13 7l4 4 M10 10l2 2 M7 13l4 4",
   projects: "M3 5h7l2 3h9v13H3z",
