@@ -26,3 +26,23 @@ Shared workspace/company constants and the unchanged runtime-grant function now 
 Two subprocess regression cases launch the operator entry point with both `upgrade` and `verify`. A test-only preload intercepts PostgreSQL connection acquisition before any network access, proving startup reaches the database and the CLI retains sanitized error handling. Both cases reproduced the original exit code 13 and unsettled-await warning before the repair, and pass after it. This startup proof complements the native PostgreSQL upgrade/retention/rollback tests; it does not claim a live database upgrade.
 
 Publication, pinned-runtime CI and a new Azure rollout remain separate evidence recorded in the repair PR.
+
+## 10 September — safe operator diagnostics
+
+PR #106 removed the confirmed startup import cycle and passed the native Azure preparation suite. Retry [34484176805](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34484176805) reached the operator error handler but stopped before web/worker rollout. Its blanket exception message did not identify the second blocker.
+
+The operator now emits fixed stage labels and an allowlist of diagnostic labels/SQLSTATE codes. Unknown exception messages, query text, details, parameters and credentials remain suppressed. This is diagnostic instrumentation only: no migration, privilege, transaction or configuration rule changes. Unit cases verify both useful classification and suppression of synthetic sensitive error fields. The retry and its result will be recorded in the PR.
+
+## 10 September — migration mismatch receipt
+
+Diagnostic run [34485559770](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34485559770), execution `job-ppo-operator-90deea5d-41xxzsf`, reached `migration-history` and failed with `incompatible-migration-history` before any upgrade writes. This establishes that the current live ledger differs from the assumed baseline; the original source commit alone is insufficient evidence of that ledger. The Azure browser connection then became unavailable during read-only inspection.
+
+A failed migration check now emits its version, expected SHA-256 and validated stored SHA-256 (or `missing`/`invalid`). The deployment helper reads only that execution’s recent durable console logs from the existing Log Analytics workspace, prints bounded diagnostic lines and retains the original failure. Lookup failures or delayed ingestion never advance deployment. Python tests verify exact-execution selection, suppression of other log text and preservation of the failed-job result. No checksum is accepted, replaced or normalized by this instrumentation. The next live receipt is still required before choosing an upgrade repair.
+
+## 10 September — original Windows checkout checksum compatibility
+
+Runs [34495607025](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34495607025) and [34495756494](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34495756494) identify migration 1: expected `6817290d78e6493a8b266ddfdef1c5a2806683516e9f397c5c6fa3a8d8e1aaf4`, stored `dbfbff684617c70fde38840f4a81fd450492d3d8fef1e6399c6a94e59ecba2ca`. Computing the SHA-256 of the unchanged foundation source confirms these are its LF and CRLF encodings respectively. The original image was built from a Windows checkout; its raw-byte checksum differs from the GitHub Linux checkout.
+
+The bounded existing-demo upgrade now recognizes those two exact line-ending variants for registered baseline migrations through 17 and hosted identity migration 1. It does not rewrite receipts or SQL, accept other edits, fill missing baseline migrations, accept unknown versions, or relax migration 18/19 hashes. The change applies to both upgrade and read-only verification. Source files and the general migration runner are unchanged.
+
+A regression unit reproduces both observed hashes and rejects substantive changes, missing values and CRLF compatibility for later migrations. A native PostgreSQL case executes the complete original baseline and identity SQL with CRLF bytes, then checks upgrade, verify and retry while preserving every original ledger row. Existing saved-record, invitation-limit, conflicting-18 and rollback tests remain in force. Live release evidence is recorded in the repair PR.

@@ -8,6 +8,7 @@ import { transaction, closeDatabase } from "../src/platform/database";
 import { seedTesterMailbox } from "./demo-mailbox";
 import { demoConfig } from "../src/platform/demo-config";
 import { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-runtime";
+import { operatorFailureCode } from "./demo-diagnostics";
 
 export { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-runtime";
 export const demoCapabilities = ["shared.read", "shared.internal.read", "activity.read", "activity.edit",
@@ -88,6 +89,7 @@ async function runtimeRole() {
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
+    console.log("Demo operator stage: configuration");
     const c = demoConfig(), command = process.argv[2];
     if (command === "setup") {
       const testers = testerInput(JSON.parse(process.env.PPO_DEMO_TESTERS ?? ""));
@@ -101,6 +103,10 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     }
     else throw Error("Use setup, testers, upgrade or verify. Reset requires a new database/storage epoch.");
     console.log("Demo database operation completed.");
-  } catch { console.error("Demo database operation failed; no credentials or SQL printed. Check the operator configuration and retained database state."); process.exitCode = 1; }
+  } catch (error) {
+    console.error("Demo database operation failed; no credentials or SQL printed. Check the operator configuration and retained database state.");
+    console.error(`Operator failure code: ${operatorFailureCode(error)}`);
+    process.exitCode = 1;
+  }
   finally { await closeDatabase(); }
 }

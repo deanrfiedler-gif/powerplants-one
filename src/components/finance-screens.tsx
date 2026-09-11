@@ -454,8 +454,9 @@ export function FinanceForm({
   }
   const patch = (i: number, v: Partial<DraftLine>) =>
     setLines((ls) => ls.map((l, j) => (j === i ? { ...l, ...v } : l)));
+  const contextUnconfirmed = options.loading || !!options.error || sources.loading || !!sources.error;
   async function save() {
-    if (!options.data || !sources.data) return;
+    if (!options.data || !sources.data || contextUnconfirmed) return;
     const refs = selected.map((report_id) => {
         const s = sources.data!.items.find((s) => s.id === report_id)!;
         return {
@@ -486,17 +487,21 @@ export function FinanceForm({
       body,
     );
   }
-  if (isDenied(cmd.error)) return <ErrorNotice error={cmd.error} />;
+  const denied = [options.error, sources.error, cmd.error].find(isDenied);
+  if (denied) return <ErrorNotice error={denied} />;
   return (
     <Frame
       title={id ? "Revise Finance handoff" : "Prepare Finance handoff"}
       subtitle="Keep captured and reviewed quantities intact. Give every selected source quantity an explicit disposition and reason."
     >
       <Link href="/finance/handoffs">← Finance queue</Link>
-      <ErrorNotice error={options.error} />
-      <ErrorNotice error={sources.error} />
+      <ReadState
+        loading={options.loading || sources.loading}
+        error={options.error || sources.error}
+        retained={!!options.data}
+        retry={() => { options.reload(); sources.reload(); }}
+      />
       {cmd.notice}
-      {options.loading && <p role="status">Loading Finance context…</p>}
       {options.data && (
         <form
           onSubmit={(e) => {
@@ -504,7 +509,7 @@ export function FinanceForm({
             void save();
           }}
         >
-          <fieldset disabled={cmd.busy || !!cmd.pending}>
+          <fieldset disabled={cmd.busy || !!cmd.pending || contextUnconfirmed}>
             <div className={styles.grid}>
               <label>
                 Work order
@@ -575,7 +580,7 @@ export function FinanceForm({
                   Checking original report bytes and dependencies…
                 </p>
               )}
-              {sources.data?.items.length === 0 && (
+              {!contextUnconfirmed && sources.data?.items.length === 0 && (
                 <p>No report sources exist for this work order.</p>
               )}
               {sources.data?.items.map((s) => (
@@ -589,7 +594,9 @@ export function FinanceForm({
                     />
                     {s.display_number} · {s.status}
                   </label>
-                  {s.ready ? (
+                  {contextUnconfirmed ? (
+                    <small>Previously loaded source. Current readiness is unconfirmed.</small>
+                  ) : s.ready ? (
                     <small>
                       Exact issued revision, technical review, declarations and
                       original bytes checked.
@@ -855,7 +862,12 @@ export function FinanceDetail({ id }: { id: string }) {
           </div>
           <section className={styles.panel}>
             <h2>Next Finance action</h2>
-            <fieldset disabled={locked}>
+            {cmd.busy && (
+              <p role="status">
+                Action in progress. Its result is not yet confirmed.
+              </p>
+            )}
+            <fieldset disabled={locked} aria-busy={cmd.busy}>
               <label>
                 Precise action / correction reason
                 <textarea

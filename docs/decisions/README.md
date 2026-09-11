@@ -48,6 +48,11 @@ The [controlled opportunity handover proposal](crm-opportunity-handover.md) reco
 
 [Azure private demo runtime](azure-private-demo.md) — individual sign-in, cloud configuration, deployment and reset preparation; live acceptance pending.
 
-- [ADR-0020 — Persisted synthetic Email & Calendar journey](ADR-0020-email-calendar-synthetic-journey.md).
+- [ADR-0020 — Persisted synthetic Email & Calendar journey](ADR-0020-email-calendar-synthetic-journey.md). ADR-0019 was never allocated; the sequence runs ADR-0018 → ADR-0020 and the gap is intentional-by-omission, not a missing file.
 
 - [Private demo Email and CRM integration](demo-email-crm-integration.md) — shared desktop/mobile journey, individual fictional mailboxes and retained access boundaries.
+
+- [Approved Job Pack r02](job-pack-design.md) — exact accepted full-page Service design and integration boundary.
+- [CI browser suite route warm-up](ci-browser-warm-up.md) — harness-only decision: compile every route before the first assertion window; no deadline, retry or product change.
+- [CI browser suite against the compiled application](ci-compiled-browser-suite.md) — additional workflow drives the unchanged suite against `npm run build` output under the unchanged synthetic-identity guard (`NODE_ENV=test`); production startup remains refused.
+[Field Technicians r04](field-technicians-design.md) records Dean’s approved Service presentation, frozen source and bounded application mapping. Design approval does not grant dispatch, merge or production acceptance.

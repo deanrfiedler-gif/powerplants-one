@@ -30,6 +30,27 @@
       "original_path": "powerplants-one-naming-standard.md"
     },
     {
+      "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r02.html",
+      "sha256": "fe2ded4a0cd9813c06e666499cc9842691e73c95be9b9e18f2aae9bf59c262fd",
+      "bytes": 446869,
+      "purpose": "Exact Job Pack design r02 accepted by Dean Fiedler on 10 September 2026; fictional standalone preview, not issued work instructions",
+      "original_path": "powerplants-one-job-pack-r02.html"
+    },
+    {
+      "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-audit-r02.md",
+      "sha256": "288545ac2d3be72da7a1085e3bc775f80a2e82ad28b6d402182e64669ed0249f",
+      "bytes": 12075,
+      "purpose": "Original Job Pack r02 audit preserved unchanged; later user design acceptance is recorded in docs/decisions/job-pack-design.md",
+      "original_path": "powerplants-one-job-pack-audit-r02.md"
+    },
+    {
+      "path": "docs/reference/powerplants-one-field-technicians-r04.html",
+      "sha256": "b4d15630d89f0a74b795b9b2af6b83d9c4874d0e31d7e503f93d386a6555a704",
+      "bytes": 429584,
+      "purpose": "Exact field technicians r04 standalone HTML accepted by Dean Fiedler on 10 September 2026. Presentation baseline; illustrative records and memory-only notes are not application records.",
+      "original_path": "output/powerplants-one-field-technicians-r04.html"
+    },
+    {
       "path": "docs/reference/engineering-r02/PPO-Engineering-Container-r02.html",
       "sha256": "52a7d24705ba3faf5f7ce87e33ccd09b641ca2b3b5e7e592975ec949552665b4",
       "bytes": 456757,

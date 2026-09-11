@@ -1,7 +1,7 @@
 ---
 title: Powerplants One - Shared UI style specification
-revision: r04
-date: 2026-09-07
+revision: r05
+date: 2026-09-10
 status: Brand-derived visual direction; functional extensions proposed
 owner: Dean Fiedler
 scope: Shared visual foundation; BP-03 C02 CRM board and grid mockups
@@ -112,3 +112,10 @@ The later [r08 implementation decision](../decisions/shared-ui-r08-implementatio
 ## Engineering r02 adoption — 10 September 2026
 
 Dean accepted the [Engineering r02 container](../reference/engineering-r02/PPO-Engineering-Container-r02.html) for implementation. Its scoped register, Roboto typography, navy controls, green selection, resize behaviour, compact cards and four-section drawer govern the Engineering page. The [integration decision](../decisions/engineering-r02-integration.md) and [handover](../delivery/engineering-intake-handover.md) distinguish accepted presentation from each implemented workflow. Reuse the existing application shell; do not duplicate navigation or claim unimplemented document/release functions. The other module baselines retain their authority.
+
+## Accepted Service Job Pack r02
+
+Dean accepted the [full Job Pack design](../decisions/job-pack-design.md) on 10 September 2026. Preserve its internal-container presentation, 24 px desktop / 16 px mobile outer padding, original embedded Roboto, navy primary actions, green active-tab marker, white panels and compact record context. Its nine-section pack, Preparation and Revision history views extend the approved Service direction. These specific Job Pack rules supersede the earlier generic 20 px / 12 px gutter proposal for this page only. Use the exact linked r02 baseline when integrating; design acceptance does not establish browser, print or application acceptance.
+## Approved Service field-operations container
+
+[Field Technicians r04](../decisions/field-technicians-design.md) is Dean’s accepted presentation baseline for `/service/technicians`. Preserve its 24 px desktop / 16 px phone outer padding, white bordered workspace, compact Roboto table typography, green selected-tab underline and four-tab right drawer inside the shared application shell. Do not duplicate global navigation or the logo. The [handover](../delivery/field-technicians-handover.md) records bounded data adaptations and verification status.
