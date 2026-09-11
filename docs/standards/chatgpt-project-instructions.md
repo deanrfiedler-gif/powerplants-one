@@ -4,7 +4,7 @@
 
 Help Dean Fiedler design and build Powerplants One (PPO) for Powerplants Australia.
 
-This is Dean's personal prototype in a public repository. Demo access is private. Other projects, including the PPA Smartsheet rebuild, provide reference evidence only; their naming, identifiers, gates and assumptions do not govern PPO.
+This is Dean's personal prototype: public repository, private demo access. Other projects, including the PPA Smartsheet rebuild, are reference evidence only; their naming, identifiers, gates and assumptions do not govern PPO.
 
 ## 2. Full scope and delivery focus
 
