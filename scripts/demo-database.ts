@@ -8,13 +8,14 @@ import { transaction, closeDatabase } from "../src/platform/database";
 import { seedTesterMailbox } from "./demo-mailbox";
 import { demoConfig } from "../src/platform/demo-config";
 import { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-runtime";
+import { demoMigrationFiles, existingDemoChecksumMatches } from "./migration-registry";
 import { operatorFailureCode } from "./demo-diagnostics";
 
 export { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-runtime";
 export const demoCapabilities = ["shared.read", "shared.internal.read", "activity.read", "activity.edit",
   "crm.opportunity.read", "crm.opportunity.create", "crm.opportunity.edit",
   "crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert", "estimating.read", "estimating.edit",
-  "estimating.quote.read", "estimating.quote.prepare", "email.read", "email.edit",
+  "estimating.quote.read", "estimating.quote.prepare", "email.read", "email.edit", "email.connect",
   "project.read", "project.create", "project.edit"] as const;
 
 export function testerInput(value: unknown, now = Date.now()) {
@@ -33,19 +34,29 @@ export function testerInput(value: unknown, now = Date.now()) {
   });
 }
 
+// Ordered hosted-only track. Version 1 is the issued identity baseline: its recorded checksum,
+// including the legacy Windows encoding, is verified and never rewritten.
 export async function migrateDemo() {
-  const sql = await readFile(new URL("../db/demo/0001-identity.sql", import.meta.url), "utf8");
-  const hash = createHash("sha256").update(sql).digest("hex");
+  const files = await Promise.all(demoMigrationFiles.map(async file => ({
+    version: Number(file.slice(0, 4)),
+    sql: await readFile(new URL(`../db/demo/${file}`, import.meta.url), "utf8"),
+  })));
   await transaction(async c => {
     await c.query("SELECT pg_advisory_xact_lock(10001)");
     await c.query("CREATE TABLE IF NOT EXISTS public.ppo_demo_migrations(version integer PRIMARY KEY,sha256 text NOT NULL)");
-    const prior = await c.query("SELECT sha256 FROM public.ppo_demo_migrations WHERE version=1");
-    if (prior.rows[0]) {
-      if (prior.rows[0].sha256 !== hash) throw Error("Demo migration checksum mismatch.");
-      return;
+    const installed = await c.query("SELECT version,sha256 FROM public.ppo_demo_migrations");
+    if (installed.rows.some(row => !files.some(f => f.version === row.version)))
+      throw Error("Unknown hosted migration history; preserve and review this database.");
+    for (const f of files) {
+      const prior = installed.rows.find(row => row.version === f.version);
+      if (prior) {
+        if (!existingDemoChecksumMatches(f.sql, prior.sha256, f.version === 1)) throw Error("Demo migration checksum mismatch.");
+        continue;
+      }
+      await c.query(f.sql);
+      await c.query("INSERT INTO public.ppo_demo_migrations VALUES($1,$2)",
+        [f.version, createHash("sha256").update(f.sql).digest("hex")]);
     }
-    await c.query(sql);
-    await c.query("INSERT INTO public.ppo_demo_migrations VALUES(1,$1)", [hash]);
   });
 }
 
