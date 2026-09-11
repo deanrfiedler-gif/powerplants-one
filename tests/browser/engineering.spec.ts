@@ -46,9 +46,7 @@ test("accepted container creates a real request; an uncertain note retries once 
   await dialog
     .getByRole("button", { name: "Create request", exact: true })
     .click();
-  await expect(
-    dialog.getByRole("heading", { name: title, exact: true }),
-  ).toBeVisible();
+  await expect(dialog.getByRole("heading").first()).toHaveText(title);
   const list = await call(page, `engineering?q=${encodeURIComponent(title)}`);
   expect(list.items).toHaveLength(1);
   const id = list.items[0].id;
@@ -84,9 +82,7 @@ test("accepted container creates a real request; an uncertain note retries once 
   await dialog.getByRole("button", { name: "Retry original note" }).click();
   await expect(dialog.getByText("Note saved.", { exact: true })).toBeVisible();
   await page.goto(`/engineering/${id}`);
-  await expect(
-    dialog.getByRole("heading", { name: title, exact: true }),
-  ).toBeVisible();
+  await expect(dialog.getByRole("heading").first()).toHaveText(title);
   const saved = await call(page, `engineering/${id}`);
   expect(saved.package.version).toBe(2);
   expect(saved.events).toHaveLength(2);
