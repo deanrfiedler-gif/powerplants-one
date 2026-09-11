@@ -36,7 +36,7 @@ export async function identity(page: Page, profile: string) {
   expect(response.ok(), await response.text()).toBe(true);
   expect(response.headers()["cache-control"]).toBe("private, no-store");
   const current = await response.json();
-  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true }).locator("strong")).toHaveText(current.display_name);
+  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true }).locator("strong").first()).toHaveText(current.display_name);
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
   await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
 }

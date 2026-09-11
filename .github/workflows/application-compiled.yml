@@ -1,0 +1,92 @@
+name: Compiled application browser assurance
+# Additional signal beside Application assurance: the same desktop and mobile
+# browser suite, unchanged, driven against the compiled application that
+# `npm run build` produces, served by the loopback synthetic-identity launcher in
+# `--compiled` mode. See docs/decisions/ci-compiled-browser-suite.md.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+defaults:
+  run:
+    shell: bash
+jobs:
+  compiled:
+    name: Desktop and mobile browser suite against the compiled application
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    services:
+      postgres:
+        image: postgres:16.15
+        env:
+          POSTGRES_USER: ppo_local
+          POSTGRES_PASSWORD: ppo_disposable_ci_only
+          POSTGRES_DB: ppo_synthetic_test
+        ports:
+          - 127.0.0.1:5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ppo_local -d ppo_synthetic_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      PPO_PROOF_DIAGNOSTICS: "1"
+      PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install exact package manager and locked dependencies
+        run: |
+          npm install --global npm@11.19.0
+          npm ci
+          node --version
+          npm --version
+          git rev-parse HEAD
+      - name: Install pinned controlled PDF renderer and browser
+        run: npx playwright install --with-deps chromium
+      - name: Compile the application
+        # Separate step so a build failure is distinguishable from a test failure.
+        id: build
+        run: |
+          npm run build
+          test -f .next/BUILD_ID
+          echo "build_id=$(cat .next/BUILD_ID)" >> "$GITHUB_OUTPUT"
+      - name: Configure disposable loopback database
+        id: database_setup
+        run: |
+          cp .env.example .env.local
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('.env.local')
+          p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
+          PY
+          npm run db:migrate
+          npm run db:seed
+          npm run db:health
+      - name: Desktop and mobile browser checks against the compiled application
+        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/compiled-browser/results.json
+        run: |
+          echo "Compiled build ${{ steps.build.outputs.build_id }} for source ${PPO_SOURCE_HEAD}"
+          npx playwright test --config=playwright.compiled.config.ts --reporter=list,json
+      - name: Prepare retained browser review diagnostics immediately
+        if: ${{ always() && steps.database_setup.outcome == 'success' }}
+        id: browser_review
+        run: python3 scripts/prepare-review-evidence.py
+      - name: Preserve retained compiled-application browser evidence
+        if: ${{ always() && steps.browser_review.outcome == 'success' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: compiled-application-browser-evidence
+          path: |
+            test-results/
+            verification-evidence/
+            !**/trace.zip
+          retention-days: 14

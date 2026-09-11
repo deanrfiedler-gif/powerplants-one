@@ -1,4 +1,6 @@
-import { test, expect, type Page, type TestInfo } from "@playwright/test";
+import { observedResponse } from "../helpers/observed-response";
+import type { Page, TestInfo } from "@playwright/test";
+import { test, expect, observeApiCall } from "../helpers/browser-lifecycle";
 import { mkdir, writeFile } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -9,7 +11,7 @@ test.use({ actionTimeout: 15000 });
 const hash = (v: string | Buffer) =>
   createHash("sha256").update(v).digest("hex");
 async function call(page: Page, path: string, body?: unknown) {
-  const r = await page.request.fetch(`/api/v1/${path}`, {
+  const r = await observeApiCall(page, `/api/v1/${path}`, () => page.request.fetch(`/api/v1/${path}`, {
     method: body === undefined ? "GET" : "POST",
     headers:
       body === undefined
@@ -19,7 +21,7 @@ async function call(page: Page, path: string, body?: unknown) {
             "Content-Type": "application/json",
           },
     data: body,
-  });
+  }));
   const d = await r.json();
   expect(r.ok(), JSON.stringify(d)).toBeTruthy();
   return d;
@@ -229,18 +231,17 @@ async function issue(page: Page) {
   // Rendering is an asynchronous controlled command. Observe its actual result
   // before asserting the refreshed UI; an arbitrary five-second render race
   // does not establish whether the original output was issued.
-  const rendered = page.waitForResponse(
+  const response = await observedResponse(page, "report-render",
     (r) =>
       /\/api\/v1\/report-render-jobs\/[^/]+\/retry$/.test(r.url()) &&
       r.request().method() === "POST",
-  );
-  await page
+    () => page
     .getByRole("button", {
       name: "Generate / recover original report",
       exact: true,
     })
-    .click();
-  const response = await rendered;
+    .click(),
+  );
   expect(response.status(), await response.text()).toBe(200);
   expect(response.headers()["cache-control"]).toBe("private, no-store");
   const output = await response.json();

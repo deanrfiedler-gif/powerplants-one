@@ -1,6 +1,8 @@
+import { leadsAvailable } from "../crm/leads/context";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../platform/identity";
 import { database, transaction } from "../platform/database";
+import { proofReadPhase } from "../platform/proof-diagnostics";
 import { sharedOperation, canonical } from "../platform/operations";
 import { AppError, unavailable } from "../platform/errors";
 import {
@@ -794,50 +796,59 @@ export async function readReport(
 ) {
   object(input, []);
   return transaction(async (c) => {
+    proofReadPhase("report-context-start");
     const ctx = await reportContext(c, p, id),
       r = ctx.report;
+    proofReadPhase("report-revisions-start");
     const revisions = (
       await c.query(
         "SELECT * FROM ppo.report_revisions WHERE workspace_id=$1 AND report_id=$2 ORDER BY revision DESC",
         [p.workspace_id, id],
       )
     ).rows;
+    proofReadPhase("report-reviews-start");
     const reviews = (
       await c.query(
         "SELECT id,revision_id,decision,source_hash,entry_decisions,authority_disposition,remarks,recipient_id,customer_hash,reviewed_at FROM ppo.report_reviews WHERE workspace_id=$1 AND report_id=$2 ORDER BY reviewed_at DESC",
         [p.workspace_id, id],
       )
     ).rows;
+    proofReadPhase("report-presentations-start");
     const presentations = (
       await c.query(
         "SELECT id,revision_id,issue_id,kind,content_hash,html_hash,created_at FROM ppo.report_presentations WHERE workspace_id=$1 AND report_id=$2 ORDER BY created_at DESC",
         [p.workspace_id, id],
       )
     ).rows;
+    proofReadPhase("report-responses-start");
     const responses = (
       await c.query(
         "SELECT id,presentation_id,presented_hash,response,respondent_name,respondent_role,remarks,next_action,presented_at,captured_at,received_at,signature_hash,signature_bytes,follow_up_activity_id FROM ppo.customer_responses WHERE workspace_id=$1 AND report_id=$2 ORDER BY received_at DESC",
         [p.workspace_id, id],
       )
     ).rows;
+    proofReadPhase("report-issues-start");
     const issues = (
       await c.query(
         "SELECT id,revision_id,issued_at,output_hash,manifest->>'filename' AS filename FROM ppo.report_issues WHERE workspace_id=$1 AND report_id=$2 ORDER BY issued_at DESC",
         [p.workspace_id, id],
       )
     ).rows;
+    proofReadPhase("report-jobs-start");
     const jobs = (
       await c.query(
         "SELECT id,revision_id,state,attempts,error_code,issue_id,requested_at FROM ppo.report_render_jobs WHERE workspace_id=$1 AND report_id=$2 ORDER BY requested_at DESC",
         [p.workspace_id, id],
       )
     ).rows;
+    proofReadPhase("report-follow-ups-start");
     const follow_ups = (
       await c.query(
-        `SELECT a.id,a.summary,a.status,a.owner_id,a.due_needed,u.display_name AS owner_name,f.kind FROM ppo.report_follow_ups f JOIN ppo.activities a ON a.id=f.activity_id JOIN ppo.users u ON u.id=a.owner_id WHERE f.workspace_id=$1 AND f.report_id=$3 AND ${activityVisibility("a", await crmAvailable(c))} ORDER BY f.created_at`,
+        `SELECT a.id,a.summary,a.status,a.owner_id,a.due_needed,u.display_name AS owner_name,f.kind FROM ppo.report_follow_ups f JOIN ppo.activities a ON a.id=f.activity_id JOIN ppo.users u ON u.id=a.owner_id WHERE f.workspace_id=$1 AND f.report_id=$3 AND ${activityVisibility("a", await crmAvailable(c), await leadsAvailable(c))} ORDER BY f.created_at`,
         [p.workspace_id, p.actor_id, id],
       )
     ).rows;
+    proofReadPhase("report-site-template-start");
     const site = await visible(c, p, "Site", ctx.a.site_id),
       template = (
         await c.query(
@@ -847,6 +858,7 @@ export async function readReport(
       ).rows[0];
     // Reuse reportContext's current scoped Service-versus-field distinction.
     // A report read/assignment is not access to internal review narratives.
+    proofReadPhase("report-permissions-start");
     const internal_review = await hasPermission(
       c, p, "service.work_order.edit", r.company_id, r.site_id,
     );
@@ -858,6 +870,7 @@ export async function readReport(
         (await hasPermission(c, p, "report.issue", r.company_id, r.site_id));
     let permitted_recipient: Awaited<ReturnType<typeof recipient>> | null =
       null;
+    proofReadPhase("report-recipient-start");
     if (can_review && site.primary_contact_id) {
       try {
         permitted_recipient = await recipient(
@@ -870,6 +883,7 @@ export async function readReport(
         if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
       }
     }
+    proofReadPhase("report-envelope-start");
     return envelope([
       {
         id: r.id,

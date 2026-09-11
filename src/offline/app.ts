@@ -144,12 +144,23 @@ async function activate(p: Owner, online: boolean) {
   if (online) await loadAssigned();
 }
 async function reconnect() {
-  const p = await api<Owner>("local-session");
-  await unlock(p);
-  await activate(p, true);
-  notice(
-    "Identity verified. Download or refresh a job to recheck its current permissions and authority.",
-  );
+  const control = $<HTMLButtonElement>("reconnect");
+  if (control.disabled) return;
+  control.disabled = true;
+  notice("Verifying identity and saved workspace…");
+  try {
+    const p = await api<Owner>("local-session");
+    await unlock(p);
+    await activate(p, true);
+    notice(
+      "Identity verified. Download or refresh a job to recheck its current permissions and authority.",
+    );
+  } catch (error) {
+    notice("Identity verification did not finish. Saved originals remain retained.");
+    throw error;
+  } finally {
+    control.disabled = false;
+  }
 }
 async function loadAssigned() {
   const s = $<HTMLSelectElement>("available");
@@ -1406,6 +1417,10 @@ await perform(async () => {
       ` Browser storage usage ${estimate.usage ?? "unknown"} bytes of ${estimate.quota ?? "unknown"}; this is a capacity hint, not a save receipt.`,
     );
   }
+}).finally(() => {
+  // Do not accept a second identity operation before shell/ownership startup
+  // has settled, including when startup reports a recoverable failure.
+  $<HTMLButtonElement>("reconnect").disabled = false;
 });
 
 function renderReports(box: HTMLElement) {

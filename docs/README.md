@@ -14,7 +14,7 @@ Start with [current status](STATUS.md) and the [First Prototype Definition & Arc
 | Projects | [BP-06](blueprints/BP-06-projects-commercial-delivery.md), [screens](blueprints/projects-screen-specification.md), [sequence](delivery/projects-implementation-plan.md), [handover](delivery/projects-discovery-handover.md) |
 | Customer portal | [Design](blueprints/customer-portal-design.md), [walkthrough](blueprints/customer-portal-mockup.html), [stages](delivery/customer-portal-implementation-plan.md), [handover](delivery/customer-portal-handover.md) |
 | Architecture | [BP-02](architecture/BP-02-platform-architecture.md) |
-| Service | [BP-07](blueprints/BP-07-service-operations.md) |
+| Service | [BP-07](blueprints/BP-07-service-operations.md), [approved field technicians design](decisions/field-technicians-design.md), [approved Job Pack r02](decisions/job-pack-design.md), [integration handover](delivery/field-technicians-handover.md) |
 | Contracts | [Data](contracts/service-data-dictionary.md), [API](contracts/service-api.md), [Finance](contracts/finance-handoff.md), [documents](contracts/document-issue-distribution.md) |
 | Sources | [Reference register](reference/README.md) and [hash manifest](reference/source-manifest.json) |
 | Decisions | [ADR index](decisions/README.md), [29 decisions](decisions/decision-register.csv), [PP-01 evidence](prototype/decisions-and-evidence.md) |
@@ -26,3 +26,7 @@ Start with [current status](STATUS.md) and the [First Prototype Definition & Arc
 Frozen issued references remain evidence. Stable working documents evolve through commits/PRs and explicit decision records. Tests/specifications do not silently turn proposals into implemented business capabilities.
 
 [Controlled opportunity handover design](delivery/crm-handover-design-handover.md) — proposed authority/eligibility/history/recovery contract, synthetic canonical form, future verification and conditional implementation starter; H-01–H-03 remain unresolved.
+
+[Azure demo connection setup](delivery/azure-demo-connection.md) — portal steps and a manually triggered read-only GitHub connection check; live Azure setup and hosted application access remain pending.
+
+[Azure private demo runtime](delivery/azure-private-demo.md) — individual sign-in, cloud configuration, deployment and reset preparation; live acceptance pending.

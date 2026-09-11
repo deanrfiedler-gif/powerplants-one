@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { prepareFieldAppointment } from "../helpers/field-http";
+import { prepareIsolatedFieldAppointment } from "../helpers/isolated-field-http";
 import { base, startInput, entry } from "../helpers/field";
 import { operation, rehash } from "../helpers/offline";
 const origin = "http://127.0.0.1:3000";
@@ -41,7 +41,7 @@ test("P08 real HTTP bounded sync, original receipts, malformed siblings and acto
   const co = await session("coordinator"),
     p = await session("assigned-technician"),
     m = await session("second-technician");
-  const setup = await prepareFieldAppointment(async (path, body) => {
+  const setup = await prepareIsolatedFieldAppointment(async (path, body) => {
     const r = await call(co, path, body);
     assert.ok(r.status < 300, JSON.stringify(r));
     return r.body;

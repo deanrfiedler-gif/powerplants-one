@@ -1,6 +1,6 @@
 # Powerplants One — Business Operations Platform
 
-## Master Business & Build Blueprint — working r04
+## Master Business & Build Blueprint — working r05
 
 ### Scope Assurance & Development Planning Edition
 
@@ -11,16 +11,16 @@
 | Prepared for | Powerplants Australia |
 | Requested by | Dean Fiedler |
 | Document reference | PPO-BP-01 |
-| Version and date | r04 — 6 September 2026 UTC; portal direction supplement to working r03 |
-| Document status | Draft target-state blueprint; business and technical approval not yet recorded |
+| Version and date | r05 — 10 September 2026 UTC; approved CRM r02 scope supplement to working r04 |
+| Document status | Draft wider target state; CRM r02 product scope and priorities accepted; implementation and operational acceptance remain separate |
 | Authoring basis | User requirements, supplied CREMS materials, prior read-only account observations and selected official sources |
 | Intended audience | Executive sponsor, departmental process owners, product owner, solution architect, delivery partners and acceptance reviewers |
 | Handling | Recommended internal distribution; contains business-system design information |
 | Programme reference | PPO — user-adopted independent private-project code; unrelated SOL008/STD-001 do not govern this project |
 | Supersedes | Master Blueprint v01 as the proposed planning baseline; v01 and its audit remain preserved historical records. The CREMS current-state specification remains a separate source |
-| Change basis | v02: Audit findings F-01–F-16. r03: naming adoption. r04: [user-authorised customer portal direction](../decisions/customer-portal-direction.md); all baseline parent requirements and PP-01 boundaries preserved |
+| Change basis | v02: Audit findings F-01–F-16. r03: naming adoption. r04: [user-authorised customer portal direction](../decisions/customer-portal-direction.md); r05: [approved CRM r02 scope](../decisions/crm-approved-scope.md); all baseline parent requirements and PP-01 boundaries preserved |
 | Working application name | Powerplants One — user-confirmed; private repository foundation and PP-01 design package delivered |
-| Authorisation represented | Current amendment implements the user-adopted naming standard in the private repository; application implementation remains a separate task |
+| Authorisation represented | Current amendment adopts approved CRM r02 scope into the maintained blueprint; prior naming/portal decisions and implementation evidence remain separate |
 
 > **Working amendment:** [ADR-0005](../decisions/ADR-0005-project-naming-adoption.md) records the naming adoption. The [issued v02](../reference/baselines/GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md) remains unchanged and continues to own baseline register wording. [Current status](../STATUS.md) and the [PP-01 package](../prototype/README.md) record later decisions. Historical source discussions below retain their original context.
 
@@ -588,7 +588,9 @@ Document results, unsupported cases, licence dependencies, security assumptions 
 
 **Purpose:** build and maintain customer relationships while connecting commercial opportunities to actual facilities, equipment, projects and service.
 
-**Proposed process owner:** Sales & Customer Experience. **Detailed specification:** BP-03.
+**Proposed process owner:** Sales & Customer Experience. **Detailed specification:** [BP-03](BP-03-crm.md).
+
+**Current accepted CRM scope (10 September 2026):** [report r02](../reference/crm-feature-report-r02.md) and its [approval decision](../decisions/crm-approved-scope.md) adopt customers/manual leads, opportunities, activities/ownership, desktop/mobile and access as Essential; reporting/module links and email/calendar integration as Next; selected automation/scoring/AI as Later. [BP-03 section 0](BP-03-crm.md#0-approved-crm-scope--report-r02) maps every report section to the existing parents. Lead capture/prospecting, CRM proposal generation/e-signatures, marketing and vendor subscription-limit comparisons are deferred at this stage. Manual qualification, individual correspondence and estimate references remain included. BP-04 scope is unchanged. This scope decision supersedes contrary provisional CRM dispositions below; it does not establish delivered functionality or authorise source-system replacement.
 
 | ID | Proposed requirement | Boundary/acceptance intent |
 |---|---|---|
@@ -615,12 +617,12 @@ The initial service release may expose customer context without replacing Pipedr
 
 ### 9.3 Pipedrive parity and outcome register
 
-**Parity means preserving required business outcomes and history, with approved improvements.** The user's wish to include Pipedrive features is a programme requirement. It is not evidence that every vendor add-on is used or that all product features should be rebuilt in Wave A. The initial assessment below distinguishes observed configuration, known business needs and unverified feature usage. All target dispositions are proposed; D-013 approves the final keep/change/defer list before CRM cutover. The official product catalogue is an inventory aid, not an account-entitlement record. [Pipedrive products](https://www.pipedrive.com/en/products) [SRC-20]
+**Parity means preserving required business outcomes and history, with approved improvements.** The user's wish to include Pipedrive features is a programme requirement. It is not evidence that every vendor add-on is used or that all product features should be rebuilt in Wave A. The initial assessment below distinguishes observed configuration, known business needs and unverified feature usage. Current-stage scope and deferrals are accepted under r02; remaining account mappings and transition dispositions require D-013 evidence and acceptance before CRM cutover. The official product catalogue is an inventory aid, not an account-entitlement record. [Pipedrive products](https://www.pipedrive.com/en/products) [SRC-20]
 
 | Parity ID / parent | Current evidence | Target disposition and release | Migration/acceptance contract | Proposed owner |
 |---|---|---|---|---|
 | PAR-01 / CRM-01 | UC: existing CRM; contact/group configuration unknown | Preserve organisations, people and relationship roles; A reference, B full | Map IDs, owners, custom fields, duplicate/merge history and permissions; AT-02/AT-25 | Sales/Data |
-| PAR-02 / CRM-02 | PO: stage named Lead; separate lead-entity use unknown | Preserve lead qualification outcome; decide separate lead object in B | Map lead versus deal explicitly; preserve conversion link and lost/disqualified reason; AT-25 | Sales |
+| PAR-02 / CRM-02 | PO: stage named Lead; separate lead-entity use unknown | Accepted manual Leads, qualification and conversion under r02; source mapping remains open | Map lead versus deal explicitly; preserve conversion link and lost/disqualified reason; AT-25 | Sales |
 | PAR-03 / CRM-02 | PO: two pipeline IDs and ten stages | Preserve required separate workflows; B | Approve pipeline names/use, stage map, close status and history; AT-24/AT-25 | Sales |
 | PAR-04 / CRM-02 | PO: probabilities and rotting-day settings | Preserve ageing/next-action outcomes; improve approved rules; B | Retain original setting evidence; target probabilities require calibration/approval; AT-25 | Sales/Finance |
 | PAR-05 / CRM-03 | UC: stronger CRM; activity usage inventory missing | Preserve calls, tasks, meetings and follow-up; B | Retain activity owner, due/completed times, links and recurring rules if used; AT-25 | Sales |
@@ -631,11 +633,11 @@ The initial service release may expose customer context without replacing Pipedr
 | PAR-10 / CRM-07 | UC: stronger retention and aftercare | Improve post-delivery follow-up, renewal ownership and reviewed cross-sell; B | Actions link back to source service/project event; no automatic offer or commitment; AT-25/AT-33 | Sales/Service |
 | PAR-11 / CRM-08 | Automation inventory unknown | Assess and selectively preserve automations; B | Record trigger, conditions, actor, retry key, pause/replay and historic run evidence; AT-25 | Sales/Systems |
 | PAR-12 / CRM-08 | Reporting/dashboard inventory unknown | Preserve approved operational outcomes; B | Reconcile stage, conversion and forecast definitions; REP-01–REP-03 and AT-25/AT-31 | Sales/Finance |
-| PAR-13 / CRM-08 | Product/document feature usage unknown | Integrate catalogue and quotation with ERP/Estimating; B | Avoid a competing product price master; migrate issued content and references; AT-20/AT-26 | Commercial |
+| PAR-13 / CRM-08 | Product/document feature usage unknown | Integrate catalogue and exact estimate/quotation references with ERP/Estimating; CRM proposal generation/signing deferred under r02 | Avoid a competing product price master; migrate issued content and references; AT-20/AT-26 | Commercial |
 | PAR-14 / CRM-08 | Mobile sales requirement implicit in parity; current use unknown | Preserve mobile visit preparation, contact lookup, notes/photos and follow-up; B | Test actual sales device and poor-connection cases separately from technician mobile; AT-23/AT-25 | Sales |
 | PAR-15 / CRM-08 | Visibility groups/admin settings unknown | Preserve approved access outcomes; A framework, B migration | Export/delete/owner-transfer rights tested; former owner loses access as policy requires; AT-01/AT-34 | Systems/Sales |
 | PAR-16 / CRM-08 | Import/export, history and integration inventory missing | Preserve required history and usable exports; B | Inspect contacts, leads/deals, activities, notes, emails, files and relationships; delta/rehearsal evidence AT-21/AT-24 | Data/Systems |
-| PAR-17 / CRM-08 | Campaigns, web forms/chat, prospecting, enrichment, document/e-signature or other add-on usage unknown | Assess before disposition; retain/integrate/defer individually under D-013 | For each used add-on record contract, data/consent, owner, business outcome, export and replacement evidence; no automatic purchase/build | Sales/Systems |
+| PAR-17 / CRM-08 | Campaigns, web forms/chat, prospecting, enrichment, document/e-signature or other add-on usage unknown | r02 defers capture/prospecting, proposals/e-signatures and marketing; vendor subscription comparisons excluded; residual operational dependencies still inventoried | For each used add-on record contract, data/consent, owner, business outcome, export and replacement evidence; no automatic purchase/build | Sales/Systems |
 | PAR-18 / CRM-08 | Product updates and other connected apps not fully inventoried | Maintain residual feature/integration inventory; B cutover gate | Every used capability must be linked to a target, approved manual process, retained tool or accepted retirement; no orphan integration | Product owner |
 
 PAR-01–PAR-18 are an assessed starting inventory, not a claim of exhaustive vendor or account parity. PAR-17/PAR-18 explicitly own the residual audit. A feature cannot be marked unnecessary solely because it was absent from the stage response. Before G2 for CRM, record actual use, criticality, users/volumes, source fields and exceptions; before G5, demonstrate accepted outcomes and history access for every retained feature.
@@ -1537,7 +1539,7 @@ The pilot benefits baseline should record preparation/search time, pack issue/ac
 |---|---|---|---|
 | BP-01 | Master Business & Build Blueprint | Product owner, sponsor and process owners | This document; draft for review |
 | BP-02 | Platform Solution Architecture | Architect, Systems, data/integration owners | Planned; not generated by this task |
-| BP-03 | CRM Functional & Build Blueprint | Sales/Customer Experience | Planned |
+| BP-03 | CRM Functional & Build Blueprint | Sales/Customer Experience | r06; r02 scope accepted; delivery evidence in CRM handovers |
 | BP-04 | Estimating & Quotation Functional & Build Blueprint | Estimating/Commercial, Engineering, Finance | Planned |
 | BP-05 | Engineering & Design Control Functional & Build Blueprint | Engineering, Projects, Service | Planned |
 | BP-06 | Projects & Commercial Delivery Functional & Build Blueprint | Projects, Commercial, Finance, QHSE | Planned |

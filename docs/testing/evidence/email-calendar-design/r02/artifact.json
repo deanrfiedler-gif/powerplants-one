@@ -1,0 +1,10 @@
+{
+  "revision": "r02",
+  "base_commit": "b8418e6909a8f54a144d15e1a08b2d2296b6a012",
+  "standalone_filename": "ppo-email-calendar-prototype.html",
+  "bytes": 896957,
+  "sha256": "2aeb7615e79530a246210d19d1fbb7e54e90e091e0f045ad97ae834b787e15d6",
+  "model_cases_passed": 29,
+  "browser_review": "Blocked by environment: ERR_BLOCKED_BY_CLIENT; no screenshots or browser interaction acceptance",
+  "live_microsoft": "Not run"
+}
