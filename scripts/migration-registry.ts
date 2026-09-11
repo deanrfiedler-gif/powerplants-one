@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+
 // One ordered registry for local and hosted setup. Gaps may be reserved by other workstreams.
 export const migrationFiles = [
   "0001-foundation.sql",
@@ -38,6 +40,29 @@ export const seedFiles = [
   [19, "seed-projects-gantt.sql"],
 ] as const;
 export const latestMigrationVersion = 19;
+
+// Separate hosted-only track (ADR-0021): schema that only exists where real identity does.
+// Version 1 is the issued identity baseline and is never re-applied or rewritten.
+export const demoMigrationFiles = [
+  "0001-identity.sql",
+  "0002-gmail-connection.sql",
+] as const;
+export const latestDemoMigrationVersion = 2;
+
+// The original Windows-built demo recorded CRLF bytes. Recognize only that
+// exact alternate encoding for the reviewed baseline; never rewrite its ledger.
+export function existingDemoChecksumMatches(
+  sql: string,
+  checksum: unknown,
+  legacyWindows = false,
+) {
+  const digest = (value: string) =>
+    createHash("sha256").update(value).digest("hex");
+  if (checksum === digest(sql)) return true;
+  if (!legacyWindows) return false;
+  const lf = sql.replace(/\r\n/g, "\n");
+  return checksum === digest(lf) || checksum === digest(lf.replace(/\n/g, "\r\n"));
+}
 
 export function validateMigrationRegistry(
   files: readonly string[],
