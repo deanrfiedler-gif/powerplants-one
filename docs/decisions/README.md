@@ -53,3 +53,4 @@ The [controlled opportunity handover proposal](crm-opportunity-handover.md) reco
 - [Private demo Email and CRM integration](demo-email-crm-integration.md) — shared desktop/mobile journey, individual fictional mailboxes and retained access boundaries.
 
 - [CI browser suite route warm-up](ci-browser-warm-up.md) — harness-only decision: compile every route before the first assertion window; no deadline, retry or product change.
+[Field Technicians r04](field-technicians-design.md) records Dean’s approved Service presentation, frozen source and bounded application mapping. Design approval does not grant dispatch, merge or production acceptance.

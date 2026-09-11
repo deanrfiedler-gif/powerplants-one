@@ -14,3 +14,5 @@ The CREMS DOCX/PDF/HTML and guide-derived reconstruction remain originating sour
 Prior Pipedrive/Smartsheet observations are bounded and dated. PP-01 does not refresh those accounts or verify MYOB/SharePoint/CAD configuration. SOL008 identifies separate Smartsheet delivery-system work.
 
 Retain frozen source bytes. Record new design decisions separately. Future working master changes use ordinary commits/PRs and preserve stable parent IDs; issuing a new baseline requires a controlled snapshot/manifest and impact review. Git history does not automatically update exported or ChatGPT-uploaded copies.
+
+[Field Technicians r04](powerplants-one-field-technicians-r04.html) — exact accepted standalone presentation; illustrative records remain examples. [Approval and application mapping](../decisions/field-technicians-design.md).

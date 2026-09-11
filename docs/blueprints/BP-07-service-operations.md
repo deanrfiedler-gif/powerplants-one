@@ -1,8 +1,12 @@
 # BP-07 — Service Operations Functional & Build Blueprint
 
-**Edition:** r09 · **Date:** 7 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
+**Edition:** r10 · **Date:** 10 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
 
 **Status:** Functional specification with the bounded P03–P05 SC-01–SC-05/SC-07/SC-08 implementation amendments below. Later workflows and full acceptance remain incomplete. [Package](../prototype/README.md) · [Dictionary](../contracts/service-data-dictionary.md) · [API](../contracts/service-api.md) · [Acceptance](../testing/prototype-acceptance.md).
+
+## Approved field technicians presentation — 10 September 2026
+
+Dean accepted [Field Technicians r04](../decisions/field-technicians-design.md). `/service/technicians` applies its padded container, Visits/Technicians/Needs preparation tables and visit drawer to existing SC-07/SC-08 reads and SC-09/SC-10 links. Controlled service state and permissions remain server-owned. The [integration handover](../delivery/field-technicians-handover.md) separates approved design from source verification, browser acceptance and publication. Historical implementation amendments below retain their original delivery boundaries.
 
 ## P05 implementation amendment
 
