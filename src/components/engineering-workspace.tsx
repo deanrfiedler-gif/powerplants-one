@@ -772,7 +772,8 @@ function RequestDialog({
         className="eng-form"
         onSubmit={async (e) => {
           e.preventDefault();
-          const result = await command.send<{ receipt: { record_id: string } }>(
+          // commandRoute replies with the operation receipt itself as the body.
+          const result = await command.send<{ record_id: string }>(
             "engineering",
             {
               ...form,
@@ -786,7 +787,7 @@ function RequestDialog({
             setContextSearch("");
             setOwnerSearch("");
             command.clear();
-            onCreated(result.receipt.record_id);
+            onCreated(result.record_id);
           }
         }}
       >
