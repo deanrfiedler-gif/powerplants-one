@@ -1,5 +1,6 @@
 {
-  "suite": "EC r01 synthetic model and projection checks",
+  "suite": "EC r01 synthetic model and projection checks (historical; current handover evidence is r02)",
+  "superseded_by": "../r02/model-checks.json",
   "browser_qa": false,
   "server_security_test": false,
   "cases": [
