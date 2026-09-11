@@ -13,7 +13,7 @@ Start with [current status](STATUS.md) and the [First Prototype Definition & Arc
 | Projects | [BP-06](blueprints/BP-06-projects-commercial-delivery.md), [screens](blueprints/projects-screen-specification.md), [sequence](delivery/projects-implementation-plan.md), [handover](delivery/projects-discovery-handover.md) |
 | Customer portal | [Design](blueprints/customer-portal-design.md), [walkthrough](blueprints/customer-portal-mockup.html), [stages](delivery/customer-portal-implementation-plan.md), [handover](delivery/customer-portal-handover.md) |
 | Architecture | [BP-02](architecture/BP-02-platform-architecture.md) |
-| Service | [BP-07](blueprints/BP-07-service-operations.md) |
+| Service | [BP-07](blueprints/BP-07-service-operations.md), [approved field technicians design](decisions/field-technicians-design.md), [integration handover](delivery/field-technicians-handover.md) |
 | Contracts | [Data](contracts/service-data-dictionary.md), [API](contracts/service-api.md), [Finance](contracts/finance-handoff.md), [documents](contracts/document-issue-distribution.md) |
 | Sources | [Reference register](reference/README.md) and [hash manifest](reference/source-manifest.json) |
 | Decisions | [ADR index](decisions/README.md), [29 decisions](decisions/decision-register.csv), [PP-01 evidence](prototype/decisions-and-evidence.md) |

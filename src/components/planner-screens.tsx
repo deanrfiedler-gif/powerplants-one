@@ -18,7 +18,7 @@ import {
 } from "./business-ui";
 import { addDays, localDateTime, utcFromLocal } from "../scheduling/time";
 import type { CrewInput } from "../scheduling/validation";
-type Resource = {
+export type Resource = {
   id: string;
   name: string;
   version: number;
@@ -53,7 +53,7 @@ type Request = {
   created_by: string;
   expected_schedule_version: number;
 };
-type Appointment = {
+export type Appointment = {
   id: string;
   display_number: string;
   version: number;
@@ -132,7 +132,7 @@ type Appointment = {
   }[];
   actions: { can_manage: boolean; can_request: boolean; can_contact: boolean };
 };
-type ScheduleAppointment = Omit<
+export type ScheduleAppointment = Omit<
   Appointment,
   | "readiness"
   | "authorisation_blockers"
@@ -146,7 +146,7 @@ type ScheduleAppointment = Omit<
   projection: "ScheduleSummary";
 };
 type BookingBasis = Omit<ScheduleAppointment, "requests" | "projection">;
-type Schedule = Envelope<ScheduleAppointment> & {
+export type Schedule = Envelope<ScheduleAppointment> & {
   resources: Resource[];
   display_timezone: string;
   from: string;

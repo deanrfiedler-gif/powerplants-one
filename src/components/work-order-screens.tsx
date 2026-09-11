@@ -108,7 +108,7 @@ type Visit = {
   scope_review_required: boolean;
   readiness: Assessment[];
 };
-type Order = {
+export type Order = {
   id: string;
   company_id: string;
   site_id: string;
