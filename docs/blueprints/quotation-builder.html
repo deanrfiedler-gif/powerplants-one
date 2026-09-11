@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Powerplants One | Quotation Builder design</title>
+<link rel="stylesheet" href="quotation-builder.css">
+</head>
+<body>
+<div class="qb">
+  <aside class="rail" aria-label="Product context"><img src="../../public/brand/powerplants-logo-green-white.png" alt="Powerplants"><span class="rail-mark">PPO</span><span class="rail-active" aria-label="Estimating">$</span><span class="rail-bottom">AT</span></aside>
+  <div class="workspace">
+    <header class="topbar"><span>Powerplants One <span class="divider">/</span> Estimating</span><span class="environment">Synthetic design</span></header>
+    <main>
+      <div class="page-heading"><div><div class="eyebrow">ESTIMATE → CUSTOMER QUOTATION</div><h1>Quotation Builder</h1><p>One saved estimate. A clear, consistent customer document.</p></div><div class="heading-actions"><button id="reset" class="quiet">Reset example</button><button id="save" class="primary">Save snapshot</button></div></div>
+      <div class="context-strip"><div><strong id="estimate-ref">SYN-PPO-EST-000901</strong><span>Example Nursery · synthetic</span></div><div><strong id="save-state" role="status">Example loaded · not saved</strong><span>Prototype only · saves in this browser</span></div><div><strong>Equipment supply</strong><span>Template r01 · AI assistance planned</span></div></div>
+      <nav class="steps" aria-label="Quotation preparation"><button data-step="estimate" class="active" aria-current="step"><b>1</b> Estimate</button><button data-step="content"><b>2</b> Content</button><button data-step="review"><b>3</b> Review draft</button></nav>
+      <div class="work-area">
+        <div class="editor">
+          <section id="estimate-panel" class="step-panel">
+            <div class="section-title"><h2>Estimate inputs</h2><span class="tag">Manual example</span></div>
+            <p class="help">Select the priced scope. Customer prices can be shown in detail or grouped into packages.</p>
+            <div class="metrics"><div><span>Included sell value</span><strong id="sell-total"></strong><small>AUD · excluding tax</small></div><div><span>Included cost</span><strong id="cost-total"></strong><small>Internal only</small></div><div><span>Selected lines</span><strong id="line-count"></strong><small>Parts, labour and freight</small></div></div>
+            <div class="table-wrap"><table class="line-table"><thead><tr><th>Include</th><th>Estimate line</th><th>Quantity</th><th>Unit sell</th><th>Amount</th></tr></thead><tbody id="estimate-lines"></tbody></table></div>
+            <div class="note"><strong>Freight stays explicit.</strong> International transport is included in this example. Local delivery is excluded until selected; the quotation wording changes with that selection.</div>
+            <label class="field">Customer pricing presentation<select id="presentation"><option value="grouped">Grouped packages</option><option value="detailed">Detailed line items</option></select></label>
+            <div class="source-note">Source: fictional manual costing sheet · 9 September 2026. Other costing engines will map to the same reviewed inputs.</div>
+            <button class="secondary next" data-go="content">Continue to content →</button>
+          </section>
+          <section id="content-panel" class="step-panel" hidden>
+            <div class="section-title"><h2>Customer content</h2><span class="tag">Template first</span></div>
+            <p class="help">Edit customer wording here. Internal costing notes stay in the estimate.</p>
+            <label class="field">Quotation title<input id="title" maxlength="100"></label>
+            <label class="field">Project context<textarea id="context" maxlength="500" rows="3"></textarea><small>Entered by the estimator · used in the project summary</small></label>
+            <label class="field">Included scope<textarea id="scope" maxlength="600" rows="4"></textarea><small>One point per line · template adds selected equipment and labour</small></label>
+            <details open><summary>Delivery and commercial details</summary><div class="field-grid"><label class="field">Equipment lead time<input id="leadTime" maxlength="65"></label><label class="field">Lead time starts from<input id="leadTrigger" maxlength="100"></label><label class="field">Draft validity date<input id="validUntil" type="date" min="2026-09-09"></label><label class="field">Payment schedule<select id="payment"><option value="50">50% on order / 50% before dispatch</option><option value="100">100% on order</option></select></label></div><p class="source-note">Fictional terms for the example. Technician attendance is separately confirmed after delivery and site readiness.</p></details>
+            <details><summary>Commissioning and customer responsibilities</summary><label class="field">Commissioning activities<textarea id="commissioning" maxlength="650" rows="5"></textarea></label><label class="field">Customer responsibilities<textarea id="responsibilities" maxlength="650" rows="5"></textarea></label></details>
+            <details><summary>Assumptions and exclusions</summary><label class="field">Assumptions<textarea id="assumptions" maxlength="550" rows="4"></textarea></label><label class="field">Other exclusions<textarea id="exclusions" maxlength="450" rows="4"></textarea><small>Freight and unselected estimate lines are added automatically.</small></label></details>
+            <details><summary>Specifications, warranty and acceptance</summary><p class="help">The example uses the fictional TF-100 specification sheet, revision 1. Warranty and acceptance panels use explicitly labelled demonstration text. Full field mapping is available under Review draft.</p></details>
+            <div class="note"><strong>Optional AI assistance — later.</strong> Suggested wording and missing-information checks will sit beside these fields. The current example uses entered text and selected templates only.</div>
+            <button class="secondary next" data-go="review">Continue to review →</button>
+          </section>
+          <section id="review-panel" class="step-panel" hidden>
+            <div class="section-title"><h2>Review & generate</h2><span class="tag">Draft only</span></div>
+            <p class="help">Save the current inputs, then generate a separate draft from that snapshot. Earlier drafts retain their original content.</p>
+            <ul id="review-checks" class="review-checks"></ul>
+            <label class="field">Revision reason<input id="reason" maxlength="120" placeholder="For example: Initial quotation draft"></label>
+            <button id="generate" class="primary" disabled>Generate branded draft</button>
+            <p id="generation-state" role="status" class="help">Save the example to enable generation.</p>
+            <h3>Draft history</h3><div id="history" class="history"><p class="help">No generated drafts yet.</p></div>
+            <details><summary>How the twelve sections are populated</summary><ol id="mapping" class="mapping"></ol></details>
+          </section>
+        </div>
+        <section class="preview-panel" aria-label="Quotation preview"><div class="preview-bar"><div><strong id="preview-label">Live preview</strong><span id="preview-state">Working inputs · not a saved draft</span></div><button id="download" class="secondary" disabled>Download draft</button></div><iframe id="preview" title="Branded quotation draft preview" sandbox="allow-same-origin"></iframe><div class="preview-footer"><span>12 sections · A4 · Powerplants brand</span><button id="working-preview" class="quiet">Show working preview</button></div></section>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="quotation-builder.js"></script>
+</body>
+</html>
