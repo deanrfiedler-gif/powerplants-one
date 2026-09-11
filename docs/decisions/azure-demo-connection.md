@@ -3,9 +3,9 @@
 | Field | Value |
 |---|---|
 | Document ID | PPO-DEMO-AZURE-CONNECTION-DEC |
-| Revision | r02 |
+| Revision | r03 |
 | Date | 9 September 2026 |
-| Status | Implementation choice for the requested demo preparation; live setup pending |
+| Status | Connection verified; hosted implementation separately authorised |
 | Owner | Dean Fiedler — prototype owner |
 
 Dean chose an independently accessible private hosted demo, created the Azure subscription and budget, and supplied resource-group and tenant screenshots. Preparing its delivery connection is within that request. The screenshots establish the observed account setup; they do not give this session authenticated Azure access.
@@ -17,3 +17,7 @@ The expected default trust subject is `repo:deanrfiedler-gif@231005545/powerplan
 Alternatives considered: a client secret creates a long-lived credential to rotate; subscription-wide Contributor is unnecessary for metadata verification; directly exposing the existing local server would violate its synthetic identity boundary. A later deployment identity and runtime access model remain concrete implementation work.
 
 The [setup guide](../delivery/azure-demo-connection.md) defines user actions, configuration, verification and removal. Keep actual tenant/subscription/client values outside source. Live connection success, hosted login, deployed services and tester access remain unverified until their own execution evidence exists. This record does not close P12, production readiness or the broader hosting decisions.
+
+## Verified connection — 9 September 2026
+
+[Run 34310429878](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34310429878) passed on main `f8035b5c55251da4da52430adf2f83094feccd6b`. Login used the immutable subject recorded above; subscription, tenant, active state and exact resource group matched. This observed token supersedes earlier unverified-default notes. The CLI version warning was caused by output suppression before the successful login; this revision lets the pinned login step read JSON while retaining suppressed output elsewhere. [Hosted demo implementation](../delivery/azure-private-demo.md) remains separate from this read-only connection proof.

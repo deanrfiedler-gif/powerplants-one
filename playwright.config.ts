@@ -14,12 +14,18 @@ export default defineConfig({
     trace: "retain-on-failure",
   },
   projects: [
+    // Dependency project: requests every route once after the dev server is up
+    // so first-request compilation never lands inside a spec's assertion window.
+    // Dependencies run unfiltered, so single-file and --grep steps still warm.
+    { name: "warm-up", testMatch: /warm-up\.setup\.ts$/ },
     {
       name: "desktop-chromium",
+      dependencies: ["warm-up"],
       use: { browserName: "chromium", viewport: { width: 1440, height: 1000 } },
     },
     {
       name: "mobile-chromium",
+      dependencies: ["warm-up"],
       use: {
         browserName: "chromium",
         viewport: { width: 390, height: 844 },

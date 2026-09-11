@@ -1,7 +1,7 @@
 ---
 title: Powerplants One - Shared UI style specification
-revision: r04
-date: 2026-09-07
+revision: r05
+date: 2026-09-10
 status: Brand-derived visual direction; functional extensions proposed
 owner: Dean Fiedler
 scope: Shared visual foundation; BP-03 C02 CRM board and grid mockups
@@ -108,3 +108,10 @@ I2 application note: the [bounded implementation handover](../delivery/crm-i2-ha
 ## Accepted r08 application presentation
 
 The later [r08 implementation decision](../decisions/shared-ui-r08-implementation.md) supersedes older presentation rules for wide navigation, green primary actions and minimum-width horizontally scrolling CRM columns. It preserves the existing domain, permission, source/completeness and save contracts. See the [handover](../delivery/shared-ui-redesign-handover.md) for actual verification and publication.
+
+## Accepted Service Job Pack r02
+
+Dean accepted the [full Job Pack design](../decisions/job-pack-design.md) on 10 September 2026. Preserve its internal-container presentation, 24 px desktop / 16 px mobile outer padding, original embedded Roboto, navy primary actions, green active-tab marker, white panels and compact record context. Its nine-section pack, Preparation and Revision history views extend the approved Service direction. These specific Job Pack rules supersede the earlier generic 20 px / 12 px gutter proposal for this page only. Use the exact linked r02 baseline when integrating; design acceptance does not establish browser, print or application acceptance.
+## Approved Service field-operations container
+
+[Field Technicians r04](../decisions/field-technicians-design.md) is Dean’s accepted presentation baseline for `/service/technicians`. Preserve its 24 px desktop / 16 px phone outer padding, white bordered workspace, compact Roboto table typography, green selected-tab underline and four-tab right drawer inside the shared application shell. Do not duplicate global navigation or the logo. The [handover](../delivery/field-technicians-handover.md) records bounded data adaptations and verification status.

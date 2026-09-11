@@ -1,0 +1,1 @@
+-- Synthetic provider fixture creation is implemented in src/email/provider.ts.

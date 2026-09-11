@@ -1,10 +1,10 @@
 # Powerplants One
 
-Personal prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance.
+Personal prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance. The repository is public; the application, data and hosted demo remain private and synthetic.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Source:** public · **Stage:** synthetic implementation; P11 publication/acceptance remains open; P12 prepared only. See [current status](docs/STATUS.md) for merged source, CI and the separate private demo workstream.
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01–P11 merged; P12 prepared only; PP-01 incomplete · **Deployment:** private Azure demo runs `main` `cb358405` (upgrade-and-deploy, 10 September 2026); owner sign-in check on the new image pending · **Current state:** [docs/STATUS.md](docs/STATUS.md)
 
-This repository contains Dean's personal prototype. Public source visibility does not grant access to the private demo or any business system. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. Integrated Service/Finance verification is in progress; the complete PP-01 acceptance boundary still requires P12. Company ownership, production approval and external-system write authority are not implied.
+This repository is Dean's personal prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. Integrated Service/Finance verification is in progress; the complete PP-01 acceptance boundary still requires P12. Company ownership, production approval and external-system write authority are not implied.
 
 ## Start here
 
@@ -14,7 +14,7 @@ This repository contains Dean's personal prototype. Public source visibility doe
 | [Adopted naming standard](docs/standards/naming-conventions.md) | Powerplants One / PPO naming, references, revisions and implementation rules |
 | [ChatGPT project instructions](docs/standards/chatgpt-project-instructions.md) | Copy-ready instructions for the dedicated design and development project |
 | [Current project status](docs/STATUS.md) | What exists, what remains planned and how recent user decisions relate to the issued blueprint |
-| [Master Blueprint — working r04](docs/blueprints/BP-01-master-blueprint.md) | Scope Assurance & Development Planning Edition: seven domains, 78 parent requirements and release contracts |
+| [Master Blueprint — working r05](docs/blueprints/BP-01-master-blueprint.md) | Scope Assurance & Development Planning Edition: seven domains, 78 parent requirements and release contracts |
 | [Documentation index](docs/README.md) | Where specifications, decisions, requirements and acceptance records belong |
 | [Development backlog](docs/delivery/backlog.md) | Initial discovery/design work packages and their live GitHub issue links |
 | [CRM blueprint and discovery handover](docs/delivery/crm-discovery-handover.md) | PPO-009 parallel CRM design, bounded Pipedrive evidence, synthetic wireframes and first implementation starter; account parity remains open |
@@ -26,6 +26,7 @@ This repository contains Dean's personal prototype. Public source visibility doe
 | [First-release plan](docs/delivery/first-release.md) | Proposed planned-service journey, dependencies and readiness criteria |
 | [Projects discovery and design](docs/delivery/projects-discovery-handover.md) | BP-06 source assessment, first-increment contract and project list/detail designs; J1 prepared only |
 | [Email & Calendar design](docs/blueprints/email-calendar-integration.md) | Synthetic inbox, record linking, privacy, agenda and first read-only Microsoft pilot preparation |
+| [Working Email & Calendar journey](docs/delivery/email-calendar-journey-handover.md) | Private fictional email, explicit opportunity link, persisted internal follow-up and calendar; PR #64 |
 | [Contributing](CONTRIBUTING.md) | Branches, pull requests, validation and evidence |
 
 ## Product direction
@@ -45,20 +46,24 @@ MYOB Acumatica remains the intended authoritative ERP. SharePoint remains the in
 | `docs/decisions/` | Current decision register and architecture decision records |
 | `docs/requirements/` | All 78 parent requirements with source/release/test linkage |
 | `docs/architecture/` | BP-02 architecture recommendation, boundaries and feasibility obligations |
-| `docs/testing/` | Acceptance catalogues, component evidence and dependency inventory |
-| `docs/delivery/` | Delivery plans, handovers and current-source verification evidence |
+| `docs/testing/` | Full acceptance catalogue, P01–P09 component evidence and dependency inventory |
+| `docs/delivery/` | Backlog, first-release plan and foundation handover |
 | `.github/` | Issue forms, pull-request template, documentation and application assurance workflows |
 | `scripts/` | Repository assurance, local launcher, database lifecycle and persistence proof |
 
-[Repository housekeeping](docs/delivery/repository-housekeeping.md) records the current documentation refresh and merged-branch disposition. Historical delivery evidence remains in the linked handovers.
-
 Application code is in `src/`, explicit SQL migrations and fixtures are in `db/`, and runtime checks are in `tests/`. See [P08 setup, verification and handover](docs/delivery/p08-handover.md) and [ADR-0006](docs/decisions/ADR-0006-p01-local-foundation.md) for the local-only implementation and limits.
+
+## Private hosted demo preparation
+
+The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separate hosted runtime, owner setup, tester access and image updates. The GitHub connection check, owner-run core provisioning and Docker Desktop image upload succeeded. A database-create argument error is corrected in the operator, with explicit reuse of the uploaded image. App startup and live sign-in acceptance remain pending. Local development continues using the commands below.
 
 ## Run the local application
 
 Follow the [exact P08 setup and run commands](docs/delivery/p08-handover.md#runtime-setup-and-recovery): Node 24.20.0, npm 11.19.0, PostgreSQL 16.15, `npm ci`, ignored local configuration, migration/seed and `npm run dev`. Open `http://127.0.0.1:3000`. Production startup is intentionally refused. The handover includes test, reset and recovery commands.
 
 Job-pack preparation and issue are at `/service/packs`; exact documents at `/documents/:issue_id`. Install the matching Chromium renderer and retain its private output directory outside Git as described in the P06 handover.
+
+Field operations use `/service/technicians`: the [approved r04 design](docs/decisions/field-technicians-design.md) presents current permitted visits, technicians and preparation flags, with controlled record links. See the [integration handover](docs/delivery/field-technicians-handover.md) for verification/publication status.
 
 Technicians use `/my-jobs` and `/my-jobs/:id`. Riley and Morgan acknowledge and start independently. Supported fictional PNGs are registered, uploaded and verified before availability. Completion drafts can be submitted separately for service review at `/service/reports`. Exact reviewed HTML/PDF, owned remaining work, immutable report revisions and customer responses are available in the P09 implementation. **Field workflow preview — integrated acceptance incomplete**. The dedicated `/offline/index.html` workspace downloads up to two permitted jobs, commits original evidence and PNGs to IndexedDB, and explicitly retries bounded original operations with per-item receipts and owned exception recovery. Offline authority remains provisional.
 

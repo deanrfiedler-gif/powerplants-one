@@ -1,0 +1,15 @@
+.git
+node_modules
+.next
+.env*
+*.log
+test-results
+playwright-report
+artifacts
+*.pem
+*.key
+*.pfx
+*.p12
+**/*parameters.local.json
+**/*testers.local.json
+**/*.local.json

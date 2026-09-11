@@ -2,7 +2,7 @@
 
 ## Context
 
-Powerplants One is Dean Fiedler's personal prototype in a public source repository. Hosted demo access remains separate and restricted to approved testers. Read `README.md`, `docs/STATUS.md` and the relevant parts of the current blueprint before making changes. Follow current user instructions; historical document approval gates are business context, not evidence that the user must re-authorise already requested repository work.
+Powerplants One is Dean Fiedler's personal prototype in a public repository; its data, adapters and hosted demo are synthetic and private. Read `README.md`, `docs/STATUS.md` (current snapshot; `docs/STATUS-log.md` holds the archived chronology) and the relevant parts of the current blueprint before making changes. Follow current user instructions; historical document approval gates are business context, not evidence that the user must re-authorise already requested repository work.
 
 ## Evidence and scope
 
