@@ -152,7 +152,7 @@ export function SalesWorklist() {
     const old = boardData?.items.find(x => x.id === id);
     if (!old || old.stage_id === stage || !old.can_edit) return;
     setMoved(m => ({ ...m, [id]: stage }));
-    setFeedback(`${old.title} moved to ${stage}.`);
+    setFeedback(`${old.title} move to ${stage} pending.`);
     setUndoMove({ id, from: old.stage_id });
     void stageCommand.send(`crm/opportunities/${id}/stage`, {
       expected_version: old.version,
@@ -163,7 +163,7 @@ export function SalesWorklist() {
     });
   };
   const undoLastMove = () => {
-    if (!undoMove) return;
+    if (!undoMove || stageCommand.busy || stageCommand.uncertain) return;
     const { id, from } = undoMove;
     setMoved(m => ({ ...m, [id]: from }));
     setFeedback("");
@@ -220,7 +220,7 @@ export function SalesWorklist() {
         <button className="secondary" onClick={() => setFilters(initial)}>Clear filters</button>
       </section>
     </>}
-    {feedback&&!isDenied&&<div className="crm-change-feedback" role="status"><span>{feedback}</span><span className="crm-save-status">{stageCommand.status}</span><ErrorNotice error={stageCommand.error} />{undoMove&&<button className="secondary" onClick={undoLastMove}>Undo stage move</button>}<button className="secondary" onClick={()=>{setFeedback("");setUndoMove(null);}}>Dismiss</button></div>}
+    {feedback&&!isDenied&&<div className="crm-change-feedback" role="status"><span>{feedback}</span><span className="crm-save-status">{stageCommand.status}</span><ErrorNotice error={stageCommand.error} />{undoMove&&<button className="secondary" disabled={stageCommand.busy || stageCommand.uncertain} onClick={undoLastMove}>Undo stage move</button>}<button className="secondary" onClick={()=>{setFeedback("");setUndoMove(null);}}>Dismiss</button></div>}
     {dialog&&!isDenied&&<DealDialog id={dialog.id} mode={dialog.mode} targetStage={dialog.stage} undo={dialog.undo} onClose={()=>setDialog(null)} onSaved={saved}/>}
     <ErrorNotice error={data.error} />
     {data.loading && <p role="status">Loading permitted sales records…</p>}
