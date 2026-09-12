@@ -1,6 +1,14 @@
 # CRM pipeline stage model
 
-**11 September 2026 · PPO-009 / BP-03 · Accepted direction for I3 · Implementation separately bounded**
+**11 September 2026, amended 12 September 2026 · PPO-009 / BP-03 · Accepted
+direction for I3 · Implementation separately bounded**
+
+**Amendment, 12 September 2026.** Dean confirmed Discovery as the first stage
+name, and accepted drag-and-drop as the board's stage interaction. The first
+confirms the model as written and changes nothing in the runtime, which retains
+its bounded Enquiry → Qualified journey. The second replaces the closing
+paragraph of "Not included" with an assessment against the five stage-movement
+requirements. Bulk stage changes remain not proposed.
 
 Dean accepted a five-stage sales pipeline on 11 September 2026, together with
 its exit conditions, permitted transitions and the retirement of Enquiry. This
@@ -168,8 +176,42 @@ display, forecast basis and quotation or ERP links remain separately bounded
 commercial work.
 
 Drag-and-drop stage movement and bulk stage changes appeared in the reviewed
-presentation prototypes. They are not proposed and do not satisfy the evidence,
-validation and conflict requirements above.
+presentation prototypes. On 12 September 2026 Dean accepted drag-and-drop as
+the correct board interaction; bulk stage changes remain not proposed.
+
+Drag-and-drop is accepted against the five requirements above, not in spite of
+them. Assessed on the branch that implements it:
+
+- **Required evidence or reason** — satisfied. A drop into a stage whose
+  transition the server requires evidence for opens the dialog on that target
+  stage; every other drop saves directly and carries `reason: "Move on the
+  board"`. `stageRequiresEvidence` in `src/components/crm-deal-controls.tsx` is
+  the single place naming that transition, and the dialog's own payload reads
+  from it, so the board cannot drift from the rule the dialog applies.
+- **Server validation** — satisfied. `parseDealStage` rejects a null
+  qualification outcome, and the `ppo.opportunities` check constraint makes the
+  outcome a data invariant of the evidence-bearing stage rather than only a
+  validator rule.
+- **Version conflict handling** — satisfied. The drag path sends
+  `expected_version` from the record it moved; the service raises
+  `VersionConflict` on mismatch and the validator requires the field, so a drag
+  cannot bypass the guard a dialog obeys. A refused or uncertain save drops the
+  optimistic placement, so a card is never left in a column the server has not
+  confirmed.
+- **Durable history** — satisfied. `opportunity_events` records the opportunity
+  version and previous version under the immutability trigger; a board move is
+  as traceable as a dialog move.
+- **Accessible form alternative** — satisfied off the board, and this remains
+  open. The stage track on the deal page renders real buttons with
+  `aria-current="step"` and is the keyboard path to a stage change. There is no
+  keyboard equivalent on the board itself. Dragging is therefore accepted as
+  the board's primary interaction, not as its only one, and a board-level
+  keyboard path remains required before the board is the sole route to a stage
+  change.
+
+One assertion is still missing: no test covers the drag path's behaviour when
+the command returns `VersionConflict`. The behaviour is implemented; it is not
+asserted. Recorded as open work rather than resolved here.
 
 ## Verification
 

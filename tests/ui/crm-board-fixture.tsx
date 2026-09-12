@@ -87,7 +87,7 @@ window.fetch = async (input) => {
   else if (url.pathname.endsWith("/shell/context")) data = {
     display_name: "SYN Demo tester with a long display name",
     actions: [
-      { id: "opportunity", label: "Opportunity", module: "CRM Sales", href: "/crm/opportunities/new" },
+      { id: "opportunity", label: "Opportunity", module: "Deals", href: "/crm/opportunities/new" },
       { id: "activity", label: "Activity", module: "My Work", href: "/work/new" },
       { id: "contact", label: "Contact", module: "Contacts", href: "/customers/new?kind=person" },
     ],

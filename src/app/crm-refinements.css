@@ -52,8 +52,10 @@
   text-decoration: none;
   color: var(--navy);
 }
-.crm-card-body:hover {
-  background: #f8faf7;
+/* The card border and shadow already signal hover; a background change as
+   well made the two halves of the card look like separate controls. */
+.crm-stage .crm-card[draggable="true"]:active {
+  cursor: grabbing;
 }
 .crm-card .crm-card-title {
   display: -webkit-box;

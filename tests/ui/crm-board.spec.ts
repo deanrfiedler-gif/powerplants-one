@@ -77,13 +77,23 @@ test("hosted header, populated board, filtering and independent card targets", a
   const card = page.locator(".crm-card:visible").first();
   await expect(card.locator(".crm-card-close")).toContainText("30 Oct 2026");
   await expect(card.locator(".crm-card-activity")).toHaveAttribute(
-    "href",
-    /^\/work\//,
+    "aria-haspopup",
+    "dialog",
   );
   await expect(card.locator(".crm-card-activity")).toHaveAttribute(
     "draggable",
     "false",
   );
+  // The activity strip opens a snapshot instead of navigating away. The full
+  // activity stays reachable from the snapshot, one action further on.
+  await card.locator(".crm-card-activity").click();
+  await expect(
+    page.getByRole("link", { name: "Open full activity", exact: true }),
+  ).toHaveAttribute("href", /^\/work\//);
+  await page.keyboard.press("Escape");
+  await expect(
+    page.getByRole("link", { name: "Open full activity", exact: true }),
+  ).toBeHidden();
   if (info.project.name === "desktop") {
     await card.locator(".crm-card-body").click();
     await expect(

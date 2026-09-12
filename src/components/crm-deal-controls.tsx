@@ -25,6 +25,10 @@ export type StageUndo = {
   qualification_note: string | null;
   identification_activity_id: string | null;
 };
+// Qualified is the one transition whose evidence the server requires:
+// parseDealStage rejects it without a qualification outcome. Anything that
+// issues a stage command without opening this dialog must ask here first.
+export const stageRequiresEvidence = (stage: string) => stage === "Qualified";
 const scopeLabels = {
   inclusions: "Inclusions",
   exclusions: "Exclusions",
@@ -341,9 +345,10 @@ function DealEditor({
     return command.send(`crm/opportunities/${o.id}/stage`, {
       expected_version: version,
       stage_id: stage,
-      qualification_note: stage === "Qualified" ? note : null,
-      identification_activity_id:
-        stage === "Qualified" ? identification || null : null,
+      qualification_note: stageRequiresEvidence(stage) ? note : null,
+      identification_activity_id: stageRequiresEvidence(stage)
+        ? identification || null
+        : null,
       reason: undo ? "Undo the previous stage move" : "Change deal stage",
     });
   };
@@ -520,7 +525,7 @@ function DealEditor({
                   { id: "Qualified", display_name: "Qualified" },
                 ]}
               />
-              {stage === "Qualified" && (
+              {stageRequiresEvidence(stage) && (
                 <>
                   <Field
                     name="qualification_note"
