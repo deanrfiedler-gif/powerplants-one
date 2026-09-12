@@ -73,8 +73,8 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   assert.equal((await readInvitedSession(database(), token, tenant)).actor_id, actor.actor_id);
   const grants = await rows("ppo.permission_grants");
   for (const old of oldGrants) assert.ok(grants.some(g => JSON.stringify(g) === JSON.stringify(old)));
-  const additions = (await database().query("SELECT * FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND (capability LIKE 'crm.lead.%' OR capability LIKE 'project.%' OR capability LIKE 'engineering.%')", [users])).rows;
-  assert.equal(additions.length, 10);
+  const additions = (await database().query("SELECT * FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND (capability LIKE 'crm.lead.%' OR capability LIKE 'project.%' OR capability LIKE 'engineering.%' OR capability='email.connect')", [users])).rows;
+  assert.equal(additions.length, 11);
   assert.ok(additions.every(g => g.user_id === users[0] && g.company_id === demoCompany && g.scope_type === "Company" && g.scope_id === demoCompany));
   const limit = (await database().query("SELECT valid_to FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.edit'", [users[0]])).rows[0].valid_to;
   assert.ok(additions.every(g => g.valid_to.getTime() <= limit.getTime()));
@@ -113,7 +113,16 @@ test("a baseline executed from Windows CRLF SQL upgrades without rewriting histo
   await upgradeExistingDemo(name, tenant, true);
   const final = await ledger();
   assert.deepEqual(final.filter(r => r.row.version <= 17), baseline);
-  assert.deepEqual(await rows("public.ppo_demo_migrations"), identities);
+  // The hosted track now carries 0002 (Gmail connection): the CRLF identity
+  // baseline row must survive with its original checksum, and version 2 must be
+  // recorded once with the LF digest of its source.
+  const demoLedger = await rows("public.ppo_demo_migrations");
+  assert.deepEqual(demoLedger.filter(r => r.row.version === 1), identities);
+  assert.deepEqual(demoLedger.map(r => r.row.version).sort(), [1, 2]);
+  assert.equal(
+    demoLedger.find(r => r.row.version === 2)?.row.sha256,
+    digest(await readFile(new URL("../../db/demo/0002-gmail-connection.sql", import.meta.url), "utf8")),
+  );
   assert.equal(final.length, baseline.length + 3);
   assert.ok((await db.query("SELECT to_regclass('ppo.projects') AS relation")).rows[0].relation);
 });

@@ -4,7 +4,7 @@
 
 **Owner:** Dean Fiedler
 
-**Design status:** Approved r04 baseline; application verification and publication are recorded separately in the [handover](../delivery/field-technicians-handover.md).
+**Design status:** Approved r04 baseline (10 September 2026), superseded for new work by the accepted successor r05 (12 September 2026, below); application verification and publication are recorded separately in the [handover](../delivery/field-technicians-handover.md).
 
 Dean reviewed the refined Field Technicians container against the supplied Leads and Projects Gantt references, requested a final audit, and then instructed: “I like that version. You can lock that design into the Powerplants One app.” This adopts r04 as the Service field-operations presentation baseline. Further visual changes should preserve this baseline unless Dean requests a change.
 
@@ -42,3 +42,24 @@ No new API, migration, permission, offline store, dependency, commercial platfor
 ## Delivery boundary
 
 The application adapter is prepared from main `27782e1c6343461ba70a3cd9841c3ca720c6f30d`, on `feature/service-field-technicians-r04`. It is reconciled onto main `143d42bbcb62d0027a8eb52b71eb7eccdc565b12` with both status entries preserved. Design approval is complete. Passing source/unit/build checks is distinct from rendered browser verification, merge, deployment and operational acceptance. The [handover](../delivery/field-technicians-handover.md) is the current delivery evidence.
+
+## Successor r05 — accepted 12 September 2026
+
+Dean accepted design r05 as the successor to r04 (“I accept.”, 12 September 2026) after a rendered audit of the approved r04 and a change record tracing every change to an audit finding. r04 remains byte-identical at `docs/reference/powerplants-one-field-technicians-r04.html`; the manifest records both hashes. The successor and its records live under `docs/reference/ui/field-technicians/`.
+
+| | |
+|---|---|
+| Successor HTML | [`powerplants-one-field-technicians-r05.html`](../reference/ui/field-technicians/powerplants-one-field-technicians-r05.html) · 459,515 bytes · SHA-256 `72e80f59b9ad08860e0c00ab8e531c47af0cabc40b40210b8ed0142414761af9` |
+| Rationale | [Rendered audit of r04](../reference/ui/field-technicians/powerplants-one-field-technicians-audit-r04.md) and the [r05 change record](../reference/ui/field-technicians/powerplants-one-field-technicians-r05-change-record.md) |
+| Presentation preserved | 24/16 px padding, palette, three views, six-column tables and phone cards, right-side drawer with four tabs, keyboard tab navigation, native modal behaviour — unchanged from the list above |
+
+What r05 adds to the presentation baseline: six route links from the drawer to the work order, appointment, job pack (with current issue revision), full readiness, equipment record and My Jobs — the traversal the application mapping above requires and the adapter had added without a design reference; visit status limited to appointment state with a separate readiness-and-dispatch column and filter; an owned next action (coordinator or technician, action, due) derived from record state; handover scoped to the visit with a separate technician day note; a *Now* column beside *Next visit*; time and zone taken from the schedule read; a date stepper, site selector and designed loading, failed, partial and empty-day states; and the token set shared with Job Pack r03.
+
+Recorded with the acceptance:
+
+- The shipped `/service/technicians` adapter's links and date/site controls are to be reconciled with r05's presentation at the next bounded integration change.
+- The readiness filter values (dispatch cleared / held / acknowledgement due) present the P06 dispatch component and crew responses; confirm the schedule read exposes them before the adapter adopts the filter.
+- The pack reference shown for a visit is derived from the work-order number in the fixture only; the application uses the pack record's own identity.
+- The fixture technician “Alex Nguyen” is renamed Sam Okoro (`SYN-PPO-PER-000003`) so that the coordinator of the same name is not shown acknowledging his own pack. The synthetic appointment `SYN-PPO-APT-000242` now matches Job Pack r03.
+
+The application mapping and delivery boundary above are unchanged.

@@ -12,6 +12,7 @@ export type Capability =
   | "project.edit"
   | "email.read"
   | "email.edit"
+  | "email.connect"
   | "finance.read"
   | "finance.prepare"
   | "finance.review"

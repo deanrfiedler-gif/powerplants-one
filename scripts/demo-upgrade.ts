@@ -2,32 +2,31 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import pg from "pg";
 import { transaction } from "../src/platform/database";
-import { migrationFiles, seedFiles, latestMigrationVersion } from "./migration-registry";
+import { migrationFiles, seedFiles, latestMigrationVersion, demoMigrationFiles, latestDemoMigrationVersion, existingDemoChecksumMatches } from "./migration-registry";
 import { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-runtime";
 
 const additions = ["crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert",
-  "project.read", "project.create", "project.edit", "engineering.read", "engineering.create", "engineering.edit"];
+  "project.read", "project.create", "project.edit", "engineering.read", "engineering.create", "engineering.edit",
+  "email.connect"];
+const gmailTables = ["ppo.mail_connections", "ppo.provider_messages", "ppo.mail_message_links", "ppo.mail_sync_checkpoints"];
 const read = (file: string) => readFile(new URL(`../db/${file}`, import.meta.url), "utf8");
 const hash = (sql: string) => createHash("sha256").update(sql).digest("hex");
 
-// The original Windows-built demo recorded CRLF bytes. Recognize only that
-// exact alternate encoding for the reviewed baseline; never rewrite its ledger.
-export function existingDemoChecksumMatches(sql: string, checksum: unknown, legacyWindows = false) {
-  if (checksum === hash(sql)) return true;
-  if (!legacyWindows) return false;
-  const lf = sql.replace(/\r\n/g, "\n");
-  return checksum === hash(lf) || checksum === hash(lf.replace(/\n/g, "\r\n"));
-}
+// Retained for existing callers; the shared implementation lives with the registry.
+export { existingDemoChecksumMatches } from "./migration-registry";
 
 // A deliberately bounded existing-demo upgrade, not a second bootstrap path.
 // Every database change shares one transaction, including grants and receipts.
 export async function upgradeExistingDemo(databaseName: string, tenant: string, apply: boolean) {
   if (latestMigrationVersion !== 20) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
+  if (latestDemoMigrationVersion !== 2) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
     version: Number(file.slice(0, 4)), sql: await read(`migrations/${file}`),
   })));
-  const identitySql = await read("demo/0001-identity.sql");
+  const demoMigrations = await Promise.all(demoMigrationFiles.map(async file => ({
+    version: Number(file.slice(0, 4)), sql: await read(`demo/${file}`),
+  })));
   console.log("Demo upgrade stage: connect");
   await transaction(async db => {
     console.log("Demo upgrade stage: validate-target");
@@ -50,10 +49,21 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
       }
     }
     console.log("Demo upgrade stage: identity-history");
-    const identities = await db.query("SELECT version,sha256 FROM public.ppo_demo_migrations");
-    if (identities.rowCount !== 1 || identities.rows[0].version !== 1 ||
-        !existingDemoChecksumMatches(identitySql, identities.rows[0].sha256, true))
-      throw Error("Existing hosted identity migration must match.");
+    const identities = await db.query("SELECT version,sha256 FROM public.ppo_demo_migrations ORDER BY version");
+    if (identities.rows.some(row => !demoMigrations.some(m => m.version === row.version)))
+      throw Error("Unknown hosted migration history; preserve and review this database.");
+    for (const m of demoMigrations) {
+      const prior = identities.rows.find(row => row.version === m.version);
+      // Version 1 is the issued baseline and must already be recorded; later hosted
+      // migrations may legitimately be pending, but only an explicit apply installs them.
+      if (prior) {
+        if (!existingDemoChecksumMatches(m.sql, prior.sha256, m.version === 1))
+          throw Error("Existing hosted identity migration must match.");
+        continue;
+      }
+      if (m.version === 1) throw Error("Existing hosted identity migration must match.");
+      if (!apply) throw Error("Pending hosted migration; use the explicit upgrade-and-deploy operation.");
+    }
     console.log("Demo upgrade stage: seed-history");
     const receipts = await db.query("SELECT version FROM ppo.seed_receipts");
     if (receipts.rows.some(row => !seedFiles.some(([version]) => version === row.version)) ||
@@ -72,6 +82,12 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
         console.log(`Demo upgrade stage: apply-seed-${version}`);
         await db.query(await read(file));
         await db.query("INSERT INTO ppo.seed_receipts(version) VALUES($1)", [version]);
+      }
+      // Hosted-only schema before the grants below, so new tables are covered by them.
+      for (const m of demoMigrations.filter(m => !identities.rows.some(row => row.version === m.version))) {
+        console.log(`Demo upgrade stage: apply-hosted-migration-${m.version}`);
+        await db.query(m.sql);
+        await db.query("INSERT INTO public.ppo_demo_migrations(version,sha256) VALUES($1,$2)", [m.version, hash(m.sql)]);
       }
       console.log("Demo upgrade stage: runtime-grants");
       await grantRuntimePrivileges(db, databaseName, role);
@@ -99,7 +115,7 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
       VALUES($1,$2,$3,$4,$3,clock_timestamp(),$5) ON CONFLICT DO NOTHING`,
     [demoWorkspace, row.user_id, demoCompany, row.cap, row.expires_at]);
     console.log("Demo upgrade stage: verify-privileges");
-    for (const table of ["ppo.lead_candidates", "ppo.projects", "ppo.engineering_packages"]) {
+    for (const table of ["ppo.lead_candidates", "ppo.projects", "ppo.engineering_packages", ...gmailTables]) {
       for (const privilege of ["SELECT", "INSERT", "UPDATE", "DELETE"]) {
         const access = await db.query("SELECT has_table_privilege($1,$2,$3) AS allowed", [role, table, privilege]);
         if (!access.rows[0].allowed) throw Error("Runtime role needs the explicit database upgrade.");
@@ -113,6 +129,8 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
     await db.query("SELECT id FROM ppo.lead_candidates LIMIT 0");
     await db.query("SELECT id FROM ppo.projects LIMIT 0");
     await db.query("SELECT id FROM ppo.engineering_packages LIMIT 0");
+    await db.query("SELECT id FROM ppo.mail_connections LIMIT 0");
+    await db.query("SELECT id FROM ppo.provider_messages LIMIT 0");
     console.log("Demo upgrade stage: commit");
   });
 }
