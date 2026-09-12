@@ -63,6 +63,48 @@
       "bytes": 19755,
       "purpose": "Retained audit accompanying the accepted Engineering r02 design",
       "original_path": "PPO-Engineering-Audit-r02.md"
+    },
+    {
+      "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
+      "sha256": "5b41481460984bdeb09f683b76a5ba30cdd805eb19f90735e725d01fedc6b825",
+      "bytes": 481380,
+      "purpose": "Job Pack design r03 accepted by Dean Fiedler on 12 September 2026 as successor to r02; synthetic standalone preview, not issued work instructions",
+      "original_path": "powerplants-one-job-pack-r03.html"
+    },
+    {
+      "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-audit-r02-rendered.md",
+      "sha256": "c6b3dd42a6e58034d0b8df70c51584ca20453257567688cffb8fa7b9c33cef99",
+      "bytes": 31205,
+      "purpose": "Rendered audit of the accepted Job Pack r02 (browser, keyboard, dialog and A4 checks); rationale for r03",
+      "original_path": "powerplants-one-job-pack-audit-r02-rendered.md"
+    },
+    {
+      "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03-change-record.md",
+      "sha256": "5685a1be17f43178dc0e6ae8724fae43f72a1a9a9a2d7c81e7f06bd82658297b",
+      "bytes": 8718,
+      "purpose": "Job Pack r03 change record tracing each change to an audit finding; acceptance recorded in docs/decisions/job-pack-design.md",
+      "original_path": "powerplants-one-job-pack-r03-change-record.md"
+    },
+    {
+      "path": "docs/reference/ui/field-technicians/powerplants-one-field-technicians-r05.html",
+      "sha256": "72e80f59b9ad08860e0c00ab8e531c47af0cabc40b40210b8ed0142414761af9",
+      "bytes": 459515,
+      "purpose": "Field Technicians design r05 accepted by Dean Fiedler on 12 September 2026 as successor to r04; synthetic standalone preview",
+      "original_path": "powerplants-one-field-technicians-r05.html"
+    },
+    {
+      "path": "docs/reference/ui/field-technicians/powerplants-one-field-technicians-audit-r04.md",
+      "sha256": "2a49e9924f957b4488fc1fd0b2e1137aee15ae670ef822aa7348fd4ee70a71cf",
+      "bytes": 25777,
+      "purpose": "Rendered audit of the accepted Field Technicians r04; rationale for r05",
+      "original_path": "powerplants-one-field-technicians-audit-r04.md"
+    },
+    {
+      "path": "docs/reference/ui/field-technicians/powerplants-one-field-technicians-r05-change-record.md",
+      "sha256": "8ed163fb530d659f45abdb54cc6c4587d834577f48dee799e0a25ebe821cf972",
+      "bytes": 9520,
+      "purpose": "Field Technicians r05 change record tracing each change to an audit finding; acceptance recorded in docs/decisions/field-technicians-design.md",
+      "original_path": "powerplants-one-field-technicians-r05-change-record.md"
     }
   ]
 }
