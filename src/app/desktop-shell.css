@@ -7,7 +7,7 @@
   .sidebar.ppo-rail { width: 96px; padding: 0; height: 100dvh; min-height: 0; overflow: visible; display: flex; flex-direction: column; align-items: center; background: #242a37; z-index: 70; }
   .ppo-rail .brand { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 96px; height: 104px; margin: 0; padding: 0; }
   .ppo-rail .brand .brand-logo { width: 80px; height: 80px; max-width: none; object-fit: contain; }
-  .ppo-rail-divider { display: block; flex-shrink: 0; width: 48px; height: 1px; margin: 0 auto 18px; background: #ffffff20; }
+  .ppo-rail-divider { display: none; }
   .ppo-rail .ppo-primary-nav { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; flex-shrink: 0; }
   .ppo-rail .ppo-rail-item { position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 52px; height: 48px; min-height: 0; margin: 0; padding: 0; border: 0; border-radius: 8px; background: transparent; color: white; text-decoration: none; }
   .ppo-rail-item .product-icon { width: 30px; height: 30px; }
@@ -100,17 +100,21 @@
   .ppo-quick-panel { right: 120px; }
   .crm-toolbar .crm-header-search { width: 180px; flex-basis: 180px; }
 }
+/* The Sales rail carries eight entries plus More. These compact-height rules
+   keep all nine inside the viewport without scrolling the rail, which the
+   shell's approved geometry requires. Icons stay 30px throughout. */
 @media (min-width: 781px) and (max-height: 690px) {
-  .ppo-rail .brand { height: 94px; }
+  .ppo-rail .brand { height: 88px; }
   .ppo-rail-divider { margin-bottom: 12px; }
-  .ppo-rail .ppo-primary-nav { gap: 5px; }
-  .ppo-rail-bottom { padding: 16px 0; }
+  .ppo-rail .ppo-primary-nav { gap: 4px; }
+  .ppo-rail .ppo-rail-item { height: 44px; }
+  .ppo-rail-bottom { padding: 14px 0; }
 }
 @media (min-width: 781px) and (max-height: 580px) {
-  .ppo-rail .brand { height: 86px; }
+  .ppo-rail .brand { height: 78px; }
   .ppo-rail-divider { margin-bottom: 8px; }
-  .ppo-rail .ppo-primary-nav { gap: 3px; }
-  .ppo-rail .ppo-rail-item { height: 44px; }
-  .ppo-rail-bottom { padding: 10px 0; }
+  .ppo-rail .ppo-primary-nav { gap: 2px; }
+  .ppo-rail .ppo-rail-item { height: 40px; }
+  .ppo-rail-bottom { padding: 8px 0; }
 }
 @media (prefers-reduced-motion: reduce) { .ppo-more-panel { animation: none; } }
