@@ -4,7 +4,7 @@ revision: r01
 date: 2026-09-11
 owner: Dean Fiedler - private prototype
 status: Proposed for review; nothing adopted, no scope widened
-source_commit: 6dc9fda0411ffcb694fc0c934971a8b3ffbee34c
+source_commit: 386d9a7d63ffd28b61691491f9dc0880230d89b9
 ---
 
 # Estimating container — five propositions for the deferred wizard scope
