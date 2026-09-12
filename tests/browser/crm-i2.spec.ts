@@ -150,16 +150,15 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   await capture(page, info, "320-grid-keyboard");
   await page.getByRole("button", { name: "Board", exact: true }).click();
   await capture(page, info, "320-board-long-action");
-  // r08 keeps equal-height previews; the canonical Activity retains all 2,000 characters.
-  // The strip is a snapshot trigger, not a link: the preview still carries every
-  // character, and the canonical Activity stays reachable one action further on.
-  const actionTrigger = page.locator("button.crm-card-activity").first();
-  await expect(actionTrigger.locator(".crm-action-text")).toHaveText(inputs[0].initial_action.summary);
-  await actionTrigger.click();
-  const fullActivity = page.getByRole("link", { name: "Open full activity", exact: true });
-  await expect(fullActivity).toHaveAttribute("href", `/work/${inputs[0].initial_action.id}`);
+  // r08 keeps equal-height previews. The strip opens an activity snapshot rather
+  // than navigating; the canonical Activity stays one action further on and
+  // retains all 2,000 characters.
+  const actionLink = page.locator("button.crm-card-activity").first();
+  await expect(actionLink.locator(".crm-action-text")).toHaveText(inputs[0].initial_action.summary);
+  await actionLink.click();
+  await expect(page.getByRole("link", { name: "Open full activity", exact: true })).toHaveAttribute("href", `/work/${inputs[0].initial_action.id}`);
   await page.keyboard.press("Escape");
-  await expect(fullActivity).toBeHidden();
+  await expect(page.getByRole("link", { name: "Open full activity", exact: true })).toBeHidden();
   const activityPage = await page.context().newPage();
   await activityPage.setViewportSize({ width: 320, height: 844 });
   await activityPage.goto(`/work/${inputs[0].initial_action.id}`);
@@ -294,10 +293,8 @@ test("CA-13 shared brand consumers retain navigation, readable actions and origi
     await expect(page.locator(".brand-logo:visible")).toBeVisible();
     if (info.project.use.isMobile) {
       await page.getByRole("button", { name: "Menu", exact: true }).click();
-      const menu = page.getByRole("dialog",{name:"Powerplants One"});
-      await expect(menu).toBeVisible();
-      // Scoped to the menu: the phone's bottom navigation also carries Deals.
-      await expect(menu.getByRole("link", { name: "Deals", exact: true })).toBeVisible();
+      await expect(page.getByRole("dialog",{name:"Powerplants One"})).toBeVisible();
+      await expect(page.getByRole("navigation", { name: "All modules", exact: true }).getByRole("link", { name: "Deals", exact: true })).toBeVisible();
       await page.getByRole("button", { name: "Close menu", exact: true }).click();
     }
     await capture(page, info, `shared-${path.replaceAll("/", "-") || "overview"}`);
