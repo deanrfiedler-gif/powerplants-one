@@ -397,6 +397,16 @@ body:has(.crm-workspace) .header-account .identity-hosted {
   align-self: center;
 }
 @media (min-width: 781px) {
+  /* Cards in a column must be the same height; the accepted board asserts it to
+     within a pixel. The card body and activity strip moved to automatic rows,
+     so a one-line and a two-line title or action text no longer match. Reserve
+     two lines of each, as the fixed row heights did before. */
+  .crm-card .crm-card-title {
+    min-height: 41px;
+  }
+  .crm-card .crm-action-text {
+    min-height: 36px;
+  }
   .app-frame {
     grid-template-columns: 104px minmax(0, 1fr);
   }
