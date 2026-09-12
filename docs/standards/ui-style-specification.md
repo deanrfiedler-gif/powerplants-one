@@ -1,11 +1,11 @@
 ---
 title: Powerplants One - Shared UI style specification
-revision: r05
-date: 2026-09-10
+revision: r06
+date: 2026-09-12
 status: Brand-derived visual direction; functional extensions proposed
 owner: Dean Fiedler
-scope: Shared visual foundation; BP-03 C02 CRM board and grid mockups
-source_commit: 8bc0d903cb9da100136a8a5430bac9e6883bb27d
+scope: Shared visual foundation; BP-03 C02 CRM board and grid mockups; UI design baseline requirements
+source_commit: 03f6dbd72340e62fa5329bbeb412621bfa31924f
 ---
 
 # Powerplants One - Shared UI style specification
@@ -103,7 +103,59 @@ Revision r03: user-authorised response to the r01 UI audit; compact shell, conti
 Creation policy: prefill the specific selected pipeline; for All pipelines, default explicitly to Systems & Projects in the form. Owner defaults to the current synthetic actor Alex Lee, regardless of owner filter. Preserve pipeline, owner, action filter, search, sort and phone stage after adding. If outside the current filters, say so and offer View opportunity. Clear all removes search/owner/action criteria while retaining pipeline and sort. Required-field errors retain other input, mark the field, link its message and focus it. Never clip accepted 200-character titles or 160-character actions, including unbroken references.
 
 
+Revision r06: adds section 7, the UI design baseline requirements, the baseline register and the verification harness. Base `03f6dbd72340e62fa5329bbeb412621bfa31924f`. No change to sections 1 to 6, to any accepted baseline, or to application behaviour.
+
 I2 application note: the [bounded implementation handover](../delivery/crm-i2-handover.md) applies these brand roles and responsive principles to the actual two-stage/Open worklist. It retains full Activity text and distinguishes action/opportunity owners; memory preferences confer no data authority. Shared-screen runtime evidence is separate from these accepted design originals. No mockup amount, owner default, pipeline or temporary model becomes a server contract.
+
+## 7. UI design baseline requirements
+
+Adopted 12 September 2026. Sections 1 to 6 govern how a Powerplants One screen should look. This section governs how an accepted design baseline is authored, registered and verified, so that a baseline can be ported into the application mechanically rather than interpreted. It adds no domain, permission or workflow authority.
+
+**Why HTML.** A baseline is a self-contained HTML file, not an image and not an external design-tool document. The reason is measurable rather than stylistic: when Field Technicians r04 was ported into `src/app/field-technicians.css`, all 71 of the design's class names survived unchanged, with five added for shell integration. An HTML baseline carries exact values, states, responsive behaviour and semantics, is retained by bytes and hash under the same document control as every other issued artefact, and can be executed and measured. An image carries appearance only; every value behind it has to be inferred.
+
+Images remain a legitimate *input to* a baseline, as section 1 already records for the two supplied Pipedrive screenshots. They are not an input to application code. The order is: reference material, then an accepted HTML baseline, then implementation.
+
+### 7.1 Required elements
+
+A design baseline is complete when it has all seven.
+
+| # | Element | Requirement |
+|---|---|---|
+| 1 | Single scope container | One element carrying a stable `#ppo-<surface>` id. Every rule in the file is scoped beneath it, including a local reset that re-declares each element `globals.css` styles bare — currently `a`, `body`, `button`, `fieldset`, `h1`, `h2`, `h3`, `label`, `main`, `p` and `select`. This is what makes the port survive the application's global cascade; `#ppo-engineering` and `#ppo-field-technicians` both follow it. |
+| 2 | Token block on the scope container | Semantic custom properties declared on the scope container itself, not on `:root`, so the application inherits the same declaration site. Reuse the shared core in 7.4 before inventing a name. |
+| 3 | Every state rendered | Loading, empty, read failed, partial read, denied, saving, saved and conflict must be reachable in the file, not described in prose. Section 5 already requires these states of implemented screens; the baseline is where their appearance is decided. A control that cycles the states, as Field Technicians r05 provides, satisfies this. |
+| 4 | Fixture data using real references | `SYN-PPO-` references consistent with application seed data, so a baseline and a running screen can be compared like for like. |
+| 5 | Declared viewports | 1440x960, 1024x768, 820x800 and 390x844. No horizontal overflow at any of them. |
+| 6 | Change record | Sibling Markdown file stating the deliverable's SHA-256 and byte count, the predecessor's SHA-256, what changed keyed to audit findings, what was verified, what was deliberately left unchanged, and the decisions the owner still has to make. |
+| 7 | No shell duplication | The baseline must not draw the application rail, logo, top bar or global navigation. It designs the content area only. |
+
+### 7.2 What a baseline does not establish
+
+Acceptance of a baseline is acceptance of presentation. It is not implementation, browser, print, accessibility or business acceptance, and it creates no data contract. A value shown in a fixture never becomes a server contract. Simulated behaviour in a preview — a link that raises a toast instead of navigating, notes held in memory that reset on reload — must become real or be explicitly excluded when the baseline is implemented.
+
+### 7.3 Registration and verification
+
+Every accepted baseline is registered in [`ui-baselines.json`](ui-baselines.json) with its path, SHA-256, byte count, scope container, governing application route, status and decision record. The register is the machine-readable form of the acceptance sections below.
+
+`node scripts/design-baseline-check.mjs` verifies each registered baseline: file integrity against the recorded hash, exactly one scope container, the declared token count, no horizontal overflow at the four viewports, and no console or page errors. It writes hashed captures and an evidence file to `verification-evidence/ui-baselines/`.
+
+Adding `--app <base-url>` compares a baseline with the running application: it opens the governing route, reads the same token names from the application's scope container and reports any drift, capturing both sides at each viewport. This measures visual token agreement, not behaviour, permissions or acceptance.
+
+### 7.4 Shared token core
+
+Forty-one token names are declared by more than one accepted baseline, established by measurement rather than assertion: Job Pack r03 declares 41 and Field Technicians r05 declares those same 41 plus `--progress` and `--progress-surface`. New baselines reuse these names before introducing their own.
+
+Thirty-eight of the 41 agree in value. Three do not, and are recorded in the register's `known_divergences` so that the check enforces the present state and fails on anything new:
+
+| Token | Field Technicians r05 | Job Pack r03 |
+|---|---|---|
+| `--surface-hover` | `#f0f2f5` | `#eff2f5` |
+| `--line-soft` | `#e9ecf1` | `#eef0f3` |
+| `--success-tint` | `#f3f7f1` | `#ebefe9` |
+
+These three are open points for the owner. The Field Technicians r05 change record describes the 43 tokens as shared with Job Pack r03 in name and value; that holds for 38 of them. Resolving each divergence means choosing one value and reissuing the losing baseline as a new revision, since changed content requires a new revision rather than an edit in place.
+
+Whether the shared core is later promoted to `:root` in `globals.css`, or kept declared per scope container, remains an implementation decision taken when the second baseline is implemented. Until then, scope containers keep each module's blast radius to one screen.
 
 ## Accepted r08 application presentation
 
