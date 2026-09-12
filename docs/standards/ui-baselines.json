@@ -1,0 +1,126 @@
+{
+  "register": "PPO-STD-002-REG",
+  "title": "Powerplants One UI design baseline register",
+  "revision": "r01",
+  "owner": "Dean Fiedler",
+  "updated": "2026-09-12",
+  "authority": "docs/standards/ui-style-specification.md section 7",
+  "scope": "Accepted UI design baselines, their scope containers and the application routes they govern. Design-side integrity and token facts only; this register establishes no application, permission or business acceptance.",
+  "viewports": [
+    { "name": "desktop", "width": 1440, "height": 960 },
+    { "name": "laptop", "width": 1024, "height": 768 },
+    { "name": "tablet", "width": 820, "height": 800 },
+    { "name": "phone", "width": 390, "height": 844 }
+  ],
+  "shared_token_core": {
+    "note": "Token names declared by two or more accepted baselines. Names and values must agree across every baseline that declares them, except where listed in known_divergences. Derived by measurement, not assertion: Job Pack r03 declares 41 tokens and Field Technicians r05 declares those same 41 plus --progress and --progress-surface.",
+    "names": [
+      "--avatar-surface", "--avatar-text", "--control-border", "--danger", "--danger-accent",
+      "--danger-border", "--danger-surface", "--focus", "--green", "--hairline",
+      "--info", "--info-accent", "--info-border", "--info-surface", "--ink",
+      "--line", "--line-soft", "--line-strong", "--link", "--muted",
+      "--navy", "--neutral", "--neutral-surface", "--paper", "--success",
+      "--success-border", "--success-icon", "--success-surface", "--success-tint", "--surface",
+      "--surface-2", "--surface-3", "--surface-hover", "--surface-white", "--text-secondary",
+      "--warning", "--warning-accent", "--warning-border", "--warning-icon", "--warning-surface",
+      "--warning-tint"
+    ]
+  },
+  "known_divergences": {
+    "note": "Measured differences in shared-core token values between accepted baselines, recorded so the check enforces the present state and fails on anything new. Each is an open point for the owner, not an accepted rule. Measured 12 September 2026 in Chromium 1194 at 1440x960.",
+    "entries": [
+      {
+        "token": "--surface-hover",
+        "values": { "field-technicians-r05": "#f0f2f5", "job-pack-r03": "#eff2f5" },
+        "status": "Unresolved; one channel apart"
+      },
+      {
+        "token": "--line-soft",
+        "values": { "field-technicians-r05": "#e9ecf1", "job-pack-r03": "#eef0f3" },
+        "status": "Unresolved; visually close"
+      },
+      {
+        "token": "--success-tint",
+        "values": { "field-technicians-r05": "#f3f7f1", "job-pack-r03": "#ebefe9" },
+        "status": "Unresolved; the most visible of the three"
+      }
+    ]
+  },
+  "baselines": [
+    {
+      "id": "field-technicians-r05",
+      "title": "Field Technicians design r05",
+      "design": "docs/reference/ui/field-technicians/powerplants-one-field-technicians-r05.html",
+      "sha256": "72e80f59b9ad08860e0c00ab8e531c47af0cabc40b40210b8ed0142414761af9",
+      "bytes": 459515,
+      "scope_selector": "#ppo-field-technicians",
+      "app_route": null,
+      "app_scope_selector": "#ppo-field-technicians",
+      "status": "Accepted design successor; not implemented",
+      "predecessor": "field-technicians-r04",
+      "decision": "docs/decisions/field-technicians-design.md",
+      "change_record": "docs/reference/ui/field-technicians/powerplants-one-field-technicians-r05-change-record.md",
+      "declared_tokens": 43
+    },
+    {
+      "id": "field-technicians-r04",
+      "title": "Field Technicians design r04",
+      "design": "docs/reference/powerplants-one-field-technicians-r04.html",
+      "sha256": "b4d15630d89f0a74b795b9b2af6b83d9c4874d0e31d7e503f93d386a6555a704",
+      "bytes": 429584,
+      "scope_selector": "#ppo-field-technicians",
+      "app_route": "/service/technicians",
+      "app_scope_selector": "#ppo-field-technicians",
+      "status": "Implemented baseline in force for /service/technicians until r05 is implemented",
+      "predecessor": null,
+      "decision": "docs/decisions/field-technicians-design.md",
+      "change_record": null,
+      "declared_tokens": 8
+    },
+    {
+      "id": "job-pack-r03",
+      "title": "Service Job Pack design r03",
+      "design": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
+      "sha256": "5b41481460984bdeb09f683b76a5ba30cdd805eb19f90735e725d01fedc6b825",
+      "bytes": 481380,
+      "scope_selector": "#ppo-job-pack",
+      "app_route": null,
+      "app_scope_selector": null,
+      "status": "Accepted design successor; not implemented. The shipped /service/packs screen predates the scoped-container pattern and has no scope container to compare against",
+      "predecessor": "job-pack-r02",
+      "decision": "docs/decisions/job-pack-design.md",
+      "change_record": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03-change-record.md",
+      "declared_tokens": 41
+    },
+    {
+      "id": "job-pack-r02",
+      "title": "Service Job Pack design r02",
+      "design": "docs/reference/ui/job-pack/powerplants-one-job-pack-r02.html",
+      "sha256": "fe2ded4a0cd9813c06e666499cc9842691e73c95be9b9e18f2aae9bf59c262fd",
+      "bytes": 446869,
+      "scope_selector": "#ppo-job-pack",
+      "app_route": null,
+      "app_scope_selector": null,
+      "status": "Accepted predecessor; retained unchanged",
+      "predecessor": null,
+      "decision": "docs/decisions/job-pack-design.md",
+      "change_record": null,
+      "declared_tokens": 8
+    },
+    {
+      "id": "engineering-r02",
+      "title": "Engineering container design r02",
+      "design": "docs/reference/engineering-r02/PPO-Engineering-Container-r02.html",
+      "sha256": "52a7d24705ba3faf5f7ce87e33ccd09b641ca2b3b5e7e592975ec949552665b4",
+      "bytes": 456757,
+      "scope_selector": "#ppo-engineering",
+      "app_route": "/engineering",
+      "app_scope_selector": "#ppo-engineering",
+      "status": "Implemented; governs /engineering",
+      "predecessor": null,
+      "decision": "docs/decisions/engineering-r02-integration.md",
+      "change_record": null,
+      "declared_tokens": 7
+    }
+  ]
+}
