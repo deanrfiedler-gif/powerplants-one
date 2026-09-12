@@ -65,7 +65,7 @@ def anchors(text):
 
 
 def check_sources():
-    manifest = json.loads((ROOT / 'docs/reference/source-manifest.json').read_text())
+    manifest = json.loads((ROOT / 'docs/reference/source-manifest.json').read_text(encoding='utf-8'))
     for entry in manifest['files']:
         path = ROOT / entry['path']
         if not path.is_file():
@@ -78,7 +78,7 @@ def check_sources():
 
 
 def check_registers():
-    text = MASTER.read_text()
+    text = MASTER.read_text(encoding='utf-8')
     source = text.split('## Appendix B —')[0]
     definitions = {}
     decisions_source = {}
@@ -101,7 +101,7 @@ def check_registers():
     unique_sequence([r['requirement_id'] for r in requirements], expected, 'Requirements')
     unique_sequence([r['decision_id'] for r in decisions], [f'D-{n:03}' for n in range(1,30)], 'Decisions')
     unique_sequence([r['acceptance_id'] for r in tests], [f'AT-{n:02}' for n in range(1,39)], 'Acceptance')
-    backlog = json.loads((ROOT / 'docs/delivery/initial-backlog.json').read_text())['items']
+    backlog = json.loads((ROOT / 'docs/delivery/initial-backlog.json').read_text(encoding='utf-8'))['items']
     items = {item['id']: item for item in backlog}
     unique_sequence([item['id'] for item in backlog], [f'PPO-{n:03}' for n in range(1,17)], 'Initial backlog')
     trace = text.split('## Appendix B —')[1].split('## Appendix C —')[0]
@@ -145,7 +145,7 @@ def check_registers():
             problem(f'{item["id"]}: incomplete GitHub issue mapping')
         if url and url != f'https://github.com/deanrfiedler-gif/powerplants-one/issues/{number}':
             problem(f'{item["id"]}: unexpected issue URL')
-        if url and url not in (ROOT / 'docs/delivery/backlog.md').read_text():
+        if url and url not in (ROOT / 'docs/delivery/backlog.md').read_text(encoding='utf-8'):
             problem(f'{item["id"]}: issue link missing from backlog index')
         for dep in item['dependencies']:
             if dep not in items:
@@ -178,7 +178,7 @@ def check_links_and_hygiene():
     for path in docs:
         if '.git' in path.parts:
             continue
-        text = path.read_text()
+        text = path.read_text(encoding='utf-8')
         for target in re.findall(r'\]\(([^\s)]+)\)', text):
             if urlsplit(target).scheme:
                 continue
@@ -188,7 +188,7 @@ def check_links_and_hygiene():
                 problem(f'{path.relative_to(ROOT)}: local link escapes repository: {target}')
             elif not candidate.exists():
                 problem(f'{path.relative_to(ROOT)}: broken local link: {target}')
-            elif parsed.fragment and candidate.suffix == '.md' and unquote(parsed.fragment) not in anchors(candidate.read_text()):
+            elif parsed.fragment and candidate.suffix == '.md' and unquote(parsed.fragment) not in anchors(candidate.read_text(encoding='utf-8')):
                 problem(f'{path.relative_to(ROOT)}: unknown heading: {target}')
             checked += 1
         if re.search(r'\]\((?:sandbox:|file:)|/workspace/scratch/', text):
@@ -200,17 +200,58 @@ def check_links_and_hygiene():
         if relative.parts[0] in {'local-data','exports','backups','tmp'} or (path.name.startswith('.env') and path.name != '.env.example') or path.suffix in {'.pem','.key','.p12','.pfx'}:
             problem(f'Unexpected sensitive/local-data path: {relative}')
         if path.suffix in {'.md','.json','.yml','.yaml','.csv'}:
-            content = path.read_text()
+            content = path.read_text(encoding='utf-8')
             if re.search(r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|\bgh[pousr]_[A-Za-z0-9]{30,}\b', content):
                 problem(f'Possible credential content: {relative}')
     return checked
+
+
+# Text suffixes worth decoding. Binary assets are skipped rather than guessed at.
+TEXT_SUFFIXES = {'.md','.ts','.tsx','.js','.mjs','.json','.yml','.yaml','.csv','.sql','.html','.css','.py','.svg','.txt'}
+OPENING = re.compile(r'^<<<<<<<[ \t]')
+CLOSING = re.compile(r'^>>>>>>>[ \t]')
+DIVIDER = re.compile(r'^=======$')
+
+
+def check_merge_markers():
+    """Fail on unresolved merge conflict markers in any tracked or new text file.
+
+    A committed conflict marker reached `main` on 12 September 2026 and the three
+    check scripts did not see it, because none of them looked. This closes that gap.
+
+    The divider `=======` is only treated as a marker when the same file also
+    carries an opening or closing marker. On its own a line of seven equals signs
+    is a valid Markdown setext heading underline, and flagging it would make the
+    check untrustworthy rather than strict.
+    """
+    scanned = 0
+    names = subprocess.check_output(['git', 'ls-files', '--cached', '--others', '--exclude-standard', '-z'], cwd=ROOT).decode().split('\0')
+    for name in sorted({n for n in names if n}):
+        path = ROOT / name
+        if not path.is_file() or '.git' in path.parts or path.suffix not in TEXT_SUFFIXES:
+            continue
+        try:
+            text = path.read_text(encoding='utf-8')
+        except UnicodeDecodeError:
+            continue
+        scanned += 1
+        lines = text.splitlines()
+        fenced = [(i, line) for i, line in enumerate(lines, 1) if OPENING.match(line) or CLOSING.match(line)]
+        for number, line in fenced:
+            problem(f'{path.relative_to(ROOT)}:{number}: unresolved merge conflict marker: {line[:16]}')
+        if fenced:
+            for number, line in enumerate(lines, 1):
+                if DIVIDER.match(line):
+                    problem(f'{path.relative_to(ROOT)}:{number}: unresolved merge conflict divider')
+    return scanned
 
 
 def main():
     count = check_sources()
     registers = check_registers()
     links = check_links_and_hygiene()
-    report = {'status':'failed' if ERRORS else 'passed', 'issued_sources':count, **registers, 'local_links_checked':links, 'errors':ERRORS, 'scope':'Documentation assurance only; no business acceptance tests executed'}
+    scanned = check_merge_markers()
+    report = {'status':'failed' if ERRORS else 'passed', 'issued_sources':count, **registers, 'local_links_checked':links, 'files_scanned_for_markers':scanned, 'errors':ERRORS, 'scope':'Documentation assurance only; no business acceptance tests executed'}
     print(json.dumps(report, indent=2))
     return 1 if ERRORS else 0
 
