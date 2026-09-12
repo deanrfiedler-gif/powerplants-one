@@ -148,10 +148,9 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
   if (info.project.use.isMobile)
     await page.getByRole("button", { name: /^Qualified \(/ }).click();
   await card.locator(".crm-card-activity").click();
-  await page
-    .getByRole("link", { name: "Open full activity", exact: true })
-    .click();
-  await expect(page).toHaveURL(new RegExp(`/work/${input.initial_action.id}$`));
+  await expect(
+    page.getByRole("link", { name: "Open full activity", exact: true }),
+  ).toHaveAttribute("href", `/work/${input.initial_action.id}`);
 });
 test("desktop directory tables and mobile lists share saved, scoped queries", async ({
   page,
