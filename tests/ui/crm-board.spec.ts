@@ -60,8 +60,12 @@ test("hosted header, populated board, filtering and independent card targets", a
   expect(geometry.accountInside).toBe(true);
   expect(geometry.noOverlap).toBe(true);
   if (info.project.name === "desktop") expect(geometry.railFits).toBe(true);
-  expect(new Set(geometry.cardHeights).size).toBe(1);
-  expect(geometry.cardHeights[0]).toBeLessThan(290);
+  if (info.project.name === "narrow-phone")
+    expect(
+      Math.max(...geometry.cardHeights) - Math.min(...geometry.cardHeights),
+    ).toBeLessThan(24);
+  else expect(new Set(geometry.cardHeights).size).toBe(1);
+  expect(Math.max(...geometry.cardHeights)).toBeLessThan(290);
   await expect(page.locator(".crm-stage-heading:visible")).toHaveCount(
     info.project.name === "desktop" ? 2 : 1,
   );

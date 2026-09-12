@@ -49,7 +49,7 @@
   .ppo-top-action.ppo-quick-add { color: white; background: #242a37; }
   .ppo-top-action.ppo-quick-add:is(:hover,[aria-expanded=true]) { background: #343c4c; }
   .ppo-shell-header .header-tools { margin: 0; padding-left: 12px; border-left: 1px solid #e2e6ec; gap: 0; }
-  .ppo-shell-header #header-search { display: none; }
+  .ppo-shell-header #header-search:empty { display: none; }
   .ppo-shell-header .prototype-label, .workspace:has(.identity-strip) .ppo-shell-header .prototype-label { display: block; position: absolute; top: 45px; left: 28px; margin: 0; padding: 0; border: 0; font-size: 10px; line-height: 12px; color: #667181; }
   .ppo-account-fallback { grid-column: 4; grid-row: 1; }
   .ppo-shell-header:has(#header-account:not(:empty)) .ppo-account-fallback { display: none; }
@@ -92,12 +92,13 @@
 @keyframes ppo-more-in { from { transform: translateX(-20px); opacity: 0; } to { transform: none; opacity: 1; } }
 @media (min-width: 781px) and (max-width: 1500px) { .ppo-shell-header .product-heading > span { display: none; } }
 @media (min-width: 781px) and (max-width: 1150px) {
-  .topbar.ppo-shell-header, body:has(.crm-workspace) .topbar.ppo-shell-header { padding-inline: 18px; gap: 12px; grid-template-columns: minmax(90px, 1fr) minmax(240px, 430px) auto auto; }
+  .topbar.ppo-shell-header, body:has(.crm-workspace) .topbar.ppo-shell-header { padding-inline: 18px; gap: 12px; grid-template-columns: minmax(90px, 1fr) minmax(200px, 300px) auto auto; }
   .ppo-shell-header .prototype-label, .workspace:has(.identity-strip) .ppo-shell-header .prototype-label { left: 18px; }
   .ppo-global-search kbd { display: none; }
   .ppo-header-utilities { gap: 2px; }
   .ppo-search-panel { right: 18px; }
   .ppo-quick-panel { right: 120px; }
+  .crm-header-search { width: clamp(160px, 18vw, 220px); }
   .crm-toolbar .crm-header-search { width: 180px; flex-basis: 180px; }
 }
 @media (min-width: 781px) and (max-height: 690px) {
@@ -107,10 +108,10 @@
   .ppo-rail-bottom { padding: 16px 0; }
 }
 @media (min-width: 781px) and (max-height: 580px) {
-  .ppo-rail .brand { height: 86px; }
+  .ppo-rail .brand { height: 80px; }
   .ppo-rail-divider { margin-bottom: 8px; }
-  .ppo-rail .ppo-primary-nav { gap: 3px; }
-  .ppo-rail .ppo-rail-item { height: 44px; }
-  .ppo-rail-bottom { padding: 10px 0; }
+  .ppo-rail .ppo-primary-nav { gap: 2px; }
+  .ppo-rail .ppo-rail-item { height: 42px; }
+  .ppo-rail-bottom { padding: 8px 0; }
 }
 @media (prefers-reduced-motion: reduce) { .ppo-more-panel { animation: none; } }

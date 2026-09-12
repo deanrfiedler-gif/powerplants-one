@@ -24,12 +24,12 @@ test("approved shell fits laptop, desktop and compact viewports with persistent 
     });
     expect(geometry.railWidth).toBe(96); expect(geometry.headerHeight).toBe(64); expect(geometry.logoCentre).toBe(48);
     expect(geometry.railFits && geometry.pageFits && geometry.controlsFit && geometry.noOverlap).toBe(true);
-    expect(geometry.moreBottom).toBeLessThanOrEqual(height); expect(geometry.icons).toEqual(Array(7).fill(30));
+    expect(geometry.moreBottom).toBeLessThanOrEqual(height); expect(geometry.icons).toEqual(Array(8).fill(30));
     expect(["1", "normal"]).toContain(geometry.zoom);
     await page.screenshot({ path: info.outputPath(`shell-${width}x${height}.png`) });
     await page.getByRole("button", { name: "More", exact: true }).click();
     await expect(page.getByRole("navigation", { name: "More navigation" })).toBeVisible();
-    for (const label of ["Sales / CRM", "Estimating & Quotation", "Engineering", "Projects", "Service", "Supply Chain — planned", "Finance"]) {
+    for (const label of ["Pulse — planned", "Leads", "Deals", "Inbox", "Activities", "Contacts", "Products — planned", "Insights — planned"]) {
       const target = page.getByRole("navigation", { name: "Main navigation", exact: true }).getByLabel(label, { exact: true });
       await target.hover();
       await expect(page.getByRole("tooltip")).toHaveText(label);
@@ -58,7 +58,7 @@ test("global search is independent of page filtering, keyboard selection and qui
   await page.keyboard.press("Escape"); await expect(page.getByRole("button", { name: "Quick add", exact: true })).toBeFocused();
   await page.getByRole("button", { name: "Quick Help", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Quick Help" })).toBeVisible();
-  await page.locator(".crm-worklist-stamp").click(); await expect(page.getByRole("heading", { name: "Quick Help" })).toBeHidden();
+  await page.getByRole("button", { name: "Board", exact: true }).click(); await expect(page.getByRole("heading", { name: "Quick Help" })).toBeHidden();
   await page.getByRole("button", { name: "Notifications", exact: true }).click();
   await expect(page.getByText("Notifications are not connected yet.", { exact: false })).toBeVisible();
 });
