@@ -1,6 +1,6 @@
 ---
 document_id: PPO-010-FEEDBACK-DES
-revision: r04
+revision: r05
 date: 2026-09-12
 owner: Dean Fiedler - private prototype
 status: Proposed for review; nothing adopted, no scope widened
@@ -195,6 +195,49 @@ A dashboard reporting that estimates were 8% light last quarter changes nothing.
 
 At a measured 3.7 quotes per working day, **estimating speed may repay the build before accuracy does.** Reaching a defensible number faster on repeat work recovers time across every quote produced. The accuracy benefit reaches only the one in three that is accepted; the speed benefit reaches all of them. It should not be treated as a secondary bonus when sequencing the work. Neither benefit is quantified here — doing so needs the owner's estimating time per quote, which this record does not have.
 
+### 6.5 Two baselines, and the identity between them
+
+**Owner-directed 12 September 2026 (decision 1e): record both.**
+
+An accepted estimate is not always the estimate that was issued. Scope moves during negotiation. Binding the outcome to only one of them answers only half the question:
+
+| Comparison | What it measures | Whose question it answers |
+|---|---|---|
+| Issued estimate → actual cost | **Total variance.** How good the original number was. | Estimating |
+| Issued estimate → accepted estimate | **Negotiation movement.** How the offer changed before it was agreed. | Commercial |
+| Accepted estimate → actual cost | **Delivery variance.** Whether the agreed number held. | Delivery |
+
+These are not three independent measurements. They reconcile exactly:
+
+```
+(actual − issued)  =  (accepted − issued)  +  (actual − accepted)
+   total variance      negotiation movement      delivery variance
+```
+
+That identity is worth enforcing, because it is a free integrity check: if the three do not reconcile, a baseline has been rebound or a line has been added without a revision, and the outcome record is wrong before anyone reads it.
+
+It also routes attribution correctly. Negotiation movement should resolve to the section 8 **Scope** codes; delivery variance to **Productivity**, **Rate and price** and **Sequencing**. A variance filed against the wrong arm teaches the wrong department.
+
+The cost is small: the outcome record carries two baseline references instead of one, and both must be immutable saved versions. The benefit is that "we estimated badly" and "the job changed after we priced it" stop being the same number.
+
+### 6.6 The prospective arm: Major-band pre-bid review
+
+**Owner-directed 12 September 2026 (decision 1d): adopt for the Major band.**
+
+Everything above this point is retrospective — it learns from jobs already delivered. That cannot work for the Major band, where n is about three a year and section 2.3 puts 18% to 41% of accepted value. Retrospection needs repetition, and the repetition is not there.
+
+So the Major band gets the opposite mechanism: **structured scrutiny before the number goes out, instead of a ratio after it comes back.** The loop therefore has two arms, and this one reaches the money the other cannot.
+
+| Element | Design position |
+|---|---|
+| **Trigger** | A value threshold, plus any estimate where a material driver has no reference case at all. The threshold is the owner's to set; section 2.1 proposes the Major boundary at $1,000,000. Two triggers matter because an unfamiliar $300,000 job can be riskier than a familiar $2,000,000 one. |
+| **Independence** | Reviewed by someone other than the estimate's author. This is the control that does the work; without it the review is a re-read. |
+| **What it examines** | Scope completeness against the stated assumptions and exclusions; quantity basis and its source; supplier price validity dates against the expected award date; whether contingency has a stated basis rather than a habitual percentage; and explicitly, which drivers have no comparable reference case. |
+| **Output** | A recorded review with findings and their disposition. **It is not an approval.** Approval authority does not exist — precondition P6 — and this record does not create it. |
+| **Relation to the loop** | The review record is what the eventual close-out compares against, and the pair becomes a curated reference case. Major-band jobs produce cases, never ratios. Section 9's rule excluding the Major band from every ratio is unchanged. |
+
+Two things this is not. It is not AACE RP 31R-03 reproduced — that recommended practice is the established reference for reviewing, validating and documenting an estimate, and it should be obtained and read before the review content is fixed. And it is not a software increment: it is a procedure, which is why it can precede F1 rather than depend on it. PPO's part is to hold the review record and bind it to the estimate version, which is a small addition to F1's data model rather than a separate build.
+
 ## 7. Candidate data model
 
 Proposed logical model, not current SQL. All mutable records would carry UUID, fixed `workspace_id` and `company_id`, `version`, server actor and time, and `synthetic`, consistent with BP-04 section 5 and the existing platform pattern.
@@ -202,13 +245,14 @@ Proposed logical model, not current SQL. All mutable records would carry UUID, f
 | Candidate | Minimum fields | Constraints |
 |---|---|---|
 | `cost_breakdown_codes` | `code`, `label`, `category`, `parent_code`, `unit_basis`, `active_from`, `active_to`, `version` | Registry. Retiring a code never reallocates it. An estimate line binds the code version current at save. |
-| `delivery_outcomes` | `estimate_version_id`, `quote_revision_id`, `delivery_target_type`, `delivery_target_id`, `comparison_basis_id`, `state`, `owner_id`, `completeness_declaration` | One accepted estimate version per outcome. Immutable once `Reviewed`; correction by linked successor. |
+| `delivery_outcomes` | `issued_estimate_version_id`, `accepted_estimate_version_id`, `quote_revision_id`, `delivery_target_type`, `delivery_target_id`, `comparison_basis_id`, `state`, `owner_id`, `completeness_declaration` | **Two baselines per 6.5**, both immutable saved versions; they may be the same version where the offer never moved. The 6.5 identity is checked before `ReadyForReview`. Immutable once `Reviewed`; correction by linked successor. |
 | `comparison_bases` | `actual_source`, `quantity_class`, `cost_definition_id`, `currency`, `escalation_index`, `as_at` | Versioned. A basis with an undefined cost definition cannot reach `ReadyForReview`. |
 | `outcome_lines` | `breakdown_code`, `estimated_quantity`, `estimated_unit`, `estimated_cost`, `delivered_quantity`, `delivered_cost`, `source_refs`, `line_completeness` | Quantities compare only on like units via a reviewed conversion. Unknown is null and blocks, never zero. |
 | `variance_reasons` | `reason_code`, `group`, `label`, `active_from`, `active_to` | Governed registry, owned by Commercial. |
 | `outcome_line_reasons` | `outcome_line_id`, `reason_code`, `share`, `note` | Shares sum to 1 across an attributed variance. |
 | `basis_observations` | `breakdown_code`, `context_key`, `ratio`, `n`, `median`, `range_low`, `range_high`, `as_at`, `source_outcome_ids` | Derived, append-only. Never a price. Never edited. |
 | `calibration_proposals` | `breakdown_code`, `proposed_rule_version`, `evidence_observation_ids`, `proposer`, `reviewer`, `decision`, `reason` | F5 only. Requires P5 and P6. |
+| `prebid_reviews` | `estimate_version_id`, `trigger_reason`, `reviewer_id`, `findings`, `disposition`, `drivers_without_reference_case`, `reviewed_at` | Per 6.6. Reviewer must differ from the estimate author. Records findings, not approval. Binds to an exact issued version. |
 
 Readable references would follow PPO-STD-001: `SYN-PPO-DOR-000001` for a delivery outcome record, subject to the type-code registry amendment section 10.2 of the standard requires. A new type code must be added deliberately, not assumed from this example.
 
@@ -302,10 +346,11 @@ These are proposals. Allocation is an owner act and does not occur by this recor
 | 1a | ~~How many quotes are won and delivered~~ | **Answered in r04 from the owner's extract: 225 of 672 accepted, 33.5%.** Accepted Project Quotes annualise to ~190. |
 | 1b | Confirm the size bands against the extract | The measured average accepted value is ~$75,600 and project work excluding Major averages $69,000–$99,000. The r03 bands were proposed before this; confirm or move the Core boundary on the real distribution. |
 | 1c | Whether the 672 counts pursuits or includes revisions and alternatives | Still open. The Sales/Project split answers *which population*, not *how many times one pursuit was quoted*. If revisions are counted, one heavily revised job contributes several observations and outvotes the rest. BP-04 section 5 already separates CommercialOption, EstimationRevision and QuoteRevision; bind the outcome record to the pursuit. |
-| 1d | Whether the Major band gets a pre-bid review rather than a post-hoc ratio | **Now the highest-value item in this record.** Section 2.3: two quotes out of 672 carry a fifth to two fifths of accepted value, in the one band no ratio can reach. It is a procedure, not a build. |
-| 1e | Which estimate version is the comparison baseline | First issued measures how good the original number was. Final accepted measures whether the agreed number held. **Recommendation: both** — the gap between them *is* scope change, which is what the section 8 Scope reason codes exist to name. Once lineage exists the second comparison is nearly free. |
+| 1d | ~~Whether the Major band gets a pre-bid review~~ | **Owner-directed 12 September 2026. Adopted in principle; specified at section 6.6.** Still to set: the value threshold, who reviews, and whether RP 31R-03 is obtained before the review content is fixed. |
+| 1e | ~~Which estimate version is the comparison baseline~~ | **Owner-directed 12 September 2026: both.** Specified at section 6.5, including the identity the three comparisons must satisfy. Carried into the section 7 model as two baseline references. |
 | 1f | Whether accepted Sales Quotes are in scope for close-out at all | ~130 a year at around $10,000. A 5% variance is about $500. F1 excludes them; confirm, or define a lighter mechanism. |
 | 1g | Two figures still to extract: the Sales/Project split of the 225 accepted, and the total quoted value of all 672 | The split is currently assumed uniform at 33.5%, which drives the ~190 figure everything else rests on. Total quoted value gives win rate *by value*, which shows whether survivorship bias runs toward large or small jobs. |
+| 1h | Whether this record now stops changing until 1g's figures arrive | Five revisions in one day, four driven by figures. A record revised continuously is never used. **Recommendation: freeze.** Merge it as the current proposal, and reopen only for 1g or for a decision that changes direction. |
 | 2 | Who owns the cost breakdown code registry | It outlives every estimate; an unowned registry decays within a year |
 | 3 | Who owns the variance reason registry | Same, and it carries the behavioural policy |
 | 4 | Non-punitive use, stated as policy | Determines whether the data is truthful |
@@ -334,5 +379,6 @@ This is a design proposal. It is not business acceptance, not engineering sizing
 | r02 | 2026-09-12 | **Recommendation reversed to Projects.** Finding 1 rewritten; section 2.1 added reconciling the Project *route* with the observed volume and separating the two project populations; P1 restated with the free-text `project_reference` / `opportunity_reference` finding; estimating-speed payback added to 6.4; F1 repointed from Service to Projects with the residual trade-off stated; decisions 1, 1a, 1b and 5 revised. | The owner corrected the volume premise: roughly three project quotes a day at around $20,000 average, not single-digit major builds a year. The r01 recommendation rested on that premise and did not survive it. The Service-first case was additionally weak because planned service work is frequently not estimated at all, which r01 did not check. |
 | r03 | 2026-09-12 | Section 2.1 replaced with the owner's observed distribution and four size bands; sections 2.2 and 2.3 added on the Major-band asymmetry and the pursuit-versus-revision count; three statistical rules added on cell budgeting, earned segmentation and driver-unit ratios; survivorship and materiality anchored to real figures; decisions 1a answered, 1b restated, 1c and 1d added. | The owner supplied the delivered distribution: 100 to 200 projects a year, $5,000 to $10,000,000, about three over $1,000,000, most between $30,000 and $100,000. This answers the open n question and replaces r02's two speculative populations with four measured bands. |
 | r04 | 2026-09-12 | Sections 2.2 and 2.3 rebuilt on the owner's YTD extract; survivorship, cell budget, estimating speed and F1 scope recomputed on measured figures; F1 narrowed to accepted Project Quotes; decisions 1a answered, 1b and 1c restated, 1e, 1f and 1g added; provenance recorded in section 14. | The owner extracted 1 January to 12 September 2026: 672 quotes (273 Sales, 399 Project), 225 accepted for about $17 million. **This resolves the r03 section 2.3 contradiction rather than patching it.** There are two quote populations, separately counted in the source records, and each of the owner's three earlier figure sets was describing a different one. None was wrong. |
+| r05 | 2026-09-12 | Sections 6.5 and 6.6 added, specifying the two comparison baselines with the identity they must satisfy, and the Major-band pre-bid review with its trigger, independence control, examination scope and relation to the loop. Section 7 gains two baseline references on `delivery_outcomes` and a `prebid_reviews` candidate. Decisions 1d and 1e closed as owner-directed; 1h added. | The owner accepted the r04 recommendations on 12 September 2026 and directed that the work proceed on that basis. Recording a direction without specifying it would leave two ticked boxes and no design, so each is given enough substance to be built or refused on its merits. Approval authority is still absent (P6) and the pre-bid review deliberately records findings rather than approvals. |
 
-r01 to r03 are superseded, not deleted. Their reasoning is preserved above so the basis of each change remains inspectable. Note which analysis held: every conclusion derived from the *delivered* count survived all four revisions unchanged in substance, while every conclusion derived from the *quote* count changed at each one. Prefer the delivered side when the two disagree.
+r01 to r04 are superseded, not deleted. Their reasoning is preserved above so the basis of each change remains inspectable. Note which analysis held: every conclusion derived from the *delivered* count survived every revision unchanged in substance, while every conclusion derived from the *quote* count changed at each one. Prefer the delivered side when the two disagree.
