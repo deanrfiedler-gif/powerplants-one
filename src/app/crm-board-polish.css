@@ -165,6 +165,7 @@ body:has(.crm-workspace) .header-account .identity-hosted {
   flex-wrap: wrap;
   gap: 5px 10px;
   padding: 0 18px 12px;
+  border-bottom: 1px solid var(--line);
   font-size: 13px;
 }
 .crm-worklist-stamp strong {
@@ -179,13 +180,9 @@ body:has(.crm-workspace) .header-account .identity-hosted {
 .crm-board {
   display: flex;
   flex-direction: column;
-  /* globals.css sets gap:16px for its two-column grid board; as a flex
-     column that became a row gap under the stage headings. */
-  gap: 0;
 }
 .crm-board-headers {
-  padding-top: 6px;
-  padding-bottom: 0;
+  padding-top: 8px;
   flex: none;
 }
 .crm-board-columns {
@@ -195,13 +192,8 @@ body:has(.crm-workspace) .header-account .identity-hosted {
 .crm-board-headers .crm-stage-heading {
   display: block;
   height: auto;
-  min-height: 52px;
-  padding: 7px 12px 7px 17px;
-}
-/* Drag feedback fills the heading chevron to match its column. Fill only:
-   no outline, which reads as a border on the chevron shape. */
-.crm-stage-heading[data-drop-active="true"]::before {
-  background: #cfe6c4;
+  min-height: 62px;
+  padding: 8px 12px 8px 17px;
 }
 .crm-stage-heading h2 {
   font-size: 16px;
@@ -218,25 +210,23 @@ body:has(.crm-workspace) .header-account .identity-hosted {
 .crm-stage-total span {
   font-size: 12px;
 }
-/* The first card sits just under the heading container. */
 .crm-stage .crm-worklist {
-  padding: 4px 6px 12px;
+  padding: 8px 6px 12px;
   gap: 7px;
 }
 .crm-stage .crm-card {
-  position: relative;
   display: grid;
-  grid-template-rows: auto auto;
+  grid-template-rows: 158px 108px;
   border-color: #d8dee6;
   box-shadow: 0 1px 2px #242a370a;
 }
 .crm-card .crm-card-body.crm-opportunity-title {
   display: grid;
-  grid-template-rows: auto auto auto auto;
-  gap: 5px;
+  grid-template-rows: 42px 21px 24px 27px;
+  gap: 4px;
   height: auto;
   min-height: 0;
-  padding: 10px 34px 9px 10px;
+  padding: 10px 10px 8px;
 }
 .crm-card-heading {
   display: flex;
@@ -276,55 +266,22 @@ body:has(.crm-workspace) .header-account .identity-hosted {
   height: 14px;
 }
 .crm-card-warning {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
+  flex: none;
   color: #865900;
 }
-.crm-card-warning:hover,
-.crm-card-warning:focus-visible {
-  background: #fff5df;
-  color: #6b4700;
-}
 .crm-card-warning .product-icon {
-  width: 19px;
-  height: 19px;
+  width: 20px;
+  height: 20px;
 }
 .crm-card .crm-card-activity {
   display: grid;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: 19px 35px 20px;
   gap: 4px;
   height: auto;
   min-height: 0;
   padding: 9px 10px;
   background: #edf6ef;
   border-top-color: #dce0e5;
-  /* The strip is a button now, so the global button rule applies: green fill,
-     navy border, 46px min-height, centred bold content. Undo all of it and
-     leave background to the state classes, which set it for every state. */
-  width: 100%;
-  border-left: 0;
-  border-right: 0;
-  border-bottom: 0;
-  border-radius: 0 0 7px 7px;
-  min-height: 0;
-  font: inherit;
-  font-weight: 400;
-  text-align: left;
-  justify-content: start;
-  align-items: start;
-  color: inherit;
-}
-.crm-save-status {
-  color: var(--muted);
-  font-size: 12px;
 }
 .crm-card .crm-card-activity.state-Overdue {
   background: #fff1f1;
@@ -361,34 +318,6 @@ body:has(.crm-workspace) .header-account .identity-hosted {
 }
 .crm-card .crm-owner-label {
   font-size: 12px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-width: 0;
-}
-/* An initials circle means a PPO user, matching the shell account control.
-   The customer contact keeps the outline glyph: it is a record, not a user. */
-.crm-owner-avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #dfe4ea;
-  color: #3f4855;
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-.crm-card .crm-card-activity.state-Overdue .crm-owner-avatar {
-  background: #f7dcd9;
-  color: #8c2018;
-}
-.crm-card .crm-card-activity:is(.state-Needed, .state-DueNeeded) .crm-owner-avatar {
-  background: #f4e4c0;
-  color: #6b4700;
 }
 .crm-page-context {
   margin-right: auto;
