@@ -9,9 +9,11 @@ review fixture. #122 has been reduced to that fixture. The change is raised here
 its own so it can be reviewed as what it is: a shell and interaction change, not
 presentation evidence.
 
-Nothing here is accepted. The suites have been re-baselined so the change is
-reviewable against a passing build, which is not the same as agreement that the
-new baseline is correct. Sections 3 and 6 list what needs a decision from Dean.
+Nothing here is accepted, and this branch is **not green**. One finding below is
+blocking: the drag-to-save path drops the qualification capture that the accepted
+stage-change journey requires. Section 3 states it. The component suite has been
+re-baselined; the database-backed suites deliberately have not, because
+re-baselining them would write that regression into the acceptance evidence.
 
 ## 1. What changes
 
@@ -47,12 +49,49 @@ Activities all day and visits Projects or Finance occasionally. Promoting the
 Sales section and demoting departments to More reflects that, and leaves room for
 the sections other roles will need later.
 
-The stage picker on drop asked the user to confirm an instruction they had already
-given by dragging. Removing it does not weaken the control: the same server
+The stage picker on drop asked the user to confirm an instruction the actor had
+already given by dragging. Removing the confirmation is sound; removing it wholesale
+is not, because the same dialog was also capturing the qualification outcome.
+Section 3 is that problem. The rest of the control is intact: the same server
 validation, version check and operation id apply, and the save status is shown
 rather than assumed.
 
-## 3. What this does not decide
+## 3. Blocking: the drop discards the qualification capture
+
+`tests/browser/crm-refinements.spec.ts` encodes the accepted stage-change journey.
+Dragging a card to Qualified opens the **Change deal stage** dialog, the actor
+supplies a **Qualification outcome**, and only then is the stage saved. Undo goes
+back through the same dialog.
+
+The drag-to-save path sends `qualification_note: null` with
+`reason: "Move on the board"` and no dialog at all. The same endpoint, operation id
+and version check apply — that part of the claim holds — but the qualification
+outcome is no longer captured on the move that sets Qualified. That is a change to
+a business control, not to presentation, and #122 was explicitly described as
+relaxing nothing of the kind.
+
+This has to be decided before the branch is finished, and three answers are
+defensible:
+
+1. **Keep the dialog for transitions that require evidence, drop it for the rest.**
+   A drop into Qualified opens the qualification dialog pre-filled with the target
+   stage; a drop between stages that require nothing saves directly. This keeps the
+   control and still removes the pointless confirmation. It is the option I would
+   take.
+2. **Save directly and capture the outcome afterwards,** leaving the opportunity in
+   a "qualification outcome needed" state the worklist surfaces. This preserves the
+   fast path but introduces a new state, a new read contract and a new exception —
+   more work than it looks.
+3. **Decide the qualification outcome is not required on a board move.** Defensible
+   only with an explicit decision that says so and updates the journey; it must not
+   arrive as a side effect of a drag-and-drop change.
+
+Until this is settled, `tests/browser/crm-refinements.spec.ts` and
+`tests/browser/crm-i2.spec.ts` are left exactly as they are. They will fail on this
+branch. That is the correct result: the suites are describing a control the change
+removes, and silencing them would destroy the evidence that it did.
+
+## 4. What this does not decide
 
 - **Whether the Sales rail is the right rail.** It is currently the only section.
   How a Service or Finance user reaches their own section is unresolved, and a
@@ -71,7 +110,7 @@ rather than assumed.
   database still supplies Enquiry and Qualified. The five-stage proposal remains a
   separate contract and migration question.
 
-## 4. Corrections made while preparing this branch
+## 5. Corrections made while preparing this branch
 
 Three defects were found and fixed here rather than carried into review.
 
@@ -95,18 +134,33 @@ requires the rail not to scroll. At 800×500 the ninth control overflowed by abo
 3→2px at ≤580px, with the ≤690px band adjusted to match — which fits all nine with
 room to spare. Icons stay 30px.
 
-## 5. Re-baselined checks
+## 6. Re-baselined checks
 
 These assertions describe the accepted shell, so changing them is part of the
-proposal and not incidental tidying.
+proposal and not incidental tidying. Only the component suite is changed here.
+
+**Changed:**
 
 - `tests/ui/desktop-shell.spec.ts` — rail icon count 7 → 8, and the hovered label
   list replaced with the eight Sales labels.
 - `tests/ui/crm-board.spec.ts` — the activity strip is asserted as a dialog trigger
   rather than an `/work/` link, and the snapshot's **Open full activity** link is
-  checked for that destination.
-- `tests/browser/crm-i2.spec.ts` — the active rail and module-dialog link is Deals
-  on both desktop and mobile, replacing Sales / CRM and CRM Sales.
+  checked for that destination. No control is lost: the full activity is still
+  reachable, one action further on.
+
+**Deliberately not changed,** pending section 3:
+
+- `tests/browser/crm-refinements.spec.ts` — the drag-to-Qualified journey, the
+  qualification outcome, Save stage, Undo through the dialog, and the activity
+  strip navigating to `/work/{id}`.
+- `tests/browser/crm-i2.spec.ts` — `a.crm-card-activity` at lines 154 and 337, which
+  assert the strip is a link with an `/work/` href and carry the owner tooltip and
+  keyboard checks; and the rail and module-dialog link names at lines 292 and 310,
+  which need Deals but are left with the rest of the file so the change lands in
+  one reviewable piece.
+
+`scripts/crm-restart-proof.ts` needs no change: the scoped search it drives is
+restored.
 
 `src/app/crm-board-polish.css` also regains a two-line minimum on the phone card
 title. The redesign relaxed the card body to automatic rows, so a one-line and a
@@ -114,7 +168,7 @@ two-line title produced 194px and 215px cards and the uniform-height check faile
 at 320px. Desktop was unaffected, because its fixed body and activity heights
 already enforce it.
 
-## 6. Verification status
+## 7. Verification status
 
 Run against this branch, in the container, with the review fixture built from the
 actual components and CSS:
@@ -126,11 +180,16 @@ actual components and CSS:
   none failing, across the desktop, phone and narrow-phone projects.
 
 **Not run here:** the database, compiled-application and full browser suites, which
-need PostgreSQL and a compiled build. CI is the evidence for those, and its result
-is required before this is treated as verified. The drag-to-save path in particular
-has had no concurrency, stale-version or lost-response test written for it, and
-should not be accepted without one.
+need PostgreSQL and a compiled build. They are **expected to fail** on this branch,
+on the assertions listed in section 6 as deliberately unchanged. CI will show that,
+and it is the honest result until section 3 is decided.
 
-No schema, migration, seed, read-contract, permission, transition-policy or
-deployment change is included. Stage movement continues to require server
-validation, version-conflict handling and durable history.
+The drag-to-save path also has no concurrency, stale-version or lost-response test
+written for it. One is required before acceptance: the optimistic column placement
+means a rejected or lost save leaves the card showing a stage the server never
+recorded, and only the status line contradicts it.
+
+No schema, migration, seed, read-contract, permission or deployment change is
+included. Stage movement continues to require server validation, version-conflict
+handling and durable history. It no longer captures a qualification outcome on a
+board move, which is the transition-policy change section 3 asks you to decide.
