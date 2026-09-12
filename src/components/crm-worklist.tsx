@@ -131,7 +131,7 @@ export function SalesWorklist() {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const data = useCrmResource<Results>(`crm/opportunities?${query(filters)}`, true);
   // On acceptance drop the optimistic override and let the server be the truth.
-  const stageCommand = useCrmCommand(() => { setMoved({}); setUndoMove(null); setFilters(o => ({ ...o, cursor: "" })); data.reload(); }, "No unsaved changes");
+  const stageCommand = useCrmCommand(() => { setMoved({}); setUndoMove(null); setFilters(o => ({ ...o, cursor: "" })); data.reload(); }, "Move pending confirmation");
 
   // Clear query text, selected IDs and option-search components after current access is denied.
   const isDenied = denied(data.error);
@@ -165,12 +165,13 @@ export function SalesWorklist() {
   const undoLastMove = () => {
     if (!undoMove || stageCommand.busy || stageCommand.uncertain) return;
     const { id, from } = undoMove;
+    const old = data.data?.items.find(x => x.id === id);
+    if (!old) return;
     setMoved(m => ({ ...m, [id]: from }));
     setFeedback("");
     setUndoMove(null);
     stageCommand.clearError();
-    const old = data.data?.items.find(x => x.id === id);
-    if (old) void stageCommand.send(`crm/opportunities/${id}/stage`, {
+    void stageCommand.send(`crm/opportunities/${id}/stage`, {
       expected_version: old.version,
       stage_id: from,
       qualification_note: null,

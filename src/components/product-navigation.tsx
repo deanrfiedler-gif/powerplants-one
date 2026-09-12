@@ -105,7 +105,7 @@ function ProductNavigationView({ path, wide }: { path: string; wide: boolean }) 
     { label: "Deals", icon: "deals", href: "/crm/opportunities" },
     { label: "Inbox", icon: "mail", href: "/email" },
     { label: "Activities", icon: "calendar", href: "/calendar" },
-    { label: "Contacts", icon: "customers", href: "/customers" },
+    { label: "Contacts", icon: "customers", href: "/people" },
     { label: "Products", icon: "products" },
     { label: "Insights", icon: "insights" },
   ];
