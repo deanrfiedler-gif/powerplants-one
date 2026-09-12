@@ -52,7 +52,7 @@ Shared conflict points for any rebase: `docs/STATUS.md`, `docs/standards/documen
 
 ## 5. Decision state
 
-D-003 is resolved for this personal prototype (Powerplants One, PPO, independent naming). D-004/D-022/D-029 are partially resolved; the other 25 master decisions remain open. [Current evidence treatment](prototype/decisions-and-evidence.md) separates useful design detail from operational closure evidence. The ADR sequence runs ADR-0001–0018 and ADR-0020; ADR-0019 was never allocated. Dean owns prototype decisions; proposed department roles assign no employees and establish no corporate sponsorship.
+D-003 is resolved for this personal prototype (Powerplants One, PPO, independent naming). D-004/D-022/D-029 are partially resolved; the other 25 master decisions remain open. [Current evidence treatment](prototype/decisions-and-evidence.md) separates useful design detail from operational closure evidence. The ADR sequence runs ADR-0001–0018, ADR-0020 and ADR-0021 (proposed on PR #117); ADR-0019 was never allocated. Dean owns prototype decisions; proposed department roles assign no employees and establish no corporate sponsorship.
 
 ## 6. Boundaries that still hold
 
