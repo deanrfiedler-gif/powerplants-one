@@ -13,11 +13,12 @@ Nothing here is accepted. The finding that held this branch back is resolved: th
 drag-to-save path both discarded the qualification capture the accepted stage-change
 journey requires and was refused by the server for doing so. Section 3 records the
 finding and the answer taken, and section 4 records where the rule goes under the
-five-stage model the supplied containers describe. The accepted stage journey is
-restored in the code, so the suite that describes it keeps its drag assertions
-unchanged; every assertion that was re-baselined is listed in section 7, and each is
-naming or presentation. Section 8 is the verification, run against a real
-PostgreSQL database and the real application.
+five-stage model accepted in `crm-pipeline-stage-model.md`, together with one
+naming contradiction that record and the supplied containers do not agree on. The
+accepted stage journey is restored in the code, so the suite that describes it
+keeps its drag assertions unchanged; every assertion that was re-baselined is
+listed in section 7, and each is naming or presentation. Section 8 is the
+verification, run against a real PostgreSQL database and the real application.
 
 ## 1. What changes
 
@@ -148,42 +149,70 @@ What that means in the code:
 ## 4. Where this goes under the five-stage model
 
 The rule this branch enforces is correct for the two-stage model it runs against.
-It is not the rule the five-stage model needs, and the supplied containers
-`ppo-deal-pipeline_r13` and `PPO-Leads-Desktop-Container-r01` settle what replaces
-it.
+It is not the rule the five-stage model needs.
+[`crm-pipeline-stage-model.md`](crm-pipeline-stage-model.md) owns the stage set,
+its names, its exit conditions and its permitted transitions; this section records
+only what the accepted model does to the evidence rule in
+`stageRequiresEvidence`, and does not restate or amend it.
 
-The leads container makes **lead conversion** the qualification event. Its **Convert
-to deal** dialog requires a qualification note, and refuses to convert without an
-organisation, a contact and a next activity — the same two gates the server applies
-today, `narrative()` and `CRM_IDENTIFICATION_REQUIRED`, relocated to Leads. The
-deal board then runs `Qualified → Scoping → Quoting → Negotiation → Closing` and
-moves a card with no dialog on any of its three paths: drag, the per-card stage
-menu, and bulk *Move to stage…*.
+That model places qualification in the Leads module: a lead that qualifies becomes
+an opportunity and enters the board at the first stage, so everything on the board
+is already qualified. The supplied `PPO-Leads-Desktop-Container-r01` shows the same
+division — its **Convert to deal** dialog requires a qualification note and refuses
+to convert without an organisation, a contact and a next activity, which are the
+two gates the server applies today, `narrative()` and
+`CRM_IDENTIFICATION_REQUIRED`, relocated to Leads.
 
-That is coherent because **Qualified becomes the entry stage.** Nothing arrives
-there by being dragged; a deal is created there by conversion. Board movement is
-then between working stages that carry no evidence of their own, and
-`stageRequiresEvidence` correctly returns false for all of them — so the direct
+That is coherent because **the entry stage is reached by conversion, not by a
+drag.** Board movement is then between working stages that carry no evidence of
+their own, so `stageRequiresEvidence` returns false for all of them: the direct
 save this branch already implements becomes the path for every board move, and the
 dialog branch becomes unreachable rather than wrong.
 
 The requirement therefore belongs to the transition **into** the pipeline, not to
-the stage named Qualified. Retiring it is part of the five-stage increment:
+any stage on the board. Retiring it is part of the five-stage increment:
 
 1. `convertLead` becomes the gate — organisation, contact, next activity,
-   qualification note, as the container specifies.
+   qualification note, as the leads container specifies.
 2. `stageRequiresEvidence` returns false for every board stage, and
-   `parseDealStage` stops special-casing Qualified.
+   `parseDealStage` stops special-casing the qualification transition.
 3. The check constraint above is rewritten. Written for two stages, it demands a
-   note for Qualified and forbids one for Enquiry; under five stages it needs a
+   note for `Qualified` and forbids one for `Enquiry`; under five stages it needs a
    clause per stage, with the note set at conversion and carried forward.
+4. The deal page's stage track stops being a literal. `crm-screens.tsx:464` maps
+   `["Enquiry", "Qualified"]`, so it will show two stages against a five-stage
+   board until it reads the stage definitions the board already reads. It is also
+   the only keyboard path to a stage change, so it cannot be left behind.
 
-**The trap to avoid.** If the stage set grows while `stageRequiresEvidence` and
-`parseDealStage` still key off `"Qualified"`, every drag *backwards* into Qualified
-will demand a fresh qualification note — a routine correction treated as a
-qualification event. `ppo.crm_stage_definitions` is a table with a foreign key from
-`opportunities`, so the stage set is data; the validation and the constraint are
-not, and both have to move with it.
+**The trap to avoid.** `stageRequiresEvidence` and `parseDealStage` key off the
+literal `"Qualified"`. `ppo.crm_stage_definitions` is a table with a foreign key
+from `opportunities`, so the stage set is data and can be extended by inserting
+rows; the validation and the check constraint are not, and do not move with it. If
+the accepted stage set retains a stage whose identifier is `Qualified`, that
+literal survives the migration while meaning something different — the entry
+column rather than the qualification event — and every drag *backwards* into it
+will silently demand a fresh qualification note, treating a routine correction as
+a qualification event. If the entry stage is named otherwise, the same stale
+special-case fails loudly instead, because no board stage matches the literal.
+Failing loudly is the safer of the two, which is a reason to prefer a first-stage
+identifier that is not `Qualified`, independent of the naming argument below.
+
+**Open contradiction — one line from Dean settles it.** The accepted record was
+amended on 11 September 2026 at 21:06 (`f71f24a`, "Dean confirmed … rename the
+first stage to Discovery") from the stage set accepted 24 minutes earlier
+(`ff46cc0`, "Dean accepted Qualified -> Scoping -> Quoting -> Negotiation ->
+Closing"). On 12 September 2026 Dean stated the board's five stages as Qualified,
+Scoping, Quoting, Negotiation, Closing, and supplied `ppo-deal-pipeline_r13`,
+which hard-codes `const STAGES = ['Qualified','Scoping','Quoting','Negotiation',
+'Closing']` at line 307 and contains no occurrence of Discovery. The later
+statement is Dean's, so it is not treated as superseded; the likelier reading is
+that r13 predates the rename and the 12 September message restated the container
+rather than reversing the decision. Recommendation: keep Discovery as confirmed
+and reissue the container to match, because the rename's stated reason holds — if
+qualification is the Leads module's responsibility, a column named Qualified
+describes a state every card on the board already holds — and because of the
+loud-failure argument above. Nothing else in this section depends on the answer:
+the gate moves to lead conversion either way.
 
 ## 5. What this does not decide
 
@@ -204,6 +233,20 @@ not, and both have to move with it.
   database still supplies Enquiry and Qualified from `ppo.crm_stage_definitions`.
   Section 4 sets out where the five-stage model takes the evidence rule; the
   migration itself is a separate increment.
+- **Whether dragging is an accepted way to change stage.**
+  [`crm-pipeline-stage-model.md`](crm-pipeline-stage-model.md) records that
+  drag-and-drop stage movement and bulk stage changes "are not proposed and do not
+  satisfy the evidence, validation and conflict requirements". Dragging is
+  nevertheless implemented and asserted by `tests/browser/crm-refinements.spec.ts`
+  and `tests/browser/crm-i2.spec.ts`, and predates this branch, which changes only
+  what a drop does. The two statements need reconciling — either the drag path
+  gains the accessible alternative, validation and conflict handling that record
+  requires, or it is withdrawn — and this branch settles neither. The accessible
+  alternative exists but not on the board: the deal detail page renders a
+  `crm-stage-track` of real buttons (`src/components/crm-screens.tsx:464`), which
+  is how the phone journey changes stage. On the board itself a drop is the only
+  path, because the per-card stage menu in `ppo-deal-pipeline_r13` has no
+  implementation here.
 
 ## 6. Corrections made while preparing this branch
 
