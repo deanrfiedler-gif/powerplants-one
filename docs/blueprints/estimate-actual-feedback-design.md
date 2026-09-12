@@ -1,6 +1,6 @@
 ---
 document_id: PPO-010-FEEDBACK-DES
-revision: r03
+revision: r04
 date: 2026-09-12
 owner: Dean Fiedler - private prototype
 status: Proposed for review; nothing adopted, no scope widened
@@ -25,7 +25,7 @@ Three findings drive everything below.
 
 | Finding | Consequence |
 |---|---|
-| **Projects carries both the volume and the learning value.** The owner delivers 100 to 200 projects a year, most between $30,000 and $100,000, against a quote rate of order three a day. That is ample for driver-level calibration at breakdown-code level, and the Core band is homogeneous enough to be genuinely comparable to itself. | Build the loop in Projects, on the Core band. Service follows once the mechanism is proven. |
+| **Projects carries both the volume and the learning value.** Measured over 255 days to 12 September 2026: 672 quotes prepared, of which 399 were Project Quotes; 225 accepted for about $17 million. Accepted Project Quotes annualise to roughly 190 a year. That is ample for driver-level calibration at breakdown-code level. | Build the loop in Projects, on accepted Project Quotes. Sales Quotes and Service are separate questions, see 2.2 and section 11. |
 | **The unit of learning is the cost driver, not the job.** "That project ran 12% over" teaches nobody anything. "Install labour on 6 m gutter-height Venlo runs 1.3× the estimated hours, n=7, range 1.1–1.6" changes the next estimate. | A shared cost breakdown structure that both the estimate and the actual are coded to is the load-bearing element. Without it the loop degenerates into a total-versus-total scoreboard that nobody acts on. |
 | **"Actual" is not one number, and PPO's own contracts already say so.** The Finance handoff contract separates captured, reviewed, billable and ERP-processed quantities. FD-05 posted cost and FD-06 open committed cost are both undefined pending D-017, and FD-06 is explicitly flagged so that actual plus commitment does not double count. Acumatica practitioners report the same trap: actual cost excludes received material still in inventory even where it is captured as a committed invoice amount, so the two cannot simply be added. | Every comparison must declare its basis. Where the basis is unknown, the comparison is withheld, not computed — the same discipline as EC-D04's *pending, never zero*. |
 
@@ -33,33 +33,64 @@ Three findings drive everything below.
 
 A project at Powerplants is not necessarily a major build. [BP-04 section 4](BP-04-estimating-quotation.md#4-routing-and-scope) already says so: the Project route is selected by whether design or engineering is required, whether dedicated project management is required, or whether significant scope decisions remain open — priorities 1 to 3. **Route is determined by the nature of the work, not by its value.** A $20,000 job needing design input routes to Project exactly as a multi-million greenhouse build does.
 
-That reconciles the quote rate with BP-04 section 3, whose *Major greenhouse project* journey describes only one end of the population. The owner's observed distribution:
+That reconciles the quote rate with BP-04 section 3, whose *Major greenhouse project* journey describes only one end of the population. The proposed bands, against the measured position in 2.2:
 
-| Band | Value | Delivered per year | Role in the loop |
-|---|---|---|---|
-| Small | under ~$30,000 | Part of the 100–200 total | Ratio calibration, if the band is shown to behave differently from Core |
-| **Core** | **~$30,000 to $100,000** | **The clear majority** | **The primary learning population** |
-| Large | ~$100,000 to $1,000,000 | The balance | Ratio calibration where n permits |
-| Major | over $1,000,000, up to ~$10,000,000 | **About 3** | Never calibratable. Curated reference cases and individual review only |
+| Band | Value | Role in the loop |
+|---|---|---|
+| Small | under ~$30,000 | Ratio calibration, if the band is shown to behave differently from Core |
+| **Core** | **~$30,000 to $100,000** | **The primary learning population** |
+| Large | ~$100,000 to $1,000,000 | Ratio calibration where n permits |
+| Major | over $1,000,000, up to ~$10,000,000 | Never calibratable. Curated reference cases and individual review only |
 
-Roughly 100 to 200 projects are delivered a year against roughly 750 quotes — a conversion of order one in five to one in seven. That is the survivorship figure: **actuals will exist for well under a quarter of estimating output**, and no amount of analysis recovers the rest.
+These boundaries were proposed in r03 before the extract existed. The measured average accepted value is ~$75,600, and project work excluding the Major band averages $69,000 to $99,000 — both sitting at the upper end of the proposed Core band rather than its middle. Decision 1b asks whether the Core boundary should move.
 
-### 2.2 Two populations, two different mechanisms
+### 2.2 The measured position
 
-The Major band is not a smaller version of the Core band, and it must not be treated as one.
+Owner extract, 1 January to 12 September 2026 — 255 days, about 70% of a year and roughly 182 working days.
 
-- **Core is where you learn.** A hundred-odd comparable jobs a year, individually modest, with variances that partly cancel across the population. Calibration works here because repetition works here.
-- **Major is where a single job can hurt.** Three a year, up to $10 million. One 10% cost over-run on a $10 million job is $1 million — comparable to the entire cost variance of the routine population, concentrated in one place and not diversified away.
+| Measure | YTD actual | Annualised (calendar pro-rata) |
+|---|---|---|
+| Quotes prepared | **672** — 273 Sales, 399 Project | ~960 — ~390 Sales, ~570 Project |
+| Accepted | **225** | ~320 |
+| Accepted value | **~$17 million** | ~$24 million |
+| Win rate by count | **33.5%, one in three** | — |
+| Average accepted value | **~$75,600** | — |
+| Quotes per working day | **3.7** | — |
 
-So the Major band needs governance, not statistics: a rigorous individual close-out, a curated reference case, and — more useful still — a pre-bid review before the number goes out, which is the subject of AACE RP 31R-03. A ratio built on n=3 would be worse than no ratio, because it would be quoted.
+Annualised figures are calendar pro-rata only. Horticulture is seasonal and the extract excludes the December–January period, so they are indicative and must not be treated as a forecast.
 
-Blending the bands would let a handful of large, distinctive jobs dominate a ratio computed for routine work. The section 9 rule against blending estimate classes covers this; it is named here because at Powerplants it is a live condition, not a hypothetical.
+**Two quote populations, and that resolves the earlier contradiction.** Sales Quotes and Project Quotes are separately counted in the source records. Reading the owner's three earlier figure sets against this extract, each described a different slice and none was wrong:
 
-### 2.3 One figure to reconcile
+| Earlier figure | What it was describing |
+|---|---|
+| "around three a day" | 3.7 quotes per working day across both types — correct |
+| "average around $10,000" | The Sales Quote population |
+| "most around $30,000 to $100,000" | The Project Quote population |
+| "100 to 200 projects delivered a year" | Accepted **Project** Quotes: ~190 a year on a uniform win rate |
+| "approximately $20 million revenue" | Against $17 million accepted YTD; accepted value and recognised revenue differ by delivery timing |
 
-The quote rate was given as roughly three a day at around $20,000 average; delivered projects are mostly $30,000 to $100,000. Those do not reconcile as stated — 750 quotes at $20,000 is about $15 million quoted, while 100 to 200 delivered projects at Core values plus three Major ones exceeds that. The likely explanation is that a "quote" counts revisions and re-issues of the same pursuit, not distinct pursuits.
+If the 33.5% win rate holds across both types — an assumption, not a measurement, and decision 1g asks for the real split — then about 134 Project Quotes and 91 Sales Quotes were accepted in the period. At a ~$10,000 Sales average that puts roughly $16 million of the $17 million in Project Quotes, averaging about $120,000 each.
 
-This is not pedantry: it changes both n and the survivorship rate, and BP-04 section 5 already separates CommercialOption, EstimationRevision, EstimateVersion and QuoteRevision. **The loop must count pursuits, not revisions** — otherwise one heavily revised job contributes several observations and quietly outvotes the rest.
+### 2.3 Concentration: where the money actually is
+
+Two Major jobs would fall in a 255-day window at the stated rate of about three a year.
+
+| If the 2 Major jobs total | Share of accepted value | Other project work then averages |
+|---|---|---|
+| $3 million | 18% | ~$99,000 |
+| $5 million | 29% | ~$84,000 |
+| $7 million | 41% | ~$69,000 |
+
+**Between a fifth and two fifths of accepted value comes from two quotes out of 672.** Those two sit in the one band the loop can never calibrate: n is 3 a year, each job is distinctive, and a ratio built on that would be worse than none because it would be quoted.
+
+That is the asymmetry, now measured rather than asserted:
+
+- **Core is where you learn.** Around 190 accepted Project Quotes a year, individually modest, variances partly cancelling across the population. Calibration works because repetition works.
+- **Major is where the money is, and statistics cannot reach it.** One 10% over-run on a $7 million job is $700,000 — more than the plausible total cost variance of the routine population.
+
+So the Major band needs governance rather than ratios: an individual close-out, a curated reference case, and a **pre-bid review before the number goes out**, which is the subject of AACE RP 31R-03. On these figures that review is the highest-value single item in this record, and it is the cheapest — it is a procedure, not a build.
+
+Blending the bands would let two jobs dominate a ratio computed for routine work. The section 9 rule against blending estimate classes covers this; it is named here because at Powerplants it is a measured live condition.
 
 ### 2.4 Assumptions that do not currently hold
 
@@ -162,7 +193,7 @@ Every variance beyond a declared materiality threshold must resolve to at least 
 
 A dashboard reporting that estimates were 8% light last quarter changes nothing. A panel saying *"the last five commissioning jobs ran 1.4× the estimated hours; three cited controls integration not scoped"* changes the line being typed.
 
-At roughly three quotes a day, **estimating speed may repay the build before accuracy does.** An estimator producing order of 750 quotes a year who reaches a defensible number faster on repeat work recovers substantial time, and that benefit lands on the same population and needs no calibration authority to realise it. The accuracy benefit is real but slower and harder to attribute, and it reaches only the one-in-five to one-in-seven of quotes that are delivered; the speed benefit reaches every quote. It should not be treated as a secondary bonus when sequencing the work. Neither benefit is quantified here — doing so needs the owner's actual estimating time per quote, which this record does not have.
+At a measured 3.7 quotes per working day, **estimating speed may repay the build before accuracy does.** Reaching a defensible number faster on repeat work recovers time across every quote produced. The accuracy benefit reaches only the one in three that is accepted; the speed benefit reaches all of them. It should not be treated as a secondary bonus when sequencing the work. Neither benefit is quantified here — doing so needs the owner's estimating time per quote, which this record does not have.
 
 ## 7. Candidate data model
 
@@ -209,10 +240,10 @@ The honest constraint is **n**. This section exists so that the loop does not ma
 | **Withhold a ratio below a declared minimum n.** Proposed: n ≥ 5 to display, n ≥ 3 to display marked *indicative*, below that show "insufficient data". | An n of 1 dressed as a benchmark is worse than nothing, because it will be quoted. |
 | **Normalise before comparing, or exclude.** Escalate to a declared index and date; convert currency at a declared rate and date; record site factor and scale. If any normalisation input is unknown, the observation is excluded, not defaulted. | Comparing 2024 costs to 2026 costs, or AUD to a EUR-denominated supply, without normalisation produces a number that is precisely wrong. This is the substance of AACE RP 114R-20 on project historical databases. |
 | **Never blend size bands, segments, currencies or estimate classes.** | A concept-stage budget figure and a firm quotation are not the same artefact. AACE RP 17R-97 classifies estimates by the maturity of project definition precisely so that like is judged against like; RP 104R-19 addresses communicating that accuracy. Tagging each PPO estimate with a definition class is cheap and prevents the commonest misreading. Section 2.1's Major band is excluded from every ratio by rule, not by judgement. |
-| **Budget n per cell, not per year.** 100–200 projects touching 5–10 breakdown codes each gives order of 500–2,000 outcome lines a year. Across a 20–30 code registry that is roughly 17–100 observations per code per year — comfortable. Split by three size bands it falls to 6–33. Split again by job type it falls to 2–11, mostly below the display threshold. | **The constraint is the cell, not the project count.** At this volume the loop can afford breakdown code plus *one* further segmentation dimension, and two only in the highest-volume codes. A third divides n to nothing while looking more sophisticated. |
+| **Budget n per cell, not per year.** About 190 accepted Project Quotes a year touching 5–10 breakdown codes gives 950–1,900 outcome lines. Across a 20–30 code registry that is 32–96 observations per code per year — comfortable. Split by three size bands it falls to 11–32. Split again by job type it falls below the display threshold in most cells. | **The constraint is the cell, not the project count.** At this volume the loop can afford breakdown code plus *one* further segmentation dimension, and two only in the highest-volume codes. A third divides n to nothing while looking more sophisticated. |
 | **Segmentation must be earned by evidence.** Compute the ratio pooled first. Split it only where the split cells differ by more than their own ranges. If they do not differ, pool and keep the n. | Every dimension added divides the sample. Adding one that does not change the answer spends n for nothing and produces cells that must then be withheld. This test is deterministic and inspectable — it needs no model. |
 | **Compute ratios on the driver's own unit, not on job-total percentage.** Hours per unit installed, cost per square metre, cost per controller commissioned. Where a driver has a fixed component — mobilisation, travel, setup — record it as fixed plus variable rather than as a single ratio. | Across a $5,000 to $10,000,000 range, fixed costs dominate a small job and vanish on a large one. A single percentage ratio over that range makes small jobs look catastrophic and would teach the estimator to inflate everything. This is the section 2 point about cost drivers, and it is why it is load-bearing rather than stylistic. |
-| **Record the survivorship limit on every view.** | Actuals exist only for jobs won and delivered. At roughly 750 quotes against 100–200 delivered projects, that is of order one in five to one in seven — **actuals cover well under a quarter of estimating output.** Calibrating on won jobs biases toward whatever was underpriced enough to win. This cannot be corrected away; it must be stated. |
+| **Record the survivorship limit on every view.** | Actuals exist only for jobs won and delivered. The measured win rate is **33.5%, one in three** — so **two thirds of estimating output never produces an actual.** Calibrating on won jobs biases toward whatever was underpriced enough to win. This cannot be corrected away; it must be stated. Win rate *by value* is not yet known and would show whether the bias runs toward large or small jobs; decision 1g asks for it. |
 | **No regression, no machine learning, no automated fitting.** | At this data volume it would fit noise and forfeit explainability. Deterministic aggregation over a governed registry is sufficient, auditable and defensible to a customer. Revisit only if a segment reaches a volume where a model demonstrably beats the median, and say so explicitly at that point. |
 
 ## 10. Risks and failure modes
@@ -246,7 +277,7 @@ Service coverage arrives by adding a delivery target to F1, not as a separate pa
 
 One trade-off is worth stating rather than hidden. Service is the easier proving ground for the mechanism, because PPO already holds reviewed field labour, travel and parts from P07/P09/P10, so F1 could pre-populate the delivered side instead of requiring manual entry. Projects is the harder start and the more valuable one: the delivered side must be keyed by hand until a project cost read is authorised under FD-05. **Projects is still the right start,** because planned service work is frequently not estimated at all — an estimate binds to an Opportunity, while a service work order originates from a ticket and carries only a free-text `opportunity_reference`. A feedback loop built where no estimate exists has nothing to feed back into, which is failure mode *the loop nobody closes* in section 10.
 
-The manual-entry burden is therefore a real cost of starting in Projects, and it constrains F1's design. At 100 to 200 delivered projects a year it is about one close-out per working day — feasible, but only if each takes minutes. On a $30,000 job that is the whole design budget for the screen.
+**F1 covers accepted Project Quotes only.** At about 190 a year that is roughly one close-out per working day — feasible, but only if each takes minutes. Accepted Sales Quotes, roughly 130 a year at around $10,000, are excluded pending decision 1f: a 5% variance there is about $500, and a structured close-out is unlikely to repay the keystrokes. Excluding them is a scope decision, not a judgement that they never vary.
 
 ## 12. Traceability
 
@@ -267,11 +298,14 @@ These are proposals. Allocation is an owner act and does not occur by this recor
 
 | # | Decision | Why it blocks |
 |---|---|---|
-| 1 | Start in Projects, with Service added later as a second delivery target | Settled in r02 on the owner's volume correction. Recorded because it governs every increment below. |
-| 1a | ~~How many quotes are won and delivered~~ | **Answered in r03: 100–200 delivered a year against roughly 750 quotes.** Sufficient n at breakdown-code level; the binding constraint moves to cells, see section 9. |
-| 1b | Confirm the four size bands in section 2.1, and the Core boundary in particular | Proposed as under $30k / $30k–$100k / $100k–$1m / over $1m from the owner's figures. The Core boundary decides which population most ratios are computed on. |
-| 1c | Whether a "quote" counts a pursuit or a revision | Section 2.3. If revisions are counted, one heavily revised job contributes several observations and outvotes the rest. Changes both n and the survivorship rate. |
-| 1d | Whether the Major band gets a pre-bid review rather than a post-hoc ratio | Section 2.2. Three jobs a year cannot be calibrated, but one of them can cost more than the entire routine population's variance. |
+| 1 | Start in Projects, with Service added later as a second delivery target | Settled in r02. Governs every increment below. |
+| 1a | ~~How many quotes are won and delivered~~ | **Answered in r04 from the owner's extract: 225 of 672 accepted, 33.5%.** Accepted Project Quotes annualise to ~190. |
+| 1b | Confirm the size bands against the extract | The measured average accepted value is ~$75,600 and project work excluding Major averages $69,000–$99,000. The r03 bands were proposed before this; confirm or move the Core boundary on the real distribution. |
+| 1c | Whether the 672 counts pursuits or includes revisions and alternatives | Still open. The Sales/Project split answers *which population*, not *how many times one pursuit was quoted*. If revisions are counted, one heavily revised job contributes several observations and outvotes the rest. BP-04 section 5 already separates CommercialOption, EstimationRevision and QuoteRevision; bind the outcome record to the pursuit. |
+| 1d | Whether the Major band gets a pre-bid review rather than a post-hoc ratio | **Now the highest-value item in this record.** Section 2.3: two quotes out of 672 carry a fifth to two fifths of accepted value, in the one band no ratio can reach. It is a procedure, not a build. |
+| 1e | Which estimate version is the comparison baseline | First issued measures how good the original number was. Final accepted measures whether the agreed number held. **Recommendation: both** — the gap between them *is* scope change, which is what the section 8 Scope reason codes exist to name. Once lineage exists the second comparison is nearly free. |
+| 1f | Whether accepted Sales Quotes are in scope for close-out at all | ~130 a year at around $10,000. A 5% variance is about $500. F1 excludes them; confirm, or define a lighter mechanism. |
+| 1g | Two figures still to extract: the Sales/Project split of the 225 accepted, and the total quoted value of all 672 | The split is currently assumed uniform at 33.5%, which drives the ~190 figure everything else rests on. Total quoted value gives win rate *by value*, which shows whether survivorship bias runs toward large or small jobs. |
 | 2 | Who owns the cost breakdown code registry | It outlives every estimate; an unowned registry decays within a year |
 | 3 | Who owns the variance reason registry | Same, and it carries the behavioural policy |
 | 4 | Non-punitive use, stated as policy | Determines whether the data is truthful |
@@ -286,7 +320,7 @@ These are proposals. Allocation is an owner act and does not occur by this recor
 
 Read at `main` head `ff81f9cb376156e0cfb2b8a8daba6fe0915cae62`: the [E1 contract](../contracts/estimating-e1.md), [BP-04](BP-04-estimating-quotation.md), the [Finance handoff contract](../contracts/finance-handoff.md), the [container propositions](../decisions/estimating-container-propositions.md), the [requirement register](../requirements/requirements.csv), [PP-01 traceability](../prototype/traceability.csv) and [PPO-STD-001](../standards/naming-conventions.md). Schema claims about estimate lines, project tables and work-order references were read from the applied migrations `0004-work-scope.sql`, `0012-estimating-e1.sql` and `0019-projects-gantt.sql` at that commit, not inferred from documentation.
 
-Volume and value figures in sections 2.1 to 2.3 are the owner's stated operating figures, recorded as given. They are not drawn from CREMS, MYOB or any system extract, and the reconciliation in section 2.3 remains open.
+Volume and value figures in section 2.2 are an owner-supplied extract covering 1 January to 12 September 2026, recorded as given. The 672 / 273 / 399 / 225 counts and the ~$17 million are from that extract. Everything else in sections 2.2 and 2.3 — the annualised figures, the Sales/Project split of the accepted 225, the assumed ~$10,000 Sales average and the Major-band totals — is derived or assumed, and is labelled as such where it appears. Annualisation is calendar pro-rata and ignores seasonality.
 
 External practice references: AACE International RP 17R-97 (cost estimate classification), RP 104R-19 (communicating estimate accuracy), RP 31R-03 (reviewing, validating and documenting the estimate) and RP 114R-20 (project historical database development). These are cited as established practice for historical cost data, normalisation and estimate classification. They are not adopted as project standards and no clause-level conformance is claimed.
 
@@ -299,5 +333,6 @@ This is a design proposal. It is not business acceptance, not engineering sizing
 | r01 | 2026-09-12 | Initial proposal. Recommended starting the loop in Service on the basis that Projects delivered single-digit major builds a year and lacked the repetition to learn from. | — |
 | r02 | 2026-09-12 | **Recommendation reversed to Projects.** Finding 1 rewritten; section 2.1 added reconciling the Project *route* with the observed volume and separating the two project populations; P1 restated with the free-text `project_reference` / `opportunity_reference` finding; estimating-speed payback added to 6.4; F1 repointed from Service to Projects with the residual trade-off stated; decisions 1, 1a, 1b and 5 revised. | The owner corrected the volume premise: roughly three project quotes a day at around $20,000 average, not single-digit major builds a year. The r01 recommendation rested on that premise and did not survive it. The Service-first case was additionally weak because planned service work is frequently not estimated at all, which r01 did not check. |
 | r03 | 2026-09-12 | Section 2.1 replaced with the owner's observed distribution and four size bands; sections 2.2 and 2.3 added on the Major-band asymmetry and the pursuit-versus-revision count; three statistical rules added on cell budgeting, earned segmentation and driver-unit ratios; survivorship and materiality anchored to real figures; decisions 1a answered, 1b restated, 1c and 1d added. | The owner supplied the delivered distribution: 100 to 200 projects a year, $5,000 to $10,000,000, about three over $1,000,000, most between $30,000 and $100,000. This answers the open n question and replaces r02's two speculative populations with four measured bands. |
+| r04 | 2026-09-12 | Sections 2.2 and 2.3 rebuilt on the owner's YTD extract; survivorship, cell budget, estimating speed and F1 scope recomputed on measured figures; F1 narrowed to accepted Project Quotes; decisions 1a answered, 1b and 1c restated, 1e, 1f and 1g added; provenance recorded in section 14. | The owner extracted 1 January to 12 September 2026: 672 quotes (273 Sales, 399 Project), 225 accepted for about $17 million. **This resolves the r03 section 2.3 contradiction rather than patching it.** There are two quote populations, separately counted in the source records, and each of the owner's three earlier figure sets was describing a different one. None was wrong. |
 
-r01 and r02 are superseded, not deleted. Their reasoning is preserved above so the basis of each change remains inspectable.
+r01 to r03 are superseded, not deleted. Their reasoning is preserved above so the basis of each change remains inspectable. Note which analysis held: every conclusion derived from the *delivered* count survived all four revisions unchanged in substance, while every conclusion derived from the *quote* count changed at each one. Prefer the delivered side when the two disagree.
