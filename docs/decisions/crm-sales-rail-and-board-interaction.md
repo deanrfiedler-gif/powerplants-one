@@ -12,9 +12,12 @@ presentation evidence.
 Nothing here is accepted. The finding that held this branch back is resolved: the
 drag-to-save path both discarded the qualification capture the accepted stage-change
 journey requires and was refused by the server for doing so. Section 3 records the
-finding and the answer taken. The accepted stage journey is restored in the code, so
-the suite that describes it keeps its drag assertions unchanged; every assertion that
-was re-baselined is listed in section 6, and each is naming or presentation.
+finding and the answer taken, and section 4 records where the rule goes under the
+five-stage model the supplied containers describe. The accepted stage journey is
+restored in the code, so the suite that describes it keeps its drag assertions
+unchanged; every assertion that was re-baselined is listed in section 7, and each is
+naming or presentation. Section 8 is the verification, run against a real
+PostgreSQL database and the real application.
 
 ## 1. What changes
 
@@ -58,9 +61,9 @@ the sections other roles will need later.
 The stage picker on drop asked the user to confirm an instruction the actor had
 already given by dragging. Removing the confirmation is sound; removing it wholesale
 is not, because the same dialog was also capturing the qualification outcome.
-Section 3 is that problem. The rest of the control is intact: the same server
-validation, version check and operation id apply, and the save status is shown
-rather than assumed.
+Section 3 is that problem and the answer taken. The rest of the control is intact:
+the same server validation, version check and operation id apply, and the save
+status is shown rather than assumed.
 
 ## 3. Resolved: the drop discarded the qualification capture, and the server refused it
 
@@ -87,9 +90,38 @@ validation error, and the optimistic placement leaves the card in a column the
 server never accepted, with only the status line contradicting it. The same is
 true of the reverse leg: an undo back into Qualified sent `null` as well.
 
+Both were then confirmed by execution rather than by reading. `parseDealStage`
+exercised directly with the two payloads:
+
+```
+REJECT  drop payload      Enquiry -> Qualified    422 InvalidData
+ACCEPT  drop payload      Qualified -> Enquiry    note=null
+ACCEPT  dialog payload    Enquiry -> Qualified    note="SYN Contact confirmed..."
+```
+
+and `tests/browser/crm-refinements.spec.ts:113` run against a real PostgreSQL
+database, which failed on the missing **Change deal stage** dialog exactly as the
+validator predicted.
+
+**The requirement is also a table constraint, not only a validator.**
+`ppo.opportunities` carries:
+
+```sql
+CHECK ((stage_id = 'Enquiry'  AND qualification_note IS NULL
+                              AND identification_activity_id IS NULL)
+    OR (stage_id = 'Qualified' AND qualification_note IS NOT NULL
+                              AND length(btrim(qualification_note)) BETWEEN 1 AND 2000
+                              AND (primary_person_id IS NOT NULL
+                                OR identification_activity_id IS NOT NULL)))
+```
+
+On the current model the qualification outcome is therefore a data invariant of the
+Qualified stage: relaxing it would mean changing the table, not only the validator.
+
 That collapses the three answers this section previously offered. Options 2 and 3
-both require changing `parseDealStage`, which is a contract change this branch
-states it does not make. Option 1 requires none. It is adopted:
+both require changing `parseDealStage` and the constraint above, which is a contract
+and schema change this branch states it does not make. Option 1 requires neither.
+It is adopted:
 
 **A drop into a stage the server requires evidence for opens the dialog on that
 target stage; every other drop saves directly.** The confirmation the actor had
@@ -113,7 +145,47 @@ What that means in the code:
   discarded the undo target the moment a move was accepted, which made the Undo
   control unreachable after a successful move; it is retained now.
 
-## 4. What this does not decide
+## 4. Where this goes under the five-stage model
+
+The rule this branch enforces is correct for the two-stage model it runs against.
+It is not the rule the five-stage model needs, and the supplied containers
+`ppo-deal-pipeline_r13` and `PPO-Leads-Desktop-Container-r01` settle what replaces
+it.
+
+The leads container makes **lead conversion** the qualification event. Its **Convert
+to deal** dialog requires a qualification note, and refuses to convert without an
+organisation, a contact and a next activity — the same two gates the server applies
+today, `narrative()` and `CRM_IDENTIFICATION_REQUIRED`, relocated to Leads. The
+deal board then runs `Qualified → Scoping → Quoting → Negotiation → Closing` and
+moves a card with no dialog on any of its three paths: drag, the per-card stage
+menu, and bulk *Move to stage…*.
+
+That is coherent because **Qualified becomes the entry stage.** Nothing arrives
+there by being dragged; a deal is created there by conversion. Board movement is
+then between working stages that carry no evidence of their own, and
+`stageRequiresEvidence` correctly returns false for all of them — so the direct
+save this branch already implements becomes the path for every board move, and the
+dialog branch becomes unreachable rather than wrong.
+
+The requirement therefore belongs to the transition **into** the pipeline, not to
+the stage named Qualified. Retiring it is part of the five-stage increment:
+
+1. `convertLead` becomes the gate — organisation, contact, next activity,
+   qualification note, as the container specifies.
+2. `stageRequiresEvidence` returns false for every board stage, and
+   `parseDealStage` stops special-casing Qualified.
+3. The check constraint above is rewritten. Written for two stages, it demands a
+   note for Qualified and forbids one for Enquiry; under five stages it needs a
+   clause per stage, with the note set at conversion and carried forward.
+
+**The trap to avoid.** If the stage set grows while `stageRequiresEvidence` and
+`parseDealStage` still key off `"Qualified"`, every drag *backwards* into Qualified
+will demand a fresh qualification note — a routine correction treated as a
+qualification event. `ppo.crm_stage_definitions` is a table with a foreign key from
+`opportunities`, so the stage set is data; the validation and the constraint are
+not, and both have to move with it.
+
+## 5. What this does not decide
 
 - **Whether the Sales rail is the right rail.** It is currently the only section.
   How a Service or Finance user reaches their own section is unresolved, and a
@@ -129,12 +201,13 @@ What that means in the code:
   or Activities. Splitting it would change the demo suite's expectations and is
   left until the naming above is settled.
 - **The stage model.** This changes presentation and the save path only. The
-  database still supplies Enquiry and Qualified. The five-stage proposal remains a
-  separate contract and migration question.
+  database still supplies Enquiry and Qualified from `ppo.crm_stage_definitions`.
+  Section 4 sets out where the five-stage model takes the evidence rule; the
+  migration itself is a separate increment.
 
-## 5. Corrections made while preparing this branch
+## 6. Corrections made while preparing this branch
 
-Three defects were found and fixed here rather than carried into review.
+Four defects were found and fixed here rather than carried into review.
 
 **The scoped opportunity search had been deleted.** `SalesWorklist` lost the
 "Search opportunities" control and its `HeaderContent` slot, while `filters.q`
@@ -150,13 +223,22 @@ own page. The action modules are now Leads and Deals, and the two component
 fixtures follow. The navigation `items` entry is renamed Deals for the same reason,
 which also restores the mobile module dialog's current-page highlight.
 
+**Cards in a column stopped matching in height, on desktop as well as phone.** The
+card body and activity strip moved to automatic rows, so a one-line and a two-line
+title or action text no longer produced the same card. Phone cards came out 194px
+and 215px. Desktop was **not** unaffected, as first recorded here: running
+`crm-i2.spec.ts:326` against a real database showed a 20.25px spread, exactly one
+line at 15px/1.35. Both boards assert equal heights — the component suite to the
+pixel, `crm-i2.spec.ts` to within one. Two lines are now reserved for the title and
+the action text at both widths, as the fixed row heights did before.
+
 **The eight-entry rail did not fit short viewports.** The shell's approved geometry
 requires the rail not to scroll. At 800×500 the ninth control overflowed by about
 23px. The compact-height rules are tightened — brand 86→78px, item 44→40px, gap
 3→2px at ≤580px, with the ≤690px band adjusted to match — which fits all nine with
 room to spare. Icons stay 30px.
 
-## 6. Re-baselined checks
+## 7. Re-baselined checks
 
 These assertions describe the accepted shell, so changing them is part of the
 proposal and not incidental tidying.
@@ -187,32 +269,61 @@ proposal and not incidental tidying.
 `scripts/crm-restart-proof.ts` needs no change: the scoped search it drives is
 restored.
 
-`src/app/crm-board-polish.css` also regains a two-line minimum on the phone card
-title. The redesign relaxed the card body to automatic rows, so a one-line and a
-two-line title produced 194px and 215px cards and the uniform-height check failed
-at 320px. Desktop was unaffected, because its fixed body and activity heights
-already enforce it.
+The card-height rules in `src/app/crm-board-polish.css` are recorded in section 6.
 
-## 7. Verification status
+## 8. Verification status
 
-Run against this branch:
+Run in the container against **PostgreSQL 16.13**, a migrated and seeded synthetic
+database and the real application — not only the component fixture.
+
+**Static and unit**
 
 - `npx eslint .` — passes.
 - `tsc --noEmit` — passes.
 - `npm run test:unit` — 77 of 77 pass.
+- `npm run build` — completes.
+- `check_foundation`, `check_prototype`, `check_naming` — pass.
 
-**Not run against the section 3 change:** the component review suite
-(`playwright.crm-ui.config.ts`), the database, compiled-application and full browser
-suites. They need a Playwright browser, PostgreSQL and a compiled build. The
-component suite passed 24 / 6 skipped / 0 failed before that change, which touches
-the board's save path and the worklist's undo state but neither the activity strip
-nor the snapshot that suite exercises. CI is the first run of the browser suites
-against it, and it is the only place the restored drag journey is actually proven.
+**Component review suite** — `playwright.crm-ui.config.ts`: 24 passed, 6 skipped,
+0 failed across desktop, phone and narrow-phone, run against the section 3 change.
 
-The drag-to-save path still has no concurrency, stale-version or lost-response test
-written for it. One is required before acceptance. The optimistic placement is now
-dropped as soon as the command reports an error, so a card is not left sitting in a
-column the server never confirmed — but that behaviour is asserted nowhere.
+**Database-backed browser suites**
+
+The whole of `tests/browser` on the desktop project: **75 passed, 0 failed** in
+18.1 minutes — every P01–P11 journey, not only CRM.
+
+The five CRM specs on both desktop and mobile — `crm-i2`, `crm-refinements`, `crm`,
+`mobile-crm`, `leads`: 37 passed, 1 skipped.
+
+Three failures were found on the way, each observed before being fixed:
+
+| Observed | Cause | Fix |
+|---|---|---|
+| `crm-refinements.spec.ts:113` — no **Change deal stage** dialog | the drop saved directly and the command was refused | section 3 |
+| `crm-i2.spec.ts:326` — card heights differ by 20.25px | automatic card rows, one line of title | section 6 |
+| `crm-i2.spec.ts:297` — strict-mode violation on "Deals" | the name appears in both the bottom bar and the module dialog | section 7 |
+
+**Database tests** — `tests/database/crm-refinements.test.ts` and
+`tests/database/desktop-shell.test.ts`: 6 of 6 pass.
+
+One local-only failure is **not** a defect in this branch.
+`tests/browser/leads.spec.ts:167` expects its created lead to be the only match for
+its title, but `leadCreate()` in `tests/helpers/leads.ts` uses the fixed title
+`"SYN Greenhouse controls enquiry"`. Repeated runs against a persistent database
+accumulate rows — six were present after three runs — and the count assertion then
+fails. CI migrates and seeds fresh each run, so it passes there, and it passed here
+before the rows accumulated. Worth noting as a test-isolation weakness in that
+helper; it is pre-existing and unrelated to this change.
+
+**Not run here:** the compiled-application suite, the P11 journeys under their own
+workflows, and the mobile project of the full sweep. CI remains the evidence for
+those.
+
+**Still missing, and required before acceptance:** the stage command has no
+concurrency, stale-version or lost-response test. The optimistic placement is now
+dropped as soon as the command reports an error, so a card is not left in a column
+the server never confirmed — but that behaviour is asserted nowhere, and it is
+exactly what such a test would cover.
 
 No schema, migration, seed, read-contract, permission or deployment change is
 included. Stage movement continues to require server validation, version-conflict
