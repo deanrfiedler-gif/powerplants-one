@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState, useRef, useLayoutEffect, useCallback } from "react";
 import type { CSSProperties } from "react";
-import { DealDialog, dealAmount, dealClose, stageRequiresEvidence, useDesktopCRM, type DealRecord, type StageUndo } from "./crm-deal-controls";
+import { DealDialog, dealAmount, dealClose, useDesktopCRM, type DealRecord, type StageUndo } from "./crm-deal-controls";
 import type { OperationReceipt } from "../platform/operations";
 import { ProductIcon } from "./product-icons";
 import { HeaderContent } from "./header-content";
@@ -10,7 +10,7 @@ import { valueSummary } from "../crm/value-summary";
 import type { listOpportunities, worklistOptions, WorklistItem } from "../crm/worklist";
 import { useIdentity } from "./business-session";
 import { ErrorNotice, Field, SelectField, Stamp, Status } from "./business-ui";
-import { denied, useCrmCommand, useCrmResource } from "./crm-state";
+import { denied, useCrmResource } from "./crm-state";
 
 type Results = Awaited<ReturnType<typeof listOpportunities>>;
 const labels = { Needed: "Next action needed", DueNeeded: "Due date needed", Overdue: "Overdue", Upcoming: "Upcoming", Unavailable: "Next action unavailable" };
@@ -144,12 +144,7 @@ function Grid({ data, scroll }: { data: Results; scroll: ReturnType<typeof useSc
 export function SalesWorklist() {
   const desktop = useDesktopCRM();
   const p = useIdentity();
-  const [dialog,setDialog]=useState<{id:string;mode:"snapshot"|"stage";stage?:string;undo?:StageUndo}|null>(null),[feedback,setFeedback]=useState("");
-  const [moved,setMoved]=useState<Record<string,string>>({});
-  // One undo for both save paths. `record` is present only when the dialog saved
-  // the move, because only the dialog reads the qualification fields the worklist
-  // does not return; without it an undo has to reopen the dialog.
-  const [undoMove,setUndoMove]=useState<{id:string;to:string;record?:StageUndo}|null>(null);
+  const [dialog,setDialog]=useState<{id:string;mode:"snapshot"|"stage";stage?:string;undo?:StageUndo}|null>(null),[undo,setUndo]=useState<StageUndo|null>(null),[feedback,setFeedback]=useState("");
   const [activity,setActivity]=useState<WorklistItem|null>(null);
 
   const [filters, setFilters] = useState(initial);
@@ -158,84 +153,29 @@ export function SalesWorklist() {
   const [selected, setSelected] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const data = useCrmResource<Results>(`crm/opportunities?${query(filters)}`, true);
-  // On acceptance drop the optimistic override and let the server be the truth.
-  // The undo target is kept: it is what the actor reverses after a move lands.
-  const stageCommand = useCrmCommand(() => { setMoved({}); setFilters(o => ({ ...o, cursor: "" })); data.reload(); }, "No unsaved changes");
-
   // Clear query text, selected IDs and option-search components after current access is denied.
   const isDenied = denied(data.error);
   useEffect(() => {
     if (!isDenied) return;
     let live = true;
-    queueMicrotask(() => { if (live) { setFilters(initial);setFeedback("");setUndoMove(null);setMoved({});setDialog(null); } });
+    queueMicrotask(() => { if (live) { setFilters(initial);setFeedback("");setUndo(null);setDialog(null); } });
     return () => { live = false; };
   }, [isDenied]);
   const change = (key: keyof typeof initial, value: string) => setFilters((old) => ({ ...old, [key]: value, cursor: "", ...(key === "company_id" ? { site_id: "" } : {}) }));
-  // Past tense here, unlike the board: the dialog has the receipt in hand, and it
-  // holds the saved record, so its undo can restore the exact previous stage and
-  // qualification rather than asking for them again.
-  const saved=(receipt:OperationReceipt,old:DealRecord,stage:boolean)=>{setDialog(null);setMoved({});if(stage){setUndoMove({id:old.id,to:old.stage_id,record:{id:old.id,version:receipt.record_version,stage_id:old.stage_id,qualification_note:old.qualification_note,identification_activity_id:old.identification_activity_id}});setFeedback(`${old.title} moved to ${receipt.state}.`);}setFilters(old=>({...old,cursor:""}));data.reload();};
+  const saved=(receipt:OperationReceipt,old:DealRecord,stage:boolean)=>{setDialog(null);if(stage){setUndo({id:old.id,version:receipt.record_version,stage_id:old.stage_id,qualification_note:old.qualification_note,identification_activity_id:old.identification_activity_id});setFeedback(`${old.title} moved to ${receipt.state}.`);}setFilters(old=>({...old,cursor:""}));data.reload();};
   const refresh = () => { setFilters((old) => ({ ...old, cursor: "" })); data.reload(); };
   const scopedSearch = !isDenied && <label className="crm-header-search"><ProductIcon name="search"/><span className="sr-only">Search opportunities</span><input name="sales-search" type="search" placeholder="Search opportunities" value={filters.q} onChange={e => change("q", e.target.value)}/></label>;
+  // A drop says which stage; it cannot say why. Both the validator and the
+  // opportunities check constraint require a qualification outcome for
+  // Qualified and forbid one for Enquiry, so a bare drop cannot express either
+  // move. The drag therefore selects the stage and the dialog captures the
+  // evidence. Saving a drop outright belongs with the five-stage model, where
+  // qualification happens once at lead conversion and board moves carry no
+  // evidence of their own: see docs/decisions/crm-sales-rail-and-board-interaction.md.
+  const move = (id: string, stage: string) => setDialog({ id, mode: "stage", stage });
   const stageIds: string[] = data.data?.stages.map(s => s.stage_id) ?? [];
   // Never assume a stage name: fall back to the first stage the server returns.
   const activeStage = stageIds.includes(selected) ? selected : (stageIds[0] ?? "");
-  // Apply the pending drag move so the card appears in its new column at once —
-  // but a refused or uncertain save must not leave a card sitting in a column the
-  // server never confirmed, so the placement is dropped as soon as the command
-  // reports an error. The status line and the error then carry the outcome.
-  const pendingMove: Record<string, string> = stageCommand.error ? {} : moved;
-  const boardData = data.data && Object.keys(pendingMove).length
-    ? (() => {
-        const items = data.data.items.map(i => pendingMove[i.id] ? { ...i, stage_id: pendingMove[i.id] as typeof i.stage_id } : i);
-        return { ...data.data, items, stages: data.data.stages.map(st => ({ ...st, count: items.filter(i => i.stage_id === st.stage_id).length })) };
-      })()
-    : data.data;
-  // A drop into a stage the server requires evidence for is an instruction to
-  // begin that transition, not to complete it: the dialog opens on the target
-  // stage so the qualification outcome is still captured. Every other drop is
-  // the whole instruction and saves directly, on the same endpoint, operation id
-  // and version check the dialog uses. Its status is shown rather than assumed,
-  // so nothing claims to be saved before the server says so.
-  const move = (id: string, stage: string) => {
-    const old = boardData?.items.find(x => x.id === id);
-    if (!old || old.stage_id === stage || !old.can_edit) return;
-    if (stageRequiresEvidence(stage)) { setDialog({ id, mode: "stage", stage }); return; }
-    setMoved({ [id]: stage });
-    setFeedback(`${old.title}: moving to ${stage}.`);
-    setUndoMove({ id, to: old.stage_id });
-    void stageCommand.send(`crm/opportunities/${id}/stage`, {
-      expected_version: old.version,
-      stage_id: stage,
-      qualification_note: null,
-      identification_activity_id: null,
-      reason: "Move on the board",
-    });
-  };
-  // Reopen the dialog when the dialog saved the original — it holds the exact
-  // qualification to restore — and when the reverse move itself needs evidence
-  // the board cannot reproduce. Otherwise reverse it directly.
-  const undoLastMove = () => {
-    if (!undoMove) return;
-    const { id, to, record } = undoMove;
-    if (record) { setDialog({ id, mode: "stage", undo: record }); return; }
-    if (stageRequiresEvidence(to)) { setDialog({ id, mode: "stage", stage: to }); return; }
-    const old = data.data?.items.find(x => x.id === id);
-    if (!old) return;
-    // A refused move never left the original stage; there is nothing to reverse.
-    if (old.stage_id === to) { setUndoMove(null); return; }
-    setMoved({ [id]: to });
-    setFeedback(`${old.title}: moving back to ${to}.`);
-    setUndoMove(null);
-    stageCommand.clearError();
-    void stageCommand.send(`crm/opportunities/${id}/stage`, {
-      expected_version: old.version,
-      stage_id: to,
-      qualification_note: null,
-      identification_activity_id: null,
-      reason: "Undo the previous stage move",
-    });
-  };
   const totals = data.data ? valueSummary(data.data.items) : null;
   return <section className="crm-workspace" aria-label="Sales worklist">
     <h1 className="sr-only">Sales worklist</h1>
@@ -263,7 +203,7 @@ export function SalesWorklist() {
         <button className="secondary" onClick={() => setFilters(initial)}>Clear filters</button>
       </section>
     </>}
-    {feedback&&!isDenied&&<div className="crm-change-feedback" role="status"><span>{feedback}</span><span className="crm-save-status">{stageCommand.status}</span><ErrorNotice error={stageCommand.error} />{undoMove&&<button className="secondary" onClick={undoLastMove}>Undo stage move</button>}<button className="secondary" onClick={()=>{setFeedback("");setUndoMove(null);}}>Dismiss</button></div>}
+    {feedback&&!isDenied&&<div className="crm-change-feedback" role="status"><span>{feedback}</span>{undo&&<button className="secondary" onClick={()=>setDialog({id:undo.id,mode:"stage",undo})}>Undo stage move</button>}<button className="secondary" onClick={()=>{setFeedback("");setUndo(null);}}>Dismiss</button></div>}
     {activity&&!isDenied&&<ActivitySnapshot item={activity} onClose={()=>setActivity(null)}/>}
     {dialog&&!isDenied&&<DealDialog id={dialog.id} mode={dialog.mode} targetStage={dialog.stage} undo={dialog.undo} onClose={()=>setDialog(null)} onSaved={saved}/>}
     <ErrorNotice error={data.error} />
@@ -273,7 +213,7 @@ export function SalesWorklist() {
       <div className="source-stamp crm-worklist-stamp"><strong>{data.data.items.length} {data.data.items.length === 1 ? "opportunity" : "opportunities"}{data.data.completeness === "Complete" ? "" : " on this page"}</strong><span>{totals?.formatted} known{totals?.unknown ? ` · ${totals.unknown} not estimated` : ""}</span><span className="crm-summary-basis">Open · AUD, excl. GST</span></div>
       {view === "Board" ? <>
         <div className="crm-stage-navigation" role="group" aria-label="Choose Board stage">{data.data.stages.map((stage) => <button key={stage.stage_id} aria-pressed={activeStage === stage.stage_id} className={activeStage === stage.stage_id ? "" : "secondary"} onClick={() => setSelected(stage.stage_id)}>{stage.stage_id} ({stage.count})</button>)}</div>
-        <Board data={boardData!} selected={activeStage} scroll={boardScroll} onOpen={id=>setDialog({id,mode:"snapshot"})} onMove={move} onActivity={setActivity} />
+        <Board data={data.data} selected={activeStage} scroll={boardScroll} onOpen={id=>setDialog({id,mode:"snapshot"})} onMove={move} onActivity={setActivity} />
       </> : <Grid data={data.data} scroll={gridScroll} />}
       <div className="crm-actions"><span className="crm-page-context">{data.data.completeness === "Complete" ? "All matching results" : data.data.window.has_more ? "Page counts and values · more pages" : "Page counts and values · final page"} · As at <Stamp value={data.data.window.as_of} /></span><button className="secondary" onClick={refresh}>Refresh from start</button>{data.data.next_cursor && <button onClick={() => setFilters((old) => ({ ...old, cursor: data.data!.next_cursor! }))}>Next page</button>}</div>
 
