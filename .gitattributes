@@ -7,3 +7,4 @@
 *.csv text eol=lf
 docs/blueprints/projects-starter-visuals/*.pdf binary
 docs/blueprints/projects-starter-visuals/r02/*.pdf binary
+*.html text eol=lf
