@@ -3,10 +3,13 @@ import { mkdir, readFile, writeFile, cp } from "node:fs/promises";
 import { resolve } from "node:path";
 // A development-only rendering of actual components with explicit synthetic API
 // fixtures. This output is not a deployment or a persistence/authentication test.
+// Optional second argument selects an alternative fixture entry point, for
+// example tests/ui/crm-five-stage-fixture.tsx. The default is unchanged.
 const out = resolve(process.argv[2] ?? "verification-evidence/crm-ui");
+const entry = process.argv[3] ?? "tests/ui/crm-board-fixture.tsx";
 await mkdir(out, { recursive: true });
 await build({
-  entryPoints: ["tests/ui/crm-board-fixture.tsx"],
+  entryPoints: [entry],
   outfile: out + "/review.js",
   bundle: true,
   platform: "browser",

@@ -1,7 +1,7 @@
 # Approved Job Pack design
 
-**Status:** Approved design baseline; application integration remains separate.
-**Design revision:** r02
+**Status:** Approved design baseline r02, superseded for new work by the accepted successor r03 (below); application integration remains separate.
+**Design revision:** r02 (accepted 10 September 2026) · successor r03 (accepted 12 September 2026)
 **Work item:** [#103](https://github.com/deanrfiedler-gif/powerplants-one/issues/103)
 **Owner approval:** Dean Fiedler, 10 September 2026
 **Scope:** Service / full Job Pack page, SC-06; SVC-03 and SVC-06; OUT-09.
@@ -58,3 +58,23 @@ Prior audit evidence: 17 targeted Node VM logic checks passed with controlled DO
 This adoption changes design references and documentation only. It adds no application, API, database, migration, permission, deployment or notification changes. Actual integration and its rendered desktop/mobile, keyboard/dialog and A4-print checks remain outstanding. User design acceptance is recorded separately from implementation and operational acceptance.
 
 For this documentation adoption, the repository foundation, prototype and naming checks all passed. Foundation assurance verified six reference hashes, all 78 parent requirements and 1,544 local links. Whitespace checking passed for the authored documentation; the preserved HTML font licence and audit retain their original trailing whitespace. These documentation results do not extend the original audit's runtime evidence. Subsequent design changes should record a successor and rationale, preserving these approved bytes.
+
+## Successor r03 — accepted 12 September 2026
+
+Dean accepted design r03 as the successor to r02 (“I accept.”, 12 September 2026) after a rendered audit of the approved r02 and a change record tracing every r03 change to an audit finding. r02 and its original audit remain byte-identical at their paths; the manifest records both hashes.
+
+| | |
+|---|---|
+| Successor HTML | [`powerplants-one-job-pack-r03.html`](../reference/ui/job-pack/powerplants-one-job-pack-r03.html) · 481,380 bytes · SHA-256 `5b41481460984bdeb09f683b76a5ba30cdd805eb19f90735e725d01fedc6b825` |
+| Rationale | [Rendered audit of r02](../reference/ui/job-pack/powerplants-one-job-pack-audit-r02-rendered.md) (executes the browser, keyboard/dialog and A4 checks the original audit left open) and the [r03 change record](../reference/ui/job-pack/powerplants-one-job-pack-r03-change-record.md) |
+| Presentation preserved | Padding, palette, Roboto/Verdana, three views, contents rail, readiness rail, guided preparation, print choices — unchanged from the list above |
+
+What r03 adds to the presentation baseline, in substance: a per-event change reason with field-level deltas in the revision history; readiness criteria with the BP-07 §8 outcome vocabulary (Pass, Blocked, PermittedException, NotApplicable) including an evidenced tool exception; a source version and as-at on every section with a source-change assessment that blocks submission until recorded; a required originating history entry; one event timestamp format with zone derived from the site record; registry-form synthetic references; a repeating A4 print header with page numbers; and a semantic token set shared with Field Technicians r05.
+
+Recorded with the acceptance:
+
+- `SYN-PPO-DOC-nnnnnn` is used provisionally for document references. PPO-STD-001 §10.2 has no controlled-document type code and requires an explicit amendment to add one; the alternative is to present documents by their SharePoint identity with revision separate. Open naming decision.
+- Readiness rows cite “PP-01 synthetic policy r01”; the application's readiness registry supplies real policy references at integration.
+- The shared appointment `SYN-PPO-APT-000242` keeps the Job Pack values (11 September, 09:00–12:00, Draft r01 not issued); Field Technicians r05 is aligned to them.
+
+The integration boundary above is unchanged: r03 is presentation, not P06 code; its in-memory simulation of source change and review remains a demonstration of TR-07 and TR-04 intent to be mapped to verified behaviour.
