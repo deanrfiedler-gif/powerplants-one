@@ -17,8 +17,10 @@ const matches = (path: string, href: string) => path === href || (href !== "/" &
 function moduleFor(path: string) {
   if (matches(path, "/service") || service.some(([href]) => matches(path, href))) return { name: "Service", tabs: service };
   if (customers.some(([href]) => matches(path, href))) return { name: "Customers", tabs: customers };
-  if (path.startsWith("/crm/")) return { name: "CRM Sales", tabs: [["/crm/leads","Leads"],["/crm/opportunities","Deals"]] };
-  if (matches(path, "/email") || matches(path, "/calendar")) return { name: "Email & Calendar", tabs: [] };
+  if (matches(path, "/crm/leads")) return { name: "Leads", tabs: [] };
+  if (path.startsWith("/crm/")) return { name: "Deals", tabs: [] };
+  if (matches(path, "/email")) return { name: "Inbox", tabs: [] };
+  if (matches(path, "/calendar")) return { name: "Activities", tabs: [] };
   if (matches(path, "/estimating")) return { name: "Estimating", tabs: [] };
   if (matches(path, "/engineering")) return { name: "Engineering", tabs: [] };
   if (matches(path, "/projects")) return { name: "Projects", tabs: [] };
@@ -79,7 +81,8 @@ function ProductNavigationView({ path, wide }: { path: string; wide: boolean }) 
   }, [wide, expanded]);
   const items: { label: string; icon: ProductIconName; href?: string; divider?: boolean }[] = [
     { label: "Overview", icon: "home", href: "/" }, { label: "My Work", icon: "work", href: "/work" },
-    { label: "CRM Sales", icon: "sales", href: "/crm/opportunities", divider: true },
+    { label: "Leads", icon: "leads", href: "/crm/leads", divider: true },
+    { label: "Deals", icon: "deals", href: "/crm/opportunities" },
     { label: "Email & Calendar", icon: "mail", href: "/email" },
     { label: "Estimating", icon: "estimate", href: "/estimating" },
     { label: "Engineering", icon: "engineering", href: "/engineering" }, { label: "Projects", icon: "projects", href: "/projects" },
@@ -94,15 +97,26 @@ function ProductNavigationView({ path, wide }: { path: string; wide: boolean }) 
     {item.href ? <Link href={item.href} className="product-nav-item" aria-current={current === item.label ? "page" : undefined} onClick={() => setExpanded(false)} title={item.label}><ProductIcon name={item.icon} /><span>{item.label}</span></Link>
       : <span className="product-nav-item planned-nav" aria-disabled="true" title={`${item.label} — planned`}><ProductIcon name={item.icon} /><span>{item.label} · Planned</span></span>}
   </div>);
-  const mobile = items.filter(i=>["My Work","CRM Sales","Service","Contacts"].includes(i.label));
-  const primary = items.filter(item => ["CRM Sales", "Estimating", "Engineering", "Projects", "Service", "Supply Chain", "Finance"].includes(item.label));
-  const railLabel = (label: string) => label === "CRM Sales" ? "Sales / CRM" : label === "Estimating" ? "Estimating & Quotation" : label;
+  const mobile = items.filter(i=>["My Work","Deals","Contacts"].includes(i.label));
+  // The rail carries the Sales section. Every other module lives under More.
+  const primary: { label: string; icon: ProductIconName; href?: string }[] = [
+    { label: "Pulse", icon: "pulse" },
+    { label: "Leads", icon: "leads", href: "/crm/leads" },
+    { label: "Deals", icon: "deals", href: "/crm/opportunities" },
+    { label: "Inbox", icon: "mail", href: "/email" },
+    { label: "Activities", icon: "calendar", href: "/calendar" },
+    { label: "Contacts", icon: "customers", href: "/people" },
+    { label: "Products", icon: "products" },
+    { label: "Insights", icon: "insights" },
+  ];
+  const railLabel = (label: string) => label;
   const groups: { title: string; links: { label: string; icon: ProductIconName; href?: string }[] }[] = [
     { title: "My workspace", links: items.filter(item => ["My Work", "Email & Calendar"].includes(item.label)) },
     { title: "Customer information", links: [
       { label: "Customers", icon: "customers", href: "/customers" }, { label: "Contacts", icon: "person", href: "/people" },
       { label: "Sites", icon: "sites", href: "/sites" }, { label: "Equipment", icon: "supply", href: "/equipment" },
     ] },
+    { title: "Other modules", links: items.filter(item => ["Estimating", "Engineering", "Projects", "Service", "Supply Chain", "Finance"].includes(item.label)) },
     { title: "Shared resources", links: [{ label: "Documents", icon: "documents" }, { label: "Service reports", icon: "list", href: "/service/reports" }] },
     { title: "Administration & support", links: items.filter(item => ["Exceptions and recovery", "Foundation checks"].includes(item.label)) },
   ];
@@ -133,7 +147,7 @@ function ProductNavigationView({ path, wide }: { path: string; wide: boolean }) 
   </section>
   <div id="shell-nav-tooltip" className="ppo-nav-tooltip" role="tooltip" hidden={!tip || !wide} style={{ top: tip?.top }} onPointerEnter={() => { if (tipTimer.current) clearTimeout(tipTimer.current); }} onPointerLeave={hideTip}>{tip?.label}</div>
   <nav className="mobile-navigation" aria-label="Mobile navigation">
-    {mobile.map(item=><Link key={item.label} href={item.href!} aria-current={current===item.label?"page":undefined}><ProductIcon name={item.icon}/><span>{item.label==="CRM Sales"?"CRM":item.label}</span></Link>)}
+    {mobile.map(item=><Link key={item.label} href={item.href!} aria-current={current===item.label?"page":undefined}><ProductIcon name={item.icon}/><span>{item.label}</span></Link>)}
     <button id="navigation-toggle" type="button" aria-label="Menu" aria-haspopup="dialog" aria-expanded={expanded} onClick={()=>setExpanded(true)}><ProductIcon name="menu"/><span>More</span></button>
   </nav>
   <dialog ref={dialog} onKeyDown={e => {
