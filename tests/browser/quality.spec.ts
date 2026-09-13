@@ -5,19 +5,9 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { prepareFieldAppointment } from "../helpers/field-http";
 import { base, entry, startInput } from "../helpers/field";
 import { operation } from "../helpers/offline";
-import { identity, openIdentityControls } from "../helpers/quality-browser";
+import { call, identity, openIdentityControls } from "../helpers/quality-browser";
 
 test.describe.configure({ timeout: 180000 });
-async function call(page: Page, path: string, body?: unknown) {
-  const response = await page.request.fetch(`/api/v1/${path}`, {
-    method: body === undefined ? "GET" : "POST",
-    headers: body === undefined ? {} : { Origin: "http://127.0.0.1:3000", "Content-Type": "application/json" }, data: body,
-  });
-  const result = await response.json();
-  expect(response.ok(), JSON.stringify(result)).toBe(true);
-  expect(response.headers()["cache-control"]).toBe("private, no-store");
-  return result;
-}
 async function capture(page: Page, info: TestInfo, scenario: string) {
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await mkdir(info.outputPath("."), { recursive: true });

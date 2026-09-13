@@ -2,18 +2,46 @@ import { expect, type Page, type TestInfo } from "@playwright/test";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { mkdir, writeFile } from "node:fs/promises";
+
+const TRANSIENT_FETCH_RETRY_DELAY_MS = 250;
+
+function isTransientFetchError(error: unknown) {
+  if (!error || typeof error !== "object") return false;
+  const { message, cause, code } = error as {
+    message?: unknown;
+    cause?: { message?: unknown; code?: unknown };
+    code?: unknown;
+  };
+  return (
+    code === "ECONNRESET" ||
+    cause?.code === "ECONNRESET" ||
+    /socket hang up|ECONNRESET/i.test(
+      `${typeof message === "string" ? message : ""} ${typeof cause?.message === "string" ? cause.message : ""}`,
+    )
+  );
+}
+
 export async function call(page: Page, path: string, body?: unknown) {
-  const r = await page.request.fetch(`/api/v1/${path}`, {
-    method: body === undefined ? "GET" : "POST",
-    headers:
-      body === undefined
-        ? {}
-        : {
-            Origin: "http://127.0.0.1:3000",
-            "Content-Type": "application/json",
-          },
-    data: body,
-  });
+  const request = () =>
+    page.request.fetch(`/api/v1/${path}`, {
+      method: body === undefined ? "GET" : "POST",
+      headers:
+        body === undefined
+          ? {}
+          : {
+              Origin: "http://127.0.0.1:3000",
+              "Content-Type": "application/json",
+            },
+      data: body,
+    });
+  let r;
+  try {
+    r = await request();
+  } catch (error) {
+    if (!isTransientFetchError(error)) throw error;
+    await page.waitForTimeout(TRANSIENT_FETCH_RETRY_DELAY_MS);
+    r = await request();
+  }
   const d = await r.json();
   expect(r.ok(), JSON.stringify(d)).toBe(true);
   expect(r.headers()["cache-control"]).toBe("private, no-store");
