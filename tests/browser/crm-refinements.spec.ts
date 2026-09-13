@@ -37,8 +37,12 @@ test("owner transfer compares separate activities and persists original/current 
   await expect(dialog.getByRole("region",{name:"Activity comparison"})).toContainText("SYN Coordinator");
   await keySelect(page,dialog.getByLabel("New opportunity owner"),"30000000-0000-4000-8000-000000000015");
   await keyType(page,dialog.getByLabel("Transfer reason"),"SYN "+"r".repeat(996));
+  const comparison=dialog.getByRole("region",{name:"Activity comparison"});
+  const noClippedComparison=()=>comparison.locator("p").evaluateAll(ps=>ps.every(p=>p.scrollWidth<=p.clientWidth));
+  expect(await noClippedComparison()).toBe(true);
+  await comparison.screenshot({path:info.outputPath("crm-transfer-full-activity-comparison.png")});
   await page.screenshot({path:info.outputPath("crm-transfer-comparison.png"),fullPage:false});
-  if(info.project.use.isMobile){await page.setViewportSize({width:320,height:844});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:info.outputPath("crm-transfer-comparison-320.png"),fullPage:false});}
+  if(info.project.use.isMobile){await page.setViewportSize({width:320,height:844});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect(await noClippedComparison()).toBe(true);await comparison.screenshot({path:info.outputPath("crm-transfer-full-activity-comparison-320.png")});await page.screenshot({path:info.outputPath("crm-transfer-comparison-320.png"),fullPage:false});}
   await committed(page,`crm/opportunities/${input.id}/transfer-owner`,()=>keyActivate(page,dialog.getByRole("button",{name:"Confirm owner transfer",exact:true})));
   await expect(dialog).not.toBeVisible();await page.reload();
   await expect(page.getByText("Original opportunity owner: SYN Coordinator · Current owner: SYN Sales receiver",{exact:true})).toBeVisible();

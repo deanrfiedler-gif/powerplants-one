@@ -438,7 +438,7 @@ function DealEditor({
             {handover.data?.items.length === 0 && <p>No eligible receiving owners match this search.</p>}
             <p>Current opportunity owner: {o.owner_name}. Transfer is immediate when this save is accepted.</p>
             {handover.data && <section aria-label="Activity comparison"><h3>Activities keep their owners</h3>{[handover.data.next_activity,...(handover.data.identification_activity && handover.data.identification_activity.id!==handover.data.next_activity.id ? [handover.data.identification_activity] : [])].map(a=><p className="crm-narrative" key={a.id}>{a.summary} · {a.status} · Owner: {a.owner_name} · Version {a.version}</p>)}<p>The receiving owner must review any outstanding activity separately. Estimates, quotes and delivery obligations keep their ownership.</p></section>}
-            <Field name="reason" label="Transfer reason" value={transferReason} onChange={setTransferReason} required maxLength={1000}/>
+            <Field name="reason" label="Transfer reason" value={transferReason} onChange={setTransferReason} multiline required maxLength={1000}/>
           </>}
           {mode === "outcome" && <>
             <SelectField name="close_outcome" label="Sales outcome" value={outcome} onChange={setOutcome} options={(o.stage_id === "Closing" ? ["Won","Lost"] : ["Lost"]).map(id=>({id,display_name:id}))} required />
