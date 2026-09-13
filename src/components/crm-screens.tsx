@@ -464,7 +464,7 @@ function OpportunityContent({
         <PageHeader eyebrow={`${o.display_number} · ${o.close_outcome}`} title={o.title}
           description={`${o.organisation_name} · ${o.site_name ?? "Site to be confirmed"}`}
           action={o.can_edit ? <button className="secondary crm-main-edit" aria-label="Edit deal information" onClick={() => setDialog("information")}><ProductIcon name="edit"/><span>Edit deal</span></button> : undefined} />
-        <div className="crm-deal-key-facts"><strong>{dealAmount(o.value_amount)}</strong><span>AUD, excl. GST</span><span>Expected close: {dealClose(o.expected_close_date)}</span><span>Customer contact: {o.contact_name ?? "Not yet identified"}</span><span>Deal owner: {o.owner_name}</span></div>
+        <div className="crm-deal-key-facts"><span aria-label="Saved sales outcome"><strong>Outcome: {o.close_outcome}</strong></span><strong>{dealAmount(o.value_amount)}</strong><span>AUD, excl. GST</span><span>Expected close: {dealClose(o.expected_close_date)}</span><span>Customer contact: {o.contact_name ?? "Not yet identified"}</span><span>Deal owner: {o.owner_name}</span></div>
         <div className="crm-stage-track" aria-label="Deal stage">
           {o.stages.map(({ stage_id: stage }) => <button key={stage} className={o.stage_id === stage ? "current" : ""} aria-current={o.stage_id === stage ? "step" : undefined} disabled={!o.can_edit || o.close_outcome !== "Open" || command.busy || command.uncertain} onClick={() => {setTargetStage(stage);setDialog("stage");}}>{stage}{o.stage_id === stage && <span>Current stage</span>}</button>)}
         </div>

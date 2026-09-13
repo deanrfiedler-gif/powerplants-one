@@ -40,6 +40,8 @@ test("owned Won handover and structured Lost survive reload on desktop and phone
     await expect(dialog).not.toBeVisible();
     await page.reload();
     await expect(page.getByRole("button",{name:"Record sales outcome",exact:true})).toHaveCount(0);
+    await expect(page.getByLabel("Saved sales outcome",{exact:true})).toHaveText(`Outcome: ${outcome}`);
+    await expect(page.getByLabel("Saved sales outcome",{exact:true})).toBeVisible();
     await expect(page.locator('.crm-stage-track [aria-current="step"]')).toBeDisabled();
     if(outcome==="Won") await expect(page.getByRole("region",{name:"Handover due"})).toContainText("SYN Coordinator");
     else await expect(page.getByText("Lost reason: Competitor",{exact:true})).toBeVisible();
