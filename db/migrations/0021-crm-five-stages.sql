@@ -84,3 +84,67 @@ BEGIN
  END IF;
  RETURN NEW;
 END $$;
+
+-- 5. Plan r02 §4.3. Without this the five-stage catalogue cannot be used at all:
+--    opportunities_check2 admits only the two I1 stage literals, so a Discovery row
+--    is refused by the table it lives in. Verified against a migrated database before
+--    this section existed: "new row for relation opportunities violates check
+--    constraint opportunities_check2".
+--    The Enquiry and Qualified branches are kept verbatim so every historical row
+--    stays valid. The added branch carries §4.3's reading: qualification happens in
+--    Leads, so a five-stage deal arrives holding its evidence and holds it at every
+--    stage, Discovery included.
+--    The five stage names are written out here because a CHECK cannot read
+--    crm_stage_definitions. That is the same limit step 3 met, resolved the other way:
+--    movement is a rule and belongs in the trigger, evidence shape is a row invariant
+--    and is worth keeping declarative even at the cost of naming the stages twice.
+DO $$
+DECLARE definition text;
+BEGIN
+ SELECT pg_get_constraintdef(oid) INTO STRICT definition FROM pg_constraint
+  WHERE conrelid='ppo.opportunities'::regclass AND conname='opportunities_check2';
+ IF position('(stage_id = ''Enquiry''::text)' in definition)=0
+    OR position('(stage_id = ''Qualified''::text)' in definition)=0 THEN
+  RAISE EXCEPTION 'Inspect the changed opportunity qualification check before migration';
+ END IF;
+END $$;
+ALTER TABLE ppo.opportunities DROP CONSTRAINT opportunities_check2;
+ALTER TABLE ppo.opportunities ADD CONSTRAINT opportunities_check2 CHECK (
+ (stage_id='Enquiry' AND qualification_note IS NULL AND identification_activity_id IS NULL)
+ OR (stage_id='Qualified' AND qualification_note IS NOT NULL
+     AND length(btrim(qualification_note)) BETWEEN 1 AND 2000
+     AND (primary_person_id IS NOT NULL OR identification_activity_id IS NOT NULL))
+ OR (stage_id IN ('Discovery','Scoping','Quoting','Negotiation','Closing')
+     AND qualification_note IS NOT NULL
+     AND length(btrim(qualification_note)) BETWEEN 1 AND 2000
+     AND (primary_person_id IS NOT NULL OR identification_activity_id IS NOT NULL)));
+
+-- 6. Bind a recorded stage to the row it describes. Step 3 removed ' AND to_stage =
+--    ''Enquiry''' from the OpportunityCreated branch and left nothing in its place:
+--    the CHECK cannot name a stage generically, protect_opportunity() guards a
+--    different table, and check_opportunity_event_chain() compared only from_stage to
+--    the preceding to_stage, which says nothing at version 1. An OpportunityCreated
+--    event could therefore record any stage while the row held another, and every
+--    later event would chain onto the wrong value consistently.
+--    The event at the row's current version must agree with the row. Earlier versions
+--    are history and are left alone. This holds for every existing event type, so no
+--    stored row is invalidated.
+CREATE OR REPLACE FUNCTION ppo.check_opportunity_event_chain() RETURNS trigger LANGUAGE plpgsql AS $$
+DECLARE o ppo.opportunities; previous ppo.opportunity_events;
+BEGIN
+ PERFORM 1 FROM ppo.workspaces WHERE id=NEW.workspace_id FOR UPDATE;
+ SELECT * INTO STRICT o FROM ppo.opportunities WHERE workspace_id=NEW.workspace_id AND id=NEW.opportunity_id;
+ IF NEW.opportunity_version>o.version OR NEW.pipeline_definition_id<>o.pipeline_definition_id THEN
+  RAISE EXCEPTION 'Event requires an accepted opportunity version and definition' USING ERRCODE='23514';
+ END IF;
+ IF NEW.opportunity_version=o.version AND NEW.to_stage<>o.stage_id THEN
+  RAISE EXCEPTION 'Recorded stage must match the opportunity it describes' USING ERRCODE='23514';
+ END IF;
+ IF NEW.opportunity_version>1 THEN
+  SELECT * INTO previous FROM ppo.opportunity_events WHERE workspace_id=NEW.workspace_id AND opportunity_id=NEW.opportunity_id AND opportunity_version=NEW.opportunity_version-1;
+  IF previous.id IS NULL OR NEW.from_stage IS DISTINCT FROM previous.to_stage THEN
+   RAISE EXCEPTION 'Opportunity history requires its exact preceding version and stage' USING ERRCODE='23514';
+  END IF;
+ END IF;
+ RETURN NULL;
+END $$;
