@@ -479,12 +479,17 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
     "SYN service coordinator to review the proposed return and contact the fictional site.",
   );
   await capture(page, info, "journey-keyboard-exact-reserved-response");
-  await keyActivate(
-    page,
-    page.getByRole("button", {
-      name: "Save response to presented content",
-      exact: true,
-    }),
+  // Activation starts an asynchronous command. Check the accepted response
+  // before asserting its read projection; the original failure snapshot still
+  // showed a busy form, followed by a later snapshot with the saved response.
+  await committed(page, `reports/${rid}/respond`, () =>
+    keyActivate(
+      page,
+      page.getByRole("button", {
+        name: "Save response to presented content",
+        exact: true,
+      }),
+    ),
   );
   await expect
     .poll(

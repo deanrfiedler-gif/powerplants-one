@@ -9,7 +9,7 @@ import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
 import { reset, migrate } from "../../scripts/database";
 import { createOpportunity } from "../../src/crm/opportunities";
-import { readOpportunity } from "../../src/crm/reads";
+import { readOpportunity, listOpportunities } from "../../src/crm/reads";
 import {
   editDealInformation,
   editDealScope,
@@ -20,7 +20,7 @@ import {
   readDirectoryViews,
   saveDirectoryViews,
 } from "../../src/crm/directory";
-import { CRM, crmCreate, crmBase } from "../helpers/crm";
+import { CRM, crmCreate, crmBase, crmDiscovery } from "../helpers/crm";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -209,4 +209,60 @@ test("directories scope affiliations and counts, search channels, sort and isola
     saveDirectoryViews(p, { kind: "people", expected_version: 0, views: [] }),
     code("VersionConflict"),
   );
+});
+
+
+test("SA-02/03/05/12 qualified Discovery creation and five-column reads retain original receipts and history", async () => {
+  const p = await principal(); const input = crmDiscovery();
+  const created = await createOpportunity(p, input);
+  assert.equal(created.receipt.state, "Discovery");
+  assert.equal(created.receipt.record_version, 1);
+  const replay = await createOpportunity(p, input);
+  assert.equal(replay.replayed, true); assert.deepEqual(replay.receipt, created.receipt);
+  const initial = await readOpportunity(p, input.id);
+  assert.equal(initial.qualification_note, input.qualification_note);
+  assert.equal(initial.events.length, 1);
+  const list = await listOpportunities(p, { pipeline_definition_id: input.pipeline_definition_id });
+  assert.deepEqual(list.stages.map(s => s.stage_id), ["Discovery", "Scoping", "Quoting", "Negotiation", "Closing"]);
+  assert.deepEqual(list.items.map(i => i.id), [input.id]);
+  await assert.rejects(changeDealStage(p, input.id, stage(1, "Quoting")), code("CRM_PROGRESS_INVALID"));
+  let version = 1;
+  for (const next of ["Scoping", "Quoting", "Negotiation", "Closing", "Scoping", "Quoting"]) {
+    await changeDealStage(p, input.id, stage(version++, next));
+    const current = await readOpportunity(p, input.id);
+    assert.equal(current.qualification_note, input.qualification_note);
+    assert.equal(current.version, version);
+    assert.equal(current.events.at(-1)?.created_at.toISOString(), current.stage_entered_at);
+  }
+  const final = await readOpportunity(p, input.id);
+  assert.deepEqual(final.events.slice(0, 1), initial.events);
+  await closeDatabase();
+  assert.deepEqual((await readOpportunity(p, input.id)).events, final.events);
+});
+
+test("SA-02 a Discovery unknown contact is bound to its own active identification action", async () => {
+  const p = await principal(); const input = crmDiscovery();
+  input.primary_person_id = null;
+  input.contact_unknown_reason = "SYN named contact must be identified";
+  input.initial_action.summary = "SYN identify the named customer contact before scope confirmation";
+  await createOpportunity(p, input);
+  const saved = await readOpportunity(p, input.id);
+  assert.equal(saved.identification_activity_id, input.initial_action.id);
+  assert.equal(saved.next_activity?.owner_id, input.owner_id);
+  assert.equal(saved.qualification_note, input.qualification_note);
+  await changeDealStage(p, input.id, stage(1, "Scoping"));
+  assert.equal((await readOpportunity(p, input.id)).identification_activity_id, input.initial_action.id);
+});
+
+test("five-stage database guard refuses rewritten qualification even with a matching stage event", async () => {
+  const p = await principal(); const input = crmDiscovery();
+  await createOpportunity(p, input);
+  const before = await readOpportunity(p, input.id);
+  await assert.rejects(transaction(async c => {
+    await c.query("UPDATE ppo.opportunities SET stage_id='Scoping',qualification_note='SYN forged replacement',version=version+1,stage_entered_at=clock_timestamp(),updated_at=clock_timestamp() WHERE id=$1", [input.id]);
+    await c.query(`INSERT INTO ppo.opportunity_events(id,workspace_id,company_id,opportunity_id,created_by,updated_by,operation_id,opportunity_version,event_type,pipeline_definition_id,from_stage,to_stage,next_activity_id,identification_activity_id,reason,need_summary,qualification_note,record_snapshot,created_at)
+      SELECT gen_random_uuid(),workspace_id,company_id,id,updated_by,updated_by,gen_random_uuid(),version,'OpportunityStageChanged',pipeline_definition_id,'Discovery',stage_id,next_activity_id,identification_activity_id,'SYN guard challenge',need_summary,qualification_note,ppo.crm_record_snapshot(o),stage_entered_at FROM ppo.opportunities o WHERE id=$1`, [input.id]);
+  }), /Five-stage qualification evidence is retained/);
+  const after = await readOpportunity(p, input.id);
+  assert.equal(after.version, before.version); assert.deepEqual(after.events, before.events);
 });

@@ -1,3 +1,4 @@
+import { opportunityStages } from "./stages";
 import {
   common,
   commonKeys,
@@ -101,17 +102,14 @@ export function parseDealStage(id: string, input: unknown) {
     "qualification_note",
     "identification_activity_id",
   ]);
-  const stage_id = choice(r.stage_id, "stage_id", [
-    "Enquiry",
-    "Qualified",
-  ] as const);
+  const stage_id = choice(r.stage_id, "stage_id", opportunityStages);
   if (
-    stage_id === "Enquiry" &&
+    stage_id !== "Qualified" &&
     (r.qualification_note != null || r.identification_activity_id != null)
   )
     invalid(
       "qualification_note",
-      "Enquiry keeps previous qualification in history; do not submit current qualification fields.",
+      "Only the original I1 qualification transition accepts qualification fields. Other moves preserve their existing evidence.",
     );
   return {
     ...common(r),

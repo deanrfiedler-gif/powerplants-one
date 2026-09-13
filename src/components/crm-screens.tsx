@@ -200,6 +200,7 @@ export function NewOpportunity() {
     [owner, setOwner] = useState(p.actor_id),
     [title, setTitle] = useState(""),
     [need, setNeed] = useState(""),
+    [qualification, setQualification] = useState(""),
     [siteReason, setSiteReason] = useState(""),
     [contactReason, setContactReason] = useState(""),
     [channel, setChannel] = useState("Phone"),
@@ -230,7 +231,7 @@ export function NewOpportunity() {
       {available.data && (
         <>
           <p>
-            Pipeline: {available.data.pipeline_label}. Stage: Enquiry. Sales
+            Pipeline: {available.data.pipeline_label}. Stage: Discovery. Sales
             outcome: Open.
           </p>
           <SaveState command={command} />
@@ -251,6 +252,7 @@ export function NewOpportunity() {
                   contact_unknown_reason: person ? null : contactReason,
                   title,
                   need_summary: need,
+                  qualification_note: qualification,
                   source_channel: channel,
                   source_basis: source,
                   owner_id: owner,
@@ -267,6 +269,8 @@ export function NewOpportunity() {
             >
               <fieldset disabled={command.busy || command.uncertain}>
                 <legend>Opportunity and customer context</legend>
+                <Field name="qualification_note" label="Qualification outcome" value={qualification} onChange={setQualification} multiline required maxLength={2000}/>
+                <p>Discovery starts with a qualified customer need. If the contact is unknown, the initial Activity must identify that contact and belong to the opportunity owner.</p>
                 <SelectField
                   name="company_id"
                   label="Visibility company"
@@ -462,10 +466,17 @@ function OpportunityContent({
           action={o.can_edit ? <button className="secondary crm-main-edit" aria-label="Edit deal information" onClick={() => setDialog("information")}><ProductIcon name="edit"/><span>Edit deal</span></button> : undefined} />
         <div className="crm-deal-key-facts"><strong>{dealAmount(o.value_amount)}</strong><span>AUD, excl. GST</span><span>Expected close: {dealClose(o.expected_close_date)}</span><span>Customer contact: {o.contact_name ?? "Not yet identified"}</span><span>Deal owner: {o.owner_name}</span></div>
         <div className="crm-stage-track" aria-label="Deal stage">
-          {["Enquiry", "Qualified"].map(stage => <button key={stage} className={o.stage_id === stage ? "current" : ""} aria-current={o.stage_id === stage ? "step" : undefined} disabled={!o.can_edit} onClick={() => {setTargetStage(stage);setDialog("stage");}}>{stage}{o.stage_id === stage && <span>Current stage</span>}</button>)}
+          {o.stages.map(({ stage_id: stage }) => <button key={stage} className={o.stage_id === stage ? "current" : ""} aria-current={o.stage_id === stage ? "step" : undefined} disabled={!o.can_edit || command.busy || command.uncertain} onClick={() => {setTargetStage(stage);setDialog("stage");}}>{stage}{o.stage_id === stage && <span>Current stage</span>}</button>)}
         </div>
       </div>
-      {dialog && <DealDialog id={o.id} mode={dialog} targetStage={targetStage} onClose={() => {setDialog(null);setTargetStage(undefined);}} onSaved={() => {setDialog(null);setTargetStage(undefined);reload();}}/>}
+      {dialog && <DealDialog id={o.id} mode={dialog} targetStage={targetStage} onClose={() => {setDialog(null);setTargetStage(undefined);}} onSaved={(receipt, _old, stage) => {
+        setDialog(null);setTargetStage(undefined);
+        // Our accepted stage command can advance a clean sibling form. Existing
+        // edits retain their original version and the deliberate comparison.
+        if(stage && !command.hasUnsavedChanges && !command.busy && !command.uncertain)
+          setVersion(receipt.record_version);
+        reload();
+      }}/>}
 
       {!o.can_edit && <p className="scope-note">Read only under current ownership, permissions or relationship eligibility.</p>}
       <SaveState command={command} />

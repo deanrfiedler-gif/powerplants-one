@@ -142,6 +142,7 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
     .fill(
       "SYN Understand the monitoring need across the growing area. ".repeat(12),
     );
+  await page.getByLabel("Qualification outcome", { exact: true }).fill("SYN Need reviewed with the known contact; proposal work is a future decision.");
   await page
     .getByLabel("Source context (synthetic)", { exact: true })
     .fill("SYN Manually recorded fictional conversation");
@@ -195,18 +196,11 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
     ),
   ).toBeVisible();
   await capture(page, info, "next-action-needed");
-  await page.getByRole("tab", {name:"Details",exact:true}).click();
-  await page
-    .getByLabel("Qualification outcome", { exact: true })
-    .fill(
-      "SYN Need reviewed with the known contact; proposal work is a future decision.",
-    );
-  await page
-    .getByRole("button", { name: "Progress to Qualified", exact: true })
-    .click();
-  await expect(
-    page.getByText("Qualified", { exact: true }).first(),
-  ).toBeVisible();
+  await page.locator(".crm-stage-track").getByRole("button", { name: "Scoping", exact: true }).click();
+  await page.getByRole("dialog", { name: "Change deal stage", exact: true }).getByRole("button", { name: "Save stage", exact: true }).click();
+  await expect(page.getByRole("dialog")).not.toBeVisible();
+  await expect(page.locator('.crm-stage-track [aria-current="step"]')).toContainText("Scoping");
+  await expect(page.getByRole("button", { name: "Save next action", exact: true })).toBeEnabled();
   if (await page.getByRole("tab",{name:"Timeline",exact:true}).count()) await page.getByRole("tab",{name:"Timeline",exact:true}).click();
   await pick(page, "Activity owner", CRM.owner);
   if (await page.getByRole("tab",{name:"Timeline",exact:true}).count()) await page.getByRole("tab",{name:"Timeline",exact:true}).click();
@@ -231,7 +225,7 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await capture(page, info, "successor-action");
   await page.goto("/crm/opportunities");
   await page.getByLabel("Search opportunities", { exact: true }).fill(title);
-  if (info.project.use.isMobile) await page.getByRole("button", { name: /^Qualified \(/ }).click();
+  if (info.project.use.isMobile) await page.getByRole("button", { name: /^Scoping \(/ }).click();
   await expect(
     page.getByRole("link", { name: title, exact: true }),
   ).toBeVisible();

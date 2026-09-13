@@ -1,4 +1,5 @@
 import { test, expect, type Page, type TestInfo } from "@playwright/test";
+import { committed } from "../helpers/quality-prepare";
 import { createHash, randomUUID } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { mkdir, writeFile } from "node:fs/promises";
@@ -193,11 +194,16 @@ test("P10 PT-17/PT-19 complete UI allocation, return/correction, unknown lookup,
       "SYN Finance preparer records independently specified F-06 source allocations.",
     );
   await capture(page, info, "long-allocation-form");
-  await page
-    .getByRole("button", { name: "Save Finance draft", exact: true })
-    .click();
+  // The screenshot from the failed retained run shows Saving exact draft.
+  // Await this original command before starting the unchanged URL assertion.
+  const created = await committed(page, "finance/handoffs", () =>
+    page
+      .getByRole("button", { name: "Save Finance draft", exact: true })
+      .click(),
+  );
   await expect(page).toHaveURL(/\/finance\/handoffs\/[a-f0-9-]+$/);
   const id = page.url().split("/").at(-1)!;
+  expect(id).toBe(created.record_id);
   await state(page, "Draft");
   await capture(page, info, "loaded-draft");
   await reason(

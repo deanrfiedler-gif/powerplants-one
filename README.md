@@ -2,7 +2,7 @@
 
 Personal prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance. The repository is public; the application, data and hosted demo remain private and synthetic.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01–P11 merged; P12 prepared only; PP-01 incomplete · **Deployment:** private Azure demo runs `main` `cb358405` (upgrade-and-deploy, 10 September 2026); owner sign-in check on the new image pending · **Current state:** [docs/STATUS.md](docs/STATUS.md)
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01–P11 merged; P12 prepared only; PP-01 incomplete · **Deployment:** latest observed private Azure deployment built `ab587d7e` (run 34745193611); current serving SHA and signed-in acceptance pending · **Current state:** [docs/STATUS.md](docs/STATUS.md)
 
 This repository is Dean's personal prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. Integrated Service/Finance verification is in progress; the complete PP-01 acceptance boundary still requires P12. Company ownership, production approval and external-system write authority are not implied.
 
@@ -74,7 +74,7 @@ P11's bounded exceptions/recovery checkpoint is at `/admin`, using existing curr
 
 Open My Work at `/work`, customer context at `/customers`, contacts at `/people`, sites at `/sites`, equipment at `/equipment`, service requests at `/service/tickets`, and work orders at `/service/work-orders`. Use Change identity to open the compact server-backed synthetic identity controls. Foundation checks remain available as diagnostics. Incomplete intake retains owned unknowns; triage does not authorise work or book attendance. Activities retain explicit unknown due dates and require an outcome on completion.
 
-CRM Sales is at `/crm/opportunities`; Board and List present the same permitted page while retaining search, filters and sort. New opportunity and canonical detail continue through I1's existing qualification and Activity journey. The fictional pipeline remains Enquiry → Qualified with sales outcome Open. [I1 handover](docs/delivery/crm-i1-handover.md) and [I2 handover](docs/delivery/crm-i2-handover.md) record actual verification and publication. Counts describe the returned page; no commercial fields, stage movement or CRM offline support are added. Broader CRM parity remains proposed.
+CRM Sales is at `/crm/opportunities`. Board and List show the same permitted page, with search, filters and sort. New opportunities and converted Leads enter Discovery with qualification evidence; the active pipeline continues through Scoping, Quoting, Negotiation and Closing, with sales outcome Open. Stage controls allow forward movement by one stage and backward movement to any earlier stage. Retained I1 records keep their original Enquiry/Qualified pipeline, available through the pipeline selector. [Runtime handover](docs/delivery/crm-five-stage-runtime-handover.md) records verification and remaining acceptance. The manual value and close-date fields are proposals for the current opportunity; they do not issue quotations or create Projects. CRM offline, Won/Lost and owner transfer remain outside this cutover.
 
 ## Working checks
 
