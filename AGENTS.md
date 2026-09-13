@@ -24,8 +24,12 @@ Use synthetic or specifically approved redacted fixtures. Keep credentials, conn
 
 Before choosing a technology, capture the reason, constraints and alternatives in an architecture decision record. Use stable internal IDs and explicit external company/entity keys; do not invent undocumented ERP endpoints or CREMS formulas.
 
+A database migration is never confined to the domain it serves. Several suites assert the exact contents of the migration registry, so adding one changes them all: migration 0021 turned three CI jobs red through eight assertions in files with no CRM connection. Before opening the pull request, update the applied-version list in `tests/database/field.test.ts`, `finance-upgrade.test.ts`, `offline.test.ts`, `packs.test.ts`, `planner.test.ts` and `reports.test.ts`; `atVersion(N)` and both `>=18` lists in `tests/database/leads-projects-integration.test.ts`; and the added-migration count in `tests/demo/upgrade.test.ts`. Seed entries in `scripts/migration-registry.ts` must be registered against an existing migration and in increasing version order. The `latestMigrationVersion` comparison in `scripts/demo-upgrade.ts` is a review gate on the hosted-demo upgrade path, not a number to bump without reading what it guards. Read the live schema rather than the migration file that introduced an object: later migrations amend earlier ones.
+
 ## Validation and handover
 
 Run `python3 scripts/check_foundation.py` for foundation changes and `python3 scripts/check_prototype.py` for PP-01 package changes. Run `python3 scripts/check_naming.py` for naming/guidance changes. Add meaningful application tests only when application behaviour exists. The current check is documentation assurance, not business acceptance.
+
+The database suites refuse to run against any database but `ppo_synthetic_test`. A local environment without a document renderer or the hosted-only identity migration produces failures that are not regressions: `RenderOrStorageFailure` in the report-producing tests, and `relation "ppo.demo_testers" does not exist` in `tests/demo/database.test.ts`. Confirm any failure against an unmodified `main` before attributing it to the change in hand.
 
 Link work to requirement, decision, interface and acceptance IDs where relevant. Explain what changed, what was checked and what remains open. Keep code delivery status separate from business approval and production readiness.

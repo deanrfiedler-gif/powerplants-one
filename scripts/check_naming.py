@@ -9,6 +9,9 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 ERRORS = []
 FRONT_MATTER = re.compile(r'\A---\r?\n(.*?)\r?\n---\r?\n', re.S)
+# PR #151's measured baseline. New comparisons may increase coverage; removing
+# metadata must not silently reduce the guarantee already provided.
+MIN_FRONT_MATTER_REVISIONS = 40
 
 
 def require(condition, message):
@@ -43,6 +46,8 @@ def main():
     documents = rows('docs/standards/document-register.csv')
     table = grid('docs/standards/document-register.csv')
     for number, row in enumerate(table[1:], start=2):
+        if not row:
+            continue  # csv.DictReader likewise ignores ordinary blank lines.
         require(len(row) == len(table[0]), f'Register line {number}: {len(row)} fields, expected {len(table[0])}; quote any field containing a comma')
     ids = [r['document_id'] for r in documents]
     paths = [r['canonical_path'] for r in documents]
@@ -65,6 +70,8 @@ def main():
                 require(declared['revision'] == row['revision'], f'{row["document_id"]}: register revision {row["revision"]}, front matter {declared["revision"]}')
             if 'document_id' in declared:
                 require(declared['document_id'] == row['document_id'], f'{row["document_id"]}: front matter declares document_id {declared["document_id"]}')
+    require(compared >= MIN_FRONT_MATTER_REVISIONS,
+            f'Front-matter revision coverage fell to {compared}; preserve at least {MIN_FRONT_MATTER_REVISIONS} compared documents')
     exceptions = rows('docs/standards/naming-exceptions.csv')
     require(len({r['exception_key'] for r in exceptions}) == len(exceptions), 'Duplicate naming exception')
     for row in exceptions:
