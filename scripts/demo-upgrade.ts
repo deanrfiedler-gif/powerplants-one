@@ -18,12 +18,12 @@ export { existingDemoChecksumMatches } from "./migration-registry";
 // A deliberately bounded existing-demo upgrade, not a second bootstrap path.
 // Every database change shares one transaction, including grants and receipts.
 export async function upgradeExistingDemo(databaseName: string, tenant: string, apply: boolean) {
-  // Reviewed for 0022: additive conversion/evidence constraints only; no old row,
+  // Reviewed for 0023: additive outcomes and an empty handover-due table; no old row,
   // seed, grant or receipt is changed. The generic migration loop and role grants
-  // cover the new functions. Existing-data compatibility stays under the retained
+  // cover the new functions and table. Existing-data compatibility stays under the retained
   // upgrade tests. The accepted five-stage demonstration uses a separately prepared
   // database/storage epoch; this function neither resets nor activates that epoch.
-  if (latestMigrationVersion !== 22) throw Error("Review the existing-demo upgrade for this release.");
+  if (latestMigrationVersion !== 23) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 2) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

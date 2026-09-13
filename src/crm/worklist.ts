@@ -16,7 +16,7 @@ const sign = (body: string) => createHmac("sha256", key).update(body).digest("ba
 type Cursor = { binding: string; as_of: string; after: string; sort_key: string; stamp: string };
 export type WorklistItem = {
   id: string; display_number: string; title: string; stage_id: OpportunityStage;
-  close_outcome: "Open"; stage_entered_at: string; updated_at: string; version: number;
+  close_outcome: "Open" | "Won" | "Lost"; stage_entered_at: string; updated_at: string; version: number;
   company_id: string; company_name: string; organisation_name: string;
   site_id: string | null; site_name: string | null;
   owner_id: string; owner_name: string;
@@ -31,8 +31,9 @@ export type WorklistItem = {
 export async function listOpportunities(p: Principal, input: unknown = {}) {
   const c = database();
   await requireCapability(c, p, "crm.opportunity.read");
-  const r = object(input, ["limit", "cursor", "q", "company_id", "site_id", "owner_id", "stage_id", "next_action", "sort", "pipeline_definition_id"]);
+  const r = object(input, ["limit", "cursor", "q", "company_id", "site_id", "owner_id", "stage_id", "next_action", "sort", "pipeline_definition_id", "outcome"]);
   const filters = {
+    outcome: r.outcome === undefined ? "Open" : choice(r.outcome, "outcome", ["Open", "Won", "Lost", "All"]),
     pipeline_definition_id: optionalId(r.pipeline_definition_id, "pipeline_definition_id") ?? PIPELINE_ID,
     owner_id: optionalId(r.owner_id, "owner_id"),
     stage_id: r.stage_id === undefined ? null : choice(r.stage_id, "stage_id", opportunityStages),
@@ -76,7 +77,7 @@ export async function listOpportunities(p: Principal, input: unknown = {}) {
       LEFT JOIN ppo.people pe ON (pe.workspace_id,pe.id)=(o.workspace_id,o.primary_person_id)
       LEFT JOIN ppo.activities a ON (a.workspace_id,a.id)=(o.workspace_id,o.next_activity_id) AND ${activityVisibility("a", true, await leadsAvailable(c))}
       LEFT JOIN ppo.users au ON (au.workspace_id,au.id)=(a.workspace_id,a.owner_id)
-      WHERE o.workspace_id=$1 AND ${opportunityVisibility()} AND o.pipeline_definition_id=$13
+      WHERE o.workspace_id=$1 AND ${opportunityVisibility()} AND o.pipeline_definition_id=$13 AND ($14='All' OR o.close_outcome=$14)
         AND ($3::uuid IS NULL OR o.company_id=$3) AND ($4::uuid IS NULL OR o.site_id=$4)
         AND position(lower($5) in lower(o.title||' '||o.display_number||' '||r.display_name))>0
         AND ($6::uuid IS NULL OR o.owner_id=$6) AND ($7::text IS NULL OR o.stage_id=$7)
@@ -85,7 +86,7 @@ export async function listOpportunities(p: Principal, input: unknown = {}) {
     stamp AS (SELECT md5(coalesce(string_agg(md5(row_to_json(m)::text),'' ORDER BY id),'')) AS stamp FROM matching m),
     result_window AS (SELECT * FROM matching WHERE $9::uuid IS NULL OR sort_key COLLATE "C" ${descending ? "<" : ">"} $11::text COLLATE "C" OR (sort_key COLLATE "C"=$11::text COLLATE "C" AND id>$9) ORDER BY sort_key COLLATE "C" ${descending ? "DESC" : "ASC"},id LIMIT $12)
     SELECT stamp.stamp,coalesce((SELECT jsonb_agg(row_to_json(w) ORDER BY sort_key COLLATE "C" ${descending ? "DESC" : "ASC"},id) FROM result_window w),'[]'::jsonb) AS items FROM stamp`,
-    [p.workspace_id, p.actor_id, pg.company_id, pg.site_id, pg.q, filters.owner_id, filters.stage_id, filters.next_action, cursor?.after ?? null, as_of, cursor?.sort_key ?? null, pg.limit + 1, filters.pipeline_definition_id],
+    [p.workspace_id, p.actor_id, pg.company_id, pg.site_id, pg.q, filters.owner_id, filters.stage_id, filters.next_action, cursor?.after ?? null, as_of, cursor?.sort_key ?? null, pg.limit + 1, filters.pipeline_definition_id, filters.outcome],
   )).rows[0];
   if (cursor && cursor.stamp !== result.stamp)
     throw new AppError(409, "WorklistChanged", "The permitted results changed. Refresh from start to avoid skipped or repeated opportunities.");

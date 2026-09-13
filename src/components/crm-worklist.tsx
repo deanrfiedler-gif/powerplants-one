@@ -16,7 +16,7 @@ import { denied, useCrmCommand, useCrmResource } from "./crm-state";
 type Results = Awaited<ReturnType<typeof listOpportunities>>;
 const labels = { Needed: "Next action needed", DueNeeded: "Due date needed", Overdue: "Overdue", Upcoming: "Upcoming", Unavailable: "Next action unavailable" };
 const query = (fields: Record<string, string>) => new URLSearchParams(Object.entries(fields).filter(([, value]) => value)).toString();
-const initial = { pipeline_definition_id: ACTIVE_PIPELINE_ID, q: "", company_id: "", site_id: "", owner_id: "", stage_id: "", next_action: "", sort: "Reference", limit: "50", cursor: "" };
+const initial = { outcome: "Open", pipeline_definition_id: ACTIVE_PIPELINE_ID, q: "", company_id: "", site_id: "", owner_id: "", stage_id: "", next_action: "", sort: "Reference", limit: "50", cursor: "" };
 
 function FilterPicker({ kind, value, company, set, enabled }: { kind: "Company" | "Site" | "Owner"; value: string; company: string; set: (value: string) => void; enabled: boolean }) {
   const [q, setQ] = useState("");
@@ -106,19 +106,19 @@ function Board({ data, selected, scroll, onOpen, onStage, blocked, onMove, onAct
       </header>)}</div>
       <div className="crm-board-columns">{data.stages.map((stage) => <section key={stage.stage_id} className="crm-stage" data-selected={stage.stage_id === selected} data-drop-stage={stage.stage_id} data-drop-active={destination===stage.stage_id}
         onDragOver={e=>{if(!desktop||!drag.current)return;e.preventDefault();e.dataTransfer.dropEffect="move";setDestination(stage.stage_id);const node=ref.current,bounds=node?.getBoundingClientRect();if(node&&bounds){if(e.clientY<bounds.top+75)node.scrollTop-=12;else if(e.clientY>bounds.bottom-40)node.scrollTop+=12;if(e.clientX<bounds.left+40)node.scrollLeft-=12;else if(e.clientX>bounds.right-40)node.scrollLeft+=12;}}}
-        onDrop={e=>{if(!desktop||!drag.current)return;e.preventDefault();const id=drag.current,old=data.items.find(x=>x.id===id);endDrag();if(old?.can_edit&&old.stage_id!==stage.stage_id)onMove(id,stage.stage_id);}} aria-labelledby={`board-${stage.stage_id}`}>
+        onDrop={e=>{if(!desktop||!drag.current)return;e.preventDefault();const id=drag.current,old=data.items.find(x=>x.id===id);endDrag();if(old?.can_edit&&old.close_outcome==="Open"&&old.stage_id!==stage.stage_id)onMove(id,stage.stage_id);}} aria-labelledby={`board-${stage.stage_id}`}>
         <ul className="crm-worklist">
-          {data.items.filter((item) => item.stage_id === stage.stage_id).map((item) => <li key={item.id} data-opportunity-id={item.id} className="crm-card" draggable={desktop&&item.can_edit&&!blocked}
-            onDragStart={e=>{if(!desktop||blocked||!item.can_edit||(e.target as HTMLElement).closest(".crm-card-activity")){e.preventDefault();return;}drag.current=item.id;e.dataTransfer.effectAllowed="move";e.dataTransfer.setData("text/x-ppo-opportunity",item.id);}} onDragEnd={endDrag}>
+          {data.items.filter((item) => item.stage_id === stage.stage_id).map((item) => <li key={item.id} data-opportunity-id={item.id} className="crm-card" draggable={desktop&&item.can_edit&&item.close_outcome==="Open"&&!blocked}
+            onDragStart={e=>{if(!desktop||blocked||!item.can_edit||item.close_outcome!=="Open"||(e.target as HTMLElement).closest(".crm-card-activity")){e.preventDefault();return;}drag.current=item.id;e.dataTransfer.effectAllowed="move";e.dataTransfer.setData("text/x-ppo-opportunity",item.id);}} onDragEnd={endDrag}>
             <Link className="crm-card-body crm-opportunity-title" href={`/crm/opportunities/${item.id}`} aria-label={item.title} draggable={false}
               onClick={e=>{if(Date.now()<suppress.current){e.preventDefault();return;}if(desktop&&!e.ctrlKey&&!e.metaKey&&!e.shiftKey&&!e.altKey){e.preventDefault();onOpen(item.id);}}}>
-              <span className="crm-card-heading"><span className="crm-card-title">{item.title}</span></span>
+              <span className="crm-card-heading"><span className="crm-card-title">{item.title}</span>{item.close_outcome !== "Open" && <span>{item.close_outcome}</span>}</span>
               <span className="crm-card-company" title={item.organisation_name}>{item.organisation_name}</span>
               <span className="crm-card-value"><strong>{dealAmount(item.value_amount)}</strong><span className="crm-card-close"><ProductIcon name="service"/>{dealClose(item.expected_close_date)}</span></span>
               <span className="crm-card-contact" title={`Customer contact: ${item.contact_name??"Not yet identified"}`}><ProductIcon name="person"/><span>{item.contact_name??"Contact not yet identified"}</span></span>
             </Link>
             {["Needed", "DueNeeded"].includes(item.next_action_state) && <Link className="crm-card-warning" href={`/crm/opportunities/${item.id}?section=timeline&activity=new`} draggable={false} title={`${labels[item.next_action_state]} — plan an activity`} aria-label={`${labels[item.next_action_state]} for ${item.title}. Plan an activity`}><ProductIcon name="warning"/></Link>}
-            {item.can_edit && <button type="button" className="crm-card-stage" aria-label={`Change stage for ${item.title}`} title="Change stage" aria-haspopup="dialog" disabled={blocked} draggable={false} onClick={()=>onStage(item.id)}><ProductIcon name="board"/></button>}
+            {item.can_edit && item.close_outcome === "Open" && <button type="button" className="crm-card-stage" aria-label={`Change stage for ${item.title}`} title="Change stage" aria-haspopup="dialog" disabled={blocked} draggable={false} onClick={()=>onStage(item.id)}><ProductIcon name="board"/></button>}
             <CardAction item={item} onOpen={onActivity} />
           </li>)}
         </ul>
@@ -219,7 +219,7 @@ export function SalesWorklist() {
   // so nothing claims to be saved before the server says so.
   const move = (id: string, stage: string) => {
     const old = boardData?.items.find(x => x.id === id);
-    if (stageCommand.busy || stageCommand.uncertain || !old || old.stage_id === stage || !old.can_edit) return;
+    if (stageCommand.busy || stageCommand.uncertain || !old || old.stage_id === stage || !old.can_edit || old.close_outcome !== "Open") return;
     if (stageRequiresEvidence(stage)) { setDialog({ id, mode: "stage", stage }); return; }
     setMoved({ [id]: stage });
     setFeedback(`${old.title}: moving to ${stage}.`);
@@ -278,6 +278,7 @@ export function SalesWorklist() {
       <section id="crm-filter-panel" className="crm-secondary-filters" aria-label="Opportunity filters" hidden={!filtersOpen}>
         <div className="crm-filter-grid">
           {(["Company", "Site", "Owner"] as const).map((kind) => <FilterPicker key={kind} kind={kind} value={filters[kind === "Company" ? "company_id" : kind === "Site" ? "site_id" : "owner_id"]} company={filters.company_id} enabled={!data.error} set={(v) => change(kind === "Company" ? "company_id" : kind === "Site" ? "site_id" : "owner_id", v)} />)}
+          <label className="field">Sales outcome<select aria-label="Sales outcome" value={filters.outcome} onChange={e=>change("outcome",e.target.value)}>{["Open","Won","Lost","All"].map(value=><option key={value} value={value}>{value}</option>)}</select></label>
           <SelectField name="next-state" label="Next action" value={filters.next_action} onChange={(v) => change("next_action", v)} options={Object.entries(labels).map(([id, display_name]) => ({ id, display_name }))} empty="All action states" />
           <SelectField name="stage" label="Stage" value={filters.stage_id} onChange={(v) => { change("stage_id", v); if (v) setSelected(v); }} options={(data.data?.stages ?? []).map((s) => ({ id: s.stage_id, display_name: s.stage_id }))} empty="All stages" />
           <label className="field">Page size<select aria-label="Page size" value={filters.limit} onChange={(e) => change("limit", e.target.value)}><option value="10">10 records</option><option value="25">25 records</option><option value="50">50 records</option></select></label>
@@ -293,7 +294,7 @@ export function SalesWorklist() {
     {data.loading && <p role="status">Loading permitted sales records…</p>}
     {data.error != null && <button className="secondary" onClick={refresh}>Try loading again</button>}
     {!data.error && data.data && <>
-      <div className="source-stamp crm-worklist-stamp"><strong>{data.data.items.length} {data.data.items.length === 1 ? "opportunity" : "opportunities"}{data.data.completeness === "Complete" ? "" : " on this page"}</strong><span>{totals?.formatted} known{totals?.unknown ? ` · ${totals.unknown} not estimated` : ""}</span><span className="crm-summary-basis">Open · AUD, excl. GST</span></div>
+      <div className="source-stamp crm-worklist-stamp"><strong>{data.data.items.length} {data.data.items.length === 1 ? "opportunity" : "opportunities"}{data.data.completeness === "Complete" ? "" : " on this page"}</strong><span>{totals?.formatted} known{totals?.unknown ? ` · ${totals.unknown} not estimated` : ""}</span><span className="crm-summary-basis">{filters.outcome} · AUD, excl. GST</span></div>
       {view === "Board" ? <>
         <div className="crm-stage-navigation" role="group" aria-label="Choose Board stage">{data.data.stages.map((stage) => <button key={stage.stage_id} aria-pressed={activeStage === stage.stage_id} className={activeStage === stage.stage_id ? "" : "secondary"} onClick={() => setSelected(stage.stage_id)}>{stage.stage_id} ({stage.count})</button>)}</div>
         <Board data={boardData!} selected={activeStage} scroll={boardScroll} onOpen={id=>{if(!stageCommand.busy&&!stageCommand.uncertain)setDialog({id,mode:"snapshot"});}} onStage={id=>setDialog({id,mode:"stage"})} blocked={stageCommand.busy||stageCommand.uncertain} onMove={move} onActivity={setActivity} />
