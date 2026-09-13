@@ -224,7 +224,7 @@ try {
       2,
     ),
   );
-  await page.goto(origin + "/crm/opportunities");
+  await page.goto(origin + "/crm/opportunities?pipeline=I1");
   await page.getByLabel("Search opportunities", {exact:true}).fill(proof.input.title);
   for (const view of ["Board", "List"]) {
     await page.getByRole("button", {name:view,exact:true}).click();

@@ -1,3 +1,6 @@
+import { changeDealStage } from "../../src/crm/refinements";
+import { readOpportunity } from "../../src/crm/reads";
+import { crmBase } from "../helpers/crm";
 import assert from "node:assert/strict";
 import { after, beforeEach, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -14,7 +17,7 @@ beforeEach(reset);
 after(closeDatabase);
 
 // Increment A (issue #143) is the catalogue and the movement rule only; the code
-// cutover is separate, so nothing in the application creates a five-stage deal yet.
+// creation cutover is separate, so five-stage fixtures are constructed directly.
 // These cases therefore exercise the database objects directly. Every write goes
 // through one transaction because the event chain and per-version event triggers are
 // DEFERRABLE INITIALLY DEFERRED and are only meaningful at commit.
@@ -103,7 +106,7 @@ const event = async (
     `INSERT INTO ppo.opportunity_events(id,workspace_id,company_id,opportunity_id,version,synthetic,created_by,updated_by,
       operation_id,opportunity_version,event_type,pipeline_definition_id,from_stage,to_stage,next_activity_id,
       reason,need_summary,qualification_note,record_snapshot,created_at,updated_at)
-     VALUES($1,$2,$3,$4,1,true,$5,$5,$6,$7,$8,$9,$10,$11,$12,'SYN probe','SYN five-stage need',$13,$14,now(),now())`,
+     VALUES($1,$2,$3,$4,1,true,$5,$5,$6,$7,$8,$9,$10,$11,$12,'SYN probe','SYN five-stage need',$13,$14,(SELECT stage_entered_at FROM ppo.opportunities WHERE workspace_id=$2 AND id=$4),now())`,
     [id, seed.workspace_id, seed.company_id, opportunity, seed.created_by, randomUUID(), version, type,
      five, from, to, seed.next_activity_id, note, snapshot],
   );
@@ -252,4 +255,84 @@ test("a recorded stage must match the opportunity it describes", async () => {
   // current version to match its stage. The invariant survived step 3 removing the
   // 'Enquiry' literal from the event CHECK, because it never lived there.
   assert.equal(message, "Exact opportunity event required for every version");
+});
+
+test("five-stage server commands preserve evidence, exact event time and original receipts", async () => {
+  const ctx = await context();
+  const p = (await createSession("coordinator")).principal;
+  const id = (await transaction(deal(ctx, "Discovery"))) as string;
+  const original = await readOpportunity(p, id);
+  assert.equal(original.can_edit, true);
+  assert.deepEqual(
+    original.stages.map((s) => s.stage_id),
+    ["Discovery", "Scoping", "Quoting", "Negotiation", "Closing"],
+  );
+  const command = (stage_id: string, expected_version: number) => ({
+    ...crmBase(),
+    expected_version,
+    stage_id,
+    qualification_note: null,
+    identification_activity_id: null,
+  });
+  for (const target of ["Quoting", "Qualified", "Enquiry"]) {
+    await assert.rejects(changeDealStage(p, id, { ...command(target, 1), qualification_note: target === "Qualified" ? "SYN other pipeline" : null }), {
+      code: "CRM_PROGRESS_INVALID",
+    });
+    assert.equal((await readOpportunity(p, id)).version, 1);
+  }
+  let version = 1;
+  for (const stage of [
+    "Scoping",
+    "Quoting",
+    "Negotiation",
+    "Closing",
+    "Scoping",
+    "Quoting",
+  ]) {
+    const intent = command(stage, version);
+    const receipt = await changeDealStage(p, id, intent);
+    const replay = await changeDealStage(p, id, intent);
+    assert.deepEqual(replay.receipt, receipt.receipt);
+    assert.equal(replay.replayed, true);
+    const saved = await readOpportunity(p, id);
+    assert.equal(saved.version, ++version);
+    assert.equal(saved.stage_id, stage);
+    assert.equal(saved.qualification_note, original.qualification_note);
+    assert.equal(
+      saved.identification_activity_id,
+      original.identification_activity_id,
+    );
+    assert.equal(saved.owner_id, original.owner_id);
+    assert.equal(saved.next_activity?.id, original.next_activity?.id);
+    assert.equal(saved.events.length, version);
+    assert.equal(
+      (
+        await rows(
+          `SELECT o.stage_entered_at=e.created_at AS exact FROM ppo.opportunities o JOIN ppo.opportunity_events e ON e.workspace_id=o.workspace_id AND e.opportunity_id=o.id AND e.opportunity_version=o.version WHERE o.id=$1`,
+          [id],
+        )
+      )[0].exact,
+      true,
+    );
+  }
+  assert.deepEqual(
+    (await readOpportunity(p, id)).events.map((e) => e.to_stage),
+    [
+      "Discovery",
+      "Scoping",
+      "Quoting",
+      "Negotiation",
+      "Closing",
+      "Scoping",
+      "Quoting",
+    ],
+  );
+  await assert.rejects(changeDealStage(p, id, command("Negotiation", 1)), {
+    code: "VersionConflict",
+  });
+  const denied = (await createSession("assigned-technician")).principal;
+  await assert.rejects(
+    changeDealStage(denied, id, command("Negotiation", version)),
+  );
+  assert.equal((await readOpportunity(p, id)).version, version);
 });

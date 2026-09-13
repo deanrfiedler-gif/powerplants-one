@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { ACTIVE_PIPELINE_ID } from "../crm/stages";
 import { useEffect, useState, useRef, useLayoutEffect, useCallback } from "react";
 import type { CSSProperties } from "react";
 import { DealDialog, dealAmount, dealClose, stageRequiresEvidence, useDesktopCRM, type DealRecord, type StageUndo } from "./crm-deal-controls";
@@ -15,7 +16,7 @@ import { denied, useCrmCommand, useCrmResource } from "./crm-state";
 type Results = Awaited<ReturnType<typeof listOpportunities>>;
 const labels = { Needed: "Next action needed", DueNeeded: "Due date needed", Overdue: "Overdue", Upcoming: "Upcoming", Unavailable: "Next action unavailable" };
 const query = (fields: Record<string, string>) => new URLSearchParams(Object.entries(fields).filter(([, value]) => value)).toString();
-const initial = { q: "", company_id: "", site_id: "", owner_id: "", stage_id: "", next_action: "", sort: "Reference", limit: "50", cursor: "" };
+const initial = { pipeline_definition_id: ACTIVE_PIPELINE_ID, q: "", company_id: "", site_id: "", owner_id: "", stage_id: "", next_action: "", sort: "Reference", limit: "50", cursor: "" };
 
 function FilterPicker({ kind, value, company, set, enabled }: { kind: "Company" | "Site" | "Owner"; value: string; company: string; set: (value: string) => void; enabled: boolean }) {
   const [q, setQ] = useState("");
@@ -89,7 +90,7 @@ function useScrollMemory() {
   const save = useCallback((top: number, left: number) => { position.current = { top, left }; }, []);
   return { read, save };
 }
-function Board({ data, selected, scroll, onOpen, onMove, onActivity }: { data: Results; selected: string; scroll: ReturnType<typeof useScrollMemory>; onOpen:(id:string)=>void; onMove:(id:string,stage:string)=>void; onActivity:(item: WorklistItem)=>void }) {
+function Board({ data, selected, scroll, onOpen, onStage, blocked, onMove, onActivity }: { data: Results; selected: string; scroll: ReturnType<typeof useScrollMemory>; onOpen:(id:string)=>void; onStage:(id:string)=>void; blocked:boolean; onMove:(id:string,stage:string)=>void; onActivity:(item: WorklistItem)=>void }) {
   const desktop=useDesktopCRM(),drag=useRef<string|null>(null),suppress=useRef(0),[destination,setDestination]=useState<string|null>(null);
   const endDrag=()=>{drag.current=null;setDestination(null);suppress.current=Date.now()+400;};
   useEffect(()=>{const cancel=(e:KeyboardEvent)=>{if(e.key==="Escape"&&drag.current)endDrag();};document.addEventListener("keydown",cancel);return()=>document.removeEventListener("keydown",cancel);},[]);
@@ -105,8 +106,8 @@ function Board({ data, selected, scroll, onOpen, onMove, onActivity }: { data: R
         onDragOver={e=>{if(!desktop||!drag.current)return;e.preventDefault();e.dataTransfer.dropEffect="move";setDestination(stage.stage_id);const node=ref.current,bounds=node?.getBoundingClientRect();if(node&&bounds){if(e.clientY<bounds.top+75)node.scrollTop-=12;else if(e.clientY>bounds.bottom-40)node.scrollTop+=12;if(e.clientX<bounds.left+40)node.scrollLeft-=12;else if(e.clientX>bounds.right-40)node.scrollLeft+=12;}}}
         onDrop={e=>{if(!desktop||!drag.current)return;e.preventDefault();const id=drag.current,old=data.items.find(x=>x.id===id);endDrag();if(old?.can_edit&&old.stage_id!==stage.stage_id)onMove(id,stage.stage_id);}} aria-labelledby={`board-${stage.stage_id}`}>
         <ul className="crm-worklist">
-          {data.items.filter((item) => item.stage_id === stage.stage_id).map((item) => <li key={item.id} data-opportunity-id={item.id} className="crm-card" draggable={desktop&&item.can_edit}
-            onDragStart={e=>{if(!desktop||!item.can_edit||(e.target as HTMLElement).closest(".crm-card-activity")){e.preventDefault();return;}drag.current=item.id;e.dataTransfer.effectAllowed="move";e.dataTransfer.setData("text/x-ppo-opportunity",item.id);}} onDragEnd={endDrag}>
+          {data.items.filter((item) => item.stage_id === stage.stage_id).map((item) => <li key={item.id} data-opportunity-id={item.id} className="crm-card" draggable={desktop&&item.can_edit&&!blocked}
+            onDragStart={e=>{if(!desktop||blocked||!item.can_edit||(e.target as HTMLElement).closest(".crm-card-activity")){e.preventDefault();return;}drag.current=item.id;e.dataTransfer.effectAllowed="move";e.dataTransfer.setData("text/x-ppo-opportunity",item.id);}} onDragEnd={endDrag}>
             <Link className="crm-card-body crm-opportunity-title" href={`/crm/opportunities/${item.id}`} aria-label={item.title} draggable={false}
               onClick={e=>{if(Date.now()<suppress.current){e.preventDefault();return;}if(desktop&&!e.ctrlKey&&!e.metaKey&&!e.shiftKey&&!e.altKey){e.preventDefault();onOpen(item.id);}}}>
               <span className="crm-card-heading"><span className="crm-card-title">{item.title}</span></span>
@@ -115,6 +116,7 @@ function Board({ data, selected, scroll, onOpen, onMove, onActivity }: { data: R
               <span className="crm-card-contact" title={`Customer contact: ${item.contact_name??"Not yet identified"}`}><ProductIcon name="person"/><span>{item.contact_name??"Contact not yet identified"}</span></span>
             </Link>
             {["Needed", "DueNeeded"].includes(item.next_action_state) && <Link className="crm-card-warning" href={`/crm/opportunities/${item.id}?section=timeline&activity=new`} draggable={false} title={`${labels[item.next_action_state]} — plan an activity`} aria-label={`${labels[item.next_action_state]} for ${item.title}. Plan an activity`}><ProductIcon name="warning"/></Link>}
+            {item.can_edit && <button type="button" className="crm-card-stage" aria-label={`Change stage for ${item.title}`} title="Change stage" aria-haspopup="dialog" disabled={blocked} draggable={false} onClick={()=>onStage(item.id)}><ProductIcon name="board"/></button>}
             <CardAction item={item} onOpen={onActivity} />
           </li>)}
         </ul>
@@ -150,9 +152,15 @@ export function SalesWorklist() {
   // the move, because only the dialog reads the qualification fields the worklist
   // does not return; without it an undo has to reopen the dialog.
   const [undoMove,setUndoMove]=useState<{id:string;to:string;record?:StageUndo}|null>(null);
+  const [focusAfterSave, setFocusAfterSave] = useState<{id:string;version:number}|null>(null);
   const [activity,setActivity]=useState<WorklistItem|null>(null);
 
   const [filters, setFilters] = useState(initial);
+  // Explicit access to retained I1 history; ordinary navigation starts on five stages.
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("pipeline") === "I1")
+      queueMicrotask(() => setFilters(old => ({ ...old, pipeline_definition_id: "c1000000-0000-4000-8000-000000000001" })));
+  }, []);
   const boardScroll = useScrollMemory(), gridScroll = useScrollMemory();
   const [view, setView] = useState<"Board" | "Grid">("Board");
   const [selected, setSelected] = useState("");
@@ -160,7 +168,7 @@ export function SalesWorklist() {
   const data = useCrmResource<Results>(`crm/opportunities?${query(filters)}`, true);
   // On acceptance drop the optimistic override and let the server be the truth.
   // The undo target is kept: it is what the actor reverses after a move lands.
-  const stageCommand = useCrmCommand(() => { setMoved({}); setFilters(o => ({ ...o, cursor: "" })); data.reload(); }, "No unsaved changes");
+  const stageCommand = useCrmCommand((receipt) => { setFeedback(`Stage saved: ${receipt.state}.`); setMoved({}); setFilters(o => ({ ...o, cursor: "" })); data.reload(); }, "No unsaved changes");
 
   // Clear query text, selected IDs and option-search components after current access is denied.
   const isDenied = denied(data.error);
@@ -170,11 +178,19 @@ export function SalesWorklist() {
     queueMicrotask(() => { if (live) { setFilters(initial);setFeedback("");setUndoMove(null);setMoved({});setDialog(null); } });
     return () => { live = false; };
   }, [isDenied]);
+  useEffect(() => {
+    if (!focusAfterSave || dialog || !data.data?.items.some(i => i.id === focusAfterSave.id && i.version >= focusAfterSave.version)) return;
+    const frame = requestAnimationFrame(() => {
+      document.querySelector<HTMLButtonElement>(`[data-opportunity-id="${focusAfterSave.id}"] .crm-card-stage`)?.focus();
+      setFocusAfterSave(null);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [focusAfterSave, dialog, data.data]);
   const change = (key: keyof typeof initial, value: string) => setFilters((old) => ({ ...old, [key]: value, cursor: "", ...(key === "company_id" ? { site_id: "" } : {}) }));
   // Past tense here, unlike the board: the dialog has the receipt in hand, and it
   // holds the saved record, so its undo can restore the exact previous stage and
   // qualification rather than asking for them again.
-  const saved=(receipt:OperationReceipt,old:DealRecord,stage:boolean)=>{setDialog(null);setMoved({});if(stage){setUndoMove({id:old.id,to:old.stage_id,record:{id:old.id,version:receipt.record_version,stage_id:old.stage_id,qualification_note:old.qualification_note,identification_activity_id:old.identification_activity_id}});setFeedback(`${old.title} moved to ${receipt.state}.`);}setFilters(old=>({...old,cursor:""}));data.reload();};
+  const saved=(receipt:OperationReceipt,old:DealRecord,stage:boolean)=>{setDialog(null);setMoved({});if(stage){stageCommand.clearError();setSelected(receipt.state);setFocusAfterSave({id:old.id,version:receipt.record_version});setUndoMove({id:old.id,to:old.stage_id,record:{id:old.id,version:receipt.record_version,stage_id:old.stage_id,qualification_note:old.qualification_note,identification_activity_id:old.identification_activity_id}});setFeedback(`${old.title} moved to ${receipt.state}.`);}setFilters(old=>({...old,cursor:""}));data.reload();};
   const refresh = () => { setFilters((old) => ({ ...old, cursor: "" })); data.reload(); };
   const scopedSearch = !isDenied && <label className="crm-header-search"><ProductIcon name="search"/><span className="sr-only">Search opportunities</span><input name="sales-search" type="search" placeholder="Search opportunities" value={filters.q} onChange={e => change("q", e.target.value)}/></label>;
   const stageIds: string[] = data.data?.stages.map(s => s.stage_id) ?? [];
@@ -199,7 +215,7 @@ export function SalesWorklist() {
   // so nothing claims to be saved before the server says so.
   const move = (id: string, stage: string) => {
     const old = boardData?.items.find(x => x.id === id);
-    if (!old || old.stage_id === stage || !old.can_edit) return;
+    if (stageCommand.busy || stageCommand.uncertain || !old || old.stage_id === stage || !old.can_edit) return;
     if (stageRequiresEvidence(stage)) { setDialog({ id, mode: "stage", stage }); return; }
     setMoved({ [id]: stage });
     setFeedback(`${old.title}: moving to ${stage}.`);
@@ -216,7 +232,10 @@ export function SalesWorklist() {
   // qualification to restore — and when the reverse move itself needs evidence
   // the board cannot reproduce. Otherwise reverse it directly.
   const undoLastMove = () => {
-    if (!undoMove) return;
+    if (!undoMove || stageCommand.busy || stageCommand.uncertain) return;
+    // A definite refusal created no movement. Do this before reopening a
+    // qualification dialog: undo must not manufacture a replacement command.
+    if (stageCommand.error) { setUndoMove(null); setMoved({}); return; }
     const { id, to, record } = undoMove;
     if (record) { setDialog({ id, mode: "stage", undo: record }); return; }
     if (stageRequiresEvidence(to)) { setDialog({ id, mode: "stage", stage: to }); return; }
@@ -240,7 +259,7 @@ export function SalesWorklist() {
   return <section className="crm-workspace" aria-label="Sales worklist">
     <h1 className="sr-only">Sales worklist</h1>
     {!desktop && <HeaderContent slot="search">{scopedSearch}</HeaderContent>}
-    <div className="crm-toolbar"><div className="crm-view-controls" role="group" aria-label="Opportunity presentation">
+    <div className="crm-toolbar"><fieldset className="crm-pipeline-picker" disabled={stageCommand.busy||stageCommand.uncertain}><SelectField name="pipeline" label="Pipeline" value={filters.pipeline_definition_id} onChange={value=>{if(!value)return;setFilters(old=>({...old,pipeline_definition_id:value,stage_id:"",cursor:""}));setSelected("");setMoved({});setUndoMove(null);setFeedback("");}} options={data.data?.pipelines ?? []}/></fieldset><div className="crm-view-controls" role="group" aria-label="Opportunity presentation">
       {(["Board", "Grid"] as const).map((value) => <button key={value} className={view === value ? "" : "secondary"} aria-pressed={view === value} onClick={() => setView(value)}><ProductIcon name={value === "Board" ? "board" : "list"} />{value === "Grid" ? "List" : value}</button>)}
     </div>
     {!data.error && data.data?.can_create && <Link className="primary-link crm-new-opportunity" href="/crm/opportunities/new" aria-label="New opportunity"><ProductIcon name="plus" />Opportunity</Link>}
@@ -260,10 +279,10 @@ export function SalesWorklist() {
           <label className="field">Page size<select aria-label="Page size" value={filters.limit} onChange={(e) => change("limit", e.target.value)}><option value="10">10 records</option><option value="25">25 records</option><option value="50">50 records</option></select></label>
           <label className="crm-check"><input type="checkbox" checked={filters.owner_id === p.actor_id} onChange={(e) => change("owner_id", e.target.checked ? p.actor_id : "")} />Owned by me</label>
         </div>
-        <button className="secondary" onClick={() => setFilters(initial)}>Clear filters</button>
+        <button className="secondary" onClick={() => setFilters(old=>({...initial,pipeline_definition_id:old.pipeline_definition_id}))}>Clear filters</button>
       </section>
     </>}
-    {feedback&&!isDenied&&<div className="crm-change-feedback" role="status"><span>{feedback}</span><span className="crm-save-status">{stageCommand.status}</span><ErrorNotice error={stageCommand.error} />{undoMove&&<button className="secondary" onClick={undoLastMove}>Undo stage move</button>}<button className="secondary" onClick={()=>{setFeedback("");setUndoMove(null);}}>Dismiss</button></div>}
+    {feedback&&!isDenied&&<div className="crm-change-feedback" role="status"><span>{feedback}</span><span className="crm-save-status">{undoMove?.record ? "Saved to the server" : stageCommand.status}</span><ErrorNotice error={stageCommand.error} />{stageCommand.uncertain&&<button disabled={stageCommand.busy} onClick={()=>void stageCommand.reconcile()}>Confirm original save outcome</button>}{!!stageCommand.error&&!stageCommand.uncertain&&<button className="secondary" onClick={()=>{setMoved({});refresh();}}>Load current saved version for comparison</button>}{undoMove&&<button className="secondary" disabled={stageCommand.busy||stageCommand.uncertain} onClick={undoLastMove}>Undo stage move</button>}<button className="secondary" disabled={stageCommand.busy||stageCommand.uncertain} onClick={()=>{setFeedback("");setUndoMove(null);}}>Dismiss</button></div>}
     {activity&&!isDenied&&<ActivitySnapshot item={activity} onClose={()=>setActivity(null)}/>}
     {dialog&&!isDenied&&<DealDialog id={dialog.id} mode={dialog.mode} targetStage={dialog.stage} undo={dialog.undo} onClose={()=>setDialog(null)} onSaved={saved}/>}
     <ErrorNotice error={data.error} />
@@ -273,7 +292,7 @@ export function SalesWorklist() {
       <div className="source-stamp crm-worklist-stamp"><strong>{data.data.items.length} {data.data.items.length === 1 ? "opportunity" : "opportunities"}{data.data.completeness === "Complete" ? "" : " on this page"}</strong><span>{totals?.formatted} known{totals?.unknown ? ` · ${totals.unknown} not estimated` : ""}</span><span className="crm-summary-basis">Open · AUD, excl. GST</span></div>
       {view === "Board" ? <>
         <div className="crm-stage-navigation" role="group" aria-label="Choose Board stage">{data.data.stages.map((stage) => <button key={stage.stage_id} aria-pressed={activeStage === stage.stage_id} className={activeStage === stage.stage_id ? "" : "secondary"} onClick={() => setSelected(stage.stage_id)}>{stage.stage_id} ({stage.count})</button>)}</div>
-        <Board data={boardData!} selected={activeStage} scroll={boardScroll} onOpen={id=>setDialog({id,mode:"snapshot"})} onMove={move} onActivity={setActivity} />
+        <Board data={boardData!} selected={activeStage} scroll={boardScroll} onOpen={id=>{if(!stageCommand.busy&&!stageCommand.uncertain)setDialog({id,mode:"snapshot"});}} onStage={id=>setDialog({id,mode:"stage"})} blocked={stageCommand.busy||stageCommand.uncertain} onMove={move} onActivity={setActivity} />
       </> : <Grid data={data.data} scroll={gridScroll} />}
       <div className="crm-actions"><span className="crm-page-context">{data.data.completeness === "Complete" ? "All matching results" : data.data.window.has_more ? "Page counts and values · more pages" : "Page counts and values · final page"} · As at <Stamp value={data.data.window.as_of} /></span><button className="secondary" onClick={refresh}>Refresh from start</button>{data.data.next_cursor && <button onClick={() => setFilters((old) => ({ ...old, cursor: data.data!.next_cursor! }))}>Next page</button>}</div>
 

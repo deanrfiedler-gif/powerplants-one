@@ -65,6 +65,11 @@ test("approved leads list/detail and atomic conversion persist through reload", 
   await expect(
     page.getByRole("link", { name: lead.display_number, exact: true }),
   ).toBeVisible();
+  const savedDeal = (await call(page, `crm/opportunities/${lead.deal.id}`)).items[0];
+  expect(savedDeal.stage_id).toBe("Discovery");
+  expect(savedDeal.version).toBe(1);
+  expect(savedDeal.events).toHaveLength(1);
+  expect(savedDeal.qualification_note).toBe("SYN Credible requirement confirmed; proceed with owned follow-up.");
   await page.screenshot({ path: info.outputPath("converted-deal.png") });
 });
 test("Add lead has one scroll body, fixed actions, focus return and navy add button at phone sizes", async ({

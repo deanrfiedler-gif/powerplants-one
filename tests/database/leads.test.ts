@@ -101,7 +101,10 @@ test("LC-01/02/06 manual capture, note, completed history and independent-owner 
   const lead = await readLead(p, input.id),
     deal = await readOpportunity(p, command.opportunity_id);
   assert.equal(lead.status, "Converted");
-  assert.equal(deal.stage_id, "Qualified");
+  assert.equal(deal.stage_id, "Discovery");
+  assert.equal(deal.version, 1);
+  assert.equal(deal.events.length, 1);
+  assert.equal(deal.events[0].qualification_note, command.qualification_note);
   assert.equal(deal.owner_id, input.owner_id);
   assert.equal(deal.close_outcome, "Open");
   assert.equal(deal.actions.length, 2);

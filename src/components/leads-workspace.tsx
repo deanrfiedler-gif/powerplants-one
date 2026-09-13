@@ -566,7 +566,7 @@ function LeadForm({
                   <div className="lead-readonly">
                     <strong>{lead?.owner_name}</strong>
                     <span>Accountable deal owner · retained from lead</span>
-                    <span>Qualified / Open · Fictional sales enquiry — I1</span>
+                    <span>Discovery / Open · Fictional sales pipeline</span>
                   </div>
                   {!site && (
                     <TextArea

@@ -36,7 +36,7 @@ async function waitForCompactSearch(page: Page) {
 }
 
 test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone stage and business records", async ({ page }, info) => {
-  await page.goto("/crm/opportunities"); await identity(page);
+  await page.goto("/crm/opportunities?pipeline=I1"); await identity(page);
   const marker = `SYN ${randomUUID().slice(0, 8)}`;
   const actionOwner = randomUUID();
   await database().query("INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1,$2,'PPO-LocalSynthetic',$3,'SYN Action colleague')", [actionOwner, CRM.workspace, randomUUID()]);
@@ -113,7 +113,7 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
 });
 
 test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error completeness", async ({ page }, info) => {
-  await page.goto("/crm/opportunities"); await identity(page);
+  await page.goto("/crm/opportunities?pipeline=I1"); await identity(page);
   const marker = `SYN page ${randomUUID().slice(0, 8)}`;
   const inputs = Array.from({ length: 12 }, (_, n) => ({ ...crmCreate(), title: `${marker} ${String(n).padStart(2, "0")}`, initial_action: { ...crmAction(), summary: n === 0 ? `SYN ${"X".repeat(1983)}END OF ACTION` : "SYN Arrange follow-up" } }));
   inputs[0].title = `${marker} 00 ${"LongReference".repeat(13)}`.slice(0, 200);
@@ -221,7 +221,7 @@ test("CA-06/10/13 I2 revocation clears list, filter labels and late responses; i
   await database().query("INSERT INTO ppo.sessions(token_hash,workspace_id,actor_id,expires_at) VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')", [createHash("sha256").update(token).digest("hex"), CRM.workspace, user]);
   await page.context().addCookies([{ name: "ppo_local_session", value: token, domain: "127.0.0.1", path: "/", httpOnly: true, sameSite: "Strict" }]);
   const input = { ...crmCreate(), title: `SYN private ${randomUUID()}`, owner_id: user, initial_action: crmAction(user) };
-  await page.goto("/crm/opportunities"); await call(page, "crm/opportunities", input);
+  await page.goto("/crm/opportunities?pipeline=I1"); await call(page, "crm/opportunities", input);
   await page.getByLabel("Search opportunities", { exact: true }).fill(input.title);
   await expect.poll(() => ids(page)).toHaveLength(1);
   let release!: () => void, held = false, intercept = true;
@@ -268,7 +268,7 @@ test("CA-06/13 initial identity must settle before an actor can switch", async (
     await held;
     await route.fulfill({ response });
   });
-  await page.goto("/crm/opportunities");
+  await page.goto("/crm/opportunities?pipeline=I1");
   const strip = page.getByRole("region", { name: "Local demonstration identity", exact: true });
   await expect(strip).toHaveAttribute("aria-busy", "true");
   await expect(page.getByLabel("Identity", { exact: true })).toBeDisabled();
@@ -305,7 +305,7 @@ test("CA-13 shared brand consumers retain navigation, readable actions and origi
 });
 
 test("Accepted r08 shell and board retain full-width stages, fixed headers and shared scrolling", async ({ page }, info) => {
-  await page.goto("/crm/opportunities"); await identity(page);
+  await page.goto("/crm/opportunities?pipeline=I1"); await identity(page);
   const marker = `SYN r08 ${randomUUID().slice(0, 8)}`;
   for (let n = 0; n < 10; n++) {
     const input = { ...crmCreate(), title: `${marker} ${n} ${n === 0 ? "Long climate control and irrigation opportunity" : "Controls upgrade"}`, initial_action: { ...crmAction(), summary: n % 2 ? "SYN Confirm installation scope and arrange the next technical review" : "SYN Call customer" } };

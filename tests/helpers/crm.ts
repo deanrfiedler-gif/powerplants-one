@@ -49,3 +49,9 @@ export const crmQualify = (version = 1) => ({
     "SYN Contact explained desired monitoring outcome; no order or financial authority.",
   identification_activity_id: null as string | null,
 });
+
+export const crmDiscovery = () => ({
+  ...crmCreate(),
+  pipeline_definition_id: "c1000000-0000-4000-8000-000000000002",
+  qualification_note: "SYN Known customer need reviewed for fictional discovery; no order authority.",
+});

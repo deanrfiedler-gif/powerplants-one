@@ -1,3 +1,8 @@
+import {
+  carriesQualification,
+  permittedStageMove,
+  type StageDefinition,
+} from "./stages";
 import { randomUUID } from "node:crypto";
 import type { PoolClient } from "pg";
 import type { Principal } from "../platform/identity";
@@ -51,8 +56,8 @@ async function record(
     scope_details: o.scope_details,
   };
   await c.query(
-    `INSERT INTO ppo.opportunity_events(id,workspace_id,company_id,opportunity_id,created_by,updated_by,operation_id,opportunity_version,event_type,pipeline_definition_id,from_stage,to_stage,next_activity_id,identification_activity_id,reason,need_summary,qualification_note,record_snapshot)
-    VALUES($1,$2,$3,$4,$5,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)`,
+    `INSERT INTO ppo.opportunity_events(id,workspace_id,company_id,opportunity_id,created_by,updated_by,operation_id,opportunity_version,event_type,pipeline_definition_id,from_stage,to_stage,next_activity_id,identification_activity_id,reason,need_summary,qualification_note,record_snapshot,created_at)
+    VALUES($1,$2,$3,$4,$5,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,CASE WHEN $8='OpportunityStageChanged' THEN (SELECT stage_entered_at FROM ppo.opportunities WHERE workspace_id=$2 AND id=$4) ELSE clock_timestamp() END)`,
     [
       randomUUID(),
       p.workspace_id,
@@ -104,7 +109,7 @@ export async function editDealInformation(
         { ...old, primary_person_id: command.primary_person_id },
         "crm.opportunity.edit",
       );
-      if (old.stage_id === "Qualified" && !command.primary_person_id) {
+      if (carriesQualification(old.stage_id) && !command.primary_person_id) {
         if (!old.identification_activity_id)
           throw new AppError(
             422,
@@ -186,16 +191,27 @@ export async function changeDealStage(
           "CRM_STAGE_UNCHANGED",
           "The deal is already in this stage.",
         );
-      if (command.stage_id === "Qualified") {
-        if (command.identification_activity_id)
-          await linkedActiveAction(
-            c,
-            p,
-            old,
-            command.identification_activity_id,
-            true,
-          );
-        if (!old.primary_person_id && !command.identification_activity_id)
+      const stages = (
+        await c.query<StageDefinition>(
+          "SELECT stage_id,ordinal FROM ppo.crm_stage_definitions WHERE workspace_id=$1 AND pipeline_definition_id=$2 ORDER BY ordinal",
+          [p.workspace_id, old.pipeline_definition_id],
+        )
+      ).rows;
+      if (!permittedStageMove(stages, old.stage_id, command.stage_id))
+        throw new AppError(
+          422,
+          "CRM_PROGRESS_INVALID",
+          "Move forward one stage or back to an earlier stage in this pipeline.",
+        );
+      const legacy = ["Enquiry", "Qualified"].includes(old.stage_id);
+      const note = legacy ? command.qualification_note : old.qualification_note;
+      const identification = legacy
+        ? command.identification_activity_id
+        : old.identification_activity_id;
+      if (carriesQualification(command.stage_id)) {
+        if (identification && (legacy || !old.primary_person_id))
+          await linkedActiveAction(c, p, old, identification, true);
+        if (!old.primary_person_id && !identification)
           throw new AppError(
             422,
             "CRM_IDENTIFICATION_REQUIRED",
@@ -207,8 +223,8 @@ export async function changeDealStage(
           `UPDATE ppo.opportunities SET stage_id=$1,qualification_note=$2,identification_activity_id=$3,stage_entered_at=clock_timestamp(),version=version+1,updated_at=clock_timestamp(),updated_by=$4 WHERE workspace_id=$5 AND id=$6 ${returned}`,
           [
             command.stage_id,
-            command.qualification_note,
-            command.identification_activity_id,
+            note,
+            identification,
             p.actor_id,
             p.workspace_id,
             id,

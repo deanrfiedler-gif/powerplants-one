@@ -1,3 +1,4 @@
+import { ACTIVE_PIPELINE_ID } from "./stages";
 import { dueFields } from "../activities/activities";
 import {
   choice,
@@ -52,6 +53,7 @@ export function parseCreate(value: unknown) {
     "owner_id",
     "pipeline_definition_id",
     "initial_action",
+    "qualification_note",
   ]);
   const company_id = selectedId(r.company_id, "company_id", "company"),
     organisation_id = selectedId(r.organisation_id, "organisation_id", "organisation"),
@@ -77,6 +79,16 @@ export function parseCreate(value: unknown) {
       "contact_unknown_reason",
       "Explain an unknown contact, or select a contact and clear its unknown reason.",
     );
+  const pipeline_definition_id = uuid(r.pipeline_definition_id, "pipeline_definition_id");
+  const initial_action = parseAction(r.initial_action);
+  const owner_id = selectedId(r.owner_id, "owner_id", "opportunity owner");
+  const qualification_note = pipeline_definition_id === ACTIVE_PIPELINE_ID
+    ? narrative(r.qualification_note, "qualification_note", 2000)
+    : null;
+  if (pipeline_definition_id !== ACTIVE_PIPELINE_ID && r.qualification_note != null)
+    invalid("qualification_note", "The original enquiry pipeline records qualification through its separate transition.");
+  if (pipeline_definition_id === ACTIVE_PIPELINE_ID && !primary_person_id && initial_action.owner_id !== owner_id)
+    invalid("activity_owner_id", "An unknown contact requires the initial identification action to belong to the opportunity owner.");
   return {
     ...common(r),
     id: uuid(r.id, "id"),
@@ -96,12 +108,10 @@ export function parseCreate(value: unknown) {
       "Other",
     ] as const),
     source_basis: narrative(r.source_basis, "source_basis", 1000),
-    owner_id: selectedId(r.owner_id, "owner_id", "opportunity owner"),
-    pipeline_definition_id: uuid(
-      r.pipeline_definition_id,
-      "pipeline_definition_id",
-    ),
-    initial_action: parseAction(r.initial_action),
+    owner_id,
+    pipeline_definition_id,
+    initial_action,
+    ...(pipeline_definition_id === ACTIVE_PIPELINE_ID ? { qualification_note } : {}),
   };
 }
 export function parseQualification(id: string, value: unknown) {

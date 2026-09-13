@@ -19,11 +19,7 @@ const CRM = {
 // Microsoft login or external requests. Keep the real React components/CSS;
 // replace only framework navigation and API.
 //
-// The stage identifiers below are PRESENTATION ONLY. WorklistItem.stage_id is
-// deliberately typed "Enquiry" | "Qualified" because that is what the database
-// and the read contract actually supply. This fixture widens the field locally
-// rather than relaxing the domain type, so the contract stays honest while the
-// accepted layout can be reviewed. See docs/decisions/crm-pipeline-stage-model.md.
+// These are synthetic presentation records, not persisted acceptance evidence.
 type ReviewItem = Omit<WorklistItem, "stage_id"> & { stage_id: string };
 const STAGES = ["Discovery", "Scoping", "Quoting", "Negotiation", "Closing"];
 
@@ -139,6 +135,7 @@ window.fetch = async (input) => {
         has_more: false,
         count_basis: "ReturnedPage",
       },
+      pipelines: [{ id: "c1000000-0000-4000-8000-000000000002", display_name: "Fictional sales pipeline" }],
       stages: STAGES.map((stage_id, i) => ({
         stage_id,
         ordinal: i + 1,
@@ -161,6 +158,8 @@ window.fetch = async (input) => {
     data = envelope([
       {
         ...record,
+        pipelines: [{ id: "c1000000-0000-4000-8000-000000000002", display_name: "Fictional sales pipeline" }],
+      stages: STAGES.map((stage_id, i) => ({ stage_id, ordinal: i + 1 })),
         organisation_id: CRM.org,
         need_summary: "Synthetic controls upgrade for visual review.",
         next_activity: {

@@ -32,3 +32,19 @@ This drives the same compiled routes and pages as the hosted image, under synthe
 ## Acceptance and follow-on decision
 
 Five consecutive clean runs of the new workflow on `main` and pull requests. After that, decide separately whether the compiled run replaces the development-server browser step in Application assurance or both continue; replacing it immediately would drop the only coverage of the development-mode behaviour local work relies on.
+
+
+## 14 September 2026 — original command completion before result assertions
+
+Dean authorised audit follow-through. [Issue #153](https://github.com/deanrfiedler-gif/powerplants-one/issues/153) addresses two observed browser assertion failures, preserving their original evidence:
+
+| Original run | Observation | Retained original archive |
+|---|---|---|
+| [Main Application 34773539502, job 103767373173](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34773539502/job/103767373173), source `39caa8ed0fe04ff157f1933c963e9653bb118945` | The broad browser suite passed 148 cases. The retained P10 run then failed the first Finance draft URL assertion while the original screenshot still showed **Saving exact draft…**. Two dependent F-06 fixture tests subsequently failed because their prerequisite reconciled record was absent. | Artifact `10323803435`, 152,254,974 bytes, SHA-256 `dc13fe06ba4713f305a6e3ef5346d7f856df47736180e70374fb93584261434e` |
+| [PR #151 compiled 34750621285, job 103706383584](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34750621285/job/103706383584) | 147 passed, one failed, one skipped. The mobile P11 report-response poll saw zero responses while the initial screenshot showed a busy response form. Its later error-context snapshot contains the saved **Accepted With Reservations** response and owned follow-up. | Artifact `10315960706`, 114,585,886 bytes, SHA-256 `f744c61e21eaebf11d29c06588bc3fd41a9804b42b4cb19af835260ca20314bf` |
+
+Both archives passed ZIP integrity validation. Original failure PNGs and error-context snapshots were inspected; no original image or output was regenerated. Raw session traces are absent from the reviewed uploads. These observations support checking command completion before starting the result assertion; they do not establish the cause of save latency or a performance improvement.
+
+The two affected actions now use the existing `committed` helper: register the exact POST response listener, activate the original control once, require an accepted private/no-store response, then perform the original persisted-result assertion. The Finance detail ID must additionally equal the ID returned by that original command. Report submission remains keyboard-only. There is no new retry, timeout change, fixture substitution, policy change or application change. The original URL and response-count assertions and all downstream business assertions remain.
+
+Local lint, type, 83 unit checks, production build and all three Python documentation checks passed under the pinned Node 24.20.0/npm 11.19.0. The build retained the existing dynamic-filesystem tracing warning in report template fingerprinting. Fresh CI results must be recorded on the contribution before merge; local PostgreSQL and browser execution were unavailable. Full P11 publication and P12 acceptance remain separate work, and neither original failed run is promoted to a pass.

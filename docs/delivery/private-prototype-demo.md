@@ -1,6 +1,6 @@
 # Private Prototype Demo package
 
-**Document ID:** PPO-DEMO-PKG · **Revision:** r02 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler — private prototype.
+**Document ID:** PPO-DEMO-PKG · **Revision:** r03 · **Date:** 14 September 2026 · **Owner:** Dean Fiedler — private prototype.
 
 **State:** Definition and runbook prepared. Local instructions are checked against source; this package has not executed a demonstration, deployed a host or granted tester access. Hosted instructions describe the required implementation and subsequent operator sequence.
 
@@ -28,7 +28,7 @@ The labels DEMO-01–DEMO-04 below are package-local walkthroughs, not replaceme
 | Journey | Actor and starting point | Demonstration and expected result | Boundary |
 |---|---|---|---|
 | DEMO-01 — Customer context; 5 min | Local `coordinator`; hosted Commercial tester. Start `/customers`. | Open the organisation identified by UUID ending `0001` below; inspect its linked person, current site, equipment and recorded history. Explain the unresolved sensor and retained previous unsuccessful fix. Refresh and retain the same record identity. | Customer/site/equipment context; no new ERP customer, real customer information or service authorisation. |
-| DEMO-02 — Opportunity to next action; 10 min | Same actor. Start `/crm/opportunities`. | Inspect six prepared opportunities in Board and List; apply the same search/filter and compare returned records. Create a seventh opportunity with an owner, known organisation/site/contact and initial Activity. Complete that Activity with an outcome; record qualification through the canonical form; plan the next Activity. Refresh and reopen the saved record. | Actual stages are Enquiry and Qualified; sales outcome remains Open. No drag-to-stage, close/win/loss, owner transfer or commercial value/close-date claim from unimplemented mockup fields. |
+| DEMO-02 — Opportunity to next action; 10 min | Same actor. Start `/crm/opportunities`. | Inspect six prepared opportunities in Board and List; apply the same search/filter and compare returned records. Create a seventh opportunity with an owner, known organisation/site/contact and initial Activity. Record qualification at creation in Discovery; move to Scoping through the stage control; complete that Activity with an outcome and plan the next Activity. Refresh and reopen the saved record. | Discovery → Scoping → Quoting → Negotiation → Closing; sales outcome remains Open. Use the keyboard-accessible stage control or desktop drag. Forward movement is one stage; backward movement may reach any earlier stage. Won/Lost and owner transfer remain unavailable. |
 | DEMO-03 — Manual estimate and exact draft; 10 min | Commercial tester with the E1 estimating capabilities. Start `/estimating`, then `/estimating/new`. | Select an existing opportunity; enter the three manual lines below; save version 1. Change labour quantity to 12 with a reason and save version 2. Prepare a quotation from that exact saved version; keep labour included but uncheck its Print choice. Generate/recover the exact draft, reopen its HTML/PDF and inspect the retained version. | AUD excluding tax; fictional prices. Expected v2 sell total A$13,050.50. Labour appears as an included scope allowance of A$1,800.00. Internal costs/source notes must not appear in the draft. Quotation stays Draft; no email, issue, e-signature or ERP action. |
 | DEMO-04 — Optional guided service tour; separate session | Presenter on the supported local application, using each appropriate synthetic actor. | Select a service request and work order, explain readiness and show an already verified pack/planner or field/report example. Use the relevant maintained service handover and rehearse that precise route beforehand. | Not included in hosted tester grants, the core timed walkthrough or a complete service-to-Finance acceptance claim. No offline or full PP-01 demonstration is promised by this package. |
 
@@ -58,7 +58,7 @@ Keep the standard seed and issued source bytes unchanged. The standard seed incl
 | Unresolved equipment | `80000000-0000-4000-8000-000000000002` | SYN-PPO-AST-000002 — SYN unidentified sensor |
 | Local commercial actor | `30000000-0000-4000-8000-000000000001` | `coordinator` — SYN Coordinator |
 
-Sources: [base seed](../../db/seed.sql), [P03 additions](../../db/seed-p03.sql), [CRM seed](../../db/seed-crm-i1.sql), [E1 seed](../../db/seed-estimating-e1.sql). Company B and the second workspace remain inaccessible to ordinary Company A testers. The duplicate-name organisation ending `0005` is not the primary demo organisation.
+Sources: [base seed](../../db/seed.sql), [P03 additions](../../db/seed-p03.sql), [retained I1 CRM seed](../../db/seed-crm-i1.sql), [five-stage catalogue seed](../../db/seed-crm-five-stages.sql), [E1 seed](../../db/seed-estimating-e1.sql). Company B and the second workspace remain inaccessible to ordinary Company A testers. The duplicate-name organisation ending `0005` is not the primary demo organisation.
 
 ### Six opportunities to prepare before the meeting
 
@@ -66,18 +66,20 @@ Sources: [base seed](../../db/seed.sql), [P03 additions](../../db/seed-p03.sql),
 
 Define `D` as the preparation date in Australia/Brisbane. Resolve relative dates once at preparation, store actual instants and record `D` in the session manifest. At 10:00 Brisbane, the UTC instant is 00:00Z on that date. Existing historical fixture dates remain unchanged. Refresh the demo epoch before later sessions if date-sensitive examples have aged.
 
-For all six: use Company A, the primary organisation, current site and contact above; local owner/Activity owner `coordinator`; pipeline `c1000000-0000-4000-8000-000000000001`; source channel Meeting; source basis “SYN internal demonstration scenario; no customer request”. Enter a relevant need summary and reason. Use the existing UI/domain commands so permissions, operation receipts and audit history are preserved. Let the application allocate readable opportunity references; record the returned UUID/reference mapping instead of guessing counters.
+For all six: use Company A, the primary organisation, current site and contact above; local owner/Activity owner `coordinator`; pipeline `c1000000-0000-4000-8000-000000000002`; source channel Meeting; source basis “SYN internal demonstration scenario; no customer request”. Enter a relevant need summary and reason. Use the existing UI/domain commands so permissions, operation receipts and audit history are preserved. Let the application allocate readable opportunity references; record the returned UUID/reference mapping instead of guessing counters.
 
 | Local scenario key | Opportunity title | Prepared stage | Activity state at demonstration start |
 |---|---|---|---|
-| O1 | SYN DEMO — Irrigation controls enquiry | Enquiry | CustomerContact: “Confirm the fictional controls scope”; due D+1 at 10:00. |
-| O2 | SYN DEMO — Controls package for draft estimating | Qualified | RelationshipReview: “Review the fictional estimate assumptions”; due D+2 at 10:00. |
-| O3 | SYN DEMO — Sensor follow-up overdue | Enquiry | CustomerContact: “Follow up the fictional sensor enquiry”; due D-2 at 10:00. |
-| O4 | SYN DEMO — Qualified scope needs its next action | Qualified | Create the mandatory initial Activity, then complete it with “SYN requirements discussed; next review not yet planned”. Do not plan a successor; show Next action needed. |
-| O5 | SYN DEMO — Site meeting date to be agreed | Enquiry | CustomerContact: “Agree the fictional site meeting date”; due date unknown with Date needed selected. |
-| O6 | SYN DEMO — Propagation greenhouse controls and irrigation review with a deliberately long opportunity title | Qualified | RelationshipReview: “Review the fictional greenhouse controls proposal”; due D at 10:00. |
+| O1 | SYN DEMO — Irrigation controls enquiry | Discovery | CustomerContact: “Confirm the fictional controls scope”; due D+1 at 10:00. |
+| O2 | SYN DEMO — Controls package for draft estimating | Scoping | RelationshipReview: “Review the fictional estimate assumptions”; due D+2 at 10:00. |
+| O3 | SYN DEMO — Sensor follow-up overdue | Discovery | CustomerContact: “Follow up the fictional sensor enquiry”; due D-2 at 10:00. |
+| O4 | SYN DEMO — Quotation scope needs its next action | Quoting | Create the mandatory initial Activity, then complete it with “SYN requirements discussed; next review not yet planned”. Do not plan a successor; show Next action needed. |
+| O5 | SYN DEMO — Site meeting date to be agreed | Negotiation | CustomerContact: “Agree the fictional site meeting date”; due date unknown with Date needed selected. |
+| O6 | SYN DEMO — Propagation greenhouse controls and irrigation review with a deliberately long opportunity title | Closing | RelationshipReview: “Review the fictional greenhouse controls proposal”; due D at 10:00. |
 
-Create each in Enquiry with its required initial Activity. For O2/O4/O6, use the canonical qualification action, a confirmed need summary and the note “SYN known organisation/site/contact; suitable for a fictional scoping discussion; no purchase authority asserted”. Do not edit stage directly in SQL. The planned baseline is three Enquiry and three Qualified opportunities, all Open; five active Activities and one completed initial Activity after O4 completion. Verify the actual counts and record any additional required workflow steps rather than hiding a discrepancy.
+Prepare this revised recipe only in a new isolated synthetic database and document-storage epoch, following the controlled preparation/reset procedure below. Record its application commit and epoch in the session manifest. Keep the old epoch and original history intact; this revision does not authorise a hosted reset or deploy. Standard migration preserves I1 records and their receipts; the pipeline selector exposes their original Enquiry/Qualified history separately.
+
+Create each in Discovery with its required initial Activity and qualification note “SYN known organisation/site/contact; suitable for a fictional scoping discussion; no purchase authority asserted”. Advance O2/O4/O5/O6 one stage at a time through the actual stage command to the destinations above, preserving every event and the original note. Complete O4's initial Activity after reaching Quoting. The planned baseline is two Discovery and one each Scoping, Quoting, Negotiation and Closing, all Open; five active Activities and one completed initial Activity. Verify actual stage, Activity and event counts, and record any discrepancy. Do not edit stage directly in SQL.
 
 Prepare one saved estimate on O2 and one Ready **Draft** quotation before the meeting as a fallback. DEMO-03 then creates a separate estimate during the presentation. The following values are fictional manual inputs, not supplier prices, company margin policy or an approved quotation.
 
@@ -223,7 +225,7 @@ npm run db:health
 ```
 
 5. The reset recreates the schema/migrations and standard seed. It does not recreate section 3's opportunity/estimate overlay. Start the local app, use a new dedicated browser profile, log in, rerun the recipe and record a new epoch/manifest. Clear/delete an old demo browser profile only after its unsent-state check; ordinary work profiles are untouched.
-6. Verify the named database and expected migration/seed versions; six prepared opportunities with a 3/3 stage split; O3 overdue/O4 next-action-needed/O5 due-date-needed; the selected estimate totals; fresh draft hashes and working file links. Old sessions/old draft URLs must not reveal previous-epoch data. Stop and investigate any mismatch.
+6. Verify the named database and expected migration/seed versions; six prepared opportunities with stage counts 2/1/1/1/1 in Discovery/Scoping/Quoting/Negotiation/Closing; O3 overdue/O4 next-action-needed/O5 due-date-needed; the selected estimate totals; fresh draft hashes and working file links. Old sessions/old draft URLs must not reveal previous-epoch data. Stop and investigate any mismatch.
 
 ### Hosted reset after the new reset tooling exists
 
@@ -245,7 +247,7 @@ If reset fails, keep entry closed. Restore the paired pre-reset DB/file/config c
 
 These focused demo checks supplement existing suites and do not promote parent AT/PT/EA statuses. Record release commit, actual executed environment, date, actor, expected/observed result and screenshot/hash where useful. No independent review or owner acceptance is inferred from documentation checks.
 
-Source inspection covered the root guidance, README/STATUS, BP-02, ordered plan, current CRM/E1 handovers, seeds, runtime/identity/database/document guards and estimating validation/arithmetic. Package arithmetic and source-link validation are recorded with the publication PR; full foundation/prototype/naming assurance uses the repository's existing Documentation assurance workflow. No new application tests or weakened CI gates are introduced by this documentation-only contribution.
+Source inspection covered the root guidance, README/STATUS, BP-02, ordered plan, current CRM/E1 handovers, seeds, runtime/identity/database/document guards and estimating validation/arithmetic. Package arithmetic and source-link validation are recorded with the publication PR; full foundation/prototype/naming assurance uses the repository's existing Documentation assurance workflow. The r03 recipe accompanies the five-stage runtime cutover; actual new-epoch preparation and hosted acceptance remain Not run.
 
 ## 10. Smallest next implementation and outstanding inputs
 
