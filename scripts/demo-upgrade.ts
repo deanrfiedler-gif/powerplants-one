@@ -18,7 +18,11 @@ export { existingDemoChecksumMatches } from "./migration-registry";
 // A deliberately bounded existing-demo upgrade, not a second bootstrap path.
 // Every database change shares one transaction, including grants and receipts.
 export async function upgradeExistingDemo(databaseName: string, tenant: string, apply: boolean) {
-  if (latestMigrationVersion !== 20) throw Error("Review the existing-demo upgrade for this release.");
+  // Reviewed for 0021 (issue #143): the loops below read migrationFiles and seedFiles
+  // generically, so an added version needs no special handling here. A demo database
+  // without 0021 is a pending migration and verify-only correctly refuses it. Not run
+  // against a hosted demo database; that is a deployment, separately authorised.
+  if (latestMigrationVersion !== 21) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 2) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
