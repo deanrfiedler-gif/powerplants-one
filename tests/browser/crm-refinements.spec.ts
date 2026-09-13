@@ -499,7 +499,8 @@ test("SA-12 default five-stage board persists Discovery movement and qualificati
   if (info.project.use.isMobile) {
     await page.setViewportSize({ width: 320, height: 844 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-    await expect(action).toBeVisible();
+    await expect(action).toBeFocused();
+    await expect(action).toBeInViewport({ ratio: 1 });
     await page.screenshot({ path: info.outputPath("crm-five-stage-persisted-320.png") });
   }
   await page.reload();
