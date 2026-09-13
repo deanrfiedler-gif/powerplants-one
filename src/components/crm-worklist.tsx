@@ -181,7 +181,9 @@ export function SalesWorklist() {
   useEffect(() => {
     if (!focusAfterSave || dialog || !data.data?.items.some(i => i.id === focusAfterSave.id && i.version >= focusAfterSave.version)) return;
     const frame = requestAnimationFrame(() => {
-      document.querySelector<HTMLButtonElement>(`[data-opportunity-id="${focusAfterSave.id}"] .crm-card-stage`)?.focus();
+      const target = document.querySelector<HTMLButtonElement>(`[data-opportunity-id="${focusAfterSave.id}"] .crm-card-stage`);
+      target?.scrollIntoView({ block: "center", inline: "nearest" });
+      target?.focus({ preventScroll: true });
       setFocusAfterSave(null);
     });
     return () => cancelAnimationFrame(frame);

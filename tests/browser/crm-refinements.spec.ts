@@ -321,6 +321,7 @@ test("SA-09 board stage change uses native keyboard controls on desktop and phon
   await expect(dialog).not.toBeVisible();
   await expect(page).toHaveURL(/\/crm\/opportunities\?pipeline=I1$/);
   await expect(action).toBeFocused();
+  await expect(action).toBeInViewport({ ratio: 1 });
   const record = (await call(page, `crm/opportunities/${input.id}`)).items[0];
   expect(record.stage_id).toBe("Qualified");
   expect(record.version).toBe(2);
@@ -490,6 +491,7 @@ test("SA-12 default five-stage board persists Discovery movement and qualificati
   await expect(dialog.getByLabel("Qualification outcome", { exact: true })).toHaveCount(0);
   await committed(page, `crm/opportunities/${input.id}/stage`, () => keyActivate(page, dialog.getByRole("button", { name: "Save stage", exact: true })));
   await expect(dialog).not.toBeVisible(); await expect(action).toBeFocused();
+  await expect(action).toBeInViewport({ ratio: 1 });
   const saved = (await call(page, `crm/opportunities/${input.id}`)).items[0];
   expect(saved.stage_id).toBe("Scoping"); expect(saved.qualification_note).toBe(input.qualification_note);
   expect(saved.events.map((e: {to_stage:string}) => e.to_stage)).toEqual(["Discovery", "Scoping"]);

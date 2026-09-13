@@ -574,6 +574,9 @@ body:has(.crm-workspace) .header-account .identity-hosted {
   }
   .crm-stage-navigation button {
     min-height: 44px;
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
   .crm-card .crm-card-title {
     font-size: 16px;
