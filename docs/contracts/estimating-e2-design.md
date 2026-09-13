@@ -1,18 +1,18 @@
 ---
 document_id: PPO-010-E2-CONTRACT
-revision: r01
-date: 2026-09-09
+revision: r02
+date: 2026-09-14
 owner: Dean Fiedler - prototype owner
-status: Proposed receiving and persistence contract; no schema or API implementation
+status: Adopted options and questions reconciled; schema and API implementation pending
 ---
 
 # E2 receiving and preservation contract
 
-Read with the [policy design](../blueprints/estimating-e2-design.md). These are logical command contracts, not allocated routes or SQL objects. Existing `estimating/options` is E1's eligible-opportunity selector; do not repurpose its meaning silently. Physical names, forward migration number and deployment compatibility must be selected against actual main at implementation time.
+Read with the [policy design](../blueprints/estimating-e2-design.md) and [adopted audit package](../decisions/audit-follow-through-policy-package.md). This r02 reconciles the later advisory-routing direction with adopted E2-D02/D03 and DR-01/02. The original declared routing model stays historical; no numeric rule, receiving confirmation or estimating-container proposition is adopted here. These are logical command contracts, not allocated routes or SQL objects. Existing `estimating/options` is E1's eligible-opportunity selector; do not repurpose its meaning silently. Physical names, forward migration number and deployment compatibility must be selected against actual main at implementation time.
 
 ## 1. Shared context and access
 
-The fixed workspace/company and canonical Opportunity, Organisation, Site, Person, Facility and Activity identities remain authoritative. Derive organisation context from current relationships, not a copied owner name. Recheck current `estimating.read`/`estimating.edit`, current estimating ownership, shared/CRM target visibility and eligible receiving owner on every command. Quote-safe reads retain separate E1 capabilities. No new implicit grant for Systems, technicians, Sales or Finance follows from this design.
+The fixed workspace/company and canonical Opportunity, Organisation, Site, Person, Facility and Activity identities remain authoritative. Derive organisation context from current relationships, not a copied owner name. Recheck current `estimating.read`/`estimating.edit`, current estimating ownership, shared/CRM target visibility and eligible estimating/follow-up owners on every command. Quote-safe reads retain separate E1 capabilities. No new implicit grant for Systems, technicians, Sales or Finance follows from this design.
 
 All selectors, counts, reads, source comparisons, history, output and receipt lookup/replay use current related-target access. A captured Facility name or answer does not remain readable after its underlying scope is revoked. Missing/inaccessible lock context cannot be interpreted as an empty group. Denial clears loaded and proposed content for the changed identity; a generic explanation must not disclose another option's private status or owner. Activity follow-up retains its independent owner/status/permissions; saving a snapshot does not create or complete an Activity silently.
 
@@ -21,14 +21,15 @@ All selectors, counts, reads, source comparisons, history, output and receipt lo
 | Record | Required identity and content | Integrity rule |
 |---|---|---|
 | EstimatingWorkspace | Existing Opportunity/company; version; selected option | Unique workspace per Opportunity; first option + selection atomic; non-null selection once created; selected option must be Active and in the same group |
-| CommercialOption | UUID; workspace; route snapshot; current estimation revision; Active/Archived; predecessor option where branched | Label is not a key. Immutable route; one current revision; archive guarded against selection |
-| RoutingSnapshot | UUID; definition ID/revision/hash; all inputs and attribution; decisive rule; outcome | Confirmed option requires Full or Express; Invalid/NeedsClarification cannot confirm a new route |
+| CommercialOption | UUID; workspace; current estimation revision; Active/Archived; predecessor option where branched | Label is not a key. One current revision; archive guarded against selection. No fixed delivery route is required |
+| Estimating effort evidence | Estimating owner’s declared Full/Express choice or owned unresolved item; actor/time/source | Separate from delivery route and scope readiness; preserves the declared allocation decision without claiming receiving acceptance |
+| Advisory classification (later rules increment) | UUID; adopted definition ID/revision/hash; exact input UUIDs/versions; decisive signal; outcome; actor/time | Immutable observation at a named checkpoint; a changed recommendation creates a successor, not a new option requirement. Until a rule set is adopted, display Not configured with the missing policy; never fabricate a classified or Ambiguous result |
 | EstimationRevision | UUID; option; predecessor; reason; scope and answer snapshots | Immutable; sequential predecessor in the same option; no rewritten E1 r01 |
-| ScopeSnapshot | UUID; exact Site/Facility IDs and observed versions/names; membership by work-system tag; explicit no-site/unknown reason | Same-company/site foreign-key checks plus current visibility; parent does not imply child; no duplicate membership |
+| ScopeSnapshot | UUID; exact Site/Facility/equipment IDs and observed versions/names; membership by work-system tag; explicit no-site/unknown reason | Same-company/site foreign-key checks plus current visibility; parent does not imply child; no duplicate membership |
 | AnswerSnapshot | UUID; definition and exact active/hidden/incompatible answers; source attribution; follow-up owners; content hash; readiness | Required flags/conditions derived on server from captured definition; never trust client Complete |
 | Estimate basis link | Estimate version UUID → exact option/estimation/scope/answer UUIDs and hashes | Append-only binding for newly authored versions; never attach a new meaning to an older cost version |
 
-Bounded proposal: 10 options per workspace; 10 Facilities within one Site; three system tags; ten active r01 questions; plain-text limits from the design; maximum 64 KiB canonical command payload. Reject excess without truncation. Route answers and contract-review answers are separate namespaces. Dates/author are server derived; input evidence includes a bounded source note (1–500 characters). Change reasons and unresolved-item reasons are 1–1,000 characters. Values and counts never reuse a readable label as identity.
+Bounded proposal: 10 options per workspace; 10 Facilities within one Site; three system tags; ten active r01 questions; plain-text limits from the design; maximum 64 KiB canonical command payload. Reject excess without truncation. Equipment membership is a duplicate-free list of up to 100 existing IDs within the same selected Site; the command also retains the 64 KiB bound. Zero selections means no equipment reference was recorded, not that equipment is unnecessary. Unknown/no-site scope cannot carry equipment IDs. Recheck every equipment record through its existing shared access/context rules; no new asset identity, implied Facility membership or Service route. Estimating-effort facts, future routing observations and contract-review answers are separate namespaces. Dates/author are server derived; input evidence includes a bounded source note (1–500 characters). Change reasons and unresolved-item reasons are 1–1,000 characters. Values and counts never reuse a readable label as identity.
 
 ## 3. Commands and concurrency
 
@@ -36,10 +37,10 @@ Every mutation uses the existing operation UUID, schema version, canonical paylo
 
 | Logical command | Required expectations and guards | Atomic result |
 |---|---|---|
-| ConfirmFirstOption | Expected no workspace; current Opportunity/context versions; complete route and valid initial snapshot | Workspace + option A + r01 + selected A; one receipt; an Incomplete questionnaire is allowed |
-| BranchOption | Workspace/current source option revision; whole-group Draft whitelist; complete route for different-route branch; explicit copy choices | New Active unselected option and r01; old selected pointer and all source records unchanged |
+| ConfirmFirstOption | Expected no workspace; current Opportunity/context versions; valid initial snapshot and attributed effort declaration/owned unknown; no delivery-route prerequisite | Workspace + option A + r01 + selected A; one receipt; an Incomplete questionnaire is allowed |
+| BranchOption | Workspace/current source option revision; whole-group Draft whitelist; explicit comparison/copy choices, independently of any routing recommendation | New Active unselected option and r01; old selected pointer and all source records unchanged |
 | SelectOption | Expected workspace version and current selected UUID; target Active; whole-group state check | Replace one pointer and advance version once; one audit event; never update CRM money/stage |
-| SaveScopeRevision | Workspace and current option revision; current target visibility; definition hash and acknowledged comparison; route compatibility | Immutable successor + source/hash/readiness; advances current pointer; no cost lines or quote output changed |
+| SaveScopeRevision | Workspace and current option revision; current target visibility; definition hash and acknowledged scope/answer comparison; no delivery-route compatibility gate | Immutable successor + source/hash/readiness; advances current pointer; no cost lines or quote output changed |
 | ArchiveOption / ReopenOption | Workspace version; known Draft-only group; eligible owner; archive target unselected | Append state event; selection retained; no deletion of estimates/quotes |
 | UseScopeForManualEstimate | Workspace and current Estimate version; chosen Active option; exact Complete scope/answer IDs/hashes; current E1 permissions | Explicit new Estimate or successor using retained E1 manual validation and immutable history; no generated/repriced lines |
 
@@ -51,7 +52,7 @@ Definition adoption/resnapshot is deliberate. Keep the old complete basis availa
 
 E1 currently allows one Estimate per Opportunity, with embedded option A and estimation r01 UUIDs. E2 must formalise those same UUIDs without altering the saved JSON, predecessor chains, content hashes, original operations, seed receipts, captured templates or HTML/PDF bundles. Do not infer missing questionnaire values or mark legacy scope as Complete.
 
-Preserve A's existing context as `LegacyManual` in an additive compatibility record; display “E1 manual basis — E2 questionnaire not recorded”. The existing E1 contract remains usable against that exact legacy basis. A deliberately reviewed successor may attach the new E2 scope/answer snapshot. Adoption of an Express/defined-supply route for this legacy A requires an explicit attributed compatibility command that verifies the existing manual-defined-supply premise and records a new extension; it does not rewrite the old routing/scope content. A proposed Full or service route requires a new option. Existing A/r01 and every old cost/quote source remain unchanged.
+Preserve A's existing context as `LegacyManual` in an additive compatibility record; display “E1 manual basis — E2 questionnaire not recorded”. The existing E1 contract remains usable against that exact legacy basis. A deliberately reviewed successor may attach the new E2 scope/answer snapshot. A deliberate E2 successor may extend this legacy A under the same Draft-only and current-scope guards as other options. Preserve its original defined-supply premise as historical evidence; do not reinterpret it as a confirmed delivery route or manufacture an E2 Complete answer set. Changing effort or future advisory classification alone does not force a new option. Existing A/r01 and every old cost/quote source remain unchanged.
 
 The future migration must change the one-Estimate-per-Opportunity restriction only as needed for one Estimate per option, while retaining the unique legacy Estimate and its foreign keys. Old commands/receipts replay under their original schema and current access, not rewritten through a new request shape. Old creation clients must not accidentally create a second default workspace. Before coding, specify the exact E1/E2 command-version dispatch and constraints in the implementation ADR; this design reserves no schema number.
 
@@ -59,7 +60,7 @@ Capture a pre-upgrade manifest of all E1 IDs, hashes, reasons, receipt results a
 
 ## 5. Quotation Builder interface
 
-This is a proposed handoff to the separately discussed templates-first builder, not a claim that its design is already published. A builder selects an **exact saved Estimate version**, which already points to its scope/answers. It must not pair Option A prices with whichever Option B is currently selected. A mismatch blocks import and shows the two sources; changing to a compatible source is explicit.
+This is the receiving interface for the separately adopted templates-first builder design; its runtime integration and E2 source import remain unimplemented. A builder selects an **exact saved Estimate version**, which already points to its scope/answers. It must not pair Option A prices with whichever Option B is currently selected. A mismatch blocks import and shows the two sources; changing to a compatible source is explicit.
 
 | Builder content | E2 source | Review boundary |
 |---|---|---|
