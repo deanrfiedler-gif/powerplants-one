@@ -123,7 +123,8 @@ test("a baseline executed from Windows CRLF SQL upgrades without rewriting histo
     demoLedger.find(r => r.row.version === 2)?.row.sha256,
     digest(await readFile(new URL("../../db/demo/0002-gmail-connection.sql", import.meta.url), "utf8")),
   );
-  assert.equal(final.length, baseline.length + 3);
+  // 0018 Leads, 0019 Projects, 0020 Engineering and 0021 CRM five stages.
+  assert.equal(final.length, baseline.length + 4);
   assert.ok((await db.query("SELECT to_regclass('ppo.projects') AS relation")).rows[0].relation);
 });
 
