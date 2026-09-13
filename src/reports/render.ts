@@ -1,4 +1,4 @@
-import { chromium } from "playwright";
+import { launchDocumentBrowser } from "../platform/browser";
 import { escapeHtml as e, rendererVersion } from "../documents/render";
 import { canonical } from "../platform/operations";
 import { digest } from "../documents/store";
@@ -250,7 +250,7 @@ export async function renderReport(
   },
 ) {
   const html = reportHtml(s, output),
-    browser = await chromium.launch();
+    browser = await launchDocumentBrowser();
   try {
     const page = await browser.newPage();
     await page.route("**/*", (r) => r.abort());

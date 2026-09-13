@@ -1,13 +1,14 @@
 import { defineConfig } from "@playwright/test";
 export default defineConfig({
+  globalSetup: "./scripts/check-browser.ts",
   testDir: "tests/browser",
   fullyParallel: false,
   workers: 1,
   timeout: 45000,
   use: {
-    // Exercise the pinned full Chromium implementation. The separate headless
-    // shell stalled before API execution in retained mobile browser evidence.
-    channel: "chromium",
+    // ADR-0022: the reviewed stable Chrome channel; retain the full browser
+    // because the separate headless shell stalled in earlier mobile evidence.
+    channel: "chrome",
     baseURL: "http://127.0.0.1:3000",
     locale: "en-AU",
     screenshot: "only-on-failure",

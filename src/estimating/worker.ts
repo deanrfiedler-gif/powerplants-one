@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { chromium } from "playwright";
+import { launchDocumentBrowser } from "../platform/browser";
 import type { Principal } from "../platform/identity";
 import { database, transaction } from "../platform/database";
 import { AppError, unavailable } from "../platform/errors";
@@ -11,7 +11,7 @@ type Job={id:string;workspace_id:string;actor_id:string;revision_id:string;state
 type Bundle={schema:1;job_id:string;workspace_id:string;revision_id:string;template_hash:string;html:string;html_hash:string;pdf_base64:string;pdf_hash:string;browser_version:string};
 const missing=()=>new AppError(503,"ExactDraftUnavailable","The exact draft output is unavailable. Its saved revision is retained for recovery.");
 export async function renderQuote(html:string) {
-  const browser=await chromium.launch({headless:true});
+  const browser=await launchDocumentBrowser();
   try {
     const page=await browser.newPage();
     await page.route("**/*",route=>route.request().url().startsWith("data:")?route.continue():route.abort());

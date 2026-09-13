@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": "24.20.0",
+    "node": "24.21.0",
     "npm": "11.19.0"
   },
   "packageManager": "npm@11.19.0",
@@ -24,7 +24,9 @@
     "test:http": "node --env-file=.env.local --import tsx --test tests/http/*.test.ts",
     "test:browser": "playwright test",
     "check": "npm run lint && npm run typecheck && npm run test:unit && npm run build",
-    "documents:worker": "node --env-file=.env.local --import tsx scripts/document-worker.ts"
+    "documents:worker": "node --env-file=.env.local --import tsx scripts/document-worker.ts",
+    "browser:install": "playwright install --with-deps --force chrome && npm run browser:check",
+    "browser:check": "node --import tsx scripts/check-browser.ts"
   },
   "dependencies": {
     "@azure/storage-blob": "12.33.0",

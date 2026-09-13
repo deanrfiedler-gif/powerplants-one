@@ -30,7 +30,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24.20.0
+          node-version-file: .nvmrc
           cache: npm
       - run: npm install --global npm@11.19.0 && npm ci
       - name: Validate deployment workflow expressions
@@ -50,7 +50,7 @@ jobs:
           from pathlib import Path
           Path('.env.local').write_text('\n'.join(f'{key}={os.environ[key]}' for key in ['PPO_ENV','PPO_EXPOSURE','PPO_IDENTITY','DATABASE_URL']) + '\n')
           PYENV
-          npx playwright install --with-deps chromium
+          npm run browser:install
           npx playwright test --config=playwright.demo.config.ts --output verification-evidence/demo-integration --reporter=list
       - name: Retain synthetic integration screenshots
         if: always()
