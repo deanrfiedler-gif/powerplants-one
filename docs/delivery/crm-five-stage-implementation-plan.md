@@ -1,6 +1,6 @@
 # BP-03 — Five-stage pipeline implementation plan (increment A)
 
-**Revision:** r01 · **Date:** 13 September 2026 · **Owner:** Dean Fiedler · **State:** Plan for review. No migration, seed, code or fixture change is performed by this document. Implementation requires its own branch and pull request.
+**Revision:** r02 · **Date:** 13 September 2026 · **Owner:** Dean Fiedler · **State:** Plan for review. **r02 corrects two material errors in r01** — see §3.0. No migration, seed, code or fixture change is performed by this document. Implementation requires its own branch and pull request.
 
 **Work:** [#143](https://github.com/deanrfiedler-gif/powerplants-one/issues/143), closing [#135](https://github.com/deanrfiedler-gif/powerplants-one/issues/135) and [#136](https://github.com/deanrfiedler-gif/powerplants-one/issues/136), under [#9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9).
 
@@ -36,20 +36,36 @@ The [stage model](../decisions/crm-pipeline-stage-model.md) was accepted on 11 S
 
 ## 3. Inventory found by inspection
 
-Inspected `db/migrations/0010-crm-opportunities.sql` and `src/` at `0f0db4e`, 13 September 2026. These are observations, not a migration design.
+Evidence base for r02: a PostgreSQL 16.15 database migrated through all nineteen migrations and seeded, inspected with `pg_get_constraintdef` and `pg_get_functiondef`, plus line-level reading of `src/` at `0f0db4e` on 13 September 2026. These are observations, not a migration design.
 
-The previously published summary — "four check constraints, and the four code literals" — understates the surface in two material ways.
+### 3.0 Two corrections to r01
+
+r01 of this plan, and the schema-consequences section of the stage model decision it drew on, both inspected **`db/migrations/0010-crm-opportunities.sql`** rather than the live schema. `0017-crm-ui-refinements.sql` has since amended the same objects. Two claims were wrong in consequence.
+
+**Correction 1 — the general stage-change event already exists.** r01 §4.1 item 6 proposed adding `OpportunityStageChanged`. `0017` added it, together with `OpportunityInformationEdited` and `OpportunityScopeEdited`, a `record_snapshot` column, and the reverse `Qualified` to `Enquiry` edge in `protect_opportunity()`. The live event CHECK already reads `event_type='OpportunityStageChanged' AND from_stage <> to_stage AND opportunity_version > 1 AND record_snapshot IS NOT NULL`, and `crm_event_guard` already requires the snapshot to equal `ppo.crm_record_snapshot(NEW)`.
+
+Bidirectional stage movement is therefore **already implemented and in use** — the board's drag path runs through it. What is missing is not the mechanism but the stages: a catalogue of five, an ordinal rule instead of an enumerated pair, and the entry stage.
+
+**Correction 2 — there is no `Qualified` naming collision.** r01 §3.3 claimed `Qualified` names both the opportunity stage and a Leads qualification outcome, and that a find-and-replace would break Leads. That is false. `ppo.lead_candidates.status` is constrained to `New`, `Contacting`, `Nurturing`, `Disqualified`, `Converted`. Leads has no `Qualified` value. Every one of the twenty-four occurrences in `src/` is the opportunity stage.
+
+The hazard is the **opposite** of what r01 described, and worse. `src/crm/leads/service.ts:457` sets `stage_id='Qualified'` on the *opportunity* at conversion. r01 told an implementer to presume the `src/crm/leads/` files were lead-outcome and leave them alone. Following that presumption would have left Leads converting new deals straight into a retired stage.
+
+Root cause of both: reading a migration file as though it described current state, and inferring a classification from file paths instead of reading the lines. r02 is written from the running database and from the lines.
 
 ### 3.1 The transition rule is in PL/pgSQL, not in a CHECK
 
-`ppo.protect_opportunity()` is not named in any prior record of this work. It contains the two statements that actually gate movement:
+This finding from r01 survives correction, and is the most important one. `ppo.protect_opportunity()` is named in no prior record of this work, and it is where movement is actually gated. As it runs today, after `0017`:
 
 ```
 IF NEW.stage_id<>'Enquiry' OR NEW.version<>1 THEN RAISE EXCEPTION 'Create only at Enquiry version one'
-IF OLD.stage_id<>'Enquiry' OR NEW.stage_id<>'Qualified' THEN RAISE EXCEPTION 'Unsupported opportunity progression'
+IF NOT ((OLD.stage_id='Enquiry' AND NEW.stage_id='Qualified')
+     OR (OLD.stage_id='Qualified' AND NEW.stage_id='Enquiry')) THEN
+  RAISE EXCEPTION 'Unsupported opportunity progression'
 ```
 
-A plan that changed only the table CHECKs would leave the single permitted edge hard-coded in the trigger, and the increment would fail at runtime with a constraint that reads as unrelated. The same function also contains an `ELSIF` branch — *"Only qualification changes qualification facts"* — that assumes qualification is a transition, which it no longer is.
+The permitted edges are an enumerated pair, not a rule. Widening the table CHECKs alone would leave that pair in force and the increment would fail at runtime with a message that reads as unrelated to stages.
+
+The same function also contains an `ELSIF` branch — *"Only qualification changes qualification facts"* — that assumes qualification is a transition, which under the accepted model it no longer is.
 
 ### 3.2 Full schema surface
 
@@ -58,23 +74,33 @@ A plan that changed only the table CHECKs would leave the single permitted edge 
 | `ppo.crm_pipeline_definitions` | `definition_key='SyntheticEnquiryI1'`; `label='Fictional sales enquiry — I1'`; `definition_immutable` blocks UPDATE and DELETE |
 | `ppo.crm_stage_definitions` | `stage_id IN ('Enquiry','Qualified')`; the ordinal pairing CHECK; `stage_immutable` blocks UPDATE and DELETE |
 | `ppo.opportunities` | `stage_id` DEFAULT `'Enquiry'`; the qualification CHECK naming both stages; `stage_entered_at`; `close_outcome CHECK(close_outcome='Open')` |
-| `ppo.opportunity_events` | `event_type` CHECK; the three-branch CHECK hard-coding `to_stage='Enquiry'`, `'Enquiry'` to `'Qualified'`, and `from_stage=to_stage` |
-| `ppo.protect_opportunity()` | Creation stage, the single permitted edge, the qualification-facts branch, the owned-identification-action check |
+| `ppo.opportunity_events` | A **five**-branch CHECK after `0017`. `OpportunityCreated` pins `to_stage='Enquiry'`; `OpportunityQualified` pins the `'Enquiry'` to `'Qualified'` edge. The `OpportunityStageChanged` branch is already general and needs no change |
+| `ppo.protect_opportunity()` | Creation stage, the enumerated edge pair, the qualification-facts branch, the owned-identification-action check |
 | `ppo.check_opportunity_event_chain()` | Exact preceding version and stage — must continue to hold under re-entry |
 | `ppo.check_opportunity_graph()` | Requires an exact event for every opportunity version |
-| `outbox_jobs.ck_outbox_kind` | Union of the three current event kinds |
+| `outbox_jobs.ck_outbox_kind` | Union of event kinds; already extended by `0017` |
+| `ppo.crm_event_guard()` | Requires `record_snapshot` to equal `ppo.crm_record_snapshot(NEW)` on every stage change, and refuses a stage change that alters `need_summary` |
 
 Both definition tables are immutability-triggered. That is a constraint and an opportunity: the five-stage pipeline **must** be a new definition row rather than an amendment, which means the I1 definition and its two stage rows survive untouched and existing history stays readable.
 
-### 3.3 Code, and a naming collision
+### 3.3 Code
 
-Fourteen files under `src/` carry the literal `Qualified`, not four:
+Fourteen files carry the literal, not four. **All twenty-four occurrences are the opportunity stage** (see §3.0, correction 2). The ones that matter:
 
-`crm/leads/service.ts`, `crm/leads/reads.ts`, `crm/leads/context.ts`, `crm/refinements.ts`, `crm/refinement-validation.ts`, `crm/worklist.ts`, `crm/opportunities.ts`, `crm/context.ts`, `crm/receipt-authority.ts`, `components/crm-screens.tsx`, `components/leads-workspace.tsx`, `components/crm-deal-controls.tsx`, `components/business-ui.tsx`, `app/leads.css`.
+| Location | What it does | Change |
+|---|---|---|
+| `crm/context.ts:37`, `crm/worklist.ts:17` | Type is the union `"Enquiry" \| "Qualified"` | Widen to the five stages |
+| `crm/worklist.ts:58` | Asserts `stages.length !== 2` and positional stage names, and throws otherwise | **Hard two-stage assertion.** Must become count-agnostic |
+| `crm/worklist.ts:36` | `choice(...)` validator allow-list | Widen |
+| `crm/opportunities.ts:232` | `UPDATE … SET stage_id='Qualified'` on qualify | Reworked per §4.3 |
+| `crm/leads/service.ts:457` | Sets the **opportunity** to `'Qualified'` at lead conversion | Must set the entry stage, `Discovery` |
+| `crm/refinements.ts:107,189`, `refinement-validation.ts:106,122,126` | Stage-conditional evidence rules | Re-express against the stage catalogue |
+| `components/crm-deal-controls.tsx:31` | `stageRequiresEvidence = stage === "Qualified"` | Re-express per §4.3 |
+| `components/crm-deal-controls.tsx:525`, `crm-screens.tsx:465` | Hard-coded stage option lists | Read from `data.stages` |
+| `components/leads-workspace.tsx:569` | Displays `Qualified / Open · Fictional sales enquiry — I1` | Follows the new definition label |
+| `components/business-ui.tsx:235` | Badge tone list | Widen |
 
-**`Qualified` names two different things.** It is the retired opportunity stage, and it is the Leads qualification outcome — which survives this change unaltered, because qualification remains the Leads module's responsibility and the board's entry condition. A find-and-replace across `src/` would break Leads.
-
-Every occurrence must be classified as opportunity-stage or lead-outcome before it is touched, and the classification recorded in the implementing pull request. The `src/crm/leads/` files are presumed lead-outcome, and the `components/crm-deal-controls.tsx` and `crm/opportunities.ts` occurrences presumed opportunity-stage, but presumption is not classification.
+`OpportunityQualified` as an **event type** is history and must not be renamed anywhere.
 
 ## 4. Proposed change set
 
@@ -89,9 +115,9 @@ Additive throughout. No existing row is rewritten, no issued bytes change, no hi
 3. **Relax `crm_stage_definitions.stage_id`** to admit Discovery, Scoping, Quoting, Negotiation and Closing alongside Enquiry and Qualified.
 4. **Replace the ordinal pairing CHECK** with `ordinal > 0` plus `UNIQUE(workspace_id, pipeline_definition_id, ordinal)`. Ordinal becomes display order, scoped per definition.
 5. **Insert five stage definition rows**, ordinals 1 to 5, under the new definition.
-6. **Add event type `OpportunityStageChanged`** to the `opportunity_events` CHECK and to `outbox_jobs.ck_outbox_kind`.
-7. **Re-express the three-branch event CHECK** so `OpportunityCreated` admits the first ordinal of its own definition, the existing Enquiry and Qualified branches remain valid for historical rows, and `OpportunityStageChanged` requires `from_stage IS NOT NULL AND to_stage IS DISTINCT FROM from_stage`.
-8. **Rewrite `ppo.protect_opportunity()`** — creation at the first ordinal of the row's own definition; movement permitted when the target ordinal is exactly one greater, or any value lower, than the current ordinal, read from `crm_stage_definitions` rather than from literals; the qualification-facts branch reworked per §4.3.
+6. ~~Add event type `OpportunityStageChanged`.~~ **Already present from `0017`. No change.**
+7. **Widen the `OpportunityCreated` branch** of the event CHECK so it admits the first ordinal of its own definition instead of the literal `'Enquiry'`. The `OpportunityQualified` and `OpportunityStageChanged` branches are left exactly as they are: the first so historical rows stay valid, the second because it is already general.
+8. **Rewrite `ppo.protect_opportunity()`** — creation at the first ordinal of the row's own definition; movement permitted when the target ordinal is exactly one greater, or any value lower, than the current ordinal, read from `crm_stage_definitions` rather than from an enumerated pair; the qualification-facts branch reworked per §4.3.
 9. **Leave `close_outcome` alone.** Increment B owns it.
 
 Ordinal comparison rather than an edge table is proposed deliberately: with five stages and a forward/backward rule expressible as arithmetic, an edge table would be more structure than the rule needs. If later stages require non-adjacent forward jumps, an edge table becomes the right answer and this decision should be revisited rather than patched.
@@ -103,7 +129,7 @@ Ordinal comparison rather than an edge table is proposed deliberately: with five
 | Create | At ordinal 1 of the row's own definition | `protect_opportunity()` |
 | Forward | Target ordinal = current + 1 | `protect_opportunity()` |
 | Backward | Target ordinal < current, any value | `protect_opportunity()` |
-| Same stage | Permitted for action planning only, as today | Existing `OpportunityActionPlanned` branch |
+| Same stage | Permitted for action planning and the two edit events, as today | Existing branches, unchanged |
 | Won, Lost | Refused | `close_outcome` CHECK, unchanged |
 
 Re-entry is a consequence of backward movement, not a separate case. `check_opportunity_event_chain()` continues to require the exact preceding version and stage, which remains satisfiable because each movement writes one event at one version.
@@ -145,7 +171,11 @@ Plus every then-current accepted suite. No assertion is waived to make the new c
 
 ## 6. Assumptions and open items
 
-**Assumed, stated rather than verified:** that no consumer outside `src/crm/` and `src/components/` reads an opportunity stage literal. The fourteen-file list is a search for one literal, not a call-graph analysis; `Enquiry` should be searched the same way at implementation time.
+**Verified, not assumed, in r02:** every `Qualified` occurrence in `src/` is classified in §3.3, read line by line.
+
+**Still assumed:** that `Enquiry` has no consumers beyond the same fourteen files. It was not searched separately and must be at implementation time.
+
+**Environment limitation:** the r02 evidence base ran under Node 22.22.2, not the pinned 24.20.0, which the sandbox cannot reach. Schema observations are engine-level and unaffected; anything runtime-sensitive must be confirmed in CI.
 
 **Open, and not blocking A:** the Won handover contract (#144) and H-01 to H-03 (#145).
 
