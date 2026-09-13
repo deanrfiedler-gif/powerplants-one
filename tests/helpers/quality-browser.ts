@@ -1,4 +1,4 @@
-import { expect, type Page, type TestInfo } from "@playwright/test";
+import { expect, test, type Page, type TestInfo } from "@playwright/test";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { mkdir, writeFile } from "node:fs/promises";
@@ -6,6 +6,47 @@ import { mkdir, writeFile } from "node:fs/promises";
 const TRANSIENT_FETCH_RETRY_DELAY_MS = 250;
 const PLAYWRIGHT_FETCH_ERROR = /^apiRequestContext\.fetch:/i;
 const PLAYWRIGHT_FETCH_SOCKET_HANG_UP = /^apiRequestContext\.fetch: socket hang up\b/i;
+
+export type TransientFetchRetry = {
+  path: string;
+  method: "GET" | "POST";
+  message: string;
+};
+
+const transientFetchRetries: TransientFetchRetry[] = [];
+
+/**
+ * Transport resets absorbed by `call` during this process.
+ *
+ * A retried request still has to satisfy every assertion in `call`, so a
+ * retry never converts a failing response into a passing one. It does hide
+ * the reset itself, and reset-shaped failures are the P11 symptom class that
+ * was never root-caused. Recording each one keeps a green run honest about
+ * how much transport noise it absorbed, and turns that noise into a rate
+ * that can be watched rather than an absence of evidence.
+ */
+export function transientFetchRetryRecord(): readonly TransientFetchRetry[] {
+  return transientFetchRetries;
+}
+
+export function resetTransientFetchRetryRecord() {
+  transientFetchRetries.length = 0;
+}
+
+function recordTransientFetchRetry(entry: TransientFetchRetry) {
+  transientFetchRetries.push(entry);
+  const description = `${entry.method} /api/v1/${entry.path} — ${entry.message}`;
+  // Readable in the job log without downloading an artifact:
+  // grep the log for "transient-fetch-retry:" to count absorbed resets.
+  console.warn(`transient-fetch-retry: ${description}`);
+  try {
+    // Surfaces on the owning test in the Playwright report.
+    test.info().annotations.push({ type: "transient-fetch-retry", description });
+  } catch {
+    // Called outside a Playwright runner, for example from the unit suite.
+    // The record above and the log line remain the evidence.
+  }
+}
 
 function isTransientFetchError(error: unknown) {
   if (!error || typeof error !== "object") return false;
@@ -24,9 +65,10 @@ function isTransientFetchError(error: unknown) {
 }
 
 export async function call(page: Page, path: string, body?: unknown) {
+  const method = body === undefined ? "GET" : "POST";
   const request = () =>
     page.request.fetch(`/api/v1/${path}`, {
-      method: body === undefined ? "GET" : "POST",
+      method,
       headers:
         body === undefined
           ? {}
@@ -41,6 +83,11 @@ export async function call(page: Page, path: string, body?: unknown) {
     r = await request();
   } catch (error) {
     if (!isTransientFetchError(error)) throw error;
+    recordTransientFetchRetry({
+      path,
+      method,
+      message: String((error as { message?: unknown }).message ?? error),
+    });
     await page.waitForTimeout(TRANSIENT_FETCH_RETRY_DELAY_MS);
     r = await request();
   }
