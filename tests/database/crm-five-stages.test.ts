@@ -275,7 +275,7 @@ test("five-stage server commands preserve evidence, exact event time and origina
     identification_activity_id: null,
   });
   for (const target of ["Quoting", "Qualified", "Enquiry"]) {
-    await assert.rejects(changeDealStage(p, id, command(target, 1)), {
+    await assert.rejects(changeDealStage(p, id, { ...command(target, 1), qualification_note: target === "Qualified" ? "SYN other pipeline" : null }), {
       code: "CRM_PROGRESS_INVALID",
     });
     assert.equal((await readOpportunity(p, id)).version, 1);
@@ -291,7 +291,9 @@ test("five-stage server commands preserve evidence, exact event time and origina
   ]) {
     const intent = command(stage, version);
     const receipt = await changeDealStage(p, id, intent);
-    assert.deepEqual(await changeDealStage(p, id, intent), receipt);
+    const replay = await changeDealStage(p, id, intent);
+    assert.deepEqual(replay.receipt, receipt.receipt);
+    assert.equal(replay.replayed, true);
     const saved = await readOpportunity(p, id);
     assert.equal(saved.version, ++version);
     assert.equal(saved.stage_id, stage);
