@@ -2,7 +2,7 @@
 
 **Document ID:** PPO-RUNTIME-MAINT-HO
 **Revision:** r01
-**Status:** Prepared and locally checked; publication blocked; CI and hosted verification outstanding
+**Status:** Published by owner in PR #163; CI repair and hosted verification outstanding
 **Date:** 14 September 2026
 **Owner:** Dean Fiedler
 **Source commit:** 5855713c107500ee80319952473fa1fcf7783f33
@@ -50,11 +50,17 @@ Executed on the prepared tree with Node 24.21.0/npm 11.19.0:
 
 The updated installer forces the official stable installation so an older preinstalled Chrome cannot be mistaken for a completed update. No mocked result is a real browser/database/hosting pass.
 
-## Publication block and owner handoff
+## Publication history and owner handoff
 
 The local source commit was prepared as `5ef79bc97fac38b27d7906def4a1eeb95442c267` (tree `a4e6a52899437c965b91a75b12fc138ab2feae2f`). Its normal branch push failed: `fatal: could not read Username for 'https://github.com': No such device or address`. `CONTRIBUTING.md` requires stopping on a blocked push and records that workflow files need owner publication because the connector lacks workflow-write access. No alternate credential, empty remote branch or permission change was attempted. No PR, CI run, merge or rollout was created for this change.
 
 The owner handoff archive contains the exact branch as a Git bundle, its review diff, checks and import instructions. The final handover commit adds only this verification/publication record. Import the bundle as a new local branch and publish it using the owner's existing authenticated GitHub Desktop connection. Then open a draft PR linked to #160. Do not merge until the configured checks, actual browser/PDF paths, compiled application suite and image build pass. Review the generated quotation, job pack, report and Finance PDFs visually using their retained CI evidence. The existing authorisation covers continuing those checks and the normal merge after owner publication; no repeated scope approval is needed.
+
+## Owner publication and first CI results
+
+Dean imported and published the exact handoff commit `a0132823f971a7570206dc6c626d7a7115c9d150` and opened [PR #163](https://github.com/deanrfiedler-gif/powerplants-one/pull/163). The earlier Git-transport block is resolved by that owner action. Current checks and any remaining corrections continue on the same branch through the authenticated connector; no workflow permissions are changed.
+
+The first PR runs installed Chrome 153.0.8010.36 on Node 24.21.0 and passed the actual PDF smoke check. Three design workflows then failed because their older scripts in `docs/blueprints` and `docs/testing` still selected bundled Chromium. Six active launch sites now select the same Chrome channel. The original failures remain visible in runs `34790816072`, `34790816018` and `34790816040`. Syntax checks alone do not establish the repaired browser interactions; the rerun is required. Historical review scripts inside issued/versioned visual evidence are not active workflow entry points and remain unchanged.
 
 ## Hosted evidence and update boundary
 

@@ -11,7 +11,7 @@ await new Promise(done=>server.listen(0,'127.0.0.1',done));
 const origin=`http://127.0.0.1:${server.address().port}`;
 let browser;const observations=[];
 try{
- browser=await chromium.launch({headless:true});
+ browser=await chromium.launch({channel:"chrome",headless:true});
  for(const width of [1440,390,320]){
   const page=await browser.newPage({viewport:{width,height:900}});const errors=[];
   page.on('pageerror',e=>errors.push(e.message));

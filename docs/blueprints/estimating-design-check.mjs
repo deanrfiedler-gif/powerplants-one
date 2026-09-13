@@ -12,7 +12,7 @@ const output=resolve(process.env.ESTIMATING_DESIGN_OUTPUT||'verification-evidenc
 await mkdir(output,{recursive:true});
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 const report={scope:'Standalone synthetic design preview only; not runtime, source parity or owner acceptance',input:'docs/blueprints/estimating-workspace-mockup.html',input_sha256:hash(await readFile(input)),checked_at:new Date().toISOString(),source_head:process.env.PPO_SOURCE_HEAD||null,viewports:[],captures:[],assertions:[],result:'in progress'};
-const browser=await chromium.launch({headless:true});report.browser=await browser.version();
+const browser=await chromium.launch({channel:"chrome",headless:true});report.browser=await browser.version();
 try{
  for(const viewport of [{width:1440,height:1000},{width:390,height:844},{width:320,height:844}]){
   const context=await browser.newContext({viewport});const page=await context.newPage();let errors=[],requests=[];
