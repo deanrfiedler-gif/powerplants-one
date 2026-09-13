@@ -4,6 +4,7 @@ import { execFileSync } from "node:child_process";
 import { mkdir, writeFile } from "node:fs/promises";
 
 const TRANSIENT_FETCH_RETRY_DELAY_MS = 250;
+const PLAYWRIGHT_FETCH_ERROR = /^apiRequestContext\.fetch:/i;
 const PLAYWRIGHT_FETCH_SOCKET_HANG_UP = /^apiRequestContext\.fetch: socket hang up\b/i;
 
 function isTransientFetchError(error: unknown) {
@@ -13,10 +14,12 @@ function isTransientFetchError(error: unknown) {
     cause?: { message?: unknown; code?: unknown };
     code?: unknown;
   };
+  if (typeof message !== "string" || !PLAYWRIGHT_FETCH_ERROR.test(message))
+    return false;
   return (
     code === "ECONNRESET" ||
     cause?.code === "ECONNRESET" ||
-    (typeof message === "string" && PLAYWRIGHT_FETCH_SOCKET_HANG_UP.test(message))
+    PLAYWRIGHT_FETCH_SOCKET_HANG_UP.test(message)
   );
 }
 
