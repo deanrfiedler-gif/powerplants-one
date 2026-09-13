@@ -36,7 +36,7 @@ test("quality-browser call does not retry unrelated request errors", async () =>
     request: {
       fetch: async () => {
         attempts += 1;
-        throw new Error("synthetic failure");
+        throw new Error("synthetic socket hang up");
       },
     },
     waitForTimeout: async (ms: number) => {
@@ -46,7 +46,7 @@ test("quality-browser call does not retry unrelated request errors", async () =>
 
   await assert.rejects(
     () => call(page as never, "local-session", { profile: "coordinator" }),
-    /synthetic failure/,
+    /synthetic socket hang up/,
   );
   assert.equal(attempts, 1);
   assert.deepEqual(waits, []);
