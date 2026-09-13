@@ -9,9 +9,15 @@ import {
 } from "@playwright/test";
 import { randomUUID, randomBytes, createHash } from "node:crypto";
 import { database, closeDatabase } from "../../src/platform/database";
+import { localConfig } from "../../src/platform/config";
 import { crmCreate, crmQualify, crmBase, crmDiscovery, crmAction, CRM } from "../helpers/crm";
 import type { DirectoryView } from "../../src/crm/directory";
 test.describe.configure({ timeout: 120000 });
+test.beforeAll(() => {
+  process.loadEnvFile(".env.local");
+  if (localConfig().database_name !== "ppo_synthetic_test")
+    throw new Error("CRM browser fixture writes require disposable ppo_synthetic_test");
+});
 test.afterAll(closeDatabase);
 async function call(page: Page, path: string, body?: unknown) {
   const r = await page.request.fetch(`/api/v1/${path}`, {

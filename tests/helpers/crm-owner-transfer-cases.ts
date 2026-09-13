@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { randomUUID } from "node:crypto";
+import { readFile } from "node:fs/promises";
 import { database, transaction } from "../../src/platform/database";
 import { createSession } from "../../src/platform/identity";
 import {
@@ -534,7 +535,12 @@ export function ownerTransferCases() {
       0,
     );
   });
-  for (const target of ["initiator", "recipient", "affiliation"] as const)
+  for (const target of [
+    "initiator",
+    "recipient",
+    "affiliation",
+    "grant",
+  ] as const)
     test(`HV-13: committed ${target} revocation wins its actual row-lock race and transfer makes no effect`, async () => {
       const { p, input } = await fixture(),
         body = await intent(p, input.id),
@@ -542,7 +548,12 @@ export function ownerTransferCases() {
       await admin.query("BEGIN");
       const pid = (await admin.query("SELECT pg_backend_pid() AS pid")).rows[0]
         .pid;
-      if (target === "affiliation")
+      if (target === "grant")
+        await admin.query(
+          "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.transfer.own'",
+          [p.actor_id],
+        );
+      else if (target === "affiliation")
         await admin.query(
           "UPDATE ppo.relationships SET valid_to=CURRENT_DATE WHERE organisation_id=$1 AND person_id=$2",
           [CRM.org, CRM.person],
@@ -578,6 +589,94 @@ export function ownerTransferCases() {
         )[0].n,
         0,
       );
+    });
+  for (const target of [
+    "initiator",
+    "recipient",
+    "affiliation",
+    "grant",
+  ] as const)
+    test(`HV-13: transfer holds authority before competing ${target} revocation, then later access reflects the revocation`, async () => {
+      const { p, input } = await fixture(),
+        body = await intent(p, input.id);
+      const blocker = await database().connect(),
+        admin = await database().connect();
+      await blocker.query("BEGIN");
+      const pid = (await blocker.query("SELECT pg_backend_pid() AS pid"))
+        .rows[0].pid;
+      await blocker.query(
+        "SELECT id FROM ppo.opportunities WHERE id=$1 FOR UPDATE",
+        [input.id],
+      );
+      const transferring = Promise.allSettled([
+        transferOpportunityOwner(p, input.id, body),
+      ]);
+      let revoking: PromiseSettledResult<unknown>[] | undefined;
+      let pending: Promise<PromiseSettledResult<unknown>[]> | undefined;
+      try {
+        // Transfer has already acquired authority SHARE locks when it reaches
+        // this independently held Opportunity lock. Observe that actual wait.
+        assert.equal(await blockedBy(pid), true);
+        await admin.query("BEGIN");
+        const sql =
+          target === "grant"
+            ? "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.transfer.own'"
+            : target === "affiliation"
+              ? "UPDATE ppo.relationships SET valid_to=CURRENT_DATE WHERE organisation_id=$1 AND person_id=$2"
+              : "UPDATE ppo.users SET active=false WHERE id=$1";
+        const args =
+          target === "affiliation"
+            ? [CRM.org, CRM.person]
+            : [target === "recipient" ? receiver : p.actor_id];
+        pending = Promise.allSettled([admin.query(sql, args)]);
+        // The administrative writer now waits behind the transfer, which
+        // itself waits behind our blocker: prove both edges before release.
+        assert.equal(await blockedBy(pid, 2), true);
+      } finally {
+        await blocker.query("COMMIT");
+        blocker.release();
+        if (pending) revoking = await pending;
+        await admin.query(
+          revoking?.[0]?.status === "fulfilled" ? "COMMIT" : "ROLLBACK",
+        );
+        admin.release();
+      }
+      const result = (await transferring)[0];
+      assert.equal(result.status, "fulfilled");
+      assert.equal(revoking?.[0]?.status, "fulfilled");
+      const saved = (
+        await rows(
+          "SELECT owner_id,version FROM ppo.opportunities WHERE id=$1",
+          [input.id],
+        )
+      )[0];
+      assert.equal(saved.owner_id, receiver);
+      assert.equal(saved.version, 2);
+      assert.equal(
+        (
+          await rows(
+            "SELECT count(*)::int AS n FROM ppo.opportunity_owner_transfers WHERE opportunity_id=$1",
+            [input.id],
+          )
+        )[0].n,
+        1,
+      );
+      assert.equal(
+        (
+          await rows(
+            "SELECT count(*)::int AS n FROM ppo.operation_receipts WHERE operation_id=$1",
+            [body.operation_id],
+          )
+        )[0].n,
+        1,
+      );
+      if (target === "recipient") {
+        assert.equal(result.status, "fulfilled");
+        assert.deepEqual(
+          await readOperation(p, body.operation_id),
+          result.value.receipt,
+        );
+      } else await assert.rejects(readOperation(p, body.operation_id));
     });
   test("HV-18: every final evidence failure rolls back the full transfer and SQL cannot bypass its chain", async () => {
     const { p, input } = await fixture();
@@ -629,6 +728,105 @@ export function ownerTransferCases() {
     const saved = await readOpportunity(p, input.id);
     assert.equal(saved.original_owner?.original_owner_id, receiver);
     assert.notEqual(saved.original_owner?.original_owner_id, p.actor_id);
+  });
+  test("HV-19/22: upgrade captures the pre-transfer owner at its exact old version when creation author differs", async () => {
+    await transaction(async (c) => {
+      await c.query(
+        await readFile(
+          new URL("../../db/migrations/0001-recover.sql", import.meta.url),
+          "utf8",
+        ),
+      );
+      await c.query("DROP TABLE IF EXISTS public.ppo_migrations");
+    });
+    await migrate(23);
+    await seed(23);
+    const p = await principal(),
+      selectedOwner = randomUUID();
+    await rows(
+      "INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1,$2,'PPO-LocalSynthetic',$3,'SYN Pre-upgrade selected owner')",
+      [selectedOwner, p.workspace_id, `hv-${selectedOwner}`],
+    );
+    await rows(
+      "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id,valid_from,valid_to) SELECT workspace_id,$1,company_id,capability,scope_type,scope_id,site_id,valid_from,valid_to FROM ppo.permission_grants WHERE user_id=$2",
+      [selectedOwner, p.actor_id],
+    );
+    const owner = {
+      ...p,
+      actor_id: selectedOwner,
+      display_name: "SYN Pre-upgrade selected owner",
+    };
+    const input = {
+      ...crmCreate(),
+      owner_id: selectedOwner,
+      initial_action: crmAction(selectedOwner),
+    };
+    const accepted = await createOpportunity(p, input);
+    const qualification = crmQualify();
+    const qualified = await qualifyOpportunity(owner, input.id, qualification);
+    const oldTables = tables.filter(
+      (t) =>
+        !["opportunity_origins", "opportunity_owner_transfers"].includes(t),
+    );
+    const oldState = () =>
+      Promise.all(
+        oldTables.map((t) =>
+          rows(
+            `SELECT to_jsonb(x) AS row FROM ppo.${t} x ORDER BY to_jsonb(x)::text`,
+          ),
+        ),
+      );
+    const before = await oldState(),
+      ledger = await rows(
+        "SELECT * FROM public.ppo_migrations ORDER BY version",
+      );
+    await migrate();
+    await seed();
+    assert.deepEqual(await oldState(), before);
+    assert.deepEqual(
+      await rows(
+        "SELECT * FROM public.ppo_migrations WHERE version<=23 ORDER BY version",
+      ),
+      ledger,
+    );
+    const original = (await readOpportunity(p, input.id)).original_owner!;
+    assert.equal(original.original_owner_id, selectedOwner);
+    assert.notEqual(original.original_owner_id, p.actor_id);
+    assert.equal(original.source_version, 2);
+    assert.equal(original.provenance, "UpgradeCapture");
+    assert.deepEqual(
+      (await createOpportunity(p, input)).receipt,
+      accepted.receipt,
+    );
+    assert.deepEqual(
+      (await qualifyOpportunity(owner, input.id, qualification)).receipt,
+      qualified.receipt,
+    );
+    await rows(
+      "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id,valid_from,valid_to) SELECT workspace_id,$1,company_id,capability,scope_type,scope_id,site_id,valid_from,valid_to FROM ppo.permission_grants WHERE user_id=$2 AND capability='crm.opportunity.transfer.own'",
+      [selectedOwner, p.actor_id],
+    );
+    await transferOpportunityOwner(
+      owner,
+      input.id,
+      await intent(owner, input.id),
+    );
+    assert.deepEqual(
+      (await readOpportunity(p, input.id)).original_owner,
+      original,
+    );
+    assert.deepEqual(
+      (await createOpportunity(p, input)).receipt,
+      accepted.receipt,
+    );
+    assert.deepEqual(
+      (await qualifyOpportunity(owner, input.id, qualification)).receipt,
+      qualified.receipt,
+    );
+    const after = await snapshot();
+    await migrate();
+    await seed();
+    assert.deepEqual(await snapshot(), after);
   });
   test("HV-11: information receipts recover after transfer without permitting a former owner's fresh edit", async () => {
     const { p, input } = await fixture();
