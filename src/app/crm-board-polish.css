@@ -572,8 +572,24 @@ body:has(.crm-workspace) .header-account .identity-hosted {
   .crm-stage-navigation {
     padding-top: 8px;
   }
+  .crm-change-feedback {
+    gap: 6px 8px;
+    padding: 8px 12px;
+    margin: 4px 0 8px;
+  }
+  .crm-change-feedback > span {
+    flex: 1 0 100%;
+    min-width: 0;
+  }
+  .crm-change-feedback > button {
+    min-height: 44px;
+    padding: 8px 10px;
+  }
   .crm-stage-navigation button {
     min-height: 44px;
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
   .crm-card .crm-card-title {
     font-size: 16px;
@@ -623,4 +639,8 @@ body:has(.crm-workspace) .header-account .identity-hosted {
 .crm-pipeline-picker .field { margin: 0; }
 .crm-pipeline-picker label { font-size: 11px; }
 .crm-pipeline-picker select { min-height: 36px; padding-block: 5px; }
-@media (max-width: 780px) { .crm-pipeline-picker { max-width: 100%; } .crm-pipeline-picker select { min-height: 44px; } }
+@media (max-width: 780px) {
+  .crm-pipeline-picker { width: 100%; max-width: 100%; }
+  .crm-pipeline-picker .field { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: center; }
+  .crm-pipeline-picker select { min-height: 44px; margin: 0; }
+}

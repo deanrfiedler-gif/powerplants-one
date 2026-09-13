@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { ACTIVE_PIPELINE_ID } from "../crm/stages";
-import { useEffect, useState, useRef, useLayoutEffect, useCallback } from "react";
+import { useEffect, useState, useRef, useLayoutEffect, useCallback, useMemo } from "react";
 import type { CSSProperties } from "react";
 import { DealDialog, dealAmount, dealClose, stageRequiresEvidence, useDesktopCRM, type DealRecord, type StageUndo } from "./crm-deal-controls";
 import type { OperationReceipt } from "../platform/operations";
@@ -88,7 +88,9 @@ function useScrollMemory() {
   const position = useRef({ top: 0, left: 0 });
   const read = useCallback(() => position.current, []);
   const save = useCallback((top: number, left: number) => { position.current = { top, left }; }, []);
-  return { read, save };
+  // Restore only when the scroll surface mounts, not after every parent render:
+  // that would race the scroll event from keyboard focus return after a save.
+  return useMemo(() => ({ read, save }), [read, save]);
 }
 function Board({ data, selected, scroll, onOpen, onStage, blocked, onMove, onActivity }: { data: Results; selected: string; scroll: ReturnType<typeof useScrollMemory>; onOpen:(id:string)=>void; onStage:(id:string)=>void; blocked:boolean; onMove:(id:string,stage:string)=>void; onActivity:(item: WorklistItem)=>void }) {
   const desktop=useDesktopCRM(),drag=useRef<string|null>(null),suppress=useRef(0),[destination,setDestination]=useState<string|null>(null);
@@ -181,7 +183,9 @@ export function SalesWorklist() {
   useEffect(() => {
     if (!focusAfterSave || dialog || !data.data?.items.some(i => i.id === focusAfterSave.id && i.version >= focusAfterSave.version)) return;
     const frame = requestAnimationFrame(() => {
-      document.querySelector<HTMLButtonElement>(`[data-opportunity-id="${focusAfterSave.id}"] .crm-card-stage`)?.focus();
+      const target = document.querySelector<HTMLButtonElement>(`[data-opportunity-id="${focusAfterSave.id}"] .crm-card-stage`);
+      target?.scrollIntoView({ block: "center", inline: "nearest" });
+      target?.focus({ preventScroll: true });
       setFocusAfterSave(null);
     });
     return () => cancelAnimationFrame(frame);

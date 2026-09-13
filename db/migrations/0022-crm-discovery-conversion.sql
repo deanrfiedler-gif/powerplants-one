@@ -39,8 +39,25 @@ BEGIN
  RETURN NULL;
 END $$;
 
--- The Activity can be inserted and linked later in the same atomic creation.
--- Do not impose an insert-order requirement on the application or weaken the FK.
+-- Discovery can identify its contact through the Activity created in the same
+-- transaction. The original identification FK was immediate (unlike next action).
+-- Retain its exact workspace/company/Activity target, checking it at commit.
+DO $$
+DECLARE identification_fk text;
+BEGIN
+ SELECT c.conname INTO STRICT identification_fk
+ FROM pg_constraint c
+ WHERE c.conrelid='ppo.opportunities'::regclass AND c.contype='f'
+  AND c.confrelid='ppo.activities'::regclass
+  AND c.conkey=ARRAY[
+   (SELECT attnum FROM pg_attribute WHERE attrelid=c.conrelid AND attname='workspace_id'),
+   (SELECT attnum FROM pg_attribute WHERE attrelid=c.conrelid AND attname='company_id'),
+   (SELECT attnum FROM pg_attribute WHERE attrelid=c.conrelid AND attname='identification_activity_id')
+  ]::smallint[];
+ EXECUTE format('ALTER TABLE ppo.opportunities ALTER CONSTRAINT %I DEFERRABLE INITIALLY DEFERRED',identification_fk);
+END $$;
+
+-- The Activity and its link must exist, be owned and active at commit.
 CREATE FUNCTION ppo.check_five_stage_evidence() RETURNS trigger LANGUAGE plpgsql AS $$
 BEGIN
  IF NEW.stage_id NOT IN ('Discovery','Scoping','Quoting','Negotiation','Closing') THEN RETURN NULL; END IF;

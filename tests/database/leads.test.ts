@@ -176,7 +176,7 @@ test("LC-04/05 same-intent retries and competing intents commit exactly one link
     1,
   );
 });
-test("LC-05 failure after tentative deal/action insertion rolls back every effect", async () => {
+test("LC-05 missing identification is specific; failure after tentative insertion rolls back every effect", async () => {
   const p = await principal(),
     input = { ...leadCreate(), primary_person_id: null };
   await createLead(p, input);
@@ -189,6 +189,14 @@ test("LC-05 failure after tentative deal/action insertion rolls back every effec
     }),
     code("CRM_IDENTIFICATION_REQUIRED"),
   );
+  assert.deepEqual(await counts(), before);
+  // A well-shaped but unavailable identification ID reaches the existing
+  // post-insert authority check; tentative opportunity/action writes roll back.
+  await assert.rejects(convertLead(p, input.id, {
+    ...leadConvert(1), primary_person_id: null,
+    contact_unknown_reason: "SYN Contact requires identification",
+    identification_activity_id: randomUUID(),
+  }), code("RecordUnavailable"));
   assert.deepEqual(await counts(), before);
   assert.equal((await readLead(p, input.id)).status, "New");
 });

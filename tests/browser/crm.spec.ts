@@ -200,6 +200,7 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await page.getByRole("dialog", { name: "Change deal stage", exact: true }).getByRole("button", { name: "Save stage", exact: true }).click();
   await expect(page.getByRole("dialog")).not.toBeVisible();
   await expect(page.locator('.crm-stage-track [aria-current="step"]')).toContainText("Scoping");
+  await expect(page.getByRole("button", { name: "Save next action", exact: true })).toBeEnabled();
   if (await page.getByRole("tab",{name:"Timeline",exact:true}).count()) await page.getByRole("tab",{name:"Timeline",exact:true}).click();
   await pick(page, "Activity owner", CRM.owner);
   if (await page.getByRole("tab",{name:"Timeline",exact:true}).count()) await page.getByRole("tab",{name:"Timeline",exact:true}).click();
