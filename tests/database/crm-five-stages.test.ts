@@ -22,7 +22,9 @@ after(closeDatabase);
 // an OpportunityStageChanged record_snapshot that matches the row exactly, and the
 // rest are browser and conversion concerns belonging to the code cutover.
 
-type Client = { query: (sql: string, values?: unknown[]) => Promise<{ rows: any[] }> };
+type Row = Record<string, unknown>;
+type Context = { seed: Row; five: string };
+type Client = { query: (sql: string, values?: unknown[]) => Promise<{ rows: Row[] }> };
 const rows = async (sql: string, values: unknown[] = []) =>
   (await transaction(async (c: Client) => c.query(sql, values))).rows;
 const refusal = async (work: (c: Client) => Promise<unknown>) => {
@@ -49,7 +51,7 @@ const context = async () => {
 // already present, because under the accepted model it arrives with the deal.
 const deal =
   (
-    ctx: { seed: any; five: string },
+    ctx: Context,
     stage: string,
     note: string | null = "SYN qualified in Leads",
   ) =>
@@ -83,7 +85,7 @@ const deal =
 
 const event = async (
   c: Client,
-  ctx: { seed: any; five: string },
+  ctx: Context,
   opportunity: string,
   type: string,
   from: string | null,
@@ -115,7 +117,7 @@ test("SA-01 the five-stage catalogue exists and the I1 definition is unmodified"
       `SELECT d.definition_key, s.stage_id, s.ordinal FROM ppo.crm_stage_definitions s
        JOIN ppo.crm_pipeline_definitions d ON d.id=s.pipeline_definition_id
        ORDER BY d.definition_key, s.ordinal`,
-    )).map((r) => `${r.definition_key}:${r.stage_id}:${r.ordinal}`),
+    )).map((r) => `${String(r.definition_key)}:${String(r.stage_id)}:${String(r.ordinal)}`),
     [
       "SyntheticEnquiryI1:Enquiry:1",
       "SyntheticEnquiryI1:Qualified:2",
