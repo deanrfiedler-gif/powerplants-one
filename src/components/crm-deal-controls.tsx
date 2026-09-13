@@ -520,10 +520,7 @@ function DealEditor({
                 label="Deal stage"
                 value={stage}
                 onChange={setStage}
-                options={[
-                  { id: "Enquiry", display_name: "Enquiry" },
-                  { id: "Qualified", display_name: "Qualified" },
-                ]}
+                options={o.stages.map(s => ({ id: s.stage_id, display_name: s.stage_id }))}
               />
               {stageRequiresEvidence(stage) && (
                 <>
@@ -557,7 +554,7 @@ function DealEditor({
                 </>
               )}
               <p className="scope-note">
-                Moving back to Enquiry keeps the previous qualification in
+                Stage changes preserve the original qualification in
                 history. Activities and sales outcome remain unchanged.
               </p>
             </>

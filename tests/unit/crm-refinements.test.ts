@@ -112,3 +112,21 @@ test("directory restricts query keys, sorts, paging and person owner ambiguity",
   ])
     assert.throws(() => parseDirectory(input));
 });
+
+test("five-stage moves cannot replace or invent their qualification evidence", () => {
+  for (const stage_id of [
+    "Discovery",
+    "Scoping",
+    "Quoting",
+    "Negotiation",
+    "Closing",
+  ]) {
+    const command = { ...crmBase(), expected_version: 1, stage_id };
+    assert.equal(parseDealStage(CRM.org, command).stage_id, stage_id);
+    for (const addition of [
+      { qualification_note: "SYN invented replacement" },
+      { identification_activity_id: CRM.owner },
+    ])
+      assert.throws(() => parseDealStage(CRM.org, { ...command, ...addition }));
+  }
+});

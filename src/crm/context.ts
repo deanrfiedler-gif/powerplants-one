@@ -1,3 +1,4 @@
+import type { OpportunityStage } from "./stages";
 import type { Principal } from "../platform/identity";
 import { AppError, unavailable } from "../platform/errors";
 import {
@@ -34,7 +35,7 @@ export type Opportunity = OpportunityContext & {
   source_basis: string;
   site_unknown_reason: string | null;
   contact_unknown_reason: string | null;
-  stage_id: "Enquiry" | "Qualified";
+  stage_id: OpportunityStage;
   close_outcome: "Open";
   stage_entered_at: Date;
   next_activity_id: string;
@@ -134,7 +135,7 @@ export async function relationshipContext(
   if (
     !(
       await c.query(
-        "SELECT 1 FROM ppo.crm_pipeline_definitions d WHERE d.workspace_id=$1 AND d.id=$2 AND d.definition_key='SyntheticEnquiryI1' AND d.version=1 AND (SELECT count(*) FROM ppo.crm_stage_definitions s WHERE s.workspace_id=d.workspace_id AND s.pipeline_definition_id=d.id)=2",
+        "SELECT 1 FROM ppo.crm_pipeline_definitions d WHERE d.workspace_id=$1 AND d.id=$2 AND d.definition_key IN ('SyntheticEnquiryI1','SyntheticFiveStage') AND d.version=1 AND EXISTS(SELECT 1 FROM ppo.crm_stage_definitions s WHERE s.workspace_id=d.workspace_id AND s.pipeline_definition_id=d.id AND s.ordinal=1)",
         [p.workspace_id, input.pipeline_definition_id],
       )
     ).rowCount

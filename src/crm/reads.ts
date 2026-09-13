@@ -1,3 +1,4 @@
+import type { StageDefinition } from "./stages";
 import { readLead } from "./leads/reads";
 import { leadsAvailable } from "./leads/context";
 import type { Principal } from "../platform/identity";
@@ -86,7 +87,12 @@ export async function readOpportunity(p: Principal, id: string) {
     const source=(await c.query("SELECT lead_id FROM ppo.lead_conversions WHERE workspace_id=$1 AND opportunity_id=$2",[p.workspace_id,id])).rows[0];
     if(source) try {const lead=await readLead(p,source.lead_id);source_lead={id:lead.id,display_number:lead.display_number,events:lead.events};} catch(e) {if(!(e instanceof AppError)||![403,404].includes(e.status))throw e;}
   }
+  const stages = (await c.query<StageDefinition>(
+    "SELECT stage_id,ordinal FROM ppo.crm_stage_definitions WHERE workspace_id=$1 AND pipeline_definition_id=$2 ORDER BY ordinal",
+    [p.workspace_id, o.pipeline_definition_id],
+  )).rows;
   return {
+    stages,
     source_lead,
     id: o.id,
     display_number: o.display_number,

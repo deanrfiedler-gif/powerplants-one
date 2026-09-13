@@ -1,3 +1,5 @@
+import { keyActivate, keySelect, keyType } from "../helpers/quality-keyboard";
+import { committed } from "../helpers/quality-prepare";
 import {
   test,
   expect,
@@ -5,7 +7,7 @@ import {
   type Page,
   type Request,
 } from "@playwright/test";
-import { crmCreate } from "../helpers/crm";
+import { crmCreate, crmQualify, crmBase } from "../helpers/crm";
 import type { DirectoryView } from "../../src/crm/directory";
 test.describe.configure({ timeout: 120000 });
 async function call(page: Page, path: string, body?: unknown) {
@@ -275,5 +277,200 @@ test("desktop directory tables and mobile lists share saved, scoped queries", as
   ).toContainText("SYN");
   await page.screenshot({
     path: info.outputPath("crm-organisations-directory.png"),
+  });
+});
+
+test("SA-09 board stage change uses native keyboard controls on desktop and phone", async ({
+  page,
+}, info) => {
+  await call(page, "local-session", { profile: "coordinator" });
+  const input = crmCreate();
+  input.title = `SYN keyboard stage ${info.project.name}`;
+  await call(page, "crm/opportunities", input);
+  await page.goto("/crm/opportunities");
+  await keyType(
+    page,
+    page.getByLabel("Search opportunities", { exact: true }),
+    input.title,
+  );
+  const action = page.getByRole("button", {
+    name: `Change stage for ${input.title}`,
+    exact: true,
+  });
+  await keyActivate(page, action);
+  const dialog = page.getByRole("dialog", {
+    name: "Change deal stage",
+    exact: true,
+  });
+  await keySelect(
+    page,
+    dialog.getByLabel("Deal stage", { exact: true }),
+    "Qualified",
+  );
+  await keyType(
+    page,
+    dialog.getByLabel("Qualification outcome", { exact: true }),
+    "SYN reviewed need and contact; keyboard proof only.",
+  );
+  await committed(page, `crm/opportunities/${input.id}/stage`, () =>
+    keyActivate(
+      page,
+      dialog.getByRole("button", { name: "Save stage", exact: true }),
+    ),
+  );
+  await expect(dialog).not.toBeVisible();
+  await expect(page).toHaveURL(/\/crm\/opportunities$/);
+  await expect(action).toBeFocused();
+  const record = (await call(page, `crm/opportunities/${input.id}`)).items[0];
+  expect(record.stage_id).toBe("Qualified");
+  expect(record.version).toBe(2);
+  expect(record.events.at(-1).event_type).toBe("OpportunityStageChanged");
+  await page.screenshot({
+    path: info.outputPath("crm-board-keyboard-stage.png"),
+  });
+  await page.reload();
+  expect(
+    (await call(page, `crm/opportunities/${input.id}`)).items[0].events,
+  ).toEqual(record.events);
+});
+
+async function qualifiedBoard(page: Page, title: string) {
+  await call(page, "local-session", { profile: "coordinator" });
+  const input = crmCreate();
+  input.title = title;
+  await call(page, "crm/opportunities", input);
+  await call(page, `crm/opportunities/${input.id}/qualify`, crmQualify());
+  await page.goto("/crm/opportunities");
+  await page.getByLabel("Search opportunities", { exact: true }).fill(title);
+  const card = page.locator(`[data-opportunity-id="${input.id}"]`);
+  await expect(
+    page.locator('[data-drop-stage="Qualified"]').locator(card),
+  ).toBeVisible();
+  return { input, card };
+}
+
+test("SA-07/08 refused drag returns to saved stage and Undo sends no replacement command", async ({
+  page,
+}, info) => {
+  test.skip(
+    !!info.project.use.isMobile,
+    "Native desktop drag; the phone uses the separately tested keyboard action.",
+  );
+  const { input, card } = await qualifiedBoard(page, "SYN refused board drag");
+  const saved = (await call(page, `crm/opportunities/${input.id}`)).items[0];
+  let posts = 0;
+  await page.route(
+    `**/api/v1/crm/opportunities/${input.id}/stage`,
+    async (route) => {
+      posts++;
+      // A real concurrent edit wins before the original browser command reaches the server.
+      await call(page, `crm/opportunities/${input.id}/information`, {
+        ...crmBase(),
+        expected_version: saved.version,
+        title: saved.title,
+        primary_person_id: saved.primary_person_id,
+        contact_unknown_reason: saved.contact_unknown_reason,
+        value_amount: saved.value_amount,
+        expected_close_date: saved.expected_close_date,
+      });
+      await route.continue();
+    },
+  );
+  await card.dragTo(page.locator('[data-drop-stage="Enquiry"]'));
+  await expect(page.locator(".crm-change-feedback")).toContainText(
+    "This opportunity changed",
+  );
+  await expect(
+    page.locator('[data-drop-stage="Qualified"]').locator(card),
+  ).toBeVisible();
+  await expect(
+    page.locator('[data-drop-stage="Enquiry"]').locator(card),
+  ).toHaveCount(0);
+  await page
+    .getByRole("button", { name: "Undo stage move", exact: true })
+    .click();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  expect(posts).toBe(1);
+  const current = (await call(page, `crm/opportunities/${input.id}`)).items[0];
+  expect(current.version).toBe(saved.version + 1);
+  expect(current.stage_id).toBe("Qualified");
+  expect(
+    current.events.filter(
+      (e: { event_type: string }) => e.event_type === "OpportunityStageChanged",
+    ),
+  ).toHaveLength(0);
+  await page.screenshot({
+    path: info.outputPath("crm-board-refused-drag.png"),
+  });
+});
+
+test("SA-08 lost drag response confirms the exact original receipt before undo is enabled", async ({
+  page,
+}, info) => {
+  test.skip(
+    !!info.project.use.isMobile,
+    "Native desktop drag; the phone uses the separately tested keyboard action.",
+  );
+  const { input, card } = await qualifiedBoard(
+    page,
+    "SYN lost board drag response",
+  );
+  let posts = 0;
+  let operation = "";
+  await page.route(
+    `**/api/v1/crm/opportunities/${input.id}/stage`,
+    async (route) => {
+      posts++;
+      operation = route.request().postDataJSON().operation_id;
+      const response = await route.fetch();
+      expect(response.ok()).toBe(true);
+      await route.abort("failed");
+    },
+  );
+  await card.dragTo(page.locator('[data-drop-stage="Enquiry"]'));
+  await expect(page.locator(".crm-change-feedback")).toContainText(
+    "Save outcome uncertain",
+  );
+  await expect(
+    page.locator('[data-drop-stage="Qualified"]').locator(card),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Undo stage move", exact: true }),
+  ).toBeDisabled();
+  await expect(
+    page.getByRole("button", { name: "Dismiss", exact: true }),
+  ).toBeDisabled();
+  await expect(
+    page.getByRole("button", {
+      name: `Change stage for ${input.title}`,
+      exact: true,
+    }),
+  ).toBeDisabled();
+  const lookup = page.waitForResponse(
+    (r) =>
+      new URL(r.url()).pathname === `/api/v1/operations/${operation}` &&
+      r.request().method() === "GET",
+  );
+  await page
+    .getByRole("button", { name: "Confirm original save outcome", exact: true })
+    .click();
+  expect((await lookup).ok()).toBe(true);
+  await expect(
+    page.locator('[data-drop-stage="Enquiry"]').locator(card),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Undo stage move", exact: true }),
+  ).toBeEnabled();
+  expect(posts).toBe(1);
+  const current = (await call(page, `crm/opportunities/${input.id}`)).items[0];
+  expect(current.stage_id).toBe("Enquiry");
+  expect(current.version).toBe(3);
+  expect(
+    current.events.filter(
+      (e: { event_type: string }) => e.event_type === "OpportunityStageChanged",
+    ),
+  ).toHaveLength(1);
+  await page.screenshot({
+    path: info.outputPath("crm-board-confirmed-original-drag.png"),
   });
 });

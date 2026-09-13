@@ -1,3 +1,4 @@
+import { opportunityStages, type OpportunityStage } from "./stages";
 import { leadsAvailable } from "./leads/context";
 import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import { database } from "../platform/database";
@@ -14,7 +15,7 @@ const key = randomBytes(32);
 const sign = (body: string) => createHmac("sha256", key).update(body).digest("base64url");
 type Cursor = { binding: string; as_of: string; after: string; sort_key: string; stamp: string };
 export type WorklistItem = {
-  id: string; display_number: string; title: string; stage_id: "Enquiry" | "Qualified";
+  id: string; display_number: string; title: string; stage_id: OpportunityStage;
   close_outcome: "Open"; stage_entered_at: string; updated_at: string; version: number;
   company_id: string; company_name: string; organisation_name: string;
   site_id: string | null; site_name: string | null;
@@ -33,7 +34,7 @@ export async function listOpportunities(p: Principal, input: unknown = {}) {
   const r = object(input, ["limit", "cursor", "q", "company_id", "site_id", "owner_id", "stage_id", "next_action", "sort"]);
   const filters = {
     owner_id: optionalId(r.owner_id, "owner_id"),
-    stage_id: r.stage_id === undefined ? null : choice(r.stage_id, "stage_id", ["Enquiry", "Qualified"]),
+    stage_id: r.stage_id === undefined ? null : choice(r.stage_id, "stage_id", opportunityStages),
     next_action: r.next_action === undefined ? null : choice(r.next_action, "next_action", ["Needed", "DueNeeded", "Overdue", "Upcoming", "Unavailable"]),
     sort: r.sort === undefined ? "Reference" : choice(r.sort, "sort", ["Reference", "Title", "Newest"]),
   };
@@ -52,10 +53,10 @@ export async function listOpportunities(p: Principal, input: unknown = {}) {
     }
   }
   const as_of = cursor?.as_of ?? new Date().toISOString();
-  const stages = (await c.query<{ stage_id: "Enquiry" | "Qualified"; ordinal: number; pipeline_definition_id: string; pipeline_label: string }>(
+  const stages = (await c.query<{ stage_id: OpportunityStage; ordinal: number; pipeline_definition_id: string; pipeline_label: string }>(
     `SELECT s.stage_id,s.ordinal,s.pipeline_definition_id,d.label AS pipeline_label FROM ppo.crm_stage_definitions s JOIN ppo.crm_pipeline_definitions d ON (d.workspace_id,d.id)=(s.workspace_id,s.pipeline_definition_id) WHERE s.workspace_id=$1 AND d.id=$2 AND d.definition_key='SyntheticEnquiryI1' AND d.version=1 ORDER BY s.ordinal`, [p.workspace_id, PIPELINE_ID],
   )).rows;
-  if (stages.length !== 2 || stages[0].stage_id !== "Enquiry" || stages[1].stage_id !== "Qualified")
+  if (!stages.length || stages.some((stage, i) => stage.ordinal !== i + 1))
     throw new AppError(503, "PipelineUnavailable", "The sales stage definition is unavailable. Try loading again.");
   // Expressions are closed server choices. UUID is a unique tie breaker for every sort.
   const sortKey = filters.sort === "Title" ? 'lower(o.title) COLLATE "C"' : filters.sort === "Newest" ? `to_char(o.created_at AT TIME ZONE 'UTC','YYYY-MM-DD HH24:MI:SS.US')` : "o.id::text";

@@ -146,6 +146,7 @@ window.fetch = async (input) => {
     data = envelope([
       {
         ...record,
+        stages: ["Enquiry", "Qualified"].map((stage_id, i) => ({ stage_id, ordinal: i + 1 })),
         organisation_id: CRM.org,
         need_summary: "Synthetic controls upgrade for visual review.",
         next_activity: {
