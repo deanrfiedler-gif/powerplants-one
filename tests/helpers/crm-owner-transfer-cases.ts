@@ -106,7 +106,7 @@ async function blockedBy(pid: number, count = 1) {
     if (
       (
         await rows(
-          "SELECT 1 FROM pg_stat_activity WHERE $1=ANY(pg_blocking_pids(pid))",
+          "WITH RECURSIVE waiting AS (SELECT pid FROM pg_stat_activity WHERE $1=ANY(pg_blocking_pids(pid)) UNION SELECT a.pid FROM pg_stat_activity a JOIN waiting w ON w.pid=ANY(pg_blocking_pids(a.pid))) SELECT DISTINCT pid FROM waiting",
           [pid],
         )
       ).length >= count
@@ -298,8 +298,8 @@ export function ownerTransferCases() {
           object_type: "Ticket",
           object_id: (
             await rows(
-              "SELECT id FROM ppo.tickets WHERE company_id=$1 ORDER BY id LIMIT 1",
-              [CRM.company],
+              "SELECT id FROM ppo.tickets WHERE company_id=$1 AND site_id=$2 ORDER BY id LIMIT 1",
+              [CRM.company, CRM.site],
             )
           )[0].id,
         },
@@ -797,5 +797,65 @@ export function ownerTransferCases() {
     });
     assert.equal((await readEstimate(p, e.id)).version, 2);
     assert.deepEqual(await draftBytes(p, command.id), exact);
+  });
+  test("HV-18: corrupt event and companion evidence cannot conceal a different owner or intermediate version", async () => {
+    const { p, input } = await fixture();
+    const challenges = [
+      [
+        "opportunity_events",
+        "NEW.company_id:='20000000-0000-4000-8000-000000000002';",
+      ],
+      ["opportunity_events", "NEW.from_stage:='Scoping';"],
+      [
+        "opportunity_events",
+        "NEW.record_snapshot:=NEW.record_snapshot || jsonb_build_object('title','SYN fabricated transfer snapshot');",
+      ],
+      [
+        "opportunity_owner_transfers",
+        "NEW.from_owner_id:='30000000-0000-4000-8000-000000000002';",
+      ],
+      [
+        "opportunity_owner_transfers",
+        "NEW.to_owner_id:='30000000-0000-4000-8000-000000000002';",
+      ],
+      [
+        "opportunity_owner_transfers",
+        "NEW.opportunity_version:=NEW.opportunity_version+1;",
+      ],
+      [
+        "opportunity_owner_transfers",
+        "NEW.next_activity_version:=NEW.next_activity_version+1;",
+      ],
+    ];
+    for (const [table, change] of challenges) {
+      const before = await snapshot(),
+        body = await intent(p, input.id);
+      await rows(
+        `CREATE OR REPLACE FUNCTION ppo.corrupt_transfer_test() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN ${change} RETURN NEW; END $$`,
+      );
+      await rows(
+        `CREATE TRIGGER corrupt_transfer_test BEFORE INSERT ON ppo.${table} FOR EACH ROW EXECUTE FUNCTION ppo.corrupt_transfer_test()`,
+      );
+      try {
+        await assert.rejects(transferOpportunityOwner(p, input.id, body));
+      } finally {
+        await rows(`DROP TRIGGER corrupt_transfer_test ON ppo.${table}`);
+      }
+      assert.deepEqual(await snapshot(), before);
+    }
+    const before = await snapshot();
+    await assert.rejects(
+      transaction(async (c) => {
+        await c.query(
+          "UPDATE ppo.opportunities SET owner_id=$1,version=version+1,updated_by=$2,updated_at=clock_timestamp() WHERE id=$3",
+          [receiver, p.actor_id, input.id],
+        );
+        await c.query(
+          "UPDATE ppo.opportunities SET owner_id=$1,version=version+1,updated_by=$2,updated_at=clock_timestamp() WHERE id=$3",
+          [p.actor_id, receiver, input.id],
+        );
+      }),
+    );
+    assert.deepEqual(await snapshot(), before);
   });
 }

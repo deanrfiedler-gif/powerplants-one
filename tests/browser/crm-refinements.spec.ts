@@ -7,9 +7,12 @@ import {
   type Page,
   type Request,
 } from "@playwright/test";
-import { crmCreate, crmQualify, crmBase, crmDiscovery } from "../helpers/crm";
+import { randomUUID, randomBytes, createHash } from "node:crypto";
+import { database, closeDatabase } from "../../src/platform/database";
+import { crmCreate, crmQualify, crmBase, crmDiscovery, crmAction, CRM } from "../helpers/crm";
 import type { DirectoryView } from "../../src/crm/directory";
 test.describe.configure({ timeout: 120000 });
+test.afterAll(closeDatabase);
 async function call(page: Page, path: string, body?: unknown) {
   const r = await page.request.fetch(`/api/v1/${path}`, {
     method: body === undefined ? "GET" : "POST",
@@ -66,6 +69,33 @@ test("lost accepted transfer response recovers the original actor receipt and st
   await dialog.getByRole("button",{name:"Confirm original save outcome"}).click();await expect(dialog).not.toBeVisible();
   expect((await call(page,`operations/${original}`)).record_version).toBe(2);
   const saved=(await call(page,`crm/opportunities/${input.id}`)).items[0];expect(saved.owner_transfers).toHaveLength(1);expect(saved.next_action_state).toBe("Needed");
+});
+test("revoked transfer access clears comparison and discards a late eligible-owner response",async({page},info)=>{
+  const user=randomUUID(),token=randomBytes(32).toString("hex");
+  await database().query("INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1,$2,'PPO-LocalSynthetic',$3,'SYN Transfer browser actor')",[user,CRM.workspace,randomUUID()]);
+  await database().query("INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id) SELECT workspace_id,$1,company_id,capability,scope_type,scope_id,site_id FROM ppo.permission_grants WHERE user_id=$2",[user,CRM.owner]);
+  await database().query("INSERT INTO ppo.sessions(token_hash,workspace_id,actor_id,expires_at) VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')",[createHash("sha256").update(token).digest("hex"),CRM.workspace,user]);
+  await page.context().addCookies([{name:"ppo_local_session",value:token,domain:"127.0.0.1",path:"/",httpOnly:true,sameSite:"Strict"}]);
+  const input={...crmDiscovery(),title:`SYN Private transfer ${randomUUID()}`,owner_id:user,initial_action:crmAction(user)};
+  await call(page,"crm/opportunities",input);await page.goto(`/crm/opportunities/${input.id}`);
+  await page.getByRole("button",{name:"Transfer opportunity owner",exact:true}).click();const dialog=page.getByRole("dialog");
+  await expect(dialog.getByRole("region",{name:"Activity comparison"})).toBeVisible();
+  await dialog.getByLabel("Transfer reason").fill("SYN confidential proposed transfer reason");
+  let release!:()=>void,held=false,intercept=true;const pending=new Promise<void>(r=>{release=r;});
+  const pattern=`**/api/v1/crm/opportunities/${input.id}/handover-options?**`;
+  await page.route(pattern,async route=>{if(!intercept){await route.continue();return;}intercept=false;const response=await route.fetch();expect(response.ok()).toBe(true);held=true;await pending;await route.fulfill({response});});
+  await page.evaluate(()=>window.dispatchEvent(new Event("focus")));await expect.poll(()=>held).toBe(true);
+  await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.read'",[user]);
+  const denied=page.waitForResponse(r=>r.url().includes(`/opportunities/${input.id}/handover-options?`)&&r.status()===404);
+  await page.evaluate(()=>window.dispatchEvent(new Event("focus")));await denied;
+  await expect(dialog.getByLabel("New opportunity owner")).toHaveCount(0);await expect(dialog.getByLabel("Transfer reason")).toHaveCount(0);
+  const late=page.waitForResponse(r=>r.url().includes(`/opportunities/${input.id}/handover-options?`)&&r.status()===200);release();await(await late).finished();
+  await page.evaluate(()=>new Promise<void>(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r()))));
+  await expect(dialog.getByRole("region",{name:"Activity comparison"})).toHaveCount(0);
+  expect(await page.locator("body").innerText()).not.toContain("SYN confidential proposed transfer reason");
+  expect(await page.locator("body").innerText()).not.toContain(input.title);
+  await page.screenshot({path:info.outputPath("crm-transfer-denied-after-late-response.png"),fullPage:false});
+  expect((await page.request.get(`/api/v1/operations/${input.operation_id}`)).status()).toBe(404);
 });
 test("owned Won handover and structured Lost survive reload on desktop and phone", async ({ page }, info) => {
   await call(page,"local-session",{profile:"coordinator"});
