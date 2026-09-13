@@ -18,9 +18,8 @@ after(closeDatabase);
 // These cases therefore exercise the database objects directly. Every write goes
 // through one transaction because the event chain and per-version event triggers are
 // DEFERRABLE INITIALLY DEFERRED and are only meaningful at commit.
-// SA-03 to SA-06 and SA-07 to SA-10 and SA-12 are not here: the movement cases need
-// an OpportunityStageChanged record_snapshot that matches the row exactly, and the
-// rest are browser and conversion concerns belonging to the code cutover.
+// SA-07 to SA-10 and SA-12 are not here: they are browser and conversion concerns
+// belonging to the code cutover.
 
 type Row = Record<string, unknown>;
 type Context = { seed: Row; five: string };
@@ -92,6 +91,7 @@ const event = async (
   to: string,
   version: number,
   note: string | null = "SYN qualified in Leads",
+  snapshot: unknown = null,
 ) => {
   const { seed, five } = ctx;
   const id = randomUUID();
@@ -105,10 +105,28 @@ const event = async (
       reason,need_summary,qualification_note,record_snapshot,created_at,updated_at)
      VALUES($1,$2,$3,$4,1,true,$5,$5,$6,$7,$8,$9,$10,$11,$12,'SYN probe','SYN five-stage need',$13,$14,now(),now())`,
     [id, seed.workspace_id, seed.company_id, opportunity, seed.created_by, randomUUID(), version, type,
-     five, from, to, seed.next_activity_id, note, type === "OpportunityCreated" ? null : {}],
+     five, from, to, seed.next_activity_id, note, snapshot],
   );
   return id;
 };
+
+// One stage movement, written as the application will write it: the row and its event
+// together, next activity unchanged, and a record_snapshot the refinement guard in
+// 0017 accepts - it compares the event's snapshot to ppo.crm_record_snapshot(NEW)
+// field for field.
+const move =
+  (ctx: Context, id: string, from: string, to: string, version: number) =>
+  async (c: Client) => {
+    await c.query(
+      "UPDATE ppo.opportunities SET stage_id=$1,stage_entered_at=clock_timestamp(),version=$2,updated_at=clock_timestamp() WHERE workspace_id=$3 AND id=$4",
+      [to, version, ctx.seed.workspace_id, id],
+    );
+    const [row] = (await c.query(
+      "SELECT ppo.crm_record_snapshot(o) AS snapshot FROM ppo.opportunities o WHERE workspace_id=$1 AND id=$2",
+      [ctx.seed.workspace_id, id],
+    )).rows;
+    await event(c, ctx, id, "OpportunityStageChanged", from, to, version, "SYN qualified in Leads", row.snapshot);
+  };
 
 test("SA-01 the five-stage catalogue exists and the I1 definition is unmodified", async () => {
   await createSession("coordinator");
@@ -147,6 +165,54 @@ test("SA-02/\u00a74.3 a five-stage deal must carry its qualification evidence at
   const ctx = await context();
   const message = await refusal(deal(ctx, "Discovery", null));
   assert.match(String(message), /opportunities_check2/);
+});
+
+test("SA-03 forward one stage is accepted and forward two is refused", async () => {
+  const ctx = await context();
+  const id = (await transaction(deal(ctx, "Discovery"))) as string;
+  assert.equal(await refusal(move(ctx, id, "Discovery", "Quoting", 2)), "Unsupported opportunity progression");
+  assert.equal(await refusal(move(ctx, id, "Discovery", "Scoping", 2)), null);
+  assert.equal((await rows("SELECT stage_id FROM ppo.opportunities WHERE id=$1", [id]))[0].stage_id, "Scoping");
+});
+
+test("SA-04 backward movement to any lower stage is accepted", async () => {
+  const ctx = await context();
+  const id = (await transaction(deal(ctx, "Discovery"))) as string;
+  let version = 1;
+  for (const [from, to] of [["Discovery", "Scoping"], ["Scoping", "Quoting"], ["Quoting", "Negotiation"], ["Negotiation", "Closing"]])
+    assert.equal(await refusal(move(ctx, id, from, to, ++version)), null, `${from} to ${to}`);
+  assert.equal(await refusal(move(ctx, id, "Closing", "Scoping", ++version)), null, "Closing to Scoping");
+  assert.equal((await rows("SELECT stage_id FROM ppo.opportunities WHERE id=$1", [id]))[0].stage_id, "Scoping");
+});
+
+test("SA-05 a stage may be re-entered and history keeps both entries", async () => {
+  const ctx = await context();
+  const id = (await transaction(deal(ctx, "Discovery"))) as string;
+  await transaction(move(ctx, id, "Discovery", "Scoping", 2));
+  await transaction(move(ctx, id, "Scoping", "Discovery", 3));
+  await transaction(move(ctx, id, "Discovery", "Scoping", 4));
+  assert.deepEqual(
+    (await rows("SELECT to_stage FROM ppo.opportunity_events WHERE opportunity_id=$1 ORDER BY opportunity_version", [id]))
+      .map((r) => String(r.to_stage)),
+    ["Discovery", "Scoping", "Discovery", "Scoping"],
+  );
+  const [state] = await rows(
+    `SELECT o.stage_id, o.version, (SELECT max(opportunity_version) FROM ppo.opportunity_events WHERE opportunity_id=o.id) AS latest
+     FROM ppo.opportunities o WHERE o.id=$1`, [id]);
+  assert.equal(state.stage_id, "Scoping");
+  assert.equal(state.version, state.latest);
+});
+
+test("SA-06 recorded events stay immutable", async () => {
+  const ctx = await context();
+  const id = (await transaction(deal(ctx, "Discovery"))) as string;
+  await transaction(move(ctx, id, "Discovery", "Scoping", 2));
+  const digest = async () =>
+    (await rows("SELECT md5(string_agg(to_jsonb(e)::text,'' ORDER BY opportunity_version)) AS hash FROM ppo.opportunity_events e"))[0].hash;
+  const before = await digest();
+  assert.ok(await refusal(async (c) => c.query("UPDATE ppo.opportunity_events SET to_stage='Closing' WHERE opportunity_id=$1", [id])));
+  assert.ok(await refusal(async (c) => c.query("DELETE FROM ppo.opportunity_events WHERE opportunity_id=$1", [id])));
+  assert.equal(await digest(), before);
 });
 
 test("SA-11 Won and Lost are still refused", async () => {
