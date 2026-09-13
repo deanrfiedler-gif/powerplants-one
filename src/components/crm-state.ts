@@ -116,6 +116,7 @@ export function useCrmCommand(
     error,
     status,
     uncertain,
+    hasUnsavedChanges: changed,
     dirty: () => {
       if (!busy && !uncertain) { setStatus("Unsaved"); setChanged(true); }
     },

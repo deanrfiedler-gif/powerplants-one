@@ -503,3 +503,23 @@ test("SA-12 default five-stage board persists Discovery movement and qualificati
   await page.reload();
   expect((await call(page, `crm/opportunities/${input.id}`)).items[0].events).toEqual(saved.events);
 });
+
+
+test("an accepted detail stage save preserves an independently edited next-action proposal for comparison", async ({ page }) => {
+  await call(page, "local-session", { profile: "coordinator" });
+  const input = crmDiscovery(); await call(page, "crm/opportunities", input);
+  await page.goto(`/crm/opportunities/${input.id}`);
+  const purpose = page.getByLabel("Action purpose", { exact: true });
+  await purpose.fill("SYN independently edited follow-up must retain its original version");
+  await page.locator(".crm-stage-track").getByRole("button", { name: "Scoping", exact: true }).click();
+  const dialog = page.getByRole("dialog", { name: "Change deal stage", exact: true });
+  await committed(page, `crm/opportunities/${input.id}/stage`, () => dialog.getByRole("button", { name: "Save stage", exact: true }).click());
+  await expect(dialog).not.toBeVisible();
+  await expect(page.getByRole("heading", { name: "Compare saved version 2 with your proposal", exact: true })).toBeVisible();
+  await expect(purpose).toHaveValue("SYN independently edited follow-up must retain its original version");
+  await expect(page.getByRole("button", { name: "Save next action", exact: true })).toBeDisabled();
+  expect((await call(page, `crm/opportunities/${input.id}`)).items[0].actions).toHaveLength(1);
+  await page.getByRole("button", { name: "Use current version for deliberate retry", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Save next action", exact: true })).toBeEnabled();
+  await expect(purpose).toHaveValue("SYN independently edited follow-up must retain its original version");
+});
