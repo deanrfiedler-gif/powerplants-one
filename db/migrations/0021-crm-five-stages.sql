@@ -35,6 +35,10 @@ ALTER TABLE ppo.crm_stage_definitions ADD CONSTRAINT crm_stage_definitions_ordin
 --    which proposed expressing it in the CHECK; that is not possible in PostgreSQL.
 --    The OpportunityQualified and OpportunityStageChanged branches are untouched:
 --    the first keeps historical rows valid, the second is already general.
+--    Removing the literal loses nothing: check_opportunity_graph() in 0010 already
+--    requires the event at a row's current version to carry that row's stage, so a
+--    created event still cannot record a stage the opportunity does not hold. Proved
+--    by tests/database/crm-five-stages.test.ts.
 DO $$
 DECLARE definition text;
 BEGIN
@@ -118,33 +122,3 @@ ALTER TABLE ppo.opportunities ADD CONSTRAINT opportunities_check2 CHECK (
      AND qualification_note IS NOT NULL
      AND length(btrim(qualification_note)) BETWEEN 1 AND 2000
      AND (primary_person_id IS NOT NULL OR identification_activity_id IS NOT NULL)));
-
--- 6. Bind a recorded stage to the row it describes. Step 3 removed ' AND to_stage =
---    ''Enquiry''' from the OpportunityCreated branch and left nothing in its place:
---    the CHECK cannot name a stage generically, protect_opportunity() guards a
---    different table, and check_opportunity_event_chain() compared only from_stage to
---    the preceding to_stage, which says nothing at version 1. An OpportunityCreated
---    event could therefore record any stage while the row held another, and every
---    later event would chain onto the wrong value consistently.
---    The event at the row's current version must agree with the row. Earlier versions
---    are history and are left alone. This holds for every existing event type, so no
---    stored row is invalidated.
-CREATE OR REPLACE FUNCTION ppo.check_opportunity_event_chain() RETURNS trigger LANGUAGE plpgsql AS $$
-DECLARE o ppo.opportunities; previous ppo.opportunity_events;
-BEGIN
- PERFORM 1 FROM ppo.workspaces WHERE id=NEW.workspace_id FOR UPDATE;
- SELECT * INTO STRICT o FROM ppo.opportunities WHERE workspace_id=NEW.workspace_id AND id=NEW.opportunity_id;
- IF NEW.opportunity_version>o.version OR NEW.pipeline_definition_id<>o.pipeline_definition_id THEN
-  RAISE EXCEPTION 'Event requires an accepted opportunity version and definition' USING ERRCODE='23514';
- END IF;
- IF NEW.opportunity_version=o.version AND NEW.to_stage<>o.stage_id THEN
-  RAISE EXCEPTION 'Recorded stage must match the opportunity it describes' USING ERRCODE='23514';
- END IF;
- IF NEW.opportunity_version>1 THEN
-  SELECT * INTO previous FROM ppo.opportunity_events WHERE workspace_id=NEW.workspace_id AND opportunity_id=NEW.opportunity_id AND opportunity_version=NEW.opportunity_version-1;
-  IF previous.id IS NULL OR NEW.from_stage IS DISTINCT FROM previous.to_stage THEN
-   RAISE EXCEPTION 'Opportunity history requires its exact preceding version and stage' USING ERRCODE='23514';
-  END IF;
- END IF;
- RETURN NULL;
-END $$;
