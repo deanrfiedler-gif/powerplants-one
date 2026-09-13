@@ -371,6 +371,13 @@ export async function convertLead(p: Principal, id: string, value: unknown) {
           "LEAD_SOURCE_CONTEXT",
           "Conversion must retain the lead's resolved organisation, contact and site.",
         );
+      // Discovery requires qualification facts from its first insert. Return the
+      // specific command error before the non-deferrable row CHECK rejects it.
+      const identificationId = command.identification_activity_id;
+      if (!command.primary_person_id && !identificationId)
+        throw new AppError(422, "CRM_IDENTIFICATION_REQUIRED", "Choose an active contact-identification action owned by the lead owner.");
+      if (command.primary_person_id && identificationId)
+        throw new AppError(422, "CRM_IDENTIFICATION_INVALID", "A resolved contact does not need a separate identification action.");
       const o = (
         await c.query(
           `INSERT INTO ppo.opportunities(id,workspace_id,company_id,created_by,updated_by,organisation_id,site_id,primary_person_id,site_unknown_reason,contact_unknown_reason,title,need_summary,source_channel,source_basis,owner_id,pipeline_definition_id,next_activity_id,stage_id,qualification_note,identification_activity_id) VALUES($1,$2,$3,$4,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,'Discovery',$17,$18) RETURNING *`,
@@ -427,16 +434,9 @@ export async function convertLead(p: Principal, id: string, value: unknown) {
         await authoriseActivityInput(c, p, input);
         await insertActivity(c, p, input);
       }
-      const identificationId = command.identification_activity_id;
       if (!command.primary_person_id) {
-        if (!identificationId)
-          throw new AppError(
-            422,
-            "CRM_IDENTIFICATION_REQUIRED",
-            "Choose an active contact-identification action owned by the lead owner.",
-          );
-        const a = await visibleActivity(c, p, identificationId),
-          links = await activityLinks(c, p, identificationId);
+        const a = await visibleActivity(c, p, identificationId!),
+          links = await activityLinks(c, p, identificationId!);
         if (
           a.owner_id !== l.owner_id ||
           !["Open", "InProgress"].includes(a.status) ||
@@ -447,12 +447,7 @@ export async function convertLead(p: Principal, id: string, value: unknown) {
         )
           throw unavailable();
         await authoriseActivityInput(c, p, { ...a, links });
-      } else if (identificationId)
-        throw new AppError(
-          422,
-          "CRM_IDENTIFICATION_INVALID",
-          "A resolved contact does not need a separate identification action.",
-        );
+      }
       await opportunityEvent(c, p, o, command, "OpportunityCreated", null);
       await c.query(
         "INSERT INTO ppo.lead_conversions(id,workspace_id,company_id,lead_id,opportunity_id,created_by,updated_by,operation_id,source_version) VALUES($1,$2,$3,$4,$5,$6,$6,$7,$8)",
