@@ -8,6 +8,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 ERRORS = []
+FRONT_MATTER = re.compile(r'\A---\r?\n(.*?)\r?\n---\r?\n', re.S)
 
 
 def require(condition, message):
@@ -24,14 +25,32 @@ def rows(path):
         return list(csv.DictReader(handle))
 
 
+def grid(path):
+    """Raw rows, so a field count can be checked before names are assigned."""
+    with (ROOT / path).open(newline='', encoding='utf-8') as handle:
+        return list(csv.reader(handle))
+
+
+def front_matter(path):
+    """Scalar front-matter fields of a markdown file; empty when it has none."""
+    match = FRONT_MATTER.match(path.read_text(encoding='utf-8'))
+    if not match:
+        return {}
+    return {k: v.strip() for k, v in re.findall(r'^([A-Za-z_]+):[ \t]*(\S.*?)[ \t]*$', match.group(1), re.M)}
+
+
 def main():
     documents = rows('docs/standards/document-register.csv')
+    table = grid('docs/standards/document-register.csv')
+    for number, row in enumerate(table[1:], start=2):
+        require(len(row) == len(table[0]), f'Register line {number}: {len(row)} fields, expected {len(table[0])}; quote any field containing a comma')
     ids = [r['document_id'] for r in documents]
     paths = [r['canonical_path'] for r in documents]
     require(len(ids) == len(set(ids)), 'Duplicate document identity')
     require(len(paths) == len(set(paths)), 'Duplicate canonical document path')
     require(len(paths) == len({p.casefold() for p in paths}), 'Case-insensitive document path collision')
     require({f'BP-{n:02}' for n in range(1, 10)} <= set(ids), 'Blueprint reservations missing')
+    compared = 0
     for row in documents:
         path = ROOT / row['canonical_path']
         require(path.resolve().is_relative_to(ROOT), f'{row["document_id"]}: path escapes repository')
@@ -39,6 +58,13 @@ def main():
             require(path.is_file(), f'{row["document_id"]}: missing canonical file')
         for field in ['title', 'owner', 'status']:
             require(bool(row[field]), f'{row["document_id"]}: missing {field}')
+        if row['status'] != 'Planned' and path.is_file() and path.suffix == '.md':
+            declared = front_matter(path)
+            if 'revision' in declared:
+                compared += 1
+                require(declared['revision'] == row['revision'], f'{row["document_id"]}: register revision {row["revision"]}, front matter {declared["revision"]}')
+            if 'document_id' in declared:
+                require(declared['document_id'] == row['document_id'], f'{row["document_id"]}: front matter declares document_id {declared["document_id"]}')
     exceptions = rows('docs/standards/naming-exceptions.csv')
     require(len({r['exception_key'] for r in exceptions}) == len(exceptions), 'Duplicate naming exception')
     for row in exceptions:
@@ -68,7 +94,7 @@ def main():
         require(f'SYN-PPO-{prefix}-000001-' in output, f'{prefix}: output naming example missing')
     decisions = {r['decision_id']:r for r in rows('docs/decisions/decision-register.csv')}
     require(decisions['D-003']['status'] == 'Resolved for private prototype', 'Naming decision state inconsistent')
-    print(json.dumps({'status':'failed' if ERRORS else 'passed','document_records':len(documents),'standing_exceptions':len(exceptions),'project_instruction_characters':len(instructions),'errors':ERRORS,'scope':'Naming and documentation consistency only; runtime behaviour is verified separately'}, indent=2))
+    print(json.dumps({'status':'failed' if ERRORS else 'passed','document_records':len(documents),'standing_exceptions':len(exceptions),'front_matter_revisions_compared':compared,'project_instruction_characters':len(instructions),'errors':ERRORS,'scope':'Naming and documentation consistency only; runtime behaviour is verified separately'}, indent=2))
     return bool(ERRORS)
 
 
