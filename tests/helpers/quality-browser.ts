@@ -16,10 +16,7 @@ function isTransientFetchError(error: unknown) {
   return (
     code === "ECONNRESET" ||
     cause?.code === "ECONNRESET" ||
-    (typeof message === "string" &&
-      PLAYWRIGHT_FETCH_SOCKET_HANG_UP.test(message) &&
-      typeof cause?.message === "string" &&
-      /ECONNRESET/i.test(cause.message))
+    (typeof message === "string" && PLAYWRIGHT_FETCH_SOCKET_HANG_UP.test(message))
   );
 }
 
