@@ -1,9 +1,9 @@
 # ADR-0022 — Maintained browser runtime
 
-**Revision:** r01  
-**Status:** Selected for authorised maintenance; verification and publication recorded in issue #160  
-**Date:** 14 September 2026  
-**Owner:** Dean Fiedler  
+**Revision:** r01
+**Status:** Selected for authorised maintenance; verification and publication recorded in issue #160
+**Date:** 14 September 2026
+**Owner:** Dean Fiedler
 **Source commit:** 5855713c107500ee80319952473fa1fcf7783f33
 
 ## Reason and decision
