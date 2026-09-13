@@ -200,6 +200,7 @@ export function NewOpportunity() {
     [owner, setOwner] = useState(p.actor_id),
     [title, setTitle] = useState(""),
     [need, setNeed] = useState(""),
+    [qualification, setQualification] = useState(""),
     [siteReason, setSiteReason] = useState(""),
     [contactReason, setContactReason] = useState(""),
     [channel, setChannel] = useState("Phone"),
@@ -230,7 +231,7 @@ export function NewOpportunity() {
       {available.data && (
         <>
           <p>
-            Pipeline: {available.data.pipeline_label}. Stage: Enquiry. Sales
+            Pipeline: {available.data.pipeline_label}. Stage: Discovery. Sales
             outcome: Open.
           </p>
           <SaveState command={command} />
@@ -251,6 +252,7 @@ export function NewOpportunity() {
                   contact_unknown_reason: person ? null : contactReason,
                   title,
                   need_summary: need,
+                  qualification_note: qualification,
                   source_channel: channel,
                   source_basis: source,
                   owner_id: owner,
@@ -267,6 +269,8 @@ export function NewOpportunity() {
             >
               <fieldset disabled={command.busy || command.uncertain}>
                 <legend>Opportunity and customer context</legend>
+                <Field name="qualification_note" label="Qualification outcome" value={qualification} onChange={setQualification} multiline required maxLength={2000}/>
+                <p>Discovery starts with a qualified customer need. If the contact is unknown, the initial Activity must identify that contact and belong to the opportunity owner.</p>
                 <SelectField
                   name="company_id"
                   label="Visibility company"

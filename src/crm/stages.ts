@@ -1,3 +1,5 @@
+export const ACTIVE_PIPELINE_ID = "c1000000-0000-4000-8000-000000000002";
+export const ACTIVE_PIPELINE_LABEL = "Fictional sales pipeline";
 // The original I1 stages remain valid history. New qualified deals use the
 // separately seeded five-stage definition; no history is relabelled here.
 export const opportunityStages = [

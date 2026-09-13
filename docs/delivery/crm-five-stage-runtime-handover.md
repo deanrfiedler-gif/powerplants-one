@@ -1,6 +1,6 @@
 # CRM five-stage runtime and board recovery handover
 
-**Document ID:** PPO-009-STAGES-HO · **Revision:** r01 · **Date:** 14 September 2026 · **Owner:** Dean Fiedler · **State:** implementation under verification; full increment A remains incomplete.
+**Document ID:** PPO-009-STAGES-HO · **Revision:** r02 · **Date:** 14 September 2026 · **Owner:** Dean Fiedler · **State:** implementation under verification; full increment A remains incomplete.
 
 [Increment A #143](https://github.com/deanrfiedler-gif/powerplants-one/issues/143) · [accepted stage model](../decisions/crm-pipeline-stage-model.md) · [r02 plan and SA cases](crm-five-stage-implementation-plan.md).
 
@@ -16,14 +16,22 @@ Dean authorised repository-audit follow-through. This contribution builds on PR 
 
 ## Verification and limits
 
-Local verification uses pinned Node 24.20.0 and npm 11.19.0. Lint, type checking, 84 unit tests, production build and all three Python documentation checks passed on this contribution; source-specific CI conclusions and original screenshots must be recorded on the PR before merge. The existing report-template filesystem-tracing warning is retained. PostgreSQL is unavailable locally and the pinned Chromium download failed with network 502/timeouts; database and browser cases therefore require disposable CI.
+Local verification uses pinned Node 24.20.0 and npm 11.19.0. Lint, type checking, 85 unit tests, production build and all three Python documentation checks passed on this contribution; source-specific CI conclusions and original screenshots must be recorded on the PR before merge. The existing report-template filesystem-tracing warning is retained. PostgreSQL is unavailable locally and the pinned Chromium download failed with network 502/timeouts; database and browser cases therefore require disposable CI.
 
 The new real-database case exercises six server moves, including Closing → Scoping and re-entry, original-receipt repetition, exact event/cache timestamp equality, retained qualification/owner/action, skipped/cross-pipeline refusal, stale version refusal and denied actor. The original direct-SQL cases remain. SA-07/08 browser cases perform a real concurrent edit or accept the original server command before dropping its response; they assert resulting events and command counts. SA-09 uses actual Tab/Enter/select-arrow input on desktop and 390 px. The two native-drag cases are explicitly desktop-only; they are skipped on phone rather than counted as phone drag proof. Component screenshots are required at desktop/390/320 px before merge.
 
 No full SA, PT or business-acceptance status is promoted by authored tests or this handover.
 
-## Remaining increment A cutover
+## Discovery creation and conversion cutover
 
-Creation and Leads conversion still use the original I1 path. The board's default pipeline remains I1. The final cutover must switch these together under the accepted new database/storage epoch and revise DEMO-02; relabelling unqualified Enquiry history is forbidden. Inspection also found `ppo.check_conversion_operation()` in migration 0018 pins a converted deal to Qualified/version 2 and two original events. A new additive migration must preserve that historical branch while requiring an atomic Discovery/version 1 creation carrying qualification evidence for the new pipeline. Merely changing the Leads service literal would fail this invariant.
+New UI opportunities require qualification evidence at Discovery. Unknown contacts require the initial identification Activity to belong to the opportunity owner. Converted Leads create exactly one Discovery/version-1 opportunity event atomically with their original conversion record and Lead event; original Activity identities, context checks and operation recovery remain. Leads retain their own New/Contacting/Nurturing/Disqualified/Converted status model; there is no invented Leads “Qualified” status.
 
-SA-10 and the persisted five-column SA-12 proof remain cutover work. Won/Lost (#144), Projects handover and owner transfer (#145) remain separate contracts; no authority or live integration is introduced by this contribution.
+Additive migration 0022 replaces the conversion guard with catalogue-specific branches: the retained I1 Qualified/version-2, two-event shape remains valid; the new pipeline requires Discovery/version 1 with qualification facts. A deferred evidence guard retains qualification facts, requires an owned active identification action for an unknown contact at creation/movement/contact change, and binds stage-entry time to its exact event. No row, original receipt or grant is rewritten. Registry assertion and demo-upgrade changes were reviewed against these additive constraints; 0022 adds no seed and does not reset or activate a demo epoch.
+
+The board defaults to the five-stage pipeline and offers a separate selector for retained I1 records. An explicit `?pipeline=I1` route preserves the original regression/restart journey. API callers omitting the pipeline filter retain the I1 default for compatibility; the current UI sends its selected pipeline explicitly. Legacy create-command canonical payloads omit the new qualification field, preserving recovery of older accepted operations.
+
+New database coverage checks qualified Discovery creation and repeat receipt, all six movements and exact timestamps, unknown-contact creation and refusal of direct qualification replacement. The persisted browser case checks five columns, keyboard save/focus return, original qualification and event history after reload, with desktop/390/320 screenshots. Leads tests assert Discovery/version 1 and the one-event conversion. Existing I1 cases remain separately identified; these checks are not an owner acceptance claim.
+
+[DEMO-02 r03](private-prototype-demo.md) now specifies the new isolated database/storage epoch and a 2/1/1/1/1 synthetic stage distribution. This is a preparation recipe; no new hosted epoch has been activated and no actual owner demonstration has run. SA-10/12 and the complete increment A decision remain under verification until the original CI evidence and epoch demonstration are recorded.
+
+Won/Lost (#144), Projects handover and owner transfer (#145) remain separate contracts. No authority or live integration is introduced.

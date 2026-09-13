@@ -135,6 +135,7 @@ window.fetch = async (input) => {
         has_more: false,
         count_basis: "ReturnedPage",
       },
+      pipelines: [{ id: "c1000000-0000-4000-8000-000000000002", display_name: "Fictional sales pipeline" }],
       stages: STAGES.map((stage_id, i) => ({
         stage_id,
         ordinal: i + 1,
@@ -157,7 +158,8 @@ window.fetch = async (input) => {
     data = envelope([
       {
         ...record,
-        stages: STAGES.map((stage_id, i) => ({ stage_id, ordinal: i + 1 })),
+        pipelines: [{ id: "c1000000-0000-4000-8000-000000000002", display_name: "Fictional sales pipeline" }],
+      stages: STAGES.map((stage_id, i) => ({ stage_id, ordinal: i + 1 })),
         organisation_id: CRM.org,
         need_summary: "Synthetic controls upgrade for visual review.",
         next_activity: {

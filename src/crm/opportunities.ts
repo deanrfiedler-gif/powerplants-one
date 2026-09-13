@@ -1,3 +1,4 @@
+import { ACTIVE_PIPELINE_ID } from "./stages";
 import { opportunityReceiptActions } from "./receipt-authority";
 import { randomUUID } from "node:crypto";
 import type { PoolClient } from "pg";
@@ -52,7 +53,7 @@ export async function opportunityEvent(
   from: string | null,
 ) {
   await c.query(
-    `INSERT INTO ppo.opportunity_events(id,workspace_id,company_id,opportunity_id,created_by,updated_by,operation_id,opportunity_version,event_type,pipeline_definition_id,from_stage,to_stage,next_activity_id,identification_activity_id,reason,need_summary,qualification_note) VALUES($1,$2,$3,$4,$5,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)`,
+    `INSERT INTO ppo.opportunity_events(id,workspace_id,company_id,opportunity_id,created_by,updated_by,operation_id,opportunity_version,event_type,pipeline_definition_id,from_stage,to_stage,next_activity_id,identification_activity_id,reason,need_summary,qualification_note,created_at) VALUES($1,$2,$3,$4,$5,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,CASE WHEN $8 IN ('OpportunityCreated','OpportunityQualified') THEN (SELECT stage_entered_at FROM ppo.opportunities WHERE workspace_id=$2 AND id=$4) ELSE clock_timestamp() END)`,
     [
       randomUUID(),
       p.workspace_id,
@@ -110,7 +111,7 @@ export async function createOpportunity(p: Principal, value: unknown) {
     async (c) => {
       const o = (
         await c.query(
-          `INSERT INTO ppo.opportunities(id,workspace_id,company_id,created_by,updated_by,organisation_id,site_id,primary_person_id,site_unknown_reason,contact_unknown_reason,title,need_summary,source_channel,source_basis,owner_id,pipeline_definition_id,next_activity_id) VALUES($1,$2,$3,$4,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16) RETURNING *,stage_id AS state`,
+          `INSERT INTO ppo.opportunities(id,workspace_id,company_id,created_by,updated_by,organisation_id,site_id,primary_person_id,site_unknown_reason,contact_unknown_reason,title,need_summary,source_channel,source_basis,owner_id,pipeline_definition_id,next_activity_id,stage_id,qualification_note,identification_activity_id) VALUES($1,$2,$3,$4,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,(SELECT stage_id FROM ppo.crm_stage_definitions WHERE workspace_id=$2 AND pipeline_definition_id=$15 ORDER BY ordinal LIMIT 1),$17,$18) RETURNING *,stage_id AS state`,
           [
             command.id,
             p.workspace_id,
@@ -128,12 +129,15 @@ export async function createOpportunity(p: Principal, value: unknown) {
             command.owner_id,
             command.pipeline_definition_id,
             command.initial_action.id,
+            command.qualification_note,
+            command.pipeline_definition_id === ACTIVE_PIPELINE_ID && !command.primary_person_id ? command.initial_action.id : null,
           ],
         )
       ).rows[0];
       const initial = actionInput(command, command.initial_action);
       await authoriseActivityInput(c, p, initial);
       await insertActivity(c, p, initial);
+      if (o.identification_activity_id) await linkedActiveAction(c, p, o, o.identification_activity_id, true);
       await opportunityEvent(c, p, o, command, "OpportunityCreated", null);
       return {
         ...o,

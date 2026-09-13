@@ -1,3 +1,4 @@
+import { ACTIVE_PIPELINE_ID, ACTIVE_PIPELINE_LABEL } from "./stages";
 import type { StageDefinition } from "./stages";
 import { readLead } from "./leads/reads";
 import { leadsAvailable } from "./leads/context";
@@ -263,7 +264,8 @@ export async function opportunityOptions(p: Principal, input: unknown = {}) {
       rows.slice(0, pg.limit),
       rows.length > pg.limit ? pg.cursor(rows[pg.limit - 1].id) : null,
     ),
-    pipeline_definition_id: PIPELINE_ID,
-    pipeline_label: "Fictional sales enquiry — I1",
+    pipeline_definition_id: ACTIVE_PIPELINE_ID,
+    pipeline_label: ACTIVE_PIPELINE_LABEL,
+    entry_stage: "Discovery",
   };
 }

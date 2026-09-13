@@ -106,7 +106,7 @@ const event = async (
     `INSERT INTO ppo.opportunity_events(id,workspace_id,company_id,opportunity_id,version,synthetic,created_by,updated_by,
       operation_id,opportunity_version,event_type,pipeline_definition_id,from_stage,to_stage,next_activity_id,
       reason,need_summary,qualification_note,record_snapshot,created_at,updated_at)
-     VALUES($1,$2,$3,$4,1,true,$5,$5,$6,$7,$8,$9,$10,$11,$12,'SYN probe','SYN five-stage need',$13,$14,now(),now())`,
+     VALUES($1,$2,$3,$4,1,true,$5,$5,$6,$7,$8,$9,$10,$11,$12,'SYN probe','SYN five-stage need',$13,$14,(SELECT stage_entered_at FROM ppo.opportunities WHERE workspace_id=$2 AND id=$4),now())`,
     [id, seed.workspace_id, seed.company_id, opportunity, seed.created_by, randomUUID(), version, type,
      five, from, to, seed.next_activity_id, note, snapshot],
   );

@@ -209,7 +209,7 @@ export async function changeDealStage(
         ? command.identification_activity_id
         : old.identification_activity_id;
       if (carriesQualification(command.stage_id)) {
-        if (identification)
+        if (identification && (legacy || !old.primary_person_id))
           await linkedActiveAction(c, p, old, identification, true);
         if (!old.primary_person_id && !identification)
           throw new AppError(

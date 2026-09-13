@@ -1,3 +1,5 @@
+import { parseCreate } from "../../src/crm/validation";
+import { crmCreate, crmDiscovery } from "../helpers/crm";
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
@@ -129,4 +131,16 @@ test("five-stage moves cannot replace or invent their qualification evidence", (
     ])
       assert.throws(() => parseDealStage(CRM.org, { ...command, ...addition }));
   }
+});
+
+
+test("Discovery requires qualification at entry without changing legacy receipt payloads", () => {
+  assert.equal(Object.hasOwn(parseCreate(crmCreate()), "qualification_note"), false);
+  const input = crmDiscovery();
+  assert.equal(parseCreate(input).qualification_note, input.qualification_note);
+  assert.throws(() => parseCreate({ ...input, qualification_note: "" }));
+  assert.throws(() => parseCreate({ ...input, stage_id: "Closing" }));
+  const unknown = { ...input, primary_person_id: null, contact_unknown_reason: "SYN awaiting introduction", initial_action: { ...input.initial_action, owner_id: "30000000-0000-4000-8000-000000000002" } };
+  assert.throws(() => parseCreate(unknown));
+  assert.equal(parseCreate({ ...unknown, initial_action: input.initial_action }).primary_person_id, null);
 });
