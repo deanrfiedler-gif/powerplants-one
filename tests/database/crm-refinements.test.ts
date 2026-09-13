@@ -1,3 +1,4 @@
+import { ownerTransferCases } from "../helpers/crm-owner-transfer-cases";
 import assert from "node:assert/strict";
 import { beforeEach, after, test } from "node:test";
 import {
@@ -347,3 +348,5 @@ test("five-stage database guard refuses rewritten qualification even with a matc
   const after = await readOpportunity(p, input.id);
   assert.equal(after.version, before.version); assert.deepEqual(after.events, before.events);
 });
+
+ownerTransferCases();

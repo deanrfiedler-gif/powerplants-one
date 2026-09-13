@@ -14,8 +14,8 @@ import {
   narrative,
   invalid,
 } from "../shared/validation";
-import { opportunityAuthority, type Opportunity } from "./context";
-import { opportunityReceiptActions } from "./receipt-authority";
+import { type Opportunity } from "./context";
+import { opportunityCommandAuthority } from "./receipt-authority";
 import { ACTIVE_PIPELINE_ID } from "./stages";
 
 export const lostReasons = [
@@ -69,9 +69,7 @@ export async function recordOpportunityOutcome(
     command,
     "RecordOpportunityOutcome",
     async (c) => {
-      const o = await opportunityAuthority(c, p, id, "crm.opportunity.edit");
-      await opportunityReceiptActions(c, p, id, command.operation_id);
-      return o;
+return opportunityCommandAuthority(c,p,id,command.operation_id,"RecordOpportunityOutcome");
     },
     async (c, old) => {
       if (old.version !== command.expected_version)

@@ -97,7 +97,12 @@ export async function readOpportunity(p: Principal, id: string) {
     "SELECT h.owner_id,u.display_name AS owner_name,h.opportunity_version,h.created_at,h.status FROM ppo.opportunity_handovers_due h JOIN ppo.users u ON (u.workspace_id,u.id)=(h.workspace_id,h.owner_id) WHERE h.workspace_id=$1 AND h.opportunity_id=$2",
     [p.workspace_id,id],
   )).rows[0] ?? null : null;
+  const transfersAvailable = !!(await c.query("SELECT to_regclass('ppo.opportunity_origins') AS relation")).rows[0].relation;
+  const original_owner = transfersAvailable ? (await c.query<{original_owner_id:string;owner_name:string;source_version:number;captured_at:Date;provenance:string}>("SELECT x.original_owner_id,u.display_name AS owner_name,x.source_version,x.captured_at,x.provenance FROM ppo.opportunity_origins x JOIN ppo.users u ON (u.workspace_id,u.id)=(x.workspace_id,x.original_owner_id) WHERE x.workspace_id=$1 AND x.opportunity_id=$2",[p.workspace_id,id])).rows[0] ?? null : null;
+  const owner_transfers = transfersAvailable ? (await c.query<{event_id:string;opportunity_version:number;from_owner_id:string;to_owner_id:string;from_owner_name:string;to_owner_name:string}>("SELECT x.event_id,x.opportunity_version,x.from_owner_id,x.to_owner_id,f.display_name AS from_owner_name,t.display_name AS to_owner_name FROM ppo.opportunity_owner_transfers x JOIN ppo.users f ON (f.workspace_id,f.id)=(x.workspace_id,x.from_owner_id) JOIN ppo.users t ON (t.workspace_id,t.id)=(x.workspace_id,x.to_owner_id) WHERE x.workspace_id=$1 AND x.opportunity_id=$2 ORDER BY x.opportunity_version",[p.workspace_id,id])).rows : [];
   return {
+    original_owner, owner_transfers,
+    can_transfer: transfersAvailable && can_edit && !!designated && (!o.identification_activity_id || actions.some(a=>a.id===o.identification_activity_id)) && await hasPermission(c,p,"crm.opportunity.transfer.own",o.company_id,o.site_id??undefined),
     handover_due,
     can_record_outcome: outcomesAvailable && can_edit && o.close_outcome === "Open" && o.pipeline_definition_id === ACTIVE_PIPELINE_ID,
     stages,

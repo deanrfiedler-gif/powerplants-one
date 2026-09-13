@@ -19,6 +19,54 @@ async function call(page: Page, path: string, body?: unknown) {
   expect(r.ok(), await r.text()).toBe(true);
   return r.json();
 }
+test("owner transfer compares separate activities and persists original/current ownership on desktop and phone",async({page},info)=>{
+  await call(page,"local-session",{profile:"coordinator"});
+  const input={...crmDiscovery(),title:`SYN Transfer journey ${info.project.name}`};input.initial_action.summary="SYN Long separate activity comparison "+"scopeword".repeat(180);await call(page,"crm/opportunities",input);
+  await page.goto(`/crm/opportunities/${input.id}`);
+  await keyActivate(page,page.getByRole("button",{name:"Transfer opportunity owner",exact:true}));
+  const dialog=page.getByRole("dialog");
+  await expect(dialog.getByRole("region",{name:"Activity comparison"})).toContainText("SYN Coordinator");
+  await keySelect(page,dialog.getByLabel("New opportunity owner"),"30000000-0000-4000-8000-000000000015");
+  await keyType(page,dialog.getByLabel("Transfer reason"),"SYN "+"r".repeat(996));
+  await page.screenshot({path:info.outputPath("crm-transfer-comparison.png"),fullPage:false});
+  if(info.project.use.isMobile){await page.setViewportSize({width:320,height:844});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:info.outputPath("crm-transfer-comparison-320.png"),fullPage:false});}
+  await committed(page,`crm/opportunities/${input.id}/transfer-owner`,()=>keyActivate(page,dialog.getByRole("button",{name:"Confirm owner transfer",exact:true})));
+  await expect(dialog).not.toBeVisible();await page.reload();
+  await expect(page.getByText("Original opportunity owner: SYN Coordinator · Current owner: SYN Sales receiver",{exact:true})).toBeVisible();
+  await expect(page.getByRole("button",{name:"Transfer opportunity owner",exact:true})).toHaveCount(0);
+  const saved=(await call(page,`crm/opportunities/${input.id}`)).items[0];expect(saved.owner_id).toBe("30000000-0000-4000-8000-000000000015");expect(saved.actions[0].owner_id).toBe(input.owner_id);expect(saved.owner_transfers).toHaveLength(1);expect(saved.events.at(-1).reason).toHaveLength(1000);
+  await page.screenshot({path:info.outputPath("crm-transfer-persisted.png"),fullPage:false});
+  await call(page,"local-session",{profile:"crm-receiver"});await page.reload();
+  await expect(page.getByRole("button",{name:"Transfer opportunity owner",exact:true})).toHaveCount(0);
+  await expect(page.getByRole("button",{name:"Edit deal information",exact:true})).toBeVisible();
+  await page.goto("/crm/opportunities");await page.getByLabel("Search opportunities",{exact:true}).fill(input.title);
+  await expect(page.locator(`[data-opportunity-id="${input.id}"]`)).toBeVisible();
+  await page.getByRole("button",{name:"List",exact:true}).click();await expect(page.getByRole("link",{name:input.title,exact:true})).toBeVisible();
+});
+test("lost accepted transfer response recovers the original actor receipt and stale activity comparison requires review",async({page},info)=>{
+  await call(page,"local-session",{profile:"coordinator"});
+  const input=crmDiscovery();await call(page,"crm/opportunities",input);await page.goto(`/crm/opportunities/${input.id}`);
+  await page.getByRole("button",{name:"Transfer opportunity owner",exact:true}).click();const dialog=page.getByRole("dialog");
+  await dialog.getByLabel("New opportunity owner").selectOption("30000000-0000-4000-8000-000000000015");await dialog.getByLabel("Transfer reason").fill("SYN Deliberate transfer after reviewing separate activity completion");
+  await call(page,`activities/${input.initial_action.id}/complete`,{...crmBase(),expected_version:1,outcome:"SYN Completed while comparison remained open"});
+  await dialog.getByRole("button",{name:"Confirm owner transfer",exact:true}).click();
+  await expect(dialog.getByText("An activity changed. Reload and review its owner and outcome before transferring.",{exact:true})).toBeVisible();
+  expect((await call(page,`crm/opportunities/${input.id}`)).items[0].version).toBe(1);
+  await page.screenshot({path:info.outputPath("crm-transfer-conflict.png"),fullPage:false});
+  await dialog.getByRole("button",{name:"Load current saved version for comparison"}).click();
+  await expect(dialog.getByRole("region",{name:"Activity comparison"})).toContainText("Completed");
+  let original:string|undefined;
+  await page.route(`**/api/v1/crm/opportunities/${input.id}/transfer-owner`,async route=>{
+    original=route.request().postDataJSON().operation_id;const response=await route.fetch();expect(response.ok(),await response.text()).toBe(true);await route.abort("connectionfailed");
+  },{times:1});
+  await dialog.getByRole("button",{name:"Confirm owner transfer",exact:true}).click();
+  await expect(dialog.getByRole("button",{name:"Confirm original save outcome"})).toBeVisible();
+  await expect(dialog.getByLabel("New opportunity owner")).toBeDisabled();
+  await page.screenshot({path:info.outputPath("crm-transfer-unknown.png"),fullPage:false});
+  await dialog.getByRole("button",{name:"Confirm original save outcome"}).click();await expect(dialog).not.toBeVisible();
+  expect((await call(page,`operations/${original}`)).record_version).toBe(2);
+  const saved=(await call(page,`crm/opportunities/${input.id}`)).items[0];expect(saved.owner_transfers).toHaveLength(1);expect(saved.next_action_state).toBe("Needed");
+});
 test("owned Won handover and structured Lost survive reload on desktop and phone", async ({ page }, info) => {
   await call(page,"local-session",{profile:"coordinator"});
   for (const outcome of ["Won","Lost"]) {

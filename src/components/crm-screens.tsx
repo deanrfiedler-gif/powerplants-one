@@ -469,13 +469,15 @@ function OpportunityContent({
           {o.stages.map(({ stage_id: stage }) => <button key={stage} className={o.stage_id === stage ? "current" : ""} aria-current={o.stage_id === stage ? "step" : undefined} disabled={!o.can_edit || o.close_outcome !== "Open" || command.busy || command.uncertain} onClick={() => {setTargetStage(stage);setDialog("stage");}}>{stage}{o.stage_id === stage && <span>Current stage</span>}</button>)}
         </div>
       </div>
+      {o.original_owner && <p className="source-stamp">Original opportunity owner: {o.original_owner.owner_name} · Current owner: {o.owner_name}</p>}
+      {o.can_transfer && <p><button className="secondary" disabled={command.busy||command.uncertain} onClick={()=>setDialog("transfer")}>Transfer opportunity owner</button></p>}
       {o.can_record_outcome && <p><button className="secondary" disabled={command.busy || command.uncertain} onClick={()=>setDialog("outcome")}>Record sales outcome</button></p>}
       {o.handover_due && <section className="crm-panel" aria-label="Handover due"><h2>Handover due</h2><p>Accountable owner: {o.handover_due.owner_name}. Receiving route and owner still need confirmation.</p><p>Won at opportunity version {o.handover_due.opportunity_version}. Existing activities retain their owners.</p></section>}
       {dialog && <DealDialog id={o.id} mode={dialog} targetStage={targetStage} onClose={() => {setDialog(null);setTargetStage(undefined);}} onSaved={(receipt, _old, stage) => {
         setDialog(null);setTargetStage(undefined);
         // Our accepted stage command can advance a clean sibling form. Existing
         // edits retain their original version and the deliberate comparison.
-        if((stage || receipt.state === "Won" || receipt.state === "Lost") && !command.hasUnsavedChanges && !command.busy && !command.uncertain)
+        if((stage || dialog === "transfer" || receipt.state === "Won" || receipt.state === "Lost") && !command.hasUnsavedChanges && !command.busy && !command.uncertain)
           setVersion(receipt.record_version);
         reload();
       }}/>}
@@ -716,6 +718,7 @@ function OpportunityContent({
                     : e.event_type === "OpportunityScopeEdited" ? "Requirements and scope updated"
                     : e.event_type === "OpportunityStageChanged" ? "Deal stage changed"
                     : e.event_type === "OpportunityOutcomeRecorded" ? `Sales outcome recorded: ${e.close_outcome}`
+                    : e.event_type === "OpportunityOwnerTransferred" ? "Opportunity owner transferred"
                     : "Next action planned"}{" "}
                 · Version {e.opportunity_version}
               </strong>
@@ -723,6 +726,7 @@ function OpportunityContent({
                 {e.from_stage ? `${e.from_stage} → ` : ""}
                 {e.to_stage} · {e.reason}
               </p>
+              {o.owner_transfers.filter(t=>t.event_id===e.id).map(t=><p key={t.event_id}>{t.from_owner_name} → {t.to_owner_name}. Activities retained their owners.</p>)}
               {e.lost_reason && <p>Lost reason: {e.lost_reason}</p>}
               {e.acceptance_evidence && <p className="crm-narrative">Acceptance evidence: {e.acceptance_evidence}</p>}
               <details>

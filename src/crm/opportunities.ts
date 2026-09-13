@@ -1,5 +1,5 @@
 import { ACTIVE_PIPELINE_ID } from "./stages";
-import { opportunityReceiptActions } from "./receipt-authority";
+import { opportunityReceiptActions, acceptedOpportunityOriginal, opportunityCommandAuthority } from "./receipt-authority";
 import { randomUUID } from "node:crypto";
 import type { PoolClient } from "pg";
 import type { Principal } from "../platform/identity";
@@ -16,7 +16,6 @@ import {
   visibleOpportunity,
   relationshipContext,
   eligibleOpportunityOwner,
-  opportunityAuthority,
   type OpportunityContext,
 } from "./context";
 import {
@@ -89,6 +88,7 @@ export async function createOpportunity(p: Principal, value: unknown) {
     command,
     "CreateOpportunity",
     async (c) => {
+      if(await acceptedOpportunityOriginal(c,p,command.id,command.operation_id,"CreateOpportunity")) return;
       await relationshipContext(c, p, command, "crm.opportunity.create");
       await eligibleOpportunityOwner(c, p, command);
       // The new target does not exist yet; validate its existing context first.
@@ -201,9 +201,7 @@ export async function qualifyOpportunity(
     command,
     "RecordQualificationAndProgress",
     async (c) => {
-      const o = await opportunityAuthority(c, p, id, "crm.opportunity.edit");
-      await opportunityReceiptActions(c, p, id, command.operation_id);
-      return o;
+return opportunityCommandAuthority(c,p,id,command.operation_id,"RecordQualificationAndProgress");
     },
     async (c, o) => {
       expected(o, command.expected_version);
@@ -269,9 +267,7 @@ export async function planOpportunityAction(
     command,
     "PlanOpportunityAction",
     async (c) => {
-      const o = await opportunityAuthority(c, p, id, "crm.opportunity.edit");
-      await opportunityReceiptActions(c, p, id, command.operation_id);
-      return o;
+return opportunityCommandAuthority(c,p,id,command.operation_id,"PlanOpportunityAction");
     },
     async (c, o) => {
       expected(o, command.expected_version);

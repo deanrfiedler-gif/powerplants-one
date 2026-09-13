@@ -36,6 +36,7 @@ export type Capability =
   | "crm.opportunity.read"
   | "crm.opportunity.create"
   | "crm.opportunity.edit"
+  | "crm.opportunity.transfer.own"
   | "field.read.own"
   | "field.start.own"
   | "field.capture.own"

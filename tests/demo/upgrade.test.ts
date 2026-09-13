@@ -67,9 +67,16 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   await assert.rejects(upgradeExistingDemo(name, tenant, false), /Missing baseline/);
   assert.deepEqual(await ledger(), oldLedger);
   await upgradeExistingDemo(name, tenant, true);
-  assert.deepEqual(await Promise.all(tables.map(rows)), before);
+  const upgradedRows=await Promise.all(tables.map(rows));
+  const addedUsers=upgradedRows[1].filter(r=>!before[1].some(old=>old.row.id===r.row.id));
+  assert.deepEqual(addedUsers.map(r=>[r.row.id,r.row.subject_id,r.row.display_name]),[["30000000-0000-4000-8000-000000000015","crm-receiver","SYN Sales receiver"]]);
+  assert.deepEqual(upgradedRows.map((rs,i)=>i===1?rs.filter(r=>r.row.id!=="30000000-0000-4000-8000-000000000015"):rs),before);
   const reloaded = await readOpportunity(actor, proposal.id);
-  assert.deepEqual({ ...reloaded, observed_at: null }, { ...saved, observed_at: null });
+  assert.equal(reloaded.original_owner?.original_owner_id,proposal.owner_id);
+  assert.equal(reloaded.original_owner?.source_version,saved.version);
+  assert.equal(reloaded.original_owner?.provenance,"UpgradeCapture");
+  assert.ok(reloaded.original_owner?.captured_at);
+  assert.deepEqual({ ...reloaded, original_owner:null, observed_at: null }, { ...saved, observed_at: null });
   assert.equal((await readInvitedSession(database(), token, tenant)).actor_id, actor.actor_id);
   const grants = await rows("ppo.permission_grants");
   for (const old of oldGrants) assert.ok(grants.some(g => JSON.stringify(g) === JSON.stringify(old)));
@@ -123,8 +130,8 @@ test("a baseline executed from Windows CRLF SQL upgrades without rewriting histo
     demoLedger.find(r => r.row.version === 2)?.row.sha256,
     digest(await readFile(new URL("../../db/demo/0002-gmail-connection.sql", import.meta.url), "utf8")),
   );
-  // 0018 Leads, 0019 Projects, 0020 Engineering, 0021 stages, 0022 Discovery conversion and 0023 owned outcomes.
-  assert.equal(final.length, baseline.length + 6);
+  // 0018 Leads, 0019 Projects, 0020 Engineering, 0021 stages, 0022 Discovery conversion and 0023 owned outcomes and 0024 owner transfer.
+  assert.equal(final.length, baseline.length + 7);
   assert.ok((await db.query("SELECT to_regclass('ppo.projects') AS relation")).rows[0].relation);
 });
 
