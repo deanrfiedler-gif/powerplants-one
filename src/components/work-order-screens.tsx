@@ -1439,6 +1439,18 @@ function ScopeView({ r }: { r: Scope }) {
     </>
   );
 }
+// Opening a saved work order does not need the asset picker for its closed
+// scope editor. After first opening, keep it mounted so closing the disclosure
+// cannot discard an unsaved proposal or an uncertain original command.
+function ScopeEditor({ w, r, onSaved }: { w: Order; r: Scope | null; onSaved: () => void }) {
+  const [opened, setOpened] = useState(!r);
+  return (
+    <details className="wo-edit" open={!r} onToggle={event => { if (event.currentTarget.open) setOpened(true); }}>
+      <summary>{r?.approved_at ? "Create successor scope" : "Edit scope draft"}</summary>
+      {(opened || !r) && <ScopeForm key={r?.id ?? "first"} w={w} r={r} successor={!!r?.approved_at} onSaved={onSaved} />}
+    </details>
+  );
+}
 export function WorkOrderDetail({ id }: { id: string }) {
   const resource = useResource<Envelope<Order>>(`service/work-orders/${id}`),
     cmd = useCommand();
@@ -1553,20 +1565,7 @@ export function WorkOrderDetail({ id }: { id: string }) {
               <p>No scope is saved yet. The draft remains owned and visible.</p>
             )}
             {w.actions.can_edit && (
-              <details className="wo-edit" open={!r}>
-                <summary>
-                  {r?.approved_at
-                    ? "Create successor scope"
-                    : "Edit scope draft"}
-                </summary>
-                <ScopeForm
-                  key={r?.id ?? "first"}
-                  w={w}
-                  r={r}
-                  successor={!!r?.approved_at}
-                  onSaved={resource.reload}
-                />
-              </details>
+              <ScopeEditor w={w} r={r} onSaved={resource.reload} />
             )}
           </section>
           {r && (
