@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { discoveryDefinition } from "../estimating/discovery-definition";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { DiscoveryInput } from "../estimating/discovery";
 import type { DiscoveryRevision } from "../estimating/discovery-workspace-context";
@@ -401,6 +401,7 @@ function ProposalEditor({
   command,
   detail,
   editor,
+  onScopeChange,
   onCancel,
 }: {
   initialOptions: FormOptions;
@@ -408,6 +409,7 @@ function ProposalEditor({
   command: Command;
   detail?: Detail;
   editor?: Editor;
+  onScopeChange?: (scopeMode: string, siteId: string | null) => void;
   onCancel?: () => void;
 }) {
   const initial = detail?.options.find((x) => x.option.id === editor?.optionId),
@@ -454,6 +456,9 @@ function ProposalEditor({
     [previewError, setPreviewError] = useState<unknown>(null);
   const copied = editor?.kind === "CopyDiscovery",
     scope = copied ? base!.revision.input!.scope : draft.scope;
+  useEffect(() => {
+    onScopeChange?.(scope.mode, scope.site_id);
+  }, [onScopeChange, scope.mode, scope.site_id]);
   const options = useCrmResource<FormOptions>(
     `estimating/workspaces/form-options?opportunity_id=${opportunityId}&scope_mode=${scope.mode}${scope.site_id ? `&site_id=${scope.site_id}` : ""}${detail ? `&workspace_id=${detail.workspace.id}` : ""}`,
     true,
@@ -968,6 +973,15 @@ export function DiscoveryDetail({ id }: { id: string }) {
                         command={command}
                         detail={d}
                         editor={editor}
+                        onScopeChange={(scopeMode, siteId) =>
+                          setEditor((current) =>
+                            !current ||
+                            (current.scopeMode === scopeMode &&
+                              current.siteId === siteId)
+                              ? current
+                              : { ...current, scopeMode, siteId },
+                          )
+                        }
                         onCancel={() => setEditor(null)}
                       />
                     )}
