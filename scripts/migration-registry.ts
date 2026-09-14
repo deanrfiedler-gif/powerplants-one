@@ -27,6 +27,7 @@ export const migrationFiles = [
   "0023-crm-owned-outcomes.sql",
   "0024-crm-owner-transfer.sql",
   "0025-estimating-line-taxonomy.sql",
+  "0026-estimating-discovery.sql",
 ] as const;
 export const seedFiles = [
   [2, "seed.sql"],
@@ -48,7 +49,7 @@ export const seedFiles = [
   [21, "seed-crm-five-stages.sql"],
   [24, "seed-crm-owner-transfer.sql"],
 ] as const;
-export const latestMigrationVersion = 25;
+export const latestMigrationVersion = 26;
 
 // Separate hosted-only track (ADR-0021): schema that only exists where real identity does.
 // Version 1 is the issued identity baseline and is never re-applied or rewritten.
