@@ -1,5 +1,5 @@
 import type { Principal } from "../platform/identity";
-import { database } from "../platform/database";
+import { database, transaction } from "../platform/database";
 import { AppError } from "../platform/errors";
 import { hasPermission, requireCapability, scopeSql } from "../platform/permissions";
 import { opportunityVisibility, relationshipContext, visibleOpportunity } from "../crm/context";
@@ -7,9 +7,11 @@ import { object, optionalId } from "../shared/validation";
 import { estimateContext, estimateVisibility, versionContext, quoteContext } from "./context";
 import { calculate } from "./math";
 import { readQuoteJob } from "./worker";
+import { discoveryAvailable, guardExistingEstimateMutation } from "./discovery-workspace-context";
 export async function estimatingOptions(p:Principal) {
   const c=database(); await requireCapability(c,p,"estimating.edit");
-  const rows=(await c.query(`SELECT o.id,o.display_number,o.title,o.company_id,o.site_id,r.display_name AS customer,s.display_name AS site FROM ppo.opportunities o JOIN ppo.organisations r ON (r.workspace_id,r.id)=(o.workspace_id,o.organisation_id) LEFT JOIN ppo.sites s ON (s.workspace_id,s.id)=(o.workspace_id,o.site_id) WHERE o.workspace_id=$1 AND ${opportunityVisibility()} AND ${scopeSql("o.company_id","o.site_id","estimating.edit")} AND ${scopeSql("o.company_id","o.site_id","estimating.read")} AND NOT EXISTS(SELECT 1 FROM ppo.estimates e WHERE e.workspace_id=o.workspace_id AND e.opportunity_id=o.id) ORDER BY o.created_at DESC,o.id LIMIT 100`,[p.workspace_id,p.actor_id])).rows;
+  const discoveryExclusion=await discoveryAvailable(c)?"AND NOT EXISTS(SELECT 1 FROM ppo.estimating_workspaces g WHERE g.workspace_id=o.workspace_id AND g.opportunity_id=o.id)":"";
+  const rows=(await c.query(`SELECT o.id,o.display_number,o.title,o.company_id,o.site_id,r.display_name AS customer,s.display_name AS site FROM ppo.opportunities o JOIN ppo.organisations r ON (r.workspace_id,r.id)=(o.workspace_id,o.organisation_id) LEFT JOIN ppo.sites s ON (s.workspace_id,s.id)=(o.workspace_id,o.site_id) WHERE o.workspace_id=$1 AND ${opportunityVisibility()} AND ${scopeSql("o.company_id","o.site_id","estimating.edit")} AND ${scopeSql("o.company_id","o.site_id","estimating.read")} AND NOT EXISTS(SELECT 1 FROM ppo.estimates e WHERE e.workspace_id=o.workspace_id AND e.opportunity_id=o.id) ${discoveryExclusion} ORDER BY o.created_at DESC,o.id LIMIT 100`,[p.workspace_id,p.actor_id])).rows;
   const items=[];
   for(const row of rows) try {await relationshipContext(c,p,await visibleOpportunity(c,p,row.id),"estimating.edit");items.push(row);} catch(e) {if(!(e instanceof AppError)||e.status!==404)throw e;}
   return {items,owner_id:p.actor_id,owner_name:p.display_name,synthetic:true,limit:100};
@@ -27,6 +29,10 @@ export async function readEstimate(p:Principal,id:string,query:Record<string,str
   let can_edit=false,can_prepare=false;
   try {await estimateContext(c,p,id,"estimating.edit");can_edit=true;} catch(error) {if(!(error instanceof AppError)||![403,404].includes(error.status))throw error;}
   try {await estimateContext(c,p,id,"estimating.quote.prepare");can_prepare=await hasPermission(c,p,"estimating.quote.read",e.company_id,e.site_id??undefined);} catch(error) {if(!(error instanceof AppError)||![403,404].includes(error.status))throw error;}
+  if(can_edit || can_prepare) {
+    try { await transaction(c=>guardExistingEstimateMutation(c,p,e)); }
+    catch(error) { if(!(error instanceof AppError)||![403,404,409].includes(error.status))throw error;can_edit=false;can_prepare=false; }
+  }
   const versions=(await c.query("SELECT id,version,predecessor_id,scope_revision_id,reason,created_at,created_by,content_hash FROM ppo.estimate_versions WHERE workspace_id=$1 AND estimate_id=$2 ORDER BY version DESC",[p.workspace_id,id])).rows;
   const quotes=(await hasPermission(c,p,"estimating.quote.read",e.company_id,e.site_id??undefined))?(await c.query("SELECT q.id,q.version,q.estimate_version_id,q.created_at,j.state AS render_state,h.display_number FROM ppo.draft_quote_revisions q JOIN ppo.draft_quotes h ON (h.workspace_id,h.id)=(q.workspace_id,q.quote_id) JOIN ppo.estimate_quote_jobs j ON j.revision_id=q.id WHERE q.workspace_id=$1 AND q.estimate_id=$2 ORDER BY q.version DESC",[p.workspace_id,id])).rows:[];
   return {...e,context,opportunity:{id:o.id,display_number:o.display_number,title:o.title},saved:v,current_saved:await versionContext(c,p,e,e.current_version_id),totals:calculate(v.lines),versions,quotes,can_edit,can_prepare};
@@ -56,6 +62,7 @@ export async function opportunityCommercial(p: Principal, id: string, query: Rec
     try { await relationshipContext(c,p,o,"estimating.edit"); can_create=true; }
     catch(e) { if (!(e instanceof AppError) || ![403,404].includes(e.status)) throw e; }
   }
+  if(can_create && await discoveryAvailable(c) && (await c.query("SELECT 1 FROM ppo.estimating_workspaces WHERE workspace_id=$1 AND opportunity_id=$2",[p.workspace_id,id])).rowCount) can_create=false;
   return {
     estimate: d ? {id:d.id,display_number:d.display_number,state:d.state,title:d.saved.title,version:d.saved.version,sell_total:d.saved.sell_total} : null,
     site_name: d?.context.site ?? null,
