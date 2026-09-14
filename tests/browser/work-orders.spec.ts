@@ -77,14 +77,38 @@ test("P04 SC-05 draft, authority refusal, dispute, identity limits, mandatory bl
 test("P04 forms retain invalid and stale proposals with explicit comparison; keyboard and phone layouts", async ({
   page,
 }, info) => {
+  const serverCommand = info.config.webServer?.command;
+  expect(["npm run dev", "npm run serve:compiled"]).toContain(serverCommand);
+  // The development client replays mount effects in Strict Mode. Both
+  // launches must avoid the closed editor read and must not remount on reopen.
+  const firstOpenRequests = serverCommand === "npm run serve:compiled" ? 1 : 2;
+  const assetRequests: string[] = [];
+  page.on("request", request => {
+    const url = new URL(request.url());
+    if (url.pathname === "/api/v1/assets" && request.method() === "GET") assetRequests.push(url.pathname);
+  });
   await page.goto(`/service/work-orders/${id(90, 3)}`);
   await identity(page);
-  await page.getByText("Edit scope draft", { exact: true }).click();
+  const disclosure = page.getByText("Edit scope draft", { exact: true });
+  await expect(disclosure).toBeVisible();
   const summary = page.getByLabel("Scope summary", { exact: true });
+  await expect(summary).toHaveCount(0);
+  expect(assetRequests).toHaveLength(0);
+  const assetsLoaded = page.waitForResponse(response => new URL(response.url()).pathname === "/api/v1/assets" && response.request().method() === "GET");
+  await disclosure.click();
+  expect((await assetsLoaded).ok()).toBe(true);
+  expect(assetRequests).toHaveLength(firstOpenRequests);
   await summary.fill(
     "SYN retained long scope proposal\n" +
       "Inspect the external display and retain uncertainty. ".repeat(15),
   );
+  const retainedProposal = await summary.inputValue();
+  await disclosure.click();
+  await expect(summary).not.toBeVisible();
+  await expect(summary).toHaveCount(1);
+  await disclosure.click();
+  await expect(summary).toHaveValue(retainedProposal);
+  expect(assetRequests).toHaveLength(firstOpenRequests);
   await summary.focus();
   await capture(page, info, "P04-scope-form-focus.png");
   await page.getByLabel("Task description", { exact: true }).fill("");
