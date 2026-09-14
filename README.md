@@ -2,7 +2,7 @@
 
 Personal prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance. The repository is public; the application, data and hosted demo remain private and synthetic.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01–P12 code merged; PT-22 synthetic recovery passed; integrated acceptance incomplete · **Deployment:** owner-triggered Azure run 34826209046 deployed `b8d33696`; image/health evidence observed, signed-in acceptance pending · **Current state:** [docs/STATUS.md](docs/STATUS.md)
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01–P12 code merged; PT-22 synthetic recovery passed; integrated acceptance incomplete · **Deployment:** owner-triggered Azure run 34826209046 deployed `b8d33696`; image/health and signed-in synthetic record/Draft checks observed; managed PostgreSQL minor unverified · **Current state:** [docs/STATUS.md](docs/STATUS.md)
 
 This repository is Dean's personal prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. P12 isolated recovery is merged with reviewed source and actual-main evidence. The written PT-22 synthetic restore procedure passed; full PT-28/PT-30 and independent owner/device acceptance remain outstanding. Company ownership, production approval and external-system write authority are not implied.
 
@@ -58,7 +58,7 @@ Application code is in `src/`, explicit SQL migrations and fixtures are in `db/`
 
 ## Private hosted demo preparation
 
-The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separate hosted runtime, owner setup, tester access and image updates. Owner-triggered Azure run 34808448458 successfully updated source `aeaf966a`, verified the selected web image was healthy/ready, set the worker to the same image digest and passed health/anonymous-access checks. Signed-in saved-record and Draft-output acceptance, representative device/accessibility evidence and the actual managed PostgreSQL minor remain unverified. Local development continues using the commands below.
+The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separate hosted runtime, owner setup, tester access and image updates. The latest observed owner-triggered run 34826209046 deployed source `b8d33696`, verified the selected web image was healthy/ready, compared the worker digest and passed health/anonymous-access checks. On 14 September, the signed-in synthetic verification journey persisted an Opportunity, initial Activity and estimate, then generated and reopened its exact Draft HTML/PDF. The two-page downloaded PDF matched its saved hash. [Evidence and limits](docs/delivery/issue-reconciliation-handover.md) retain the fixture identities and separate the remaining managed PostgreSQL minor, physical-device/accessibility and owner acceptance. Local development continues using the commands below.
 
 ## Run the local application
 
