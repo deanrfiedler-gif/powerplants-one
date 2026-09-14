@@ -61,3 +61,5 @@ The [PPO Assistant direction and architecture decision](ppo-assistant-direction.
 [Field Technicians r04](field-technicians-design.md) records Dean’s approved Service presentation, frozen source and bounded application mapping. Design approval does not grant dispatch, merge or production acceptance.
 
 [Derived routing direction](estimating-derived-routing.md) records Dean’s 12 September 2026 adoption of "derive continuously, advise visibly, bind once, confirm always". The delivery route becomes a classification derived from accepted line composition, advisory during drafting and confirmed by the receiving owner at handover creation. It decides E2-D01 for the first time rather than superseding it; `SYN-E2-ROUTE-r01` was never adopted as policy and is retained as design history. A line category taxonomy extension is recorded as the blocking prerequisite. No threshold, rule version, migration or ADR number is allocated.
+
+- [Development and compiled performance profiles](ci-performance-profiles.md) — retain both original PT-27 measurements on the exact same load fixture, with bounded phase observations; CI evidence pending.

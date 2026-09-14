@@ -173,10 +173,12 @@ async function prepareCapture(path: string) {
   return result;
 }
 
-async function prepare() {
-  const directory = netlogDirectory();
-  if (!directory) throw new Error("NetLog diagnostic directory is required");
-  const output = "verification-evidence/p11-performance/netlog-metadata.json";
+export async function prepareNetlog(compiled = false) {
+  const base = netlogDirectory();
+  if (!base) throw new Error("NetLog diagnostic directory is required");
+  const directory = compiled ? resolve(base, "compiled") : base;
+  const root = `verification-evidence/p11-performance${compiled ? "/compiled" : ""}`;
+  const output = `${root}/netlog-metadata.json`;
   let result: RecordValue = { status: "unavailable", captures: [] };
   try {
     const names = (await readdir(directory).catch(() => [] as string[]))
@@ -188,11 +190,11 @@ async function prepare() {
     result = { status: completeSet && captures.every(c => c.status === "prepared") ? "prepared" : captures.length ? "partial" : "unavailable", complete_capture_set: completeSet, captures };
     if (result.status !== "prepared") throw new Error("NetLog capture incomplete");
   } finally {
-    await mkdir("verification-evidence/p11-performance", { recursive: true });
+    await mkdir(root, { recursive: true });
     await writeFile(output, JSON.stringify(result, null, 2) + "\n");
     await rm(directory, { recursive: true, force: true });
   }
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href)
-  await prepare().catch((error) => { console.error("NetLog metadata preparation failed:", error.message || error); process.exitCode = 1; });
+  await prepareNetlog().catch((error) => { console.error("NetLog metadata preparation failed:", error.message || error); process.exitCode = 1; });
