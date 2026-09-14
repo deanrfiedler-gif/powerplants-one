@@ -302,13 +302,13 @@ export async function discoveryReceiptAuthority(
   groupId: string,
   operationId: string,
 ) {
-  const g = await workspaceAuthority(c, p, groupId, true);
+  const g = await workspaceAuthority(c, p, groupId);
   const event = (
     await c.query<{
       details: { revision_id?: string; source_revision_id?: string };
     }>(
-      "SELECT details FROM ppo.audit_events WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3 AND object_type='EstimatingWorkspace' AND object_id=$4",
-      [p.workspace_id, p.actor_id, operationId, g.id],
+      "SELECT details FROM ppo.audit_events WHERE workspace_id=$1 AND operation_id=$2 AND object_type='EstimatingWorkspace' AND object_id=$3 ORDER BY occurred_at DESC,id DESC LIMIT 1",
+      [p.workspace_id, operationId, g.id],
     )
   ).rows[0];
   if (!event) throw unavailable();

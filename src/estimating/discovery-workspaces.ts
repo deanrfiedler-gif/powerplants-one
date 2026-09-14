@@ -64,8 +64,8 @@ async function originalAuthority(
 ) {
   const prior = (
     await c.query<{ record_id: string }>(
-      "SELECT record_id FROM ppo.operation_receipts WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3",
-      [p.workspace_id, p.actor_id, operationId],
+      "SELECT record_id FROM ppo.operation_receipts WHERE workspace_id=$1 AND operation_id=$2 ORDER BY received_at DESC,id DESC LIMIT 1",
+      [p.workspace_id, operationId],
     )
   ).rows[0];
   if (prior)
