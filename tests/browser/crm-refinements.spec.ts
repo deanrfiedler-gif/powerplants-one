@@ -19,6 +19,69 @@ async function call(page: Page, path: string, body?: unknown) {
   expect(r.ok(), await r.text()).toBe(true);
   return r.json();
 }
+test("owned Won handover and structured Lost survive reload on desktop and phone", async ({ page }, info) => {
+  await call(page,"local-session",{profile:"coordinator"});
+  for (const outcome of ["Won","Lost"]) {
+    const input={...crmDiscovery(),title:`SYN ${outcome} outcome ${info.project.name}`};
+    await call(page,"crm/opportunities",input);
+    let version=1;
+    if(outcome==="Won") for(const stage_id of ["Scoping","Quoting","Negotiation","Closing"])
+      await call(page,`crm/opportunities/${input.id}/stage`,{...crmBase(),expected_version:version++,stage_id,qualification_note:null,identification_activity_id:null});
+    await page.goto(`/crm/opportunities/${input.id}`);
+    await page.getByRole("button",{name:"Record sales outcome",exact:true}).click();
+    const dialog=page.getByRole("dialog");
+    if(outcome==="Won") await dialog.getByLabel("Acceptance or order evidence").fill("SYN Fictional accepted scope for controlled handover");
+    else {
+      await dialog.getByRole("button",{name:"Record outcome",exact:true}).click();
+      await expect(dialog.getByText("Choose Price, Competitor, Timing, No decision.", {exact:true})).toBeVisible();
+      await dialog.getByLabel("Lost reason").selectOption("Competitor");
+    }
+    await committed(page,`crm/opportunities/${input.id}/outcome`,()=>dialog.getByRole("button",{name:"Record outcome",exact:true}).click());
+    await expect(dialog).not.toBeVisible();
+    await page.reload();
+    await expect(page.getByRole("button",{name:"Record sales outcome",exact:true})).toHaveCount(0);
+    await expect(page.getByLabel("Saved sales outcome",{exact:true})).toHaveText(`Outcome: ${outcome}`);
+    await expect(page.getByLabel("Saved sales outcome",{exact:true})).toBeVisible();
+    await expect(page.locator('.crm-stage-track [aria-current="step"]')).toBeDisabled();
+    if(outcome==="Won") await expect(page.getByRole("region",{name:"Handover due"})).toContainText("SYN Coordinator");
+    else await expect(page.getByText("Lost reason: Competitor",{exact:true})).toBeVisible();
+    const saved=(await call(page,`crm/opportunities/${input.id}`)).items[0];
+    expect(saved.close_outcome).toBe(outcome); expect(saved.version).toBe(version+1);
+    expect(saved.actions[0].owner_id).toBe(input.initial_action.owner_id);
+    await page.screenshot({path:info.outputPath(`crm-${outcome.toLowerCase()}-persisted.png`),fullPage:false});
+    await page.goto("/crm/opportunities");
+    await page.getByLabel("Search opportunities",{exact:true}).fill(input.title);
+    await expect(page.locator(`[data-opportunity-id="${input.id}"]`)).toHaveCount(0);
+    await page.getByRole("button",{name:"Filters and sort"}).click();
+    await page.getByLabel("Sales outcome",{exact:true}).selectOption(outcome);
+    if(info.project.use.isMobile) await page.getByRole("group",{name:"Choose Board stage"}).getByRole("button",{name:outcome === "Won" ? /^Closing / : /^Discovery /}).click();
+    const card=page.locator(`[data-opportunity-id="${input.id}"]`);
+    await expect(card).toBeVisible(); await expect(card).toHaveAttribute("draggable","false");
+    await page.getByRole("button",{name:"List",exact:true}).click();
+    await expect(page.getByRole("link",{name:input.title,exact:true})).toBeVisible();
+  }
+});
+test("accepted outcome with a lost response recovers its original receipt without another effect", async ({page})=>{
+  await call(page,"local-session",{profile:"coordinator"});
+  const input=crmDiscovery(); await call(page,"crm/opportunities",input);
+  await page.goto(`/crm/opportunities/${input.id}`);
+  await page.getByRole("button",{name:"Record sales outcome",exact:true}).click();
+  const dialog=page.getByRole("dialog"); await dialog.getByLabel("Lost reason").selectOption("Timing");
+  let acceptedOperation:string|undefined;
+  await page.route(`**/api/v1/crm/opportunities/${input.id}/outcome`,async route=>{
+    acceptedOperation=route.request().postDataJSON().operation_id;
+    const response=await route.fetch(); expect(response.ok(),await response.text()).toBe(true);
+    await route.abort("connectionfailed");
+  },{times:1});
+  await dialog.getByRole("button",{name:"Record outcome",exact:true}).click();
+  await expect(dialog.getByRole("button",{name:"Confirm original save outcome"})).toBeVisible();
+  await expect(dialog.getByLabel("Lost reason")).toBeDisabled();
+  await dialog.getByRole("button",{name:"Confirm original save outcome"}).click();
+  await expect(dialog).not.toBeVisible();
+  const saved=(await call(page,`crm/opportunities/${input.id}`)).items[0];
+  expect(saved.version).toBe(2); expect(saved.events.filter((e:{event_type:string})=>e.event_type==="OpportunityOutcomeRecorded")).toHaveLength(1);
+  expect((await call(page,`operations/${acceptedOperation}`)).state).toBe("Lost");
+});
 test("card hit areas, snapshot, core pencil, separate scope and stage changes persist", async ({
   page,
 }, info) => {

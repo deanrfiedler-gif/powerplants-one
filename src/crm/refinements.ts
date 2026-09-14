@@ -185,6 +185,8 @@ export async function changeDealStage(
     (c) => authorise(c, p, id, command.operation_id),
     async (c, old) => {
       expected(old, command.expected_version);
+      if (old.close_outcome !== "Open")
+        throw new AppError(422, "CRM_OUTCOME_CLOSED", "Closed opportunities cannot change stage.");
       if (old.stage_id === command.stage_id)
         throw new AppError(
           422,

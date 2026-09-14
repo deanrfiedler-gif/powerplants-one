@@ -21,6 +21,8 @@ import {
   saveDirectoryViews,
 } from "../../src/crm/directory";
 import { CRM, crmCreate, crmBase, crmDiscovery } from "../helpers/crm";
+import { recordOpportunityOutcome } from "../../src/crm/outcomes";
+import { readOperation } from "../../src/shared/receipts";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -48,6 +50,85 @@ const stage = (version: number, stage_id: string) => ({
 });
 const code = (code: string) => (e: unknown) =>
   (e as { code: string }).code === code;
+const outcome = (expected_version: number, close_outcome = "Lost", lost_reason: string | null = "Timing") => ({
+  ...crmBase(), expected_version, close_outcome,
+  lost_reason: close_outcome === "Lost" ? lost_reason : null,
+  acceptance_evidence: close_outcome === "Won" ? "SYN Accepted fictional scope at customer review; no external order." : null,
+});
+async function closing(p: Awaited<ReturnType<typeof principal>>, id: string) {
+  let version = 1;
+  for (const next of ["Scoping", "Quoting", "Negotiation", "Closing"])
+    await changeDealStage(p, id, stage(version++, next));
+}
+test("Won from Closing records one owned handover due and preserves original activities and receipts", async () => {
+  const p = await principal(), input = crmDiscovery();
+  await createOpportunity(p,input);
+  await assert.rejects(recordOpportunityOutcome(p,input.id,outcome(1,"Won")),code("CRM_WON_REQUIRES_CLOSING"));
+  await closing(p,input.id);
+  const before = await readOpportunity(p,input.id), body = outcome(5,"Won");
+  const result = await recordOpportunityOutcome(p,input.id,body);
+  assert.equal(result.receipt.state,"Won");
+  assert.equal(result.receipt.record_version,6);
+  assert.deepEqual((await recordOpportunityOutcome(p,input.id,body)).receipt,result.receipt);
+  assert.deepEqual(await readOperation(p,body.operation_id),result.receipt);
+  const saved = await readOpportunity(p,input.id);
+  assert.equal(saved.close_outcome,"Won");
+  assert.equal(saved.stage_id,"Closing");
+  assert.deepEqual(saved.actions,before.actions);
+  assert.deepEqual(saved.events.slice(0,-1),before.events);
+  assert.equal(saved.events.at(-1).acceptance_evidence,body.acceptance_evidence);
+  assert.equal(saved.handover_due?.owner_id,input.owner_id);
+  assert.equal(saved.handover_due?.opportunity_version,6);
+  assert.equal(saved.can_record_outcome,false);
+  assert.equal((await database().query("SELECT count(*)::int AS n FROM ppo.opportunity_handovers_due WHERE opportunity_id=$1",[input.id])).rows[0].n,1);
+  assert.equal((await database().query("SELECT count(*)::int AS n FROM ppo.outbox_jobs WHERE operation_id=$1",[body.operation_id])).rows[0].n,1);
+  await assert.rejects(recordOpportunityOutcome(p,input.id,{...body,reason:"SYN changed original"}),code("OperationConflict"));
+  await assert.rejects(recordOpportunityOutcome(p,input.id,outcome(6)),code("CRM_OUTCOME_CLOSED"));
+  await assert.rejects(changeDealStage(p,input.id,stage(6,"Discovery")),code("CRM_OUTCOME_CLOSED"));
+  // Existing information rights remain; they cannot rewrite the original handover basis.
+  await editDealInformation(p,input.id,information(6));
+  assert.deepEqual((await readOpportunity(p,input.id)).handover_due,saved.handover_due);
+  assert.deepEqual((await recordOpportunityOutcome(p,input.id,body)).receipt,result.receipt);
+});
+test("Lost requires a structured reason at each stage and Board/List queries explicitly select outcomes", async () => {
+  const p = await principal();
+  for (const [index,target] of ["Discovery","Scoping","Quoting","Negotiation","Closing"].entries()) {
+    const input = crmDiscovery(); await createOpportunity(p,input);
+    const stages = ["Scoping","Quoting","Negotiation","Closing"];
+    for (let n=0;n<index;n++) await changeDealStage(p,input.id,stage(n+1,stages[n]));
+    const before = await readOpportunity(p,input.id), body = outcome(index+1,"Lost",["Price","Competitor","Timing","No decision","Price"][index]);
+    await assert.rejects(recordOpportunityOutcome(p,input.id,{...body,lost_reason:null}),code("InvalidData"));
+    await recordOpportunityOutcome(p,input.id,body);
+    const saved = await readOpportunity(p,input.id);
+    assert.equal(saved.stage_id,target); assert.equal(saved.close_outcome,"Lost");
+    assert.equal(saved.events.at(-1).lost_reason,body.lost_reason);
+    assert.equal(saved.handover_due,null); assert.deepEqual(saved.actions,before.actions);
+    const filter = {pipeline_definition_id:input.pipeline_definition_id,q:input.title};
+    assert.ok(!(await listOpportunities(p,filter)).items.some(o=>o.id===input.id));
+    assert.ok((await listOpportunities(p,{...filter,outcome:"Lost"})).items.some(o=>o.id===input.id));
+    assert.ok(!(await listOpportunities(p,{...filter,outcome:"Won"})).items.some(o=>o.id===input.id));
+  }
+});
+test("competing outcomes accept one original; stale, scoped, legacy and reopened proposals have no effects", async () => {
+  const p = await principal(), input = crmDiscovery(); await createOpportunity(p,input);
+  await assert.rejects(recordOpportunityOutcome(await principal("observer"),input.id,outcome(1)));
+  await assert.rejects(recordOpportunityOutcome(await principal("second-company"),input.id,outcome(1)));
+  const results = await Promise.allSettled([recordOpportunityOutcome(p,input.id,outcome(1)),recordOpportunityOutcome(p,input.id,outcome(1,"Lost","Competitor"))]);
+  assert.equal(results.filter(r=>r.status==="fulfilled").length,1);
+  assert.equal((await readOpportunity(p,input.id)).version,2);
+  for (const assignment of ["close_outcome='Open'","stage_id='Scoping'"])
+    await assert.rejects(transaction(c=>c.query(`UPDATE ppo.opportunities SET ${assignment},version=version+1 WHERE id=$1`,[input.id])));
+  const legacy=crmCreate(); await createOpportunity(p,legacy);
+  await assert.rejects(recordOpportunityOutcome(p,legacy.id,outcome(1)),code("CRM_OUTCOME_PIPELINE"));
+  assert.equal((await readOpportunity(p,legacy.id)).close_outcome,"Open");
+});
+test("SQL cannot close without the exact outcome event or insert a handover for an open opportunity", async () => {
+  const p=await principal(),input=crmDiscovery(); await createOpportunity(p,input);
+  await assert.rejects(transaction(c=>c.query("UPDATE ppo.opportunities SET close_outcome='Lost',version=version+1 WHERE id=$1",[input.id])));
+  await assert.rejects(transaction(c=>c.query(`INSERT INTO ppo.opportunity_handovers_due(workspace_id,company_id,opportunity_id,outcome_event_id,opportunity_version,owner_id,created_by,created_at)
+    SELECT workspace_id,company_id,opportunity_id,id,2,created_by,created_by,created_at FROM ppo.opportunity_events WHERE opportunity_id=$1`,[input.id])));
+  assert.equal((await readOpportunity(p,input.id)).version,1);
+});
 test("core and scope commands persist separate data, replay once and retain next action and exact history", async () => {
   const p = await principal(),
     input = crmCreate();

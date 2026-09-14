@@ -17,7 +17,7 @@ import type { readOpportunity } from "../crm/reads";
 import type { OperationReceipt } from "../platform/operations";
 
 export type DealRecord = Awaited<ReturnType<typeof readOpportunity>>;
-export type DealMode = "snapshot" | "information" | "scope" | "stage";
+export type DealMode = "snapshot" | "information" | "scope" | "stage" | "outcome";
 export type StageUndo = {
   id: string;
   version: number;
@@ -130,7 +130,7 @@ export function DealDialog({
     >
       <header className="crm-dialog-head">
         <h2 id="crm-dialog-title">
-          {currentMode === "snapshot"
+          {currentMode === "outcome" ? "Record sales outcome" : currentMode === "snapshot"
             ? (o?.title ?? "Deal snapshot")
             : currentMode === "information"
               ? "Edit deal"
@@ -201,7 +201,7 @@ export function DealDialog({
                   </dl>
                   <button
                     className="secondary"
-                    disabled={!o.can_edit || !!resource.error}
+                    disabled={!o.can_edit || o.close_outcome !== "Open" || !!resource.error}
                     onClick={() => setMode("stage")}
                   >
                     Change stage · {o.stage_id}
@@ -308,6 +308,10 @@ function DealEditor({
     [identification, setIdentification] = useState(
       undo?.identification_activity_id ?? o.identification_activity_id ?? "",
     ),
+    [outcome, setOutcome] = useState(o.stage_id === "Closing" ? "Won" : "Lost"),
+    [lostReason, setLostReason] = useState(""),
+    [acceptanceEvidence, setAcceptanceEvidence] = useState(""),
+    [outcomeNote, setOutcomeNote] = useState(""),
     [search, setSearch] = useState("");
   const command = useCrmCommand(
     (r) => onAccepted(r, o, mode === "stage"),
@@ -321,10 +325,12 @@ function DealEditor({
     true,
   );
   const blocked =
-    command.busy || command.uncertain || !o.can_edit || readFailed;
+    command.busy || command.uncertain || !o.can_edit || readFailed || ((mode === "outcome" || mode === "stage") && o.close_outcome !== "Open");
   if (denied(command.error) || denied(persons.error))
     return <ErrorNotice error={command.error ?? persons.error} />;
   const send = () => {
+    if (mode === "outcome")
+      return command.send(`crm/opportunities/${o.id}/outcome`, {expected_version:version,close_outcome:outcome,lost_reason:outcome === "Lost" ? lostReason : null,acceptance_evidence:outcome === "Won" ? acceptanceEvidence : null,reason:outcomeNote.trim() || `Record ${outcome} sales outcome`});
     if (mode === "information")
       return command.send(`crm/opportunities/${o.id}/information`, {
         expected_version: version,
@@ -411,6 +417,12 @@ function DealEditor({
                 ? "Deal stage"
                 : "Deal information"}
           </legend>
+          {mode === "outcome" && <>
+            <SelectField name="close_outcome" label="Sales outcome" value={outcome} onChange={setOutcome} options={(o.stage_id === "Closing" ? ["Won","Lost"] : ["Lost"]).map(id=>({id,display_name:id}))} required />
+            {outcome === "Lost" ? <SelectField name="lost_reason" label="Lost reason" value={lostReason} onChange={setLostReason} options={["Price","Competitor","Timing","No decision"].map(id=>({id,display_name:id}))} required /> : <Field name="acceptance_evidence" label="Acceptance or order evidence" value={acceptanceEvidence} onChange={setAcceptanceEvidence} multiline required maxLength={2000} />}
+            <Field name="reason" label="Outcome notes (optional)" value={outcomeNote} onChange={setOutcomeNote} maxLength={1000} />
+            <p>{outcome === "Won" ? `Handover will be due, owned by ${o.owner_name}, until a receiving route and owner are confirmed.` : "The stage and existing activities will remain in the record."} Reopening is unavailable.</p>
+          </>}
           {mode === "information" && (
             <>
               <Field
@@ -577,7 +589,7 @@ function DealEditor({
               (mode === "stage" && stage === o.stage_id)
             }
           >
-            {mode === "information"
+            {mode === "outcome" ? "Record outcome" : mode === "information"
               ? "Save deal"
               : mode === "scope"
                 ? "Save requirements and scope"
@@ -630,7 +642,7 @@ export function DealInformation({
         <dd>
           <button
             className="text-action"
-            disabled={!o.can_edit}
+            disabled={!o.can_edit || o.close_outcome !== "Open"}
             onClick={onStage}
           >
             {o.stage_id}

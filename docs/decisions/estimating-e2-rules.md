@@ -1,13 +1,15 @@
 ---
 document_id: PPO-010-E2-DEC
-revision: r01
-date: 2026-09-09
+revision: r02
+date: 2026-09-14
 owner: Dean Fiedler - prototype owner
-status: Design authorised; synthetic rule adoption pending
+status: E2 options/questions adopted with advisory-routing reconciliation; runtime pending
 source_commit: f8035b5c55251da4da52430adf2f83094feccd6b
 ---
 
 # E2 routing, alternatives and scoped questions — decision package
+
+**Current decision, 14 September 2026:** E2-D02 and E2-D03 are adopted with the later advisory-routing reconciliation. Their older route-before-option assumptions must be updated in the versioned receiving contract before implementation. E2-D01’s historical declared policy remains unadopted. See the [audit follow-through policy package](audit-follow-through-policy-package.md). The original proposal and earlier-state narrative below remain historical context.
 
 Dean's “Proceed” invokes the previously proposed **E2 design and rules package before implementation**. The outcome is a reviewable workflow, concrete policy tables, screen walkthrough and synthetic examples. It does not adopt the candidate business rules by implication. E1's [completed verification publication](https://github.com/deanrfiedler-gif/powerplants-one/pull/49#issuecomment-5562344440) is the dependency record; its historical passing commit is not a fresh test result for current main.
 
