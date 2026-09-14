@@ -149,10 +149,9 @@ test("E2 HTTP persists explicit discovery, recovers one original response, branc
       .body.items[0].selected_option_id,
     branch.new_option_id,
   );
-  assert.equal(
-    (await call(s.cookie, `crm/opportunities/${s.o.id}`)).body.version,
-    1,
-  );
+  const opportunity = await call(s.cookie, `crm/opportunities/${s.o.id}`);
+  assert.equal(opportunity.status, 200);
+  assert.equal(opportunity.body.items[0].version, 1);
 });
 test("E2 HTTP denies direct guessing, false confirmation, unsupported definitions, unbounded bodies and wrong origins without receipts", async () => {
   const s = await setup();
