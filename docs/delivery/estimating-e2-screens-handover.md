@@ -35,4 +35,10 @@ Browser screenshots and restart evidence include source head, executed checkout/
 
 ## Next receiving step
 
+### Original source verification and correction
+
+Source `d574b5526d5ff5cf26e814b94682beb439241d3f` passed E1 run `34809674640`, job `103868328757`: 103 unit, 14 estimating database, three estimating HTTP and 13 retained E1 browser cases. Its E2 restart extension verified all three original revisions and five receipts in write/recover/verify after the actual application and PostgreSQL restarts. These 13 browser cases are the retained `estimating.spec.ts` suite; the new discovery cases run in the broader browser workflows.
+
+The original compiled run `34809674630`, job `103868327596`, failed the new stale-proposal case on both desktop and phone at line 359: the save button was disabled. The other six discovery executions passed. Inspection of the procedure found that `Locator.all()` enumerated acknowledgement checkboxes immediately after starting an asynchronous comparison, so it could return zero before the result rendered. The successor still correctly required Q01 confirmation. This correction waits for the comparison region and explicitly requires the Q01 checkbox before acknowledging; it changes no product guard, timeout or retry count. The failed run and its evidence remain the original record, with corrected-source runtime verification pending. Artifact `10334806537` has the API-reported digest `sha256:5a1769efdfa2891989c06b4f067a3bf04be38fe24ae051b33e1bc62fa218ef07`; its generated download link was refused with HTTP 403 in this workspace, so no screenshot inspection or independent archive-hash verification is claimed here.
+
 The append-only manual-estimate basis and selected-Site/output contract in ADR-0026 remains the next implementation boundary. Existing one-Estimate-per-Opportunity and fixed-Site constraints are preserved until that receiving change is designed and verified as a whole. DR-03–DR-06, five container propositions and E3/E4 pricing/source/approval/terms policy remain unresolved; this UI adds none of them.

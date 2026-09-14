@@ -125,6 +125,11 @@ async function capture(
   );
 }
 async function acknowledge(page: Page) {
+  // Locator.all() does not wait for the asynchronous comparison to render.
+  // Read the actual comparison before enumerating its required confirmations.
+  await expect(
+    page.getByRole("region", { name: "Discovery comparison", exact: true }),
+  ).toBeVisible();
   for (const checkbox of await page
     .getByRole("checkbox", { name: /^I confirm Q/ })
     .all())
@@ -345,6 +350,9 @@ test("E2 browser retains a stale proposal, explicitly compares the new predecess
   await page
     .getByRole("button", { name: "Compare discovery proposal", exact: true })
     .click();
+  await expect(
+    page.getByRole("checkbox", { name: "I confirm Q01 in this exact proposal", exact: true }),
+  ).toBeVisible();
   await acknowledge(page);
   let original: Record<string, unknown> | undefined;
   await page.route(`**/api/v1/${s.path}`, async (route) => {
