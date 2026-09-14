@@ -7,7 +7,7 @@ import { uuid } from "../shared/validation";
 import { visibleOpportunity, relationshipContext } from "../crm/context";
 import { estimateContext, type Estimate } from "./context";
 import { readDiscoveryTargets } from "./discovery-context";
-import type { Answer, DiscoveryInput } from "./discovery";
+import { compileDiscovery, type Answer, type DiscoveryInput } from "./discovery";
 
 export type DiscoveryWorkspace = {
   id: string;
@@ -151,21 +151,12 @@ export async function revisionAuthority(
     )
       throw unavailable();
   } else if (r.kind === "Discovery") {
-    const current = await readDiscoveryTargets(c, p, g.opportunity_id, r.input);
-    if (edit) {
-      const opportunity = await visibleOpportunity(c, p, g.opportunity_id);
-      await relationshipContext(
-        c,
-        p,
-        { ...opportunity, site_id: current.compiled.input.scope.site_id },
-        "estimating.edit",
-      );
-    }
+    const compiled = compileDiscovery(r.input);
     if (
-      current.compiled.content_hash !== r.content_hash ||
+      compiled.content_hash !== r.content_hash ||
       digest(
         canonical({
-          input_hash: r.content_hash,
+          input_hash: compiled.content_hash,
           references: r.observed_context,
         }),
       ) !== r.context_hash
@@ -175,6 +166,13 @@ export async function revisionAuthority(
         "DiscoveryEvidenceMismatch",
         "The retained discovery source requires review before use.",
       );
+    const opportunity = await visibleOpportunity(c, p, g.opportunity_id);
+    await relationshipContext(
+      c,
+      p,
+      { ...opportunity, site_id: compiled.input.scope.site_id },
+      edit ? "estimating.edit" : "estimating.read",
+    );
   } else throw unavailable();
   return r;
 }
