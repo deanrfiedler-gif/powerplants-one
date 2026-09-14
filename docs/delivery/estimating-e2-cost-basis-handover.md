@@ -1,6 +1,6 @@
 ---
 document_id: PPO-010-E2-COST-HO
-revision: r01
+revision: r02
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
 status: Exact discovery-to-costing connection implemented; runtime verification pending
@@ -51,3 +51,10 @@ Publish the source with exact local/remote tree equality, inspect its actual CI 
 Source `5047c927` passed E1 run [34814802616](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34814802616), job `103883142266`: 104 unit, 14 retained E1 DB, 3 retained E1 HTTP and 13 retained E1 browser cases. Its new cost-basis write/recover/verify stages each passed with two exact version bases and seven original receipts across actual application/PostgreSQL processes. Both original interrupted attempts remain incomplete; this later success does not establish their shutdown cause.
 
 The eight new cost-basis database cases are now registered once through `tests/database/estimating.test.ts`, using that entrypoint's existing disposable reset lifecycle. Their bodies and assertions are unchanged, and the former standalone entrypoint is removed. This makes the existing required Estimating workflow execute all eight alongside the 14 retained E1 cases, while the full suite still executes each once. It resolves the concrete gap where all eight new SQL/history/permission/upgrade cases otherwise waited until the late broad Application stage. No workflow, timeout, dependency, application guard or expected test outcome changes. The changed test-registration source requires its own CI result.
+
+
+## Full-suite HTTP refusal correction
+
+Source `46d65048` broad Application run [34815664432](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34815664432), job `103885688355`, passed 104 unit plus three preparation cases, all 420 database cases and 178 browser cases with three explicit skips, but failed one of 30 HTTP cases. The new costing test tried to JSON-parse the local origin guard's intentional plain-text HTTP 403 response (`Local synthetic access only.`) before asserting the refusal. All 29 other HTTP cases passed; the source remains failed.
+
+The corrected case checks the raw wrong-origin response status directly, matching the retained E1 origin-boundary case. Application-origin guards and JSON expectations for actual API responses remain unchanged. The complete costing HTTP case is registered once through the required `tests/http/estimating.test.ts` entrypoint; the former standalone test file is removed, so the full glob still executes exactly one copy. This makes the existing required Estimating workflow exercise four HTTP cases without a workflow edit, timeout, retry or assertion waiver. Fresh corrected-source verification is required.

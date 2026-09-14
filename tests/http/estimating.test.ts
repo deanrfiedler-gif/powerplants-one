@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { randomUUID } from "node:crypto";
+import { registerEstimatingCostBasisHttpCases } from "../helpers/estimating-cost-basis-http-cases";
 import { crmCreate, crmBase } from "../helpers/crm";
 import { estimateInput, quoteCommand } from "../helpers/estimating";
 const origin="http://127.0.0.1:3000";
@@ -47,3 +48,5 @@ test("DR01-HTTP01 explicit adoption preserves old DTO and receipts, rejects fals
   assert.equal((await call(cookie,path+"/quotes",q)).status,201);
   assert.doesNotMatch(JSON.stringify((await call(cookie,`estimating/quotes/${q.id}`)).body.snapshot),/cost_schema_version|allowance|category|Engineering|Subcontract/);
 });
+
+registerEstimatingCostBasisHttpCases();
