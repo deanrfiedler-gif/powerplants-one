@@ -343,10 +343,11 @@ test("E2 copies retained discovery as unconfirmed, fresh branches retain no inhe
 test("E2 hidden answers remain in their accepted predecessor and later activation requires deliberate confirmation", async () => {
   const s = await saved(),
     discovery = discoveryInput();
-  discovery.scope.systems = [];
+  discovery.scope.systems = [{ tag: "DefinedLabour", facility_ids: [] }];
   discovery.answers = discovery.answers.filter(
     (a) => !["Q05", "Q06"].includes(a.question_id),
   );
+  discovery.answers.push({ question_id: "Q07", value: "No", state: "Confirmed", source: "SYN defined labour scope; product system inactive", follow_up: null });
   const hide = await proposal(s, "Save", { discovery });
   await changeDiscoveryWorkspace(s.p, s.input.id, hide);
   const hidden = (await readDiscoveryWorkspace(s.p, s.input.id)).options[0]
@@ -355,7 +356,7 @@ test("E2 hidden answers remain in their accepted predecessor and later activatio
     hidden.retained_hidden_answers.map((a) => a.question_id),
     ["Q05", "Q06"],
   );
-  assert.equal(hidden.input!.answers.length, 4);
+  assert.deepEqual(hidden.input!.answers.map(a => a.question_id), ["Q01", "Q02", "Q03", "Q04", "Q07"]);
   const reactivate = await proposal(s);
   assert.ok(reactivate.confirmed_question_ids.includes("Q05"));
   await assert.rejects(
@@ -707,7 +708,7 @@ test("E2 recovery rechecks edit access to the exact original selected Site even 
     [s.p.actor_id],
   );
   await rows(
-    "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,valid_from) VALUES($1,$2,$3,'estimating.edit','Site',$4,'2026-01-01')",
+    "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id,valid_from) VALUES($1,$2,$3,'estimating.edit','Site',$4,$4,'2026-01-01')",
     [CRM.workspace, s.p.actor_id, CRM.company, CRM.site],
   );
   assert.equal(
