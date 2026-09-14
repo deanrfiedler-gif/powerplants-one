@@ -46,7 +46,7 @@ export async function discoveryFormOptions(
         )
       ).rows[0]?.site_id ?? null;
     }
-    const siteId = mode === "Site" ? (requestedSite ?? o.site_id) : null;
+    const siteId = mode === "Site" ? (requestedSite ?? currentSiteId) : null;
     const context = { ...o, site_id: siteId };
     await relationshipContext(c, p, context, "estimating.read");
     await relationshipContext(c, p, context, "estimating.edit");

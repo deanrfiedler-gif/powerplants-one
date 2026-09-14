@@ -5,6 +5,7 @@ import { canonical } from "../platform/operations";
 import { digest } from "../documents/store";
 import { uuid } from "../shared/validation";
 import { visibleOpportunity, relationshipContext } from "../crm/context";
+import { visible } from "../shared/reads";
 import { estimateContext, type Estimate } from "./context";
 import { readDiscoveryTargets } from "./discovery-context";
 import { compileDiscovery, type Answer, type DiscoveryInput } from "./discovery";
@@ -151,8 +152,15 @@ export async function revisionAuthority(
     )
       throw unavailable();
   } else if (r.kind === "Discovery") {
+    const evidenceMismatch = () =>
+      new AppError(
+        409,
+        "DiscoveryEvidenceMismatch",
+        "The retained discovery source requires review before use.",
+      );
     const compiled = compileDiscovery(r.input);
     if (
+      !r.observed_context ||
       compiled.content_hash !== r.content_hash ||
       digest(
         canonical({
@@ -161,18 +169,86 @@ export async function revisionAuthority(
         }),
       ) !== r.context_hash
     )
-      throw new AppError(
-        409,
-        "DiscoveryEvidenceMismatch",
-        "The retained discovery source requires review before use.",
+      throw evidenceMismatch();
+    try {
+      const opportunity = await visibleOpportunity(c, p, g.opportunity_id);
+      await relationshipContext(
+        c,
+        p,
+        { ...opportunity, site_id: compiled.input.scope.site_id },
+        edit ? "estimating.edit" : "estimating.read",
       );
-    const opportunity = await visibleOpportunity(c, p, g.opportunity_id);
-    await relationshipContext(
-      c,
-      p,
-      { ...opportunity, site_id: compiled.input.scope.site_id },
-      edit ? "estimating.edit" : "estimating.read",
-    );
+      const organisation = await visible(
+          c,
+          p,
+          "Organisation",
+          r.observed_context.organisation.id,
+        ),
+        contact = r.observed_context.contact
+          ? await visible(c, p, "Person", r.observed_context.contact.id)
+          : null,
+        site = r.observed_context.site
+          ? await visible(c, p, "Site", r.observed_context.site.id)
+          : null,
+        facilities = [];
+      for (const facility of r.observed_context.facilities) {
+        const row = await visible(c, p, "Facility", facility.id);
+        facilities.push({ id: row.id, version: row.version, name: row.name });
+      }
+      const equipment = [];
+      for (const asset of r.observed_context.equipment) {
+        const row = await visible(c, p, "Asset", asset.id);
+        equipment.push({
+          id: row.id,
+          version: row.version,
+          display_number: row.display_number,
+          description: row.description,
+          identity_status: row.identity_status,
+          lifecycle_status: row.lifecycle_status,
+        });
+      }
+      if (
+        digest(
+          canonical({
+            input_hash: compiled.content_hash,
+            references: {
+              opportunity: {
+                id: opportunity.id,
+                version: opportunity.version,
+                company_id: opportunity.company_id,
+                site_id: opportunity.site_id,
+              },
+              organisation: {
+                id: organisation.id,
+                version: organisation.version,
+                display_name: organisation.display_name,
+              },
+              contact: contact
+                ? {
+                    id: contact.id,
+                    version: contact.version,
+                    display_name: contact.display_name,
+                  }
+                : null,
+              site: site
+                ? {
+                    id: site.id,
+                    version: site.version,
+                    display_name: site.display_name,
+                  }
+                : null,
+              facilities,
+              equipment,
+            },
+          }),
+        ) !== r.context_hash
+      )
+        throw evidenceMismatch();
+    } catch (error) {
+      if (error instanceof AppError && [403, 404].includes(error.status))
+        throw evidenceMismatch();
+      throw error;
+    }
   } else throw unavailable();
   return r;
 }

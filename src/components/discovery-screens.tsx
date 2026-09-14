@@ -803,7 +803,7 @@ export function DiscoveryDetail({ id }: { id: string }) {
     waiting = !!d && accepted > d.workspace.version;
   const options = useCrmResource<FormOptions>(
     d && editor
-      ? `estimating/workspaces/form-options?opportunity_id=${d.workspace.opportunity_id}&workspace_id=${id}&scope_mode=${editor.scopeMode}${editor.siteId ? `&site_id=${editor.siteId}` : ""}`
+      ? `estimating/workspaces/form-options?opportunity_id=${d.workspace.opportunity_id}&workspace_id=${id}&scope_mode=${editor.scopeMode}`
       : null,
   );
   if (denied(command.error))

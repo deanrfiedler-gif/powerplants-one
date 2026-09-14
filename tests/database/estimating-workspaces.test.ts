@@ -736,15 +736,16 @@ test("E2 recovery rechecks edit access to the exact original selected Site even 
   );
 });
 
-test("E2 retained discovery revisions stay readable when current facility placement no longer matches captured evidence", async () => {
+test("E2 retained discovery revisions surface stale-evidence review when current facility placement drifts", async () => {
   const s = await saved();
   await rows(
     "UPDATE ppo.facilities SET site_id=$2,version=version+1 WHERE id=$1",
     [discoveryFacility, "70000000-0000-4000-8000-000000000002"],
   );
-  const retained = await readDiscoveryRevision(s.p, s.input.id, s.input.revision_id);
-  assert.equal(retained.id, s.input.revision_id);
-  assert.deepEqual(retained.input!.scope.facility_ids, [discoveryFacility]);
+  await assert.rejects(
+    readDiscoveryRevision(s.p, s.input.id, s.input.revision_id),
+    code("DiscoveryEvidenceMismatch"),
+  );
 });
 
 test("E2 application and SQL guards hold unsupported states anywhere in the group while ordinary render Pending remains editable", async () => {
