@@ -18,6 +18,12 @@ export { existingDemoChecksumMatches } from "./migration-registry";
 // A deliberately bounded existing-demo upgrade, not a second bootstrap path.
 // Every database change shares one transaction, including grants and receipts.
 export async function upgradeExistingDemo(databaseName: string, tenant: string, apply: boolean) {
+  // Reviewed for 0027: roots/bases use ordinary typed-table grants and deferred
+  // graph checks, with no seed, capability or hosted identity change. Original
+  // estimate/version/quote rows and checksums are not rewritten. One estimate
+  // per option replaces Opportunity uniqueness only for exact typed E2 roots;
+  // legacy creation still materialises its constrained A identity. Existing
+  // upgrade tests must exercise both old originals and restricted-role writes.
   // Reviewed for 0026: new typed discovery groups preserve existing E1 A/r01
   // UUIDs and source rows. No seed, grant or quote/price mutation is introduced.
   // Existing generic table/sequence grants cover the new schema; authority tables
@@ -34,7 +40,7 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // row locks on authority tables, without granting the runtime role write access. Existing-data compatibility stays under the retained
   // upgrade tests. The accepted five-stage demonstration uses a separately prepared
   // database/storage epoch; this function neither resets nor activates that epoch.
-  if (latestMigrationVersion !== 26) throw Error("Review the existing-demo upgrade for this release.");
+  if (latestMigrationVersion !== 27) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 2) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
