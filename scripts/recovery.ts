@@ -267,6 +267,8 @@ async function identity(c: pg.Client) {
   };
 }
 async function noOtherClients(c: pg.Client) {
+  // Do not reuse a statistics snapshot from an earlier check in this transaction.
+  await c.query("SELECT pg_stat_clear_snapshot()");
   const r = await c.query(
     "SELECT count(*)::int n FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND backend_type='client backend'",
   );
@@ -448,11 +450,15 @@ export async function createCheckpoint(options: {
         `LOCK TABLE ${quote(r.schema)}.${quote(r.name)} IN SHARE MODE`,
       );
     await noOtherClients(c);
-    const snapshot = (await c.query("SELECT pg_export_snapshot() snapshot"))
-      .rows[0].snapshot as string;
+    const snapshotPoint = (
+      await c.query(
+        "SELECT pg_export_snapshot() snapshot,clock_timestamp() captured_at",
+      )
+    ).rows[0];
+    const snapshot = snapshotPoint.snapshot as string;
     const database = await fingerprint(c);
     await mkdir(directory, { mode: 0o700 }); // Exclusive: never replace a prior checkpoint.
-    const created_at = new Date().toISOString();
+    const created_at = (snapshotPoint.captured_at as Date).toISOString();
     await pgTool(
       "pg_dump",
       [

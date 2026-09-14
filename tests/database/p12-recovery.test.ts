@@ -467,6 +467,17 @@ test(
       }
       const evidence = "verification-evidence/p12-recovery";
       await mkdir(evidence, { recursive: true });
+      const demoOutput = await draftBytes(p, demo.quote.id);
+      assert.equal(digest(demoOutput.html), demo.quote.html_sha256);
+      assert.equal(digest(demoOutput.pdf), demo.quote.pdf_sha256);
+      await writeFile(
+        join(evidence, "owner-demo-original-draft.html"),
+        demoOutput.html,
+      );
+      await writeFile(
+        join(evidence, "owner-demo-original-draft.pdf"),
+        demoOutput.pdf,
+      );
       await writeFile(
         join(evidence, "database-restore.json"),
         JSON.stringify(

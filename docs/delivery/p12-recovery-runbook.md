@@ -58,6 +58,16 @@ A selected closed profile is copied byte-for-byte before it is opened. On reopen
 
 Rollback means selecting code that explicitly understands the restored migration/payload/template versions while retaining the accepted originals and outcomes. Never restore an old checkpoint over a database that might already contain a later external effect. Keep a later accepted target fenced and investigate it under its original operation. The utility refuses a ledger that this code cannot identify; it does not downgrade migrations or rewrite stored payloads.
 
+## Run the isolated verification component
+
+After the normal dependency/browser installation and private disposable database configuration, the recovery component can be run directly:
+
+```bash
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=600000 tests/database/p12-recovery.test.ts
+```
+
+It deliberately resets only the named synthetic source fixture, creates/removes its own labelled second PostgreSQL container, and retains its private checkpoint under a temporary owner-only directory. It requires Docker for that disposable second instance and the selected PostgreSQL 16 client image, plus the maintained Chrome installation. It never connects to a hosted or operational target. The existing full database suite runs the same test. Public evidence under `verification-evidence/p12-recovery/` contains comparison hashes, classified synthetic outcomes, original offline captures and the actual saved fallback Draft HTML/PDF; it excludes dumps and browser profiles. This test's result is separate from the full PT procedures and owner acceptance.
+
 ## Reset and owner walkthrough
 
 For an explicitly disposable local test environment only, stop the app and run:
