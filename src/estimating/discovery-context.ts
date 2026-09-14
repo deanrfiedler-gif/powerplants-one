@@ -10,6 +10,7 @@ import {
 } from "../crm/context";
 import { visible } from "../shared/reads";
 import { compileDiscovery } from "./discovery";
+import type { EstimateCap } from "./context";
 
 // Internal receiving boundary for the E2 service. These reads neither acquire
 // estimating ownership nor save a revision. The future command must supply its
@@ -20,15 +21,16 @@ async function targets(
   opportunityId: string,
   value: unknown,
   edit: boolean,
+  readCapability: EstimateCap = "estimating.read",
 ) {
   const compiled = compileDiscovery(value);
   const opportunity = await visibleOpportunity(c, p, opportunityId);
-  await relationshipContext(c, p, opportunity, "estimating.read");
+  await relationshipContext(c, p, opportunity, readCapability);
   const scopeContext = {
     ...opportunity,
     site_id: compiled.input.scope.site_id,
   };
-  await relationshipContext(c, p, scopeContext, "estimating.read");
+  await relationshipContext(c, p, scopeContext, readCapability);
   if (edit) {
     await relationshipContext(c, p, opportunity, "estimating.edit");
     await relationshipContext(c, p, scopeContext, "estimating.edit");
@@ -136,8 +138,9 @@ export function readDiscoveryTargets(
   p: Principal,
   opportunityId: string,
   value: unknown,
+  capability: EstimateCap = "estimating.read",
 ) {
-  return targets(c, p, opportunityId, value, false);
+  return targets(c, p, opportunityId, value, false, capability);
 }
 
 export function prepareDiscoveryTargets(
