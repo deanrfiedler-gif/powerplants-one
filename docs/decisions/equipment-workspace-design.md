@@ -1,89 +1,99 @@
 ---
 document_id: PPO-EQUIPMENT-DES
-revision: r01
+revision: r02
 date: 2026-09-14
 owner: Dean Fiedler
-status: Authorised standalone design; visual review and application integration pending
-source_commit: 10625815187f26179f316b887fcdee33467ac81f
+status: Authorised r02 refinement; visual review and application integration pending
+source_commit: 42383fc2e3a85f6cf9c38c829683b14787578579
 ---
 
 # Equipment and Installed Base workspace
 
-Dean authorised the Equipment and Installed Base interactive HTML workspace after the 14 September design-coverage audit. The [r01 design](../reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r01.html) connects equipment lookup, current record context, retained history, inspection capture, owned defects and reviewed retests. It provides one complete synthetic journey without creating another application asset model.
+The [r02 interactive HTML](../reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html) implements Dean's authorised refinement of the Equipment workspace. It connects an equipment register, record and service history, visit preparation, equipment-specific inspection capture, review and retest, manual/QR-result identification and sourced assistance.
 
-This is an authored design for review. It is not an accepted application baseline, production inspection procedure or implementation of QR scanning, AI1, offline synchronisation, service completion or ERP processing. The UI baseline register is unchanged pending visual acceptance. Finance design PR #178 merged during this work; product-quality scope PR #182 remains separate.
+The [r01 HTML](../reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r01.html) is preserved byte-for-byte for comparison. Its seven existing asset identities are retained in r02; readable Asset and Work Order examples now use six-digit sequences. Two additional synthetic records demonstrate a second Northbank site and a component within an assembly.
 
-## Sources and design choice
+This is an authored design for review. It does not update application routes, services, schemas, dependency pins, external adapters or hosting. It is not an accepted application baseline or production inspection procedure. The UI baseline register remains unchanged pending visual acceptance.
 
-At the start of design work, `main` and a complete clean clone were verified at `10625815187f26179f316b887fcdee33467ac81f`, tree `37fab6114f905c09183f28f15c6e2d51bf300d38`. AGENTS, README, STATUS, naming, shared UI guidance, the shared customer/equipment implementation and relevant contracts were inspected. Before publication, the branch was rebased onto `c3797ce9605a9eb1afab1f839e47e63095de1f7d`, preserving the Finance design and both sets of documentation entries. Existing Equipment pages use `ContextDetail` and already retain configuration, attributed history and location events; those capabilities are not labelled unstarted.
+## Sources and design approach
 
-The earlier Equipment and Installed Base Lifecycle Workflow Map r01 supplies workflow context. This contribution is the operational workspace, not a replacement workflow map. The user-authorised [product-quality delivery package](https://github.com/deanrfiedler-gif/powerplants-one/pull/182) prioritises the equipment-to-inspection journey F01/F02/F08 and the later lifecycle extensions.
+Current `main` was confirmed at `42383fc2e3a85f6cf9c38c829683b14787578579`. The r02 branch starts from the reconciled Equipment r01 PR #183 head `928c3fec7f64a5433b1f48139435df1205562226`, which already includes that main and the Finance r02 documentation. The r02 pull request targets the r01 branch so reviewers see only the refinement. Its dependency must merge before this design reaches main.
 
-The supplied attachment label says r18, but the available HTML title and internal revision identify **r16**. Source SHA-256: `19d96d383fadfda3bb03b5939cb933a64e4b220e69b8cb9a21df3f48d90b794f`. This design retains its three embedded Roboto font faces, exact navy `#242a37` and green `#62bb46`, supplied compact on-navy symbol, neutral surfaces, one-pixel borders and bottom-only drawer corners. It does not claim r18-specific provenance. The supplied source file is not modified or added to Git.
+The user's accepted audit supplies the change scope. Existing authorities remain the [Service data dictionary](../contracts/service-data-dictionary.md), [Service API](../contracts/service-api.md), [PPO naming standard](../standards/naming-conventions.md), [document issue contract](../contracts/document-issue-distribution.md), current blueprint and the authorised F01/F02/F08 package in [PR #182](https://github.com/deanrfiedler-gif/powerplants-one/pull/182). No parent requirement is added, removed or renamed.
 
-Self-contained HTML/CSS/JavaScript follows the existing standalone design approach. This avoids a new framework or runtime integration for a reviewable file. Native semantic controls and a shared pure model support meaningful local verification. The production TypeScript/Next.js/PostgreSQL architecture remains unchanged.
+The attached theme is labelled r18, but the available HTML identifies itself as **r16**. Its SHA-256 is `19d96d383fadfda3bb03b5939cb933a64e4b220e69b8cb9a21df3f48d90b794f`. The design reuses the embedded Roboto fonts, supplied compact on-navy mark, navy `#242a37`, green `#62bb46`, neutral surfaces, 1 px borders and bottom-only drawer corners. It makes no claim to r18-specific styling.
 
-## Delivered views
+The existing standalone HTML/CSS/JavaScript approach is retained. Model operations and DOM interaction are separable for targeted regression checks; no framework or application dependency is introduced. The HTML is self-contained and makes no network requests.
 
-| View | Behaviour |
+## Audit corrections
+
+| Finding | r02 behaviour |
 |---|---|
-| Equipment register | Seven fictional assets across three customer sites; search reference, serial, model, location, customer and system; combined customer/condition filters and name/customer sort; equivalent desktop rows and mobile cards; useful empty state |
-| Equipment record | Separate stable sample UUID and readable reference; identity/condition, model, serial, owner, site hierarchy and explicit unknown warranty/coverage evidence |
-| Service history | Unsuccessful repair, suspected/unresolved condition, reviewed report extract, owned OEM clarification and local inspection events; no inference that an inspection closes other work |
-| Documents and configuration | Inspectable exact synthetic source revisions; equipment-specific association; configuration and moved-asset location history retained; no unrelated asset inherits the sample visit document |
-| Inspection workspace | Confirm identity, access and isolation evidence; require current fictional instrument calibration; capture fixed-unit readings, visual condition, narrative and local image/sample evidence; preserve exact submitted snapshots |
-| Identification | Exact reference, serial or UUID lookup; no-match and explicit confirmation states; sample QR result; manual fallback; no camera permission requested |
-| Contextual assistance | Scripted, visibly synthetic summary bound to the selected asset; source extracts; editable follow-up with eligible owner and valid due date; explicit save; a separate UUID-based local Activity candidate |
+| Earlier review reasons overwritten | Each decision has its own immutable entry: submission ID/revision, reviewer, decision, reason, owner, due date and timestamp. Hold and clarification entries remain after the next decision. Original submissions remain separate from later drafts. |
+| Cross-equipment or historically wrong context | Events carry an equipment ID and an event-time location snapshot. Pump 03's installation remains at the trial bench; its later move is retained separately. Climate-controller follow-ups appear only in that equipment's history. |
+| Empty image accepted | Upload rejects zero-byte, unsupported, oversized and signature-mismatched files. Native image decoding must succeed with positive, bounded dimensions before attachment. Decoder failure provides a replacement/retry message. |
+| Damaged saved state prevents loading | Navigation, filters, asset hierarchy, drafts, preparation, submissions, reviews, defects, activities and events are checked before render. Saved images are decoded again. Failure preserves original bytes and opens recovery with export and confirmed reset. A render boundary provides the same recovery route. |
+| Passing inspection cannot be returned | Return for correction, Request clarification and Hold review are independent of numeric pass status. Each requires a reason, accountable owner and due date. Acceptance requires no failed or unavailable assessment. |
+| Preparation omitted from submitted revision | Snapshot retains work order ID/revision, exact visit window/timezone, contact, installed and served context, access and isolation source IDs/revisions/extracts, acknowledgements and all five prerequisite groups with owners/review dates. |
+| Location hierarchy oversimplified | Linked organisations, addressed sites, facilities/growing areas and equipment. Northbank has two sites; Pump 03 is installed in an irrigation shed and serves three growing blocks. Parent/component and predecessor links are separate. |
+| Assistant citations lost | Saved follow-ups retain exact source IDs/revisions/extracts and the applying person's attribution. Link/update an existing obligation is offered before creating another; exact duplicates and stale source drafts are rejected. |
 
-The responsive shell retains Equipment and Inspections navigation plus Identify and Guide actions. The file works without remote resources. It exposes only the review scenario's two simulated roles, Alex Morgan (Technician) and Casey Reed (Reviewer). This selector illustrates responsibility, not authentication or server permission enforcement.
+Review entries and snapshots are append-only through the design's controls. The local JSON is not cryptographically immutable or server-authorised; that distinction remains in Guide and the implementation boundary below.
 
-## Complete synthetic journey
+## Expanded design coverage
 
-1. Open Fertigation unit 01 (`SYN-PPO-AST-00101`) through the register or exact identification lookup. Confirm its Propagation site / Glasshouse 02 context.
-2. Continue the fictional visit on 15 September 2026, 07:30–10:00 AEST. Confirm physical identity, approved fictional access/isolation evidence and instrument `SYN-PPO-INS-00009`, calibration `CAL-r02`.
-3. Record **5.60 bar**, **2.00 mS/cm**, visual condition, a finding and a photograph or explicitly illustrated sample. The pressure fails the fictional template r03 range. Limits are labelled as design examples, not operating instructions.
-4. Submit as the technician. The exact site, area, equipment UUID/reference, configuration r02, template r03, units/limits, instrument evidence, author, timestamp, narrative and image are retained in inspection r01. One failed submission creates one linked defect 00048; retry does not duplicate it.
-5. Switch to the reviewer. Assign Alex Morgan, a valid due date and a reason; return for retest. A failed inspection cannot be accepted as passed.
-6. Switch to the technician. Start r02, reconfirm prerequisites and capture **4.60 bar** with new evidence. Original r01 remains unchanged. Submit the successor.
-7. Switch to the reviewer and record the review outcome. Acceptance references the exact passing submission and closes only defect 00048. Existing OEM defect 00047, work-order completion, customer acceptance and Finance handoff remain separate.
+| Area | Delivered scope and limits |
+|---|---|
+| Register and queue | Search reference, serial, manufacturer/model, organisation, site, installed and served area; combined site/facility/type/owner/due/condition filters. Whole-register totals and filtered equipment results are labelled separately. Queue distinguishes preparation, submission and review outcomes. Due calculations use the disclosed synthetic reference date, 14 September 2026. |
+| Equipment details | Manufacturer and model are separate; commissioning and installation dates, firmware/software, criticality/impact, stable UUID, parent/component and predecessor links are shown. Lifecycle, operating condition, identity confidence and recorded-field completeness have separate labels. Completeness is a disclosed synthetic fixture value, not a verified health score. |
+| Record maintenance | Reviewer-only, two-stage confirmation for create, correct, relocate, replace and retire. Reason, actor and previous context are retained. Correct can reassign a same-site parent without cycles. Relocation reassesses service areas and clears access confirmations. Active components block assembly retirement/replacement until reconciled. Replacement creates a new identity and does not infer warranty or commissioning. |
+| Visit readiness | Work order, contact, visit timezone/window, access/isolation source, biosecurity, induction, crop access, irrigation/shutdown restrictions, tools and source owners/review dates. Outside-window and changed-restriction scenarios block submission until resolved. Current preparation is distinct from frozen submitted preparation. |
+| Inspection templates | Equipment-specific checks for fertigation, pump, climate control, monitoring, ventilation and lighting. A visible issue enables a conditional detail/evidence check. Monitoring and lighting illustrate unavailable criteria. Every example limit is fictional and labelled at capture. |
+| Defects and retests | Failed checks create explicitly linked defects. Repeated failures reuse the unresolved defect for that check and retain submission references. A passing accepted retest closes only the applicable linked defect; the existing OEM obligation remains open. New revisions have fresh preparation and evidence. |
+| Evidence | Multiple photographs, check associations, editable draft captions, original file name/type/size/dimensions, progress and invalid-file recovery. Maximum eight originals, 8 MiB each, 20 MiB per revision and 40 megapixels. Phone HEIC or larger originals require a compatible smaller original. No silent resizing or compression. A separately labelled synthetic illustration supports the demonstration. |
+| Identification | Known, unknown, malformed, ambiguous serial, retired/removed, damaged/replaced label, unavailable and restricted-record scenarios. Confirmation compares reference, serial, organisation, site and installed facility. Camera capture is not implemented; the sample result and manual fallback are explicit. Identification does not alter identity confidence or grant access. |
+| Lifecycle context | Inspectable read-only relationships to maintenance planning, service agreements, warranty evidence, replacement history and service bulletins. The owning workflow is named; no coverage, scheduling or bulletin-application decision is implied. |
+| Assistant | Equipment-scoped scripted summary, inspectable exact sources, editable proposal and explicit reviewed save. It uses the same native modal as other drawers, including on mobile. No provider connection or automated action. |
+| Interface | Clear primary actions, explicit draft/read-only states, field-level errors with an error summary, focus restoration after navigation and modal close, native modal semantics with Tab/Escape handling. Detailed implementation notes are in Guide; fictional criteria and uncertain coverage remain beside their content. Native browser verification remains outstanding. |
 
-A passing initial inspection can also be reviewed without manufacturing a defect. Empty, negative, non-finite, exponent and excess-precision readings are rejected; supported readings have at most two decimal places so the result cannot contradict rounded display values. Retest due dates cannot precede the fictional visit or contain invalid calendar dates.
+## Primary synthetic journey
 
-## State, persistence and recovery
+1. Open Fertigation unit 01, `SYN-PPO-AST-000101`, at Northbank's Propagation site / Irrigation room. Read work order `SYN-PPO-WO-000241` and the visit sources for 15 September, 07:30–10:00 AEST.
+2. As Alex Morgan, confirm correct physical equipment, access/induction, authorised isolation and current restrictions; select current fictional instrument `SYN-PPO-INS-000009`, CAL-r02.
+3. Enter **5.60 bar** and **2.00 mS/cm**, select Satisfactory, add a finding and attach a captioned photograph or labelled example to each numeric check. The pressure fails the explicitly fictional 4–5 bar criterion.
+4. Submit. The full preparation, equipment/configuration, template, instrument, readings and evidence are frozen. One pressure defect links to this submitted revision.
+5. Switch to Casey Reed. Return for retest with a reason, owner and due date. Alex starts the successor revision with fresh acknowledgements and evidence.
+6. Repeat a failure if desired. Both detailed review reasons remain in the archive. Finally submit **4.60 bar** with suitable evidence and accept as Casey. The pressure defect closes; the separate OEM clarification does not.
+7. Also try a passing first submission followed by Return for correction, Request clarification or Hold review. These decisions depend on the whole evidence package, independently of numeric results.
 
-Drafts and review entries are kept separately from submitted snapshots. The standalone file uses one revision-specific localStorage key. Input and role/navigation state are restored on reload where browser storage permits. Photo inputs accept JPEG/PNG/WebP up to 1 MiB; the source bytes are retained rather than silently compressed. The built-in sample is labelled an illustration, never a photograph or live reading. An asynchronous upload cannot overwrite a submitted or different draft revision.
+For horticulture context, inspect Pump 03's installed versus served locations and original installation event; filter Northbank's Growing-on site; inspect the fertigation dosing-pump component; try the ambiguous monitoring-hub serial in Identify. Guide contains the remaining exploration steps.
 
-Storage failure is disclosed as **Session only**, with an evidence download available. Incompatible saved data is not silently overwritten. Reset has a separate confirmation and applies only to this design's local key. The downloadable JSON includes draft, original submissions, source context, review, linked defect and follow-ups; it is not an issued service report. No offline queued/synchronised claim or durable server receipt is made.
+## Persistence and recovery
 
-Design references for inspections, configuration and defects are fictional display examples, not additions to the application's allocator or enums. Follow-ups use a UUID and a separate label, retaining the existing Activity identity distinction. The sample objects are not migration fixtures and must not be imported as operational records.
+r02 uses only `ppo-equipment-workspace-r02`; r01's source and local key are untouched. Current drafts, submissions, reviews, preparation, record changes, obligations and history can be exported as a synthetic JSON session. The original image bytes are retained.
+
+Browser storage may be unavailable or too small for larger original photographs. The visible Session only state instructs the reviewer to export before closing. This is not an offline synchronisation queue or durable server receipt. A damaged stored session is not replaced automatically: the recovery screen offers original-data export and a separately confirmed reset. The role selector remains disabled while saved evidence is being validated.
+
+## Validation and remaining sign-off
+
+The exact HTML digest and check results are in [the r02 evidence manifest](../testing/evidence/equipment-workspace-r02.json).
+
+- `scripts/check-equipment-design-r02.mjs`: **69 checks passed**: 49 model/static checks and 20 DOM-emulation checks. They cover the eight audit regressions, repeated retests, held and returned passing work, readiness changes, unavailable/conditional checks, image rejection paths, citations, hierarchy, controlled maintenance, identification states, restart/recovery and every equipment tab/template.
+- Node **24.21.0**, npm **11.19.0**, jsdom **27.0.1** for optional local DOM assurance. Existing dependency pins and lockfile are unchanged.
+- Full repository `npm run lint` passed. Documentation foundation, prototype, naming and `git diff --check` are required before publication and recorded in the manifest.
+- The DOM harness substitutes native dialog methods and an image decoder that accepts only the known synthetic fixture. It exercises decoder rejection and success handling; **it does not prove native image decoding, rendered layout, real keyboard behaviour or assistive-technology operation**.
+- Browser visual verification remains **not run**. The earlier Browser URL security policy rejection is respected; no alternate preview route or renderer was used to bypass it.
+
+Before accepting a visual baseline, review 1440, 1024, 390 and 320 pixel widths, 200% zoom, native modal focus/Tab/Escape and focus return, screen-reader announcements, real JPEG/PNG/WebP acceptance and malformed-image rejection, phone photographs, quota recovery and the complete technician/reviewer journey. Camera capture, real identity/access permissions, live document sources, offline/server integrity and integration require separate implementation and acceptance.
 
 ## Traceability and implementation boundary
 
-| Existing authority | Design relationship |
-|---|---|
-| CRM-01/CRM-06; DAT-01–DAT-03 | Equipment/customer/site identity, permitted linked context and distinct account authority |
-| SVC-03/SVC-06 | Prepared visit source, attributed history, unsuccessful fixes and unresolved work |
-| DOC-01/DOC-02 | Exact source references and retained original submissions; export is not controlled issue |
-| [Service data dictionary](../contracts/service-data-dictionary.md) and [service API](../contracts/service-api.md) | Reuse canonical Asset/Site/configuration/location/history and Activity semantics during future integration |
-| [ADR-0008](ADR-0008-p03-customer-intake.md) | Existing context and owned follow-up; the design introduces no competing master or external authority |
-| [Document contract](../contracts/document-issue-distribution.md) | Production issue/distribution, file permissions and immutable source integrity require the existing server controls |
+CRM-01/CRM-06 and DAT-01–DAT-03 govern equipment/customer/site identity and distinct account authority. SVC-03/SVC-06 cover preparation, retained service history and unresolved work. DOC-01/DOC-02 govern exact source context and controlled issue. F01/F02/F08 are derived authorised delivery scope; later lifecycle workflows remain with their owning modules. The 78 parent requirements remain intact.
 
-Later implementation must define the minimum structured-inspection schema, current server permissions, supported template approval/limits/instrument rules, assignment changes, exact-source validation, stale revisions, durable command recovery, file storage and any offline extension. Client role checks and local JSON snapshots do not provide those guarantees. MYOB remains the intended ERP authority and SharePoint the intended business-document authority. No existing application route, database, migration, dependency pin, workflow or acceptance procedure changes here.
+Production integration must reuse canonical Asset/Site/Facility/configuration/location/event and Activity identities, server permissions and durable concurrency/receipt controls. MYOB remains the intended ERP authority; SharePoint owns controlled business documents. Local role checks and snapshots do not implement those guarantees. No migration, real customer record, operational inspection limit or new reference allocator is delivered here.
 
-## Verification and limits
+## Preserved r01 evidence
 
-- `node scripts/check-equipment-design.mjs`: **46** pure design-model/static checks passed, including invalid evidence, role separation, exact identity, failed-result acceptance refusal, retest ownership, original preservation, repeat-effect prevention and JSON restart.
-- `scripts/check-equipment-design-dom.mjs`: **23** Node DOM-emulation checks passed against the contributed HTML, including the complete journey, search/filter equivalence, source access, explicit scan confirmation, reviewed AI follow-up and reload recovery. The optional scratch QA dependency was jsdom 27.0.1; no application dependency was added. Dialog open/close and scroll were inert test adapters; no native-browser result is claimed.
-- JavaScript syntax, static IDs, embedded-resource independence and exact font/logo source identity were checked. Node was 24.19.0 and Python 3.12.14 in this design environment; no application build was attempted under that Node version.
-- **Visual browser verification is pending.** The Browser tool explicitly rejected the synchronized local HTML URL under its URL security policy. No alternate browser surface or workaround was attempted. Desktop/mobile geometry, 200% zoom, native dialog/focus behaviour, print layout, actual camera handling and physical-device accessibility remain unverified.
-- The [evidence manifest](../testing/evidence/equipment-workspace-r01.json) binds results to the HTML hash. Foundation, prototype and naming results are recorded there after execution. These are documentation/design checks, not application or business acceptance.
+r01 SHA-256 remains `24c8196564e1636c9ab846d5adf34dd462f66c9017ce8c28a83e7ea01e34d310` (171,342 bytes). Its [evidence manifest](../testing/evidence/equipment-workspace-r01.json), original model checks and DOM check remain unchanged for comparison.
 
-The next bounded step is visual review at 1440, 1024, 390 and 320 pixels, keyboard and 200% zoom; refine r01 before accepting it as an application baseline. Then implement the specified equipment/inspection slice through the existing domain services and F01/F02/F08 package. Publication remains a reviewable design PR; no hosting or production deployment is included.
-
-## PR continuation and CI repair
-
-The continuation merges current `main` at `42383fc2e3a85f6cf9c38c829683b14787578579` into PR #183, retaining the Finance r02 design and both sets of register/status entries. The Equipment HTML retains its original verified SHA-256.
-
-All eight failed application jobs on the initial PR head `61aff57dbbb72e40d04bce4e25e3c739a5bfd9c4` stopped at the same three `@typescript-eslint/no-require-imports` errors in the contributed DOM check. The check now uses ES-module imports and a module-relative HTML URL; no lint rule is disabled. The optional `PPO_DESIGN_JSDOM_MODULE` override now takes an absolute entry-file path (for example, the local jsdom `lib/api.js`), converted with `pathToFileURL` for portability. These initial CI failures are attributable to this contribution; earlier model/DOM passes were not full repository lint evidence.
-
-Refreshed local checks and subsequent GitHub results are tracked separately in the evidence manifest and PR description. Browser visual review remains pending.
+The initial r01 PR head `61aff57dbbb72e40d04bce4e25e3c739a5bfd9c4` failed eight application jobs at the same three forbidden CommonJS imports in its new DOM script. PR #183's continuation replaced those imports with ES modules, preserved the HTML and reconciled current main. The r02 check uses ES modules from the start and is included in full repository lint. The later audit found cases outside r01's original demonstration checks; r02's regression suite records those additional cases without rewriting the earlier evidence as broader acceptance.

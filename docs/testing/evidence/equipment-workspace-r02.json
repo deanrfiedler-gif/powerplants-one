@@ -1,0 +1,40 @@
+{
+  "design": "PPO-EQUIPMENT-HTML-R02",
+  "revision": "r02",
+  "date": "2026-09-14",
+  "source_main": "42383fc2e3a85f6cf9c38c829683b14787578579",
+  "parent_r01_head": "928c3fec7f64a5433b1f48139435df1205562226",
+  "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
+  "html_sha256": "46721b7a738e67dc8ce348df417e289b4e7e971a95b27c66c86cc97317ff55b5",
+  "html_bytes": 204676,
+  "r01_preserved_sha256": "24c8196564e1636c9ab846d5adf34dd462f66c9017ce8c28a83e7ea01e34d310",
+  "theme_internal_revision": "r16",
+  "theme_attachment_label": "r18",
+  "theme_sha256": "19d96d383fadfda3bb03b5939cb933a64e4b220e69b8cb9a21df3f48d90b794f",
+  "node": "24.21.0",
+  "npm": "11.19.0",
+  "jsdom": "27.0.1; optional local QA only",
+  "model_static_checks": 49,
+  "dom_emulation_checks": 20,
+  "checks_total": 69,
+  "check_script": "scripts/check-equipment-design-r02.mjs",
+  "full_repository_lint": "Passed",
+  "documentation_checks": {
+    "foundation": "Passed; 78 requirements, 1947 local links, 1034 files checked for conflict markers",
+    "prototype": "Passed; all 78 parent dispositions retained",
+    "naming": "Passed; 167 document records and 62 front-matter revisions compared",
+    "git_diff_check": "Passed"
+  },
+  "visual_browser": "Not run; prior Browser URL security policy rejection remains applicable; no bypass attempted",
+  "native_image_decode": "Implemented with native Image onload/onerror; not executed in browser. DOM uses fixture-only decoder stub.",
+  "native_modal": "Native dialog with focus restoration and Tab/Escape wiring; methods stubbed in DOM; device/AT verification pending",
+  "application_integration": "Not implemented",
+  "scope_limits": [
+    "Synthetic data and criteria only",
+    "Scripted QR-result and assistant demonstrations",
+    "Lifecycle panels are read-only owning-workflow handoffs",
+    "Local state is not server-authorised or durable business evidence",
+    "No application baseline acceptance, merge or deployment"
+  ],
+  "remote_ci": "Consult r02 pull request for exact head checks; no result inferred from local checks"
+}
