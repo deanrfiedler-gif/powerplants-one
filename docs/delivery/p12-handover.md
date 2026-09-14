@@ -1,6 +1,6 @@
 ---
 document_id: PPO-PP01-P12-HO
-revision: r01
+revision: r02
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
 status: Implemented on integration branch; exact-source restore and main publication pending
@@ -26,6 +26,8 @@ The private DEMO-02 preparer freezes the actual Brisbane date, source and migrat
 ## Evidence and procedure disposition
 
 Final exact source/tree, run IDs/attempts, logs, artifacts, original visual review, normal merge and actual-main results belong in #166 and the authoritative #165 publication. This avoids a repository document claiming its own later commit. Earlier failed attempts and repairs stay linked. Current local integrated lint/types, 90 unit tests, build and documentation checks passed before the final filesystem refinement; its focused guard tests/lint/types also passed. Local Node was 24.20.0; maintained CI targets 24.21.0 and the guarded Chrome from #163. No local PostgreSQL/browser run is claimed.
+
+The first integration source `da92832331d8ca653aeff88657c80f47840c517c` failed the Full Application database job `103823023762`: 392 of 393 database cases passed. P12 failed before checkpoint/restore because the test incorrectly expected a private manifest in the public report-issue projection (`TypeError` reading `job_id`). The correction retrieves the original IssuedReport presentation through the existing permission-checked `presentationBytes` service and compares the same presentation after restore. It does not add a manifest to the public DTO or regenerate the report. The second disposable PostgreSQL readiness probe now requires TCP, so the temporary initialization socket cannot qualify as the final server. Focused lint and types passed; actual corrected restore execution remains pending. The original failure is retained, not attributed to restore.
 
 | Procedure | Implemented evidence | Remaining condition |
 |---|---|---|
