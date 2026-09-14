@@ -77,6 +77,11 @@ test("P04 SC-05 draft, authority refusal, dispute, identity limits, mandatory bl
 test("P04 forms retain invalid and stale proposals with explicit comparison; keyboard and phone layouts", async ({
   page,
 }, info) => {
+  const serverCommand = info.config.webServer?.command;
+  expect(["npm run dev", "npm run serve:compiled"]).toContain(serverCommand);
+  // The development client replays mount effects in Strict Mode. Both
+  // launches must avoid the closed editor read and must not remount on reopen.
+  const firstOpenRequests = serverCommand === "npm run serve:compiled" ? 1 : 2;
   const assetRequests: string[] = [];
   page.on("request", request => {
     const url = new URL(request.url());
@@ -92,7 +97,7 @@ test("P04 forms retain invalid and stale proposals with explicit comparison; key
   const assetsLoaded = page.waitForResponse(response => new URL(response.url()).pathname === "/api/v1/assets" && response.request().method() === "GET");
   await disclosure.click();
   expect((await assetsLoaded).ok()).toBe(true);
-  expect(assetRequests).toHaveLength(1);
+  expect(assetRequests).toHaveLength(firstOpenRequests);
   await summary.fill(
     "SYN retained long scope proposal\n" +
       "Inspect the external display and retain uncertainty. ".repeat(15),
@@ -103,7 +108,7 @@ test("P04 forms retain invalid and stale proposals with explicit comparison; key
   await expect(summary).toHaveCount(1);
   await disclosure.click();
   await expect(summary).toHaveValue(retainedProposal);
-  expect(assetRequests).toHaveLength(1);
+  expect(assetRequests).toHaveLength(firstOpenRequests);
   await summary.focus();
   await capture(page, info, "P04-scope-form-focus.png");
   await page.getByLabel("Task description", { exact: true }).fill("");

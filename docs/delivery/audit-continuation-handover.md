@@ -1,6 +1,6 @@
 ---
 document_id: PPO-AUDIT-CONTINUATION-HO
-revision: r05
+revision: r06
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
 status: Source components reviewed; combined E2 and performance integration awaiting CI
@@ -63,3 +63,8 @@ The integration also closes a specific CRM evidence gap. Original transfer archi
 The #173 source `46d65048` passed all 420 database and 178 browser cases plus three skips, but one of its 30 HTTP cases failed: the test JSON-parsed the local server origin guard's intentional plain-text 403 refusal. The corrected raw-response assertion preserves that guard and all actual API JSON assertions. The complete case now registers once through the existing required estimating HTTP entrypoint, alongside the three retained cases, and is removed from the standalone full-suite glob. The same correction is included in this combined source. This is a proof correction, not an application change; original failed source results remain failed. Corrected-source CI, normal integration and current-main verification remain required.
 
 The independent #172 documentation source completed broad Application `34816131759` / job `103887084514`: 100 unit plus three preparation cases, 400 DB, 26 HTTP, 168 browser cases plus three skips, retained restarts and the P12 isolated restore test in 69.842 seconds. Its documentation is incorporated here; its older runtime tree does not certify this newer E2 integration.
+
+
+## Development-browser request-count correction
+
+The original #176 and `7bfde787` broad browser reports each contain two P04 failures: the new instrumentation expected one first-open asset request while the development client's Strict Mode effect replay produced two. The reports and all four original failure PNGs were inspected; 166/176 other cases passed respectively, with three explicit skips and no flaky retries. The corrected assertion uses the declared development/compiled launcher to require exactly two/one initial requests, still zero while closed and no additional request or lost proposal on reopening. Application behavior, Strict Mode and every existing invalid/stale/keyboard assertion remain unchanged. The [performance record](../decisions/ci-performance-profiles.md) retains original archive hashes, the slower integrated measurements and this exact correction. Current-source CI is required before integration.

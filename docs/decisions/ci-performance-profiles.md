@@ -1,6 +1,6 @@
 ---
 document_id: PPO-CI-PERF-PROFILES
-revision: r03
+revision: r04
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
 status: Original comparison and remedy measurements reviewed; integrated assurance pending
@@ -40,7 +40,7 @@ PR [#175](https://github.com/deanrfiedler-gif/powerplants-one/pull/175), source 
 
 These are separate observed profiles under the limitations above. They do not establish that compilation caused the differences. Work-order observations retain a substantial interval after the core body: combined-viewport warm p95 for that phase is 5,159ms development and 2,074ms compiled. Code inspection found that the closed scope editor mounts its asset picker immediately and requests up to 200 assets. Reading the saved scope does not require that picker. The benchmark's existing settled-UI boundary waits for loading indicators, including the hidden editor's indicator. This makes deferring the closed editor a concrete candidate remedy; it is not yet a measured attribution or improvement.
 
-The follow-through mounts an existing saved scope's editor on its first native disclosure opening. After that opening it remains mounted when closed, preserving the unsaved proposal and an uncertain original command. A work order without a saved scope still opens and mounts its first editor immediately. The existing revision key, permission boundary, scope command, asset filter and original request remain unchanged. The existing desktop/phone P04 case now observes zero asset reads before opening, one successful read on first opening, and the exact retained proposal with no extra read after closing and reopening. Its invalid/stale proposal and keyboard assertions remain in place.
+The follow-through mounts an existing saved scope's editor on its first native disclosure opening. After that opening it remains mounted when closed, preserving the unsaved proposal and an uncertain original command. A work order without a saved scope still opens and mounts its first editor immediately. The existing revision key, permission boundary, scope command, asset filter and original request remain unchanged. The existing desktop/phone P04 case now observes zero asset reads before opening, the exact first-mount read count for its declared server profile with a successful response, and the exact retained proposal with no extra read after closing and reopening. Its invalid/stale proposal and keyboard assertions remain in place.
 
 No measurement script, fixture, timing boundary, network rule, threshold, retry or workflow changes accompany this remedy. Its source must pass application and browser checks and repeat the same two profiles before any speed improvement can be reported. Full PT-27 remains open.
 
@@ -58,3 +58,21 @@ Source `c992dd7f52f6165d2f4cd168724de398d9497476`, tree `d1e8da807fe3efdc6d6023c
 Eight of sixteen compiled groups meet the candidate, including both warm work-order groups; all sixteen development groups still miss it. Compiled desktop first-context work-order p95 is 3.114s and remains above target. The combined-viewport warm work-order interval after the core body falls from 5,159ms to 759ms in development and from 2,074ms to 385ms compiled. These are the original observations of the changed source under unchanged scripts, not a controlled estimate of the editor's isolated causal effect: other unchanged views also improved, so runner/cache variation contributes. No profile, sample, failure or candidate miss was removed.
 
 Application PIDs are 5572 (development) and 10440 (compiled), measurement PIDs 5459 and 10425, comparison ID `2dde0a32-b783-4bd2-a338-1474d69d64c0`, compiled build `BJHHS3Ct7jUXkver2_70P`. The production-shaped compiled fixture still uses the guarded synthetic launcher. Full application/browser regression and the combined integration remain required; PT-27 and hosted/physical-device acceptance are incomplete.
+
+
+## Original integration measurement and browser finding
+
+Integration source `7bfde7871d3e8440ff3d42f6ab751395a50433cb`, tree `c7fffb611dff224252b217af7381134e247f41b6`, completed the unchanged comparison in run `34818799844`, job `103895338399`. Original artifact `10336559716` is 31,390,577 bytes, SHA-256 `7a1b46eb148ab9e931f6d1b76a8d1b5fabf8e9b2e1ce656223d51d92dad2e2eb`. ZIP integrity, all 16 PNG manifests/hashes/provenance and the unchanged seven-table fixture were verified; all 16 original PNGs were inspected. Both profiles again retain 320 original successful reads and the applied core-request network rules.
+
+| Warm p95, seconds | Development desktop | Compiled desktop | Development phone | Compiled phone |
+|---|---:|---:|---:|---:|
+| Customers | 7.636 | 4.846 | 6.504 | 4.189 |
+| Work order | 6.151 | 3.778 | 6.310 | 3.193 |
+| Planner | 7.063 | 4.533 | 7.013 | 4.025 |
+| My jobs | 5.048 | 3.250 | 5.134 | 2.802 |
+
+Only one of sixteen compiled groups meets the candidate; all sixteen development groups miss it. This run is slower than the first remedy run. Both observations remain, and the integrated work-order result is not represented as meeting three seconds. Combined-viewport warm work-order phase p95 milliseconds are document response 958/160, first core request 4,859/1,846, parsed core body 5,721/3,375 and body-to-settled 966/560 (development/compiled). These remain ordered observations, not isolated causal or hosted-performance proof.
+
+The broad development-browser stages on original #176 source `c992dd7f` and integration `7bfde787` each failed the new P04 first-open request-count assertion on desktop and phone: expected one request, observed two. Their original reports show 166/176 passing cases respectively, two failures, three explicit skips and no flaky retries. Archives `10338381055` (126,620,085 bytes, SHA-256 `2cb9cfa18af50f81637c38881806d45bf229b6b0d78a3a62da14092ba7000907`) and `10338976154` (128,389,779 bytes, SHA-256 `5a281dcae7c2de1dcd4d2aa17fbbe465c62d6227658a305b250dbd4739cbf1b8`) were verified, and all four original failure PNGs inspected. The test had already observed zero reads before opening; it stopped before its new close/reopen assertions. Compiled source suites passed this case with one initial request. Neither development failure is relabelled as a pass.
+
+The original shared resource hook starts an API read during effect setup and ignores a cleaned-up effect's response. [React Strict Mode](https://react.dev/reference/react/StrictMode) repeats effect setup/cleanup in development; the development and compiled client launches therefore have different first-mount request counts. The corrected P04 instrumentation explicitly validates the declared launcher and expects exactly two initial requests for `npm run dev` and one for `npm run serve:compiled`. It still requires zero before opening, a successful asset response, the exact same count after closing/reopening, and the identical retained proposal. The existing invalid/stale, keyboard and layout assertions remain. Strict Mode, the application/hook, all performance samples, network settings and deadlines are unchanged. Fresh corrected development and compiled proof is required.
