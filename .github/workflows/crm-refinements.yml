@@ -25,7 +25,7 @@ jobs:
         run: |
           npm install --global npm@11.19.0
           npm ci
-          npx playwright install --with-deps chromium
+          npm run browser:install
           node scripts/build-crm-ui-review.mjs
       - name: Check desktop and phone layouts
         run: npx playwright test --config=playwright.crm-ui.config.ts
@@ -74,7 +74,7 @@ jobs:
           git rev-parse HEAD
           npm ls --depth=0
       - name: Install pinned controlled PDF renderer
-        run: npx playwright install --with-deps chromium
+        run: npm run browser:install
       - name: Static, unit and build checks
         run: npm run check
       - name: Configure disposable loopback database

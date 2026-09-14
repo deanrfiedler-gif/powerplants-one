@@ -6,6 +6,7 @@ import { promisify } from "node:util";
 import { mkdtemp, mkdir, readFile, writeFile, rename } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { createServer, connect, type Socket } from "node:net";
 import pg from "pg";
 import { localConfig } from "../../src/platform/config";
 import { database, closeDatabase } from "../../src/platform/database";
@@ -40,6 +41,11 @@ import {
 import { documentStore, digest } from "../../src/documents/store";
 import { crmCreate } from "../helpers/crm";
 import { estimateInput, quoteCommand } from "../helpers/estimating";
+import { prepareOwnerDemo } from "../../scripts/prepare-owner-demo";
+import {
+  prepareOfflineRecovery,
+  verifyOfflineRecovery,
+} from "../helpers/p12-offline";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required.");
@@ -63,7 +69,7 @@ async function docker(args: string[], env = process.env) {
 
 test(
   "P12 real isolated restore retains all database/files, fences unknown Finance and recovers the original durable quote lease",
-  { timeout: 240000 },
+  { timeout: 600000 },
   async () => {
     const original = {
       url: process.env.DATABASE_URL!,
@@ -132,6 +138,7 @@ test(
       );
       await closeDatabase();
 
+      const offline = await prepareOfflineRecovery(root);
       const extra = new pg.Client({ connectionString: original.url });
       await extra.connect();
       try {
@@ -152,10 +159,47 @@ test(
         sourceUrl: original.url,
         directory,
         documents: sourceDocs,
+        profile: offline.profile,
         stopped: true,
         backend: "docker",
       });
       assert.deepEqual(await inspectCheckpoint(directory), checkpoint);
+      const sockets = new Set<Socket>();
+      const alias = createServer((socket) => {
+        const upstream = connect(
+          Number(new URL(original.url).port || "5432"),
+          "127.0.0.1",
+        );
+        sockets.add(socket);
+        sockets.add(upstream);
+        socket.on("error", () => upstream.destroy());
+        upstream.on("error", () => socket.destroy());
+        socket.pipe(upstream).pipe(socket);
+      });
+      await new Promise<void>((resolve, reject) => {
+        alias.once("error", reject);
+        alias.listen(0, "127.0.0.1", () => resolve());
+      });
+      try {
+        const endpoint = alias.address();
+        assert.ok(endpoint && typeof endpoint !== "string");
+        const aliasUrl = new URL(original.url);
+        aliasUrl.port = String(endpoint.port);
+        await assert.rejects(
+          restoreCheckpoint({
+            directory,
+            targetUrl: aliasUrl.toString(),
+            documents: targetDocs,
+            profile: join(root, "restored-browser-profile"),
+            stopped: true,
+            backend: "docker",
+          }),
+          /different PostgreSQL instance/,
+        );
+      } finally {
+        for (const socket of sockets) socket.destroy();
+        await new Promise<void>((resolve) => alias.close(() => resolve()));
+      }
       await assert.rejects(
         restoreCheckpoint({
           directory,
@@ -225,6 +269,7 @@ test(
           directory,
           targetUrl,
           documents: targetDocs,
+          profile: join(root, "restored-browser-profile"),
           stopped: true,
           backend: "docker" as const,
         };
@@ -377,6 +422,39 @@ test(
       );
       await assert.rejects(readEstimate(observer, input.id));
       await closeDatabase();
+      const offlineRestored = await verifyOfflineRecovery(opts.profile);
+      const demoDirectory = join(root, "owner-demo-epoch");
+      const demoDate = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Australia/Brisbane",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).format(new Date());
+      const demo = await prepareOwnerDemo(demoDirectory, demoDate);
+      assert.deepEqual(demo.stages, {
+        Discovery: 2,
+        Scoping: 1,
+        Quoting: 1,
+        Negotiation: 1,
+        Closing: 1,
+      });
+      assert.equal(demo.estimate.cost, "9900.00");
+      assert.equal(demo.estimate.sell, "12750.50");
+      assert.equal(demo.receipts.length, 19);
+      assert.deepEqual(await prepareOwnerDemo(demoDirectory, demoDate), demo);
+      const planPath = join(demoDirectory, "plan.json"),
+        planBytes = await readFile(planPath);
+      const plan = JSON.parse(planBytes.toString("utf8"));
+      await writeFile(
+        planPath,
+        JSON.stringify({ ...plan, database_epoch: "different-reset-epoch" }),
+      );
+      await assert.rejects(
+        prepareOwnerDemo(demoDirectory, demoDate),
+        /epoch mismatch/,
+      );
+      await writeFile(planPath, planBytes);
+      await closeDatabase();
       // The source is still an independent, unchanged comparison environment.
       const source = new pg.Client({ connectionString: original.url });
       await source.connect();
@@ -418,9 +496,11 @@ test(
             finance_target_count: 1,
             original_quote_job_count: 1,
             source_unchanged: true,
+            demo_epoch: demo,
+            offline_originals: offlineRestored,
             limits: [
               "Synthetic same-platform PostgreSQL 16 restore only",
-              "No browser profile or full PT-28/PT-30 procedure in this component",
+              "Restored browser/profile originals verified on this platform; full policy-change PT-28/PT-30 remain separate",
               "Measured checkpoint age is not an RPO/RTO promise",
               "No live outbound integration or owner acceptance",
             ],

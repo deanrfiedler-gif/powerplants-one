@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { chromium } from "playwright";
+import { launchDocumentBrowser } from "../platform/browser";
 import {
   packHtml,
   renderPack,
@@ -33,7 +33,7 @@ async function branded(html: string) {
     : prepared.replace("<body>", "<body>" + mark);
 }
 async function renderBranded(html: string, reference: string, context: string) {
-  const browser = await chromium.launch();
+  const browser = await launchDocumentBrowser();
   try {
     const page = await browser.newPage();
     await page.route("**/*", (r) => r.abort());

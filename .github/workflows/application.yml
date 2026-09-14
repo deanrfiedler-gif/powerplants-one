@@ -48,7 +48,7 @@ jobs:
           git rev-parse HEAD
           npm ls --depth=0
       - name: Install pinned controlled PDF renderer
-        run: npx playwright install --with-deps chromium
+        run: npm run browser:install
       - name: Static, unit and build checks
         run: npm run check
       - name: Configure disposable loopback database
@@ -87,7 +87,7 @@ jobs:
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-full-browser/results.json
         run: |
-          npx playwright install --with-deps chromium
+          npm run browser:install
           npm run test:browser -- --reporter=list,json
       - name: Prepare retained browser review diagnostics immediately
         if: ${{ always() && steps.database_setup.outcome == 'success' }}
@@ -277,7 +277,7 @@ jobs:
           git rev-parse HEAD
           npm ls --depth=0
       - name: Install pinned controlled PDF renderer
-        run: npx playwright install --with-deps chromium
+        run: npm run browser:install
       - name: Static, unit and build checks
         run: npm run check
       - name: Configure disposable loopback database
@@ -409,7 +409,7 @@ jobs:
           git rev-parse HEAD
           npm ls --depth=0
       - name: Install pinned controlled PDF renderer
-        run: npx playwright install --with-deps chromium
+        run: npm run browser:install
       - name: Static, unit and build checks
         run: npm run check
       - name: Configure disposable loopback database
@@ -502,7 +502,7 @@ jobs:
           git rev-parse HEAD
           npm ls --depth=0
       - name: Install pinned controlled PDF renderer
-        run: npx playwright install --with-deps chromium
+        run: npm run browser:install
       - name: Static, unit and build checks
         run: npm run check
       - name: Configure disposable loopback database
@@ -580,7 +580,7 @@ jobs:
           git rev-parse HEAD
           npm ls --depth=0
       - name: Install pinned controlled PDF renderer
-        run: npx playwright install --with-deps chromium
+        run: npm run browser:install
       - name: Static, unit and build checks
         run: npm run check
       - name: Configure disposable loopback database

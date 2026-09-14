@@ -11,7 +11,7 @@ const output=resolve(root,process.env.PPO_PORTAL_EVIDENCE||'verification-evidenc
 await mkdir(output,{recursive:true});
 const hash=data=>createHash('sha256').update(data).digest('hex');
 const report={scope:'Standalone synthetic design only; no runtime authorisation, persistence or CPA acceptance',source_head:process.env.PPO_SOURCE_HEAD||'local-working-tree',source_sha256:hash(await readFile(source)),node:process.version,viewports:[],captures:[],checks:[]};
-const browser=await chromium.launch({headless:true});
+const browser=await chromium.launch({channel:"chrome",headless:true});
 try{
  for(const viewport of [{width:1440,height:1000},{width:390,height:844},{width:320,height:800}]){
   const context=await browser.newContext({viewport,deviceScaleFactor:1});

@@ -14,7 +14,7 @@ await mkdir(root, { recursive: true });
 const origin = "http://127.0.0.1:3000";
 // Both Chromium implementations have reproduced the stall. Keep the current
 // selection fixed while observing the internal network pipeline.
-const channel = "chromium";
+const channel = "chrome";
 async function assetProbe(path: string) {
   // A separate post-failure server probe, never a replacement measured sample.
   const started = performance.now();
