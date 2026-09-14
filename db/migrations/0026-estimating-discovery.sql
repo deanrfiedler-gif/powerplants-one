@@ -161,6 +161,10 @@ CREATE CONSTRAINT TRIGGER estimating_graph AFTER INSERT OR UPDATE ON ppo.estimat
 CREATE CONSTRAINT TRIGGER estimating_graph AFTER INSERT OR UPDATE ON ppo.estimating_options DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.check_estimating_graph();
 CREATE CONSTRAINT TRIGGER estimating_graph AFTER INSERT ON ppo.estimation_revisions DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.check_estimating_graph();
 
+-- Build indexes before backfill queues deferred identity/graph checks.
+CREATE INDEX ix_estimating_workspace_owner ON ppo.estimating_workspaces(workspace_id,company_id,owner_id,id);
+CREATE INDEX ix_estimating_revision_history ON ppo.estimation_revisions(workspace_id,option_id,version DESC);
+
 CREATE FUNCTION ppo.materialise_legacy_estimate(e ppo.estimates) RETURNS void LANGUAGE plpgsql AS $$
 DECLARE group_id uuid:=gen_random_uuid();
 BEGIN
@@ -224,5 +228,3 @@ CREATE TRIGGER discovery_draft_guard BEFORE INSERT OR UPDATE ON ppo.estimates FO
 CREATE TRIGGER discovery_draft_guard BEFORE INSERT ON ppo.estimate_versions FOR EACH ROW EXECUTE FUNCTION ppo.guard_e1_discovery_state();
 CREATE TRIGGER discovery_draft_guard BEFORE INSERT OR UPDATE ON ppo.draft_quotes FOR EACH ROW EXECUTE FUNCTION ppo.guard_e1_discovery_state();
 CREATE TRIGGER discovery_draft_guard BEFORE INSERT ON ppo.draft_quote_revisions FOR EACH ROW EXECUTE FUNCTION ppo.guard_e1_discovery_state();
-CREATE INDEX ix_estimating_workspace_owner ON ppo.estimating_workspaces(workspace_id,company_id,owner_id,id);
-CREATE INDEX ix_estimating_revision_history ON ppo.estimation_revisions(workspace_id,option_id,version DESC);

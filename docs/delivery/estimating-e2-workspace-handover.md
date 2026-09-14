@@ -1,6 +1,6 @@
 ---
 document_id: PPO-010-E2-PERSIST-HO
-revision: r01
+revision: r02
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
 status: Workspace API and additive migration implemented; runtime verification and browser journey pending
@@ -32,6 +32,8 @@ At this source checkpoint, local full lint, TypeScript, all 103 unit tests and t
 Three new unit cases exercise strict command identity, branch/copy exclusivity and exact selection requirements. Twelve real-database cases are authored for identical/stale races; immutable source and explicit reconfirmation; copy/fresh/hidden-answer behaviour; archive/reopen/selection; revoked current and original-Site access; changed context; atomic rollback at audit/receipt/outbox; additive E1 migration/repeated seed/original HTML/PDF recovery; ten-option and relationship constraints; and unsupported group states. The unsupported-state fixture changes constraints only inside a transaction that is always rolled back. Render Pending is separately proved compatible with Draft editability. Two actual HTTP cases cover saved commands, original recovery, exact history, direct denial, invalid definitions/confirmation, payload limits and origin enforcement. Authored cases are not passing runtime evidence.
 
 Every exact migration-registry assertion was reviewed, including the unchanged seed list (0026 adds no seed), and the existing hosted-upgrade gate was reviewed for additive records and runtime privileges. No hosted upgrade or deployment is performed by this contribution. Workflow files are unchanged.
+
+The first exact source `45deb5cea5273aeaf1067f2a97013e2b3102b203` passed 103 CI unit cases and 13 of 14 retained E1 database cases in run `34804121411`, job `103852478666`. The existing migration-24 upgrade case failed with PostgreSQL `55006`: index creation followed the legacy backfill, which had queued deferred trigger events. Fresh migration passed. The correction moves both new indexes before backfill; it does not suppress a constraint, trigger, upgrade case or original-file check. The corrected source still needs runtime execution. Main-targeted #169 owns this contribution; concurrently opened #170 was closed as a duplicate with no source discarded.
 
 ## Remaining delivery
 
