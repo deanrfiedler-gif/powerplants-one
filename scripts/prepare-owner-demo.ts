@@ -1,6 +1,6 @@
 import { randomUUID, createHash } from "node:crypto";
 import { mkdir, readFile, writeFile, open, rename, rm } from "node:fs/promises";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
@@ -126,6 +126,12 @@ async function save(path: string, value: unknown, exclusive = false) {
     await handle.close();
   }
   if (!exclusive) await rename(temp, path);
+  const parent = await open(dirname(path), "r");
+  try {
+    await parent.sync();
+  } finally {
+    await parent.close();
+  }
 }
 export async function prepareOwnerDemo(directory: string, date: string) {
   if (localConfig().database_name !== "ppo_synthetic_test")
@@ -142,8 +148,17 @@ export async function prepareOwnerDemo(directory: string, date: string) {
       "Supply the actual preparation date in Australia/Brisbane as YYYY-MM-DD.",
     );
   await privatePath(directory, false);
+  // Require an existing private parent so one flushed directory entry makes
+  // this epoch durable before any original business operation is sent.
+  await privatePath(dirname(directory), true);
   await mkdir(directory, { mode: 0o700, recursive: true });
   await privatePath(directory, true);
+  const epochParent = await open(dirname(directory), "r");
+  try {
+    await epochParent.sync();
+  } finally {
+    await epochParent.close();
+  }
   const lock = join(directory, "preparation.lock");
   await mkdir(lock, { mode: 0o700 });
   try {

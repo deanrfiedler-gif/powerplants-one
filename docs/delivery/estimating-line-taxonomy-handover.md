@@ -1,13 +1,21 @@
 ---
 document_id: PPO-010-TAXONOMY-HO
-revision: r01
+revision: r02
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
-status: Implemented locally; exact-source and actual-main verification pending
+status: Original source and representative outputs verified; integration and main pending
 source_commit: 233dd66ccdf2a576c0e36f2cddd374504b337fb0
 ---
 
 # Manual estimating categories and Allowance handover
+
+## Current verified component
+
+Source `8a5ec097d8aa896d7390b7af2f399acf3ca3014b`, tree `7b23e46feb047e843c157068f0444b01a6366a63`, passed all 16 applicable checks. Full run `34791723766` / job `103817081160`, attempt 1, passed 87 unit, 392 DB, 26 HTTP and 168 browser cases plus three explicit skips. Focused E1 run `34791723778` / job `103817081097` passed 14 DB, three HTTP, 13 browser and legacy/schema-2 actual process restart proofs.
+
+Original focused artifact `10328820026` is 3,206,705 bytes, SHA-256 `c53b867d1d4849e3018a8695a0be39c6aa53b4271ca2a411d1920f0df1d266a8`. All 35 supplied screenshot hashes match, as do source/checkout/tree/run references. Three legacy restart records omit byte count/run attempt; their differently named screenshot hashes match and originals remain unchanged. Six taxonomy desktop/phone/restart PNGs and all eight pages of the desktop long Draft PDF were reviewed. No PDF overlap/clipping was seen; its repeated table headers, total, exclusions, assumptions and page numbers are legible. The mobile PDF was independently hashed but not visually reviewed. Phone captures are scroll windows; the 320px native select shortens Engineering while its full fieldset label remains visible.
+
+[#164](https://github.com/deanrfiedler-gif/powerplants-one/pull/164) retains the original failure/fixture correction below. Combined [#166](https://github.com/deanrfiedler-gif/powerplants-one/pull/166) includes this source and main’s newer guarded Chrome/runtime; current integration/main verification remains pending. The earlier CI-pending narrative below is a historical checkpoint, not the latest result. E2, full acceptance and owner demonstration remain separate.
 
 ## Authority and result
 

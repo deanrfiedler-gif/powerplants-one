@@ -76,7 +76,7 @@ For an explicitly disposable local test environment only, stop the app and run:
 PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
 ```
 
-Reset intentionally recreates synthetic database fixtures; it is **not recovery**, does not restore browser originals and does not remove the private document store. Use a new demo epoch and the [DEMO-02 six-opportunity recipe](private-prototype-demo.md), preserving exact scenario/operation mappings. The preparer now stores original operation identities before dispatch, advances the six records through the actual domain commands, completes O4's initial Activity, and prepares O2's saved fallback estimate and Ready Draft. Run it only in a new isolated epoch with an empty current pipeline:
+Reset intentionally recreates synthetic database fixtures; it is **not recovery**, does not restore browser originals and does not remove the private document store. Use a new demo epoch and the [DEMO-02 six-opportunity recipe](private-prototype-demo.md), preserving exact scenario/operation mappings. The preparer now stores original operation identities before dispatch, advances the six records through the actual domain commands, completes O4's initial Activity, and prepares O2's saved fallback estimate and Ready Draft. Run it only in a new isolated epoch with an empty current pipeline. Use an existing owner-only private parent directory; the preparer durably creates its one epoch child before sending operations:
 
 ```bash
 node --env-file=.env.local --import tsx scripts/prepare-owner-demo.ts /absolute/private/demo-epoch YYYY-MM-DD

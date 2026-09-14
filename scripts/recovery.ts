@@ -10,7 +10,7 @@ import {
   realpath,
   writeFile,
 } from "node:fs/promises";
-import { dirname, isAbsolute, join, parse, relative, resolve } from "node:path";
+import { dirname, isAbsolute, join, parse, relative, resolve, sep } from "node:path";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import pg from "pg";
@@ -86,14 +86,16 @@ export function recoveryConnection(url: string) {
 
 export function distinctPaths(paths: string[]) {
   const absolute = paths.map((p) => resolve(p));
+  const descendant = (path: string) =>
+    path !== ".." && !path.startsWith(`..${sep}`) && !isAbsolute(path);
   for (let a = 0; a < absolute.length; a++)
     for (let b = a + 1; b < absolute.length; b++) {
       const r = relative(absolute[a], absolute[b]),
         back = relative(absolute[b], absolute[a]);
       if (
         !r ||
-        (!r.startsWith("..") && !isAbsolute(r)) ||
-        (!back.startsWith("..") && !isAbsolute(back))
+        descendant(r) ||
+        descendant(back)
       )
         fail(
           "Recovery source, checkpoint and destination paths must be separate.",

@@ -1,15 +1,19 @@
 ---
 document_id: PPO-009-OUTCOME-HO
-revision: r01
+revision: r02
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
-status: Implemented on a branch; database, browser and merged-main verification pending
+status: Merged and verified; authoritative bounded completion in issue 144
 source_commit: 503473dc136046812fbd42907aca448d7e895b9d
 ---
 
 # CRM owned outcomes — increment B
 
 [CRM-02 / issue #144](https://github.com/deanrfiedler-gif/powerplants-one/issues/144) follows the five-stage increment A. The [adopted policy package](../decisions/audit-follow-through-policy-package.md) was committed before this implementation. This is a synthetic prototype increment; delivery acceptance, receiving-route confirmation and operational transactions remain separate.
+
+## Current bounded publication
+
+[#158](https://github.com/deanrfiedler-gif/powerplants-one/pull/158) source `642e283998f6e286f986d0cda53469780ed1dfbb` passed all 16 checks before normal merge. Actual merge `d069ea3e0a0e82034bb47e501e1c293d12933cd2`, tree `970bd39d18b056254cf299b730509b61e6993d7a`, passed all 12 checks; Full Application run `34791648020` / job `103816876886`, attempt 1, passed 85 unit, 358 DB, 24 HTTP and 160 browser cases plus three explicit skips. All four exact-source desktop/phone outcome originals were reviewed. [Authoritative publication](https://github.com/deanrfiedler-gif/powerplants-one/issues/144#issuecomment-5657859987) records hashes, preserved failure/repair evidence and the six bounded acceptance criteria. #144 is closed; broader CRM/Projects and owner acceptance remain separate. The earlier pending statements below describe the implementation checkpoint, superseded by this publication.
 
 ## Implemented contract
 

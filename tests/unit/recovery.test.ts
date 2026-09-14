@@ -63,10 +63,13 @@ test("P12 separates checkpoint/source/destination and refuses Git paths, symlink
   const root = await mkdtemp(join(tmpdir(), "ppo-p12-guard-"));
   try {
     distinctPaths([join(root, "a"), join(root, "ab")]);
+    distinctPaths([join(root, "a"), join(root, "..sibling")]);
     for (const paths of [
       [root, root],
       [root, join(root, "child")],
       [join(root, "child"), root],
+      [root, join(root, "..still-a-child")],
+      [join(root, "..still-a-child"), root],
     ])
       assert.throws(() => distinctPaths(paths));
     await mkdir(join(root, "repo"), { mode: 0o700 });

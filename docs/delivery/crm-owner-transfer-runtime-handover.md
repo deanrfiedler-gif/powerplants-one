@@ -1,15 +1,21 @@
 ---
 document_id: PPO-009-TRANSFER-HO
-revision: r01
+revision: r02
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
-status: Implemented on a branch; HV execution and exact-source review pending
+status: Original source verified; combined maintained-source and main publication pending
 source_commit: 642e283998f6e286f986d0cda53469780ed1dfbb
 ---
 
 # CRM controlled owner transfer — increment C
 
 [Issue #145](https://github.com/deanrfiedler-gif/powerplants-one/issues/145) implements the [adopted H-01–H-03 package](../decisions/audit-follow-through-policy-package.md) and reconciled [contract](../contracts/crm-opportunity-handover.md), following Won/Lost in #158. The complete #55 design publication was reread before implementation. This is one synthetic command; full AT-25, independent review and operational acceptance remain separate.
+
+## Current verification and integration
+
+Original source `233dd66ccdf2a576c0e36f2cddd374504b337fb0`, tree `b8a59332eaeb18a25367d217dce2e14d21458c7c`, passed all 16 applicable checks. Full run `34789695830` / job `103811512161`, attempt 1, passed 85 unit, 389 DB, 25 HTTP and 166 browser cases plus three explicit skips. Focused run `34789695835` / job `103811512062` passed 44 DB, 23 browser plus two explicit phone-drag skips, 13 retained I2 cases and actual transfer restart. Thirteen of fourteen transfer PNG originals were reviewed; the remaining full-region/device/independent acceptance limits are recorded in [#161](https://github.com/deanrfiedler-gif/powerplants-one/pull/161).
+
+Maintained-runtime source `ada7368ef2b7eb720f783e3db1642e44244ec2dd` is an ancestor of combined [#166](https://github.com/deanrfiedler-gif/powerplants-one/pull/166), which owns current integration/main verification and normal merge. The matrix below records the original prepared scope, not a new claim that every written HV/AT-25 step was executed. Its CI-pending labels and subsequent intermediate failures are historical; the current-source and full-procedure limits remain distinct. #145 stays open pending combined delivery/publication.
 
 ## Changed behaviour
 
