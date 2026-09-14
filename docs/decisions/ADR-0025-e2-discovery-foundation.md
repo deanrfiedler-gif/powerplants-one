@@ -1,6 +1,6 @@
 ---
 document_id: PPO-ADR-0025
-revision: r01
+revision: r02
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
 status: Selected bounded implementation foundation; persistence and full E2 verification pending
@@ -22,6 +22,14 @@ Validate explicit Site/NoSiteRequired/Unknown scope, duplicate-free Facility/equ
 Answers retain Empty/Deferred/Answered/Confirmed/Assumed separately, with explicit source and owned unresolved items. Required active answers need confirmation; Unknown never substitutes for a known enum/count or silently becomes zero. Q04 review need is independent of routing and does not alone prevent the narrow manual-basis readiness. Hidden answers are retained from accepted history by a deliberate successor comparison, not supplied as new hidden confirmed content. Server callers provide actor/time; request input cannot forge them or client-computed readiness.
 
 Definition comparison evaluates stable identity, type, unit, choices, predicates and required state before any label-only compatibility claim. Incompatible/removal/new-required outcomes retain exact prior meaning; the r02 metres/packaging case remains a comparison fixture only. Branch inheritance downgrades confirmed copied answers to Answered and requires deliberate confirmation, preserving provenance. The future database layer must store immutable revisions and compare expected workspace versions; pure tests do not demonstrate those locks or persistence.
+
+## Current related-record boundary
+
+The internal `discovery-context.ts` resolver uses the existing shared and CRM services against the caller-provided transaction. It rechecks the current Opportunity, organisation/contact relationships, estimating read access and the proposed Site's current customer relationship. Every Facility and equipment ID must be currently visible and match that company and selected Site. Only explicit membership is captured. Equipment identity/lifecycle uncertainty remains labelled; a reference does not verify equipment or add its Facility implicitly.
+
+Preparation additionally rechecks estimating edit access and each unresolved item's currently eligible Activity owner. Reading an accepted historical input rechecks current related-record visibility without treating an expired follow-up assignment as a new assignment. Neither entry point grants group ownership or performs a mutation: the eventual command must separately enforce current estimating ownership and workspace/Draft/version locks. The resolver's current context hash binds the exact compiled input and observed related identities, labels and versions; a changed shared version requires a new comparison. It is not a bearer permission and never replaces reauthorisation. Captured originals stay immutable; current observations do not rewrite historical labels.
+
+Opportunity Site and proposed scope Site remain distinct in the internal result. A different proposed Site must have a current relationship to the same customer. This supplies scoped discovery evidence only. It does not relax the current E1 header/quote Site contract or silently bind the proposal to an existing Estimate. No migration or HTTP entry point is allocated by this refinement.
 
 ## Receiving implementation obligations
 
