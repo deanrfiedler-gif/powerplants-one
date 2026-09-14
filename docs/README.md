@@ -17,6 +17,7 @@ Start with [current status](STATUS.md) and the [First Prototype Definition & Arc
 | Customer portal | [Design](blueprints/customer-portal-design.md), [walkthrough](blueprints/customer-portal-mockup.html), [stages](delivery/customer-portal-implementation-plan.md), [handover](delivery/customer-portal-handover.md) |
 | Architecture | [BP-02](architecture/BP-02-platform-architecture.md) |
 | Service | [BP-07](blueprints/BP-07-service-operations.md), [approved field technicians design](decisions/field-technicians-design.md), [approved Job Pack r02](decisions/job-pack-design.md), [integration handover](delivery/field-technicians-handover.md) |
+| Finance workspace | [Interactive r01 HTML](reference/ui/finance/PPO-Finance-and-Commercial-Controls-r01.html), [design and handover](decisions/finance-workspace-design.md); proposed design, visual browser validation and application integration pending |
 | Contracts | [Data](contracts/service-data-dictionary.md), [API](contracts/service-api.md), [Finance](contracts/finance-handoff.md), [documents](contracts/document-issue-distribution.md) |
 | Sources | [Reference register](reference/README.md) and [hash manifest](reference/source-manifest.json) |
 | Decisions | [ADR index](decisions/README.md), [29 decisions](decisions/decision-register.csv), [PP-01 evidence](prototype/decisions-and-evidence.md) |
