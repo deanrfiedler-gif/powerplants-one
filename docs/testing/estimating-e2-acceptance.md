@@ -1,16 +1,18 @@
 ---
 document_id: PPO-010-E2-TEST
-revision: r01
-date: 2026-09-09
+revision: r02
+date: 2026-09-14
 owner: Dean Fiedler - prototype owner
-status: Synthetic design examples; runtime acceptance Not run
+status: Reconciled adopted-subset obligations; runtime acceptance Not run
 ---
 
 # E2 worked examples and future verification
 
 All names, answers and amounts here are fictional. Expected results evaluate the [candidate policies](../decisions/estimating-e2-rules.md), not operational CREMS behaviour. [Design-model fixtures](estimating-e2-fixtures.json) are independent declared input/output examples for the walkthrough's routing model. Their execution is not database, permission or business acceptance.
 
-## Worked journeys
+## Historical r01 worked journeys
+
+W01–W04/W09 and the R01–R13 fixtures retain the unadopted declared model. Their route prerequisites/results are historical comparisons only; current r02 runtime must use the reconciliation below. W05–W08 retain their option/source/comparison obligations independently of route.
 
 | Example | Inputs and actions | Expected reviewable result |
 |---|---|---|
@@ -24,17 +26,26 @@ All names, answers and amounts here are fictional. Expected results evaluate the
 | W08 Concurrent selection | Two actors both read version 7 with A selected. One selects B; another selects C. | One acceptance at version 8, one conflict with no effect. Retry the original accepted operation returns its original result after current reauthorisation. |
 | W09 Route-changing discovery | A is Express; new evidence establishes engineering is required. | Difference shown. A retains original route/history. A new Full option can be created with fresh routing snapshot; no new readiness or inherited approval is implied. |
 
+## Current r02 reconciliation
+
+| Historical example | Required current behaviour |
+|---|---|
+| W01 | Confirmed applicable scope may be Complete for manual estimating. Effort is separately declared; no Sales Order classification is computed before rules are adopted. |
+| W02/W04 | Owned unknown effort/discovery may create an Incomplete first option and atomic selection. Missing routing policy never fabricates an outcome or blocks drafting. Mandatory scope unknowns still block use as a Complete basis. |
+| W03/W09 | Capture engineering/PM facts and declared effort separately. Retain exact source history; revised facts or a later advisory recommendation do not force a new option, receiving route or authority. |
+| W05–W08 | Retain exact old prices/quote bytes, explicit alternative selection, comparison, reconfirmation and competing-write obligations. Remove only the historical same-route restriction. |
+
 ## Runtime acceptance obligations — all Not run
 
 These E2-local case labels refine existing EA/master AT scopes; they are not new parent requirements. Do not mark full EA cases passed when additive options, approvals, outputs or operational source prerequisites remain deferred.
 
 | Local case / existing trace | Required proof at implementation | Evidence layer |
 |---|---|---|
-| E2-A01 / EA-02, EST-01, AT-26 | Every R01–R13 boundary, missing/invalid inputs, all decisive overlaps, ignored lower-priority answers and Q04 independence; exact definition/input evidence | Pure policy, real DB command and HTTP; key complete/incomplete browser journeys |
-| E2-A02 / EA-03/09, EST-03, AT-03/26 | First selection atomic; B unselected on creation; 10-option limit; same/different-route inheritance; selected archive rejected; reopen unselected; Draft-output and all unsupported-state locks | Constraints, transaction/race tests and browser compare |
+| E2-A01 / EA-02, EST-01, AT-26 | Attributed effort/owned unknown separate from delivery route; option creation/save with routing Not configured; no fabricated classification, binding or new-option requirement; Q04 independence. R01–R13 remain historical model fixtures, not adopted DB/API gates; future advisory rules need their own adopted boundaries and exact snapshots | Pure policy, real DB command and HTTP; key complete/incomplete browser journeys |
+| E2-A02 / EA-03/09, EST-03, AT-03/26 | First selection atomic; B unselected on creation; 10-option limit; explicit source inheritance independent of a routing recommendation; selected archive rejected; reopen unselected; Draft-output and all unsupported-state locks | Constraints, transaction/race tests and browser compare |
 | E2-A03 / EA-04, EST-02, AT-27 | Ten question definitions; every condition; 1/100,000 valid count, 0/100,001/fraction/blank invalid or unresolved as appropriate; required confirmation, Assumed/Deferred and missing-owner handling | Definition validation, command tests, browser state |
-| E2-A04 / EA-04/15, EST-02/08, AT-27/36 | Same-site Facility subsets; no inherited children; changed membership; label-only/new/removed/type/unit/choice/conditional compatibility; cancel, incomplete successor, restore and explicit reuse | DB relationships and comparison/history browser journey |
-| E2-A05 / EA-01/18, EST-07, AT-01/18/23 | Current company/site/Facility/CRM/person denial on read/count/selector/command/receipt/history/export; identity clears sensitive input; ownership gives no extra authority | Actual grants, direct API and two-identity browser cases |
+| E2-A04 / EA-04/15, EST-02/08, AT-27/36 | Same-site Facility and direct equipment subsets; zero equipment means none recorded; reject duplicates, wrong-site/unknown-site equipment and more than 100 IDs; no new asset identity or inferred route; no inherited children; changed membership; label-only/new/removed/type/unit/choice/conditional compatibility; cancel, incomplete successor, restore and explicit reuse | DB relationships and comparison/history browser journey |
+| E2-A05 / EA-01/18, EST-07, AT-01/18/23 | Current company/site/Facility/equipment/CRM/person denial on read/count/selector/command/receipt/history/export; identity clears sensitive input; ownership gives no extra authority | Actual grants, direct API and two-identity browser cases |
 | E2-A06 / EA-06/18, EST-03, AT-26 | Two competing selections/branches/saves; lost response after commit; original replay, changed-content conflict; unknown lock read; no duplicate audit/outbox | Concurrent PostgreSQL, HTTP and browser recovery |
 | E2-A07 / EA-03/15/18, EST-03/08, AT-26/36 | Pre-upgrade E1 manifest identical after migration/reseed/new alternatives/snapshots and separate app/DB restarts, including original HTML/PDF, receipts and revoked grants | Fresh and upgraded DB, actual original bytes and restart evidence |
 | E2-A08 / EA-10/15, EST-08, AT-36 | Builder mismatch rejected; customer-safe whitelist excludes internal/history/incompatible answers; current source permissions; no live selection refresh of A quote | Future receiving contract/API/output integration; not satisfied by design preview |

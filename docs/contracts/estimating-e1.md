@@ -1,5 +1,7 @@
 # BP-04 E1 physical and API contract
 
+**Revision:** r02 · **Updated:** 14 September 2026 · Implemented E1 contract with adopted extension specified separately below.
+
 **Scope:** Authorised manual synthetic estimate and draft quotation, issue #46 / ADR-0017. Verification is recorded in the [handover](../delivery/estimating-e1-handover.md). The broader BP-04 design and 78 master parents remain unchanged.
 
 ## Identity and history
@@ -40,6 +42,16 @@ Mutation inputs are whitelisted. Business commands use the existing operation UU
 Preparation captures the PPA logo bytes, Verdana fallback and `PPO-E1-DRAFT-r01` HTML definition. The draft input is immutable. A separate two-minute leased job records attempts and retains one immutable bundle keyed by job UUID through the existing private synthetic document adapter. PDF generation uses the repository's pinned Playwright renderer with external requests blocked. The bundle binds workspace/job/revision/template/input, original HTML and PDF hashes, byte counts and browser version. A Ready job cannot be overwritten. A file acknowledgement followed by a process/database interruption recovers the stored original bundle rather than rendering another output. Missing/corrupt original bytes report unavailable while retaining the reference. Render retry is a POST, never a GET side effect. No document crosses into a live storage adapter.
 
 The UI provides scope and manual line editing, separate proposal/saved totals, saved history and exact-source draft preview/downloads. Phone context is compact and cost controls reflow. Shared identity changes unmount sensitive forms. Browser entries are online memory only; no offline-save claim is made.
+
+## Adopted taxonomy extension — runtime pending
+
+DR-01 in the [audit policy package](../decisions/audit-follow-through-policy-package.md) retains Product/Labour/Freight and adds Engineering/Subcontract. Allowance is a separate explicit Boolean on newly authored lines. It must not be inferred from category, missing or zero amount, or the existing quote projection named “Included scope allowance”. That grouped customer-safe amount remains an independent include/print presentation rule.
+
+Implement this as a strict versioned command extension: schema 1 keeps its exact whitelist, canonical defaults, hashes and three-category semantics; schema 2 requires an explicit allowance value and permits the five adopted categories. Version dispatch precedes parsing and hashing. Old accepted commands must replay with their original schema, never be expanded with a default before receipt comparison. New saved cost versions identify their cost schema; old saved JSON and output bytes remain untouched. Legacy reads can show “Allowance not recorded” rather than fabricate a historic false declaration. A deliberate new version can adopt explicit values without relabelling its predecessor.
+
+Retain the existing scaled-integer arithmetic, quantity/price bounds, required actual source date, 100-line/64 KiB limits and separate costing/quote permissions. No unknown amount, FX, discount, margin threshold, tax, generated price, approval or routing rule follows from the new category/flag. Same-site equipment belongs to the exact E2 scope revision under the [receiving contract](estimating-e2-design.md); it does not create a competing Service equipment record.
+
+Before runtime changes, record the actual migration/ADR allocation and schema-1/schema-2 storage and dispatch strategy against current main. Prove schema-1 original replay and every E1 stored source/HTML/PDF byte through upgrade, reseed, explicit new-version adoption and app/database restart. Required negative cases include omitted/non-Boolean allowance, unsupported category, schema-1 new fields/categories and hidden-line/zero-price inference. This section specifies the authorised extension; the implemented routes and three-category behaviour above remain current until its separately verified runtime delivery.
 
 ## Mobile CRM presentation projection
 

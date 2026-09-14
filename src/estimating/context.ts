@@ -15,6 +15,7 @@ export type EstimateVersion = {
   id:string; workspace_id:string; company_id:string; estimate_id:string; version:number; predecessor_id:string|null;
   scope_revision_id:string; title:string; scope:{included:string;excluded:string;assumptions:string}; lines:CostLine[];
   policy:string; content_hash:string; reason:string; cost_total:string|null; sell_total:string|null; created_at:Date; created_by:string;
+  cost_schema_version?: 1 | 2;
 };
 export type QuoteRevision = {
   id:string; workspace_id:string; company_id:string; quote_id:string; estimate_id:string; estimate_version_id:string;
@@ -42,7 +43,10 @@ export async function estimateContext(c:QueryClient,p:Principal,id:string,cap:Es
 }
 export async function versionContext(c:QueryClient,p:Principal,e:Estimate,id:string) {
   const v=(await c.query<EstimateVersion>("SELECT * FROM ppo.estimate_versions WHERE workspace_id=$1 AND estimate_id=$2 AND id=$3",[p.workspace_id,e.id,uuid(id,"version_id")])).rows[0];
-  if(!v) throw unavailable(); return v;
+  if(!v) throw unavailable();
+  // Keep every original schema-1 DTO field and value, including its absence of this new discriminator.
+  if(v.cost_schema_version === 1) delete v.cost_schema_version;
+  return v;
 }
 export async function quoteContext(c:QueryClient,p:Principal,id:string,cap:EstimateCap="estimating.quote.read") {
   const q=(await c.query<QuoteRevision>("SELECT * FROM ppo.draft_quote_revisions WHERE workspace_id=$1 AND id=$2",[p.workspace_id,uuid(id,"revision_id")])).rows[0];

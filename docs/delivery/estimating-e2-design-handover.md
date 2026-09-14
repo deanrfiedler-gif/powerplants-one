@@ -1,24 +1,28 @@
 ---
 document_id: PPO-010-E2-HO
-revision: r01
-date: 2026-09-09
+revision: r02
+date: 2026-09-14
 owner: Dean Fiedler - prototype owner
-status: Design package prepared; policy review pending; no E2 runtime implementation
+status: Adopted subset reconciled; no E2 runtime implementation
 ---
 
 # E2 design handover
 
-Start with the [three proposed decisions](../decisions/estimating-e2-rules.md#review-the-three-proposed-decisions), then open the [walkthrough](../blueprints/estimating-e2-walkthrough.html). The [complete design](../blueprints/estimating-e2-design.md), [receiving/preservation contract](../contracts/estimating-e2-design.md) and [worked/acceptance cases](../testing/estimating-e2-acceptance.md) make the next implementation reviewable.
+Start with the [adopted audit package](../decisions/audit-follow-through-policy-package.md) and current [E2 decisions](../decisions/estimating-e2-rules.md). The unchanged [walkthrough](../blueprints/estimating-e2-walkthrough.html) is explicitly historical declared-model design, not the r02 runtime oracle. The [complete design](../blueprints/estimating-e2-design.md), [receiving/preservation contract](../contracts/estimating-e2-design.md) and [worked/acceptance cases](../testing/estimating-e2-acceptance.md) make the next implementation reviewable.
 
 Work item: [E2 design #76](https://github.com/deanrfiedler-gif/powerplants-one/issues/76).
 
 Source baseline: `f8035b5c55251da4da52430adf2f83094feccd6b`. E1 completion remains governed by its [actual publication](https://github.com/deanrfiedler-gif/powerplants-one/pull/49#issuecomment-5562344440). Its 7 September passes are not copied forward as fresh tests of this branch. Current main, relevant shared/E1 contracts, open PRs and the approved-but-unmerged Facility field decision were inspected. No published Quotation Builder package was located; its interface is explicitly proposed here.
 
-## Review outcome required
+## Current adopted subset
 
-Dean can adopt E2-D01, E2-D02 and E2-D03 for the named r01 synthetic policies, or identify a change. The decisions specifically cover stopping unknown prepayment, allowing alternatives while exact quotations are Draft, and retaining incomplete scoped discovery with confirmation before manual estimating. No employee reviewer or operational authority is fabricated. G02 pricing/approval, G03 broader commitments and G04 operational questionnaires remain unresolved even if this subset is accepted.
+Dean adopted E2-D02/D03 and DR-01/02 in the audit follow-through. The r02 documents retain Draft-only exclusive options, immutable answers, owned unknowns and deliberate resnapshot while removing route confirmation before option creation and forced branching after route changes. Effort remains separate. Routing displays Not configured until rules are adopted; this does not block drafting. Equipment uses existing same-site IDs and Allowance is an explicit new-version flag separate from category and quote include/print. The E1 contract now defines schema-1 preservation and schema-2 extension obligations. No employee reviewer or operational authority is fabricated. G02 pricing/approval, G03 broader commitments and G04 operational questionnaires remain unresolved even if this subset is accepted.
 
 ## Verification record
+
+The 14 September r02 is contract reconciliation only; no schema, API, parser, output or issued reference is changed. Run documentation checks for this contribution. Historical route fixtures remain unchanged and do not prove adopted route policy. Runtime E2, category/allowance and equipment acceptance remain Not run.
+
+### Historical design verification
 
 Publication: [review PR #78](https://github.com/deanrfiedler-gif/powerplants-one/pull/78). Its maintained description records the final design verification and owner-review state; it does not establish policy adoption.
 
@@ -30,4 +34,4 @@ Local foundation/prototype/naming checks and the model fixtures passed. Local br
 
 ## Next implementation boundary
 
-After concrete policy adoption, refresh actual main/active reservations and prepare one E2 implementation item. Formalise E1 identities additively; specify legacy command compatibility; implement route snapshots, exclusive options and scoped question snapshots under current permissions/receipts. Use the acceptance matrix for meaningful constraints, recovery, E1-original preservation and current regression. Do not infer approval from merging design documentation. Specialist formulas, pricing/approval, formal issue/send/acceptance, ERP effects, source imports, offline estimating, migration/cutover, hosting and E3 are outside this design contribution.
+Under the recorded continuing authority, refresh actual main/active reservations and prepare one E2 implementation item. Formalise E1 identities additively; specify legacy command compatibility; implement effort evidence, exclusive options and scoped question/equipment snapshots; reserve future advisory observations for an adopted rule set under current permissions/receipts. Use the acceptance matrix for meaningful constraints, recovery, E1-original preservation and current regression. Do not infer approval from merging design documentation. Specialist formulas, pricing/approval, formal issue/send/acceptance, ERP effects, source imports, offline estimating, migration/cutover, hosting and E3 are outside this design contribution.
