@@ -1,11 +1,10 @@
 import assert from "node:assert/strict";
-import { beforeEach, after, test } from "node:test";
+import { test } from "node:test";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
-import { database, closeDatabase, transaction } from "../../src/platform/database";
-import { localConfig } from "../../src/platform/config";
+import { database, transaction } from "../../src/platform/database";
 import { createSession } from "../../src/platform/identity";
-import { reset, migrate, seed } from "../../scripts/database";
+import { migrate, seed } from "../../scripts/database";
 import { createOpportunity } from "../../src/crm/opportunities";
 import { createEstimate, saveEstimate, prepareQuote } from "../../src/estimating/service";
 import { readEstimate, listEstimates, readQuote, opportunityCommercial } from "../../src/estimating/reads";
@@ -17,9 +16,9 @@ import { CRM, crmBase, crmCreate } from "../helpers/crm";
 import { estimateInput, quoteCommand } from "../helpers/estimating";
 import { discoveryInput } from "../helpers/estimating-discovery";
 import { discoveryCostSetup, manualCostCommand, costed, reviseCostDiscovery, selectCostOption } from "../helpers/estimating-cost-basis";
-if(localConfig().database_name!=="ppo_synthetic_test")throw Error("Disposable ppo_synthetic_test only");
-process.env.PPO_ALLOW_RESET="dispose-synthetic";process.env.PPO_RESET_DATABASE="ppo_synthetic_test";
-beforeEach(reset);after(closeDatabase);
+// Registered once by the existing estimating DB entrypoint; it owns the
+// disposable guard, beforeEach(reset) and after(closeDatabase) lifecycle.
+export function registerDiscoveryCostBasisTests() {
 const rows=async(q:string,v:unknown[]=[])=> (await database().query(q,v)).rows;
 const code=(name:string)=>(e:unknown)=>(e as {code:string}).code===name;
 const tables=["estimates","estimate_versions","estimate_discovery_roots","estimate_discovery_bases","estimating_workspaces","estimating_options","estimation_revisions","draft_quotes","draft_quote_revisions","business_identities","audit_events","operation_receipts","outbox_jobs","opportunities"];
@@ -152,3 +151,5 @@ test("E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts an
   assert.equal((await rows("SELECT count(*)::int n FROM ppo.estimate_discovery_roots"))[0].n,0);
   await assert.rejects(createEstimate(p,{...estimateInput(o.id)}),code("RelationshipConflict"));
 });
+
+}
