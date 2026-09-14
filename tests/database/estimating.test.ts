@@ -173,11 +173,12 @@ test("DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent ad
   const s=await quoted();await runQuoteJob((await readQuoteJob(s.p,s.command.id)).j.id);
   const bytes=await draftBytes(s.p,s.command.id),tables=["estimates","estimate_versions","draft_quotes","draft_quote_revisions","estimate_quote_jobs","estimate_quote_attempts","audit_events","operation_receipts","outbox_jobs"];
   const originals=()=>Promise.all(tables.map(t=>rows(`SELECT to_jsonb(v) value FROM ppo.${t} v ORDER BY id`)));
-  const before=await originals(),ledger=await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   const observer=await principal("observer");
   await rows("INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,valid_from) VALUES($1,$2,$3,'estimating.edit','Company',$3,'2026-01-01') ON CONFLICT DO NOTHING",[CRM.workspace,observer.actor_id,CRM.company]);
   assert.equal((await rows("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='estimating.edit' RETURNING id",[observer.actor_id])).length,1);
   const grants=await rows("SELECT * FROM ppo.permission_grants ORDER BY id");
+  // Capture the backup point after the observer login and revoked-grant fixture have committed.
+  const before=await originals(),ledger=await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   await migrate();await seed();await migrate();await seed();
   assert.deepEqual(await originals(),before.map((rs,i)=>tables[i]==="estimate_versions"?rs.map(r=>({...r,value:{...r.value,cost_schema_version:1}})):rs));
   assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version<=24 ORDER BY version"),ledger);
