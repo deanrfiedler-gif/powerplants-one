@@ -161,7 +161,7 @@ test("E2 retained contact visibility protects history and exact recovery after t
   assert.deepEqual(await snapshot(),before);
   // Explicit fixture restoration proves denied recovery never rewrites or
   // refreshes stored labels, version bindings, receipts or Draft bytes.
-  await rows("INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,valid_from) VALUES($1,$2,$3,'shared.read','Company',$3,clock_timestamp())",[CRM.workspace,s.p.actor_id,CRM.company]);
+  assert.equal((await rows("UPDATE ppo.permission_grants SET valid_to=NULL WHERE workspace_id=$1 AND user_id=$2 AND capability='shared.read' AND scope_type='Company' AND scope_id=$3 RETURNING id",[CRM.workspace,s.p.actor_id,CRM.company])).length,1);
   await assertOriginals();assert.deepEqual(await snapshot(),before);
 });
 test("E2 graph guards refuse missing, cross-option and mutable bases without accepting partial cost versions",async()=>{
