@@ -6,7 +6,7 @@
 
 The issued master owns the source requirement text. This CSV is a derived index; the foundation check detects missing/duplicate IDs, altered source wording and invalid initial-backlog or acceptance references. GitHub issue status describes work execution. Requirement approval, implementation and test status remain explicit and separate.
 
-All requirements are proposed; none is marked implemented by this foundation. A-min or A-manual delivery does not mean the whole parent is complete.
+The original CSV retains the issued proposal wording and foundation status. Later adopted scope is recorded in the [product-quality child register](product-quality-register.md) and current decisions; none of its parent requirements is marked fully implemented by this amendment. A-min or A-manual delivery does not mean the whole parent is complete.
 
 ## Prototype scope disposition
 

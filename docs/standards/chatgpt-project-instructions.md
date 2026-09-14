@@ -70,7 +70,7 @@ Design readable desktop coordination and practical mobile field work: accessible
 
 Use Australian English and docs/standards/ui-style-specification.md: Roboto/Verdana, navy #242a37, green #62bb46 and the intact supplied logo. Read docs/decisions/crm-desktop-mobile-refinements.md for the approved r11/r07 implementation and remaining two-stage limits. Show synthetic/environment context.
 
-Define permissions, scope, validation, transitions, recovery and acceptance; assess integrity and usability.
+Define permissions, scope, validation, transitions, recovery and acceptance; assess integrity and usability. Apply docs/requirements/product-quality-register.md and docs/delivery/product-quality-plan.md for adopted scope.
 
 ## 8. Execution and authority
 

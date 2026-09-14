@@ -54,3 +54,7 @@ The [CRM handover](crm-discovery-handover.md) records BP-03, all eighteen parity
 ## Customer portal staged work
 
 [Issue #50](https://github.com/deanrfiedler-gif/powerplants-one/issues/50) is the focused customer portal design contribution under D-027 and the existing shared/Service/Projects/document requirements. [Design](../blueprints/customer-portal-design.md), [CP1–CP5 plan](customer-portal-implementation-plan.md), [handover](customer-portal-handover.md). The initial PPO-001–PPO-016 creation snapshot and all 78 parent requirements remain unchanged. Runtime child issues are created only as their stage is ready; no P13 or eighth domain is introduced.
+
+## Adopted product quality delivery
+
+The [quality adoption](../decisions/product-quality-adoption.md), [child register](../requirements/product-quality-register.md) and [delivery plan](product-quality-plan.md) govern the next refinements. Complete existing #121/#120 via #179, then named personal/team views; deliver one complete equipment/inspection journey and one readiness/change-impact journey. Lifecycle, data/integration operations and customer/assisted journeys follow their dependencies. All five quality standards apply throughout. Preserve the original PPO-001–PPO-016 snapshot and reuse existing domain issues; [tracker #181](https://github.com/deanrfiedler-gif/powerplants-one/issues/181) coordinates new scope without bulk duplicate issues.

@@ -43,3 +43,7 @@ The [audit continuation handover](delivery/audit-continuation-handover.md) recor
 - [E3 source, arithmetic and review choices](delivery/estimating-e3-decision-pack.md) — concrete examples and a bounded manual-source proposal; unresolved pricing/approval choices stay explicit.
 - [J1 coordination reconciliation](delivery/projects-j1-reconciliation.md) — extend existing Project/Gantt identities with shared Activities and manual health; preserve forecast-milestone meaning.
 - [Supply Chain readiness contract](contracts/supply-chain-readiness.md) — SCM-01–08 candidate demand, promise, allocation, quarantine and owned-impact semantics; no ERP mapping or executed acceptance.
+
+## Adopted product quality and capability scope
+
+[Adoption decision](decisions/product-quality-adoption.md), [quality and gap register](requirements/product-quality-register.md), [ordered delivery plan](delivery/product-quality-plan.md). All eight refinements and five standards are adopted; existing capability plans continue. First increments: persistent personal/team views, equipment/inspection, readiness/change impact. Runtime and acceptance remain separately tracked.
