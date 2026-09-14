@@ -35,3 +35,9 @@ Frozen issued references remain evidence. Stable working documents evolve throug
 [Azure private demo runtime](delivery/azure-private-demo.md) — individual sign-in, cloud configuration, deployment and reset preparation; live acceptance pending.
 
 The [audit continuation handover](delivery/audit-continuation-handover.md) records the authorised next-ten sequence, current verification and remaining delivery boundaries.
+
+## Audit continuation receiving packages
+
+- [E3 source, arithmetic and review choices](delivery/estimating-e3-decision-pack.md) — concrete examples and a bounded manual-source proposal; unresolved pricing/approval choices stay explicit.
+- [J1 coordination reconciliation](delivery/projects-j1-reconciliation.md) — extend existing Project/Gantt identities with shared Activities and manual health; preserve forecast-milestone meaning.
+- [Supply Chain readiness contract](contracts/supply-chain-readiness.md) — SCM-01–08 candidate demand, promise, allocation, quarantine and owned-impact semantics; no ERP mapping or executed acceptance.

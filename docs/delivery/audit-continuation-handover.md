@@ -1,6 +1,6 @@
 ---
 document_id: PPO-AUDIT-CONTINUATION-HO
-revision: r02
+revision: r03
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
 status: Authorised continuation; verification and ready implementation underway
@@ -34,9 +34,9 @@ Main's PT-27 load job `103855071769` completed all 320 core reads without error,
 | 5 | Complete PP-01 acceptance | PT-22 synthetic execution reconciled as passed; full PT-28 compatible-update/scheduling-rule impact and continuous PT-30 narrative remain incomplete. Owner demonstration is separate |
 | 6 | Performance | #175 publishes the ordered development/compiled comparison and phase observations. Review original CI measurements before choosing a remedy; no threshold or timeout waiver |
 | 7 | Hosted/device acceptance | Verify signed-in permitted journeys in the actual authorised environment and representative physical-device/screen-reader use; no new access or deployment assumed |
-| 8 | E3 costing/review | Prepare concrete source/FX/landed-cost/review decisions and supported synthetic cases before implementing unadopted policy |
-| 9 | Projects coordination | Reconcile J1 with existing Gantt; close shared-Activity, health and owned-blocker gaps without a second task store or false completion |
-| 10 | Supply Chain readiness contract | Specify bounded demand, required date, promise, allocation, shortage/quarantine and job-impact semantics; no ERP stock authority or live transaction implied |
+| 8 | E3 costing/review | [Concrete decision pack](estimating-e3-decision-pack.md) prepared: recommended manual-source slice, FX rounding alternatives, allocation conservation and reviewer/self-review choices; numerical/business decisions remain open |
+| 9 | Projects coordination | [Current-code reconciliation and receiving contract](projects-j1-reconciliation.md) prepared: preserve Gantt semantics; add typed shared Activities and manual assessment in the next integrated migration |
+| 10 | Supply Chain readiness contract | [Candidate contract and exact cases](../contracts/supply-chain-readiness.md) prepared across SCM-01–08; selected synthetic role/target/quantity/completeness choices and real ERP evidence remain open |
 
 The E2 screen contribution reuses the maintained UI/domain architecture and existing workflow globs. It adds no workflow, dependency or new migration beyond #169's 0026. Local source `e554ad4` was copied and reverified in an isolated checkout, not overwritten. UI, API and source-definition components retain their separate review boundaries. Current permissions precede historical/receipt recovery; option selection never changes CRM forecast or stored quote bytes.
 
