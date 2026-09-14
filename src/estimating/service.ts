@@ -10,6 +10,7 @@ import { createInput, saveInput, quoteInput } from "./validation";
 import { estimateContext, versionContext, type Estimate, type EstimateVersion } from "./context";
 import { calculate, quoteAmounts } from "./math";
 import { quoteTemplate, type SafeQuote } from "./template";
+import { guardLegacyEstimateCreate, guardExistingEstimateMutation } from "./discovery-workspace-context";
 export function versionHash(v:Pick<EstimateVersion,"title"|"scope"|"lines"|"policy"|"cost_schema_version">) {
   return digest(canonical({title:v.title,scope:v.scope,lines:v.lines,policy:v.policy,...(v.cost_schema_version === 2 ? {cost_schema_version:2} : {})}));
 }
@@ -33,6 +34,7 @@ export async function createEstimate(p:Principal,value:unknown) {
       await estimateContext(c,p,input.id,"estimating.edit");
     return o;
   },async(c,o)=>{
+    await guardLegacyEstimateCreate(c,p,o.id);
     const id=randomUUID();
     const e=(await c.query<Estimate>(`INSERT INTO ppo.estimates(id,workspace_id,company_id,created_by,updated_by,opportunity_id,site_id,owner_id,option_id,estimation_revision_id,current_version_id)
       VALUES($1,$2,$3,$4,$4,$5,$6,$4,$7,$8,$9) RETURNING *`,[input.id,p.workspace_id,o.company_id,p.actor_id,o.id,o.site_id,randomUUID(),randomUUID(),id])).rows[0];
@@ -43,6 +45,7 @@ export async function createEstimate(p:Principal,value:unknown) {
 export async function saveEstimate(p:Principal,id:string,value:unknown) {
   const input=saveInput(id,value);
   return sharedOperation(p,input,"SaveEstimate",c=>estimateContext(c,p,input.id,"estimating.edit"),async(c,e)=>{
+    await guardExistingEstimateMutation(c,p,e);
     expected(e.version,input.expected_version);
     const next=randomUUID(),old=e.current_version_id;
     const updated=(await c.query<Estimate>("UPDATE ppo.estimates SET version=version+1,current_version_id=$3,updated_by=$4,updated_at=clock_timestamp() WHERE workspace_id=$1 AND id=$2 RETURNING *",[p.workspace_id,id,next,p.actor_id])).rows[0];
@@ -57,6 +60,7 @@ export async function prepareQuote(p:Principal,id:string,value:unknown) {
     if(!(await hasPermission(c,p,"estimating.quote.read",e.company_id,e.site_id??undefined))) throw unavailable();
     return {e,v:await versionContext(c,p,e,input.estimate_version_id)};
   },async(c,{e,v})=>{
+    await guardExistingEstimateMutation(c,p,e);
     expected(e.version,input.expected_version);
     if(versionHash(v)!==v.content_hash) throw new AppError(409,"EstimateEvidenceMismatch","The saved estimate evidence must be reviewed before preparation.");
     if(!v.lines.length || input.choices.length!==v.lines.length || input.choices.some(choice=>!v.lines.some(line=>line.id===choice.line_id)))
