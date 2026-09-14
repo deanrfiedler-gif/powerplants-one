@@ -242,3 +242,14 @@ test("E2 HTTP denies direct guessing, false confirmation, unsupported definition
   assert.equal(forbidden.status, 403);
   assert.equal((await call(s.cookie, s.path)).body.workspace.version, 1);
 });
+
+test("E2 form options bind current opportunity, customer relationship and selected Site before exposing candidate labels", async()=>{
+  const s=await setup(),path=`estimating/workspaces/form-options?opportunity_id=${s.o.id}&workspace_id=${s.input.id}`;
+  const result=await call(s.cookie,path);assert.equal(result.status,200);assert.match(result.headers.get("cache-control")!,/no-store/);assert.equal(result.body.definition.id,"SYN-E2-QUESTIONS");assert.equal(result.body.definition.questions.length,10);assert.ok(result.body.facilities.some((x:{id:string})=>x.id===s.input.discovery.scope.facility_ids[0]));assert.ok(result.body.equipment.some((x:{id:string})=>x.id===s.input.discovery.scope.equipment_ids[0]));
+  const noSite=await call(s.cookie,path+"&scope_mode=NoSiteRequired");assert.equal(noSite.status,200);assert.deepEqual(noSite.body.facilities,[]);assert.deepEqual(noSite.body.equipment,[]);
+  const other=await session("second-company"),hidden=await call(other,path),missing=await call(other,`estimating/workspaces/form-options?opportunity_id=${randomUUID()}`);assert.equal(hidden.status,404);assert.equal(hidden.body.code,missing.body.code);assert.equal(hidden.body.message,missing.body.message);
+  assert.equal((await call(s.cookie,path+"&site_id=70000000-0000-4000-8000-000000000002")).status,404);
+  assert.equal((await call(s.cookie,path+"&site_id=70000000-0000-4000-8000-000000000004")).status,404);
+  assert.equal((await call(s.cookie,path+"&definition_hash=forged")).status,422);
+  assert.equal((await call(s.cookie,s.path)).body.workspace.version,1);
+});
