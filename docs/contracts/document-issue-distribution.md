@@ -1,6 +1,6 @@
 # PP-01 — Minimum document, issue and distribution contract
 
-**Edition:** r06 · **Status:** OUT-09/DAT-07/minimum DAT-11 implemented in P06; bounded DAT-09/OUT-10 in P09 and restricted OUT-14 in P10, with actual verification recorded separately. No actual SharePoint repository, template or retention policy has been verified in this package.
+**Edition:** r07 · **Status:** OUT-09/DAT-07/minimum DAT-11 implemented in P06; bounded DAT-09/OUT-10 in P09 and restricted OUT-14 in P10, with actual verification recorded separately. No actual SharePoint repository, template or retention policy has been verified in this package.
 
 [Package](../prototype/README.md) · [Dictionary](service-data-dictionary.md) · [BP-07](../blueprints/BP-07-service-operations.md).
 
@@ -152,3 +152,17 @@ The successor definitions fingerprint the original rendering sources, frozen P11
 The HTML is self-contained. File CSP allows only embedded data fonts/images plus the existing inline stylesheet; scripts, network sources, forms and external framing remain disallowed. PDF rendering waits for the complete font and still blocks external requests. Body text uses Roboto; the isolated Chromium page-header/footer uses the documented Verdana fallback. Every generated page retains synthetic classification, identity and page numbers. Tagged PDF remains a renderer request, not PDF/UA or screen-reader conformance. Original HTML/PDF/page provenance and visual inspection remain mandatory.
 
 OUT-09 version 2 replaces the obsolete implementation-progress completion sentence with actionable personal save/offline/submit instructions. It keeps local save, server acceptance, pack acknowledgement, attendance acceptance, customer response and Finance approval distinct. New DraftEvidence HTML is also frozen under the current supported report template and its exact HTML hash; previously saved presentations/responses are untouched. Complete branded pack/report HTML must remain within the existing 1 MiB offline bound; oversized content still fails explicitly. Full final-head/browser/restart verification is pending in the P11 handover.
+
+## Naming, filing and SharePoint receiving amendment — r07
+
+The authorised [naming package](../delivery/naming-sharepoint-handover.md) supplies a proposed shared naming/filing workflow and [SharePoint configuration](../architecture/sharepoint-information-architecture.md). Existing implemented P06/P09/P10 boundaries above remain; this amendment supplies no new endpoint, migration, provider adapter or operational issue.
+
+Document registration retains provider, tenant, site, drive, item, exact provider version/eTag, content hash, original filename and owning record UUID. Display paths and readable names are mutable locators. One document may link to multiple records under current per-record authority without copying bytes or granting new access. Names and approved aliases are searchable only to permitted readers.
+
+A proposed naming operation binds operation UUID, source item/eTag, current company/record/destination permissions, original/approved name, proposal/rule version and reviewer evidence. Revalidate before execution. A rename uses conditional provider update, collision refusal and verified read-back. Preserve unchanged byte identity. Name and metadata operations may fail independently; retain step receipts and expose partial/OutcomeUnknown state until exact-item reconciliation. A matching target filename alone is not a receipt. Original-intent retry must not rename again or overwrite another object. Batch operations have independent item results; reversal is a new checked operation.
+
+Supplier/CAD dependencies and exact issued manifests are protected sources. Keep their names or use scoped display aliases pending supported source-owner procedures. Renaming a display field does not authorise altered issued bytes, change technical status, or transfer an acknowledgement. New content requires the established successor-review/issue protocol. A renamed source remains referenced by its actual identity and applicable historical version; cross-library/site moves require explicit mapping and are outside the first pilot.
+
+The issued library must preserve exact snapshots/manifest and apply verified permissions/retention/restore controls. Version history alone does not prove permanent retention. Existing operational policies remain D-012/D-024 obligations. Library placement, document issue and external sharing are independent; restricted Finance evidence never becomes customer-visible through generic issued-document access. Authorisation covers previews, original-name search, downloads, metadata and direct provider access.
+
+Receiving acceptance is [NA-01–NA-22](../delivery/naming-sharepoint-pilot.md#3-acceptance-matrix), mapped through NC-01–NC-16 to existing DOC/NFR/CRM/Engineering/Service parents. These are new staged cases, not replacements for PT-18/PT-23 or evidence that provider tests ran.
