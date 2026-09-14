@@ -28,5 +28,26 @@
     "No server permissions, source-change concurrency, synchronisation or live model verification",
     "No application baseline acceptance or production readiness claimed"
   ],
-  "publication_base_commit": "c3797ce9605a9eb1afab1f839e47e63095de1f7d"
+  "publication_base_commit": "c3797ce9605a9eb1afab1f839e47e63095de1f7d",
+  "continuation": {
+    "base_commit": "42383fc2e3a85f6cf9c38c829683b14787578579",
+    "previous_pr_head": "61aff57dbbb72e40d04bce4e25e3c739a5bfd9c4",
+    "html_unchanged": true,
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "dependency_lock_unchanged": true,
+    "lint": "Passed: npm run lint using repository-pinned dependencies",
+    "model_static_checks": 46,
+    "dom_emulation_checks": 23,
+    "dom_script": "scripts/check-equipment-design-dom.mjs",
+    "documentation_checks": {
+      "foundation": "Passed; 78 requirements and 1945 local links checked",
+      "prototype": "Passed; 78 parent dispositions retained",
+      "naming": "Passed; 166 document records and 62 front-matter revisions compared",
+      "git_diff_check": "Passed"
+    },
+    "ci_repair": "Replaced the three forbidden require imports that stopped all eight failed jobs on the previous PR head; no lint rule bypass",
+    "refreshed_remote_ci": "Pending publication; consult PR #183 for results against the updated head",
+    "visual_browser": "Still not run; previous Browser URL policy rejection remains applicable"
+  }
 }

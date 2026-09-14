@@ -1,8 +1,12 @@
 // Optional Node DOM-emulation assurance; requires jsdom 27.0.1 outside application dependencies.
-const fs=require('node:fs');
-const assert=require('node:assert/strict');
-const {JSDOM,VirtualConsole}=require(process.env.PPO_DESIGN_JSDOM_MODULE || 'jsdom');
-const file=__dirname+'/../docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r01.html';
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import { pathToFileURL } from 'node:url';
+
+// The optional override is an absolute entry-file path, including on Windows.
+const jsdomModule=process.env.PPO_DESIGN_JSDOM_MODULE;
+const {JSDOM,VirtualConsole}=await import(jsdomModule ? pathToFileURL(jsdomModule).href : 'jsdom');
+const file=new URL('../docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r01.html',import.meta.url);
 const text=fs.readFileSync(file,'utf8');let checks=0;
 const errors=[];const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
 function create(saved){return new JSDOM(text,{url:'https://equipment-design.invalid/',runScripts:'dangerously',virtualConsole:vc,beforeParse(w){w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;this.dispatchEvent(new w.Event('close'));};if(saved)w.localStorage.setItem('ppo-equipment-workspace-r01',saved);}});}

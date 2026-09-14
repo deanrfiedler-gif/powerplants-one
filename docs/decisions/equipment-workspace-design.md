@@ -73,9 +73,17 @@ Later implementation must define the minimum structured-inspection schema, curre
 ## Verification and limits
 
 - `node scripts/check-equipment-design.mjs`: **46** pure design-model/static checks passed, including invalid evidence, role separation, exact identity, failed-result acceptance refusal, retest ownership, original preservation, repeat-effect prevention and JSON restart.
-- `scripts/check-equipment-design-dom.cjs`: **23** Node DOM-emulation checks passed against the contributed HTML, including the complete journey, search/filter equivalence, source access, explicit scan confirmation, reviewed AI follow-up and reload recovery. The optional scratch QA dependency was jsdom 27.0.1; no application dependency was added. Dialog open/close and scroll were inert test adapters; no native-browser result is claimed.
+- `scripts/check-equipment-design-dom.mjs`: **23** Node DOM-emulation checks passed against the contributed HTML, including the complete journey, search/filter equivalence, source access, explicit scan confirmation, reviewed AI follow-up and reload recovery. The optional scratch QA dependency was jsdom 27.0.1; no application dependency was added. Dialog open/close and scroll were inert test adapters; no native-browser result is claimed.
 - JavaScript syntax, static IDs, embedded-resource independence and exact font/logo source identity were checked. Node was 24.19.0 and Python 3.12.14 in this design environment; no application build was attempted under that Node version.
 - **Visual browser verification is pending.** The Browser tool explicitly rejected the synchronized local HTML URL under its URL security policy. No alternate browser surface or workaround was attempted. Desktop/mobile geometry, 200% zoom, native dialog/focus behaviour, print layout, actual camera handling and physical-device accessibility remain unverified.
 - The [evidence manifest](../testing/evidence/equipment-workspace-r01.json) binds results to the HTML hash. Foundation, prototype and naming results are recorded there after execution. These are documentation/design checks, not application or business acceptance.
 
 The next bounded step is visual review at 1440, 1024, 390 and 320 pixels, keyboard and 200% zoom; refine r01 before accepting it as an application baseline. Then implement the specified equipment/inspection slice through the existing domain services and F01/F02/F08 package. Publication remains a reviewable design PR; no hosting or production deployment is included.
+
+## PR continuation and CI repair
+
+The continuation merges current `main` at `42383fc2e3a85f6cf9c38c829683b14787578579` into PR #183, retaining the Finance r02 design and both sets of register/status entries. The Equipment HTML retains its original verified SHA-256.
+
+All eight failed application jobs on the initial PR head `61aff57dbbb72e40d04bce4e25e3c739a5bfd9c4` stopped at the same three `@typescript-eslint/no-require-imports` errors in the contributed DOM check. The check now uses ES-module imports and a module-relative HTML URL; no lint rule is disabled. The optional `PPO_DESIGN_JSDOM_MODULE` override now takes an absolute entry-file path (for example, the local jsdom `lib/api.js`), converted with `pathToFileURL` for portability. These initial CI failures are attributable to this contribution; earlier model/DOM passes were not full repository lint evidence.
+
+Refreshed local checks and subsequent GitHub results are tracked separately in the evidence manifest and PR description. Browser visual review remains pending.
