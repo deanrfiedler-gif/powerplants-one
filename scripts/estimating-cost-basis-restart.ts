@@ -11,8 +11,9 @@ import type { OperationReceipt } from "../src/platform/operations";
 import { createCostingWorkspace, costingApiCommand, costingScopeSuccessor, type CostingCall } from "../tests/helpers/estimating-costing-api";
 import { quoteCommand } from "../tests/helpers/estimating";
 import { CRM } from "../tests/helpers/crm";
+import type { DocumentKey } from "../src/adapters/contracts";
 type Accepted={path:string;body:Record<string,unknown>;receipt:OperationReceipt};
-type Proof={estimate_id:string;quote_id:string;job_id:string;original_quote:unknown;rows:unknown[];accepted:Accepted[];pids:number[];starts:string[];manifest:unknown};
+type Proof={estimate_id:string;quote_id:string;job_id:string;original_quote:unknown;rows:unknown[];accepted:Accepted[];pids:number[];starts:string[];manifest:DocumentKey};
 async function basisRows(id:string) {
   return Promise.all(["estimates","estimate_versions","estimate_discovery_roots","estimate_discovery_bases"].map(async table=>(await database().query(`SELECT to_jsonb(t) AS row FROM ppo.${table} t WHERE ${table==="estimates"?"id":"estimate_id"}=$1 ORDER BY to_jsonb(t)::text`,[id])).rows));
 }
@@ -33,14 +34,18 @@ export async function costBasisRestart({phase,root,evidence,call,page,pid,databa
     await database().query("UPDATE ppo.estimate_quote_jobs SET lease_until=clock_timestamp()-interval '1 second' WHERE id=$1",[job]);
     const {documentStore}=await import("../src/documents/store");
     const manifest=await documentStore().locate({workspace_id:CRM.workspace,actor_id:CRM.owner,operation_id:job});assert.ok(manifest);
-    proof={estimate_id:saved.id,quote_id:q2.id,job_id:job,original_quote,rows:await basisRows(saved.id),accepted,pids:[pid],starts:[databaseStart],manifest};
+    await writeFile(join(root,"e2-cost-original.bundle"),manifest.bytes);
+    proof={estimate_id:saved.id,quote_id:q2.id,job_id:job,original_quote,rows:await basisRows(saved.id),accepted,pids:[pid],starts:[databaseStart],manifest:manifest.key};
   } else {
     proof=JSON.parse(await readFile(file,"utf8"));assert.ok(!proof.pids.includes(pid));assert.ok(!proof.starts.includes(databaseStart));
     proof.pids.push(pid);proof.starts.push(databaseStart);
     if(phase==="recover")await runQuoteJob(proof.job_id,{render:async()=>{throw Error("The original E2 cost quote must not be regenerated");}});
     assert.equal((await database().query("SELECT state FROM ppo.estimate_quote_jobs WHERE id=$1",[proof.job_id])).rows[0].state,"Ready");
     const {documentStore}=await import("../src/documents/store");
-    assert.deepEqual(await documentStore().locate({workspace_id:CRM.workspace,actor_id:CRM.owner,operation_id:proof.job_id}),proof.manifest);
+    const stored=await documentStore().locate({workspace_id:CRM.workspace,actor_id:CRM.owner,operation_id:proof.job_id});assert.ok(stored);
+    assert.deepEqual(stored.key,proof.manifest);
+    assert.equal(stored.bytes.equals(await readFile(join(root,"e2-cost-original.bundle"))),true,"The original stored E2 quote bundle must be byte-for-byte unchanged");
+    assert.equal(digest(stored.bytes),proof.manifest.sha256);
   }
   assert.deepEqual(await basisRows(proof.estimate_id),proof.rows);
   const q1=(proof.original_quote as {row:{id:string}}[])[0].row.id;
