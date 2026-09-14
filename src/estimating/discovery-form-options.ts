@@ -35,9 +35,16 @@ export async function discoveryFormOptions(
     const o = await visibleOpportunity(c, p, opportunityId);
     await relationshipContext(c, p, o, "estimating.read");
     await relationshipContext(c, p, o, "estimating.edit");
+    let currentSiteId = mode === "Site" ? o.site_id : null;
     if (workspaceId) {
       const g = await workspaceAuthority(c, p, workspaceId, true);
       if (g.opportunity_id !== o.id) throw unavailable();
+      currentSiteId = (
+        await c.query<{ site_id: string | null }>(
+          `SELECT r.site_id FROM ppo.estimating_options o JOIN ppo.estimation_revisions r ON r.workspace_id=o.workspace_id AND r.estimating_workspace_id=o.estimating_workspace_id AND r.id=o.current_revision_id WHERE o.workspace_id=$1 AND o.estimating_workspace_id=$2 AND o.id=$3`,
+          [p.workspace_id, g.id, g.selected_option_id],
+        )
+      ).rows[0]?.site_id ?? null;
     }
     const siteId = mode === "Site" ? (requestedSite ?? o.site_id) : null;
     const context = { ...o, site_id: siteId };
@@ -70,9 +77,9 @@ export async function discoveryFormOptions(
           throw error;
       }
     // Keep an explicitly permitted current selection available even outside the candidate page.
-    if (siteId && !sites.some((s) => s.id === siteId)) {
+    if (currentSiteId && !sites.some((s) => s.id === currentSiteId)) {
       try {
-        const s = await visible(c, p, "Site", siteId);
+        const s = await visible(c, p, "Site", currentSiteId);
         await relationshipContext(c, p, { ...o, site_id: s.id }, "estimating.read");
         await relationshipContext(c, p, { ...o, site_id: s.id }, "estimating.edit");
         sites.push({ id: s.id, display_name: s.display_name });
