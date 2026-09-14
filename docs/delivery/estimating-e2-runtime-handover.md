@@ -1,6 +1,6 @@
 ---
 document_id: PPO-010-E2-RUNTIME-HO
-revision: r02
+revision: r03
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
 status: Definition comparison and current-context foundation implemented; DB proof and full E2 pending
@@ -22,6 +22,8 @@ Definition comparisons distinguish label changes from type/unit/choice/condition
 `src/estimating/discovery-context.ts` now resolves current Opportunity/customer/contact and proposed Site relationships, exact selected Facility/equipment IDs and their observed versions/names. Preparation rechecks estimating edit permission and eligible follow-up owners; historical access rechecks current related-record visibility. It captures only explicit membership, preserves unresolved equipment identity and hashes observed context with the exact input. These internal helpers do not acquire group ownership, save a revision or bind a new Site to E1. Seven real-database cases are authored for access revocation, unrelated identities, same-company/wrong-Site membership, customer relationships, owner eligibility, no business writes and changed shared versions. Execution is pending.
 
 ## Verification and limits
+
+Source `a22eee458978568a0343d27df38c21b6004a6f07` completed full run `34800169567`, job `103841099682`, attempt 1: 100 unit, 398/400 DB, 26 HTTP and 168 browser cases plus three explicit skips. Two new context cases failed while constructing a second current Operator for the already-operated synthetic Site, before the intended relationship assertions. The correction adds the customer's separate BillingParty relationship. The seeded operator, exclusion constraints, wrong-Site tests and revoked-customer-access assertions remain intact. Corrected-source execution remains pending; #168 now targets main after #166 merged.
 
 Local Node 24.20.0/npm 11.19.0 lint/types and all 100 unit tests passed, including ten new E2 cases. The initial worktree build failed because a dependency symlink pointed outside Turbopack’s existing root. A local copy of the exact already installed dependency tree resolved it; the unchanged application build then passed. No compiler boundary or test assertion was loosened. The real CI target remains Node 24.21.0 and guarded Chrome. Three documentation checks preserve all 78 parents and the P01–P12 order. Current-source CI and actual-main verification belong in the eventual review publication.
 
