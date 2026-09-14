@@ -709,6 +709,8 @@ function ProposalEditor({
             <button
               type="button"
               disabled={
+                frozen ||
+                stale ||
                 comparison.preview.required_confirmation_ids.some(
                   (id) => !confirmations.includes(id),
                 ) ||

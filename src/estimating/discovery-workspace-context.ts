@@ -292,10 +292,7 @@ export async function guardExistingEstimateMutation(
   if (!row) throw unavailable();
   const g = await workspaceAuthority(c, p, row.id, true);
   await requireDraftGroup(c, p, g);
-  if (g.legacy_estimate_id === e.id) {
-    requireActiveOption(await optionContext(c, g, e.option_id));
-    return;
-  }
+  if (g.legacy_estimate_id === e.id) return;
   requireActiveOption(await optionContext(c, g, e.option_id));
 }
 
