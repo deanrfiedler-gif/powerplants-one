@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { chromium } from "playwright";
+import { launchDocumentBrowser } from "../platform/browser";
 import { escapeHtml as e, rendererVersion } from "../documents/render";
 import { digest } from "../documents/store";
 import { canonical } from "../platform/operations";
@@ -78,7 +78,7 @@ export function financeHtml(s: FinanceOutput, o: ReservedOutput) {
 }
 export async function renderFinance(s: FinanceOutput, o: ReservedOutput) {
   const html = financeHtml(s, o),
-    browser = await chromium.launch();
+    browser = await launchDocumentBrowser();
   try {
     const page = await browser.newPage();
     await page.route("**/*", (r) => r.abort());

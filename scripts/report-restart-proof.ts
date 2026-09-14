@@ -67,6 +67,7 @@ try {
   }
   assert.ok(ready);
   context = await chromium.launchPersistentContext(join(root, "profile"), {
+    channel: "chrome",
     headless: true,
     viewport: { width: 1440, height: 1000 },
     baseURL: origin,

@@ -49,7 +49,7 @@ jobs:
           npm --version
           git rev-parse HEAD
       - name: Install pinned controlled PDF renderer and browser
-        run: npx playwright install --with-deps chromium
+        run: npm run browser:install
       - name: Compile the application
         # Separate step so a build failure is distinguishable from a test failure.
         id: build
