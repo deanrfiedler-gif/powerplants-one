@@ -1,0 +1,32 @@
+{
+  "design": "PPO-EQUIPMENT-HTML",
+  "revision": "r01",
+  "date": "2026-09-14",
+  "source_commit": "10625815187f26179f316b887fcdee33467ac81f",
+  "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r01.html",
+  "html_sha256": "24c8196564e1636c9ab846d5adf34dd462f66c9017ce8c28a83e7ea01e34d310",
+  "html_bytes": 171342,
+  "theme_internal_revision": "r16",
+  "theme_sha256": "19d96d383fadfda3bb03b5939cb933a64e4b220e69b8cb9a21df3f48d90b794f",
+  "node": "24.19.0",
+  "python": "3.12.14",
+  "model_static_checks": 46,
+  "dom_emulation_checks": 23,
+  "dom_engine": "jsdom 27.0.1; local QA only",
+  "native_dialogs": "Not tested; open/close emulated",
+  "visual_browser": "Not run: cloud Browser URL security policy rejected synchronized local HTML",
+  "camera": "Sample-result demonstration only; no camera access",
+  "application_integration": "Not implemented",
+  "documentation_checks": {
+    "foundation": "Passed after rebase; 78 requirements and 1943 local links checked",
+    "prototype": "Passed after rebase; 78 parent dispositions retained",
+    "naming": "Passed after rebase; 165 document records and 62 front-matter revisions compared",
+    "git_diff_check": "Passed against publication base"
+  },
+  "limitations": [
+    "No rendered geometry, screenshot or real-device verification",
+    "No server permissions, source-change concurrency, synchronisation or live model verification",
+    "No application baseline acceptance or production readiness claimed"
+  ],
+  "publication_base_commit": "c3797ce9605a9eb1afab1f839e47e63095de1f7d"
+}
