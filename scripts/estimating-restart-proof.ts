@@ -18,7 +18,7 @@ const server=spawn(process.execPath,["--env-file=.env.local","--import","tsx","s
 let browser:Awaited<ReturnType<typeof chromium.launch>>|undefined;
 try {
   let ready=false;for(let n=0;n<120;n++){try{if((await fetch(origin)).ok){ready=true;break;}}catch{}await new Promise(r=>setTimeout(r,500));}
-  assert.ok(ready);assert.equal(server.exitCode,null);browser=await chromium.launch();
+  assert.ok(ready);assert.equal(server.exitCode,null);browser=await chromium.launch({ channel: "chrome" });
   const context=await browser.newContext({viewport:{width:1440,height:1000},locale:"en-AU"}),page=await context.newPage();
   async function call(path:string,body?:unknown){const r=await context.request.fetch(`${origin}/api/v1/${path}`,{method:body===undefined?"GET":"POST",headers:body===undefined?{}:{Origin:origin,"Content-Type":"application/json"},data:body});assert.ok(r.ok(),await r.text());return r.json();}
   const started=async()=>(await database().query("SELECT pg_postmaster_start_time() AS at")).rows[0].at.toISOString();

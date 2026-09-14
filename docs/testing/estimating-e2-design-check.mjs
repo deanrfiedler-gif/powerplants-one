@@ -35,7 +35,7 @@ if (!process.argv.includes('--model-only')) {
   const { chromium } = process.env.PPO_DESIGN_PLAYWRIGHT_ROOT
     ? require(path.join(process.env.PPO_DESIGN_PLAYWRIGHT_ROOT, 'playwright'))
     : await import('playwright');
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch({ channel: "chrome", headless: true });
   report.browser_version = browser.version();
   try {
     const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });

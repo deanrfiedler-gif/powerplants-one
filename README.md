@@ -60,9 +60,9 @@ The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separa
 
 ## Run the local application
 
-Follow the [exact P08 setup and run commands](docs/delivery/p08-handover.md#runtime-setup-and-recovery): Node 24.20.0, npm 11.19.0, PostgreSQL 16.15, `npm ci`, ignored local configuration, migration/seed and `npm run dev`. Open `http://127.0.0.1:3000`. Production startup is intentionally refused. The handover includes test, reset and recovery commands.
+Apply the [current runtime maintenance instructions](docs/delivery/runtime-maintenance.md), then follow the [P08 setup and run commands](docs/delivery/p08-handover.md#runtime-setup-and-recovery): Node 24.21.0, npm 11.19.0, PostgreSQL 16.15, `npm ci`, ignored local configuration, migration/seed and `npm run dev`. Open `http://127.0.0.1:3000`. Production startup is intentionally refused. The handover includes test, reset and recovery commands.
 
-Job-pack preparation and issue are at `/service/packs`; exact documents at `/documents/:issue_id`. Install the matching Chromium renderer and retain its private output directory outside Git as described in the P06 handover.
+Job-pack preparation and issue are at `/service/packs`; exact documents at `/documents/:issue_id`. Install the reviewed Chrome renderer with `npm run browser:install` and retain its private output directory outside Git as described in the P06 handover.
 
 Field operations use `/service/technicians`: the [approved r04 design](docs/decisions/field-technicians-design.md) presents current permitted visits, technicians and preparation flags, with controlled record links. See the [integration handover](docs/delivery/field-technicians-handover.md) for verification/publication status.
 

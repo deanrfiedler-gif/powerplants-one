@@ -1,0 +1,48 @@
+{
+  "as_at": "2026-09-14",
+  "source_commit": "5855713c107500ee80319952473fa1fcf7783f33",
+  "node": "24.21.0",
+  "npm": "11.19.0",
+  "lockfile_sha256": "5f7a88abb6cd16b001525d7f59ff8a7204cf40b9e1121567fdc949a65951051e",
+  "direct_packages": {
+    "@azure/storage-blob": "12.33.0",
+    "next": "16.3.4",
+    "openid-client": "6.8.8",
+    "pg": "8.23.0",
+    "playwright": "1.63.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "server-only": "0.0.1",
+    "@next/eslint-plugin-next": "16.3.4",
+    "@playwright/test": "1.63.0",
+    "@types/node": "24.13.3",
+    "@types/pg": "8.23.1",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "eslint": "10.10.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "prettier": "3.9.6",
+    "tsx": "4.23.13",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.69.0"
+  },
+  "browser_channel": "chrome",
+  "minimum_browser_version": "153.0.8010.36",
+  "reviewed_browser_major": 153,
+  "local_executable_version": "153.0.8010.36",
+  "local_browser_execution": "Blocked by container socket permission; PDF and browser proof not passed",
+  "azure_login_commit": "a641126d1b8aa4d1fa005f4f92df94a3a4c4c906",
+  "postgresql_actual_hosted_version": null,
+  "ci_observed_runtime": {
+    "node": "24.21.0",
+    "playwright": "1.63.0",
+    "chrome": "153.0.8010.36",
+    "azure_preparation_runs": [
+      34790816031,
+      34791071067
+    ],
+    "non_root_image_pdf_check": "Passed",
+    "actual_cloud_deployment": false
+  },
+  "authoritative_final_verification": "https://github.com/deanrfiedler-gif/powerplants-one/pull/163"
+}

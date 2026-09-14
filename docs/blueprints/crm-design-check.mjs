@@ -23,7 +23,7 @@ const evidence = {
   states: ['ready', 'loading', 'empty', 'validation', 'denied', 'conflict', 'unavailable'],
   captures: [], checked_views: 0, result: 'in progress'
 };
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ channel: "chrome", headless: true });
 const failures = [];
 try {
   for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }, { width: 320, height: 844 }]) {
