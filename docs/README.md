@@ -33,3 +33,5 @@ Frozen issued references remain evidence. Stable working documents evolve throug
 [Azure demo connection setup](delivery/azure-demo-connection.md) — portal steps and a manually triggered read-only GitHub connection check; live Azure setup and hosted application access remain pending.
 
 [Azure private demo runtime](delivery/azure-private-demo.md) — individual sign-in, cloud configuration, deployment and reset preparation; live acceptance pending.
+
+The next adopted E2 persistence increment is governed by [ADR-0026](decisions/ADR-0026-e2-option-persistence.md); full implementation and verification remain pending.
