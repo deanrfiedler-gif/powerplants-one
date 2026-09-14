@@ -1,4 +1,4 @@
-import { chromium } from "playwright";
+import { launchDocumentBrowser } from "../platform/browser";
 import { canonical } from "../platform/operations";
 import { digest } from "./store";
 import { sectionKeys, sectionLabels, type SectionKey } from "./validation";
@@ -89,7 +89,7 @@ export async function renderPack(
   output: { prepared_at: string; issue_id: string },
 ) {
   const html = packHtml(s, output);
-  const browser = await chromium.launch();
+  const browser = await launchDocumentBrowser();
   try {
     const page = await browser.newPage();
     await page.route("**/*", (route) => route.abort());

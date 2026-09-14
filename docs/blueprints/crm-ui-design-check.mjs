@@ -19,7 +19,7 @@ const evidence = { scope: 'Synthetic exported design only; not application or ac
   input, input_sha256: sha256(source), run_id: process.env.GITHUB_RUN_ID || null,
   attempt: process.env.GITHUB_RUN_ATTEMPT || null, captures: [], result: 'in progress', failures: [] };
 await mkdir(output, { recursive: true });
-const browser = await chromium.launch({ headless: true, ...(process.env.CRM_UI_BROWSER ? { executablePath: process.env.CRM_UI_BROWSER } : {}) });
+const browser = await chromium.launch({ channel: "chrome", headless: true, ...(process.env.CRM_UI_BROWSER ? { executablePath: process.env.CRM_UI_BROWSER } : {}) });
 evidence.browser = browser.version();
 try {
   assert.equal(sha256(source), manifest.interactive_export.sha256, 'Export differs from its manifest');

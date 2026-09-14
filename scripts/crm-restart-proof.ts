@@ -45,7 +45,7 @@ try {
     null,
     "The launched application process must be running",
   );
-  browser = await chromium.launch();
+  browser = await chromium.launch({ channel: "chrome" });
   const context = await browser.newContext({
     viewport: { width: 1440, height: 1000 },
     locale: "en-AU",
