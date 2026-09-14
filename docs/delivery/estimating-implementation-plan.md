@@ -1,9 +1,9 @@
 ---
 document_id: PPO-010-PLAN
-revision: r01
-date: 2026-09-06
+revision: r02
+date: 2026-09-14
 owner: Dean Fiedler - private prototype
-status: Proposed sequence; implementation not authorised by discovery
+status: E1 implemented; adopted E2 subset authorised; later policy dependencies remain
 ---
 
 # BP-04 bounded implementation sequence
@@ -17,7 +17,7 @@ Discovery/design can proceed alongside PP-01 and CRM. The master allocates EST i
 | Increment | Bounded outcome | Dependency and evidence before start | Observable delivery |
 |---|---|---|---|
 | E1 Manual estimate and draft quotation | Existing permitted opportunity → one owned defined-supply option → scoped manual product/labour/freight estimate → saved version/successor → customer-safe draft quotation | Explicit E1 authority/sequencing; verified actual CRM I1 main/publication and current shared contracts; adopted synthetic decimal policy and sample. No real rates required. | Persistence, scoped permissions, version/retry safety, internal/safe projections, draft HTML/PDF and phone/desktop use. No approval/issue/send/accept/ERP or CRM stage/money changes. |
-| E2 Routing, options and scoped discovery | Approved Full/Express route contract, alternatives/locks, facilities/systems and versioned questionnaire subset | E1; G02/03/04 resolved for selected synthetic policy. Complete branch/lock fixtures; scope/answer compatibility contract. | First-match/unknown cases, exact inheritance, one forecast basis, scoped questions and re-snapshot history. No specialist formula engine. |
+| E2 Effort, options and scoped discovery | Separate effort evidence, alternatives/locks, same-site equipment/Facilities/systems and versioned questionnaire subset | E1; adopted E2-D02/D03 and DR-01/02; r02 preservation/command contract and exact runtime proof. Advisory rule decisions remain separate. | Owned unknowns, exact inheritance, one selected estimating basis, scoped questions and resnapshot history. No confirmed route before drafting, specialist formula engine or forecast write. |
 | E3 Cost sources, policies and estimate review | Bounded catalogue/manual provenance, declared FX/landed-cost allocation, explicit refresh and estimate approvals | E1; E2 where selected scope depends on it; G02/05 supported examples and synthetic authority matrix accepted. | Exact calculations, three pricing outcomes, comparison/new revision, current-authority review; issued history not repriced. Live catalogue remains deferred unless separately authorised. |
 | E4 Controlled quote issue and response | Exact approved estimate → separately reviewed quote → durable issue → explicit content-bound response and owned exceptions | E3; E2 option locks where applicable; G07 template/terms/response policy approved for selected synthetic scope; current P06/P09 contracts reconciled. | Immutable source/output/issue; no cost leakage; issue/send/delivery/response distinct; successor has no inherited acceptance; no live communication. |
 | E5 Specialist configuration | One specified Screen Systems variant with declared formulas/ranges/parts map, overrides, apply/rerun and partial recovery | E2/E3 and G06 executable definitions plus accepted intermediate/final reference cases. E4 only if scope includes issuing its result. | Verified mathematical/parts outcomes and safe rerun; no-purchase separate from price; no engine built from screenshots alone. |
@@ -42,6 +42,10 @@ D-009/D-010 do not close because a synthetic slice works. Accepted production fo
 ## 4. Subsequent E1 invocation
 
 Dean's later “Proceed” and “Continue” supply the bounded E1 authority and sequencing decision described above. [ADR-0017](../decisions/ADR-0017-estimating-e1.md) adopts the manual synthetic policy; [E1 handover](estimating-e1-handover.md) records implementation, observed component evidence and the authoritative final publication link for issue #46 / PR #49. The approved design is merged and verified. [E2 starter](estimating-e2-starter.md) prepares the next bounded task only; route precedence, option locks and questionnaire compatibility must be resolved for its chosen synthetic scope when separately invoked. The original discovery boundary remains historical evidence, not a request to re-authorise already instructed E1 work.
+
+## Audit follow-through — 14 September 2026
+
+The [policy package](../decisions/audit-follow-through-policy-package.md) adopts the five concrete choices and authorises their repository follow-through. E2 receiving/design/test/starter documents are reconciled in r02/r03; the E1 contract specifies the category/Allowance command-version extension. Drafting can proceed with routing Not configured. DR-03–DR-06, the separate container propositions and E3/E4 source/approval/terms policies remain unresolved. Historical discovery authority statements below do not withdraw the later instruction or establish runtime completion.
 
 ## Guided estimating design addition — 9 September 2026
 
