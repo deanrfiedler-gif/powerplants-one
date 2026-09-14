@@ -32,5 +32,17 @@
   "local_executable_version": "153.0.8010.36",
   "local_browser_execution": "Blocked by container socket permission; PDF and browser proof not passed",
   "azure_login_commit": "a641126d1b8aa4d1fa005f4f92df94a3a4c4c906",
-  "postgresql_actual_hosted_version": null
+  "postgresql_actual_hosted_version": null,
+  "ci_observed_runtime": {
+    "node": "24.21.0",
+    "playwright": "1.63.0",
+    "chrome": "153.0.8010.36",
+    "azure_preparation_runs": [
+      34790816031,
+      34791071067
+    ],
+    "non_root_image_pdf_check": "Passed",
+    "actual_cloud_deployment": false
+  },
+  "authoritative_final_verification": "https://github.com/deanrfiedler-gif/powerplants-one/pull/163"
 }

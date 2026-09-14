@@ -2,7 +2,7 @@
 
 **Document ID:** PPO-RUNTIME-MAINT-HO
 **Revision:** r01
-**Status:** Published by owner in PR #163; CI repair and hosted verification outstanding
+**Status:** Maintenance implementation delivered to PR #163; authoritative verification and merge state in that PR; hosted rollout separate
 **Date:** 14 September 2026
 **Owner:** Dean Fiedler
 **Source commit:** 5855713c107500ee80319952473fa1fcf7783f33
@@ -56,11 +56,17 @@ The local source commit was prepared as `5ef79bc97fac38b27d7906def4a1eeb95442c26
 
 The owner handoff archive contains the exact branch as a Git bundle, its review diff, checks and import instructions. The final handover commit adds only this verification/publication record. Import the bundle as a new local branch and publish it using the owner's existing authenticated GitHub Desktop connection. Then open a draft PR linked to #160. Do not merge until the configured checks, actual browser/PDF paths, compiled application suite and image build pass. Review the generated quotation, job pack, report and Finance PDFs visually using their retained CI evidence. The existing authorisation covers continuing those checks and the normal merge after owner publication; no repeated scope approval is needed.
 
-## Owner publication and first CI results
+## Owner publication and CI evidence
 
 Dean imported and published the exact handoff commit `a0132823f971a7570206dc6c626d7a7115c9d150` and opened [PR #163](https://github.com/deanrfiedler-gif/powerplants-one/pull/163). The earlier Git-transport block is resolved by that owner action. Current checks and any remaining corrections continue on the same branch through the authenticated connector; no workflow permissions are changed.
 
-The first PR runs installed Chrome 153.0.8010.36 on Node 24.21.0 and passed the actual PDF smoke check. Three design workflows then failed because their older scripts in `docs/blueprints` and `docs/testing` still selected bundled Chromium. Six active launch sites now select the same Chrome channel. The original failures remain visible in runs `34790816072`, `34790816018` and `34790816040`. Syntax checks alone do not establish the repaired browser interactions; the rerun is required. Historical review scripts inside issued/versioned visual evidence are not active workflow entry points and remain unchanged.
+The first PR runs installed Chrome 153.0.8010.36 on Node 24.21.0 and passed the actual PDF smoke check. Three design workflows then failed because their older scripts in `docs/blueprints` and `docs/testing` still selected bundled Chromium. Six active launch sites now select the same Chrome channel. The original failures remain visible in runs `34790816072`, `34790816018` and `34790816040`. The correction was published as `41d6da7f9682391f750439b09cb78f6dbd306d15`, tree `f4b4bda47f84759038e109facff853448d5712e5`. The repaired CRM, estimating and customer-portal design workflows passed in runs `34791071036`, `34791071043` and `34791071051`. Historical review scripts inside issued/versioned visual evidence are not active workflow entry points and remain unchanged.
+
+Azure preparation passed both before and after the design-only correction: runs `34790816031` and `34791071067`. Logs establish the actual Node 24.21.0/Chrome 153.0.8010.36 versions, PDF smoke check, hosted-identity tests against disposable PostgreSQL, Bicep compilation and Docker image build. The image's final non-root-user PDF check passed. These jobs had no Azure sign-in and deployed no resource.
+
+Visual review used the real HTTP-generated six-page Finance PDF from artifact `10328352036` in run `34790815981`, source `a0132823f971a7570206dc6c626d7a7115c9d150`; all page layouts and the first page at full review size were inspected. No clipping, overlap, missing brand/font or broken table continuation was observed. PDF SHA-256 `072cf3ad7371dc963675e32c56071a3816e9ce55c936410123843f6f88d5e9dc` and HTML SHA-256 `ea72146732d234073aee1d2f0305b33215e2359b6404c2cac3d4389a46eabdec` matched its manifest, which records Chrome 153.0.8010.36. The subsequent design-script correction changed no document-rendering source. This representative review does not stand in for full Service/Finance acceptance.
+
+**Authoritative completion record:** [PR #163](https://github.com/deanrfiedler-gif/powerplants-one/pull/163) and [issue #160](https://github.com/deanrfiedler-gif/powerplants-one/issues/160) retain the final checked commit, complete CI conclusions, remaining quotation/job-pack/report visual review, merge SHA and any hosted action. Read those exact records before treating this static handover or a component pass as final completion. The final handover update changes documentation/evidence only; original failed runs are preserved. No independent human review is claimed.
 
 ## Hosted evidence and update boundary
 
