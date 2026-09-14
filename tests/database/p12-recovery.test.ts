@@ -27,7 +27,7 @@ import {
   recordFinanceOutcome,
   reconcileFinance,
 } from "../../src/finance/service";
-import { readReportBundle } from "../../src/reports/worker";
+import { presentationBytes } from "../../src/reports/service";
 import { attachmentBytes } from "../../src/field/attachments";
 import { createOpportunity } from "../../src/crm/opportunities";
 import { createEstimate, prepareQuote } from "../../src/estimating/service";
@@ -93,8 +93,16 @@ test(
       const finance = await processedFinance("AcceptedThenTimeout");
       const unknown = await readFinance(finance.processor, finance.id);
       assert.equal(unknown.handoff.status, "OutcomeUnknown");
-      const reportManifest = finance.q.report.issues[0].manifest;
-      const issued = await readReportBundle(finance.q.reviewer, reportManifest);
+      const reportPresentation = finance.q.report.presentations.find(
+        (item: { kind: string }) => item.kind === "IssuedReport",
+      );
+      assert.ok(reportPresentation, "The fixture has an original issued presentation");
+      const issued = await presentationBytes(
+        finance.q.reviewer,
+        finance.q.report.id,
+        reportPresentation.id,
+      );
+      assert.ok(issued.pdf, "The original issued presentation includes its PDF");
       const photo = await attachmentBytes(finance.q.p, finance.q.photo.id);
       const p = await principal("coordinator"),
         opportunity = crmCreate();
@@ -239,6 +247,8 @@ test(
             "exec",
             name,
             "pg_isready",
+            "-h",
+            "127.0.0.1",
             "-U",
             "ppo_local",
             "-d",
@@ -334,7 +344,11 @@ test(
         "37",
       );
       assert.deepEqual(
-        await readReportBundle(finance.q.reviewer, reportManifest),
+        await presentationBytes(
+          finance.q.reviewer,
+          finance.q.report.id,
+          reportPresentation.id,
+        ),
         issued,
       );
       assert.deepEqual(

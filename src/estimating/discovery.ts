@@ -516,8 +516,8 @@ export function compareDefinitions(previous: Definition, next: Definition) {
       return freeze({
         question_id: id,
         disposition,
-        previous: before ?? null,
-        next: after ?? null,
+      previous: before ? structuredClone(before) : null,
+      next: after ? structuredClone(after) : null,
       });
     });
 }

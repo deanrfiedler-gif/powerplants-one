@@ -314,6 +314,12 @@ test("E2 definition comparison refuses implicit Each-to-metres reuse and identif
     changes.find((q) => q.question_id === "Q01")!.disposition,
     "LabelChanged",
   );
+  assert.equal(Object.isFrozen(next.questions[0]), false);
+  next.questions[0].label = "SYN later proposal retained independently";
+  assert.equal(
+    changes.find((q) => q.question_id === "Q01")!.next!.label,
+    "Included proposed work",
+  );
   assert.equal(
     discoveryDefinition.questions.find((q) => q.id === "Q06")!.unit,
     "Each",
