@@ -1,7 +1,9 @@
 // SYN-EST-ARITHMETIC-01. Exact base-10 arithmetic; no binary-float money.
 export const arithmeticPolicy = "SYN-EST-ARITHMETIC-01";
 export type CostLine = {
-  id: string; description: string; category: "Product" | "Labour" | "Freight";
+  id: string; description: string; category: "Product" | "Labour" | "Freight" | "Engineering" | "Subcontract";
+  // Absent in preserved schema-1 lines; never infer an old No choice.
+  allowance?: boolean;
   quantity: string; unit: string; unit_cost: string; unit_sell: string;
   source: string; effective_date: string;
 };

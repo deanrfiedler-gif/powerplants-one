@@ -1,10 +1,9 @@
 import { engineeringRow } from "../engineering/service";
 import { emailContext } from "../email/service";
 import { leadReceiptAuthority } from "../crm/leads/receipt-authority";
-import { opportunityReceiptActions } from "../crm/receipt-authority";
+import { acceptedOpportunityOriginal } from "../crm/receipt-authority";
 import { financeContext, financeAccount, receiptCapability } from "../finance/context";
 import { estimateContext, quoteContext } from "../estimating/context";
-import { visibleOpportunity, relationshipContext, eligibleOpportunityOwner } from "../crm/context";
 import { authoriseProjectReceipt } from "../projects/service";
 import { reportContext, ownReport } from "../reports/context";
 import {
@@ -15,7 +14,7 @@ import {
 import { packContext } from "../documents/context";
 import { visibleAppointment, visibleRequest } from "../scheduling/planner";
 import { visibleWorkOrder } from "../service/work-orders";
-import { database } from "../platform/database";
+import { database, transaction } from "../platform/database";
 import { unavailable } from "../platform/errors";
 import type { Principal } from "../platform/identity";
 import type { OperationReceipt } from "../platform/operations";
@@ -60,12 +59,12 @@ export async function readOperation(
   } else if (r.object_type === "Project") {
     await authoriseProjectReceipt(client, p, r.record_id, r.command);
   } else if (r.object_type === "Opportunity") {
-    const o = await visibleOpportunity(client, p, r.record_id);
-    const cap = r.command === "CreateOpportunity" ? "crm.opportunity.create" : "crm.opportunity.edit";
-    await relationshipContext(client,p,o,cap);
-    await eligibleOpportunityOwner(client,p,o);
-    if (cap === "crm.opportunity.edit" && o.owner_id !== p.actor_id) throw unavailable();
-    await opportunityReceiptActions(client,p,o.id,operation_id);
+    return transaction(async c=>{
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",[p.workspace_id]);
+      const accepted=await acceptedOpportunityOriginal(c,p,r.record_id,operation_id,r.command);
+      if(!accepted)throw unavailable();
+      return accepted.receipt;
+    });
   } else if (r.object_type === "ServiceReport") {
     if (r.command === "SubmitCompletion" || r.command === "AmendReport")
       await ownReport(client, p, r.record_id);

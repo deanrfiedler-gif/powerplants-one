@@ -27,6 +27,26 @@ async function call(cookie: string, path: string, body?: unknown) {
   });
   return { status: r.status, headers: r.headers, body: await r.json() };
 }
+test("HV-01/02/03/07/11/14 HTTP transfer enforces exact input and actor scope, then recovers the original",async()=>{
+  const cookie=await session("coordinator"),other=await session("second-company"),q=await session("crm-receiver"),input=crmCreate();
+  assert.equal((await call(cookie,"crm/opportunities",input)).status,201);
+  const path=`crm/opportunities/${input.id}`,options=await call(cookie,`${path}/handover-options`);
+  assert.equal(options.status,200);assert.match(options.headers.get("cache-control")!,/no-store/);
+  const comparison=options.body,next=comparison.next_activity;
+  const body={...crmBase(),expected_version:1,new_owner_id:"30000000-0000-4000-8000-000000000015",expected_next_activity:{id:next.id,version:next.version},expected_identification_activity:null};
+  const hidden=await call(other,`${path}/handover-options`),missing=await call(other,`crm/opportunities/${randomUUID()}/handover-options`);
+  assert.equal(hidden.status,404);assert.equal(hidden.body.code,missing.body.code);assert.equal(hidden.body.message,missing.body.message);
+  assert.equal((await call(cookie,`${path}/transfer-owner`,{...body,from_owner_id:CRM.owner})).status,422);
+  assert.equal((await call(other,`${path}/transfer-owner`,body)).status,404);
+  const accepted=await call(cookie,`${path}/transfer-owner`,body);assert.equal(accepted.status,200);
+  assert.deepEqual((await call(cookie,`operations/${body.operation_id}`)).body,accepted.body);
+  assert.deepEqual((await call(cookie,`${path}/transfer-owner`,body)).body,accepted.body);
+  assert.equal((await call(cookie,`${path}/transfer-owner`,{...body,reason:"SYN Changed original"})).status,409);
+  assert.equal((await call(q,`operations/${body.operation_id}`)).status,404);
+  assert.equal((await call(q,`${path}/handover-options`)).status,403);
+  const after=(await call(q,path)).body.items[0];assert.equal(after.owner_id,body.new_owner_id);assert.equal(after.version,2);assert.equal(after.owner_transfers.length,1);
+  assert.equal(after.actions[0].owner_id,CRM.owner);
+});
 test("CA-01/03/04 real HTTP lost response, receipt lookup, strict commands and complete/qualify/next journey", async () => {
   const cookie = await session("coordinator"),
     input = { ...crmCreate(), title: "SYN HTTP I1 qualification" };

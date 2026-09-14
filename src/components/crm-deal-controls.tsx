@@ -13,11 +13,12 @@ import {
 } from "./business-ui";
 import { denied, useCrmCommand, useCrmResource } from "./crm-state";
 import { LookupField } from "./record-ui";
+import type { ownerTransferOptions } from "../crm/owner-transfer";
 import type { readOpportunity } from "../crm/reads";
 import type { OperationReceipt } from "../platform/operations";
 
 export type DealRecord = Awaited<ReturnType<typeof readOpportunity>>;
-export type DealMode = "snapshot" | "information" | "scope" | "stage" | "outcome";
+export type DealMode = "snapshot" | "information" | "scope" | "stage" | "outcome" | "transfer";
 export type StageUndo = {
   id: string;
   version: number;
@@ -130,7 +131,7 @@ export function DealDialog({
     >
       <header className="crm-dialog-head">
         <h2 id="crm-dialog-title">
-          {currentMode === "outcome" ? "Record sales outcome" : currentMode === "snapshot"
+          {currentMode === "transfer" ? "Transfer opportunity owner" : currentMode === "outcome" ? "Record sales outcome" : currentMode === "snapshot"
             ? (o?.title ?? "Deal snapshot")
             : currentMode === "information"
               ? "Edit deal"
@@ -308,6 +309,9 @@ function DealEditor({
     [identification, setIdentification] = useState(
       undo?.identification_activity_id ?? o.identification_activity_id ?? "",
     ),
+    [newOwner, setNewOwner] = useState(""),
+    [transferReason, setTransferReason] = useState(""),
+    [ownerSearch, setOwnerSearch] = useState(""),
     [outcome, setOutcome] = useState(o.stage_id === "Closing" ? "Won" : "Lost"),
     [lostReason, setLostReason] = useState(""),
     [acceptanceEvidence, setAcceptanceEvidence] = useState(""),
@@ -324,11 +328,19 @@ function DealEditor({
       : null,
     true,
   );
+  const handover = useCrmResource<Awaited<ReturnType<typeof ownerTransferOptions>>>(
+    mode === "transfer" ? `crm/opportunities/${o.id}/handover-options?${new URLSearchParams({q:ownerSearch,limit:"25"})}` : null,true,
+  );
   const blocked =
-    command.busy || command.uncertain || !o.can_edit || readFailed || ((mode === "outcome" || mode === "stage") && o.close_outcome !== "Open");
-  if (denied(command.error) || denied(persons.error))
-    return <ErrorNotice error={command.error ?? persons.error} />;
+    command.busy || command.uncertain || !o.can_edit || readFailed || (mode === "transfer" && (!o.can_transfer || handover.loading || !handover.data || !!handover.error)) || ((mode === "outcome" || mode === "stage") && o.close_outcome !== "Open");
+  if (denied(command.error) || denied(persons.error) || denied(handover.error))
+    return <ErrorNotice error={command.error ?? persons.error ?? handover.error} />;
   const send = () => {
+    if(mode === "transfer") {
+      const comparison=handover.data;if(!comparison)return;
+      const {next_activity:next,identification_activity:identification}=comparison;
+      return command.send(`crm/opportunities/${o.id}/transfer-owner`,{expected_version:version,new_owner_id:newOwner,reason:transferReason,expected_next_activity:{id:next.id,version:next.version},expected_identification_activity:identification?{id:identification.id,version:identification.version}:null});
+    }
     if (mode === "outcome")
       return command.send(`crm/opportunities/${o.id}/outcome`, {expected_version:version,close_outcome:outcome,lost_reason:outcome === "Lost" ? lostReason : null,acceptance_evidence:outcome === "Won" ? acceptanceEvidence : null,reason:outcomeNote.trim() || `Record ${outcome} sales outcome`});
     if (mode === "information")
@@ -386,7 +398,7 @@ function DealEditor({
           </button>
         )}
         {!!command.error && !command.uncertain && (
-          <button type="button" className="secondary" onClick={reload}>
+          <button type="button" className="secondary" onClick={()=>{reload();handover.reload();}}>
             Load current saved version for comparison
           </button>
         )}
@@ -417,6 +429,17 @@ function DealEditor({
                 ? "Deal stage"
                 : "Deal information"}
           </legend>
+          {mode === "transfer" && <>
+            <Field name="owner-search" label="Find eligible owner" value={ownerSearch} onChange={setOwnerSearch} maxLength={200}/>
+            <SelectField name="new_owner_id" label="New opportunity owner" value={newOwner} onChange={setNewOwner} options={handover.data?.items??[]} required/>
+            <ErrorNotice error={handover.error}/>
+            {handover.loading && <p role="status">Loading eligible owners…</p>}
+            {handover.data?.next_cursor && <p>More eligible owners exist. Refine the search.</p>}
+            {handover.data?.items.length === 0 && <p>No eligible receiving owners match this search.</p>}
+            <p>Current opportunity owner: {o.owner_name}. Transfer is immediate when this save is accepted.</p>
+            {handover.data && <section aria-label="Activity comparison"><h3>Activities keep their owners</h3>{[handover.data.next_activity,...(handover.data.identification_activity && handover.data.identification_activity.id!==handover.data.next_activity.id ? [handover.data.identification_activity] : [])].map(a=><p className="crm-narrative" key={a.id}>{a.summary} · {a.status} · Owner: {a.owner_name} · Version {a.version}</p>)}<p>The receiving owner must review any outstanding activity separately. Estimates, quotes and delivery obligations keep their ownership.</p></section>}
+            <Field name="reason" label="Transfer reason" value={transferReason} onChange={setTransferReason} multiline required maxLength={1000}/>
+          </>}
           {mode === "outcome" && <>
             <SelectField name="close_outcome" label="Sales outcome" value={outcome} onChange={setOutcome} options={(o.stage_id === "Closing" ? ["Won","Lost"] : ["Lost"]).map(id=>({id,display_name:id}))} required />
             {outcome === "Lost" ? <SelectField name="lost_reason" label="Lost reason" value={lostReason} onChange={setLostReason} options={["Price","Competitor","Timing","No decision"].map(id=>({id,display_name:id}))} required /> : <Field name="acceptance_evidence" label="Acceptance or order evidence" value={acceptanceEvidence} onChange={setAcceptanceEvidence} multiline required maxLength={2000} />}
@@ -586,10 +609,10 @@ function DealEditor({
             disabled={
               blocked ||
               version !== o.version ||
-              (mode === "stage" && stage === o.stage_id)
+              (mode === "stage" && stage === o.stage_id) || (mode === "transfer" && handover.data?.opportunity_version !== version)
             }
           >
-            {mode === "outcome" ? "Record outcome" : mode === "information"
+            {mode === "transfer" ? "Confirm owner transfer" : mode === "outcome" ? "Record outcome" : mode === "information"
               ? "Save deal"
               : mode === "scope"
                 ? "Save requirements and scope"

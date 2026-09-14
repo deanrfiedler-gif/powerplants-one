@@ -277,7 +277,7 @@ export function SalesWorklist() {
     {!isDenied && <>
       <section id="crm-filter-panel" className="crm-secondary-filters" aria-label="Opportunity filters" hidden={!filtersOpen}>
         <div className="crm-filter-grid">
-          {(["Company", "Site", "Owner"] as const).map((kind) => <FilterPicker key={kind} kind={kind} value={filters[kind === "Company" ? "company_id" : kind === "Site" ? "site_id" : "owner_id"]} company={filters.company_id} enabled={!data.error} set={(v) => change(kind === "Company" ? "company_id" : kind === "Site" ? "site_id" : "owner_id", v)} />)}
+          {(["Company", "Site", "Owner"] as const).map((kind) => <FilterPicker key={kind} kind={kind} value={filters[kind === "Company" ? "company_id" : kind === "Site" ? "site_id" : "owner_id"]} company={filters.company_id} enabled={filtersOpen && !data.error} set={(v) => change(kind === "Company" ? "company_id" : kind === "Site" ? "site_id" : "owner_id", v)} />)}
           <label className="field">Sales outcome<select aria-label="Sales outcome" value={filters.outcome} onChange={e=>change("outcome",e.target.value)}>{["Open","Won","Lost","All"].map(value=><option key={value} value={value}>{value}</option>)}</select></label>
           <SelectField name="next-state" label="Next action" value={filters.next_action} onChange={(v) => change("next_action", v)} options={Object.entries(labels).map(([id, display_name]) => ({ id, display_name }))} empty="All action states" />
           <SelectField name="stage" label="Stage" value={filters.stage_id} onChange={(v) => { change("stage_id", v); if (v) setSelected(v); }} options={(data.data?.stages ?? []).map((s) => ({ id: s.stage_id, display_name: s.stage_id }))} empty="All stages" />

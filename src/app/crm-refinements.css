@@ -392,6 +392,10 @@
 .crm-scope-section .crm-narrative {
   margin: 0;
 }
+.crm-deal-dialog.mode-transfer .crm-narrative {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
 .text-action {
   min-height: 32px;
   padding: 0;

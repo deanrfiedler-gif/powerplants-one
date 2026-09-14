@@ -1,6 +1,6 @@
 # P12 — Recovery, delivery and owner demonstration starter
 
-**Prepared:** 14 September 2026 · **Revision:** r04 · **State:** maintained preparation only. Requires completed verified P11 publication and a separately authorised invocation; this file grants no authority.
+**Prepared:** 14 September 2026 · **Revision:** r05 · **State:** invoked under Dean’s continuing repository audit instruction after completed P11 publication. [#165](https://github.com/deanrfiedler-gif/powerplants-one/issues/165), [#166](https://github.com/deanrfiedler-gif/powerplants-one/pull/166) and the [handover](p12-handover.md) now govern delivery. The original starter below is retained as the scoped implementation/verification checklist; it does not require repeat permission for work already authorised.
 
 When separately invoked, implement only P12 from the current [ordered plan](prototype-implementation-plan.md): clean isolated synthetic restore, supported old-payload/release checks, recovery runbook, deterministic demonstration/reset and final full procedure evidence. Complete authorised repository handover, normal expected-head merge and verification of actual merged main, then stop. No remote hosting is implied; assess costed hosting/authentication only if separately requested.
 

@@ -1,7 +1,8 @@
 # BP-03 — Controlled opportunity owner transfer implementation starter
 
-**Revision:** r01 · **Date:** 7 September 2026 · **Owner:** Dean Fiedler · **State:** Conditional preparation only. H-01–H-03 are unresolved; a new explicit implementation invocation is required. Storage or design merge grants no implementation authority.
+**Revision:** r02 · **Date:** 14 September 2026 · **Owner:** Dean Fiedler · **State:** Implementation authorised by audit follow-through and the adopted H-01–H-03 package; acceptance pending.
 
+**Current reconciliation:** The [audit follow-through policy package](../decisions/audit-follow-through-policy-package.md) adopts H-01–H-03 and authorises this single transfer journey under #145. The complete #55 publication ledger was reread. The older proposed labels below are retained as design history; all concrete guards and HV obligations remain.
 [Design handover/publication](crm-handover-design-handover.md) · [decisions](../decisions/crm-opportunity-handover.md) · [contract and physical map](../contracts/crm-opportunity-handover.md) · [journey](../blueprints/crm-handover-journey.md) · [future verification](../testing/crm-handover-verification.md) · [CRM sequence](crm-implementation-plan.md).
 
 ## Prerequisites before an implementation invocation

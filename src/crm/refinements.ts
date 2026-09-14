@@ -9,11 +9,10 @@ import type { Principal } from "../platform/identity";
 import { sharedOperation } from "../platform/operations";
 import { AppError } from "../platform/errors";
 import {
-  opportunityAuthority,
   relationshipContext,
   type Opportunity,
 } from "./context";
-import { opportunityReceiptActions } from "./receipt-authority";
+import { opportunityCommandAuthority } from "./receipt-authority";
 import {
   parseDealInformation,
   parseDealScope,
@@ -28,16 +27,6 @@ function expected(o: Opportunity, v: number) {
       "VersionConflict",
       "This opportunity changed. Reload and compare the saved information before retrying.",
     );
-}
-async function authorise(
-  c: PoolClient,
-  p: Principal,
-  id: string,
-  operation: string,
-) {
-  const o = await opportunityAuthority(c, p, id, "crm.opportunity.edit");
-  await opportunityReceiptActions(c, p, id, operation);
-  return o;
 }
 async function record(
   c: PoolClient,
@@ -100,7 +89,7 @@ export async function editDealInformation(
     p,
     command,
     "EditOpportunityInformation",
-    (c) => authorise(c, p, id, command.operation_id),
+    (c) => opportunityCommandAuthority(c, p, id, command.operation_id, "EditOpportunityInformation"),
     async (c, old) => {
       expected(old, command.expected_version);
       await relationshipContext(
@@ -151,7 +140,7 @@ export async function editDealScope(p: Principal, id: string, input: unknown) {
     p,
     command,
     "EditOpportunityScope",
-    (c) => authorise(c, p, id, command.operation_id),
+    (c) => opportunityCommandAuthority(c, p, id, command.operation_id, "EditOpportunityScope"),
     async (c, old) => {
       expected(old, command.expected_version);
       const o = (
@@ -182,7 +171,7 @@ export async function changeDealStage(
     p,
     command,
     "ChangeOpportunityStage",
-    (c) => authorise(c, p, id, command.operation_id),
+    (c) => opportunityCommandAuthority(c, p, id, command.operation_id, "ChangeOpportunityStage"),
     async (c, old) => {
       expected(old, command.expected_version);
       if (old.close_outcome !== "Open")
@@ -212,7 +201,7 @@ export async function changeDealStage(
         : old.identification_activity_id;
       if (carriesQualification(command.stage_id)) {
         if (identification && (legacy || !old.primary_person_id))
-          await linkedActiveAction(c, p, old, identification, true);
+          await linkedActiveAction(c, p, legacy || !(await c.query("SELECT to_regclass('ppo.opportunity_origins') AS relation")).rows[0].relation ? old : {...old,owner_id:(await c.query<{owner_id:string}>("SELECT ppo.crm_owner_at($1,$2,1) AS owner_id",[p.workspace_id,id])).rows[0].owner_id}, identification, true);
         if (!old.primary_person_id && !identification)
           throw new AppError(
             422,

@@ -118,7 +118,14 @@ try {
       const receipt = await call(`crm/opportunities/${deal.id}/outcome`,body);
       outcomes.push({deal,body,receipt,detail:(await call(`crm/opportunities/${deal.id}`)).items[0],original:(await database().query("SELECT payload_hash,result FROM ppo.operation_receipts WHERE operation_id=$1",[body.operation_id])).rows[0]});
     }
+    const transferInput={...crmDiscovery(),title:"SYN Durable owner transfer after restart"};
+    const transferCreated=await call("crm/opportunities",transferInput);
+    const comparison=await call(`crm/opportunities/${transferInput.id}/handover-options`);
+    const transferBody={...crmBase(),expected_version:1,new_owner_id:"30000000-0000-4000-8000-000000000015",expected_next_activity:{id:comparison.next_activity.id,version:comparison.next_activity.version},expected_identification_activity:null};
+    const transferReceipt=await call(`crm/opportunities/${transferInput.id}/transfer-owner`,transferBody);
+    const transfer={input:transferInput,body:transferBody,created:transferCreated,receipt:transferReceipt,detail:(await call(`crm/opportunities/${transferInput.id}`)).items[0],original:(await database().query("SELECT payload_hash,result FROM ppo.operation_receipts WHERE operation_id=$1",[transferBody.operation_id])).rows[0]};
     proof = {
+      transfer,
       outcomes,
       input,
       server_pid: server.pid,
@@ -145,6 +152,15 @@ try {
       proof.database_started_at,
       "PostgreSQL must actually restart between phases",
     );
+    const transfer=proof.transfer;
+    const transferred=(await call(`crm/opportunities/${transfer.input.id}`)).items[0];
+    assert.equal(transferred.owner_id,transfer.body.new_owner_id);assert.equal(transferred.version,2);
+    assert.deepEqual(transferred.original_owner,transfer.detail.original_owner);assert.deepEqual(transferred.owner_transfers,transfer.detail.owner_transfers);
+    assert.deepEqual(transferred.actions,transfer.detail.actions);assert.deepEqual(transferred.events,transfer.detail.events);
+    assert.deepEqual(await call(`operations/${transfer.body.operation_id}`),transfer.receipt);
+    assert.deepEqual(await call(`crm/opportunities/${transfer.input.id}/transfer-owner`,transfer.body),transfer.receipt);
+    assert.deepEqual(await call("crm/opportunities",transfer.input),transfer.created);
+    assert.deepEqual((await database().query("SELECT payload_hash,result FROM ppo.operation_receipts WHERE operation_id=$1",[transfer.body.operation_id])).rows[0],transfer.original);
     for (const outcome of proof.outcomes) {
       const saved = (await call(`crm/opportunities/${outcome.deal.id}`)).items[0];
       assert.equal(saved.close_outcome,outcome.body.close_outcome);
@@ -268,6 +284,12 @@ try {
     const metadata = JSON.parse(await readFile(`${evidence}/${phase}.json`,"utf8"));
     await writeFile(`${file}.json`,JSON.stringify({...metadata,scenario:`Owned ${outcome.body.close_outcome} outcome and exact receipt across actual application and PostgreSQL restart`,opportunity_id:outcome.deal.id,operations:[outcome.body.operation_id],sha256:createHash("sha256").update(image).digest("hex"),bytes:image.length},null,2));
   }
+  await page.goto(origin+`/crm/opportunities/${proof.transfer.input.id}`);
+  await expect(page.getByText("Original opportunity owner: SYN Coordinator · Current owner: SYN Sales receiver",{exact:true})).toBeVisible();
+  const transferImage=await page.screenshot({path:`${evidence}/transfer-${phase}.png`,fullPage:false});
+  const transferMetadata=JSON.parse(await readFile(`${evidence}/${phase}.json`,"utf8"));
+  await writeFile(`${evidence}/transfer-${phase}.json`,JSON.stringify({...transferMetadata,scenario:"Owner transfer, original owner, unchanged Activities and exact original actor receipt through real process restart",opportunity_id:proof.transfer.input.id,operations:[proof.transfer.body.operation_id],sha256:createHash("sha256").update(transferImage).digest("hex"),bytes:transferImage.length},null,2));
+  console.log(`CRM C ${phase}: owner/origin/history/Activity and exact original-actor receipt survived actual process restart.`);
   console.log(`CRM B ${phase}: Won/Lost, owned handover due, unchanged Activities and exact original receipts verified.`);
   console.log(`I2 ${phase}: Board/List canonical ID, exact saved worklist content and restart cursor boundary verified.`);
   console.log(

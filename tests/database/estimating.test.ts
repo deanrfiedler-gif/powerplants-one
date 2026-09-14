@@ -136,3 +136,65 @@ test("E1-DB11 graph constraints reject forged aggregate totals and unrelated cur
     await c.query(`INSERT INTO ppo.estimate_versions(id,workspace_id,company_id,estimate_id,version,created_by,updated_by,predecessor_id,scope_revision_id,title,scope,lines,policy,content_hash,reason,cost_total,sell_total) SELECT $2,workspace_id,company_id,estimate_id,2,created_by,updated_by,id,gen_random_uuid(),title,scope,lines,policy,content_hash,'SYN invalid declared total',0,0 FROM ppo.estimate_versions WHERE id=$1`,[s.e.saved.id,id]);
   }),code("23514"));assert.equal((await readEstimate(s.p,s.e.id)).version,1);
 });
+test("DR01-DB01 expanded creation races retain one effect; flags bind original recovery and current authority",async()=>{
+  const {p,input}=await setup(),expanded={...input,schema_version:2,lines:input.lines.map((l,i)=>({...l,category:i===0?"Engineering":i===1?"Subcontract":l.category,allowance:i===1}))};
+  const results=await Promise.all([createEstimate(p,expanded),createEstimate(p,expanded)]);
+  assert.deepEqual(results[0].receipt,results[1].receipt);assert.equal(results.filter(r=>r.replayed).length,1);
+  const e=await readEstimate(p,input.id);assert.equal(e.saved.cost_schema_version,2);assert.equal(e.totals.sell,"720.00");
+  assert.deepEqual(e.saved.lines.map(l=>[l.category,l.allowance]),[["Engineering",false],["Subcontract",true],["Freight",false]]);
+  await assert.rejects(createEstimate(p,{...expanded,lines:expanded.lines.map(l=>({...l,allowance:!l.allowance}))}),code("OperationConflict"));
+  assert.deepEqual(await readOperation(p,input.operation_id),results[0].receipt);
+  for(const table of ["audit_events","outbox_jobs","operation_receipts"])assert.equal((await rows(`SELECT count(*)::int n FROM ppo.${table} WHERE operation_id=$1`,[input.operation_id]))[0].n,1);
+  const save={...crmBase(),schema_version:2,expected_version:1,title:input.title,scope:input.scope,lines:expanded.lines,policy:input.policy};
+  const before=await rows("SELECT to_jsonb(e) v FROM ppo.estimates e WHERE id=$1",[e.id]);
+  await assert.rejects(saveEstimate(p,e.id,{...save,lines:save.lines.map(l=>({...l,allowance:undefined}))}),code("InvalidData"));
+  await assert.rejects(saveEstimate(await principal("second-company"),e.id,save),code("RecordUnavailable"));
+  assert.deepEqual(await rows("SELECT to_jsonb(e) v FROM ppo.estimates e WHERE id=$1",[e.id]),before);
+  await rows("UPDATE ppo.relationships SET valid_to=CURRENT_DATE WHERE workspace_id=$1 AND organisation_id=$2 AND person_id=$3",[CRM.workspace,CRM.org,CRM.person]);
+  await assert.rejects(readOperation(p,input.operation_id),code("RecordUnavailable"));
+  await assert.rejects(saveEstimate(p,e.id,save),code("RecordUnavailable"));
+});
+test("DR01-DB02 direct SQL cannot mislabel line format, invent flags, change arithmetic or overwrite originals",async()=>{
+  const s=await saved(),base=(await rows("SELECT to_jsonb(v) value FROM ppo.estimate_versions v WHERE id=$1",[s.e.saved.id]))[0].value;
+  for(const [schema,patch] of [[1,{category:"Engineering"}],[1,{allowance:false}],[2,{}],[2,{allowance:null}],[2,{allowance:"false"}],[2,{allowance:true,category:"Allowance"}],[2,{allowance:false,unit_sell:"0.00"}]] as const){
+    await assert.rejects(transaction(async c=>{
+      const id=randomUUID();await c.query("UPDATE ppo.estimates SET version=2,current_version_id=$2 WHERE id=$1",[s.e.id,id]);
+      const candidate={...base,id,version:2,predecessor_id:base.id,scope_revision_id:randomUUID(),cost_schema_version:schema,lines:base.lines.map((l:object)=>({...l,...patch}))};
+      await c.query("INSERT INTO ppo.estimate_versions SELECT (jsonb_populate_record(NULL::ppo.estimate_versions,$1::jsonb)).*",[JSON.stringify(candidate)]);
+    }),code("23514"));
+    assert.equal((await readEstimate(s.p,s.e.id)).version,1);
+  }
+  await assert.rejects(rows("UPDATE ppo.estimate_versions SET cost_schema_version=2 WHERE id=$1",[s.e.saved.id]),code("55000"));
+  assert.deepEqual((await rows("SELECT to_jsonb(v) value FROM ppo.estimate_versions v WHERE id=$1",[s.e.saved.id]))[0].value,base);
+});
+test("DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent adoption and exact quotation recovery",async()=>{
+  await rows(await readFile(new URL("../../db/migrations/0001-recover.sql",import.meta.url),"utf8"));await rows("DROP TABLE public.ppo_migrations");
+  await migrate(24);await seed(24);
+  const s=await quoted();await runQuoteJob((await readQuoteJob(s.p,s.command.id)).j.id);
+  const bytes=await draftBytes(s.p,s.command.id),tables=["estimates","estimate_versions","draft_quotes","draft_quote_revisions","estimate_quote_jobs","estimate_quote_attempts","audit_events","operation_receipts","outbox_jobs"];
+  const originals=()=>Promise.all(tables.map(t=>rows(`SELECT to_jsonb(v) value FROM ppo.${t} v ORDER BY id`)));
+  const observer=await principal("observer");
+  await rows("INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,valid_from) VALUES($1,$2,$3,'estimating.edit','Company',$3,'2026-01-01') ON CONFLICT DO NOTHING",[CRM.workspace,observer.actor_id,CRM.company]);
+  assert.equal((await rows("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='estimating.edit' RETURNING id",[observer.actor_id])).length,1);
+  const grants=await rows("SELECT * FROM ppo.permission_grants ORDER BY id");
+  // Capture the backup point after the observer login and revoked-grant fixture have committed.
+  const before=await originals(),ledger=await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
+  await migrate();await seed();await migrate();await seed();
+  assert.deepEqual(await originals(),before.map((rs,i)=>tables[i]==="estimate_versions"?rs.map(r=>({...r,value:{...r.value,cost_schema_version:1}})):rs));
+  assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version<=24 ORDER BY version"),ledger);
+  assert.deepEqual(await rows("SELECT * FROM ppo.permission_grants ORDER BY id"),grants);
+  assert.deepEqual((await readEstimate(s.p,s.e.id)).saved,s.e.saved);assert.deepEqual(await draftBytes(s.p,s.command.id),bytes);
+  assert.deepEqual((await createEstimate(s.p,s.input)).receipt,s.result.receipt);
+  const adoption={...crmBase(),schema_version:2,expected_version:1,title:s.input.title,scope:s.input.scope,lines:s.input.lines.map((l,i)=>({...l,category:i===0?"Engineering":i===1?"Subcontract":l.category,allowance:i===1})),policy:s.input.policy};
+  const commands=[adoption,{...adoption,...crmBase(),schema_version:2}];
+  const races=await Promise.allSettled(commands.map(c=>saveEstimate(s.p,s.e.id,c)));
+  assert.equal(races.filter(r=>r.status==="fulfilled").length,1);assert.equal(races.filter(r=>r.status==="rejected"&&code("VersionConflict")(r.reason)).length,1);
+  const current=await readEstimate(s.p,s.e.id);assert.equal(current.saved.cost_schema_version,2);assert.equal(current.saved.predecessor_id,s.e.saved.id);
+  assert.deepEqual((await readEstimate(s.p,s.e.id,{version_id:s.e.saved.id})).saved,s.e.saved);
+  const winner=commands[races.findIndex(r=>r.status==="fulfilled")];assert.deepEqual((await saveEstimate(s.p,s.e.id,winner)).receipt,await readOperation(s.p,winner.operation_id));
+  const q=quoteCommand(current.saved,2,1);await prepareQuote(s.p,s.e.id,q);await runQuoteJob((await readQuoteJob(s.p,q.id)).j.id);
+  const safe=await readQuote(s.p,q.id);assert.equal(safe.snapshot.total,"720.00");assert.doesNotMatch(JSON.stringify(safe.snapshot),/cost_schema_version|allowance|category|Engineering|Subcontract/);
+  const nextBytes=await draftBytes(s.p,q.id);assert.ok(nextBytes.pdf.length>1000);assert.deepEqual(await draftBytes(s.p,s.command.id),bytes);
+  await rows("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='estimating.edit'",[s.p.actor_id]);await seed();
+  await assert.rejects(readOperation(s.p,winner.operation_id),code("RecordUnavailable"));assert.equal((await readEstimate(s.p,s.e.id)).can_edit,false);
+});

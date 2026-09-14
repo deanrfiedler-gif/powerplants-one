@@ -161,6 +161,9 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
         .flatMap(g => ["project.read", "project.create", "project.edit", "engineering.read", "engineering.create", "engineering.edit"]
           .map(capability => ({ ...g.value, capability }))),
     );
+    const companyAGrants=originalGrants.filter(g=>g.value.user_id==="30000000-0000-4000-8000-000000000001" && g.value.company_id==="20000000-0000-4000-8000-000000000001" && g.value.scope_type==="Company");
+    expected.push(...companyAGrants.filter(g=>g.value.capability==="crm.opportunity.edit").map(g=>({...g.value,capability:"crm.opportunity.transfer.own"})),
+      ...companyAGrants.filter(g=>["shared.read","shared.internal.read","crm.opportunity.read","crm.opportunity.edit","activity.read","activity.edit"].includes(String(g.value.capability))).map(g=>({...g.value,capability:String(g.value.capability),user_id:"30000000-0000-4000-8000-000000000015"})));
     const grantShape = (g: Record<string, unknown>) => Object.fromEntries(Object.entries(g).filter(([k]) => k !== "id"));
     const sorted = (gs: Record<string, unknown>[]) => gs.map(g => JSON.stringify(grantShape(g))).sort();
     assert.deepEqual(sorted(added.map(g => g.value)), sorted(expected));

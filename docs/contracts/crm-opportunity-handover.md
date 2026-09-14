@@ -1,7 +1,8 @@
 # BP-03 — Controlled opportunity handover contract
 
-**Revision:** r01 · **Date:** 7 September 2026 · **Owner:** Dean Fiedler · **State:** Proposed, design only; H-01–H-03 unresolved. **Baseline:** `744b6e6b89e69abdd0fbd4bfdd6ef5ae51e154f3`.
+**Revision:** r02 · **Date:** 14 September 2026 · **Owner:** Dean Fiedler · **State:** H-01–H-03 adopted; implementation and HV verification pending. **Baseline:** `744b6e6b89e69abdd0fbd4bfdd6ef5ae51e154f3`.
 
+**Current reconciliation:** The [audit follow-through policy package](../decisions/audit-follow-through-policy-package.md) adopts H-01–H-03 and authorises this single transfer journey under #145. The complete #55 publication ledger was reread. The older proposed labels below are retained as design history; all concrete guards and HV obligations remain.
 [Decisions](../decisions/crm-opportunity-handover.md) · [Journey](../blueprints/crm-handover-journey.md) · [Future proof](../testing/crm-handover-verification.md) · [Handover](../delivery/crm-handover-design-handover.md).
 
 ## 1. Accepted source facts and the precise gap
@@ -110,3 +111,17 @@ Perform this proof inside the same lock/authorisation sequence for POST replay a
 Future errors retain current semantics: malformed/oversize/validation 400/413/422; no current action permission 403 where safe; missing/hidden target 404; version/comparison or operation conflict 409; unavailable service 503. No response contains hidden target IDs, candidate exclusion counts, grant rows or historical private content. Full matrix and design-state messages are linked above. All transfer runtime cases remain **Not run**.
 
 Mechanism references checked 7 September 2026: [PostgreSQL 16 row/advisory locks](https://www.postgresql.org/docs/16/explicit-locking.html) support transaction coordination, and [composite foreign-key constraints](https://www.postgresql.org/docs/16/ddl-constraints.html) support matching typed relationships. Neither establishes PPO business authority; the explicit owner-chain/grant checks and competing tests above remain required. Preserve old event projections and schema-versioned receipt payloads when adding columns: do not inject new nullable fields into an old accepted hash or serialisation.
+
+## 7. Current runtime reconciliation for increment C
+
+Use each opportunity's immutable I1 or five-stage catalogue, preserving its existing Open/Won/Lost outcome. Transfer does not record or reopen an outcome. A Won handover-due record remains immutable evidence of the closing owner's outstanding obligation; changing the sales owner does not confirm the receiving delivery route/owner or complete that obligation.
+
+The original-owner companion also supplies the owner at initial five-stage qualification. Later five-stage moves with an unchanged unknown-contact qualification use that historical owner for the existing identification-action ownership check; they still require the permitted linked action to be active. Editing the contact remains a separate current-owner command. Transfer itself never requalifies or requires a historical identification action to become active again.
+
+The new event's structured owner/comparison fields may live in an immutable companion keyed by its existing OpportunityEvent ID. This avoids changing any older event's stored field shape while retaining the exact event/aggregate/owner chain. The origin companion captures pre-migration ownership as observed on upgrade; new creation captures the selected owner even when the author differs.
+
+Accepted-original recovery covers the delivered CRM information, scope, stage and outcome commands as well as I1 create/qualify/plan and the new transfer. A matching receipt, accepted audit and command-specific event must prove that exact actor/operation/opportunity before the narrow current-owner exception applies. Old command payloads, hashes and receipts remain byte-for-byte. No other domain receives this exception.
+
+The prototype's workspace mutation lock remains. Transfer additionally locks the affected workspace's user, grant and effective relationship rows against concurrent revocation, then rechecks current authority and time-expiring grants before mutation. Required Activity rows are locked once in UUID order; read fences compare both pointers and versions. Direct administrative SQL remains outside server business-authority guarantees, while SQL owner/history integrity is tested independently.
+
+One explicit local synthetic receiver may be added with Company A shared/Internal, CRM read/edit and Activity read/edit capabilities. It receives no transfer, estimating, Finance or Service command capability. The coordinator's own-transfer grant is separate and once-only under a seed receipt. Neither repeated seed nor the hosted tester upgrade grants onward transfer or repairs a revocation.

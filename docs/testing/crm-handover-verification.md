@@ -1,7 +1,8 @@
 # BP-03 — Future handover verification matrix
 
-**Revision:** r01 · **Date:** 7 September 2026 · **Owner:** Dean Fiedler · **Status:** All HV cases **Not run**; prospective tests for an unimplemented command. **Work:** #55 / PPO-009. [Contract](../contracts/crm-opportunity-handover.md) · [decisions](../decisions/crm-opportunity-handover.md) · [journey](../blueprints/crm-handover-journey.md).
+**Revision:** r02 · **Date:** 14 September 2026 · **Owner:** Dean Fiedler · **Status:** HV execution **Not run** on the transfer branch; concrete tests prepared, CI and original-evidence review pending. **Work:** #55 / PPO-009. [Contract](../contracts/crm-opportunity-handover.md) · [decisions](../decisions/crm-opportunity-handover.md) · [journey](../blueprints/crm-handover-journey.md).
 
+**Current reconciliation:** The [audit follow-through policy package](../decisions/audit-follow-through-policy-package.md) adopts H-01–H-03 and authorises this single transfer journey under #145. The complete #55 publication ledger was reread. The older proposed labels below are retained as design history; all concrete guards and HV obligations remain.
 HV identifiers are local matrix labels, not parent requirements, PP-01 packages or replacements for CA/AT/PT IDs. Preserve all accepted test suites/assertions/pins. Design checks and illustrations cannot pass a DB, HTTP, browser, restart or business-acceptance case.
 
 ## Fixture and result contract
@@ -41,4 +42,4 @@ Run current foundation/prototype/naming/design checks plus all accepted applicat
 
 Record source head, executed checkout/tree, runtime versions, fresh/upgrade baseline, fixture IDs, actual executed commands and counts, observed competing results, distinct process IDs and PostgreSQL start times, original screenshot hashes/viewports and receipt/output hashes. Record failed/cancelled/skipped gates as such. Review loaded, conflict, unknown-response, denied and long-content desktop/phone originals; static design illustrations do not substitute. Retain all prior immutable source bytes and all 78 parent requirement identities.
 
-Full AT-25 stays **Planned** and #9 stays open. Account parity, independent review, owner acceptance, real mobile/screen-reader evidence and production readiness are distinct from future component verification. This design package executes none of HV-01–HV-22.
+Full AT-25 stays **Planned** and #9 stays open. Account parity, independent review, owner acceptance, real mobile/screen-reader evidence and production readiness are distinct from future component verification. The historical design package executed none of HV-01–HV-22. Current implementation coverage and honest execution state are recorded in the [increment C handover](../delivery/crm-owner-transfer-runtime-handover.md); preparing a test does not establish a pass.

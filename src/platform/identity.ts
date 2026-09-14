@@ -21,6 +21,7 @@ export async function createSession(profile: string, previous_token?: string) {
   if (
     ![
       "coordinator",
+      "crm-receiver",
       "observer",
       "systems",
       "other-workspace",

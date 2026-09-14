@@ -7,9 +7,18 @@ import {
   type Page,
   type Request,
 } from "@playwright/test";
-import { crmCreate, crmQualify, crmBase, crmDiscovery } from "../helpers/crm";
+import { randomUUID, randomBytes, createHash } from "node:crypto";
+import { database, closeDatabase } from "../../src/platform/database";
+import { localConfig } from "../../src/platform/config";
+import { crmCreate, crmQualify, crmBase, crmDiscovery, crmAction, CRM } from "../helpers/crm";
 import type { DirectoryView } from "../../src/crm/directory";
 test.describe.configure({ timeout: 120000 });
+test.beforeAll(() => {
+  process.loadEnvFile(".env.local");
+  if (localConfig().database_name !== "ppo_synthetic_test")
+    throw new Error("CRM browser fixture writes require disposable ppo_synthetic_test");
+});
+test.afterAll(closeDatabase);
 async function call(page: Page, path: string, body?: unknown) {
   const r = await page.request.fetch(`/api/v1/${path}`, {
     method: body === undefined ? "GET" : "POST",
@@ -19,6 +28,85 @@ async function call(page: Page, path: string, body?: unknown) {
   expect(r.ok(), await r.text()).toBe(true);
   return r.json();
 }
+test("owner transfer compares separate activities and persists original/current ownership on desktop and phone",async({page},info)=>{
+  await call(page,"local-session",{profile:"coordinator"});
+  const input={...crmDiscovery(),title:`SYN Transfer journey ${info.project.name}`};input.initial_action.summary="SYN Long separate activity comparison "+"scopeword".repeat(180);await call(page,"crm/opportunities",input);
+  await page.goto(`/crm/opportunities/${input.id}`);
+  await keyActivate(page,page.getByRole("button",{name:"Transfer opportunity owner",exact:true}));
+  const dialog=page.getByRole("dialog");
+  await expect(dialog.getByRole("region",{name:"Activity comparison"})).toContainText("SYN Coordinator");
+  await keySelect(page,dialog.getByLabel("New opportunity owner"),"30000000-0000-4000-8000-000000000015");
+  await keyType(page,dialog.getByLabel("Transfer reason"),"SYN "+"r".repeat(996));
+  const comparison=dialog.getByRole("region",{name:"Activity comparison"});
+  const noClippedComparison=()=>comparison.locator("p").evaluateAll(ps=>ps.every(p=>p.scrollWidth<=p.clientWidth));
+  expect(await noClippedComparison()).toBe(true);
+  await comparison.screenshot({path:info.outputPath("crm-transfer-full-activity-comparison.png")});
+  await page.screenshot({path:info.outputPath("crm-transfer-comparison.png"),fullPage:false});
+  if(info.project.use.isMobile){await page.setViewportSize({width:320,height:844});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect(await noClippedComparison()).toBe(true);await comparison.screenshot({path:info.outputPath("crm-transfer-full-activity-comparison-320.png")});await page.screenshot({path:info.outputPath("crm-transfer-comparison-320.png"),fullPage:false});}
+  await committed(page,`crm/opportunities/${input.id}/transfer-owner`,()=>keyActivate(page,dialog.getByRole("button",{name:"Confirm owner transfer",exact:true})));
+  await expect(dialog).not.toBeVisible();await page.reload();
+  await expect(page.getByText("Original opportunity owner: SYN Coordinator · Current owner: SYN Sales receiver",{exact:true})).toBeVisible();
+  await expect(page.getByRole("button",{name:"Transfer opportunity owner",exact:true})).toHaveCount(0);
+  const saved=(await call(page,`crm/opportunities/${input.id}`)).items[0];expect(saved.owner_id).toBe("30000000-0000-4000-8000-000000000015");expect(saved.actions[0].owner_id).toBe(input.owner_id);expect(saved.owner_transfers).toHaveLength(1);expect(saved.events.at(-1).reason).toHaveLength(1000);
+  await page.screenshot({path:info.outputPath("crm-transfer-persisted.png"),fullPage:false});
+  await call(page,"local-session",{profile:"crm-receiver"});await page.reload();
+  await expect(page.getByRole("button",{name:"Transfer opportunity owner",exact:true})).toHaveCount(0);
+  await expect(page.getByRole("button",{name:"Edit deal information",exact:true})).toBeVisible();
+  await page.goto("/crm/opportunities");await page.getByLabel("Search opportunities",{exact:true}).fill(input.title);
+  await expect(page.locator(`[data-opportunity-id="${input.id}"]`)).toBeVisible();
+  await page.getByRole("button",{name:"List",exact:true}).click();await expect(page.getByRole("link",{name:input.title,exact:true})).toBeVisible();
+});
+test("lost accepted transfer response recovers the original actor receipt and stale activity comparison requires review",async({page},info)=>{
+  await call(page,"local-session",{profile:"coordinator"});
+  const input=crmDiscovery();await call(page,"crm/opportunities",input);await page.goto(`/crm/opportunities/${input.id}`);
+  await page.getByRole("button",{name:"Transfer opportunity owner",exact:true}).click();const dialog=page.getByRole("dialog");
+  await dialog.getByLabel("New opportunity owner").selectOption("30000000-0000-4000-8000-000000000015");await dialog.getByLabel("Transfer reason").fill("SYN Deliberate transfer after reviewing separate activity completion");
+  await call(page,`activities/${input.initial_action.id}/complete`,{...crmBase(),expected_version:1,outcome:"SYN Completed while comparison remained open"});
+  await dialog.getByRole("button",{name:"Confirm owner transfer",exact:true}).click();
+  await expect(dialog.getByText("An activity changed. Reload and review its owner and outcome before transferring.",{exact:true})).toBeVisible();
+  expect((await call(page,`crm/opportunities/${input.id}`)).items[0].version).toBe(1);
+  await page.screenshot({path:info.outputPath("crm-transfer-conflict.png"),fullPage:false});
+  await dialog.getByRole("button",{name:"Load current saved version for comparison"}).click();
+  await expect(dialog.getByRole("region",{name:"Activity comparison"})).toContainText("Completed");
+  let original:string|undefined;
+  await page.route(`**/api/v1/crm/opportunities/${input.id}/transfer-owner`,async route=>{
+    original=route.request().postDataJSON().operation_id;const response=await route.fetch();expect(response.ok(),await response.text()).toBe(true);await route.abort("connectionfailed");
+  },{times:1});
+  await dialog.getByRole("button",{name:"Confirm owner transfer",exact:true}).click();
+  await expect(dialog.getByRole("button",{name:"Confirm original save outcome"})).toBeVisible();
+  await expect(dialog.getByLabel("New opportunity owner")).toBeDisabled();
+  await page.screenshot({path:info.outputPath("crm-transfer-unknown.png"),fullPage:false});
+  await dialog.getByRole("button",{name:"Confirm original save outcome"}).click();await expect(dialog).not.toBeVisible();
+  expect((await call(page,`operations/${original}`)).record_version).toBe(2);
+  const saved=(await call(page,`crm/opportunities/${input.id}`)).items[0];expect(saved.owner_transfers).toHaveLength(1);expect(saved.next_action_state).toBe("Needed");
+});
+test("revoked transfer access clears comparison and discards a late eligible-owner response",async({page},info)=>{
+  const user=randomUUID(),token=randomBytes(32).toString("hex");
+  await database().query("INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1,$2,'PPO-LocalSynthetic',$3,'SYN Transfer browser actor')",[user,CRM.workspace,randomUUID()]);
+  await database().query("INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id) SELECT workspace_id,$1,company_id,capability,scope_type,scope_id,site_id FROM ppo.permission_grants WHERE user_id=$2",[user,CRM.owner]);
+  await database().query("INSERT INTO ppo.sessions(token_hash,workspace_id,actor_id,expires_at) VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')",[createHash("sha256").update(token).digest("hex"),CRM.workspace,user]);
+  await page.context().addCookies([{name:"ppo_local_session",value:token,domain:"127.0.0.1",path:"/",httpOnly:true,sameSite:"Strict"}]);
+  const input={...crmDiscovery(),title:`SYN Private transfer ${randomUUID()}`,owner_id:user,initial_action:crmAction(user)};
+  await call(page,"crm/opportunities",input);await page.goto(`/crm/opportunities/${input.id}`);
+  await page.getByRole("button",{name:"Transfer opportunity owner",exact:true}).click();const dialog=page.getByRole("dialog");
+  await expect(dialog.getByRole("region",{name:"Activity comparison"})).toBeVisible();
+  await dialog.getByLabel("Transfer reason").fill("SYN confidential proposed transfer reason");
+  let release!:()=>void,held=false,intercept=true;const pending=new Promise<void>(r=>{release=r;});
+  const pattern=`**/api/v1/crm/opportunities/${input.id}/handover-options?**`;
+  await page.route(pattern,async route=>{if(!intercept){await route.continue();return;}intercept=false;const response=await route.fetch();expect(response.ok()).toBe(true);held=true;await pending;await route.fulfill({response});});
+  await page.evaluate(()=>window.dispatchEvent(new Event("focus")));await expect.poll(()=>held).toBe(true);
+  await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.read'",[user]);
+  const denied=page.waitForResponse(r=>r.url().includes(`/opportunities/${input.id}/handover-options?`)&&r.status()===404);
+  await page.evaluate(()=>window.dispatchEvent(new Event("focus")));await denied;
+  await expect(dialog.getByLabel("New opportunity owner")).toHaveCount(0);await expect(dialog.getByLabel("Transfer reason")).toHaveCount(0);
+  const late=page.waitForResponse(r=>r.url().includes(`/opportunities/${input.id}/handover-options?`)&&r.status()===200);release();await(await late).finished();
+  await page.evaluate(()=>new Promise<void>(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r()))));
+  await expect(dialog.getByRole("region",{name:"Activity comparison"})).toHaveCount(0);
+  expect(await page.locator("body").innerText()).not.toContain("SYN confidential proposed transfer reason");
+  expect(await page.locator("body").innerText()).not.toContain(input.title);
+  await page.screenshot({path:info.outputPath("crm-transfer-denied-after-late-response.png"),fullPage:false});
+  expect((await page.request.get(`/api/v1/operations/${input.operation_id}`)).status()).toBe(404);
+});
 test("owned Won handover and structured Lost survive reload on desktop and phone", async ({ page }, info) => {
   await call(page,"local-session",{profile:"coordinator"});
   for (const outcome of ["Won","Lost"]) {
