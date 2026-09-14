@@ -1,0 +1,86 @@
+.e2-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.e2-check {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  overflow-wrap: anywhere;
+  padding: 6px 0;
+}
+.e2-check input {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  accent-color: #367322;
+}
+.e2-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 20px 0;
+}
+.e2-options button[aria-pressed="true"] {
+  border: 3px solid #367322;
+  background: #f1f8ee;
+}
+.e2-answers {
+  margin: 20px 0;
+}
+.e2-answers > div {
+  padding: 12px 0;
+  border-top: 1px solid #d6dbe0;
+}
+.e2-answers dt {
+  font-weight: 700;
+}
+.e2-answers dd {
+  margin: 8px 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.e2-answers small {
+  display: block;
+  margin-top: 6px;
+}
+.e2-editor,
+.e2-snapshot,
+.e2-comparison {
+  overflow-wrap: anywhere;
+}
+.e2-editor .est-panel {
+  padding: 16px;
+}
+.e2-question .field {
+  margin-bottom: 14px;
+}
+.e2-editor h3 {
+  margin-top: 24px;
+}
+.e2-editor form {
+  max-width: 100%;
+}
+.e2-editor .est-form > button {
+  margin-top: 12px;
+}
+.e2-options button {
+  flex: 1 1 210px;
+  text-align: left;
+}
+@media (max-width: 600px) {
+  .e2-grid {
+    grid-template-columns: 1fr;
+  }
+  .e2-editor .est-panel {
+    padding: 12px;
+  }
+  .e2-editor .est-line {
+    padding: 10px;
+  }
+  .e2-editor .est-actions > * {
+    max-width: 100%;
+  }
+}

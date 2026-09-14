@@ -34,6 +34,8 @@ Frozen issued references remain evidence. Stable working documents evolve throug
 
 [Azure private demo runtime](delivery/azure-private-demo.md) — individual sign-in, cloud configuration, deployment and reset preparation; live acceptance pending.
 
+The adopted E2 persistence increment is governed by [ADR-0026](decisions/ADR-0026-e2-option-persistence.md). The [workspace handover](delivery/estimating-e2-workspace-handover.md) records the implemented additive migration/API and remaining runtime, browser and receiving work.
+
 The [audit continuation handover](delivery/audit-continuation-handover.md) records the authorised next-ten sequence, current verification and remaining delivery boundaries.
 
 ## Audit continuation receiving packages
