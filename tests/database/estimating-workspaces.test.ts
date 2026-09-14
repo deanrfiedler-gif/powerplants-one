@@ -593,6 +593,18 @@ test("E2 migration formalises exact E1 identities and preserves every accepted c
     accepted.receipt,
   );
   assert.deepEqual(await draftBytes(p, quote.id), bytes);
+  await saveEstimate(p, e.id, {
+    ...crmBase(),
+    expected_version: 1,
+    title: input.title,
+    scope: input.scope,
+    lines: input.lines,
+    policy: input.policy,
+  });
+  const savedEstimate = await readEstimate(p, e.id);
+  assert.equal(savedEstimate.version, 2);
+  await prepareQuote(p, e.id, quoteCommand(savedEstimate.saved, 2, 1));
+  assert.equal((await readEstimate(p, e.id)).quotes[0].version, 2);
   const s = { p, input: { id: g.id } },
     branch = await proposal(s, "Branch");
   await changeDiscoveryWorkspace(p, g.id, branch);
