@@ -1,8 +1,12 @@
 # BP-03 — Controlled opportunity handover decisions
 
-**Revision:** r01 · **Date:** 7 September 2026 · **Owner:** Dean Fiedler · **State:** Proposed policy; design publication authorised, policy acceptance outstanding. **Work:** [#55](https://github.com/deanrfiedler-gif/powerplants-one/issues/55), under [#9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9).
+**Revision:** r02 · **Date:** 14 September 2026 · **Owner:** Dean Fiedler · **State:** H-01–H-03 adopted for the synthetic prototype; implementation under review. **Work:** [#55](https://github.com/deanrfiedler-gif/powerplants-one/issues/55), under [#9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9).
 
 [Contract and physical map](../contracts/crm-opportunity-handover.md) · [Screen journey](../blueprints/crm-handover-journey.md) · [Future verification](../testing/crm-handover-verification.md) · [Publication handover](../delivery/crm-handover-design-handover.md).
+
+## Current decision — 14 September 2026
+
+H-01, H-02 and H-03 are adopted as the recommended package through [Dean’s audit follow-through instruction](audit-follow-through-policy-package.md). H-04/H-05 preservation continues, now applying to each record’s original catalogue and qualification history. The following original proposal records the alternatives considered; its historical Open labels no longer describe these three decisions. No transfer runtime pass or merge is claimed here.
 
 ## Recommendation for Dean
 

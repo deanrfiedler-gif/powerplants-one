@@ -1,13 +1,15 @@
 ---
 document_id: PPO-010-ROUTE-DEC
-revision: r01
-date: 2026-09-12
+revision: r02
+date: 2026-09-14
 owner: Dean Fiedler - prototype owner
-status: Direction adopted; rules, taxonomy and runtime pending
+status: Direction and DR-01/DR-02 adopted; routing rules and runtime pending
 source_commit: bfc0eca04fd9ae4da080b9cd7f49843fc3d2e8aa
 ---
 
 # Derived routing direction — advisory derivation with confirmed binding at acceptance
+
+**Current decision, 14 September 2026:** DR-01 and DR-02 are resolved by the adopted category/allowance and equipment choices. DR-03–DR-06 remain open; route thresholds and container propositions are unchanged. See the [audit follow-through policy package](audit-follow-through-policy-package.md). The original proposal and earlier-state narrative below remain historical context.
 
 Dean adopted this direction on 12 September 2026. It settles **how** PPO decides the delivery route for an estimating pursuit. It does not adopt a rule set, a threshold, a migration or a runtime behaviour, and it allocates no ADR number. Those follow under the sequence in section 7.
 

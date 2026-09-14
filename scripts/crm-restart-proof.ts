@@ -11,6 +11,7 @@ import {
   crmQualify,
   crmBase,
   crmAction,
+  crmDiscovery,
 } from "../tests/helpers/crm";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
@@ -106,7 +107,19 @@ try {
         [operations.map((r) => r.operation_id)],
       )
     ).rows;
+    const outcomes = [];
+    for (const close_outcome of ["Won","Lost"]) {
+      const deal = {...crmDiscovery(),title:`SYN ${close_outcome} durable owned outcome`};
+      await call("crm/opportunities",deal);
+      let version = 1;
+      if (close_outcome === "Won") for (const stage_id of ["Scoping","Quoting","Negotiation","Closing"])
+        await call(`crm/opportunities/${deal.id}/stage`,{...crmBase(),expected_version:version++,stage_id,qualification_note:null,identification_activity_id:null});
+      const body = {...crmBase(),expected_version:version,close_outcome,lost_reason:close_outcome === "Lost" ? "No decision" : null,acceptance_evidence:close_outcome === "Won" ? "SYN Accepted fictional scope; closing owner retains handover due." : null};
+      const receipt = await call(`crm/opportunities/${deal.id}/outcome`,body);
+      outcomes.push({deal,body,receipt,detail:(await call(`crm/opportunities/${deal.id}`)).items[0],original:(await database().query("SELECT payload_hash,result FROM ppo.operation_receipts WHERE operation_id=$1",[body.operation_id])).rows[0]});
+    }
     proof = {
+      outcomes,
       input,
       server_pid: server.pid,
       database_started_at: (
@@ -132,6 +145,18 @@ try {
       proof.database_started_at,
       "PostgreSQL must actually restart between phases",
     );
+    for (const outcome of proof.outcomes) {
+      const saved = (await call(`crm/opportunities/${outcome.deal.id}`)).items[0];
+      assert.equal(saved.close_outcome,outcome.body.close_outcome);
+      assert.equal(saved.stage_id,outcome.detail.stage_id);
+      assert.equal(saved.version,outcome.detail.version);
+      assert.deepEqual(saved.events,outcome.detail.events);
+      assert.deepEqual(saved.handover_due,outcome.detail.handover_due);
+      assert.deepEqual(saved.actions,outcome.detail.actions);
+      assert.deepEqual(await call(`operations/${outcome.body.operation_id}`),outcome.receipt);
+      assert.deepEqual(await call(`crm/opportunities/${outcome.deal.id}/outcome`,outcome.body),outcome.receipt);
+      assert.deepEqual((await database().query("SELECT payload_hash,result FROM ppo.operation_receipts WHERE operation_id=$1",[outcome.body.operation_id])).rows[0],outcome.original);
+    }
     const o = (await call(`crm/opportunities/${proof.input.id}`)).items[0];
     assert.deepEqual((await call(`crm/opportunities?q=${encodeURIComponent(proof.input.title)}&sort=Title`)).items, proof.worklist_items);
     assert.ok(proof.read_cursor, "The accepted HTTP fixtures must provide a second record for cursor restart proof");
@@ -233,6 +258,17 @@ try {
     const metadata = JSON.parse(await readFile(`${evidence}/${phase}.json`,"utf8"));
     await writeFile(`${evidence}/I2-${phase}-${view}.json`,JSON.stringify({...metadata,scenario:`I2 ${view} reads the same accepted Qualified/Open opportunity across actual application and PostgreSQL restart`,sha256:createHash("sha256").update(image).digest("hex"),bytes:image.length},null,2));
   }
+  for (const outcome of proof.outcomes) {
+    await page.goto(origin + `/crm/opportunities/${outcome.deal.id}`);
+    await expect(page.getByRole("heading",{name:outcome.deal.title,exact:true})).toBeVisible();
+    if (outcome.body.close_outcome === "Won") await expect(page.getByRole("heading",{name:"Handover due",exact:true})).toBeVisible();
+    else await expect(page.getByText("Lost reason: No decision",{exact:true})).toBeVisible();
+    const file = `${evidence}/outcome-${outcome.body.close_outcome.toLowerCase()}-${phase}`;
+    const image = await page.screenshot({path:`${file}.png`,fullPage:false});
+    const metadata = JSON.parse(await readFile(`${evidence}/${phase}.json`,"utf8"));
+    await writeFile(`${file}.json`,JSON.stringify({...metadata,scenario:`Owned ${outcome.body.close_outcome} outcome and exact receipt across actual application and PostgreSQL restart`,opportunity_id:outcome.deal.id,operations:[outcome.body.operation_id],sha256:createHash("sha256").update(image).digest("hex"),bytes:image.length},null,2));
+  }
+  console.log(`CRM B ${phase}: Won/Lost, owned handover due, unchanged Activities and exact original receipts verified.`);
   console.log(`I2 ${phase}: Board/List canonical ID, exact saved worklist content and restart cursor boundary verified.`);
   console.log(
     `I1 ${phase}: real PostgreSQL and HTTP accepted opportunity, two actions, exact completed outcome, qualification/events and four immutable receipts verified. Application PID ${server.pid}.`,

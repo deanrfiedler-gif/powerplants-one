@@ -464,16 +464,18 @@ function OpportunityContent({
         <PageHeader eyebrow={`${o.display_number} · ${o.close_outcome}`} title={o.title}
           description={`${o.organisation_name} · ${o.site_name ?? "Site to be confirmed"}`}
           action={o.can_edit ? <button className="secondary crm-main-edit" aria-label="Edit deal information" onClick={() => setDialog("information")}><ProductIcon name="edit"/><span>Edit deal</span></button> : undefined} />
-        <div className="crm-deal-key-facts"><strong>{dealAmount(o.value_amount)}</strong><span>AUD, excl. GST</span><span>Expected close: {dealClose(o.expected_close_date)}</span><span>Customer contact: {o.contact_name ?? "Not yet identified"}</span><span>Deal owner: {o.owner_name}</span></div>
+        <div className="crm-deal-key-facts"><span aria-label="Saved sales outcome"><strong>Outcome: {o.close_outcome}</strong></span><strong>{dealAmount(o.value_amount)}</strong><span>AUD, excl. GST</span><span>Expected close: {dealClose(o.expected_close_date)}</span><span>Customer contact: {o.contact_name ?? "Not yet identified"}</span><span>Deal owner: {o.owner_name}</span></div>
         <div className="crm-stage-track" aria-label="Deal stage">
-          {o.stages.map(({ stage_id: stage }) => <button key={stage} className={o.stage_id === stage ? "current" : ""} aria-current={o.stage_id === stage ? "step" : undefined} disabled={!o.can_edit || command.busy || command.uncertain} onClick={() => {setTargetStage(stage);setDialog("stage");}}>{stage}{o.stage_id === stage && <span>Current stage</span>}</button>)}
+          {o.stages.map(({ stage_id: stage }) => <button key={stage} className={o.stage_id === stage ? "current" : ""} aria-current={o.stage_id === stage ? "step" : undefined} disabled={!o.can_edit || o.close_outcome !== "Open" || command.busy || command.uncertain} onClick={() => {setTargetStage(stage);setDialog("stage");}}>{stage}{o.stage_id === stage && <span>Current stage</span>}</button>)}
         </div>
       </div>
+      {o.can_record_outcome && <p><button className="secondary" disabled={command.busy || command.uncertain} onClick={()=>setDialog("outcome")}>Record sales outcome</button></p>}
+      {o.handover_due && <section className="crm-panel" aria-label="Handover due"><h2>Handover due</h2><p>Accountable owner: {o.handover_due.owner_name}. Receiving route and owner still need confirmation.</p><p>Won at opportunity version {o.handover_due.opportunity_version}. Existing activities retain their owners.</p></section>}
       {dialog && <DealDialog id={o.id} mode={dialog} targetStage={targetStage} onClose={() => {setDialog(null);setTargetStage(undefined);}} onSaved={(receipt, _old, stage) => {
         setDialog(null);setTargetStage(undefined);
         // Our accepted stage command can advance a clean sibling form. Existing
         // edits retain their original version and the deliberate comparison.
-        if(stage && !command.hasUnsavedChanges && !command.busy && !command.uncertain)
+        if((stage || receipt.state === "Won" || receipt.state === "Lost") && !command.hasUnsavedChanges && !command.busy && !command.uncertain)
           setVersion(receipt.record_version);
         reload();
       }}/>}
@@ -713,6 +715,7 @@ function OpportunityContent({
                     : e.event_type === "OpportunityInformationEdited" ? "Deal information updated"
                     : e.event_type === "OpportunityScopeEdited" ? "Requirements and scope updated"
                     : e.event_type === "OpportunityStageChanged" ? "Deal stage changed"
+                    : e.event_type === "OpportunityOutcomeRecorded" ? `Sales outcome recorded: ${e.close_outcome}`
                     : "Next action planned"}{" "}
                 · Version {e.opportunity_version}
               </strong>
@@ -720,6 +723,8 @@ function OpportunityContent({
                 {e.from_stage ? `${e.from_stage} → ` : ""}
                 {e.to_stage} · {e.reason}
               </p>
+              {e.lost_reason && <p>Lost reason: {e.lost_reason}</p>}
+              {e.acceptance_evidence && <p className="crm-narrative">Acceptance evidence: {e.acceptance_evidence}</p>}
               <details>
                 <summary>Recorded need and qualification</summary>
                 <p className="crm-narrative">{e.need_summary}</p>

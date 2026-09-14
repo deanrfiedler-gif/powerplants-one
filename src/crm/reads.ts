@@ -60,7 +60,7 @@ export async function readOpportunity(p: Principal, id: string) {
           : "Upcoming";
   const events = (
     await c.query(
-      "SELECT e.id,e.event_type,e.opportunity_version,e.from_stage,e.to_stage,e.reason,e.need_summary,e.qualification_note,e.next_activity_id,e.identification_activity_id,e.created_at,e.created_by,u.display_name AS actor_name FROM ppo.opportunity_events e JOIN ppo.users u ON (u.workspace_id,u.id)=(e.workspace_id,e.created_by) WHERE e.workspace_id=$1 AND e.opportunity_id=$2 ORDER BY e.opportunity_version",
+      "SELECT e.id,e.event_type,e.opportunity_version,e.from_stage,e.to_stage,e.reason,e.need_summary,e.qualification_note,e.next_activity_id,e.identification_activity_id,e.created_at,e.created_by,to_jsonb(e)->>'close_outcome' AS close_outcome,to_jsonb(e)->>'lost_reason' AS lost_reason,to_jsonb(e)->>'acceptance_evidence' AS acceptance_evidence,u.display_name AS actor_name FROM ppo.opportunity_events e JOIN ppo.users u ON (u.workspace_id,u.id)=(e.workspace_id,e.created_by) WHERE e.workspace_id=$1 AND e.opportunity_id=$2 ORDER BY e.opportunity_version",
       [p.workspace_id, id],
     )
   ).rows.map((e) => ({
@@ -92,7 +92,14 @@ export async function readOpportunity(p: Principal, id: string) {
     "SELECT stage_id,ordinal FROM ppo.crm_stage_definitions WHERE workspace_id=$1 AND pipeline_definition_id=$2 ORDER BY ordinal",
     [p.workspace_id, o.pipeline_definition_id],
   )).rows;
+  const outcomesAvailable = !!(await c.query("SELECT to_regclass('ppo.opportunity_handovers_due') AS relation")).rows[0].relation;
+  const handover_due = outcomesAvailable ? (await c.query<{owner_id:string;owner_name:string;opportunity_version:number;created_at:Date;status:"Due"}>(
+    "SELECT h.owner_id,u.display_name AS owner_name,h.opportunity_version,h.created_at,h.status FROM ppo.opportunity_handovers_due h JOIN ppo.users u ON (u.workspace_id,u.id)=(h.workspace_id,h.owner_id) WHERE h.workspace_id=$1 AND h.opportunity_id=$2",
+    [p.workspace_id,id],
+  )).rows[0] ?? null : null;
   return {
+    handover_due,
+    can_record_outcome: outcomesAvailable && can_edit && o.close_outcome === "Open" && o.pipeline_definition_id === ACTIVE_PIPELINE_ID,
     stages,
     source_lead,
     id: o.id,

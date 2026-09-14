@@ -36,7 +36,7 @@ export type Opportunity = OpportunityContext & {
   site_unknown_reason: string | null;
   contact_unknown_reason: string | null;
   stage_id: OpportunityStage;
-  close_outcome: "Open";
+  close_outcome: "Open" | "Won" | "Lost";
   stage_entered_at: Date;
   next_activity_id: string;
   qualification_note: string | null;
