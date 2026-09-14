@@ -1,3 +1,4 @@
+import { registerDiscoveryCostBasisTests } from "../helpers/estimating-cost-basis-cases";
 import assert from "node:assert/strict";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -198,3 +199,5 @@ test("DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent ad
   await rows("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='estimating.edit'",[s.p.actor_id]);await seed();
   await assert.rejects(readOperation(s.p,winner.operation_id),code("RecordUnavailable"));assert.equal((await readEstimate(s.p,s.e.id)).can_edit,false);
 });
+
+registerDiscoveryCostBasisTests();

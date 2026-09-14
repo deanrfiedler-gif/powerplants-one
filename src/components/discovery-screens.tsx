@@ -95,7 +95,7 @@ function CommandState({ command }: { command: Command }) {
     </>
   );
 }
-function ScopeView({
+export function ScopeView({
   input,
   context,
 }: {
@@ -664,8 +664,8 @@ function ProposalEditor({
           <p>
             Proposed readiness:{" "}
             <strong>{comparison.preview.compiled.scope_readiness}</strong>.
-            Delivery routing: Not configured. Manual costing import is not yet
-            available.
+            Delivery routing: Not configured. After saving Complete discovery,
+            review its exact basis separately for manual costing.
           </p>
           <ScopeView
             input={comparison.preview.compiled.input}
@@ -850,8 +850,8 @@ export function DiscoveryDetail({ id }: { id: string }) {
             </Link>
           </p>
           <p>
-            Delivery routing: Not configured. Manual costing import is not yet
-            available. Selection keeps one estimating basis and does not change
+            Delivery routing: Not configured. Complete selected discovery can
+            be reviewed for manual costing. Selection keeps one estimating basis and does not change
             the CRM forecast or a saved quotation.
           </p>
           <div className="e2-options" aria-label="Saved options">
@@ -887,6 +887,9 @@ export function DiscoveryDetail({ id }: { id: string }) {
             selected && (
               <>
                 <div className="est-actions">
+                  {!frozen && !editor && !action && d.can_edit && selected.option.state === "Active" && selected.option.id === d.workspace.selected_option_id && selected.revision.kind === "Discovery" && selected.revision.scope_readiness === "Complete" && (
+                    <Link className="button" href={`/estimating/discovery/${id}/costing?option=${selected.option.id}`}>Review scope for manual costing</Link>
+                  )}
                   <button
                     type="button"
                     className="secondary"

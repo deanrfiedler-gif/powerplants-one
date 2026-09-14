@@ -64,8 +64,8 @@ async function originalAuthority(
 ) {
   const prior = (
     await c.query<{ record_id: string }>(
-      "SELECT record_id FROM ppo.operation_receipts WHERE workspace_id=$1 AND operation_id=$2 ORDER BY received_at DESC,id DESC LIMIT 1",
-      [p.workspace_id, operationId],
+      "SELECT record_id FROM ppo.operation_receipts WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3",
+      [p.workspace_id, p.actor_id, operationId],
     )
   ).rows[0];
   if (prior)
@@ -688,44 +688,40 @@ export async function listDiscoveryWorkspaces(
   return transaction(async (c) => {
     await requireCapability(c, p, "estimating.read");
     if (opportunityId) await visibleOpportunity(c, p, opportunityId);
+    const rows = (
+      await c.query<{ id: string }>(
+        "SELECT id FROM ppo.estimating_workspaces WHERE workspace_id=$1 AND ($2::uuid IS NULL OR opportunity_id=$2) ORDER BY updated_at DESC,id LIMIT 100",
+        [p.workspace_id, opportunityId],
+      )
+    ).rows;
     const items = [];
-    for (let offset = 0; items.length < 100; offset += 100) {
-      const rows = (
-        await c.query<{ id: string }>(
-          "SELECT id FROM ppo.estimating_workspaces WHERE workspace_id=$1 AND ($2::uuid IS NULL OR opportunity_id=$2) ORDER BY updated_at DESC,id LIMIT 100 OFFSET $3",
-          [p.workspace_id, opportunityId, offset],
-        )
-      ).rows;
-      if (!rows.length) break;
-      for (const row of rows) {
-        try {
-          const workspace = await workspaceAuthority(c, p, row.id),
-            options = await currentGroup(c, p, workspace),
-            opportunity = await visibleOpportunity(
-              c,
-              p,
-              workspace.opportunity_id,
-            );
-          items.push({
-            id: workspace.id,
-            version: workspace.version,
-            opportunity_id: opportunity.id,
-            title: opportunity.title,
-            display_number: opportunity.display_number,
-            selected_option_id: workspace.selected_option_id,
-            options: options.map(({ option, revision }) => ({
-              id: option.id,
-              label: option.label,
-              state: option.state,
-              revision_id: revision.id,
-              revision: revision.version,
-              scope_readiness: revision.scope_readiness,
-            })),
-          });
-          if (items.length === 100) break;
-        } catch (error) {
-          if (!(error instanceof AppError) || error.status !== 404) throw error;
-        }
+    for (const row of rows) {
+      try {
+        const workspace = await workspaceAuthority(c, p, row.id),
+          options = await currentGroup(c, p, workspace),
+          opportunity = await visibleOpportunity(
+            c,
+            p,
+            workspace.opportunity_id,
+          );
+        items.push({
+          id: workspace.id,
+          version: workspace.version,
+          opportunity_id: opportunity.id,
+          title: opportunity.title,
+          display_number: opportunity.display_number,
+          selected_option_id: workspace.selected_option_id,
+          options: options.map(({ option, revision }) => ({
+            id: option.id,
+            label: option.label,
+            state: option.state,
+            revision_id: revision.id,
+            revision: revision.version,
+            scope_readiness: revision.scope_readiness,
+          })),
+        });
+      } catch (error) {
+        if (!(error instanceof AppError) || error.status !== 404) throw error;
       }
     }
     return { items, limit: 100, synthetic: true };

@@ -347,7 +347,13 @@ test("E2 hidden answers remain in their accepted predecessor and later activatio
   discovery.answers = discovery.answers.filter(
     (a) => !["Q05", "Q06"].includes(a.question_id),
   );
-  discovery.answers.push({ question_id: "Q07", value: "No", state: "Confirmed", source: "SYN defined labour scope; product system inactive", follow_up: null });
+  discovery.answers.push({
+    question_id: "Q07",
+    value: "No",
+    state: "Confirmed",
+    source: "SYN defined labour scope; product system inactive",
+    follow_up: null,
+  });
   const hide = await proposal(s, "Save", { discovery });
   await changeDiscoveryWorkspace(s.p, s.input.id, hide);
   const hidden = (await readDiscoveryWorkspace(s.p, s.input.id)).options[0]
@@ -356,7 +362,10 @@ test("E2 hidden answers remain in their accepted predecessor and later activatio
     hidden.retained_hidden_answers.map((a) => a.question_id),
     ["Q05", "Q06"],
   );
-  assert.deepEqual(hidden.input!.answers.map(a => a.question_id), ["Q01", "Q02", "Q03", "Q04", "Q07"]);
+  assert.deepEqual(
+    hidden.input!.answers.map((a) => a.question_id),
+    ["Q01", "Q02", "Q03", "Q04", "Q07"],
+  );
   const reactivate = await proposal(s);
   assert.ok(reactivate.confirmed_question_ids.includes("Q05"));
   await assert.rejects(
@@ -471,6 +480,62 @@ test("E2 original receipts and captured labels are hidden after current relation
   ])
     await assert.rejects(read(), code("RecordUnavailable"));
 });
+test("E2 identical operation UUIDs remain actor-scoped and recovery rechecks current edit access", async () => {
+  const s = await saved(),
+    other = (await createSession("observer")).principal;
+  for (const capability of [
+    "shared.internal.read",
+    "crm.opportunity.read",
+    "estimating.read",
+    "estimating.edit",
+  ])
+    await rows(
+      "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,valid_from) VALUES($1,$2,$3,$4,'Company',$3,'2026-01-01') ON CONFLICT DO NOTHING",
+      [CRM.workspace, other.actor_id, CRM.company, capability],
+    );
+  const second = await setup();
+  second.input.operation_id = s.input.operation_id;
+  const accepted = await createDiscoveryWorkspace(other, second.input);
+  assert.equal(accepted.receipt.record_id, second.input.id);
+  const before = await businessSnapshot();
+  for (const original of [
+    { actor: s.p, input: s.input, receipt: s.accepted.receipt },
+    { actor: other, input: second.input, receipt: accepted.receipt },
+  ]) {
+    assert.deepEqual(
+      await readOperation(original.actor, original.input.operation_id),
+      original.receipt,
+    );
+    const replay = await createDiscoveryWorkspace(
+      original.actor,
+      original.input,
+    );
+    assert.equal(replay.replayed, true);
+    assert.deepEqual(replay.receipt, original.receipt);
+  }
+  assert.deepEqual(await businessSnapshot(), before);
+  await rows(
+    "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='estimating.edit'",
+    [s.p.actor_id],
+  );
+  assert.equal(
+    (await readDiscoveryWorkspace(s.p, s.input.id)).workspace.id,
+    s.input.id,
+  );
+  await assert.rejects(
+    readOperation(s.p, s.input.operation_id),
+    code("RecordUnavailable"),
+  );
+  await assert.rejects(
+    createDiscoveryWorkspace(s.p, s.input),
+    code("RecordUnavailable"),
+  );
+  assert.deepEqual(
+    await readOperation(other, second.input.operation_id),
+    accepted.receipt,
+  );
+});
+
 test("E2 shared-context changes reject the original proposal without altering its retained source or silently refreshing it", async () => {
   const s = await saved(),
     input = await proposal(s);
@@ -614,10 +679,11 @@ test("E2 migration formalises exact E1 identities and preserves every accepted c
     await action(s, branch.new_option_id!, "Select"),
   );
   await changeDiscoveryOption(p, g.id, await action(s, e.option_id, "Archive"));
+  const archived = await capture();
   await assert.rejects(
     saveEstimate(p, e.id, {
       ...crmBase(),
-      expected_version: 1,
+      expected_version: savedEstimate.version,
       title: input.title,
       scope: input.scope,
       lines: input.lines,
@@ -626,19 +692,23 @@ test("E2 migration formalises exact E1 identities and preserves every accepted c
     code("OptionArchived"),
   );
   await assert.rejects(
-    prepareQuote(p, e.id, {
-      ...quote,
-      ...crmBase(),
-      id: randomUUID(),
-      expected_quote_version: 1,
-    }),
+    prepareQuote(
+      p,
+      e.id,
+      quoteCommand(savedEstimate.saved, savedEstimate.version, 2),
+    ),
     code("OptionArchived"),
   );
+  assert.deepEqual(await capture(), archived);
   await retryQuote(p, quote.id);
   await closeDatabase();
   assert.deepEqual(await draftBytes(p, quote.id), bytes);
   assert.deepEqual((await createEstimate(p, input)).receipt, accepted.receipt);
-  assert.deepEqual((await readEstimate(p, e.id)).saved, e.saved);
+  assert.deepEqual((await readEstimate(p, e.id)).saved, savedEstimate.saved);
+  assert.deepEqual(
+    (await readEstimate(p, e.id, { version_id: e.saved.id })).saved,
+    e.saved,
+  );
 });
 test("E2 constraints refuse forged selection, related membership, history mutation and an eleventh retained option", async () => {
   const s = await saved();

@@ -12,7 +12,7 @@ export function OpportunityCommercial({ id }: { id: string }) {
     {r.data && <>{r.data.estimate ? <>
       <Status value={r.data.estimate.state} />
       <h3><Link href={`/estimating/estimates/${r.data.estimate.id}`}>{r.data.estimate.display_number} · {r.data.estimate.title}</Link></h3>
-      <p>Option A · Saved version {r.data.estimate.version}</p>
+      <p>{r.data.estimates?.find(e=>e.id===r.data!.estimate!.id)?.discovery_basis?.option_label?`Option ${r.data.estimates.find(e=>e.id===r.data!.estimate!.id)!.discovery_basis!.option_label}`:"Option A"} · Saved version {r.data.estimate.version}</p>
       <p>Saved sell: {r.data.estimate.sell_total == null ? "Not estimated" : `AUD ${r.data.estimate.sell_total} · excluding tax`}</p>
       <p>Site: {r.data.site_name ?? "To be confirmed"}</p>
       <h3>Draft quotations</h3>
@@ -20,6 +20,7 @@ export function OpportunityCommercial({ id }: { id: string }) {
       {!r.data.quotes.length && <p>No draft quotations available in this view.</p>}
     </> : <p>No estimate available in this view.</p>}
     {r.data.can_create && <Link className="button" href={`/estimating/new?opportunity=${id}`}>Create estimate</Link>}
+    {!!r.data.estimates?.length&&<section><h3>Saved option estimates</h3><p>Each alternative has separate costs and draft quotations. These amounts are not added to the opportunity forecast.</p>{r.data.estimates.map(e=><p key={e.id}><Link href={`/estimating/estimates/${e.id}`}>Option {e.discovery_basis?.option_label??"A"} · {e.display_number} · {e.title}</Link> · Saved version {e.version} · {e.sell_total===null?"Not estimated":`AUD ${e.sell_total} excluding tax`}</p>)}</section>}
     <p className="scope-note">Draft quotations have not been issued or accepted.</p></>}
   </section>;
 }

@@ -31,7 +31,7 @@ export function scope(value: unknown) {
   const r = object(value, ["included", "excluded", "assumptions"]);
   return { included: narrative(r.included, "included", 3000), excluded: narrative(r.excluded, "excluded", 2000), assumptions: narrative(r.assumptions, "assumptions", 2000) };
 }
-function policy(value: unknown) { return choice(value, "policy", [arithmeticPolicy] as const); }
+export function policy(value: unknown) { return choice(value, "policy", [arithmeticPolicy] as const); }
 function estimateEnvelope(r: Record<string, unknown>) {
   if (r.schema_version === 1) return common(r);
   if (r.schema_version !== 2) invalid("schema_version", "Only estimate schema versions 1 and 2 are supported.");
