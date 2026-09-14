@@ -3,7 +3,7 @@ import { emailContext } from "../email/service";
 import { leadReceiptAuthority } from "../crm/leads/receipt-authority";
 import { acceptedOpportunityOriginal } from "../crm/receipt-authority";
 import { financeContext, financeAccount, receiptCapability } from "../finance/context";
-import { estimateContext, quoteContext } from "../estimating/context";
+import { acceptedEstimateContext, quoteContext } from "../estimating/context";
 import { discoveryReceiptAuthority } from "../estimating/discovery-workspace-context";
 import { authoriseProjectReceipt } from "../projects/service";
 import { reportContext, ownReport } from "../reports/context";
@@ -57,7 +57,7 @@ export async function readOperation(
       return r.result as OperationReceipt;
     });
   } else if (r.object_type === "Estimate") {
-    await estimateContext(client,p,r.record_id,"estimating.edit");
+    if(!(await acceptedEstimateContext(client,p,r.record_id,operation_id)))throw unavailable();
   } else if (r.object_type === "DraftQuoteRevision") {
     await quoteContext(client,p,r.record_id,"estimating.quote.prepare");
     await quoteContext(client,p,r.record_id);

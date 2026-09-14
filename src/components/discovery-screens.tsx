@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { discoveryDefinition } from "../estimating/discovery-definition";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { DiscoveryInput } from "../estimating/discovery";
 import type { DiscoveryRevision } from "../estimating/discovery-workspace-context";
@@ -95,7 +95,7 @@ function CommandState({ command }: { command: Command }) {
     </>
   );
 }
-function ScopeView({
+export function ScopeView({
   input,
   context,
 }: {
@@ -401,7 +401,6 @@ function ProposalEditor({
   command,
   detail,
   editor,
-  onScopeChange,
   onCancel,
 }: {
   initialOptions: FormOptions;
@@ -409,7 +408,6 @@ function ProposalEditor({
   command: Command;
   detail?: Detail;
   editor?: Editor;
-  onScopeChange?: (scopeMode: string, siteId: string | null) => void;
   onCancel?: () => void;
 }) {
   const initial = detail?.options.find((x) => x.option.id === editor?.optionId),
@@ -456,9 +454,6 @@ function ProposalEditor({
     [previewError, setPreviewError] = useState<unknown>(null);
   const copied = editor?.kind === "CopyDiscovery",
     scope = copied ? base!.revision.input!.scope : draft.scope;
-  useEffect(() => {
-    onScopeChange?.(scope.mode, scope.site_id);
-  }, [onScopeChange, scope.mode, scope.site_id]);
   const options = useCrmResource<FormOptions>(
     `estimating/workspaces/form-options?opportunity_id=${opportunityId}&scope_mode=${scope.mode}${scope.site_id ? `&site_id=${scope.site_id}` : ""}${detail ? `&workspace_id=${detail.workspace.id}` : ""}`,
     true,
@@ -669,8 +664,8 @@ function ProposalEditor({
           <p>
             Proposed readiness:{" "}
             <strong>{comparison.preview.compiled.scope_readiness}</strong>.
-            Delivery routing: Not configured. Manual costing import is not yet
-            available.
+            Delivery routing: Not configured. After saving Complete discovery,
+            review its exact basis separately for manual costing.
           </p>
           <ScopeView
             input={comparison.preview.compiled.input}
@@ -808,7 +803,7 @@ export function DiscoveryDetail({ id }: { id: string }) {
     waiting = !!d && accepted > d.workspace.version;
   const options = useCrmResource<FormOptions>(
     d && editor
-      ? `estimating/workspaces/form-options?opportunity_id=${d.workspace.opportunity_id}&workspace_id=${id}&scope_mode=${editor.scopeMode}`
+      ? `estimating/workspaces/form-options?opportunity_id=${d.workspace.opportunity_id}&workspace_id=${id}&scope_mode=${editor.scopeMode}${editor.siteId ? `&site_id=${editor.siteId}` : ""}`
       : null,
   );
   if (denied(command.error))
@@ -853,8 +848,8 @@ export function DiscoveryDetail({ id }: { id: string }) {
             </Link>
           </p>
           <p>
-            Delivery routing: Not configured. Manual costing import is not yet
-            available. Selection keeps one estimating basis and does not change
+            Delivery routing: Not configured. Complete selected discovery can
+            be reviewed for manual costing. Selection keeps one estimating basis and does not change
             the CRM forecast or a saved quotation.
           </p>
           <div className="e2-options" aria-label="Saved options">
@@ -890,6 +885,9 @@ export function DiscoveryDetail({ id }: { id: string }) {
             selected && (
               <>
                 <div className="est-actions">
+                  {!frozen && !editor && !action && d.can_edit && selected.option.state === "Active" && selected.option.id === d.workspace.selected_option_id && selected.revision.kind === "Discovery" && selected.revision.scope_readiness === "Complete" && (
+                    <Link className="button" href={`/estimating/discovery/${id}/costing?option=${selected.option.id}`}>Review scope for manual costing</Link>
+                  )}
                   <button
                     type="button"
                     className="secondary"
@@ -973,15 +971,6 @@ export function DiscoveryDetail({ id }: { id: string }) {
                         command={command}
                         detail={d}
                         editor={editor}
-                        onScopeChange={(scopeMode, siteId) =>
-                          setEditor((current) =>
-                            !current ||
-                            (current.scopeMode === scopeMode &&
-                              current.siteId === siteId)
-                              ? current
-                              : { ...current, scopeMode, siteId },
-                          )
-                        }
                         onCancel={() => setEditor(null)}
                       />
                     )}

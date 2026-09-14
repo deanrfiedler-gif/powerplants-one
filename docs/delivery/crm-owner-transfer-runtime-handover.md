@@ -1,9 +1,9 @@
 ---
 document_id: PPO-009-TRANSFER-HO
-revision: r03
+revision: r04
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
-status: Source and combined main verified; complete HV and original visual review remain open
+status: Source and combined main verified; original scroll coverage correction and complete HV remain open
 source_commit: 642e283998f6e286f986d0cda53469780ed1dfbb
 ---
 
@@ -69,5 +69,7 @@ All 13 retained I2 cases now passed, including the previously stale filter picke
 Matrix reconciliation adds actual observed reverse authority races for initiator, recipient, affiliation and transfer-grant revocation: the transfer holds SHARE locks, the administrative writer demonstrably waits, then later reads reflect the revocation. A grant-first race is included too. A separate migration-23 fixture creates and qualifies an opportunity with selected owner distinct from its author, then proves migration 24 captures that exact owner/version as UpgradeCapture while preserving old events/receipts and repeat-seed behaviour. These newly prepared cases require fresh CI; no earlier-source pass is copied forward.
 
 ## Original transfer visual review finding
+
+**Current original review, 14 September:** source-233 archive `10327701645` has now been materialized and verified at 6,771,809 bytes, SHA-256 `516a1274706b300e62cf013e9f370aaf95c9b8842c542f9834c87126d319cefe`, including ZIP integrity. The previously outstanding full comparison originals were inspected. Desktop long text wraps, but the 390/320px locator captures labelled full comparison omit content behind the scroll port/header/footer. They are insufficient evidence of complete reading coverage. The current integration adds overlapping original viewport frames through ordinary scrolling of the unchanged dialog, a coverage/source/tree/run/hash manifest, a 2,000-character Activity and exact retained 1,000-character reason. Existing captures and assertions remain. This changes the proof only; no CSS, resized dialog, stitched image or timeout increase is used. Fresh originals and complete HV/independent acceptance remain open. Earlier thirteen-of-fourteen review counts above are historical checkpoints.
 
 Original source-360 archive `10326809298`, 6,490,865 bytes, SHA-256 `d03778ab13bf3640adc18c9b4a0fe392499c58a8d673e4e61fbbee2c8f78aa44`, passed exact archive/CRC/path checks. Desktop and 320px comparison PNGs were inspected. The page-width assertion passed while the long unbroken Activity description was clipped inside the scrollable dialog. The new transfer-mode rule wraps the original description, and the reason uses the existing multiline field. Browser checks now measure each comparison paragraph’s own scroll/client width on desktop/phone/320px and retain a complete comparison-region capture as well as viewport evidence. The saved text/limits and command semantics remain unchanged. This finding requires new original screenshots and current-source checks; the earlier green interaction cases do not certify the corrected presentation.

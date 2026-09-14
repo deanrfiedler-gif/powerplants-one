@@ -1,3 +1,4 @@
+import { captureTransferComparison } from "../helpers/crm-transfer-capture";
 import { keyActivate, keySelect, keyType } from "../helpers/quality-keyboard";
 import { committed } from "../helpers/quality-prepare";
 import {
@@ -30,7 +31,7 @@ async function call(page: Page, path: string, body?: unknown) {
 }
 test("owner transfer compares separate activities and persists original/current ownership on desktop and phone",async({page},info)=>{
   await call(page,"local-session",{profile:"coordinator"});
-  const input={...crmDiscovery(),title:`SYN Transfer journey ${info.project.name}`};input.initial_action.summary="SYN Long separate activity comparison "+"scopeword".repeat(180);await call(page,"crm/opportunities",input);
+  const input={...crmDiscovery(),title:`SYN Transfer journey ${info.project.name}`};input.initial_action.summary=("SYN Long separate activity comparison "+"scopeword".repeat(220)).slice(0,2000);await call(page,"crm/opportunities",input);
   await page.goto(`/crm/opportunities/${input.id}`);
   await keyActivate(page,page.getByRole("button",{name:"Transfer opportunity owner",exact:true}));
   const dialog=page.getByRole("dialog");
@@ -42,7 +43,9 @@ test("owner transfer compares separate activities and persists original/current 
   expect(await noClippedComparison()).toBe(true);
   await comparison.screenshot({path:info.outputPath("crm-transfer-full-activity-comparison.png")});
   await page.screenshot({path:info.outputPath("crm-transfer-comparison.png"),fullPage:false});
-  if(info.project.use.isMobile){await page.setViewportSize({width:320,height:844});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect(await noClippedComparison()).toBe(true);await comparison.screenshot({path:info.outputPath("crm-transfer-full-activity-comparison-320.png")});await page.screenshot({path:info.outputPath("crm-transfer-comparison-320.png"),fullPage:false});}
+  await captureTransferComparison(page,info,comparison);
+  if(info.project.use.isMobile){await page.setViewportSize({width:320,height:844});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect(await noClippedComparison()).toBe(true);await comparison.screenshot({path:info.outputPath("crm-transfer-full-activity-comparison-320.png")});await page.screenshot({path:info.outputPath("crm-transfer-comparison-320.png"),fullPage:false});await captureTransferComparison(page,info,comparison);}
+  await expect(dialog.getByLabel("Transfer reason")).toHaveValue("SYN "+"r".repeat(996));
   await committed(page,`crm/opportunities/${input.id}/transfer-owner`,()=>keyActivate(page,dialog.getByRole("button",{name:"Confirm owner transfer",exact:true})));
   await expect(dialog).not.toBeVisible();await page.reload();
   await expect(page.getByText("Original opportunity owner: SYN Coordinator · Current owner: SYN Sales receiver",{exact:true})).toBeVisible();

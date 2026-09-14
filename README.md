@@ -20,6 +20,7 @@ This repository is Dean's personal prototype. It contains the planning foundatio
 | [CRM blueprint and discovery handover](docs/delivery/crm-discovery-handover.md) | PPO-009 parallel CRM design, bounded Pipedrive evidence, synthetic wireframes and first implementation starter; account parity remains open |
 | [Estimating discovery and design](docs/delivery/estimating-discovery-handover.md) | PPO-010 / BP-04 source evidence, synthetic costing/quotation preview, acceptance plan and prepared E1 starter |
 | [E2 saved discovery screens](docs/delivery/estimating-e2-screens-handover.md) | Scoped option/questionnaire UI and exact original recovery; runtime verification pending |
+| [E2 exact manual cost basis](docs/delivery/estimating-e2-cost-basis-handover.md) | Selected complete scope to immutable manual cost versions and exact Draft quotations; runtime verification pending |
 | [Estimating E1 implementation](docs/delivery/estimating-e1-handover.md) | Authorised manual estimating and exact draft quotation increment; current verification state and limits |
 | [CRM I1 handover](docs/delivery/crm-i1-handover.md) | Bounded owned opportunity implementation and actual verification/publication |
 | [CRM I2 handover](docs/delivery/crm-i2-handover.md) | Scoped Board/Grid worklist, shared brand, actual runtime evidence and external publication |
