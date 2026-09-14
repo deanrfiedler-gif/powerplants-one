@@ -49,6 +49,42 @@ try {
     assert.deepEqual(hashes,proof.hashes);proof.hashes=hashes;proof.application_pids.push(server.pid);proof.database_starts.push(await started());
     assert.equal((await database().query("SELECT count(*)::int AS n FROM ppo.estimate_quote_jobs WHERE revision_id=$1",[proof.quote.id])).rows[0].n,1);
   }
+  // Keep the original schema-1 proof above intact, with a separate schema-2 original.
+  let taxonomy;
+  if(phase==="write"){
+    const o=crmCreate();await call("crm/opportunities",o);const legacy=estimateInput(o.id);
+    const input={...legacy,schema_version:2,lines:legacy.lines.map((l,i)=>({...l,category:i===0?"Engineering":i===1?"Subcontract":l.category,allowance:i===1}))};
+    const first=await call("estimating/estimates",input),original=await call(`estimating/estimates/${input.id}`);
+    const command={...crmBase(),schema_version:2,expected_version:1,title:input.title,scope:input.scope,lines:input.lines.map(l=>({...l,allowance:!l.allowance})),policy:input.policy};
+    const second=await call(`estimating/estimates/${input.id}`,command),detail=await call(`estimating/estimates/${input.id}`),quote=quoteCommand(detail.saved,2);
+    const third=await call(`estimating/estimates/${input.id}/quotes`,quote);
+    const p=(await createSession("coordinator")).principal,{j}=await readQuoteJob(p,quote.id);
+    await assert.rejects(runQuoteJob(j.id,{afterStore:async()=>{throw new QuoteWorkerInterrupted("SYN schema-2 interrupted after exact storage");}}),QuoteWorkerInterrupted);
+    const stored=await documentStore().locate({...p,operation_id:j.id});assert.ok(stored);const bundle=JSON.parse(stored.bytes.toString("utf8"));
+    await writeFile(join(root,"taxonomy-exact.html"),bundle.html);await writeFile(join(root,"taxonomy-exact.pdf"),Buffer.from(bundle.pdf_base64,"base64"));
+    taxonomy={input,command,quote,operations:[first,second,third],original:original.saved,saved:detail.saved,hashes:{html:bundle.html_hash,pdf:bundle.pdf_hash},job_id:j.id};
+    await database().query("UPDATE ppo.estimate_quote_jobs SET lease_until=clock_timestamp()-interval '1 second' WHERE id=$1",[j.id]);
+    await writeFile(join(root,"taxonomy-proof.json"),JSON.stringify(taxonomy));
+  }else{
+    taxonomy=JSON.parse(await readFile(join(root,"taxonomy-proof.json"),"utf8"));
+    assert.deepEqual((await call(`estimating/estimates/${taxonomy.input.id}`)).saved,taxonomy.saved);
+    assert.deepEqual((await call(`estimating/estimates/${taxonomy.input.id}?version_id=${taxonomy.original.id}`)).saved,taxonomy.original);
+    for(const r of taxonomy.operations)assert.deepEqual(await call(`operations/${r.operation_id}`),r);
+    assert.deepEqual(await call("estimating/estimates",taxonomy.input),taxonomy.operations[0]);
+    assert.deepEqual(await call(`estimating/estimates/${taxonomy.input.id}`,taxonomy.command),taxonomy.operations[1]);
+    assert.deepEqual(await call(`estimating/estimates/${taxonomy.input.id}/quotes`,taxonomy.quote),taxonomy.operations[2]);
+    if(phase==="recover")await runQuoteJob(taxonomy.job_id,{render:async()=>{throw Error("An original schema-2 output must not be regenerated");}});
+    const q=await call(`estimating/quotes/${taxonomy.quote.id}`);assert.equal(q.job.state,"Ready");
+    assert.doesNotMatch(JSON.stringify(q.snapshot),/cost_schema_version|category|allowance|Engineering|Subcontract/);
+    for(const kind of ["html","pdf"]){const r:APIResponse=await context.request.get(`${origin}/api/v1/estimating/quotes/${taxonomy.quote.id}/file?kind=${kind}`);assert.ok(r.ok());const bytes:Buffer=await r.body();assert.deepEqual(bytes,await readFile(join(root,`taxonomy-exact.${kind}`)));assert.equal(digest(bytes),taxonomy.hashes[kind]);}
+    assert.equal((await database().query("SELECT count(*)::int n FROM ppo.estimate_quote_jobs WHERE revision_id=$1",[taxonomy.quote.id])).rows[0].n,1);
+  }
+  await page.goto(`${origin}/estimating/estimates/${taxonomy.input.id}`);await expect(page.getByLabel("Category 1",{exact:true})).toHaveValue("Engineering");await expect(page.getByLabel("Allowance 2",{exact:true})).toHaveValue("No");
+  await page.locator(".est-line").first().evaluate(e=>e.scrollIntoView({block:"start"}));
+  const taxonomyCapture=await page.screenshot({path:`${evidence}/taxonomy-${phase}.png`});
+  const checkout=execFileSync("git",["rev-parse","HEAD"],{encoding:"utf8"}).trim();
+  await writeFile(`${evidence}/taxonomy-${phase}.json`,JSON.stringify({phase,scenario:"DR01 schema-2 originals through actual process restart",source_head:process.env.PPO_SOURCE_HEAD??checkout,executed_checkout:checkout,tree:execFileSync("git",["rev-parse","HEAD^{tree}"],{encoding:"utf8"}).trim(),run_id:process.env.GITHUB_RUN_ID,run_attempt:process.env.GITHUB_RUN_ATTEMPT,viewport:page.viewportSize(),byte_count:taxonomyCapture.length,sha256:digest(taxonomyCapture),output_hashes:taxonomy.hashes},null,2));
+  console.log(`DR01 ${phase}: schema-2 original/successor, three exact receipts and immutable pending/ready output verified.`);
   await page.goto(`${origin}/estimating/estimates/${proof.input.id}`);await expect(page.getByRole("heading",{name:"Scope and cost workbook"})).toBeVisible();await expect(page.getByText(/Viewing saved version 2/)).toBeVisible();
   await page.locator(".business-heading").evaluate(e=>e.scrollIntoView({block:"start"}));const screenshot=await page.screenshot({path:`${evidence}/${phase}.png`});
   await writeFile(join(root,"proof.json"),JSON.stringify(proof));

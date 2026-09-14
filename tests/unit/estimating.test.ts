@@ -2,7 +2,10 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { randomUUID } from "node:crypto";
 import { calculate, quoteAmounts, extended } from "../../src/estimating/math";
-import { amount, parseLines, createInput, quoteInput } from "../../src/estimating/validation";
+import { amount, parseLines, createInput, saveInput, quoteInput } from "../../src/estimating/validation";
+import { canonical } from "../../src/platform/operations";
+import { versionHash } from "../../src/estimating/service";
+import { digest } from "../../src/documents/store";
 import { manualLines, estimateInput, quoteCommand } from "../helpers/estimating";
 test("E1 arithmetic: exact manual totals and separately named margin and markup",()=>{
   const lines=parseLines(manualLines()),t=calculate(lines);
@@ -38,4 +41,32 @@ test("E1 validation: strict commands reject invented issue, tax, duplicate membe
   const q=quoteCommand({id:randomUUID(),lines:input.lines});assert.throws(()=>quoteInput(input.id,{...q,choices:[q.choices[0],q.choices[0]]}));
   assert.throws(()=>quoteInput(input.id,{...q,choices:[{...q.choices[0],print:"false"}]}));
   assert.throws(()=>quoteInput(input.id,{...q,expected_quote_version:-1}));
+});
+test("DR01 preserves the exact legacy canonical command and content-hash basis",()=>{
+  const input=estimateInput(randomUUID()), parsed=createInput(input);
+  const lines=input.lines.map(l=>({...l,quantity:`${l.quantity}.000`,unit_cost:`${l.unit_cost}.00`,unit_sell:`${l.unit_sell}.00`}));
+  assert.equal(canonical(parsed),canonical({...input,lines}));
+  assert.equal(versionHash(parsed),digest(canonical({title:input.title,scope:input.scope,lines,policy:input.policy})));
+  assert.equal(Object.hasOwn(parsed,"cost_schema_version"),false);
+  assert.ok(parsed.lines.every(l=>!Object.hasOwn(l,"allowance")));
+  for(const category of ["Engineering","Subcontract"])assert.throws(()=>createInput({...input,lines:[{...input.lines[0],category}]}));
+  assert.throws(()=>createInput({...input,lines:input.lines.map(l=>({...l,allowance:false}))}));
+});
+test("DR01 strict schema 2 records five categories and explicit flags independently of arithmetic and quote printing",()=>{
+  const input=estimateInput(randomUUID());
+  const lines=["Product","Labour","Freight","Engineering","Subcontract"].map((category,i)=>({...input.lines[0],id:randomUUID(),category,allowance:i%2===0}));
+  const parsed=createInput({...input,schema_version:2,lines});
+  assert.deepEqual(parsed.lines.map(l=>l.category),lines.map(l=>l.category));
+  assert.equal(calculate(parsed.lines).sell,"1750.00");
+  const choices=parsed.lines.map(l=>({line_id:l.id,included:true,print:true}));
+  const quote=quoteAmounts(parsed.lines,choices);
+  assert.equal(quote.items.length,5);assert.equal(quote.total,"1750.00");
+  assert.doesNotMatch(JSON.stringify(quote),/category|allowance|Engineering|Subcontract/);
+  assert.notEqual(versionHash({...parsed,cost_schema_version:2}),versionHash(parsed));
+  assert.notEqual(versionHash({...parsed,cost_schema_version:2}),versionHash({...parsed,cost_schema_version:2,lines:parsed.lines.map(l=>({...l,allowance:!l.allowance}))}));
+  for(const allowance of [undefined,null,"false",0,1,{}])assert.throws(()=>createInput({...input,schema_version:2,lines:[{...lines[0],allowance}]}));
+  assert.throws(()=>createInput({...input,schema_version:2,lines:[{...lines[0],category:"Allowance"}]}));
+  const save={operation_id:input.operation_id,schema_version:2,reason:input.reason,expected_version:1,title:input.title,scope:input.scope,lines,policy:input.policy};
+  assert.equal(saveInput(input.id,save).schema_version,2);
+  assert.throws(()=>quoteInput(input.id,{...quoteCommand(parsed),schema_version:2}));
 });

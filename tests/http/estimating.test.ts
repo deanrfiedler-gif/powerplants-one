@@ -27,3 +27,23 @@ test("E1-HTTP02 real direct routes enforce identity, scope, original target, str
   assert.equal((await call(cookie,`estimating/estimates/${input.id}/quotes`,{...q,...crmBase(),id:randomUUID(),choices:q.choices.slice(1)})).status,422);
   const forbidden=await fetch(`${origin}/api/v1/estimating/estimates`,{method:"POST",headers:{Cookie:cookie,Origin:"https://unrelated.invalid","Content-Type":"application/json"},body:JSON.stringify(input)});assert.equal(forbidden.status,403);
 });
+test("DR01-HTTP01 explicit adoption preserves old DTO and receipts, rejects false flags and binds recovery",async()=>{
+  const cookie=await session(),o=crmCreate();assert.equal((await call(cookie,"crm/opportunities",o)).status,201);
+  const input=estimateInput(o.id),path=`estimating/estimates/${input.id}`;
+  const created=await call(cookie,"estimating/estimates",input);assert.equal(created.status,201);
+  const old=(await call(cookie,path)).body.saved;assert.equal(Object.hasOwn(old,"cost_schema_version"),false);
+  const save={...crmBase(),schema_version:2,expected_version:1,title:input.title,scope:input.scope,lines:input.lines.map((l,i)=>({...l,category:i===0?"Engineering":i===1?"Subcontract":l.category,allowance:i===1})),policy:input.policy};
+  for(const allowance of [null,"false",0])assert.equal((await call(cookie,path,{...save,lines:save.lines.map(l=>({...l,allowance}))})).status,422);
+  assert.equal((await call(cookie,path,{...save,schema_version:1})).status,422);
+  assert.equal((await call(await session("second-company"),path,save)).status,404);
+  assert.equal((await call(cookie,path)).body.version,1);
+  const accepted=await call(cookie,path,save);assert.equal(accepted.status,200);
+  assert.deepEqual((await call(cookie,path,save)).body,accepted.body);assert.deepEqual((await call(cookie,`operations/${save.operation_id}`)).body,accepted.body);
+  assert.equal((await call(cookie,path,{...save,lines:save.lines.map(l=>({...l,allowance:!l.allowance}))})).status,409);
+  assert.deepEqual((await call(cookie,path+`?version_id=${old.id}`)).body.saved,old);
+  assert.deepEqual((await call(cookie,"estimating/estimates",input)).body,created.body);
+  const current=(await call(cookie,path)).body;assert.equal(current.saved.cost_schema_version,2);assert.equal(current.totals.sell,"720.00");
+  const q=quoteCommand(current.saved,2);assert.equal((await call(cookie,path+"/quotes",{...q,schema_version:2})).status,422);
+  assert.equal((await call(cookie,path+"/quotes",q)).status,201);
+  assert.doesNotMatch(JSON.stringify((await call(cookie,`estimating/quotes/${q.id}`)).body.snapshot),/cost_schema_version|allowance|category|Engineering|Subcontract/);
+});

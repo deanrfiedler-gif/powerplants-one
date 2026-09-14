@@ -16,13 +16,45 @@ async function capture(page:Page,info:TestInfo,name:string,anchor=".business-hea
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   await page.locator(anchor).first().evaluate(e=>e.scrollIntoView({block:"start"}));
   const bytes=await page.screenshot({path:info.outputPath(`E1-${name}.png`)});
-  await writeFile(info.outputPath(`E1-${name}.json`),JSON.stringify({name,viewport:page.viewportSize(),source_head:process.env.PPO_SOURCE_HEAD,checkout:execFileSync("git",["rev-parse","HEAD"],{encoding:"utf8"}).trim(),run_id:process.env.GITHUB_RUN_ID,sha256:createHash("sha256").update(bytes).digest("hex")},null,2));
+  const checkout=execFileSync("git",["rev-parse","HEAD"],{encoding:"utf8"}).trim();
+  await writeFile(info.outputPath(`E1-${name}.json`),JSON.stringify({name,viewport:page.viewportSize(),source_head:process.env.PPO_SOURCE_HEAD??checkout,checkout,tree:execFileSync("git",["rev-parse","HEAD^{tree}"],{encoding:"utf8"}).trim(),run_id:process.env.GITHUB_RUN_ID,run_attempt:process.env.GITHUB_RUN_ATTEMPT,byte_count:bytes.length,sha256:createHash("sha256").update(bytes).digest("hex")},null,2));
 }
+test("DR01 browser: deliberate legacy adoption, explicit flags and original uncertain save on desktop and phone",async({page},info)=>{
+  const input=await saved(page),path=`estimating/estimates/${input.id}`,original=(await call(page,path)).saved;
+  await expect(page.getByText("Allowance 1: Not recorded in this saved format.",{exact:true})).toBeVisible();
+  await expect(page.getByLabel("Allowance 1",{exact:true})).toHaveCount(0);
+  await page.getByRole("button",{name:"Use expanded categories in a new version",exact:true}).click();
+  await expect(page.getByLabel("Allowance 1",{exact:true})).toHaveValue("");
+  await page.getByLabel("Category 1",{exact:true}).selectOption("Engineering");await page.getByLabel("Category 2",{exact:true}).selectOption("Subcontract");
+  await page.getByLabel("Allowance 1",{exact:true}).selectOption("No");await page.getByLabel("Allowance 2",{exact:true}).selectOption("Yes");await page.getByLabel("Allowance 3",{exact:true}).selectOption("No");
+  await expect(page.getByRole("complementary",{name:"Proposal totals"})).toContainText("AUD 720.00");
+  await capture(page,info,"taxonomy-proposal",".est-line");
+  if(info.project.name.includes("mobile")){await page.setViewportSize({width:320,height:844});await capture(page,info,"taxonomy-proposal-320",".est-line");await page.setViewportSize({width:390,height:844});}
+  let originalBody:Record<string,unknown>|undefined;
+  await page.route(`**/api/v1/${path}`,async route=>{if(route.request().method()!=="POST")return route.continue();originalBody=route.request().postDataJSON();const r=await route.fetch();expect(r.ok()).toBe(true);await route.abort("failed");});
+  await page.getByLabel("Change reason",{exact:true}).fill("SYN Record independent allowance evidence on a new version");
+  await page.getByRole("button",{name:"Save new version",exact:true}).click();
+  await expect(page.getByRole("button",{name:"Confirm original save outcome",exact:true})).toBeVisible();
+  expect(originalBody?.schema_version).toBe(2);await expect(page.getByLabel("Allowance 2",{exact:true})).toBeDisabled();
+  await expect(page.getByRole("button",{name:"Prepare draft quotation",exact:true})).toBeDisabled();
+  await capture(page,info,"taxonomy-unknown",'.business-error[role="alert"]');
+  await page.unroute(`**/api/v1/${path}`);
+  await page.getByRole("button",{name:"Confirm original save outcome",exact:true}).click();
+  await expect(page.getByText(/Viewing saved version 2/)).toBeVisible();await page.reload();
+  await expect(page.getByLabel("Category 1",{exact:true})).toHaveValue("Engineering");await expect(page.getByLabel("Allowance 2",{exact:true})).toHaveValue("Yes");
+  const current=await call(page,path);expect(current.versions).toHaveLength(2);expect(current.saved.cost_schema_version).toBe(2);
+  expect((await call(page,`${path}?version_id=${original.id}`)).saved).toEqual(original);
+  await capture(page,info,"taxonomy-persisted",".est-line");
+  await page.getByText("Saved versions and change reasons (2)",{exact:true}).click();await page.getByRole("button",{name:"View version 1",exact:true}).click();
+  await expect(page.getByText("Allowance 1: Not recorded in this saved format.",{exact:true})).toBeVisible();
+  await expect(page.getByRole("button",{name:"Use expanded categories in a new version",exact:true})).toBeVisible();
+  await capture(page,info,"taxonomy-original-preserved",".est-line");
+});
 test("E1 browser: create through UI, save successor, prepare hidden allowance, generate and reopen exact draft",async({page},info)=>{
   const o=await opportunity(page);await page.goto("/estimating/new");await page.getByLabel("Existing opportunity",{exact:true}).selectOption(o.id);
   await page.getByLabel("Estimate title",{exact:true}).fill("SYN Browser controls estimate");await page.getByLabel("Included scope",{exact:true}).fill("SYN Supply controls and install at the permitted site.");await page.getByLabel("Excluded scope",{exact:true}).fill("Civil works excluded.");await page.getByLabel("Assumptions",{exact:true}).fill("Fictional prices for review.");
   const lines=manualLines();
-  for(let i=0;i<lines.length;i++){const n=i+1,l=lines[i];await page.getByRole("button",{name:"Add manual line",exact:true}).click();for(const [label,value] of [[`Description ${n}`,l.description],[`Quantity ${n}`,l.quantity],[`Unit ${n}`,l.unit],[`Unit cost AUD ${n}`,l.unit_cost],[`Unit sell AUD ${n}`,l.unit_sell],[`Source ${n}`,l.source],[`Source date ${n}`,l.effective_date]])await page.getByLabel(label,{exact:true}).fill(value);await page.getByLabel(`Category ${n}`,{exact:true}).selectOption(l.category);}
+  for(let i=0;i<lines.length;i++){const n=i+1,l=lines[i];await page.getByRole("button",{name:"Add manual line",exact:true}).click();for(const [label,value] of [[`Description ${n}`,l.description],[`Quantity ${n}`,l.quantity],[`Unit ${n}`,l.unit],[`Unit cost AUD ${n}`,l.unit_cost],[`Unit sell AUD ${n}`,l.unit_sell],[`Source ${n}`,l.source],[`Source date ${n}`,l.effective_date]])await page.getByLabel(label,{exact:true}).fill(value);await page.getByLabel(`Category ${n}`,{exact:true}).selectOption(l.category);await page.getByLabel(`Allowance ${n}`,{exact:true}).selectOption("No");}
   await expect(page.getByRole("complementary",{name:"Proposal totals"})).toContainText("AUD 720.00");await capture(page,info,"proposal",".est-line");
   await page.getByLabel("Reason for creating this estimate",{exact:true}).fill("SYN Initial manual estimate");await page.getByRole("button",{name:"Create estimate",exact:true}).click();await expect(page).toHaveURL(/\/estimating\/estimates\//);
   await page.getByLabel("Quantity 1",{exact:true}).fill("3");await page.getByLabel("Change reason",{exact:true}).fill("SYN Add third controller");await page.getByRole("button",{name:"Save new version",exact:true}).click();await expect(page.getByText(/Viewing saved version 2/)).toBeVisible();await expect(page.getByLabel("Quantity 1",{exact:true})).toHaveValue("3.000");
