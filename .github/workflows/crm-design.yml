@@ -4,7 +4,6 @@ on:
     paths:
       - 'docs/blueprints/BP-03-crm.md'
       - 'docs/blueprints/crm-*'
-      - 'docs/blueprints/crm-ui-mockups/**'
       - 'docs/standards/ui-style-specification.md'
       - 'docs/standards/ui-assets/**'
       - 'docs/delivery/crm-*'
@@ -14,7 +13,6 @@ on:
     paths:
       - 'docs/blueprints/BP-03-crm.md'
       - 'docs/blueprints/crm-*'
-      - 'docs/blueprints/crm-ui-mockups/**'
       - 'docs/standards/ui-style-specification.md'
       - 'docs/standards/ui-assets/**'
       - 'docs/delivery/crm-*'
