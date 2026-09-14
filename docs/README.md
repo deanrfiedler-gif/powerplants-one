@@ -33,3 +33,5 @@ Frozen issued references remain evidence. Stable working documents evolve throug
 [Azure demo connection setup](delivery/azure-demo-connection.md) — portal steps and a manually triggered read-only GitHub connection check; live Azure setup and hosted application access remain pending.
 
 [Azure private demo runtime](delivery/azure-private-demo.md) — individual sign-in, cloud configuration, deployment and reset preparation; live acceptance pending.
+
+The [audit continuation handover](delivery/audit-continuation-handover.md) records the authorised next-ten sequence, current verification and remaining delivery boundaries.

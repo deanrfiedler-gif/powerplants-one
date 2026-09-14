@@ -2,9 +2,9 @@
 
 Personal prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance. The repository is public; the application, data and hosted demo remain private and synthetic.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01–P11 merged; P12 recovery in progress; PP-01 incomplete · **Deployment:** owner-triggered Azure run 34794316011 deployed `6d46e0e5`; image/health evidence observed, signed-in acceptance pending · **Current state:** [docs/STATUS.md](docs/STATUS.md)
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01–P12 code merged; integrated acceptance incomplete · **Deployment:** owner-triggered Azure run 34808448458 deployed `aeaf966a`; image/health evidence observed, signed-in acceptance pending · **Current state:** [docs/STATUS.md](docs/STATUS.md)
 
-This repository is Dean's personal prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. Integrated Service/Finance verification is in progress; the complete PP-01 acceptance boundary still requires P12. Company ownership, production approval and external-system write authority are not implied.
+This repository is Dean's personal prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. P12 isolated recovery code is merged with reviewed source evidence; actual-main verification and complete PP-01 acceptance remain distinct outstanding obligations. Company ownership, production approval and external-system write authority are not implied.
 
 ## Start here
 
@@ -56,7 +56,7 @@ Application code is in `src/`, explicit SQL migrations and fixtures are in `db/`
 
 ## Private hosted demo preparation
 
-The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separate hosted runtime, owner setup, tester access and image updates. The GitHub connection check, owner-run core provisioning and Docker Desktop image upload succeeded. A database-create argument error is corrected in the operator, with explicit reuse of the uploaded image. App startup and live sign-in acceptance remain pending. Local development continues using the commands below.
+The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separate hosted runtime, owner setup, tester access and image updates. Owner-triggered Azure run 34808448458 successfully updated source `aeaf966a`, verified the selected web image was healthy/ready, set the worker to the same image digest and passed health/anonymous-access checks. Signed-in saved-record and Draft-output acceptance, representative device/accessibility evidence and the actual managed PostgreSQL minor remain unverified. Local development continues using the commands below.
 
 ## Run the local application
 
