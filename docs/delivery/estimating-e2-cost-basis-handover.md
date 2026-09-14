@@ -39,4 +39,6 @@ Every exact migration-registry assertion and the hosted-upgrade gate was reviewe
 
 ## Remaining verification and acceptance
 
+The first source `285e78d6` failed its E1 restart extension in run [34812983052](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34812983052), job `103877834832`: the first new costing acceptance rolled back at COMMIT because SQL alias `old` was ambiguous with PostgreSQL's trigger `OLD` record. The correction renames that alias to `predecessor_basis`; no graph condition, transaction boundary, assertion or original sample is relaxed. The original run remains failed. Runtime verification of the correction is pending.
+
 Publish the source with exact local/remote tree equality, inspect its actual CI failures and original evidence, integrate normally after its dependencies, and verify the actual merged tree. Physical device, screen-reader, independent owner demonstration, full E2 acceptance and E3/E4 policy remain separate. Formal quotations remain Draft; no customer communication, operational data migration, ERP/SharePoint write or automatic pricing is included.

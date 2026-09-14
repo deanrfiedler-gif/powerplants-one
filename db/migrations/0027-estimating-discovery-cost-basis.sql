@@ -36,9 +36,9 @@ BEGIN
  SELECT * INTO STRICT initial FROM ppo.estimation_revisions WHERE workspace_id=root.workspace_id AND id=root.initial_revision_id;
  IF TG_TABLE_NAME='estimate_discovery_bases' THEN
  IF NOT EXISTS(
-   SELECT 1 FROM ppo.estimate_versions v JOIN ppo.estimate_discovery_bases old
-     ON (old.workspace_id,old.estimate_version_id)=(v.workspace_id,v.predecessor_id)
-     WHERE v.workspace_id=NEW.workspace_id AND v.id=NEW.estimate_version_id AND old.revision_id=NEW.revision_id)
+   SELECT 1 FROM ppo.estimate_versions v JOIN ppo.estimate_discovery_bases predecessor_basis
+     ON (predecessor_basis.workspace_id,predecessor_basis.estimate_version_id)=(v.workspace_id,v.predecessor_id)
+     WHERE v.workspace_id=NEW.workspace_id AND v.id=NEW.estimate_version_id AND predecessor_basis.revision_id=NEW.revision_id)
    AND NOT EXISTS(SELECT 1 FROM ppo.estimating_options o WHERE o.workspace_id=g.workspace_id AND o.id=root.option_id
      AND o.id=g.selected_option_id AND o.current_revision_id=NEW.revision_id AND o.state='Active') THEN
    RAISE EXCEPTION 'New discovery adoption requires the exact current selected option' USING ERRCODE='23514';
