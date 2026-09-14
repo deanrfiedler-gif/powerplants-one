@@ -1,9 +1,9 @@
 ---
 document_id: PPO-009-TRANSFER-HO
-revision: r02
+revision: r03
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
-status: Original source verified; combined maintained-source and main publication pending
+status: Source and combined main verified; complete HV and original visual review remain open
 source_commit: 642e283998f6e286f986d0cda53469780ed1dfbb
 ---
 
@@ -15,7 +15,7 @@ source_commit: 642e283998f6e286f986d0cda53469780ed1dfbb
 
 Original source `233dd66ccdf2a576c0e36f2cddd374504b337fb0`, tree `b8a59332eaeb18a25367d217dce2e14d21458c7c`, passed all 16 applicable checks. Full run `34789695830` / job `103811512161`, attempt 1, passed 85 unit, 389 DB, 25 HTTP and 166 browser cases plus three explicit skips. Focused run `34789695835` / job `103811512062` passed 44 DB, 23 browser plus two explicit phone-drag skips, 13 retained I2 cases and actual transfer restart. Thirteen of fourteen transfer PNG originals were reviewed; the remaining full-region/device/independent acceptance limits are recorded in [#161](https://github.com/deanrfiedler-gif/powerplants-one/pull/161).
 
-Maintained-runtime source `ada7368ef2b7eb720f783e3db1642e44244ec2dd` is an ancestor of combined [#166](https://github.com/deanrfiedler-gif/powerplants-one/pull/166), which owns current integration/main verification and normal merge. The matrix below records the original prepared scope, not a new claim that every written HV/AT-25 step was executed. Its CI-pending labels and subsequent intermediate failures are historical; the current-source and full-procedure limits remain distinct. #145 stays open pending combined delivery/publication.
+Maintained-runtime source `ada7368ef2b7eb720f783e3db1642e44244ec2dd` is an ancestor of combined [#166](https://github.com/deanrfiedler-gif/powerplants-one/pull/166), which was independently merged by the owner as `aeaf966a`. Actual-main full run `34805010402` / job `103855071686` passed 90 unit, 393 DB, 26 HTTP and 168 browser cases plus three explicit skips; actual-main focused CRM run `34805010388` / job `103855071697` passed 44 DB, 23 browser cases plus two explicit phone-drag skips, 13 retained I2 cases and the actual transfer restart. The matrix below records the original prepared scope, not a new claim that every written HV/AT-25 step was executed. Its CI-pending labels and subsequent intermediate failures are historical; the current-source and full-procedure limits remain distinct. #145 remains open for the complete written HV obligations and remaining original/independent review; combined code inclusion and actual-main verification are complete. Duplicate taxonomy/transfer PRs #164/#174 are closed as incorporated; their runtime/test/workflow blobs match main.
 
 ## Changed behaviour
 
@@ -35,20 +35,20 @@ H-03 recovery is CRM-only. The original actor/operation/record/command-specific 
 
 Seed 24 adds one synthetic receiving user with the six copied, currently effective Company A CRM/shared/Activity grants and one explicit current-owner transfer grant. The recipient gains no onward-transfer or estimating/Finance/Service permissions. A once-only receipt prevents reseeding from restoring revoked grants. Old migration and seed files are unchanged; migration registries, cross-domain upgrade assertions and reviewed hosted migration count now include 0024. No hosted upgrade is performed.
 
-## Prepared evidence and remaining gates
+## Component evidence and remaining gates
 
 Local lint, types, existing 85 unit cases and build passed before publication preparation; final checks are recorded on the PR. Local PostgreSQL and pinned Chromium execution are unavailable, so no local DB/browser pass is claimed.
 
 | Coverage | Concrete prepared proof | Execution state |
 |---|---|---|
-| HV-01–04, 09, 14 | Immediate transfer, required capabilities, excluded candidates, mixed hidden Activity target, actual two-candidate signed cursor and real HTTP routes | CI pending |
-| HV-05–08, 13 | Independent backends with observed workspace/authority row blocking; both queued save orders; same-key race; stale Activity completion; committed revocation before transfer; later completion/revocation after acceptance | CI pending |
-| HV-10–12, 22 | Historical unknown-contact qualification; original owner distinct from author; multiple handovers; original receipt recovery; each required actor permission revoked independently; recipient revocation; changed same-key payload | CI pending |
-| HV-15–16 | Desktop/390/320 keyboard comparison, 1,000-character reason and long unbroken Activity; conflict and frozen lost-response screenshots | CI and original visual review pending; real revoked-actor/late eligible-owner response case prepared; original evidence review pending |
-| HV-17 | Existing CRM write/verify script now preserves transfer input, origin/chain, original create/transfer receipts and payload hashes across distinct application/browser/PostgreSQL processes; I1/I2/Won/Lost proofs retained | CI pending |
-| HV-18 | Injected failures at event/companion/audit/receipt/outbox; exact full-state rollback; arbitrary owner SQL and immutable history deletion refused | CI pending; corrupt event/companion and two intermediate owner updates are now challenged |
-| HV-19–20 | Current demo upgrade full old-row comparisons, explicit new-user/grant/provenance allowlists, original migration checksums, repeated seed/migration and revoked-grant preservation | CI pending |
-| HV-21 | E1 owner/saved version/quote/source/output preserved across transfer; exact stored HTML/PDF bytes; old estimator continues, recipient denied; service-report and Finance table snapshots unchanged | CI pending; full linked HTTP/browser regressions retained |
+| HV-01–04, 09, 14 | Immediate transfer, required capabilities, excluded candidates, mixed hidden Activity target, actual two-candidate signed cursor and real HTTP routes | Named component cases passed in the source and actual-main runs above; full written HV coverage remains distinct |
+| HV-05–08, 13 | Independent backends with observed workspace/authority row blocking; both queued save orders; same-key race; stale Activity completion; committed revocation before transfer; later completion/revocation after acceptance | Named component cases passed in the source and actual-main runs above; full written HV coverage remains distinct |
+| HV-10–12, 22 | Historical unknown-contact qualification; original owner distinct from author; multiple handovers; original receipt recovery; each required actor permission revoked independently; recipient revocation; changed same-key payload | Named component cases passed in the source and actual-main runs above; full written HV coverage remains distinct |
+| HV-15–16 | Desktop/390/320 keyboard comparison, 1,000-character reason and long unbroken Activity; conflict and frozen lost-response screenshots | Authored browser cases passed, including revoked-actor/late-response handling; 13/14 transfer originals reviewed, remaining full-region and independent/device review open |
+| HV-17 | Existing CRM write/verify script now preserves transfer input, origin/chain, original create/transfer receipts and payload hashes across distinct application/browser/PostgreSQL processes; I1/I2/Won/Lost proofs retained | Named component cases passed in the source and actual-main runs above; full written HV coverage remains distinct |
+| HV-18 | Injected failures at event/companion/audit/receipt/outbox; exact full-state rollback; arbitrary owner SQL and immutable history deletion refused | Corrupt event/companion and intermediate owner-update component challenges passed in the recorded runs |
+| HV-19–20 | Current demo upgrade full old-row comparisons, explicit new-user/grant/provenance allowlists, original migration checksums, repeated seed/migration and revoked-grant preservation | Named component cases passed in the source and actual-main runs above; full written HV coverage remains distinct |
+| HV-21 | E1 owner/saved version/quote/source/output preserved across transfer; exact stored HTML/PDF bytes; old estimator continues, recipient denied; service-report and Finance table snapshots unchanged | Named preservation components and retained HTTP/browser regressions passed; full HV-21 cross-surface narrative is not inferred |
 
 The helper is registered once inside the existing focused CRM DB file so both focused and Full Application run it. Three transfer browser cases and one HTTP case extend existing suites without replacing prior assertions. The required [HV matrix](../testing/crm-handover-verification.md) remains authoritative: prepared coverage is not equivalent to all HV obligations passed. Record exact source/checkout/tree, runtime, counts, original artifacts/hashes, failures and skips on the PR. Merge only after resolving applicable failures and outstanding proof obligations, then verify actual main and publish the bounded result. Do not close #9 or claim a production release.
 

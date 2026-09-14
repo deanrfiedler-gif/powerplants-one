@@ -2,9 +2,9 @@
 
 Personal prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance. The repository is public; the application, data and hosted demo remain private and synthetic.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01–P12 code merged; integrated acceptance incomplete · **Deployment:** owner-triggered Azure run 34808448458 deployed `aeaf966a`; image/health evidence observed, signed-in acceptance pending · **Current state:** [docs/STATUS.md](docs/STATUS.md)
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01–P12 code merged; PT-22 synthetic recovery passed; integrated acceptance incomplete · **Deployment:** owner-triggered Azure run 34808448458 deployed `aeaf966a`; image/health evidence observed, signed-in acceptance pending · **Current state:** [docs/STATUS.md](docs/STATUS.md)
 
-This repository is Dean's personal prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. P12 isolated recovery code is merged with reviewed source evidence; actual-main verification and complete PP-01 acceptance remain distinct outstanding obligations. Company ownership, production approval and external-system write authority are not implied.
+This repository is Dean's personal prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. P12 isolated recovery is merged with reviewed source and actual-main evidence. The written PT-22 synthetic restore procedure passed; full PT-28/PT-30 and independent owner/device acceptance remain outstanding. Company ownership, production approval and external-system write authority are not implied.
 
 ## Start here
 

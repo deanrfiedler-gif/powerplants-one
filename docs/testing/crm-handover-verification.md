@@ -1,6 +1,6 @@
 # BP-03 — Future handover verification matrix
 
-**Revision:** r02 · **Date:** 14 September 2026 · **Owner:** Dean Fiedler · **Status:** HV execution **Not run** on the transfer branch; concrete tests prepared, CI and original-evidence review pending. **Work:** #55 / PPO-009. [Contract](../contracts/crm-opportunity-handover.md) · [decisions](../decisions/crm-opportunity-handover.md) · [journey](../blueprints/crm-handover-journey.md).
+**Revision:** r02 · **Date:** 14 September 2026 · **Owner:** Dean Fiedler · **Status:** Named transfer components passed original-source and combined actual-main CI; complete HV-01–22 procedure execution is **not claimed**. Remaining original visual/independent evidence is recorded in the runtime handover. **Work:** #55 / PPO-009. [Contract](../contracts/crm-opportunity-handover.md) · [decisions](../decisions/crm-opportunity-handover.md) · [journey](../blueprints/crm-handover-journey.md).
 
 **Current reconciliation:** The [audit follow-through policy package](../decisions/audit-follow-through-policy-package.md) adopts H-01–H-03 and authorises this single transfer journey under #145. The complete #55 publication ledger was reread. The older proposed labels below are retained as design history; all concrete guards and HV obligations remain.
 HV identifiers are local matrix labels, not parent requirements, PP-01 packages or replacements for CA/AT/PT IDs. Preserve all accepted test suites/assertions/pins. Design checks and illustrations cannot pass a DB, HTTP, browser, restart or business-acceptance case.
