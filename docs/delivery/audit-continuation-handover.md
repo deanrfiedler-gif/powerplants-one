@@ -1,10 +1,10 @@
 ---
 document_id: PPO-AUDIT-CONTINUATION-HO
-revision: r04
+revision: r05
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
 status: Source components reviewed; combined E2 and performance integration awaiting CI
-source_commit: 3a27728c2c41e366a4863683fac748cd0d1da910
+source_commit: b8d3369626810c18bd430d57ba251114934dbfb1
 ---
 
 # Repository audit continuation
@@ -13,7 +13,9 @@ Dean authorised the audit's next ten tasks and asked Codex to continue until his
 
 ## Current evidence
 
-Main `3a27728c`, tree `5f19f79eeb7c4322c47fcffae740af429843bb7e`, contains the owner-merged E2 foundation #168 after the verified P12/transfer/taxonomy integration. All twelve actual-main checks passed; broad Application `34811459586` / job `103873481814` passed 103 unit (100 plus three preparation cases), 400 DB, 26 HTTP and 168 browser cases plus three skips, retained component/restart proofs and P12 isolated restore in 71.040 seconds. #168's corrected source passed all thirteen checks, including 103 unit, 400 DB, 26 HTTP and 168 browser cases plus three skips. This does not certify changed E2 workspace or costing source.
+Current main `b8d3369626810c18bd430d57ba251114934dbfb1`, tree `845971cd7eeceafd939914d776d1f00747739289`, contains normally merged #169 and #171. Their exact sources passed all 17 and 16 checks respectively, including the broad application suite; all 16 E2 screen originals were reviewed. Current-main compiled browser, E1 and CRM jobs passed; its broad application run is still in progress at this writing.
+
+The earlier E2-foundation main `3a27728c`, tree `5f19f79eeb7c4322c47fcffae740af429843bb7e`, contains the owner-merged E2 foundation #168 after the verified P12/transfer/taxonomy integration. All twelve actual-main checks passed; broad Application `34811459586` / job `103873481814` passed 103 unit (100 plus three preparation cases), 400 DB, 26 HTTP and 168 browser cases plus three skips, retained component/restart proofs and P12 isolated restore in 71.040 seconds. #168's corrected source passed all thirteen checks, including 103 unit, 400 DB, 26 HTTP and 168 browser cases plus three skips. This does not certify changed E2 workspace or costing source.
 
 Earlier main `aeaf966a` and reviewed source `d28cfc25` have the identical tree `11c4e91f5fb9c67cfb5aed8947f3232453e31c9e`. Actual-main Application `34805010402` / job `103855071686` completed successfully: 90 unit, 393 DB, 26 HTTP and 168 browser cases plus three explicit skips, retained component/restart proofs and the P12 test in 74.104 seconds. #165's bounded implementation is published and closed. PT-22's executed synthetic procedure and reviewed original restore evidence are reconciled in the [P12 handover](p12-handover.md); full PT-28/PT-30 and owner acceptance remain open.
 Issues #129, #135 and #136 are closed with evidence. Actual-main CRM run `34805010388` / job `103855071697` passed 44 database cases, 23 browser cases with two explicit phone drag skips, 13 retained I2 cases and the actual restart proof. Desktop refused-drag/Undo and accepted-lost-response recovery passed; native keyboard stage movement passed on desktop and phone. The omissions in those three issues are repaired; full business/device acceptance is separate.
@@ -28,8 +30,8 @@ Main's PT-27 load job `103855071769` completed all 320 core reads without error,
 | Priority | Outcome | Remaining work |
 |---|---|---|
 | 1 | Current-main verification and accurate backlog | Verified #166 actual main; closed #129/#135/#136/#165 and duplicate #174; #168 now on main. New main passed; finish #145 complete-HV evidence without closing owner obligations |
-| 2 | E2 backend | #168 merged; #169 source `02fddd74` corrects invalid fixtures and CRM response-envelope assertion. Required/focused checks passed; broad source verification still running |
-| 3 | Saved E2 screens | #171 source `45de8e3e` passes 176 compiled browser cases plus three skips and real E1/E2 restart. All 16 original E2 captures and exact manifests reviewed; broad source and combined integration remain |
+| 2 | E2 backend | #168 and #169 merged; corrected #169 source `02fddd74` passed all 17 checks, including 412 DB, 28 HTTP and 168 browser cases plus three skips |
+| 3 | Saved E2 screens | #171 merged after source `45de8e3e` passed all 16 checks, including broad 412 DB, 29 HTTP and 176 browser cases plus three skips. All 16 original E2 captures and exact manifests reviewed; combined integration remains |
 | 4 | E2 manual-estimate receiving basis | #173 source `46d65048` passes 104 unit, 22 focused DB including all eight new cases, retained E1 HTTP/browser and real cost-basis write/recover/verify; compiled costing originals reviewed. Broad source and combined integration remain |
 | 5 | Complete PP-01 acceptance | PT-22 synthetic execution reconciled as passed; full PT-28 compatible-update/scheduling-rule impact and continuous PT-30 narrative remain incomplete. Owner demonstration is separate |
 | 6 | Performance | #175 original comparison reviewed; #176 closed-editor remedy implemented with proposal preservation and unchanged measurement. Original performance archive and changed-view captures reviewed; broad and combined integration remain. No threshold or timeout waiver |
@@ -54,3 +56,10 @@ DR-03–DR-06, estimating-container propositions, E3/E4 operational rules and Fi
 Branch `feat/audit-integration` combines the exact #173 E2 source (including #169/#171), #176 performance follow-through (including #175) and #172 audit/receiving documents. Documentation conflicts were resolved against the current evidence while preserving every runtime component. No workflow, dependency, issued source or historical payload hash is changed by integration. Full source verification and original evidence review remain prerequisites to normal merge; the resulting actual-main tree needs its own verification. Separate PRs retain their original failures and component histories until inclusion is published.
 
 The integration also closes a specific CRM evidence gap. Original transfer archive `10327701645` was downloaded and verified (6,771,809 bytes, SHA-256 `516a1274706b300e62cf013e9f370aaf95c9b8842c542f9834c87126d319cefe`). Desktop text wraps, but the 390/320px locator screenshots named full comparison are clipped by the scroll container and fixed dialog regions. They cannot demonstrate the entire Activity text or consequence. The existing browser case now adds overlapping original viewport captures while scrolling the unchanged dialog, with exact source/tree/run/viewport/PNG hashes and covered intervals. It exercises a 2,000-character Activity and retains the 1,000-character reason and existing keyboard/save checks. No CSS, dialog resizing, stitched image, assertion removal or timeout increase is used. Fresh originals remain to be reviewed; complete HV/AT-25 and independent device/owner acceptance remain open.
+
+
+## Broad costing HTTP finding
+
+The #173 source `46d65048` passed all 420 database and 178 browser cases plus three skips, but one of its 30 HTTP cases failed: the test JSON-parsed the local server origin guard's intentional plain-text 403 refusal. The corrected raw-response assertion preserves that guard and all actual API JSON assertions. The complete case now registers once through the existing required estimating HTTP entrypoint, alongside the three retained cases, and is removed from the standalone full-suite glob. The same correction is included in this combined source. This is a proof correction, not an application change; original failed source results remain failed. Corrected-source CI, normal integration and current-main verification remain required.
+
+The independent #172 documentation source completed broad Application `34816131759` / job `103887084514`: 100 unit plus three preparation cases, 400 DB, 26 HTTP, 168 browser cases plus three skips, retained restarts and the P12 isolated restore test in 69.842 seconds. Its documentation is incorporated here; its older runtime tree does not certify this newer E2 integration.

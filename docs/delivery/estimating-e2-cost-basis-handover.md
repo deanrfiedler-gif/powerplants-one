@@ -1,6 +1,6 @@
 ---
 document_id: PPO-010-E2-COST-HO
-revision: r02
+revision: r03
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
 status: Focused database restart and original screen proofs passed; integrated verification pending
@@ -59,3 +59,10 @@ Source `46d650484f3db2b13bcc3d20f1dfa1e975c29397`, tree `c771f8ad71cbc67d0e864fd
 Original restart artifact `10335479784` has 4,023,564 bytes and SHA-256 `afb614d4e587b55fe944e0759fcd3f03c10c02bfe4be4e3303ea2fd3e1703539`. ZIP integrity and all three PNG manifests were verified. The three PNGs are byte-identical, SHA-256 `e407268f8238e65e34d019fd2322aac2a8a1aee78176f1ea9a6195f14cf28bbd`. The original verified image was inspected: discovery revision 2, two saved versions and AUD 480 cost / AUD 720 sell remain visible with the saved scope.
 
 Compiled run [34815664428](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34815664428), job `103885688299`, passed. Its original artifact `10336990466` has 121,595,572 bytes and SHA-256 `e032495fc02621f80fdcac683ba2595e85fe167a087342f3768e7a1fb2512059`; archive integrity and both cost-image manifests were checked. Original desktop 1440×1000 and phone 320×740 captures show the retained customer-safe Draft, AUD 175.00, wrapped scope/title, quantity/price, exclusions and assumptions. PNG SHA-256 values are `08c618c2e29940ab64ed3015d7b5bf7f08a010f3182cbf6d15f0bc0e6fe24e2a` and `6e4d59c5df8082cd7e1943dc4c1649e14f28610eadee033559f90f68c0944fd2`. No visible defect was identified in those captured regions. Broad source and combined integration proof remain pending at this checkpoint; original source component passes are not actual-main or owner acceptance.
+
+
+## Full-suite HTTP refusal correction
+
+Source `46d65048` broad Application run [34815664432](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34815664432), job `103885688355`, passed 104 unit plus three preparation cases, all 420 database cases and 178 browser cases with three explicit skips, but failed one of 30 HTTP cases. The new costing test tried to JSON-parse the local origin guard's intentional plain-text HTTP 403 response (`Local synthetic access only.`) before asserting the refusal. All 29 other HTTP cases passed; the source remains failed.
+
+The corrected case checks the raw wrong-origin response status directly, matching the retained E1 origin-boundary case. Application-origin guards and JSON expectations for actual API responses remain unchanged. The complete costing HTTP case is registered once through the required `tests/http/estimating.test.ts` entrypoint; the former standalone test file is removed, so the full glob still executes exactly one copy. This makes the existing required Estimating workflow exercise four HTTP cases without a workflow edit, timeout, retry or assertion waiver. Fresh corrected-source verification is required.

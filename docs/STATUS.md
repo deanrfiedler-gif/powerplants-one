@@ -83,3 +83,6 @@ D-003 is resolved for this personal prototype (Powerplants One, PPO, independent
 | Which decisions exist? | [Decision control](decisions/README.md) |
 | How do I run and verify locally? | README and the [P11 handover](delivery/p11-handover.md) |
 | What happened before 11 September 2026? | [STATUS-log.md](STATUS-log.md) |
+
+
+**Audit integration verification checkpoint, 14 September 2026:** #169 and #171 are normally merged as main `b8d3369626810c18bd430d57ba251114934dbfb1`. #173 source `46d65048` passed 420 DB and 178 browser cases plus three skips, but its costing HTTP case parsed a plain-text origin refusal as JSON (29 of 30 HTTP cases passed). The combined continuation corrects the test response handling and registers the case in the existing required estimating HTTP suite. Actual guards, migrations and saved content are unchanged. Corrected-source verification and combined merge remain pending; the [audit handover](delivery/audit-continuation-handover.md) and PR publications retain exact results and remaining owner decisions.
