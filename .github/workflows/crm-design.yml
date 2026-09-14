@@ -38,7 +38,7 @@ jobs:
         run: |
           npm install --global npm@11.19.0
           npm ci
-          npx playwright install --with-deps chromium
+          npm run browser:install
       - name: Check standalone design and capture desktop and phone
         env:
           PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}

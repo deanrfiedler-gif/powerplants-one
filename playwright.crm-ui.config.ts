@@ -2,11 +2,12 @@ import { defineConfig } from "@playwright/test";
 
 // Fast component presentation checks, explicitly separate from database proof.
 export default defineConfig({
+  globalSetup: "./scripts/check-browser.ts",
   testDir: "tests/ui",
   testMatch: "*.spec.ts",
   workers: 1,
   timeout: 30000,
-  use: { channel: "chromium", locale: "en-AU", screenshot: "only-on-failure" },
+  use: { channel: "chrome", locale: "en-AU", screenshot: "only-on-failure" },
   projects: [
     { name: "desktop", use: { viewport: { width: 1440, height: 1000 } } },
     {

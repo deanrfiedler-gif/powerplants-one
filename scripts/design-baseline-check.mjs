@@ -70,7 +70,7 @@ const pageSize = page => page.evaluate(() => ({
   client: document.documentElement.clientWidth,
 }));
 
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, channel: "chrome" });
 const evidence = {
   scope: 'Design baseline integrity and token comparison only; not application, accessibility or business acceptance',
   registry: registryPath,

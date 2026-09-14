@@ -43,7 +43,7 @@ jobs:
           npm run lint
           npm run typecheck
           npm run test:unit
-          npx playwright install --with-deps chromium
+          npm run browser:install
       - name: PostgreSQL permissions and atomic persistence
         run: |
           cp .env.example .env.local

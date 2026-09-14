@@ -455,6 +455,7 @@ test("P08 persistent browser process restart retains two jobs and original evide
   const directory = await mkdtemp(join(tmpdir(), "ppo-p08-profile-")),
     viewport = info.project.use.viewport as { width: number; height: number };
   let context = await chromium.launchPersistentContext(directory, {
+      channel: "chrome",
       headless: true,
       viewport,
       baseURL: origin,
@@ -529,6 +530,7 @@ test("P08 persistent browser process restart retains two jobs and original evide
   }
   await context.close();
   context = await chromium.launchPersistentContext(directory, {
+    channel: "chrome",
     headless: true,
     viewport,
     baseURL: origin,
