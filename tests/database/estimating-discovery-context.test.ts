@@ -85,9 +85,11 @@ async function observations() {
   ).rows[0];
 }
 async function allowCustomerAtSecondSite() {
+  // This Site already has an operator. Add the customer's separate billing
+  // relationship; retain the seeded operator and its exclusion constraint.
   await database().query(
     `INSERT INTO ppo.site_parties(id,workspace_id,created_by,updated_by,company_id,site_id,organisation_id,role,valid_from)
-    VALUES($1,$2,$3,$3,$4,$5,$6,'Operator','2026-01-01')`,
+    VALUES($1,$2,$3,$3,$4,$5,$6,'BillingParty','2026-01-01')`,
     [randomUUID(), CRM.workspace, CRM.owner, CRM.company, site2, CRM.org],
   );
 }

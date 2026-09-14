@@ -674,7 +674,7 @@ test("E2 recovery rechecks edit access to the exact original selected Site even 
   const s = await setup(),
     site2 = "70000000-0000-4000-8000-000000000002";
   await rows(
-    "INSERT INTO ppo.site_parties(id,workspace_id,created_by,updated_by,company_id,site_id,organisation_id,role,valid_from) VALUES($1,$2,$3,$3,$4,$5,$6,'Operator','2026-01-01')",
+    "INSERT INTO ppo.site_parties(id,workspace_id,created_by,updated_by,company_id,site_id,organisation_id,role,valid_from) VALUES($1,$2,$3,$3,$4,$5,$6,'BillingParty','2026-01-01')",
     [randomUUID(), CRM.workspace, s.p.actor_id, CRM.company, site2, CRM.org],
   );
   s.input.discovery.scope = {
