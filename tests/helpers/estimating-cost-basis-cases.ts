@@ -6,12 +6,14 @@ import { database, transaction } from "../../src/platform/database";
 import { createSession } from "../../src/platform/identity";
 import { migrate, seed } from "../../scripts/database";
 import { createOpportunity } from "../../src/crm/opportunities";
+import { editDealInformation } from "../../src/crm/refinements";
 import { createEstimate, saveEstimate, prepareQuote } from "../../src/estimating/service";
 import { readEstimate, listEstimates, readQuote, opportunityCommercial } from "../../src/estimating/reads";
 import { adoptDiscoveryCosting, previewDiscoveryCosting } from "../../src/estimating/cost-basis-service";
-import { readDiscoveryWorkspace } from "../../src/estimating/discovery-workspaces";
+import { createDiscoveryWorkspace, readDiscoveryWorkspace, readDiscoveryRevision, listDiscoveryWorkspaces } from "../../src/estimating/discovery-workspaces";
 import { readQuoteJob, runQuoteJob, draftBytes } from "../../src/estimating/worker";
 import { readOperation } from "../../src/shared/receipts";
+import { readShared } from "../../src/shared/reads";
 import { CRM, crmBase, crmCreate } from "../helpers/crm";
 import { estimateInput, quoteCommand } from "../helpers/estimating";
 import { discoveryInput } from "../helpers/estimating-discovery";
@@ -104,6 +106,63 @@ test("E2 safe draft readers do not acquire internal cost access and source revoc
   await assert.rejects(readEstimate(observer,s.estimate.id),code("RecordUnavailable"));
   await rows("UPDATE ppo.site_parties SET valid_to=CURRENT_DATE WHERE workspace_id=$1 AND site_id=$2 AND organisation_id=$3",[CRM.workspace,CRM.site,CRM.org]);
   await assert.rejects(readQuote(observer,q.id),code("RecordUnavailable"));
+});
+test("E2 retained contact visibility protects history and exact recovery after the current CRM contact changes",async()=>{
+  const s=await costed(await discoveryCostSetup()),q=quoteCommand(s.estimate.saved);
+  await prepareQuote(s.p,s.estimate.id,q);await runQuoteJob((await readQuoteJob(s.p,q.id)).j.id);
+  const originalRevision=await readDiscoveryRevision(s.p,s.input.id,s.input.revision_id),
+    originalCreation=await readOperation(s.p,s.input.operation_id),
+    originalQuote=(await readQuoteJob(s.p,q.id)).q,bytes=await draftBytes(s.p,q.id);
+  assert.equal(originalRevision.observed_context!.contact!.id,CRM.person);
+  // Disposable fixture: add a legitimate new contact, then use the real CRM
+  // command to change the deal. The original revision still captures Avery.
+  const nextContact=randomUUID();
+  await rows("INSERT INTO ppo.people(id,workspace_id,created_by,updated_by,display_name) VALUES($1,$2,$3,$3,'SYN Replacement contact')",[nextContact,CRM.workspace,s.p.actor_id]);
+  await rows("INSERT INTO ppo.person_company_contexts(workspace_id,company_id,person_id) VALUES($1,$2,$3)",[CRM.workspace,CRM.company,nextContact]);
+  await rows("INSERT INTO ppo.relationships(id,workspace_id,created_by,updated_by,company_id,organisation_id,person_id,role_label,valid_from) VALUES($1,$2,$3,$3,$4,$5,$6,'SYN replacement contact','2026-01-01')",[randomUUID(),CRM.workspace,s.p.actor_id,CRM.company,CRM.org,nextContact]);
+  await editDealInformation(s.p,s.o.id,{...crmBase(),expected_version:1,title:s.o.title,primary_person_id:nextContact,contact_unknown_reason:null,value_amount:null,expected_close_date:null});
+  await rows("UPDATE ppo.sites SET primary_contact_id=$2,version=version+1 WHERE id=$1",[CRM.site,nextContact]);
+  // A live label/version change is not evidence corruption. Authorised history
+  // and original command recovery retain the exact accepted content.
+  const assertOriginals=async()=>{
+    assert.deepEqual(await readDiscoveryRevision(s.p,s.input.id,s.input.revision_id),originalRevision);
+    assert.deepEqual((await readDiscoveryWorkspace(s.p,s.input.id)).options[0].revision,originalRevision);
+    assert.deepEqual(await readOperation(s.p,s.input.operation_id),originalCreation);
+    assert.deepEqual((await createDiscoveryWorkspace(s.p,s.input)).receipt,originalCreation);
+    assert.deepEqual(await readOperation(s.p,s.command.operation_id),s.accepted.receipt);
+    assert.deepEqual((await adoptDiscoveryCosting(s.p,s.input.id,s.command)).receipt,s.accepted.receipt);
+    assert.deepEqual((await readEstimate(s.p,s.estimate.id)).saved,s.estimate.saved);
+    assert.deepEqual((await readQuoteJob(s.p,q.id)).q,originalQuote);
+    assert.deepEqual(await draftBytes(s.p,q.id),bytes);
+  };
+  await assertOriginals();
+  // The same actor retains this Site, CRM and estimating capabilities. Only
+  // shared visibility narrows; the current contact is visible and Avery is not.
+  await rows("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='shared.read'",[s.p.actor_id]);
+  await rows("INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id,valid_from) VALUES($1,$2,$3,'shared.read','Site',$4,$4,'2026-01-01')",[CRM.workspace,s.p.actor_id,CRM.company,CRM.site]);
+  assert.equal((await readShared(s.p,"Person",nextContact)).id,nextContact);
+  assert.equal((await readShared(s.p,"Site",CRM.site)).id,CRM.site);
+  await assert.rejects(readShared(s.p,"Person",CRM.person),code("RecordUnavailable"));
+  const before=await snapshot();
+  for(const attempt of [
+    ()=>readDiscoveryRevision(s.p,s.input.id,s.input.revision_id),
+    ()=>readDiscoveryWorkspace(s.p,s.input.id),
+    ()=>readOperation(s.p,s.input.operation_id),
+    ()=>createDiscoveryWorkspace(s.p,s.input),
+    ()=>readOperation(s.p,s.command.operation_id),
+    ()=>adoptDiscoveryCosting(s.p,s.input.id,s.command),
+    ()=>readEstimate(s.p,s.estimate.id,{version_id:s.estimate.saved.id}),
+    ()=>readQuote(s.p,q.id),
+    ()=>prepareQuote(s.p,s.estimate.id,q),
+    ()=>draftBytes(s.p,q.id),
+  ])await assert.rejects(attempt,code("RecordUnavailable"));
+  assert.equal((await listDiscoveryWorkspaces(s.p,{opportunity_id:s.o.id})).items.length,0);
+  assert.equal((await listEstimates(s.p,{})).items.some(e=>e.id===s.estimate.id),false);
+  assert.deepEqual(await snapshot(),before);
+  // Explicit fixture restoration proves denied recovery never rewrites or
+  // refreshes stored labels, version bindings, receipts or Draft bytes.
+  await rows("INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,valid_from) VALUES($1,$2,$3,'shared.read','Company',$3,clock_timestamp())",[CRM.workspace,s.p.actor_id,CRM.company]);
+  await assertOriginals();assert.deepEqual(await snapshot(),before);
 });
 test("E2 graph guards refuse missing, cross-option and mutable bases without accepting partial cost versions",async()=>{
   const s=await costed(await discoveryCostSetup()),base=(await rows("SELECT to_jsonb(v) value FROM ppo.estimate_versions v WHERE id=$1",[s.estimate.saved.id]))[0].value;
