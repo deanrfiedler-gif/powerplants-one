@@ -92,6 +92,10 @@ CREATE TABLE ppo.estimation_revisions (
  CHECK(kind='LegacyManual' OR (input->'scope'->>'site_id')::uuid IS NOT DISTINCT FROM site_id)
 );
 CREATE TRIGGER retain_revision BEFORE UPDATE OR DELETE ON ppo.estimation_revisions FOR EACH ROW EXECUTE FUNCTION ppo.immutable_evidence();
+ALTER TABLE ppo.estimating_workspaces ADD CONSTRAINT fk_estimating_selected_option FOREIGN KEY(workspace_id,id,selected_option_id)
+ REFERENCES ppo.estimating_options(workspace_id,estimating_workspace_id,id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ppo.estimating_options ADD CONSTRAINT fk_estimating_current_revision FOREIGN KEY(workspace_id,id,current_revision_id)
+ REFERENCES ppo.estimation_revisions(workspace_id,option_id,id) DEFERRABLE INITIALLY DEFERRED;
 
 CREATE TABLE ppo.estimating_scope_facilities (
  workspace_id uuid NOT NULL, company_id uuid NOT NULL, site_id uuid NOT NULL, scope_snapshot_id uuid NOT NULL, facility_id uuid NOT NULL,
@@ -174,10 +178,6 @@ END $$;
 DO $$ DECLARE e ppo.estimates; BEGIN
  FOR e IN SELECT * FROM ppo.estimates ORDER BY workspace_id,id LOOP PERFORM ppo.materialise_legacy_estimate(e); END LOOP;
 END $$;
-ALTER TABLE ppo.estimating_workspaces ADD CONSTRAINT fk_estimating_selected_option FOREIGN KEY(workspace_id,id,selected_option_id)
- REFERENCES ppo.estimating_options(workspace_id,estimating_workspace_id,id) DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE ppo.estimating_options ADD CONSTRAINT fk_estimating_current_revision FOREIGN KEY(workspace_id,id,current_revision_id)
- REFERENCES ppo.estimation_revisions(workspace_id,option_id,id) DEFERRABLE INITIALLY DEFERRED;
 CREATE FUNCTION ppo.materialise_new_legacy_estimate() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN
  PERFORM ppo.materialise_legacy_estimate(NEW); RETURN NULL;
 END $$;
