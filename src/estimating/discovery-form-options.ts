@@ -71,8 +71,15 @@ export async function discoveryFormOptions(
       }
     // Keep an explicitly permitted current selection available even outside the candidate page.
     if (siteId && !sites.some((s) => s.id === siteId)) {
-      const s = await visible(c, p, "Site", siteId);
-      sites.push({ id: s.id, display_name: s.display_name });
+      try {
+        const s = await visible(c, p, "Site", siteId);
+        await relationshipContext(c, p, { ...o, site_id: s.id }, "estimating.read");
+        await relationshipContext(c, p, { ...o, site_id: s.id }, "estimating.edit");
+        sites.push({ id: s.id, display_name: s.display_name });
+      } catch (error) {
+        if (!(error instanceof AppError) || ![403, 404].includes(error.status))
+          throw error;
+      }
     }
     const facilities = siteId
       ? (
