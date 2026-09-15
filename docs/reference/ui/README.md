@@ -52,7 +52,7 @@ The [accepted UI baseline register](../../standards/ui-baselines.json) retains e
 
 | Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
 |---|---|---|---|
-| Engineering | [r02](../engineering-r02/PPO-Engineering-Container-r02.html) | Approved | Bounded Engineering intake integration exists; wider BP-05 delivery remains separate. [Accepted decision](../../decisions/engineering-r02-integration.md), [implementation handover](../../delivery/engineering-intake-handover.md). |
+| Engineering | [r02](engineering/PPO-Engineering-Container-r02.html) | Approved | Bounded Engineering intake integration exists; wider BP-05 delivery remains separate. [Accepted decision](../../decisions/engineering-r02-integration.md), [implementation handover](../../delivery/engineering-intake-handover.md). |
 | Projects starter workspace | [r02](../../blueprints/projects-starter-visuals/r02/projects-design-review-r02.html) | Published review package; owner design acceptance not inferred from publication | Project/Gantt capability exists separately; broader starter/commercial handover acceptance remains open. [Review package](../../blueprints/projects-starter-visuals/r02/README.md), [J1 reconciliation](../../delivery/projects-j1-reconciliation.md). |
 | Service Job Pack | [r03](job-pack/powerplants-one-job-pack-r03.html) | Approved design successor to r02 | `/service/packs` exists; r03 page integration remains separate. [Decision](../../decisions/job-pack-design.md), [exact baseline mapping](../../standards/ui-baselines.json). |
 | Field Technicians | [r05](field-technicians/powerplants-one-field-technicians-r05.html) | Approved design successor to r04 | Baseline register still maps `/service/technicians` to r04; r05 is not recorded as implemented. [Decision](../../decisions/field-technicians-design.md), [exact baseline mapping](../../standards/ui-baselines.json). |
@@ -68,7 +68,7 @@ These files remain unchanged. The successor link identifies a newer design refer
 | Equipment & Installed Base | [r01](equipment/PPO-Equipment-and-Installed-Base-Workspace-r01.html) | Preserved for comparison with the r02 proposal. |
 | Finance & Commercial Controls | [r01](finance/PPO-Finance-and-Commercial-Controls-r01.html) | Preserved for comparison with the r02 proposal. |
 | Service Job Pack | [r02](job-pack/powerplants-one-job-pack-r02.html) | Accepted predecessor; r03 is the accepted design successor. |
-| Field Technicians | [r04](../powerplants-one-field-technicians-r04.html) | Earlier design, still the recorded implementation baseline until r05 integration. |
+| Field Technicians | [r04](field-technicians/powerplants-one-field-technicians-r04.html) | Earlier design, still the recorded implementation baseline until r05 integration. |
 
 ## Supporting references and generated documents
 
