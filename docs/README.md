@@ -10,11 +10,13 @@ Start with [current status](STATUS.md) and the [First Prototype Definition & Arc
 | Blueprint set | [Master and module index](blueprints/README.md) |
 | CRM UI | [Board/Grid preview](blueprints/crm-board-grid-mockup.html), [I2 guidance](delivery/crm-i2-ui-guidance.md), [handover](delivery/crm-ui-design-handover.md) |
 | CRM application | [I1 owned opportunity handover](delivery/crm-i1-handover.md), [I2 scoped Board/Grid handover](delivery/crm-i2-handover.md), [worklist decision](decisions/crm-i2-worklist.md); actual runtime/publication evidence remains separate from design originals |
+| Site surveys | [Site Survey & As-Found workspace r01](reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html), [design and handover](decisions/site-survey-workspace-design.md); module-only r20 HTML, 40 model/DOM checks passed, native visual review and application integration pending |
 | Contextual Page guides | [Design r01](blueprints/contextual-help-design.md), [CRM pilot guide](guides/crm-deals.md), [interactive preview](blueprints/contextual-help-preview.html), [template](standards/page-guide-template.md), [acceptance/pilot](testing/contextual-help-acceptance.md), [decision/handover](decisions/contextual-help.md); prepared for review, app implementation pending |
 | PPO Assistant | [Pilot specification](blueprints/ppo-assistant-specification.md), [direction/architecture](decisions/ppo-assistant-direction.md), [handover](delivery/ppo-assistant-handover.md); design only, runtime/model acceptance pending |
 | Estimating | [BP-04](blueprints/BP-04-estimating-quotation.md), [CREMS evidence](blueprints/estimating-evidence.md), [preview](blueprints/estimating-workspace-mockup.html), [handover](delivery/estimating-discovery-handover.md) |
 | Engineering | [Accepted r02 decision](decisions/engineering-r02-integration.md), [intake implementation handover](delivery/engineering-intake-handover.md) |
 | Projects | [BP-06](blueprints/BP-06-projects-commercial-delivery.md), [screens](blueprints/projects-screen-specification.md), [sequence](delivery/projects-implementation-plan.md), [handover](delivery/projects-discovery-handover.md) |
+| Projects delivery readiness | [Interactive r01 HTML](reference/ui/projects/PPO-Project-Delivery-Readiness-and-Change-Control-r01.html), [design and receiving record](decisions/project-delivery-readiness-design.md), [verification](testing/project-delivery-readiness-review.md); F05 / issue #12, six-view standalone review, 26 model/DOM groups passed; native visual review and application integration pending |
 | Customer portal | [Design](blueprints/customer-portal-design.md), [walkthrough](blueprints/customer-portal-mockup.html), [stages](delivery/customer-portal-implementation-plan.md), [handover](delivery/customer-portal-handover.md) |
 | Architecture | [BP-02](architecture/BP-02-platform-architecture.md) |
 | Service | [BP-07](blueprints/BP-07-service-operations.md), [approved field technicians design](decisions/field-technicians-design.md), [approved Job Pack r02](decisions/job-pack-design.md), [integration handover](delivery/field-technicians-handover.md) |
@@ -59,3 +61,7 @@ The [audit continuation handover](delivery/audit-continuation-handover.md) recor
 [Workspace r03](reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html) contains only the customer/location workspace using the supplied r20 theme, with Google Maps links, directions, address copying and optional arrival/facility pins. [Map extension](decisions/customers-sites-maps-r03.md) records the behaviour and 98 model/DOM checks; [r02 audit](decisions/customers-sites-workspace-audit-r02.md) retains the 18 earlier findings; [current handover](decisions/customers-sites-workspace-design.md) records boundaries. R01 and r02 references are preserved.
 
 [MYOB integration blueprint and field mapping handbook r01](contracts/myob-integration-blueprint.md) — proposed mappings, installed-configuration evidence requests, cross-system workflows and procedures; actual MYOB use/API verification remain outstanding.
+
+## Service Review & Reports HTML
+
+[Standalone r01 workspace and receiving handover](decisions/service-review-reports-workspace-design.md): SV-06/SV-07 exact evidence, report response and owned follow-up; design only.

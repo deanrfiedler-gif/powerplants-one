@@ -9,6 +9,8 @@ on:
       - 'docs/reference/powerplants-one-field-technicians-r04.html'
       - 'docs/reference/engineering-r02/**'
       - 'scripts/design-baseline-check.mjs'
+      - 'docs/design/service-review/**'
+      - 'scripts/*service-review*'
       - '.github/workflows/ui-baselines.yml'
   push:
     branches: [main]
@@ -19,6 +21,8 @@ on:
       - 'docs/reference/powerplants-one-field-technicians-r04.html'
       - 'docs/reference/engineering-r02/**'
       - 'scripts/design-baseline-check.mjs'
+      - 'docs/design/service-review/**'
+      - 'scripts/*service-review*'
       - '.github/workflows/ui-baselines.yml'
   workflow_dispatch:
 
@@ -52,4 +56,20 @@ jobs:
         with:
           name: UI-baseline-evidence
           path: verification-evidence/ui-baselines/
+          retention-days: 14
+      - name: Check standalone Service Review design
+        env:
+          PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          mkdir -p verification-evidence/service-review
+          python3 scripts/build-service-review-design.py
+          git diff --exit-code -- docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html
+          node scripts/check-service-review-model.mjs > verification-evidence/service-review/model-results.json
+          node scripts/check-service-review-browser.mjs
+      - name: Retain Service Review original browser evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Service-review-design-evidence
+          path: verification-evidence/service-review/
           retention-days: 14

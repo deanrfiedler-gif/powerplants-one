@@ -10,7 +10,7 @@ Dean reviewed the refined Field Technicians container against the supplied Leads
 
 ## Preserved source
 
-[Accepted standalone HTML r04](../reference/powerplants-one-field-technicians-r04.html) is retained byte-for-byte, including its embedded font licence. SHA-256 `b4d15630d89f0a74b795b9b2af6b83d9c4874d0e31d7e503f93d386a6555a704`; 429,584 bytes. The source manifest records the same checksum. The original has seven illustrative visits, four fictional technicians and memory-only field notes; these remain design examples.
+[Accepted standalone HTML r04](../reference/ui/field-technicians/powerplants-one-field-technicians-r04.html) is retained byte-for-byte, including its embedded font licence. SHA-256 `b4d15630d89f0a74b795b9b2af6b83d9c4874d0e31d7e503f93d386a6555a704`; 429,584 bytes. The source manifest records the same checksum. The original has seven illustrative visits, four fictional technicians and memory-only field notes; these remain design examples.
 
 The accepted source supersedes r01–r03 for this container. It follows the supplied `PPO-Leads-Desktop-Container-r01(1).html` and `ppo-projects-gantt-content-r10(1).html` visual references. It does not replace the separately approved application shell or adopt future commercial vendor features as delivered functionality.
 
@@ -45,7 +45,7 @@ The application adapter is prepared from main `27782e1c6343461ba70a3cd9841c3ca72
 
 ## Successor r05 — accepted 12 September 2026
 
-Dean accepted design r05 as the successor to r04 (“I accept.”, 12 September 2026) after a rendered audit of the approved r04 and a change record tracing every change to an audit finding. r04 remains byte-identical at `docs/reference/powerplants-one-field-technicians-r04.html`; the manifest records both hashes. The successor and its records live under `docs/reference/ui/field-technicians/`.
+Dean accepted design r05 as the successor to r04 (“I accept.”, 12 September 2026) after a rendered audit of the approved r04 and a change record tracing every change to an audit finding. r04 remains byte-identical at `docs/reference/ui/field-technicians/powerplants-one-field-technicians-r04.html`; the manifest records both hashes. The successor and its records live under `docs/reference/ui/field-technicians/`.
 
 | | |
 |---|---|

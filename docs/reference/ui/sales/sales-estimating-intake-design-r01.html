@@ -1,0 +1,617 @@
+<!doctype html><html lang="en-AU"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sales to Estimating Intake Design r01</title><style>body{font:15px/1.65 Verdana,sans-serif;color:#242a37;background:#f5f6f8;margin:0}header{background:#242a37;color:white;padding:24px 34px}header strong{font-size:18px}header span{color:#62bb46}header p{font-size:13px;margin:5px 0 0;color:#e1e5eb}nav{display:flex;gap:16px;margin:17px 0;flex-wrap:wrap}nav a{color:white;font-size:13px}.wrap{max-width:1300px;margin:24px auto;display:grid;grid-template-columns:245px minmax(0,1fr);gap:30px;padding:0 24px}aside{font-size:12px;position:sticky;top:15px;align-self:start;max-height:94vh;overflow:auto}aside ul{padding-left:16px}aside li{margin:7px 0}main{background:white;padding:30px 38px;border:1px solid #dce0e5;border-radius:7px;min-width:0}h1{font-size:28px;line-height:1.3;margin-top:0}h2{font-size:21px;border-top:1px solid #dce0e5;padding-top:24px;margin-top:35px}h3{font-size:17px}a{color:#265886;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;font-size:12px;margin:18px 0;display:block;overflow:auto}th,td{border:1px solid #dce0e5;padding:10px 12px;text-align:left;vertical-align:top}th{background:#eef1f4}code{font-size:12px;overflow-wrap:anywhere}p,li{overflow-wrap:anywhere}li{margin:5px 0}footer{font-size:12px;color:#606977;padding:20px 24px;max-width:1300px;margin:auto}@media(max-width:800px){.wrap{grid-template-columns:1fr;padding:0 12px;margin-top:12px}aside{position:static;max-height:none}aside .toc{max-height:220px;overflow:auto}main{padding:22px 18px}header{padding:20px}h1{font-size:24px}}@media print{body{background:white;font-size:10pt}header,aside,footer{display:none}.wrap{display:block;margin:0;padding:0}main{padding:0;border:0}table{display:table;font-size:8pt}h1{font-size:20pt}h2{font-size:15pt;break-after:avoid}h3{break-after:avoid}tr{break-inside:avoid}a{color:inherit;text-decoration:none}@page{size:A4;margin:18mm}}</style><header><strong>Powerplants <span>One</span></strong><p>Sales to Estimating Intake Design · r01 · 13 September 2026 · For review</p><nav><a href="sales-estimating-intake-preview-r01.html">Open interactive preview</a><a href="sales-estimating-intake-field-map-r01.md">Field map</a><a href="sales-estimating-intake-verification-r01.md">Verification record</a></nav></header><div class="wrap"><aside aria-label="Contents"><div class="toc">
+<ul>
+<li><a href="#sales-to-estimating-intake-design">Sales to Estimating Intake Design</a><ul>
+<li><a href="#1-recommended-product-decision">1. Recommended product decision</a></li>
+<li><a href="#2-evidence-and-current-ppo-alignment">2. Evidence and current PPO alignment</a></li>
+<li><a href="#3-consolidation-of-the-four-drafts">3. Consolidation of the four drafts</a></li>
+<li><a href="#4-scope-and-terminology">4. Scope and terminology</a></li>
+<li><a href="#5-capture-and-progressive-disclosure">5. Capture and progressive disclosure</a></li>
+<li><a href="#6-readiness-at-each-step">6. Readiness at each step</a></li>
+<li><a href="#7-request-and-revision-lifecycle">7. Request and revision lifecycle</a></li>
+<li><a href="#8-roles-and-visibility">8. Roles and visibility</a></li>
+<li><a href="#9-the-three-screens">9. The three screens</a><ul>
+<li><a href="#sales-intake">Sales intake</a></li>
+<li><a href="#estimating-intake-queue">Estimating intake queue</a></li>
+<li><a href="#handover-review">Handover review</a></li>
+</ul>
+</li>
+<li><a href="#10-evidence-and-responsibilities">10. Evidence and responsibilities</a></li>
+<li><a href="#11-logical-data-and-implementation-behaviour">11. Logical data and implementation behaviour</a></li>
+<li><a href="#12-failure-and-accessibility-states">12. Failure and accessibility states</a></li>
+<li><a href="#13-worked-example-one">13. Worked example one</a></li>
+<li><a href="#14-worked-example-two">14. Worked example two</a></li>
+<li><a href="#15-worked-example-three">15. Worked example three</a></li>
+<li><a href="#16-measures-for-the-pilot">16. Measures for the pilot</a></li>
+<li><a href="#17-bounded-first-implementation">17. Bounded first implementation</a></li>
+<li><a href="#18-acceptance-obligations">18. Acceptance obligations</a></li>
+<li><a href="#19-decisions-to-review-and-handover">19. Decisions to review and handover</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside><main><h1 id="sales-to-estimating-intake-design">Sales to Estimating Intake Design</h1>
+<p>This design gives Powerplants sales staff a practical way to capture a customer requirement and obtain an explicit estimating handover. The first pilot combines the two unreleased potting-line forms into one progressive questionnaire. It covers capture, save, submit, clarify, accept and revise, with a short initial brief and technical detail shown when relevant.</p>
+<p>Dean authorised this design package on 13 September 2026. The deliverables are the three-screen interactive preview, a complete source field map, three worked examples and a bounded implementation contract. New workflow rules in this document are proposals for review. The preview is a local simulation with fictional records; it does not implement PPO server persistence, permissions, file storage, notifications or estimates.</p>
+<h2 id="1-recommended-product-decision">1. Recommended product decision</h2>
+<p>Add <strong>Scope &amp; Intake</strong> to the canonical deal detail and an <strong>Intake queue</strong> within Estimating. Both open the same request and exact brief revisions. Sales retains the customer relationship and its sales next action; the estimating owner accepts responsibility for an agreed estimating output. Acceptance of an intake does not approve a design, move a deal, create a quote, confirm a delivery route or authorise work.</p>
+<p>Keep one editable brief per request, with immutable submitted revisions and explicit review decisions. A customer change after acceptance creates a successor for review while the former accepted basis remains visible. Each clarification has a question, owner and due date or explicit due-date-needed reason.</p>
+<p>Use the first pilot for potting equipment, connected lines and retrofit/staging intent. General greenhouse and berry questions stay mapped for later modules. Do not ask a machine enquiry to complete an entire greenhouse questionnaire. Do not require every answer before sales can record and submit the enquiry for triage.</p>
+<h2 id="2-evidence-and-current-ppo-alignment">2. Evidence and current PPO alignment</h2>
+<p>Repository access was checked against <code>main</code> commit <code>a02ea22f4514757983f0b8d3bc8cd8fe80f8a787</code>, merge of PR #142, dated 13 September 2026. AGENTS, README, STATUS, the shared UI specification and E2 design/contract were read at that commit. The previous advisory review also inspected BP-04, ADR-0017, the guided estimating design and the adopted pipeline and derived-routing decisions at the same head. Current repository documents are the product evidence; earlier session memory is not used as proof of implementation.</p>
+<table>
+<thead>
+<tr>
+<th>Evidence</th>
+<th>Consequence for this package</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BP-04 owns estimating requests, scope/answer revisions, options, estimates and quotes</td>
+<td>Intake extends Estimating and reuses CRM/shared context; it is not a new business domain.</td>
+</tr>
+<tr>
+<td>E1 implements bounded manual estimates and exact draft quotations</td>
+<td>Intake does not mutate E1 versions or pretend its current API already accepts questionnaire snapshots.</td>
+</tr>
+<tr>
+<td>E2 scope and questionnaire contracts are proposed designs</td>
+<td>Reuse their identity, snapshot and conflict disciplines. Do not claim their rules have all been adopted.</td>
+</tr>
+<tr>
+<td>Derived-routing decision, 12 September</td>
+<td>Estimating effort class is distinct from eventual delivery route. Intake captures needs; no Project/Sales Order/Service Order binding occurs here.</td>
+</tr>
+<tr>
+<td>Accepted five-stage CRM direction</td>
+<td>Discovery and Scoping carry intake work; Quoting carries estimating and offer work. No stage changes are inferred from submission, acceptance or completion of an Activity. The five-stage runtime remains a separate increment.</td>
+</tr>
+<tr>
+<td>User says all four forms were unreleased</td>
+<td>Treat them as draft source evidence, not mandatory company procedure or technical authority.</td>
+</tr>
+<tr>
+<td>Brand PDF p18 and current shared UI guidance</td>
+<td>Navy #242a37, green #62bb46, white, Roboto/Verdana; readable controls, visible focus and responsive content.</td>
+</tr>
+</tbody>
+</table>
+<p>There is a repository inconsistency to avoid carrying forward: STATUS broadly labels E2 routing adopted, while the newer detailed routing decision says E2-D01 was first decided in a different direction and E2-D02/D03 remain proposed. This package follows the detailed later decision and does not adopt the older declared delivery-route engine. No repository content was changed during this design task.</p>
+<p>Sources: <a href="https://github.com/deanrfiedler-gif/powerplants-one/blob/a02ea22f4514757983f0b8d3bc8cd8fe80f8a787/docs/blueprints/BP-04-estimating-quotation.md">BP-04</a>, <a href="https://github.com/deanrfiedler-gif/powerplants-one/blob/a02ea22f4514757983f0b8d3bc8cd8fe80f8a787/docs/decisions/ADR-0017-estimating-e1.md">E1 ADR</a>, <a href="https://github.com/deanrfiedler-gif/powerplants-one/blob/a02ea22f4514757983f0b8d3bc8cd8fe80f8a787/docs/contracts/estimating-e2-design.md">E2 contract</a>, <a href="https://github.com/deanrfiedler-gif/powerplants-one/blob/a02ea22f4514757983f0b8d3bc8cd8fe80f8a787/docs/decisions/estimating-derived-routing.md">derived routing</a>, <a href="https://github.com/deanrfiedler-gif/powerplants-one/blob/a02ea22f4514757983f0b8d3bc8cd8fe80f8a787/docs/decisions/crm-pipeline-stage-model.md">pipeline</a>, <a href="https://github.com/deanrfiedler-gif/powerplants-one/blob/a02ea22f4514757983f0b8d3bc8cd8fe80f8a787/docs/standards/ui-style-specification.md">UI specification</a>.</p>
+<h2 id="3-consolidation-of-the-four-drafts">3. Consolidation of the four drafts</h2>
+<p>The separate <a href="sales-estimating-intake-field-map-r01.md">field map</a> and <a href="sales-estimating-intake-field-map-r01.json">machine-readable mapping</a> account for 476 numbered source items and ten supplemental anchors. There are 107 canonical field groups across the complete mapping, including future shared extensions. This is a question bank, not 107 compulsory controls in the pilot.</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Role in the design</th>
+<th>Source reconciliation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Potting line v3</td>
+<td>Short ten-item opening, throughput distinctions, media and integration detail</td>
+<td>Internal ID PP-INTK-AUTO-CUST-001; June 2026. Minimum snapshot repeats detail questions; map both to one answer.</td>
+</tr>
+<tr>
+<td>Javo draft</td>
+<td>Responsibility matrix, process and robotics detail, installation and support</td>
+<td>Filename PPA-TPL-004; internal PPA-COM-FRM-014, v0.1, 3 July 2026. Keep both identities in provenance.</td>
+</tr>
+<tr>
+<td>Greenhouse v1.2</td>
+<td>Shared customer, scope, timing, responsibility and evidence concepts; specialist expansion bank</td>
+<td>Full structure/climate/system detail remains deferred. No structural or equipment selection rules are imported.</td>
+</tr>
+<tr>
+<td>Berry filename v1.2</td>
+<td>Shared context plus water/fertigation/control expansion bank</td>
+<td>Body says Version 1.0; checklist has duplicated/placeholder entries. No automatic release precedence from filename.</td>
+</tr>
+</tbody>
+</table>
+<p>Preserve source bytes and hashes. Questionnaire publication will use a new PPO definition with stable question and choice IDs. Changing that definition creates a new version and requires deliberate comparison before applying it to a working request. Do not alter historical accepted answers when a reusable question changes.</p>
+<p>Unreleased return addresses, privacy wording, signatures and acknowledgements are not automatically adopted operational clauses. Capture who provided information and any project-specific permission to contact advisers; sending a message remains a separate explicit action. The pilot is staff-operated. Customer self-service and public forms are later work.</p>
+<h2 id="4-scope-and-terminology">4. Scope and terminology</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Deal</td>
+<td>Existing permitted Opportunity in CRM; the commercial pursuit and sales owner.</td>
+</tr>
+<tr>
+<td>Intake request</td>
+<td>One identifiable piece of estimating work requested against the deal. Proposed first-slice limit: one active potting intake per deal, with successors for changes; separate requests for genuinely separate later scopes require a later policy.</td>
+</tr>
+<tr>
+<td>Working brief</td>
+<td>Editable answers and proposed scope. May be incomplete. Saving is not submission.</td>
+</tr>
+<tr>
+<td>Submitted revision</td>
+<td>Immutable, attributable snapshot supplied to estimating for triage.</td>
+</tr>
+<tr>
+<td>Accepted basis</td>
+<td>The exact submitted revision the estimating owner accepted for a stated output and target. It is not a technical release.</td>
+</tr>
+<tr>
+<td>Clarification</td>
+<td>An owned question about a field, evidence item or scope boundary. A reply is not automatically reviewer resolution.</td>
+</tr>
+<tr>
+<td>Estimate basis</td>
+<td>An explicit future link from a newly authored estimate version to the accepted intake revision. No automatic E1 mutation.</td>
+</tr>
+<tr>
+<td>Revision r01 / r02</td>
+<td>Revision of the intake brief. Separate from this design’s r01, questionnaire definition revision and estimate/quote versions.</td>
+</tr>
+</tbody>
+</table>
+<p>The business label “project intake” does not force every enquiry to become a Project record. Customer/site/equipment selection uses the shared masters and current permissions. A missing master record follows its own authorised creation/resolution flow; intake text must not create a second customer master.</p>
+<h2 id="5-capture-and-progressive-disclosure">5. Capture and progressive disclosure</h2>
+<p>The initial brief presents existing customer/site/contact context, the problem and desired result, build scope, installation context, operations requested, main container range, media, timing and requested commercial output. Budget is optional, with Not disclosed distinct from Unknown. The response type is Budget estimate, Formal quotation preparation, or Technical scoping advice. A formal-output request does not mean that the later quotation is issue-ready.</p>
+<p>The first runtime slice should have approximately 30 active field groups: shared customer/site/contact, sales owner, problem/outcome, build scope, installation context, operations, containers, media types/supply, average/peak/sustained rates, existing equipment/interfaces, footprint, robotics intent, handling constraints, electrical supply, requested operational/estimating dates, timing constraints, response type, fulfilment responsibilities, exclusions, assumptions, evidence and change reason. Logical repeatable rows preserve atomic details. Remaining bank questions can appear as optional prompts in scoped notes/evidence until their typed controls are deliberately added. No generated equipment or cost output is needed to prove the intake journey.</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Reveal</th>
+<th>Readiness effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Every potting enquiry</td>
+<td>Containers, media, production objective, scope boundaries, delivery/installation intent</td>
+<td>Essential to describe the requested work; unknowns can be submitted for triage.</td>
+</tr>
+<tr>
+<td>Existing equipment / combination</td>
+<td>Equipment, disposition, interface heights/hand-offs/controls, operating-during-install constraints</td>
+<td>Reviewer decides which interface evidence blocks the requested estimating output.</td>
+</tr>
+<tr>
+<td>Connected or staged line</td>
+<td>Sustained output, layout, buffering, downstream hand-off, phases</td>
+<td>Do not equate potting-head peak with sustained line performance.</td>
+</tr>
+<tr>
+<td>Robotics included or requested as option</td>
+<td>Placement destination, container/plant handling, layout, controls, safeguarding review</td>
+<td>Technical assessment required; no auto-selection or assertion of safety.</td>
+</tr>
+<tr>
+<td>Supply and installation/commissioning</td>
+<td>Responsibilities, services, access, unloading, timing</td>
+<td>Unknown party/scope stays an open question.</td>
+</tr>
+<tr>
+<td>Additive dosing selected</td>
+<td>Material, recipe source, dosing intent</td>
+<td>Detailed chemical/dosing design stays with a competent technical reviewer.</td>
+</tr>
+<tr>
+<td>Specialist greenhouse/berry system added</td>
+<td>Capture the additional scope and flag specialist assessment</td>
+<td>Do not turn on unreviewed specialist calculation or silently broaden pilot completeness.</td>
+</tr>
+</tbody>
+</table>
+<p>An answer can be NotAnswered, Deferred, Answered or Confirmed. Applicability is separate: Applicable, NotApplicable with reason, or Unknown. The UI may show plain labels such as Not sure, Customer advised and Confirmed for this brief. Confirmation identifies who confirmed what, when and from which evidence; it never implies Engineering approved suitability. All values retain source attribution. Every unresolved item required for the agreed output has an owner and due date or a due-date-needed reason.</p>
+<p>Numeric inputs retain units and basis. Throughput distinguishes pots/hour from trays/hour and average from peak and sustained rate. Container diameter and height use mm, volume uses L; original cm values and conversion are retained. Dates distinguish a requested operational date, a customer quotation deadline and the estimator’s agreed completion target. None is a supplier lead-time commitment.</p>
+<p>When a condition becomes false, preserve the old answer as inactive history and show its effect in the comparison. Never silently delete it or continue to include an inactive feature in scope. Re-enabling it proposes the old value for reconfirmation, with its source date.</p>
+<h2 id="6-readiness-at-each-step">6. Readiness at each step</h2>
+<p>Saving a draft requires valid values for the fields that are supplied, an allowed definition and permitted parent context. It does not require a complete technical brief.</p>
+<p>Submission requires a permitted deal/customer, named sales owner, a meaningful need/scope summary, response type, site/contact or an explicit unresolved reason, and a requested estimating date or date-needed reason. Each material unknown must be visible with an owner/action. Conditional technical gaps can accompany the submission so estimating can triage them. Submission freezes the answers and creates one review-queue entry, with one operation receipt.</p>
+<p>Acceptance requires an eligible estimating owner, an agreed target or explicit scheduling-pending reason, the exact submitted revision, reviewed scope boundaries, and a disposition for every question relevant to that output. A blocking question must be resolved or expressly reclassified by the authorised reviewer with a reason and an appropriate output/assumption change. It cannot disappear because a salesperson marked it complete.</p>
+<p><strong>Budget assessment:</strong> reviewed assumptions may be sufficient for bounded budget work; uncertain items remain visible and no issue-ready quote is implied. <strong>Formal quotation preparation:</strong> the reviewer establishes which technical facts must be available to start costing and which further checks must be satisfied before issue. <strong>Technical scoping advice:</strong> the output may be a site survey or engineering assessment rather than a price. The pilot supports requesting these outputs without inventing their approval authority.</p>
+<p>Show exact blockers and next actions, not a misleading percentage. In the synthetic preview, a supplied customer need and output enable submission; missing conveyor interface evidence or requested robotics assessment blocks acceptance until reviewed. Those fixture rules are illustrative, not adopted supplier criteria.</p>
+<h2 id="7-request-and-revision-lifecycle">7. Request and revision lifecycle</h2>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Starting state</th>
+<th>Actor and guard</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Save draft</td>
+<td>Draft / Clarification required / successor Draft</td>
+<td>Sales editor or assigned contributor; expected working version</td>
+<td>Saved working version; no submission or acceptance.</td>
+</tr>
+<tr>
+<td>Submit</td>
+<td>Draft or resolved response draft</td>
+<td>Sales submitter; submission checks; expected request/working versions</td>
+<td>Immutable revision, Submitted state, single queue item.</td>
+</tr>
+<tr>
+<td>Request clarification</td>
+<td>Submitted</td>
+<td>Estimating reviewer; one or more specific owned questions</td>
+<td>Clarification required; submission preserved; due/action recorded.</td>
+</tr>
+<tr>
+<td>Record reply</td>
+<td>Clarification required</td>
+<td>Assigned responder or sales owner with rights</td>
+<td>Attributed response and proposed changed answers; question becomes Answered, not Resolved.</td>
+</tr>
+<tr>
+<td>Resubmit</td>
+<td>Clarification required</td>
+<td>Sales submitter; response context and change reason</td>
+<td>New Submitted revision linked to predecessor; previous questions and responses retained.</td>
+</tr>
+<tr>
+<td>Resolve clarification</td>
+<td>Submitted revision containing response</td>
+<td>Estimating reviewer checks evidence</td>
+<td>Resolved question or renewed clarification with reason; never self-approved by reply alone.</td>
+</tr>
+<tr>
+<td>Accept for estimating</td>
+<td>Submitted</td>
+<td>Authorised estimating reviewer; exact revision; no blocking open questions; owner/target</td>
+<td>Append acceptance; accepted-basis pointer advances; state Accepted for estimating.</td>
+</tr>
+<tr>
+<td>Create revision</td>
+<td>Accepted for estimating</td>
+<td>Sales editor; mandatory change reason and expected accepted version</td>
+<td>New working successor; accepted predecessor remains the active basis pending review.</td>
+</tr>
+<tr>
+<td>Accept successor</td>
+<td>Submitted successor</td>
+<td>Estimating reviewer; comparison and impact disposition</td>
+<td>New accepted basis; historical acceptance immutable; affected estimate/quote marked for review through a later explicit interface.</td>
+</tr>
+<tr>
+<td>Withdraw</td>
+<td>Draft / Submitted / Clarification required</td>
+<td>Sales owner; reason; concurrent reviewer guard</td>
+<td>Withdrawn, history retained; no record deletion.</td>
+</tr>
+<tr>
+<td>Request cancellation</td>
+<td>Accepted for estimating</td>
+<td>Sales owner requests; estimating owner confirms work disposition</td>
+<td>Future controlled exception; first slice shows an owned cancellation request and retains accepted history. No silent deletion of work.</td>
+</tr>
+</tbody>
+</table>
+<p>The request’s visible state describes the latest proposal. The accepted basis is a separate pointer. For example: “r02 submitted · accepted basis r01 · change review needed”. There is no ambiguous replacement of an Accepted label with Draft that hides ongoing estimating work.</p>
+<p>The estimator records whether a pending change pauses affected work or allows unaffected preparation to continue. Submission alone does not authorise costing changed scope. The first preview holds a single current simulated submission and an immutable history array; runtime must support the concurrency and authority guards below.</p>
+<h2 id="8-roles-and-visibility">8. Roles and visibility</h2>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Intended actions</th>
+<th>Limits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sales owner / permitted editor</td>
+<td>Capture, save, submit, reply, propose changes, withdraw unaccepted request</td>
+<td>Cannot accept on behalf of estimating or approve technical suitability.</td>
+</tr>
+<tr>
+<td>Estimating intake reviewer</td>
+<td>Review, classify questions, accept/request clarification, assign eligible estimating owner and target</td>
+<td>Assignment requires actual grant eligibility; ownership alone is not permission.</td>
+</tr>
+<tr>
+<td>Assigned estimator</td>
+<td>View accepted basis; prepare estimate; raise further questions; assess change impact</td>
+<td>Exact basis link and current E1 permissions govern estimate work.</td>
+</tr>
+<tr>
+<td>Engineering contributor</td>
+<td>Supply attributed technical response and evidence</td>
+<td>Does not acquire commercial acceptance rights; released design remains in Engineering.</td>
+</tr>
+<tr>
+<td>Read-only permitted user</td>
+<td>View authorised brief, status and history</td>
+<td>No edit, acceptance, file visibility beyond existing grants or internal cost access.</td>
+</tr>
+</tbody>
+</table>
+<p>Reuse current company/workspace/record visibility. Proposed intake capabilities require an implementation permission matrix mapped to real grants; no capability names or corporate delegates are invented here. Server checks cover selectors, counters, queue results, every related target, commands, historical revisions, attachment downloads and receipt replay. A denied source must not leak its filename or prior captured label.</p>
+<p>The preview actor selector is a demonstration control only. It disables inappropriate buttons but provides no authentication or security.</p>
+<h2 id="9-the-three-screens">9. The three screens</h2>
+<h3 id="sales-intake">Sales intake</h3>
+<p>Open from the deal’s Scope &amp; Intake tab. Header shows deal, organisation/site, sales owner, latest request state, current revision and saved status. A short brief is the initial view. Expand relevant system detail and evidence as needed; preserve entered data when switching sections. Display blockers/action owners beside the work, with a right-hand readiness panel on desktop and stacked content on phone.</p>
+<p>Actions: Save draft, Submit to estimating, respond to questions, create a revision with reason, view accepted predecessor. Validation points to fields and preserves input. Shared context is selected from authorised records. Master contact/address changes use the shared record workflow. Reuse existing activities for explicit follow-up links; do not silently complete CRM activities or move the deal.</p>
+<h3 id="estimating-intake-queue">Estimating intake queue</h3>
+<p>Rows show request/deal, customer/site, request state, requested output, sales owner, requested date, blockers and latest change. Search and filter act on the same permitted records; counts reflect the filtered result. Open the exact request for review. No bulk acceptance: the reviewer must see scope and blockers.</p>
+<p>Submitted age starts at the original submission. Resubmission must not reset its age or hide a slow request. A separate latest-submission timestamp supports the reviewer’s current queue. Suggested sort is oldest submitted first, with explicit due-date sort available. Due dates are requested until an estimator agrees a target. Customer urgency does not imply an authorised priority threshold.</p>
+<h3 id="handover-review">Handover review</h3>
+<p>Read the exact submitted revision, requested output, responsibility summary, evidence availability, assumptions and questions. A successor opens with a field-level comparison to the accepted basis: Added, Changed, Removed and Unchanged; show before/after and affected work. Reviewers resolve responses explicitly, then assign an eligible owner and target before acceptance.</p>
+<p>Actions: Request clarification, resolve a response, accept for estimating, inspect history. Acceptance records purpose and scope, not a broad technical approval. After acceptance show the new accepted revision and any downstream impact needing review. Later estimate creation is explicit and binds that revision.</p>
+<p>The standalone HTML illustrates these screens and the three cases. It uses in-memory saved drafts and snapshots, labelled throughout. It does not implement the entire source bank, external attachments, persistent records, real workload assignment, advanced queue sorting or estimate creation.</p>
+<h2 id="10-evidence-and-responsibilities">10. Evidence and responsibilities</h2>
+<p>Evidence records distinguish Requested, Can provide, Unavailable, Not applicable, and Available. Available means actual stored bytes/link resolution with current access, exact version and hash in runtime. It is separate from Reviewed. Physical pot samples use requested/received/custodian states and never masquerade as uploaded files.</p>
+<p>Suggested evidence categories: layout, equipment list/photos, media specification, container/tray schedule, production targets, electrical/services, site access, controls and supplier correspondence. A file can support several answers through references; do not create a duplicate upload per question. An unavailable attachment can be replaced by an explicit reviewed measurement/statement when suitable, with attribution and purpose. A checkbox alone is not evidence.</p>
+<p>Responsibility rows separate what is included from who will perform it: supply, freight, unloading, mechanical installation, electrical connection, civil works, compressed air, water/drainage, safeguarding review, commissioning, training and support. Each row supports Included, Excluded, Option or Unknown and PPA, Customer, Named other or Unknown. Customer-advised responsibility is not a signed contract term. Draft quotation narrative must be reviewed against the final accepted scope.</p>
+<h2 id="11-logical-data-and-implementation-behaviour">11. Logical data and implementation behaviour</h2>
+<p>These are logical proposals, not reserved SQL names, migrations or new parent requirements.</p>
+<table>
+<thead>
+<tr>
+<th>Record</th>
+<th>Required content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IntakeRequest</td>
+<td>UUID; company/workspace; opportunity UUID; sales owner; latest working/submitted pointers; accepted revision UUID if any; requested output/date; request state; version; synthetic flag.</td>
+</tr>
+<tr>
+<td>IntakeWorkingVersion</td>
+<td>Versioned editable answer proposal; exact definition ID/revision/hash; source refs; conditional applicability; current change reason.</td>
+</tr>
+<tr>
+<td>IntakeRevision</td>
+<td>UUID; request; predecessor; immutable answers/scope/evidence refs; canonical hash; submitted actor/time; definition snapshot; change reason.</td>
+</tr>
+<tr>
+<td>IntakeReview</td>
+<td>UUID; exact revision/hash; reviewer; decision; estimating owner; agreed target/date-needed reason; output; assumption dispositions; affected-work decision. Append-only.</td>
+</tr>
+<tr>
+<td>Clarification</td>
+<td>UUID; revision/field/evidence reference; question; severity for requested output; owner; due/date-needed reason; append-only responses; resolution actor/time/reason.</td>
+</tr>
+<tr>
+<td>EvidenceReference</td>
+<td>Shared document ID; exact version/hash; category; scope/answer links; availability and review metadata. File content follows the document adapter and intended SharePoint boundary.</td>
+</tr>
+<tr>
+<td>EstimateBasisLink</td>
+<td>Future append-only link from a new estimate version to exact accepted intake, definition, scope and answer snapshots. Existing E1 versions remain unchanged.</td>
+</tr>
+</tbody>
+</table>
+<p>Commands use expected versions, operation UUID and canonical payload hash. Saving validates without coercing unknowns. Submission atomically freezes the revision and creates the queue event. Acceptance atomically checks the current submission, questions, target/owner eligibility and review record, then changes the accepted pointer. Original-operation retry returns one effect after reauthorisation. Same operation ID with different payload conflicts. A timeout reconciles the original receipt before any retry with a new intent.</p>
+<p>Concurrent sales edit and estimating acceptance must not cause a reviewer to accept unseen answers. Return VersionConflict with a safe comparison, retaining the permitted draft for recovery. Two acceptance attempts cannot create competing active bases. A withdrawn request cannot be accepted by a stale reviewer. Immutable submitted and accepted revisions cannot be patched in place. Changing the reusable questionnaire never rewrites history.</p>
+<p>If a new accepted basis affects an existing estimate or quote, show an owned review-needed exception. Do not update prices, quantities, generated text, approvals or customer acknowledgement automatically. The implementation must explicitly reconcile the intake extension with E1 and any intervening E2 work before reserving a migration. This design adds no database schema, API or runtime dependency.</p>
+<h2 id="12-failure-and-accessibility-states">12. Failure and accessibility states</h2>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Required behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Loading / unavailable</td>
+<td>Retain context; retry; never display a failed query as zero requests.</td>
+</tr>
+<tr>
+<td>Unsaved / saving / saved</td>
+<td>Saved appears only after durable accepted receipt in runtime. Preview says saved in this preview and resets on reload.</td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>Explain field problem, focus/link to it, preserve input. Blank and unknown remain distinguishable.</td>
+</tr>
+<tr>
+<td>No matches</td>
+<td>Show filters and Clear filters; no suggestion that the whole queue is empty.</td>
+</tr>
+<tr>
+<td>Permission changed</td>
+<td>Reauthorise, clear sensitive data and previews; do not expose prior cached content under the new identity.</td>
+</tr>
+<tr>
+<td>File unavailable</td>
+<td>Keep the evidence record and owned follow-up; never display Available/Reviewed success.</td>
+</tr>
+<tr>
+<td>Outcome uncertain</td>
+<td>Keep original operation identity and reconcile; do not offer duplicate creation.</td>
+</tr>
+<tr>
+<td>Stale revision</td>
+<td>Show exact reviewed/current revisions and differences; require renewed review.</td>
+</tr>
+<tr>
+<td>Offline</td>
+<td>Say unavailable for saving; do not imply an offline queue or persist business data locally without a separate contract.</td>
+</tr>
+</tbody>
+</table>
+<p>Use native labelled inputs, keyboard navigation, visible focus, descriptive button names, text plus colour for state, and 44px phone targets. On narrow screens, fields and side panels stack. The queue may use contained horizontal scrolling with preserved request identity, never outer-page overflow. Essential details and actions cannot rely on hover. Dialogs support Escape and restore focus. Long text wraps without hiding critical status or scope.</p>
+<h2 id="13-worked-example-one">13. Worked example one</h2>
+<p><strong>Single machine at Synthetic Example Nursery.</strong> Fictional request SYN-PPO-INT-000101. Sales owner Casey Hart captures a replacement potting machine enquiry: 140–200 mm containers, bark/coir media, 900 pots/hour average and 1,200 pots/hour peak customer targets. Requested output is formal quotation preparation; supply and commissioning are requested, customer electrical works are proposed as excluded from PPA scope. The customer wants the machine operational by 30 November 2026; sales requests an estimate by 18 September.</p>
+<p>Sales captures the objective, saves the draft, and submits r01. The reviewer sees the customer’s production targets as inputs, not a machine rating. In the fixture, the necessary machine/interface evidence is recorded as reviewed and no further question blocks beginning estimating. Estimator Morgan Lee accepts r01 for the stated output and target. Further supplier suitability and issue checks still belong downstream.</p>
+<p><strong>Proof:</strong> one saved draft, one immutable submission, one estimating acceptance with owner/target; no price, quote, deal-stage change, customer message or Project record created.</p>
+<h2 id="14-worked-example-two">14. Worked example two</h2>
+<p><strong>Connected line at Synthetic Riverbank Nursery.</strong> Fictional request SYN-PPO-INT-000102. Sales captures a retrofit connecting pot filling, labelling and manual take-off. The customer requests 1,500 pots/hour average, 2,000 peak and 1,400 sustained through the complete line. Existing conveyor interface and responsibility for electrical connection are unresolved; a layout and container schedule are available in the scenario.</p>
+<p>Sales can submit the brief for triage with owned unknowns. The estimating reviewer returns a question to Casey: confirm conveyor transfer height/interface and identify who supplies the electrical connection. A due date is recorded. Sales obtains a 780 mm customer measurement and a customer-electrician responsibility statement, records their sources and replies. Resubmission creates r02 with that response; r01 remains intact. The reviewer checks the response, resolves the blocking question and accepts r02. Supplier validation remains a separate technical step.</p>
+<p><strong>Proof:</strong> a returned request stays visible in the same queue; a reply alone cannot count as reviewer resolution; original submission age remains; the eventual acceptance references r02, not whichever answers are latest later.</p>
+<h2 id="15-worked-example-three">15. Worked example three</h2>
+<p><strong>Change after acceptance at Synthetic Hillview Nursery.</strong> Fictional request SYN-PPO-INT-000103. Accepted r01 includes manual take-off. The customer then asks for robotic placing onto trolleys.</p>
+<p>Sales chooses Create revision, enters “Customer requests robotic placing instead of manual take-off”, selects robotics and captures the new scope. The review compares r02 to accepted r01. Robotics is Added; outfeed and scope wording are Changed; the former manual-only assumption is Removed or revised explicitly. New handling/layout/safeguarding questions appear. The estimating owner records whether affected work pauses and assigns a technical follow-up.</p>
+<p>The preview lets the reviewer resolve the fictional technical question with an attributed review note, then accept r02. The old r01 acceptance stays visible in history. Runtime must keep the old estimate/quote unchanged and create an owned impact review; it cannot inherit approval or customer acknowledgement onto new scope.</p>
+<p><strong>Proof:</strong> changed scope cannot be accepted silently, inactive old answers remain historical, and new acceptance changes only the agreed intake basis.</p>
+<h2 id="16-measures-for-the-pilot">16. Measures for the pilot</h2>
+<p>Measure before setting performance targets. Use the same potting-request cohort and distinguish first submissions from successors; exclude withdrawn cases from accepted-cycle calculations but report their count and reason. Timestamps are server-derived UTC; the interface displays Australia/Brisbane time. Business-hours adjustments require an agreed calendar later.</p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Definition</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Missing-information return rate</td>
+<td>Distinct first-submitted requests returned for missing information / distinct first-submitted requests, in a defined cohort</td>
+<td>Report denominator, output type and complexity; customer scope changes are a separate return reason.</td>
+</tr>
+<tr>
+<td>Clarification rounds</td>
+<td>Count of reviewer return events before first acceptance, per request</td>
+<td>A batch of questions returned together is one round; replies are not additional rounds.</td>
+</tr>
+<tr>
+<td>Time to accepted brief</td>
+<td>First acceptance time minus first submission time</td>
+<td>Report median and p90 once sample supports it; include pending age so incomplete cases are not hidden.</td>
+</tr>
+<tr>
+<td>Sales capture effort</td>
+<td>Measured active preparation time or explicitly labelled user estimate</td>
+<td>Do not equate elapsed time between first edit and submission with working effort.</td>
+</tr>
+<tr>
+<td>Change after acceptance</td>
+<td>Successor submissions after an accepted basis, grouped by customer change, correction or source change</td>
+<td>Helps distinguish genuine scope evolution from weak original intake.</td>
+</tr>
+</tbody>
+</table>
+<p>Recommended initial trial: review three synthetic walkthroughs, then a small approved/redacted potting cohort with sales and estimating. Establish a manual baseline, record the same measures in the trial, inspect returned questions and remove prompts that do not improve handover. No percentage saving or turnaround SLA is claimed by this design.</p>
+<h2 id="17-bounded-first-implementation">17. Bounded first implementation</h2>
+<p><strong>Objective:</strong> one permitted deal can capture a potting brief, save and resume after restart, submit an exact revision, receive and answer a clarification, obtain an estimating acceptance, and propose a reviewed successor without altering the accepted original.</p>
+<table>
+<thead>
+<tr>
+<th>Included</th>
+<th>Deferred</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Approximately 30 active groups plus evidence/notes for relevant specialist prompts</td>
+<td>Full typed controls for the whole 107-group bank; greenhouse and berry questionnaires</td>
+</tr>
+<tr>
+<td>Exact source question mapping and one published synthetic potting definition</td>
+<td>General form builder and template publication UI</td>
+</tr>
+<tr>
+<td>Shared record references, scoped queue, immutable snapshots and explicit permissions</td>
+<td>Customer portal forms, public links, automatic customer/adviser messages</td>
+</tr>
+<tr>
+<td>Readiness for agreed estimating purpose and named owner/date</td>
+<td>Corporate approval thresholds or delegated authority not yet supplied</td>
+</tr>
+<tr>
+<td>Controlled questions, responses, review and accepted-change comparison</td>
+<td>Automatic equipment selection, pricing, engineering calculations or supplier capacity claims</td>
+</tr>
+<tr>
+<td>Existing durable document adapter with synthetic evidence fixtures</td>
+<td>Live SharePoint/MYOB integration, operational document migration</td>
+</tr>
+<tr>
+<td>Explicit downstream basis contract preserving E1 originals</td>
+<td>Automatic estimate or quote creation/refresh, delivery routing or stock reservation</td>
+</tr>
+</tbody>
+</table>
+<p>At implementation start, verify current main, changes to E1/E2, active work, migrations and permissions. Use a dedicated issue/branch and normal reviewable PR. Reconcile the overlapping E2 request/snapshot contracts before coding so two competing intake models are not introduced. The user’s current instruction invokes this design package; runtime implementation, publication and business adoption remain distinct next actions.</p>
+<h2 id="18-acceptance-obligations">18. Acceptance obligations</h2>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Observable result</th>
+<th>Existing parent linkage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IN01 Capture and restart</td>
+<td>Partial brief, repeatable container rows, units and unknown owners survive app/database restart; saved label follows receipt</td>
+<td>EST-01/02</td>
+</tr>
+<tr>
+<td>IN02 Conditional changes</td>
+<td>Retrofit/robotics questions appear; hiding retains inactive answers and prompts impact review</td>
+<td>EST-02/06</td>
+</tr>
+<tr>
+<td>IN03 Submission</td>
+<td>Invalid/missing submission minimum gives field errors; valid submit freezes exact answers once</td>
+<td>EST-01/03</td>
+</tr>
+<tr>
+<td>IN04 Clarification</td>
+<td>Owned question, response and reviewer resolution remain distinct; resubmit is a new revision</td>
+<td>EST-01/02/03</td>
+</tr>
+<tr>
+<td>IN05 Acceptance</td>
+<td>Eligible owner, purpose, target and resolved blockers required; server rechecks exact revision</td>
+<td>EST-01/07</td>
+</tr>
+<tr>
+<td>IN06 Change</td>
+<td>r02 comparison preserves r01 and prior acceptance; estimates/quotes remain unchanged</td>
+<td>EST-03/06/08</td>
+</tr>
+<tr>
+<td>IN07 Access</td>
+<td>Cross-company/related-target denial covers queue, counts, evidence, history and receipt replay</td>
+<td>EST-07</td>
+</tr>
+<tr>
+<td>IN08 Concurrency</td>
+<td>Edit-versus-accept, accept-versus-withdraw and dual accept cannot accept unseen or conflicting bases</td>
+<td>EST-03/07</td>
+</tr>
+<tr>
+<td>IN09 Retry</td>
+<td>Repeated operation has one effect; changed payload conflicts; lost response reconciles original</td>
+<td>EST-01/03</td>
+</tr>
+<tr>
+<td>IN10 Evidence</td>
+<td>Missing bytes do not become Available; review remains separate; sample custody differs from file state</td>
+<td>EST-02/08</td>
+</tr>
+<tr>
+<td>IN11 E1 preservation</td>
+<td>Pre-existing IDs, versions, hashes, reasons, receipts and draft bytes remain unchanged after migration/restart</td>
+<td>EST-03/08</td>
+</tr>
+<tr>
+<td>IN12 Usability</td>
+<td>Desktop/390px/320px, keyboard, long text, empty/error/conflict and permission-change states are usable</td>
+<td>EST-02/08</td>
+</tr>
+<tr>
+<td>IN13 Measures</td>
+<td>Return counts, first-submission age, clarification rounds and acceptance time follow documented denominators</td>
+<td>EST-01</td>
+</tr>
+</tbody>
+</table>
+<p>IN labels are local design cases, not new master requirements or completed runtime tests. Preview checks and visual inspection are recorded separately in <a href="sales-estimating-intake-verification-r01.md">verification</a>. No database or production acceptance is claimed.</p>
+<h2 id="19-decisions-to-review-and-handover">19. Decisions to review and handover</h2>
+<p>The concrete review choices are the compact first-pilot field set, per-purpose acceptance rules, one-active-request pilot limit, estimating reviewer/owner allocation, and how much work may continue on an accepted predecessor while a change is pending. The interactive preview makes the normal, returned and changed cases reviewable now.</p>
+<p>Recommended next bounded step after design review: reconcile this request/acceptance slice with current E2 contracts, confirm the real actor/grant mapping, and implement the complete synthetic pilot with the acceptance cases above. Retain the other source families for later bounded extensions. No new technical selection or pricing rules are needed to prove that sales and estimating can complete a reliable handover.</p></main></div><footer>Standalone design package. No PPO runtime or repository changes.</footer></html>

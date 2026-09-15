@@ -1,0 +1,1662 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PPO Quotation Module — customer view</title>
+
+<!--
+  PPO QUOTATION MODULE — customer-facing document surface
+  ======================================================
+  This is the public surface behind the tokenised quotation link: the document a
+  customer opens, selects within, and either accepts online or prints, signs by
+  hand and returns. The internal issue console (draft, approve, issue, withdraw)
+  is a separate module and is not included here.
+
+  CONTAINER CONTRACT
+    Mount #ppo-quotation-styles, #ppo-quotation-module and #ppo-quotation-script
+    inside the host shell. Omit #ppo-quotation-preview-frame and the document
+    wrapper. The root owns its gutter; set --ppo-quotation-height to the
+    available host height. One fresh root per mount. Before removal, dispatch
+    new Event('ppo-quotation-dispose') on the root — this detaches every
+    listener, clears timers and closes any open dialog.
+
+  ALIGNMENT WITH THE BLUEPRINT (v3)
+    §3   Nothing recomputes. Every amount below is frozen in integer cents.
+         Selection is summation over frozen amounts; no pricing engine exists
+         on this path.
+    §6.3 The DOCUMENT object below is the projection as an allowlist. It
+         contains no cost, no margin, no rule id, no supplier reference, no
+         labour hours. Those keys are absent, not hidden.
+    §6.5 The reconciliation identity is a visible row sequence and is asserted
+         at render.
+    §7.2 Specification content is descriptive, configuration and design basis
+         only. No performance statement appears without engineering approval,
+         and none is present here.
+    §7.4 Precedence order is stated because attachments exist.
+    §9.2 Closed states render an explanation, never a 404.
+    §15  Acceptance captures consent as a distinct act, hashes the wording, and
+         records the document hash being accepted.
+
+  THEME
+    Tokens derived from docs/blueprints/quotation-builder.css — brand navy
+    #242a37, brand green #62bb46, Roboto variable referenced relatively at
+    ../../public/brand/Roboto-variable.woff, as the sibling mockups do.
+    Minimum text size is 12 px per the r03 standard, which raises the 10–11 px
+    used in the older builder stylesheet.
+
+  PRINTED COPY
+    The browser print path produces the customer's local copy and carries the
+    document hash so it reconciles to the authoritative server-rendered PDF
+    generated at issue (blueprint §14). It is not that PDF.
+
+  All data below is fictional. No rule is approved. This is not engineering
+  sizing and not a commercial approval.
+-->
+
+<style id="ppo-quotation-styles">
+@font-face{
+  font-family:Roboto;
+  src:url('../../public/brand/Roboto-variable.woff') format('woff');
+  font-weight:100 900;font-display:swap;
+}
+
+#ppo-quotation-module{
+  /* ---- brand ---- */
+  --ppq-navy:#242a37;
+  --ppq-navy-soft:#3b4657;
+  --ppq-green:#62bb46;
+  --ppq-green-deep:#317327;
+  --ppq-green-deeper:#2a6221;
+  --ppq-green-hover:#55a63c;
+  --ppq-paper:#ffffff;
+  --ppq-ink:#000000;
+
+  /* ---- surfaces ---- */
+  --ppq-page:#f4f6f8;
+  --ppq-surface:#ffffff;
+  --ppq-surface-muted:#f5f7f9;
+  --ppq-surface-sunken:#edf0f4;
+  --ppq-surface-accent:#f4f7f2;
+  --ppq-surface-selected:#f1f8ee;
+  --ppq-surface-info:#edf2f6;
+  --ppq-surface-warning:#fff4d8;
+  --ppq-surface-danger:#fdf1ea;
+
+  /* ---- lines ---- */
+  --ppq-border:#dce1e7;
+  --ppq-border-strong:#cdd4dd;
+  --ppq-border-soft:#e4e8ed;
+  --ppq-rule:#e1e6ec;
+  --ppq-border-accent:#c3e0b6;
+  --ppq-border-danger:#e8c6ae;
+
+  /* ---- text ---- */
+  --ppq-text:#242a37;
+  --ppq-text-muted:#626e7c;
+  --ppq-text-faint:#6b7683;
+  --ppq-text-label:#5c6a7e;
+  --ppq-text-info:#465162;
+  --ppq-text-warning:#725009;
+  --ppq-text-danger:#a54e00;
+  --ppq-text-invert:#ffffff;
+  --ppq-text-on-navy:#cfd2d8;
+
+  /* ---- interaction ---- */
+  --ppq-focus:#2765c5;
+  --ppq-radius:6px;
+  --ppq-radius-card:9px;
+  --ppq-tap:24px;
+  --ppq-target:44px;
+  --ppq-control-h:44px;
+
+  /* ---- type scale ---- */
+  --ppq-fs-micro:13px;
+  --ppq-fs-small:14px;
+  --ppq-fs-body:16px;
+  --ppq-fs-lead:17px;
+  --ppq-fs-h3:18px;
+  --ppq-fs-h2:22px;
+  --ppq-fs-h1:28px;
+  --ppq-fs-figure:26px;
+
+  /* ---- layout ---- */
+  --ppq-maxw:1000px;
+  --ppq-gutter:30px;
+
+  font-family:Roboto,Verdana,sans-serif;
+  font-synthesis:none;
+  color:var(--ppq-text);
+  background:var(--ppq-page);
+  block-size:var(--ppo-quotation-height,100%);
+  overflow:auto;
+  container-type:inline-size;
+  color-scheme:light;
+  -webkit-text-size-adjust:100%;
+}
+
+#ppo-quotation-module *{box-sizing:border-box}
+#ppo-quotation-module p,
+#ppo-quotation-module li,
+#ppo-quotation-module td,
+#ppo-quotation-module th,
+#ppo-quotation-module dd,
+#ppo-quotation-module dt{overflow-wrap:anywhere}
+#ppo-quotation-module [hidden]{display:none!important}
+#ppo-quotation-module button,
+#ppo-quotation-module input,
+#ppo-quotation-module select,
+#ppo-quotation-module textarea{font:inherit;color:inherit}
+#ppo-quotation-module :focus-visible{outline:3px solid var(--ppq-focus);outline-offset:3px}
+
+/* ============ shell ============ */
+.ppq-wrap{max-inline-size:var(--ppq-maxw);margin-inline:auto;padding:0 var(--ppq-gutter) 56px}
+
+/* ============ preview controls (not part of the customer surface) ============ */
+.ppq-devbar{
+  background:var(--ppq-surface-warning);color:var(--ppq-text-warning);
+  border-block-end:1px solid var(--ppq-border);
+  padding:10px var(--ppq-gutter);
+  display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;
+  font-size:var(--ppq-fs-micro);
+}
+.ppq-devbar b{font-weight:700;letter-spacing:.4px}
+.ppq-devbar label{display:flex;gap:7px;align-items:center;font-weight:550}
+.ppq-devbar select{
+  border:1px solid var(--ppq-border-strong);background:var(--ppq-surface);
+  border-radius:var(--ppq-radius);padding:5px 8px;min-block-size:var(--ppq-tap);
+  font-size:var(--ppq-fs-micro);
+}
+
+/* ============ masthead ============ */
+.ppq-mast{background:var(--ppq-navy);color:var(--ppq-text-invert);padding:26px 0 0}
+.ppq-mast-inner{
+  max-inline-size:var(--ppq-maxw);margin-inline:auto;padding:0 var(--ppq-gutter) 24px;
+  display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:flex-start;
+}
+.ppq-brand{display:flex;gap:14px;align-items:center}
+.ppq-logo-plate{
+  inline-size:88px;block-size:88px;background:var(--ppq-navy);
+  display:grid;place-items:center;flex:0 0 auto;
+  print-color-adjust:exact;-webkit-print-color-adjust:exact;
+}
+.ppq-logo-plate img{inline-size:88px;block-size:88px;object-fit:contain;display:block}
+.ppq-brand-name{font-size:var(--ppq-fs-h3);font-weight:650;letter-spacing:-.2px}
+.ppq-brand-sub{font-size:var(--ppq-fs-micro);color:var(--ppq-text-on-navy);margin-block-start:3px}
+.ppq-mast-meta{text-align:end;font-size:var(--ppq-fs-micro);line-height:1.7;color:var(--ppq-text-on-navy)}
+.ppq-mast-meta b{display:block;font-size:var(--ppq-fs-body);color:var(--ppq-text-invert);letter-spacing:.2px}
+.ppq-mast-rule{block-size:4px;background:var(--ppq-green)}
+
+/* ============ document head ============ */
+.ppq-head{padding-block:28px 4px}
+.ppq-eyebrow{
+  font-size:var(--ppq-fs-micro);font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--ppq-text-label);
+}
+.ppq-head h1{font-size:var(--ppq-fs-h1);margin:9px 0 8px;letter-spacing:-.7px;line-height:1.2}
+.ppq-head-row{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:flex-start}
+.ppq-head p{margin:0;font-size:var(--ppq-fs-body);color:var(--ppq-text-muted);line-height:1.55;max-inline-size:52ch}
+.ppq-actions{display:flex;flex-wrap:wrap;gap:8px}
+
+/* ============ buttons ============ */
+.ppq-btn{
+  border:1px solid var(--ppq-border-strong);background:var(--ppq-surface);
+  color:var(--ppq-text);border-radius:var(--ppq-radius);
+  padding:10px 16px;font-weight:550;font-size:var(--ppq-fs-small);
+  min-block-size:var(--ppq-control-h);cursor:pointer;white-space:nowrap;
+}
+.ppq-btn:hover{background:var(--ppq-surface-sunken)}
+.ppq-btn-primary{background:var(--ppq-navy);color:var(--ppq-text-invert);border-color:var(--ppq-navy)}
+.ppq-btn-primary:hover{background:var(--ppq-navy-soft)}
+.ppq-btn-accept{background:var(--ppq-green);border-color:var(--ppq-green);color:var(--ppq-navy);font-weight:650}
+.ppq-btn-accept:hover{background:var(--ppq-green-hover)}
+.ppq-btn-quiet{border:0;background:transparent;text-decoration:underline;padding:10px 4px}
+.ppq-btn-quiet:hover{background:transparent;color:var(--ppq-text-danger)}
+.ppq-btn:disabled{cursor:not-allowed;opacity:.5}
+.ppq-btn:disabled:hover{background:var(--ppq-surface)}
+
+/* ============ status banner ============ */
+.ppq-banner{
+  border:1px solid var(--ppq-border);border-inline-start:4px solid var(--ppq-green);
+  background:var(--ppq-surface-accent);border-radius:var(--ppq-radius-card);
+  padding:15px 18px;margin-block:20px;font-size:var(--ppq-fs-small);line-height:1.6;
+  display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;justify-content:space-between;
+}
+.ppq-banner strong{font-weight:650}
+.ppq-banner-warn{background:var(--ppq-surface-warning);border-inline-start-color:var(--ppq-text-warning);color:var(--ppq-text-warning)}
+.ppq-banner-closed{background:var(--ppq-surface-danger);border-inline-start-color:var(--ppq-text-danger);color:var(--ppq-text-danger);border-color:var(--ppq-border-danger)}
+.ppq-banner-done{background:var(--ppq-surface-accent);border-inline-start-color:var(--ppq-green-deep)}
+
+/* ============ badges ============ */
+.ppq-badge{
+  display:inline-block;border-radius:4px;padding:4px 9px;
+  font-size:var(--ppq-fs-micro);font-weight:600;white-space:nowrap;
+  background:var(--ppq-surface-info);color:var(--ppq-text-info);
+}
+.ppq-badge-live{background:var(--ppq-surface-accent);color:var(--ppq-green-deep)}
+.ppq-badge-closed{background:var(--ppq-surface-danger);color:var(--ppq-text-danger)}
+.ppq-badge-warn{background:var(--ppq-surface-warning);color:var(--ppq-text-warning)}
+
+/* ============ cards ============ */
+.ppq-card{
+  background:var(--ppq-surface);border:1px solid var(--ppq-border);
+  border-radius:var(--ppq-radius-card);padding:24px;margin-block:18px;
+}
+.ppq-card > h2{
+  font-size:var(--ppq-fs-h2);margin:0 0 6px;letter-spacing:-.3px;
+}
+.ppq-card > .ppq-help{margin:0 0 18px}
+.ppq-help{color:var(--ppq-text-muted);font-size:var(--ppq-fs-small);line-height:1.6}
+.ppq-card h3{
+  font-size:var(--ppq-fs-small);margin:26px 0 12px;text-transform:uppercase;
+  letter-spacing:.9px;color:var(--ppq-text-label);font-weight:700;
+}
+.ppq-card h3:first-of-type{margin-block-start:4px}
+
+/* ============ parties ============ */
+.ppq-parties{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:22px}
+.ppq-party dt{
+  font-size:var(--ppq-fs-micro);font-weight:700;letter-spacing:.9px;text-transform:uppercase;
+  color:var(--ppq-text-label);margin-block-end:8px;
+}
+.ppq-party dd{margin:0;font-size:var(--ppq-fs-small);line-height:1.65}
+.ppq-party dd b{display:block;font-size:var(--ppq-fs-body);font-weight:650;margin-block-end:3px}
+.ppq-party dd span{color:var(--ppq-text-muted)}
+
+/* ============ scope tables ============ */
+.ppq-tablewrap{overflow-x:auto;margin-block:8px}
+.ppq-table{inline-size:100%;border-collapse:collapse;font-size:var(--ppq-fs-small);min-inline-size:440px}
+.ppq-table caption{text-align:start;font-size:var(--ppq-fs-micro);color:var(--ppq-text-muted);padding-block-end:9px}
+.ppq-table th{
+  background:var(--ppq-surface-muted);font-weight:600;font-size:var(--ppq-fs-micro);
+  color:var(--ppq-text-label);text-align:start;
+}
+.ppq-table th,.ppq-table td{padding:13px 10px;border-block-end:1px solid var(--ppq-border-soft);vertical-align:top}
+.ppq-table th.ppq-num,.ppq-table td.ppq-num{text-align:end;white-space:nowrap;font-variant-numeric:tabular-nums}
+.ppq-table td b{font-weight:600}
+.ppq-table td small{display:block;color:var(--ppq-text-muted);font-size:var(--ppq-fs-micro);margin-block-start:5px;line-height:1.55}
+.ppq-qty{color:var(--ppq-text-muted);white-space:nowrap}
+.ppq-table .ppq-secrow th{
+  background:var(--ppq-surface-muted);font-weight:700;font-size:var(--ppq-fs-micro);
+  text-transform:uppercase;letter-spacing:.8px;color:var(--ppq-text-label);padding:11px 10px;
+}
+
+/* ============ selectable offers ============ */
+.ppq-offer{
+  border:1px solid var(--ppq-border);border-radius:var(--ppq-radius-card);
+  padding:16px 18px;margin-block:12px;background:var(--ppq-surface-muted);
+}
+.ppq-offer-head{display:flex;flex-wrap:wrap;gap:8px 14px;justify-content:space-between;align-items:baseline}
+.ppq-offer-head b{font-size:var(--ppq-fs-body);font-weight:650}
+.ppq-offer-desc{font-size:var(--ppq-fs-micro);color:var(--ppq-text-muted);line-height:1.6;margin:7px 0 4px}
+.ppq-choice{
+  display:flex;gap:13px;align-items:flex-start;
+  padding:12px 13px;margin-block-start:10px;
+  border:1px solid var(--ppq-border);border-radius:var(--ppq-radius);
+  background:var(--ppq-surface);cursor:pointer;min-block-size:var(--ppq-control-h);
+}
+.ppq-choice:hover{border-color:var(--ppq-border-strong)}
+.ppq-choice input{
+  inline-size:var(--ppq-tap);block-size:var(--ppq-tap);margin:0;flex:0 0 auto;
+  accent-color:var(--ppq-navy);cursor:pointer;
+}
+.ppq-choice-body{flex:1 1 auto;min-inline-size:0}
+.ppq-choice-title{display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:space-between;align-items:baseline}
+.ppq-choice-title b{font-size:var(--ppq-fs-small);font-weight:600}
+.ppq-choice-price{font-size:var(--ppq-fs-small);font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ppq-choice small{display:block;color:var(--ppq-text-muted);font-size:var(--ppq-fs-micro);line-height:1.6;margin-block-start:6px}
+.ppq-choice:has(input:checked){background:var(--ppq-surface-selected);border-color:var(--ppq-border-accent)}
+.ppq-choice:has(input:focus-visible){outline:3px solid var(--ppq-focus);outline-offset:2px}
+.ppq-locked{
+  font-size:var(--ppq-fs-micro);color:var(--ppq-text-muted);
+  background:var(--ppq-surface-info);border-radius:4px;padding:3px 8px;
+}
+
+/* ============ totals ============ */
+.ppq-totals{margin-block-start:22px;border-block-start:2px solid var(--ppq-navy);padding-block-start:4px}
+.ppq-totals table{inline-size:100%;border-collapse:collapse;font-size:var(--ppq-fs-small)}
+.ppq-totals th{text-align:start;font-weight:400;color:var(--ppq-text-muted);padding:9px 10px 9px 0}
+.ppq-totals td{
+  text-align:end;padding:9px 0;font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:550;
+}
+.ppq-totals tr.ppq-discount th,.ppq-totals tr.ppq-discount td{color:var(--ppq-green-deep)}
+.ppq-totals tr.ppq-sub th,.ppq-totals tr.ppq-sub td{
+  border-block-start:1px solid var(--ppq-border);font-weight:650;color:var(--ppq-text);
+}
+.ppq-totals tr.ppq-grand th,.ppq-totals tr.ppq-grand td{
+  border-block-start:2px solid var(--ppq-navy);font-size:var(--ppq-fs-figure);
+  font-weight:650;letter-spacing:-.5px;color:var(--ppq-text);padding-block-start:14px;
+}
+.ppq-totals tr.ppq-grand th{font-size:var(--ppq-fs-body);font-weight:600;letter-spacing:0}
+.ppq-totals-note{font-size:var(--ppq-fs-micro);color:var(--ppq-text-muted);margin-block-start:12px;line-height:1.6}
+
+/* ============ specification ============ */
+.ppq-specgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px 26px}
+.ppq-spec{border-block-start:1px solid var(--ppq-rule);padding-block:11px}
+.ppq-spec dt{font-size:var(--ppq-fs-micro);color:var(--ppq-text-muted);margin-block-end:5px}
+.ppq-spec dd{margin:0;font-size:var(--ppq-fs-small);font-weight:550;line-height:1.55}
+.ppq-spec dd em{font-style:normal;font-weight:400;color:var(--ppq-text-muted);display:block;font-size:var(--ppq-fs-micro);margin-block-start:4px}
+
+/* ============ terms ============ */
+.ppq-terms{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:0 30px}
+.ppq-term{border-block-start:1px solid var(--ppq-rule);padding-block:14px}
+.ppq-term dt{
+  font-size:var(--ppq-fs-micro);font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--ppq-text-label);margin-block-end:7px;
+}
+.ppq-term dd{margin:0;font-size:var(--ppq-fs-small);line-height:1.65}
+.ppq-list{margin:0;padding-inline-start:20px;font-size:var(--ppq-fs-small);line-height:1.7}
+.ppq-list li{margin-block:7px}
+.ppq-list li span{color:var(--ppq-text-muted)}
+.ppq-pay{inline-size:100%;border-collapse:collapse;font-size:var(--ppq-fs-small);margin-block-start:4px}
+.ppq-pay th,.ppq-pay td{padding:9px 10px 9px 0;border-block-end:1px solid var(--ppq-border-soft);text-align:start;vertical-align:top}
+.ppq-pay th{font-weight:600;font-size:var(--ppq-fs-micro);color:var(--ppq-text-label)}
+.ppq-pay td:last-child{text-align:end;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+/* ============ precedence ============ */
+.ppq-precedence{
+  background:var(--ppq-surface-info);border-radius:var(--ppq-radius);
+  padding:14px 16px;margin-block-start:16px;font-size:var(--ppq-fs-micro);
+  line-height:1.7;color:var(--ppq-text-info);
+}
+.ppq-precedence ol{margin:8px 0 0;padding-inline-start:20px}
+
+/* ============ acceptance ============ */
+.ppq-accept{border-color:var(--ppq-navy);border-width:2px}
+.ppq-accept > h2{color:var(--ppq-text)}
+.ppq-accept-summary{
+  background:var(--ppq-surface-accent);border:1px solid var(--ppq-border-accent);
+  border-radius:var(--ppq-radius-card);padding:17px 19px;margin-block:16px 22px;
+}
+.ppq-accept-summary h3{margin:0 0 11px;font-size:var(--ppq-fs-micro)}
+.ppq-accept-summary ul{margin:0;padding-inline-start:19px;font-size:var(--ppq-fs-small);line-height:1.7}
+.ppq-accept-amount{
+  display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:space-between;align-items:baseline;
+  margin-block-start:14px;padding-block-start:13px;border-block-start:1px solid var(--ppq-border-accent);
+}
+.ppq-accept-amount span{font-size:var(--ppq-fs-small);color:var(--ppq-text-muted)}
+.ppq-accept-amount b{font-size:var(--ppq-fs-h2);font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:-.4px}
+
+.ppq-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 20px}
+.ppq-field{display:flex;flex-direction:column;gap:7px;margin-block:14px}
+.ppq-field label{font-size:var(--ppq-fs-small);font-weight:600}
+.ppq-field label .ppq-req{color:var(--ppq-text-danger);font-weight:400}
+.ppq-field input{
+  border:1px solid var(--ppq-border-strong);border-radius:var(--ppq-radius);
+  padding:11px;font-size:var(--ppq-fs-small);background:var(--ppq-surface);
+  min-block-size:var(--ppq-control-h);inline-size:100%;
+}
+.ppq-field input[aria-invalid="true"]{border-color:var(--ppq-text-danger);background:var(--ppq-surface-danger)}
+.ppq-field small{font-size:var(--ppq-fs-micro);color:var(--ppq-text-muted);line-height:1.55}
+.ppq-field .ppq-err{color:var(--ppq-text-danger);font-weight:550}
+.ppq-sign input{
+  font-size:var(--ppq-fs-h3);font-weight:600;letter-spacing:.3px;
+  padding:13px 12px;background:var(--ppq-surface-muted);
+}
+
+.ppq-consent{
+  display:flex;gap:13px;align-items:flex-start;margin-block:20px;
+  padding:16px 17px;border:1px solid var(--ppq-border);border-radius:var(--ppq-radius-card);
+  background:var(--ppq-surface-muted);cursor:pointer;
+}
+.ppq-consent:has(input:checked){background:var(--ppq-surface-selected);border-color:var(--ppq-border-accent)}
+.ppq-consent:has(input:focus-visible){outline:3px solid var(--ppq-focus);outline-offset:2px}
+.ppq-consent input{inline-size:var(--ppq-tap);block-size:var(--ppq-tap);margin:0;flex:0 0 auto;accent-color:var(--ppq-green-deep);cursor:pointer}
+.ppq-consent span{font-size:var(--ppq-fs-small);line-height:1.65}
+
+.ppq-accept-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-block-start:6px}
+.ppq-accept-actions .ppq-btn-accept{padding:13px 26px;font-size:var(--ppq-fs-body)}
+.ppq-accept-foot{font-size:var(--ppq-fs-micro);color:var(--ppq-text-muted);line-height:1.65;margin-block-start:16px}
+
+/* ============ manual signing ============ */
+.ppq-manual{
+  border:1px dashed var(--ppq-border-strong);border-radius:var(--ppq-radius-card);
+  padding:18px 20px;margin-block-start:22px;background:var(--ppq-surface-muted);
+}
+.ppq-manual h3{margin-block-start:0}
+.ppq-manual p{margin:0 0 14px;font-size:var(--ppq-fs-small);color:var(--ppq-text-muted);line-height:1.65}
+
+/* print-only signature block */
+.ppq-signblock{display:none}
+
+/* ============ confirmation ============ */
+.ppq-confirm{
+  border:2px solid var(--ppq-green-deep);border-radius:var(--ppq-radius-card);
+  background:var(--ppq-surface-accent);padding:24px;margin-block:18px;
+}
+.ppq-confirm h2{margin:0 0 8px;font-size:var(--ppq-fs-h2);color:var(--ppq-green-deep)}
+.ppq-confirm p{margin:0 0 16px;font-size:var(--ppq-fs-small);line-height:1.65}
+.ppq-receipt{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px 26px;margin-block-start:6px}
+.ppq-receipt dt{font-size:var(--ppq-fs-micro);color:var(--ppq-text-muted);margin-block-end:4px}
+.ppq-receipt dd{margin:0;font-size:var(--ppq-fs-small);font-weight:600;overflow-wrap:anywhere}
+
+/* ============ footer ============ */
+.ppq-foot{
+  border-block-start:1px solid var(--ppq-border);margin-block-start:30px;padding-block-start:20px;
+  font-size:var(--ppq-fs-micro);color:var(--ppq-text-muted);line-height:1.7;
+}
+.ppq-foot-row{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between}
+.ppq-hash{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:var(--ppq-fs-micro);overflow-wrap:anywhere}
+.ppq-synthetic{
+  margin-block-start:14px;padding:12px 14px;background:var(--ppq-surface-warning);
+  color:var(--ppq-text-warning);border-radius:var(--ppq-radius);font-weight:550;
+}
+
+/* ============ toast ============ */
+.ppq-toast{
+  position:fixed;inset-block-end:20px;inset-inline:auto 20px;z-index:40;
+  background:var(--ppq-navy);color:var(--ppq-text-invert);
+  padding:13px 18px;border-radius:var(--ppq-radius);font-size:var(--ppq-fs-small);
+  max-inline-size:330px;line-height:1.5;
+}
+
+/* ============ dialog ============ */
+#ppo-quotation-module dialog{
+  border:1px solid var(--ppq-border);border-radius:var(--ppq-radius-card);
+  padding:0;max-inline-size:min(520px,92vw);color:var(--ppq-text);background:var(--ppq-surface);
+}
+#ppo-quotation-module dialog::backdrop{background:rgb(36 42 55 / .48)}
+.ppq-dlg-body{padding:24px}
+.ppq-dlg-body h2{margin:0 0 8px;font-size:var(--ppq-fs-h2)}
+.ppq-dlg-body p{margin:0 0 16px;font-size:var(--ppq-fs-small);line-height:1.65;color:var(--ppq-text-muted)}
+.ppq-dlg-body textarea{
+  inline-size:100%;min-block-size:92px;border:1px solid var(--ppq-border-strong);
+  border-radius:var(--ppq-radius);padding:11px;font-size:var(--ppq-fs-small);resize:vertical;line-height:1.55;
+}
+.ppq-dlg-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;margin-block-start:18px}
+
+/* ============ container queries ============ */
+@container (max-width: 780px){
+  #ppo-quotation-module{--ppq-gutter:18px;--ppq-fs-h1:25px;--ppq-fs-figure:21px}
+  .ppq-card{padding:19px 16px}
+  .ppq-mast-meta{text-align:start}
+  .ppq-head-row{flex-direction:column}
+  .ppq-actions{inline-size:100%}
+  .ppq-actions .ppq-btn{flex:1 1 auto}
+}
+@container (max-width: 560px){
+  #ppo-quotation-module{--ppq-gutter:14px}
+  .ppq-brand{gap:11px}
+  .ppq-table{min-inline-size:0}
+  .ppq-table thead{position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip-path:inset(50%)}
+  .ppq-table tr{display:block;border-block-end:1px solid var(--ppq-border);padding-block:12px}
+  .ppq-table td{display:flex;gap:12px;justify-content:space-between;border:0;padding:5px 0}
+  .ppq-table td::before{content:attr(data-label);color:var(--ppq-text-muted);font-size:var(--ppq-fs-micro);flex:0 0 auto}
+  .ppq-table td.ppq-desc{display:block}
+  .ppq-table td.ppq-desc::before{display:block;margin-block-end:4px}
+  .ppq-table .ppq-secrow{padding:0;border:0}
+  .ppq-table .ppq-secrow th{display:block;margin-block:6px 2px}
+  .ppq-totals tr.ppq-grand td{font-size:var(--ppq-fs-h2)}
+}
+
+@container (max-width: 380px){
+  #ppo-quotation-module{--ppq-gutter:12px;--ppq-fs-h1:23px;--ppq-fs-h2:19px;--ppq-fs-figure:21px}
+  .ppq-mast-inner{flex-direction:column;gap:14px}
+  .ppq-brand-name{font-size:var(--ppq-fs-body)}
+  .ppq-card{padding:16px 13px}
+  .ppq-accept-summary{padding:14px 13px}
+  .ppq-choice{padding:11px 10px;gap:10px}
+  .ppq-offer{padding:13px 12px}
+  .ppq-totals tr.ppq-grand td{font-size:var(--ppq-fs-lead)}
+  .ppq-totals th{padding-inline-end:8px}
+  .ppq-sign-lines{grid-template-columns:1fr}
+  .ppq-actions .ppq-btn{inline-size:100%}
+  .ppq-devbar{flex-direction:column;align-items:flex-start;gap:8px}
+  .ppq-devbar label,.ppq-devbar select{inline-size:100%}
+}
+
+@media (prefers-reduced-motion: reduce){
+  #ppo-quotation-module *{animation:none!important;transition:none!important}
+}
+
+/* ============ print ============ */
+@media print{
+  #ppo-quotation-module{
+    background:var(--ppq-paper);block-size:auto;overflow:visible;
+    --ppq-gutter:0;--ppq-maxw:none;
+  }
+  .ppq-devbar,.ppq-actions,.ppq-toast,.ppq-manual,.ppq-accept-actions,
+  .ppq-consent,.ppq-fields,.ppq-accept-foot,.ppq-nonprint{display:none!important}
+  .ppq-mast{padding-block-start:0;color:var(--ppq-ink);background:var(--ppq-paper);border-block-end:2px solid var(--ppq-navy)}
+  .ppq-mast-inner{padding-inline:0}
+    .ppq-brand-sub,.ppq-mast-meta{color:var(--ppq-ink)}
+  .ppq-mast-rule{block-size:0}
+  .ppq-wrap{padding:0}
+  .ppq-card{border:1px solid var(--ppq-border);break-inside:avoid;margin-block:12px;padding:16px}
+  .ppq-offer,.ppq-choice{break-inside:avoid;background:var(--ppq-paper)}
+  .ppq-tablewrap{overflow:visible}
+  .ppq-table{min-inline-size:0}
+  .ppq-signblock{display:block;break-before:page;break-inside:avoid}
+  .ppq-accept{border-width:1px}
+  h1,h2,h3{break-after:avoid}
+  tr,.ppq-spec,.ppq-term{break-inside:avoid}
+  @page{size:A4;margin:16mm 14mm}
+}
+
+/* print signature block */
+.ppq-signblock h2{font-size:var(--ppq-fs-h2);margin:0 0 6px}
+.ppq-sign-intro{font-size:var(--ppq-fs-small);line-height:1.65;margin:0 0 18px}
+.ppq-sign-sel{border:1px solid var(--ppq-border);border-radius:var(--ppq-radius);padding:14px 16px;margin-block-end:20px;font-size:var(--ppq-fs-small);line-height:1.7}
+.ppq-sign-sel ul{margin:8px 0 0;padding-inline-start:19px}
+.ppq-sign-sel .ppq-sign-total{display:flex;justify-content:space-between;gap:16px;margin-block-start:12px;padding-block-start:11px;border-block-start:1px solid var(--ppq-border);font-weight:650}
+.ppq-sign-lines{display:grid;grid-template-columns:1fr 1fr;gap:26px 30px;margin-block-start:8px}
+.ppq-sign-line{border-block-end:1px solid var(--ppq-navy);padding-block-end:30px}
+.ppq-sign-line span{display:block;font-size:var(--ppq-fs-micro);color:var(--ppq-text-muted)}
+.ppq-sign-line.ppq-sign-wide{grid-column:1 / -1}
+.ppq-sign-return{margin-block-start:22px;padding:14px 16px;border:1px solid var(--ppq-navy);border-radius:var(--ppq-radius);font-size:var(--ppq-fs-small);line-height:1.7}
+</style>
+</head>
+<body style="margin:0;background:#e7ebf0">
+
+<!-- ==== preview frame: omit when mounting inside the host shell ==== -->
+<div id="ppo-quotation-preview-frame" style="min-height:100vh">
+
+<div id="ppo-quotation-module">
+
+  <!-- preview controls — not part of the customer surface -->
+  <div class="ppq-devbar ppq-nonprint">
+    <b>PREVIEW CONTROLS</b>
+    <span>Not part of the customer surface. Renders each lifecycle state of the same document.</span>
+    <label>
+      State
+      <select id="ppq-state-select">
+        <option value="issued">Issued · awaiting decision</option>
+        <option value="viewed">Viewed · awaiting decision</option>
+        <option value="expiring">Issued · expiring in 3 days</option>
+        <option value="accepted">Accepted</option>
+        <option value="declined">Declined</option>
+        <option value="expired">Expired</option>
+        <option value="superseded">Superseded</option>
+        <option value="withdrawn">Withdrawn</option>
+      </select>
+    </label>
+    <label>
+      Selection
+      <select id="ppq-lock-select">
+        <option value="open">Customer-selectable (Phase 3)</option>
+        <option value="locked">Locked at issue (Phases 1–2)</option>
+      </select>
+    </label>
+  </div>
+
+  <!-- masthead -->
+  <header class="ppq-mast">
+    <div class="ppq-mast-inner">
+      <div class="ppq-brand">
+        <span class="ppq-logo-plate">
+          <img src="../../public/brand/powerplants-logo-green-white.png"
+               width="88" height="88" alt="Powerplants Australia">
+        </span>
+        <div>
+          <div class="ppq-brand-name">Powerplants Australia</div>
+          <div class="ppq-brand-sub">Controlled environment horticulture systems</div>
+        </div>
+      </div>
+      <div class="ppq-mast-meta" id="ppq-mast-meta"></div>
+    </div>
+    <div class="ppq-mast-rule" aria-hidden="true"></div>
+  </header>
+
+  <div class="ppq-wrap">
+    <main id="ppq-main" tabindex="-1"></main>
+  </div>
+
+  <div id="ppq-toast" class="ppq-toast ppq-nonprint" role="status" aria-live="polite" hidden></div>
+  <div id="ppq-announce" class="ppq-nonprint" role="status" aria-live="polite"
+       style="position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip-path:inset(50%)"></div>
+
+  <dialog id="ppq-dialog" class="ppq-nonprint">
+    <form method="dialog" class="ppq-dlg-body" id="ppq-dlg-form">
+      <h2 id="ppq-dlg-title" tabindex="-1">Decline this quotation</h2>
+      <p id="ppq-dlg-text">If you tell us why, we can respond with something that works better. This is optional.</p>
+      <label for="ppq-dlg-reason" style="display:block;font-size:13px;font-weight:600;margin-block-end:7px">
+        Reason (optional)
+      </label>
+      <textarea id="ppq-dlg-reason"></textarea>
+      <div class="ppq-dlg-actions">
+        <button type="button" class="ppq-btn" id="ppq-dlg-cancel">Cancel</button>
+        <button type="button" class="ppq-btn ppq-btn-primary" id="ppq-dlg-confirm">Decline quotation</button>
+      </div>
+    </form>
+  </dialog>
+
+</div>
+</div>
+
+<script id="ppo-quotation-script">
+(() => {
+"use strict";
+
+const root = document.getElementById("ppo-quotation-module");
+if (!root) return;
+const ac = new AbortController();
+const on = (el, ev, fn, opt) => el && el.addEventListener(ev, fn, { signal: ac.signal, ...(opt || {}) });
+const $ = id => document.getElementById(id);
+
+/* ================================================================
+   THE DOCUMENT
+   This is the projection exactly as the server would send it.
+   It is an allowlist: no cost, no margin, no rule id, no supplier
+   reference, no labour hours, no price status. Those keys are absent,
+   not hidden. Every amount is frozen integer cents (blueprint §3, §6.3).
+   ================================================================ */
+const DOCUMENT = Object.freeze({
+  quotationNumber: "Q-26-00142",
+  revision: 2,
+  issuedAt: "2026-09-11T09:40:00+10:00",
+  validUntil: "2026-10-11T23:59:59+10:00",
+  validityDays: 30,
+  supersedesLabel: "Q-26-00142 R01",
+  currency: "AUD",
+  gstRateBp: 1000,
+  granularity: "package",
+  documentHash: "7ce47597beb1f16e161bac1381c7cfaaabaf4eff357dcbf65ef558f0c02252b2",
+
+  customer: {
+    name: "SYN Riverbend Produce Pty Ltd",
+    abn: "ABN 00 000 000 000",
+    contact: "Alison Reid",
+    position: "Operations Manager",
+    email: "a.reid@syn-riverbend.example"
+  },
+  site: {
+    name: "SYN Riverbend — Glasshouse 3",
+    address: "Lot 14 Murray Valley Highway, Cobram VIC 3644"
+  },
+  preparedBy: {
+    name: "Daniel Moss",
+    position: "Estimating",
+    email: "estimating@powerplants.example",
+    phone: "+61 3 0000 0000"
+  },
+
+  intro:
+    "Supply, delivery, installation and commissioning of a climate control and fertigation " +
+    "upgrade to Glasshouse 3, comprising a replacement controller and irrigation core, " +
+    "environmental sensing, and integration to the existing wireless network.",
+
+  /* base scope — mandatory */
+  baseLines: [
+    { id: "L1", section: "Climate control", description: "Controller cabinet and core hardware",
+      detail: "Main control cabinet, power supply, field wiring termination and enclosure.",
+      quantity: 1, unit: "lot", sellCents: 3333333 },
+    { id: "L2", section: "Climate control", description: "Environmental sensing package",
+      detail: "Temperature, relative humidity and CO₂ sensing across four measurement points.",
+      quantity: 4, unit: "point", sellCents: 640000 },
+    { id: "L3", section: "Fertigation", description: "Fertigation unit — four dosing channels",
+      detail: "Dosing skid, injection assembly, EC and pH monitoring, mixing vessel.",
+      quantity: 1, unit: "lot", sellCents: 4800000 },
+    { id: "L4", section: "Fertigation", description: "Irrigation valve control",
+      detail: "Valve interface and field cabling to eight irrigation zones.",
+      quantity: 8, unit: "zone", sellCents: 186667 },
+    { id: "L5", section: "Installation & commissioning", description: "Installation",
+      detail: "Mechanical and electrical installation, on site.",
+      quantity: 1, unit: "lot", sellCents: 1760000 },
+    { id: "L6", section: "Installation & commissioning", description: "Commissioning and handover training",
+      detail: "System commissioning, verification against the design basis, and operator handover.",
+      quantity: 1, unit: "lot", sellCents: 1000000 },
+    { id: "L7", section: "Project", description: "Engineering and documentation",
+      detail: "Design, drawings, configuration and as-built documentation.",
+      quantity: 1, unit: "lot", sellCents: 2666667 },
+    { id: "L8", section: "Project", description: "Delivery to site",
+      detail: "Local delivery to Cobram VIC.",
+      quantity: 1, unit: "lot", sellCents: 266667 }
+  ],
+
+  /* selection envelope — frozen deltas, no recomputation */
+  offers: [
+    {
+      id: "OF1", type: "option", label: "Weather station",
+      description:
+        "External weather sensing feeding the control strategy — wind, rainfall, " +
+        "outside temperature and light. Recommended where vent control is automated.",
+      customerSelectable: true, minSelections: 0, maxSelections: 1,
+      members: [
+        { id: "M1", label: "Include weather station", isDefault: false, deltaCents: 866666,
+          note: "Mast, sensor head, interface module and commissioning." }
+      ]
+    },
+    {
+      id: "OF2", type: "option", label: "Extended monitoring — root zone",
+      description: "Substrate moisture, EC and temperature sensing in four positions.",
+      customerSelectable: true, minSelections: 0, maxSelections: 1,
+      members: [
+        { id: "M2", label: "Include root zone monitoring", isDefault: true, deltaCents: 1253333,
+          note: "Four sensing positions, interface and configuration." }
+      ]
+    },
+    {
+      id: "OF3", type: "alternative_group", label: "Irrigation pump set",
+      description:
+        "Choose one. Both options meet the design basis at §Technical specification; " +
+        "the variable speed set reduces energy use at part load.",
+      customerSelectable: true, minSelections: 1, maxSelections: 1,
+      members: [
+        { id: "M3", label: "Fixed speed pump set", isDefault: true, deltaCents: 0,
+          note: "Direct on line starter. Included in the price shown." },
+        { id: "M4", label: "Variable speed pump set", isDefault: false, deltaCents: 1173333,
+          note: "Variable speed drive, pressure control and integration to the controller." }
+      ]
+    }
+  ],
+
+  discountCents: 450000,
+  discountLabel: "Project discount",
+
+  /* specification — descriptive, configuration and design basis only.
+     No performance class content is present (blueprint §7.2). */
+  spec: {
+    supplied: [
+      { label: "Control platform", value: "PPO Controller CC-series", qualifier: "Cabinet mounted, 24 V field" },
+      { label: "Fertigation unit", value: "F300 — four channel", qualifier: "Skid mounted, pre-plumbed" },
+      { label: "Sensing", value: "Temperature, RH, CO₂", qualifier: "Four measurement points" },
+      { label: "Network", value: "Existing wireless network", qualifier: "Joins network GH-NORTH" }
+    ],
+    configuration: [
+      { label: "Control points", value: "24" },
+      { label: "Irrigation zones", value: "8" },
+      { label: "Dosing channels", value: "4" },
+      { label: "Growing areas served", value: "2" },
+      { label: "Measurement points", value: "4" },
+      { label: "Wireless network", value: "GH-NORTH (existing)" }
+    ],
+    designBasis: [
+      { label: "Ambient temperature",
+        value: "Priced on the basis that ambient does not exceed 42 °C" },
+      { label: "Water supply",
+        value: "Priced on the basis of a single mains supply at not less than 250 kPa at the skid" },
+      { label: "Electrical supply",
+        value: "Priced on the basis of an existing 3-phase supply within 15 m of the cabinet position" },
+      { label: "Site access",
+        value: "Priced on the basis of unrestricted vehicle access during standard working hours" },
+      { label: "Network coverage",
+        value: "Priced on the basis that the existing GH-NORTH network reaches the new cabinet position" }
+    ]
+  },
+
+  terms: {
+    priceBasis: "Delivered to site, installed and commissioned",
+    priceAdjustment:
+      "Fixed for the validity period stated above. Imported equipment is priced at the " +
+      "exchange rate applying on 11 September 2026; no adjustment applies within the validity period.",
+    leadTime: {
+      weeksMin: 14, weeksMax: 18,
+      commencesOn: "Order acceptance and receipt of deposit",
+      excludes: "Excludes periods awaiting customer approval of drawings."
+    },
+    paymentSchedule: [
+      { trigger: "On order acceptance", percentBp: 3000, description: "Deposit — releases procurement" },
+      { trigger: "On delivery to site", percentBp: 6000, description: "Equipment delivered" },
+      { trigger: "On commissioning", percentBp: 1000, description: "Practical completion" }
+    ],
+    paymentNote: "All amounts payable within 14 days of the relevant invoice.",
+    warranty: {
+      periodMonths: 12,
+      commencesOn: "Commissioning",
+      covers: "Parts and labour on equipment supplied by Powerplants Australia.",
+      excludes: "Consumables, customer-supplied equipment, and damage arising from operation outside the design basis."
+    },
+    scopeOfSupply: [
+      "Controller cabinet, core hardware and field termination",
+      "Fertigation skid with four dosing channels",
+      "Environmental sensing across four measurement points",
+      "Irrigation valve interface for eight zones"
+    ],
+    scopeOfWork: [
+      "Mechanical and electrical installation",
+      "Configuration and commissioning",
+      "As-built documentation and operator handover training"
+    ],
+    exclusions: [
+      { item: "Electrical supply upgrade", reason: "Existing 3-phase supply assessed as adequate; no upgrade allowed for." },
+      { item: "Civil works and cabinet plinth", reason: "By others. Not within Powerplants scope for this site." },
+      { item: "Water treatment and filtration", reason: "Existing filtration retained at the customer's direction." }
+    ],
+    customerSupplied: [
+      { item: "Existing irrigation pump set", reason: "Retained at the customer's direction; installation and commissioning of the retained set are included above." }
+    ],
+    responsibilities: [
+      "Provide safe site access and a clear working area during the installation period.",
+      "Approve drawings within 10 working days of issue.",
+      "Isolate and make safe existing services prior to installation.",
+      "Nominate an operator for handover training."
+    ],
+    assumptions: [
+      "Installation carried out in a single continuous mobilisation.",
+      "Existing cable routes are serviceable and reusable.",
+      "Work carried out during standard working hours."
+    ]
+  },
+
+  attachments: [
+    { type: "terms", label: "Powerplants Australia — Terms and Conditions of Supply", version: "v4.2" },
+    { type: "product_spec", label: "CC-series controller — product specification", version: "v2.1" },
+    { type: "datasheet", label: "F300 fertigation unit — manufacturer datasheet", version: "2026-03" }
+  ],
+  precedenceOrder: [
+    "This quotation",
+    "The technical specification section of this quotation",
+    "Attachments, in the order listed"
+  ],
+
+  consentText:
+    "I confirm that I am authorised to accept this quotation on behalf of the entity named above, " +
+    "and I agree to accept it by electronic signature. I understand that typing my name below and " +
+    "selecting “Accept quotation” creates a binding agreement on the terms of this document.",
+
+  returnEmail: "estimating@powerplants.example"
+});
+
+/* ================================================================
+   MONEY — integer cents, one rounding point, half away from zero
+   ================================================================ */
+const roundHalfAway = n => (n < 0 ? -Math.round(-n) : Math.round(n));
+const AUD = new Intl.NumberFormat("en-AU", { style: "currency", currency: "AUD" });
+const money = cents => AUD.format(cents / 100);
+const gstOn = exCents => roundHalfAway((exCents * DOCUMENT.gstRateBp) / 10000);
+
+/* ================================================================
+   DATES — Australian convention in prose, always
+   ================================================================ */
+const MONTHS = ["January","February","March","April","May","June",
+                "July","August","September","October","November","December"];
+const auDate = iso => {
+  const d = new Date(iso);
+  return `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+};
+const tzLabel = d => {
+  const parts = new Intl.DateTimeFormat("en-AU", { timeZoneName: "short" }).formatToParts(d);
+  return parts.find(p => p.type === "timeZoneName")?.value || "local time";
+};
+const auDateTime = iso => {
+  const d = new Date(iso);
+  const hh = String(d.getHours()).padStart(2, "0");
+  const mm = String(d.getMinutes()).padStart(2, "0");
+  return `${auDate(iso)} at ${hh}:${mm} ${tzLabel(d)}`;
+};
+
+/* ================================================================
+   ESCAPING — every value below reaches the DOM through this
+   ================================================================ */
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c =>
+  ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+/* ================================================================
+   VIEW STATE
+   ================================================================ */
+const state = {
+  lifecycle: "issued",          // issued | viewed | expiring | accepted | declined | expired | superseded | withdrawn
+  selectable: true,
+  selection: new Map(),         // offerId -> memberId | null
+  acceptance: null,
+  declineReason: "",
+  errors: {},
+  form: { name: "", position: "", email: "", actingFor: "", consent: false, signature: "" }
+};
+
+const defaultSelection = () => {
+  const m = new Map();
+  for (const o of DOCUMENT.offers) {
+    const def = o.members.find(x => x.isDefault);
+    m.set(o.id, def ? def.id : null);
+  }
+  return m;
+};
+state.selection = defaultSelection();
+state.form.name = DOCUMENT.customer.contact;
+state.form.position = DOCUMENT.customer.position;
+state.form.email = DOCUMENT.customer.email;
+state.form.actingFor = DOCUMENT.customer.name;
+
+const isOpen = () => ["issued", "viewed", "expiring"].includes(state.lifecycle);
+
+/* ================================================================
+   ARITHMETIC — summation over frozen amounts only.
+   No pricing engine exists on this path (blueprint §3, asserted below).
+   ================================================================ */
+function compute() {
+  const baseCents = DOCUMENT.baseLines.reduce((t, l) => t + l.sellCents, 0);
+  const selected = [];
+  let deltaCents = 0;
+  for (const o of DOCUMENT.offers) {
+    const memberId = state.selection.get(o.id);
+    if (!memberId) continue;
+    const m = o.members.find(x => x.id === memberId);
+    if (!m) continue;
+    selected.push({ offer: o, member: m });
+    deltaCents += m.deltaCents;
+  }
+  const subtotalCents = baseCents + deltaCents;
+  const exGstCents = subtotalCents - DOCUMENT.discountCents;
+  const gstCents = gstOn(exGstCents);
+  return {
+    baseCents, deltaCents, subtotalCents, exGstCents, gstCents,
+    inclGstCents: exGstCents + gstCents, selected
+  };
+}
+
+/* reconciliation identity — blueprint §6.5, asserted at every render */
+function assertReconciles(c) {
+  const ok = c.baseCents + c.deltaCents - DOCUMENT.discountCents === c.exGstCents
+          && c.exGstCents + c.gstCents === c.inclGstCents;
+  if (!ok) console.error("PPQ: reconciliation identity failed", c);
+  return ok;
+}
+
+/* ================================================================
+   PARTS
+   ================================================================ */
+function mastMeta() {
+  return `
+    <b>Quotation ${esc(DOCUMENT.quotationNumber)} · R${String(DOCUMENT.revision).padStart(2, "0")}</b>
+    Issued ${esc(auDate(DOCUMENT.issuedAt))}<br>
+    Valid until ${esc(auDate(DOCUMENT.validUntil))}`;
+}
+
+function statusBadge() {
+  const map = {
+    issued:     ["ppq-badge-live",   "Awaiting your decision"],
+    viewed:     ["ppq-badge-live",   "Awaiting your decision"],
+    expiring:   ["ppq-badge-warn",   "Expiring soon"],
+    accepted:   ["ppq-badge-live",   "Accepted"],
+    declined:   ["ppq-badge-closed", "Declined"],
+    expired:    ["ppq-badge-closed", "Expired"],
+    superseded: ["ppq-badge-closed", "Superseded"],
+    withdrawn:  ["ppq-badge-closed", "Withdrawn"]
+  };
+  const [cls, label] = map[state.lifecycle];
+  return `<span class="ppq-badge ${cls}">${esc(label)}</span>`;
+}
+
+function banner() {
+  const until = auDate(DOCUMENT.validUntil);
+  switch (state.lifecycle) {
+    case "expiring":
+      return `<div class="ppq-banner ppq-banner-warn">
+        <span><strong>This quotation expires in 3 days.</strong>
+        It is open for acceptance until ${esc(until)}.</span>
+        <span>After that date we can issue a revised quotation.</span></div>`;
+    case "expired":
+      return `<div class="ppq-banner ppq-banner-closed">
+        <span><strong>This quotation expired on ${esc(until)}.</strong>
+        It is no longer open for acceptance.</span>
+        <span>Contact ${esc(DOCUMENT.preparedBy.name)} at ${esc(DOCUMENT.preparedBy.email)} for a revised quotation.</span></div>`;
+    case "superseded":
+      return `<div class="ppq-banner ppq-banner-closed">
+        <span><strong>This quotation has been superseded.</strong>
+        A revised quotation has been sent to you and replaces this document.</span>
+        <span>Please refer to the most recent quotation you received.</span></div>`;
+    case "withdrawn":
+      return `<div class="ppq-banner ppq-banner-closed">
+        <span><strong>This quotation has been withdrawn.</strong>
+        It is no longer open for acceptance.</span>
+        <span>Contact ${esc(DOCUMENT.preparedBy.email)} if this is unexpected.</span></div>`;
+    case "declined":
+      return `<div class="ppq-banner ppq-banner-closed">
+        <span><strong>This quotation was declined.</strong>
+        The document remains available for your records.</span>
+        <span>We can issue a revised quotation if circumstances change.</span></div>`;
+    case "accepted":
+      return "";
+    default:
+      return `<div class="ppq-banner">
+        <span><strong>Open for acceptance until ${esc(until)}.</strong>
+        You can accept online below, or print this document, sign it and return it.</span>
+        <span>${esc(DOCUMENT.validityDays)} day validity from issue.</span></div>`;
+  }
+}
+
+function head() {
+  const supersedes = DOCUMENT.revision > 1
+    ? `<p style="margin-block-start:8px">This revision replaces ${esc(DOCUMENT.supersedesLabel)}.</p>` : "";
+  return `
+  <div class="ppq-head">
+    <div class="ppq-eyebrow">Quotation ${esc(DOCUMENT.quotationNumber)} · Revision ${String(DOCUMENT.revision).padStart(2, "0")} · ${statusBadge()}</div>
+    <div class="ppq-head-row">
+      <div>
+        <h1>Climate &amp; fertigation upgrade — Glasshouse 3</h1>
+        <p>${esc(DOCUMENT.intro)}</p>
+        ${supersedes}
+      </div>
+      <div class="ppq-actions ppq-nonprint">
+        <button type="button" class="ppq-btn" id="ppq-print">Print / save PDF</button>
+        ${isOpen() ? `<button type="button" class="ppq-btn ppq-btn-primary" id="ppq-jump">Go to acceptance</button>` : ""}
+      </div>
+    </div>
+  </div>
+  ${banner()}`;
+}
+
+function parties() {
+  const d = DOCUMENT;
+  return `
+  <section class="ppq-card" aria-labelledby="ppq-parties-h">
+    <h2 id="ppq-parties-h">Quotation details</h2>
+    <dl class="ppq-parties">
+      <div class="ppq-party"><dt>Prepared for</dt><dd>
+        <b>${esc(d.customer.name)}</b>
+        <span>${esc(d.customer.abn)}<br>${esc(d.customer.contact)} · ${esc(d.customer.position)}<br>${esc(d.customer.email)}</span>
+      </dd></div>
+      <div class="ppq-party"><dt>Site</dt><dd>
+        <b>${esc(d.site.name)}</b><span>${esc(d.site.address)}</span>
+      </dd></div>
+      <div class="ppq-party"><dt>Prepared by</dt><dd>
+        <b>${esc(d.preparedBy.name)}</b>
+        <span>${esc(d.preparedBy.position)}, Powerplants Australia<br>${esc(d.preparedBy.email)}<br>${esc(d.preparedBy.phone)}</span>
+      </dd></div>
+      <div class="ppq-party"><dt>Reference</dt><dd>
+        <b>${esc(d.quotationNumber)} R${String(d.revision).padStart(2, "0")}</b>
+        <span>Issued ${esc(auDate(d.issuedAt))}<br>Valid until ${esc(auDate(d.validUntil))}<br>All amounts in AUD, ex GST unless stated</span>
+      </dd></div>
+    </dl>
+  </section>`;
+}
+
+function scopeTable() {
+  const bySection = new Map();
+  for (const l of DOCUMENT.baseLines) {
+    if (!bySection.has(l.section)) bySection.set(l.section, []);
+    bySection.get(l.section).push(l);
+  }
+  let rows = "";
+  for (const [section, lines] of bySection) {
+    rows += `<tr class="ppq-secrow"><th scope="rowgroup" colspan="3">${esc(section)}</th></tr>`;
+    for (const l of lines) {
+      const qty = l.unit === "lot" ? "1 lot" : `${l.quantity} ${esc(l.unit)}${l.quantity === 1 ? "" : "s"}`;
+      rows += `<tr>
+        <td class="ppq-desc" data-label="Item"><b>${esc(l.description)}</b><small>${esc(l.detail)}</small></td>
+        <td class="ppq-num ppq-qty" data-label="Quantity">${esc(qty)}</td>
+        <td class="ppq-num" data-label="Amount ex GST">${esc(money(l.sellCents))}</td>
+      </tr>`;
+    }
+  }
+  return `
+  <div class="ppq-tablewrap">
+    <table class="ppq-table">
+      <caption>Included scope. All amounts in Australian dollars, excluding GST.</caption>
+      <thead><tr>
+        <th scope="col">Item</th>
+        <th scope="col" class="ppq-num">Quantity</th>
+        <th scope="col" class="ppq-num">Amount ex GST</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>`;
+}
+
+function offerBlock(o) {
+  const locked = !state.selectable || !o.customerSelectable || !isOpen();
+  const chosen = state.selection.get(o.id);
+  const isRadio = o.type === "alternative_group";
+
+  const rows = o.members.map(m => {
+    const checked = chosen === m.id;
+    const price = m.deltaCents === 0 ? "Included" : `+ ${money(m.deltaCents)}`;
+    const aria = `${o.label}: ${m.label}, ${price}`;
+    const input = locked
+      ? `<input type="${isRadio ? "radio" : "checkbox"}" ${checked ? "checked" : ""} disabled
+                aria-label="${esc(aria)}">`
+      : `<input type="${isRadio ? "radio" : "checkbox"}" ${checked ? "checked" : ""}
+                name="${esc(o.id)}" value="${esc(m.id)}" data-offer="${esc(o.id)}" data-member="${esc(m.id)}"
+                aria-label="${esc(aria)}">`;
+    return `<label class="ppq-choice">
+      ${input}
+      <span class="ppq-choice-body">
+        <span class="ppq-choice-title">
+          <b>${esc(m.label)}</b>
+          <span class="ppq-choice-price">${esc(price)}</span>
+        </span>
+        <small>${esc(m.note)}</small>
+      </span>
+    </label>`;
+  }).join("");
+
+  const lockNote = locked && isOpen()
+    ? `<span class="ppq-locked">As quoted</span>` : "";
+
+  return `<div class="ppq-offer">
+    <div class="ppq-offer-head">
+      <b>${esc(o.label)}</b>
+      ${lockNote}
+    </div>
+    <p class="ppq-offer-desc">${esc(o.description)}</p>
+    ${isRadio ? `<div role="radiogroup" aria-label="${esc(o.label)}">${rows}</div>` : rows}
+  </div>`;
+}
+
+function totals(c) {
+  const disc = DOCUMENT.discountCents > 0 ? `
+    <tr class="ppq-discount">
+      <th scope="row">${esc(DOCUMENT.discountLabel)}</th>
+      <td>− ${esc(money(DOCUMENT.discountCents))}</td>
+    </tr>` : "";
+  const deltas = c.deltaCents !== 0 ? `
+    <tr>
+      <th scope="row">Selected options and alternatives</th>
+      <td>${esc(money(c.deltaCents))}</td>
+    </tr>` : "";
+  return `
+  <div class="ppq-totals">
+    <table>
+      <tbody>
+        <tr><th scope="row">Included scope</th><td>${esc(money(c.baseCents))}</td></tr>
+        ${deltas}
+        <tr class="ppq-sub"><th scope="row">Subtotal before discount</th><td>${esc(money(c.subtotalCents))}</td></tr>
+        ${disc}
+        <tr class="ppq-sub"><th scope="row">Total ex GST</th><td>${esc(money(c.exGstCents))}</td></tr>
+        <tr><th scope="row">GST at 10%</th><td>${esc(money(c.gstCents))}</td></tr>
+        <tr class="ppq-grand"><th scope="row">Total including GST</th><td>${esc(money(c.inclGstCents))}</td></tr>
+      </tbody>
+    </table>
+    <p class="ppq-totals-note">
+      Every row above is part of the same sum: included scope, plus what you select, less the
+      discount, gives the total excluding GST. GST is shown separately.
+    </p>
+  </div>`;
+}
+
+function pricing(c) {
+  const anySelectable = DOCUMENT.offers.some(o => o.customerSelectable) && state.selectable && isOpen();
+  return `
+  <section class="ppq-card" aria-labelledby="ppq-price-h">
+    <h2 id="ppq-price-h">Scope and price</h2>
+    <p class="ppq-help">
+      ${anySelectable
+        ? "The items below marked as options and alternatives are yours to choose. The total updates as you select; every amount is fixed for the validity period."
+        : "Priced as quoted. If you would like a different configuration, contact us and we will issue a revised quotation."}
+    </p>
+    ${scopeTable()}
+    <h3>Options and alternatives</h3>
+    ${DOCUMENT.offers.map(offerBlock).join("")}
+    ${totals(c)}
+  </section>`;
+}
+
+function specSection() {
+  const s = DOCUMENT.spec;
+  const grid = items => `<dl class="ppq-specgrid">${items.map(i => `
+    <div class="ppq-spec">
+      <dt>${esc(i.label)}</dt>
+      <dd>${esc(i.value)}${i.qualifier ? `<em>${esc(i.qualifier)}</em>` : ""}</dd>
+    </div>`).join("")}</dl>`;
+
+  return `
+  <section class="ppq-card" aria-labelledby="ppq-spec-h">
+    <h2 id="ppq-spec-h">Technical specification</h2>
+    <p class="ppq-help">
+      What is supplied, the configuration this quotation is priced against, and the
+      conditions the price assumes.
+    </p>
+    <h3>Equipment supplied</h3>
+    ${grid(s.supplied)}
+    <h3>As-specified configuration</h3>
+    ${grid(s.configuration)}
+    <h3>Design basis</h3>
+    <p class="ppq-help" style="margin-block:-4px 12px">
+      These are the conditions the price is based on, not performance commitments.
+      If site conditions differ, tell us before accepting and we will re-quote.
+    </p>
+    ${grid(s.designBasis)}
+  </section>`;
+}
+
+function termsSection() {
+  const t = DOCUMENT.terms;
+  const pay = t.paymentSchedule.map(p => `
+    <tr>
+      <td><b>${esc(p.trigger)}</b><br><span style="color:var(--ppq-text-muted);font-size:var(--ppq-fs-micro)">${esc(p.description)}</span></td>
+      <td>${esc((p.percentBp / 100).toFixed(0))}%</td>
+    </tr>`).join("");
+
+  const listOf = (arr, withReason) => `<ul class="ppq-list">${arr.map(x =>
+    withReason
+      ? `<li>${esc(x.item)} — <span>${esc(x.reason)}</span></li>`
+      : `<li>${esc(x)}</li>`).join("")}</ul>`;
+
+  return `
+  <section class="ppq-card" aria-labelledby="ppq-terms-h">
+    <h2 id="ppq-terms-h">Commercial terms</h2>
+
+    <dl class="ppq-terms">
+      <div class="ppq-term"><dt>Price basis</dt><dd>${esc(t.priceBasis)}<br>
+        <span style="color:var(--ppq-text-muted)">${esc(t.priceAdjustment)}</span></dd></div>
+      <div class="ppq-term"><dt>Lead time</dt><dd>
+        ${esc(t.leadTime.weeksMin)}–${esc(t.leadTime.weeksMax)} weeks from ${esc(t.leadTime.commencesOn.toLowerCase())}.<br>
+        <span style="color:var(--ppq-text-muted)">${esc(t.leadTime.excludes)}</span></dd></div>
+      <div class="ppq-term"><dt>Warranty</dt><dd>
+        ${esc(t.warranty.periodMonths)} months from ${esc(t.warranty.commencesOn.toLowerCase())}.<br>
+        ${esc(t.warranty.covers)}<br>
+        <span style="color:var(--ppq-text-muted)">Excludes: ${esc(t.warranty.excludes)}</span></dd></div>
+      <div class="ppq-term"><dt>Payment</dt><dd>
+        <table class="ppq-pay"><tbody>${pay}</tbody></table>
+        <span style="color:var(--ppq-text-muted);display:block;margin-block-start:8px">${esc(t.paymentNote)}</span></dd></div>
+    </dl>
+
+    <h3>Scope of supply — goods</h3>
+    ${listOf(t.scopeOfSupply)}
+    <h3>Scope of work — services</h3>
+    ${listOf(t.scopeOfWork)}
+    <h3>Exclusions</h3>
+    ${listOf(t.exclusions, true)}
+    <h3>Supplied by the customer</h3>
+    ${listOf(t.customerSupplied, true)}
+    <h3>Customer responsibilities</h3>
+    ${listOf(t.responsibilities)}
+    <h3>Assumptions</h3>
+    ${listOf(t.assumptions)}
+
+    <h3>Attachments</h3>
+    ${listOf(DOCUMENT.attachments.map(a => `${a.label} (${a.version})`))}
+
+    <div class="ppq-precedence">
+      <strong>Order of precedence.</strong> Where documents differ, the following order applies:
+      <ol>${DOCUMENT.precedenceOrder.map(p => `<li>${esc(p)}</li>`).join("")}</ol>
+      Attached manufacturer material describes the product range. Only the configuration
+      set out in this quotation is supplied.
+    </div>
+  </section>`;
+}
+
+function selectionSummary(c) {
+  const chosen = c.selected.filter(s => s.member.deltaCents !== 0 || s.offer.type === "alternative_group");
+  const items = chosen.length
+    ? chosen.map(s => `<li>${esc(s.offer.label)} — ${esc(s.member.label)}${s.member.deltaCents ? ` (${esc(money(s.member.deltaCents))})` : " (included)"}</li>`).join("")
+    : `<li>No optional items selected.</li>`;
+  return `
+    <h3>What you are accepting</h3>
+    <ul>
+      <li>All included scope as set out above.</li>
+      ${items}
+    </ul>
+    <div class="ppq-accept-amount">
+      <span>Total including GST</span>
+      <b>${esc(money(c.inclGstCents))}</b>
+    </div>`;
+}
+
+function acceptSection(c) {
+  if (!isOpen()) return "";
+  const f = state.form;
+  const e = state.errors;
+  const field = (id, label, value, type, hint) => `
+    <div class="ppq-field">
+      <label for="ppq-${id}">${esc(label)} <span class="ppq-req" aria-hidden="true">*</span></label>
+      <input id="ppq-${id}" type="${type}" value="${esc(value)}" data-field="${id}"
+             autocomplete="${type === "email" ? "email" : "off"}"
+             ${e[id] ? 'aria-invalid="true" aria-describedby="ppq-' + id + '-err"' : ""}>
+      ${e[id] ? `<small class="ppq-err" id="ppq-${id}-err">${esc(e[id])}</small>`
+              : (hint ? `<small>${esc(hint)}</small>` : "")}
+    </div>`;
+
+  return `
+  <section class="ppq-card ppq-accept" id="ppq-accept" aria-labelledby="ppq-accept-h">
+    <h2 id="ppq-accept-h">Accept this quotation</h2>
+    <p class="ppq-help">
+      Accepting online creates a binding agreement on the terms of this document. You will
+      receive a confirmation email with a copy of exactly what you accepted.
+      <strong>In this design preview nothing is sent or saved</strong> — entries live in page
+      memory and reset on reload.
+    </p>
+
+    <div class="ppq-accept-summary">
+      ${selectionSummary(c)}
+    </div>
+
+    <div class="ppq-fields">
+      ${field("name", "Your full name", f.name, "text")}
+      ${field("position", "Your position", f.position, "text")}
+      ${field("email", "Your email address", f.email, "email", "The confirmation is sent here.")}
+      ${field("actingFor", "Accepting on behalf of", f.actingFor, "text", "The entity that will be bound.")}
+    </div>
+
+    <label class="ppq-consent">
+      <input type="checkbox" id="ppq-consent" ${f.consent ? "checked" : ""}
+             ${e.consent ? 'aria-invalid="true"' : ""}>
+      <span>${esc(DOCUMENT.consentText)}</span>
+    </label>
+    ${e.consent ? `<p class="ppq-err" style="font-size:var(--ppq-fs-micro);margin:-12px 0 16px">${esc(e.consent)}</p>` : ""}
+
+    <div class="ppq-field ppq-sign">
+      <label for="ppq-signature">Type your full name to sign <span class="ppq-req" aria-hidden="true">*</span></label>
+      <input id="ppq-signature" type="text" value="${esc(f.signature)}" data-field="signature"
+             placeholder="Your full name"
+             ${e.signature ? 'aria-invalid="true" aria-describedby="ppq-signature-err"' : ""}>
+      ${e.signature ? `<small class="ppq-err" id="ppq-signature-err">${esc(e.signature)}</small>`
+                    : `<small>This must match the name entered above.</small>`}
+    </div>
+
+    <div class="ppq-accept-actions">
+      <button type="button" class="ppq-btn ppq-btn-accept" id="ppq-do-accept">Accept quotation</button>
+      <button type="button" class="ppq-btn ppq-btn-quiet" id="ppq-do-decline">Decline this quotation</button>
+    </div>
+
+    <p class="ppq-accept-foot">
+      We record the date and time, your network address and the exact document you accepted,
+      as evidence of the agreement. We use this only to form and evidence the contract.
+    </p>
+
+    <div class="ppq-manual">
+      <h3>Prefer to sign by hand?</h3>
+      <p>
+        Print this quotation, sign the signature page and return the signed copy to
+        <strong>${esc(DOCUMENT.returnEmail)}</strong>, quoting ${esc(DOCUMENT.quotationNumber)}.
+        The printed copy carries the selections you have made above.
+      </p>
+      <button type="button" class="ppq-btn" id="ppq-print-2">Print / save PDF for signing</button>
+    </div>
+  </section>`;
+}
+
+function confirmation() {
+  const a = state.acceptance;
+  if (!a) return "";
+  return `
+  <section class="ppq-confirm" aria-labelledby="ppq-conf-h">
+    <h2 id="ppq-conf-h" tabindex="-1">Quotation accepted — thank you</h2>
+    <p>
+      This preview has recorded your acceptance of ${esc(DOCUMENT.quotationNumber)} R${String(DOCUMENT.revision).padStart(2, "0")}
+      in page memory only. <strong>Nothing was sent or saved.</strong> In the live module a
+      confirmation would be sent to ${esc(a.email)} with a copy of exactly what you accepted,
+      and ${esc(DOCUMENT.preparedBy.name)} would confirm the delivery programme.
+    </p>
+    <dl class="ppq-receipt">
+      <div><dt>Accepted by</dt><dd>${esc(a.name)}, ${esc(a.position)}</dd></div>
+      <div><dt>On behalf of</dt><dd>${esc(a.actingFor)}</dd></div>
+      <div><dt>Accepted at</dt><dd>${esc(auDateTime(a.at))}</dd></div>
+      <div><dt>Accepted amount incl GST</dt><dd>${esc(money(a.inclGstCents))}</dd></div>
+      <div style="grid-column:1/-1"><dt>Document reference</dt>
+        <dd class="ppq-hash">${esc(DOCUMENT.documentHash)}</dd></div>
+    </dl>
+  </section>`;
+}
+
+function signBlock(c) {
+  const chosen = c.selected.filter(s => s.member.deltaCents !== 0 || s.offer.type === "alternative_group");
+  const items = chosen.length
+    ? chosen.map(s => `<li>${esc(s.offer.label)} — ${esc(s.member.label)}${s.member.deltaCents ? ` (${esc(money(s.member.deltaCents))})` : " (included)"}</li>`).join("")
+    : `<li>No optional items selected.</li>`;
+  return `
+  <section class="ppq-signblock" aria-hidden="true">
+    <h2>Acceptance by signature</h2>
+    <p class="ppq-sign-intro">
+      To accept ${esc(DOCUMENT.quotationNumber)} R${String(DOCUMENT.revision).padStart(2, "0")} by hand,
+      complete and sign this page and return it to ${esc(DOCUMENT.returnEmail)}.
+      By signing you confirm you are authorised to accept this quotation on behalf of the
+      entity named, and you agree to its terms.
+    </p>
+
+    <div class="ppq-sign-sel">
+      <strong>Scope accepted</strong>
+      <ul>
+        <li>All included scope as set out in this quotation.</li>
+        ${items}
+      </ul>
+      <div class="ppq-sign-total"><span>Total ex GST</span><span>${esc(money(c.exGstCents))}</span></div>
+      <div class="ppq-sign-total" style="border:0;margin:0;padding:0"><span>GST at 10%</span><span>${esc(money(c.gstCents))}</span></div>
+      <div class="ppq-sign-total"><span>Total including GST</span><span>${esc(money(c.inclGstCents))}</span></div>
+    </div>
+
+    <div class="ppq-sign-lines">
+      <div class="ppq-sign-line ppq-sign-wide"><span>Accepting on behalf of (entity name)</span></div>
+      <div class="ppq-sign-line"><span>Full name</span></div>
+      <div class="ppq-sign-line"><span>Position</span></div>
+      <div class="ppq-sign-line"><span>Signature</span></div>
+      <div class="ppq-sign-line"><span>Date</span></div>
+    </div>
+
+    <div class="ppq-sign-return">
+      <strong>Return to:</strong> ${esc(DOCUMENT.returnEmail)} — quote ${esc(DOCUMENT.quotationNumber)} R${String(DOCUMENT.revision).padStart(2, "0")}.<br>
+      <strong>Document reference:</strong> <span class="ppq-hash">${esc(DOCUMENT.documentHash)}</span><br>
+      This printed copy is issued for signature. It reproduces the quotation issued on
+      ${esc(auDate(DOCUMENT.issuedAt))} and valid until ${esc(auDate(DOCUMENT.validUntil))}.
+    </div>
+  </section>`;
+}
+
+function footer() {
+  return `
+  <footer class="ppq-foot">
+    <div class="ppq-foot-row">
+      <div>
+        <strong>Powerplants Australia</strong><br>
+        ${esc(DOCUMENT.preparedBy.email)} · ${esc(DOCUMENT.preparedBy.phone)}<br>
+        All amounts in Australian dollars. GST shown separately.
+      </div>
+      <div>
+        Quotation ${esc(DOCUMENT.quotationNumber)} R${String(DOCUMENT.revision).padStart(2, "0")}<br>
+        Issued ${esc(auDate(DOCUMENT.issuedAt))}<br>
+        Document reference<br><span class="ppq-hash">${esc(DOCUMENT.documentHash)}</span>
+      </div>
+    </div>
+    <div class="ppq-synthetic">
+      Fictional data — design preview. No rule is approved. This is not engineering sizing
+      and not a commercial approval.
+    </div>
+  </footer>`;
+}
+
+/* ================================================================
+   RENDER
+   ================================================================ */
+function render(preserveScroll = true) {
+  const main = $("ppq-main");
+  const top = preserveScroll ? root.scrollTop : 0;
+  const c = compute();
+  assertReconciles(c);
+
+  $("ppq-mast-meta").innerHTML = mastMeta();
+
+  main.innerHTML =
+    head() +
+    (state.lifecycle === "accepted" ? confirmation() : "") +
+    parties() +
+    pricing(c) +
+    specSection() +
+    termsSection() +
+    acceptSection(c) +
+    signBlock(c) +
+    footer();
+
+  root.scrollTop = top;
+  const sel = $("ppq-state-select");
+  if (sel && sel.value !== state.lifecycle) sel.value = state.lifecycle;
+  bind();
+}
+
+/* ================================================================
+   BINDING
+   ================================================================ */
+function bind() {
+  const main = $("ppq-main");
+
+  main.querySelectorAll("[data-offer]").forEach(input => {
+    on(input, "change", () => {
+      const offerId = input.dataset.offer;
+      const memberId = input.dataset.member;
+      const offer = DOCUMENT.offers.find(o => o.id === offerId);
+      if (!offer) return;
+      if (offer.type === "alternative_group") {
+        state.selection.set(offerId, memberId);
+      } else {
+        state.selection.set(offerId, input.checked ? memberId : null);
+      }
+      const c = compute();
+      announce(`Selection updated. Total including GST ${money(c.inclGstCents)}.`);
+      render();
+    });
+  });
+
+  main.querySelectorAll("[data-field]").forEach(input => {
+    on(input, "input", () => { state.form[input.dataset.field] = input.value; });
+  });
+
+  const consent = $("ppq-consent");
+  on(consent, "change", () => { state.form.consent = consent.checked; });
+
+  on($("ppq-print"), "click", () => window.print());
+  on($("ppq-print-2"), "click", () => window.print());
+  on($("ppq-jump"), "click", () => {
+    const el = $("ppq-accept");
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    const first = $("ppq-name");
+    if (first) first.focus({ preventScroll: true });
+  });
+  on($("ppq-do-accept"), "click", accept);
+  on($("ppq-do-decline"), "click", openDecline);
+}
+
+/* ================================================================
+   ACCEPTANCE
+   ================================================================ */
+function validateForm() {
+  const f = state.form;
+  const e = {};
+  if (!f.name.trim()) e.name = "Enter your full name.";
+  if (!f.position.trim()) e.position = "Enter your position.";
+  if (!f.email.trim()) e.email = "Enter your email address.";
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) e.email = "Enter a valid email address.";
+  if (!f.actingFor.trim()) e.actingFor = "Enter the entity you are accepting on behalf of.";
+  if (!f.consent) e.consent = "Please confirm you agree to accept by electronic signature.";
+  if (!f.signature.trim()) e.signature = "Type your full name to sign.";
+  else if (f.signature.trim().toLowerCase() !== f.name.trim().toLowerCase())
+    e.signature = "Your typed signature must match the name entered above.";
+  return e;
+}
+
+function accept() {
+  const errors = validateForm();
+  state.errors = errors;
+  const keys = Object.keys(errors);
+  if (keys.length) {
+    render();
+    const first = $("ppq-" + keys[0]) || $("ppq-consent");
+    if (first) first.focus();
+    toast(`${keys.length} ${keys.length === 1 ? "field needs" : "fields need"} attention before you can accept.`);
+    return;
+  }
+  const c = compute();
+  state.acceptance = {
+    name: state.form.name.trim(),
+    position: state.form.position.trim(),
+    email: state.form.email.trim(),
+    actingFor: state.form.actingFor.trim(),
+    at: new Date().toISOString(),
+    inclGstCents: c.inclGstCents,
+    exGstCents: c.exGstCents,
+    selection: [...state.selection.entries()]
+  };
+  state.lifecycle = "accepted";
+  state.errors = {};
+  render(false);
+  ($("ppq-conf-h") || $("ppq-main")).focus();
+  toast("Accepted in this preview. Nothing was sent or saved.");
+  announce("Quotation accepted in this preview. Nothing was sent or saved.");
+}
+
+/* ================================================================
+   DECLINE DIALOG
+   ================================================================ */
+let declineOpener = null;
+function openDecline(ev) {
+  declineOpener = ev.currentTarget;
+  const dlg = $("ppq-dialog");
+  $("ppq-dlg-reason").value = state.declineReason;   // retained across close/reopen
+  dlg.showModal();
+  $("ppq-dlg-title").focus();
+}
+function closeDecline(confirmed) {
+  const dlg = $("ppq-dialog");
+  state.declineReason = $("ppq-dlg-reason").value;
+  if (dlg.open) dlg.close();
+  if (confirmed) {
+    state.lifecycle = "declined";
+    render(false);
+    toast("Declined in this preview. Nothing was sent or saved.");
+  }
+  if (declineOpener && document.contains(declineOpener)) declineOpener.focus();
+  declineOpener = null;
+}
+
+/* ================================================================
+   TOAST / ANNOUNCE
+   ================================================================ */
+let toastTimer = null;
+function toast(msg) {
+  const t = $("ppq-toast");
+  t.hidden = false;              // reveal first, then write (blueprint U9)
+  t.textContent = msg;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.hidden = true; t.textContent = ""; }, 5000);
+}
+function announce(msg) { $("ppq-announce").textContent = msg; }
+
+/* ================================================================
+   PREVIEW CONTROLS
+   ================================================================ */
+on($("ppq-state-select"), "change", e => {
+  state.lifecycle = e.target.value;
+  if (state.lifecycle !== "accepted") state.acceptance = null;
+  else if (!state.acceptance) {
+    const c = compute();
+    state.acceptance = {
+      name: DOCUMENT.customer.contact, position: DOCUMENT.customer.position,
+      email: DOCUMENT.customer.email, actingFor: DOCUMENT.customer.name,
+      at: new Date().toISOString(), inclGstCents: c.inclGstCents, exGstCents: c.exGstCents,
+      selection: [...state.selection.entries()]
+    };
+  }
+  state.errors = {};
+  render(false);
+});
+on($("ppq-lock-select"), "change", e => {
+  state.selectable = e.target.value === "open";
+  if (!state.selectable) state.selection = defaultSelection();
+  render(false);
+});
+
+on($("ppq-dlg-cancel"), "click", () => closeDecline(false));
+on($("ppq-dlg-confirm"), "click", () => closeDecline(true));
+on($("ppq-dialog"), "cancel", e => { e.preventDefault(); closeDecline(false); });
+
+/* ================================================================
+   TEARDOWN — blueprint container contract
+   ================================================================ */
+on(root, "ppo-quotation-dispose", () => {
+  clearTimeout(toastTimer);
+  const dlg = $("ppq-dialog");
+  if (dlg && dlg.open) dlg.close();
+  ac.abort();
+});
+
+/* ================================================================
+   SELF-CHECKS — the invariants this module must not lose
+   ================================================================ */
+(function selfCheck() {
+  const FORBIDDEN = [
+    "cost", "costCents", "unitCost", "margin", "marginPct", "profit", "grossProfit",
+    "contingencyPct", "contingencyBasis", "discountReason", "overrideReason",
+    "ruleId", "ruleVersion", "ruleDriver", "costType", "priceListId",
+    "supplierSource", "supplierRef", "priceStatus", "priceDate",
+    "internalNote", "labourHours", "labourRate", "rateId", "inputHash"
+  ];
+  const found = new Set();
+  (function walk(v) {
+    if (!v || typeof v !== "object") return;
+    for (const k of Object.keys(v)) {
+      if (FORBIDDEN.includes(k)) found.add(k);
+      walk(v[k]);
+    }
+  })(DOCUMENT);
+  if (found.size) console.error("PPQ: forbidden key in projection:", [...found]);
+
+  const c = compute();
+  if (!assertReconciles(c)) console.error("PPQ: default selection does not reconcile");
+})();
+
+render(false);
+
+})();
+</script>
+</body>
+</html>
