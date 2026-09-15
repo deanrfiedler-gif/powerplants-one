@@ -31,6 +31,7 @@ This repository is Dean's personal prototype. It contains the planning foundatio
 | [Projects discovery and design](docs/delivery/projects-discovery-handover.md) | BP-06 source assessment, first-increment contract and project list/detail designs; J1 prepared only |
 | [Email & Calendar design](docs/blueprints/email-calendar-integration.md) | Synthetic inbox, record linking, privacy, agenda and first read-only Microsoft pilot preparation |
 | [Working Email & Calendar journey](docs/delivery/email-calendar-journey-handover.md) | Private fictional email, explicit opportunity link, persisted internal follow-up and calendar; PR #64 |
+| [Service Cases & Triage r02 design](docs/decisions/service-cases-workspace-design.md) | Module-only Board/List triage centre with Deals r35 cards and guarded case workflows; native review and runtime integration pending |
 | [Contributing](CONTRIBUTING.md) | Branches, pull requests, validation and evidence |
 
 ## Product direction
