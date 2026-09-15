@@ -1,0 +1,22 @@
+{
+  "baseline_commit": "07ade644de06ff3b13e5af6ae9c299ca7c78c535",
+  "html_path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
+  "html_sha256": "66644e809bab58106037f4226f68f025fd2d8d462fdcce1693710bd310be14db",
+  "model_groups_passed": 24,
+  "dom_groups_passed": 12,
+  "native_browser": "Passed: 15 groups, no page or console errors",
+  "documentation_checks": "Foundation, prototype and naming passed; no business acceptance inferred",
+  "dom_source_html_sha256": "9eafe28fc496f65833f0c9ac980b16375ac684451d90c20d933078b57dd18b82",
+  "dom_scope": "Initial 12-group local check; subsequent changes only affect CSS and the native test runner. Final native run verifies current HTML.",
+  "model_sha256": "cf756c2ba3fa1b4b5016d64ea1e2b6c3bac6f4d3f8ab9ccb75024745344d0fdf",
+  "workspace_js_sha256": "b0fbb8e058b92c03a7d90b60fddb967a98c6af444330ba8d88f3f7378ba77edb",
+  "verified_source_commit": "2ce9fbaca5de51b03e7141dd53d4682e04fb7235",
+  "native_run_id": 34962528501,
+  "native_job_id": 104359239424,
+  "browser": "Chrome 153.0.8010.36",
+  "artifact_id": 10394231597,
+  "artifact_zip_sha256": "e65ca68f7e00fb9d430aa2e1b965d241830cf60e748317d0b71655f0ef72f146",
+  "artifact_expires_at": "2026-09-29T11:18:52Z",
+  "original_images_verified": 23,
+  "visual_review": "All six views at desktop and 390/320px phone widths, plus the native deferral dialog, inspected. Skip-link overlay and clipped phone filter labels corrected and recaptured."
+}

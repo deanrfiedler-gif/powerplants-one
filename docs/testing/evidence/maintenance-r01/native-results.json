@@ -1,0 +1,163 @@
+{
+  "source": "2ce9fbaca5de51b03e7141dd53d4682e04fb7235",
+  "html_sha256": "66644e809bab58106037f4226f68f025fd2d8d462fdcce1693710bd310be14db",
+  "browser": "153.0.8010.36",
+  "groups": 15,
+  "results": [
+    {
+      "name": "Initial register and all six views are available",
+      "result": "Passed"
+    },
+    {
+      "name": "Search preserves the permitted register",
+      "result": "Passed"
+    },
+    {
+      "name": "Native coverage form retains exact assessment",
+      "result": "Passed"
+    },
+    {
+      "name": "Native crop-window deferral retains original obligation",
+      "result": "Passed"
+    },
+    {
+      "name": "Request and partial result preserve separate receiving decisions",
+      "result": "Passed"
+    },
+    {
+      "name": "Remaining task request uses the explicit follow-up due date",
+      "result": "Passed"
+    },
+    {
+      "name": "Source template change requires review and preserves existing tasks",
+      "result": "Passed"
+    },
+    {
+      "name": "Generation preview retains occurrence identity across reruns",
+      "result": "Passed"
+    },
+    {
+      "name": "Commercial renewal proposal leaves accepted source dates intact",
+      "result": "Passed"
+    },
+    {
+      "name": "Unknown save recovery produces no duplicate effect",
+      "result": "Passed"
+    },
+    {
+      "name": "Failed save keeps the native form and original data",
+      "result": "Passed"
+    },
+    {
+      "name": "Reload and backup preserve exact accepted local records",
+      "result": "Passed"
+    },
+    {
+      "name": "Read-only and denied roles remove mutation controls and record context",
+      "result": "Passed"
+    },
+    {
+      "name": "All six views fit desktop tablet and phone widths",
+      "result": "Passed"
+    },
+    {
+      "name": "Keyboard navigation and native modal focus return work",
+      "result": "Passed"
+    }
+  ],
+  "errors": [],
+  "images": [
+    {
+      "name": "desktop-register.png",
+      "sha256": "6f88268ff8e8a1f013fb1bbf5b9745fbfbb39c14befcac47bc5215febc5c6337"
+    },
+    {
+      "name": "desktop-coverage.png",
+      "sha256": "67b12675098b8391598530756ed614e7e2a1e05815bfca6d84d7629be53ff785"
+    },
+    {
+      "name": "desktop-deferral-dialog.png",
+      "sha256": "88f80b0c5223a69dc1477d69e405c04f49c487cc713092dd86f7bc461da4c8ba"
+    },
+    {
+      "name": "desktop-partial-result.png",
+      "sha256": "679321315b0a6d2789243d636917058b3f81f8d49cd93aac516d1febe5418bd1"
+    },
+    {
+      "name": "desktop-renewal-proposal.png",
+      "sha256": "48e297d5bedba9936e7b81a93140a571d826d6f4c4e013eb41f79901e05646fe"
+    },
+    {
+      "name": "1440-register.png",
+      "sha256": "988aef52053b7bb0da9ee8fc9707cea062d52b5bf834762767de5470361658c0"
+    },
+    {
+      "name": "1440-coverage.png",
+      "sha256": "31d57129ff5da9fe32472d249eb995d9c56a65d77b83fedc794dba8333099ee6"
+    },
+    {
+      "name": "1440-plans.png",
+      "sha256": "87611693f1eeb45543d173234f48dfbe76f4f14a749f92a4c10106f560b9d146"
+    },
+    {
+      "name": "1440-due.png",
+      "sha256": "0540c426ba0f61f230b4869b51712cba9d1db9e1e63a16847c4cc85480988dfc"
+    },
+    {
+      "name": "1440-history.png",
+      "sha256": "f19d17348e5547884337cf77ec87c1b87c12ba835d5e95a9f5f5b443a13f5f57"
+    },
+    {
+      "name": "1440-renewals.png",
+      "sha256": "05a4f2020129ba375c3e6cb48f997fccdbbd9239649959a9ec9f19956422f7fd"
+    },
+    {
+      "name": "390-register.png",
+      "sha256": "c4f2b334518c328dbd0b8946bdfb804bef39240f345f4a9c3fd4593f0642fa36"
+    },
+    {
+      "name": "390-coverage.png",
+      "sha256": "67cfceb6a319136a8dca326efcd5d84659748a97350f52ea8b9939b88f889de4"
+    },
+    {
+      "name": "390-plans.png",
+      "sha256": "da77c9d91711a7680e75b2d4cd20c03dbf9db0f890433094bf52a38999f4a1bb"
+    },
+    {
+      "name": "390-due.png",
+      "sha256": "c04b6f271593368429d16646868cd9a2e5c95f063fd1291558eb073035e8c3f7"
+    },
+    {
+      "name": "390-history.png",
+      "sha256": "d95538915c4d58ae89075a6a27facc4ff117e4f7dd02a003f125c5f18eb07c61"
+    },
+    {
+      "name": "390-renewals.png",
+      "sha256": "cc705f42d9843a21d6d9948b69fecabc09e70c7acb7af0cd361366f04625c45e"
+    },
+    {
+      "name": "320-register.png",
+      "sha256": "ae519256e19777552585d897126aa648f631e3cd8007090d9fb02bd9c5e124d8"
+    },
+    {
+      "name": "320-coverage.png",
+      "sha256": "e01036e3423880cfdc78eeb43ec3958cffeabeef7198b3ae5d698ae3ba1036ae"
+    },
+    {
+      "name": "320-plans.png",
+      "sha256": "14867a9ba8067a06873b85b86f4eb678c0fca2df81d95e2f836f547332679416"
+    },
+    {
+      "name": "320-due.png",
+      "sha256": "dc93f38b43074b69bd21f3298ffcb7c8c7e6e48492d2620365762f31b6458491"
+    },
+    {
+      "name": "320-history.png",
+      "sha256": "1489a49e468866b2fe0be6b0a8cc1f4868934f361b2519972571e88fe77dd9d5"
+    },
+    {
+      "name": "320-renewals.png",
+      "sha256": "e1cf018277032dc78604ec63b189dc1dd5ffecc563f3837629e36e4ca5427524"
+    }
+  ]
+}

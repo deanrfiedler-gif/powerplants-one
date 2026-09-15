@@ -57,6 +57,7 @@ The [accepted UI baseline register](../../standards/ui-baselines.json) retains e
 | Service Job Pack | [r03](job-pack/powerplants-one-job-pack-r03.html) | Approved design successor to r02 | `/service/packs` exists; r03 page integration remains separate. [Decision](../../decisions/job-pack-design.md), [exact baseline mapping](../../standards/ui-baselines.json). |
 | Field Technicians | [r05](field-technicians/powerplants-one-field-technicians-r05.html) | Approved design successor to r04 | Baseline register still maps `/service/technicians` to r04; r05 is not recorded as implemented. [Decision](../../decisions/field-technicians-design.md), [exact baseline mapping](../../standards/ui-baselines.json). |
 | Finance & Commercial Controls | [r02](finance/PPO-Finance-and-Commercial-Controls-r02.html) | Proposed refinement; not an accepted application baseline | P10 handoff/reconciliation exists; this four-view workspace requires integration. [Design decision](../../decisions/finance-workspace-design.md), [P10 handover](../../delivery/p10-handover.md). |
+| Service Agreements & Maintenance | [r01](maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html) | Proposed MA-01–MA-05 design; native checks and capture review complete; owner acceptance and application integration separate | Sourced coverage, recurring obligations, owned requests and renewal preparation. [Design and receiving handover](../../decisions/service-agreements-maintenance-design.md). |
 
 ## Preserved earlier revisions
 
