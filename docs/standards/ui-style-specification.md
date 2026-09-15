@@ -194,7 +194,7 @@ The later [r08 implementation decision](../decisions/shared-ui-r08-implementatio
 
 ## Engineering r02 adoption — 10 September 2026
 
-Dean accepted the [Engineering r02 container](../reference/engineering-r02/PPO-Engineering-Container-r02.html) for implementation. Its scoped register, Roboto typography, navy controls, green selection, resize behaviour, compact cards and four-section drawer govern the Engineering page. The [integration decision](../decisions/engineering-r02-integration.md) and [handover](../delivery/engineering-intake-handover.md) distinguish accepted presentation from each implemented workflow. Reuse the existing application shell; do not duplicate navigation or claim unimplemented document/release functions. The other module baselines retain their authority.
+Dean accepted the [Engineering r02 container](../reference/ui/engineering/PPO-Engineering-Container-r02.html) for implementation. Its scoped register, Roboto typography, navy controls, green selection, resize behaviour, compact cards and four-section drawer govern the Engineering page. The [integration decision](../decisions/engineering-r02-integration.md) and [handover](../delivery/engineering-intake-handover.md) distinguish accepted presentation from each implemented workflow. Reuse the existing application shell; do not duplicate navigation or claim unimplemented document/release functions. The other module baselines retain their authority.
 
 ## Accepted Service Job Pack r02
 
