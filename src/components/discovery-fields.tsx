@@ -70,6 +70,18 @@ export function activeInput(
     ),
   };
 }
+export function preserveAnswerOrder(
+  answers: readonly Answer[],
+  answer: Answer,
+  questions: readonly Question[],
+) {
+  const byId = new Map(answers.map((item) => [item.question_id, item]));
+  byId.set(answer.question_id, answer);
+  return questions.flatMap((question) => {
+    const current = byId.get(question.id);
+    return current ? [current] : [];
+  });
+}
 export function FollowUpFields({
   label,
   value,
@@ -545,10 +557,11 @@ export function DiscoveryFields({
           onChange={(answer) =>
             onChange({
               ...value,
-              answers: [
-                ...value.answers.filter((a) => a.question_id !== q.id),
+              answers: preserveAnswerOrder(
+                value.answers,
                 answer,
-              ],
+                options.definition.questions,
+              ),
             })
           }
         />
