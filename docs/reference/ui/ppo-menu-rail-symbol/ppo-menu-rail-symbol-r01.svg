@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="1040" viewBox="-520 -520 1040 1040" role="img" aria-labelledby="ppo-symbol-title ppo-symbol-desc">
+  <title id="ppo-symbol-title">Powerplants One</title>
+  <desc id="ppo-symbol-desc">Compact Powerplants symbol with three continuous green elliptical loops and four white circles. Transparent background. Menu-rail adaptation r01.</desc>
+  <defs>
+    <mask id="ppo-circle-clearance" x="-520" y="-520" width="1040" height="1040" maskUnits="userSpaceOnUse" style="mask-type:luminance">
+      <rect x="-520" y="-520" width="1040" height="1040" fill="#fff"/>
+      <g fill="#000">
+        <circle cx="-240" cy="-268" r="56"/>
+        <circle cx="240" cy="-268" r="56"/>
+        <circle cx="-240" cy="268" r="56"/>
+        <circle cx="240" cy="268" r="56"/>
+      </g>
+    </mask>
+  </defs>
+  <g fill="none" stroke="#62BB46" stroke-width="52" mask="url(#ppo-circle-clearance)">
+    <ellipse cx="0" cy="0" rx="160" ry="470"/>
+    <ellipse cx="0" cy="0" rx="160" ry="470" transform="rotate(60)"/>
+    <ellipse cx="0" cy="0" rx="160" ry="470" transform="rotate(-60)"/>
+  </g>
+  <g fill="#FFFFFF">
+    <circle cx="-240" cy="-268" r="44"/>
+    <circle cx="240" cy="-268" r="44"/>
+    <circle cx="-240" cy="268" r="44"/>
+    <circle cx="240" cy="268" r="44"/>
+  </g>
+</svg>
