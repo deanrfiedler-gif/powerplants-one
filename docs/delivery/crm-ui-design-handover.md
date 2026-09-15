@@ -2,6 +2,8 @@
 
 **Revision:** r02 · **Date:** 6 September 2026 · **Owner:** Dean Fiedler, private prototype · **Parent:** PPO-009 / [issue #9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9) · **Status:** Repository design handover; implementation and acceptance remain separate.
 
+**Housekeeping update, 15 September 2026:** Dean authorised removal of the old capture gallery through PR #188 (duplicate #189). The [retirement decision](../decisions/crm-mockup-retirement.md) records the exact historical files and recovery. Earlier results below remain historical: their links now use a fixed commit. Current verification uses the [retained preview](../blueprints/crm-board-grid-mockup.html) and [active manifest](../blueprints/crm-ui-design-manifest.json); the deleted eight-example static gallery is no longer a current test target.
+
 ## Audit-driven revision r02
 
 Dean requested an audit of both pages, then authorised the design revision on 6 September 2026. The revision starts from published main `8bc0d903cb9da100136a8a5430bac9e6883bb27d`, tree `191b7f86c790201850240a55b3f81b683a52c38c` (original design PR #41). It uses the separate `docs/crm-ui-audit-revision` branch and leaves the active I1 and P09 branches untouched.
@@ -34,7 +36,7 @@ Measurements use CSS pixels without browser chrome. Phone first-card bottom is i
 
 ### Revision verification and review
 
-The actual standalone export passed `node docs/blueprints/crm-ui-design-check.mjs` using Chrome headless shell 151.0.7922.34. Its companion `crm-ui-audit-checks.mjs` exercises the observed regressions. [Local result and measurements](../blueprints/crm-ui-mockups/revision-review.json) record the exact input hash; [current asset manifest](../blueprints/crm-ui-mockups/manifest.json) retains original and revised hashes.
+The actual standalone export passed `node docs/blueprints/crm-ui-design-check.mjs` using Chrome headless shell 151.0.7922.34. Its companion `crm-ui-audit-checks.mjs` exercises the observed regressions. [Local result and measurements](https://github.com/deanrfiedler-gif/powerplants-one/blob/dcabfec1b5cde1c2cf220359e6cf1c63408512d6/docs/blueprints/crm-ui-mockups/revision-review.json) record the exact input hash; [historical asset manifest](https://github.com/deanrfiedler-gif/powerplants-one/blob/dcabfec1b5cde1c2cf220359e6cf1c63408512d6/docs/blueprints/crm-ui-mockups/manifest.json) retains original and revised hashes.
 
 Checked seven viewport sizes from 320 to 1920 px; all-six-stage phone navigation; Board/Grid data/filter/sort equivalence; known/unknown totals; creation context and out-of-filter recovery; linked field validation/focus; Escape and detail focus return; horizontal keyboard scrolling; frozen table identity/headings; long input in Board/Grid/detail; a temporary 150-record uneven-stage derivative; and a focused 200% text enlargement check. Seventeen captures were generated. Desktop Board/Grid, phone, scrolled grid, long text, enlarged text, load and state illustrations were visually inspected. No runtime errors, external network calls or browser storage writes occurred.
 
@@ -44,13 +46,13 @@ Foundation, prototype and naming checks also passed on a complete local archive 
 
 ## Original r01 handover and authority
 
-Dean authorised publication of the brand-derived shared specification, supplied logo and synthetic Board/Grid mockups, with maintained CRM and I2 guidance. The [UI specification r03](../standards/ui-style-specification.md), [C01–C07 specification r03](../blueprints/crm-screen-specification.md), [preview/captures](../blueprints/crm-ui-mockups/README.md), [I2 UI guidance](crm-i2-ui-guidance.md) and [decision note](../decisions/ui-brand-and-crm-layout.md) form the handover. The issued r01 conversation documents/captures retain their original bytes; the working specification adds repository links and scope guidance.
+Dean authorised publication of the brand-derived shared specification, supplied logo and synthetic Board/Grid mockups, with maintained CRM and I2 guidance. The [UI specification r03](../standards/ui-style-specification.md), [C01–C07 specification r03](../blueprints/crm-screen-specification.md), [preview/captures](https://github.com/deanrfiedler-gif/powerplants-one/blob/dcabfec1b5cde1c2cf220359e6cf1c63408512d6/docs/blueprints/crm-ui-mockups/README.md), [I2 UI guidance](crm-i2-ui-guidance.md) and [decision note](../decisions/ui-brand-and-crm-layout.md) form the handover. The issued r01 conversation documents/captures retain their original bytes; the working specification adds repository links and scope guidance.
 
 Baseline main was `ddc1a3cce769e011939e621d8d5f176542f48f8c` (PR #38), tree `d6d374ec30c620276e402d6a15f5adbc4d25bf02`. Work uses the dedicated `docs/ppo-ui-crm-design-handover` branch. I1 issue #39 / draft PR #40 and P09 issue #36 / draft PR #37 were active; neither branch is edited here. I1 keeps its existing scope and owns preparation of the full I2 starter. The [UI addendum](crm-i2-ui-guidance.md) is ready for it to consume.
 
 ## Source and export treatment
 
-The original brand PDF governs exact colour, typography and logo evidence; its Markdown transcription is secondary. The logo and reattachment matched exactly. The [manifest](../blueprints/crm-ui-mockups/manifest.json) records supplied-PDF, logo and original capture hashes. Only the approved logo and synthetic design outputs enter Git. No operational Pipedrive record, original screenshot or full company PDF is committed.
+The original brand PDF governs exact colour, typography and logo evidence; its Markdown transcription is secondary. The logo and reattachment matched exactly. The [manifest](https://github.com/deanrfiedler-gif/powerplants-one/blob/dcabfec1b5cde1c2cf220359e6cf1c63408512d6/docs/blueprints/crm-ui-mockups/manifest.json) records supplied-PDF, logo and original capture hashes. Only the approved logo and synthetic design outputs enter Git. No operational Pipedrive record, original screenshot or full company PDF is committed.
 
 The standalone HTML carries the same fictional fixture and UI as the conversation preview. Export removes the host frame, embeds only the used Lucide 1.17.0 geometries and includes font/icon notices. It uses no API, network, local/session storage or service worker; temporary creation resets on reload. It is a design document, not a new application route or hosted site.
 
