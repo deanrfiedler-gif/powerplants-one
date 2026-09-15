@@ -1,0 +1,102 @@
+{
+  "suite": "Service Agreements & Maintenance design model",
+  "groups": 24,
+  "results": [
+    {
+      "name": "Unreviewed coverage blocks maintenance requests",
+      "result": "Passed"
+    },
+    {
+      "name": "Unknown or disputed coverage cannot bypass Finance review",
+      "result": "Passed"
+    },
+    {
+      "name": "A missing source cannot be resolved as Covered",
+      "result": "Passed"
+    },
+    {
+      "name": "Coverage preserves the separate billing decision",
+      "result": "Passed"
+    },
+    {
+      "name": "Deferral retains original due identity and source scope",
+      "result": "Passed"
+    },
+    {
+      "name": "Invalid, earlier and outside-term deferrals are rejected",
+      "result": "Passed"
+    },
+    {
+      "name": "Owned request contains exact hashed scope and no booking",
+      "result": "Passed"
+    },
+    {
+      "name": "A repeated request cannot duplicate the same obligation",
+      "result": "Passed"
+    },
+    {
+      "name": "Partial Service Review result preserves original work and owns the remainder",
+      "result": "Passed"
+    },
+    {
+      "name": "Duplicate reviewed result and destructive cancellation are refused",
+      "result": "Passed"
+    },
+    {
+      "name": "Remaining-work request retains the same original occurrence",
+      "result": "Passed"
+    },
+    {
+      "name": "Calendar recurrence preserves the original month-end anchor",
+      "result": "Passed"
+    },
+    {
+      "name": "Repeated generation is duplicate-safe",
+      "result": "Passed"
+    },
+    {
+      "name": "Plan successor preserves existing occurrences across versions",
+      "result": "Passed"
+    },
+    {
+      "name": "Renewal proposal never extends the active agreement",
+      "result": "Passed"
+    },
+    {
+      "name": "Observer and wrong-role mutations are refused",
+      "result": "Passed"
+    },
+    {
+      "name": "Original-result replay preserves a single effect and rejects changed content",
+      "result": "Passed"
+    },
+    {
+      "name": "Stale forms cannot overwrite a later change",
+      "result": "Passed"
+    },
+    {
+      "name": "Successor source invalidates current eligibility without rewriting historical evidence",
+      "result": "Passed"
+    },
+    {
+      "name": "Expired agreement cannot create due work",
+      "result": "Passed"
+    },
+    {
+      "name": "Reviewed result must match the original request context",
+      "result": "Passed"
+    },
+    {
+      "name": "Terminal exceptions retain originals and prevent ordinary requests",
+      "result": "Passed"
+    },
+    {
+      "name": "Hostile source text is escaped and unsupported saved state is rejected",
+      "result": "Passed"
+    },
+    {
+      "name": "Sourced template changes only successor tasks and requires review",
+      "result": "Passed"
+    }
+  ]
+}

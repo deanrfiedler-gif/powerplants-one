@@ -1,0 +1,9 @@
+{
+  "baseline_commit": "07ade644de06ff3b13e5af6ae9c299ca7c78c535",
+  "html_path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
+  "html_sha256": "9eafe28fc496f65833f0c9ac980b16375ac684451d90c20d933078b57dd18b82",
+  "model_groups_passed": 24,
+  "dom_groups_passed": 12,
+  "native_browser": "Pending; no native result claimed",
+  "documentation_checks": "Foundation, prototype and naming passed; no business acceptance inferred"
+}
