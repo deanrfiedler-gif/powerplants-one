@@ -29,7 +29,14 @@ await build({
           resolveDir: process.cwd(),
           contents:
             args.path === "next/navigation"
-              ? 'export const usePathname=()=>"/crm/opportunities"; export const useRouter=()=>({push:()=>{},refresh:()=>{}});'
+              ? `import { useSyncExternalStore } from "react";
+                 for (const key of ["pushState", "replaceState"]) {
+                   const original = window.history[key].bind(window.history);
+                   window.history[key] = (...args) => { original(...args); window.dispatchEvent(new Event("fixture-location")); };
+                 }
+                 const subscribe = listener => { window.addEventListener("popstate", listener); window.addEventListener("fixture-location", listener); return () => { window.removeEventListener("popstate", listener); window.removeEventListener("fixture-location", listener); }; };
+                 export const useSearchParams=()=>new URLSearchParams(useSyncExternalStore(subscribe,()=>window.location.search,()=>""));
+                 export const usePathname=()=>"/crm/opportunities"; export const useRouter=()=>({push:()=>{},refresh:()=>{}});`
               : args.path === "next/link"
                 ? 'import React from "react"; export default function Link({href,children,...props}){return <a href={href} {...props}>{children}</a>}'
                 : 'import React from "react"; export default function Image({unoptimized,src,...props}){return <img src={src.replace("/brand/","brand/")} {...props}/>}',

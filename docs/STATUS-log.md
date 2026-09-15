@@ -130,7 +130,7 @@ One bounded live stage-metadata read refreshed ten stages across two pipeline ID
 
 ## Shared UI and branded CRM design handover
 
-The [shared UI specification](standards/ui-style-specification.md), [branded Board/Grid preview and original captures](blueprints/crm-ui-mockups/README.md) and [visual decision](decisions/ui-brand-and-crm-layout.md) publish the supplied Powerplants identity with a Pipedrive-familiar CRM layout. The [screen specification](blueprints/crm-screen-specification.md) and [I2 UI guidance](delivery/crm-i2-ui-guidance.md) make this discoverable for later implementation; the [handover](delivery/crm-ui-design-handover.md) records provenance, validation and publication controls.
+The [shared UI specification](standards/ui-style-specification.md), [branded Board/Grid preview and original captures](https://github.com/deanrfiedler-gif/powerplants-one/blob/dcabfec1b5cde1c2cf220359e6cf1c63408512d6/docs/blueprints/crm-ui-mockups/README.md) and [visual decision](decisions/ui-brand-and-crm-layout.md) publish the supplied Powerplants identity with a Pipedrive-familiar CRM layout. The [screen specification](blueprints/crm-screen-specification.md) and [I2 UI guidance](delivery/crm-i2-ui-guidance.md) make this discoverable for later implementation; the [handover](delivery/crm-ui-design-handover.md) records provenance, validation and publication controls.
 
 This is documentation/design work under PPO-009, separate from active I1 and P09. I1 retains Enquiry → Qualified, Open and no money fields. The six reference stages and fictional commercial values do not expand its scope, establish account parity or pass AT-25. The maintained I2 starter is prepared by I1 and requires a new invocation before implementation.
 
@@ -148,7 +148,7 @@ P09 issue #36 / PR #37 implement exact completion submission, authorised review/
 
 ## CRM UI audit revision
 
-Dean authorised the next design revision after the published Board/Grid audit. The [r02 visual revision](delivery/crm-ui-design-handover.md) improves mobile first-record visibility, continuous desktop stage navigation, frozen grid headings/identity, full next actions/owners, creation context, validation and long text. [Updated captures and branded exception examples](blueprints/crm-ui-mockups/README.md) accompany shared UI specification r03 and I2 UI guidance r02. Original issued images and source bytes remain preserved. Verification and PR publication are recorded in the handover; this does not change I1/P09 application scope or close PPO-009/AT-25.
+Dean authorised the next design revision after the published Board/Grid audit. The [r02 visual revision](delivery/crm-ui-design-handover.md) improves mobile first-record visibility, continuous desktop stage navigation, frozen grid headings/identity, full next actions/owners, creation context, validation and long text. [Updated captures and branded exception examples](https://github.com/deanrfiedler-gif/powerplants-one/blob/dcabfec1b5cde1c2cf220359e6cf1c63408512d6/docs/blueprints/crm-ui-mockups/README.md) accompany shared UI specification r03 and I2 UI guidance r02. Original issued images and source bytes remain preserved. Verification and PR publication are recorded in the handover; this does not change I1/P09 application scope or close PPO-009/AT-25.
 
 ## P10 Finance handoff and account simulation
 

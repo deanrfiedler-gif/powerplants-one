@@ -2,7 +2,7 @@
 
 The [complete supplied logo](powerplants-logo-green-white.png) is copied byte-for-byte from `GEN_LGO_PPALogoPrimaryTransparent_v01_ISS.png`; the reattached `(1)` copy matched. Do not crop, recolour, separate the symbol/wordmark or distort it. Use the authorised private-design treatment and clear-space rules in the [shared UI specification](../ui-style-specification.md).
 
-The [mockup manifest](../../blueprints/crm-ui-mockups/manifest.json) records provenance and hashes. The repository does not redistribute the full company brand PDF or operational screenshots.
+The [active design manifest](../../blueprints/crm-ui-design-manifest.json) records provenance and unchanged logo/export hashes. Historical captures and their original manifest remain linked from the [retirement decision](../../decisions/crm-mockup-retirement.md). The repository does not redistribute the full company brand PDF or operational screenshots.
 
 The standalone design preview embeds Roboto font subsets extracted from the supplied PDF, retaining the Roboto Project Authors copyright. The upstream [Roboto 3 Classic project](https://github.com/googlefonts/roboto-3-classic) provides its [OFL 1.1 text](roboto-ofl.txt). These subsets support the illustrated content; the application should use a verified complete font distribution for supported languages.
 

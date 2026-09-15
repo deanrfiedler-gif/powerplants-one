@@ -1,0 +1,57 @@
+{
+  "metadata": {
+    "schema_version": "1",
+    "template_ref": "PPO-EST-WORKBOOK",
+    "template_revision": "r01",
+    "workbook_ref": "SYN-PPO-WBK-000001",
+    "workbook_revision": "r01",
+    "opportunity_ref": "SYN-PPO-OPP-EXCEL-001",
+    "option_ref": "SYN-PPO-OPT-EXCEL-A",
+    "organisation_ref": "SYN-PPO-ORG-EXCEL-001",
+    "site_ref": "SYN-PPO-SITE-EXCEL-001",
+    "title": "Propagation greenhouse systems upgrade",
+    "estimator": "SYN Estimator",
+    "currency": "AUD",
+    "tax_basis": "ExcludingTax",
+    "calculation_policy": "SYN-EST-ARITHMETIC-01",
+    "data_mode": "Synthetic",
+    "formula_reviewed_by": "SYN Estimator",
+    "formula_reviewed_at": "2026-09-15"
+  },
+  "sections": [
+    ["SEC-01", "Climate control", "SYN-PPO-FAC-EXCEL-001", "", "Climate", "Upgrade"],
+    ["SEC-02", "Irrigation and fertigation", "SYN-PPO-FAC-EXCEL-001", "SYN-PPO-AREA-EXCEL-001", "Irrigation", "Upgrade"],
+    ["SEC-03", "Lighting", "SYN-PPO-FAC-EXCEL-001", "SYN-PPO-AREA-EXCEL-001", "Lighting", "Upgrade"],
+    ["SEC-04", "Installation", "SYN-PPO-FAC-EXCEL-001", "", "Shared", "Installation"],
+    ["SEC-05", "Engineering", "SYN-PPO-FAC-EXCEL-001", "", "Shared", "Design"],
+    ["SEC-06", "Freight", "", "", "Shared", "Delivery"],
+    ["SEC-07", "Commissioning", "SYN-PPO-FAC-EXCEL-001", "", "Shared", "Commissioning"]
+  ],
+  "scope": [
+    ["SCOPE-01", "Inclusion", "Supply and install the listed controls, irrigation and lighting components."],
+    ["SCOPE-02", "Exclusion", "Incoming mains power upgrade and greenhouse structural alterations."],
+    ["SCOPE-03", "Assumption", "Existing water supply and switchboard capacity require confirmation before a firm offer."]
+  ],
+  "sources": [
+    ["SRC-01", "SupplierQuote", "SYN Controls Supplier", "SYN-PPO-SQ-001", "2026-09-10", "2026-10-10", "Fictional AUD unit costs; no company pricing."],
+    ["SRC-02", "SupplierQuote", "SYN Irrigation Supplier", "SYN-PPO-SQ-002", "2026-09-10", "2026-10-10", "Freight excluded; one separate freight line."],
+    ["SRC-03", "SupplierQuote", "SYN Lighting Supplier", "SYN-PPO-SQ-003", "2026-09-11", "2026-10-11", "Fictional equipment and bracket quantities."],
+    ["SRC-04", "Manual", "SYN Estimating Team", "SYN-PPO-RATE-001", "2026-09-12", "2026-10-12", "Illustrative labour and engineering rates only."],
+    ["SRC-05", "SupplierQuote", "SYN Freight Provider", "SYN-PPO-SQ-004", "2026-09-12", "2026-10-12", "Delivery allowance is explicit; no booking."],
+    ["SRC-06", "SupplierQuote", "SYN Electrical Contractor", "SYN-PPO-SQ-005", "2026-09-12", "2026-10-12", "Electrical installation allowance pending survey."]
+  ],
+  "lines": [
+    ["L-001", "SEC-01", "Climate controller and interface", "Product", 1, "ea", 14500, 19000, false, "SRC-01", "2026-09-10", true, true],
+    ["L-002", "SEC-01", "Temperature and humidity sensors", "Product", 6, "ea", 225, 320, false, "SRC-01", "2026-09-10", true, true],
+    ["L-003", "SEC-02", "Fertigation dosing assembly", "Product", 1, "ea", 18500, 24500, false, "SRC-02", "2026-09-10", true, true],
+    ["L-004", "SEC-02", "Irrigation pipework", "Product", 180.5, "m", 6.75, 9.25, false, "SRC-02", "2026-09-10", true, true],
+    ["L-005", "SEC-02", "Irrigation valve assemblies", "Product", 8, "ea", 175, 245, false, "SRC-02", "2026-09-10", true, true],
+    ["L-006", "SEC-03", "LED luminaires", "Product", 24, "ea", 465, 620, false, "SRC-03", "2026-09-11", true, true],
+    ["L-007", "SEC-03", "Luminaire mounting brackets", "Product", 24, "ea", 8.5, 12, false, "SRC-03", "2026-09-11", true, true],
+    ["L-008", "SEC-04", "Mechanical installation labour", "Labour", 80, "h", 70, 110, false, "SRC-04", "2026-09-12", true, true],
+    ["L-009", "SEC-04", "Electrical subcontract allowance", "Subcontract", 1, "lot", 4200, 5400, true, "SRC-06", "2026-09-12", true, true],
+    ["L-010", "SEC-05", "Controls design and documentation", "Engineering", 24, "h", 85, 135, false, "SRC-04", "2026-09-12", true, true],
+    ["L-011", "SEC-06", "Site delivery allowance", "Freight", 1, "lot", 1500, 1950, true, "SRC-05", "2026-09-12", true, true],
+    ["L-012", "SEC-07", "Commissioning and operator training", "Labour", 16, "h", 80, 125, false, "SRC-04", "2026-09-12", true, true]
+  ]
+}

@@ -352,12 +352,15 @@ export function ownerTransferCases() {
       code("RecordUnavailable"),
     );
   });
-  for (const competitor of ["qualification", "planning", "transfer"] as const)
+  for (const competitor of ["qualification", "planning", "planning-existing", "transfer"] as const)
     for (const transferFirst of [true, false])
       test(`HV-05/06/07: real competing ${competitor}; transfer queued ${transferFirst ? "first" : "second"}`, async () => {
         const { p, input } = await fixture(true),
-          body = await intent(p, input.id),
-          blocker = await database().connect();
+          body = await intent(p, input.id);
+        const existing = { ...crmAction(), ...crmBase(), company_id: CRM.company, site_id: CRM.site,
+          access_class: "Internal", links: [{ object_type: "Opportunity", object_id: input.id }] };
+        if (competitor === "planning-existing") await createActivity(p, existing);
+        const blocker = await database().connect();
         await blocker.query("BEGIN");
         const pid = (await blocker.query("SELECT pg_backend_pid() AS pid"))
           .rows[0].pid;
@@ -369,12 +372,12 @@ export function ownerTransferCases() {
         const competing = () =>
           competitor === "qualification"
             ? qualifyOpportunity(p, input.id, crmQualify())
-            : competitor === "planning"
+            : competitor === "planning" || competitor === "planning-existing"
               ? planOpportunityAction(p, input.id, {
                   ...crmBase(),
                   expected_version: 1,
-                  new_action: crmAction(),
-                  activity_id: null,
+                  new_action: competitor === "planning" ? crmAction() : null,
+                  activity_id: competitor === "planning-existing" ? existing.id : null,
                 })
               : transferOpportunityOwner(p, input.id, {
                   ...body,
@@ -415,6 +418,58 @@ export function ownerTransferCases() {
           results[0].status === "fulfilled" ? 1 : 0,
         );
       });
+  for (const action of ["complete", "cancel", "update"] as const)
+    for (const transferFirst of [true, false])
+      test(`HV-08: observed ${action} race, transfer queued ${transferFirst ? "first" : "second"}`, async () => {
+        const { p, input } = await fixture(), body = await intent(p, input.id);
+        const command = { ...crmBase(), expected_version: 1,
+          ...(action === "complete" ? { outcome: "SYN independently completed" } : action === "cancel" ? { cancellation_reason: "SYN independently cancelled" } :
+            { owner_id: receiver, summary: input.initial_action.summary, due_at: null, due_needed: true }) };
+        const blocker = await database().connect();
+        await blocker.query("BEGIN");
+        const pid = (await blocker.query("SELECT pg_backend_pid() AS pid")).rows[0].pid;
+        await blocker.query("SELECT id FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
+        const transfer = () => transferOpportunityOwner(p, input.id, body);
+        const activity = () => activityCommand(p, input.initial_action.id, command, action);
+        const first = Promise.allSettled([(transferFirst ? transfer : activity)()]);
+        let second: typeof first | undefined;
+        try {
+          assert.equal(await blockedBy(pid), true);
+          second = Promise.allSettled([(transferFirst ? activity : transfer)()]);
+          assert.equal(await blockedBy(pid, 2), true);
+        } finally { await blocker.query("COMMIT"); blocker.release(); }
+        const a = (await first)[0], b = (await second!)[0];
+        assert.equal(a.status, "fulfilled");
+        assert.equal(b.status, transferFirst ? "fulfilled" : "rejected");
+        if (!transferFirst && b.status === "rejected") assert.equal(b.reason.code, "ActivityComparisonConflict");
+        const saved = await readOpportunity(p, input.id);
+        assert.equal(saved.owner_id, transferFirst ? receiver : p.actor_id);
+        assert.equal(saved.version, transferFirst ? 2 : 1);
+        assert.equal(saved.next_activity!.version, 2);
+        assert.equal(saved.next_activity!.owner_id, action === "update" ? receiver : p.actor_id);
+        assert.equal(saved.next_activity!.status, action === "complete" ? "Completed" : action === "cancel" ? "Cancelled" : "Open");
+        assert.equal((await rows("SELECT count(*)::int n FROM ppo.operation_receipts WHERE operation_id=$1", [body.operation_id]))[0].n, transferFirst ? 1 : 0);
+        const activityResult = transferFirst ? b : a;
+        assert.equal(activityResult.status, "fulfilled");
+        if (activityResult.status === "fulfilled") assert.deepEqual(await readOperation(p, command.operation_id), activityResult.value.receipt);
+      });
+  test("HV-22: renamed and inactive historical owners retain exact chain across intervening qualification and planning", async () => {
+    const p = await principal(), q = await principal("crm-receiver"), input = { ...crmCreate(), owner_id: receiver };
+    await createOpportunity(p, input); await grantOnward();
+    const origin = (await readOpportunity(p, input.id)).original_owner!;
+    const first = await intent(q, input.id, p.actor_id), accepted = await transferOpportunityOwner(q, input.id, first);
+    await qualifyOpportunity(p, input.id, crmQualify(2));
+    await planOpportunityAction(p, input.id, { ...crmBase(), expected_version: 3, new_action: crmAction(), activity_id: null });
+    await transferOpportunityOwner(p, input.id, await intent(p, input.id));
+    const before = await rows("SELECT to_jsonb(t) row FROM ppo.opportunity_events t WHERE opportunity_id=$1 ORDER BY opportunity_version", [input.id]);
+    await rows("UPDATE ppo.users SET display_name='SYN Renamed historical creator',active=false WHERE id=$1", [p.actor_id]);
+    const saved = await readOpportunity(q, input.id);
+    assert.equal(saved.original_owner!.original_owner_id, origin.original_owner_id);
+    assert.equal((await rows("SELECT created_by FROM ppo.opportunities WHERE id=$1", [input.id]))[0].created_by, p.actor_id);
+    assert.deepEqual(saved.owner_transfers.map(x => [x.from_owner_id,x.to_owner_id]), [[receiver,p.actor_id],[p.actor_id,receiver]]);
+    assert.deepEqual(await rows("SELECT to_jsonb(t) row FROM ppo.opportunity_events t WHERE opportunity_id=$1 ORDER BY opportunity_version", [input.id]), before);
+    assert.deepEqual(await readOperation(q, first.operation_id), accepted.receipt);
+  });
   test("HV-08: completed Activity conflicts with an old comparison; transfer then completion leaves independent outcomes", async () => {
     const { p, input } = await fixture(),
       body = await intent(p, input.id);

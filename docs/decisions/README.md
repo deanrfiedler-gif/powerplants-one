@@ -63,3 +63,11 @@ The [PPO Assistant direction and architecture decision](ppo-assistant-direction.
 [Derived routing direction](estimating-derived-routing.md) records Dean’s 12 September 2026 adoption of "derive continuously, advise visibly, bind once, confirm always". The delivery route becomes a classification derived from accepted line composition, advisory during drafting and confirmed by the receiving owner at handover creation. It decides E2-D01 for the first time rather than superseding it; `SYN-E2-ROUTE-r01` was never adopted as policy and is retained as design history. A line category taxonomy extension is recorded as the blocking prerequisite. No threshold, rule version, migration or ADR number is allocated.
 
 - [Development and compiled performance profiles](ci-performance-profiles.md) — retain both original PT-27 measurements on the exact same load fixture, with bounded phase observations; original comparison and deferred scope editor measurements reviewed; integrated assurance remains.
+
+[Excel estimate import design](excel-estimate-import-design.md) records the authorised r01 workbook/import package under PPO-010. The import runtime and operational workbook acceptance remain separate.
+
+[Product quality adoption](product-quality-adoption.md) records Dean’s 14 September instruction to incorporate all eight product refinements and five engineering/design standards. Existing portal, maintenance, warranty, knowledge, estimating feedback, AI, voice and search plans continue. The derived register and staged delivery plan implement scope adoption; no new technology dependency or operational approval is inferred.
+
+## Naming, communications and SharePoint
+
+[Package decision](naming-communications-sharepoint.md) records Dean's authorisation of the shared design package, r04 naming extension, exact r18 theme source, architecture choices and operational boundaries. It continues ADR-0005 and existing D-012/D-024/D-025 evidence obligations without renumbering the master decisions.

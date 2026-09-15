@@ -1,0 +1,30 @@
+{
+  "revision": "r01",
+  "date": "2026-09-15",
+  "scope": "Retained synthetic Board/Grid design and brand assets; not application acceptance",
+  "provenance": {
+    "source_commit": "dcabfec1b5cde1c2cf220359e6cf1c63408512d6",
+    "original_manifest": "https://github.com/deanrfiedler-gif/powerplants-one/blob/dcabfec1b5cde1c2cf220359e6cf1c63408512d6/docs/blueprints/crm-ui-mockups/manifest.json",
+    "retirement_decision": "docs/decisions/crm-mockup-retirement.md"
+  },
+  "assets": [
+    {
+      "path": "docs/standards/ui-assets/powerplants-logo-green-white.png",
+      "source_filename": "GEN_LGO_PPALogoPrimaryTransparent_v01_ISS.png",
+      "bytes": 315536,
+      "sha256": "8d12f0ecc394950cd9eb66964c588efb71c8e6f445390336c245c3f6712b9694",
+      "treatment": "Original bytes preserved"
+    }
+  ],
+  "brand_pdf": {
+    "filename": "PPA_BRAND_GUIDELINES_compressed.pdf",
+    "bytes": 27591152,
+    "sha256": "335d3049bc72783799315d4790bd56b04e928acd0e1c2c81d8099cec2f2b8fd3",
+    "retained_in_repository": false
+  },
+  "interactive_export": {
+    "path": "docs/blueprints/crm-board-grid-mockup.html",
+    "sha256": "3ef6895d64a237c5cacc144dc5006df296b06b87c0b19e138b5c3560d0ac157a",
+    "adaptation": "r02 audited layout revision; same original synthetic fixture; standalone embedded assets; no network or storage"
+  }
+}

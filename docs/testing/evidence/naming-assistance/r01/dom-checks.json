@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "checks": 21,
+  "tests": [
+    "Filing view renders with synthetic notice and work reference",
+    "Editing description updates the proposed filename",
+    "Invalid name is refused in place without false success",
+    "Destination selection and simulated filing preserve context",
+    "Repeated filing creates no duplicate",
+    "Report preview records simulated issue and prepares report-linked email",
+    "Reply preserves subject; Outlook-native save is unavailable",
+    "Task is created once and notification does not send",
+    "Review selection retains DOM focus and updates batch count",
+    "Stale preview is refused and selection retained",
+    "Refreshed individual approval clears stale batch selection",
+    "Original-name search still finds renamed record",
+    "Protected CAD offers retain with mandatory reason, no rename",
+    "Lost provider response requires same-operation investigation",
+    "History contains original names and simulation outcomes",
+    "Reset confirmation restores original fictional state",
+    "Batch partial failure reports independent outcomes",
+    "Read-only identity disables business action controls",
+    "All six proposed library panels open",
+    "Menu keyboard traversal and escape restore trigger focus in DOM model",
+    "User-entered markup remains text"
+  ],
+  "scope": "jsdom 26.1.0 event/DOM emulation with stubbed dialog/popover APIs. No rendered layout, native focus trapping, touch, accessibility tree, browser or provider proof."
+}

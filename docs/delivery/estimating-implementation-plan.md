@@ -54,3 +54,7 @@ Dean authorised a [first guided estimating package design](../blueprints/estimat
 ## E2 design invocation — 9 September 2026
 
 Dean has invoked the bounded design and rules step. [E2-D01–03](../decisions/estimating-e2-rules.md) and the [design handover](estimating-e2-design-handover.md) replace the earlier prepared-only status for design. They do not yet resolve operational G02/G03/G04 or authorise runtime implementation without adoption of the concrete synthetic policy package. E3–E6 remain unchanged.
+
+## Excel import design addition — 15 September 2026
+
+Dean authorised the [Excel import design package](excel-estimate-import-handover.md). The [bounded plan](excel-estimate-import-plan.md) places standard-workbook upload/review/draft saving alongside E3 cost-source work, reusing E1 and the exact E2 receiving basis. The first pilot retains current numerical/100-line limits. Operational workbook compatibility, native Excel checks and browser/r19 review remain open; no runtime import, pricing-policy extension or new E/P sequence label is delivered.
