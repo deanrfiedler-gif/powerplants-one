@@ -75,3 +75,5 @@ Next bounded step: review this exact visual, then map the accepted workspace to 
 ## Integrated PR repair — 15 September 2026
 
 The r02 successor removes an unused catch binding exposed by repository lint; r01 HTML remains unchanged. The native check now requests the Chrome channel installed by the existing pinned workflow. PR #203 integrates #195, #196, #200, #201 and #202 with their histories retained for combined CI and normal merge. The document-register conflict retains both sets of distinct entries. The CRM gallery deletion retains its fixed historical references. Exact current-source check results remain in PR #203; owner visual and business acceptance remain separate.
+
+The first repaired native run (35022787577) passed nine journey groups and then exposed a test selection defect: after factual correction the attention sort places another report first. The recovery test now opens its retained report by stable ID and asserts the selected identity. No production selector or business assertion is weakened; this corrects which fixture receives the existing recovery checks.
