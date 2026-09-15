@@ -151,7 +151,10 @@ export async function revisionAuthority(
     )
       throw unavailable();
   } else if (r.kind === "Discovery") {
-    const current = await readDiscoveryTargets(c, p, g.opportunity_id, r.input);
+    const current = await readDiscoveryTargets(
+      c, p, g.opportunity_id, r.input, "estimating.read",
+      r.observed_context?.contact?.id,
+    );
     if (edit) {
       const opportunity = await visibleOpportunity(c, p, g.opportunity_id);
       await relationshipContext(
@@ -162,6 +165,7 @@ export async function revisionAuthority(
       );
     }
     if (
+      !r.observed_context ||
       current.compiled.content_hash !== r.content_hash ||
       digest(
         canonical({

@@ -4,10 +4,11 @@ Start with [current status](STATUS.md) and the [First Prototype Definition & Arc
 
 | Area | Entry point |
 |---|---|
+| HTML design index | [Module visuals and maintenance template](reference/ui/README.md): repository files, recorded approvals, implementation references and preserved earlier revisions |
 | Standards | [Naming](standards/naming-conventions.md), [adoption](standards/naming-adoption.md), [ChatGPT instructions](standards/chatgpt-project-instructions.md), [shared UI](standards/ui-style-specification.md) |
 | Prototype package | [Scope, specifications, contracts, tests and ordered plan](prototype/README.md) |
 | Blueprint set | [Master and module index](blueprints/README.md) |
-| CRM UI | [Board/Grid mockups](blueprints/crm-ui-mockups/README.md), [I2 guidance](delivery/crm-i2-ui-guidance.md), [handover](delivery/crm-ui-design-handover.md) |
+| CRM UI | [Board/Grid preview](blueprints/crm-board-grid-mockup.html), [I2 guidance](delivery/crm-i2-ui-guidance.md), [handover](delivery/crm-ui-design-handover.md) |
 | CRM application | [I1 owned opportunity handover](delivery/crm-i1-handover.md), [I2 scoped Board/Grid handover](delivery/crm-i2-handover.md), [worklist decision](decisions/crm-i2-worklist.md); actual runtime/publication evidence remains separate from design originals |
 | Site surveys | [Site Survey & As-Found workspace r01](reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html), [design and handover](decisions/site-survey-workspace-design.md); module-only r20 HTML, 40 model/DOM checks passed, native visual review and application integration pending |
 | Contextual Page guides | [Design r01](blueprints/contextual-help-design.md), [CRM pilot guide](guides/crm-deals.md), [interactive preview](blueprints/contextual-help-preview.html), [template](standards/page-guide-template.md), [acceptance/pilot](testing/contextual-help-acceptance.md), [decision/handover](decisions/contextual-help.md); prepared for review, app implementation pending |
@@ -18,6 +19,7 @@ Start with [current status](STATUS.md) and the [First Prototype Definition & Arc
 | Customer portal | [Design](blueprints/customer-portal-design.md), [walkthrough](blueprints/customer-portal-mockup.html), [stages](delivery/customer-portal-implementation-plan.md), [handover](delivery/customer-portal-handover.md) |
 | Architecture | [BP-02](architecture/BP-02-platform-architecture.md) |
 | Service | [BP-07](blueprints/BP-07-service-operations.md), [approved field technicians design](decisions/field-technicians-design.md), [approved Job Pack r02](decisions/job-pack-design.md), [integration handover](delivery/field-technicians-handover.md) |
+| Service Cases & Triage | [Module-only r01 HTML](reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r01.html), [design and handover](decisions/service-cases-workspace-design.md); internal capture, manager triage, owned actions and reviewed closure; 44 model/DOM checks passed, native visual review and application integration pending |
 | Finance workspace | [Interactive r02 HTML](reference/ui/finance/PPO-Finance-and-Commercial-Controls-r02.html), [design and handover](decisions/finance-workspace-design.md), [preserved r01](reference/ui/finance/PPO-Finance-and-Commercial-Controls-r01.html); proposed design, visual browser validation and application integration pending |
 | Contracts | [Data](contracts/service-data-dictionary.md), [API](contracts/service-api.md), [Finance](contracts/finance-handoff.md), [documents](contracts/document-issue-distribution.md) |
 | Sources | [Reference register](reference/README.md) and [hash manifest](reference/source-manifest.json) |
@@ -46,4 +48,15 @@ The [audit continuation handover](delivery/audit-continuation-handover.md) recor
 - [J1 coordination reconciliation](delivery/projects-j1-reconciliation.md) — extend existing Project/Gantt identities with shared Activities and manual health; preserve forecast-milestone meaning.
 - [Supply Chain readiness contract](contracts/supply-chain-readiness.md) — SCM-01–08 candidate demand, promise, allocation, quarantine and owned-impact semantics; no ERP mapping or executed acceptance.
 
-[Equipment and Installed Base workspace r01](decisions/equipment-workspace-design.md) — self-contained equipment, inspection, owned defect/retest and sourced-assistance design; local model/DOM checks passed, visual review and application integration pending.
+## Adopted product quality and capability scope
+
+[Adoption decision](decisions/product-quality-adoption.md), [quality and gap register](requirements/product-quality-register.md), [ordered delivery plan](delivery/product-quality-plan.md). All eight refinements and five standards are adopted; existing capability plans continue. First increments: persistent personal/team views, equipment/inspection, readiness/change impact. Runtime and acceptance remain separately tracked.
+
+
+[Equipment and Installed Base workspace r02](decisions/equipment-workspace-design.md) — refined standalone design with retained review decisions, preparation snapshots, horticulture hierarchy, validated evidence and recoverable sessions; 69 model/DOM checks passed. r01 is preserved; browser visual review and application integration remain pending.
+
+## Customers, sites and growing areas
+
+[Workspace r03](reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html) contains only the customer/location workspace using the supplied r20 theme, with Google Maps links, directions, address copying and optional arrival/facility pins. [Map extension](decisions/customers-sites-maps-r03.md) records the behaviour and 98 model/DOM checks; [r02 audit](decisions/customers-sites-workspace-audit-r02.md) retains the 18 earlier findings; [current handover](decisions/customers-sites-workspace-design.md) records boundaries. R01 and r02 references are preserved.
+
+[MYOB integration blueprint and field mapping handbook r01](contracts/myob-integration-blueprint.md) — proposed mappings, installed-configuration evidence requests, cross-system workflows and procedures; actual MYOB use/API verification remain outstanding.

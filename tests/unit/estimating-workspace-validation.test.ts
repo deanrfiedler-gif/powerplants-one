@@ -8,6 +8,7 @@ import {
   discoveryChangeProposal,
   optionActionInput,
 } from "../../src/estimating/discovery-workspace-validation";
+import { discoveryDefinition } from "../../src/estimating/discovery";
 import { discoveryInput } from "../helpers/estimating-discovery";
 import { crmBase, CRM } from "../helpers/crm";
 const invalid = (e: unknown) => (e as { code: string }).code === "InvalidData";
@@ -20,7 +21,7 @@ const creation = () => ({
   discovery: discoveryInput(),
   expected_opportunity_version: 1,
   context_hash: "a".repeat(64),
-  confirmed_question_ids: ["Q01", "Q02", "Q03", "Q04", "Q05", "Q06"],
+  confirmed_question_ids: discoveryDefinition.questions.map((q) => q.id),
 });
 test("E2 command identity rejects unsupported envelopes and client-authored history while canonicalising confirmations", () => {
   const input = creation(),

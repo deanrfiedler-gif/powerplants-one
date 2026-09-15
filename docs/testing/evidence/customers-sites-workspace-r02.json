@@ -1,0 +1,296 @@
+{
+  "artifact": "docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r02.html",
+  "sha256": "455a402b5aaeb9f6158767aa032d45fedfffbc99c31c64186efbf08db6c2791b",
+  "checks": 72,
+  "results": [
+    {
+      "name": "Valid starter: one organisation, two addressed sites, nine unique facilities",
+      "status": "passed"
+    },
+    {
+      "name": "Six requested horticultural examples separate structure, use and crop",
+      "status": "passed"
+    },
+    {
+      "name": "One pump has one installed location and three served areas",
+      "status": "passed"
+    },
+    {
+      "name": "Initial hierarchy has seven nursery records including one nested bay",
+      "status": "passed"
+    },
+    {
+      "name": "Search and structure filters combine, including useful empty recovery",
+      "status": "passed"
+    },
+    {
+      "name": "Indicative map resolves exact facilities without duplicating the nested bay",
+      "status": "passed"
+    },
+    {
+      "name": "Site switching scopes facilities and equipment",
+      "status": "passed"
+    },
+    {
+      "name": "Customer overview shows visible counts and separate site-party meanings",
+      "status": "passed"
+    },
+    {
+      "name": "Read-only site details expose address, access, delivery, visit hours, parties and sources",
+      "status": "passed"
+    },
+    {
+      "name": "Model rejects cross-site parent, self-parent and cycles",
+      "status": "passed"
+    },
+    {
+      "name": "Model refuses bad decimal boundaries, fractional counts and irrelevant fields",
+      "status": "passed"
+    },
+    {
+      "name": "Unknown and Other require explanations while optional footprint stays blank",
+      "status": "passed"
+    },
+    {
+      "name": "Stale record version refuses the complete save",
+      "status": "passed"
+    },
+    {
+      "name": "New form requires explicit name and type and retains the proposal",
+      "status": "passed"
+    },
+    {
+      "name": "Repeated names get a separate identity and retain unknown detail on save",
+      "status": "passed"
+    },
+    {
+      "name": "Type change names exact cleared values and blocks unconfirmed saving",
+      "status": "passed"
+    },
+    {
+      "name": "Cancelling discard retains the unsaved proposal",
+      "status": "passed"
+    },
+    {
+      "name": "Confirming discard leaves saved record unchanged",
+      "status": "passed"
+    },
+    {
+      "name": "Confirmed type change clears active values and records exact before and after",
+      "status": "passed"
+    },
+    {
+      "name": "Switching back never restores cleared historic cladding or bay count",
+      "status": "passed"
+    },
+    {
+      "name": "Editing served areas preserves one asset, its identity and installed location",
+      "status": "passed"
+    },
+    {
+      "name": "Readiness treats overdue and absent information separately from current sources",
+      "status": "passed"
+    },
+    {
+      "name": "Explicit area readiness excludes sibling restrictions and does not inherit parent clearance",
+      "status": "passed"
+    },
+    {
+      "name": "Readiness review needs a dated source and reason",
+      "status": "passed"
+    },
+    {
+      "name": "Readiness source review retains the old source and fixed explicit scope",
+      "status": "passed"
+    },
+    {
+      "name": "Site amendment creates a new source and preserves old address history",
+      "status": "passed"
+    },
+    {
+      "name": "Visit brief cites the selected current address and retains inspectable source contents",
+      "status": "passed"
+    },
+    {
+      "name": "Gap assistance reports owned unknowns without manufacturing zero values or clearance",
+      "status": "passed"
+    },
+    {
+      "name": "Read-only site view clears prior dialogs, hides other sites and disables edits",
+      "status": "passed"
+    },
+    {
+      "name": "Viewer overview excludes other-site contacts and cross-site counts",
+      "status": "passed"
+    },
+    {
+      "name": "Competing tab revision refuses overwrite and keeps the current draft",
+      "status": "passed"
+    },
+    {
+      "name": "Explicit reload resolves changed-tab context without applying the refused draft",
+      "status": "passed"
+    },
+    {
+      "name": "Reload preserves facilities, source successors, history and one equipment identity",
+      "status": "passed"
+    },
+    {
+      "name": "Malformed retained data is preserved and not silently overwritten",
+      "status": "passed"
+    },
+    {
+      "name": "Storage failure truthfully keeps the change in this tab and exposes export recovery",
+      "status": "passed"
+    },
+    {
+      "name": "All current element IDs are unique and text input is HTML-escaped",
+      "status": "passed"
+    },
+    {
+      "name": "R20 Intake metadata, embedded fonts and every CSS variable resolve",
+      "status": "passed"
+    },
+    {
+      "name": "Non-applicability requires a current review date, not permanent neutrality",
+      "status": "passed"
+    },
+    {
+      "name": "Cross-site equipment relationships are rejected by complete-state validation",
+      "status": "passed"
+    },
+    {
+      "name": "Changing use to Non-growing requires deliberate clearing of the crop snapshot",
+      "status": "passed"
+    },
+    {
+      "name": "Unrecorded scope-specific categories are surfaced without inventing inherited requirements",
+      "status": "passed"
+    },
+    {
+      "name": "Choice card stays inside its open form dialog and flips above near the viewport bottom",
+      "status": "passed"
+    },
+    {
+      "name": "Keyboard End, Enter selection changes the original select and dependent form fields",
+      "status": "passed"
+    },
+    {
+      "name": "Escape closes only the choice card and returns focus to the trigger",
+      "status": "passed"
+    },
+    {
+      "name": "Choice card shifts left to remain within a narrow viewport",
+      "status": "passed"
+    },
+    {
+      "name": "Typeahead selects from enabled options without changing selection before confirmation",
+      "status": "passed"
+    },
+    {
+      "name": "Outside pointer dismissal removes the menu without changing the selected option",
+      "status": "passed"
+    },
+    {
+      "name": "Tab dismisses the choice card so native tab navigation can resume from its trigger",
+      "status": "passed"
+    },
+    {
+      "name": "Workspace-only composition has one heading, local tabs and no global app rail or masthead",
+      "status": "passed"
+    },
+    {
+      "name": "Local tabs expose linked selected panels and keyboard focus movement",
+      "status": "passed"
+    },
+    {
+      "name": "Nested hierarchy expands and collapses while search still finds hidden descendants",
+      "status": "passed"
+    },
+    {
+      "name": "Filtering out a selected area clears its modeless inspection panel",
+      "status": "passed"
+    },
+    {
+      "name": "Snapshot and Assistant share one modeless dock and the same selected record",
+      "status": "passed"
+    },
+    {
+      "name": "Assistant carries the filtered readiness area rather than broadening to the whole site",
+      "status": "passed"
+    },
+    {
+      "name": "Readiness citations retain both current requirement fields and the underlying source",
+      "status": "passed"
+    },
+    {
+      "name": "Brief output preserves paragraph and source boundaries instead of one dense text block",
+      "status": "passed"
+    },
+    {
+      "name": "An identified area-specific requirement can be created with exact scope, owner and source",
+      "status": "passed"
+    },
+    {
+      "name": "Changing requirement scope presents exact before/after comparison and does not save early",
+      "status": "passed"
+    },
+    {
+      "name": "Cancelling a scope comparison retains both the saved record and the reviewable form",
+      "status": "passed"
+    },
+    {
+      "name": "Confirmed scope changes retain original scope history and one requirement identity",
+      "status": "passed"
+    },
+    {
+      "name": "Empty selected-area scope has a linked field error and uniquely identified controls",
+      "status": "passed"
+    },
+    {
+      "name": "Stored source dates, duplicate readiness IDs, negative versions and malformed history are rejected",
+      "status": "passed"
+    },
+    {
+      "name": "Retained original source content cannot be rewritten through a restored backup",
+      "status": "passed"
+    },
+    {
+      "name": "Site contact information can be completed and history offers readable field-level changes",
+      "status": "passed"
+    },
+    {
+      "name": "Invalid backup preview refuses restoration without changing current data",
+      "status": "passed"
+    },
+    {
+      "name": "Valid backup is previewed before any state change",
+      "status": "passed"
+    },
+    {
+      "name": "Cancelling restore preserves the current data and validated preview",
+      "status": "passed"
+    },
+    {
+      "name": "Confirmed restore applies the complete validated snapshot with stable identities",
+      "status": "passed"
+    },
+    {
+      "name": "A changed storage basis refuses an already-previewed backup restore",
+      "status": "passed"
+    },
+    {
+      "name": "Changed-tab notification marks assistant sources stale and blocks regeneration and export",
+      "status": "passed"
+    },
+    {
+      "name": "Modeless Escape closes inspection without dismissing the underlying workspace",
+      "status": "passed"
+    },
+    {
+      "name": "No uncaught script errors in the exercised journeys",
+      "status": "passed"
+    }
+  ],
+  "limits": "Node/jsdom 27.0.1 DOM emulation. Native dialog, scrolling and focus/top-layer behavior not established. No rendered browser, mobile, print, real-device, backend, security or business acceptance."
+}

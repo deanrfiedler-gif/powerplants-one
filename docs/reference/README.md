@@ -1,5 +1,7 @@
 # Source and historical reference register
 
+[HTML design index](ui/README.md) lists module previews, recorded design approvals, implementation references and preserved earlier revisions, with instructions and a row template for maintaining the inventory.
+
 | Included reference | Role |
 |---|---|
 | [Master Blueprint v01](GEN_SPC_PPABusinessPlatform_MasterBlueprint_v01.md) | Historical baseline, preserved unchanged |
