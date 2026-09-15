@@ -40,10 +40,25 @@ async function modal(page, trigger, entry) {
   await button.click();
   const dialog = page.locator('dialog:modal');
   await dialog.waitFor({ state: 'visible' });
+  // A native modal makes the background inert. HTML sequential focus navigation
+  // may still visit browser chrome; that is distinct from focusing page controls.
+  // https://html.spec.whatwg.org/multipage/interaction.html#sequential-focus-navigation
+  entry.focus = [];
   for (let i = 0; i < 12; i++) {
     await page.keyboard.press('Tab');
-    assert.ok(await dialog.evaluate(el => el.contains(document.activeElement)), 'Tab leaves native modal');
+    const focus = await dialog.evaluate(el => ({
+      inModal: el.contains(document.activeElement),
+      documentFocused: document.hasFocus(),
+      activeTag: document.activeElement?.tagName,
+      activeId: document.activeElement?.id,
+    }));
+    entry.focus.push(focus);
+    assert.ok(focus.inModal || (!focus.documentFocused && ['BODY', 'HTML'].includes(focus.activeTag)),
+      `Tab reaches background page control: ${JSON.stringify(focus)}`);
   }
+  await dialog.evaluate(el => el.querySelector('button, input, a[href], select, [tabindex="0"]').focus());
+  await button.evaluate(el => el.focus());
+  assert.ok(await dialog.evaluate(el => el.contains(document.activeElement)), 'Background trigger remains inert');
   await capture(page, entry, 'dialog');
   await page.keyboard.press('Escape');
   assert.equal(await page.locator('dialog:modal').count(), 0, 'Escape closes modal');

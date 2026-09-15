@@ -5,6 +5,9 @@
 @media(max-width:560px){#ppo-excel-import{padding:16px}#ppo-excel-import h1{font-size:23px}#ppo-excel-import .header{display:block;margin-bottom:16px}#ppo-excel-import .header .actions{justify-content:flex-start;margin-top:12px}#ppo-excel-import .context{gap:12px;padding:14px}#ppo-excel-import .context>span{flex-basis:calc(50% - 12px);font-size:13px}#ppo-excel-import .steps{gap:16px;font-size:12px}#ppo-excel-import .steps li{gap:6px}#ppo-excel-import .steps i{width:20px;height:20px}#ppo-excel-import .scenario-grid,#ppo-excel-import .aside{grid-template-columns:1fr}#ppo-excel-import .panel{padding:16px}#ppo-excel-import .upload{padding:16px}#ppo-excel-import .search{width:100%}#ppo-excel-import input,#ppo-excel-import select{font-size:16px!important}#ppo-excel-import button{min-height:44px}#ppo-excel-import .table-scroll{max-height:420px}#ppo-excel-import .footer-actions{align-items:stretch}#ppo-excel-import .footer-actions button{width:100%}#ppo-excel-import .issue{display:block}#ppo-excel-import .issue button{margin-top:8px}#ppo-excel-import dl{grid-template-columns:1fr;gap:5px}#ppo-excel-import dd{margin-bottom:8px}#ppo-excel-import .dialog-body{padding:18px}}
 
 /* Audit: scrolling, focus and narrow-screen containment. */
+#ppo-excel-import .upload{grid-template-columns:minmax(0,1fr)}
+#ppo-excel-import .upload>*{min-width:0;max-width:100%;overflow-wrap:anywhere}
+#ppo-excel-import input[type=file]{width:100%;min-width:0}
 #ppo-excel-import .workspace>div,#ppo-excel-import .context>span,#ppo-excel-import .header>div{min-width:0}
 #ppo-excel-import .context,#ppo-excel-import .issue,#ppo-excel-import .change,#ppo-excel-import .receipt{overflow-wrap:anywhere}
 #ppo-excel-import .table-scroll:focus-visible,#ppo-excel-import summary:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
