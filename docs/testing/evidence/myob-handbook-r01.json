@@ -1,0 +1,258 @@
+{
+  "document_id": "PPO-002-MYOB-HB",
+  "revision": "r01",
+  "generated_at": "2026-09-15T01:14:03.885Z",
+  "source_commit": "dcabfec1b5cde1c2cf220359e6cf1c63408512d6",
+  "html_sha256": "88b0ea4800cc68c92505b9bf4333558d0ebb73b5c79ebf9ae07c426176ff4712",
+  "theme_sha256": "c68a499e857b1705d47bd6598d4b2e89526bf0861a0d234394c3da023f19b617",
+  "environment": {
+    "node": "v24.19.0",
+    "dom_engine": "jsdom",
+    "native_browser": false,
+    "dialog_and_scroll": "Inert DOM adapters; not native browser behaviour"
+  },
+  "checks": [
+    {
+      "name": "All ten sections plus overview render without script errors",
+      "result": "passed"
+    },
+    {
+      "name": "All IDs unique and internal static anchors resolve",
+      "result": "passed"
+    },
+    {
+      "name": "All tenant mappings remain proposed with no invented evidence",
+      "result": "passed"
+    },
+    {
+      "name": "Every source and workflow mapping reference resolves",
+      "result": "passed"
+    },
+    {
+      "name": "Actual MYOB acceptance states are all Not run",
+      "result": "passed"
+    },
+    {
+      "name": "Artifact has no external embedded assets or callable connections",
+      "result": "passed"
+    },
+    {
+      "name": "Route opens mapping register and marks active navigation",
+      "result": "passed"
+    },
+    {
+      "name": "Desktop rows and mobile cards show identical 60 IDs",
+      "result": "passed"
+    },
+    {
+      "name": "Reference search selects the exact equipment mapping",
+      "result": "passed"
+    },
+    {
+      "name": "Mapping detail retains the selected identity and unverified API status",
+      "result": "passed"
+    },
+    {
+      "name": "Single mapping export includes all columns and exactly the selected row",
+      "result": "passed"
+    },
+    {
+      "name": "Close detail returns DOM focus to its invoking control",
+      "result": "passed"
+    },
+    {
+      "name": "Module filter combines with the shared dataset",
+      "result": "passed"
+    },
+    {
+      "name": "Search combines with module filter",
+      "result": "passed"
+    },
+    {
+      "name": "Matching CSV contains the filtered subset only",
+      "result": "passed"
+    },
+    {
+      "name": "All CSV ignores active filters and preserves blank verified API fields",
+      "result": "passed"
+    },
+    {
+      "name": "Unverified edition has a useful zero-match state for Approved",
+      "result": "passed"
+    },
+    {
+      "name": "Clear filters restores all mappings and defaults",
+      "result": "passed"
+    },
+    {
+      "name": "Authority filter is independent and precise",
+      "result": "passed"
+    },
+    {
+      "name": "Sort changes order without changing membership",
+      "result": "passed"
+    },
+    {
+      "name": "Picker keyboard End reaches the last option",
+      "result": "passed"
+    },
+    {
+      "name": "Picker Escape closes and restores DOM focus",
+      "result": "passed"
+    },
+    {
+      "name": "Warranty journey shows its own context and linked mappings",
+      "result": "passed"
+    },
+    {
+      "name": "Workflow mapping link opens correct mapping even with prior filters",
+      "result": "passed"
+    },
+    {
+      "name": "Procedure deep link opens recovery procedure",
+      "result": "passed"
+    },
+    {
+      "name": "Review marks update count and save only local review data",
+      "result": "passed"
+    },
+    {
+      "name": "Review marks survive a document restart",
+      "result": "passed"
+    },
+    {
+      "name": "Review export is bounded to edition and reviewed steps",
+      "result": "passed"
+    },
+    {
+      "name": "Valid review import replaces marks without changing evidence",
+      "result": "passed"
+    },
+    {
+      "name": "Wrong revision import preserves current marks",
+      "result": "passed"
+    },
+    {
+      "name": "Unknown step import preserves current marks",
+      "result": "passed"
+    },
+    {
+      "name": "Duplicate step import preserves current marks",
+      "result": "passed"
+    },
+    {
+      "name": "Extra approval property is rejected",
+      "result": "passed"
+    },
+    {
+      "name": "Malformed JSON preserves marks and explains failure",
+      "result": "passed"
+    },
+    {
+      "name": "Cancelling reset retains review marks",
+      "result": "passed"
+    },
+    {
+      "name": "Confirmed reset clears only this handbook key",
+      "result": "passed"
+    },
+    {
+      "name": "Blocked storage retains session marks with a truthful status",
+      "result": "passed"
+    },
+    {
+      "name": "Incompatible saved bytes are not overwritten",
+      "result": "passed"
+    },
+    {
+      "name": "Print preparation includes all mappings and procedures",
+      "result": "passed"
+    },
+    {
+      "name": "After print restores filtered view",
+      "result": "passed"
+    },
+    {
+      "name": "All external reference links use an explicit safe new tab",
+      "result": "passed"
+    },
+    {
+      "name": "No script errors after all interaction scenarios",
+      "result": "passed"
+    }
+  ],
+  "passed": 42,
+  "failed": 0,
+  "limitations": [
+    "Native browser navigation to synchronised local HTML was rejected by the Browser URL security policy.",
+    "No visual geometry, native focus trap, real download or printed-pagination acceptance is claimed.",
+    "All 24 MYOB acceptance cases remain Not run; no live tenant or endpoint was accessed."
+  ],
+  "documentation_checks": {
+    "check_foundation": {
+      "status": "passed",
+      "issued_sources": 15,
+      "requirements": 78,
+      "decisions": 29,
+      "planned_acceptance": 38,
+      "backlog_items": 16,
+      "linked_issues": 16,
+      "local_links_checked": 2023,
+      "files_scanned_for_markers": 1062,
+      "errors": [],
+      "scope": "Documentation assurance only; no business acceptance tests executed"
+    },
+    "check_prototype": {
+      "status": "passed",
+      "package": "PP-01",
+      "documents": 12,
+      "parent_dispositions": 78,
+      "dispositions": {
+        "Core": 24,
+        "Partial": 25,
+        "Deferred": 29
+      },
+      "master_decisions": 29,
+      "prototype_procedures": 30,
+      "implementation_packages": 12,
+      "registers": {
+        "SC": 15,
+        "CMP": 12,
+        "SR": 20,
+        "VAL": 24,
+        "TR": 16,
+        "API-C": 26,
+        "API-R": 10
+      },
+      "errors": [],
+      "scope": "Documentation consistency only; authored catalogue defaults are not execution evidence; see recorded runs"
+    },
+    "check_naming": {
+      "status": "passed",
+      "document_records": 176,
+      "standing_exceptions": 9,
+      "front_matter_revisions_compared": 69,
+      "project_instruction_characters": 7964,
+      "errors": [],
+      "scope": "Naming and documentation consistency only; runtime behaviour is verified separately"
+    }
+  },
+  "source_file_hashes": {
+    "docs/design/myob-integration/brand-symbol.svg": "f72cfdd5a7b6d2aaa906d16c28f3f4f4f187d72bf89c9b51816ef2f0340110ba",
+    "docs/design/myob-integration/brand.css": "57b4aafb71296b18d80408cb10aa972c87f5185deafd748c7fdcfb33e2bd4bef",
+    "docs/design/myob-integration/content.json": "6845383d7a0ed6595fa5ca79d67efc1c4d43e38df725d64e97e18835913bdf8c",
+    "docs/design/myob-integration/handbook.js": "084d22b71b3c86d3af87fabd454b096809803bb9bcd99c266b9710a31ca75265",
+    "docs/design/myob-integration/style.css": "f43dd3e374685562120c6430cb192810f56982164043d493bc1e93621e2630cb",
+    "docs/design/myob-integration/template.html": "37a46c0821bc1d5c9f5075940846e426e8124a70ab15e19f37afb0b582a5d411"
+  },
+  "initial_run": {
+    "passed": 39,
+    "total": 42,
+    "refinements": [
+      "Retain explicit mapping-panel invoker for DOM focus return.",
+      "Sort both expected and actual review JSON key lists in the test harness.",
+      "Enable jsdom animation-frame emulation for procedure navigation; no geometry/rendering claim."
+    ]
+  },
+  "integrated_main": "64574208ca604fee381e45c1b7db1b2b03c1dc8b"
+}

@@ -4,6 +4,7 @@ Start with [current status](STATUS.md) and the [First Prototype Definition & Arc
 
 | Area | Entry point |
 |---|---|
+| HTML design index | [Module visuals and maintenance template](reference/ui/README.md): repository files, recorded approvals, implementation references and preserved earlier revisions |
 | Standards | [Naming](standards/naming-conventions.md), [adoption](standards/naming-adoption.md), [ChatGPT instructions](standards/chatgpt-project-instructions.md), [shared UI](standards/ui-style-specification.md) |
 | Prototype package | [Scope, specifications, contracts, tests and ordered plan](prototype/README.md) |
 | Blueprint set | [Master and module index](blueprints/README.md) |
@@ -49,4 +50,11 @@ The [audit continuation handover](delivery/audit-continuation-handover.md) recor
 
 [Adoption decision](decisions/product-quality-adoption.md), [quality and gap register](requirements/product-quality-register.md), [ordered delivery plan](delivery/product-quality-plan.md). All eight refinements and five standards are adopted; existing capability plans continue. First increments: persistent personal/team views, equipment/inspection, readiness/change impact. Runtime and acceptance remain separately tracked.
 
-[Equipment and Installed Base workspace r01](decisions/equipment-workspace-design.md) — self-contained equipment, inspection, owned defect/retest and sourced-assistance design; local model/DOM checks passed, visual review and application integration pending.
+
+[Equipment and Installed Base workspace r02](decisions/equipment-workspace-design.md) — refined standalone design with retained review decisions, preparation snapshots, horticulture hierarchy, validated evidence and recoverable sessions; 69 model/DOM checks passed. r01 is preserved; browser visual review and application integration remain pending.
+
+## Customers, sites and growing areas
+
+[Workspace r03](reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html) contains only the customer/location workspace using the supplied r20 theme, with Google Maps links, directions, address copying and optional arrival/facility pins. [Map extension](decisions/customers-sites-maps-r03.md) records the behaviour and 98 model/DOM checks; [r02 audit](decisions/customers-sites-workspace-audit-r02.md) retains the 18 earlier findings; [current handover](decisions/customers-sites-workspace-design.md) records boundaries. R01 and r02 references are preserved.
+
+[MYOB integration blueprint and field mapping handbook r01](contracts/myob-integration-blueprint.md) — proposed mappings, installed-configuration evidence requests, cross-system workflows and procedures; actual MYOB use/API verification remain outstanding.
