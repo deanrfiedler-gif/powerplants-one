@@ -16,6 +16,7 @@ This repository is Dean's personal prototype. It contains the planning foundatio
 | [Current project status](docs/STATUS.md) | What exists, what remains planned and how recent user decisions relate to the issued blueprint |
 | [Master Blueprint — working r06](docs/blueprints/BP-01-master-blueprint.md) | Scope Assurance & Development Planning Edition: seven domains, 78 parent requirements and release contracts |
 | [Documentation index](docs/README.md) | Where specifications, decisions, requirements and acceptance records belong |
+| [HTML design index](docs/reference/ui/README.md) | Module visuals, recorded approvals, implementation references, earlier revisions and a copyable maintenance template |
 | [Development backlog](docs/delivery/backlog.md) | Initial discovery/design work packages and their live GitHub issue links |
 | [Adopted quality and capability plan](docs/delivery/product-quality-plan.md) | All eight product refinements, five quality standards and existing capability continuation, with staged implementation and acceptance |
 | [CRM blueprint and discovery handover](docs/delivery/crm-discovery-handover.md) | PPO-009 parallel CRM design, bounded Pipedrive evidence, synthetic wireframes and first implementation starter; account parity remains open |
