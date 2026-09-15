@@ -1,0 +1,206 @@
+{
+  "artifact": "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r01.html",
+  "sha256": "c05c0ea51e6bcceca8a35edbf606fdebdd452780f7c9c41432a51a2cb669c6a7",
+  "checks": 44,
+  "results": [
+    {
+      "name": "Starter validates six cases, two customers and one shared Willowbank pump identity",
+      "status": "passed"
+    },
+    {
+      "name": "Composition contains only the module and six accessible local views",
+      "status": "passed"
+    },
+    {
+      "name": "r20 tokens and embedded Roboto font bytes match the declared source",
+      "status": "passed"
+    },
+    {
+      "name": "Filter exclusion clears selected case and prevents opening a hidden record",
+      "status": "passed"
+    },
+    {
+      "name": "Customer, site, owner, category and priority filters operate together",
+      "status": "passed"
+    },
+    {
+      "name": "Case workspace retains installed location, three served areas and Google Maps address",
+      "status": "passed"
+    },
+    {
+      "name": "Same-equipment history exposes the earlier unsuccessful fix without merging cases",
+      "status": "passed"
+    },
+    {
+      "name": "Assistant is source-scoped, modeless and has inspectable exact case evidence",
+      "status": "passed"
+    },
+    {
+      "name": "Triage adds a technician action while retaining a distinct Service Manager case owner",
+      "status": "passed"
+    },
+    {
+      "name": "Waiting retains an owner, review time and active customer-update commitment",
+      "status": "passed"
+    },
+    {
+      "name": "Resuming preserves the original waiting decision in history",
+      "status": "passed"
+    },
+    {
+      "name": "Outstanding work cannot be transferred back to the same case",
+      "status": "passed"
+    },
+    {
+      "name": "Technician preview shows assigned cases and suppresses other customer cases and full backup",
+      "status": "passed"
+    },
+    {
+      "name": "Technician can record their action outcome but cannot triage or change case ownership",
+      "status": "passed"
+    },
+    {
+      "name": "Photo capture rejects disguised text and creates no retained attachment",
+      "status": "passed"
+    },
+    {
+      "name": "Observation upload retains exact original photo bytes, author, basis, target and source",
+      "status": "passed"
+    },
+    {
+      "name": "Correcting a finding retains the old observation and one original image identity",
+      "status": "passed"
+    },
+    {
+      "name": "Technician submits a sourced resolution proposal without closing the case",
+      "status": "passed"
+    },
+    {
+      "name": "Manager return retains the proposal in history and creates an owned correction action",
+      "status": "passed"
+    },
+    {
+      "name": "Accepted resolution preserves the source evidence and remains separate from closure",
+      "status": "passed"
+    },
+    {
+      "name": "Closure is refused without successful customer contact after the review",
+      "status": "passed"
+    },
+    {
+      "name": "Internal discussion cannot stand in for successful customer contact",
+      "status": "passed"
+    },
+    {
+      "name": "Recorded contact permits manager closure while clearing the next-update commitment",
+      "status": "passed"
+    },
+    {
+      "name": "Reopening retains the case identity, previous closure and all evidence",
+      "status": "passed"
+    },
+    {
+      "name": "On-site coordination creates a draft work order and proposed visit without changing case ownership",
+      "status": "passed"
+    },
+    {
+      "name": "Linking existing same-site work preserves one work-order identity",
+      "status": "passed"
+    },
+    {
+      "name": "Related-case link keeps separate identities and the previous closed case unchanged",
+      "status": "passed"
+    },
+    {
+      "name": "Employee intake saves explicit unknowns with a manager owner and separate logger",
+      "status": "passed"
+    },
+    {
+      "name": "An employee can complete missing site and equipment details while preserving case identity and the original capture",
+      "status": "passed"
+    },
+    {
+      "name": "Employee cannot promote a reported symptom into a verified technical finding",
+      "status": "passed"
+    },
+    {
+      "name": "Model rejects unknown-site attendance routing, wrong department assignment and stale versions",
+      "status": "passed"
+    },
+    {
+      "name": "Storage change marks sourced assistance stale and blocks copying the old draft",
+      "status": "passed"
+    },
+    {
+      "name": "Competing retained data refuses the save and preserves the entered proposal",
+      "status": "passed"
+    },
+    {
+      "name": "Reload retains case revisions, closed outcomes, relationships and original image bytes",
+      "status": "passed"
+    },
+    {
+      "name": "Backup validation rejects cross-site equipment, invalid instants and missing original cases",
+      "status": "passed"
+    },
+    {
+      "name": "Invalid backup is refused without replacing current evidence",
+      "status": "passed"
+    },
+    {
+      "name": "Backup replacement requires review and cancellation keeps the current cases",
+      "status": "passed"
+    },
+    {
+      "name": "Confirmed restore recovers the validated starter without changing shared context",
+      "status": "passed"
+    },
+    {
+      "name": "Native local tabs expose keyboard traversal and matching panel labels",
+      "status": "passed"
+    },
+    {
+      "name": "IDs remain unique while a source field and source-inspection dialog coexist",
+      "status": "passed"
+    },
+    {
+      "name": "Read-only observer can inspect but cannot capture, triage, wait or assign",
+      "status": "passed"
+    },
+    {
+      "name": "Malformed retained data is preserved and disclosed separately from starter data",
+      "status": "passed"
+    },
+    {
+      "name": "Storage failure keeps the session change and reports session-only recovery",
+      "status": "passed"
+    },
+    {
+      "name": "No uncaught script errors in the exercised model and DOM journeys",
+      "status": "passed"
+    }
+  ],
+  "limits": "jsdom DOM emulation; native dialog, focus/top-layer, menu geometry, image decode (stubbed to a 1px test fixture), browser camera, actual clipboard/downloads and physical-device acceptance remain unverified. No application, backend, security or operational acceptance is claimed.",
+  "source_main": "76a732a9520d28fd59d0fd990c13b6e7cdf415d1",
+  "integration_base": "bc1dcf21490dda37979227f5fc13224183853d5a",
+  "check_script_sha256": "e3b42d48a01beed3de8a534beadb38dcc6ca2f2e43be209ef4c88e8d6101311a",
+  "documentation_checks": {
+    "foundation": {
+      "status": "passed",
+      "requirements": 78,
+      "local_links_checked": 2115,
+      "files_scanned_for_markers": 1105
+    },
+    "prototype": {
+      "status": "passed",
+      "parent_dispositions": 78,
+      "procedures": 30
+    },
+    "naming": {
+      "status": "passed",
+      "document_records": 195,
+      "project_instruction_characters": 7994
+    },
+    "test_script_syntax": "passed"
+  }
+}
