@@ -7,7 +7,7 @@ import {createHash} from 'node:crypto';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const file=path.join(root,'docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html');
 const out=path.join(root,'verification-evidence/maintenance');await fs.mkdir(out,{recursive:true});
-const browser=await chromium.launch({headless:true}),context=await browser.newContext({viewport:{width:1440,height:960},acceptDownloads:true}),page=await context.newPage();
+const browser=await chromium.launch({channel:'chrome',headless:true}),context=await browser.newContext({viewport:{width:1440,height:960},acceptDownloads:true}),page=await context.newPage();
 const errors=[],results=[],images=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
 const action=(name)=>page.locator(`[data-action="${name}"]`), nav=name=>page.locator(`[data-view="${name}"]`), state=()=>page.evaluate(()=>window.MA_DEMO.state());
 const modal=()=>page.locator('#modal');
