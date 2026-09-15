@@ -82,7 +82,7 @@ The image reference opens a clearly labelled SVG illustration of the pump housin
 
 **Load missing demonstration evidence** is available once for Willowbank. It adds a retained successor handover reference and a new source-context revision with explicit warranty start/end dates. The original missing reference remains visible. Purchase, installation and commissioning dates are unchanged.
 
-**Review evidence** records reviewer, current evidence revision, current source-context revision, available evidence identities and review basis. Missing facts remain missing. The side panel shows whether the current set has been reviewed, provides linked-workspace context and allows the next case review to be assigned with an owner, due date and reason. The case timeline records accepted changes and their actors.
+**Review evidence** records reviewer, current evidence revision, current source-context revision, available evidence identities and review basis. Missing facts remain missing. The side panel shows whether the current set has been reviewed, provides linked-workspace context and allows the next case review to be assigned with an owner, due date and reason. The case timeline records accepted changes and their actors. Timeline timestamps reflect the local browser clock; fictional evidence/event dates are retained separately.
 
 ### 4.3 Coverage assessment
 
@@ -293,8 +293,8 @@ The verification package distinguishes pure-model assertions, local non-rendered
 |---|---|
 | Pure model | 25 groups passed locally: evidence invalidation; coverage/authority gates; preserved assets/dates; independent customer/recovery outcomes; reservations; return ordering; partial approval/credits; stale/replayed commands; malformed state and scope-mismatch refusal. |
 | Non-rendered DOM smoke | Six groups passed locally through the actual forms and six views. Dialog, scrolling and download APIs were stubbed; this is not visual proof. |
-| Native browser | Pending the dedicated published workflow at initial preparation. Results and any corrected source are recorded in the verification record before final delivery. |
-| Repository assurance | Foundation, naming, generated-file consistency and lint results are recorded with the final contribution. |
+| Native browser | 17 groups passed on the initial published HTML in Chrome 153.0.8010.47. All six desktop/phone views were visually inspected; final wording refinement is being rechecked against its exact successor source. See the verification record. |
+| Repository assurance | Foundation, naming and prototype documentation checks passed locally; generated-file consistency and UI baseline integrity passed in published CI. Broader application checks remain tracked on the PR. |
 | Independent business/device acceptance | Not claimed by these checks. |
 
 See [original verification evidence and hashes](../../../testing/evidence/warranty-r01/README.md) and [draft PR #206](https://github.com/deanrfiedler-gif/powerplants-one/pull/206) for final source identity, actual results and remaining limits. The native suite covers the full role-driven journey, reservations, exports, partial recovery, save failure/recovery, read states, keyboard behaviour and all six views at 1440, 1024, 820, 390 and 320 px. Screenshots are retained for visual review.
