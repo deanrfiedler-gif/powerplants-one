@@ -1,0 +1,96 @@
+{
+  "status": "Design authored; source/model/DOM assurance passed; visual acceptance blocked",
+  "verified_at_utc": "2026-09-14T22:31:17.243442+00:00",
+  "inspected_base": "42383fc2e3a85f6cf9c38c829683b14787578579",
+  "integration_base": "dcabfec1b5cde1c2cf220359e6cf1c63408512d6",
+  "theme_sha256": "e55ccbabef40a0b07a95ee5847f99147a8f29e8f7c84f90497df2b4d5e6696ab",
+  "sha256": {
+    "docs/blueprints/naming-filing-prototype/index.html": "1748829597203d0e5de2d0481d4b37b51ba6e9780da5b2447d94170bf93132bd",
+    "docs/blueprints/naming-filing-prototype/model.js": "14a26a3bad304716e0e25d675b9aa9a8f92b4e6292e168af252edf64384df3a2",
+    "docs/blueprints/naming-filing-prototype/app.js": "26f433b0251d52e49c8195c3b1340148709616ddd98fcf6e5f64002080fcf66e",
+    "docs/blueprints/naming-filing-prototype/styles.css": "4305b8f7cbac008d22bcbb741a96aa4c32ce5441eb7116d25e3dfd4f18deb1a9",
+    "docs/blueprints/naming-filing-prototype/theme-assets.json": "dad61bbe5c6d11d51d35b0f16c9852143f81ccfd461cc5cad9bc11046fee7a9e",
+    "docs/blueprints/naming-filing-prototype/build.py": "3e803dfc3ab6deea534324d6f8834530d4fd421922e98704d3d7ebfb6b5d956e",
+    "scripts/check-naming-assistance-design.mjs": "147b939cb6d67129996c2f3200ad24e1afaecc65c447ab639a39d12ad9cfe205",
+    "scripts/check-naming-assistance-dom.mjs": "16103a0daad5feae2d03f0b03c543c5d3414a20a62bddc38be04365637529a2f"
+  },
+  "runtime": "Node 24.21.0; Python 3; optional jsdom 26.1.0 in temporary directory",
+  "commands": [
+    "node scripts/check-naming-assistance-design.mjs",
+    "node scripts/check-naming-assistance-dom.mjs <isolated-jsdom-26.1.0>/lib/api.js",
+    "python3 scripts/check_foundation.py",
+    "python3 scripts/check_prototype.py",
+    "python3 scripts/check_naming.py",
+    "git diff --check"
+  ],
+  "repository_checks": {
+    "check_foundation.py": {
+      "status": "passed",
+      "issued_sources": 15,
+      "requirements": 78,
+      "decisions": 29,
+      "planned_acceptance": 38,
+      "backlog_items": 16,
+      "linked_issues": 16,
+      "local_links_checked": 2007,
+      "files_scanned_for_markers": 1050,
+      "errors": [],
+      "scope": "Documentation assurance only; no business acceptance tests executed"
+    },
+    "check_prototype.py": {
+      "status": "passed",
+      "package": "PP-01",
+      "documents": 12,
+      "parent_dispositions": 78,
+      "dispositions": {
+        "Core": 24,
+        "Partial": 25,
+        "Deferred": 29
+      },
+      "master_decisions": 29,
+      "prototype_procedures": 30,
+      "implementation_packages": 12,
+      "registers": {
+        "SC": 15,
+        "CMP": 12,
+        "SR": 20,
+        "VAL": 24,
+        "TR": 16,
+        "API-C": 26,
+        "API-R": 10
+      },
+      "errors": [],
+      "scope": "Documentation consistency only; authored catalogue defaults are not execution evidence; see recorded runs"
+    },
+    "check_naming.py": {
+      "status": "passed",
+      "document_records": 173,
+      "standing_exceptions": 9,
+      "front_matter_revisions_compared": 67,
+      "project_instruction_characters": 7964,
+      "errors": [],
+      "scope": "Naming and documentation consistency only; runtime behaviour is verified separately"
+    }
+  },
+  "parent_traceability": {
+    "rows": 78,
+    "existing_values_unchanged": true,
+    "new_child_requirements": 16
+  },
+  "browser_visual": {
+    "status": "blocked",
+    "reason": "Browser security policy rejected navigation to local HTML; no alternate browser surface attempted",
+    "not_verified": [
+      "Rendered 320/390/768/1440 layouts",
+      "Native dialog/focus trap and keyboard behaviour",
+      "Touch/physical-device interaction",
+      "Accessibility tree and zoom/text enlargement"
+    ]
+  },
+  "not_claimed": [
+    "Persisted app implementation",
+    "Live SharePoint or Outlook proof",
+    "Business acceptance",
+    "Deployment"
+  ]
+}

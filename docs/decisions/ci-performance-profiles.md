@@ -1,9 +1,9 @@
 ---
 document_id: PPO-CI-PERF-PROFILES
-revision: r04
+revision: r05
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
-status: Original comparison and remedy measurements reviewed; integrated assurance pending
+status: Original measurements retained; PR #175 regression repair awaiting CI
 source_commit: 3a27728c2c41e366a4863683fac748cd0d1da910
 ---
 
@@ -76,3 +76,17 @@ Only one of sixteen compiled groups meets the candidate; all sixteen development
 The broad development-browser stages on original #176 source `c992dd7f` and integration `7bfde787` each failed the new P04 first-open request-count assertion on desktop and phone: expected one request, observed two. Their original reports show 166/176 passing cases respectively, two failures, three explicit skips and no flaky retries. Archives `10338381055` (126,620,085 bytes, SHA-256 `2cb9cfa18af50f81637c38881806d45bf229b6b0d78a3a62da14092ba7000907`) and `10338976154` (128,389,779 bytes, SHA-256 `5a281dcae7c2de1dcd4d2aa17fbbe465c62d6227658a305b250dbd4739cbf1b8`) were verified, and all four original failure PNGs inspected. The test had already observed zero reads before opening; it stopped before its new close/reopen assertions. Compiled source suites passed this case with one initial request. Neither development failure is relabelled as a pass.
 
 The original shared resource hook starts an API read during effect setup and ignores a cleaned-up effect's response. [React Strict Mode](https://react.dev/reference/react/StrictMode) repeats effect setup/cleanup in development; the development and compiled client launches therefore have different first-mount request counts. The corrected P04 instrumentation explicitly validates the declared launcher and expects exactly two initial requests for `npm run dev` and one for `npm run serve:compiled`. It still requires zero before opening, a successful asset response, the exact same count after closing/reopening, and the identical retained proposal. The existing invalid/stale, keyboard and layout assertions remain. Strict Mode, the application/hook, all performance samples, network settings and deadlines are unchanged. Fresh corrected development and compiled proof is required.
+
+## PR #175 follow-up regression repair
+
+The original comparison/remedy is incorporated through main `10625815187f26179f316b887fcdee33467ac81f` / #177. Subsequent estimating changes on #175 are a separate source. The first correction `3db9e251fd18639e8ca4c0a29e4fd37a01b259e6`, tree `abfb24a55a50f832a26a7ae33758d383a5ce29e7`, restored migration 0026's constraint-before-backfill order. Its [E1 job 103935224583](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34831365860/job/103935224583) completed successfully, including the previously failing upgrade, direct HTTP, restart and browser steps.
+
+The same source's broad [Application job 103935224503](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/34831365862/job/103935224503) passed 411 of 412 database and 175 of 176 browser cases, with three browser skips; it failed the retained E2 legacy-archive case and the phone P05 final capture. It passed 104 unit plus three preparation cases and all 29 HTTP cases. Its performance and compiled-browser checks passed. None of those passes supersedes the two broad failures.
+
+The repair merges current main and removes the legacy Estimate early return before `requireActiveOption`. Active legacy estimates can still create a new version and quotation; archived ones cannot. The retained migration case now supplies the actual current Estimate/quote versions to both refusal assertions, checks unchanged records, and separately verifies the original saved version and quote bytes after restart. This distinguishes archive authority from stale-version rejection.
+
+Original receipt and audit lookup again use `(workspace_id, actor_id, operation_id)` and recheck current workspace edit/owner authority. A real-database case creates two owned workspaces with the same operation UUID under distinct synthetic actors, verifies independent exact lookup/replay without new effects, and then revokes one actor's edit access while preserving the other's recovery. The later unbounded OFFSET scan is removed in favour of main's existing 100-candidate bound. The independent answer-order helper and additional UI refusal checks are retained; no saved payload/hash is rewritten.
+
+The P05 failure occurred after the move receipt was accepted: `Loading permitted records…` remained during the schedule refresh beyond the capture's 5-second assertion. Code inspection shows acceptance triggers a separate GET; the test now registers that response before retry, verifies its success and exact saved appointment position/assignment version, then retains the original loading/layout/capture checks. It adds no sleep, retry, threshold or timeout increase. This corrects evidence ordering; it does not establish why that source's refresh was slow or claim a planner performance improvement. Fresh development and compiled browser evidence remains required.
+
+The existing estimating workflow now runs `estimating-workspaces.test.ts` alongside its E1 database entrypoint, under the same serial execution, disposable database and deadlines. The failing archive case was previously absent from this focused job. No new workflow, dependency, schema, deployed environment, benchmark sample, network rule or timing threshold is introduced. All performance scripts and migration 0026 match the merged main source exactly. Local Node 24.21.0 validation passed 105 unit tests, TypeScript, full ESLint, the compiled build and all three documentation checks (78 parents and 15 issued sources preserved). Fresh CI outcomes are recorded on the PR; PostgreSQL/browser execution is unavailable in this local checkout.

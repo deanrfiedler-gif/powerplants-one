@@ -25,7 +25,7 @@ export async function costBasisContext(c: QueryClient, p: Principal, e: Estimate
     JOIN ppo.estimation_revisions r ON (r.workspace_id,r.id)=(b.workspace_id,b.revision_id)
     WHERE b.workspace_id=$1 AND b.estimate_id=$2 AND b.estimate_version_id=$3`, [p.workspace_id, e.id, versionId])).rows[0];
   if (!r || r.kind !== "Discovery" || r.scope_readiness !== "Complete" || r.option_id !== e.option_id || r.company_id !== e.company_id || r.estimating_workspace_id !== root.estimating_workspace_id) throw unavailable();
-  const current = await readDiscoveryTargets(c, p, e.opportunity_id, r.input, cap);
+  const current = await readDiscoveryTargets(c, p, e.opportunity_id, r.input, cap, r.observed_context?.contact?.id);
   if (current.compiled.scope_readiness !== "Complete" || current.compiled.content_hash !== r.content_hash ||
       digest(canonical({ input_hash: r.content_hash, references: r.observed_context })) !== r.context_hash)
     throw new AppError(409, "DiscoveryEvidenceMismatch", "The exact saved scope basis requires review before use.");
@@ -41,7 +41,7 @@ export async function latestCostingScope(c:QueryClient,p:Principal,e:Estimate) {
   const r=(await c.query<DiscoveryRevision>(`SELECT r.* FROM ppo.estimating_options o JOIN ppo.estimation_revisions r
     ON (r.workspace_id,r.id)=(o.workspace_id,o.current_revision_id) WHERE o.workspace_id=$1 AND o.id=$2`,[p.workspace_id,e.option_id])).rows[0];
   if(!r||r.kind!=="Discovery")throw unavailable();
-  await readDiscoveryTargets(c,p,e.opportunity_id,r.input);
+  await readDiscoveryTargets(c,p,e.opportunity_id,r.input,"estimating.read",r.observed_context?.contact?.id);
   return {revision_id:r.id,revision:r.version,scope_readiness:r.scope_readiness};
 }
 export function estimateSite(e: Estimate) {
