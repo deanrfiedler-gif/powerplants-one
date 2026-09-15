@@ -5,7 +5,6 @@ import { canonical } from "../platform/operations";
 import { digest } from "../documents/store";
 import { uuid } from "../shared/validation";
 import { visibleOpportunity, relationshipContext } from "../crm/context";
-import { visible } from "../shared/reads";
 import { estimateContext, type Estimate } from "./context";
 import { readDiscoveryTargets } from "./discovery-context";
 import type { Answer, DiscoveryInput } from "./discovery";
@@ -152,11 +151,10 @@ export async function revisionAuthority(
     )
       throw unavailable();
   } else if (r.kind === "Discovery") {
-    // The Opportunity may now name a different contact. Current access to the
-    // captured contact still governs its historical label and receipt content.
-    if (r.observed_context?.contact)
-      await visible(c, p, "Person", r.observed_context.contact.id);
-    const current = await readDiscoveryTargets(c, p, g.opportunity_id, r.input);
+    const current = await readDiscoveryTargets(
+      c, p, g.opportunity_id, r.input, "estimating.read",
+      r.observed_context?.contact?.id,
+    );
     if (edit) {
       const opportunity = await visibleOpportunity(c, p, g.opportunity_id);
       await relationshipContext(

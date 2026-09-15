@@ -3,7 +3,7 @@ document_id: PPO-AUDIT-CONTINUATION-HO
 revision: r07
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
-status: PR #172 regression repair; corrected-source CI pending
+status: Integrated PR #172 and #180 repairs; combined-source CI pending
 source_commit: 10625815187f26179f316b887fcdee33467ac81f
 ---
 
@@ -27,7 +27,23 @@ The remaining sections retain the earlier audit's source-specific evidence and c
 
 ## Earlier evidence
 
-Current main `b8d3369626810c18bd430d57ba251114934dbfb1`, tree `845971cd7eeceafd939914d776d1f00747739289`, contains normally merged #169 and #171. Their exact sources passed all 17 and 16 checks respectively, including the broad application suite; all 16 E2 screen originals were reviewed. Current-main compiled browser, E1 and CRM jobs passed; its broad application run is still in progress at this writing.
+Main `10625815187f26179f316b887fcdee33467ac81f`, tree `37fab6114f905c09183f28f15c6e2d51bf300d38`, contains normally merged #177 after the owner independently merged #173. The published tree exactly matches #177 source `ec8b7e1cf6199eb2b3323370482289cf665ccd80`, which passed all 17 checks. Broad Application `34825302209` / job `103915938324` passed 104 unit plus three preparation cases, 420 DB, 30 HTTP and 178 browser cases plus three existing skips, retained restarts and P12 isolated restore in 56.71655 seconds. The E1 job independently passed 22 focused DB, four HTTP and thirteen browser cases plus actual restart with two cost bases and seven original receipts. Source #173 `12b81816` passed all sixteen checks. Actual-main run `34833090032` remains in progress at this writing; its E1 job has passed. PR publications hold the final results without rewriting this checkpoint after every job.
+
+Earlier main `b8d3369626810c18bd430d57ba251114934dbfb1`, tree `845971cd7eeceafd939914d776d1f00747739289`, contains normally merged #169 and #171. All twelve applicable assurance checks passed, including broad Application `34819947644` / job `103898993639`: 103 unit plus three preparation cases, 412 DB, 29 HTTP and 176 browser cases plus three skips, retained restarts and P12 isolated restore in 64.773 seconds. Their exact sources passed all seventeen and sixteen checks respectively; all sixteen E2 screen originals were reviewed.
+
+The later development and compiled #177 originals were also reviewed, including retained P04 validation/conflict proposals and six overlapping CRM transfer-dialog frames. Performance artifact `10339619267` retained 640 successful reads and unchanged fixture fingerprints: compiled warm Work Orders p95 was 2.659446s desktop and 2.342035s phone, with seven of sixteen compiled groups meeting the unchanged 3,000ms candidate and none of the development groups meeting it. The phone Planner value of 3,000.295015ms remains a miss. This does not erase earlier slower runs or establish full PT-27 acceptance.
+
+The owner independently deployed earlier main `b8d33696` through workflow-dispatch run `34826209046` / job `103918865571`, image `sha256:56aef4eb1a36c6be51f592e35d40e22d9e296cdda0a5203101850bdd35ec0860`. Its emitted result confirms the selected web revision was healthy and ready. This session only inspected the evidence; signed-in acceptance, actual worker execution and the managed PostgreSQL minor remain unverified.
+
+## Retained-contact follow-through
+
+Source review found that saved Discovery labels retain the accepted contact, while current target checks follow the opportunity's current primary contact. After a legitimate CRM contact change and narrower shared visibility, an old captured contact could therefore remain readable through revision history. The focused follow-through checks that retained contact independently in revision, cost-basis and latest-scope reads. It preserves current owner/edit guards, actor-scoped operation recovery, captured labels, hashes and original bytes; an ordinary authorised name/version change is not evidence corruption. No migration, dependency, workflow, live access grant or operational data change is introduced.
+
+One real PostgreSQL regression in the existing required E1 entrypoint changes a synthetic CRM contact through the command, narrows disposable shared grants to the retained Site, checks the new contact remains visible and the old one is hidden, then exercises historical reads, lists, creation/adoption/quote replay, receipts and Draft access. Fixture restoration must recover identical originals with unchanged stored rows. Runtime execution is pending; this paragraph describes the added case, not a passed result.
+
+The independently advanced #172 `56a69ff5` and #175 `3db9e251` are not assumed incorporated. [#172 review](https://github.com/deanrfiedler-gif/powerplants-one/pull/172#issuecomment-5662683585) records live-hash invalidation of authorised history and weakened recovery permissions. [#175 review](https://github.com/deanrfiedler-gif/powerplants-one/pull/175#issuecomment-5662685646) records the archived legacy-option guard bypass and actor-namespace removal. Their original contributions are included in #177; these new changes require separate disposition. #176's advanced runtime/test blobs already match published main.
+
+## Earlier evidence retained
 
 The earlier E2-foundation main `3a27728c`, tree `5f19f79eeb7c4322c47fcffae740af429843bb7e`, contains the owner-merged E2 foundation #168 after the verified P12/transfer/taxonomy integration. All twelve actual-main checks passed; broad Application `34811459586` / job `103873481814` passed 103 unit (100 plus three preparation cases), 400 DB, 26 HTTP and 168 browser cases plus three skips, retained component/restart proofs and P12 isolated restore in 71.040 seconds. #168's corrected source passed all thirteen checks, including 103 unit, 400 DB, 26 HTTP and 168 browser cases plus three skips. This does not certify changed E2 workspace or costing source.
 
@@ -43,12 +59,12 @@ Main's PT-27 load job `103855071769` completed all 320 core reads without error,
 
 | Priority | Outcome | Remaining work |
 |---|---|---|
-| 1 | Current-main verification and accurate backlog | Verified #166 actual main; closed #129/#135/#136/#165 and duplicate #174; #168 now on main. New main passed; finish #145 complete-HV evidence without closing owner obligations |
+| 1 | Current-main verification and accurate backlog | #177 merged after all seventeen source checks; finish actual-main run and retained-contact guard proof. #145 complete-HV and owner obligations remain open |
 | 2 | E2 backend | #168 and #169 merged; corrected #169 source `02fddd74` passed all 17 checks, including 412 DB, 28 HTTP and 168 browser cases plus three skips |
-| 3 | Saved E2 screens | #171 merged after source `45de8e3e` passed all 16 checks, including broad 412 DB, 29 HTTP and 176 browser cases plus three skips. All 16 original E2 captures and exact manifests reviewed; combined integration remains |
-| 4 | E2 manual-estimate receiving basis | #173 source `46d65048` passes 104 unit, 22 focused DB including all eight new cases, retained E1 HTTP/browser and real cost-basis write/recover/verify; compiled costing originals reviewed. Broad source and combined integration remain |
+| 3 | Saved E2 screens | #171 and combined #177 published; exact original captures and source evidence reviewed. Complete business/device acceptance remains separate |
+| 4 | E2 manual-estimate receiving basis | #173 owner-merged after source `12b81816` passed all sixteen checks; combined #177 passed all seventeen, including 420 DB, 30 HTTP and 178 browser cases plus three skips and exact restart recovery |
 | 5 | Complete PP-01 acceptance | PT-22 synthetic execution reconciled as passed; full PT-28 compatible-update/scheduling-rule impact and continuous PT-30 narrative remain incomplete. Owner demonstration is separate |
-| 6 | Performance | #175 original comparison reviewed; #176 closed-editor remedy implemented with proposal preservation and unchanged measurement. Original performance archive and changed-view captures reviewed; broad and combined integration remain. No threshold or timeout waiver |
+| 6 | Performance | Comparison and closed-editor remedy published through #177; original archives reviewed. Latest compiled warm Work Orders 2.659446s/2.342035s; seven of sixteen compiled groups pass the candidate. Full PT-27 remains open with earlier misses retained |
 | 7 | Hosted/device acceptance | Verify signed-in permitted journeys in the actual authorised environment and representative physical-device/screen-reader use; no new access or deployment assumed |
 | 8 | E3 costing/review | [Concrete decision pack](estimating-e3-decision-pack.md) prepared: recommended manual-source slice, FX rounding alternatives, allocation conservation and reviewer/self-review choices; numerical/business decisions remain open |
 | 9 | Projects coordination | [Current-code reconciliation and receiving contract](projects-j1-reconciliation.md) prepared: preserve Gantt semantics; add typed shared Activities and manual assessment in the next integrated migration |
@@ -59,7 +75,9 @@ The E2 screen contribution reuses the maintained UI/domain architecture and exis
 DR-03–DR-06, estimating-container propositions, E3/E4 operational rules and Finance/MYOB ownership remain unresolved where the current contracts say so. This continuation does not invent formulas, pricing thresholds, corporate roles or approval authority. Repository implementation does not authorise paid services, access changes, live integrations, customer messages, operational migration or another hosted release.
 
 
-## Current E2 failure dispositions
+## Earlier E2 failure dispositions and integration checkpoints
+
+The following paragraphs retain the findings and pending state when their individual sources were reviewed. Publication and corrected-source outcomes are recorded above; earlier failed sources remain failed.
 
 #169's original source failed two DB fixtures (an empty required system selection and a Site grant missing its explicit `site_id`) and an HTTP expectation reading the CRM envelope at the wrong level. Corrections keep the domain constraints and assertions. #171's original compiled run `34809674630` failed the two stale-proposal cases because checkbox enumeration preceded rendering; corrected run `34811201250` passed 176 cases plus three explicit skips. Current source `45de8e3e` also passed its compiled suite. Direct archive-host access initially failed; supported file-reference materialization subsequently succeeded. All 16 corrected-source originals in artifact `10336190630` were inspected, with ZIP integrity and every image manifest verified. This does not turn the original failed source into a pass.
 

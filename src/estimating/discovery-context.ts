@@ -133,14 +133,22 @@ async function targets(
 // History callers pass the accepted original input, then return its captured
 // labels only after this CURRENT access check. Do not replace old labels with
 // these observations or accept a caller-provided historical snapshot as truth.
-export function readDiscoveryTargets(
+export async function readDiscoveryTargets(
   c: QueryClient,
   p: Principal,
   opportunityId: string,
   value: unknown,
   capability: EstimateCap = "estimating.read",
+  retainedContactId?: string | null,
 ) {
-  return targets(c, p, opportunityId, value, false, capability);
+  const current = await targets(c, p, opportunityId, value, false, capability);
+  // CRM can change its primary contact after acceptance. Scope IDs are checked
+  // from the original input above; the captured contact lives in the saved
+  // references and must independently remain visible before returning history.
+  // Current labels/versions do not replace or invalidate an authorised original.
+  if (retainedContactId && retainedContactId !== current.references.contact?.id)
+    await visible(c, p, "Person", retainedContactId);
+  return current;
 }
 
 export function prepareDiscoveryTargets(
