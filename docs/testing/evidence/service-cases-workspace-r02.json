@@ -1,0 +1,292 @@
+{
+  "artifact": "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
+  "sha256": "23e92f96f495690e5670d664ac09e1063b8f9473679c39d7fa77b1e13d18fa5f",
+  "checks": 71,
+  "results": [
+    {
+      "name": "Starter validates six cases, two customers and one shared Willowbank pump identity",
+      "status": "passed"
+    },
+    {
+      "name": "Composition contains only the module and six accessible local views",
+      "status": "passed"
+    },
+    {
+      "name": "r20 tokens and embedded Roboto font bytes match the declared source",
+      "status": "passed"
+    },
+    {
+      "name": "Filter exclusion clears selected case and prevents opening a hidden record",
+      "status": "passed"
+    },
+    {
+      "name": "Customer, site, owner, category and priority filters operate together",
+      "status": "passed"
+    },
+    {
+      "name": "Case workspace retains installed location, three served areas and Google Maps address",
+      "status": "passed"
+    },
+    {
+      "name": "Same-equipment history exposes the earlier unsuccessful fix without merging cases",
+      "status": "passed"
+    },
+    {
+      "name": "Assistant is source-scoped, modeless and has inspectable exact case evidence",
+      "status": "passed"
+    },
+    {
+      "name": "Triage adds a technician action while retaining a distinct Service Manager case owner",
+      "status": "passed"
+    },
+    {
+      "name": "Waiting retains an owner, review time and active customer-update commitment",
+      "status": "passed"
+    },
+    {
+      "name": "Resuming preserves the original waiting decision in history",
+      "status": "passed"
+    },
+    {
+      "name": "Outstanding work cannot be transferred back to the same case",
+      "status": "passed"
+    },
+    {
+      "name": "Technician preview shows assigned cases and suppresses other customer cases and full backup",
+      "status": "passed"
+    },
+    {
+      "name": "Technician can record their action outcome but cannot triage or change case ownership",
+      "status": "passed"
+    },
+    {
+      "name": "Photo capture rejects disguised text and creates no retained attachment",
+      "status": "passed"
+    },
+    {
+      "name": "Observation upload retains exact original photo bytes, author, basis, target and source",
+      "status": "passed"
+    },
+    {
+      "name": "Correcting a finding retains the old observation and one original image identity",
+      "status": "passed"
+    },
+    {
+      "name": "Technician submits a sourced resolution proposal without closing the case",
+      "status": "passed"
+    },
+    {
+      "name": "Manager return retains the proposal in history and creates an owned correction action",
+      "status": "passed"
+    },
+    {
+      "name": "Accepted resolution preserves the source evidence and remains separate from closure",
+      "status": "passed"
+    },
+    {
+      "name": "Closure is refused without successful customer contact after the review",
+      "status": "passed"
+    },
+    {
+      "name": "Internal discussion cannot stand in for successful customer contact",
+      "status": "passed"
+    },
+    {
+      "name": "Recorded contact permits manager closure while clearing the next-update commitment",
+      "status": "passed"
+    },
+    {
+      "name": "Reopening retains the case identity, previous closure and all evidence",
+      "status": "passed"
+    },
+    {
+      "name": "On-site coordination creates a draft work order and proposed visit without changing case ownership",
+      "status": "passed"
+    },
+    {
+      "name": "Linking existing same-site work preserves one work-order identity",
+      "status": "passed"
+    },
+    {
+      "name": "Related-case link keeps separate identities and the previous closed case unchanged",
+      "status": "passed"
+    },
+    {
+      "name": "Employee intake saves explicit unknowns with a manager owner and separate logger",
+      "status": "passed"
+    },
+    {
+      "name": "An employee can complete missing site and equipment details while preserving case identity and the original capture",
+      "status": "passed"
+    },
+    {
+      "name": "Employee cannot promote a reported symptom into a verified technical finding",
+      "status": "passed"
+    },
+    {
+      "name": "Model rejects unknown-site attendance routing, wrong department assignment and stale versions",
+      "status": "passed"
+    },
+    {
+      "name": "Storage change marks sourced assistance stale and blocks copying the old draft",
+      "status": "passed"
+    },
+    {
+      "name": "Competing retained data refuses the save and preserves the entered proposal",
+      "status": "passed"
+    },
+    {
+      "name": "Reload retains case revisions, closed outcomes, relationships and original image bytes",
+      "status": "passed"
+    },
+    {
+      "name": "Backup validation rejects cross-site equipment, invalid instants and missing original cases",
+      "status": "passed"
+    },
+    {
+      "name": "Invalid backup is refused without replacing current evidence",
+      "status": "passed"
+    },
+    {
+      "name": "Backup replacement requires review and cancellation keeps the current cases",
+      "status": "passed"
+    },
+    {
+      "name": "Confirmed restore recovers the validated starter without changing shared context",
+      "status": "passed"
+    },
+    {
+      "name": "Native local tabs expose keyboard traversal and matching panel labels",
+      "status": "passed"
+    },
+    {
+      "name": "IDs remain unique while a source field and source-inspection dialog coexist",
+      "status": "passed"
+    },
+    {
+      "name": "Read-only observer can inspect but cannot capture, triage, wait or assign",
+      "status": "passed"
+    },
+    {
+      "name": "Malformed retained data is preserved and disclosed separately from starter data",
+      "status": "passed"
+    },
+    {
+      "name": "Storage failure keeps the session change and reports session-only recovery",
+      "status": "passed"
+    },
+    {
+      "name": "Default Board presents six canonical lanes and hides the retained Closed case",
+      "status": "passed"
+    },
+    {
+      "name": "Deals r35 reference and final scoped card geometry retain the exact declared style basis",
+      "status": "passed"
+    },
+    {
+      "name": "Board and List retain identical cases, selected identity and saved data when toggled",
+      "status": "passed"
+    },
+    {
+      "name": "Every attention queue applies the same compound criteria to Board and List",
+      "status": "passed"
+    },
+    {
+      "name": "Include closed adds one lane without copying the case, and Closed only is consistent in both views",
+      "status": "passed"
+    },
+    {
+      "name": "Keyboard card controls select or open a case without changing its data",
+      "status": "passed"
+    },
+    {
+      "name": "Snapshot exposes full next action, separate owners and a waiting review",
+      "status": "passed"
+    },
+    {
+      "name": "Dragging opens the clarification workflow; cancelling a dirty proposal preserves the stage",
+      "status": "passed"
+    },
+    {
+      "name": "A saved triage form moves the same case and assigns an action without changing the manager owner",
+      "status": "passed"
+    },
+    {
+      "name": "Starting a triaged response retains the open action and does not fabricate completion or a booking",
+      "status": "passed"
+    },
+    {
+      "name": "Model refuses start for an untriaged case, nonexistent action or non-manager",
+      "status": "passed"
+    },
+    {
+      "name": "Waiting movement requires a dependency description and leaves the case unchanged on validation failure",
+      "status": "passed"
+    },
+    {
+      "name": "Waiting card retains the responsible follow-up person, review time and customer-update commitment",
+      "status": "passed"
+    },
+    {
+      "name": "Resume is a separate reasoned decision and retains the previous waiting source",
+      "status": "passed"
+    },
+    {
+      "name": "Unfinished work prevents a move to Resolved and explains the refusal before any edit",
+      "status": "passed"
+    },
+    {
+      "name": "Resolved movement opens manager acceptance with inspectable supporting evidence",
+      "status": "passed"
+    },
+    {
+      "name": "Accepted resolution moves to Resolved and retains the original case identity and evidence",
+      "status": "passed"
+    },
+    {
+      "name": "Reopening from the Closed filter retains the previous closure and clears a now-hidden selection",
+      "status": "passed"
+    },
+    {
+      "name": "Technician, employee and observer Board/List previews retain scope and disable stage changes",
+      "status": "passed"
+    },
+    {
+      "name": "Cross-tab changes during drag prevent opening or applying a stale movement",
+      "status": "passed"
+    },
+    {
+      "name": "Phone presentation uses a readable List and preserves the saved desktop preference",
+      "status": "passed"
+    },
+    {
+      "name": "Phone Move case button opens the same required workflow form",
+      "status": "passed"
+    },
+    {
+      "name": "Reload restores the List preference without writing or altering case data",
+      "status": "passed"
+    },
+    {
+      "name": "Within a column, urgent precedes overdue commitments and overdue precedes non-overdue high priority",
+      "status": "passed"
+    },
+    {
+      "name": "An initial move toward Resolved creates a sourced proposal and remains Active awaiting acceptance",
+      "status": "passed"
+    },
+    {
+      "name": "All rendered IDs remain unique after Board movement dialogs and source inspection",
+      "status": "passed"
+    },
+    {
+      "name": "Waiting cannot bypass intake triage through either the board or model",
+      "status": "passed"
+    },
+    {
+      "name": "No uncaught script errors in the exercised model and DOM journeys",
+      "status": "passed"
+    }
+  ],
+  "limits": "jsdom DOM emulation; native dialog, focus/top-layer, menu geometry, image decode (stubbed to a 1px test fixture), browser camera, actual clipboard/downloads and physical-device acceptance remain unverified. No application, backend, security or operational acceptance is claimed."
+}
