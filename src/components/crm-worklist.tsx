@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
-import { ACTIVE_PIPELINE_ID } from "../crm/stages";
+import { initialWorklistFilters as initial } from "../crm/worklist-location";
+import { useWorklistLocation } from "./crm-worklist-location";
 import { useEffect, useState, useRef, useLayoutEffect, useCallback, useMemo } from "react";
 import type { CSSProperties } from "react";
 import { DealDialog, dealAmount, dealClose, stageRequiresEvidence, useDesktopCRM, type DealRecord, type StageUndo } from "./crm-deal-controls";
@@ -16,7 +17,6 @@ import { denied, useCrmCommand, useCrmResource } from "./crm-state";
 type Results = Awaited<ReturnType<typeof listOpportunities>>;
 const labels = { Needed: "Next action needed", DueNeeded: "Due date needed", Overdue: "Overdue", Upcoming: "Upcoming", Unavailable: "Next action unavailable" };
 const query = (fields: Record<string, string>) => new URLSearchParams(Object.entries(fields).filter(([, value]) => value)).toString();
-const initial = { outcome: "Open", pipeline_definition_id: ACTIVE_PIPELINE_ID, q: "", company_id: "", site_id: "", owner_id: "", stage_id: "", next_action: "", sort: "Reference", limit: "50", cursor: "" };
 
 function FilterPicker({ kind, value, company, set, enabled }: { kind: "Company" | "Site" | "Owner"; value: string; company: string; set: (value: string) => void; enabled: boolean }) {
   const [q, setQ] = useState("");
@@ -157,15 +157,8 @@ export function SalesWorklist() {
   const [focusAfterSave, setFocusAfterSave] = useState<{id:string;version:number}|null>(null);
   const [activity,setActivity]=useState<WorklistItem|null>(null);
 
-  const [filters, setFilters] = useState(initial);
-  // Explicit access to retained I1 history; ordinary navigation starts on five stages.
-  useEffect(() => {
-    if (new URLSearchParams(window.location.search).get("pipeline") === "I1")
-      queueMicrotask(() => setFilters(old => ({ ...old, pipeline_definition_id: "c1000000-0000-4000-8000-000000000001" })));
-  }, []);
+  const { filters, setFilters, view, setView, selected, setSelected, clear: clearLocation } = useWorklistLocation();
   const boardScroll = useScrollMemory(), gridScroll = useScrollMemory();
-  const [view, setView] = useState<"Board" | "Grid">("Board");
-  const [selected, setSelected] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const data = useCrmResource<Results>(`crm/opportunities?${query(filters)}`, true);
   // On acceptance drop the optimistic override and let the server be the truth.
@@ -177,9 +170,9 @@ export function SalesWorklist() {
   useEffect(() => {
     if (!isDenied) return;
     let live = true;
-    queueMicrotask(() => { if (live) { setFilters(initial);setFeedback("");setUndoMove(null);setMoved({});setDialog(null); } });
+    queueMicrotask(() => { if (live) { clearLocation();setFeedback("");setUndoMove(null);setMoved({});setDialog(null);setActivity(null);setFiltersOpen(false); } });
     return () => { live = false; };
-  }, [isDenied]);
+  }, [isDenied, clearLocation]);
   useEffect(() => {
     if (!focusAfterSave || dialog || !data.data?.items.some(i => i.id === focusAfterSave.id && i.version >= focusAfterSave.version)) return;
     const frame = requestAnimationFrame(() => {
@@ -263,7 +256,7 @@ export function SalesWorklist() {
   return <section className="crm-workspace" aria-label="Sales worklist">
     <h1 className="sr-only">Sales worklist</h1>
     {!desktop && <HeaderContent slot="search">{scopedSearch}</HeaderContent>}
-    <div className="crm-toolbar"><fieldset className="crm-pipeline-picker" disabled={stageCommand.busy||stageCommand.uncertain}><SelectField name="pipeline" label="Pipeline" value={filters.pipeline_definition_id} onChange={value=>{if(!value)return;setFilters(old=>({...old,pipeline_definition_id:value,stage_id:"",cursor:""}));setSelected("");setMoved({});setUndoMove(null);setFeedback("");}} options={data.data?.pipelines ?? []}/></fieldset><div className="crm-view-controls" role="group" aria-label="Opportunity presentation">
+    <div className="crm-toolbar"><fieldset className="crm-pipeline-picker" disabled={stageCommand.busy||stageCommand.uncertain}><SelectField name="pipeline" label="Pipeline" value={filters.pipeline_definition_id} onChange={value=>{if(!value)return;setFilters(old=>({...old,pipeline_definition_id:value,stage_id:"",cursor:""}), "push");setSelected("");setMoved({});setUndoMove(null);setFeedback("");}} options={data.data?.pipelines ?? []}/></fieldset><div className="crm-view-controls" role="group" aria-label="Opportunity presentation">
       {(["Board", "Grid"] as const).map((value) => <button key={value} className={view === value ? "" : "secondary"} aria-pressed={view === value} onClick={() => setView(value)}><ProductIcon name={value === "Board" ? "board" : "list"} />{value === "Grid" ? "List" : value}</button>)}
     </div>
     {!data.error && data.data?.can_create && <Link className="primary-link crm-new-opportunity" href="/crm/opportunities/new" aria-label="New opportunity"><ProductIcon name="plus" />Opportunity</Link>}
@@ -296,7 +289,7 @@ export function SalesWorklist() {
     {!data.error && data.data && <>
       <div className="source-stamp crm-worklist-stamp"><strong>{data.data.items.length} {data.data.items.length === 1 ? "opportunity" : "opportunities"}{data.data.completeness === "Complete" ? "" : " on this page"}</strong><span>{totals?.formatted} known{totals?.unknown ? ` · ${totals.unknown} not estimated` : ""}</span><span className="crm-summary-basis">{filters.outcome} · AUD, excl. GST</span></div>
       {view === "Board" ? <>
-        <div className="crm-stage-navigation" role="group" aria-label="Choose Board stage">{data.data.stages.map((stage) => <button key={stage.stage_id} aria-pressed={activeStage === stage.stage_id} className={activeStage === stage.stage_id ? "" : "secondary"} onClick={() => setSelected(stage.stage_id)}>{stage.stage_id} ({stage.count})</button>)}</div>
+        <div className="crm-stage-navigation" role="group" aria-label="Choose Board stage">{data.data.stages.map((stage) => <button key={stage.stage_id} aria-pressed={activeStage === stage.stage_id} className={activeStage === stage.stage_id ? "" : "secondary"} onClick={() => setSelected(stage.stage_id, "push")}>{stage.stage_id} ({stage.count})</button>)}</div>
         <Board data={boardData!} selected={activeStage} scroll={boardScroll} onOpen={id=>{if(!stageCommand.busy&&!stageCommand.uncertain)setDialog({id,mode:"snapshot"});}} onStage={id=>setDialog({id,mode:"stage"})} blocked={stageCommand.busy||stageCommand.uncertain} onMove={move} onActivity={setActivity} />
       </> : <Grid data={data.data} scroll={gridScroll} />}
       <div className="crm-actions"><span className="crm-page-context">{data.data.completeness === "Complete" ? "All matching results" : data.data.window.has_more ? "Page counts and values · more pages" : "Page counts and values · final page"} · As at <Stamp value={data.data.window.as_of} /></span><button className="secondary" onClick={refresh}>Refresh from start</button>{data.data.next_cursor && <button onClick={() => setFilters((old) => ({ ...old, cursor: data.data!.next_cursor! }))}>Next page</button>}</div>

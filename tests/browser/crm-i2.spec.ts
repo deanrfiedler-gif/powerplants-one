@@ -30,6 +30,82 @@ async function capture(page: Page, info: TestInfo, scenario: string, top = true)
 }
 const ids = (page: Page) => page.locator(".crm-workspace [data-opportunity-id]").evaluateAll((elements) => elements.map((e) => e.getAttribute("data-opportunity-id")));
 const snapshot = async () => Promise.all(["opportunities", "activities", "activity_links", "opportunity_events", "business_identities", "operation_receipts", "audit_events", "outbox_jobs", "reference_counters"].map(async (table) => (await database().query(`SELECT md5(coalesce(string_agg(to_jsonb(t)::text,'' ORDER BY to_jsonb(t)::text),'')) AS hash FROM ppo.${table} t`)).rows[0].hash));
+
+test("CRM URL restores filtered List, Board stage and sort through reload, a copied link and Back without business writes", async ({ page, context }, info) => {
+  await page.goto("/crm/opportunities?pipeline=I1"); await identity(page);
+  const marker = `SYN URL ${randomUUID().slice(0, 8)}`;
+  const inputs = ["Zulu", "Alpha", "Bravo"].map(title => ({ ...crmCreate(), title: `${marker} ${title}` }));
+  for (const input of inputs) await call(page, "crm/opportunities", input);
+  await call(page, `crm/opportunities/${inputs[1].id}/qualify`, crmQualify());
+  const before = await snapshot();
+  const commands: string[] = [];
+  page.on("request", r => { if (r.url().includes("/api/v1/") && r.method() !== "GET") commands.push(r.method()); });
+  const search = page.getByLabel("Search opportunities", { exact: true });
+  const historyLength = await page.evaluate(() => history.length);
+  await search.pressSequentially(marker);
+  await expect.poll(() => ids(page)).toHaveLength(3);
+  expect(await page.evaluate(() => history.length)).toBe(historyLength);
+  await expect(search).toBeFocused();
+  await page.getByLabel("Sort", { exact: true }).selectOption("Title");
+  await page.getByRole("button", { name: "Filters and sort", exact: true }).click();
+  await page.getByLabel("Company", { exact: true }).selectOption(CRM.company);
+  await page.getByLabel("Site", { exact: true }).selectOption(CRM.site);
+  await page.getByLabel("Opportunity owner", { exact: true }).selectOption(CRM.owner);
+  await page.getByLabel("Page size", { exact: true }).selectOption("10");
+  await page.getByRole("button", { name: "Filters and sort", exact: true }).click();
+  await expect.poll(() => ids(page)).toHaveLength(3);
+  if (info.project.use.isMobile) await page.getByRole("button", { name: /^Qualified \(/ }).click();
+  await page.getByRole("button", { name: "List", exact: true }).click();
+  const expected = [inputs[1].id, inputs[2].id, inputs[0].id];
+  await expect.poll(() => ids(page)).toEqual(expected);
+  const linked = page.url(), query = new URL(linked).searchParams;
+  expect(query.get("view")).toBe("Grid"); expect(query.get("q")).toBe(marker);
+  expect(query.get("company_id")).toBe(CRM.company); expect(query.get("site_id")).toBe(CRM.site);
+  expect(query.get("owner_id")).toBe(CRM.owner); expect(query.get("sort")).toBe("Title");
+  expect(query.get("limit")).toBe("10"); expect(query.has("cursor")).toBe(false);
+  await page.reload();
+  await expect(page.getByRole("button", { name: "List", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await expect.poll(() => ids(page)).toEqual(expected);
+  const copy = await context.newPage();
+  try {
+    await copy.goto(linked); await expect.poll(() => ids(copy)).toEqual(expected);
+    await expect(copy.getByRole("button", { name: "List", exact: true })).toHaveAttribute("aria-pressed", "true");
+  } finally { await copy.close(); }
+  await page.getByRole("link", { name: inputs[1].title, exact: true }).click();
+  await expect(page).toHaveURL(new RegExp(`/crm/opportunities/${inputs[1].id}$`));
+  await page.goBack(); await expect(page).toHaveURL(linked);
+  await expect.poll(() => ids(page)).toEqual(expected);
+  await page.getByRole("button", { name: "Board", exact: true }).click();
+  if (info.project.use.isMobile) await expect(page.getByRole("button", { name: /^Qualified \(/ })).toHaveAttribute("aria-pressed", "true");
+  await page.goBack(); await expect(page).toHaveURL(linked);
+  await expect(page.getByRole("button", { name: "List", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await capture(page, info, "url-restored-list");
+  expect(await snapshot()).toEqual(before); expect(commands).toEqual([]);
+});
+
+test("CRM URL clears sensitive criteria on identity lock and a copied link never grants another actor access", async ({ page, context }, info) => {
+  await page.goto("/crm/opportunities?pipeline=I1"); await identity(page);
+  const input = { ...crmCreate(), title: `SYN Private URL ${randomUUID()}` };
+  await call(page, "crm/opportunities", input);
+  await page.getByLabel("Search opportunities", { exact: true }).fill(input.title);
+  await expect.poll(() => ids(page)).toEqual([input.id]);
+  await page.getByRole("button", { name: "List", exact: true }).click();
+  const linked = page.url();
+  const other = await context.browser()!.newContext();
+  try {
+    const response = await other.request.post("http://127.0.0.1:3000/api/v1/local-session", { headers: { Origin: "http://127.0.0.1:3000" }, data: { profile: "second-company" } });
+    expect(response.ok()).toBe(true);
+    const restricted = await other.newPage(); await restricted.goto(linked);
+    await expect(restricted.locator(".crm-worklist-stamp strong")).toHaveText("0 opportunities");
+    await expect(restricted.locator(`[data-opportunity-id="${input.id}"]`)).toHaveCount(0);
+    const detail = await other.request.get(`http://127.0.0.1:3000/api/v1/crm/opportunities/${input.id}`);
+    expect(detail.status()).toBe(404);
+  } finally { await other.close(); }
+  await identity(page, "second-company");
+  await expect.poll(() => new URL(page.url()).searchParams.has("q")).toBe(false);
+  await expect(page.locator(`[data-opportunity-id="${input.id}"]`)).toHaveCount(0);
+  await capture(page, info, "url-identity-cleared");
+});
 async function waitForCompactSearch(page: Page) {
   await expect(page.locator("#header-search input[name='sales-search']")).toHaveCount(1);
   await expect(page.locator(".crm-toolbar input[name='sales-search']")).toHaveCount(0);
