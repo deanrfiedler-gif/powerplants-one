@@ -36,3 +36,6 @@ verification-evidence/
 
 public/offline/modules/
 public/offline/sw.js
+
+# Windows Explorer folder metadata
+desktop.ini
