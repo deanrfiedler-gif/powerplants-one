@@ -1,0 +1,360 @@
+{
+  "revision": "r01",
+  "product": "Powerplants One",
+  "colours": {
+    "green": "#62BB46",
+    "navy": "#242A37",
+    "white": "#FFFFFF"
+  },
+  "assets": [
+    {
+      "name": "powerplants-full-on-light",
+      "label": "Full logo \u00b7 Green and navy",
+      "use": "White or very light backgrounds; full company name.",
+      "type": "full",
+      "source": "Brand Identity Guidelines 2026, page 6, vector paths 43\u201363"
+    },
+    {
+      "name": "powerplants-full-on-navy",
+      "label": "Full logo \u00b7 Green and white",
+      "use": "Brand navy background; full company name.",
+      "type": "full",
+      "source": "Brand Identity Guidelines 2026, page 6, vector paths 43\u201363"
+    },
+    {
+      "name": "powerplants-full-white",
+      "label": "Full logo \u00b7 All white",
+      "use": "Single-colour reversed use on a dark background.",
+      "type": "full",
+      "source": "Brand Identity Guidelines 2026, page 6, vector paths 43\u201363"
+    },
+    {
+      "name": "powerplants-full-white-badge",
+      "label": "Full logo \u00b7 White badge",
+      "use": "Navy backgrounds where a white corporate badge is preferred.",
+      "type": "full",
+      "source": "Brand Identity Guidelines 2026, page 7, vector paths 44\u201365"
+    },
+    {
+      "name": "ppo-symbol-on-navy",
+      "label": "Compact symbol \u00b7 Green and white",
+      "use": "Desktop navy rail: 80 px. Mobile dark tile: 36 px.",
+      "type": "compact",
+      "source": "User-requested symbol-only adaptation, ppo-menu-rail-symbol-r01.svg"
+    },
+    {
+      "name": "ppo-symbol-on-light",
+      "label": "Compact symbol \u00b7 Green and navy",
+      "use": "White or very light interface surfaces.",
+      "type": "compact",
+      "source": "User-requested symbol-only adaptation, ppo-menu-rail-symbol-r01.svg"
+    }
+  ],
+  "full_logo_geometry": "Extracted original PDF vector paths; no raster tracing and no replacement font.",
+  "compact_geometry": "Existing authorised symmetrical symbol-only adaptation.",
+  "application_installation": "Not installed or deployed.",
+  "verification": [
+    {
+      "asset": "powerplants-full-on-light",
+      "svg": "valid vector only",
+      "png": "dimensions, corner alpha and solid colours passed"
+    },
+    {
+      "asset": "powerplants-full-on-navy",
+      "svg": "valid vector only",
+      "png": "dimensions, corner alpha and solid colours passed"
+    },
+    {
+      "asset": "powerplants-full-white",
+      "svg": "valid vector only",
+      "png": "dimensions, corner alpha and solid colours passed"
+    },
+    {
+      "asset": "powerplants-full-white-badge",
+      "svg": "valid vector only",
+      "png": "dimensions, corner alpha and solid colours passed"
+    },
+    {
+      "asset": "ppo-symbol-on-navy",
+      "svg": "valid vector only",
+      "png": "dimensions, corner alpha and solid colours passed"
+    },
+    {
+      "asset": "ppo-symbol-on-light",
+      "svg": "valid vector only",
+      "png": "dimensions, corner alpha and solid colours passed"
+    }
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 5394,
+      "sha256": "51f9ac6d03caf91127758dc77e410f0129e7cb0c91aacc835d028db69f1004b6"
+    },
+    {
+      "path": "icons/favicon.ico",
+      "bytes": 2920,
+      "sha256": "3f5270bd0bca542b268d52e9a004d52b0545c2b38166fa2ff38963f3e8863b75"
+    },
+    {
+      "path": "icons/ppo-app-icon-16.png",
+      "bytes": 407,
+      "sha256": "d3f92a39160588b76f69279ed1fc9419279761bb3d9b6759da7036c1516c92ac"
+    },
+    {
+      "path": "icons/ppo-app-icon-180.png",
+      "bytes": 6689,
+      "sha256": "146fe7597902493cacda0a59b5a07cfd21f642903a48cf9ad0e1cc2e56e46a47"
+    },
+    {
+      "path": "icons/ppo-app-icon-192.png",
+      "bytes": 6835,
+      "sha256": "e519ece7d1afc70d7b45af9e2dc9a078c7ff02ad943d088e4c98e582cdfb59b7"
+    },
+    {
+      "path": "icons/ppo-app-icon-32.png",
+      "bytes": 948,
+      "sha256": "d4073ba4d20c11eb03127f48b7eee96b1f0978f9999c8c82bb1b5d47c74c6cab"
+    },
+    {
+      "path": "icons/ppo-app-icon-48.png",
+      "bytes": 1511,
+      "sha256": "af8e368b51e147a3d7d19a6dfe3613a73a21d65285ee4d244b45748eac6b876e"
+    },
+    {
+      "path": "icons/ppo-app-icon-512.png",
+      "bytes": 24178,
+      "sha256": "572af932e32cd2e291452f69fc737d3ccb3eb32fbd265a24de83efd1726e39fc"
+    },
+    {
+      "path": "icons/ppo-app-icon.svg",
+      "bytes": 1567,
+      "sha256": "622976de97d34e8820863115d68ad18c3ee2bb0e87c1e8dced1ca6293fce36c9"
+    },
+    {
+      "path": "logo-pack-preview.png",
+      "bytes": 162616,
+      "sha256": "84c3df1811a901b679020d4b1a2b17fffcc7641d1ab688070a7d13b380e4ecff"
+    },
+    {
+      "path": "png/powerplants-full-on-light/powerplants-full-on-light-1024.png",
+      "bytes": 64530,
+      "sha256": "f63a515ca4eefbfd06a7a0636259c40053e7159de61c2be3edcd71022d24846b"
+    },
+    {
+      "path": "png/powerplants-full-on-light/powerplants-full-on-light-160.png",
+      "bytes": 7586,
+      "sha256": "122c49aab8f07ecb40ac2a6ece4c82d1abbec4266a18d4872196aa62350fd566"
+    },
+    {
+      "path": "png/powerplants-full-on-light/powerplants-full-on-light-2048.png",
+      "bytes": 156899,
+      "sha256": "eb6c7bfda8f2ffa622c126e08f5c15068f76f061ce90c1f4da1185b0f62796a2"
+    },
+    {
+      "path": "png/powerplants-full-on-light/powerplants-full-on-light-256.png",
+      "bytes": 12857,
+      "sha256": "60eb2197f180c55a0e94526fa05dad83f30dbe1ba81a96d13d90bb0b5e6fc1db"
+    },
+    {
+      "path": "png/powerplants-full-on-light/powerplants-full-on-light-512.png",
+      "bytes": 27834,
+      "sha256": "460a08502fc3b4518ca5c3f97e72a317dee5f3d8b395bb5677bddbe73f456676"
+    },
+    {
+      "path": "png/powerplants-full-on-light/powerplants-full-on-light-80.png",
+      "bytes": 3730,
+      "sha256": "7a31e33a12c7a2c8af52d317391870204c9dba4354d8c09b4d8583092a20c323"
+    },
+    {
+      "path": "png/powerplants-full-on-navy/powerplants-full-on-navy-1024.png",
+      "bytes": 60320,
+      "sha256": "2d3bf913edaa1cdd401fc16a30aac5897f0e2e4de0526e7b7bc94f962b15f7d4"
+    },
+    {
+      "path": "png/powerplants-full-on-navy/powerplants-full-on-navy-160.png",
+      "bytes": 6999,
+      "sha256": "db7eaa559beddf60f44511924f6faf4032dedb7003e159fa2ae242b6e2276496"
+    },
+    {
+      "path": "png/powerplants-full-on-navy/powerplants-full-on-navy-2048.png",
+      "bytes": 143391,
+      "sha256": "32d6a998b72d6be4828466f268e03893c070b845a05997de4fff4787259da770"
+    },
+    {
+      "path": "png/powerplants-full-on-navy/powerplants-full-on-navy-256.png",
+      "bytes": 11911,
+      "sha256": "f0a58e9f4aa81b921f0b55c2d2820ac1e6e16c765d295877e32a2901b6ca8edb"
+    },
+    {
+      "path": "png/powerplants-full-on-navy/powerplants-full-on-navy-512.png",
+      "bytes": 25952,
+      "sha256": "69323ac533dc214a89dec5a64cc1be8639bd02aeca5f73008b7945d164187f34"
+    },
+    {
+      "path": "png/powerplants-full-on-navy/powerplants-full-on-navy-80.png",
+      "bytes": 3368,
+      "sha256": "8f4d772fc5fbdafa6aa4f2070fb5bcb461ca3086004f0d43d4dae2b575ed3504"
+    },
+    {
+      "path": "png/powerplants-full-white/powerplants-full-white-1024.png",
+      "bytes": 46803,
+      "sha256": "57ca1773f6991a2efaf19c54ad8576ece743f26b2430b55d10e455b54dec8424"
+    },
+    {
+      "path": "png/powerplants-full-white/powerplants-full-white-160.png",
+      "bytes": 5770,
+      "sha256": "9e23f27d0e7d462d552fa29e2967aa8b14ce8c4c406c2a5b2f1e136212a2e066"
+    },
+    {
+      "path": "png/powerplants-full-white/powerplants-full-white-2048.png",
+      "bytes": 110721,
+      "sha256": "1bb2ac68d3bf9253431fb78fab7a01deb2978baeab59e043181fa68a3e92209d"
+    },
+    {
+      "path": "png/powerplants-full-white/powerplants-full-white-256.png",
+      "bytes": 9748,
+      "sha256": "9de4c96957b0733cc4bea21db4efd0bfdfd804c1e7ee4ad479c81d39d4873db3"
+    },
+    {
+      "path": "png/powerplants-full-white/powerplants-full-white-512.png",
+      "bytes": 21118,
+      "sha256": "766823351ecc35746d0f189924c28f59f9a951c4abcf80078d424e5320474290"
+    },
+    {
+      "path": "png/powerplants-full-white/powerplants-full-white-80.png",
+      "bytes": 2669,
+      "sha256": "6618a75aa9c5abf566ced1e80b96b2fe94c3d40bd2ddce11dac9bbeb7c2e9d34"
+    },
+    {
+      "path": "png/powerplants-full-white-badge/powerplants-full-white-badge-1024.png",
+      "bytes": 72031,
+      "sha256": "d8e7964fd99e5867f3a43636d26699c116e38bdd2db272c4f34fe93bc2a81336"
+    },
+    {
+      "path": "png/powerplants-full-white-badge/powerplants-full-white-badge-160.png",
+      "bytes": 8501,
+      "sha256": "4a25e1309af44d48c25fdcafb6b6a2df495c87e7811d595aa840f35cd43bb3f6"
+    },
+    {
+      "path": "png/powerplants-full-white-badge/powerplants-full-white-badge-2048.png",
+      "bytes": 170222,
+      "sha256": "a883faa7993cde316ed8c2c6cc16a2587f8faabd03cb89730c956c41ab3de56c"
+    },
+    {
+      "path": "png/powerplants-full-white-badge/powerplants-full-white-badge-256.png",
+      "bytes": 14444,
+      "sha256": "e9de50874e08b68944fb16e7417223ed01b21a51c581af1745f5d8bba9ff063b"
+    },
+    {
+      "path": "png/powerplants-full-white-badge/powerplants-full-white-badge-512.png",
+      "bytes": 31019,
+      "sha256": "91bed472aff2f8bc635f114d6f9a94b6444e64d6a01d9902719679add2e09b70"
+    },
+    {
+      "path": "png/powerplants-full-white-badge/powerplants-full-white-badge-80.png",
+      "bytes": 4174,
+      "sha256": "a576dadd1cdd05b6763d5b48384ae434525c739e11a2e9672796e46eb4e3116f"
+    },
+    {
+      "path": "png/ppo-symbol-on-light/ppo-symbol-on-light-1024.png",
+      "bytes": 65560,
+      "sha256": "436e4129b4b77c94afaf1cf737ffcfbea74d9a3d6f9ae3c3544ae640f0791965"
+    },
+    {
+      "path": "png/ppo-symbol-on-light/ppo-symbol-on-light-160.png",
+      "bytes": 6955,
+      "sha256": "578fb8e86b1092bb431a79458ab5cc3d944d716b9b5a4b4da7598900e930cddd"
+    },
+    {
+      "path": "png/ppo-symbol-on-light/ppo-symbol-on-light-256.png",
+      "bytes": 11746,
+      "sha256": "279b2e07a9d86f832d47c1991c6021244fc13c8c38951cc99c3734a0ae6d48e1"
+    },
+    {
+      "path": "png/ppo-symbol-on-light/ppo-symbol-on-light-36.png",
+      "bytes": 1472,
+      "sha256": "f08820f12f45e417c8e49ddc6b388721a332bc3d8c888fe3b898681d8d2b643c"
+    },
+    {
+      "path": "png/ppo-symbol-on-light/ppo-symbol-on-light-512.png",
+      "bytes": 27616,
+      "sha256": "193aaf60ea3aafa19aa80826653adcd0aa6154ae6bb3e70a4237d12fe1515d6b"
+    },
+    {
+      "path": "png/ppo-symbol-on-light/ppo-symbol-on-light-72.png",
+      "bytes": 2927,
+      "sha256": "79e37dada900ceee1247556a95bffc9611852f17b901b88776a97529f614c10d"
+    },
+    {
+      "path": "png/ppo-symbol-on-light/ppo-symbol-on-light-80.png",
+      "bytes": 3252,
+      "sha256": "56a6cb832480ad5896bcfe5c2b1697640ce84154599ed818e72ec752da8724c3"
+    },
+    {
+      "path": "png/ppo-symbol-on-navy/ppo-symbol-on-navy-1024.png",
+      "bytes": 63717,
+      "sha256": "900b24942abdde0c9ebb9b671d0df5cf044e8981bc485356eee1cd38b3873950"
+    },
+    {
+      "path": "png/ppo-symbol-on-navy/ppo-symbol-on-navy-160.png",
+      "bytes": 6704,
+      "sha256": "f40880062fddca8aa0db28d02c796eac9d0ee5b488ef64eed6066b054c25c301"
+    },
+    {
+      "path": "png/ppo-symbol-on-navy/ppo-symbol-on-navy-256.png",
+      "bytes": 11424,
+      "sha256": "e0719bd76e63f90e1c20fba4e52594cada6286fab9d0399889c460afa095cd5d"
+    },
+    {
+      "path": "png/ppo-symbol-on-navy/ppo-symbol-on-navy-36.png",
+      "bytes": 1456,
+      "sha256": "85b6b40bbf36e8189ff1eb2ad398a6c882920da1ec2f5af49f4c41595f865efa"
+    },
+    {
+      "path": "png/ppo-symbol-on-navy/ppo-symbol-on-navy-512.png",
+      "bytes": 26710,
+      "sha256": "1dea6479fb5b230646e0b30c8ce973537a07cfa0a340ffc53b0b8788897285f1"
+    },
+    {
+      "path": "png/ppo-symbol-on-navy/ppo-symbol-on-navy-72.png",
+      "bytes": 2842,
+      "sha256": "a008d02bc84396a55644f0fe73ea9573e26a676fdc2b56ccf9f3e1eaba89aa40"
+    },
+    {
+      "path": "png/ppo-symbol-on-navy/ppo-symbol-on-navy-80.png",
+      "bytes": 3151,
+      "sha256": "2bbb5ab6bf9296ae42393c3a264460622a8252cf051d4c8784bb5fb2aea83e03"
+    },
+    {
+      "path": "svg/powerplants-full-on-light.svg",
+      "bytes": 12756,
+      "sha256": "cf9f555d3f863a15c7ae2a0eb66728512620767e45c0c7c1088a61d98d8a8b15"
+    },
+    {
+      "path": "svg/powerplants-full-on-navy.svg",
+      "bytes": 12757,
+      "sha256": "8f1d4dfe310b97cdb5ee48239642bca3c40b5ee40a49c05c1ace3012242b3c54"
+    },
+    {
+      "path": "svg/powerplants-full-white-badge.svg",
+      "bytes": 12314,
+      "sha256": "94e7fcfc449325a4a107511a6c4829bcfc261e21b72d732c8d3460562305b065"
+    },
+    {
+      "path": "svg/powerplants-full-white.svg",
+      "bytes": 12751,
+      "sha256": "c900c7d548abcf03ea13310bf3a54f05361e5e97e0230614af0a763103a128b9"
+    },
+    {
+      "path": "svg/ppo-symbol-on-light.svg",
+      "bytes": 1333,
+      "sha256": "d2bd045bc150bd50df9645b1bb824b996ec3c654bd7fa0012fa893469bdfcfc8"
+    },
+    {
+      "path": "svg/ppo-symbol-on-navy.svg",
+      "bytes": 1328,
+      "sha256": "f72cfdd5a7b6d2aaa906d16c28f3f4f4f187d72bf89c9b51816ef2f0340110ba"
+    }
+  ]
+}
