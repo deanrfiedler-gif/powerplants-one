@@ -49,4 +49,4 @@ The [audit continuation handover](delivery/audit-continuation-handover.md) recor
 
 ## Customers, sites and growing areas
 
-[Workspace r01](reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r01.html) connects two synthetic addressed sites, facility details, equipment service relationships and sourced visit requirements. [Design and handover](decisions/customers-sites-workspace-design.md) records the r18 theme source, register coverage, model/DOM evidence and outstanding rendered-browser/application acceptance.
+[Workspace r02](reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r02.html) contains only the customer/location workspace, using the supplied r20 theme. [Audit findings](decisions/customers-sites-workspace-audit-r02.md) describe the 18 refinements and remaining gaps; [current handover](decisions/customers-sites-workspace-design.md) records source/interaction evidence and receiving boundaries. [R01](reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r01.html) is preserved.

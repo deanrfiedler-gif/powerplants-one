@@ -1,88 +1,74 @@
 # Customers, Sites & Growing Areas Workspace
 
-**Revision:** r01 · **Date:** 15 September 2026 · **Owner:** Dean Fiedler · **State:** Authorised standalone design delivered for review; browser visual acceptance and application integration pending.
+**Revision:** r02 · **Date:** 15 September 2026 · **Owner:** Dean Fiedler · **State:** Authorised standalone workspace refinement, delivered for review. Native visual/device acceptance and application integration remain pending.
 
-The user instructed development of the recommended Customers, Sites & Growing Areas Workspace, starting with CS-04 and CS-05, using the PPO theme board and the refined navigation/dropdown patterns. The approved demonstration includes one organisation, two addressed sites, all six horticultural facility examples, one pump installed in a shed serving several growing areas, and contextual sourced assistance. This is a design deliverable under PPO-009 / CRM-01/04/08, not a new business approval or a completed runtime acceptance case.
+[Current r02 HTML](../reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r02.html) · [Detailed r02 audit](customers-sites-workspace-audit-r02.md) · [72 model/DOM results](../testing/evidence/customers-sites-workspace-r02.json) · [Retained r01 HTML](../reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r01.html).
 
-[Open the HTML](../reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r01.html) · [Model and DOM-emulation check](../../scripts/check-customers-sites-design.mjs) · [Exact check evidence](../testing/evidence/customers-sites-workspace-r01.json).
+## Authority and revision
 
-## Sources and current-code reconciliation
+The user first authorised the recommended Customers, Sites & Growing Areas Workspace, starting with CS-04 and CS-05 and including one organisation, two addressed sites, all six horticultural examples, shared equipment relationships, visit requirements and sourced assistance. R01 was published in draft PR #193 at `0e5f26d0757a3c2ed21f4871227e70c41c1e0b35`.
 
-- Main was refreshed at `dcabfec1b5cde1c2cf220359e6cf1c63408512d6`, tree `39f462560154914360a93f71779ce8b68b9fc28b`. Equipment r01 is merged. The older main-head snapshot in STATUS is not used as current repository truth.
-- Equipment r02 remains a separate open PR #192, inspected at `8535acd9e5909a0dff5f6ccde752bad6087ef1e6`. The workspace links that exact design reference and explicitly labels its synthetic fixture as separate. It does not pretend to resolve the new pump in the application or in Equipment r02.
-- Existing customer context already has organisation details, site summaries and a Sites hierarchy. This design builds on those concepts rather than classifying customer runtime as absent. Sources include [BP-03](../blueprints/BP-03-crm.md), the [shared data dictionary](../contracts/service-data-dictionary.md), [approved facility fields](facility-field-proposal.md), and the [shared UI specification](../standards/ui-style-specification.md).
-- The conversation's coverage register r06 carries r04 scope content. Its CS-01/02, CS-04/05/06 and EQ-03 references organise this work; this deliverable does not reclassify every register entry as implemented. CS-03/07 are not claimed complete. CS-08 remains the next extension.
-- The actual supplied `powerplants-one-theme-style-board-r18(2).html` was inspected locally, not inferred from the attachment label. SHA-256: `e55ccbabef40a0b07a95ee5847f99147a8f29e8f7c84f90497df2b4d5e6696ab`. The older r16 copy was not used as the theme source. The later user-provided r18 components control this standalone design where older repository guidance differs.
-- Publication reconciliation: main advanced to `64574208ca604fee381e45c1b7db1b2b03c1dc8b`, tree `ec43a7ca4373ff233bb58632f34a7f6b3d0f7a1f`, through the merge of naming/SharePoint #190. The design branch was rebased; both workstreams' document-register entries and status updates were retained. Naming standard r04 Section 24 was inspected: its explicit organisation/site/facility/area/equipment metadata boundary is consistent with this design. No live filing or communication action is added.
-- The existing plain HTML/CSS/JavaScript design pattern is retained. No framework, package, server, migration, API, adapter, environment or hosting change is introduced. Naming/SharePoint #190 is now merged; Excel estimate-import #191 remains a separate workstream.
+The next instruction requests an audit for gaps, improvements and professionalism, repository/theme alignment using the attached r20 board, and explicitly **only the workspace, without the left navigation rail or app shell**. R02 implements that request and preserves the r01 reference unchanged. The [audit](customers-sites-workspace-audit-r02.md) records 18 addressed findings and the remaining expansion boundaries.
 
-## Connected views and behaviour
+Source checkpoint: main `64574208ca604fee381e45c1b7db1b2b03c1dc8b`, tree `ec43a7ca4373ff233bb58632f34a7f6b3d0f7a1f`. Naming/SharePoint #190 is merged; Equipment r02 #192, Excel import #191 and MYOB handbook #194 remain separate at the inspected checkpoint. Existing organisation/site context and Facility identity commands are acknowledged; this HTML is not a claim that its richer fields are persisted by the current application.
 
-| View | Register coverage | Delivered design behaviour |
+## Included workspace
+
+| Local view | Register mapping | Scope |
 |---|---|---|
-| Customer overview | CS-01 / CS-02 | Fictional organisation, legal name, relationship owner, relevant contacts, separate site-party meanings, two site links and scoped counts. No new customer or ERP-account editor. |
-| Site workspace | CS-04 | Two distinct addressed sites, exact IDs, IANA timezone, site contact, read-only access/delivery/visit detail, site-party roles, versioned site-information edit, source inspection and site change history. Site switching scopes every primary view. |
-| Facilities and growing areas | CS-05 | Hierarchy and indicative site plan; search by name/crop/reference and structure filter; create/edit; separate structure/use/crop; optional same-site parent; conditional details; footprint; approximate dimensions; on-site position; retained before/after history. |
-| Equipment relationships | CS-05 / EQ-03 | One stable pump identity, one installation location, separate served-area links, editable same-site service relationships, immutable source successors and link to the exact Equipment r02 design. Equipment creation, relocation, inspections and service history remain Equipment work. |
-| Site and area readiness | CS-06 | Biosecurity, induction, crop access and shutdown information; fixed explicit scopes; responsible contacts; exact source records; review dates evaluated against a chosen visit date; source review creates a successor. Missing scoped categories are surfaced without inheriting parent or sibling clearance. |
-| Contextual assistance | Cross-cutting | Scripted site summary, information-gap review and visit brief. Site or facility context, inspectable frozen sources, owned missing information and source-inclusive copy/download. No model service, live source retrieval, automatic updates, communications or booking. |
+| Customer | CS-01 / CS-02 | Organisation context, relevant contacts, separate site-party meanings and scoped site/facility/equipment counts. |
+| Sites | CS-04 | Two addressed sites, timezone, contacts, telephone, access/delivery/visit information, site-source successors and history. |
+| Facilities & areas | CS-05 | Filtered collapsible hierarchy, stable visible references, indicative site plan, detail/forms, optional same-site parent, taxonomy/use/crop, dimensions, on-site position and readable history. |
+| Equipment links | CS-05 / EQ-03 | One equipment identity, fixed installation location, separately editable same-site served relationships, source and history. |
+| Visit requirements | CS-06 | Biosecurity, induction, crop access and shutdown information, explicit scope, owners/review dates, exact sources, new requirements and reviewed scope amendments. |
+| Contextual Assistant | Cross-cutting | Scripted summary, missing-information review and source-inclusive visit draft for the exact selected site/area. |
 
-The main fictional grower is **Willowbank Horticulture**. Its **Nursery & propagation** site contains Greenhouse 01, Tunnel 01, Propagation House 01, nested Propagation Bay A, Pack Room 01, Irrigation Shed 01 and Irrigation Block 01. **Field production** contains Irrigation Block 02 / Field and Tunnel 02. The two addresses, people, email addresses and all asset information are fabricated. `.example` email addresses are displayed as fictional contact context and are not send actions.
+The demonstration remains **Willowbank Horticulture** with Nursery & propagation and Field production sites. Nine facilities/areas cover Greenhouse, Tunnel, Propagation House, Pack Room, Irrigation Block/Field and Irrigation Shed, plus nested Propagation Bay A. All identities, addresses, people, email addresses and records are synthetic.
 
-Pump `SYN-PPO-AST-000501` is installed in Irrigation Shed 01 and initially serves Greenhouse 01, Tunnel 01 and Propagation House 01. These are links to one Asset, not three duplicate assets and not parent-child equipment containment. Served facilities may also be non-growing support facilities; structure/use changes keep existing relationships and call for applicability review. A service grouping is not itself a physical irrigation block.
+Pump `SYN-PPO-AST-000501` is installed in Irrigation Shed 01 and initially serves Greenhouse 01, Tunnel 01 and Propagation House 01. It is one Asset with three service relationships. Served facilities can also be non-growing support facilities. Structural containment is not an irrigation control-group relationship. Installation moves and equipment lifecycle changes remain Equipment receiving work.
 
-## Facility policy fidelity and proposed extensions
+## Retained business controls
 
-FAC-D01–03 are retained: controlled type vocabulary, separate use/crop, Other description, Unknown reason, explicit unknown optional values, same-site parent graph guards, immutable site within the facility editor, positive decimal m² with at most two places, bounded conditional counts, and no automatic footprint roll-up. Greenhouse includes propagation houses by use. Packing and pump/equipment rooms remain non-growing facilities without a crop requirement.
+[BP-03](../blueprints/BP-03-crm.md), the [shared data dictionary](../contracts/service-data-dictionary.md) and [FAC-D01–03](facility-field-proposal.md) retain authority. Organisation-to-site context follows SiteParty; Facility does not copy an organisation owner. Operator, owner and billing party remain distinct; neither hierarchy nor a relationship grants billing or access authority.
 
-Type/use changes show the exact saved values that become inapplicable. Save requires a reason and explicit confirmation to clear those values in the same local revision as the before/after history. Cancel leaves the saved record unchanged. Switching back does not silently recover cleared historic fields. Names can repeat while UUIDs/references remain separate.
+Facility structure, use and crop remain separate. Other/Unknown require their approved description/reason. Conditional counts and positive m² retain their limits. Blank optional values remain Not recorded, never zero. Site is fixed in a facility edit; self-parent, cycles and cross-site parent/served relationships are rejected. Duplicate names keep distinct UUID/reference identities.
 
-Approximate length, width, maximum height, a measurement source/date note, and descriptive on-site position extend the approved footprint field for this design only. They are optional, independently recorded and never calculate footprint, loads, capacity, design suitability or compliance. Structured units/source contracts and runtime adoption of these additional fields remain receiving decisions. The site plan is an illustrative starter layout, not GIS, a survey or a map editor; new/nested/unmapped records remain accessible in the hierarchy.
+Type/use changes show the exact values becoming inapplicable, require a reason and explicit confirmation, and clear them with before/after history. Cancel changes nothing. Switching back does not recover hidden old values automatically. Equipment relationships are preserved and their applicability review is called out when structure/use changes.
 
-Organisation ownership is not copied onto Facility. Site parties show Operator, Owner and Billing party separately; unrecorded property ownership remains explicit. Effective party amendment and real ERP authority are outside this editor. Site address changes preserve previous source and history rather than rewriting prior context.
+Approximate length, width, maximum height and measurement source/date remain optional **design extensions** to the approved footprint field. They do not calculate footprint or certify design suitability. Parent/child footprints are not totalled. The site-plan rectangles remain indicative starter positions; new/nested/unmapped records stay accessible in the hierarchy. Survey/GIS capture remains CS-08.
 
-## Readiness and assistance boundaries
+Readiness status evaluates source-review information against a chosen visit date. Current source is not induction completion, crop-entry permission, shutdown approval, dispatch or attendance. A Not applicable rationale also requires a current review basis. Site-wide requirements apply generally; explicit area records do not propagate to relatives. New requirements and category/scope changes retain exact source metadata and history, with explicit review of changed applicability.
 
-“Current source” means the record's review date has not passed for the chosen visit date. It is not Ready, inducted, safe to enter, dispatched or shutdown-approved. A Not applicable rationale also needs a current review date. Missing information remains distinct from overdue information. Requirement scope is fixed to the site or explicitly listed facilities; scope creation/amendment is deferred in r01.
+## R20 presentation and interaction
 
-Site-wide requirements may apply generally. An individual facility never inherits an adjacent or parent area's permission. Where no applicable crop-access or shutdown record exists, the workspace names the gap and site contact instead of manufacturing an affirmative clearance. Pesticide re-entry intervals, chemical records and operational procedures are not invented.
+The supplied `powerplants-one-theme-style-board-r20(2).html` was inspected directly. SHA-256: `c68a499e857b1705d47bd6598d4b2e89526bf0861a0d234394c3da023f19b617`. The Intake profile was selected for this data/form workspace: 41 source-profile tokens plus shared type/geometry entries produce 47 resolved keys. Three source Roboto faces are embedded. Different source-module palettes are not averaged.
 
-Assistant responses use deterministic templates over the selected synthetic context. Every factual context section has inspectable retained source content, including exact local facility/scope query snapshots where an absence is reported. Downloads contain the draft and the cited source bodies. They are a starting point for human review, not generated operational instructions. Copy uses the clipboard when available and otherwise selects the visible text for manual copying. Nothing is sent externally.
+R02 contains one workspace heading, organisation/site context and five horizontal local tabs. It removes global navigation, logo masthead, breadcrumb and identity/status strips. Primary actions use white on navy; green marks current context. Choice cards preserve 14 px corners, 7 px inset, shared shadows, measured height, above/below placement and viewport clamping. Cards are 7 px, controls 6 px and focused decisions 10 px. The support column is 292 px before stacking on narrower layouts.
 
-## Theme, interaction and local persistence
+Record inspection and Assistant occupy one modeless dock without squeezing the workspace. Forms, source reading and explicit decisions remain focused dialogs. Choice cards stay in their owning dialog context. Filtered-out selections close their inspection; duplicate names are distinguished by visible references. Tabs and dropdowns have labelled keyboard behaviour, error summaries link to exact controls and history starts with human-readable field changes.
 
-The HTML embeds the supplied r18 board's 39 core tokens, all three Roboto font faces, the exact compact PPO symbol on navy, and the shell's line icons. Typography, controls, cards and decision dialogs use the source scale and radii. The sidebar has a spacious brand header, five concise navigation choices, independent desktop navigation scrolling and a mobile menu. The supplied compact symbol is reused; no new logo is drawn.
+No native screenshot, browser layout, screen-reader, zoom, touch or physical-device acceptance is asserted. The board itself identifies its newer composition patterns as proposed references. The user's workspace-only requirement controls omission of the generic application frame.
 
-Choice cards use r18's 14 px container corners, 1 px border, 7 px inset, exact layered shadow and 7 px option rows. They measure natural height after width, choose above/below placement, clamp to viewport gutters and use internal scrolling. Menu panels stay inside their open dialog's top-layer context. Arrow keys, Home/End, typeahead, Enter, Space, Escape, Tab and outside dismissal are implemented. Form drawers use the board's bottom-corner treatment and inspection drawers remain square.
+## Local data and assistance
 
-Explicit local saves use a versioned browser-storage object and preserve prior record/source snapshots. Record version and changed-tab generation checks refuse detected stale writes while retaining the draft. This is not an atomic multi-user transaction or server receipt implementation: simultaneous localStorage read/write races are not solved by this design. Actual runtime must reuse the approved server transaction, command receipt, author, permission and audit contracts.
+Explicit saves retain a validated synthetic state in browser storage when available. R02 uses its own key and can read an existing valid r01 example without rewriting that original key. Malformed history, source dates, IDs, versions and altered original source content are rejected. A detected changed-tab generation refuses overwrite and retains the proposal. Storage failures are labelled session-only with export recovery.
 
-Malformed retained storage is left intact and can be exported. Storage refusal/quota failure is shown as session-only data with an export path, never as durable server success. Reset requires an explicit destructive confirmation. Backup export is limited to the Coordinator demo view; there is no import workflow in this increment. A Nursery-only viewer scenario clears dialogs and exposes only its scoped navigation, contacts/counts and disabled editors. The HTML still embeds all fixtures and is inspectable; this scenario is not a security boundary or an offline-access grant.
+Backup restoration validates a bounded JSON file, previews record/history counts, requires explicit replacement confirmation and rechecks the storage basis. Invalid, cancelled or stale restores leave current data unchanged. This does not implement server permissions, atomic multi-user concurrency or original-operation receipts. Those remain approved application receiving contracts.
 
-## Verification and remaining acceptance
+Assistant is a deterministic local demonstration. Its scope follows the selected site/area, and source snapshots include current requirement fields plus the exact supporting note. Changed data marks the draft stale and blocks regeneration/copy/download until refreshed. Paragraphs, list items and sources remain readable in exported text. No external AI call, communication, booking, approval or operational action occurs.
 
-The committed check runs **49 model and DOM-emulation groups** using optional jsdom 27.0.1 outside application dependencies. It covers fixture identities, the six examples, both-site navigation, read-only site details, hierarchy/filter/map record resolution, field boundaries, graph guards, unknowns, duplicate names, type/crop clearing and cancellation, exact history, asset relationships, readiness scopes/dates, source successors, site-address preservation, scoped assistance, viewer presentation, changed-tab refusal, reload, corrupt storage, storage failure, escaped text, unique IDs, theme tokens and keyboard/menu logic. Menu geometry uses explicitly synthetic rectangles and scroll heights.
+The Nursery-only read-only scenario scopes presentation and disables edits/backups. Embedded data remains inspectable; this is not a security boundary, server role or offline-authority grant.
 
-Run with an installed optional jsdom module:
+## Verification and delivery
+
+[Check script](../../scripts/check-customers-sites-design-r02.mjs) runs **72 model/DOM-emulation groups**, including retained r01 behaviours and 23 audit-driven additions. The optional jsdom 27.0.1 module remains outside application dependencies:
 
 ```sh
-PPO_DESIGN_JSDOM_MODULE=/absolute/path/to/jsdom/lib/api.js node scripts/check-customers-sites-design.mjs
+PPO_DESIGN_JSDOM_MODULE=/absolute/path/to/jsdom/lib/api.js node scripts/check-customers-sites-design-r02.mjs
 ```
 
-The path override is converted through `pathToFileURL`; native Windows paths can also be supplied through the environment. `--write-evidence` records the current artifact hash and actual group results. Evidence contains no real customer data.
+Use `--write-evidence` to record the exact HTML hash and group results. Native dialog/show/scrolling and menu rectangles are simulated; file validation/restoration runs through FileReader in DOM emulation. The environment's earlier browser URL security rejection was not bypassed. Native clipboard/download, rendering, screen-reader and device acceptance remain open.
 
-A native browser URL was rejected by the authoring environment's access policy in the preceding workspace work. It was not bypassed with another URL, renderer or hosting surface. Therefore **no rendered screenshot, real browser layout, native focus trap, clipboard/download execution, phone, print, accessibility or owner visual acceptance is claimed**. jsdom stubs native dialog and scroll methods; its measurements are not screenshots. The actual r18 source treatment is present, but visual approval remains a review task.
+The original [r01 check](../../scripts/check-customers-sites-design.mjs), [r01 evidence](../testing/evidence/customers-sites-workspace-r01.json) and HTML are retained. The r02 package adds no framework, application package, runtime route, database migration, provider adapter, deployment or operational data. Master FAC-A/MC-A/AT/PT cases are not passed by these design checks.
 
-The first check run reached 35 passing groups then found that the CSS-token assurance did not see the site-plan's inline coordinate variables. Explicit map-variable defaults were added and the complete checks rerun. No product assertion was removed. Subsequent scoped-readiness, menu and read-only site-detail cases bring the final run to 49 passing groups.
-
-Repository documentation assurance also passed: `check_foundation.py` (2,017 local links), `check_prototype.py` (78 parent dispositions preserved), `check_naming.py` (175 document records), and `git diff --check`. These remain documentation consistency checks.
-
-These groups do not pass FAC-A01–07, MC-A, master AT/PT cases, backend validation, negative-authorisation, lost-response reconciliation, database concurrency or restart acceptance. The existing application is unchanged. Application CI may run for the PR; its results must be assessed separately from this standalone evidence.
-
-## Next increments
-
-1. Owner review of the actual HTML at desktop and 390/320 px widths, normal zoom, keyboard-only navigation, open dropdowns near every viewport edge and native modal focus. Record rendered evidence before claiming visual acceptance.
-2. CS-08 site-survey capture: owned capture tasks, dimensions with explicit units and evidence/source dates, photos/annotations, uncertain coordinates, review/acceptance and exact current-to-reviewed snapshot handling.
-3. Runtime receiving contract: reuse current scoped shared reads/commands and server-derived identity, history and receipts. Reconcile actual-main Facility implementation, decide approximate-dimension fields, preserve source originals, and verify FAC-A cases through the database, HTTP and real browser.
-4. Explicit location receiving references for Equipment, Estimating, Projects and Service. Define field-level scope junctions and immutable work/estimate snapshots rather than copying notes or treating this design link as live integration.
-5. Service Agreements & Maintenance as the next substantial module after the survey extension. Effective party changes, facility archive/move, GIS, crop cycles, source-document storage, broad CRM account management and customer portal rights remain separate scope.
+Next: review rendered r02 on an authorised desktop/phone surface, then extend CS-08 survey capture. Broader customer/site lifecycle, effective party changes, SharePoint evidence, runtime Facility persistence and exact receiving links into Equipment/Estimating/Projects/Service remain separate work. Service Agreements & Maintenance follows as the next substantial module.
