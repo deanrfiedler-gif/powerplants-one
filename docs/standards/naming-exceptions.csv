@@ -6,3 +6,6 @@ python_utilities,scripts/*.py,Python utilities use snake_case filenames,Dean Fie
 external_identifiers,Provider keys; ERP references; CAD source identities,"Preserve exact source casing, punctuation, leading zeros and dependencies",Dean Fiedler - private prototype,Verified source interface amendment
 existing_contract_keys,created_by;updated_by;active;synthetic;PascalCase enums/events,Existing explicit contracts retain names through typed layer mappings,Dean Fiedler - private prototype,Deliberate schema/contract migration
 planned_documents,Planned BP-03/04/05/06/08/09 register rows,Paths are reservations; no placeholder documents or implementation claims,Dean Fiedler - private prototype,Blueprint authoring begins
+
+historical_message_subjects,Incoming and historical email subjects; reply subjects,Preserve source correspondence and thread context; use permitted aliases and explicit record links,Dean Fiedler - prototype; operational communication owner unassigned,Explicit new-topic or verified provider requirement
+protected_business_sources,Supplier controlled files; CAD dependencies; exact issued manifests,Retain original names and identities; a searchable alias does not change source bytes or issue evidence,Dean Fiedler - prototype; operational source owner unassigned,Supported dependency and document-control procedure

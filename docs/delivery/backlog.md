@@ -54,3 +54,9 @@ The [CRM handover](crm-discovery-handover.md) records BP-03, all eighteen parity
 ## Customer portal staged work
 
 [Issue #50](https://github.com/deanrfiedler-gif/powerplants-one/issues/50) is the focused customer portal design contribution under D-027 and the existing shared/Service/Projects/document requirements. [Design](../blueprints/customer-portal-design.md), [CP1–CP5 plan](customer-portal-implementation-plan.md), [handover](customer-portal-handover.md). The initial PPO-001–PPO-016 creation snapshot and all 78 parent requirements remain unchanged. Runtime child issues are created only as their stage is ready; no P13 or eighth domain is introduced.
+
+## Naming, communication and SharePoint design package
+
+The [authorised package](naming-sharepoint-handover.md) extends PPO-007 controlled documents, PPO-009 communications and PPO-008/014 access/acceptance. [N0–N6](naming-sharepoint-pilot.md) gives bounded receiving increments. N0 authors the design and synthetic HTML; N1 is the next proposed durable synthetic naming operation. Live SharePoint reads/writes/issue, PPO sending and Outlook-native composition remain separate stages. NC-01–NC-16 map to existing parents; the initial PPO-001–016 creation snapshot is preserved. No eighth domain, P13 or bulk operational migration is introduced.
+
+The shared naming design package is tracked by [issue #187](https://github.com/deanrfiedler-gif/powerplants-one/issues/187); N1 implementation remains a separate bounded follow-on.

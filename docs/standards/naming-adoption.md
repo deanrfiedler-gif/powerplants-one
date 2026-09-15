@@ -85,3 +85,7 @@ Copy the complete [project instructions](chatgpt-project-instructions.md) into t
 The instructions define roles, scope, source hierarchy, current architecture, workflow controls, autonomy, naming, verification and handover. They deliberately refer to current repository status so the dated implementation position does not become a permanent instruction.
 
 The project can group related chats, sources and instructions; connected-source access still needs verification. [Official Projects guidance](https://learn.chatgpt.com/docs/projects)
+
+## 7. Business filing and communication extension — 15 September 2026
+
+The [r04 working standard](naming-conventions.md#24-business-filing-and-communication-assistance) and [package decision](../decisions/naming-communications-sharepoint.md) record the new authorised design. The original sections above are the dated r03 adoption evidence. R04 does not relabel the accepted r02 baseline or claim general runtime/live integration. See the [package handover](../delivery/naming-sharepoint-handover.md) for current validation and publication. The pre-existing output filename generators and synthetic email-link/Activity slice remain distinct from the proposed general assistant.
