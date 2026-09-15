@@ -1,6 +1,6 @@
 # Engineering r02 — accepted design and first implementation
 
-Dean accepted Engineering r02 on 10 September 2026 and authorised moving into implementation. The exact [HTML](../reference/engineering-r02/PPO-Engineering-Container-r02.html) and [audit](../reference/engineering-r02/PPO-Engineering-Audit-r02.md) are retained unchanged. The design uses Roboto, navy/green, outer gutters, a resizable register and the Overview / Deliverables / Technical queries / Review & history drawer.
+Dean accepted Engineering r02 on 10 September 2026 and authorised moving into implementation. The exact [HTML](../reference/ui/engineering/PPO-Engineering-Container-r02.html) and [audit](../reference/ui/engineering/PPO-Engineering-Audit-r02.md) are retained unchanged. The design uses Roboto, navy/green, outer gutters, a resizable register and the Overview / Deliverables / Technical queries / Review & history drawer.
 
 The first implementation covers ENG-01 and the owned-context/note part of ENG-02/ENG-04: persisted engineering requests linked to an existing permitted Project or Opportunity, a currently eligible engineer, discipline, brief, separate package/action dates, and attributable notes and coordination history. Queued, In design and Awaiting information are coordination states. They do not approve effort, certify a design or authorise document issue. The assigned engineer owns the next action in this increment.
 

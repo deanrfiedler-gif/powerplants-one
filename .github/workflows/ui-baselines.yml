@@ -63,7 +63,7 @@ jobs:
         run: |
           mkdir -p verification-evidence/service-review
           python3 scripts/build-service-review-design.py
-          git diff --exit-code -- docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r01.html
+          git diff --exit-code -- docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html
           node scripts/check-service-review-model.mjs > verification-evidence/service-review/model-results.json
           node scripts/check-service-review-browser.mjs
       - name: Retain Service Review original browser evidence

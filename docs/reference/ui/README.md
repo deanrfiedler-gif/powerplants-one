@@ -52,12 +52,13 @@ The [accepted UI baseline register](../../standards/ui-baselines.json) retains e
 
 | Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
 |---|---|---|---|
-| Engineering | [r02](../engineering-r02/PPO-Engineering-Container-r02.html) | Approved | Bounded Engineering intake integration exists; wider BP-05 delivery remains separate. [Accepted decision](../../decisions/engineering-r02-integration.md), [implementation handover](../../delivery/engineering-intake-handover.md). |
+| Engineering | [r02](engineering/PPO-Engineering-Container-r02.html) | Approved | Bounded Engineering intake integration exists; wider BP-05 delivery remains separate. [Accepted decision](../../decisions/engineering-r02-integration.md), [implementation handover](../../delivery/engineering-intake-handover.md). |
 | Projects starter workspace | [r02](../../blueprints/projects-starter-visuals/r02/projects-design-review-r02.html) | Published review package; owner design acceptance not inferred from publication | Project/Gantt capability exists separately; broader starter/commercial handover acceptance remains open. [Review package](../../blueprints/projects-starter-visuals/r02/README.md), [J1 reconciliation](../../delivery/projects-j1-reconciliation.md). |
-| Service Review & Reports | [r01](service-review/PPO-Service-Review-and-Reports-Workspace-r01.html) | Proposed SV-06/SV-07 workspace; owner acceptance separate | Existing P09/P10 services provide the receiving foundation. [Design and handover](../../decisions/service-review-reports-workspace-design.md). |
+| Service Review & Reports | [r02](service-review/PPO-Service-Review-and-Reports-Workspace-r02.html) | Proposed SV-06/SV-07 workspace; owner acceptance separate | Existing P09/P10 services provide the receiving foundation. [Design and handover](../../decisions/service-review-reports-workspace-design.md). |
 | Service Job Pack | [r03](job-pack/powerplants-one-job-pack-r03.html) | Approved design successor to r02 | `/service/packs` exists; r03 page integration remains separate. [Decision](../../decisions/job-pack-design.md), [exact baseline mapping](../../standards/ui-baselines.json). |
 | Field Technicians | [r05](field-technicians/powerplants-one-field-technicians-r05.html) | Approved design successor to r04 | Baseline register still maps `/service/technicians` to r04; r05 is not recorded as implemented. [Decision](../../decisions/field-technicians-design.md), [exact baseline mapping](../../standards/ui-baselines.json). |
 | Finance & Commercial Controls | [r02](finance/PPO-Finance-and-Commercial-Controls-r02.html) | Proposed refinement; not an accepted application baseline | P10 handoff/reconciliation exists; this four-view workspace requires integration. [Design decision](../../decisions/finance-workspace-design.md), [P10 handover](../../delivery/p10-handover.md). |
+| Service Agreements & Maintenance | [r01](maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html) | Proposed MA-01–MA-05 design; native checks and capture review complete; owner acceptance and application integration separate | Sourced coverage, recurring obligations, owned requests and renewal preparation. [Design and receiving handover](../../decisions/service-agreements-maintenance-design.md). |
 
 ## Preserved earlier revisions
 
@@ -69,7 +70,7 @@ These files remain unchanged. The successor link identifies a newer design refer
 | Equipment & Installed Base | [r01](equipment/PPO-Equipment-and-Installed-Base-Workspace-r01.html) | Preserved for comparison with the r02 proposal. |
 | Finance & Commercial Controls | [r01](finance/PPO-Finance-and-Commercial-Controls-r01.html) | Preserved for comparison with the r02 proposal. |
 | Service Job Pack | [r02](job-pack/powerplants-one-job-pack-r02.html) | Accepted predecessor; r03 is the accepted design successor. |
-| Field Technicians | [r04](../powerplants-one-field-technicians-r04.html) | Earlier design, still the recorded implementation baseline until r05 integration. |
+| Field Technicians | [r04](field-technicians/powerplants-one-field-technicians-r04.html) | Earlier design, still the recorded implementation baseline until r05 integration. |
 
 ## Supporting references and generated documents
 
@@ -121,3 +122,5 @@ git diff --check
 ```
 
 The accompanying pull request records the actual results and exact source. These are documentation checks, not a fresh visual audit or application test. Next maintenance step: reconcile newly supplied HTML files with the linked repository references and add only missing or genuinely revised designs in their own reviewed change.
+
+Service Review [r01](service-review/PPO-Service-Review-and-Reports-Workspace-r01.html) is preserved; r02 contains the CI repair, with source and native browser evidence tracked in PR #203.

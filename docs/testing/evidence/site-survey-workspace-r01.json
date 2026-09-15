@@ -1,0 +1,190 @@
+{
+  "artifact": "docs/reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html",
+  "sha256": "5645a89430f081cc32edea9c748614b7c3c9ebbf43f5f393d1d18d1a55ee40bd",
+  "checks": 40,
+  "results": [
+    {
+      "name": "Valid starter retains two surveys, two addressed sites, nine facilities and one shared pump identity",
+      "status": "passed"
+    },
+    {
+      "name": "Module composition uses six local tabs and no global rail, logo or app masthead",
+      "status": "passed"
+    },
+    {
+      "name": "Actual r20 Intake tokens and embedded fonts are retained with no unresolved CSS variables",
+      "status": "passed"
+    },
+    {
+      "name": "Register search clears an excluded selected survey and disables its local actions",
+      "status": "passed"
+    },
+    {
+      "name": "Scope shows exact organisation, site, facilities and one installed/served-equipment relationship",
+      "status": "passed"
+    },
+    {
+      "name": "Local tabs expose linked panels and keyboard focus traversal",
+      "status": "passed"
+    },
+    {
+      "name": "Measured, observed, customer statement, assumption and unknown bases remain distinct",
+      "status": "passed"
+    },
+    {
+      "name": "Observation inspector and Assistant share one modeless dock and exact fact context",
+      "status": "passed"
+    },
+    {
+      "name": "Filtering out an inspected fact clears the panel and prevents hidden fact assistance",
+      "status": "passed"
+    },
+    {
+      "name": "Changing measured basis shows the exact cleared fields and requires explicit review",
+      "status": "passed"
+    },
+    {
+      "name": "Cancelled discard retains the unsaved basis proposal; confirmed discard preserves saved measurement",
+      "status": "passed"
+    },
+    {
+      "name": "An unknown observation saves without a manufactured numeric value or unit",
+      "status": "passed"
+    },
+    {
+      "name": "Submission refuses unowned uncertainty and shows the exact missing follow-up",
+      "status": "passed"
+    },
+    {
+      "name": "Follow-up retains exact target, linked fact, responsible owner and due date",
+      "status": "passed"
+    },
+    {
+      "name": "Scope changes cannot orphan observation, photo or follow-up references",
+      "status": "passed"
+    },
+    {
+      "name": "Evidence view starts honestly empty and offers original-image capture",
+      "status": "passed"
+    },
+    {
+      "name": "Photo capture rejects MIME-disguised text without retaining evidence",
+      "status": "passed"
+    },
+    {
+      "name": "Validated upload retains exact original bytes, filename, target, caption, date and source",
+      "status": "passed"
+    },
+    {
+      "name": "Photo metadata correction preserves original image bytes and before/after evidence",
+      "status": "passed"
+    },
+    {
+      "name": "Submitting locks editing and captures an exact immutable review snapshot",
+      "status": "passed"
+    },
+    {
+      "name": "Reviewer return preserves the submitted snapshot and records a specific reason",
+      "status": "passed"
+    },
+    {
+      "name": "Returned-survey corrections retain earlier measurements and submitted source contents",
+      "status": "passed"
+    },
+    {
+      "name": "Review with open information requires explicit acknowledgement of owned limitations",
+      "status": "passed"
+    },
+    {
+      "name": "Reviewed revision remains exact and includes photos and owned open information",
+      "status": "passed"
+    },
+    {
+      "name": "Prepared handover binds the exact reviewed revision, receiving team and owner without changing shared records",
+      "status": "passed"
+    },
+    {
+      "name": "Successor revision starts a new draft while original review and prepared handover stay unchanged",
+      "status": "passed"
+    },
+    {
+      "name": "Mutation guard rejects rewriting prior reviewed snapshots or prepared handovers",
+      "status": "passed"
+    },
+    {
+      "name": "Retained-data validation rejects cross-site targets, malformed dates, duplicate references and missing original review",
+      "status": "passed"
+    },
+    {
+      "name": "Changed-tab notification marks the Assistant stale and blocks regeneration and copy",
+      "status": "passed"
+    },
+    {
+      "name": "Save compares the retained storage basis and refuses a competing generation while retaining the proposal",
+      "status": "passed"
+    },
+    {
+      "name": "Reload preserves reviewed revisions, handover text, corrected facts and original photo bytes",
+      "status": "passed"
+    },
+    {
+      "name": "Invalid backup is refused without replacing current survey state",
+      "status": "passed"
+    },
+    {
+      "name": "Backup restoration previews counts and cancellation keeps current evidence",
+      "status": "passed"
+    },
+    {
+      "name": "Confirmed backup restore loads a validated complete example with stable site identities",
+      "status": "passed"
+    },
+    {
+      "name": "New survey creates independent identity and scopes facilities, contacts and equipment to its selected site",
+      "status": "passed"
+    },
+    {
+      "name": "Read-only observer can inspect the module while all capture and review mutation actions are disabled",
+      "status": "passed"
+    },
+    {
+      "name": "All rendered IDs are unique and native dialogs, frames and UI framework dependencies are not invented",
+      "status": "passed"
+    },
+    {
+      "name": "Malformed retained storage stays preserved and is clearly separated from starter data",
+      "status": "passed"
+    },
+    {
+      "name": "Storage failure retains the session change with truthful recovery messaging",
+      "status": "passed"
+    },
+    {
+      "name": "No uncaught script errors in the exercised journeys",
+      "status": "passed"
+    }
+  ],
+  "limits": "Node/jsdom 27.0.1 DOM emulation. Native dialog/top-layer, menu layout, image decode (stubbed to a 1px fixture), browser/camera, clipboard, actual downloads, physical-device and independent acceptance remain unverified. No runtime, backend, operational or security acceptance is claimed.",
+  "check_script_sha256": "8389707886b5146cbb15dd7bc0059395cea7918509707409f913aac24c3ccaae",
+  "source_main": "64574208ca604fee381e45c1b7db1b2b03c1dc8b",
+  "source_locations": "b6066d18602b7b544a1883b8beb3a12ed0ecf09c",
+  "documentation_checks": {
+    "check_foundation": {
+      "status": "passed",
+      "requirements": 78,
+      "local_links_checked": 2017,
+      "files_scanned_for_markers": 1054
+    },
+    "check_prototype": {
+      "status": "passed",
+      "parent_dispositions": 78,
+      "prototype_procedures": 30
+    },
+    "check_naming": {
+      "status": "passed",
+      "document_records": 175,
+      "project_instruction_characters": 7964
+    },
+    "test_script_syntax": "passed"
+  }
+}

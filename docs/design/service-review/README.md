@@ -8,6 +8,8 @@ node scripts/check-service-review-model.mjs
 node scripts/check-service-review-browser.mjs
 ```
 
-Run from the repository root with its maintained dependencies for browser checks. `fonts.css` and `icons.json` retain embedded assets from the supplied Work Orders r01 / r20 lineage. No runtime package is added. The standalone HTML is assembled at `docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r01.html`.
+Run from the repository root with its maintained dependencies for browser checks. `fonts.css` and `icons.json` retain embedded assets from the supplied Work Orders r01 / r20 lineage. No runtime package is added. The standalone HTML is assembled at `docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html`.
 
 See the [receiving handover](../../decisions/service-review-reports-workspace-design.md). Preserve issued r01 bytes once published for review; future material changes use the repository's normal reviewed successor issue process.
+
+The CI repair produces r02 while preserving the published r01 HTML. The browser check uses the Chrome channel installed by the existing workflow.

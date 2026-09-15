@@ -1,6 +1,6 @@
 ---
 document_id: PPO-SVC-REVIEW-DES
-revision: r01
+revision: r02
 date: 2026-09-15
 owner: Dean Fiedler
 status: Requested standalone design; browser verification and owner visual acceptance tracked separately
@@ -11,7 +11,7 @@ source_commit: 07ade644de06ff3b13e5af6ae9c299ca7c78c535
 
 Dean authorised a module-only HTML workspace for **SV-06 Service review and controlled reports**, with **SV-07 Remaining work and follow-up**, using the supplied r20 theme and Work Orders r01 composition. The central question is: *What was completed, does the evidence support it, and what still needs to happen?*
 
-Open [PPO-Service-Review-and-Reports-Workspace-r01.html](../reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r01.html) in a current browser. Its fonts, styling, icons, fictional records and JavaScript are embedded. This is a proposed design reference, not an accepted application baseline or a live Service screen. No application route, migration, dependency pin, ERP adapter or deployment is changed.
+Open [PPO-Service-Review-and-Reports-Workspace-r02.html](../reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html) in a current browser. Its fonts, styling, icons, fictional records and JavaScript are embedded. This is a proposed design reference, not an accepted application baseline or a live Service screen. No application route, migration, dependency pin, ERP adapter or deployment is changed.
 
 ## Sources and authority
 
@@ -71,3 +71,7 @@ Run `python3 scripts/build-service-review-design.py`, then `node scripts/check-s
 Local browser installation timed out. The connected preview browser then refused the local URL with `ERR_BLOCKED_BY_CLIENT`; no alternate local URL or browser-policy bypass was used. Local model checks and non-rendered DOM checks are distinct from actual browser evidence. Exact results, original captures and any remaining limits are recorded in the PR and [evidence record](../testing/evidence/service-review-r01/README.md). Browser/owner/device acceptance is never inferred from a model pass or PR merge.
 
 Next bounded step: review this exact visual, then map the accepted workspace to the existing P09 service review/report APIs and P10 handoff receiving controls. Physical-device, screen-reader, 200% zoom and complete business acceptance remain separate.
+
+## Integrated PR repair — 15 September 2026
+
+The r02 successor removes an unused catch binding exposed by repository lint; r01 HTML remains unchanged. The native check now requests the Chrome channel installed by the existing pinned workflow. PR #203 integrates #195, #196, #200, #201 and #202 with their histories retained for combined CI and normal merge. The document-register conflict retains both sets of distinct entries. The CRM gallery deletion retains its fixed historical references. Exact current-source check results remain in PR #203; owner visual and business acceptance remain separate.
