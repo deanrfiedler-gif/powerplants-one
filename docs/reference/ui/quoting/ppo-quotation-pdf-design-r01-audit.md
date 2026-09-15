@@ -59,7 +59,7 @@ The sample identity, contact details, response wording and unavailable supportin
 
 ## Evidence and limits
 
-- Audited [HTML reference](sandbox:/workspace/scratch/c26c74fc9cff/output/ppo-quotation-pdf-design-r01.html) and [matching PDF](sandbox:/workspace/scratch/c26c74fc9cff/output/ppo-quotation-pdf-design-r01.pdf). The saved files retain their issued r01 bytes.
+- Audited [HTML reference](ppo-quotation-pdf-design-r01.html) and [matching PDF](ppo-quotation-pdf-design-r01.pdf). The saved files retain their issued r01 bytes.
 - Supplied Powerplants Brand Identity Guidelines: logo treatments and clear space, pages 7–8; minimum size, page 9; typography, page 17; primary colours, page 18; proposal template, page 39. The alternate logo's existing private-preview authorisation is retained; this audit makes no wider brand-approval claim.
 - Latest retrieved `powerplants-one-theme-style-board-r11.html`, current file version 5, modified 14 September 2026. Its typography, control, geometry and full-logo guidance were read directly. It retains source-specific profiles and proposed extensions; it is not evidence that every pattern is implemented in the app.
 - Repository checked at `d069ea3e0a0e82034bb47e501e1c293d12933cd2`: [Shared UI style specification r06](https://github.com/deanrfiedler-gif/powerplants-one/blob/d069ea3e0a0e82034bb47e501e1c293d12933cd2/docs/standards/ui-style-specification.md) and [accepted r08 presentation decision](https://github.com/deanrfiedler-gif/powerplants-one/blob/d069ea3e0a0e82034bb47e501e1c293d12933cd2/docs/decisions/shared-ui-r08-implementation.md). The later decision supersedes the original green primary-action direction.
