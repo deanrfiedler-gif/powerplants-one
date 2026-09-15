@@ -46,3 +46,5 @@ The [audit continuation handover](delivery/audit-continuation-handover.md) recor
 - [Supply Chain readiness contract](contracts/supply-chain-readiness.md) — SCM-01–08 candidate demand, promise, allocation, quarantine and owned-impact semantics; no ERP mapping or executed acceptance.
 
 [Equipment and Installed Base workspace r01](decisions/equipment-workspace-design.md) — self-contained equipment, inspection, owned defect/retest and sourced-assistance design; local model/DOM checks passed, visual review and application integration pending.
+
+[MYOB integration blueprint and field mapping handbook r01](contracts/myob-integration-blueprint.md) — proposed mappings, installed-configuration evidence requests, cross-system workflows and procedures; actual MYOB use/API verification remain outstanding.
