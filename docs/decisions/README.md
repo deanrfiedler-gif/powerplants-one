@@ -64,6 +64,8 @@ The [PPO Assistant direction and architecture decision](ppo-assistant-direction.
 
 - [Development and compiled performance profiles](ci-performance-profiles.md) — retain both original PT-27 measurements on the exact same load fixture, with bounded phase observations; original comparison and deferred scope editor measurements reviewed; integrated assurance remains.
 
+[Product quality adoption](product-quality-adoption.md) records Dean’s 14 September instruction to incorporate all eight product refinements and five engineering/design standards. Existing portal, maintenance, warranty, knowledge, estimating feedback, AI, voice and search plans continue. The derived register and staged delivery plan implement scope adoption; no new technology dependency or operational approval is inferred.
+
 ## Naming, communications and SharePoint
 
 [Package decision](naming-communications-sharepoint.md) records Dean's authorisation of the shared design package, r04 naming extension, exact r18 theme source, architecture choices and operational boundaries. It continues ADR-0005 and existing D-012/D-024/D-025 evidence obligations without renumbering the master decisions.
