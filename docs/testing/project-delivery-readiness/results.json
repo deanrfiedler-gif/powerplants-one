@@ -1,0 +1,157 @@
+{
+  "model": {
+    "kind": "synthetic model checks",
+    "passed": 11,
+    "cases": [
+      "Shared quantity conservation and invalid correction rejection",
+      "Scope filtering cannot hide shared pump dependencies or change aggregate assessment",
+      "Current programme and confirmed booking stay independent of scenario",
+      "Source race preserves draft and exact comparison, invalidating only affected specialist responses",
+      "Source outage blocks confirmation and keeps previous evidence",
+      "Fail-before-acceptance and lost-response recovery do not duplicate actions",
+      "Returned scheduler request is resubmitted with same identity after compatible evidence and affected review",
+      "Support for investigation never grants substitution or unsupported staging execution",
+      "Reasoned completion and reassignment retain history without clearing a blocker",
+      "Restricted role exports omit all known commercial values and comments",
+      "Proposal validation preserves recorded data on an invalid edit"
+    ]
+  },
+  "dom": {
+    "kind": "DOM simulation (no native rendering)",
+    "passed": 15,
+    "cases": [
+      "Initial module and six semantic tabs render",
+      "Summary filter agrees with register; no matches recovers",
+      "Typed material snapshot and over-allocation correction guard",
+      "Gantt and List share all seven tasks including undated handover",
+      "Source inspection preserves an entered specialist-response draft",
+      "Captured proposal receives role-owned specialist responses",
+      "Changed source blocks confirmation and permits targeted review refresh",
+      "Lost-response recovery returns original request set",
+      "Scheduler return preserves booking and action history",
+      "Returned request resubmits under same ID and scheduler separately accepts visit",
+      "Restricted role removes raw and derived commercial display and print/export content",
+      "Contextual scripted Assistant can stop without applying effects",
+      "User-entered markup is rendered as text",
+      "Project change clears hidden selected record and does not infer readiness from no blockers",
+      "Panel width rule switches modeless dock to modal/inert overlay in DOM simulation"
+    ],
+    "consoleErrors": []
+  },
+  "files": {
+    "docs/design/projects-delivery-readiness/README.md": {
+      "sha256": "90d29fffafc69c5982b8c255650264406f94b01e7841d303c3fe6f09bca74036",
+      "bytes": 1736
+    },
+    "docs/design/projects-delivery-readiness/model.js": {
+      "sha256": "620d69bb0871b62b9372978b1016546ea4693811c9a72ebddcfa48d3d12b3161",
+      "bytes": 40756
+    },
+    "docs/design/projects-delivery-readiness/template.html": {
+      "sha256": "cdd5db1dc00c1fa64146bf307088dc989175db8dfe7139ef18022df44c0f1fff",
+      "bytes": 3366
+    },
+    "docs/design/projects-delivery-readiness/workspace.js": {
+      "sha256": "0ae34ee43d828ded5270c72b1cdfff7bbc30c4c8413d5fa60188b883bff419c3",
+      "bytes": 105393
+    },
+    "docs/design/projects-delivery-readiness/workspace.css": {
+      "sha256": "607b13ceb8c0d4a4032b7539421c3ad2c4cd1a37357ab5d5ca725675a4de3ea5",
+      "bytes": 30474
+    },
+    "docs/design/projects-delivery-readiness/roboto.css": {
+      "sha256": "825d7119119e4cf12ede86fa0ffb4c2156b2f7a9bbc379b2578ec39bd3f099d7",
+      "bytes": 63635
+    },
+    "docs/reference/ui/projects/PPO-Project-Delivery-Readiness-and-Change-Control-r01.html": {
+      "sha256": "a830eebb34ed44292a0906b878c9965746e7e1e8f0c870c77820cf5cd79e841b",
+      "bytes": 243576
+    },
+    "docs/reference/ui/projects/project-delivery-readiness-and-change-control.html": {
+      "sha256": "a830eebb34ed44292a0906b878c9965746e7e1e8f0c870c77820cf5cd79e841b",
+      "bytes": 243576
+    },
+    "docs/reference/ui/projects/PPO-Project-Delivery-Readiness-and-Change-Control-Plan-r01.md": {
+      "sha256": "3080ef2a1223eb8fce8dade98c183059e8674d009de42be39794c06a1dcff5e4",
+      "bytes": 39280
+    }
+  },
+  "source_commit": "bc1dcf21490dda37979227f5fc13224183853d5a",
+  "theme_sha256": "c68a499e857b1705d47bd6598d4b2e89526bf0861a0d234394c3da023f19b617",
+  "date": "2026-09-15",
+  "native_browser": {
+    "status": "blocked; not verified",
+    "http_result": "ERR_BLOCKED_BY_CLIENT",
+    "file_result": "Browser URL policy denial; no alternate browser workaround attempted",
+    "captures": []
+  },
+  "assembly": {
+    "result": "passed",
+    "embedded_font_faces": 3,
+    "working_equals_issue": true,
+    "external_runtime_assets": 0
+  },
+  "node_version": "v24.19.0",
+  "repository_checks": {
+    "foundation": {
+      "exit_code": 0,
+      "result": {
+        "status": "passed",
+        "issued_sources": 15,
+        "requirements": 78,
+        "decisions": 29,
+        "planned_acceptance": 38,
+        "backlog_items": 16,
+        "linked_issues": 16,
+        "local_links_checked": 2126,
+        "files_scanned_for_markers": 1116,
+        "errors": [],
+        "scope": "Documentation assurance only; no business acceptance tests executed"
+      }
+    },
+    "prototype": {
+      "exit_code": 0,
+      "result": {
+        "status": "passed",
+        "package": "PP-01",
+        "documents": 12,
+        "parent_dispositions": 78,
+        "dispositions": {
+          "Core": 24,
+          "Partial": 25,
+          "Deferred": 29
+        },
+        "master_decisions": 29,
+        "prototype_procedures": 30,
+        "implementation_packages": 12,
+        "registers": {
+          "SC": 15,
+          "CMP": 12,
+          "SR": 20,
+          "VAL": 24,
+          "TR": 16,
+          "API-C": 26,
+          "API-R": 10
+        },
+        "errors": [],
+        "scope": "Documentation consistency only; authored catalogue defaults are not execution evidence; see recorded runs"
+      }
+    },
+    "naming": {
+      "exit_code": 0,
+      "result": {
+        "status": "passed",
+        "document_records": 195,
+        "standing_exceptions": 9,
+        "front_matter_revisions_compared": 80,
+        "project_instruction_characters": 7994,
+        "errors": [],
+        "scope": "Naming and documentation consistency only; runtime behaviour is verified separately"
+      }
+    },
+    "diff": {
+      "exit_code": 0,
+      "result": "passed"
+    }
+  }
+}
