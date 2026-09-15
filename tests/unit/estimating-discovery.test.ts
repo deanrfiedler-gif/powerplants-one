@@ -12,6 +12,7 @@ import {
   type Definition,
   type Answer,
 } from "../../src/estimating/discovery";
+import { preserveAnswerOrder } from "../../src/components/discovery-fields";
 
 const owner = "30000000-0000-4000-8000-000000000001";
 const site = "70000000-0000-4000-8000-000000000001";
@@ -118,6 +119,21 @@ test("E2 product counts retain integer Each boundaries without blank, fraction, 
   assert.equal(compileDiscovery(f).scope_readiness, "Incomplete");
   change(f, "Q06", { follow_up: null });
   assert.throws(() => compileDiscovery(f));
+});
+
+test("E2 answer edits preserve definition order while replacing the changed answer", () => {
+  const answers = [answer("Q01", "SYN first"), answer("Q03", "SYN third")],
+    changed = answer("Q02", "SYN second"),
+    ordered = preserveAnswerOrder(
+      answers,
+      changed,
+      discoveryDefinition.questions,
+    );
+  assert.deepEqual(
+    ordered.map((item) => item.question_id),
+    ["Q01", "Q02", "Q03"],
+  );
+  assert.equal(ordered[1], changed);
 });
 
 test("E2 required known answers need confirmation and explicit source; Assumed and Deferred retain an owned unresolved item", () => {

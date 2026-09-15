@@ -8,7 +8,7 @@ Download/open `crm-wireframes.html` in a browser. It needs no server or connecti
 
 ## Branded C02 layout direction
 
-The [shared UI specification](../standards/ui-style-specification.md) now refines the provisional visual direction below using the supplied Powerplants brand. The [branded Board/Grid preview and original captures](crm-ui-mockups/README.md) demonstrate a Pipedrive-familiar workspace with navy `#242a37`, green `#62bb46`, Roboto/Verdana and the intact supplied logo on navy. They cover the same-record view switch, scoped filters, search, sort, detail and temporary synthetic creation. The [I2 UI guidance](../delivery/crm-i2-ui-guidance.md) coordinates later implementation.
+The [shared UI specification](../standards/ui-style-specification.md) now refines the provisional visual direction below using the supplied Powerplants brand. The [branded Board/Grid preview](crm-board-grid-mockup.html) demonstrate a Pipedrive-familiar workspace with navy `#242a37`, green `#62bb46`, Roboto/Verdana and the intact supplied logo on navy. They cover the same-record view switch, scoped filters, search, sort, detail and temporary synthetic creation. The [I2 UI guidance](../delivery/crm-i2-ui-guidance.md) coordinates later implementation.
 
 The original seven-screen wireframe remains an unchanged functional/state reference. Its three-stage pipeline and provisional colours are historical design examples. The branded C02 preview uses six screenshot-derived labels for layout review; actual implementation must use accepted stage definitions. I1 stays Enquiry → Qualified / Open with no money fields. Fictional values in the branded preview do not authorise commercial implementation or operational mapping.
 
@@ -62,7 +62,7 @@ The [UI handover](../delivery/crm-ui-design-handover.md) records the separate br
 
 The screenshot walkthrough provides reviewable appearance/state examples for CRM-01–CRM-08; it cannot prove server authority, persistence, concurrency, integration, exact file delivery, offline durability or accepted sales policy. CA-13 and AT-23/25 remain Not run as business/runtime acceptance until the implemented workflow and representative-device tests exist.
 
-Revision r03 adds the [audit-driven r02 Board/Grid design](../delivery/crm-ui-design-handover.md): full action/owner in the grid, removable criteria and reset, selected pipeline at creation, preserved filters, focused field errors, long-text wrapping and [branded exception illustrations](crm-ui-mockups/states.html). The original seven-screen wireframe and its state illustrations remain unchanged.
+Revision r03 adds the [audit-driven r02 Board/Grid design](../delivery/crm-ui-design-handover.md): full action/owner in the grid, removable criteria and reset, selected pipeline at creation, preserved filters, focused field errors, long-text wrapping and [branded exception illustrations](https://github.com/deanrfiedler-gif/powerplants-one/blob/dcabfec1b5cde1c2cf220359e6cf1c63408512d6/docs/blueprints/crm-ui-mockups/states.html). The original seven-screen wireframe and its state illustrations remain unchanged.
 
 ## I1 implemented-subset distinction
 

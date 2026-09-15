@@ -2,7 +2,7 @@
 
 **Revision:** r01 · **Date:** 7 September 2026 · **Owner:** Dean Fiedler · **State:** Proposed screen contract; no application controls implemented. **Work:** #55 / PPO-009. [Policy decisions](../decisions/crm-opportunity-handover.md) · [Contract](../contracts/crm-opportunity-handover.md) · [Future proof](../testing/crm-handover-verification.md).
 
-This extends the canonical C03 Opportunity detail and existing Activity detail. It does not redesign the delivered C02 Board/Grid. Use the [shared UI specification](../standards/ui-style-specification.md), [I2 guidance](../delivery/crm-i2-ui-guidance.md) and [original supplied-asset manifest](crm-ui-mockups/manifest.json). Reattached logo and brand PDF hashes match that manifest; the full PNG and PDF colour page were inspected in this design session. No company mark, contact block or new palette is invented.
+This extends the canonical C03 Opportunity detail and existing Activity detail. It does not redesign the delivered C02 Board/Grid. Use the [shared UI specification](../standards/ui-style-specification.md), [I2 guidance](../delivery/crm-i2-ui-guidance.md) and [original supplied-asset manifest](https://github.com/deanrfiedler-gif/powerplants-one/blob/dcabfec1b5cde1c2cf220359e6cf1c63408512d6/docs/blueprints/crm-ui-mockups/manifest.json). Reattached logo and brand PDF hashes match that manifest; the full PNG and PDF colour page were inspected in this design session. No company mark, contact block or new palette is invented.
 
 ## Walkthrough: one deliberate handover
 

@@ -13,15 +13,18 @@ const output = resolve(process.env.CRM_UI_OUTPUT || 'verification-evidence/crm-d
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 const git = arg => { try { return execFileSync('git', ['rev-parse', arg], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { return null; } };
 const source = await readFile(input);
-const manifest = JSON.parse(await readFile('docs/blueprints/crm-ui-mockups/manifest.json', 'utf8'));
+const manifestPath = 'docs/blueprints/crm-ui-design-manifest.json';
+const manifestBytes = await readFile(manifestPath);
+const manifest = JSON.parse(manifestBytes.toString('utf8'));
 const evidence = { scope: 'Synthetic exported design only; not application or acceptance proof',
   source_head: process.env.PPO_SOURCE_HEAD || git('HEAD'), executed_checkout: git('HEAD'), executed_tree: git('HEAD^{tree}'),
-  input, input_sha256: sha256(source), run_id: process.env.GITHUB_RUN_ID || null,
+  input, input_sha256: sha256(source), asset_manifest: manifestPath, asset_manifest_sha256: sha256(manifestBytes), run_id: process.env.GITHUB_RUN_ID || null,
   attempt: process.env.GITHUB_RUN_ATTEMPT || null, captures: [], result: 'in progress', failures: [] };
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ channel: "chrome", headless: true, ...(process.env.CRM_UI_BROWSER ? { executablePath: process.env.CRM_UI_BROWSER } : {}) });
 evidence.browser = browser.version();
 try {
+  assert.equal(manifest.interactive_export.path, input, 'Manifest identifies the checked export');
   assert.equal(sha256(source), manifest.interactive_export.sha256, 'Export differs from its manifest');
   for (const asset of manifest.assets) assert.equal(sha256(await readFile(asset.path)), asset.sha256, `${asset.path} integrity`);
   const embedded = source.toString().match(/src="data:image\/png;base64,([^"]+)"/)[1];

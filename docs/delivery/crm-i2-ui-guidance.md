@@ -2,7 +2,7 @@
 
 **Revision:** r03 · **Date:** 6 September 2026 · **Parent:** BP-03 / PPO-009 / issue #9 · **Owner:** Dean Fiedler, private prototype · **Status:** Design input for a later authorised increment.
 
-Read this alongside the [ordered implementation plan](crm-implementation-plan.md), [shared UI specification](../standards/ui-style-specification.md), [C01–C07 screen specification](../blueprints/crm-screen-specification.md) and [Board/Grid preview and captures](../blueprints/crm-ui-mockups/README.md). This is an additive UI handover, not the full I2 implementation starter. The active I1 workstream owns its completion handover and preparation of that starter.
+Read this alongside the [ordered implementation plan](crm-implementation-plan.md), [shared UI specification](../standards/ui-style-specification.md), [C01–C07 screen specification](../blueprints/crm-screen-specification.md) and [Board/Grid preview](../blueprints/crm-board-grid-mockup.html). This is an additive UI handover, not the full I2 implementation starter. The active I1 workstream owns its completion handover and preparation of that starter.
 
 ## Start from the actual merged contracts
 
