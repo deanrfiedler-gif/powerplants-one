@@ -1,0 +1,56 @@
+{
+  "suite": "Non-rendered DOM interaction",
+  "groups": 12,
+  "results": [
+    {
+      "name": "All six views and five agreements render without script errors",
+      "result": "Passed"
+    },
+    {
+      "name": "Coverage decision uses a real valid form and retains exact source",
+      "result": "Passed"
+    },
+    {
+      "name": "Crop-window deferral retains the original occurrence",
+      "result": "Passed"
+    },
+    {
+      "name": "Owned request and reviewed partial result remain separate",
+      "result": "Passed"
+    },
+    {
+      "name": "Remaining request uses the owned follow-up date and one task",
+      "result": "Passed"
+    },
+    {
+      "name": "Generation and successor plan retain generated occurrence identities",
+      "result": "Passed"
+    },
+    {
+      "name": "Renewal review and commercial proposal do not change agreement dates",
+      "result": "Passed"
+    },
+    {
+      "name": "Read-only and denied roles remove mutation controls and selected context",
+      "result": "Passed"
+    },
+    {
+      "name": "Lost confirmation recovers the original saved effect once",
+      "result": "Passed"
+    },
+    {
+      "name": "Failed save preserves form values and original state",
+      "result": "Passed"
+    },
+    {
+      "name": "Reload preserves accepted local records",
+      "result": "Passed"
+    },
+    {
+      "name": "Every selected view renders after the complete journey",
+      "result": "Passed"
+    }
+  ],
+  "errors": [],
+  "limits": "JSDOM with native dialog, scroll and URL download stubs; no native layout or browser proof."
+}

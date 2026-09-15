@@ -56,7 +56,7 @@ Revision r02 adds the brand-derived C02 reference and I2 handover without rewrit
 
 ## Visual QA and acceptance limits
 
-Inspect 1440×1000 and 390×844 original captures and 320px reflow, all seven screen/state combinations, board/list equivalence, keyboard focus and validation. The actual checks and captures are recorded in the handover and gallery. The isolated CRM design workflow runs `crm-design-check.mjs` using existing repository dependencies and retains original captures/manifest. All 18 unchanged PNGs and their original manifest are preserved in the [capture gallery](crm-visuals/README.md); nine representative originals covering all seven screens plus denied/conflict were visually inspected; they are screenshots of design, not runtime evidence.
+Inspect 1440×1000 and 390×844 original captures and 320px reflow, all seven screen/state combinations, board/list equivalence, keyboard focus and validation. The actual checks and captures are recorded in the handover and gallery. The isolated CRM design workflow runs `crm-design-check.mjs` using existing repository dependencies and retains original captures/manifest. All 18 unchanged PNGs and their original manifest are retained in Git history at the [historical capture gallery](https://github.com/deanrfiedler-gif/powerplants-one/blob/3f347fa5ffabb4bda4c684c7f2edb1c5fe5f5d65/docs/blueprints/crm-visuals/README.md); they are no longer carried in the working tree; nine representative originals covering all seven screens plus denied/conflict were visually inspected; they are screenshots of design, not runtime evidence.
 
 The [UI handover](../delivery/crm-ui-design-handover.md) records the separate branded-export checks; these supplement the original screen/state checks.
 
