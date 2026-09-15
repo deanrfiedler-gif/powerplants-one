@@ -15,7 +15,7 @@ execFileSync('python3', ['scripts/build-myob-handbook.py', '--output', handbook]
 const designs = [
   ['excel', 'docs/blueprints/excel-estimate-import.html'],
   ['equipment', 'docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html'],
-  ['customers', 'docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r02.html'],
+  ['customers', 'docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html'],
   ['myob', handbook],
 ];
 const evidence = {
@@ -107,6 +107,20 @@ try {
         }
         await modal(page, '[data-action="about"]', entry);
         entry.checks.push('all five workspace tabs with selected state');
+        await page.locator('[role="tab"][data-view="areas"]').click();
+        const mapLinks = await page.locator('a[href*="www.google.com/maps/"]').evaluateAll(els => els.map(el => ({ href: el.href, target: el.target, rel: el.rel })));
+        assert.ok(mapLinks.length >= 2, 'Site map and directions links are rendered');
+        for (const link of mapLinks) {
+          const url = new URL(link.href);
+          assert.equal(url.protocol, 'https:');
+          assert.equal(url.hostname, 'www.google.com');
+          assert.equal(url.searchParams.get('api'), '1');
+          assert.ok(link.href.length <= 2048);
+          assert.equal(link.target, '_blank');
+          assert.match(link.rel, /noopener/);
+        }
+        await capture(page, entry, 'map-directions');
+        entry.checks.push('native map/directions controls and encoded HTTPS destinations; external Maps not opened');
       } else {
         await page.goto(pathToFileURL(resolve(file)).href + '#mappings');
         await page.locator('#mapping-search').waitFor({ state: 'visible' });

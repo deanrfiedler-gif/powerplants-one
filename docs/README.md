@@ -54,6 +54,6 @@ The [audit continuation handover](delivery/audit-continuation-handover.md) recor
 
 ## Customers, sites and growing areas
 
-[Workspace r02](reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r02.html) contains only the customer/location workspace, using the supplied r20 theme. [Audit findings](decisions/customers-sites-workspace-audit-r02.md) describe the 18 refinements and remaining gaps; [current handover](decisions/customers-sites-workspace-design.md) records source/interaction evidence and receiving boundaries. [R01](reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r01.html) is preserved.
+[Workspace r03](reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html) contains only the customer/location workspace using the supplied r20 theme, with Google Maps links, directions, address copying and optional arrival/facility pins. [Map extension](decisions/customers-sites-maps-r03.md) records the behaviour and 98 model/DOM checks; [r02 audit](decisions/customers-sites-workspace-audit-r02.md) retains the 18 earlier findings; [current handover](decisions/customers-sites-workspace-design.md) records boundaries. R01 and r02 references are preserved.
 
 [MYOB integration blueprint and field mapping handbook r01](contracts/myob-integration-blueprint.md) — proposed mappings, installed-configuration evidence requests, cross-system workflows and procedures; actual MYOB use/API verification remain outstanding.
