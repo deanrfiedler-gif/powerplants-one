@@ -46,3 +46,7 @@ The [audit continuation handover](delivery/audit-continuation-handover.md) recor
 - [Supply Chain readiness contract](contracts/supply-chain-readiness.md) — SCM-01–08 candidate demand, promise, allocation, quarantine and owned-impact semantics; no ERP mapping or executed acceptance.
 
 [Equipment and Installed Base workspace r01](decisions/equipment-workspace-design.md) — self-contained equipment, inspection, owned defect/retest and sourced-assistance design; local model/DOM checks passed, visual review and application integration pending.
+
+## Customers, sites and growing areas
+
+[Workspace r01](reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r01.html) connects two synthetic addressed sites, facility details, equipment service relationships and sourced visit requirements. [Design and handover](decisions/customers-sites-workspace-design.md) records the r18 theme source, register coverage, model/DOM evidence and outstanding rendered-browser/application acceptance.
