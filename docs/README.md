@@ -7,7 +7,7 @@ Start with [current status](STATUS.md) and the [First Prototype Definition & Arc
 | Standards | [Naming](standards/naming-conventions.md), [adoption](standards/naming-adoption.md), [ChatGPT instructions](standards/chatgpt-project-instructions.md), [shared UI](standards/ui-style-specification.md) |
 | Prototype package | [Scope, specifications, contracts, tests and ordered plan](prototype/README.md) |
 | Blueprint set | [Master and module index](blueprints/README.md) |
-| CRM UI | [Board/Grid mockups](blueprints/crm-ui-mockups/README.md), [I2 guidance](delivery/crm-i2-ui-guidance.md), [handover](delivery/crm-ui-design-handover.md) |
+| CRM UI | [Board/Grid preview](blueprints/crm-board-grid-mockup.html), [I2 guidance](delivery/crm-i2-ui-guidance.md), [handover](delivery/crm-ui-design-handover.md) |
 | CRM application | [I1 owned opportunity handover](delivery/crm-i1-handover.md), [I2 scoped Board/Grid handover](delivery/crm-i2-handover.md), [worklist decision](decisions/crm-i2-worklist.md); actual runtime/publication evidence remains separate from design originals |
 | Contextual Page guides | [Design r01](blueprints/contextual-help-design.md), [CRM pilot guide](guides/crm-deals.md), [interactive preview](blueprints/contextual-help-preview.html), [template](standards/page-guide-template.md), [acceptance/pilot](testing/contextual-help-acceptance.md), [decision/handover](decisions/contextual-help.md); prepared for review, app implementation pending |
 | PPO Assistant | [Pilot specification](blueprints/ppo-assistant-specification.md), [direction/architecture](decisions/ppo-assistant-direction.md), [handover](delivery/ppo-assistant-handover.md); design only, runtime/model acceptance pending |
@@ -44,5 +44,9 @@ The [audit continuation handover](delivery/audit-continuation-handover.md) recor
 - [E3 source, arithmetic and review choices](delivery/estimating-e3-decision-pack.md) — concrete examples and a bounded manual-source proposal; unresolved pricing/approval choices stay explicit.
 - [J1 coordination reconciliation](delivery/projects-j1-reconciliation.md) — extend existing Project/Gantt identities with shared Activities and manual health; preserve forecast-milestone meaning.
 - [Supply Chain readiness contract](contracts/supply-chain-readiness.md) — SCM-01–08 candidate demand, promise, allocation, quarantine and owned-impact semantics; no ERP mapping or executed acceptance.
+
+## Adopted product quality and capability scope
+
+[Adoption decision](decisions/product-quality-adoption.md), [quality and gap register](requirements/product-quality-register.md), [ordered delivery plan](delivery/product-quality-plan.md). All eight refinements and five standards are adopted; existing capability plans continue. First increments: persistent personal/team views, equipment/inspection, readiness/change impact. Runtime and acceptance remain separately tracked.
 
 [Equipment and Installed Base workspace r01](decisions/equipment-workspace-design.md) — self-contained equipment, inspection, owned defect/retest and sourced-assistance design; local model/DOM checks passed, visual review and application integration pending.

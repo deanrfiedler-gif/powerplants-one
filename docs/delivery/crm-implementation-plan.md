@@ -30,7 +30,7 @@ Use the report's full greenhouse-upgrade journey and adverse cases from BP-03 se
 
 The discovery session itself authorised no implementation. Subsequent I1 work is merged through [PR #40](https://github.com/deanrfiedler-gif/powerplants-one/pull/40), with its complete external publication linked below. The retained r02 design amendment does not expand that scope or authorise I2. Verify actual main and both I1/P09 handovers before selecting the next slice.
 
-Read the [I2 UI guidance](crm-i2-ui-guidance.md), [shared visual specification](../standards/ui-style-specification.md) and [branded C02 Board/Grid preview](../blueprints/crm-ui-mockups/README.md) when preparing I2. The addendum complements the full I2 starter to be prepared by I1. Six reference stage labels and fictional amounts illustrate future layout; accepted stage contracts govern implementation, I1 keeps two stages/no money, and commercial displays retain I3 prerequisites.
+Read the [I2 UI guidance](crm-i2-ui-guidance.md), [shared visual specification](../standards/ui-style-specification.md) and [branded C02 Board/Grid preview](../blueprints/crm-board-grid-mockup.html) when preparing I2. The addendum complements the full I2 starter to be prepared by I1. Six reference stage labels and fictional amounts illustrate future layout; accepted stage contracts govern implementation, I1 keeps two stages/no money, and commercial displays retain I3 prerequisites.
 
 ## First slice and rationale
 

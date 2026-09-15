@@ -1,6 +1,6 @@
 # Powerplants One — Business Operations Platform
 
-## Master Business & Build Blueprint — working r05
+## Master Business & Build Blueprint — working r06
 
 ### Scope Assurance & Development Planning Edition
 
@@ -11,16 +11,16 @@
 | Prepared for | Powerplants Australia |
 | Requested by | Dean Fiedler |
 | Document reference | PPO-BP-01 |
-| Version and date | r05 — 10 September 2026 UTC; approved CRM r02 scope supplement to working r04 |
-| Document status | Draft wider target state; CRM r02 product scope and priorities accepted; implementation and operational acceptance remain separate |
+| Version and date | r06 — 14 September 2026 UTC; adopted product quality and capability scope supplement |
+| Document status | Draft wider target state with accepted CRM r02 and product quality scope; implementation and operational acceptance remain separate |
 | Authoring basis | User requirements, supplied CREMS materials, prior read-only account observations and selected official sources |
 | Intended audience | Executive sponsor, departmental process owners, product owner, solution architect, delivery partners and acceptance reviewers |
 | Handling | Recommended internal distribution; contains business-system design information |
 | Programme reference | PPO — user-adopted independent private-project code; unrelated SOL008/STD-001 do not govern this project |
 | Supersedes | Master Blueprint v01 as the proposed planning baseline; v01 and its audit remain preserved historical records. The CREMS current-state specification remains a separate source |
-| Change basis | v02: Audit findings F-01–F-16. r03: naming adoption. r04: [user-authorised customer portal direction](../decisions/customer-portal-direction.md); r05: [approved CRM r02 scope](../decisions/crm-approved-scope.md); all baseline parent requirements and PP-01 boundaries preserved |
+| Change basis | v02: Audit findings F-01–F-16. r03: naming adoption. r04: [user-authorised customer portal direction](../decisions/customer-portal-direction.md); r05: [approved CRM r02 scope](../decisions/crm-approved-scope.md); r06: [product quality adoption](../decisions/product-quality-adoption.md); all baseline parent requirements and PP-01 boundaries preserved |
 | Working application name | Powerplants One — user-confirmed; private repository foundation and PP-01 design package delivered |
-| Authorisation represented | Current amendment adopts approved CRM r02 scope into the maintained blueprint; prior naming/portal decisions and implementation evidence remain separate |
+| Authorisation represented | Current amendment adopts Dean’s eight product refinements and five quality standards plus existing capability continuation; prior naming/portal/CRM decisions retained; runtime delivery and operational acceptance remain separate |
 
 > **Working amendment:** [ADR-0005](../decisions/ADR-0005-project-naming-adoption.md) records the naming adoption. The [issued v02](../reference/baselines/GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md) remains unchanged and continues to own baseline register wording. [Current status](../STATUS.md) and the [PP-01 package](../prototype/README.md) record later decisions. Historical source discussions below retain their original context.
 
@@ -66,6 +66,12 @@
 Appendices: [A — Sources](#appendix-a--source-and-evidence-register) · [B — Traceability](#appendix-b--requirement-to-source-and-acceptance-traceability) · [C — Glossary](#appendix-c--controlled-business-glossary) · [D — Document assurance](#appendix-d--document-assurance-and-review-record)
 
 ---
+
+## Adopted product quality scope — 14 September 2026
+
+Dean adopted all recommendations in the product-quality review. The [decision](../decisions/product-quality-adoption.md), [quality and gap register](../requirements/product-quality-register.md) and [delivery plan](../delivery/product-quality-plan.md) govern this supplement. F01–F08 cover equipment QR links, structured inspections, service bulletins, saved views, readiness/change impacts, actionable My Work, data/integration operations and horticultural visit preparation. Q01–Q05 establish security evidence, business-operation monitoring, shared components, accessible/responsive workflows and recoverable releases. C01–C08 carry forward portal, maintenance, warranty, knowledge, estimating feedback, AI, voice and existing global search.
+
+These are adopted product requirements, with staged synthetic implementation and observable acceptance; none is newly declared delivered by this amendment. The register maps them to the existing 78 parents and distinguishes existing runtime, designs and extensions. Missing site limits, commercial rules, provider configuration and operating commitments remain explicit inputs. The current architecture, seven domains, exact issued references and existing module acceptance plans remain. r17 attachment identity must be reconciled before any r17-specific visual implementation claim.
 
 ## Register navigation
 
@@ -2231,6 +2237,8 @@ Release A means the Wave A contract in Section 25.5. A-min/A-manual includes onl
 | NFR-12 | SRC-01: own web app/GitHub discussion, UC; SRC-21 ER; release design PR | Systems/Product owner | A maintainability/release foundation | D-022/D-023/D-029; DEV-01–DEV-10; BP-02 | AT-21/AT-22/AT-35 |
 
 ### B.11 Cross-cutting scope and change discipline
+
+The adopted [product-quality child register](../requirements/product-quality-register.md) now supplies F01–F08, C01–C08 and Q01–Q05 with explicit parent mappings, current delivery evidence and acceptance criteria. It supplements the following original scope discipline; it does not rewrite Appendix B or the issued 78-parent CSV.
 
 The 78 parents cover seven business domains plus shared document/non-functional requirements. Supporting QHSE, competence/People, IT, customer success, biosecurity, corporate tools and conditional portal/telemetry/AI scope remains in Section 17 and D-019/D-027/D-028. BR-01–BR-24 govern all relevant parents; IF-01–IF-16, DAT/TR/OUT/FD/PAR/CRE/MIG/DEV registers elaborate those contracts. They are not additional unapproved departments or independent products.
 

@@ -1,6 +1,6 @@
 # Email & Calendar integration design
 
-**Revision:** r02 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Proposed design with a synthetic interaction prototype; no live integration.
+**Revision:** r03 · **Date:** 15 September 2026 · **Owner:** Dean Fiedler · **State:** Proposed design with a synthetic interaction prototype; no live integration.
 
 **Workstream:** PPO-009 / [issue #9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9), CRM-03 and PAR-06. Supporting parents: CRM-01/02/06/08, NFR-01/02/03/05/08/09/10/11/12. D-025, D-020 and D-012 remain operational evidence gaps. This increment does not change the 78 parent requirements, PP-01 P01–P12 order or AT-25 status.
 
@@ -138,3 +138,13 @@ PPO keeps UTC instants plus source zone/offset and displays the user's selected 
 The [pilot plan](../delivery/email-calendar-microsoft-pilot.md) supplies EC-A01–EC-A18 and a runnable review sequence. These are child scenarios under existing parents, not new parent requirements or passed AT tests. The [handover](../delivery/email-calendar-handover.md) records actual executed checks separately from planned Microsoft/real-device checks.
 
 Open before a live pilot: actual Exchange Online tenant/test mailbox, permitted registrar/admin, approved isolated environment, selected test-user identity, data/cache retention and cleanup ownership. Open before broader sharing/sending: company disclosure policy, operational mailbox list, shared-mailbox requirements, approved signature/document filing, invitation rules and ownership conflicts. None prevents this fictional design review.
+
+## 15. Subject and task naming receiving amendment — r03
+
+The [naming/filing package](../delivery/naming-sharepoint-handover.md) adds channel-specific assistance to this design. Its [functional specification](naming-and-communication-assistance.md#45-email-authored-in-ppo) and [PPO-STD-001 Section 24](../standards/naming-conventions.md#24-business-filing-and-communication-assistance) govern new subject/task suggestions. Existing synthetic email links and one internal follow-up remain implemented as documented in the [journey handover](../delivery/email-calendar-journey-handover.md); no send or native Outlook compose capability is added by this amendment.
+
+New PPO-authored email drafts propose `[confirmed reference] Purpose – Short description`, with editable subject and explicit recipient/body/attachment preview. Store exact rule/source/audience revisions and draft location. Subject changes invalidate any approval that covered the prior communication content. Preserve replies' original subjects by default; incoming/historical originals are never rewritten for cosmetic consistency. Explicit local record links/aliases support discovery without treating a subject match as identity or evidence of a thread.
+
+An internal Activity uses action-led text and typed links. Notification drafts use the actual event/reference and disclose only intended audience-safe information; creating a task does not send, invite or complete it. Preserve source-mail privacy even if another actor can read the task. The future sender needs an original operation/event key, exact approved communication revision, current authority and a durable outbox. Accepted send responses do not establish delivery; unknown outcomes require provider-aware reconciliation before retry. No universally exactly-once external send is claimed.
+
+N5's PPO drafting/sending and N6's native Outlook add-in are distinct from the first read-only pilot. The add-in requires supported-client and installation/permission decisions and must handle new/reply/forward/unsupported states. A linked account alone cannot rewrite every user-composed subject. See [N0–N6](../delivery/naming-sharepoint-pilot.md#1-delivery-sequence-and-authority) for dependencies and NA-10/11/17/18 for acceptance. D-025 remains open for real communication policy and provider evidence.

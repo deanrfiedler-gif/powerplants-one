@@ -198,7 +198,7 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
     await expect(
       snapshot.getByRole("heading", { name: "Deal summary" }),
     ).toBeVisible();
-    await expect(page).toHaveURL(/\/crm\/opportunities\?pipeline=I1$/);
+    await expect(page).toHaveURL(url => url.pathname === "/crm/opportunities" && url.search === `?${new URLSearchParams({ pipeline: "I1", q: input.title })}`);
     await page.keyboard.press("Escape");
     await expect(snapshot).not.toBeVisible();
     await expect(card.locator(".crm-card-body")).toBeFocused();
@@ -473,7 +473,7 @@ test("SA-09 board stage change uses native keyboard controls on desktop and phon
     ),
   );
   await expect(dialog).not.toBeVisible();
-  await expect(page).toHaveURL(/\/crm\/opportunities\?pipeline=I1$/);
+  await expect(page).toHaveURL(url => url.pathname === "/crm/opportunities" && url.search === `?${new URLSearchParams({ pipeline: "I1", q: input.title, selected: "Qualified" })}`);
   await expect(action).toBeFocused();
   await expect(action).toBeInViewport({ ratio: 1 });
   const record = (await call(page, `crm/opportunities/${input.id}`)).items[0];
