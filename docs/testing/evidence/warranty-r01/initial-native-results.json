@@ -1,0 +1,187 @@
+{
+  "source": "0e41d579d509b4a9618b909337ded3f25a7291ef",
+  "html_sha256": "02282ffeefc34bb4090c7462fd9c8972dbd4a2f0056b5f165468e184a463a478",
+  "browser": "153.0.8010.47",
+  "groups": 17,
+  "results": [
+    {
+      "name": "Register, search, ownership and six connected views",
+      "result": "Passed"
+    },
+    {
+      "name": "Missing evidence successor and native exact evidence review",
+      "result": "Passed"
+    },
+    {
+      "name": "Disputed coverage cannot directly authorise replacement",
+      "result": "Passed"
+    },
+    {
+      "name": "Commercial goodwill leaves warranty disputed and Service grants separate authority",
+      "result": "Passed"
+    },
+    {
+      "name": "Reviewed replacement preserves both assets and owned maintenance review",
+      "result": "Passed"
+    },
+    {
+      "name": "Supplier submission and response leave approval and credit outstanding",
+      "result": "Passed"
+    },
+    {
+      "name": "Customer reservations create owned action and preserve exact presented content",
+      "result": "Passed"
+    },
+    {
+      "name": "Customer and receiving exports match the retained source records",
+      "result": "Passed"
+    },
+    {
+      "name": "Physical return, partial supplier approval and Finance credit remain independent",
+      "result": "Passed"
+    },
+    {
+      "name": "Unknown save recovery preserves exactly one accepted effect",
+      "result": "Passed"
+    },
+    {
+      "name": "Failed save retains native form values and original records",
+      "result": "Passed"
+    },
+    {
+      "name": "Reload and downloaded backup retain exact accepted records",
+      "result": "Passed"
+    },
+    {
+      "name": "Read-only and denied roles hide actions and selected record context",
+      "result": "Passed"
+    },
+    {
+      "name": "Partial loading failed empty and denied reads do not imply complete results",
+      "result": "Passed"
+    },
+    {
+      "name": "All six views fit desktop tablet and phone widths without clipped filters",
+      "result": "Passed"
+    },
+    {
+      "name": "Keyboard navigation, skip link and modal focus return operate natively",
+      "result": "Passed"
+    },
+    {
+      "name": "Concurrent storage changes block stale writes and malformed data stays exportable",
+      "result": "Passed"
+    }
+  ],
+  "errors": [],
+  "images": [
+    {
+      "name": "desktop-register.png",
+      "sha256": "d0007dbbc11ce477bf27bb826827b5b6735820e5894b71de4c52026d129c74da"
+    },
+    {
+      "name": "desktop-evidence-illustration.png",
+      "sha256": "35af9b3a4f31fbbd0462f188dec246e38c4540128279127e9c514cbe9be85c4b"
+    },
+    {
+      "name": "desktop-coverage.png",
+      "sha256": "d18ada1317019529f63966b6cd43e56a434cf0687acbc4fbfa9fca78ce420a63"
+    },
+    {
+      "name": "desktop-replacement-dialog.png",
+      "sha256": "80911bbcc462e8bd43f00087dcbbe1e279ad9ffd0436cd364fb114ec55454ef3"
+    },
+    {
+      "name": "desktop-replacement-result.png",
+      "sha256": "036f0e08f2a51118dcfdb416ff27de069992178a6ee991293f59c6a5c606943e"
+    },
+    {
+      "name": "desktop-recovery-open.png",
+      "sha256": "a72fafedc900ee3da40c0773dd71031055ecf4ea38d6b8d58df52a5cbf7c53b5"
+    },
+    {
+      "name": "desktop-customer-reservations.png",
+      "sha256": "d7847311b9ccac321638e07a6745690584a3754bda78a843805c663af8f5f961"
+    },
+    {
+      "name": "desktop-customer-resolved-recovery-open.png",
+      "sha256": "cd7fd9eb73e0d819489370ea8e3a0e2ca4fd20d91f467a38717fff560088a4e5"
+    },
+    {
+      "name": "desktop-credit-partial-recovery.png",
+      "sha256": "38f0ff8f410971974df0db9d79abe8c9d147e5b4bd43f580192be57567a42bc5"
+    },
+    {
+      "name": "1440-register.png",
+      "sha256": "c37faa7504e1db7685f4b49c691b4862103bd63b90b8802e15a4314094ecbbcd"
+    },
+    {
+      "name": "1440-evidence.png",
+      "sha256": "bba6051f22f5298b7ef2cc4aaafef060d8abe6cb55b90c07b3020edb252c19a4"
+    },
+    {
+      "name": "1440-coverage.png",
+      "sha256": "55413f9d8fcdd09d54941fba2043e386e55f23859efd925152dcd422c7c7771f"
+    },
+    {
+      "name": "1440-resolution.png",
+      "sha256": "115e81b30bd747edcb81d53fc7e2e4146fb7daa843470e5c6c378f251c5b238a"
+    },
+    {
+      "name": "1440-customer.png",
+      "sha256": "26590bd8a3dc1bab271bb7c2c6e0139ee5e6aaaffc3ca4fc8451b0707dcb0de7"
+    },
+    {
+      "name": "1440-supplier.png",
+      "sha256": "f8794dc405615a7299fd9f772ae3d067e01d795585d8052fcabd6a5353a5910f"
+    },
+    {
+      "name": "390-register.png",
+      "sha256": "54df7ab8590b98e841784c82d432f02d165b6c236cc34b4d49b13d75660b73b5"
+    },
+    {
+      "name": "390-evidence.png",
+      "sha256": "697fe68d52d9205a508c235e9405eb8756a6cf97def530a1c70645d0e901ad9e"
+    },
+    {
+      "name": "390-coverage.png",
+      "sha256": "68ff8ab2f5ae0df77216aa3b0047dcd5a6b5584ef07bc6cae52b50d5a6083d8c"
+    },
+    {
+      "name": "390-resolution.png",
+      "sha256": "035742a2749921217cd34e402728176bdfefb786f753e14bbcfd3b502f41af20"
+    },
+    {
+      "name": "390-customer.png",
+      "sha256": "d8370457a900ae39264657edeb4f3533a165634a671c1049b4ed4a595b9898fa"
+    },
+    {
+      "name": "390-supplier.png",
+      "sha256": "9f4aaa41db97ca76bd8324ac53d7cbbf94d9b329df2f96898290b4cb7f1be169"
+    },
+    {
+      "name": "320-register.png",
+      "sha256": "6dcbd3b55abc2d127cc613e37eb04962a99352fdbe7485cbd74d12365e907c37"
+    },
+    {
+      "name": "320-evidence.png",
+      "sha256": "e689447338979bf2c3d652cf2f436d35ed543a922969812063e3bf902b0a26b6"
+    },
+    {
+      "name": "320-coverage.png",
+      "sha256": "5cce9d30c47c134ff6b36bc32b71d77897bcda167ef567dc39137ec69497999a"
+    },
+    {
+      "name": "320-resolution.png",
+      "sha256": "92e5bbd5d349dcbdea0ecaf4287228d96c9a9c4554cfc4a698c790c61d5aafb4"
+    },
+    {
+      "name": "320-customer.png",
+      "sha256": "3c99fe9c54df82a571da3b7986ce513c55347c1cbd304a4fa05337e22c8cf271"
+    },
+    {
+      "name": "320-supplier.png",
+      "sha256": "b94bc9ed8e1ba6d3acde971921242c3f8c18eb0618638b33b63732bf3cfc4c8f"
+    }
+  ]
+}

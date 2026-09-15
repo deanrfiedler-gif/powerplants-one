@@ -3,7 +3,7 @@ document_id: PPO-WAR-WORKSPACE-DES
 revision: r01
 date: 2026-09-15
 owner: Dean Fiedler
-status: Proposed HTML design; detailed companion report included; native verification pending
+status: Proposed HTML design; model and native browser verification complete; owner acceptance and application integration separate
 source_commit: d041de7c40e7ba73acdef3252d5f18f1bf8ccb2f
 ---
 
@@ -29,4 +29,4 @@ Roles, saves and recovery are interactive client-side design controls, not authe
 
 ## Verification and publication
 
-See the [verification record](../testing/evidence/warranty-r01/README.md) for exact source/hash, original results, capture review and limits. Initial local verification passed 25 model groups and six non-rendered DOM groups. Published for review in [draft PR #206](https://github.com/deanrfiedler-gif/powerplants-one/pull/206). Native browser verification is pending; the final report is reconciled to actual evidence before delivery. Owner acceptance and application integration remain separate.
+See the [verification record](../testing/evidence/warranty-r01/README.md) for exact source/hash, original results, capture review and limits. Verification passed 25 model groups, six local non-rendered DOM groups and 17 native Chrome groups. All six desktop/phone views were visually inspected; a supplier wording inconsistency was corrected and the final HTML reverified. Source `101ab550bc213b307628402479f5f2e44a8c0445`, [run 35030396519](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35030396519), HTML SHA-256 `81abea8363d638dd220915af27bac5a12a52ac595f4799510145ad9f39252dde`. Published for review in [draft PR #206](https://github.com/deanrfiedler-gif/powerplants-one/pull/206); subsequent documentation-only commits retain these tested HTML bytes. Owner acceptance and application integration remain separate.
