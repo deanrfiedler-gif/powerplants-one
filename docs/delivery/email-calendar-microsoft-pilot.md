@@ -1,6 +1,6 @@
 # First Microsoft Email & Calendar pilot
 
-**Revision:** r01 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Prepared only; live implementation, registration and connection not performed.
+**Revision:** r02 · **Date:** 15 September 2026 · **Owner:** Dean Fiedler · **State:** Prepared only; live implementation, registration and connection not performed.
 
 [Integration design](../blueprints/email-calendar-integration.md) · [Prototype review](../blueprints/email-calendar-prototype/README.md) · [Handover](email-calendar-handover.md).
 
@@ -94,3 +94,9 @@ Future live teardown: first deny the connection in PPO and stop its workers; rem
 No paid service was provisioned. Costs to confirm for a live pilot are test mailbox licensing, isolated app/worker/database hosting, token/key storage, logging/backup retention and engineering/support time. Existing Microsoft 365/Azure entitlements are unverified; no monthly estimate or free-service promise is made. A personal Azure subscription for the prototype is separate from company Microsoft tenant consent.
 
 **Next implementation boundary:** implement the persisted synthetic email-to-opportunity-to-follow-up journey with server permissions and a provider adapter, then verify the read-only Microsoft prerequisites. No extra meeting, broad redesign or operational mailbox export is needed to review this package.
+
+## 7. Naming assistance boundaries — r02
+
+The [naming package](naming-sharepoint-handover.md) extends future subject and task-title design while preserving this pilot's owner-only read scope, permissions, selected mailbox and teardown. NC-09/10/11 and NA-10/11 add synthetic subject/reply/task cases; no Mail.Send, Mail.ReadWrite, calendar write, shared mailbox or Outlook add-in is introduced here. Existing EC-A17 must still prove no Outlook mutation.
+
+Current-source clarification: the persisted synthetic journey referenced in the original next-implementation sentence above is now implemented in [PR #64](https://github.com/deanrfiedler-gif/powerplants-one/pull/64), as recorded by its [handover](email-calendar-journey-handover.md). This Microsoft live pilot remains prepared, not executed. Receiving work verifies its existing prerequisites and the naming plan's applicable read cases before connection. Later N5 sending and N6 native compose work are separately scoped; SharePoint test permission is not mailbox send permission.

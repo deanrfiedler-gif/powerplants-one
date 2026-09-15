@@ -292,6 +292,50 @@ test("E2 browser creates scoped discovery and retains the original unknown creat
   await capture(page, info, "saved-reload", ".e2-snapshot");
 });
 
+test("E2 browser retains unsaved answers and reason while changing a saved workspace's scope", async ({
+  page,
+}) => {
+  const s = await saved(page);
+  await page
+    .getByRole("button", { name: "Edit discovery", exact: true })
+    .click();
+  const answer = page.getByLabel("Q01 Included work", { exact: true }),
+    reason = page.getByLabel("Discovery change reason", { exact: true }),
+    scope = page.getByLabel("Site declaration", { exact: true });
+  await answer.fill("SYN retain this unsaved scope proposal");
+  await reason.fill("SYN review the Site before saving");
+  for (const mode of ["NoSiteRequired", "Site"]) {
+    const refreshed = page.waitForResponse((response) => {
+      const url = new URL(response.url());
+      return (
+        url.pathname.endsWith("/estimating/workspaces/form-options") &&
+        url.searchParams.get("scope_mode") === mode
+      );
+    });
+    await scope.selectOption(mode);
+    expect((await refreshed).ok()).toBe(true);
+    await expect(scope).toHaveValue(mode);
+    await expect(answer).toHaveValue("SYN retain this unsaved scope proposal");
+    await expect(reason).toHaveValue("SYN review the Site before saving");
+  }
+  const siteRefreshed = page.waitForResponse((response) => {
+    const url = new URL(response.url());
+    return (
+      url.pathname.endsWith("/estimating/workspaces/form-options") &&
+      url.searchParams.get("site_id") === CRM.site
+    );
+  });
+  await page
+    .getByLabel("Existing Site", { exact: true })
+    .selectOption(CRM.site);
+  expect((await siteRefreshed).ok()).toBe(true);
+  await expect(answer).toHaveValue("SYN retain this unsaved scope proposal");
+  await expect(reason).toHaveValue("SYN review the Site before saving");
+  const persisted = await call(page, s.path);
+  expect(persisted.workspace.version).toBe(1);
+  expect(persisted.options[0].revision.id).toBe(s.input.revision_id);
+});
+
 test("E2 browser retains a stale proposal, explicitly compares the new predecessor and reconciles one original save", async ({
   page,
 }, info) => {
@@ -351,7 +395,10 @@ test("E2 browser retains a stale proposal, explicitly compares the new predecess
     .getByRole("button", { name: "Compare discovery proposal", exact: true })
     .click();
   await expect(
-    page.getByRole("checkbox", { name: "I confirm Q01 in this exact proposal", exact: true }),
+    page.getByRole("checkbox", {
+      name: "I confirm Q01 in this exact proposal",
+      exact: true,
+    }),
   ).toBeVisible();
   await acknowledge(page);
   let original: Record<string, unknown> | undefined;

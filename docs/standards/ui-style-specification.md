@@ -1,7 +1,7 @@
 ---
 title: Powerplants One - Shared UI style specification
-revision: r06
-date: 2026-09-12
+revision: r07
+date: 2026-09-14
 status: Brand-derived visual direction; functional extensions proposed
 owner: Dean Fiedler
 scope: Shared visual foundation; BP-03 C02 CRM board and grid mockups; UI design baseline requirements
@@ -76,11 +76,42 @@ The Board / Grid toggle preserves pipeline, owner, action filter, search and sor
 
 **Implementation requirements:** use a single permission-filtered query contract for both views and aggregates. Retain current permissions on details, related Activities, search and receipts. Save view preference per user only when implemented; this preview uses no storage. Later column resizing/reordering, saved filters, multi-select/bulk editing, drag-and-drop and stage movement are outside this mockup. Stage movement must have an accessible form alternative, required evidence/reason, server validation, version conflict handling and durable history. Completing an Activity never silently advances the stage; Closing never implies Won, customer acceptance or an ERP order.
 
+### 4.1 Restorable application worklist (#120)
+
+Dean authorised this extension on 14 September 2026. In the application, the URL carries Board/List (`view=Grid` for List), pipeline, search, company/site/owner filters, outcome, action state, stage filter, sort, page size and selected phone Board stage. Omit defaults. Refining filters/search/sort replaces the current history entry; switching view, pipeline or phone stage creates a navigation entry. Reload, a copied link and Back restore the stated criteria under the reader’s current permissions. Native History API updates integrate with the existing Next search-parameter subscription without a server navigation for every keystroke.
+
+Signed paging cursors remain transient and restart at page one on reload, changed criteria or history navigation. Unknown/duplicate/invalid controls fall back safely; no identity, permission, receipt or proposed business command is accepted from a URL. Access denial and identity lock clear sensitive criteria. This is a shareable view, not a per-user saved preference. Exact implementation, checks and remaining acceptance are recorded in the [issue reconciliation handover](../delivery/issue-reconciliation-handover.md).
+
 ## 5. Responsive and state rules
 
 Above 780 px, maintain six stages in one horizontal sequence with 250 px minimum columns and contained horizontal scrolling; never wrap the pipeline into a second row. Sticky stage headings orient long columns. At 780 px or below, show one selected stage with a direct selector, counts and previous/next controls; retain the selection across view switches. The Grid remains available with a frozen 150 px identity column on small screens. Use bounded scrolling and keep the outer page within its viewport. Secondary filters start collapsed. At 390×844 and 320×800, show a complete initial Board card with its top at or above 420 px. At 1366×768, target at least nine complete compact Grid rows. These measured design targets do not impose clipping heights on content.
 
 Show loading, no matches, validation, unavailable, denied, saving, saved and uncertain/conflict states distinctly in implemented screens. Never translate failed loading into zero records, say Saved before durable acceptance or retain sensitive details after actor/scope changes. Preserve entered proposals safely during validation/conflict, and announce changes without moving focus unexpectedly. Normal, no-matches with recovery, detail, temporary creation and linked field validation are interactive in the preview. Eight [branded state illustrations](https://github.com/deanrfiedler-gif/powerplants-one/blob/dcabfec1b5cde1c2cf220359e6cf1c63408512d6/docs/blueprints/crm-ui-mockups/states.html) additionally cover loading, no matches, validation, unavailable, changed version, changed access, saving and uncertain save; these are static design examples, not implemented server behaviour. Native dialog Escape and focus return are required; essential status remains visible without hover.
+
+### 5.1 Bounded scroll mechanics
+
+For a module that owns its scroll region, the shell supplies the viewport height once. The shell workspace and module slot use `overflow: hidden`; every flex/grid ancestor down to the actual scrolling element needs `min-height: 0` (and `min-width: 0` for horizontal containment). The module fills its supplied slot with `height: 100%` or flex sizing, rather than allocating another `100vh`/`100dvh` beneath the header. At least one reachable content element must own `overflow: auto`; never hide overflow without providing a scroll path to all content.
+
+Sticky table/stage headings attach to their nearest scrolling ancestor. Give headings and frozen cells opaque backgrounds, and give the scroll surface sufficient `scroll-padding` for keyboard focus. Keep one Board scroll surface across all stage columns. Long dialogs retain fixed action/header regions and an independently scrollable body; ordinary scrolling must expose all content at desktop, 390 px and 320 px widths.
+
+This describes the existing patterns in `shared-layout.css`, `crm-board-polish.css` and the accepted containers. The generic `main` currently owns scrolling for other routes; this subsection does not silently turn every page into a bounded module or remove their existing scroll path. Check the complete ancestor chain when porting a container. Use keyboard focus and long-content checks as well as wheel/touch input.
+
+### 5.2 Layer ownership and scale
+
+Use the following bands at the **shared document stacking context**. The ranges are reconciled to existing shell values, instead of claiming that the proposed 100/200 shell/menu ranges in #121 are already implemented.
+
+| Band | Range | Existing use / rule |
+|---|---|---|
+| Module content | 0–29 | Content, sticky headings/cells and local feedback. Keep module roots below shell chrome; isolate internal layering where needed. |
+| Shell chrome | 30–79 | Identity strip 30, mobile navigation 40, desktop header 60, More panel 65 and navigation rail 70. |
+| Shared menus and affordances | 80–119 | Header menu 80, account menu 85, focus-visible skip link 99 and navigation tooltip 110. |
+| Reserved | 120–299 | No routine module use. A new shared overlay requires an explicit placement decision. |
+| Non-native modal fallback | 300–399 | Reserved for a shared modal/scrim implementation if one is required. |
+| Shared transient status | 400–499 | Reserved for a shared toast host; ordinary record save status remains in its module. |
+
+These are ownership boundaries, not a command to renumber accepted CSS. Values inside a nested stacking context only compete within that context: for example, Projects has its own layered timeline and menus. Inspect ancestor transforms, isolation, opacity and positioned z-index before comparing raw numbers. Do not raise a module above navigation to repair a clipped dropdown; place the overlay in its proper host or use the existing native control.
+
+A native `<dialog>` opened with `showModal()` and its backdrop occupy the browser top layer, above ordinary z-index values. Use that existing pattern and its focus/Escape controls. Local decorative `z-index: -1` (such as the isolated stage arrow) does not allocate a shared layer. This documentation-only reconciliation changes no CSS or accepted appearance.
 
 ## 6. Review and handover
 
@@ -172,3 +203,5 @@ Dean accepted the [full Job Pack design](../decisions/job-pack-design.md) on 10 
 ## Approved Service field-operations container
 
 [Field Technicians r04](../decisions/field-technicians-design.md) is Dean’s accepted presentation baseline for `/service/technicians`. Preserve its 24 px desktop / 16 px phone outer padding, white bordered workspace, compact Roboto table typography, green selected-tab underline and four-tab right drawer inside the shared application shell. Do not duplicate global navigation or the logo. The [handover](../delivery/field-technicians-handover.md) records bounded data adaptations and verification status.
+
+Revision r07: #121 records bounded-scroll mechanics and a scale reconciled to existing shell layering; 14 September 2026. No CSS or domain authority change.

@@ -1,12 +1,12 @@
 # Powerplants One — Naming, Identification & Information Organisation Standard
 
-**Adopted project standard · Repository adoption edition · 5 September 2026**
+**Adopted project standard · Business filing and communication design edition · 15 September 2026**
 
 | Document control | Value |
 |---|---|
 | Document ID | **PPO-STD-001** |
 | Short title | Naming Standard |
-| Revision | **r03** |
+| Revision | **r04** |
 | Status | **Adopted for the Powerplants One private prototype** |
 | Prepared for | Dean Fiedler — private prototype owner |
 | Applies to | Powerplants One — Design & Development |
@@ -14,12 +14,12 @@
 | Download filename | `powerplants-one-naming-standard.md` |
 | Source baseline inspected | `deanrfiedler-gif/powerplants-one`, commit `c44321e8cbbe205a482e38499016f396e2f6374d` |
 | Scope of this edition | Naming policy, terminology, examples, exceptions and implementation plan |
-| Adoption state | User adopted r02; this r03 records repository naming, guidance and design-contract implementation. Runtime behaviour and live-system changes remain unimplemented |
+| Adoption state | User adopted r02 and authorised the r04 business filing/communication design package. Existing selected output naming is implemented; general assistance, live SharePoint and Outlook writes remain future work |
 | Authority and independence | Independently designed for Powerplants One. The user confirmed that the other project's `STD-001` and identifiers do not govern this project. Existing PPO decisions are retained or refined on their merits |
 
 ## Adopted direction
 
-> **Adoption record:** The user approved the r02 scheme and authorised repository implementation on 5 September 2026. This r03 records the canonical master/contract paths, independent naming authority, aligned design contracts and maintained project instructions. [Implementation record](naming-adoption.md) lists the actual changes and outstanding runtime work. Recommendation/future-tense wording retained below describes general design and future capabilities; it does not leave the naming policy unapproved.
+> **Adoption record:** The user approved the r02 scheme and authorised repository implementation on 5 September 2026. R03 recorded repository adoption. This r04 adds the authorised business filing and communication design in Section 24; the original accepted r02 bytes remain preserved. [Implementation record](naming-adoption.md) lists the actual changes and outstanding runtime work. Recommendation/future-tense wording retained below describes general design and future capabilities; it does not leave the naming policy unapproved.
 
 
 Use the user-confirmed **Powerplants One** application and project identity and **PPO** short code, with a naming system based on readable words, stable references and explicit context.
@@ -61,6 +61,8 @@ The design deliberately preserves useful identifiers already established within 
 21. [Ownership, exceptions and verification](#21-ownership-exceptions-and-verification)
 22. [Quick reference and worked example](#22-quick-reference-and-worked-example)
 23. [Evidence and references](#23-evidence-and-references)
+
+24. [Business filing and communication assistance](#24-business-filing-and-communication-assistance)
 
 ## 1. Purpose, scope and authority
 
@@ -958,3 +960,55 @@ The existing scheme is retained because it balances readability, traceability an
 | r01 | 2026-09-05 | Initial project-wide standard, current-state mapping, code/data conventions and adoption plan | Proposed; repository implementation pending |
 | r02 | 2026-09-05 | Confirmed Powerplants One/PPO; removed the unrelated STD-001 dependency; clarified independent identifier selection and added international-practice rationale | Subsequently adopted by the user; exact accepted baseline retained |
 | r03 | 2026-09-05 | Recorded r02 adoption, current canonical paths, completed design-contract alignment and repository guidance | Adopted for private prototype; runtime implementation remains separate |
+
+## 24. Business filing and communication assistance
+
+### 24.1 Scope and adoption
+
+Dean authorised this complete naming, communications and SharePoint design package on 15 September 2026 (Brisbane). This section extends the existing adopted prototype standard. The proposed operational library configuration and live integration require evidence in their receiving stages; no business files or messages are changed by this edition. Current application inspection at `42383fc2e3a85f6cf9c38c829683b14787578579` found selected pack/report/Finance filename generation and synthetic email linking, but no general naming assistant or live Microsoft writes.
+
+[Functional specification](../blueprints/naming-and-communication-assistance.md), [SharePoint configuration](../architecture/sharepoint-information-architecture.md), [pilot](../delivery/naming-sharepoint-pilot.md) and [decision](../decisions/naming-communications-sharepoint.md) define behaviour and implementation boundaries. International records-management principles inform identity, provenance and metadata; they do not mandate these exact filename or subject patterns.
+
+### 24.2 Channel-specific patterns
+
+| Channel/object | Pattern and synthetic example | Automatic versus reviewed |
+|---|---|---|
+| Working business file | `<owning reference>-<description>.<extension>`; `SYN-PPO-WO-000001-site-access-notes.docx` | Suggested on upload; editable valid description; stable working filename |
+| Issued document | `<document reference>-<type>-rNN.<extension>`; `SYN-PPO-RPT-000001-service-report-r01.pdf` | Automatic within the authorised issue workflow using actual revision; no user-entered status shortcut |
+| Field evidence | `<appointment reference>-<description>-<sequence>.<extension>`; `SYN-PPO-APT-000001-controller-terminal-photo-01.png` | Suggested from confirmed parent/context; sequence is a label, UUID/hash establish identity |
+| Work folder | `<owning reference> - <short description>`; `SYN-PPO-WO-000001 - Irrigation controller service` | Suggest/preview destination; provision only after authority and duplicate mapping checks |
+| New email | `[reference] Purpose – Short description`; `[SYN-PPO-WO-000001] Service visit – Confirm site access` | Prefill editable subject in PPO; use a public-safe reference and description |
+| Report email | `[SYN-PPO-RPT-000001] Service report – Irrigation controller` | Reference exact report; include revision only when useful and known; attachments bind exact issue |
+| Internal Activity | Action-led title; `Confirm access to Greenhouse 2` | Suggest only; record links, owner, due and status remain separate fields |
+| Outbound task notification | `[SYN-PPO-WO-000001] Action required – Confirm site access` | Template-generated draft from actual event; send is separate |
+| Message without subject field | Short action heading plus permitted record context/link | Do not repeat long codes through every in-app comment; include reference in exported notification |
+
+File descriptions use portable lowercase hyphenated words. Human communication uses sentence case, normal spaces and readable punctuation. Subject conventions are not filename validators. Dates use `YYYY-MM-DD` when meaningful, such as a confirmed visit date; do not add mutable dates/owners/status to permanent IDs or folders. Working provider versions and issued rNN revisions remain distinct. Preserve actual external references; never prepend SYN to real references or infer an ERP project code.
+
+### 24.3 Context and exceptions
+
+The selected record supplies company, organisation, site, facility, growing area and equipment relationships. Only include detail needed to distinguish the document or message; retain full context as metadata/record links. Do not construct a compulsory folder path from every horticultural level. One document can serve multiple records without duplicate copies.
+
+Keep supplier filenames, native CAD dependency names, issued source manifests and contractual naming requirements where their exact form matters. An approved searchable alias may improve discovery without changing original bytes or provider name. Preserve the original received name exactly in protected metadata and every later name-change event. Retain Unicode customer/person/source names in metadata; do not silently transliterate them into an asserted official identity.
+
+Use the scoped exception record: item/rule, reason, author/reviewer, time, source obligation, allowed alternative and review trigger. A blanket exception is not permission to bypass content approval, confidentiality or access controls. “Retain original” is a valid documented outcome, not an unsuccessful automatic rename.
+
+### 24.4 Validation and safe application
+
+Retain Section 19's targets: ordinary filename target 80 characters, maximum 120 including extension; folder target 40 characters; decoded SharePoint path target 200. Validate the complete resolved path and actual client/platform limits. Target exceedance requires a reviewed explanation; a hard platform restriction cannot be waived. Preserve stable reference and revision while shortening description. Reject control/path traversal characters, reserved portable device names, leading/trailing spaces/dots, extension changes and case-insensitive collisions. A filename does not convert a file format.
+
+Suggestion → reviewed preview → authorised operation → verified result are distinct. Preview stores source identity/eTag, destination, expected record/rule version and proposed name. Recheck immediately before writing. Retry the same intended operation with the same ID; investigate unknown outcomes against the exact item. Batch results are per item. Do not silently overwrite, move libraries, copy/delete a source or increment a content revision merely to resolve a name conflict.
+
+### 24.5 Email continuity and confidentiality
+
+Retain original subjects for replies, incoming messages and historical mail. Avoid duplicate prefixes. An intentional new topic can start a reviewed new conversation. Subject matching supplies a suggestion only; provider/mailbox/message identity and explicit links establish relationships. Do not infer a common conversation from matching subject text.
+
+Do not expose internal costs, margins, private task comments, credentials or confidential site-access details in subjects/notifications. Select the minimum safe reference/context for the intended audience. Permission to read an internal record does not authorise emailing it. Draft saved, send requested, accepted, delivered and acknowledged remain distinct facts.
+
+PPO-authored messages and native Outlook compose assistance are separate implementations. Linking an account or enabling read-only sync does not apply a convention to every Outlook message. The existing Microsoft read pilot retains its current permissions. Outlook add-in scope/client behaviour is a later evidence obligation.
+
+### 24.6 Revision record addition
+
+| Revision | Date | Change | Adoption |
+|---|---|---|---|
+| r04 | 2026-09-15 | Business files/folders, subjects/tasks, context, legacy review, exceptions and safe application; linked five-deliverable package | Authorised prototype design extension; visual acceptance and application/live integration separate |
