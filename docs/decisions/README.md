@@ -64,6 +64,8 @@ The [PPO Assistant direction and architecture decision](ppo-assistant-direction.
 
 - [Development and compiled performance profiles](ci-performance-profiles.md) — retain both original PT-27 measurements on the exact same load fixture, with bounded phase observations; original comparison and deferred scope editor measurements reviewed; integrated assurance remains.
 
+[Excel estimate import design](excel-estimate-import-design.md) records the authorised r01 workbook/import package under PPO-010. The import runtime and operational workbook acceptance remain separate.
+
 [Product quality adoption](product-quality-adoption.md) records Dean’s 14 September instruction to incorporate all eight product refinements and five engineering/design standards. Existing portal, maintenance, warranty, knowledge, estimating feedback, AI, voice and search plans continue. The derived register and staged delivery plan implement scope adoption; no new technology dependency or operational approval is inferred.
 
 ## Naming, communications and SharePoint
