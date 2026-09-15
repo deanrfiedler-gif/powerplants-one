@@ -29,4 +29,4 @@ Roles, saves and recovery are interactive client-side design controls, not authe
 
 ## Verification and publication
 
-See the [verification record](../testing/evidence/warranty-r01/README.md) for exact source/hash, original results, capture review and limits. Initial local verification passed 25 model groups and six non-rendered DOM groups. Native browser verification and final publication are pending at initial preparation; the final report is reconciled to actual evidence before delivery. Owner acceptance and application integration remain separate.
+See the [verification record](../testing/evidence/warranty-r01/README.md) for exact source/hash, original results, capture review and limits. Initial local verification passed 25 model groups and six non-rendered DOM groups. Published for review in [draft PR #206](https://github.com/deanrfiedler-gif/powerplants-one/pull/206). Native browser verification is pending; the final report is reconciled to actual evidence before delivery. Owner acceptance and application integration remain separate.

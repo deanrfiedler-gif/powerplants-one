@@ -246,7 +246,7 @@ This is local demonstration resilience, not offline synchronisation, cross-devic
 
 ## 10. Visual system, responsiveness and accessibility
 
-The workspace uses r20 navy `#242a37`, green `#62bb46`, background `#f5f6f8`, embedded Roboto 400/500/700, restrained borders and line icons. Controls use the shared 6 px radius, cards 7 px and dialogs 10 px. Snapshot cells remain square and contiguous. Green identifies primary actions; state pills and written labels distinguish review, uncertainty and completed outcomes without relying only on colour.
+The workspace uses r20 navy `#242a37`, green `#62bb46`, background `#f5f6f8`, embedded Roboto 400/500/700, restrained borders and line icons. Controls use the shared 6 px radius, cards 7 px and dialogs 10 px. Snapshot cells remain square and contiguous. Navy anchors primary actions and green marks the active view and selected context; state pills and written labels distinguish review, uncertainty and completed outcomes without relying only on colour.
 
 The layout is module-only: no copied application masthead, global sidebar or alternate application shell. Large screens use a main column with contextual side cards; narrower layouts stack content. Navigation can scroll within its own strip. Long identities/hashes wrap, evidence cards and actions reflow, and narrow register rows become labelled cards.
 
@@ -297,7 +297,7 @@ The verification package distinguishes pure-model assertions, local non-rendered
 | Repository assurance | Foundation, naming, generated-file consistency and lint results are recorded with the final contribution. |
 | Independent business/device acceptance | Not claimed by these checks. |
 
-See [original verification evidence and hashes](../../../testing/evidence/warranty-r01/README.md) and the contribution PR for final source identity, actual results and remaining limits. The native suite covers the full role-driven journey, reservations, exports, partial recovery, save failure/recovery, read states, keyboard behaviour and all six views at 1440, 1024, 820, 390 and 320 px. Screenshots are retained for visual review.
+See [original verification evidence and hashes](../../../testing/evidence/warranty-r01/README.md) and [draft PR #206](https://github.com/deanrfiedler-gif/powerplants-one/pull/206) for final source identity, actual results and remaining limits. The native suite covers the full role-driven journey, reservations, exports, partial recovery, save failure/recovery, read states, keyboard behaviour and all six views at 1440, 1024, 820, 390 and 320 px. Screenshots are retained for visual review.
 
 ## 14. Files and maintenance
 
