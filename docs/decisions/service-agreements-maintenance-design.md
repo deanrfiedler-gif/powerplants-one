@@ -3,7 +3,7 @@ document_id: PPO-MA-WORKSPACE-DES
 revision: r01
 date: 2026-09-15
 owner: Dean Fiedler
-status: Requested HTML design; native visual review and application integration tracked separately
+status: Draft HTML design; native browser and capture review complete; owner acceptance and application integration separate
 source_commit: 07ade644de06ff3b13e5af6ae9c299ca7c78c535
 ---
 
@@ -71,4 +71,4 @@ No email or customer message is sent. No accepted agreement, work order, booking
 
 The deterministic build, pure model suite, non-rendered DOM journey and native browser suite have distinct evidence meanings. See the [verification record](../testing/evidence/maintenance-r01/README.md) for actual results and limits. The dedicated design workflow uses the repository's existing Node/npm/Playwright/browser pins, contents-read permission and original screenshots. No branch-protection context or existing assurance workflow is weakened.
 
-This contribution is a standalone draft for review. Native browser/visual evidence, owner acceptance and application integration must each be stated from actual results. The PR is the authoritative publication/check record. Once the design is accepted, the next implementation step is to settle the occurrence/plan contracts and exact receiving links under PPO-015.
+This contribution is published in [draft PR #204](https://github.com/deanrfiedler-gif/powerplants-one/pull/204). Source `2ce9fbaca5de51b03e7141dd53d4682e04fb7235` passed 24 model and 15 native browser groups; all six desktop/phone views were visually inspected after correcting the hidden skip link and narrow filter labels. The verification record retains exact source, HTML/image hashes, run and artifact identity. Owner acceptance and application integration remain separate. The PR is the authoritative publication/check record. Once the design is accepted, the next implementation step is to settle the occurrence/plan contracts and exact receiving links under PPO-015.
