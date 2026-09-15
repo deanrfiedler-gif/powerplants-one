@@ -29,7 +29,7 @@ function hash(value: unknown, field: string) {
 function confirmations(value: unknown) {
   if (
     !Array.isArray(value) ||
-    value.length > 10 ||
+    value.length > discoveryDefinition.questions.length ||
     value.some(
       (id) => !discoveryDefinition.questions.some((q) => q.id === id),
     ) ||

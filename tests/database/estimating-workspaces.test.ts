@@ -11,6 +11,8 @@ import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
 import { reset, migrate, seed } from "../../scripts/database";
 import { createOpportunity } from "../../src/crm/opportunities";
+import { editDealInformation } from "../../src/crm/refinements";
+import { readShared } from "../../src/shared/reads";
 import {
   createEstimate,
   saveEstimate,
@@ -558,6 +560,73 @@ test("E2 shared-context changes reject the original proposal without altering it
     "SYN changed bay",
   );
 });
+test("E2 historical contact visibility is rechecked independently of current labels and versions", async () => {
+  const s = await saved(),
+    nextContact = randomUUID();
+  await rows(
+    "INSERT INTO ppo.people(id,workspace_id,created_by,updated_by,display_name) VALUES($1,$2,$3,$3,'SYN Replacement contact')",
+    [nextContact, CRM.workspace, s.p.actor_id],
+  );
+  await rows(
+    "INSERT INTO ppo.person_company_contexts(workspace_id,company_id,person_id) VALUES($1,$2,$3)",
+    [CRM.workspace, CRM.company, nextContact],
+  );
+  await rows(
+    "INSERT INTO ppo.relationships(id,workspace_id,created_by,updated_by,company_id,organisation_id,person_id,role_label,valid_from) VALUES($1,$2,$3,$3,$4,$5,$6,'SYN replacement contact','2026-01-01')",
+    [
+      randomUUID(),
+      CRM.workspace,
+      s.p.actor_id,
+      CRM.company,
+      CRM.org,
+      nextContact,
+    ],
+  );
+  await editDealInformation(s.p, s.o.id, {
+    ...crmBase(),
+    expected_version: 1,
+    title: s.o.title,
+    primary_person_id: nextContact,
+    contact_unknown_reason: null,
+    value_amount: null,
+    expected_close_date: null,
+  });
+  await rows(
+    "UPDATE ppo.sites SET primary_contact_id=$2,version=version+1 WHERE id=$1",
+    [CRM.site, nextContact],
+  );
+  assert.deepEqual(
+    await readDiscoveryRevision(s.p, s.input.id, s.input.revision_id),
+    s.view.options[0].revision,
+  );
+  assert.deepEqual(
+    await readOperation(s.p, s.input.operation_id),
+    s.accepted.receipt,
+  );
+  await rows(
+    "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='shared.read'",
+    [s.p.actor_id],
+  );
+  await rows(
+    "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id,valid_from) VALUES($1,$2,$3,'shared.read','Site',$4,$4,'2026-01-01')",
+    [CRM.workspace, s.p.actor_id, CRM.company, CRM.site],
+  );
+  assert.equal((await readShared(s.p, "Person", nextContact)).id, nextContact);
+  await assert.rejects(
+    readShared(s.p, "Person", CRM.person),
+    code("RecordUnavailable"),
+  );
+  const before = await businessSnapshot();
+  for (const read of [
+    () => readDiscoveryRevision(s.p, s.input.id, s.input.revision_id),
+    () => readDiscoveryWorkspace(s.p, s.input.id),
+    () => readOperation(s.p, s.input.operation_id),
+    () => createDiscoveryWorkspace(s.p, s.input),
+  ])
+    await assert.rejects(read(), code("RecordUnavailable"));
+  assert.deepEqual(await businessSnapshot(), before);
+});
+
 test("E2 receipt, audit and outbox failures roll back the entire option graph", async () => {
   const s = await saved(),
     input = await proposal(s, "Branch");
@@ -780,6 +849,13 @@ test("E2 recovery rechecks edit access to the exact original selected Site even 
     s.input.id,
     await action(s, branch.new_option_id!, "Select"),
   );
+  const selectOriginal = await action(s, s.input.option_id, "Select");
+  await changeDiscoveryOption(s.p, s.input.id, selectOriginal);
+  await changeDiscoveryOption(
+    s.p,
+    s.input.id,
+    await action(s, branch.new_option_id!, "Select"),
+  );
   await changeDiscoveryOption(
     s.p,
     s.input.id,
@@ -815,6 +891,31 @@ test("E2 recovery rechecks edit access to the exact original selected Site even 
   await assert.rejects(
     readOperation(s.p, branch.operation_id),
     code("RecordUnavailable"),
+  );
+  await assert.rejects(
+    readOperation(s.p, selectOriginal.operation_id),
+    code("RecordUnavailable"),
+  );
+  await assert.rejects(
+    changeDiscoveryOption(s.p, s.input.id, selectOriginal),
+    code("RecordUnavailable"),
+  );
+});
+
+test("E2 permanent Facility placement rejects a move and preserves the retained discovery revision", async () => {
+  const s = await saved();
+  const before = await businessSnapshot();
+  await assert.rejects(
+    rows("UPDATE ppo.facilities SET site_id=$2,version=version+1 WHERE id=$1", [
+      discoveryFacility,
+      "70000000-0000-4000-8000-000000000002",
+    ]),
+    code("23514"),
+  );
+  assert.deepEqual(await businessSnapshot(), before);
+  assert.deepEqual(
+    await readDiscoveryRevision(s.p, s.input.id, s.input.revision_id),
+    s.view.options[0].revision,
   );
 });
 
