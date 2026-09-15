@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { Workbook, SpreadsheetFile } from '@oai/artifact-tool';
+import { refineWorkbook, verifyRefinements } from './workbook-refinements.mjs';
 
 // Run a copy in the primary runtime scratch directory. No operational prices.
 const fixturePath = process.argv[2];
@@ -122,6 +123,8 @@ const notes=[
 ];notes.forEach((v,i)=>o.getRange(`A${23+i}`).values=[[v]]);
 o.getRange('B10').conditionalFormats.add('cellIs',{operator:'greaterThan',formula:0,format:{fill:'#fff1ed',font:{bold:true,color:'#993b2a'}}});
 
+refineWorkbook(wb);
+verifyRefinements(wb);
 wb.recalculate();
 // Check input propagation in a disposable edit, then restore it.
 const before=o.getRange('B6:B8').values;

@@ -57,7 +57,7 @@ Required metadata keys: `schema_version`, `template_ref`, `template_revision`, `
 | unit | Explicit compatible unit | Keep source unit and canonical mapping. Pilot examples: ea, m, m2, m3, h, lot. Recognise aliases only through a reviewed mapping; do not reinterpret m as m2. |
 | unit_cost / unit_sell | Typed numbers, up to 2 decimals | Existing cost/sell decimal strings. Blank is unknown, explicit zero is retained. No AI price completion or margin inference. |
 | allowance | Yes / No | Required explicit Boolean in new schema-2 lines. Missing cost is not an allowance. |
-| source_ref | Existing source key | Bind exact source record to this line/version. Existing E1 source text is a concise projection; full provenance remains in the import sidecar. |
+| source_ref | Existing source key | Bind exact source record to this line/version. Existing E1 source text is a concise projection within its 500-character limit; full provenance remains in the import sidecar. |
 | source_date | Typed Excel date or ISO YYYY-MM-DD | Required calendar date, mapped to effective_date. Recognise 1900/1904 date systems in the production parser or reject unsupported systems explicitly. The preview rejects 1904. |
 | include | Yes / No | Proposal for quote included_in_price. Does not remove the cost line from the internal estimate. |
 | print | Yes / No | Independent quotation presentation proposal. Included hidden amounts roll into the existing named safe allowance. Approval of import does not approve customer wording. |
@@ -66,14 +66,18 @@ Required metadata keys: `schema_version`, `template_ref`, `template_revision`, `
 
 Identifiers remain text. Amounts and dates remain typed in Excel. Formula values are read from saved results without executing formulas. Empty-string results on unused reserved rows are allowed; missing required results on populated rows block. A string-typed formula with no numeric cache is never treated as zero. Date display is Australian; import compares calendar values. Excel separators/number formatting do not change numeric meaning. Units, formula provenance and case/option relationships cannot be reconstructed from formatting alone.
 
+The estimate title must satisfy the receiver's 200-character limit; unit text must fit 40 characters. Source rows must be positive worksheet row numbers. The preview records the actual export sheet, table, range and row separately from the workbook's declared calculation origin. It identifies problem rows by their position within the immutable parsed upload, so duplicate or missing line references do not redirect inspection to a different row. Domain identity still uses stable line references after validation.
+
 ## 4. Reconciliation and formula review
 
 1. Check file structure and all required tables/headers. Preserve input hash, template version and parser version.
 2. Compare context with current permitted E2 selection. Compare scope, sections and referenced equipment/facilities before costing.
-3. Validate each row, including excluded lines. Reject error cells, missing formula caches, unresolved references, invalid decimals and expired/unknown cost bases according to the adopted pilot rule. Expired or unknown validity is a review warning for Draft; source date remains mandatory. No business approval threshold is invented.
+3. Validate each row, including excluded lines. Reject error cells, missing formula caches, unresolved references and invalid decimals. Expired or unknown validity is a review warning for Draft; source date remains mandatory. No business approval threshold is invented.
 4. Recalculate supported line cost/sell, section totals, all-line totals and included quote total using PPO decimal arithmetic. Compare every line and each control total to the cent; IDs/counts must match exactly. There is no unexplained balancing line or tolerance that hides a mismatch.
 5. Present original values, proposed values and the difference. The estimator can correct Excel and upload a new revision, or make an explicitly reasoned import adjustment when that field is eligible. Keep original bytes and values unchanged. Store source evidence, old/new values, reason and reviewer. Recompute all derived controls after an adjustment while retaining original differences.
 6. Show unresolved errors separately from reviewed warnings. A reviewer confirms source calculation review, scope and reconciliation. Any data, mapping, scope, source file or current version change invalidates the confirmation.
+
+An incomplete amount must remain visibly Unknown at the affected aggregate; do not display a partial sum as the total. Cost and sell completeness are independent. Missing include choices also make the proposed included total unknown. An adjustment is validated completely before replacing a proposed row; a failed adjustment creates no mutation or adjustment record. Compare canonical decimal and Boolean values so `1` versus `1.000`, or `Yes` versus `true`, does not create a false revision. Display each field that changed, including quantity and line extensions.
 
 PPO's total comparison cannot prove an engineering formula is correct, that an external supplier source was refreshed, or that a cached value is current. The workflow requires Excel recalculation/save and estimator review. Specialist calculations remain authored in Excel until independently specified and verified for PPO. [Microsoft documents saved formula caches](https://learn.microsoft.com/en-us/office/open-xml/spreadsheet/working-with-formulas).
 
