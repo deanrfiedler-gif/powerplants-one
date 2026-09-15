@@ -65,7 +65,7 @@
     {
       "id": "field-technicians-r04",
       "title": "Field Technicians design r04",
-      "design": "docs/reference/powerplants-one-field-technicians-r04.html",
+      "design": "docs/reference/ui/field-technicians/powerplants-one-field-technicians-r04.html",
       "sha256": "b4d15630d89f0a74b795b9b2af6b83d9c4874d0e31d7e503f93d386a6555a704",
       "bytes": 429584,
       "scope_selector": "#ppo-field-technicians",
@@ -110,7 +110,7 @@
     {
       "id": "engineering-r02",
       "title": "Engineering container design r02",
-      "design": "docs/reference/engineering-r02/PPO-Engineering-Container-r02.html",
+      "design": "docs/reference/ui/engineering/PPO-Engineering-Container-r02.html",
       "sha256": "52a7d24705ba3faf5f7ce87e33ccd09b641ca2b3b5e7e592975ec949552665b4",
       "bytes": 456757,
       "scope_selector": "#ppo-engineering",
