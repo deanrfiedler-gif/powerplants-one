@@ -64,7 +64,7 @@ Powerplants One is Dean's personal synthetic prototype of a seven-domain operati
 
 | Group | Items | Next action |
 |---|---|---|
-| Open pull requests | Current repair covers #211–#218 against main `d565a9d`; component histories and uploaded aliases are preserved. | [Repair record](testing/pr-repair-2026-09-16.md). #216–#218 require the missing original packages; current CI and owner acceptance remain distinct. |
+| Open pull requests | Current repair covers #211–#218 and replacement #220 against main `d565a9d`; component histories and uploaded aliases are preserved. | [Repair record](testing/pr-repair-2026-09-16.md). #216–#217 require the missing original packages; #218 is closed in favour of complete #220. Current CI and owner acceptance remain distinct. |
 | CRM board follow-through | Earlier #135/#136 keyboard, focus and lost-response work is delivered. #121 scroll/layer guidance and #120 URL state are now the authorised follow-through. | Source, original browser evidence and normal merge are tracked in the [reconciliation](delivery/issue-reconciliation-handover.md). |
 | Current repository-writing session | Owner-authorised repair of all eight open PRs, 16 September 2026; main #219 is retained. | Repair conflicts, lint and missing package references. Record unresolved original-file gaps. No main merge or deployment is included. |
 | Independent runtime maintenance | #163 merged as `6d46e0e5`; the latest owner-triggered hosted run uses the maintained runtime. | #160 remains open only for the listed hosted evidence, not for reimplementing the Node/Azure/browser update. [Maintenance handover](delivery/runtime-maintenance.md). |

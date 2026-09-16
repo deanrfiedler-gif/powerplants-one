@@ -35,3 +35,7 @@ The original machine-readable [browser manifest](native-results.json) and [model
 Local foundation, prototype and naming checks also passed, along with JavaScript syntax, reproducible assembly and `git diff --check`. These focused results do not assert that every unrelated repository workflow or merge gate has completed. [Draft PR #211](https://github.com/deanrfiedler-gif/powerplants-one/pull/211) provides the review boundary; no merge or deployment has been performed.
 
 These checks are standalone design evidence, not application integration, independent owner acceptance, complete WCAG conformance, physical-device acceptance or real delivery verification.
+
+## Pull-request repair follow-up, 2026-09-16
+
+Run [35153136096](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35153136096) on the aggregate upload branch exposed a race in the keyboard test: Escape returned native focus before the queued dialog `close` event restored controller focus. That event could interrupt the next arrow-key interaction. The harness now observes completion of `close` before testing view navigation; both exact focus assertions remain. Notification source and generated HTML are unchanged. A fresh focused workflow supplies verification of this harness change.

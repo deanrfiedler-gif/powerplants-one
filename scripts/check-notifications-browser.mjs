@@ -30,7 +30,27 @@ try{
  await check('Failed, partial and empty sources are visibly distinct',async()=>{await nav('inbox').click();await preview({scenario:'failed'});assert((await page.locator('.summary').innerText()).includes('—'));assert.equal(await page.locator('.notification').count(),0);await preview({scenario:'partial'});assert((await page.locator('#main').innerText()).includes('Service is unavailable'));assert.equal(await page.locator('.notification').count(),9);await preview({scenario:'empty'});assert((await page.locator('#main').innerText()).includes('successfully with no records'));await preview();});
  await check('Local deep link reload retains exact target and mismatched context is rejected',async()=>{await page.locator('[data-action="select"][data-id="n01"]').click();await action('source').click();const url=page.url();assert(url.endsWith('#notice=n01&source=material'));await page.reload();assert((await modal.innerText()).includes('SYN-PPO-IN-000015'));await action('close').first().click();await page.goto(pathToFileURL(file).href+'#notice=n01&source=report');assert((await modal.innerText()).includes('do not match'));await action('close').first().click();});
  await check('Responsive four-view layouts and controls fit five widths',async()=>{await reset();for(const [width,height] of [[1440,1000],[1024,900],[820,1000],[390,844],[320,740]]){await page.setViewportSize({width,height});for(const id of ['inbox','groups','escalations','preferences']){await nav(id).click();await page.evaluate(()=>document.fonts.ready);assert(!(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1)),`${id} overflows at ${width}`);if(id==='preferences'){const clipped=await page.locator('.form-grid .checkbox').evaluateAll(labels=>labels.filter(label=>{const r=label.getBoundingClientRect(),input=label.querySelector('input').getBoundingClientRect(),text=label.querySelector('span').getBoundingClientRect();return input.width>24||text.right>r.right+1||text.width<120;}).map(label=>label.textContent));assert.deepEqual(clipped,[],`Checkbox label clipped at ${width}`);}if([1440,390,320].includes(width))await snap(`${width}-${id}`);}}});
- await check('Phone detail, dialog escape and keyboard view navigation retain focus',async()=>{await page.setViewportSize({width:390,height:844});await nav('inbox').click();await page.locator('[data-action="select"][data-id="n01"]').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'snapshot');await action('source').click();await page.screenshot({path:path.join(out,'phone-source-viewport.png'),fullPage:false});images.push('phone-source-viewport.png');await snap('phone-source');await modal.press('Escape');assert.equal(await page.evaluate(()=>document.activeElement.dataset.action),'source');await nav('inbox').focus();await nav('inbox').press('ArrowRight');assert.equal(await page.evaluate(()=>document.activeElement.dataset.view),'groups');});
+ await check('Phone detail, dialog escape and keyboard view navigation retain focus',async()=>{
+  await page.setViewportSize({width:390,height:844});
+  await nav('inbox').click();
+  await page.locator('[data-action="select"][data-id="n01"]').click();
+  assert.equal(await page.evaluate(()=>document.activeElement.id),'snapshot');
+  await action('source').click();
+  await page.screenshot({path:path.join(out,'phone-source-viewport.png'),fullPage:false});
+  images.push('phone-source-viewport.png');
+  await snap('phone-source');
+  // Escape restores native focus before the queued close event runs the controller.
+  // Finish that event before starting a separate keyboard-navigation interaction.
+  await modal.evaluate(dialog=>{
+   dialog.addEventListener('close',()=>{dialog.dataset.keyboardCheckClosed='true';},{once:true});
+  });
+  await modal.press('Escape');
+  await page.waitForFunction(()=>document.querySelector('#modal').dataset.keyboardCheckClosed==='true');
+  assert.equal(await page.evaluate(()=>document.activeElement.dataset.action),'source');
+  await nav('inbox').focus();
+  await nav('inbox').press('ArrowRight');
+  assert.equal(await page.evaluate(()=>document.activeElement.dataset.view),'groups');
+ });
  await check('Concurrent saved state changes block writes and preserve current export',async()=>{await page.setViewportSize({width:1440,height:1000});await page.evaluate(()=>localStorage.setItem('ppo-notifications-r01','{"unsupported":"original bytes"}'));await action('read').click();assert((await page.locator('#recovery').innerText()).includes('Another tab'));await page.reload();assert.equal(await page.evaluate(()=>localStorage.getItem('ppo-notifications-r01')),'{"unsupported":"original bytes"}');await action('retry-storage').click();assert((await page.locator('#recovery').innerText()).includes('Original saved data'));await action('original').click();});
  assert.deepEqual(errors,[]);
 }catch(e){results.push({name:'Native browser failure',result:'Failed',message:e.stack});await snap('failure');process.exitCode=1;}
