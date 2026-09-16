@@ -39,6 +39,7 @@ These are the latest uploaded shared visual references. Their presence does not 
 | Customer portal | [Working preview](../../blueprints/customer-portal-mockup.html) | Direction authorised; detailed design proposed | CP1–CP5 remain staged delivery work. [Decision](../../decisions/customer-portal-direction.md), [handover](../../delivery/customer-portal-handover.md). |
 | Contextual Help / Page guide | [r01](../../blueprints/contextual-help-preview.html) | Proposed details under authorised design direction | CRM guide is the design pilot; application integration pending. [Decision and handover](../../decisions/contextual-help.md). |
 | Naming & Filing | [r01](../../blueprints/naming-filing-prototype/index.html) | Authorised design package; visual acceptance separate | General naming/filing assistance and SharePoint integration remain receiving work. [Decision](../../decisions/naming-communications-sharepoint.md), [preview instructions](../../blueprints/naming-filing-prototype/README.md). |
+| Quality, Safety & Site Assurance | [r01](quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html) · [Detailed report](quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-Report-r01.md) | Proposed CS-06 / FI-03–FI-06 workspace; owner acceptance separate | Source preparation, inspections, retained defects/retests, incident outcomes and scoped release. [Design and receiving handover](../../decisions/quality-site-assurance-design.md). |
 
 ## CRM and communications
 
