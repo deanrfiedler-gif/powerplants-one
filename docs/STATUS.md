@@ -12,6 +12,8 @@ This file is a snapshot of the current state, kept short enough to read in one s
 
 **Quality and Site Assurance HTML, 16 September 2026:** [Six-view workspace and detailed report](decisions/quality-site-assurance-design.md) demonstrate exact site preparation, inspection evidence, retained corrections/retests, incident review and scoped release with owned remaining work. Proposed design; owner acceptance and runtime integration remain separate. Actual verification is recorded in the linked handover.
 
+**Reference Cases & Calibration Proposals HTML, 17 September 2026:** [ES-10 five-view workspace and detailed report](decisions/reference-calibration-design.md) add reviewed reference-case navigation, explicit comparison eligibility, illustrative sample statistics, retained proposal/review revisions and an estimator reference panel. Northbank from open ES-09 PR #220 remains Draft / Partial and excluded; completed examples are authored synthetic fixtures. Rule adoption, ES-08 changes and application integration remain separate. [Actual verification](testing/evidence/reference-calibration-r01/README.md).
+
 ## 1. Stage in one paragraph
 
 Powerplants One is Dean's personal synthetic prototype of a seven-domain operations platform. The PP-01 planned-service journey code (P01–P12), including isolated recovery, is implemented and merged. P12 bounded delivery and PT-22 synthetic recovery are complete; full PT-28/PT-30 and independent owner/device acceptance remain separate, so **PP-01 is not complete**. [#165](https://github.com/deanrfiedler-gif/powerplants-one/issues/165) is closed for bounded delivery; [ADR-0024](decisions/ADR-0024-p12-isolated-recovery.md) retains the limits. Bounded slices of CRM, Estimating, Engineering, Projects and Email/Calendar are merged alongside it. The latest observed owner-triggered Azure update deployed `b8d33696`; signed-in synthetic saved-record and Draft rendering checks passed, while full owner acceptance remains separate. MYOB Acumatica, SharePoint, Pipedrive, Smartsheet and native CAD retain their operational roles; every external interface in the application is a simulated adapter. Company ownership, production approval and external write authority are not implied by anything below.
@@ -103,3 +105,4 @@ D-003 is resolved for this personal prototype (Powerplants One, PPO, independent
 | Which decisions exist? | [Decision control](decisions/README.md) |
 | How do I run and verify locally? | README and the [P11 handover](delivery/p11-handover.md) |
 | What happened before 11 September 2026? | [STATUS-log.md](STATUS-log.md) |
+
