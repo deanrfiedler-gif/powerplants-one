@@ -1,0 +1,113 @@
+{
+  "groups": 27,
+  "results": [
+    {
+      "name": "Four missing definition sets always block operational readiness",
+      "result": "Passed"
+    },
+    {
+      "name": "Only complete exact authored cases produce reference quantities",
+      "result": "Passed"
+    },
+    {
+      "name": "Blackout and Replacement have no inferred formula outputs",
+      "result": "Passed"
+    },
+    {
+      "name": "Required and conditional fields report actionable errors",
+      "result": "Passed"
+    },
+    {
+      "name": "Non-numeric, negative, non-finite and fractional counts are rejected",
+      "result": "Passed"
+    },
+    {
+      "name": "Blank cloth cost and explicit zero are distinct",
+      "result": "Passed"
+    },
+    {
+      "name": "Sell below a cost override blocks staging without inventing a margin policy",
+      "result": "Passed"
+    },
+    {
+      "name": "E1-style half-up extensions sum integer cents and preserve unknown sources",
+      "result": "Passed"
+    },
+    {
+      "name": "No-purchase labour and freight remain included in pricing totals",
+      "result": "Passed"
+    },
+    {
+      "name": "Quantity overrides require reason, fixed units and explicit supported outputs",
+      "result": "Passed"
+    },
+    {
+      "name": "Source-version changes retain overrides and require new review",
+      "result": "Passed"
+    },
+    {
+      "name": "Read-only, locked, removed-scope and stale sessions cannot stage",
+      "result": "Passed"
+    },
+    {
+      "name": "Stale preview and missing acknowledgement prevent any commit",
+      "result": "Passed"
+    },
+    {
+      "name": "Initial compound staging retains answers, baseline and exact source identities",
+      "result": "Passed"
+    },
+    {
+      "name": "Manual edit keeps immutable run snapshot and generated baseline",
+      "result": "Passed"
+    },
+    {
+      "name": "Rerun requires explicit decisions for manual edits and removed parts",
+      "result": "Passed"
+    },
+    {
+      "name": "Cancel or unresolved diff never mutates the staged configuration",
+      "result": "Passed"
+    },
+    {
+      "name": "Explicit removal and new generated values apply to the same configuration",
+      "result": "Passed"
+    },
+    {
+      "name": "Ambiguous stable keys block reconciliation",
+      "result": "Passed"
+    },
+    {
+      "name": "Failed save preserves answers, decisions and original line state",
+      "result": "Passed"
+    },
+    {
+      "name": "Lost reply recovery rechecks current authority and never generates twice",
+      "result": "Passed"
+    },
+    {
+      "name": "Stale totals repair retains lines, run count and original receipt",
+      "result": "Passed"
+    },
+    {
+      "name": "Draft reset preserves staged history, manual edits and issued fixture",
+      "result": "Passed"
+    },
+    {
+      "name": "Price-source change and rerun preserve issued snapshot exactly",
+      "result": "Passed"
+    },
+    {
+      "name": "Export restore validates context, range, override unit, duplicate identities and malformed data",
+      "result": "Passed"
+    },
+    {
+      "name": "A retained manual part that reappears requires a new explicit decision",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore rejects changed part units and forged saved totals",
+      "result": "Passed"
+    }
+  ]
+}

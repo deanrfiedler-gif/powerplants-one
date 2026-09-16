@@ -1,0 +1,159 @@
+{
+  "source": "3acbf202f96be1bbc4f823ab1db9955c3e974e23",
+  "html_sha256": "83679a1229c69b77939c0584fff1f6ecbeaac3cc77bf6a0e8ba722ffc91945e4",
+  "browser": "153.0.8010.47",
+  "groups": 23,
+  "results": [
+    {
+      "name": "Five views, fixed facility and missing approval boundary render",
+      "result": "Passed"
+    },
+    {
+      "name": "Field validation and step gating retain invalid answers",
+      "result": "Passed"
+    },
+    {
+      "name": "Blank cost and explicit zero retain independent meanings",
+      "result": "Passed"
+    },
+    {
+      "name": "Arbitrary geometry suppresses output instead of extrapolating",
+      "result": "Passed"
+    },
+    {
+      "name": "Computed working drawer identifies absent formula and enforces override reason",
+      "result": "Passed"
+    },
+    {
+      "name": "New reference version retains override until explicit review",
+      "result": "Passed"
+    },
+    {
+      "name": "Grouped parts show priced no-purchase rows and source versions",
+      "result": "Passed"
+    },
+    {
+      "name": "First reference staging requires explicit synthetic acknowledgement",
+      "result": "Passed"
+    },
+    {
+      "name": "Manual part edits preserve the original generated run",
+      "result": "Passed"
+    },
+    {
+      "name": "Rerun cancellation and unresolved edits keep staged lines unchanged",
+      "result": "Passed"
+    },
+    {
+      "name": "Explicit manual and unmatched decisions revise the same configuration",
+      "result": "Passed"
+    },
+    {
+      "name": "Run drawer exposes retained complete source and input evidence",
+      "result": "Passed"
+    },
+    {
+      "name": "Definition catalogue keeps other families unavailable",
+      "result": "Passed"
+    },
+    {
+      "name": "Read-only and locked estimate states block writes with reasons",
+      "result": "Passed"
+    },
+    {
+      "name": "Failed write leaves the exact confirmation and answers available for retry",
+      "result": "Passed"
+    },
+    {
+      "name": "Lost-response recovery finds the original receipt without duplicate lines",
+      "result": "Passed"
+    },
+    {
+      "name": "Committed lines survive failed totals and repair without regeneration",
+      "result": "Passed"
+    },
+    {
+      "name": "Local reload preserves exact saved inputs, runs and manual evidence",
+      "result": "Passed"
+    },
+    {
+      "name": "Five views fit desktop, tablet and phone without clipped navigation",
+      "result": "Passed"
+    },
+    {
+      "name": "Keyboard, modal cancellation and focus return preserve unsaved input",
+      "result": "Passed"
+    },
+    {
+      "name": "JSON export restores the exact session in read-only review mode",
+      "result": "Passed"
+    },
+    {
+      "name": "Cross-tab changes pause edits while preserving the current draft",
+      "result": "Passed"
+    },
+    {
+      "name": "Malformed local data remains preserved for recovery",
+      "result": "Passed"
+    }
+  ],
+  "errors": [],
+  "images": [
+    {
+      "name": "1440-configure.png",
+      "sha256": "fa37743d7efab51e73e9783748a475f171c773ef61b1def3d517dd1a5eb04d02"
+    },
+    {
+      "name": "1440-overrides.png",
+      "sha256": "12f52d09a2b70d0691056bcfa075685fbccf5d72c10c68890a4db370f0532259"
+    },
+    {
+      "name": "1440-parts.png",
+      "sha256": "6ef500bcf4badc0e8c8b0a6ee914c6af93000649fe065ba3cbf1df087a522b0b"
+    },
+    {
+      "name": "1440-rerun-decisions.png",
+      "sha256": "4b2b1ec2b81ca2ddef28cf91d86d2bcd3c08aa8feffa610cc83390387784d419"
+    },
+    {
+      "name": "1440-runs.png",
+      "sha256": "246a2338a5ad1d0f45513111892fd799a4eb0b2f7199ce526bff9cd19d6c779c"
+    },
+    {
+      "name": "1440-run-snapshot.png",
+      "sha256": "7877246942c77908bb28be6097a431032e3acb60407c3e32540d4e53a13f20d5"
+    },
+    {
+      "name": "1440-evidence.png",
+      "sha256": "7073971951969ed3697f4fa549b74d9a084e845ef9187c3b5a96cbdc4d5bb878"
+    },
+    {
+      "name": "1440-stale-totals.png",
+      "sha256": "f5da093b3e163b60b125d50a847517018e643cb7b5a039d0b2b4a681b240be5c"
+    },
+    {
+      "name": "390-configure.png",
+      "sha256": "497e21579b986fad2984ff39642bbc13902d860d4e270473c5f6a7dc7add133c"
+    },
+    {
+      "name": "390-parts.png",
+      "sha256": "c9d573cd9a12c125af59d48912deb141a79c7bd524f2d28e7640d297665ae0fc"
+    },
+    {
+      "name": "390-rerun.png",
+      "sha256": "a8c147cb2c70e23495266165a068c0df431e7ed7ff1b733e910636683e4fcdc1"
+    },
+    {
+      "name": "390-evidence.png",
+      "sha256": "eed27628fc0b739c0501c55399ee59de4d95542d68c4b55cd3e988fbe0688d66"
+    },
+    {
+      "name": "390-runs.png",
+      "sha256": "465ebb89197b867fe742b374a547065b9efbdaa55f19e9aa924ee0b283b1c895"
+    },
+    {
+      "name": "320-configure.png",
+      "sha256": "e29cf2f241848eda6ee8f4ee4be2a4ff9460969c8f991eede071a199e729a1e3"
+    }
+  ]
+}
