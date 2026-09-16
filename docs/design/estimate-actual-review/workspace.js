@@ -57,7 +57,6 @@
   const btn = (label, action, data, classes, disabled) => `<button type="button" data-action="${action}" ${data || ''} class="${classes || ''}" ${disabled ? 'disabled' : ''}>${label}</button>`;
   const facts = rows => `<dl class="facts">${rows.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${v}</dd>`).join('')}</dl>`;
   const note = (title, body, type) => `<div class="note ${type || ''}"><strong>${esc(title)}</strong><div>${body}</div></div>`;
-  const owner = name => `<div class="owner"><span class="avatar" aria-hidden="true">${esc(String(name).split(' ').map(x => x[0]).join(''))}</span><span>${esc(name)}</span></div>`;
   const heading = (title, subtitle, actions) => `<div class="page-heading"><div><h2>${title}</h2><p>${subtitle}</p></div><div class="row">${actions || ''}</div></div>`;
   const card = (title, body, footer, sub) => `<section class="card"><div class="card-head"><div><h2>${title}</h2>${sub ? `<p>${sub}</p>` : ''}</div></div>${body}${footer ? `<div class="card-foot">${footer}</div>` : ''}</section>`;
   const empty = (title, body, action) => `<div class="empty"><h2>${esc(title)}</h2><p>${esc(body)}</p>${action || ''}</div>`;

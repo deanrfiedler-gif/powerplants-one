@@ -83,3 +83,9 @@ The repository's pinned Chrome channel was **not available** in the authoring en
 ## 8. What no result here establishes
 
 No result establishes an adopted accounting definition, materiality threshold, allocation basis or variance reason registry; an approved formula or a change to one; a commercial lineage that does not exist in the schema; application behaviour; or business acceptance. Code delivery, component checks, executed acceptance and business approval remain four separate claims.
+
+## PR repair — 16 September 2026
+
+The complete package in #220 supersedes the abandoned partial upload #218. The source guide, template and builder are byte-identical between them; the complete decision adds a clarification that actuals without estimated basis are reported separately. No unique completed implementation is lost by closing #218.
+
+Repository CI found an unused `owner` renderer in the controller. Removed that unused binding and rebuilt the working draft. The resulting HTML is SHA-256 `a6a235b9290715651aee516f07218a89ef421ab1d94743f248d6c1970f39e913`. Full repository lint, 39 model groups, deterministic build and foundation/prototype/naming assurance pass. The focused workflow now includes ESLint so that a standalone browser pass cannot conceal a lint failure. Historical screenshots/results above retain their original source hash; the new CI run verifies the repaired draft. No layout, calculation, role, source or operational rule changes are introduced.

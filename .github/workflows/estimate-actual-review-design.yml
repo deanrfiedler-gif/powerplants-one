@@ -33,6 +33,7 @@ jobs:
           mkdir -p verification-evidence/estimate-actual-review
           python3 scripts/build-estimate-actual-review.py
           git diff --exit-code -- docs/reference/ui/estimate-actual-review/PPO-Estimate-to-Actual-Outcome-Review-r01.html
+          npx eslint docs/design/estimate-actual-review/*.js scripts/check-estimate-actual-review-*.mjs
           node scripts/check-estimate-actual-review-model.mjs > verification-evidence/estimate-actual-review/model-results.json
           node scripts/check-estimate-actual-review-browser.mjs
       - name: Retain original evidence
