@@ -152,7 +152,7 @@
     const el=event.target;
     if(el.dataset.pref||el.dataset.prefChannel){if(el.dataset.prefChannel)draft.channels[el.dataset.prefChannel]=el.value;else draft[el.dataset.pref]=el.type==='checkbox'?el.checked:el.value;updatePrefs();return;}
     if(el.id==='preview-clock'){clock=el.value||'19:30';updatePrefs();return;}
-    if(el.dataset.select){el.checked?checked.add(el.dataset.select):checked.delete(el.dataset.select);renderResults();$(`[data-select="${el.dataset.select}"]`)?.focus({preventScroll:true});return;}
+    if(el.dataset.select){if(el.checked)checked.add(el.dataset.select);else checked.delete(el.dataset.select);renderResults();$(`[data-select="${el.dataset.select}"]`)?.focus({preventScroll:true});return;}
     if(el.id==='select-all'){checked=new Set(el.checked?filtered().map(e=>e.id):[]);renderResults();$('#select-all')?.focus({preventScroll:true});return;}
     const map={'module-filter':'module','read-filter':'read','archive-filter':'archive'};if(map[el.id]){filters[map[el.id]]=el.value;checked.clear();renderResults();renderSnapshot();}
   });
