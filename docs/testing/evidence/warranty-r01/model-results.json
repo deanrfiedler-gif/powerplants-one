@@ -1,0 +1,106 @@
+{
+  "suite": "Warranty & Customer Resolution design model",
+  "groups": 25,
+  "results": [
+    {
+      "name": "Seed distinguishes missing identity, uncertain coverage and rejected recovery",
+      "result": "Passed"
+    },
+    {
+      "name": "Unreviewed evidence and unsupported coverage do not authorise a remedy",
+      "result": "Passed"
+    },
+    {
+      "name": "Recovered evidence preserves original sources and invalidates their current decisions",
+      "result": "Passed"
+    },
+    {
+      "name": "An in-period date does not establish covered causation",
+      "result": "Passed"
+    },
+    {
+      "name": "Goodwill and work authority are independent roles and exact decisions",
+      "result": "Passed"
+    },
+    {
+      "name": "A successor plan retains earlier authority but cannot inherit it",
+      "result": "Passed"
+    },
+    {
+      "name": "Owned receiving request retains exact bytes and cannot duplicate or book work",
+      "result": "Passed"
+    },
+    {
+      "name": "Replacement preserves original asset, independent dates and original maintenance obligation",
+      "result": "Passed"
+    },
+    {
+      "name": "Maintenance review records ownership without moving the original obligation",
+      "result": "Passed"
+    },
+    {
+      "name": "Supplier claim retains one exact package without approval or credit",
+      "result": "Passed"
+    },
+    {
+      "name": "Customer update preserves exact safe content and requires exact acknowledgement",
+      "result": "Passed"
+    },
+    {
+      "name": "Reservations create owned work and prevent customer closure until resolved",
+      "result": "Passed"
+    },
+    {
+      "name": "A later reservation reopens customer review without erasing prior closure",
+      "result": "Passed"
+    },
+    {
+      "name": "New customer content requires a new exact response and closure",
+      "result": "Passed"
+    },
+    {
+      "name": "Physical return requires ordered evidence and never implies recovery",
+      "result": "Passed"
+    },
+    {
+      "name": "Supplier partial approval does not settle the customer or credit balance",
+      "result": "Passed"
+    },
+    {
+      "name": "Finance matches unique credits within exact approved amount",
+      "result": "Passed"
+    },
+    {
+      "name": "Finance can retain the unresolved portion as unrecovered without inventing cash",
+      "result": "Passed"
+    },
+    {
+      "name": "Denied and read-only roles cannot mutate records",
+      "result": "Passed"
+    },
+    {
+      "name": "Original operation recovery is duplicate-safe and rejects another payload or role",
+      "result": "Passed"
+    },
+    {
+      "name": "Stale forms cannot replace a later accepted change",
+      "result": "Passed"
+    },
+    {
+      "name": "New evidence invalidates current authority without rewriting historical service or claims",
+      "result": "Passed"
+    },
+    {
+      "name": "Malformed local data and unsafe money/date inputs are rejected",
+      "result": "Passed"
+    },
+    {
+      "name": "Missing equipment identity cannot gain work authority through goodwill",
+      "result": "Passed"
+    },
+    {
+      "name": "Embedded completion refuses a changed receiving scope",
+      "result": "Passed"
+    }
+  ]
+}
