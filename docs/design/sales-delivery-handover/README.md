@@ -6,7 +6,7 @@ This is the reproducible source of the [standalone r01 workspace](../../referenc
 |---|---|
 | `model.js` | Synthetic sources, proposed state model, submission/return/acceptance guards, source-fingerprint binding, revision comparison, obligations, original-operation recovery and session validation |
 | `workspace.js` | Six-view renderer, saved views, filters, snapshots, decision forms, comparison, local persistence and recovery banners |
-| `workspace.css` | Scoped r20 palette, layout, registers, forms, comparison, responsibility chain and responsive rules |
+| `additions.css` | This module's additions to the inherited workspace styles: responsibility chain, allocation and totals, requirement outcomes, revision comparison and their responsive rules |
 | `template.html` | Self-contained document assembly template; workspace interior only, with no competing application masthead |
 
 Run from the repository root:
@@ -22,7 +22,10 @@ git --no-pager grep -n -E "^(<<<<<<<|=======$|>>>>>>>)" -- docs
 git diff --check
 ```
 
-The embedded r20 Roboto faces are **not duplicated here**. The build reads them from `docs/design/quality-site-assurance/fonts.css`, SHA-256 `57b4aafb71296b18d80408cb10aa972c87f5185deafd748c7fdcfb33e2bd4bef`, and asserts that hash, so an upstream change is a reviewed decision rather than a silent difference in this output.
+Two shared assets are **inherited rather than duplicated**, and both are hash-pinned so an upstream change is a reviewed decision rather than a silent difference in this output:
+
+- the embedded r20 Roboto faces, read from `docs/design/quality-site-assurance/fonts.css`, SHA-256 `57b4aafb71296b18d80408cb10aa972c87f5185deafd748c7fdcfb33e2bd4bef`;
+- the shared workspace styles, read from `docs/design/quality-site-assurance/workspace.css`, SHA-256 `e50a0974bb7e60701aa7be30717229319adc57bde7693076bdf0d72f7ae12d8d`, re-scoped from `#ppo-assurance` to `#ppo-handover` and then extended by `additions.css`.
 
 The build also asserts that the retained customer quotation r03 (`docs/reference/ui/quoting/ppo-quotation-module-r03.html`, SHA-256 `7ee657ef0f78d905486e9227a0821d88f86beddc9e13b872202b4095e2b6fe9a`) is unchanged, because the accepted commercial basis reproduces its declared lines, selection defaults and amounts. Do not remove that guard: if the upstream issue changes, the accepted basis needs a reviewed successor mapping, not a silent rebuild.
 
