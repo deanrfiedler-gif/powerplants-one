@@ -142,7 +142,7 @@ Every check can be marked Not performed with a required reason. That records fac
 
 Measured values are separate from their calculated assessment. Instrument records include reference, revision, calibration evidence, valid-until date and supported unit. Missing instruments, expired calibration, incompatible units or missing criteria produce Unavailable.
 
-The fixture includes current pressure and conductivity instruments and an expired pressure instrument. The general tools checklist does not establish calibration. A measured observation with unavailable assessment requires a reason before submission, creates an incomplete-check defect and cannot support acceptance or release.
+The fixture includes current pressure, conductivity and travel-time instruments and an expired pressure instrument. The general tools checklist does not establish calibration. A measured observation with unavailable assessment requires a reason before submission, creates an incomplete-check defect and cannot support acceptance or release.
 
 Units must match the procedure; no automatic conversion occurs. Missing or non-finite readings are refused unless the check is explicitly Not performed with its reason.
 
@@ -282,7 +282,7 @@ For the independent hold scenario, select Greenhaven and inspect its passing sub
 | Response lost after save | Recovers the original operation/receipt without a duplicate effect |
 | Operation identity reused with different content | Refuses the operation |
 | Stale form version | Refuses save and retains the entered form |
-| Another tab changes the session | Reloads when idle; otherwise blocks saving and retains local work for export/reload |
+| Another tab changes the session | Reloads when idle; otherwise blocks saving, retains the screen and asks the user to copy unsaved entries and export saved records before reloading |
 | Storage failure/quota | Retains in-memory state and reports Session only |
 | Export | Downloads JSON with current records and navigation context |
 | Restore | Validates structure and saved image decoding; confirms replacement and opens read-only |
@@ -290,7 +290,7 @@ For the independent hold scenario, select Greenhaven and inspect its passing sub
 | Reset | Restores the three fixtures after explicit confirmation |
 | Unsaved inspection edits | Requires a choice before navigation or package change |
 
-The storage key is `ppo-quality-site-assurance-r01`; other module sessions are independent. JSON export is not a durable server receipt or offline synchronisation queue. Local state is neither encrypted nor tamper-proof. Runtime persistence, access, concurrency and recovery require existing application services and full journey verification.
+The storage key is `ppo-quality-site-assurance-r01`; other module sessions are independent. JSON export contains saved records; unsaved form entries must be copied separately. JSON export is not a durable server receipt or offline synchronisation queue. Local state is neither encrypted nor tamper-proof. Runtime persistence, access, concurrency and recovery require existing application services and full journey verification.
 
 ## 14. Visual, responsive and accessibility design
 

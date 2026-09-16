@@ -24,6 +24,7 @@
   const instruments = [
     {id: 'SYN-PPO-INS-000009', title: 'Pressure instrument', revision: 2, calibration: 'SYN-CAL-009-r02', validUntil: '2026-12-31', units: ['bar'], source: 'Fictional instrument evidence'},
     {id: 'SYN-PPO-INS-000010', title: 'Conductivity instrument', revision: 1, calibration: 'SYN-CAL-010-r01', validUntil: '2026-12-31', units: ['mS/cm'], source: 'Fictional instrument evidence'},
+    {id: 'SYN-PPO-INS-000011', title: 'Travel-time instrument', revision: 1, calibration: 'SYN-TIMER-011-r01', validUntil: '2026-12-31', units: ['s'], source: 'Fictional instrument evidence'},
     {id: 'SYN-PPO-INS-000008', title: 'Pressure instrument · expired', revision: 1, calibration: 'SYN-CAL-008-r01', validUntil: '2026-08-31', units: ['bar'], source: 'Expired fictional evidence'}
   ];
   function blankDraft(p, predecessor = null) {
