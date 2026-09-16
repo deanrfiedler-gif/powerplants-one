@@ -301,7 +301,10 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
   function heading(title,subtitle,action=''){return '<div class="page-heading"><div><h2>'+title+'</h2><p>'+subtitle+'</p></div>'+action+'</div>';}
   function card(title,body,subtitle='',action=''){return '<section class="card"><div class="card-head"><div><h2>'+title+'</h2>'+(subtitle?'<p>'+subtitle+'</p>':'')+'</div>'+action+'</div>'+body+'</section>';}
   function facts(values){return '<dl class="facts">'+values.map(([k,v])=>'<dt>'+k+'</dt><dd>'+v+'</dd>').join('')+'</dl>';}
-  function binding(p){return '<div class="inline-status"><p><b>Approved calculation unavailable.</b> Formulae, approved ranges, parts mappings and accepted examples are not supplied. '+(p.caseId?'Showing authored reference case '+p.caseId+'; these are fixed demonstration results.':'Changed answers have no matching reference result.')+'</p>'+btn('evidence','Review evidence gaps','','small-button')+'</div>';}
+  function binding(p){
+    const diagnostics=[...Object.entries(p.errors).map(([key,message])=>(M.fields.find(f=>f.key===key)?.label||key)+': '+message),...p.warnings];
+    return '<div class="inline-status"><p><b>Approved calculation unavailable.</b> Formulae, approved ranges, parts mappings and accepted examples are not supplied. '+(p.caseId?'Showing authored reference case '+p.caseId+'; these are fixed demonstration results.':'Changed answers have no matching reference result.')+(diagnostics.length?'<br><b>Review needed:</b> '+diagnostics.map(esc).join(' · '):'')+'</p>'+btn('evidence','Review evidence gaps','','small-button')+'</div>';
+  }
   function render(){
     $('#role-label').textContent=ui.role==='estimator'?'Synthetic estimator':'Read-only reviewer';
     $('#tabs').innerHTML=views.map(([id,label])=>'<button type="button" data-view="'+id+'" aria-current="'+(ui.view===id?'page':'false')+'">'+label+'</button>').join('');
@@ -448,7 +451,7 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
   });
   document.addEventListener('input',event=>{
     const f=event.target.dataset.field;if(!f)return;
-    try{M.writable(s,gate());s.inputs[f]=event.target.value;s.rev++;ui.resolutions={};queueSave();const side=$('.result-side');if(side)side.innerHTML=resultsSide(M.preview(s));}catch(error){feedback(error);}
+    try{M.writable(s,gate());s.inputs[f]=event.target.value;s.rev++;ui.resolutions={};queueSave();const p=M.preview(s),side=$('.result-side'),status=$('.inline-status');if(side)side.innerHTML=resultsSide(p);if(status)status.outerHTML=binding(p);}catch(error){feedback(error);}
   });
   document.addEventListener('change',event=>{
     if(event.target.dataset.field){const f=event.target.dataset.field;try{M.writable(s,gate());s.inputs[f]=event.target.value;ui.resolutions={};s.rev++;queueSave();if(event.target.tagName==='SELECT')render();}catch(error){feedback(error);}return;}

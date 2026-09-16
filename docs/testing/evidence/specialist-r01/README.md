@@ -26,3 +26,7 @@ Additional model checks cover a previously retained manual key returning in a la
 Run [35047412498](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35047412498), source 4b483357090b531fd0c2d9943fce02123a7386e2, HTML SHA-256 c9e20e408db944a32bb9018bfa5d18f703061226e67e42c335506d59cb19e87a, passed 13 native groups through input validation, overrides, staging, manual/unmatched rerun, immutable snapshots and the definition catalogue. Preview role selection then exposed a compound accessible label containing option text. Explicit accessible names now identify the preview selectors and all main fields; the original interaction check remains. Original results are in second-results.json.
 
 The E1 and Email Calendar workflows also rejected two unused catch parameters in the new workspace source at their shared lint gate. Both unused parameters were removed; focused ESLint now passes and is included in the specialist workflow. No application-domain code was changed.
+
+## Live source-status refinement
+
+Text-input edits now update the calculation-status strip as well as the computed preview, without replacing form buttons. Current validation errors and override-version reviews are displayed with the source boundary. The arbitrary-input native check now also verifies that the visible strip reports no matching reference result immediately after the answer change. This closes the stale-label risk introduced when preserving the form click target.
