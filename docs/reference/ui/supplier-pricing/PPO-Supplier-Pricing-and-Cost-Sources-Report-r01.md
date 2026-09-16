@@ -34,7 +34,7 @@ Dean authorised this build after the five-view recommendation, including a profe
 | [Shared UI specification](../../../standards/ui-style-specification.md) | Source/evidence distinctions, keyboard feedback, responsive layout, readable monetary values and preservation of domain controls. |
 | [Naming standard](../../../standards/naming-conventions.md) | Local synthetic references remain distinct from governed record types, external IDs and production identity. |
 
-Main was inspected at `d565a9de01b94aa7ad3fffe3a996f78c3aee589b`. Existing parent requirement IDs are preserved. Principal estimating links are EST-04 cost provenance, EST-05 price/precision/refresh and EST-07 distinct approval authority. Product source evidence also supports the PD family links to SCM-02, ENG-05 and DOC-04 without claiming their acceptance.
+Main was inspected at `d565a9de01b94aa7ad3fffe3a996f78c3aee589b` and the contribution was subsequently reconciled onto `e1b705acc5457dab6fc0b6a2f0c977132cbd2215`, preserving the newly merged modules. Existing parent requirement IDs are preserved. Principal estimating links are EST-04 cost provenance, EST-05 price/precision/refresh and EST-07 distinct approval authority. Product source evidence also supports the PD family links to SCM-02, ENG-05 and DOC-04 without claiming their acceptance.
 
 `PD-03` and `ES-03` here are coverage-register page identifiers. They must not be confused with parent requirement numbers or older screen-specification numbering. The design does not redefine either register.
 
@@ -200,6 +200,8 @@ The implementation reuses the r20-aligned presentation primitives and embedded R
 | Guided forms | Labelled inputs, fixed identity context, preserved errors, explicit submit/save/cancel actions. |
 | Mobile presentation | Stacked cost cards, wrapping metadata, full-width snapshot and touch-sized controls. |
 
+Verified visual examples: [desktop price comparison](../../../testing/evidence/supplier-pricing-r01/desktop-price-comparison.png) and [phone refresh impact](../../../testing/evidence/supplier-pricing-r01/phone-refresh-impact.png). These are original browser captures of the starting synthetic state.
+
 The module does not introduce a new global navigation system or redraw the Powerplants logo. Standard native selects are retained for the small fixed role/status/source choices; the r20 custom dropdown-card interaction is not reproduced. This deliberate implementation simplification preserves platform keyboard behaviour and is not an accepted change to the app-wide component standard.
 
 Semantic headings, visible focus outlines, labelled fields, live status messages, tab semantics and native dialogs support keyboard use. Text accompanies all coloured states. Screen-reader review, forced-colour assessment, 200% zoom, physical-device testing and owner design acceptance remain separate from the executed browser checks. Browser printing is incidental review output, not a controlled supplier or customer document service.
@@ -248,7 +250,11 @@ The local model suite contains **26 checks** covering exact totals, quantity tie
 
 The dedicated browser suite exercises the generated HTML with the repository's pinned native Chrome runtime. It covers the complete source-review/refresh journey, draft editing, cancellation, input escaping, failed-save retry, persisted history, role restrictions, keyboard navigation, export, cross-tab conflict, corrupt-state recovery and responsive presentation at 1440, 1024, 820, 390 and 320 px.
 
-Executed CI outcomes, source hashes, screenshots and review limitations are maintained in the [verification record](../../../testing/evidence/supplier-pricing-r01/README.md). A test definition is not a passed test. Browser and full-repository results are only claimed there after the relevant run has completed and evidence has been inspected.
+**Executed verification:** final HTML source `71d486f39d11fb7420b2e6885e1c15b055f33bed` passed 26 model groups and all 20 native-browser groups in [run 35163851488](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35163851488), using Chrome 153.0.8010.47. No page or console errors were reported. Focused lint, deterministic assembly, foundation, prototype and naming checks also passed. All 29 returned screenshots and the delivered HTML were checked against their hashes. Desktop and phone captures were inspected during verification.
+
+The first native run identified a form-ID shadowing bug in review submission. The corrected run completed the workflow and responsive gallery, then identified a phone snapshot focus-cycle issue. Both defects were corrected and the full final suite passed. Original run history, source hashes, captures and remaining acceptance limits are recorded in the [verification record](../../../testing/evidence/supplier-pricing-r01/README.md).
+
+Browser execution and complete-repository assurance ran in GitHub CI; no local native-browser or full-repository pass is claimed. Later report/evidence-only publication leaves the verified HTML unchanged.
 
 ## 19. Explicit exclusions and open decisions
 

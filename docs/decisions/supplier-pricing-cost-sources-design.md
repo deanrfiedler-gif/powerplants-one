@@ -47,3 +47,7 @@ Owner visual acceptance, screen-reader/device review, full operational acceptanc
 ## Main-branch reconciliation
 
 Main advanced during verification to `e1b705acc5457dab6fc0b6a2f0c977132cbd2215` through PR #214. The shared HTML index, STATUS and document register were reconciled from that exact main, preserving all incoming module entries and adding only this contribution. The merge uses current main as its base tree and retains both commit histories. Module HTML/source remains the focus-corrected version; no unrelated main files are replaced.
+
+## Verified contribution
+
+[Draft PR #222](https://github.com/deanrfiedler-gif/powerplants-one/pull/222) contains the completed package. Final source `71d486f39d11fb7420b2e6885e1c15b055f33bed` passed all 26 model and 20 native-browser groups with zero page/console errors, focused lint, deterministic assembly and all three documentation checks in [run 35163851488](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35163851488). Initial form routing and phone focus defects were corrected and reverified. Original manifests, two screenshots, hashes and visual-review scope are preserved in the verification record. Owner design acceptance, merge and deployment are not inferred. Evidence/report-only commits preserve the verified HTML hash.
