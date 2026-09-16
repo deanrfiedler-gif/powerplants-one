@@ -30,10 +30,13 @@ These are the latest uploaded shared visual references. Their presence does not 
 
 ## Shared customer and platform pages
 
+**16 September addition:** SH-03 below is a new proposed design on this contribution. The 15 September inventory counts above remain the historical audited snapshot and exclude this new HTML and its generator template.
+
 
 | Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
 |---|---|---|---|
 | Customers, Sites & Growing Areas | [r01](customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r01.html), [r02](customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r02.html) | Preserved for comparison with the r03 proposal. |
+| Notification inbox and preferences | [r01](notifications/PPO-Notification-Inbox-and-Preferences-r01.html) | Proposed SH-03 design; owner acceptance and application integration separate | Inbox, grouped changes, owned escalations and delivery preferences. [Detailed report](notifications/PPO-Notification-Inbox-and-Preferences-Report-r01.md) · [Handover](../../decisions/notification-inbox-preferences-design.md). |
 | Site Survey & As-Found | [r01](customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html) | Proposed CS-08 workspace | [Design and receiving handover](../../decisions/site-survey-workspace-design.md). |
 | Equipment & Installed Base | [r01](equipment/PPO-Equipment-and-Installed-Base-Workspace-r01.html) | Preserved for comparison with the r02 proposal. |
 | Customer portal | [Working preview](../../blueprints/customer-portal-mockup.html) | Direction authorised; detailed design proposed | CP1–CP5 remain staged delivery work. [Decision](../../decisions/customer-portal-direction.md), [handover](../../delivery/customer-portal-handover.md). |
