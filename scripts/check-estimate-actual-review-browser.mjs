@@ -413,7 +413,13 @@ try {
     await nav('register').press('ArrowRight');
     assert.equal(await page.evaluate(() => document.activeElement.dataset.view), 'basis');
     await page.getByRole('button', {name: 'Page guide', exact: true}).click();
+    // Native focus restoration precedes the queued close handler. Let the handler
+    // finish before starting the separate skip-link interaction.
+    await modal().evaluate(dialog => {
+      dialog.addEventListener('close', () => { dialog.dataset.keyboardCheckClosed = 'true'; }, {once: true});
+    });
     await modal().press('Escape');
+    await page.waitForFunction(() => document.querySelector('#modal').dataset.keyboardCheckClosed === 'true');
     assert.equal(await page.evaluate(() => document.activeElement.dataset.action), 'guide');
     await page.locator('.skip').focus();
     await page.locator('.skip').press('Enter');
