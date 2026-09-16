@@ -1,8 +1,8 @@
 {
   "design": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
-  "sha256": "d2b21bacfa4b709fcb9e52292b94def8b934414be9e246e4f3167490b9ba8431",
+  "sha256": "ce8b117f5b62615389111c59e479f606c8c50b7b3c218cde5e5d86cd14edeab8",
   "engine": "Chromium via Playwright, headless, locale en-AU, timezone Australia/Melbourne",
-  "checked_at": "2026-09-16T11:18:49.490Z",
+  "checked_at": "2026-09-16T11:42:08.190Z",
   "viewports": [
     {
       "viewport": "desktop",

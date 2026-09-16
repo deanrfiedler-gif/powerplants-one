@@ -68,10 +68,10 @@ const availableViews=()=>VIEWS.filter(v=>{
 function readStorage(){
  let raw=null;
  try{raw=window.localStorage.getItem(STORAGE_KEY);}
- catch(error){state.storage='session-only';return;}
+ catch{state.storage='session-only';return;}
  if(raw===null){state.storage='ok';return;}
  let parsed=null;
- try{parsed=JSON.parse(raw);}catch(error){state.storage='invalid';return;}
+ try{parsed=JSON.parse(raw);}catch{state.storage='invalid';return;}
  if(!parsed||typeof parsed!=='object'||parsed.version!==STORAGE_VERSION||typeof parsed.notes!=='object'||parsed.notes===null){
   state.storage='invalid';return;
  }
@@ -89,7 +89,7 @@ function writeStorage(){
   window.localStorage.setItem(STORAGE_KEY,JSON.stringify({version:STORAGE_VERSION,notes:state.notes}));
   state.storage='ok';
   return {saved:true};
- }catch(error){
+ }catch{
   state.storage='session-only';
   return {saved:false,reason:'storage'};
  }
@@ -170,6 +170,14 @@ function matchesLocation(kind,id){
 function unassignedFor(kind,id){
  if(!state.filters.site) return false;
  return siteOf(kind,id)===null;
+}
+/* A site filter can only apply where a site relationship exists. Records that hold no
+   such relationship are excluded by it, and that exclusion is stated rather than silent. */
+function unassignedNote(kind,records){
+ if(!state.filters.site) return '';
+ const count=records.filter(record=>unassignedFor(kind,record.id)).length;
+ if(!count) return '';
+ return `${count} record(s) hold no site relationship and are excluded by the site filter rather than assumed into it.`;
 }
 function matchesDate(iso){
  const {from,to}=state.filters;
@@ -709,7 +717,7 @@ function renderOrders(){
   ${toolbar('Search orders, customer PO references and line descriptions')}
   ${filterBar('orders')}
   ${chipBar()}
-  ${resultsBar(shown.length,all.length,'Counts cover mapped accounts only.')}
+  ${resultsBar(shown.length,all.length,['Counts cover mapped accounts only.',unassignedNote('order',all)].filter(Boolean).join(' '))}
   ${shown.length?`
    <div class="register-wrap">
     <table class="register">
@@ -799,7 +807,7 @@ function renderDeals(){
   ${toolbar('Search opportunities, quotations and responses')}
   ${filterBar('deals')}
   ${chipBar()}
-  ${resultsBar(quotes.length,allQuotes.length,'Quotation revisions of one quotation are listed separately but counted once as a commitment.')}
+  ${resultsBar(quotes.length,allQuotes.length,['Quotation revisions of one quotation are listed separately but counted once as a commitment.',unassignedNote('quotation',allQuotes)].filter(Boolean).join(' '))}
   ${quotes.length?`
   <div class="register-wrap">
    <table class="register">
@@ -887,7 +895,7 @@ function renderCases(){
   ${toolbar('Search cases, symptoms, findings and owners')}
   ${filterBar('cases')}
   ${chipBar()}
-  ${resultsBar(shown.length,allCases.length)}
+  ${resultsBar(shown.length,allCases.length,unassignedNote('case',allCases))}
   ${shown.length?shown.map(item=>renderCaseCard(item)).join(''):emptyState('No cases match this scope','Adjust or clear the filters to widen the result.')}
  </div>
 
@@ -983,7 +991,7 @@ function renderProjects(){
   ${toolbar('Search projects, milestones and owners')}
   ${filterBar('projects')}
   ${chipBar()}
-  ${resultsBar(shown.length,all.length)}
+  ${resultsBar(shown.length,all.length,unassignedNote('project',all))}
   ${shown.length?shown.map(project=>`<div style="padding:20px;border-bottom:1px solid var(--line-soft)">
    <div class="row between">
     <div>
@@ -1211,7 +1219,7 @@ function openSnapshot(kind,id){
   </div>`;
  if(!dialog.open) dialog.show();
  dialog.setAttribute('aria-modal','false');
- window.PPOChoices&&window.PPOChoices.sync();
+ if(window.PPOChoices) window.PPOChoices.sync();
  q('#detail-title').focus({preventScroll:true});
  render(false);
 }
@@ -1695,7 +1703,7 @@ function openAbout(){
   <div class="actions"><button type="button" class="primary" data-action="close-dialog">Close</button></div>`;
  if(!dialog.open) dialog.show();
  dialog.setAttribute('aria-modal','false');
- window.PPOChoices&&window.PPOChoices.sync();
+ if(window.PPOChoices) window.PPOChoices.sync();
  q('#detail-title').focus({preventScroll:true});
 }
 
@@ -1722,7 +1730,7 @@ function render(focusHeading){
   projects:renderProjects,sites:renderSites,accounts:renderAccounts,activity:renderActivity}[state.view];
  q('#content').innerHTML=body()+footerNote();
 
- window.PPOChoices&&window.PPOChoices.sync();
+ if(window.PPOChoices) window.PPOChoices.sync();
  storageNotice();
  if(focusHeading!==false&&render.shouldFocus){
   const heading=q('#main-heading');
@@ -1765,7 +1773,7 @@ document.addEventListener('click',event=>{
   state.returnStack.push({view:state.view,filters:{...state.filters},search:state.search,
    label:(VIEWS.find(v=>v.id===state.view)||{}).label||'overview'});
   let filter={};
-  try{filter=JSON.parse(trigger.dataset.filter||'{}');}catch(error){filter={};}
+  try{filter=JSON.parse(trigger.dataset.filter||'{}');}catch{filter={};}
   state.filters={...EMPTY_FILTERS,...filter};
   state.search='';
   state.view=trigger.dataset.view;
@@ -1841,7 +1849,7 @@ document.addEventListener('input',event=>{
   const position=event.target.selectionStart;
   render();
   const field=q('#record-search');
-  if(field){field.focus({preventScroll:true});try{field.setSelectionRange(position,position);}catch(error){/* type does not support selection */}}
+  if(field){field.focus({preventScroll:true});try{field.setSelectionRange(position,position);}catch{/* this input type does not support selection */}}
  }
 });
 

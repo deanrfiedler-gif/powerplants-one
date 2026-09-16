@@ -10,7 +10,7 @@ source_commit: 0769a16dd842e9dc1c349a853036ab71949e7807
 
 # CS-01 Customer 360 — design report
 
-**Design HTML:** [`PPO-Customer-360-Workspace-r01.html`](PPO-Customer-360-Workspace-r01.html) · SHA-256 `d2b21bacfa4b709fcb9e52292b94def8b934414be9e246e4f3167490b9ba8431` · 283,946 bytes, one self-contained file.
+**Design HTML:** [`PPO-Customer-360-Workspace-r01.html`](PPO-Customer-360-Workspace-r01.html) · SHA-256 `ce8b117f5b62615389111c59e479f606c8c50b7b3c218cde5e5d86cd14edeab8` · 284,591 bytes, one self-contained file.
 
 **Decision and receiving handover:** [`customer-360-workspace-design.md`](../../../decisions/customer-360-workspace-design.md) · **Reproducible sources:** [`docs/design/customer-360/`](../../../design/customer-360/README.md) · **Evidence:** [`customer-360-r01`](../../../testing/evidence/customer-360-r01/README.md).
 
@@ -580,10 +580,12 @@ One only: `POST /customers/{id}/notes` — an internal Powerplants note against 
 | PP-01 prototype consistency | `python3 scripts/check_prototype.py` | Passed |
 | Naming and document register | `python3 scripts/check_naming.py` | Passed |
 | Conflict-marker scan | `git --no-pager grep -n -E "^(<<<<<<<\|=======$\|>>>>>>>)" -- docs` | No match |
-| Model and DOM emulation | `node scripts/check-customer-360-design.mjs` | **86 groups passed** |
+| Repository lint | `npm run lint` (`eslint .`, which covers `docs/**`) | Passed |
+| Repository typecheck | `npm run typecheck` (`tsc --noEmit`) | Passed |
+| Model and DOM emulation | `node scripts/check-customer-360-design.mjs` | **87 groups passed** |
 | Native browser | `node scripts/check-customer-360-browser.mjs` | **12 groups passed** |
 
-Both design checks were run against the issued file at SHA-256 `d2b21bacfa4b709fcb9e52292b94def8b934414be9e246e4f3167490b9ba8431`. Results are recorded in [`docs/testing/evidence/customer-360-r01/`](../../../testing/evidence/customer-360-r01/README.md).
+Both design checks were run against the issued file at SHA-256 `ce8b117f5b62615389111c59e479f606c8c50b7b3c218cde5e5d86cd14edeab8`. Results are recorded in [`docs/testing/evidence/customer-360-r01/`](../../../testing/evidence/customer-360-r01/README.md).
 
 ### 14.2 Defects found and fixed during verification
 
@@ -592,6 +594,7 @@ Both design checks were run against the issued file at SHA-256 `d2b21bacfa4b709f
 | 68 px horizontal page overflow at 320 px, caused by two native date inputs refusing to shrink inside a flex row | Native browser measurement | `flex:1 1 0; min-width:0` on `.date-range input`; re-measured at 0 px |
 | Keyboard focus was dropped to the document body after activating a tab, because the tab strip re-renders | Native browser keyboard check | The tab keydown handler now changes the view directly and restores focus to the new tab element |
 | The case detail note became a third grid column, pushing the work-order column onto a second row | Screenshot review | The description list and its note were wrapped in one grid child |
+| Nine lint violations in `workspace.js` — five unused `catch (error)` bindings, three bare short-circuit call expressions, and one helper (`unassignedFor`) that was written but never called | The repository's own `eslint .`, which covers `docs/**`. It failed three CI jobs on the first push | Optional catch bindings, `if (...) call()` statements, and the unused helper put to work: a site filter now states how many records hold no site relationship and are excluded rather than assumed in. `eslint .` and `tsc --noEmit` are clean across the repository |
 
 ### 14.3 What was not verified
 

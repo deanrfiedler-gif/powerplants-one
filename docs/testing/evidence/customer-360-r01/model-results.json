@@ -1,8 +1,8 @@
 {
   "design": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
-  "sha256": "d2b21bacfa4b709fcb9e52292b94def8b934414be9e246e4f3167490b9ba8431",
-  "checked_at": "2026-09-16T11:18:34.479Z",
-  "groups": 86,
+  "sha256": "ce8b117f5b62615389111c59e479f606c8c50b7b3c218cde5e5d86cd14edeab8",
+  "checked_at": "2026-09-16T11:41:48.784Z",
+  "groups": 87,
   "status": "passed",
   "scope": "Model and DOM emulation only. No rendered browser, screen reader, device, print or visual acceptance is asserted.",
   "results": [
@@ -248,6 +248,10 @@
     },
     {
       "name": "A site filter scopes orders to explicit site relationships only",
+      "status": "passed"
+    },
+    {
+      "name": "A record with no site relationship is reported, not silently dropped",
       "status": "passed"
     },
     {

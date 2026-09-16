@@ -11,7 +11,7 @@ source_commit: 0769a16dd842e9dc1c349a853036ab71949e7807
 # CS-01 Customer 360 r01 — verification evidence
 
 Subject: [`docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html`](../../../reference/ui/customers/PPO-Customer-360-Workspace-r01.html)
-SHA-256 `d2b21bacfa4b709fcb9e52292b94def8b934414be9e246e4f3167490b9ba8431` · 283,946 bytes.
+SHA-256 `ce8b117f5b62615389111c59e479f606c8c50b7b3c218cde5e5d86cd14edeab8` · 284,591 bytes.
 
 Both result files below were written by their own check script against that exact file.
 
@@ -20,7 +20,7 @@ Both result files below were written by their own check script against that exac
 | [`model-results.json`](model-results.json) | `scripts/check-customer-360-design.mjs` | **86 passed** | 2026-09-16T10:03:00Z |
 | [`native-results.json`](native-results.json) | `scripts/check-customer-360-browser.mjs` | **12 passed** | 2026-09-16T10:03:13Z |
 
-## Model and DOM emulation — 86 groups
+## Model and DOM emulation — 87 groups
 
 jsdom 27, `runScripts: 'dangerously'`, with `scrollTo`, `scrollIntoView` and the three `HTMLDialogElement` methods stubbed because jsdom does not implement the top layer.
 
@@ -53,6 +53,7 @@ The table row count and the card count are equal at every viewport, so the two p
 | 68 px horizontal page overflow at 320 px | Native measurement of `scrollWidth − clientWidth` | `flex:1 1 0; min-width:0` on `.date-range input`; native date inputs will not otherwise shrink inside a flex row | 0 px at 320 px |
 | Keyboard focus dropped to the document body after activating a tab | Native keyboard sequence Arrow → End | The tab keydown handler changes the view directly and restores focus to the new tab element | `tab-deals` focused, `:focus-visible` true |
 | Case detail note occupied a third grid column, pushing the work-order column to a second row | Screenshot review at 1440 px | The description list and its note wrapped in one grid child | Two-column layout confirmed |
+| Nine lint violations in `workspace.js`: five unused `catch (error)` bindings, three bare short-circuit call expressions, one helper written but never called | The repository's own `eslint .`, which lints `docs/**`. Three CI jobs failed on the first push before this was found | Optional catch bindings; `if (...) call()` statements; the unused helper put to work so a site filter states how many records hold no site relationship | `eslint .` and `tsc --noEmit` clean across the repository; one check group added, 86 → 87 |
 
 ## Repository checks
 
@@ -60,6 +61,8 @@ Run from the repository root on this branch:
 
 | Check | Result |
 |---|---|
+| `npm run lint` — `eslint .`, which covers `docs/**` | passed |
+| `npm run typecheck` — `tsc --noEmit` | passed |
 | `python3 scripts/check_foundation.py` | passed |
 | `python3 scripts/check_prototype.py` | passed |
 | `python3 scripts/check_naming.py` | passed |

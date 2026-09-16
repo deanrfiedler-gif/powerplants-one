@@ -575,6 +575,12 @@ check('A site filter scopes orders to explicit site relationships only', () => {
   assert.ok(!ids.includes('SYN-MYOB-SO-006001'), 'An order with no site relationship is not assumed into a site');
 });
 
+check('A record with no site relationship is reported, not silently dropped', () => {
+  assert.match(text('.results-bar'), /1 record\(s\) hold no site relationship and are excluded by the site filter rather than assumed into it/);
+  const ids = all('.register tbody tr[data-row-id]').map(r => r.dataset.rowId);
+  assert.ok(!ids.includes('SYN-MYOB-SO-006001'), 'The unrelated order is excluded from the filtered result');
+});
+
 check('An active filter is shown as a removable chip and can be cleared', () => {
   assert.match(text('.chip-bar'), /Site: Willowbank Field Production/);
   click('remove-filter', '[data-key="site"]');

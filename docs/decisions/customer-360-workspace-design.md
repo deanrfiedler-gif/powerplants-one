@@ -12,7 +12,7 @@ source_commit: 0769a16dd842e9dc1c349a853036ab71949e7807
 
 Dean authorised CS-01 Customer 360 as an extension of the existing Customers, Sites & Growing Areas workspace, with sales orders as an explicit first-class section, MYOB Acumatica retained as the intended ERP authority and live integration outstanding. The requested deliverables are a professional interactive HTML design and a detailed companion Markdown report, delivered as a reviewable package.
 
-- [HTML r01](../reference/ui/customers/PPO-Customer-360-Workspace-r01.html) — SHA-256 `d2b21bacfa4b709fcb9e52292b94def8b934414be9e246e4f3167490b9ba8431`
+- [HTML r01](../reference/ui/customers/PPO-Customer-360-Workspace-r01.html) — SHA-256 `ce8b117f5b62615389111c59e479f606c8c50b7b3c218cde5e5d86cd14edeab8`
 - [Detailed report r01](../reference/ui/customers/PPO-Customer-360-Workspace-Report-r01.md)
 - [Reproducible sources](../design/customer-360/README.md)
 - [Verification evidence](../testing/evidence/customer-360-r01/README.md)
@@ -79,7 +79,7 @@ PPO_DESIGN_PLAYWRIGHT_MODULE=/absolute/path/to/playwright/index.js \
   node scripts/check-customer-360-browser.mjs --write-evidence
 ```
 
-**86 model and DOM-emulation groups** and **12 native Chromium groups** passed against the issued file. `check_foundation.py`, `check_prototype.py` and `check_naming.py` pass, and a conflict-marker scan over `docs` finds nothing. Three real defects were found during verification and fixed: a 68 px horizontal overflow at 320 px caused by non-shrinking native date inputs, keyboard focus being dropped after a tab re-render, and a case-detail note occupying a third grid column. Exact results are in the [evidence record](../testing/evidence/customer-360-r01/README.md).
+**87 model and DOM-emulation groups** and **12 native Chromium groups** passed against the issued file. `check_foundation.py`, `check_prototype.py` and `check_naming.py` pass, and a conflict-marker scan over `docs` finds nothing. Four real defects were found during verification and fixed: a 68 px horizontal overflow at 320 px caused by non-shrinking native date inputs; keyboard focus being dropped after a tab re-render; a case-detail note occupying a third grid column; and nine lint violations in `workspace.js` that the repository's own `eslint .` reports, because it covers `docs/**` — five unused `catch (error)` bindings, three bare short-circuit call expressions and one helper written but never called. That last one failed three CI jobs on the first push. `eslint .` and `tsc --noEmit` are now clean across the repository, and the unused helper was put to work rather than deleted: a site filter now states how many records hold no site relationship and are excluded rather than assumed in. Exact results are in the [evidence record](../testing/evidence/customer-360-r01/README.md).
 
 No screen reader, assistive technology, physical device, colour-contrast measurement, print review, second browser engine, owner visual acceptance or business acceptance has occurred. No MYOB endpoint, schema, permission, company definition, status vocabulary or financial definition has been verified against a real instance. No parent requirement and no acceptance case is passed by these design checks.
 
