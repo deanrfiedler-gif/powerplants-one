@@ -32,13 +32,28 @@ assert fonts_actual == fonts_expected, (
     "before rebuilding; do not remove this guard."
 )
 
+# The shared workspace styles are inherited from the Quality & Site Assurance
+# source with this module's scope prefix, then extended by additions.css. The
+# baseline is pinned for the same reason as the fonts: an upstream change must be
+# a reviewed decision, not a silent difference here.
+shared = root / "docs/design/quality-site-assurance/workspace.css"
+shared_expected = "e50a0974bb7e60701aa7be30717229319adc57bde7693076bdf0d72f7ae12d8d"
+shared_text = shared.read_text(encoding="utf-8")
+shared_actual = hashlib.sha256(shared_text.encode("utf-8")).hexdigest()
+assert shared_actual == shared_expected, (
+    f"Shared workspace styles changed ({shared_actual}). Review the inherited "
+    "baseline before rebuilding; do not remove this guard."
+)
+stylesheet = shared_text.replace("#ppo-assurance", "#ppo-handover") + (source / "additions.css").read_text(encoding="utf-8")
+
 html = (source / "template.html").read_text(encoding="utf-8")
-for marker, path in [("FONTS", fonts), ("CSS", source / "workspace.css"), ("MODEL", source / "model.js"), ("APP", source / "workspace.js")]:
-    contents = path.read_text(encoding="utf-8")
+for marker, contents in [("FONTS", fonts.read_text(encoding="utf-8")), ("CSS", stylesheet),
+                         ("MODEL", (source / "model.js").read_text(encoding="utf-8")),
+                         ("APP", (source / "workspace.js").read_text(encoding="utf-8"))]:
     if marker in {"MODEL", "APP"}:
         contents = contents.replace("</script", "<\\/script")
     assert html.count(f"/* {marker} */") == 1, f"Template marker {marker} is missing or duplicated"
     html = html.replace(f"/* {marker} */", contents)
 target.parent.mkdir(parents=True, exist_ok=True)
 target.write_text(html, encoding="utf-8")
-print(f"{target.relative_to(root)}\nSHA-256 {hashlib.sha256(target.read_bytes()).hexdigest()}\nQuotation r03 SHA-256 {actual}\nShared Roboto SHA-256 {fonts_actual}")
+print(f"{target.relative_to(root)}\nSHA-256 {hashlib.sha256(target.read_bytes()).hexdigest()}\nQuotation r03 SHA-256 {actual}\nShared Roboto SHA-256 {fonts_actual}\nInherited workspace styles SHA-256 {shared_actual}")
