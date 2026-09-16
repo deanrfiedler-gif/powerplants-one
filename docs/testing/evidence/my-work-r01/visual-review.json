@@ -1,0 +1,60 @@
+{
+  "source": "b3f83e4fe4de36cca79c8fed927409e971e5e279",
+  "html_sha256": "7e915a6d896e4c64967857e1fcd536307eab0c0394916f3d776a1b23ebdab850",
+  "run_id": 35044052566,
+  "review_date": "2026-09-16",
+  "result": "Passed bounded visual inspection",
+  "captures": [
+    {
+      "name": "1440-released.png",
+      "sha256": "5b4e7da51520e7cd7b0a41043999339010798ba18becf2d11ce1f7dcb5366ba4",
+      "finding": "Recorded-outcome heading and source-history action agree with the completed scoped release; separate OEM work remains visible."
+    },
+    {
+      "name": "1440-team.png",
+      "sha256": "5da0af236c4691272db4106f92f3309ab7cbd2d88a7e3750b019555f354190e8",
+      "finding": "Assigned closeout task now asks for evidence collection and names its current owner; counts and due date agree."
+    },
+    {
+      "name": "1440-source-snapshot.png",
+      "sha256": "eccef7bdb2367283a25e86ffad8673de9123a8b277171b2160381796e23c1663",
+      "finding": "Exact equipment identity, installation/served-area distinction, submission and predecessor are readable in the source drawer."
+    },
+    {
+      "name": "1440-actions.png",
+      "sha256": "bd6d381d5fd696986ae8c578067580252588a4995e6fdf4c256bb7c8672048c6",
+      "finding": "Fresh passing retest explicitly awaits reviewer acceptance; date-needed work remains distinct."
+    },
+    {
+      "name": "390-today.png",
+      "sha256": "5d6e993cc9e7a2983b4bcde14d9b34bb099201d48cee668fe747a7d9c0c2b9ae",
+      "finding": "All six navigation tabs, wrapped summary strip, stacked work and remaining journey/actions fit; top and bottom also inspected at native width."
+    },
+    {
+      "name": "320-actions.png",
+      "sha256": "57ea0dc2057c07aaa5e4426dcb09ff46633ac6ac1a2017e45c2a78d8f064e020",
+      "finding": "Labelled records and touch controls stack; long task names wrap and source references remain readable."
+    },
+    {
+      "name": "390-reviews.png",
+      "sha256": "49a11fd806bbfe49a65db25ed72c9d25e2665d1c3cce74e96fb328a25fb1663b",
+      "finding": "All six tabs visible; source review records and completed journey retain clear hierarchy."
+    },
+    {
+      "name": "390-blocked.png",
+      "sha256": "f91845ab4191de490857c6db63c9644163d8fdc6812bad42fbfef8cd8336f9ed",
+      "finding": "Dependency reasons, responsible owner and follow-up date fit the phone cards."
+    },
+    {
+      "name": "320-team.png",
+      "sha256": "eeed6bcf8ac49809082a5bf25dc4b374c6cfe016e6514cde4003522d907006f2",
+      "finding": "All tabs and team summary fit; unassigned/date-needed categories remain explicit. Top and bottom inspected at native width."
+    },
+    {
+      "name": "320-updates.png",
+      "sha256": "95c5eaaa2c426398ad99c61f23769a2a99f8aae9fd1ad8a2c76d41b52f3a3a6c",
+      "finding": "Read/source controls and preferences stack; routine and owned notices remain distinct."
+    }
+  ],
+  "limits": "Ten final original captures inspected, covering six phone views plus source/transition desktop details. Twenty originals were captured by CI. Native-width crops used only for inspecting two long screenshots; originals unchanged. This is not owner acceptance or a full assistive-technology audit."
+}
