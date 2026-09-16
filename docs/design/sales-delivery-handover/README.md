@@ -29,6 +29,8 @@ Two shared assets are **inherited rather than duplicated**, and both are hash-pi
 
 The build also asserts that the retained customer quotation r03 (`docs/reference/ui/quoting/ppo-quotation-module-r03.html`, SHA-256 `7ee657ef0f78d905486e9227a0821d88f86beddc9e13b872202b4095e2b6fe9a`) is unchanged, because the accepted commercial basis reproduces its declared lines, selection defaults and amounts. Do not remove that guard: if the upstream issue changes, the accepted basis needs a reviewed successor mapping, not a silent rebuild.
 
+All three guards compare content with newlines **normalised**, and the output is written as bytes. This matters on Windows: the repository's `.gitattributes` pins `.md`, `.py`, `.json`, `.yml`, `.csv` and `.html` to LF, but `.css` and `.js` fall under `* text=auto` and are checked out with CRLF there. Comparing raw bytes made the build abort on an unmodified Windows checkout. Keep the normalisation; do not re-pin the hashes to a platform's byte form.
+
 Edit the sources here and rebuild. Do not hand-edit the generated HTML and do not modify any issued upstream reference.
 
 The browser script uses the repository-pinned Playwright. It launches the `chrome` channel by default; set `PPO_CHROME_PATH` to an explicit Chromium binary where that channel is not installed. The manifest always records the browser version actually used, so a run on a different binary is visible rather than implied. Results and captures are written to the ignored `verification-evidence/sales-delivery-handover/` directory.
