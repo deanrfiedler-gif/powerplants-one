@@ -39,3 +39,7 @@ python3 scripts/check_naming.py
 The browser script uses the repository-pinned Playwright/Chrome environment and writes original screenshots, results and hashes to the ignored `verification-evidence/site-access/` directory. The prepared workflow retains them as an artifact. Full application checks and normal merge gates remain separate from this design package.
 
 Next: publish the review branch/PR once the repository destination is explicitly approved, run native checks, inspect the original desktop/phone captures and correct any findings before claiming visual verification.
+
+## Restored-package native review — 16 September 2026
+
+PR #214 restored this original package. Native run `35152433742` reached the export check after the first twelve model/UI journeys completed. The export locator also matched the retained, hidden Preview options dialog button; its failed click left a download waiter unhandled during browser cleanup. The repaired check selects the visible `Export demo data` control by its accessible name and awaits the click and download together. Export data assertions and every remaining native check are retained. The repaired run, rather than the earlier prepared-test statement, supplies current execution evidence. No product HTML changed for this harness correction.
