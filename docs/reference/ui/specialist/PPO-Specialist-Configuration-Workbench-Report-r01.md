@@ -275,7 +275,9 @@ An additional scenario sets cloth override to 1,200 m², loads B, reviews that r
 
 The [verification record](../../../testing/evidence/specialist-r01/README.md) identifies exact source/hash, original model/browser results and visual review. Checks cover calculation boundaries, decimal extension, zero/blank handling, versioned overrides, manual/unmatched reconciliation, cancellation, stale previews, permission scenarios, original-operation recovery, totals repair, immutable history and invalid restore rejection.
 
-At initial review-package publication, **27 model groups pass; native browser execution and visual review are pending**. Final evidence will identify the exact verified HTML hash.
+**27 model groups and 23 native Chrome groups pass**, with no console errors. Focused lint, deterministic assembly and documentation checks pass. All five views fit 1440, 1024, 820, 390 and 320 px; 14 original captures were reviewed. The initial input-click and selector-label findings were corrected and their original evidence retained.
+
+Verified source: **0c5e60868b6651e9eee55742fa04bb722cbf894a**, [native run 35048234854](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35048234854), Chrome **153.0.8010.47**. HTML SHA-256: **52c59d94b8a743eb6e521917c3db88564e3aaaaaea5f2f29959f40a4deae5639**. Published in [draft PR #210](https://github.com/deanrfiedler-gif/powerplants-one/pull/210); later documentation-only commits preserve these verified HTML bytes.
 
 This is design assurance. **EA-16 and EA-17 are not accepted against approved Screen Systems definitions.** Real engineering correctness, source parity, full legacy fields, concurrent server persistence, operational permissions, quote approval, tax/FX policy, database integration and offline estimating remain outside the delivered prototype.
 

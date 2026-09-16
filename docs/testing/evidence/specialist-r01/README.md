@@ -2,6 +2,21 @@
 
 This record separates design verification from EA-16/EA-17 mathematical and business acceptance.
 
+## Final verified result
+
+**27 model groups and 23 native Chrome groups pass**, with no browser console errors. Focused ESLint, deterministic assembly and documentation foundation/prototype/naming checks pass. All five views were checked at 1440, 1024, 820, 390 and 320 px. Fourteen original captures were reviewed directly or matched byte-for-byte to already inspected captures; the exact method and hashes are in visual-review.json.
+
+- Verified source: 0c5e60868b6651e9eee55742fa04bb722cbf894a.
+- HTML SHA-256: 52c59d94b8a743eb6e521917c3db88564e3aaaaaea5f2f29959f40a4deae5639.
+- Native run: [35048234854](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35048234854).
+- Runtime: repository Node 24.21.0 / Playwright 1.63.0; actual Chrome 153.0.8010.47.
+- Original results: results.json and model-results.json. Earlier failures and the prior passing run remain in separate files.
+- Review package: [draft PR #210](https://github.com/deanrfiedler-gif/powerplants-one/pull/210). Subsequent documentation-only commits retain the verified HTML bytes.
+
+The preceding source 3acbf202f96be1bbc4f823ab1db9955c3e974e23 also passed all 23 native groups in run [35047879245](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35047879245); prior-passing-results.json retains that result. The final rerun additionally checks live source-status consistency while typing.
+
+The focused design result does not claim completion of every repository-wide application workflow or business acceptance. Native ZIP artifacts have 14-day retention; the checked-in scripts, exact hashes, original JSON results and visual-review record support reproduction.
+
 ## Initial local checks
 
 - JavaScript syntax and deterministic assembly pass.
