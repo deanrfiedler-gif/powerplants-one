@@ -1,0 +1,102 @@
+{
+  "source": "4b483357090b531fd0c2d9943fce02123a7386e2",
+  "html_sha256": "c9e20e408db944a32bb9018bfa5d18f703061226e67e42c335506d59cb19e87a",
+  "browser": "153.0.8010.47",
+  "groups": 14,
+  "results": [
+    {
+      "name": "Five views, fixed facility and missing approval boundary render",
+      "result": "Passed"
+    },
+    {
+      "name": "Field validation and step gating retain invalid answers",
+      "result": "Passed"
+    },
+    {
+      "name": "Blank cost and explicit zero retain independent meanings",
+      "result": "Passed"
+    },
+    {
+      "name": "Arbitrary geometry suppresses output instead of extrapolating",
+      "result": "Passed"
+    },
+    {
+      "name": "Computed working drawer identifies absent formula and enforces override reason",
+      "result": "Passed"
+    },
+    {
+      "name": "New reference version retains override until explicit review",
+      "result": "Passed"
+    },
+    {
+      "name": "Grouped parts show priced no-purchase rows and source versions",
+      "result": "Passed"
+    },
+    {
+      "name": "First reference staging requires explicit synthetic acknowledgement",
+      "result": "Passed"
+    },
+    {
+      "name": "Manual part edits preserve the original generated run",
+      "result": "Passed"
+    },
+    {
+      "name": "Rerun cancellation and unresolved edits keep staged lines unchanged",
+      "result": "Passed"
+    },
+    {
+      "name": "Explicit manual and unmatched decisions revise the same configuration",
+      "result": "Passed"
+    },
+    {
+      "name": "Run drawer exposes retained complete source and input evidence",
+      "result": "Passed"
+    },
+    {
+      "name": "Definition catalogue keeps other families unavailable",
+      "result": "Passed"
+    },
+    {
+      "name": "Native browser failure",
+      "result": "Failed",
+      "message": "locator.selectOption: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('#modal').getByLabel('Preview role', { exact: true })\n\n    at options (/home/runner/work/powerplants-one/powerplants-one/scripts/check-specialist-browser.mjs:15:139)\n    at async file:///home/runner/work/powerplants-one/powerplants-one/scripts/check-specialist-browser.mjs:37:90\n    at async check (/home/runner/work/powerplants-one/powerplants-one/scripts/check-specialist-browser.mjs:13:30)\n    at async file:///home/runner/work/powerplants-one/powerplants-one/scripts/check-specialist-browser.mjs:37:3",
+      "dialog": "These controls exercise local design states. They are not application roles, permissions or server responses.\nPreview role\nEstimator\nRead-only reviewer\nNext reference save\nNormal save\nFail before commit\nCommit; lose response\nCommit; fail totals refresh\nEstimate editing state\nEditable draft\nEstimate locked\nScope changed\nExport local session\nRestore session\nReset demonstration",
+      "toast": "Reference run staged. Operational calculation remains blocked."
+    }
+  ],
+  "errors": [],
+  "images": [
+    {
+      "name": "1440-configure.png",
+      "sha256": "fa37743d7efab51e73e9783748a475f171c773ef61b1def3d517dd1a5eb04d02"
+    },
+    {
+      "name": "1440-overrides.png",
+      "sha256": "12f52d09a2b70d0691056bcfa075685fbccf5d72c10c68890a4db370f0532259"
+    },
+    {
+      "name": "1440-parts.png",
+      "sha256": "6ef500bcf4badc0e8c8b0a6ee914c6af93000649fe065ba3cbf1df087a522b0b"
+    },
+    {
+      "name": "1440-rerun-decisions.png",
+      "sha256": "4b2b1ec2b81ca2ddef28cf91d86d2bcd3c08aa8feffa610cc83390387784d419"
+    },
+    {
+      "name": "1440-runs.png",
+      "sha256": "8fb20458fb3914a1938f73bd827c413bd59a32013d36055b7cf2c8a13d81a16f"
+    },
+    {
+      "name": "1440-run-snapshot.png",
+      "sha256": "03666423e8b71cfd6a9450bb4f2287000c4d8e6735e823d8eea47e15b774da2b"
+    },
+    {
+      "name": "1440-evidence.png",
+      "sha256": "7073971951969ed3697f4fa549b74d9a084e845ef9187c3b5a96cbdc4d5bb878"
+    },
+    {
+      "name": "failure.png",
+      "sha256": "57677110b780057b80f7af026598f1d95f0dd919bd51e13a461bd7cfb21e8b0e"
+    }
+  ]
+}

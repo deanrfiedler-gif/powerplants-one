@@ -1,7 +1,7 @@
 /* ES-05 state/command assurance. A lightweight DOM adapter executes the standalone
  * script without a browser. These checks do not claim native rendering or accessibility. */
-const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),crypto=require('node:crypto');
-const path=require('node:path');
+const fs=process.getBuiltinModule('fs'),vm=process.getBuiltinModule('vm'),assert=process.getBuiltinModule('assert/strict'),crypto=process.getBuiltinModule('crypto');
+const path=process.getBuiltinModule('path');
 const root=path.resolve(__dirname,'../..');
 const html=fs.readFileSync(path.join(root,'docs/reference/ui/quoting/PPO-Quotation-Approval-Issue-and-Distribution-r02.html'),'utf8');
 const script=html.match(/<script>\s*([\s\S]*?)<\/script>/)[1];
