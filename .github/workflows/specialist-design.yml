@@ -33,6 +33,7 @@ jobs:
           mkdir -p verification-evidence/specialist
           python3 scripts/build-specialist.py
           git diff --exit-code -- docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r01.html
+          node node_modules/eslint/bin/eslint.js docs/design/specialist/model.js docs/design/specialist/workspace.js scripts/check-specialist-model.mjs scripts/check-specialist-browser.mjs
           node scripts/check-specialist-model.mjs > verification-evidence/specialist/model-results.json
           node scripts/check-specialist-browser.mjs
       - name: Retain original evidence

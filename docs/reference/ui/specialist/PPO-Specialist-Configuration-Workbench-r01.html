@@ -281,7 +281,7 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
   const views=[['configure','Configure'],['parts','Results & parts'],['rerun','Overrides & rerun'],['evidence','Definitions & evidence'],['runs','Runs & recovery']];
   const steps=['Structure','Screen & drive','Installation & travel','Allowances & label'];
   let s=M.seed(),ui={view:'configure',step:0,reached:0,role:'estimator',locked:false,scopeChanged:false,stale:false,mode:'normal',errors:{},resolutions:{},parts:'preview'},corrupt=null,saveTimer,toastTimer,modalAction=null,modalInitial='',opener=null;
-  try{const raw=localStorage.getItem(KEY);if(raw)s=M.restore(raw);}catch(error){corrupt=localStorage.getItem(KEY)||'';}
+  try{const raw=localStorage.getItem(KEY);if(raw)s=M.restore(raw);}catch{corrupt=localStorage.getItem(KEY)||'';}
   const gate=()=>({...ui,ack:false});
   const editable=()=>ui.role==='estimator'&&!ui.locked&&!ui.scopeChanged&&!ui.stale&&!s.pending;
   const disabled=condition=>condition?' disabled':'';
@@ -293,7 +293,7 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
     clearTimeout(saveTimer);
     if(corrupt!==null||ui.stale)return;
     try{localStorage.setItem(KEY,JSON.stringify(s));$('#save-status').textContent='Draft saved in this browser';}
-    catch(error){$('#save-status').textContent='Local save unavailable · export your session';toast('Local storage is unavailable. Export the session to retain your work.');}
+    catch{$('#save-status').textContent='Local save unavailable · export your session';toast('Local storage is unavailable. Export the session to retain your work.');}
   }
   function queueSave(){clearTimeout(saveTimer);$('#save-status').textContent='Saving local draft…';saveTimer=setTimeout(persist,500);}
   function feedback(error){toast(error.message||String(error));}
@@ -313,7 +313,8 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
   }
   function fieldHTML(f){
     const value=s.inputs[f.key],locked=!editable()||f.key==='power'||(f.key==='variant'&&!!s.configuration),error=ui.errors[f.key],id='answer-'+f.key;
-    let input=f.options?'<select id="'+id+'" data-field="'+f.key+'"'+disabled(locked)+'>'+f.options.map(o=>'<option'+(o===value?' selected':'')+'>'+esc(o)+'</option>').join('')+'</select>':'<div class="input-unit"><input id="'+id+'" data-field="'+f.key+'" value="'+esc(value)+'" maxlength="'+(f.key==='label'?300:1000)+'"'+(f.unit?' inputmode="decimal"':'')+(locked?' readonly class="read-only"':'')+' aria-invalid="'+!!error+'" aria-describedby="help-'+f.key+'">'+(f.unit?'<span class="unit">'+esc(f.unit)+'</span>':'')+'</div>';
+    const access=' aria-label="'+esc(f.label)+'" aria-required="'+M.required.includes(f.key)+'" aria-invalid="'+!!error+'" aria-describedby="help-'+f.key+'"';
+    let input=f.options?'<select id="'+id+'" data-field="'+f.key+'"'+access+disabled(locked)+'>'+f.options.map(o=>'<option'+(o===value?' selected':'')+'>'+esc(o)+'</option>').join('')+'</select>':'<div class="input-unit"><input id="'+id+'" data-field="'+f.key+'" value="'+esc(value)+'" maxlength="'+(f.key==='label'?300:1000)+'"'+(f.unit?' inputmode="decimal"':'')+(locked?' readonly class="read-only"':'')+access+'>'+(f.unit?'<span class="unit">'+esc(f.unit)+'</span>':'')+'</div>';
     const helper=f.key==='power'?'Facility source · read-only · not a quantity driver':f.unit?'Proposed unit · approved range not supplied':f.key==='clothCost'?'Blank uses the reference catalogue cost; zero is explicit.':f.key==='variant'?'Shade is the only illustrated reference variant.':'Guide-derived field · reference value';
     return '<label class="field" for="'+id+'"><span>'+esc(f.label)+(M.required.includes(f.key)?' <span aria-label="required">*</span>':'')+'</span>'+input+'<small id="help-'+f.key+'">'+helper+'</small>'+(error?'<small class="error">'+esc(error)+'</small>':'')+'</label>';
   }
@@ -386,7 +387,7 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
   function formSignature(){return JSON.stringify([...new FormData($('#modal-form')).entries()].map(([k,v])=>[k,typeof v==='string'?v:v.name]));}
   function close(force=false){if(!force&&modalAction&&formSignature()!==modalInitial&&!confirm('Discard the unsaved dialog changes?'))return;$('#modal').close();modalAction=null;opener?.focus();}
   function input(label,name,value='',type='text'){return '<label class="field"><span>'+esc(label)+'</span><input name="'+name+'" type="'+type+'" value="'+esc(value)+'" '+(type==='file'?'accept=".json,application/json"':'')+'></label>';}
-  function select(label,name,options,value){return '<label class="field"><span>'+label+'</span><select name="'+name+'">'+options.map(([v,l])=>'<option value="'+v+'"'+(value===v?' selected':'')+'>'+l+'</option>').join('')+'</select></label>';}
+  function select(label,name,options,value){return '<label class="field"><span>'+label+'</span><select name="'+name+'" aria-label="'+esc(label)+'">'+options.map(([v,l])=>'<option value="'+v+'"'+(value===v?' selected':'')+'>'+l+'</option>').join('')+'</select></label>';}
   function check(label,name){return '<label class="check-label"><input type="checkbox" name="'+name+'">'+label+'</label>';}
   function download(name,raw){const url=URL.createObjectURL(new Blob([raw],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
   const exportSession=()=>download('PPO-Screen-Systems-Reference-Session-r01.json',JSON.stringify(s,null,2));
