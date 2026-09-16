@@ -28,7 +28,7 @@ The distinction at the centre of this design is that an observed delivery differ
 
 Dean requested this build following the recommendation to create **ES-10 — Reference cases and calibration proposals**, with interactive HTML, a professional detailed Markdown report and alignment to the Powerplants One theme board. This package implements that page brief and a demonstrative estimator panel; it does not implement application services, database tables, external integrations or a pricing policy.
 
-ES-10 is the page identifier from the HTML coverage register. It is not a new parent requirement. The existing EST-01–EST-09 parent requirements and all 78 master requirement IDs remain unchanged. The principal links are EST-04 cost provenance and EST-06 specialist calculation evidence, with EST-05 source-price boundaries and EST-09 controlled document history retained.
+ES-10 is the page identifier from the HTML coverage register. It is not a new parent requirement. The existing EST-01–EST-09 parent requirements and all 78 master requirement IDs remain unchanged. The principal links are EST-04 cost provenance and EST-06 specialist calculation evidence. The feedback proposal also identifies EST-03 durable line identity and FIN-04/FIN-07 comparison definitions as future receiving dependencies; its proposed child requirements remain unallocated.
 
 ### 2.2 Sources inspected
 
@@ -255,6 +255,8 @@ Export review copy creates `PPO-ES10-Synthetic-Review-Copy.json`, containing the
 | Status semantics | Text-labelled success, warning, information and superseded/rejected states; colour is supplementary. |
 | Modal reviews | Ten-pixel corners, clear close/cancel actions, focus containment supplied by native dialog. |
 
+Retained visual examples: [desktop estimator panel](../../../testing/evidence/reference-calibration-r01/desktop-estimator-panel.png) and [phone case comparison](../../../testing/evidence/reference-calibration-r01/phone-case-comparison.png), captured from the verified layout source recorded in the evidence manifest.
+
 Native select controls are retained in this first package for predictable keyboard behaviour. They use the shared field colours and dimensions; the richer r20 custom choice-card menu is not implemented. The estimator panel is an ES-10 composition extension built from existing card, review and reference patterns, not an accepted application baseline. No existing shell or baseline hash is replaced.
 
 ## 14. Responsive and accessibility treatment
@@ -308,6 +310,8 @@ Fixture labels `SYN-ES10-REF-…` and `SYN-ES10-CAL-…` are explicitly local de
 ## 18. Verification and evidence
 
 The local model suite checks calculations, sample suppression, selection deduplication, exclusions, invalid quantities and inputs, role restrictions, draft editing, exact submission, immutable review history, source changes, stale evidence, successors and state-version conflicts.
+
+**Executed design verification:** 24 model groups and 18 native-browser groups passed on final HTML source `e5e3eb233e7dc865a67a7d8867757dc5d510e19b`, using Chrome 153.0.8010.47, with no page/console errors and 28 captures. Focused lint, deterministic assembly, foundation, prototype and naming checks passed in [run 35157933992](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35157933992). Desktop and phone captures were inspected; a sticky-navigation focus issue and skip-link capture artefact identified in the first run were corrected and reverified. The final HTML and screenshot hashes were checked against the returned CI evidence. Later evidence/report-only publication does not change the verified HTML bytes.
 
 The native suite checks search and filtering, snapshots and detail navigation, incomplete-source exclusion, failed save with retained text and retry, escaped draft content, role-based review, persistence on reload, stale-source successors, scenario isolation, keyboard tabs, export contents, cross-tab conflicts, corrupt saved-data retention, responsive widths and phone snapshot behaviour.
 

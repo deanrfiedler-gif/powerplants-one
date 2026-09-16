@@ -23,7 +23,7 @@ Based on main `d565a9de01b94aa7ad3fffe3a996f78c3aee589b`; ES-09 inspected at PR 
 
 The [feedback-loop proposal](../blueprints/estimate-actual-feedback-design.md) supplies candidate reference and calibration behaviour; its policies remain unadopted. ES-10 labels the illustrative n thresholds and preview input limits accordingly. Its five authored reviewed cases must not be mistaken for imported ES-09 evidence. Northbank remains incoming Draft / Partial and is excluded from aggregation. Its 232 accepted installation hours and 291 used hours preserve the source fixture; no financial comparison is imported.
 
-The approved build uses the existing plain JavaScript/CSS, embedded font and deterministic HTML pattern. No new technology, dependencies, migration, application route, hosted service or operational adapter is introduced. Reusing the current r20 and Customer 360 patterns does not alter accepted UI baseline hashes. A native select is a disclosed first-pass alternative to the custom choice-card control.
+The authorised build uses the existing plain JavaScript/CSS, embedded font and deterministic HTML pattern. No new technology, dependencies, migration, application route, hosted service or operational adapter is introduced. Reusing the current r20 and Customer 360 patterns does not alter accepted UI baseline hashes. A native select is a disclosed first-pass alternative to the custom choice-card control.
 
 ## Decisions implemented in the design
 
@@ -47,3 +47,7 @@ The older proposal's Projects-led sequence and ES-09's proposed Service-only A1 
 Recommended next application increment, once prerequisites exist: read-only, permission-scoped reference cases at an existing estimate line. Proposal persistence and governed adoption are later bounded work. No automatic repricing is recommended or implemented.
 
 No main merge, deployment, external communication, business transaction or live integration is part of this contribution. Owner visual acceptance and application integration remain separate from a successful CI run. Recovery is to revert this isolated design contribution; no application data migration is required.
+
+## Verified contribution
+
+Published in [draft PR #221](https://github.com/deanrfiedler-gif/powerplants-one/pull/221). Final HTML source `e5e3eb233e7dc865a67a7d8867757dc5d510e19b` passed 24 model and 18 native-browser groups, focused lint, deterministic assembly and all three documentation checks in [run 35157933992](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35157933992). The final ZIP, all 28 screenshot hashes and the delivered HTML hash were verified. Desktop/phone, case, snapshot and review captures were inspected during verification. The two observed layout defects were fixed and reverified. Preserved manifests and two original final-source screenshots are in the evidence directory. Evidence/report-only publication leaves the verified HTML unchanged. No owner acceptance or merge is inferred.
