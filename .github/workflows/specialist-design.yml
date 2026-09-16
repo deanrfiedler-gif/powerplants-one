@@ -1,4 +1,4 @@
-name: Screen Systems specialist design review
+name: Screen Systems specialist design review r02
 on:
   pull_request:
     paths:
@@ -30,16 +30,16 @@ jobs:
         env:
           PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
-          mkdir -p verification-evidence/specialist
-          python3 scripts/build-specialist.py
-          git diff --exit-code -- docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r01.html
-          node node_modules/eslint/bin/eslint.js docs/design/specialist/model.js docs/design/specialist/workspace.js scripts/check-specialist-model.mjs scripts/check-specialist-browser.mjs
-          node scripts/check-specialist-model.mjs > verification-evidence/specialist/model-results.json
-          node scripts/check-specialist-browser.mjs
+          mkdir -p verification-evidence/specialist-r02
+          python3 scripts/build-specialist-r02.py
+          git diff --exit-code -- docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r02.html
+          node node_modules/eslint/bin/eslint.js docs/design/specialist/r02/model.js docs/design/specialist/r02/workspace.js scripts/check-specialist-r02-model.mjs scripts/check-specialist-r02-browser.mjs
+          node scripts/check-specialist-r02-model.mjs > verification-evidence/specialist-r02/model-results.json
+          node scripts/check-specialist-r02-browser.mjs
       - name: Retain original evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: Specialist-design-evidence
-          path: verification-evidence/specialist/
+          path: verification-evidence/specialist-r02/
           retention-days: 14
