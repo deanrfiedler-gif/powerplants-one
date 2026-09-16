@@ -1,0 +1,354 @@
+{
+  "design": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
+  "sha256": "d2b21bacfa4b709fcb9e52292b94def8b934414be9e246e4f3167490b9ba8431",
+  "checked_at": "2026-09-16T11:18:34.479Z",
+  "groups": 86,
+  "status": "passed",
+  "scope": "Model and DOM emulation only. No rendered browser, screen reader, device, print or visual acceptance is asserted.",
+  "results": [
+    {
+      "name": "Two synthetic customers exist and only one is in context at a time",
+      "status": "passed"
+    },
+    {
+      "name": "One organisation relates to several company-specific ERP accounts",
+      "status": "passed"
+    },
+    {
+      "name": "One source account is returned with a similar name and no confirmed mapping",
+      "status": "passed"
+    },
+    {
+      "name": "Every synthetic identity is a reserved SYN reference",
+      "status": "passed"
+    },
+    {
+      "name": "Overview opens on the central question and names the relationship owner",
+      "status": "passed"
+    },
+    {
+      "name": "Overview separates operator, property owner and bill payer",
+      "status": "passed"
+    },
+    {
+      "name": "Every summary tile states the scope of what it counted",
+      "status": "passed"
+    },
+    {
+      "name": "Each attention item names record, reason, owner, due meaning and next action",
+      "status": "passed"
+    },
+    {
+      "name": "The workspace does not add a second application shell or navigation rail",
+      "status": "passed"
+    },
+    {
+      "name": "The sales-order register lists only this customer’s mapped-account orders",
+      "status": "passed"
+    },
+    {
+      "name": "Unresolved source records are separated, labelled and explicitly not counted",
+      "status": "passed"
+    },
+    {
+      "name": "Order amounts are stated per currency and never consolidated",
+      "status": "passed"
+    },
+    {
+      "name": "Outstanding supply is only computed where both measures are known",
+      "status": "passed"
+    },
+    {
+      "name": "The order snapshot carries source, company, account and identity fields",
+      "status": "passed"
+    },
+    {
+      "name": "Requested, confirmed and expected delivery are three distinct values",
+      "status": "passed"
+    },
+    {
+      "name": "Ordered, allocated, shipped, delivered, cancelled, returned and invoiced stay separate",
+      "status": "passed"
+    },
+    {
+      "name": "The accepted quotation and its exact revision are retained on the order",
+      "status": "passed"
+    },
+    {
+      "name": "A one-off line without a catalogue product is shown as a description",
+      "status": "passed"
+    },
+    {
+      "name": "Partial fulfilment shows outstanding lines, a source hold and a missing expected date",
+      "status": "passed"
+    },
+    {
+      "name": "A mapped difference from the accepted quotation is shown, not silently absorbed",
+      "status": "passed"
+    },
+    {
+      "name": "Shipment and invoice references are shown per line",
+      "status": "passed"
+    },
+    {
+      "name": "A failed observation retains last-good values and labels them stale",
+      "status": "passed"
+    },
+    {
+      "name": "Unknown quantities on a stale order are rendered unknown rather than zero",
+      "status": "passed"
+    },
+    {
+      "name": "Requesting a source refresh changes no record and says what happened",
+      "status": "passed"
+    },
+    {
+      "name": "A cancelled order shows its cancellation and carries no invoice",
+      "status": "passed"
+    },
+    {
+      "name": "A completed historical order retains its shipment and invoice references",
+      "status": "passed"
+    },
+    {
+      "name": "An unmapped order states that it is attributed to nobody and counted nowhere",
+      "status": "passed"
+    },
+    {
+      "name": "No ERP edit, release, cancellation, payment or fulfilment control exists",
+      "status": "passed"
+    },
+    {
+      "name": "An accepted quotation with an unknown conversion is never presented as an order",
+      "status": "passed"
+    },
+    {
+      "name": "Conversion and recovery link to ES-07 instead of being recreated here",
+      "status": "passed"
+    },
+    {
+      "name": "Quotation states are distinguished as the source defines them",
+      "status": "passed"
+    },
+    {
+      "name": "Alternative estimate options are marked mutually exclusive and never totalled",
+      "status": "passed"
+    },
+    {
+      "name": "Successive revisions of one quotation are not counted as separate commitments",
+      "status": "passed"
+    },
+    {
+      "name": "Opportunity forecast value is never added to orders, invoices or payments",
+      "status": "passed"
+    },
+    {
+      "name": "A completed visit does not resolve the case or its remaining work",
+      "status": "passed"
+    },
+    {
+      "name": "Symptom, suspected cause, verified finding and agreed resolution stay distinguishable",
+      "status": "passed"
+    },
+    {
+      "name": "Report acknowledgement is bound to the exact issued revision",
+      "status": "passed"
+    },
+    {
+      "name": "Billing state is stated separately from attendance",
+      "status": "passed"
+    },
+    {
+      "name": "Customer warranty outcome and supplier recovery are separate facts",
+      "status": "passed"
+    },
+    {
+      "name": "A new case with no work order shows its next action and date needed",
+      "status": "passed"
+    },
+    {
+      "name": "No service level or priority threshold is invented",
+      "status": "passed"
+    },
+    {
+      "name": "Technical completion, customer acceptance and commercial closeout are separate",
+      "status": "passed"
+    },
+    {
+      "name": "A delivered and accepted project can still be commercially open",
+      "status": "passed"
+    },
+    {
+      "name": "Variation values are not added to order or invoice measures",
+      "status": "passed"
+    },
+    {
+      "name": "Equipment physical location and served growing areas stay distinct",
+      "status": "passed"
+    },
+    {
+      "name": "The full hierarchy is linked rather than duplicated",
+      "status": "passed"
+    },
+    {
+      "name": "Each asset appears once for its site",
+      "status": "passed"
+    },
+    {
+      "name": "Finance visibility is withheld from the coordinator role without leaking a summary",
+      "status": "passed"
+    },
+    {
+      "name": "Search cannot surface a restricted private communication",
+      "status": "passed"
+    },
+    {
+      "name": "An operational-only role loses the commercial sections entirely",
+      "status": "passed"
+    },
+    {
+      "name": "A permitted role sees account observations with their own source context",
+      "status": "passed"
+    },
+    {
+      "name": "No account balance is derived from the rows that happened to arrive",
+      "status": "passed"
+    },
+    {
+      "name": "Fixture F-01 keeps the original and the source remaining amount separate",
+      "status": "passed"
+    },
+    {
+      "name": "Fixture F-02 unapplied cash is shown separately and nets nothing",
+      "status": "passed"
+    },
+    {
+      "name": "A deposit held against an order does not make the order paid",
+      "status": "passed"
+    },
+    {
+      "name": "A disputed invoice with no source remaining amount stays unknown",
+      "status": "passed"
+    },
+    {
+      "name": "A different legal company and currency is never consolidated",
+      "status": "passed"
+    },
+    {
+      "name": "Ageing bands, credit rules and undefined measures are not invented",
+      "status": "passed"
+    },
+    {
+      "name": "A summary tile drills into the register behind it and offers a return",
+      "status": "passed"
+    },
+    {
+      "name": "Return navigation restores the previous view and its filters",
+      "status": "passed"
+    },
+    {
+      "name": "A site filter scopes orders to explicit site relationships only",
+      "status": "passed"
+    },
+    {
+      "name": "An active filter is shown as a removable chip and can be cleared",
+      "status": "passed"
+    },
+    {
+      "name": "Search runs within this customer’s records only",
+      "status": "passed"
+    },
+    {
+      "name": "An empty result explains itself and offers a recovery control",
+      "status": "passed"
+    },
+    {
+      "name": "An ERP company filter separates the two legal companies",
+      "status": "passed"
+    },
+    {
+      "name": "Equipment context drills from an asset into its service history",
+      "status": "passed"
+    },
+    {
+      "name": "Switching customer retains no record, filter, search or snapshot from the other",
+      "status": "passed"
+    },
+    {
+      "name": "The second customer shows only its own records",
+      "status": "passed"
+    },
+    {
+      "name": "Site options are scoped to the customer in context",
+      "status": "passed"
+    },
+    {
+      "name": "The activity history retains source, author, date and exact document revision",
+      "status": "passed"
+    },
+    {
+      "name": "Reading a timeline entry completes no underlying business action",
+      "status": "passed"
+    },
+    {
+      "name": "Controlled documents are linked, not mastered again here",
+      "status": "passed"
+    },
+    {
+      "name": "An internal note is saved, attributed and shown against its record",
+      "status": "passed"
+    },
+    {
+      "name": "Saved notes survive a reload of the same browser storage",
+      "status": "passed"
+    },
+    {
+      "name": "Malformed retained bytes are preserved and never silently overwritten",
+      "status": "passed"
+    },
+    {
+      "name": "A refused storage write is reported truthfully as session-only",
+      "status": "passed"
+    },
+    {
+      "name": "Note text is escaped rather than rendered as markup",
+      "status": "passed"
+    },
+    {
+      "name": "R20 metadata, embedded fonts and every CSS token resolve",
+      "status": "passed"
+    },
+    {
+      "name": "The file is self-contained: no external script, stylesheet or image request",
+      "status": "passed"
+    },
+    {
+      "name": "Every element identity in the current document is unique",
+      "status": "passed"
+    },
+    {
+      "name": "Tabs use roving tabindex and respond to arrow, Home and End keys",
+      "status": "passed"
+    },
+    {
+      "name": "The content region is a labelled tab panel and dialogs are labelled",
+      "status": "passed"
+    },
+    {
+      "name": "Desktop rows and phone cards represent the same matching records",
+      "status": "passed"
+    },
+    {
+      "name": "The workspace states that it is synthetic and that MYOB remains the authority",
+      "status": "passed"
+    },
+    {
+      "name": "A demonstration role switch is never described as real security",
+      "status": "passed"
+    },
+    {
+      "name": "No page error was raised while running every interaction above",
+      "status": "passed"
+    }
+  ]
+}
