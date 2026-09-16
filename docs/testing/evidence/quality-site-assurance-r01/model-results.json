@@ -1,0 +1,114 @@
+{
+  "html_sha256": "7f0e7531c2f4b8d592e4e269225d45da0d870db4361879465149164eb4cf9db3",
+  "groups": 27,
+  "results": [
+    {
+      "name": "Initial packages preserve existing equipment identity and differentiated blockers",
+      "result": "Passed"
+    },
+    {
+      "name": "Wrong role and unknown package refuse atomically",
+      "result": "Passed"
+    },
+    {
+      "name": "Unconfirmed preparation cannot be acknowledged or submitted",
+      "result": "Passed"
+    },
+    {
+      "name": "Source confirmation requires evidence, current validity and explicit confirmation",
+      "result": "Passed"
+    },
+    {
+      "name": "Current equipment/source acknowledgement is required independently",
+      "result": "Passed"
+    },
+    {
+      "name": "Missing photo, mismatched unit and condition findings block submission",
+      "result": "Passed"
+    },
+    {
+      "name": "Failed inspection freezes sources and creates exactly one owned defect",
+      "result": "Passed"
+    },
+    {
+      "name": "Receipt recovery is idempotent and different reuse is refused",
+      "result": "Passed"
+    },
+    {
+      "name": "Stale version refuses without changing original state",
+      "result": "Passed"
+    },
+    {
+      "name": "Failed evidence cannot be accepted or released",
+      "result": "Passed"
+    },
+    {
+      "name": "Return and clarification decisions retain individual reason and owner",
+      "result": "Passed"
+    },
+    {
+      "name": "Retest requires recorded correction; new draft clears readings and acknowledgement",
+      "result": "Passed"
+    },
+    {
+      "name": "Repeated failure reuses the open defect and preserves original submission",
+      "result": "Passed"
+    },
+    {
+      "name": "Passing retest does not close defect before reviewer acceptance",
+      "result": "Passed"
+    },
+    {
+      "name": "Passing evidence can still be held or returned for correction",
+      "result": "Passed"
+    },
+    {
+      "name": "Accepted passing retest closes only linked defect and retains separate OEM action",
+      "result": "Passed"
+    },
+    {
+      "name": "Scoped release retains exact review, exclusions and open obligations",
+      "result": "Passed"
+    },
+    {
+      "name": "Receiving handovers are separate, source-linked and deduplicated",
+      "result": "Passed"
+    },
+    {
+      "name": "Changed sources invalidate effective release without overwriting history",
+      "result": "Passed"
+    },
+    {
+      "name": "Expired instrument cannot produce passing assessment",
+      "result": "Passed"
+    },
+    {
+      "name": "Not-performed reason is mandatory and never grants release",
+      "result": "Passed"
+    },
+    {
+      "name": "Missing approved criterion remains unavailable",
+      "result": "Passed"
+    },
+    {
+      "name": "Incident hold survives evidence acceptance until independently reviewed",
+      "result": "Passed"
+    },
+    {
+      "name": "New incident records exact context and keeps classification separate",
+      "result": "Passed"
+    },
+    {
+      "name": "Duplicate open action is refused; bad dates do not mutate state",
+      "result": "Passed"
+    },
+    {
+      "name": "Malformed saved state and invalid image metadata are rejected",
+      "result": "Passed"
+    },
+    {
+      "name": "Serialised state preserves retained event, incident and review records",
+      "result": "Passed"
+    }
+  ]
+}

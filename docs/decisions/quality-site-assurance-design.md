@@ -46,7 +46,7 @@ Local `SYN-QA-*` package/evidence labels are design fixture identifiers, not new
 
 The linked evidence record contains executed results and exact hashes. Local source/model/documentation checks are distinct from native rendering. Local preview navigation was blocked by the available browser, so native checks and captures are executed through the repository’s focused GitHub workflow. No alternate local browser was used to bypass the block.
 
-Keep this as a draft review contribution until its reported native check and capture review are complete. Dean’s acceptance of the finished visual, real-device/screen-reader verification, operational policies, runtime integration and full application acceptance remain separate. Creating the design is authorised; the finished design is not automatically an accepted implementation baseline.
+The focused review completed with 27 model groups and 23 native Chrome groups passing, plus inspection of the original desktop and phone captures. Keep this as a draft contribution for owner review. Dean’s acceptance of the finished visual, real-device/screen-reader verification, operational policies, runtime integration and full application acceptance remain separate. Creating the design is authorised; the finished design is not automatically an accepted implementation baseline.
 
 ## Receiving boundaries and recovery
 
