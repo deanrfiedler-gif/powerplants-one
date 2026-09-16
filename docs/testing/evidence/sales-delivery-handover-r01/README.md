@@ -55,3 +55,9 @@ python3 scripts/check_naming.py
 git --no-pager grep -n -E "^(<<<<<<<|=======$|>>>>>>>)" -- docs
 git diff --check
 ```
+
+## PR repair — 16 September 2026
+
+The current-main merge preserves the Customer 360 and specialist entries alongside CR-03. Full repository lint then exposed seven unused bindings in the draft controller. Removed the unused helper, local and parameters; optional catch bindings retain the existing recovery behaviour. The rebuilt working HTML is SHA-256 `956b059b7d1407c7000caebfcc1626d625e25ffa966785e1066dfc40a37ee5f6`. Existing quotation, font and shared-style hashes remain unchanged.
+
+Full lint, 25 model groups, deterministic rebuild and foundation/prototype/naming assurance pass on the repaired source. The original native evidence above remains bound to its original hash. A focused CI workflow now reruns the existing native suite with the repository runtime/browser pins and preserves its actual output. Local native execution could not run because Chrome installation required unavailable system privileges and the user-space Chromium download timed out; no new local native or visual pass is claimed.

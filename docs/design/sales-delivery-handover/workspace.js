@@ -72,8 +72,6 @@
   const permitted = (s) => s.handovers.filter((h) => !(RESTRICTED[ui.role] || []).includes(h.id));
   const restrictedCount = (s) => s.handovers.length - permitted(s).length;
   const commercialVisible = () => M.can(ui.role, 'commercial.read');
-  const amount = (cents) => commercialVisible() ? M.money(cents)
-    : 'Restricted';
   const amountNode = (cents) => commercialVisible()
     ? el('span', {class: 'money', text: M.money(cents)})
     : el('span', {class: 'restricted-value', title: 'Commercial amounts are not available to this identity'}, ['Restricted']);
@@ -86,14 +84,14 @@
     try {
       localStorage.setItem(KEY, JSON.stringify({schema: M.SCHEMA, savedAt: new Date().toISOString(), state}));
       setStatus('Saved in this browser · ' + new Date().toLocaleTimeString('en-AU', {hour: '2-digit', minute: '2-digit'}));
-    } catch (error) {
+    } catch {
       ui.storage = false;
       setStatus('Browser storage unavailable — records are held in this page only', true);
     }
   }
   function load() {
     let raw = null;
-    try { raw = localStorage.getItem(KEY); } catch (error) { ui.storage = false; }
+    try { raw = localStorage.getItem(KEY); } catch { ui.storage = false; }
     if (!raw) { state = M.seed(); return; }
     try {
       const envelope = JSON.parse(raw);
@@ -443,7 +441,7 @@
     ]));
     return el('div', {class: 'card'}, parts);
   }
-  const labelled = (label, control, key) => el('label', {class: 'tiny'}, [el('span', {text: label}), control]);
+  const labelled = (label, control) => el('label', {class: 'tiny'}, [el('span', {text: label}), control]);
 
   /* --------------------------------------------------------------- basis */
   function basisView(h) {
@@ -815,7 +813,6 @@
   function decisionView(h) {
     const submitted = M.currentSubmission(h);
     const accepted = M.acceptance(h);
-    const last = M.latestReview(h);
     const steps = el('div', {class: 'steps'}, [
       ['Prepare', h.revisions.length || h.draft ? 'done' : '', h.draft ? 'Draft ' + h.draft.rev : h.revisions.length ? 'Revision prepared' : 'Not started'],
       ['Submit', submitted || h.revisions.length ? 'done' : '', submitted ? submitted.rev + ' submitted' : h.revisions.length ? M.latestRevision(h).rev + ' · ' + M.latestRevision(h).state.toLowerCase() : 'Not submitted'],
@@ -1173,7 +1170,7 @@
     syncBlocks();
   }
 
-  function formRoute(h) {
+  function formRoute() {
     openModal({
       kicker: 'Delivery destination', title: 'Record the routing decision', submitLabel: 'Record routing',
       body: [
@@ -1200,7 +1197,7 @@
   const ACTION_PRESETS = {
     commercial: (h) => ({title: 'Request a commercial revision for ' + h.commercial.quotation.ref, owner: h.opportunity.ownerAtWon}),
     routing: (h) => ({title: 'Record the routing decision for the accepted scope', owner: h.destination.routingOwner}),
-    conversion: (h) => ({title: 'Reconcile the unresolved conversion targets in ES-07', owner: 'Jordan · Conversion coordinator'}),
+    conversion: () => ({title: 'Reconcile the unresolved conversion targets in ES-07', owner: 'Jordan · Conversion coordinator'}),
     requirement: (h, id) => {
       const r = h.requirements.find((x) => x.id === id);
       return {title: 'Obtain ' + r.title.toLowerCase(), owner: r.owner};
