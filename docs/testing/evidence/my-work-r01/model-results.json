@@ -1,0 +1,110 @@
+{
+  "html_sha256": "7e915a6d896e4c64967857e1fcd536307eab0c0394916f3d776a1b23ebdab850",
+  "groups": 26,
+  "results": [
+    {
+      "name": "Initial fixture projects exact equipment and work into one deduplicated obligation set",
+      "result": "Passed"
+    },
+    {
+      "name": "Every count and query excludes the restricted Finance source",
+      "result": "Passed"
+    },
+    {
+      "name": "Technician scope and team visibility are enforced independently of filters",
+      "result": "Passed"
+    },
+    {
+      "name": "Unknown dates remain separate from overdue and upcoming obligations",
+      "result": "Passed"
+    },
+    {
+      "name": "Combined worklist criteria retain actual source context",
+      "result": "Passed"
+    },
+    {
+      "name": "Observer writes and cross-role Activity completion refuse atomically",
+      "result": "Passed"
+    },
+    {
+      "name": "Failed inspection cannot be accepted",
+      "result": "Passed"
+    },
+    {
+      "name": "Reviewer return retains a reason and routes correction to its owner",
+      "result": "Passed"
+    },
+    {
+      "name": "Notification acknowledgement does not complete the underlying defect",
+      "result": "Passed"
+    },
+    {
+      "name": "Retest cannot precede recorded correction",
+      "result": "Passed"
+    },
+    {
+      "name": "Corrective evidence remains source-owned and does not close the defect",
+      "result": "Passed"
+    },
+    {
+      "name": "Invalid fresh reading rolls back the complete multi-command retest",
+      "result": "Passed"
+    },
+    {
+      "name": "Fresh passing retest preserves original evidence and creates a new review obligation",
+      "result": "Passed"
+    },
+    {
+      "name": "A passing retest awaits review instead of accepting itself or generating another retest",
+      "result": "Passed"
+    },
+    {
+      "name": "Reviewer acceptance closes the linked defect but creates a separate release decision",
+      "result": "Passed"
+    },
+    {
+      "name": "Scoped release retains the original exclusion and open OEM action",
+      "result": "Passed"
+    },
+    {
+      "name": "Changed source invalidates effective release and creates a readiness obligation",
+      "result": "Passed"
+    },
+    {
+      "name": "Activity completion requires an outcome and preserves the source history",
+      "result": "Passed"
+    },
+    {
+      "name": "Team assignment validates role, recipient module access and real date",
+      "result": "Passed"
+    },
+    {
+      "name": "Stale source and session versions retain the original state",
+      "result": "Passed"
+    },
+    {
+      "name": "Dependency contact never clears the source blocker",
+      "result": "Passed"
+    },
+    {
+      "name": "Personal saved criteria persist independently and team readers cannot edit another private view",
+      "result": "Passed"
+    },
+    {
+      "name": "Saved-view edit, duplicate name and retirement guard business records",
+      "result": "Passed"
+    },
+    {
+      "name": "Quiet preferences retain required updates and all owned obligations",
+      "result": "Passed"
+    },
+    {
+      "name": "Original operation recovery is idempotent and different reuse is refused",
+      "result": "Passed"
+    },
+    {
+      "name": "Malformed saved sessions refuse and valid serialised state retains all history",
+      "result": "Passed"
+    }
+  ]
+}
