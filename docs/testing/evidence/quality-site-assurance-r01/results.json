@@ -1,0 +1,203 @@
+{
+  "source": "f7240fa65d54804124d452c15267608fa4c27c84",
+  "html_sha256": "7f0e7531c2f4b8d592e4e269225d45da0d870db4361879465149164eb4cf9db3",
+  "browser": "153.0.8010.47",
+  "groups": 23,
+  "results": [
+    {
+      "name": "Initial three-package overview and six views render",
+      "result": "Passed"
+    },
+    {
+      "name": "Combined filtering and empty selection context are explicit",
+      "result": "Passed"
+    },
+    {
+      "name": "Exact equipment and work snapshots use the correct record type",
+      "result": "Passed"
+    },
+    {
+      "name": "Readiness source confirmation is recorded against the selected visit",
+      "result": "Passed"
+    },
+    {
+      "name": "Technician acknowledges equipment and exact preparation",
+      "result": "Passed"
+    },
+    {
+      "name": "Draft changes are protected when navigating away",
+      "result": "Passed"
+    },
+    {
+      "name": "Malformed image is rejected without adding evidence",
+      "result": "Passed"
+    },
+    {
+      "name": "Native PNG decoding retains original bytes and check links",
+      "result": "Passed"
+    },
+    {
+      "name": "Failed submission creates one linked defect",
+      "result": "Passed"
+    },
+    {
+      "name": "Reviewer return retains a full reason and owned due date",
+      "result": "Passed"
+    },
+    {
+      "name": "Corrective work and successor create fresh evidence requirements",
+      "result": "Passed"
+    },
+    {
+      "name": "Passing retest keeps the original evidence and closes only after review",
+      "result": "Passed"
+    },
+    {
+      "name": "Scoped release retains OEM exclusion and receiving handover",
+      "result": "Passed"
+    },
+    {
+      "name": "Reload retains exact submitted and released records",
+      "result": "Passed"
+    },
+    {
+      "name": "Failed save preserves the exact modal and original records",
+      "result": "Passed"
+    },
+    {
+      "name": "Lost response recovers original save without another action",
+      "result": "Passed"
+    },
+    {
+      "name": "Changed source withdraws effective release while retaining its history",
+      "result": "Passed"
+    },
+    {
+      "name": "Incident scope hold is independently reviewed and retained",
+      "result": "Passed"
+    },
+    {
+      "name": "Restricted incident display hides details from observer role",
+      "result": "Passed"
+    },
+    {
+      "name": "All views fit desktop, tablet and phone viewports",
+      "result": "Passed"
+    },
+    {
+      "name": "Native dialog focus, Escape and navigation keys behave correctly",
+      "result": "Passed"
+    },
+    {
+      "name": "Export contains current exact local records",
+      "result": "Passed"
+    },
+    {
+      "name": "Damaged session is preserved and offers original export",
+      "result": "Passed"
+    }
+  ],
+  "errors": [],
+  "images": [
+    {
+      "name": "1440-overview.png",
+      "sha256": "25cafc62bf30d46cf386c98ff9af4a5130c2c6c6e4527072a2225f061d33bf90"
+    },
+    {
+      "name": "1440-readiness.png",
+      "sha256": "11e57968bc49e3e0b2b71a7e1d82b5e768f92886ff5d62ab0e71df22580e7fa8"
+    },
+    {
+      "name": "1440-defects-failed.png",
+      "sha256": "6f48ee917dbbe6b565e2b9422d9557af59ac08f4c9c220ab819f840b6e6f8ad2"
+    },
+    {
+      "name": "1440-inspection-draft.png",
+      "sha256": "3a0283e467beef1b0905fa0f36977f730aecfacb31d2ca74743d4f5b3e6bc75a"
+    },
+    {
+      "name": "1440-release-complete.png",
+      "sha256": "ae4125f6aa48d27f252e7956e15a2edc78aeb1752d7e2c07fabf9ddaa284dff6"
+    },
+    {
+      "name": "1440-release-stale.png",
+      "sha256": "6c0bf27be62d212411fb71fbae1c308646030431a0e2bf9c760654b3400e5e2a"
+    },
+    {
+      "name": "1440-incidents.png",
+      "sha256": "c9f1c451a2c4e9331659bc47af97d3b53695f8a535864c600d1285c426bcf206"
+    },
+    {
+      "name": "1440-overview-review.png",
+      "sha256": "5d31b1308e9807c37abe26898473d70d8a63e075f581a41b9bc4c991d5029947"
+    },
+    {
+      "name": "1440-readiness-review.png",
+      "sha256": "df0c942d24026febd94be5fa44f70680dfbc6267e2bb426838c25a83965d4935"
+    },
+    {
+      "name": "1440-inspection-review.png",
+      "sha256": "14698dcbfb0ecfddf9b075d04e715720e670a419d515763d11d6db4950e08cdc"
+    },
+    {
+      "name": "1440-defects-review.png",
+      "sha256": "015c2d556c476ad0ae148ccb8aae6dd63fa3e3b3223ee1f28d74016528e33831"
+    },
+    {
+      "name": "1440-incidents-review.png",
+      "sha256": "7a5d9cb132ee19ec0d754aee2d66ddb0d90cb34b2425c9055ace11e6a403b23a"
+    },
+    {
+      "name": "1440-release-review.png",
+      "sha256": "ff31ae70f6e328e08e45db0695a96b0d22c52e18b3e271c0b3519dbf1d7417ad"
+    },
+    {
+      "name": "390-overview-review.png",
+      "sha256": "97a29d2ae938aa46b36dab06acedc43a4b959e13c9bfd4d67f523e68726b3918"
+    },
+    {
+      "name": "390-readiness-review.png",
+      "sha256": "8cb5e70250434d7daf216e0e8c2a431d278d3a1e4e94385f2c2a2c59b1934e5c"
+    },
+    {
+      "name": "390-inspection-review.png",
+      "sha256": "89f7d47f230b66e06079d56ae554f054a349e52b0a6d7d06b29c704fa8f7e6f9"
+    },
+    {
+      "name": "390-defects-review.png",
+      "sha256": "8b9360da9eda2bb351d5b9b1798ee22b0552c3b43c803c8c52bf5ab72f63ad7a"
+    },
+    {
+      "name": "390-incidents-review.png",
+      "sha256": "6b94e2ef0454f11a1ab3980cb550bdbba28523c98d48c3286b5bdb36658be15d"
+    },
+    {
+      "name": "390-release-review.png",
+      "sha256": "5bb3ab16ab0301329306ee1eb07fcc08929a1c687e55540b05a24cb6e9e7ecc7"
+    },
+    {
+      "name": "320-overview-review.png",
+      "sha256": "3f272b9940d136f9da31142d91e054cca922ead27d7b9e79d3ba2424dafe7f9d"
+    },
+    {
+      "name": "320-readiness-review.png",
+      "sha256": "a96c70ee5c2c266a67b4d8cc34dbc6232e0422ca1eecad9051017ede85cf8839"
+    },
+    {
+      "name": "320-inspection-review.png",
+      "sha256": "4029c41c9eda600e0e4e9ea1d4337e92716288bfd450fd2518f9ddfb07b4f087"
+    },
+    {
+      "name": "320-defects-review.png",
+      "sha256": "1beb6b504c54661bd89e2dee23732d1b821c63c8c7a5f6f79e0d98ae8e4ce410"
+    },
+    {
+      "name": "320-incidents-review.png",
+      "sha256": "b3761c2f6cec51d6be274a2e10d0152a2f4c2c29553cdabdda3da08f6fabe3bf"
+    },
+    {
+      "name": "320-release-review.png",
+      "sha256": "680ad4ec499528b5843a24fe1705117c321cbc75b175f3c779b85f9761bfc5c8"
+    }
+  ]
+}

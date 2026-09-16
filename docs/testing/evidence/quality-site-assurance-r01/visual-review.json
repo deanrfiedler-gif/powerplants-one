@@ -1,0 +1,47 @@
+{
+  "review_date": "2026-09-16",
+  "source": "db450c85e9909dd01a89289bc7bd0acb9b0257f4",
+  "html_sha256": "7f0e7531c2f4b8d592e4e269225d45da0d870db4361879465149164eb4cf9db3",
+  "run_id": 35039599568,
+  "artifact_id": 10424558063,
+  "artifact_sha256": "3ddfc7d8b228da786c18548a4a6dc1914315fbb14de8a462bee895dc6d82cace",
+  "inspected_original_captures": [
+    {
+      "name": "1440-overview.png",
+      "sha256": "25cafc62bf30d46cf386c98ff9af4a5130c2c6c6e4527072a2225f061d33bf90"
+    },
+    {
+      "name": "1440-readiness.png",
+      "sha256": "11e57968bc49e3e0b2b71a7e1d82b5e768f92886ff5d62ab0e71df22580e7fa8"
+    },
+    {
+      "name": "1440-defects-failed.png",
+      "sha256": "7ffd02f6df1d3ea2ed2bafd31f374e892d4875c8accd731d65cce7bb40e3c31d"
+    },
+    {
+      "name": "1440-inspection-draft.png",
+      "sha256": "b3e1df2d0e23fdb46a1e127753faac6a3099562c8cfc9b5acf57963dd5876e70"
+    },
+    {
+      "name": "1440-release-complete.png",
+      "sha256": "a41befc59bfb3248c4f5252fe6ba6cc7e283bb7dd9b76dc20a47789143af5f13"
+    },
+    {
+      "name": "1440-incidents.png",
+      "sha256": "6cc75662c557c1e5582c1758f79f4f20d1229e72a3cdbe779fdb1631b647266b"
+    },
+    {
+      "name": "390-overview-review.png",
+      "sha256": "97a29d2ae938aa46b36dab06acedc43a4b959e13c9bfd4d67f523e68726b3918"
+    },
+    {
+      "name": "390-inspection-review.png",
+      "sha256": "4faf8b35e367ee8b18a14c50cc02ecf5ab47d6afc5653bcf2be5bd2aa2d46d39"
+    },
+    {
+      "name": "320-release-review.png",
+      "sha256": "9f9c83488cca9ca7ca84dd3609a0541bad2b24f98df860a82a9135202f4ac833"
+    }
+  ],
+  "findings": "Desktop hierarchy, fields, source context, linked defects, retained reviews, release exclusions and mobile stacking inspected. No layout clipping observed. Some original captures include transient saved-status toasts; images have not been cropped or retouched. The native suite checked document overflow at all five widths. This run completed the full business journey and responsive group, then stopped on an ambiguous test selector for the page guide; final completion is recorded separately."
+}
