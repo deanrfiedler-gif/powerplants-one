@@ -1,11 +1,11 @@
 ---
 document_id: PPO-UI-DESIGN-INDEX
 title: HTML design index and maintenance guide
-revision: r02
-updated: 2026-09-15
+revision: r03
+updated: 2026-09-16
 owner: Dean Fiedler
 status: Repository inventory; individual design approvals remain in linked decisions
-source_commit: d041de7c40e7ba73acdef3252d5f18f1bf8ccb2f
+source_commit: 9921be2439ca479135482c51fbf3ed4b28615f37
 ---
 
 # Powerplants One HTML design index
@@ -13,6 +13,8 @@ source_commit: d041de7c40e7ba73acdef3252d5f18f1bf8ccb2f
 Use this page to find the **latest available HTML for each design family**, its recorded approval and its implementation handover. The tables distinguish files already on `main` from contributions still in open pull requests. Keep this index at one stable path and update it in the same pull request as a new design or approval decision.
 
 **Inventory checked:** 15 September 2026, against [main at d041de7](https://github.com/deanrfiedler-gif/powerplants-one/commit/d041de7c40e7ba73acdef3252d5f18f1bf8ccb2f). All **139 HTML paths under `docs/`** are linked below: **120 UI reference files, 15 blueprint previews and four generator templates**. This is a file count, including earlier revisions and duplicates, not a count of distinct modules. Application HTML in `src/` and `public/` is outside this inventory. Open PRs #205 and #206 are listed separately and excluded from these main-branch counts. Unpublished conversation/download files cannot be established from GitHub alone.
+
+**Scoped addition, 16 September 2026:** ES-05 Quotation approval, issue and distribution r01 and its detailed report are linked below. This amendment does not repeat the dated full-inventory audit above or change existing design acceptance.
 
 **Latest available does not mean approved or implemented.** A higher filename revision, a successful check or a merged pull request does not establish design approval. **Approved** requires a linked Dean decision; **Proposed** and **Uploaded reference** do not establish acceptance; **Study** is explicitly unadopted scope. Recorded desktop and phone approvals retain their separate scopes. Where filenames and embedded revision labels disagree, the discrepancy is stated instead of silently choosing a new baseline.
 
@@ -62,6 +64,7 @@ These are the latest uploaded shared visual references. Their presence does not 
 | Sales → Estimating intake | [r02 preview](estimating/sales-estimating-intake-preview-r02.html) | Proposed design | [r02 change record](sales/sales-estimating-intake-change-record-r02.md). Original field-bank/design reference is retained below. |
 | Wizard data review | [r02](estimation-wizard/PPO-Wizard-Data-Review-r02.html) | Latest uploaded design; acceptance not established by this audit | Distinct from the advanced estimating-container study and bounded guided pilot. |
 | Quotation module | [r03](quoting/ppo-quotation-module-r03.html) | Latest uploaded design; acceptance not established by this audit | [r03 audit](quoting/ppo-quotation-audit-r03.md); separate from the legacy Quotation Builder concept below. |
+| Quotation approval, issue & distribution — ES-05 | [r01](quoting/PPO-Quotation-Approval-Issue-and-Distribution-r01.html) · [Detailed report](quoting/PPO-Quotation-Approval-Issue-and-Distribution-Report-r01.md) | Proposed six-view module; native visual and owner acceptance pending | Exact source/output review, approval, retained issue, recipient evidence and revision history. [Design and receiving handover](../../decisions/quotation-approval-issue-distribution-design.md). |
 | Quotation PDF design | [r02](quoting/ppo-quotation-pdf-design-r02.html) | Latest uploaded output design; acceptance not established by this audit | [r02 change notes](quoting/ppo-quotation-pdf-design-r02-changes.md). Output layout and the interactive quotation module are distinct references. |
 | Estimating workspace | [Working preview](../../blueprints/estimating-workspace-mockup.html) | Discovery reference; full preview is not an application acceptance claim | E1/E2 implement bounded portions. [Discovery handover](../../delivery/estimating-discovery-handover.md), [E1 handover](../../delivery/estimating-e1-handover.md). |
 | E2 options and scope discovery | [Original walkthrough](../../blueprints/estimating-e2-walkthrough.html) | Historical proposal with partial policy adoption; original routing is not current authority | Adopted E2-D02/D03 and DR-02 are implemented in bounded slices. Numeric routing and other deferred rules remain unadopted. [Current authority](../../decisions/ADR-0025-e2-discovery-foundation.md), [saved-screen handover](../../delivery/estimating-e2-screens-handover.md). |
