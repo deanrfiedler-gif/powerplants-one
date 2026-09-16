@@ -1,5 +1,5 @@
 {
-  "groups": 25,
+  "groups": 27,
   "results": [
     {
       "name": "Four missing definition sets always block operational readiness",
@@ -99,6 +99,14 @@
     },
     {
       "name": "Export restore validates context, range, override unit, duplicate identities and malformed data",
+      "result": "Passed"
+    },
+    {
+      "name": "A retained manual part that reappears requires a new explicit decision",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore rejects changed part units and forged saved totals",
       "result": "Passed"
     }
   ]

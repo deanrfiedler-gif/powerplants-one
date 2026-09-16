@@ -207,7 +207,7 @@
     writable(s,gate);const line=s.configuration?.lines.find(l=>l.key===key);if(!line)fail('Staged part not found.');
     decimal(values.qty,3,100000,false);decimal(values.cost,2,1000000);decimal(values.sell,2,1000000);
     if(Number(values.sell)<Number(values.cost))fail('Reference sell cannot be below cost.');
-    if(!values.description.trim()||values.description.length>300||!reason.trim())fail('Description and manual-edit reason are required.');
+    if(!values.description.trim()||values.description.length>300||!reason.trim()||reason.length>1000)fail('Description and a manual-edit reason of at most 1,000 characters are required.');
     Object.assign(line,clone(values));s.configuration.totals=totals(s.configuration.lines);
     s.audit.push({at:new Date().toISOString(),event:'Manual part edit · '+key,detail:reason});s.rev++;
   }
@@ -227,9 +227,10 @@
     for(const r of s.runs)if(!fixtures[r.caseId]||r.formula!=='NOT SUPPLIED'||!r.id||!Array.isArray(r.lines)||stable(r.context)!==stable(CONTEXT)||!Number.isFinite(Date.parse(r.at))||!r.totalSnapshot||!r.inputs||fields.some(f=>typeof r.inputs[f.key]!=='string')||r.reference!==fixtures[r.caseId].version||r.mapping!==fixtures[r.caseId].mapping||r.prices!==fixtures[r.caseId].prices)fail('Invalid reference run.');
     if(!s.overrides||!s.reviewedOverrides||Array.isArray(s.overrides))fail('Invalid override collection.');
     for(const [key,o]of Object.entries(s.overrides)){if(!['clothQty','cableQty','pipeQty','motorsQty','labourQty'].includes(key)||!o.reason||o.reason.length>1000||!Object.values(fixtures).some(f=>f.version===o.basis)||!Number.isFinite(Date.parse(o.at)))fail('Invalid override evidence.');decimal(o.value,3,100000,false);if(o.unit!==resultDefinitions.find(r=>r[0]===key)[2])fail('Override unit mismatch.');}
+    const referenceUnits=Object.fromEntries(Object.values(fixtures).flatMap(f=>linesFor(f,f.results,f.inputs)).map(l=>[l.key,l.unit]));
     for(const list of [...s.runs.flatMap(r=>[r.lines,r.baseline]),...(s.configuration?[s.configuration.lines,s.configuration.baseline]:[])]) {
       if(!Array.isArray(list)||list.length>100||new Set(list.map(l=>l.key)).size!==list.length)fail('Invalid or ambiguous part list.');
-      for(const l of list){if(typeof l.key!=='string'||l.key.length>100||typeof l.description!=='string'||l.description.length>300||typeof l.unit!=='string'||l.unit.length>30||typeof l.group!=='string'||l.group.length>100||!['generated','manual'].includes(l.origin)||typeof l.noPurchase!=='boolean')fail('Invalid part.');decimal(l.qty,3,100000,false);if(l.cost!=='')decimal(l.cost,2,1000000);if(l.sell!=='')decimal(l.sell,2,1000000);}
+      for(const l of list){if(typeof l.key!=='string'||l.key.length>100||typeof l.description!=='string'||l.description.length>300||l.unit!==referenceUnits[l.key]||typeof l.unit!=='string'||typeof l.group!=='string'||l.group.length>100||!['generated','manual'].includes(l.origin)||typeof l.noPurchase!=='boolean')fail('Invalid part or reference unit.');decimal(l.qty,3,100000,false);if(l.cost!=='')decimal(l.cost,2,1000000);if(l.sell!=='')decimal(l.sell,2,1000000);}
     }
     for(const r of s.runs)if(stable(r.totalSnapshot)!==stable(totals(r.lines)))fail('Run totals do not match their saved line snapshot.');
     for(const a of s.audit)if(typeof a.event!=='string'||a.event.length>500||typeof a.detail!=='string'||a.detail.length>2000||!Number.isFinite(Date.parse(a.at)))fail('Invalid audit entry.');

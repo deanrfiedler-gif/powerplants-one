@@ -239,7 +239,7 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
     writable(s,gate);const line=s.configuration?.lines.find(l=>l.key===key);if(!line)fail('Staged part not found.');
     decimal(values.qty,3,100000,false);decimal(values.cost,2,1000000);decimal(values.sell,2,1000000);
     if(Number(values.sell)<Number(values.cost))fail('Reference sell cannot be below cost.');
-    if(!values.description.trim()||values.description.length>300||!reason.trim())fail('Description and manual-edit reason are required.');
+    if(!values.description.trim()||values.description.length>300||!reason.trim()||reason.length>1000)fail('Description and a manual-edit reason of at most 1,000 characters are required.');
     Object.assign(line,clone(values));s.configuration.totals=totals(s.configuration.lines);
     s.audit.push({at:new Date().toISOString(),event:'Manual part edit · '+key,detail:reason});s.rev++;
   }
@@ -259,9 +259,10 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
     for(const r of s.runs)if(!fixtures[r.caseId]||r.formula!=='NOT SUPPLIED'||!r.id||!Array.isArray(r.lines)||stable(r.context)!==stable(CONTEXT)||!Number.isFinite(Date.parse(r.at))||!r.totalSnapshot||!r.inputs||fields.some(f=>typeof r.inputs[f.key]!=='string')||r.reference!==fixtures[r.caseId].version||r.mapping!==fixtures[r.caseId].mapping||r.prices!==fixtures[r.caseId].prices)fail('Invalid reference run.');
     if(!s.overrides||!s.reviewedOverrides||Array.isArray(s.overrides))fail('Invalid override collection.');
     for(const [key,o]of Object.entries(s.overrides)){if(!['clothQty','cableQty','pipeQty','motorsQty','labourQty'].includes(key)||!o.reason||o.reason.length>1000||!Object.values(fixtures).some(f=>f.version===o.basis)||!Number.isFinite(Date.parse(o.at)))fail('Invalid override evidence.');decimal(o.value,3,100000,false);if(o.unit!==resultDefinitions.find(r=>r[0]===key)[2])fail('Override unit mismatch.');}
+    const referenceUnits=Object.fromEntries(Object.values(fixtures).flatMap(f=>linesFor(f,f.results,f.inputs)).map(l=>[l.key,l.unit]));
     for(const list of [...s.runs.flatMap(r=>[r.lines,r.baseline]),...(s.configuration?[s.configuration.lines,s.configuration.baseline]:[])]) {
       if(!Array.isArray(list)||list.length>100||new Set(list.map(l=>l.key)).size!==list.length)fail('Invalid or ambiguous part list.');
-      for(const l of list){if(typeof l.key!=='string'||l.key.length>100||typeof l.description!=='string'||l.description.length>300||typeof l.unit!=='string'||l.unit.length>30||typeof l.group!=='string'||l.group.length>100||!['generated','manual'].includes(l.origin)||typeof l.noPurchase!=='boolean')fail('Invalid part.');decimal(l.qty,3,100000,false);if(l.cost!=='')decimal(l.cost,2,1000000);if(l.sell!=='')decimal(l.sell,2,1000000);}
+      for(const l of list){if(typeof l.key!=='string'||l.key.length>100||typeof l.description!=='string'||l.description.length>300||l.unit!==referenceUnits[l.key]||typeof l.unit!=='string'||typeof l.group!=='string'||l.group.length>100||!['generated','manual'].includes(l.origin)||typeof l.noPurchase!=='boolean')fail('Invalid part or reference unit.');decimal(l.qty,3,100000,false);if(l.cost!=='')decimal(l.cost,2,1000000);if(l.sell!=='')decimal(l.sell,2,1000000);}
     }
     for(const r of s.runs)if(stable(r.totalSnapshot)!==stable(totals(r.lines)))fail('Run totals do not match their saved line snapshot.');
     for(const a of s.audit)if(typeof a.event!=='string'||a.event.length>500||typeof a.detail!=='string'||a.detail.length>2000||!Number.isFinite(Date.parse(a.at)))fail('Invalid audit entry.');
@@ -306,7 +307,7 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
     $('#tabs').innerHTML=views.map(([id,label])=>'<button type="button" data-view="'+id+'" aria-current="'+(ui.view===id?'page':'false')+'">'+label+'</button>').join('');
     $('#context').innerHTML='<section class="context"><div><span class="eyebrow">Estimate '+esc(s.context.estimate)+' · '+esc(s.context.option)+' · '+esc(s.context.revision)+'</span><h2>Northbank Nursery <span class="muted">/</span> Glasshouse 02</h2><p class="small">Screen Systems · '+esc(s.inputs.variant)+' · Fixed facility '+esc(s.context.facility)+'</p></div><div class="context-controls"><div class="row">'+tag(ui.locked?'Estimate locked':'Local design draft',ui.locked?'danger':'source')+btn('context','Record snapshot','','small-button')+'</div><p class="small">Proposed screen configuration · no installed asset claimed</p></div></section>';
     if(corrupt!==null){$('#recovery').innerHTML='';$('#content').innerHTML=heading('Saved session needs attention','The stored data has been preserved. Export it before resetting this demonstration.')+note('No saved answers or run history have been overwritten.','warning')+'<div class="row mt">'+btn('raw','Export preserved data')+btn('reset','Reset demonstration')+'</div>';return;}
-    $('#recovery').innerHTML=(ui.stale?note('Another tab changed the saved session. Export your current answers, then reload. Writes are paused.','warning'):'')+(s.pending?note('<b>Save response not received.</b> The original operation may have committed. Recover '+esc(s.pending.operation)+' before another write. '+btn('recover','Recover original operation','','small-button'),'warning'):'')+(s.configuration?.totalsState==='Stale totals'?note('<b>Lines are saved; totals are stale.</b> Repair totals from the existing lines. '+btn('repair','Repair totals',disabled(!editable()),'small-button'),'warning'):'');
+    $('#recovery').innerHTML=(ui.scopeChanged?note('The committed estimate scope has changed. Reconcile the exact scope in the originating estimate before editing or staging.','warning'):'')+(ui.locked?note('The estimate is locked. An authorised draft successor is required before further editing.','warning'):'')+(ui.stale?note('Another tab changed the saved session. Export your current answers, then reload. Writes are paused.','warning'):'')+(s.pending?note('<b>Save response not received.</b> The original operation may have committed. Recover '+esc(s.pending.operation)+' before another write. '+btn('recover','Recover original operation','','small-button'),'warning'):'')+(s.configuration?.totalsState==='Stale totals'?note('<b>Lines are saved; totals are stale.</b> Repair totals from the existing lines. '+btn('repair','Repair totals',disabled(!editable()),'small-button'),'warning'):'');
     const p=M.preview(s);
     $('#content').innerHTML=({configure:configure,parts:parts,rerun:rerun,evidence:evidence,runs:runs}[ui.view])(p);
   }
@@ -449,7 +450,7 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
     try{M.writable(s,gate());s.inputs[f]=event.target.value;s.rev++;ui.resolutions={};queueSave();const side=$('.result-side');if(side)side.innerHTML=resultsSide(M.preview(s));}catch(error){feedback(error);}
   });
   document.addEventListener('change',event=>{
-    if(event.target.dataset.field){const f=event.target.dataset.field;try{M.writable(s,gate());s.inputs[f]=event.target.value;ui.resolutions={};s.rev++;queueSave();render();}catch(error){feedback(error);}return;}
+    if(event.target.dataset.field){const f=event.target.dataset.field;try{M.writable(s,gate());s.inputs[f]=event.target.value;ui.resolutions={};s.rev++;queueSave();if(event.target.tagName==='SELECT')render();}catch(error){feedback(error);}return;}
     if(event.target.dataset.resolution)ui.resolutions[event.target.dataset.resolution]=event.target.value;
   });
   $('#tabs').addEventListener('keydown',event=>{

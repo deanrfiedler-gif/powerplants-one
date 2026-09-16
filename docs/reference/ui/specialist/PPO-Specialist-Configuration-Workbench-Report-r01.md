@@ -275,7 +275,7 @@ An additional scenario sets cloth override to 1,200 m², loads B, reviews that r
 
 The [verification record](../../../testing/evidence/specialist-r01/README.md) identifies exact source/hash, original model/browser results and visual review. Checks cover calculation boundaries, decimal extension, zero/blank handling, versioned overrides, manual/unmatched reconciliation, cancellation, stale previews, permission scenarios, original-operation recovery, totals repair, immutable history and invalid restore rejection.
 
-At initial review-package publication, **25 model groups pass; native browser execution and visual review are pending**. Final evidence will identify the exact verified HTML hash.
+At initial review-package publication, **27 model groups pass; native browser execution and visual review are pending**. Final evidence will identify the exact verified HTML hash.
 
 This is design assurance. **EA-16 and EA-17 are not accepted against approved Screen Systems definitions.** Real engineering correctness, source parity, full legacy fields, concurrent server persistence, operational permissions, quote approval, tax/FX policy, database integration and offline estimating remain outside the delivered prototype.
 

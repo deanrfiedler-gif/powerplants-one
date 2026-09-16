@@ -33,4 +33,4 @@ Current permissions, scope and locks are local scenarios. Future services must e
 
 ## Delivery status
 
-Five views, every implemented field, logical evidence ownership, receiving references, recovery and walkthrough are documented in the report. Twenty-five model groups pass. Native execution and visual review will be recorded before final delivery. Owner design acceptance, approved mathematical outcomes and application integration remain separate.
+Five views, every implemented field, logical evidence ownership, receiving references, recovery and walkthrough are documented in the report. Twenty-seven model groups pass. Native execution and visual review will be recorded before final delivery. Owner design acceptance, approved mathematical outcomes and application integration remain separate.
