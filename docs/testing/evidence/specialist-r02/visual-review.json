@@ -1,0 +1,21 @@
+{
+  "source": "721ef87c8243e688fdb3fc13121ba543f3fc5209",
+  "html_sha256": "bc06fa41f1362145eb585431427ee5aebe94d1e3c8a40cc53b68ccc4d6a72e5c",
+  "run": 35061751847,
+  "artifact": 10432292919,
+  "initial_review": "All 16 original captures reviewed; see initial-results.json and README.md.",
+  "final_targeted_review": [
+    "1440-working.png",
+    "1440-parts.png",
+    "1440-run-snapshot.png",
+    "390-pricing.png"
+  ],
+  "observations": [
+    "Cut-length dialog displays numeric substitution, normalized units and source formula.",
+    "Discount position uses Pricing policy; other generated positions retain explicit exclusion.",
+    "Run snapshot remains readable in a bounded scrolling dialog.",
+    "Phone pricing bridge and rounding policy precede the long editable line list."
+  ],
+  "result": "Passed; no further layout correction identified",
+  "limits": "Visual review is separate from assistive-technology and owner/device acceptance."
+}
