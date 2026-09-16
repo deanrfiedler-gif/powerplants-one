@@ -1,0 +1,168 @@
+{
+  "design": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
+  "sha256": "ce8b117f5b62615389111c59e479f606c8c50b7b3c218cde5e5d86cd14edeab8",
+  "engine": "Chromium via Playwright, headless, locale en-AU, timezone Australia/Melbourne",
+  "checked_at": "2026-09-16T11:42:08.190Z",
+  "viewports": [
+    {
+      "viewport": "desktop",
+      "width": 1440,
+      "overflow": {
+        "overview": 0,
+        "orders": 0,
+        "orderSnapshot": 0,
+        "accounts": 0,
+        "cases": 0
+      },
+      "registerPresentation": {
+        "table": "block",
+        "cards": "none",
+        "rows": 6,
+        "cardCount": 6
+      },
+      "snapshotOpen": true,
+      "appliedFont": "PPOBoardRoboto, Roboto, Verdana, sans-serif",
+      "smallestInteractiveTarget": 32
+    },
+    {
+      "viewport": "laptop",
+      "width": 1280,
+      "overflow": {
+        "overview": 0,
+        "orders": 0,
+        "orderSnapshot": 0,
+        "accounts": 0,
+        "cases": 0
+      },
+      "registerPresentation": {
+        "table": "block",
+        "cards": "none",
+        "rows": 6,
+        "cardCount": 6
+      },
+      "snapshotOpen": true,
+      "appliedFont": "PPOBoardRoboto, Roboto, Verdana, sans-serif",
+      "smallestInteractiveTarget": 32
+    },
+    {
+      "viewport": "tablet",
+      "width": 834,
+      "overflow": {
+        "overview": 0,
+        "orders": 0,
+        "orderSnapshot": 0,
+        "accounts": 0,
+        "cases": 0
+      },
+      "registerPresentation": {
+        "table": "block",
+        "cards": "none",
+        "rows": 6,
+        "cardCount": 6
+      },
+      "snapshotOpen": true,
+      "appliedFont": "PPOBoardRoboto, Roboto, Verdana, sans-serif",
+      "smallestInteractiveTarget": 32
+    },
+    {
+      "viewport": "phone",
+      "width": 390,
+      "overflow": {
+        "overview": 0,
+        "orders": 0,
+        "orderSnapshot": 0,
+        "accounts": 0,
+        "cases": 0
+      },
+      "registerPresentation": {
+        "table": "none",
+        "cards": "block",
+        "rows": 6,
+        "cardCount": 6
+      },
+      "snapshotOpen": true,
+      "appliedFont": "PPOBoardRoboto, Roboto, Verdana, sans-serif",
+      "smallestInteractiveTarget": 32
+    },
+    {
+      "viewport": "narrow",
+      "width": 320,
+      "overflow": {
+        "overview": 0,
+        "orders": 0,
+        "orderSnapshot": 0,
+        "accounts": 0,
+        "cases": 0
+      },
+      "registerPresentation": {
+        "table": "none",
+        "cards": "block",
+        "rows": 6,
+        "cardCount": 6
+      },
+      "snapshotOpen": true,
+      "appliedFont": "PPOBoardRoboto, Roboto, Verdana, sans-serif",
+      "smallestInteractiveTarget": 32
+    }
+  ],
+  "keyboard_focus": {
+    "id": "tab-deals",
+    "matchesFocusVisible": true,
+    "outlineStyle": "solid",
+    "outlineWidth": "2px"
+  },
+  "messages": [],
+  "groups": 12,
+  "status": "passed",
+  "scope": "Rendered layout, console output and interaction in one Chromium engine. No screen reader, assistive technology, physical device, print or owner acceptance is asserted.",
+  "results": [
+    {
+      "name": "No horizontal page scroll at 1440, 1280, 834, 390 or 320 CSS pixels",
+      "status": "passed"
+    },
+    {
+      "name": "The embedded Roboto face is the applied body font",
+      "status": "passed"
+    },
+    {
+      "name": "Desktop shows the register table and the phone layout shows the same records as cards",
+      "status": "passed"
+    },
+    {
+      "name": "Interactive controls keep a usable height at every measured viewport",
+      "status": "passed"
+    },
+    {
+      "name": "A docked record snapshot opens at every measured viewport",
+      "status": "passed"
+    },
+    {
+      "name": "Arrow and End keys move between local tabs in a real engine",
+      "status": "passed"
+    },
+    {
+      "name": "Keyboard focus stays on the activated tab and renders a visible focus outline",
+      "status": "passed"
+    },
+    {
+      "name": "The shared choice card opens within the viewport and closes on Escape",
+      "status": "passed"
+    },
+    {
+      "name": "Drill-through applies the filter and return navigation restores the overview",
+      "status": "passed"
+    },
+    {
+      "name": "Switching customer through the choice card shows no other customer record",
+      "status": "passed"
+    },
+    {
+      "name": "The docked snapshot overlays the context row, which is recorded rather than claimed otherwise",
+      "status": "passed"
+    },
+    {
+      "name": "No console error, page error or external network request occurred",
+      "status": "passed"
+    }
+  ]
+}
