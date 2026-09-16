@@ -1,0 +1,81 @@
+{
+  "groups": 19,
+  "results": [
+    {
+      "name": "Eight locations cover greenhouse, tunnel, block, field, room, shed and nested growing area",
+      "result": "Passed"
+    },
+    {
+      "name": "Exact greenhouse scope includes seven requirements and no sibling rules",
+      "result": "Passed"
+    },
+    {
+      "name": "Parent greenhouse instructions never propagate to a nested bay",
+      "result": "Passed"
+    },
+    {
+      "name": "Cross-site evidence cannot satisfy field visitor readiness",
+      "result": "Passed"
+    },
+    {
+      "name": "Entire attendance interval must fit the window; equality boundaries pass",
+      "result": "Passed"
+    },
+    {
+      "name": "Outside-season attendance remains blocked",
+      "result": "Passed"
+    },
+    {
+      "name": "Site-local midnight and UTC date boundary remain distinct",
+      "result": "Passed"
+    },
+    {
+      "name": "Non-interrupting inspection excludes shutdown requirement only",
+      "result": "Passed"
+    },
+    {
+      "name": "Expired crew induction creates individual missing-evidence reason",
+      "result": "Passed"
+    },
+    {
+      "name": "Acknowledging every crew member changes neither blockers nor work authority",
+      "result": "Passed"
+    },
+    {
+      "name": "Snapshot retains exact blockers and denies work authority; duplicates rejected",
+      "result": "Passed"
+    },
+    {
+      "name": "Captured evidence needs independent review and exact visit binding",
+      "result": "Passed"
+    },
+    {
+      "name": "Future clean-down performance cannot be asserted",
+      "result": "Passed"
+    },
+    {
+      "name": "Instruction draft does not change active source or clear readiness",
+      "result": "Passed"
+    },
+    {
+      "name": "Reviewer publishes exact successor and retains original snapshots/acknowledgements",
+      "result": "Passed"
+    },
+    {
+      "name": "Read-only, coordinator review and cross-site draft mutations are refused",
+      "result": "Passed"
+    },
+    {
+      "name": "Owned action deduplication leaves obligation open after reading",
+      "result": "Passed"
+    },
+    {
+      "name": "Invalid, missing and reverse visit ranges have no readiness result",
+      "result": "Passed"
+    },
+    {
+      "name": "Advance shutdown approval remains scoped and separate from shutdown performance",
+      "result": "Passed"
+    }
+  ]
+}
