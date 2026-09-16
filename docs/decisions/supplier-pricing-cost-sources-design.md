@@ -43,3 +43,7 @@ Main baseline: `d565a9de01b94aa7ad3fffe3a996f78c3aee589b`; tree `2c84890de6ab80a
 MYOB retains intended ERP authority and SharePoint intended document authority. Read-only source provenance alongside an existing estimate is the recommended first runtime increment, after permission-scoped source/mapping contracts exist. Durable source commands and estimate successors need server permissions, atomic version checks, idempotency/receipts, exact document evidence and agreed cost policies. ES-04 remains the next commercial-review boundary.
 
 Owner visual acceptance, screen-reader/device review, full operational acceptance, integration, deployment and merge are separate from this design contribution. No source thresholds or review authority are adopted by fixture data. Recovery is to revert this isolated design package; there is no database migration or external write to reverse.
+
+## Main-branch reconciliation
+
+Main advanced during verification to `e1b705acc5457dab6fc0b6a2f0c977132cbd2215` through PR #214. The shared HTML index, STATUS and document register were reconciled from that exact main, preserving all incoming module entries and adding only this contribution. The merge uses current main as its base tree and retains both commit histories. Module HTML/source remains the focus-corrected version; no unrelated main files are replaced.

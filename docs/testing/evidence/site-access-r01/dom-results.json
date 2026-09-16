@@ -1,0 +1,68 @@
+{
+  "mode": "DOM emulation only; no native browser or visual assertions",
+  "html_sha256": "c47c49041195b3834393f880daad83239e15280eaaff8978125f827c52036506",
+  "groups": 15,
+  "results": [
+    {
+      "name": "All six views render against initial greenhouse with three blockers",
+      "result": "Passed"
+    },
+    {
+      "name": "Requirement search, empty recovery, category and source detail",
+      "result": "Passed"
+    },
+    {
+      "name": "Time and season changes create exact full-interval blockers",
+      "result": "Passed"
+    },
+    {
+      "name": "Nested and cross-site scope does not inherit greenhouse evidence",
+      "result": "Passed"
+    },
+    {
+      "name": "Individual acknowledgements leave all blockers unchanged",
+      "result": "Passed"
+    },
+    {
+      "name": "Owned clarification, snapshots and acknowledgements survive reload",
+      "result": "Passed"
+    },
+    {
+      "name": "Captured clean-down requires site review before satisfying the requirement",
+      "result": "Passed"
+    },
+    {
+      "name": "Positive prerequisite completion never grants permission to work",
+      "result": "Passed"
+    },
+    {
+      "name": "Source draft keeps active r01, reviewer publishes r02 with original snapshot retained",
+      "result": "Passed"
+    },
+    {
+      "name": "New requirement remains a draft until independently reviewed and survives reload",
+      "result": "Passed"
+    },
+    {
+      "name": "Read-only role disables mutation controls but allows source inspection",
+      "result": "Passed"
+    },
+    {
+      "name": "Unavailable source scenario suppresses readiness and recovers deliberately",
+      "result": "Passed"
+    },
+    {
+      "name": "Stale local save refuses overwrite and retains entered form",
+      "result": "Passed"
+    },
+    {
+      "name": "Quota failure retains the command in memory with visible session-only status",
+      "result": "Passed"
+    },
+    {
+      "name": "Malformed original storage remains preserved with explicit recovery",
+      "result": "Passed"
+    }
+  ],
+  "errors": []
+}

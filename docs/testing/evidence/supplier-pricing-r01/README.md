@@ -31,3 +31,7 @@ The corrected model also derives unresolved successor findings from actual retai
 Source `c990aaacd6817c7506ccf40339f240803f51e4d5`, [run 35163189640](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35163189640), passed 26 model checks and the first 19 native groups, including the complete save/retry/review/successor journey and all five views at all five widths. No page/console errors were reported. The final focus-cycle assertion found that native dialog tab traversal could leave the snapshot; an explicit first/last focus loop now retains Tab and Shift+Tab inside both dialogs. The unchanged final assertion remains the acceptance gate for the correction.
 
 The returned ZIP hash `e342e70b23e965957aa8a77cf8d8cca292bb1405cbfafe0ef56d0f2bf9bb0004` and all 29 returned PNG hashes were verified. Desktop source register and price comparison, plus phone refresh, were inspected and clear. No proposed change was changed from amber to neutral to avoid implying a source problem.
+
+## Main reconciliation before final verification
+
+The focus-fix source `b1fe895905f61cb40245999c54a19192b53ad3c6` did not receive a native run because newer main introduced shared documentation conflicts. Main `e1b705ac` from PR #214 was merged into this branch with all incoming files retained and only the three shared supplier-pricing entries added. Final verification must be read against the reconciled source.

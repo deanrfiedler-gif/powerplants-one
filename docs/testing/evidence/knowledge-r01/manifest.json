@@ -1,0 +1,15 @@
+{
+  "baseline": "07eb34d5df5ea430c365da78e160cb6aa0b76f20",
+  "date": "2026-09-16",
+  "native_review": "Blocked; not claimed",
+  "files": {
+    "docs/design/knowledge/workspace.js": "215b034e0970c18d79621749a5054607a71ceb81b38f6789736c5bc8aa236f5d",
+    "docs/design/knowledge/README.md": "beda89b4a52b4f052607edb0816ee827e4cfa232dd9a0328d9f3705f56ba5a7d",
+    "docs/design/knowledge/workspace.css": "7f616fbfd30322e71345a98fb6b4a048114fa7d5e6134d511855328304973a50",
+    "docs/design/knowledge/fonts.css": "57b4aafb71296b18d80408cb10aa972c87f5185deafd748c7fdcfb33e2bd4bef",
+    "docs/design/knowledge/icons.json": "fa0ff9017a3218176b6c86d9a27dd8e21a853c96ded404aa73b79af64d2fe422",
+    "docs/design/knowledge/model.js": "da67dd8b2a1c3f17349a15a85469912e1c359b7381d74ad702fb1c88de215a97",
+    "docs/design/knowledge/template.html": "43f0c35d4efdca0892877e1386bba0b8f05fc459d9a62cd0a5bd7eb1cc62d532",
+    "docs/reference/ui/knowledge/PPO-Knowledge-Search-and-Article-Detail-r01.html": "a6f369219a366943001c6c2da70a8dd1edf1340d4b3c84887d5d826b6fc77d5b"
+  }
+}
