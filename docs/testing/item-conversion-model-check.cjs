@@ -1,6 +1,6 @@
 /* Executes the actual generated ES-07 script. This shim verifies model and
  * event wiring, not native browser layout, focus, print or device behaviour. */
-const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),crypto=require('node:crypto'),path=require('node:path');
+const fs=process.getBuiltinModule('fs'),vm=process.getBuiltinModule('vm'),assert=process.getBuiltinModule('assert/strict'),crypto=process.getBuiltinModule('crypto'),path=process.getBuiltinModule('path');
 const root=path.resolve(__dirname,'../..'),html=fs.readFileSync(path.join(root,'docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html'),'utf8'),script=html.match(/<script>\s*([\s\S]*?)<\/script>/)[1],results=[];
 async function harness(raw,failSave=false){const nodes=new Map(),listeners={},storage=new Map(raw?[['ppo-es07-conversion-r01',raw]]:[]);let document;
  function el(id){if(!nodes.has(id))nodes.set(id,{id,value:'',checked:false,hidden:false,disabled:false,open:false,innerHTML:'',textContent:'',isConnected:true,dataset:{},setAttribute(){},focus(){document.activeElement=this},scrollIntoView(){},addEventListener:(t,f)=>listeners[id+':'+t]=f,showModal(){this.open=true},close(){this.open=false},click(){},classList:{toggle(){}}});return nodes.get(id)}

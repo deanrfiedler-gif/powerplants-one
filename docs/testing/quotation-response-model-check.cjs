@@ -1,6 +1,6 @@
 /* Executes the generated module and retained r03 adapter. DOM shims test command
  * wiring, not browser layout, accessibility, print rendering or server behaviour. */
-const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),crypto=require('node:crypto'),path=require('node:path');
+const fs=process.getBuiltinModule('fs'),vm=process.getBuiltinModule('vm'),assert=process.getBuiltinModule('assert/strict'),crypto=process.getBuiltinModule('crypto'),path=process.getBuiltinModule('path');
 const root=path.resolve(__dirname,'../..'),file=path.join(root,'docs/reference/ui/quoting/PPO-Quotation-Response-and-Negotiation-r01.html');
 const html=fs.readFileSync(file,'utf8'),script=html.match(/<script>\s*([\s\S]*?)<\/script>/)[1],results=[];
 function dom(){const nodes=new Map(),listeners=new Map(),messages=[];let document;

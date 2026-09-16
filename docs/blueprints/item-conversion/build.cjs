@@ -1,5 +1,5 @@
 /* Deterministic ES-07 assembly; existing standalone HTML/JS technology retained. */
-const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),crypto=require('node:crypto');
+const fs=process.getBuiltinModule('fs'),path=process.getBuiltinModule('path'),vm=process.getBuiltinModule('vm'),crypto=process.getBuiltinModule('crypto');
 const root=path.resolve(__dirname,'../../..'),read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const source=read('docs/reference/ui/quoting/PPO-Quotation-Response-and-Negotiation-r01.html');
 const digest=s=>crypto.createHash('sha256').update(s).digest('hex');

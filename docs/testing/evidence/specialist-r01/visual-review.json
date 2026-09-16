@@ -1,0 +1,78 @@
+{
+  "source": "0c5e60868b6651e9eee55742fa04bb722cbf894a",
+  "html_sha256": "52c59d94b8a743eb6e521917c3db88564e3aaaaaea5f2f29959f40a4deae5639",
+  "native_run": 35048234854,
+  "reviewed_on": "2026-09-16",
+  "result": "Passed",
+  "method": "Native captures inspected directly or verified byte-identical to already inspected captures from the previous native runs. Long phone captures inspected in consecutive crops; original images unchanged.",
+  "reviewed_captures": [
+    {
+      "name": "1440-configure.png",
+      "sha256": "fa37743d7efab51e73e9783748a475f171c773ef61b1def3d517dd1a5eb04d02"
+    },
+    {
+      "name": "1440-overrides.png",
+      "sha256": "12f52d09a2b70d0691056bcfa075685fbccf5d72c10c68890a4db370f0532259"
+    },
+    {
+      "name": "1440-parts.png",
+      "sha256": "6ef500bcf4badc0e8c8b0a6ee914c6af93000649fe065ba3cbf1df087a522b0b"
+    },
+    {
+      "name": "1440-rerun-decisions.png",
+      "sha256": "4b2b1ec2b81ca2ddef28cf91d86d2bcd3c08aa8feffa610cc83390387784d419"
+    },
+    {
+      "name": "1440-runs.png",
+      "sha256": "1ca20e3713356504e051990eef8e42d0513da85ee2d4c4f8b52d7c1e6b0da152"
+    },
+    {
+      "name": "1440-run-snapshot.png",
+      "sha256": "3c73b0bdab01bcb9956c9ad375cc2bf9cf25abf0153398a470067d6878c28a36"
+    },
+    {
+      "name": "1440-evidence.png",
+      "sha256": "7073971951969ed3697f4fa549b74d9a084e845ef9187c3b5a96cbdc4d5bb878"
+    },
+    {
+      "name": "1440-stale-totals.png",
+      "sha256": "75beec8ed15c9f2654962342838c55673acd33f4ca43f57ae4e408875146e196"
+    },
+    {
+      "name": "390-configure.png",
+      "sha256": "497e21579b986fad2984ff39642bbc13902d860d4e270473c5f6a7dc7add133c"
+    },
+    {
+      "name": "390-parts.png",
+      "sha256": "c9d573cd9a12c125af59d48912deb141a79c7bd524f2d28e7640d297665ae0fc"
+    },
+    {
+      "name": "390-rerun.png",
+      "sha256": "a8c147cb2c70e23495266165a068c0df431e7ed7ff1b733e910636683e4fcdc1"
+    },
+    {
+      "name": "390-evidence.png",
+      "sha256": "eed27628fc0b739c0501c55399ee59de4d95542d68c4b55cd3e988fbe0688d66"
+    },
+    {
+      "name": "390-runs.png",
+      "sha256": "cd3ec8da7c06bfe547e21689ab5a3db3e822f051b14887b95b842a6a93200b6e"
+    },
+    {
+      "name": "320-configure.png",
+      "sha256": "e29cf2f241848eda6ee8f4ee4be2a4ff9460969c8f991eede071a199e729a1e3"
+    }
+  ],
+  "findings": [
+    "r20 typography, navy/green accents and white-panel layout preserved.",
+    "All five views readable at desktop and 390 px; 320 px Configure inspected in full.",
+    "Parts, units, source states, manual decisions and immutable run context readable without overlap.",
+    "Native assertions checked all five views at 1440, 1024, 820, 390 and 320 px; navigation and document have no horizontal overflow.",
+    "Stale totals clearly says lines are saved and exposes repair; prior input and selector issues corrected."
+  ],
+  "limits": [
+    "Native screenshots are review evidence, not engineering acceptance.",
+    "Other specialist families and arbitrary engineering inputs have no executable definition.",
+    "Full screen-reader and operational server acceptance remain separate."
+  ]
+}
