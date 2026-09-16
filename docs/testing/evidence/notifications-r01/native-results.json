@@ -1,0 +1,143 @@
+{
+  "source": "39e8a785925b0422a48734709ffbaa1c0dbb4a8e",
+  "html_sha256": "f7cd88234ceb2653ae21f900804e161284b28c1b2312ce8f87b2e2ca00ad3514",
+  "browser": "153.0.8010.47",
+  "groups": 14,
+  "results": [
+    {
+      "name": "Initial inbox contains nine visible notices and accurate action totals",
+      "result": "Passed"
+    },
+    {
+      "name": "Reading all visible notices leaves three source escalations intact",
+      "result": "Passed"
+    },
+    {
+      "name": "Required archive disabled, routine archive and undo work",
+      "result": "Passed"
+    },
+    {
+      "name": "Grouped history retains original changes and a new unread successor once",
+      "result": "Passed"
+    },
+    {
+      "name": "Stale source warns before showing current r03 and no business command",
+      "result": "Passed"
+    },
+    {
+      "name": "Unavailable and revoked targets never open substitute source content",
+      "result": "Passed"
+    },
+    {
+      "name": "Filters and selection use exact displayed scope",
+      "result": "Passed"
+    },
+    {
+      "name": "Preferences draft validates quiet window, saves, persists and excludes read entries",
+      "result": "Passed"
+    },
+    {
+      "name": "Changing preview identity hides out-of-scope sources and isolates read state",
+      "result": "Passed"
+    },
+    {
+      "name": "Failed, partial and empty sources are visibly distinct",
+      "result": "Passed"
+    },
+    {
+      "name": "Local deep link reload retains exact target and mismatched context is rejected",
+      "result": "Passed"
+    },
+    {
+      "name": "Responsive four-view layouts and controls fit five widths",
+      "result": "Passed"
+    },
+    {
+      "name": "Phone detail, dialog escape and keyboard view navigation retain focus",
+      "result": "Passed"
+    },
+    {
+      "name": "Concurrent saved state changes block writes and preserve current export",
+      "result": "Passed"
+    }
+  ],
+  "errors": [],
+  "images": [
+    {
+      "name": "desktop-inbox.png",
+      "sha256": "27ab0887ab73ab2bd539dd05b342174415d8fc38969ea5de7b50506515867122"
+    },
+    {
+      "name": "desktop-escalations-read.png",
+      "sha256": "197f97a0bbf2cadf8f56ee1959de8becf26ece79b052698ab094ce004288cfb4"
+    },
+    {
+      "name": "desktop-groups.png",
+      "sha256": "8417434c75eda3c11a8d2668eb8e963e167a7c12ded2ca6664c48c90ee4597b7"
+    },
+    {
+      "name": "desktop-current-source.png",
+      "sha256": "f0c44a20de0880231450d607b88b86a0632ddb71c09904bf91bf059cd7f45fd6"
+    },
+    {
+      "name": "desktop-preferences.png",
+      "sha256": "26488ccbaa0fb2c17c14386d22cc0af58d974cc36e7abdf223209ec7b83f0a9c"
+    },
+    {
+      "name": "1440-inbox.png",
+      "sha256": "27ab0887ab73ab2bd539dd05b342174415d8fc38969ea5de7b50506515867122"
+    },
+    {
+      "name": "1440-groups.png",
+      "sha256": "81c3e334e64aa992a5213611382c467425cbdd831606de2fb1c1810da5fae222"
+    },
+    {
+      "name": "1440-escalations.png",
+      "sha256": "5117924ce3e5b6e1ad96f738ae1c40f203533fb4b2b3b63b277ffd70c08e49e7"
+    },
+    {
+      "name": "1440-preferences.png",
+      "sha256": "902547f2b9bc31427469e69a916b11dd614d50b86acd602c0692cc91fb9241f2"
+    },
+    {
+      "name": "390-inbox.png",
+      "sha256": "dce483c52ba13cfbd4ae9fcdac75264ac44ac19cde2895b2c9345659251b9c83"
+    },
+    {
+      "name": "390-groups.png",
+      "sha256": "62f9fdcd3e132292a9608832259922fdcb24e321ae57973f06608760a282f03e"
+    },
+    {
+      "name": "390-escalations.png",
+      "sha256": "6aabbfc99c417c8ebe409e22f33fc3f3f7cb7a7b653c9c497785f0c9d99a1e19"
+    },
+    {
+      "name": "390-preferences.png",
+      "sha256": "1cc9d257198fda50aab7f7d161d78f28a6c5b7a0f0d329557e199b10e12c08d3"
+    },
+    {
+      "name": "320-inbox.png",
+      "sha256": "0a6e2d0237405b5218b8a3137d8bd0dae03c2a4a06e5fdaadce6ad3f78baac05"
+    },
+    {
+      "name": "320-groups.png",
+      "sha256": "32a6e53ec58c83ad9dc9395cb8794752a50df473ac565d84ac75248937afa6e8"
+    },
+    {
+      "name": "320-escalations.png",
+      "sha256": "acf9004da2b74439f6dbaf6d5492bb64808e24414f779e2d27d49976c0b46300"
+    },
+    {
+      "name": "320-preferences.png",
+      "sha256": "71f1e4117bd6c267f57e753a1d239da12b1615d66948d14b9a869b13a600fe59"
+    },
+    {
+      "name": "phone-source-viewport.png",
+      "sha256": "1dc3f26919248aa7228cd72a114e67c4706e062b908af427b73a52e0bea36c52"
+    },
+    {
+      "name": "phone-source.png",
+      "sha256": "273e1e8cadbbf9565990a3d517388d6344cae40753a1f933d42ff0c4e5c86afe"
+    }
+  ]
+}

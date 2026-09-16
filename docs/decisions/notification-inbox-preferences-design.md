@@ -29,6 +29,6 @@ This is a module-only synthetic design and a coverage supplement for SH-03. The 
 
 ## Verification and next step
 
-The [evidence record](../testing/evidence/notifications-r01/README.md) owns exact model/browser results, source/hash and visual findings. Component delivery and owner acceptance remain separate. The reviewable contribution includes maintainable sources, reproducible assembly and focused CI evidence.
+The [evidence record](../testing/evidence/notifications-r01/README.md) owns exact model/browser results, source/hash and visual findings. Final focused run [35052365179](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35052365179) passed 17 model groups and 14 native browser groups on source `39e8a785925b0422a48734709ffbaa1c0dbb4a8e`; eight final desktop/phone captures were visually reviewed. [Draft PR #211](https://github.com/deanrfiedler-gif/powerplants-one/pull/211) is the review boundary. Component delivery and owner acceptance remain separate. The reviewable contribution includes maintainable sources, reproducible assembly and focused CI evidence.
 
 Next bounded implementation: one existing synthetic source event projected to a recipient-scoped inbox with durable personal read state, then explicit source opening. Keep My Work's source obligations authoritative. Broader channel delivery, runtime preferences and operational policy require their own specified receiving increment; this design does not close issue #181 or grant external-send authority.
