@@ -1,7 +1,7 @@
 ---
 document_id: PPO-UI-DESIGN-INDEX
 title: HTML design index and maintenance guide
-revision: r03
+revision: r04
 updated: 2026-09-16
 owner: Dean Fiedler
 status: Repository inventory; individual design approvals remain in linked decisions
@@ -14,11 +14,13 @@ Use this page to find the **latest available HTML for each design family**, its 
 
 **Inventory checked:** 15 September 2026, against [main at d041de7](https://github.com/deanrfiedler-gif/powerplants-one/commit/d041de7c40e7ba73acdef3252d5f18f1bf8ccb2f). All **139 HTML paths under `docs/`** are linked below: **120 UI reference files, 15 blueprint previews and four generator templates**. This is a file count, including earlier revisions and duplicates, not a count of distinct modules. Application HTML in `src/` and `public/` is outside this inventory. Open PRs #205 and #206 are listed separately and excluded from these main-branch counts. Unpublished conversation/download files cannot be established from GitHub alone.
 
-**Scoped addition, 16 September 2026:** ES-05 Quotation approval, issue and distribution r01 and its detailed report are linked below. This amendment does not repeat the dated full-inventory audit above or change existing design acceptance.
+**Scoped additions, 16 September 2026:** ES-05 presentation correction r02 and ES-06 response/negotiation r01 with detailed reports are linked below. ES-05 r01 and customer quotation r03 remain retained references. This amendment does not repeat the dated full-inventory audit above or change existing design acceptance.
 
 **Latest available does not mean approved or implemented.** A higher filename revision, a successful check or a merged pull request does not establish design approval. **Approved** requires a linked Dean decision; **Proposed** and **Uploaded reference** do not establish acceptance; **Study** is explicitly unadopted scope. Recorded desktop and phone approvals retain their separate scopes. Where filenames and embedded revision labels disagree, the discrepancy is stated instead of silently choosing a new baseline.
 
 The [accepted UI baseline register](../../standards/ui-baselines.json) retains exact baseline hashes and application mappings. This index does not replace those controls. Consult [current project status](../../STATUS.md) and the receiving handovers for application delivery evidence. Historical handovers and uploaded closeouts may still describe their original publication or browser-review checkpoints.
+
+New packages follow the [HTML module conformance standard](../../standards/html-module-conformance.md): existing scope ID, chosen r20 page type, reused components, handover boundaries and declared departures.
 
 ## Theme and application shell
 
@@ -64,7 +66,8 @@ These are the latest uploaded shared visual references. Their presence does not 
 | Sales → Estimating intake | [r02 preview](estimating/sales-estimating-intake-preview-r02.html) | Proposed design | [r02 change record](sales/sales-estimating-intake-change-record-r02.md). Original field-bank/design reference is retained below. |
 | Wizard data review | [r02](estimation-wizard/PPO-Wizard-Data-Review-r02.html) | Latest uploaded design; acceptance not established by this audit | Distinct from the advanced estimating-container study and bounded guided pilot. |
 | Quotation module | [r03](quoting/ppo-quotation-module-r03.html) | Latest uploaded design; acceptance not established by this audit | [r03 audit](quoting/ppo-quotation-audit-r03.md); separate from the legacy Quotation Builder concept below. |
-| Quotation approval, issue & distribution — ES-05 | [r01](quoting/PPO-Quotation-Approval-Issue-and-Distribution-r01.html) · [Detailed report](quoting/PPO-Quotation-Approval-Issue-and-Distribution-Report-r01.md) | Proposed six-view module; native visual and owner acceptance pending | Exact source/output review, approval, retained issue, recipient evidence and revision history. [Design and receiving handover](../../decisions/quotation-approval-issue-distribution-design.md). |
+| Quotation approval, issue & distribution — ES-05 | [r02](quoting/PPO-Quotation-Approval-Issue-and-Distribution-r02.html) · [Detailed report r02](quoting/PPO-Quotation-Approval-Issue-and-Distribution-Report-r02.md) · retained [r01](quoting/PPO-Quotation-Approval-Issue-and-Distribution-r01.html) and [report r01](quoting/PPO-Quotation-Approval-Issue-and-Distribution-Report-r01.md) | Proposed presentation correction; native visual and owner acceptance pending | Workspace-only composition, docked basis inspection and exact output using retained r03 customer components. Approval, issue and recipient evidence retained. [Design and receiving handover](../../decisions/quotation-approval-issue-distribution-design.md). |
+| Quotation response & negotiation — ES-06 | [r01](quoting/PPO-Quotation-Response-and-Negotiation-r01.html) · [Detailed report](quoting/PPO-Quotation-Response-and-Negotiation-Report-r01.md) | Proposed extension of customer quotation r03; native visual and owner acceptance pending | Exact revision/options/signature, negotiation, unknown-response recovery and prepared ES-07 handover. [Design and receiving handover](../../decisions/quotation-response-negotiation-design.md). |
 | Quotation PDF design | [r02](quoting/ppo-quotation-pdf-design-r02.html) | Latest uploaded output design; acceptance not established by this audit | [r02 change notes](quoting/ppo-quotation-pdf-design-r02-changes.md). Output layout and the interactive quotation module are distinct references. |
 | Estimating workspace | [Working preview](../../blueprints/estimating-workspace-mockup.html) | Discovery reference; full preview is not an application acceptance claim | E1/E2 implement bounded portions. [Discovery handover](../../delivery/estimating-discovery-handover.md), [E1 handover](../../delivery/estimating-e1-handover.md). |
 | E2 options and scope discovery | [Original walkthrough](../../blueprints/estimating-e2-walkthrough.html) | Historical proposal with partial policy adoption; original routing is not current authority | Adopted E2-D02/D03 and DR-02 are implemented in bounded slices. Numeric routing and other deferred rules remain unadopted. [Current authority](../../decisions/ADR-0025-e2-discovery-foundation.md), [saved-screen handover](../../delivery/estimating-e2-screens-handover.md). |

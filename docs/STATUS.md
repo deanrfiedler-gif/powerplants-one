@@ -10,7 +10,7 @@ This file is a snapshot of the current state, kept short enough to read in one s
 
 **Quality and Site Assurance HTML, 16 September 2026:** [Six-view workspace and detailed report](decisions/quality-site-assurance-design.md) demonstrate exact site preparation, inspection evidence, retained corrections/retests, incident review and scoped release with owned remaining work. Proposed design; owner acceptance and runtime integration remain separate. Actual verification is recorded in the linked handover.
 
-**Quotation release HTML, 16 September 2026:** [ES-05 six-view design and detailed report](decisions/quotation-approval-issue-distribution-design.md) covers exact source/output review, separate quote approval, retained issues, recipient evidence and superseded revisions. Twenty-three command/state groups passed; native visual review and application integration remain pending. Commercial approval policy and customer distribution are not adopted or implemented.
+**Quotation lifecycle HTML, 16 September 2026:** [ES-05 r02](decisions/quotation-approval-issue-distribution-design.md) corrects workspace presentation, docked inspection and exact customer output reuse; [ES-06 r01](decisions/quotation-response-negotiation-design.md) extends retained quotation r03 with negotiation, exact responses, original-operation recovery and prepared ES-07 handover. Both have detailed reports and 24 passing command/model groups each. Native visual/owner acceptance and runtime integration remain pending. [Future package conformance](standards/html-module-conformance.md) records the authorised scope/design discipline; no operational policy or customer distribution is adopted.
 
 ## 1. Stage in one paragraph
 

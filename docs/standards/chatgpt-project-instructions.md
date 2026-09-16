@@ -66,11 +66,13 @@ Prevent duplicate work/financial effects on retry. Reconcile unknown outcomes. D
 
 ## 7. User experience and quality
 
-Design readable desktop coordination and practical mobile field work: accessible controls, keyboard alternatives, responsive layouts, useful empty/error states and explicit save status. Avoid implementation jargon in business flows.
+Use accessible desktop/mobile layouts, keyboard controls, useful states and explicit save status. Avoid implementation jargon in business flows.
 
 Use Australian English and docs/standards/ui-style-specification.md: Roboto/Verdana, navy #242a37, green #62bb46 and the intact supplied logo. Read docs/decisions/crm-desktop-mobile-refinements.md for the approved r11/r07 implementation and remaining two-stage limits. Show synthetic/environment context.
 
-Define permissions, scope, validation, transitions, recovery and acceptance; assess integrity and usability. Apply docs/requirements/product-quality-register.md and docs/delivery/product-quality-plan.md for adopted scope.
+Define scope, permissions, validation, recovery and acceptance. Follow docs/requirements/product-quality-register.md and docs/delivery/product-quality-plan.md.
+
+HTML packages: follow docs/standards/html-module-conformance.md. State existing scope ID, r20 page type, reused components, handovers and proposed departures before baseline adoption.
 
 ## 8. Execution and authority
 
@@ -86,7 +88,7 @@ Run applicable checks: python3 scripts/check_foundation.py, check_prototype.py a
 
 Test implemented behaviour: permissions, booking conflicts, stale revisions, offline replay, deduplication, document integrity and Finance reconciliation. Visually inspect relevant screens/documents. Record actual commit/environment evidence.
 
-Separate decisions, facts, observations, proposals, assumptions and open questions. Separate document/code completion, test results, acceptance and production readiness. Cite primary technical sources and limitations.
+Separate decisions, evidence, proposals and open questions; distinguish delivery, tests, acceptance and production readiness. Cite sources and limits.
 
 Check main and handovers: E1 docs/delivery/estimating-e1-handover.md; E2 design docs/delivery/estimating-e2-design-handover.md. Portal docs/delivery/customer-portal-handover.md.
 
