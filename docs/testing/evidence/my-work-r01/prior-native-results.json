@@ -1,0 +1,187 @@
+{
+  "source": "034d370e38413a702442371d2fab8c8d3e665ce0",
+  "html_sha256": "caffddc5e76174a9217050f4fc769884183f557e9c786666ceba74b08538ba6e",
+  "browser": "153.0.8010.47",
+  "groups": 24,
+  "results": [
+    {
+      "name": "Six connected views and owned daily priorities render",
+      "result": "Passed"
+    },
+    {
+      "name": "Search filters preserve explicit selection outside current results",
+      "result": "Passed"
+    },
+    {
+      "name": "Source snapshot preserves exact equipment, location and submission",
+      "result": "Passed"
+    },
+    {
+      "name": "Reviewer returns exact failed evidence with a reason and due date",
+      "result": "Passed"
+    },
+    {
+      "name": "Technician sees owned correction and separate date-needed work",
+      "result": "Passed"
+    },
+    {
+      "name": "Fresh retest form protects unsaved entries on cancellation",
+      "result": "Passed"
+    },
+    {
+      "name": "Passing retest records fresh evidence without closing its defect",
+      "result": "Passed"
+    },
+    {
+      "name": "Accepted retest creates a separate scoped release action",
+      "result": "Passed"
+    },
+    {
+      "name": "Release retains original scope, exclusions and the open OEM obligation",
+      "result": "Passed"
+    },
+    {
+      "name": "Reading an update and applying quiet preferences leave business work unchanged",
+      "result": "Passed"
+    },
+    {
+      "name": "Reload retains exact source records and personal preferences",
+      "result": "Passed"
+    },
+    {
+      "name": "Activity completion is owned and requires a recorded outcome",
+      "result": "Passed"
+    },
+    {
+      "name": "Team assignment resolves owner and missing date without duplicate work",
+      "result": "Passed"
+    },
+    {
+      "name": "Source dependency follow-up retains the blocker and records the next date",
+      "result": "Passed"
+    },
+    {
+      "name": "Saved-view creation, reuse, duplication and retirement preserve source state",
+      "result": "Passed"
+    },
+    {
+      "name": "Failed save retains form entries and original source state",
+      "result": "Passed"
+    },
+    {
+      "name": "Lost response recovers the original operation without another history entry",
+      "result": "Passed"
+    },
+    {
+      "name": "Partial, failed and empty source states never imply a false all-clear",
+      "result": "Passed"
+    },
+    {
+      "name": "Cross-tab change refuses stale writes while retaining typed entries",
+      "result": "Passed"
+    },
+    {
+      "name": "Role changes remove unavailable team and private saved-view content",
+      "result": "Passed"
+    },
+    {
+      "name": "All six views fit five widths, including phone controls",
+      "result": "Passed"
+    },
+    {
+      "name": "Keyboard navigation, Escape and skip link retain focus",
+      "result": "Passed"
+    },
+    {
+      "name": "Export backs up the exact saved fixture and restore validates into read-only mode",
+      "result": "Passed"
+    },
+    {
+      "name": "Malformed stored session is preserved for recovery",
+      "result": "Passed"
+    }
+  ],
+  "errors": [],
+  "images": [
+    {
+      "name": "1440-today.png",
+      "sha256": "afd99d72b0f304acf0f0af74c3be0be89a386f8f2fa6082bdf51bc8d7cb656f8"
+    },
+    {
+      "name": "1440-source-snapshot.png",
+      "sha256": "c7a97e4deddf5b3331c33836abb785dfcdcfe9c263234b002c7ec9918b46b149"
+    },
+    {
+      "name": "1440-reviews.png",
+      "sha256": "90b4eb25c8d03490055a171ea0b496577fc9a20db6fe8f50e1ff6a17f5267ea8"
+    },
+    {
+      "name": "1440-actions.png",
+      "sha256": "66e9816a2086832796379ff2ae2143f1bd1e3030b99ecd5a1617d3bd35d1ee58"
+    },
+    {
+      "name": "1440-released.png",
+      "sha256": "65a95ce0f560c86a82133b614014acfbd2d14b1630e88f96995ab9e336c19224"
+    },
+    {
+      "name": "1440-updates.png",
+      "sha256": "6c77729ec7a4dcdf9cb6297b8e1a302e660010ee67719b9d1691f144a77252ce"
+    },
+    {
+      "name": "1440-team.png",
+      "sha256": "714aada2d63900e2aa2df548d80fe3dd0ed4a896911114510960e0c7cb13fe60"
+    },
+    {
+      "name": "1440-blocked.png",
+      "sha256": "3d4cd38ca430d6d3921820fccb47b9ea2d0cc5b337f5bbc074873236ed85b3bd"
+    },
+    {
+      "name": "390-today.png",
+      "sha256": "2d5c0521b7f9dc1912d44422a4e245987e2b975ba723a75ff06585eead13dfe6"
+    },
+    {
+      "name": "390-actions.png",
+      "sha256": "1fe53fe1f254a2f45c2ec961a5f612c70250f68a127531b95874f7d16ef2797f"
+    },
+    {
+      "name": "390-reviews.png",
+      "sha256": "e808d979fcfd8da1e86da1c019c8ec4876c074f0980305e6e1c22f9e29ec448d"
+    },
+    {
+      "name": "390-blocked.png",
+      "sha256": "0d68ac5a601130a4e4e2c014e7a2fa9e5b4e98d7ba8418173a3c3ef8a45430f1"
+    },
+    {
+      "name": "390-team.png",
+      "sha256": "f35e83ca246816de12594b0ed985fbe917e3913d994badb4685de43eb8831311"
+    },
+    {
+      "name": "390-updates.png",
+      "sha256": "faa280eaaaa7c6c9a8eef018820d580f8fcaa9b1c25ac831ddd59de8e83ee1bb"
+    },
+    {
+      "name": "320-today.png",
+      "sha256": "67e53abaa49627e7c168701bbd0aa730785f66488371e487154324881ed41ed5"
+    },
+    {
+      "name": "320-actions.png",
+      "sha256": "789c2a42af4478778ee6329ef3608c626c04e8304151e8e2ac61d9e54f931f26"
+    },
+    {
+      "name": "320-reviews.png",
+      "sha256": "68045996e67742a77ab942cccb8e3e43ac271e1cd9cf5c6d1cf5774d55d746ae"
+    },
+    {
+      "name": "320-blocked.png",
+      "sha256": "8218e9a6c3f0503ba6f57f615f7b658e7fee14551de5b9baae590b61f1dd947d"
+    },
+    {
+      "name": "320-team.png",
+      "sha256": "fdcb1bfbcea0beefca6815d502593d263d58a1159e8a2455cbe29ececde28712"
+    },
+    {
+      "name": "320-updates.png",
+      "sha256": "bb1dc4a617c582ac877ba940581f8c4d8a16d45f224f8dfec2e8040107cee576"
+    }
+  ]
+}
