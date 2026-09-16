@@ -30,6 +30,13 @@ export default defineConfig([
       ],
     },
   },
+  {
+    files: ["docs/blueprints/item-conversion/model.js"],
+    rules: {
+      // The generated workspace and VM checks consume this assembled binding.
+      "@typescript-eslint/no-unused-vars": ["error", { varsIgnorePattern: "^Conversion$" }],
+    },
+  },
   globalIgnores([
     ".next/**",
     "public/offline/modules/**",
