@@ -117,7 +117,7 @@ Saved draft successors appear below the cost lines. Opening a successor shows it
 
 The refresh view compares each saved cost line with the latest proposed source revision. Only applicable Reviewed evidence is selectable. Expired sources, missing FX evidence and unreviewed or returned proposals display their reason instead of a checkbox. A dash indicates that no eligible proposed amount is available; it does not mean zero cost.
 
-Users can select individual eligible lines or select all eligible updates. The table shows saved and proposed extended AUD amounts, change, source revision movement and FX basis. The summary recalculates the known subtotal and selected difference while retaining the unknown-cost warning.
+Users can select individual eligible lines or select all eligible updates. The table shows saved and proposed extended AUD amounts, change, source revision movement and FX basis. The summary recalculates the known subtotal and selected difference while retaining the unknown-cost warning. If a previously unknown cost becomes known, it marks the overall difference Not comparable because the two known subtotals cover different sets of costs. Saved unresolved findings are derived from the exact refreshed lines.
 
 The starting selection contains the reviewed rail and tube revisions. It produces a proposed known subtotal of **AUD 6,603.12**, an increase of **AUD 109.12**. After the drive r4 source receives independent review, selecting all three eligible changes produces **AUD 6,843.92**, an increase of **AUD 349.92**.
 
@@ -244,7 +244,7 @@ The [source README](../../../design/supplier-pricing/README.md) documents build/
 
 ## 18. Verification and evidence
 
-The local model suite contains **25 checks** covering exact totals, quantity tiers, complete-pack conversion, integer rounding, FX direction, missing sources, invalid inputs, role transitions, stale versions, exact review, retained snapshots, duplicate prevention and malformed saved state.
+The local model suite contains **26 checks** covering exact totals, quantity tiers, complete-pack conversion, integer rounding, FX direction, missing sources, invalid inputs, role transitions, stale versions, exact review, retained snapshots, duplicate prevention and malformed saved state.
 
 The dedicated browser suite exercises the generated HTML with the repository's pinned native Chrome runtime. It covers the complete source-review/refresh journey, draft editing, cancellation, input escaping, failed-save retry, persisted history, role restrictions, keyboard navigation, export, cross-tab conflict, corrupt-state recovery and responsive presentation at 1440, 1024, 820, 390 and 320 px.
 

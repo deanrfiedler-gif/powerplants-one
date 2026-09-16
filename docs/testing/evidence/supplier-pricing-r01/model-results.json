@@ -1,5 +1,5 @@
 {
-  "passed": 25,
+  "passed": 26,
   "groups": [
     "Seed schema, eight sources and six proposed revisions",
     "Exact known subtotal retains unknown sensor amount",
@@ -25,6 +25,7 @@
     "Duplicate submission refused; independent reviewer can return with reason",
     "Changed source invalidates a retained refresh fingerprint",
     "Malformed dates, negative amounts and exponent input rejected",
-    "Malformed stored structures and changed snapshots fail validation"
+    "Malformed stored structures and changed snapshots fail validation",
+    "Resolved unknown FX updates saved findings without claiming a complete cost basis"
   ]
 }
