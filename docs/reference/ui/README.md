@@ -87,6 +87,7 @@ These are the latest uploaded shared visual references. Their presence does not 
 | Field Technicians | [r04](field-technicians/powerplants-one-field-technicians-r04.html) | Earlier design, still the recorded implementation baseline until r05 integration. |
 | Finance & Commercial Controls | [r01](finance/PPO-Finance-and-Commercial-Controls-r01.html) | Preserved for comparison with the r02 proposal. |
 | Service Agreements & Maintenance | [r01](maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html) | Proposed MA-01–MA-05 design; native checks and capture review complete; owner acceptance and application integration separate | Sourced coverage, recurring obligations, owned requests and renewal preparation. [Design and receiving handover](../../decisions/service-agreements-maintenance-design.md). |
+| Warranty & Customer Resolution | [r01](warranty/PPO-Warranty-and-Customer-Resolution-Workspace-r01.html) | Proposed MA-06/MA-07 design; 25 model and 17 native browser groups passed; captures reviewed; owner acceptance separate | Evidence, independent decisions, retained replacement history and outstanding supplier recovery. [Detailed companion report](warranty/PPO-Warranty-and-Customer-Resolution-Workspace-Report-r01.md) · [Handover](../../decisions/warranty-customer-resolution-design.md). |
 
 ## Preserved earlier revisions
 
