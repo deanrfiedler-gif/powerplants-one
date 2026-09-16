@@ -14,7 +14,7 @@
   function notice(message,actions='') {$('#save-notice').hidden=false;$('#save-notice').innerHTML=`${esc(message)}${actions}`;}
   function toast(t){$('#toast').textContent=t;$('#toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').hidden=true,4000);}
   function current(){return state.cases.find(c=>c.id===caseId)||state.cases[0];}
-  function markSave(){ $('#save-status').textContent=storageBlocked?'Saving unavailable · original data retained':conflict?'Newer saved work available':`Saved in this browser · version ${state.version}`; }
+  function markSave(){ $('#save-status').textContent=storageBlocked?'Saving unavailable · original data retained':conflict?'Newer saved work available':state.version===0?'Original examples · no local changes':`Saved in this browser · version ${state.version}`; }
   function commit(action,data){
     if(storageBlocked||conflict)throw Error('Saving is paused. Export your review copy or reload saved work.');
     const saved=localStorage.getItem(M.KEY);if(saved){let p;try{p=JSON.parse(saved);}catch{storageBlocked=true;throw Error('Saved data cannot be read. Original content has been retained.');}if(!M.validState(p)){storageBlocked=true;throw Error('Saved data uses an unsupported format.');}if(p.version!==state.version){conflict=true;notice('Another tab saved newer work. Reload saved work to continue.','<button data-action="reload">Reload saved work</button><button data-action="export">Export current copy</button>');markSave();throw Error('Newer saved work detected. Your form is still open.');}}

@@ -27,7 +27,7 @@
     if (!c.complete) reasons.push('Source incomplete');
     if (c.expires < TODAY) reasons.push('Review expired');
     if (c.band !== base.band) reasons.push('Individual case only');
-    if (c.system !== base.system || c.context !== base.context) reasons.push('Different system or growing context');
+    if (c.family !== base.family || c.driver !== base.driver || c.system !== base.system || c.context !== base.context) reasons.push('Different system or growing context');
     if (c.unit !== base.unit || c.quantityClass !== base.quantityClass || c.currency !== base.currency || c.estimateClass !== base.estimateClass) reasons.push('Incompatible comparison basis');
     if (!Number.isFinite(c.estimated) || c.estimated <= 0 || !Number.isFinite(c.actual) || c.actual < 0) reasons.push('Quantity unavailable');
     return reasons;
@@ -41,7 +41,7 @@
     return { n, records, eligible, excluded: records.filter(c => comparable(c).length), mode: n < 3 ? 'Insufficient data' : n < 5 ? 'Indicative only' : 'Illustrative comparison', median: n < 3 ? null : (n % 2 ? ratios[(n-1)/2] : (ratios[n/2-1]+ratios[n/2])/2), low: n < 3 ? null : ratios[0], high: n < 3 ? null : ratios[n-1] };
   }
   function evidence(state, ids) {
-    return [...new Set(ids)].sort((a,b)=>a-b).map(id=>state.cases.find(c=>c.id===id)).filter(Boolean).map(c=>({ id:c.id, ref:c.ref, revision:c.revision, estimated:c.estimated, actual:c.actual, review:c.review, complete:c.complete, sourceRef:c.sourceRef, expires:c.expires, system:c.system, context:c.context, unit:c.unit, quantityClass:c.quantityClass, currency:c.currency, estimateClass:c.estimateClass, band:c.band, driver:c.driver, family:c.family }));
+    return [...new Set(ids)].sort((a,b)=>a-b).map(id=>state.cases.find(c=>c.id===id)).filter(Boolean).map(c=>({ id:c.id, ref:c.ref, revision:c.revision, estimated:c.estimated, actual:c.actual, review:c.review, complete:c.complete, sourceRef:c.sourceRef, expires:c.expires, system:c.system, context:c.context, unit:c.unit, quantityClass:c.quantityClass, currency:c.currency, estimateClass:c.estimateClass, band:c.band, driver:c.driver, family:c.family, accepted:c.accepted, area:c.area, date:c.date, cause:c.cause, lesson:c.lesson, source:c.source }));
   }
   function stale(state,p) { return JSON.stringify(p.evidence) !== JSON.stringify(evidence(state,p.caseIds)); }
   function requireRole(role, allowed) { if (!allowed.includes(role)) throw Error('This demonstration role cannot perform that action.'); }
@@ -91,8 +91,14 @@
     s.version++;s.history.push({at,actor,action,ref:p?.id||s.cases[0].ref,version:s.version});return s;
   }
   function validState(s) {
-    return !!s && s.schema===1 && Number.isInteger(s.version) && s.version>=0 && Array.isArray(s.cases) && s.cases.length===9 && s.cases.every(c=>Number.isInteger(c.id)&&typeof c.customer==='string'&&Number.isInteger(c.revision)&&typeof c.expires==='string') && Array.isArray(s.proposals) && s.proposals.every(p=>typeof p.id==='string'&&Array.isArray(p.caseIds)&&Array.isArray(p.evidence)&&Array.isArray(p.decisions)&&['Draft','In review','Reviewed proposal','Returned','Rejected'].includes(p.state)) && Array.isArray(s.history);
+    const str=v=>typeof v==='string';
+    const finite=v=>typeof v==='number'&&Number.isFinite(v);
+    const shape=c=>c&&Number.isInteger(c.id)&&Number.isInteger(c.revision)&&c.revision>0&&['ref','customer','title','site','system','family','driver','unit','currency','estimateClass','band','context','quantityClass','review','reviewer','expires','source','sourceRef','accepted','cause','lesson'].every(k=>str(c[k]))&&finite(c.area)&&finite(c.estimated)&&finite(c.actual)&&typeof c.complete==='boolean'&&(c.date===null||str(c.date));
+    if(!s||s.schema!==1||!Number.isInteger(s.version)||s.version<0||!Array.isArray(s.cases)||s.cases.length!==9||!s.cases.every(shape)||new Set(s.cases.map(c=>c.id)).size!==9||!Array.isArray(s.proposals)||!Array.isArray(s.history))return false;
+    const states=['Draft','In review','Reviewed proposal','Returned','Rejected'];
+    return s.proposals.every(p=>p&&['id','title','kind','scope','reason','limit','author','created'].every(k=>str(p[k]))&&Number.isInteger(p.revision)&&states.includes(p.state)&&finite(p.factor)&&Array.isArray(p.caseIds)&&p.caseIds.length>0&&p.caseIds.every(id=>s.cases.some(c=>c.id===id))&&Array.isArray(p.evidence)&&p.evidence.every(c=>c&&Number.isInteger(c.id)&&Number.isInteger(c.revision)&&finite(c.estimated)&&finite(c.actual)&&str(c.sourceRef))&&Array.isArray(p.decisions)&&p.decisions.every(d=>d&&['actor','at','outcome','note'].every(k=>str(d[k]))))&&s.history.every(h=>h&&['at','actor','action','ref'].every(k=>str(h[k]))&&Number.isInteger(h.version));
   }
+
   const api = { TODAY, KEY, actors, seed, comparable, aggregate, evidence, stale, command, validState };
   if(typeof module !== 'undefined') module.exports=api; else root.PPOReferenceCalibration=api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
