@@ -1,0 +1,30 @@
+{
+  "source": "f6be6170976947f2ddd031b9fcc6e95484b51573",
+  "html_sha256": "34a1f081a67506ae201daca414eddc9fe033dcc290b1526f8708872fbcb54282",
+  "browser": "153.0.8010.47",
+  "groups": 2,
+  "results": [
+    {
+      "name": "Five views, fixed facility and missing approval boundary render",
+      "result": "Passed"
+    },
+    {
+      "name": "Native browser failure",
+      "result": "Failed",
+      "message": "AssertionError [ERR_ASSERTION]: The input did not match the regular expression /outside the demonstration arithmetic limit/. Input:\n\n'Approved calculation unavailable. Formulae, approved ranges, parts mappings and accepted examples are not supplied. Changed answers have no matching reference result.\\n' +\n  '\\n' +\n  'Review evidence gaps\\n' +\n  '1\\n' +\n  'Structure\\n' +\n  'Current step\\n' +\n  '2\\n' +\n  'Screen & drive\\n' +\n  '3\\n' +\n  'Installation & travel\\n' +\n  '4\\n' +\n  'Allowances & label\\n' +\n  'Screen Systems is the agreed family. Other specialist calculators need their own validated definitions.\\n' +\n  'Structure\\n' +\n  '\\n' +\n  'Capture the geometry for this facility. Values are run-specific and do not update the facility record.\\n' +\n  '\\n' +\n  'Screen variant *\\n' +\n  'Retractable Shade\\n' +\n  'Retractable Blackout\\n' +\n  'Replacement Screens\\n' +\n  'Shade is the only illustrated reference variant.\\n' +\n  'Greenhouse builder\\n' +\n  'Guide-derived field · reference value\\n' +\n  'Greenhouse brand\\n' +\n  'Guide-derived field · reference value\\n' +\n  'Spans *\\n' +\n  'count\\n' +\n  'Proposed unit · approved range not supplied\\n' +\n  'Span width *\\n' +\n  'm\\n' +\n  'Proposed unit · approved range not supplied\\n' +\n  'Bays *\\n' +\n  'count\\n' +\n  'Proposed unit · approved range not supplied\\n' +\n  'Bay spacing *\\n' +\n  'm\\n' +\n  'Proposed unit · approved range not supplied\\n' +\n  'Height to screen *\\n' +\n  'm\\n' +\n  'Proposed unit · approved range not supplied\\n' +\n  'Gutter height\\n' +\n  'm\\n' +\n  'Proposed unit · approved range not supplied\\n' +\n  'More structure inputs · 6\\n' +\n  'Back\\n' +\n  'Step 1 of 4 · local draft\\n' +\n  'Next\\n' +\n  'Load reference A\\n' +\n  'Load reference B\\n' +\n  'Start fresh draft\\n' +\n  'Computed preview\\n' +\n  '\\n' +\n  'Eight headline values\\n' +\n  '\\n' +\n  'Parts\\n' +\n  'No matching case\\n' +\n  'Not approved\\n' +\n  '\\n' +\n  'House width\\n' +\n  '\\n' +\n  'View basis\\n' +\n  '—m\\n' +\n  '\\n' +\n  'House length\\n' +\n  '\\n' +\n  'View basis\\n' +\n  '—m\\n' +\n  '\\n' +\n  'Covered footprint\\n' +\n  '\\n' +\n  'View basis\\n' +\n  '—m²\\n' +\n  '\\n' +\n  'Cloth allowance\\n' +\n  '\\n' +\n  'View basis\\n' +\n  '—m²\\n' +\n  '\\n' +\n  'Drive cable\\n' +\n  '\\n' +\n  'View basis\\n' +\n  '—m\\n' +\n  '\\n' +\n  'Drive pipe\\n' +\n  '\\n' +\n  'View basis\\n' +\n  '—m\\n' +\n  '\\n' +\n  'Drive motors\\n' +\n  '\\n' +\n  'View basis\\n' +\n  '—each\\n' +\n  '\\n' +\n  'Installation allowance\\n' +\n  '\\n' +\n  'View basis\\n' +\n  '—h\\n' +\n  '\\n' +\n  'Fixed authored outputs. No Screen Systems formula is executed or inferred.'\n\n    at file:///home/runner/work/powerplants-one/powerplants-one/scripts/check-specialist-browser.mjs:22:325\n    at async check (file:///home/runner/work/powerplants-one/powerplants-one/scripts/check-specialist-browser.mjs:13:30)\n    at async file:///home/runner/work/powerplants-one/powerplants-one/scripts/check-specialist-browser.mjs:22:3",
+      "dialog": "",
+      "toast": ""
+    }
+  ],
+  "errors": [],
+  "images": [
+    {
+      "name": "1440-configure.png",
+      "sha256": "fa37743d7efab51e73e9783748a475f171c773ef61b1def3d517dd1a5eb04d02"
+    },
+    {
+      "name": "failure.png",
+      "sha256": "a2a382b3749dfa760b11a92b711a90dcbc62068e173fd5b30c53098d3fdad8bf"
+    }
+  ]
+}

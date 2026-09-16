@@ -1,0 +1,35 @@
+{
+  "source_workbook_sha256": "00b8ac02d13bb2229eb690c77cb8ed7e20f089d25b0a0efaef2ba3ab6bc55484",
+  "source_report_sha256": "3f99199989f74da5f5975ec14102b8e4f1811237bde25c5db577ae273d277c4e",
+  "source_formulas": 3106,
+  "input_register": {
+    "entries": 478,
+    "editable_or_override": 340,
+    "calculated": 138
+  },
+  "saved_reconciliation": {
+    "Match": 142,
+    "#VALUE!": 1,
+    "error_cell": "L7"
+  },
+  "formula_display_name_errors": 3106,
+  "new_quantity_comparison": {
+    "matching": 141,
+    "total_positions": 143,
+    "includes_manual_values_and_inactive_zeros": true,
+    "outside_example": [
+      320,
+      328
+    ],
+    "method": "New JavaScript execution against supplied Engine cached quantities using private historical inputs."
+  },
+  "new_response_comparison": {
+    "scenarios": 10,
+    "numeric_outputs": 13,
+    "invalid_shrinkage_guard_also_checked": true
+  },
+  "price_bridge": "Independent arithmetic using cached source quantities and rates matched source final rounding. Historical amounts are excluded from this public summary.",
+  "native_excel_recalculated": false,
+  "engineering_acceptance": false,
+  "raw_source_or_historical_fixture_published": false
+}

@@ -1,0 +1,171 @@
+{
+  "source": "721ef87c8243e688fdb3fc13121ba543f3fc5209",
+  "html_sha256": "bc06fa41f1362145eb585431427ee5aebe94d1e3c8a40cc53b68ccc4d6a72e5c",
+  "browser": "153.0.8010.47",
+  "groups": 24,
+  "results": [
+    {
+      "name": "Six views show sourced live quantities and synthetic context",
+      "result": "Passed"
+    },
+    {
+      "name": "Live input updates do not swallow the next click",
+      "result": "Passed"
+    },
+    {
+      "name": "Exact lookup failure withholds results and exposes field feedback",
+      "result": "Passed"
+    },
+    {
+      "name": "Working dialog shows source formula and normalised units",
+      "result": "Passed"
+    },
+    {
+      "name": "Cable location and pinion diameter have distinct controls",
+      "result": "Passed"
+    },
+    {
+      "name": "Additional screens expose changed cloth quantity and motor-area defect",
+      "result": "Passed"
+    },
+    {
+      "name": "Parts show all source positions, filter and preserve manual zero",
+      "result": "Passed"
+    },
+    {
+      "name": "Manual reason is required and blank remains unresolved",
+      "result": "Passed"
+    },
+    {
+      "name": "Scope exclusion preserves original quantity and removes its price effect",
+      "result": "Passed"
+    },
+    {
+      "name": "Commercial bridge separates unrounded policy, FX and unknown prices",
+      "result": "Passed"
+    },
+    {
+      "name": "First save requires acknowledgement and retains source hashes",
+      "result": "Passed"
+    },
+    {
+      "name": "Saved manual edit survives until an explicit rerun decision",
+      "result": "Passed"
+    },
+    {
+      "name": "Run drawer exposes immutable inputs and exact rule version",
+      "result": "Passed"
+    },
+    {
+      "name": "Source audit and complete register are searchable without claiming approval",
+      "result": "Passed"
+    },
+    {
+      "name": "Reader and locked states disable changes with visible reasons",
+      "result": "Passed"
+    },
+    {
+      "name": "Precommit failure preserves inputs and permits explicit retry",
+      "result": "Passed"
+    },
+    {
+      "name": "Lost response recovers original receipt without duplicate generation",
+      "result": "Passed"
+    },
+    {
+      "name": "Stale totals repair preserves saved lines and original runs",
+      "result": "Passed"
+    },
+    {
+      "name": "Reload restores the exact locally saved review",
+      "result": "Passed"
+    },
+    {
+      "name": "Six views fit five desktop tablet and phone widths",
+      "result": "Passed"
+    },
+    {
+      "name": "Keyboard navigation and modal cancellation preserve unsaved changes",
+      "result": "Passed"
+    },
+    {
+      "name": "JSON export and restore keep exact data and open read-only",
+      "result": "Passed"
+    },
+    {
+      "name": "Cross-tab update pauses writes and preserves unsaved draft",
+      "result": "Passed"
+    },
+    {
+      "name": "Malformed saved data remains available for export",
+      "result": "Passed"
+    }
+  ],
+  "errors": [],
+  "images": [
+    {
+      "name": "1440-configure.png",
+      "sha256": "5750ce1cf03c1e83f9d733fb88c7d38a23656a77621982090eba645c4ca6340d"
+    },
+    {
+      "name": "1440-working.png",
+      "sha256": "06e7f5fbaf5d4801523487616be2ce59ae96aea6ef87aaac31bcce76040cf5e5"
+    },
+    {
+      "name": "1440-parts.png",
+      "sha256": "532e3b327109a3a25411d2c9a3aa3a61715ccb889587ed39c7b97887f0ca8891"
+    },
+    {
+      "name": "1440-pricing.png",
+      "sha256": "3b66302596dc56efcd03e78cfbcf9126fcf95249aa1acf673b4218a6447b1efe"
+    },
+    {
+      "name": "1440-compare.png",
+      "sha256": "674bb7ee7a5c4fbb0da92cd5dfba14bc2e830a5bae21b116cbe3596247a143d9"
+    },
+    {
+      "name": "1440-run-snapshot.png",
+      "sha256": "97d33962db8c1b2cec36a3f5c4d6184dc1cdf90d495b297d3c6b18e9a75df2da"
+    },
+    {
+      "name": "1440-runs.png",
+      "sha256": "e3bf68531e7c945b96804819569bea238037b2380f15aace2113912227ab7293"
+    },
+    {
+      "name": "1440-evidence.png",
+      "sha256": "22389b9bb5c7884a845975e81d4774d227a8cf3678d49778e9a40f2980740be0"
+    },
+    {
+      "name": "1440-recovery.png",
+      "sha256": "70cd9f1a4cca8a8d9a7193371a753470526ca954504d77c8a19635f96532c59f"
+    },
+    {
+      "name": "390-configure.png",
+      "sha256": "d52826c6c0280cd2a7e6ff28ec96a416a721cd23f25e11d85caa97d1a97578a8"
+    },
+    {
+      "name": "390-parts.png",
+      "sha256": "7f64574688388f91e0ba761e0a93c364fdbd08e1451dd264b30a8fd02652786d"
+    },
+    {
+      "name": "390-pricing.png",
+      "sha256": "946390916c931a163f8d8a82a3c8154354cfe22618e6d4b50c7f106b0e640f00"
+    },
+    {
+      "name": "390-compare.png",
+      "sha256": "e9c158d68a09055355941ba06ed5b1bd5eac277a97bf8e21d9495aaa94ba6467"
+    },
+    {
+      "name": "390-evidence.png",
+      "sha256": "15d5dd399f257ce9cbf197f0afd49bc339cfad898334bcfa9356954fc77ac4f0"
+    },
+    {
+      "name": "390-runs.png",
+      "sha256": "8ec59c6c467fa1a9e6f491ee607a3190366e8b08269658413963146e8f389cb0"
+    },
+    {
+      "name": "320-configure.png",
+      "sha256": "1fdf6c6dbea0f161d3306ddf6871b266fece0ac5ec2de75b8ead283ae5b883e5"
+    }
+  ]
+}
