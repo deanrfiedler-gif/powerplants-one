@@ -14,6 +14,12 @@ Run [35051625281](https://github.com/deanrfiedler-gif/powerplants-one/actions/ru
 
 ## Native verification
 
-Pending the contribution workflow. The workflow records source head, exact HTML SHA-256, browser version, every result, page/console errors and original screenshot hashes. It covers all four views at 1440, 1024, 820, 390 and 320 px and retains original captures for visual inspection. Final results and any corrections will be recorded here before handover.
+Run [35051908896](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35051908896), source `98a8198344eed15d4a32cecc7360a1f119a214ca`, passed focused lint, all 17 model groups and all 14 native browser groups on Chrome `153.0.8010.47`, with no page/console errors. HTML SHA-256 `0a3076aa9caae405fd51003e3e8f4a3ce34c845414a17978bb651f0542369bdf`.
+
+Downloaded artifact `10429536462` was verified against ZIP SHA-256 `4671c7788aa2f4c67a5265512b0c8c285682af1add4a4007b14848611de80472`; all 18 original image hashes matched the manifest. Seven originals were visually inspected: desktop inbox, grouped changes, escalations and preferences, 390 px inbox, 320 px preferences, and phone source preview.
+
+Visual review found clipped quiet-hour/grouping checkbox labels because a full-width form-input rule also sized checkbox inputs. The CSS now explicitly fixes checkbox width and gives the label the remaining row width. The responsive test now verifies both checkbox width and label containment at every viewport. Forward-action arrows were corrected, source revision labels normalised to rNN and Job Pack design navigation advanced to its accepted r03 reference. Captures now wait for transient toasts to dismiss; an additional phone-dialog viewport capture is retained. Final corrected-source verification is pending.
+
+ The workflow records source head, exact HTML SHA-256, browser version, every result, page/console errors and original screenshot hashes. It covers all four views at 1440, 1024, 820, 390 and 320 px and retains original captures for visual inspection. Final results and any corrections will be recorded here before handover.
 
 These checks are standalone design evidence, not application integration, independent owner acceptance, complete WCAG conformance, physical-device acceptance or real delivery verification.
