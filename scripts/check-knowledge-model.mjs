@@ -1,0 +1,24 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+const scope={structuredClone,module:{exports:{}}};
+vm.runInNewContext(fs.readFileSync(new URL('../docs/design/knowledge/model.js',import.meta.url),'utf8'),scope);
+const M=scope.module.exports,results=[];
+function check(name,fn){fn();results.push({name,result:'Passed'});}
+const a=M.articles[0],c=M.contexts[0];
+check('Eight unique synthetic articles retain exact revisions',()=>{assert.equal(M.articles.length,8);assert.equal(new Set(M.articles.map(a=>a.id)).size,8);assert(M.articles.every(a=>a.id.startsWith('SYN-PPO-')&&a.revision));});
+check('A current reviewed procedure requires all context and source dimensions',()=>{assert(M.eligibility(a,c).eligible);assert.equal(M.match(a.scope,c).rows.length,5);});
+check('Unknown firmware does not inherit a match',()=>{assert.equal(M.match(a.scope,M.contexts[2]).state,'Context incomplete');assert(!M.eligibility(a,M.contexts[2]).eligible);});
+check('Firmware upgrade does not inherit earlier-version guidance',()=>{assert.equal(M.match(a.scope,M.contexts[1]).state,'Outside scope');assert(!M.eligibility(a,M.contexts[1]).eligible);});
+check('Every equipment and growing dimension can independently disqualify guidance',()=>{for(const [key]of M.dimensions){assert.equal(M.match(a.scope,{...c,[key]:'Different'}).state,'Outside scope');assert(!M.eligibility(a,{...c,[key]:'Different'}).eligible);}});
+check('No equipment context remains incomplete',()=>{assert.equal(M.match(a.scope,M.contexts[4]).state,'Context incomplete');});
+check('Overdue review excludes operationally current guidance',()=>{assert.equal(M.currency(M.articles[1]),'Review overdue');assert(!M.eligibility(M.articles[1],c).eligible);});
+check('Suspected fixes have no validated corrective steps',()=>{assert.equal(M.articles[2].state,'Suspected fix');assert.equal(M.articles[2].steps.length,0);assert(!M.eligibility(M.articles[2],c).eligible);});
+check('Reviewed lessons do not gain procedure authority',()=>{assert.equal(M.articles[3].state,'Reviewed lesson');assert(!M.eligibility(M.articles[3],c).eligible);});
+check('Superseded references point to an available successor',()=>{const old=M.articles[4];assert.equal(old.successor,a.id);assert(!M.eligibility(old,c).eligible);assert.equal(old.steps.length,0);});
+check('Different equipment has its own explicit applicability',()=>{assert(M.eligibility(M.articles[5],M.contexts[3]).eligible);assert(!M.eligibility(M.articles[5],c).eligible);});
+check('Expired article and source stay expired even with matching context',()=>{const old=M.articles[6];assert.equal(M.currency(old),'Expired');assert(!M.sourceCheck(old.sources[0],c).current);});
+check('Reviewed article cannot mask changed and mismatched required evidence',()=>{const changed=M.articles[7];assert.equal(M.currency(changed),'Current');assert.equal(M.match(changed.scope,c).state,'Matches context');assert(!M.eligibility(changed,c).eligible);assert.equal(M.sourceCheck(changed.sources[0],c).match.state,'Outside scope');});
+check('Missing required evidence blocks current procedure eligibility',()=>{assert(!M.eligibility({...a,sources:[]},c).eligible);});
+check('Missing source review or expiry cannot count as current',()=>{for(const p of [{reviewed:null},{expiry:null},{status:'Unavailable'}])assert(!M.eligibility({...a,sources:[{...a.sources[0],...p}]},c).eligible);});
+console.log(JSON.stringify({suite:'Knowledge design model',groups:results.length,results},null,2));

@@ -1,0 +1,66 @@
+{
+  "suite": "Knowledge design model",
+  "groups": 15,
+  "results": [
+    {
+      "name": "Eight unique synthetic articles retain exact revisions",
+      "result": "Passed"
+    },
+    {
+      "name": "A current reviewed procedure requires all context and source dimensions",
+      "result": "Passed"
+    },
+    {
+      "name": "Unknown firmware does not inherit a match",
+      "result": "Passed"
+    },
+    {
+      "name": "Firmware upgrade does not inherit earlier-version guidance",
+      "result": "Passed"
+    },
+    {
+      "name": "Every equipment and growing dimension can independently disqualify guidance",
+      "result": "Passed"
+    },
+    {
+      "name": "No equipment context remains incomplete",
+      "result": "Passed"
+    },
+    {
+      "name": "Overdue review excludes operationally current guidance",
+      "result": "Passed"
+    },
+    {
+      "name": "Suspected fixes have no validated corrective steps",
+      "result": "Passed"
+    },
+    {
+      "name": "Reviewed lessons do not gain procedure authority",
+      "result": "Passed"
+    },
+    {
+      "name": "Superseded references point to an available successor",
+      "result": "Passed"
+    },
+    {
+      "name": "Different equipment has its own explicit applicability",
+      "result": "Passed"
+    },
+    {
+      "name": "Expired article and source stay expired even with matching context",
+      "result": "Passed"
+    },
+    {
+      "name": "Reviewed article cannot mask changed and mismatched required evidence",
+      "result": "Passed"
+    },
+    {
+      "name": "Missing required evidence blocks current procedure eligibility",
+      "result": "Passed"
+    },
+    {
+      "name": "Missing source review or expiry cannot count as current",
+      "result": "Passed"
+    }
+  ]
+}

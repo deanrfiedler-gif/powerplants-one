@@ -1,0 +1,139 @@
+{
+  "passed": 33,
+  "kind": "Node VM generated model and UI command checks; no native browser",
+  "htmlSha256": "503f66ac6592d0ff6ff106d259f39c2c0fdb41477f20c871bd4ba93bb943ebcf",
+  "results": [
+    {
+      "name": "All five guided views render with reused workspace and docked snapshot",
+      "status": "passed"
+    },
+    {
+      "name": "Accepted r03 amounts, discount and included selection derive from ES-06",
+      "status": "passed"
+    },
+    {
+      "name": "Five-decimal unit price preserves valve amount and two-decimal profile blocks",
+      "status": "passed"
+    },
+    {
+      "name": "Existing-item binding checks exact target company, unit and reason without repricing",
+      "status": "passed"
+    },
+    {
+      "name": "Inactive item cannot be bound without explicit reactivation and sync",
+      "status": "passed"
+    },
+    {
+      "name": "One-off creation retains a known but unsynchronised original target",
+      "status": "passed"
+    },
+    {
+      "name": "Unknown item effect holds retry, rebinding, return and destination change",
+      "status": "passed"
+    },
+    {
+      "name": "Unknown item reconciliation needs evidence and exact original target",
+      "status": "passed"
+    },
+    {
+      "name": "Confirmed no-effect failure retries the same item identity",
+      "status": "passed"
+    },
+    {
+      "name": "Binding an existing item after no-effect failure closes the obsolete create attempt",
+      "status": "passed"
+    },
+    {
+      "name": "Clarification remains an explicit blocker, and mapping changes preserve accepted scope",
+      "status": "passed"
+    },
+    {
+      "name": "Destination checks hold absent entity keys, currency mismatch and wrong tax profile",
+      "status": "passed"
+    },
+    {
+      "name": "Company change clears item mappings; invalid profile does not partially mutate",
+      "status": "passed"
+    },
+    {
+      "name": "Receiving approval requires readiness, Receiver, exact proposal version, reason and confirmation",
+      "status": "passed"
+    },
+    {
+      "name": "New destination review invalidates approval but preserves the earlier decision",
+      "status": "passed"
+    },
+    {
+      "name": "Preparation requires current Operator authority and freezes one exact payload",
+      "status": "passed"
+    },
+    {
+      "name": "Partial conversion keeps confirmed targets and blocks retries while any outcome is unknown",
+      "status": "passed"
+    },
+    {
+      "name": "Target reconciliation validates correlation, evidence and original target identity",
+      "status": "passed"
+    },
+    {
+      "name": "Only confirmed no-effect siblings retry; confirmed targets and original operation stay unchanged",
+      "status": "passed"
+    },
+    {
+      "name": "All-unknown recovery requires order-header confirmation before lines and creates no new operation",
+      "status": "passed"
+    },
+    {
+      "name": "Upstream supersession holds new conversion and retries but permits original-effect reconciliation",
+      "status": "passed"
+    },
+    {
+      "name": "Unknown and confirmed operation evidence survives reload; payload or target tampering is held",
+      "status": "passed"
+    },
+    {
+      "name": "Interrupted Submitted target restores as unknown rather than being resent",
+      "status": "passed"
+    },
+    {
+      "name": "Restoration refuses altered original item target, unit and confirmed binding",
+      "status": "passed"
+    },
+    {
+      "name": "Read-only model commands cannot change basis, items, company, review or conversion",
+      "status": "passed"
+    },
+    {
+      "name": "ES-06 handover import verifies actual bytes, acceptance and selected amounts; missing files remain held",
+      "status": "passed"
+    },
+    {
+      "name": "Changed bytes, projection, acceptance or missing receiving handover are refused without replacing the case",
+      "status": "passed"
+    },
+    {
+      "name": "An incomplete imported handover returns to ES-06 with reason, owner and due date",
+      "status": "passed"
+    },
+    {
+      "name": "A different permitted ES-06 selection imports without carrying excluded option lines",
+      "status": "passed"
+    },
+    {
+      "name": "Generated UI decisions use required reasons and persist the actual command result",
+      "status": "passed"
+    },
+    {
+      "name": "Staged destination edits require explicit discard before leaving the form",
+      "status": "passed"
+    },
+    {
+      "name": "Cross-tab change prevents writes and marks the current page read-only",
+      "status": "passed"
+    },
+    {
+      "name": "Malformed saved state is preserved and local save failure holds subsequent actions",
+      "status": "passed"
+    }
+  ]
+}
