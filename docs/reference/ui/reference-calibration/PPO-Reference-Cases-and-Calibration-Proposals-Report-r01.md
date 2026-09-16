@@ -2,7 +2,7 @@
 document_id: PPO-ES10-WORKSPACE-REPORT
 title: Reference Cases and Calibration Proposals — Detailed Design Report
 revision: r01
-date: 2026-09-17
+date: 2026-09-16
 owner: Dean Fiedler
 status: Proposed standalone design; owner acceptance and application integration separate
 source_commit: d565a9de01b94aa7ad3fffe3a996f78c3aee589b

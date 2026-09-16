@@ -2,7 +2,7 @@
 document_id: PPO-ES10-WORKSPACE-DES
 title: Reference cases and calibration proposals — design and receiving handover
 revision: r01
-date: 2026-09-17
+date: 2026-09-16
 owner: Dean Fiedler
 status: Authorised standalone design; owner acceptance and application integration separate
 source_commit: d565a9de01b94aa7ad3fffe3a996f78c3aee589b
