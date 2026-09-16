@@ -168,6 +168,7 @@ Source cells below refer to the original `CALC_ENGINE` coordinates retained by E
 | Local-freight cost | AUD | `G208` | Numeric entry |
 | Local-freight sell | AUD | `G209` | Explicit sell amount; not derived from the unused road-freight margin. |
 | Include installation | Selection | `C152` | No, Yes |
+
 ### Additional screens and retained source fields
 
 Each additional-screen slot accepts a whole screen count, base length, overhang at each end and cloth width. Sources are C80/D80/E80/G80 through C84/D84/E84/G84. Zero count represents an unused synthetic slot. Active slots require positive base length and width. Material identifiers are synthetic fixture labels, not current supplier choices.
@@ -297,11 +298,12 @@ The source supplies 23 findings. This audit adds three findings for saved reconc
 | AUD-01 | Saved reconciliation is 142 Match and one error | `Reconciliation!L7:L149` | Repair the blank-rate comparison on line 219 and rerun in native Excel; do not inherit the report’s blanket pass. |
 | AUD-02 | Saved formula display errors | `Rules!G7:G3112` | FORMULATEXT is stored with an _xludf prefix and #NAME? caches. Read active formula XML and original text; validate formula display in Excel. |
 | AUD-03 | Report and workbook revision labels differ | `Summary!A4; Guide; report source section` | Use exact attachment hashes. The r02 filename contains r01 labels; record that difference without renaming source evidence. |
+
 The specialist estimator should first resolve overwritten quantities and replacement-scope gates. Engineering review owns operating limits, motor loading and accepted branch examples. Catalogue ownership covers identifiers, units, stock lengths and current prices. Estimating and Finance must settle FX, rounding, freight, discount, commission and tax policy. Those decisions are needed before application integration can make reliable operational promises.
 
 ## 7. Record evidence and receiving modules
 
-Every saved run retains the exact fixed context, definition version, source hashes, raw inputs, additional-screen entries, manual evidence, line gates, exclusions, illustrative prices, findings, comparison resolutions, generated baseline, resolved lines, calculated price bridge, timestamp and explicit `operationalReady: false` state.
+Every saved run retains the exact fixed context, definition version, source hashes, raw inputs, normalized values and units with source references, additional-screen entries, manual evidence, line gates, exclusions, illustrative prices, findings, comparison resolutions, generated baseline, resolved lines, calculated price bridge, timestamp and explicit `operationalReady: false` state.
 
 The exported JSON is a complete local review pack. It is not a MYOB import file or supplier order. Source documents remain separate and their identity is recorded by hash. Review notes and the local audit trail retain who the fixture actor represents; real identity and authorization must be supplied by the application.
 
@@ -357,3 +359,5 @@ Dialogs preserve unsaved edits until the user confirms cancellation. Focus retur
 The implementation is a self-contained HTML assembled from plain JavaScript, CSS, sanitized evidence metadata and the existing embedded fonts. It adds no framework, runtime dependency, service, application route, database migration or deployment. The established standalone approach remains suitable for reviewing the product and source rules before adopting a server calculation contract.
 
 The issued r01 artifacts remain unchanged. The new r02 package is published through the existing [draft PR #210](https://github.com/deanrfiedler-gif/powerplants-one/pull/210). The [evidence record](../../../testing/evidence/specialist-r02/README.md) distinguishes source-cache checks, synthetic model checks, native browser execution and visual review. Engineering approval, native Excel validation, current catalogue acceptance and operational application integration remain separate work.
+
+Final verification passed 26 model groups and 24 native Chrome groups with no console or page errors. The six views were checked at five widths from 320 to 1440 px. The evidence record identifies the exact tested source and HTML hash, preserves all 16 capture hashes and documents the initial complete and final targeted visual reviews. These checks verify the bounded review implementation; they do not approve the recovered engineering rules.

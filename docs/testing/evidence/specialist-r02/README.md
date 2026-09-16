@@ -23,7 +23,11 @@ The review led to a concrete correction: discount is governed only by commercial
 
 ## Final verification
 
-The corrected model passes 26 groups. Final native execution and exact source/hash are to be recorded after the corrected-source run completes. The original passing run above is not substituted for that final execution.
+The corrected source `721ef87c8243e688fdb3fc13121ba543f3fc5209` passed **26 model groups** and **24 native Chrome groups** in [run 35061751847](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35061751847), job `104683355323`, artifact `10432292919`. Chrome `153.0.8010.47` reported no console or page errors. The tested HTML SHA-256 is `bc06fa41f1362145eb585431427ee5aebe94d1e3c8a40cc53b68ccc4d6a72e5c`.
+
+The final [model results](model-results.json) and [native results](results.json) retain individual checks and all 16 capture hashes. All six views passed width checks at 1440, 1024, 820, 390 and 320 px. The [targeted final visual review](visual-review.json) checked the revised working dialog, parts actions, saved-run snapshot and phone pricing order after the initial complete capture review. No further layout correction was identified.
+
+[Documentation results](documentation-results.json) record passing foundation, PP-01 consistency and naming checks and the unchanged r01 HTML hash. Later report/evidence-only commits do not change the tested HTML or calculation source.
 
 ## Reproduction
 
