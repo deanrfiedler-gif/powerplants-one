@@ -20,7 +20,7 @@ const confirm=async()=>{await page.locator('#modal input[name=confirm]').check()
 async function capture(pressure) {
   await nav('inspection').click();await page.getByLabel('Measured delivery pressure').fill(pressure);
   await page.locator('#instrument-pressure').selectOption('SYN-PPO-INS-000009');await page.getByLabel('Measured nutrient conductivity').fill('2.00');
-  await page.locator('#instrument-ec').selectOption('SYN-PPO-INS-000010');await page.getByLabel('Visible condition',{exact:true}).selectOption('Satisfactory');
+  await page.locator('#instrument-ec').selectOption('SYN-PPO-INS-000010');await page.locator('#inspection-form').getByLabel('Visible condition',{exact:true}).selectOption('Satisfactory');
   await action('fixture').click();await submit();await action('saveDraft').click();await action('submitInspection').click();await confirm();await submit();
 }
 try {
