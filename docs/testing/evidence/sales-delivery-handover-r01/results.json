@@ -1,0 +1,252 @@
+{
+  "source": "local",
+  "html_sha256": "1e47efa70938127b644a9e5dda9a61d1d4f929b548610d515ec21d1d09ed30a5",
+  "browser": "141.0.7390.37",
+  "launch": "explicit executablePath",
+  "groups": 29,
+  "results": [
+    {
+      "name": "Register renders five permitted handovers and six views",
+      "result": "Passed"
+    },
+    {
+      "name": "Summary counts open exactly their contributing records",
+      "result": "Passed"
+    },
+    {
+      "name": "Search, filters and the empty result are distinct from an unavailable source",
+      "result": "Passed"
+    },
+    {
+      "name": "Restricted identity sees fewer records, no amounts and a stated exclusion",
+      "result": "Passed"
+    },
+    {
+      "name": "Accepted commercial basis shows the exact accepted amounts and evidence",
+      "result": "Passed"
+    },
+    {
+      "name": "Customer 360 and opportunity snapshots keep transfer and handover-due facts separate",
+      "result": "Passed"
+    },
+    {
+      "name": "Destination shows the ES-07 outcome and offers no retry",
+      "result": "Passed"
+    },
+    {
+      "name": "Readiness separates acceptance evidence from work-release prerequisites",
+      "result": "Passed"
+    },
+    {
+      "name": "A receiving decision requires the matching receiving team",
+      "result": "Passed"
+    },
+    {
+      "name": "Return for clarification preserves the submission and names owners and dates",
+      "result": "Passed"
+    },
+    {
+      "name": "A return without a finding is refused and the entered text is preserved",
+      "result": "Passed"
+    },
+    {
+      "name": "A missing document needs a revision and a source, not a checklist tick",
+      "result": "Passed"
+    },
+    {
+      "name": "Correcting both returned findings clears the acceptance blockers",
+      "result": "Passed"
+    },
+    {
+      "name": "Resubmission creates a successor revision and a readable comparison",
+      "result": "Passed"
+    },
+    {
+      "name": "Acceptance binds the reviewed revision and keeps release prerequisites open",
+      "result": "Passed"
+    },
+    {
+      "name": "A source change after acceptance requires renewed acceptance and keeps the original",
+      "result": "Passed"
+    },
+    {
+      "name": "A stale review is refused while the submitted revision is under review",
+      "result": "Passed"
+    },
+    {
+      "name": "A lost response recovers the original operation without a second record",
+      "result": "Passed"
+    },
+    {
+      "name": "A failed save changes nothing and preserves the entered text",
+      "result": "Passed"
+    },
+    {
+      "name": "An unresolved conversion blocks fulfilment acceptance and points at ES-07",
+      "result": "Passed"
+    },
+    {
+      "name": "A Won opportunity with missing acceptance evidence cannot be submitted",
+      "result": "Passed"
+    },
+    {
+      "name": "An accepted Service handover keeps an outstanding prerequisite that prevents work release",
+      "result": "Passed"
+    },
+    {
+      "name": "Completing one obligation leaves the other prerequisites open",
+      "result": "Passed"
+    },
+    {
+      "name": "Switching customers and identities retains no other context",
+      "result": "Passed"
+    },
+    {
+      "name": "Every view fits desktop, tablet and phone viewports without horizontal scroll",
+      "result": "Passed"
+    },
+    {
+      "name": "Keyboard navigation, dialog focus return and the skip link behave correctly",
+      "result": "Passed"
+    },
+    {
+      "name": "Reload retains the exact saved records",
+      "result": "Passed"
+    },
+    {
+      "name": "Export contains the exact current session",
+      "result": "Passed"
+    },
+    {
+      "name": "A damaged saved session is preserved rather than overwritten",
+      "result": "Passed"
+    }
+  ],
+  "errors": [],
+  "images": [
+    {
+      "name": "1440-register.png",
+      "sha256": "50dafb26668952e0554abf68de5c946a3b51ace50253bbf3b7d51d0dd3914d37"
+    },
+    {
+      "name": "1440-restricted-basis.png",
+      "sha256": "66edc629b0a88168a35e097bf7bbbccdfffe6af576b21804331b673484feefd2"
+    },
+    {
+      "name": "1440-basis.png",
+      "sha256": "e3192569eca2e7efaba722cb8412e5193adc7d74a16a8fe436001967361fcb7b"
+    },
+    {
+      "name": "1440-destination.png",
+      "sha256": "f899e31fc8555c9e9be7a905913c62a42aa5af770d5eadeb6ec616eeb850f638"
+    },
+    {
+      "name": "1440-readiness.png",
+      "sha256": "c516123584f28ab46d553e8d41f296c4c9a30062a1284aa4b7cef1d389f7c9cf"
+    },
+    {
+      "name": "1440-returned.png",
+      "sha256": "35c3afb87a97bf89a282d2ce5f0ecff29f85a24e15600c8a0191d0800c670f1c"
+    },
+    {
+      "name": "1440-comparison.png",
+      "sha256": "79b0478b3646fb6a740f57e5a65641c6bf85772ca203fdbb643a4d1cea0a8753"
+    },
+    {
+      "name": "1440-accepted.png",
+      "sha256": "b4cd11109758c550c191b45148fef8516671a5b3d1e57a0e3ba4ae40f6f9fe08"
+    },
+    {
+      "name": "1440-renewed.png",
+      "sha256": "13c9cd474b09ba4a8dafc885ccf8a1859fc807c7330b5435f59f80e88e00e7f1"
+    },
+    {
+      "name": "1440-partial-conversion.png",
+      "sha256": "4e393cb9d89d585c535ec420d2eaebefa2081785b0c2a29c20f64caab5c34a11"
+    },
+    {
+      "name": "1440-missing-acceptance.png",
+      "sha256": "1c4f3f9833f5fb0f482ff58a5652ff3c62133cf10ae4e61b1d792baeea6dc095"
+    },
+    {
+      "name": "1440-history-chain.png",
+      "sha256": "b7b20c4e9670f159ba8c65dd70acba597ebaade16d8a289e5436a58edbc34c03"
+    },
+    {
+      "name": "1440-register-responsive.png",
+      "sha256": "e68c42b9bb0315540590a6e9ef5f86f9585309ab719be398df49b0cd1b844362"
+    },
+    {
+      "name": "1440-basis-responsive.png",
+      "sha256": "08cb2535c3c3b3cc7f43c3efa710dd88a93561b07cc596bd58d8cc8d55e63b7a"
+    },
+    {
+      "name": "1440-destination-responsive.png",
+      "sha256": "9d151d14e9a4ff468904d6ba10ac45e3fc1fcb50138bd5353314af2dc9a5a7c9"
+    },
+    {
+      "name": "1440-readiness-responsive.png",
+      "sha256": "981728f26e0920979eb1c630443f680049a49021e935753a26eaa06649b9eac1"
+    },
+    {
+      "name": "1440-decision-responsive.png",
+      "sha256": "7375af7f0d4d03d4deef1e1c3ce00c06c8c65f433c6ae9fe780d416757816860"
+    },
+    {
+      "name": "1440-history-responsive.png",
+      "sha256": "b77215aaf15b533bb8a957f53b59fddfee8e9c048f6af8f54075f24c28534834"
+    },
+    {
+      "name": "390-register-responsive.png",
+      "sha256": "311e7698e200416db0831f0e8f786712b31f6ec1ebc5439713517735d07b3c16"
+    },
+    {
+      "name": "390-basis-responsive.png",
+      "sha256": "eee5791d90136a3a2399e7ade20b6914f18b66313994a3a7e5b650d10074b2fd"
+    },
+    {
+      "name": "390-destination-responsive.png",
+      "sha256": "65b580b9becc97d6ff22a2a6f6462447aa9741c99e4c4cd44cdfa051cfb8707f"
+    },
+    {
+      "name": "390-readiness-responsive.png",
+      "sha256": "c42f13dd4a7170417887dc3fed445bae13f3fe286913a398ff280c98bd23cd0c"
+    },
+    {
+      "name": "390-decision-responsive.png",
+      "sha256": "62fdbc3f7041cdb44d0e4481a848c8b713ed3658e7588289e0a20262513aa087"
+    },
+    {
+      "name": "390-history-responsive.png",
+      "sha256": "a7d1798afeb5c660f806c52f0d015c363aacf76655b10ef3fb12a07d549f70c3"
+    },
+    {
+      "name": "320-register-responsive.png",
+      "sha256": "a803070623dbab4061d1d5b970a66ba8936da60dab2ad4031e5356bc365ce849"
+    },
+    {
+      "name": "320-basis-responsive.png",
+      "sha256": "942a857cb8b5f2825c60e06a0efdb5cc0a812308eaab8afe2747f3616f76bde5"
+    },
+    {
+      "name": "320-destination-responsive.png",
+      "sha256": "e69b1a5813bc84a7083800b5b7abfafe80da77d22e0c74801c0d3603528aa165"
+    },
+    {
+      "name": "320-readiness-responsive.png",
+      "sha256": "d08ca926c8b102ddac83dd1a793aeaded6d5ff9c1db1c975c3f01a7da014b35a"
+    },
+    {
+      "name": "320-decision-responsive.png",
+      "sha256": "c60af818c0af5715fece69e0864592ff7869a1e8adcf485ecd62f11e95fd03a9"
+    },
+    {
+      "name": "320-history-responsive.png",
+      "sha256": "d3e244a37b108aacda798de9eadb915ba3034a1eb9691affe199482e1f9e617f"
+    },
+    {
+      "name": "1440-damaged-session.png",
+      "sha256": "2cc8edfdd3e3561f707c7852af288daf77e7b1dec79cc45bd900644be344eae7"
+    }
+  ]
+}
