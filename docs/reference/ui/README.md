@@ -1,8 +1,8 @@
 ---
 document_id: PPO-UI-DESIGN-INDEX
 title: HTML design index and maintenance guide
-revision: r05
-updated: 2026-09-16
+revision: r06
+updated: 2026-09-17
 owner: Dean Fiedler
 status: Repository inventory; individual design approvals remain in linked decisions
 source_commit: 9921be2439ca479135482c51fbf3ed4b28615f37
@@ -15,6 +15,8 @@ Use this page to find the **latest available HTML for each design family**, its 
 **Inventory checked:** 15 September 2026, against [main at d041de7](https://github.com/deanrfiedler-gif/powerplants-one/commit/d041de7c40e7ba73acdef3252d5f18f1bf8ccb2f). All **139 HTML paths under `docs/`** are linked below: **120 UI reference files, 15 blueprint previews and four generator templates**. This is a file count, including earlier revisions and duplicates, not a count of distinct modules. Application HTML in `src/` and `public/` is outside this inventory. Open PRs #205 and #206 are listed separately and excluded from these main-branch counts. Unpublished conversation/download files cannot be established from GitHub alone.
 
 **Scoped additions, 16 September 2026:** ES-05 presentation correction r02, ES-06 response/negotiation r01 and ES-07 item resolution/conversion r01 with detailed reports are linked below. ES-05 r01 and customer quotation r03 remain retained references. This amendment does not repeat the dated full-inventory audit above or change existing design acceptance.
+
+**Scoped addition, 17 September 2026:** Application Shell r17 and its exact companion report are retained with the authorised implementation contribution. This does not repeat the dated inventory audit or claim deployment.
 
 **Latest available does not mean approved or implemented.** A higher filename revision, a successful check or a merged pull request does not establish design approval. **Approved** requires a linked Dean decision; **Proposed** and **Uploaded reference** do not establish acceptance; **Study** is explicitly unadopted scope. Recorded desktop and phone approvals retain their separate scopes. Where filenames and embedded revision labels disagree, the discrepancy is stated instead of silently choosing a new baseline.
 
@@ -30,7 +32,7 @@ These are the latest uploaded shared visual references. Their presence does not 
 | Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
 |---|---|---|---|
 | Theme / style board | [r20](theme-style-board/powerplants-one-theme-style-board-r20.html) | Latest uploaded visual reference | Matches the supplied r20 attachment byte for byte. [Shared UI specification](../../standards/ui-style-specification.md) and accepted baseline register retain implementation authority. |
-| Application shell | [r14](application-shell/PPO-Application-Shell-r14.html) | Latest uploaded visual reference | Shared container reference for module-only designs; accepted application shell scope remains separate. |
+| Application shell | [r17](application-shell/PPO-Application-Shell-r17.html) · [report](application-shell/PPO-Application-Shell-Report-r17.md) · [retained r14](application-shell/PPO-Application-Shell-r14.html) | r17 integration authorised by Dean; native review remains pending | Shared-frame implementation contribution: [decision](../../decisions/application-shell-integration.md), [handover](../../delivery/application-shell-handover.md). Existing module interiors and permissions remain authoritative. |
 
 ## Shared customer and platform pages
 
@@ -77,6 +79,7 @@ These are the latest uploaded shared visual references. Their presence does not 
 | Quotation response & negotiation — ES-06 | [r01](quoting/PPO-Quotation-Response-and-Negotiation-r01.html) · [Detailed report](quoting/PPO-Quotation-Response-and-Negotiation-Report-r01.md) | Proposed extension of customer quotation r03; native visual and owner acceptance pending | Exact revision/options/signature, negotiation, unknown-response recovery and prepared ES-07 handover. [Design and receiving handover](../../decisions/quotation-response-negotiation-design.md). |
 | One-off item resolution and conversion — ES-07 | [r01](quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html) · [Detailed report](quoting/PPO-One-Off-Item-Resolution-and-Conversion-Report-r01.md) | Proposed guided workflow; native visual and owner acceptance pending | Exact ES-06 accepted basis, item operations and synchronisation, company mappings, receiving review and original-operation conversion recovery. [Design and receiving handover](../../decisions/item-resolution-conversion-design.md). |
 | Quotation PDF design | [r02](quoting/ppo-quotation-pdf-design-r02.html) | Latest uploaded output design; acceptance not established by this audit | [r02 change notes](quoting/ppo-quotation-pdf-design-r02-changes.md). Output layout and the interactive quotation module are distinct references. |
+| Supplier Pricing & Cost Sources | [r01](supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html) · [detailed report](supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-Report-r01.md) | Proposed PD-03 / ES-03 design; owner acceptance and application integration separate | Five views cover exact supplier evidence, independent source review, cost provenance and deliberate draft refresh. [Design handover](../../decisions/supplier-pricing-cost-sources-design.md), [verification](../../testing/evidence/supplier-pricing-r01/README.md). |
 | Estimating workspace | [Working preview](../../blueprints/estimating-workspace-mockup.html) | Discovery reference; full preview is not an application acceptance claim | E1/E2 implement bounded portions. [Discovery handover](../../delivery/estimating-discovery-handover.md), [E1 handover](../../delivery/estimating-e1-handover.md). |
 | E2 options and scope discovery | [Original walkthrough](../../blueprints/estimating-e2-walkthrough.html) | Historical proposal with partial policy adoption; original routing is not current authority | Adopted E2-D02/D03 and DR-02 are implemented in bounded slices. Numeric routing and other deferred rules remain unadopted. [Current authority](../../decisions/ADR-0025-e2-discovery-foundation.md), [saved-screen handover](../../delivery/estimating-e2-screens-handover.md). |
 | Guided estimating pilot | [Working preview](../../blueprints/estimating-wizard-mockup.html) | Authorised bounded pilot direction; detailed result for review | Fictional supply-and-installation rules; application wizard integration remains separate. [Pilot decision](../../decisions/estimating-wizard-pilot.md). |

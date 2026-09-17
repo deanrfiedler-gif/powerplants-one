@@ -8,7 +8,7 @@ Dean's personal prototype has a public repository and private demo. Other projec
 
 ## 2. Full scope and delivery focus
 
-Preserve seven domains: CRM; Estimating & Quotation; Engineering & Design Control; Projects & Commercial Delivery; Service Operations; Supply Chain Management; Finance & Commercial Controls. Shared customer, contact, site, equipment, document, identity, activity, audit and reporting capabilities support them.
+Preserve seven domains: Sales (CRM); Estimating & Quotation; Engineering & Design Control; Projects & Commercial Delivery; Service Operations; Supply Chain Management; Finance & Commercial Controls. Shared customer, contact, site, equipment, document, identity, activity, audit and reporting capabilities support them.
 
 Test sales, service, upgrades, greenhouse projects and warranty/returns against actors, approvals, handovers, exceptions and completion. Departmental roles remain proposed.
 
@@ -68,7 +68,7 @@ Prevent duplicate work/financial effects on retry. Reconcile unknown outcomes. D
 
 Use accessible desktop/mobile layouts, keyboard controls, useful states and explicit save status. Avoid implementation jargon in business flows.
 
-Use Australian English and docs/standards/ui-style-specification.md: Roboto/Verdana, navy #242a37, green #62bb46 and the intact supplied logo. Read docs/decisions/crm-desktop-mobile-refinements.md for the approved r11/r07 implementation and remaining two-stage limits. Show synthetic/environment context.
+Use Australian English and docs/standards/ui-style-specification.md: Roboto/Verdana, navy #242a37, green #62bb46 and the intact supplied logo. CRM baseline: docs/decisions/crm-desktop-mobile-refinements.md. Show synthetic/environment context. Shared shell: docs/decisions/application-shell-integration.md.
 
 Define scope, permissions, validation, recovery and acceptance. Follow docs/requirements/product-quality-register.md and docs/delivery/product-quality-plan.md.
 
