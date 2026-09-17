@@ -15,9 +15,14 @@ test("r38 two-row toolbar, single board scroll and uniform cards at desktop and 
       const cards = [...root.querySelectorAll(".crm-card")].map(card => card.getBoundingClientRect()).filter(rect => rect.width);
       return { pageFits: document.documentElement.scrollWidth <= innerWidth, heights: cards.map(rect => rect.height), controlsFit: [...root.querySelectorAll(".crm-toolbar-r38 button,.crm-new-opportunity,.crm-workbar button,.crm-workbar input,.crm-workbar select")].filter(node => node.getBoundingClientRect().width).every(node => { const rect = node.getBoundingClientRect(); return rect.left >= 0 && rect.right <= innerWidth; }), secondRow: workbar.top >= toolbar.bottom - 1, innerScrolls: [...root.querySelectorAll(".crm-stage")].some(node => getComputedStyle(node).overflowY === "auto") };
     });
-    expect(geometry.pageFits && geometry.controlsFit && geometry.secondRow).toBe(true);
+    expect(geometry, `Toolbar geometry at ${width}px`).toMatchObject({ pageFits: true, controlsFit: true, secondRow: true });
     expect(new Set(geometry.heights).size).toBe(1);
     expect(geometry.innerScrolls).toBe(false);
+    const activityFits = await page.locator(".crm-card:visible .crm-card-activity").evaluateAll(nodes => nodes.every(node => {
+      const button = node.getBoundingClientRect(), copy = node.querySelector(".crm-activity-copy")!.getBoundingClientRect();
+      return copy.top >= button.top && copy.bottom <= button.bottom && copy.right <= button.right;
+    }));
+    expect(activityFits, `Activity dates fit their cards at ${width}px`).toBe(true);
     await page.screenshot({ path: info.outputPath(`r38-board-${width}.png`) });
   }
 });
@@ -36,6 +41,7 @@ test("r38 collapse, snapshot, filter focus, shared forecast and archive populati
   const filter = page.getByRole("dialog", { name: "Filter opportunities", exact: true });
   await expect(filter).toBeVisible();
   expect((await filter.boundingBox())!.y).toBe(0);
+  expect(await filter.locator(".crm-secondary-filters").evaluate(node => node.scrollHeight <= node.clientHeight + 1)).toBe(true);
   await filter.getByLabel("Next action", { exact: true }).selectOption("Overdue");
   await page.screenshot({ path: info.outputPath("r38-filters.png") });
   await page.keyboard.press("Escape");

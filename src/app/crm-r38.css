@@ -75,7 +75,7 @@
 .crm-r38 .crm-card-close .product-icon { width:12px; height:12px; }
 .crm-r38 .crm-card-warning { top:8px; right:7px; min-height:24px; width:24px; height:24px; padding:3px; border:0; background:transparent; color:#865900; }
 .crm-r38 .crm-card-warning .product-icon { width:17px; height:17px; }
-.crm-r38 .crm-card .crm-card-activity { display:flex; align-items:flex-start; justify-content:flex-start; gap:6px; height:51px; min-height:51px; padding:7px 0 3px; border:0; border-radius:0; background:transparent; font-size:12px; text-align:left; color:#606977; }
+.crm-r38 .crm-card .crm-card-activity { display:flex; flex-direction:row; align-items:flex-start; justify-content:flex-start; gap:6px; height:51px; min-height:51px; padding:7px 0 3px; border:0; border-radius:0; background:transparent; font-size:12px; text-align:left; color:#606977; }
 .crm-r38 .crm-card .crm-card-activity>.product-icon { width:15px; height:15px; margin-top:2px; flex:none; }
 .crm-r38 .crm-activity-copy { display:flex; flex-direction:column; min-width:0; }
 .crm-r38 .crm-card .crm-action-text { font-size:12px; font-weight:500; line-height:17px; height:17px; min-height:17px; white-space:nowrap; display:block; overflow:hidden; text-overflow:ellipsis; color:#242a37; }
@@ -159,7 +159,7 @@
 .crm-r38 .crm-r38-panel>footer button { min-height:36px; font-size:13px; padding:7px 18px; background:#242a37; color:white; }
 .crm-r38 .crm-r38-drawer { position:fixed; inset:0 0 0 auto; margin:0; height:100dvh; max-height:100dvh; width:min(820px,100vw); border-radius:0 0 0 10px; }
 .crm-r38 .crm-r38-drawer .crm-r38-panel-body { flex:1; }
-.crm-r38 .crm-secondary-filters { padding:0; border:0; background:white; }
+.crm-r38 .crm-secondary-filters { padding:0; border:0; background:white; max-height:none; overflow:visible; }
 .crm-r38 .crm-filter-grid { grid-template-columns:1fr 1fr; gap:16px; }
 .crm-r38 .crm-filter-grid .crm-header-search { width:100%; grid-column:1/-1; height:36px; }
 .crm-r38 .crm-filter-grid .crm-header-search input { height:32px; }
@@ -208,10 +208,14 @@
  .crm-r38 .crm-workbar { flex-wrap:wrap; gap:3px; padding:4px 8px; }
  .crm-r38 .crm-workbar-filters { width:100%; flex:1 1 100%; }
  .crm-r38 .crm-workbar-review { width:100%; justify-content:space-between; }
+ .crm-r38 .crm-workbar-review>button:first-child { width:34px; justify-content:center; }
+ .crm-r38 .crm-workbar-review>button:first-child>span { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+ .crm-r38 .crm-sort>span { display:none; }
  .crm-r38 .crm-workbar :is(button,select) { min-height:34px; }
  .crm-r38 .crm-workbar .crm-icon-button { width:34px; height:34px; }
  .crm-r38 .crm-board-headers,.crm-r38 .crm-board-columns { display:block; padding-inline:8px; }
  .crm-r38 .crm-board-headers .crm-stage-heading { height:52px; min-height:52px; padding:7px 12px; }
+ .crm-r38 .crm-board-headers .crm-stage-heading[data-selected=false] { display:none; }
  .crm-r38 .crm-stage-heading-copy { display:flex; align-items:center; justify-content:space-between; width:100%; }
  .crm-r38 .crm-stage-total { margin:0; }
  .crm-r38 .crm-stage .crm-card { height:270px; min-height:270px; }
