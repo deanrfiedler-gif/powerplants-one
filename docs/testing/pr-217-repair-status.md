@@ -20,6 +20,8 @@ No application, database, dependency pin or deployment changes are included. Own
 
 [Run 35220962231](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35220962231) identified five unused bindings in the recovered source: the always-true first-step predicate parameter, the unused degraded-source predicate, two unused record-chip projections and an unused customer-select projection. These bindings are removed without changing business behavior. The maintained [versionless HTML](../reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist.html) is generated and tested from the corrected source. The uploaded r01 HTML/report stay unchanged; the model hash above identifies the exact original recovery before this cleanup. Fresh model and browser artifacts identify the actual maintained hashes.
 
+The first native recovery run reached the provenance refusal check and correctly refused a missing rule revision: the seed already carried a source reference. The check now explicitly clears both provenance fields before asserting the missing-source refusal, so it tests the intended condition rather than assuming blank seed values. Business code and the original snapshots are unchanged by this harness correction.
+
 The earlier missing-file inventory below is retained as history; its source and deliverable blockers are now resolved and the missing tests have been replaced with the separately identified recovery suites.
 
 ---

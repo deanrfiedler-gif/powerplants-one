@@ -46,6 +46,7 @@ try{
   });
   await check('A sourced review date refuses missing provenance and preserves the form',async()=>{
     const before=await state();await plan();await page.locator('#f-basis').selectOption('Sourced rule');
+    await page.locator('#f-sourceRef').fill('');await page.locator('#f-ruleRevision').fill('');
     await page.locator('#f-planned').fill('2026-09-24');await page.locator('#f-detail').fill('A sourced review interval needs its exact source and revision.');
     await page.locator('#modal-submit').click();await page.locator('#modal-error').waitFor({state:'visible'});
     assert.match(await page.locator('#modal-error').innerText(),/Source reference/);assert.deepEqual(await state(),before);
