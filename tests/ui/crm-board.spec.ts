@@ -17,12 +17,13 @@ test("hosted header, populated board, filtering and independent card targets", a
   );
   await page.getByRole("button", { name: "Account", exact: true }).click();
   await expect(page.getByRole("button", { name: "Sign out", exact: true })).toBeVisible();
+  await expect(page.getByText("Powerplants One · Synthetic data only", { exact: true })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(
     page.getByLabel("Search opportunities", { exact: true }),
   ).toBeVisible();
   await page.getByRole("button", { name: info.project.name === "desktop" ? "More" : "Menu", exact: true }).click();
-  await expect(page.getByText("Synthetic data only", { exact: true })).toBeVisible();
+  await expect(page.getByRole("searchbox", { name: "Find a menu item" })).toBeVisible();
   await page.getByRole("button", { name: info.project.name === "desktop" ? "Close More menu" : "Close menu", exact: true }).click();
   const geometry = await page.evaluate(() => {
     const header = document.querySelector(".topbar")!.getBoundingClientRect();

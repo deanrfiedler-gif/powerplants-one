@@ -45,6 +45,7 @@ type State = {
   hosted: boolean;
   preview: WorkspaceId;
   selectPreview: (id: WorkspaceId) => boolean;
+  resetPreview: () => boolean;
 };
 const Shell = createContext<State | null>(null);
 export function useShell() {
@@ -142,6 +143,14 @@ export function ShellProvider({
         hosted,
         preview,
         selectPreview,
+        resetPreview: () => {
+          if (!context?.can_preview) return false;
+          let saved = true;
+          try { localStorage.removeItem(preferenceKey); visitPreference = null; }
+          catch { visitPreference = "sales"; saved = false; }
+          window.dispatchEvent(new Event(preferenceEvent));
+          return saved;
+        },
       }}
     >
       {children}

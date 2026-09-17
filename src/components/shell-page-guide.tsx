@@ -1,93 +1,29 @@
+"use client";
+import { useState } from "react";
+import { shellGuide } from "../shell/guide";
+import { ShellIcon } from "./shell-icon";
+
 export function ShellPageGuide({ page }: { page: string }) {
-  const shell = page === "Application shell";
-  return (
-    <div className="ppo-page-guide">
-      <p className="ppo-guide-eyebrow">USER GUIDE & JOURNEY MAP</p>
-      <h3>{shell ? "Your workspace in Powerplants One" : page}</h3>
-      {!shell && (
-        <p className="ppo-guide-status">
-          The detailed {page} guide is being prepared. The shared navigation
-          guide below is available now.
-        </p>
-      )}
-      <section>
-        <h4>What the application shell does</h4>
-        <p>
-          The shell keeps navigation, record search, Quick add and your account
-          together while you work across Powerplants One. Your page and its
-          records stay open behind this guide.
-        </p>
-      </section>
-      <section>
-        <h4>How to get started</h4>
-        <ol className="ppo-journey">
-          <li>
-            <strong>Choose your destination</strong>
-            <p>
-              Open More and search for a workspace or shared page. Sales
-              contains Deals and Leads; Customers and Contacts are shared
-              records. Planned destinations are not yet available.
-            </p>
-          </li>
-          <li>
-            <strong>Find the record you need</strong>
-            <p>
-              Use global search for records you can access. Type at least two
-              characters, then select a result. A page’s own search and filters
-              apply to that page only.
-            </p>
-          </li>
-          <li>
-            <strong>Create or continue work</strong>
-            <p>
-              Quick add opens the existing creation form for a record type.
-              Available actions depend on your signed-in identity. Review the
-              form and save there.
-            </p>
-          </li>
-          <li>
-            <strong>Follow the page’s workflow</strong>
-            <p>
-              The heading identifies your current page. Its controls, required
-              fields and status messages guide the work. This shell does not
-              save changes made inside a page.
-            </p>
-          </li>
-        </ol>
-      </section>
-      <section>
-        <h4>Helpful controls</h4>
-        <dl>
-          <dt>Page guide · information icon</dt>
-          <dd>
-            Opens guidance for the current page. Each module’s detailed journey
-            will be added with its approved workflow.
-          </dd>
-          <dt>Quick Help · question mark</dt>
-          <dd>A short reference for navigation and keyboard shortcuts.</dd>
-          <dt>Account</dt>
-          <dd>
-            Shows your signed-in identity and sign-out control. In this
-            development preview, Preview workspace remembers a workspace on this
-            browser; it does not change your access.
-          </dd>
-          <dt>On a phone</dt>
-          <dd>
-            The bottom bar follows the current workspace. Open More for the
-            complete menu, Quick add and Notifications. Global search and this
-            guide remain in the header.
-          </dd>
-        </dl>
-      </section>
-      <section>
-        <h4>Keyboard and access</h4>
-        <p>
-          Ctrl or Command + K opens global search. Arrow keys select a result,
-          Enter opens it and Escape closes a panel. Tab moves between controls.
-          A page marked No access requires permission; choosing a preview
-          workspace does not grant it.
-        </p>
-      </section>
-    </div>
-  );
+  const [showShell, setShowShell] = useState(page === "Application shell");
+  const jump = (id: string) => {
+    const section = document.getElementById(id);
+    section?.focus({ preventScroll: true });
+    section?.scrollIntoView({ block: "start", behavior: "instant" });
+  };
+  if (!showShell) return <div className="ppo-page-guide">
+    <div className="ppo-guide-intro"><span className="ppo-guide-eyebrow">Page guide</span><h3>{page}</h3><p>The detailed {page} guide is being prepared.</p></div>
+    <div className="ppo-guide-note">The page guide will explain its purpose, how to use it, the journey through its key tasks and where to go next.</div>
+    <button className="ppo-guide-link" onClick={() => setShowShell(true)}><ShellIcon name="info" /><span>Read the application shell guide</span><ShellIcon name="chevron-right" /></button>
+  </div>;
+  const numbered = (items: readonly (readonly [string, string])[], kind: string) => <ol className={`ppo-guide-${kind}`}>{items.map(([title, text], i) => <li key={title}><span className="ppo-step-number" aria-hidden="true">{i + 1}</span><div><h4>{title}</h4><p>{text}</p></div></li>)}</ol>;
+  return <article className="ppo-page-guide">
+    <div className="ppo-guide-intro"><span className="ppo-guide-eyebrow">User guide</span><h3>{shellGuide.title}</h3><p>{shellGuide.intro}</p></div>
+    <nav className="ppo-guide-contents" aria-label="Guide sections">{[["overview", "Overview"], ["how", "How to use"], ["journey", "Journey map"]].map(([id, title]) => <button key={id} onClick={() => jump(`ppo-guide-${id}`)}>{title}</button>)}</nav>
+    <section className="ppo-guide-section"><h3 id="ppo-guide-overview" tabIndex={-1}>{shellGuide.overviewTitle}</h3><p>{shellGuide.purpose}</p><div className="ppo-guide-features">{shellGuide.features.map(([title, text]) => <div key={title}><h4>{title}</h4><p>{text}</p></div>)}</div></section>
+    <section className="ppo-guide-section"><h3 id="ppo-guide-how" tabIndex={-1}>How to use it</h3>{numbered(shellGuide.steps, "steps")}</section>
+    <section className="ppo-guide-section"><h3 id="ppo-guide-journey" tabIndex={-1}>Your journey</h3><p>{shellGuide.journeyIntro}</p>{numbered(shellGuide.journey, "journey")}</section>
+    <section className="ppo-guide-section"><h3>On your phone</h3><p>{shellGuide.mobile}</p></section>
+    <section className="ppo-guide-section"><h3>Keyboard shortcuts</h3><dl className="ppo-guide-shortcuts">{shellGuide.shortcuts.map(([key, text]) => <div key={key}><dt><kbd>{key}</kbd></dt><dd>{text}</dd></div>)}</dl></section>
+    <section className="ppo-guide-section"><h3>If something is unavailable</h3><p>{shellGuide.recovery}</p><div className="ppo-guide-note">{shellGuide.boundary}</div></section>
+  </article>;
 }

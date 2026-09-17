@@ -55,6 +55,19 @@ The completed [compiled desktop/phone run on 4037c881](https://github.com/deanrf
 
 PR #222 merged into main as `aa94dcdc` while the repaired browser suites were running. The branch incorporates that existing supplier-pricing design without changing its files; the document-register append conflict retains all four Shell entries and both Supplier Pricing entries. Main and Shell status/index entries are both preserved. Documentation assurance is rerun on the combined branch before publication.
 
+## Azure visual alignment follow-up
+
+Dean reports r17 is deployed and working. The supplied paired screenshots show that the React integration still inherits the old application's typography and uses different panel dimensions, anchors and content. Branch `fix/shell-r17-visual-alignment` corrects the implementation against the retained r17 HTML; the reference file is unchanged.
+
+- Extracts the exact embedded Roboto 400/500/700 WOFF2 assets into `public/brand/shell-roboto-{weight}.woff2`, covered by the existing `public/brand/Roboto-OFL.txt`. The scoped `PPOShellRoboto` family and original SVG geometry apply to the shell only. In particular, global search no longer inherits a bold label's weight.
+- Restores 40px search, 16px product heading (14px at the reference breakpoint), 344px utility/More panels, 560px guide, 320px Quick add, reference anchors, close controls, shadows, spacing and fixed footers. Existing phone page filtering remains.
+- Restores the authored guide sections, jump controls, journey styling, Quick Help tips/shortcuts, centred disconnected notification state, account profile and preview reset. Names/initials come from the signed-in identity. The accessible native preview select retains its keyboard operation with the reference's closed styling. Live sign-out and local identity controls remain additional runtime content.
+- Restores More's 20 resting destinations, including Help, with seven business workspaces. Existing module pages remain discoverable through menu/global search and permitted workspace tabs. Planned and denied destinations remain truthful. The development Foundation checks page is searchable locally, not exposed in the hosted demo.
+- Adds permitted page suggestions to global search while retaining live record search, real creation forms, server enforcement, session invalidation and rejection of late responses after sign-out. Runtime copy describes these working features rather than the HTML preview's disconnected controls.
+- Replaces the introductory `/` screen with a redirect to the existing authenticated `/work` activity list. [My Work & Action Centre r01](../decisions/my-work-action-centre-design.md) is the appropriate existing HTML design for the eventual landing workspace, but its six views and source-owned workflows are **not** claimed as integrated by this correction.
+
+The native component suite compares actual shell typography and panel geometry with the independent retained HTML at 1536×864 and retains paired screenshots for search, Quick add, help, notifications, guide, account and More. Existing viewport, menu scrolling, permission, identity-lock, focus, save/reload and mobile checks remain. Home/diagnostic assertions follow the new route and Account disclosure location without removing their underlying checks. Local validation passed: lint, TypeScript, all 111 unit tests, production build, actual-component bundle, foundation and naming checks. CI must pass on the final PR source. No workflow timeout, retry, access grant, migration or Azure setting is changed. The earlier local browser policy block is respected; native execution is through the existing CI workflows.
+
 ## Review and rollout
 
 1. Review PR checks against its final commit, including the six enforced contexts and any additional applicable suites. A component screenshot run is not owner acceptance.

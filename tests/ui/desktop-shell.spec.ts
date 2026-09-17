@@ -32,7 +32,7 @@ test("approved shell fits laptop, desktop and compact viewports with centred sea
     await page.screenshot({ path: info.outputPath(`shell-${width}x${height}.png`) });
     await page.getByRole("button", { name: "More", exact: true }).click();
     await expect(page.getByRole("navigation", { name: "More navigation" })).toBeVisible();
-    await expect(page.getByRole("navigation", { name: "More navigation" }).getByRole("link", { name: "Deals", exact: true })).toHaveAttribute("aria-current", "page");
+    await expect(page.getByRole("navigation", { name: "More navigation" }).getByRole("link", { name: "Sales", exact: true })).toHaveAttribute("aria-current", "page");
     const frames = await page.locator("#desktop-more-panel").evaluate(panel => {
       const body = panel.querySelector<HTMLElement>(".ppo-more-body")!, header = panel.querySelector("header")!, footer = panel.querySelector("footer")!;
       const before = { head: header.getBoundingClientRect().bottom, foot: footer.getBoundingClientRect().top };
@@ -69,7 +69,7 @@ test("global search is independent of page filtering, keyboard selection and qui
   await expect(page.getByRole("heading", { name: "Quick Help" })).toBeVisible();
   await page.locator(".crm-worklist-stamp").click(); await expect(page.getByRole("heading", { name: "Quick Help" })).toBeHidden();
   await page.getByRole("button", { name: "Notifications", exact: true }).click();
-  await expect(page.getByText("Notifications are not connected yet.", { exact: false })).toBeVisible();
+  await expect(page.getByText("Notifications are not connected", { exact: false })).toBeVisible();
 });
 test("identity lock clears results and rejects a late response even if transport ignores abort", async ({ page }) => {
   const search = page.getByRole("combobox", { name: "Search Powerplants One" });
@@ -105,4 +105,64 @@ test("page guide is contextual and planned preview preserves the working page", 
   await page.reload();
   await page.getByRole("button", { name: "Change identity", exact: true }).click();
   await expect(page.getByLabel("Preview workspace", { exact: true })).toHaveValue("supply");
+});
+
+test("runtime shell matches the retained r17 reference typography, panel geometry and guide layout", async ({ page, context }, info) => {
+  const reference = await context.newPage();
+  await page.setViewportSize({ width: 1536, height: 864 });
+  await reference.setViewportSize({ width: 1536, height: 864 });
+  await page.goto(fixture);
+  await reference.goto(pathToFileURL(resolve("docs/reference/ui/application-shell/PPO-Application-Shell-r17.html")).href);
+  await page.evaluate(() => document.fonts.ready);
+  await reference.evaluate(() => document.fonts.ready);
+  const style = async (locator: import("@playwright/test").Locator, properties: string[]) => locator.evaluate((element, props) => {
+    const css = getComputedStyle(element);
+    return Object.fromEntries(props.map(property => [property, css.getPropertyValue(property)]));
+  }, properties);
+  const typography = ["font-size", "font-weight", "line-height", "letter-spacing"];
+  await expect(page.getByRole("button", { name: "Account", exact: true })).toBeVisible();
+  expect(await style(page.locator(".ppo-product-name"), typography)).toEqual(await style(reference.locator(".sh-product"), typography));
+  expect(await style(page.locator(".ppo-global-search input"), ["font-size", "font-weight", "height"])).toEqual(await style(reference.locator("#sh-global-search"), ["font-size", "font-weight", "height"]));
+  expect(await style(page.locator(".ppo-global-search"), ["height", "border-radius", "background-color", "padding-left"])).toEqual(await style(reference.locator(".sh-search-anchor .sh-search-field"), ["height", "border-radius", "background-color", "padding-left"]));
+  const cases = [
+    ["search", ""], ["quick", "Quick add"], ["help", "Quick Help"], ["notifications", "Notifications"], ["guide", "Page guide"], ["account", "Account"], ["more", "More"],
+  ] as const;
+  for (const [kind, name] of cases) {
+    if (kind === "search") {
+      await page.getByRole("combobox", { name: "Search Powerplants One" }).focus();
+      await reference.locator("#sh-global-search").focus();
+      await expect(page.locator("#shell-search-list").getByRole("option")).toHaveCount(4);
+    } else {
+      await page.getByRole("button", { name, exact: true }).click();
+      await reference.locator(`[data-panel="${kind}"]:visible`).first().click();
+    }
+    const actualPanel = page.locator(kind === "more" ? "#desktop-more-panel" : kind === "account" ? "#hosted-account-controls" : kind === "search" ? "#shell-search-panel" : "#shell-utility-panel");
+    const referencePanel = reference.locator("#sh-panel");
+    await expect(actualPanel).toBeVisible();
+    await expect(referencePanel).toBeVisible();
+    await referencePanel.evaluate(element => element.getAnimations().forEach(animation => animation.finish()));
+    const a = (await actualPanel.boundingBox())!, b = (await referencePanel.boundingBox())!;
+    expect(a.width, kind + " width").toBeCloseTo(b.width, 0);
+    expect(a.x, kind + " horizontal anchor").toBeCloseTo(b.x, 0);
+    if (kind !== "more") expect(a.y, kind + " vertical anchor").toBeCloseTo(b.y, 0);
+    expect(await style(actualPanel, ["border-radius", "box-shadow", "border-color"])).toEqual(await style(referencePanel, ["border-radius", "box-shadow", "border-color"]));
+    expect(await style(actualPanel.locator("h2"), ["font-size", "font-weight", "line-height"])).toEqual(await style(referencePanel.locator("h2"), ["font-size", "font-weight", "line-height"]));
+    if (kind === "guide") {
+      await actualPanel.getByRole("button", { name: "Read the application shell guide" }).click();
+      expect(await style(actualPanel.locator(".ppo-guide-intro h3"), typography)).toEqual(await style(referencePanel.locator(".sh-guide-intro h3"), typography));
+      await expect(actualPanel.getByRole("button", { name: "Journey map", exact: true })).toBeVisible();
+      await actualPanel.getByRole("button", { name: "Journey map", exact: true }).click();
+      await expect(actualPanel.getByRole("heading", { name: "Your journey", exact: true })).toBeFocused();
+      await actualPanel.locator(".ppo-panel-body").evaluate(element => { element.scrollTop = 0; });
+    }
+    if (kind === "more") {
+      await expect(actualPanel.locator(".ppo-menu-group").first().locator(".ppo-more-link")).toHaveCount(7);
+      await expect(actualPanel.locator("footer")).toContainText("20 destinations");
+    }
+    await page.screenshot({ path: info.outputPath(`r17-runtime-${kind}.png`) });
+    await reference.screenshot({ path: info.outputPath(`r17-reference-${kind}.png`) });
+    await page.keyboard.press("Escape");
+    await reference.keyboard.press("Escape");
+  }
+  await reference.close();
 });
