@@ -18,7 +18,7 @@ source_commit: e1b705acc5457dab6fc0b6a2f0c977132cbd2215
 - Global search and real permission-aware Quick add, positioned to its right.
 - Searchable grouped More with independently fixed title/footer and retained working routes.
 - Seven remembered preview workspaces inside the actual account popup; server-derived navigation visibility and truthful planned/denied states.
-- Contextual mobile tabs; mobile global search, guide and More utilities. Existing Leads phone exception preserved.
+- Contextual mobile tabs; mobile global search, guide and More utilities. Existing Leads phone exception and CRM phone page-filter header slot preserved.
 - Page guide information icon and shell journey; concise Quick Help; truthful notification placeholder.
 - Shared context invalidation on identity lock without changing existing identity, tenant or record access enforcement.
 

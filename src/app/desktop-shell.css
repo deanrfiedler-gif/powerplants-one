@@ -123,7 +123,12 @@
   .ppo-shell-header .ppo-heading-divider { display: inline-block; height: 16px; vertical-align: middle; margin: 0 8px; }
   .ppo-header-centre, .ppo-desktop-utility { display: none; }
   .ppo-header-utilities { gap: 0; }
-  .ppo-shell-header .header-tools { display: flex; }
+  .ppo-shell-header .header-tools { display: contents; }
+  /* Retain the CRM phone page filter supplied through its existing header slot.
+     Global record search is separate; hiding this slot would remove page filtering. */
+  .topbar.ppo-shell-header:has(#header-search:not(:empty)), body:has(.crm-workspace) .topbar.ppo-shell-header:has(#header-search:not(:empty)) { height: 116px; min-height: 116px; flex-wrap: wrap; align-content: center; row-gap: 8px; }
+  .ppo-shell-header #header-search:not(:empty) { display: block; flex: 0 0 100%; order: 1; padding: 0; }
+  .ppo-shell-header #header-search .crm-header-search { width: 100%; margin: 0; }
   .ppo-header-panel { top: 72px; max-height: calc(100dvh - 150px - env(safe-area-inset-bottom)); }
   .ppo-mobile-search-field { padding: 16px 18px 0; }
   .ppo-global-search input, .ppo-menu-search input, .ppo-development select { font-size: 16px; }
