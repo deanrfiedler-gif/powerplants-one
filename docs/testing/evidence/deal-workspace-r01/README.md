@@ -28,3 +28,7 @@ The initial native run and any corrections will be recorded here. Tests exercise
 ## First CI correction
 
 Source 36654bd5c7b54aee86ea6b54d7404930542000f2, [run 35179926837](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35179926837), stopped at the focused lint gate: the render dispatcher used a conditional expression as a statement. It is now an explicit if/else. Native checks did not run on that attempt. The browser launcher also explicitly uses the existing installed Chrome channel, matching browser:install. No assertion or lint rule was removed.
+
+## Native form correction
+
+Source 36a3813a5fc7eb225e5b504303a2afb065de642c, [run 35180091893](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35180091893), passed deterministic assembly, focused lint, model and documentation gates and the first six browser groups. Activity creation exposed native form named-property shadowing: its hidden input named id masked the form.id property used by the submit dispatcher. The dispatcher now matches the form selector, independent of named controls. The browser assertion explicitly checks that creation produced the requested activity. No functional assertion was removed.
