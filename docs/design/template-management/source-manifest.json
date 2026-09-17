@@ -1,0 +1,51 @@
+{
+  "module": "DK-06 · Document and form template management",
+  "revision": "r01",
+  "authoring_main": "a5406a81c02d37c4a23e75c1b71c7653fcec0d80",
+  "notice": "Hashes below are SHA-256 over the repository file with CRLF normalised to LF for text content, and byte for byte for binary content. Normalisation is required because .gitattributes sets eol=lf only for some extensions, so a Windows checkout holds the .ts, .css and .js sources with CRLF while the committed blobs are LF. The builder refuses to assemble if any of these changes, so a shared source or asset change is a reviewed event rather than a silent one.",
+  "pinned_sources": {
+    "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r20.html": "c68a499e857b1705d47bd6598d4b2e89526bf0861a0d234394c3da023f19b617",
+    "docs/design/supplier-pricing/fonts.css": "3fc64b31d7209275856ec7719fee024075e4b4409a37a70984e0f6f005afe10f",
+    "docs/design/supplier-pricing/workspace.css": "6b6b3bba102932a82e4ffe9f5344f99d6f41975e204edbba0a6ff2a0b0dd35b0",
+    "docs/standards/html-module-conformance.md": "b457ba511c645ae134103514550c30b96258bea39f5af294cd6e76bc747366af",
+    "docs/contracts/document-issue-distribution.md": "4eb25e3a72dd08e961bc20f62d1adc7005028154bcaea8a43a6e4739bce9683f",
+    "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html": "672f626ddfdfc2c67287c646e97485681872b1bb29ddddedf4072917db71a770",
+    "src/documents/p11-template.ts": "a98dfe2e4126e4824518b0c691bd06625673369674648620a82b01a09345d969",
+    "src/documents/p11-fixtures.ts": "a2917ffa473e55046156a887f332b4a8531f9d03a99a0e60d8042e3aaa0cc32b",
+    "src/documents/context.ts": "0ba8bae2afd3c5b7c91ac19f50e876f5fc918dc81c8ede21c739922692169be9",
+    "src/reports/template.ts": "1b8653b428b0a58a79826e9df2c4980dfacd087b05c268b240e9f0d77b592a94",
+    "src/reports/worker.ts": "31e5825e4083088d0aa1f37b816cfc49d387d6d9a028402c249de115d484f21a",
+    "src/documents/render.ts": "782e936300ed1ad9f71a257c5be952a515ebcf0b604b03a9a9e9005b09ed4e60",
+    "src/reports/render.ts": "31adcf77fd3ee448432de0eceb77f4082b34847a26fb2c3ada0d4a422859cf26",
+    "src/finance/render.ts": "2758cec4155450886ba5bed33009fc16d87d4001ae64c81e79972bb1e9c860f4",
+    "src/documents/p11-render.ts": "c78abc71cca67c8b900721f5b67755c01255bde74febc08a2f1d2373a55a8171",
+    "public/brand/Roboto-variable.woff": "f6338970a62542e9a9f46ebd5a1e1c776425021edae07ce043f959b3ea97a87d",
+    "public/brand/powerplants-logo-green-white.png": "8d12f0ecc394950cd9eb66964c588efb71c8e6f445390336c245c3f6712b9694"
+  },
+  "reused_components": {
+    "docs/design/supplier-pricing/fonts.css": "Embedded PPO Roboto assets, reused unchanged from the pinned Supplier Pricing source family.",
+    "docs/design/supplier-pricing/workspace.css": "r20-aligned primitives: typography, tokens, controls, tabs, tables, cards, dialogs, status labels, focus treatment and responsive snapshots.",
+    "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r20.html": "Page types, navy/green/paper tokens, 6 px control and 7 px card radii, Roboto with Verdana fallback."
+  },
+  "dependency_references": {
+    "notice": "The definition dependency manifests inside model.js quote the fingerprints above for the renderer, font and branding sources. They are references for impact demonstration; the prototype never modifies those files.",
+    "shared_across_families": [
+      "src/documents/render.ts",
+      "public/brand/Roboto-variable.woff",
+      "public/brand/powerplants-logo-green-white.png"
+    ]
+  },
+  "profile_capabilities": {
+    "html-a4-r2": "Supported. Real local HTML rendered from the exact definition and an audience-filtered sample.",
+    "form-capture-r1": "Supported. Structured form capture against the sample fixture only.",
+    "pdf-ua-r1": "Not supported in this build. No PDF bytes are produced, so no PDF or PDF/UA claim is made."
+  },
+  "declared_departures": [
+    "The demonstration clock is a local scenario control, not trusted server time or a scheduled publication service.",
+    "The definition fingerprint is a real SHA-256 over a canonical serialisation, computed in the page by a bundled synchronous implementation verified against node:crypto in the model checks.",
+    "Local storage is not an ACID database, a secure audit log or a multi-user concurrency solution; cross-tab checks refuse stale saves without claiming database guarantees.",
+    "Preview profiles demonstrate intended interface behaviour only. They do not secure embedded fixture content from anyone holding the file.",
+    "The form fixture engine has no pinned runtime digest and is recorded with a null hash rather than an invented integrity value.",
+    "Pinned source hashes are taken over line-ending-normalised text so the builder gives the same result on Windows and Linux, and the artifact is written with explicit LF. Raw-byte hashing reported an unchanged source as changed on a Windows checkout."
+  ]
+}
