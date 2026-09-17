@@ -1,0 +1,31 @@
+{
+  "passed": 26,
+  "groups": [
+    "Seed schema, eight sources and six proposed revisions",
+    "Exact known subtotal retains unknown sensor amount",
+    "FX multiplies supplier cost into AUD in declared direction",
+    "Highest eligible quantity tier applies to whole line",
+    "Metres to complete rolls conversion is retained and exact",
+    "Manual commissioning and single freight amounts are explicit",
+    "Half-up extended line rounding uses fixed decimal integers",
+    "Unknown FX is not treated as zero or parity",
+    "Expired, unmapped, unavailable and unreviewed sources block use",
+    "Unit, product and company changes are never silent refreshes",
+    "Review selection deduplicates and computes exact preview",
+    "Author and observer cannot independently review",
+    "Decision rationale required and input state unchanged",
+    "Independent source decision enables refresh without mutating saved estimate",
+    "Only estimator creates a draft and acknowledgement is required",
+    "Blocked and unknown line selections cannot be saved",
+    "Successor preserves original quotation, sources, policy and unknowns",
+    "Repeated save cannot create duplicate successor for exact refresh",
+    "Stale expected state version refuses command",
+    "New source draft does not replace reviewed revisions",
+    "Source draft can be edited and submitted as exact revision",
+    "Duplicate submission refused; independent reviewer can return with reason",
+    "Changed source invalidates a retained refresh fingerprint",
+    "Malformed dates, negative amounts and exponent input rejected",
+    "Malformed stored structures and changed snapshots fail validation",
+    "Resolved unknown FX updates saved findings without claiming a complete cost basis"
+  ]
+}
