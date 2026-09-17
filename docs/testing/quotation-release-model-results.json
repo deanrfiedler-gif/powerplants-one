@@ -1,0 +1,99 @@
+{
+  "passed": 23,
+  "kind": "Node VM command/state checks; no native browser",
+  "htmlSha256": "f86a40bdb2410f05af2281316d3b4154b26ecefecdd03116e8fa6089ffd14654",
+  "results": [
+    {
+      "name": "Initial fixture and all six view renderers execute",
+      "status": "passed"
+    },
+    {
+      "name": "Output fingerprint is real SHA-256 and excludes internal costing",
+      "status": "passed"
+    },
+    {
+      "name": "Approval fails without exact output inspection and confirmations",
+      "status": "passed"
+    },
+    {
+      "name": "Approval requires reviewer capability and a decision note",
+      "status": "passed"
+    },
+    {
+      "name": "Issue needs issuer role and explicit confirmation",
+      "status": "passed"
+    },
+    {
+      "name": "Repeated issue command has one release effect",
+      "status": "passed"
+    },
+    {
+      "name": "Recipient confirmation and synthetic email validation prevent accidental distribution",
+      "status": "passed"
+    },
+    {
+      "name": "Duplicate recipient/channel preparation has one record",
+      "status": "passed"
+    },
+    {
+      "name": "Unknown outcome cannot be retried or treated as sent",
+      "status": "passed"
+    },
+    {
+      "name": "Reconciliation requires evidence and confirmed failure permits one retained retry",
+      "status": "passed"
+    },
+    {
+      "name": "Sent delivery and acknowledgement require separate evidence; no acceptance",
+      "status": "passed"
+    },
+    {
+      "name": "Successor retains earlier issued bytes and clears approval issue and recipient responses",
+      "status": "passed"
+    },
+    {
+      "name": "Draft edits invalidate preview without modifying the retained issue",
+      "status": "passed"
+    },
+    {
+      "name": "New source holds submission while preserving source and amount",
+      "status": "passed"
+    },
+    {
+      "name": "Draft source update requires reason and clears inspection before resubmission",
+      "status": "passed"
+    },
+    {
+      "name": "Saved state survives a fresh script session",
+      "status": "passed"
+    },
+    {
+      "name": "Missing source approval and missing policy hold release independently",
+      "status": "passed"
+    },
+    {
+      "name": "Read-only commands do not alter review or issue",
+      "status": "passed"
+    },
+    {
+      "name": "Cross-tab change holds writes even after a requested role change",
+      "status": "passed"
+    },
+    {
+      "name": "Malformed local data is retained with a visible recovery warning",
+      "status": "passed"
+    },
+    {
+      "name": "Storage write failure reports session-only state",
+      "status": "passed"
+    },
+    {
+      "name": "Return decisions require reason and retain submitted basis",
+      "status": "passed"
+    },
+    {
+      "name": "Search has explicit empty state and clear recovery",
+      "status": "passed"
+    }
+  ]
+}

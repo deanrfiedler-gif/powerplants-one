@@ -1,0 +1,73 @@
+{
+  "groups": 17,
+  "results": [
+    {
+      "name": "Ten unique initial events map to eight exact source identities",
+      "result": "Passed"
+    },
+    {
+      "name": "Read all preserves source business state and three distinct escalations",
+      "result": "Passed"
+    },
+    {
+      "name": "Required documents cannot be archived even for another source owner",
+      "result": "Passed"
+    },
+    {
+      "name": "Mixed required/routine archive is atomic and rejected",
+      "result": "Passed"
+    },
+    {
+      "name": "Routine archive is reversible and does not implicitly mark read",
+      "result": "Passed"
+    },
+    {
+      "name": "Personal read state and scope are independent",
+      "result": "Passed"
+    },
+    {
+      "name": "Unknown dates do not become on-time dates",
+      "result": "Passed"
+    },
+    {
+      "name": "Group read only captures existing events; new event remains unread",
+      "result": "Passed"
+    },
+    {
+      "name": "Duplicate refresh/new-event retry has one effect",
+      "result": "Passed"
+    },
+    {
+      "name": "Loading failures, partial reads and successful empty reads have distinct results",
+      "result": "Passed"
+    },
+    {
+      "name": "Cross-midnight quiet hours include start and exclude end",
+      "result": "Passed"
+    },
+    {
+      "name": "Same-day quiet hours and disabled quiet hours work",
+      "result": "Passed"
+    },
+    {
+      "name": "Invalid and ambiguous preferences are rejected",
+      "result": "Passed"
+    },
+    {
+      "name": "Delivery preview excludes read archived and unavailable targets",
+      "result": "Passed"
+    },
+    {
+      "name": "Email off cannot hide required notices or source obligations",
+      "result": "Passed"
+    },
+    {
+      "name": "Saved state validates exact fixture integrity without rewriting bad bytes",
+      "result": "Passed"
+    },
+    {
+      "name": "No universal business completion command exists",
+      "result": "Passed"
+    }
+  ]
+}

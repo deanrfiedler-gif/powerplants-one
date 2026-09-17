@@ -1,0 +1,103 @@
+{
+  "passed": 24,
+  "kind": "Node VM model, command and customer adapter checks; no native browser",
+  "htmlSha256": "f7f6388c90d3d9fc38c58ddf74633db1e7614d8dea9588405ebd57777c2bb879",
+  "results": [
+    {
+      "name": "Retained source CSS, branding and customer data are used verbatim",
+      "status": "passed"
+    },
+    {
+      "name": "All five staff views render and customer iframe uses exact retained bytes",
+      "status": "passed"
+    },
+    {
+      "name": "Default r03 amounts reconcile without repricing the source",
+      "status": "passed"
+    },
+    {
+      "name": "Permitted options change exact totals; unknown, duplicate and missing alternatives fail",
+      "status": "passed"
+    },
+    {
+      "name": "Wrong hash, revision, customer, amount, signature and consent block acceptance",
+      "status": "passed"
+    },
+    {
+      "name": "Unknown response retains original identity and blocks duplicate and retry",
+      "status": "passed"
+    },
+    {
+      "name": "Reconciliation to failure permits retry of the same captured request only",
+      "status": "passed"
+    },
+    {
+      "name": "Acceptance handover is explicit and cannot convert or duplicate an order",
+      "status": "passed"
+    },
+    {
+      "name": "Supersession retains the response but holds any prepared handover",
+      "status": "passed"
+    },
+    {
+      "name": "Fresh issue-session state has no inherited signature, response, consent or handover",
+      "status": "passed"
+    },
+    {
+      "name": "Clarification pauses acceptance until an information-only answer is confirmed",
+      "status": "passed"
+    },
+    {
+      "name": "Material change routes to ES-05 and cannot be resolved as unchanged afterwards",
+      "status": "passed"
+    },
+    {
+      "name": "A declined issue keeps its reason and blocks acceptance and conversion",
+      "status": "passed"
+    },
+    {
+      "name": "Expiry and withdrawal hold new responses at the command boundary",
+      "status": "passed"
+    },
+    {
+      "name": "Late reconciliation retains old issue evidence without reopening expired issue",
+      "status": "passed"
+    },
+    {
+      "name": "Saved response reloads; altered amount, identity and receipt fail validation",
+      "status": "passed"
+    },
+    {
+      "name": "Interrupted pending operation recovers to Unknown, requiring reconciliation",
+      "status": "passed"
+    },
+    {
+      "name": "Read-only role blocks staff changes and response submission",
+      "status": "passed"
+    },
+    {
+      "name": "Iframe messages require the actual frame and matching issue hash",
+      "status": "passed"
+    },
+    {
+      "name": "Valid frame response persists before a saved receipt context is supplied",
+      "status": "passed"
+    },
+    {
+      "name": "Cross-tab changes hold writes and remove active customer response permission",
+      "status": "passed"
+    },
+    {
+      "name": "Corrupt storage is retained and visibly held for recovery",
+      "status": "passed"
+    },
+    {
+      "name": "Storage failure withholds acceptance receipt and further mutation",
+      "status": "passed"
+    },
+    {
+      "name": "Typed customer acceptance adapter retains r03 validation and sends exact signature payload",
+      "status": "passed"
+    }
+  ]
+}
