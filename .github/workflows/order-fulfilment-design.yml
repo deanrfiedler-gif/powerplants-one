@@ -4,6 +4,7 @@ on:
     paths:
       - 'docs/design/order-fulfilment/**'
       - 'docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-*'
+      - 'docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace.html'
       - 'scripts/*order-fulfilment*'
       - '.github/workflows/order-fulfilment-design.yml'
   workflow_dispatch:
@@ -32,7 +33,8 @@ jobs:
         run: |
           mkdir -p verification-evidence/order-fulfilment
           python3 scripts/build-order-fulfilment.py
-          git diff --exit-code -- docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html
+          git diff --exit-code -- docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace.html
+          npx eslint docs/design/order-fulfilment/*.js scripts/check-order-fulfilment-*.mjs
           node scripts/check-order-fulfilment-model.mjs > verification-evidence/order-fulfilment/model-results.json
           node scripts/check-order-fulfilment-browser.mjs
       - name: Retain original evidence

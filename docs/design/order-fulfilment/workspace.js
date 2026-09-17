@@ -15,7 +15,6 @@
   let ui={role:'coordinator',company:'PPA-AU',view:'register',filters:M.filters(),selected:'ful-000001',stockSelected:null,restore:null};
   let mode='complete',saveBehaviour='none',pending=null,damaged=null,storageOK=true,external=false,handler=null,origin=null,formDirty=false,timer;
   const me=()=>M.roles[ui.role];
-  const writable=()=>me().write&&me().companies.includes(ui.company);
   const granted=()=>me().companies.includes(ui.company);
 
   const fdate=d=>d?new Date(d+'T00:00:00Z').toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'}):'Date needed';
@@ -378,7 +377,7 @@
   function deliveryView(){
     const os=allOrders();
     const dels=os.flatMap(o=>o.deliveries.map(d=>({o,d}))).sort((a,b)=>b.d.at.localeCompare(a.d.at));
-    const awaiting=os.flatMap(o=>o.dispatches.filter(d=>d.movementAt).map(d=>({o,d}))).filter(({o,d})=>{
+    const awaiting=os.flatMap(o=>o.dispatches.filter(d=>d.movementAt).map(d=>({o,d}))).filter(({d})=>{
       const prior=state.deliveries.filter(x=>!x.superseded&&x.dispatch===d.id);
       return d.lines.some(dl=>M.sum(prior.flatMap(p=>p.lines.filter(z=>z.line===dl.line).map(z=>z.received+z.damaged+z.missing)))<dl.qty);
     });
@@ -510,13 +509,12 @@
 
   /* ---------- Forms ------------------------------------------------------------------ */
   function reserveForm(lineId,avId){
-    const os=allOrders();
     let line=lineId?state.lines.find(l=>l.id===lineId):null;
     const candidates=state.availability.filter(a=>a.company===ui.company&&me().warehouses.includes(a.warehouse)&&(!line||(a.item===line.item&&a.unit===line.unit)));
     const av=avId?M.avOf(state,avId):(candidates[0]||null);
     if(!line&&av)line=state.lines.find(l=>l.item===av.item&&l.unit===av.unit&&M.order(state,l.order).company===ui.company&&M.totals(state,l.id).unreserved>0);
     if(!line||!av){dialog('Reservation unavailable',note('No reservation target','No order line in this company needs this item in this unit, or no observation in your warehouse scope supplies it.','warning'));return;}
-    const t=M.totals(state,line.id),remaining=M.remainingUsable(state,av.id);
+    const remaining=M.remainingUsable(state,av.id);
     const lineOptions=state.lines.filter(l=>l.item===av.item&&l.unit===av.unit&&M.order(state,l.order).company===ui.company&&M.totals(state,l.id).unreserved>0)
       .map(l=>[l.id,`${M.order(state,l.order).ref} · ${l.sourceLine} · ${M.amount(M.totals(state,l.id).unreserved,l.unit)} unreserved`]);
     const body=note('This creates a reservation request, not a source transaction','A proposed allocation, a submitted request and a confirmed source reservation are separate. Pending, confirmed, failed and unknown outcomes are all shown as they are.')+

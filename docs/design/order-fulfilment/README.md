@@ -1,6 +1,6 @@
 # Order Fulfilment & Customer Delivery source
 
-This source produces the [standalone r01 HTML](../../reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html) for page scopes **SC-05**, **SC-06** and **SC-07**. The [companion report](../../reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-Report-r01.md) documents its views, fields, quantity definitions, permissions, recovery behaviour, provenance and receiving boundaries.
+This source produces the [standalone r01 HTML](../../reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace.html) for page scopes **SC-05**, **SC-06** and **SC-07**. The [companion report](../../reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-Report-r01.md) documents its views, fields, quantity definitions, permissions, recovery behaviour, provenance and receiving boundaries.
 
 | File | Responsibility |
 |---|---|
@@ -23,3 +23,5 @@ The native browser command requires the repository's pinned runtime, Playwright 
 Edit the sources and rebuild the HTML; never edit the generated file. Keep `fonts.css` byte-identical until a deliberate dependency update with reviewed provenance.
 
 The complete fixture is synthetic. Two companies, three warehouses, six identities and every `SYN-…` reference are demonstration values. No application package, dependency pin, server contract or database migration is introduced here, and browser role and company selection is a presentation of the model's permission projections rather than authenticated access control.
+
+The versionless HTML is the maintained working copy. The uploaded r01 HTML and report remain unchanged as issued snapshots. The 17 September repair removes four unused local bindings from the interaction source and one unused exception binding from the browser script; it changes no user workflow or model. See [recovery evidence](../../testing/pr-216-repair-status.md).

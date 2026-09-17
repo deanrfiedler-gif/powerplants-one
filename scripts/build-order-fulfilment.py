@@ -10,7 +10,7 @@ import hashlib
 
 root = Path(__file__).resolve().parents[1]
 source = root / "docs/design/order-fulfilment"
-target = root / "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html"
+target = root / "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace.html"
 html = (source / "template.html").read_text(encoding="utf-8")
 for marker, filename in [("FONTS", "fonts.css"), ("CSS", "workspace.css"), ("MODEL", "model.js"), ("APP", "workspace.js")]:
     content = (source / filename).read_text(encoding="utf-8")

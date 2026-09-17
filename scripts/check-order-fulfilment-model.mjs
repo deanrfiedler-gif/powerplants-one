@@ -447,7 +447,7 @@ test('Every recorded command produced exactly one receipt and one history entry'
   assert.equal(state.receiptsLedger.at(-1).version,state.version);
 });
 
-const html=path.join(root,'docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html');
+const html=path.join(root,'docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace.html');
 console.log(JSON.stringify({
   design:'PPO Order Fulfilment & Customer Delivery r01',
   html_sha256:createHash('sha256').update(fs.readFileSync(html)).digest('hex'),

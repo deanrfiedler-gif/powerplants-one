@@ -1,6 +1,6 @@
 # PR #216 recovery update — 17 September 2026
 
-**Original package restored; fresh CI required before merge.** Dean supplied the original Git bundle, ZIP, HTML and report. All recovered ZIP files match bundle commit `9dfbb27f4594351a6993e132a763639c5d60937e`; the separately uploaded HTML/report match the ZIP. Main `86802e9cbaa7f0f72a5108018802a3d95e0a4285` is retained as a merge parent.
+**Original package restored; maintained source corrected; fresh CI required before merge.** Dean supplied the original Git bundle, ZIP, HTML and report. All recovered ZIP files match bundle commit `9dfbb27f4594351a6993e132a763639c5d60937e`; the separately uploaded HTML/report match the ZIP. Main `86802e9cbaa7f0f72a5108018802a3d95e0a4285` is retained as a merge parent.
 
 | Original | SHA-256 |
 |---|---|
@@ -14,6 +14,10 @@ The deterministic builder reproduces the uploaded HTML exactly. All **40 origina
 Local Chrome cannot start because the execution environment denies its socket creation. The restored workflow installs the repository-pinned runtime and browser, and must pass with all required checks before merge. Read fresh results and the authoritative merge outcome on [PR #216](https://github.com/deanrfiedler-gif/powerplants-one/pull/216).
 
 No application, database, dependency pin or deployment changes. Owner acceptance and runtime integration remain separate.
+
+## Fresh CI finding and bounded correction
+
+The exact recovered package passed native design workflow [35219217534](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35219217534). Wider checks found five unused-variable lint errors: four dead bindings in the interaction layer and one unused caught exception in the browser harness. These are removed without changing the model or user workflow. The builder now writes the maintained [versionless HTML](../reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace.html); the supplied r01 HTML and report remain byte-for-byte intact. Browser/model checks now target the working HTML, and focused CI explicitly includes lint. New CI must pass on the corrected head.
 
 The earlier inventory below is retained as history; its missing-file blocker is now resolved.
 

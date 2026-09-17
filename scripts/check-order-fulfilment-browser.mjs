@@ -9,7 +9,7 @@ import {fileURLToPath,pathToFileURL} from 'node:url';
 import {createHash} from 'node:crypto';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const file=path.join(root,'docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html');
+const file=path.join(root,'docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace.html');
 const out=path.join(root,'verification-evidence/order-fulfilment');
 await fs.mkdir(out,{recursive:true});
 
@@ -35,7 +35,7 @@ const field=label=>modal().getByLabel(label,{exact:true});
 const submit=async()=>{
   await page.locator('#modal-submit').click();
   try{await modal().waitFor({state:'hidden',timeout:8000});}
-  catch(e){
+  catch{
     const detail=await page.locator('#modal-error').innerText().catch(()=>'');
     const title=await page.locator('#modal-title').innerText().catch(()=>'');
     throw Error(`Form "${title}" did not save. Reported: ${detail||'no message'}`);
