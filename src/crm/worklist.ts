@@ -33,7 +33,7 @@ export async function listOpportunities(p: Principal, input: unknown = {}) {
   await requireCapability(c, p, "crm.opportunity.read");
   const r = object(input, ["limit", "cursor", "q", "company_id", "site_id", "owner_id", "stage_id", "next_action", "sort", "pipeline_definition_id", "outcome"]);
   const filters = {
-    outcome: r.outcome === undefined ? "Open" : choice(r.outcome, "outcome", ["Open", "Won", "Lost", "All"]),
+    outcome: r.outcome === undefined ? "Open" : choice(r.outcome, "outcome", ["Open", "Won", "Lost", "All", "Closed"]),
     pipeline_definition_id: optionalId(r.pipeline_definition_id, "pipeline_definition_id") ?? PIPELINE_ID,
     owner_id: optionalId(r.owner_id, "owner_id"),
     stage_id: r.stage_id === undefined ? null : choice(r.stage_id, "stage_id", opportunityStages),
@@ -77,7 +77,7 @@ export async function listOpportunities(p: Principal, input: unknown = {}) {
       LEFT JOIN ppo.people pe ON (pe.workspace_id,pe.id)=(o.workspace_id,o.primary_person_id)
       LEFT JOIN ppo.activities a ON (a.workspace_id,a.id)=(o.workspace_id,o.next_activity_id) AND ${activityVisibility("a", true, await leadsAvailable(c))}
       LEFT JOIN ppo.users au ON (au.workspace_id,au.id)=(a.workspace_id,a.owner_id)
-      WHERE o.workspace_id=$1 AND ${opportunityVisibility()} AND o.pipeline_definition_id=$13 AND ($14='All' OR o.close_outcome=$14)
+      WHERE o.workspace_id=$1 AND ${opportunityVisibility()} AND o.pipeline_definition_id=$13 AND ($14='All' OR o.close_outcome=$14 OR ($14='Closed' AND o.close_outcome IN ('Won','Lost')))
         AND ($3::uuid IS NULL OR o.company_id=$3) AND ($4::uuid IS NULL OR o.site_id=$4)
         AND position(lower($5) in lower(o.title||' '||o.display_number||' '||r.display_name))>0
         AND ($6::uuid IS NULL OR o.owner_id=$6) AND ($7::text IS NULL OR o.stage_id=$7)

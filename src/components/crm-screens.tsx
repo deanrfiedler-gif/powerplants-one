@@ -5,7 +5,7 @@ import { LookupField, LocalDateTimeField, RecordTabs, RecordPanel } from "./reco
 import { DealDialog, DealInformation, DealScope, dealAmount, dealClose, type DealMode } from "./crm-deal-controls";
 import { ProductIcon } from "./product-icons";
 import { OpportunityCommercial, OpportunityFiles } from "./opportunity-commercial";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { readOpportunity } from "../crm/reads";
 import { useIdentity } from "./business-session";
 import {
@@ -431,7 +431,8 @@ function OpportunityContent({
   reload: () => void;
 }) {
   const [dialog, setDialog] = useState<DealMode | null>(null), [targetStage,setTargetStage] = useState<string | undefined>();
-  const [tab, setTab] = useState("timeline"),
+  const section = useSearchParams().get("section");
+  const [tab, setTab] = useState(section && ["timeline", "details", "commercial", "files"].includes(section) ? section : "timeline"),
     [version, setVersion] = useState(o.version),
     [need, setNeed] = useState(o.need_summary),
     [note, setNote] = useState(""),

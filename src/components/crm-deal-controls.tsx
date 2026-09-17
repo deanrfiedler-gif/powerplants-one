@@ -73,6 +73,7 @@ export function DealDialog({
   id,
   mode = "snapshot",
   targetStage,
+  targetOutcome,
   undo,
   onClose,
   onSaved,
@@ -80,6 +81,7 @@ export function DealDialog({
   id: string;
   mode?: DealMode;
   targetStage?: string;
+  targetOutcome?: "Won" | "Lost";
   undo?: StageUndo;
   onClose: () => void;
   onSaved: (
@@ -246,6 +248,7 @@ export function DealDialog({
               o={o}
               mode={currentMode}
               targetStage={targetStage}
+              targetOutcome={targetOutcome}
               undo={undo}
               onDirty={() => setDirty(true)}
               onPending={setPending}
@@ -275,6 +278,7 @@ function DealEditor({
   o,
   mode,
   targetStage,
+  targetOutcome,
   undo,
   onDirty,
   onPending,
@@ -286,6 +290,7 @@ function DealEditor({
   o: DealRecord;
   mode: Exclude<DealMode, "snapshot">;
   targetStage?: string;
+  targetOutcome?: "Won" | "Lost";
   undo?: StageUndo;
   onDirty: () => void;
   onPending: (b: boolean) => void;
@@ -312,7 +317,7 @@ function DealEditor({
     [newOwner, setNewOwner] = useState(""),
     [transferReason, setTransferReason] = useState(""),
     [ownerSearch, setOwnerSearch] = useState(""),
-    [outcome, setOutcome] = useState(o.stage_id === "Closing" ? "Won" : "Lost"),
+    [outcome, setOutcome] = useState(targetOutcome === "Lost" ? "Lost" : o.stage_id === "Closing" ? "Won" : "Lost"),
     [lostReason, setLostReason] = useState(""),
     [acceptanceEvidence, setAcceptanceEvidence] = useState(""),
     [outcomeNote, setOutcomeNote] = useState(""),
