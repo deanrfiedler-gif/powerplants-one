@@ -19,9 +19,9 @@ Delivered HTML SHA-256: `91252dd5b550d465478ac9eb41aa8d93a1efa9c3e573cfc393d8480
 
 ## Runtime actually used, and its limit
 
-The native run used **Chromium 141.0.7390.37** through the repository-pinned Playwright 1.63.0 on **Node 22.22.2**, launched with the documented `PPO_CHROME_PATH` override. The repository pins Node 24.21.0 and the Chrome channel; that combination is what the focused `Output issue and distribution design` workflow installs and runs, and **it has not yet been executed for this package**. The runtime that was used is recorded verbatim in `native-results.json` rather than inferred from the committed script default.
+The authoring run used **Chromium 141.0.7390.37** through the repository-pinned Playwright 1.63.0 on **Node 22.22.2**, launched with the documented `PPO_CHROME_PATH` override, because Node 24.21.0 could not be installed in that session — the distribution host is outside its network allowlist. The runtime actually used is recorded verbatim in `native-results.json` rather than inferred from the committed script default.
 
-Node 24.21.0 could not be installed in this session because the distribution host is outside the session's network allowlist. This is a stated limitation, not a passed check.
+**The pinned runtime has since been executed.** The focused `Output issue and distribution design` workflow — which installs npm 11.19.0, Node 24.21.0 from `.nvmrc` and the Chrome channel through `npm run browser:install` — passed on head `940316bd148d478bd4927da8d15d33085f4c3d39` in [run 35192211499](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35192211499), covering the deterministic rebuild, focused lint, the model checks, foundation/prototype/naming assurance and the native browser journey. Its returned evidence is retained as that run's artifact. This record and the design report were amended afterwards to cite that run; the HTML, the module source and both check scripts are byte-identical to the head it tested. `Check documentation foundation`, `CRM header and board visual checks` and `Registered UI design baseline integrity` also passed on the same head.
 
 ## What the browser run proves
 
