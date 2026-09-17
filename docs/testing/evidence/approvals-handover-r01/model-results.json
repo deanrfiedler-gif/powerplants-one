@@ -1,0 +1,78 @@
+{
+  "scope": "SH-06 r01",
+  "checks": 18,
+  "results": [
+    {
+      "name": "Seven domains and fourteen distinct source tasks",
+      "status": "passed"
+    },
+    {
+      "name": "Duplicate source delivery does not duplicate workload",
+      "status": "passed"
+    },
+    {
+      "name": "Service visibility filters before counts and routing",
+      "status": "passed"
+    },
+    {
+      "name": "Overdue, due today and unknown dates remain distinct",
+      "status": "passed"
+    },
+    {
+      "name": "Returned work retains first-submitted and current-cycle age",
+      "status": "passed"
+    },
+    {
+      "name": "Queue views separate ownership, submission, returns and history",
+      "status": "passed"
+    },
+    {
+      "name": "Search and domain filters never retain unrelated rows",
+      "status": "passed"
+    },
+    {
+      "name": "Unknown due dates sort after known source dates",
+      "status": "passed"
+    },
+    {
+      "name": "Every source resolves to its domain-owned destination",
+      "status": "passed"
+    },
+    {
+      "name": "Mismatched source, screen and unsupported revision fail closed",
+      "status": "passed"
+    },
+    {
+      "name": "Stale revision requires explicit current revision selection",
+      "status": "passed"
+    },
+    {
+      "name": "Historical superseded source cannot be relabelled as its successor",
+      "status": "passed"
+    },
+    {
+      "name": "Unavailable and revoked links do not expose source data",
+      "status": "passed"
+    },
+    {
+      "name": "Read-only observer and terminal items remain read-only",
+      "status": "passed"
+    },
+    {
+      "name": "Partial result omits unavailable domain; failed and empty distinct input states",
+      "status": "passed"
+    },
+    {
+      "name": "Sent, received and accepted carry distinct evidence",
+      "status": "passed"
+    },
+    {
+      "name": "Malformed saved view criteria cannot be applied",
+      "status": "passed"
+    },
+    {
+      "name": "Reading, filtering and routing never mutate source records",
+      "status": "passed"
+    }
+  ]
+}
