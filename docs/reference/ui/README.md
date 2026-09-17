@@ -80,9 +80,12 @@ These are the latest uploaded shared visual references. Their presence does not 
 
 **ES-10 design contribution, 17 September 2026:** [Reference Cases & Calibration Proposals r01](reference-calibration/PPO-Reference-Cases-and-Calibration-Proposals-r01.html) · [detailed report](reference-calibration/PPO-Reference-Cases-and-Calibration-Proposals-Report-r01.md). Five-view standalone r20 design; source eligibility, retained proposal reviews and estimator evidence panel. Proposed design; owner acceptance and application integration separate. [Receiving handover](../../decisions/reference-calibration-design.md), [verification](../../testing/evidence/reference-calibration-r01/README.md). This contribution is additional to the historical inventory count above.
 
+**17 September addition:** ES-04 Estimate Review & Pricing Exceptions r01 adds a dedicated internal review, correction and estimate-approval boundary between ES-03 and ES-05. Standalone design; acceptance and application integration remain separate.
+
 
 | Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
 |---|---|---|---|
+| Estimate review & pricing exceptions — ES-04 | [r01](estimate-review/PPO-Estimate-Review-and-Pricing-Exceptions-r01.html) · [Detailed report](estimate-review/PPO-Estimate-Review-and-Pricing-Exceptions-Report-r01.md) | Proposed six-view design; owner acceptance and application integration separate | Exact scope/cost review, pricing exceptions, retained corrections, independent review, separate estimate approval and prepared ES-05 handover. [Decision](../../decisions/estimate-review-pricing-exceptions-design.md) · [Verification](../../testing/evidence/estimate-review-r01/README.md). |
 | Sales → Estimating intake | [r02 preview](estimating/sales-estimating-intake-preview-r02.html) | Proposed design | [r02 change record](sales/sales-estimating-intake-change-record-r02.md). Original field-bank/design reference is retained below. |
 | Wizard data review | [r02](estimation-wizard/PPO-Wizard-Data-Review-r02.html) | Latest uploaded design; acceptance not established by this audit | Distinct from the advanced estimating-container study and bounded guided pilot. |
 | Quotation module | [r03](quoting/ppo-quotation-module-r03.html) | Latest uploaded design; acceptance not established by this audit | [r03 audit](quoting/ppo-quotation-audit-r03.md); separate from the legacy Quotation Builder concept below. |

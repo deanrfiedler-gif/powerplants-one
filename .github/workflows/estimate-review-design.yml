@@ -1,0 +1,45 @@
+name: Estimate review workspace design
+on:
+  pull_request:
+    paths:
+      - 'docs/design/estimate-review/**'
+      - 'docs/reference/ui/estimate-review/**'
+      - 'scripts/*estimate-review*'
+      - '.github/workflows/estimate-review-design.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  design:
+    name: ES-04 model and native browser review
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Use existing runtime and browser pins
+        run: |
+          npm install --global npm@11.19.0
+          npm ci
+          npm run browser:install
+      - name: Verify review model and native interactions
+        env:
+          PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          mkdir -p verification-evidence/estimate-review
+          python3 scripts/build-estimate-review-design.py
+          git diff --exit-code -- docs/reference/ui/estimate-review/PPO-Estimate-Review-and-Pricing-Exceptions-r01.html
+          npx eslint docs/design/estimate-review/*.js scripts/check-estimate-review-*.mjs
+          node scripts/check-estimate-review-model.mjs > verification-evidence/estimate-review/model-results.json
+          node scripts/check-estimate-review-browser.mjs
+      - name: Retain original verification evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ES04-estimate-review-evidence
+          path: verification-evidence/estimate-review/
+          retention-days: 14
