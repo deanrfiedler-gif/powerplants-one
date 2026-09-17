@@ -10,7 +10,7 @@ source_commit: efd4d4e33f5fc4ef2a4605455ed8d4c66e0ddc39
 
 # Users, Roles, Teams & Access Review r01 — change record
 
-This record is required by the shared UI style specification (§7.1, element 6). It covers the design HTML `PPO-Users-Roles-and-Access-Review-r01.html` (SHA-256 `0478e247aae54bad360f6d4316901e32d83296d4dbf634a375b2b005811320db`).
+This record is required by the shared UI style specification (§7.1, element 6). It covers the design HTML `PPO-Users-Roles-and-Access-Review-r01.html` (SHA-256 `a15ecb01ff596e5eaa9cc784977ab103fe664de6258ac41c66aaed58397d6363`).
 
 ## r01 — 17 September 2026 (first issue)
 
@@ -48,6 +48,8 @@ This record is required by the shared UI style specification (§7.1, element 6).
 12. Queue tiles centred their text when a row held a single tile (visible at 390 px). They now align to the start like the other tiles.
 13. The before/after table printed "to No end date" mid-sentence; it now reads "to no end date".
 14. A request created from an access review showed two *Draft* history lines, the first wrongly attributed to the administrator. Only the recorded creation entry is now shown.
+
+15. **Found by pull request CI (#232):** four `catch` blocks in `workspace.js` declared an error binding they never used. The repository's ESLint rule rejects this, so `npm run check` failed in every application job. The blocks now use bare `catch`. There is no behaviour change; the HTML hash changed only because of this.
 
 ### Owner decisions applied before issue (17 September 2026)
 

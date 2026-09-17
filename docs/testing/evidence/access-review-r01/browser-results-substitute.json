@@ -1,6 +1,6 @@
 {
   "source": "local-pre-commit",
-  "html_sha256": "0478e247aae54bad360f6d4316901e32d83296d4dbf634a375b2b005811320db",
+  "html_sha256": "a15ecb01ff596e5eaa9cc784977ab103fe664de6258ac41c66aaed58397d6363",
   "browser": "141.0.7390.37",
   "browser_channel": "substitute",
   "substitute_path": "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
@@ -199,7 +199,7 @@
     },
     {
       "name": "1440-history.png",
-      "sha256": "ed7ce08459dfc9b69c05e70fde8192fdfd086f2dde993528e431f8b280373ef8"
+      "sha256": "fb90e87b4eb1bef3d0527b0d294dce5608b65acaaa965b7cf1d9879105ab3254"
     },
     {
       "name": "390-people.png",

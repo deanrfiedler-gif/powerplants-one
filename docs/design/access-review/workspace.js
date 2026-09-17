@@ -33,9 +33,9 @@
   const writable=()=>['admin','approver','lead'].includes(ui.role);
 
   /* ---------- persistence ---------- */
-  function persist(){if(damaged)return;try{localStorage.setItem(KEY,JSON.stringify({schema:'ppo-access-review-session/v1',state,ui}));storageOK=true;}catch(e){storageOK=false;}}
+  function persist(){if(damaged)return;try{localStorage.setItem(KEY,JSON.stringify({schema:'ppo-access-review-session/v1',state,ui}));storageOK=true;}catch{storageOK=false;}}
   function load(){
-    let raw=null;try{raw=localStorage.getItem(KEY);}catch(e){storageOK=false;return;}
+    let raw=null;try{raw=localStorage.getItem(KEY);}catch{storageOK=false;return;}
     if(!raw)return;
     try{const saved=JSON.parse(raw);M.validate(saved.state);if(!saved.ui||!M.roles[saved.ui.role])throw Error('Invalid preview settings.');state=saved.state;ui={...defaults(),...saved.ui};}
     catch(e){damaged={raw,message:e.message};}
@@ -405,7 +405,7 @@
       ${check('confirm','I understand this replaces the current local session.')}
       ${note('Validated before use','A backup with an unknown capability, an invalid scope, a grant ending before it starts, a duplicate grant or a self-approved request is refused without changing anything.','info')}`,
       onSubmit:async()=>{const input=$('modal-form').querySelector('input[name=file]');if(!input.files.length)throw Error('Choose a backup file.');
-        const text=await input.files[0].text();let data;try{data=JSON.parse(text);}catch(e){throw Error('The file is not valid JSON.');}
+        const text=await input.files[0].text();let data;try{data=JSON.parse(text);}catch{throw Error('The file is not valid JSON.');}
         if(!data||data.schema!=='ppo-access-review-session/v1')throw Error('This is not an access review session backup.');
         M.validate(JSON.parse(JSON.stringify(data.state)));if(!data.ui||!M.roles[data.ui.role])throw Error('The backup has invalid preview settings.');
         if(!formData().confirm)throw Error('Confirm that the current session will be replaced.');
@@ -452,7 +452,7 @@
       case 'view':ui.view=d.view;render();break;
       case 'guide':guide();break;case 'options':options();break;case 'assistant':assistant();break;
       case 'assistantRun':assistantRun();break;
-      case 'assistantCopy':try{await navigator.clipboard.writeText(assistant.state.output);toast('Copied.');}catch(err){toast('Copy is unavailable here; select the text instead.');}break;
+      case 'assistantCopy':try{await navigator.clipboard.writeText(assistant.state.output);toast('Copied.');}catch{toast('Copy is unavailable here; select the text instead.');}break;
       case 'closePanel':closePanel();break;
       case 'queue':ui.filters.queue=ui.filters.queue===d.queue?'':d.queue;persist();render();break;
       case 'clear':ui.filters={q:'',issuer:'',status:'',company:'',family:'',queue:'',sort:'attention'};persist();render();break;

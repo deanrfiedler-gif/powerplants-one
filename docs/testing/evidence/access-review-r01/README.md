@@ -22,13 +22,14 @@ Owner acceptance, D-020 decisions and application integration are separate.
 | Item | Evidence |
 |---|---|
 | Checked source | Branch `design/users-roles-access-review-r01`, cut from `main` `efd4d4e33f5fc4ef2a4605455ed8d4c66e0ddc39`; local working tree before commit (`PPO_SOURCE_HEAD=local-pre-commit`). The pull request records the committed head and CI runs |
-| HTML SHA-256 | `0478e247aae54bad360f6d4316901e32d83296d4dbf634a375b2b005811320db` |
+| HTML SHA-256 | `a15ecb01ff596e5eaa9cc784977ab103fe664de6258ac41c66aaed58397d6363` |
 | Fixture manifest SHA-256 | `13d0e64db11afa36104a55be883c5c605947b84bc3a9471acbeaa36a57ede37d` (canonical JSON of the seed state) |
 | Capability source | `src/platform/permissions.ts` SHA-256 `a589022f8fdfaf109a58b3ad97f4856bbad472fa2e2b94803e50ea9b4402bcfc`: 61 capabilities. `scripts/demo-database.ts` SHA-256 `9dc127224dedff3cbf8e11500de2d9df6a50c72a24464ec4a3b5677b1a62dbc1`: 24 hosted tester capabilities |
 | Model | **107 groups passed** — [original result](model-results.json) |
 | Native interaction | **40 groups passed**, zero page or console errors — [original result](browser-results-substitute.json) |
 | Runtime used | **Substitute, not the pinned runtime.** Node 22.22.2 (the repository pins 24.21.0), Playwright 1.63.0, Chromium 141.0.7390.37 through `PPO_BROWSER_PATH` (the repository pins the Chrome channel). The result file records `browser_channel: substitute` |
-| Pinned-runtime evidence | **Pending.** Produced by the focused workflow `access-review-design.yml` on the pull request |
+| Pinned-runtime evidence | First PR head `395a72bd62b566e52a85cf5ff82f7c8494f310ad` (earlier HTML `0478e247…20db`): the focused job *Access review model and native browser review* **succeeded** on 17 September 2026 ([run 35219022617](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35219022617), job `105194317426`). The rebuild check, model check and native checks therefore passed on the pinned runtime for that head. The fixed head (below) needs its own run |
+| CI failure and fix | On that same head, seven application jobs failed at `npm run check`. ESLint rejected four unused `catch` bindings in `docs/design/access-review/workspace.js`. This was reproduced locally on the unchanged head and fixed (change record item 15). Local `npm run check` then passed (lint, typecheck, 111 unit tests, production build) on Node 22.22.2, with the engine check overridden for the local install only |
 | Responsive coverage | All six views at 1440, 1024, 820, 390 and 320 px. No page overflow, and no visible content or toolbar button under 44 px high at 390 or 320 px. The inspection panel fits 390 px |
 | Screenshots | 21 PNGs captured in `verification-evidence/access-review/` (not committed; the workflow retains its own for 14 days). Names and SHA-256 are listed in the result file |
 | Deterministic build | Rebuilding reproduces the committed HTML and `capabilities.js` byte for byte |

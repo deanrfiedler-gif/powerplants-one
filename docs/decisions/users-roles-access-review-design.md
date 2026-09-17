@@ -27,7 +27,7 @@ The package retains the following, and creates no new module, domain or requirem
 
 ## Deliverable
 
-The [HTML](../reference/ui/access-review/PPO-Users-Roles-and-Access-Review-r01.html) (SHA-256 `0478e247aae54bad360f6d4316901e32d83296d4dbf634a375b2b005811320db`) provides six views:
+The [HTML](../reference/ui/access-review/PPO-Users-Roles-and-Access-Review-r01.html) (SHA-256 `a15ecb01ff596e5eaa9cc784977ab103fe664de6258ac41c66aaed58397d6363`) provides six views:
 - **People** — a register with seven attention queues;
 - **Person access** — identity, grants and an effective-access matrix with a step-by-step explanation;
 - **Roles, teams & capabilities** — the 61 contract capabilities, proposed bundles and teams, and separation-of-duties pairs;

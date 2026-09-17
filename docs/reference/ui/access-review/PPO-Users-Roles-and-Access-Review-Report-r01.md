@@ -6,7 +6,7 @@ date: 2026-09-17
 owner: Dean Fiedler
 status: Proposed standalone design; owner acceptance, D-020 decisions and application integration separate
 source_commit: efd4d4e33f5fc4ef2a4605455ed8d4c66e0ddc39
-html_sha256: 0478e247aae54bad360f6d4316901e32d83296d4dbf634a375b2b005811320db
+html_sha256: a15ecb01ff596e5eaa9cc784977ab103fe664de6258ac41c66aaed58397d6363
 ---
 
 # Users, Roles, Teams & Access Review r01 — detailed design report
@@ -332,7 +332,7 @@ The scripted assistant answers four source-scoped prompts (person summary, grant
 
 | Check | Result |
 |---|---|
-| Deterministic build | Rebuild reproduces HTML SHA-256 `0478e247…20db` and the generated capability file |
+| Deterministic build | Rebuild reproduces HTML SHA-256 `a15ecb01…6363` and the generated capability file |
 | Model | **107 groups passed** ([result](../../../testing/evidence/access-review-r01/model-results.json)) |
 | Native browser | **40 groups passed**, zero page or console errors, on **substitute Chromium 141.0.7390.37** with Node 22.22.2 and Playwright 1.63.0. This is **not** the pinned Chrome channel or Node 24.21.0; the focused workflow provides that evidence |
 | Viewports | 1440, 1024, 820, 390 and 320 px for all six views: no page overflow; no visible content or toolbar button under 44 px high at 390 and 320 px |
