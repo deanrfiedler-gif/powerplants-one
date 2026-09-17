@@ -53,6 +53,8 @@ The repair binds both retained phone-menu cases to r17's visible More title, set
 
 The completed [compiled desktop/phone run on 4037c881](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35169617519/job/105038243304) passed 175 cases and reported 11 failures (three platform-inapplicable skips). Eight failures were the retained navigation issues above. Two more concerned the diagnostic label's new More-footer location; the remaining desktop failure concerned a reload-time storage selector matching both the active page and content outside main. The follow-up opens More to verify the exact diagnostic label, then closes it before the existing scoped-data proof, and binds the storage control to its unique panel inside main. The synthetic-data, permissions, keyboard, save and reload assertions remain. Both new r17 preview journeys passed in that run, but final-source CI remains the verification gate.
 
+PR #222 merged into main as `aa94dcdc` while the repaired browser suites were running. The branch incorporates that existing supplier-pricing design without changing its files; the document-register append conflict retains all four Shell entries and both Supplier Pricing entries. Main and Shell status/index entries are both preserved. Documentation assurance is rerun on the combined branch before publication.
+
 ## Review and rollout
 
 1. Review PR checks against its final commit, including the six enforced contexts and any additional applicable suites. A component screenshot run is not owner acceptance.

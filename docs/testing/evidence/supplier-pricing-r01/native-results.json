@@ -1,0 +1,147 @@
+{
+  "source": "71d486f39d11fb7420b2e6885e1c15b055f33bed",
+  "browser": "153.0.8010.47",
+  "htmlSha256": "a0a38d3f520b350a97886d5148865fe6caeb3ba1fe367a05cada6f926962a0e5",
+  "passed": 20,
+  "groups": [
+    "Register renders eight supplier sources and exposes currencies",
+    "Search and status filtering recover from no results",
+    "Docked source snapshot opens exact full source and authored evidence",
+    "Unreviewed source cannot be applied or self-reviewed",
+    "Failed review save retains rationale and retry saves one decision",
+    "Original estimate and issued quotation remain unchanged after review",
+    "Selected refresh reconciles exact known subtotal and blockers",
+    "Cancel has no effect and only estimator may create successor",
+    "Successor saves complete snapshots, escapes text and retains unknown costs",
+    "Duplicate exact refresh is refused without an extra draft",
+    "Saved decisions and successor survive reload",
+    "New source draft, edit, submit and return preserve earlier evidence",
+    "Returned latest source blocks a new refresh and preserves earlier successor",
+    "Observer cannot maintain prices or review sources",
+    "Keyboard navigation has selected-tab semantics",
+    "Export contains synthetic warning, originals and exact saved revisions",
+    "Cross-tab write detects changed local state",
+    "Malformed saved data retained while writes are paused",
+    "All five views fit desktop, tablet and phone without obscured headings",
+    "Phone snapshot fills width, traps focus and closes with Escape"
+  ],
+  "errors": [],
+  "captures": [
+    {
+      "file": "desktop-source-snapshot.png",
+      "sha256": "335abb97aed38dfc8abe8ab9a01247c2ca7f9c0f3717b736b9ce91da64afa9c2"
+    },
+    {
+      "file": "desktop-refresh-reviewed.png",
+      "sha256": "351c97d48916dd681876ded4cb9bf05148f6d8d97dd046994d6a3c03459176dd"
+    },
+    {
+      "file": "desktop-saved-successor.png",
+      "sha256": "eb242ec05b05695b58bb9478ec04d10925f003d854eac68e4bd4d6842e3f7e1b"
+    },
+    {
+      "file": "1440-supplier-price-sources.png",
+      "sha256": "ac1fd6d0f7f3d96cbe40ed937f6cc2e908e8ecd9ee0bf30f0c5d4b97f310d616"
+    },
+    {
+      "file": "1440-source-detail.png",
+      "sha256": "ba87b2fa5e2edcb24bb3918dcbfaca816193ee893f160db82c55d3b25a018e7c"
+    },
+    {
+      "file": "1440-price-change-review.png",
+      "sha256": "899474a521d2f7a559501f8f4b5af6bd90e8d9d033e3c153af50b7cfe996c31e"
+    },
+    {
+      "file": "1440-estimate-cost-review.png",
+      "sha256": "cc8dffe068c21a7b76aa4ad1197202eb966e7c28032c290db375c5bf8dd7efc4"
+    },
+    {
+      "file": "1440-refresh-impact.png",
+      "sha256": "edb517b2d88e7f971bb8aeb5dd63142348c4d2d7104b22be45dfcfc20e82e2f5"
+    },
+    {
+      "file": "1024-supplier-price-sources.png",
+      "sha256": "d24bcff2f6db26dc42a819ae798ae8c768af58927be5bbab6e5b3006d1972d6e"
+    },
+    {
+      "file": "1024-source-detail.png",
+      "sha256": "4d969b3fea338b7df7c771697ec27b6c87e6e642b70707be7425f9d6ead6767f"
+    },
+    {
+      "file": "1024-price-change-review.png",
+      "sha256": "56f6aeb9cc54e0c3fcd81ab01fa8c8955a14f9e3940dfd1a38a44b26c5b9fee2"
+    },
+    {
+      "file": "1024-estimate-cost-review.png",
+      "sha256": "f9d60f02a2ef90306923e5a5467da33db72d45a2193ed25a5417b9d2c53efda2"
+    },
+    {
+      "file": "1024-refresh-impact.png",
+      "sha256": "069e4be6b488ab77d0a0065c8b56da09865dc7406a0c128451bd3f71d31fb232"
+    },
+    {
+      "file": "820-supplier-price-sources.png",
+      "sha256": "671b1b57c9759a1e6ea570db3eeee1050073c0280e06e2b1e4c7876a4aff8f75"
+    },
+    {
+      "file": "820-source-detail.png",
+      "sha256": "441f476cb7bc774c0231e9251f944c9676870a30bf8c318e8801df3ce0e39ae7"
+    },
+    {
+      "file": "820-price-change-review.png",
+      "sha256": "28164cfd624e2685a31336660f3ed023c883cb5b2bed9f287979c26622a5518b"
+    },
+    {
+      "file": "820-estimate-cost-review.png",
+      "sha256": "c3c7abd3cd178b42b465915f6d228b4b15bc5fb83d6ae62332672e728afbcf13"
+    },
+    {
+      "file": "820-refresh-impact.png",
+      "sha256": "6dc928b2b3a3b10dceeaf5ccf00166e1d9624ffd9db46ba779f01a99d86983f7"
+    },
+    {
+      "file": "390-supplier-price-sources.png",
+      "sha256": "2a0ffcbfecc1fdfadba8d3afa5be28cb0e102e2547820cd9a50ec4ede98698ff"
+    },
+    {
+      "file": "390-source-detail.png",
+      "sha256": "a56456b6380d7d31d44a49515117eb7739b3ceca9dec0a045f55baad38b942f0"
+    },
+    {
+      "file": "390-price-change-review.png",
+      "sha256": "6c18138151befd5e23b312337cf4147cdfa2f03f3dd8276e389d5563f12a4899"
+    },
+    {
+      "file": "390-estimate-cost-review.png",
+      "sha256": "bbbdc1990f4da7cc85480e6c49fd313d07b29cc100566db89032ed20413bde10"
+    },
+    {
+      "file": "390-refresh-impact.png",
+      "sha256": "d947fe238d0c13ee9413ee5cf1a48739440d75779b00cae6379f0a5205e919e7"
+    },
+    {
+      "file": "320-supplier-price-sources.png",
+      "sha256": "dcc0fa7a803ad2a2d4fb7d0577a342fb33868e9e8fecae71f3b888fe4c75b7f7"
+    },
+    {
+      "file": "320-source-detail.png",
+      "sha256": "ccca12c021c06b942af489905365bb0c6042e15868f5cca16bf57d6c200de985"
+    },
+    {
+      "file": "320-price-change-review.png",
+      "sha256": "f4ad19f7f5b12d0fcdb42f7c8c05f54c4a2aafb2d840173db2954cb9c37a9611"
+    },
+    {
+      "file": "320-estimate-cost-review.png",
+      "sha256": "91546a98aea37cd4144f7ec68877e137b0e7ed503ee474f3979ef3d0f9b318a8"
+    },
+    {
+      "file": "320-refresh-impact.png",
+      "sha256": "8967bac81a9b76af0eb6bdc024d46b149ae63c4cc72d5ff7228d60819798a868"
+    },
+    {
+      "file": "320-source-snapshot.png",
+      "sha256": "ab1d3ea29ea15617de4210e6d458a4074fbf6c49d0f7e1904a7ab795b55f1631"
+    }
+  ]
+}
