@@ -1,0 +1,51 @@
+name: Document and form template management design
+on:
+  pull_request:
+    paths:
+      - 'docs/design/template-management/**'
+      - 'docs/reference/ui/template-management/**'
+      - 'scripts/*template-management*'
+      - '.github/workflows/template-management-design.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  design:
+    name: DK-06 model and native browser review
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Use existing runtime and browser pins
+        run: |
+          npm install --global npm@11.19.0
+          npm ci
+          npm run browser:install
+      - name: Verify deterministic output and model
+        run: |
+          mkdir -p verification-evidence/template-management
+          python3 scripts/build-template-management.py
+          git diff --exit-code -- docs/reference/ui/template-management/PPO-Document-and-Form-Template-Management-r01.html
+          npx eslint docs/design/template-management/*.js scripts/check-template-management-*.mjs
+          node scripts/check-template-management-model.mjs > verification-evidence/template-management/model-results.json
+      - name: Check repository documentation
+        run: |
+          python3 scripts/check_foundation.py
+          python3 scripts/check_prototype.py
+          python3 scripts/check_naming.py
+      - name: Verify native interactions and responsive layouts
+        env:
+          PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: node scripts/check-template-management-browser.mjs
+      - name: Retain original evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Template-management-design-evidence
+          path: verification-evidence/template-management/
+          retention-days: 14

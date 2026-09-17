@@ -1,0 +1,28 @@
+{
+  "passed": 23,
+  "groups": [
+    "Ten fictional identities and four exact source exceptions",
+    "Site technician scope excludes commercial and other-site documents",
+    "Search includes exact area and equipment context",
+    "Missing historical version is never silently replaced",
+    "Restricted source has no hidden title or source credentials",
+    "Author cannot make independent technical decision",
+    "Read-only identities cannot create a finding",
+    "Invalid owner and impossible due date rejected without mutation",
+    "Owned finding retains exact source and author",
+    "Unresolved finding prevents Reviewed",
+    "Response requires separate independent acceptance",
+    "Decision stores immutable exact source and purpose",
+    "Duplicate decision cannot overwrite original review",
+    "New findings hold current review while retaining the original decision",
+    "Source successor invalidates pending forms but preserves earlier decisions",
+    "Historical and withdrawn sources reject current-use review",
+    "Receiving job pack and quotation remain bound to r02",
+    "Owned impact task is prepared once and cannot change source or receipt",
+    "Exception follow-up does not repair source availability",
+    "Wrong target revision and unknown receiving identity are rejected",
+    "Stale state version refuses a write",
+    "Malformed saved state and altered decision basis are rejected",
+    "Export honours preview scope and explicitly states no delivery"
+  ]
+}

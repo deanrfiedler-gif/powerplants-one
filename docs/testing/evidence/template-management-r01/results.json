@@ -1,0 +1,224 @@
+{
+  "source": "local",
+  "browser": "141.0.7390.37",
+  "launch": "executablePath /opt/pw-browsers/chromium-1194/chrome-linux/chrome",
+  "node": "v22.22.2",
+  "htmlSha256": "a8e76cf50dfd844f0bc84b2e16e9f5eb6d78efe2021642b43808e4beb46e6c3d",
+  "htmlBytes": 324285,
+  "passed": 38,
+  "groups": [
+    "Register lists the permitted population with eligibility and next action",
+    "Search, filters and empty state recover without claiming zero templates",
+    "Snapshot exposes source authority, exact fingerprints and consumers",
+    "A published definition is read-only and states why",
+    "Read-only and restricted profiles see a scoped register and no editing controls",
+    "Unsupported rendering profile is an explicit blocked state, not a rendered success",
+    "Creating a successor leaves the published definition unchanged",
+    "A structured section and its bound fields are added without a code editor",
+    "An incompatible unit fails binding validation instead of converting",
+    "Protected standing wording cannot be edited through ordinary field editing",
+    "Document preview renders the exact draft and reports distinct states",
+    "A finding navigates to the field it belongs to",
+    "The scenario matrix runs and records exact output evidence",
+    "Editing the draft afterwards makes the recorded evidence out of date",
+    "A failed local save keeps the entry visible and a retry saves once",
+    "Submission needs current evidence, then freezes the exact snapshot",
+    "An author cannot review their own work and a finding response does not close it",
+    "A return, correction and fresh submission retain the original findings and decisions",
+    "Usage impact separates consumer stages and states an incomplete lookup",
+    "Follow-up and the DK-03 handover are prepared once and issue nothing",
+    "Publication requires an explicit succession confirmation and a supported check set",
+    "A lost publication response is reconciled to one operation and one assignment",
+    "Future effective is distinct from eligible now until the demo clock advances",
+    "No match, missing context and ambiguous match are never resolved silently",
+    "Policy not configured blocks review and publication until a policy is selected",
+    "Form preview keeps unanswered, No, Unknown and zero distinct without creating a record",
+    "A unit change is reported as incompatible with the retained form response",
+    "Historical reconstruction is labelled and never claims to be the issued file",
+    "Withdrawal prevents new use for the scope and preserves history",
+    "Saved definitions, decisions and operations survive a reload",
+    "Export carries a synthetic notice and the exact retained records",
+    "Cross-tab writes are detected and stale saves are refused",
+    "Malformed saved data is retained while writes are paused",
+    "Reset clears only this module’s keys after an explicit confirmation",
+    "All six views fit desktop, tablet and phone widths without page overflow",
+    "Phone snapshot fills the width, traps focus and closes with Escape",
+    "Keyboard navigation moves between views with correct tab semantics",
+    "A keyboard-only successor, edit, validate and submit journey completes"
+  ],
+  "errors": [],
+  "captures": [
+    {
+      "file": "desktop-register.png",
+      "sha256": "50755c5e69c1baf3c3424ca23fa4be51cb731481a147cf616ec320a43be3c8e7"
+    },
+    {
+      "file": "desktop-snapshot.png",
+      "sha256": "7e24295eb38684f92f5311bed4da1be21121c6dc091e91ff3d7ab6556c6d0bcc"
+    },
+    {
+      "file": "desktop-field-editor.png",
+      "sha256": "53a768b7a30ece6bd619afc7bf86331360b5c6fa888854c33bf9d6aac92551ed"
+    },
+    {
+      "file": "desktop-preview-restricted.png",
+      "sha256": "a5b0a548d0930a1403a27bdedd7dabf187f73646e504e4c09c00f216c791c027"
+    },
+    {
+      "file": "desktop-validation.png",
+      "sha256": "11d87690d54112bf54bbf6815319096cca1a816bccfbaedcd0df28922264d945"
+    },
+    {
+      "file": "desktop-review.png",
+      "sha256": "30b5ec547d864c54b17a57ef6efe4e848d0043b3e2074cfffcce5cd2ed4f9889"
+    },
+    {
+      "file": "desktop-impact.png",
+      "sha256": "ef8dfa34d559218bf054a55307830a3e822b263af2ba2ae79e310ad65e2a4b48"
+    },
+    {
+      "file": "desktop-history-unknown.png",
+      "sha256": "e4ff59f78749cc818037fa92d3454f9918f0eda53d7ae5cb7d352698d55a286b"
+    },
+    {
+      "file": "desktop-ambiguous.png",
+      "sha256": "dbf702295557448fc276b30c983c322bb94a2ec896ffc1b88d7cbc6ba8f14b13"
+    },
+    {
+      "file": "desktop-form-preview.png",
+      "sha256": "d7040fb9ac1d18d8f04a2b7e957199bc26d4829b376fa14b27121c0b3e6c0ad2"
+    },
+    {
+      "file": "desktop-response-compatibility.png",
+      "sha256": "76f27147cebf9a26a1ba7d727ff81ffd1c5d47378c9b1a4c1c61dd4a18617826"
+    },
+    {
+      "file": "desktop-history.png",
+      "sha256": "359d33e46714057fb6364299f610f63d016bcda49321b000809ad199ee702c43"
+    },
+    {
+      "file": "1440-template-register.png",
+      "sha256": "00f91295fe9e4835259cea6f635456a2c3f942ef70e53fa80fe8f6eb1471628e"
+    },
+    {
+      "file": "1440-template-rules.png",
+      "sha256": "dbc1d68b4b6a2254b61b5a56a8ecd1495374e4085f3c11de6fa1319de6080ee9"
+    },
+    {
+      "file": "1440-preview-validation.png",
+      "sha256": "b15237b0976266dba4fcc8d163ffc689a405b0b0e6bf36d75e622ab6f45b3d80"
+    },
+    {
+      "file": "1440-review-publication.png",
+      "sha256": "9aeca686667d18363b505fcc418378e70a1c03671f004bc685ac331123d1559b"
+    },
+    {
+      "file": "1440-usage-change-impact.png",
+      "sha256": "83a32cb3489b701da83dcfcfcfac923e2d3b620b120a60ca033d0fc6b865064d"
+    },
+    {
+      "file": "1440-history-recovery.png",
+      "sha256": "6e9dfe80026becca0a05d8f9313c231ed92cbebfa074d389c98a971b79a6f7ca"
+    },
+    {
+      "file": "1024-template-register.png",
+      "sha256": "35979004df819ce0367749d97f39924115ab29ca8a56a7f9c25a5c967438fbe4"
+    },
+    {
+      "file": "1024-template-rules.png",
+      "sha256": "0dd5c51db5e37befdc479d1b5a7b3f9d10de8df8b4e8591401c419110fcf381b"
+    },
+    {
+      "file": "1024-preview-validation.png",
+      "sha256": "93bffbf94a4994f243aee7d043e8c44550a5e235e0febda88af05dedbc3943e0"
+    },
+    {
+      "file": "1024-review-publication.png",
+      "sha256": "b5330bdfa8635368226440080dbe1386a79293a7866b2da98ae84180a9f96d8a"
+    },
+    {
+      "file": "1024-usage-change-impact.png",
+      "sha256": "75d1ae161aed124c3b241111357351c1f53cb3f417db17c98debba731637bde4"
+    },
+    {
+      "file": "1024-history-recovery.png",
+      "sha256": "957746d2d3ed211b20fff839e492577937562cc6f8b1c1d73c78f405cfa7e5aa"
+    },
+    {
+      "file": "820-template-register.png",
+      "sha256": "2aee2c4f7d10fd4a627a4b5e2d86a2325f8f1bc80ec22c91eb23651f25cc049f"
+    },
+    {
+      "file": "820-template-rules.png",
+      "sha256": "e08516182b596ac7f6fee194da2580916a671aa79705e3a01d04660fc499d3bb"
+    },
+    {
+      "file": "820-preview-validation.png",
+      "sha256": "8d99ee7a5bc14c5b538373ea65a33d73123fc4762e78d3dc62a1feecdf1e1d48"
+    },
+    {
+      "file": "820-review-publication.png",
+      "sha256": "fa98cabc581af9dddc840ef788acd0abe4e12417644a8f23d9d5e46af22b69b9"
+    },
+    {
+      "file": "820-usage-change-impact.png",
+      "sha256": "33ac761f8b63dd9898feae3dac769b3ac403f8fffc9af565566508cc022d92a8"
+    },
+    {
+      "file": "820-history-recovery.png",
+      "sha256": "4ce88994657ef6763bb322332cf88385e5352cf212085054a25266e5ebc19f8a"
+    },
+    {
+      "file": "390-template-register.png",
+      "sha256": "a9cf3bc031de021863ffd8085cc787442a7434868623b8f64d695f8860ce4220"
+    },
+    {
+      "file": "390-template-rules.png",
+      "sha256": "e98331c0e2817ae79b1837452124ae37377d05b7d9f0c93e65ec969e6ac04bc7"
+    },
+    {
+      "file": "390-preview-validation.png",
+      "sha256": "c771d83763dda20d6bfbd45ad434efb78dd44171ba2aff49eabbf6ab65f3addf"
+    },
+    {
+      "file": "390-review-publication.png",
+      "sha256": "8f11781d4bffa542f7571ef03c5d14ff14c3c05015ace059dc44bcd34b87d074"
+    },
+    {
+      "file": "390-usage-change-impact.png",
+      "sha256": "f2f12ac825435c60c0add848eb17833acc61eed3d74db218baa879cecc7d7d2e"
+    },
+    {
+      "file": "390-history-recovery.png",
+      "sha256": "6cfe9f68687aa97df2842b811a7fd190c1e44ad447f3094a3361f03a9bff4f1a"
+    },
+    {
+      "file": "320-template-register.png",
+      "sha256": "1a8fae5c47ef9b9854368c959739cba714e36ed4b47a826b1a5110302d9791fc"
+    },
+    {
+      "file": "320-template-rules.png",
+      "sha256": "2c059940662b1583f1f9c50f5cbeff03d94d93f654b54a99859365ab201c2222"
+    },
+    {
+      "file": "320-preview-validation.png",
+      "sha256": "4d586a492a8a9d1c273086aa259d8e0a2bbf968e89e85e30482eb82e5b876218"
+    },
+    {
+      "file": "320-review-publication.png",
+      "sha256": "f13061a7157ec6fb0eb39e742a06350bdd18685cfc9f0e4e1aa57e87583caa41"
+    },
+    {
+      "file": "320-usage-change-impact.png",
+      "sha256": "ae81d23a8133e210dcb1ef3e2dd12cc331ccbea6deb4fa4a8f09ebb2b379ea88"
+    },
+    {
+      "file": "320-history-recovery.png",
+      "sha256": "9642f497e7fbc7c7c363efd3d04e3c29a802cecbbce2058e8c4ebc286b6e352b"
+    },
+    {
+      "file": "320-snapshot.png",
+      "sha256": "70ec882662cfdc05d9a16f0524e909c55e14efe0f5500234aadeb7bc7ed193ad"
+    }
+  ]
+}

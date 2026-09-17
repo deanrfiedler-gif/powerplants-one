@@ -1,0 +1,221 @@
+{
+  "source": "091e7ec6d0e382e098bd8966904d92af8e7720f5",
+  "browser": "153.0.8010.47",
+  "htmlSha256": "8fd467547d5369de0a42cde05700495ceb0068a433d5e1c4dea0fbd1485d507a",
+  "passed": 22,
+  "groups": [
+    "Overview has eight accessible tabs and distinct owner/action facts",
+    "Board/List share filters, edited record and return context",
+    "Dirty edits require discard and cancel preserves saved values",
+    "Validation and known save failure retain proposed values",
+    "Stale save compares current title and requires deliberate retry",
+    "Unknown save freezes inputs and reconciles one original effect",
+    "Activity is planned then completed with owned outcome",
+    "Blocked task is explained and completion retains internal outcome",
+    "Scope selection saves and submitting brief captures exact basis",
+    "Receiving estimator returns exact brief and owner revises without erasure",
+    "Issued revision, accepted basis and newer draft remain distinct",
+    "Won retains stage and activity, then prepares one unsent receiving packet",
+    "Owner transfer keeps activities and captured closing accountability",
+    "Email preparation is private and filing does not send",
+    "Supporting files validate signatures, render text safely and reject duplicates",
+    "Shared pipeline settings update names and weighted visibility without touch reset",
+    "Partial sources and denied state do not show misleading empty or protected content",
+    "Keyboard tabs and modal focus return work",
+    "All eight views fit desktop, tablet and phone without page overflow",
+    "Phone evidence panel fills viewport and contains content",
+    "Phone Board/List retains accessible navigation and selected outcome",
+    "Reload restores fixtures and all session attachments disappear"
+  ],
+  "errors": [],
+  "captures": [
+    {
+      "file": "desktop-overview.png",
+      "sha256": "cd38c4ae18637c8a29f89f9c0134042fee4fadacbdba59bc7085282d0770e44a"
+    },
+    {
+      "file": "conflict-retained-proposal.png",
+      "sha256": "498206a132f8721f31c464be490c1cb39df985746ea98d815d2d9577511846c2"
+    },
+    {
+      "file": "desktop-commercial-exact-basis.png",
+      "sha256": "6443dea959a6d98ffbcb4777da5a1640eea881296d1074b66c036120ba227bf4"
+    },
+    {
+      "file": "prepared-handover.png",
+      "sha256": "272918999da95572a989c171df91cbb59bb4cec37a4739700bf26fddd2c55b89"
+    },
+    {
+      "file": "1440-overview.png",
+      "sha256": "97edb1074570c861c8bbefd061ee7b32e30c7a4d3730042d6cfd0f1227df5199"
+    },
+    {
+      "file": "1440-scope.png",
+      "sha256": "b8df984f2e0960c29c222d1fd97c548956025a7e26d7c3bb88175ea549c060e9"
+    },
+    {
+      "file": "1440-activities.png",
+      "sha256": "f7e87e6815314c1157ebc7510bff95b2f92304fd4252513ffd83728ce627eb28"
+    },
+    {
+      "file": "1440-tasks.png",
+      "sha256": "e9c165fece5ffa9cad6828bc012cd952f818ea00f94f755949307cdeb53fcd49"
+    },
+    {
+      "file": "1440-commercial.png",
+      "sha256": "defdd4cc6e0bf3deece726de9ceabd5a554ec4e187e3f5fd7708ca665577e934"
+    },
+    {
+      "file": "1440-correspondence.png",
+      "sha256": "cb4d609593a9b77a0437bdf51f09479174802f7e881304a3f92b956dee9ccfd8"
+    },
+    {
+      "file": "1440-documents.png",
+      "sha256": "260e82de331159aa8580e5c377d75bfebf665ef66433e29df45bac463e7a2fd4"
+    },
+    {
+      "file": "1440-history.png",
+      "sha256": "8f2790f30912e4d705b65f51ac8cdb8aabd776ed3c3bbd00380b38ae1dd2b545"
+    },
+    {
+      "file": "1024-overview.png",
+      "sha256": "c80a35a91c7b9eecd98929ec09d96f71ec380ab8c2eed316fbc409eee5d20726"
+    },
+    {
+      "file": "1024-scope.png",
+      "sha256": "d966f076df44217c8a1af5a80c128fd8d53eb1e35b45f109884f98a6f36dc0d1"
+    },
+    {
+      "file": "1024-activities.png",
+      "sha256": "cb21ae2497e9f000a38a0f18d0b3852e8553b5474c09313ca7da50d8c6bae72d"
+    },
+    {
+      "file": "1024-tasks.png",
+      "sha256": "e8951250e3bde9894ee78a09603233c978b1401a32e922e912e01ba3050494d8"
+    },
+    {
+      "file": "1024-commercial.png",
+      "sha256": "4f276c015467e0b134c0e718a4628554ef5d43d5143851441ffb266d3225af28"
+    },
+    {
+      "file": "1024-correspondence.png",
+      "sha256": "5c9b0aab348920a53609b9675a803b7f27f551cfbd3d9a11a9a19ddf3dac26b8"
+    },
+    {
+      "file": "1024-documents.png",
+      "sha256": "3a74c57475574de9c586f6c37a0be51b3f4e5bcfcc6892856ae326aaef9809a3"
+    },
+    {
+      "file": "1024-history.png",
+      "sha256": "9a2efd1553f8fcfe80d17328ec87fe2d6a57034bde8b51a04a86888f77ba8774"
+    },
+    {
+      "file": "768-overview.png",
+      "sha256": "eeb518ce2aa1eb132effb458bc041e46cc86a770a473cb944cdcf9105a77e663"
+    },
+    {
+      "file": "768-scope.png",
+      "sha256": "9651ff5319be29d68f9a60bb2feee3fb67fca2c0e18703cd163025dc49b0c96e"
+    },
+    {
+      "file": "768-activities.png",
+      "sha256": "5eb6876aafcc8f9413c3e49502e12e7e58a111675cc68e8ec59b65d35c29df76"
+    },
+    {
+      "file": "768-tasks.png",
+      "sha256": "e903205551d9a088db17e227b5528261100cf73358e86e90710512ffa0c62dd0"
+    },
+    {
+      "file": "768-commercial.png",
+      "sha256": "7dca4f7c75504bd5445a0bc6d9fa6538c0cb74fe29f5fc734f83a8eae0b0be07"
+    },
+    {
+      "file": "768-correspondence.png",
+      "sha256": "c389567b36013e3acd6d91a8676922fcf89f9ce4bccaacf2c9d819a00e0a35cb"
+    },
+    {
+      "file": "768-documents.png",
+      "sha256": "0a6bae50ee0c71c0cb8168be812920ecdd4d28f6d538ad19a831e4334f520059"
+    },
+    {
+      "file": "768-history.png",
+      "sha256": "9bd7e09c877145a9d5c44e16fc3a0c1d59050a384eda0fa12c486bb593df2651"
+    },
+    {
+      "file": "390-overview.png",
+      "sha256": "60f2369b794d21f1c3ede8ac800c00a8681795d080ac802448503cef8b1090cb"
+    },
+    {
+      "file": "390-scope.png",
+      "sha256": "e22bf90de6c9c4772d45e102610e1f2a6ebb1dc10d8aea5fd8d0a92d7462dcef"
+    },
+    {
+      "file": "390-activities.png",
+      "sha256": "9061e30476deb651b0db8d9213cda5929b6428ea648986c692809370876e323e"
+    },
+    {
+      "file": "390-tasks.png",
+      "sha256": "ce3db6ebbc267493360e54790cc78a92d1ad4ea8adc3647ddc34ee7c01df0ad2"
+    },
+    {
+      "file": "390-commercial.png",
+      "sha256": "db6ea2937b5427defe61aee3a219ac63050f50e09830d30c2e42e9c8a8ece1a2"
+    },
+    {
+      "file": "390-correspondence.png",
+      "sha256": "e80e1956b4204e242b56c91ac897482760e585287bdea0c49cd99465774a19b4"
+    },
+    {
+      "file": "390-documents.png",
+      "sha256": "df3638297cb5b0e98b385e4b06bb982ffc51dbf735e8ba3eddda71a8bbfc87af"
+    },
+    {
+      "file": "390-history.png",
+      "sha256": "f2caf3faa0dd97e0c62bac154f965a93b0880a795fb75d025548fa7c9e99f447"
+    },
+    {
+      "file": "320-overview.png",
+      "sha256": "8b4cfda0e5a0d472642b324fd58ead1bf12c764e1842f505c158658ae53fc171"
+    },
+    {
+      "file": "320-scope.png",
+      "sha256": "bb9c86705c37ae6be716e4f22e31218afd66e4cc7d23e88a482d723148cec013"
+    },
+    {
+      "file": "320-activities.png",
+      "sha256": "c92f10876480fc6c48934bb51829989e0be45803f2e40e1dbf97fef72a4ed7eb"
+    },
+    {
+      "file": "320-tasks.png",
+      "sha256": "a8977adef061453ec09b089dc4f53499a6cb261723f0f4289b1c78078cf4762c"
+    },
+    {
+      "file": "320-commercial.png",
+      "sha256": "ff8db18cf27b2632e63c1cf85a6ccc39d7add4f65b5905c5e625ba97aea4455f"
+    },
+    {
+      "file": "320-correspondence.png",
+      "sha256": "914b00c0a97fa01587446bed701af0a5d06efed8fe6f6d4ab107369f9fc83680"
+    },
+    {
+      "file": "320-documents.png",
+      "sha256": "44665665e48642896232414596c42227a4e0df8ba88746e5a702cb3e17970c8b"
+    },
+    {
+      "file": "320-history.png",
+      "sha256": "d5e02e798950ff73dc392f56a56cf2147f02545568aad1e5460d8c69b614acde"
+    },
+    {
+      "file": "320-document-panel.png",
+      "sha256": "238b785a95cc37fe794bfeb575cf6a1dce56d19b9c853e2f29d279ecf17e105f"
+    },
+    {
+      "file": "320-board.png",
+      "sha256": "ebe5f8515e41b392f207f1302ccb23f40a431cadcec56258957eae0cbfed4bfc"
+    },
+    {
+      "file": "320-list.png",
+      "sha256": "ff2d07fdaf9c36516a2cc12fbde2bd4cd4af99341f07a86e633129c76c15fd47"
+    }
+  ]
+}

@@ -1,0 +1,213 @@
+{
+  "source": "local",
+  "browser": "141.0.7390.37",
+  "runtime": "v22.22.2",
+  "executable": "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
+  "htmlSha256": "91252dd5b550d465478ac9eb41aa8d93a1efa9c3e573cfc393d8480d0ad1af7b",
+  "passed": 36,
+  "groups": [
+    "Needs attention queue reports its population and open exceptions",
+    "Search and location filters retain a no-match state without selecting a hidden record",
+    "Docked snapshot opens the full record and states its distribution denominator",
+    "Issue evidence separates preparation time, issue time and reserved identity",
+    "Downloaded bytes match the displayed byte count and content identity",
+    "The manifest states an absent PDF rendition rather than implying one",
+    "A multi-item transmittal keeps a missing exact item without a substitute",
+    "Readiness explains each check and no percentage replaces the decision",
+    "An unconfigured domain rule blocks release while inspection still works",
+    "A changed source blocks the successor and appears as an owned exception",
+    "Successor draft and independent domain decision bind the exact basis",
+    "A failed local save retains the form and the retry creates one preparation",
+    "An interrupted finalisation refuses release and is owned as an exception",
+    "Recovery continues the original operation and release records a separate issue time",
+    "The predecessor stays exact and keeps its own acknowledgements",
+    "Per-recipient attempts keep independent results and an unknown outcome is not repeated",
+    "Reconciliation is additive and retains the original attempt evidence",
+    "An explicit acknowledgement binds the presented bytes and stays with its own issue",
+    "A channel with no delivery evidence cannot record Delivered",
+    "A returned successor can be replaced through ordinary controls",
+    "The Withdraw control follows the selected issue and only the issue in force",
+    "Restricted Finance evidence has no distribution control for its own reviewer",
+    "Internal cost content refuses an external destination rather than redacting it",
+    "A restricted profile sees no forbidden titles and exports none of them",
+    "Withdrawal retains the exact issue, its reason and its history",
+    "History compares revisions and prepares an owned follow-up without changing a module",
+    "Loading empty and failed reads never display a zero count",
+    "A failed recipient read is not read as an empty audience",
+    "Cross-tab change pauses writes and preserves the open form",
+    "Malformed saved state is preserved with writes paused",
+    "Entered text cannot inject markup into the workspace",
+    "All six views fit 1440 1024 820 390 and 320 pixels",
+    "A short viewport keeps sticky controls clear of the selected content",
+    "Phone snapshot traps focus, closes on Escape and returns to the invoking control",
+    "Keyboard tab navigation exposes selected-tab semantics",
+    "The review file makes no provider, font, image or analytics request"
+  ],
+  "errors": [],
+  "captures": [
+    {
+      "file": "desktop-queue.png",
+      "sha256": "637edbef21570357ae75ac6a0c28e768c67987520c8030a88e1aa8950f8945c3"
+    },
+    {
+      "file": "desktop-snapshot.png",
+      "sha256": "1a51241f9045fd14a9473af3acc77ac1cae60451224993eb1b60e7ba30bc966b"
+    },
+    {
+      "file": "desktop-detail.png",
+      "sha256": "3823e004d53ad42b3e75651983c76f24ac8763b09ae545f29466390c748ddbe9"
+    },
+    {
+      "file": "desktop-readiness.png",
+      "sha256": "8b40f6390009f035e0c4536c16497428ae3c3852c8f7eceb6d8e617dc251ceb3"
+    },
+    {
+      "file": "desktop-exceptions.png",
+      "sha256": "1532138aff419da64ddd62c611b4f99ec66a4b610c45db645006307ef8810e6c"
+    },
+    {
+      "file": "desktop-released.png",
+      "sha256": "1d066caaa38acf39182c58695f82c9aec608b66a48023c23957721101bd902ac"
+    },
+    {
+      "file": "desktop-distribution.png",
+      "sha256": "bc2e22161931db5add83d50257f2fdad0d37b533bb1579f6f1142acec01d7b85"
+    },
+    {
+      "file": "desktop-finance.png",
+      "sha256": "c922bccfac8e9446838cad119053d3124c0700279a0cd06c8ce595eb35b5fbb8"
+    },
+    {
+      "file": "desktop-history.png",
+      "sha256": "098c691745a95c1be130ffee91517e3db1158790e334efc9aec3d024244e0a5e"
+    },
+    {
+      "file": "1440-output-queue.png",
+      "sha256": "e0673cde66f614c848beea8f90964e6b3a0532198dea669fd449340d252212df"
+    },
+    {
+      "file": "1440-output-issue-detail.png",
+      "sha256": "63c20e8e29f83fa5db4329f321533d8787875bd62f9904d4c5159da6d23f8b52"
+    },
+    {
+      "file": "1440-readiness-domain-review.png",
+      "sha256": "5337b255573ada07f25b15677fe05ced3b0030a9229eb9109f12237f754aa20d"
+    },
+    {
+      "file": "1440-distribution-responses.png",
+      "sha256": "9ff33c1222490739a16bf497f6d69a7ee73eecaa4b60891950a574221dc06f76"
+    },
+    {
+      "file": "1440-exceptions-recovery.png",
+      "sha256": "e54a00d6d0722485f3e1e2907a49e0843919204926849491a0481253e15a9f13"
+    },
+    {
+      "file": "1440-history-change-impact.png",
+      "sha256": "feda892b6b0f22fdd1a8b9c5197e49dce9422623aad13149be1e40a15d694aa2"
+    },
+    {
+      "file": "1024-output-queue.png",
+      "sha256": "aef712766fba8ddb7dcbcb9af5892efa9e34d7ceecb9fe78d3ab97424d19d995"
+    },
+    {
+      "file": "1024-output-issue-detail.png",
+      "sha256": "a6d94fc34c42f6be52690dd05835891053128d10db45e20fdf5a94e1479d589d"
+    },
+    {
+      "file": "1024-readiness-domain-review.png",
+      "sha256": "e5d4c0e78d4713e473cc51b604c9d60bd3e439a7d5befeb52dbe4b79b67da7ee"
+    },
+    {
+      "file": "1024-distribution-responses.png",
+      "sha256": "48adc12cdd2d621772246a5971f72a03c1fce36695fba01359c57100e3b19d70"
+    },
+    {
+      "file": "1024-exceptions-recovery.png",
+      "sha256": "85fe20bdd9c4153bf788e8946c014986b053004953212045565e2b7fd53d0baa"
+    },
+    {
+      "file": "1024-history-change-impact.png",
+      "sha256": "7a6cf397ac8843c60c80057081ae16ed1b51e421b3da9e4c169635cf72f95bf6"
+    },
+    {
+      "file": "820-output-queue.png",
+      "sha256": "f6974331a731b3e9cbaf1b43756ac97cc35ea118654cebbecace1b27bb872b31"
+    },
+    {
+      "file": "820-output-issue-detail.png",
+      "sha256": "1ffd5eb1ad75db16a1349b93bf52cfbe5870f3a1e61850f56bcdb30c190aab26"
+    },
+    {
+      "file": "820-readiness-domain-review.png",
+      "sha256": "9906e6cba7b4c6cde0f52d5687ea343c8045527aad12e7b0c0c067fb6dc9fe7e"
+    },
+    {
+      "file": "820-distribution-responses.png",
+      "sha256": "3ee4ad3983d876ca4f0caf4773b18f7de926954fbd968d64f6cb4ff2c3594a97"
+    },
+    {
+      "file": "820-exceptions-recovery.png",
+      "sha256": "2cd971096e8958d2ef04d082fe51f2c750e9b913f8fe3019b59ee28577a74dc2"
+    },
+    {
+      "file": "820-history-change-impact.png",
+      "sha256": "c8e86d4a242a1d58d25997986492b08b4e0ee08414c9f8cb88473e13c2e1d168"
+    },
+    {
+      "file": "390-output-queue.png",
+      "sha256": "baab5935f11451c935e67e048f7da41e68fefed1ff0513e68b02f6a79ed52cb9"
+    },
+    {
+      "file": "390-output-issue-detail.png",
+      "sha256": "daa17c6da833a920a606baadbb01d58c228ababe401f8455c550aec3b20cf569"
+    },
+    {
+      "file": "390-readiness-domain-review.png",
+      "sha256": "7f0957f1a400b43c4550d50c7c237386deb6b3cc772f42106718832590f34fcc"
+    },
+    {
+      "file": "390-distribution-responses.png",
+      "sha256": "6b56d747b321d8509a85dbf943175a63d1e0b556ca924b3fe0a14ddcb3cc13e8"
+    },
+    {
+      "file": "390-exceptions-recovery.png",
+      "sha256": "8c97921ee7cf2c205769579673e673b50a6c6dcaae5ce2513fba6890656b57d9"
+    },
+    {
+      "file": "390-history-change-impact.png",
+      "sha256": "db514eb29300f9e4c732732579fa2c734e3cbaf2862454b4525acc82cacb7c74"
+    },
+    {
+      "file": "320-output-queue.png",
+      "sha256": "60cc140a7b221e0bbd2d790ed3308e57e0d72b8b4c039ee400cd90ee592a9073"
+    },
+    {
+      "file": "320-output-issue-detail.png",
+      "sha256": "e04dd6d2b3dd2301cda16236b90aa98dfe3d0d2df76e0009ad13101a4bda9132"
+    },
+    {
+      "file": "320-readiness-domain-review.png",
+      "sha256": "0ba2cdd6cf0d3f27b79a81118e6b7764721dace05de995a1499eef176ac60697"
+    },
+    {
+      "file": "320-distribution-responses.png",
+      "sha256": "1b10f595bce47a5b2cc19c130d54a075b0ce21938b604a8ac83f2864b4968250"
+    },
+    {
+      "file": "320-exceptions-recovery.png",
+      "sha256": "089650b7b75ddae9e1227345b76314b67985ede1b07304327b0dd2453815ffe7"
+    },
+    {
+      "file": "320-history-change-impact.png",
+      "sha256": "d1b3a7191e184490ee930f1fff0968ba4af21d653af88818124fa73136e74ae1"
+    },
+    {
+      "file": "short-viewport-queue.png",
+      "sha256": "f2adcdb038b0eac4d7cda4d895f13429a981130c341abc4d09c4076cbd68712c"
+    },
+    {
+      "file": "phone-snapshot.png",
+      "sha256": "0d181969c24b03dd382a90f4d5ce03cd7e5703a4d8cec03d5107843ec0265cfe"
+    }
+  ]
+}

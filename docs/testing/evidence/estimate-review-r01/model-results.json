@@ -1,0 +1,85 @@
+{
+  "groups": 20,
+  "results": [
+    {
+      "name": "Incomplete cost is a known subtotal and excluded unknowns do not become zero",
+      "result": "Passed"
+    },
+    {
+      "name": "Exact arithmetic distinguishes margin and markup with half-up rounding",
+      "result": "Passed"
+    },
+    {
+      "name": "Zero denominator remains not applicable and 100% discount is distinct",
+      "result": "Passed"
+    },
+    {
+      "name": "Read-only identity and wrong decision roles are refused without mutation",
+      "result": "Passed"
+    },
+    {
+      "name": "Stale expected version and exact revision are required",
+      "result": "Passed"
+    },
+    {
+      "name": "Partial, stale, failed and denied sources block decisions",
+      "result": "Passed"
+    },
+    {
+      "name": "Expired supplier evidence cannot be checked and source revision cannot be silently refreshed",
+      "result": "Passed"
+    },
+    {
+      "name": "Current submitted and approved commercial lines are immutable",
+      "result": "Passed"
+    },
+    {
+      "name": "Required line and scope checks precede independent review",
+      "result": "Passed"
+    },
+    {
+      "name": "Review and estimate approval remain separate",
+      "result": "Passed"
+    },
+    {
+      "name": "Unconfigured policy blocks approval even after complete review",
+      "result": "Passed"
+    },
+    {
+      "name": "Exact approval and one prepared handover; duplicate preparation is refused",
+      "result": "Passed"
+    },
+    {
+      "name": "Approved predecessor survives successor with no inherited review or approval",
+      "result": "Passed"
+    },
+    {
+      "name": "Return, corrected draft, response, resubmission and independent acceptance preserve originals",
+      "result": "Passed"
+    },
+    {
+      "name": "Invalid decimal, negative, over-discount and invalid date edits preserve draft",
+      "result": "Passed"
+    },
+    {
+      "name": "Discount exception requires completed review and separate approving identity",
+      "result": "Passed"
+    },
+    {
+      "name": "Reopening a line check invalidates the independent review",
+      "result": "Passed"
+    },
+    {
+      "name": "Finding requires accountable owner, valid date and independent closure",
+      "result": "Passed"
+    },
+    {
+      "name": "Changed scope successor retains the original and captures matching new brief revision",
+      "result": "Passed"
+    },
+    {
+      "name": "Malformed saved state is recognised without silently replacing original data",
+      "result": "Passed"
+    }
+  ]
+}

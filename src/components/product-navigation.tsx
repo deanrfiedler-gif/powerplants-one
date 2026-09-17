@@ -3,34 +3,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { ProductIcon, type ProductIconName } from "./product-icons";
+import { ShellIcon as ProductIcon } from "./shell-icon";
 import { ShellControls } from "./shell-controls";
+import { useShell } from "./shell-provider";
 import { openShellPanel, shellPanelEvent } from "./shell-events";
+import {
+  canOpen,
+  destination,
+  menuGroups,
+  pageForPath,
+  workspaces,
+  type ShellDestination,
+} from "../shell/navigation";
 
-const service = [
-  ["/schedule", "Service planner"], ["/service/technicians", "Field technicians"], ["/service/tickets", "Service requests"],
-  ["/service/work-orders", "Work orders"], ["/service/packs", "Job packs"],
-  ["/service/reports", "Service review"], ["/my-jobs", "My Jobs"],
-];
-const customers = [["/customers", "Customers"], ["/sites", "Sites"], ["/equipment", "Equipment"]];
-const matches = (path: string, href: string) => path === href || (href !== "/" && path.startsWith(href + "/"));
-function moduleFor(path: string) {
-  if (matches(path, "/service") || service.some(([href]) => matches(path, href))) return { name: "Service", tabs: service };
-  if (customers.some(([href]) => matches(path, href))) return { name: "Customers", tabs: customers };
-  if (matches(path, "/crm/leads")) return { name: "Leads", tabs: [] };
-  if (path.startsWith("/crm/")) return { name: "Deals", tabs: [] };
-  if (matches(path, "/email")) return { name: "Inbox", tabs: [] };
-  if (matches(path, "/calendar")) return { name: "Activities", tabs: [] };
-  if (matches(path, "/estimating")) return { name: "Estimating", tabs: [] };
-  if (matches(path, "/engineering")) return { name: "Engineering", tabs: [] };
-  if (matches(path, "/projects")) return { name: "Projects", tabs: [] };
-  if (matches(path, "/finance")) return { name: "Finance", tabs: [] };
-  if (matches(path, "/people")) return { name: "Contacts", tabs: [] };
-  if (matches(path, "/work")) return { name: "My Work", tabs: [] };
-  if (matches(path, "/admin")) return { name: "Exceptions and recovery", tabs: [] };
-  if (matches(path, "/documents")) return { name: "Documents", tabs: [] };
-  return { name: path === "/" ? "Overview" : "Foundation checks", tabs: [] };
-}
 const subscribe = (changed: () => void) => {
   const media = window.matchMedia("(min-width: 781px)");
   media.addEventListener("change", changed);
@@ -38,135 +23,395 @@ const subscribe = (changed: () => void) => {
 };
 export function ProductNavigation() {
   const path = usePathname();
-  const wide = useSyncExternalStore(subscribe, () => window.matchMedia("(min-width: 781px)").matches, () => true);
-  return <ProductNavigationView key={`${path}:${wide}`} path={path} wide={wide}/>;
+  const wide = useSyncExternalStore(
+    subscribe,
+    () => window.matchMedia("(min-width: 781px)").matches,
+    () => true,
+  );
+  return (
+    <ProductNavigationView key={`${path}:${wide}`} path={path} wide={wide} />
+  );
 }
-function ProductNavigationView({ path, wide }: { path: string; wide: boolean }) {
-  const current = moduleFor(path).name;
-  const [expanded, setExpanded] = useState(false);
-  const dialog = useRef<HTMLDialogElement>(null);
-  const [more, setMore] = useState(false);
-  const [tip, setTip] = useState<{ label: string; top: number } | null>(null);
-  const morePanel = useRef<HTMLElement>(null), moreToggle = useRef<HTMLButtonElement>(null);
-  const tipTarget = useRef<HTMLElement | null>(null);
-  const tipTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const showTip = (label: string, target: HTMLElement) => {
-    if (tipTimer.current) clearTimeout(tipTimer.current);
-    tipTarget.current = target;
-    const rect = target.getBoundingClientRect();
-    setTip({ label, top: Math.max(8, Math.min(window.innerHeight - 42, rect.top + rect.height / 2 - 18)) });
+function ProductNavigationView({
+  path,
+  wide,
+}: {
+  path: string;
+  wide: boolean;
+}) {
+  const shell = useShell(),
+    current = pageForPath(path);
+  const workspace = workspaces.find(
+    (w) => w.id === (current?.workspace ?? shell.preview),
+  )!;
+  const [more, setMore] = useState(false),
+    [query, setQuery] = useState("");
+  const dialog = useRef<HTMLDialogElement>(null),
+    search = useRef<HTMLInputElement>(null),
+    toggle = useRef<HTMLButtonElement>(null);
+  const permitted = shell.context?.navigation ?? [];
+  const allowed = (item: ShellDestination) =>
+    canOpen(item, permitted, shell.hosted);
+  const close = () => {
+    setMore(false);
+    toggle.current?.focus();
   };
-  const hideTip = () => {
-    if (tipTimer.current) clearTimeout(tipTimer.current);
-    tipTimer.current = setTimeout(() => {
-      if (!tipTarget.current?.matches(":hover,:focus-visible") && !document.getElementById("shell-nav-tooltip")?.matches(":hover")) setTip(null);
-    }, 160);
-  };
   useEffect(() => {
-    if (more) morePanel.current?.querySelector<HTMLButtonElement>("button")?.focus();
-  }, [more]);
-  useEffect(() => {
-    const dismiss = (event: Event) => {
-      if (!(event.target as Element | null)?.closest("[data-shell-navigation]")) setMore(false);
-    };
-    const other = (event: Event) => { if ((event as CustomEvent).detail !== "navigation") setMore(false); };
-    const key = (event: KeyboardEvent) => { if (event.key === "Escape") { setTip(null); if (more) { setMore(false); moreToggle.current?.focus(); setTip(null); } } };
-    document.addEventListener("pointerdown", dismiss); document.addEventListener("focusin", dismiss);
-    document.addEventListener("keydown", key); window.addEventListener(shellPanelEvent, other);
-    return () => { document.removeEventListener("pointerdown", dismiss); document.removeEventListener("focusin", dismiss); document.removeEventListener("keydown", key); window.removeEventListener(shellPanelEvent, other); if (tipTimer.current) clearTimeout(tipTimer.current); };
-  }, [more]);
-  useEffect(() => {
-    if (!wide && expanded) dialog.current?.showModal();
+    if (!wide && more) dialog.current?.showModal();
     else dialog.current?.close();
-  }, [wide, expanded]);
-  const items: { label: string; icon: ProductIconName; href?: string; divider?: boolean }[] = [
-    { label: "Overview", icon: "home", href: "/" }, { label: "My Work", icon: "work", href: "/work" },
-    { label: "Leads", icon: "leads", href: "/crm/leads", divider: true },
-    { label: "Deals", icon: "deals", href: "/crm/opportunities" },
-    { label: "Email & Calendar", icon: "mail", href: "/email" },
-    { label: "Estimating", icon: "estimate", href: "/estimating" },
-    { label: "Engineering", icon: "engineering", href: "/engineering" }, { label: "Projects", icon: "projects", href: "/projects" },
-    { label: "Service", icon: "service", href: "/schedule" }, { label: "Supply Chain", icon: "supply" },
-    { label: "Finance", icon: "finance", href: "/finance/handoffs" },
-    { label: "Customers", icon: "customers", href: "/customers", divider: true },
-    { label: "Contacts", icon: "person", href: "/people" },
-    { label: "Exceptions and recovery", icon: "warning", href: "/admin" },
-    { label: "Foundation checks", icon: "settings", href: "/foundation" },
-  ];
-  const navigationItems = items.map(item => <div key={item.label} className={item.divider ? "product-nav-divider" : undefined}>
-    {item.href ? <Link href={item.href} className="product-nav-item" aria-current={current === item.label ? "page" : undefined} onClick={() => setExpanded(false)} title={item.label}><ProductIcon name={item.icon} /><span>{item.label}</span></Link>
-      : <span className="product-nav-item planned-nav" aria-disabled="true" title={`${item.label} — planned`}><ProductIcon name={item.icon} /><span>{item.label} · Planned</span></span>}
-  </div>);
-  const mobile = items.filter(i=>["My Work","Deals","Contacts"].includes(i.label));
-  // The rail carries the Sales section. Every other module lives under More.
-  const primary: { label: string; icon: ProductIconName; href?: string }[] = [
-    { label: "Pulse", icon: "pulse" },
-    { label: "Leads", icon: "leads", href: "/crm/leads" },
-    { label: "Deals", icon: "deals", href: "/crm/opportunities" },
-    { label: "Inbox", icon: "mail", href: "/email" },
-    { label: "Activities", icon: "calendar", href: "/calendar" },
-    { label: "Contacts", icon: "customers", href: "/people" },
-    { label: "Products", icon: "products" },
-    { label: "Insights", icon: "insights" },
-  ];
-  const railLabel = (label: string) => label;
-  const groups: { title: string; links: { label: string; icon: ProductIconName; href?: string }[] }[] = [
-    { title: "My workspace", links: items.filter(item => ["My Work", "Email & Calendar"].includes(item.label)) },
-    { title: "Customer information", links: [
-      { label: "Customers", icon: "customers", href: "/customers" }, { label: "Contacts", icon: "person", href: "/people" },
-      { label: "Sites", icon: "sites", href: "/sites" }, { label: "Equipment", icon: "supply", href: "/equipment" },
-    ] },
-    { title: "Other modules", links: items.filter(item => ["Estimating", "Engineering", "Projects", "Service", "Supply Chain", "Finance"].includes(item.label)) },
-    { title: "Shared resources", links: [{ label: "Documents", icon: "documents" }, { label: "Service reports", icon: "list", href: "/service/reports" }] },
-    { title: "Administration & support", links: items.filter(item => ["Exceptions and recovery", "Foundation checks"].includes(item.label)) },
-  ];
-  const leave = () => { setExpanded(false); setMore(false); setTip(null); };
-  return <><aside className="sidebar ppo-rail" data-shell-navigation>
-    <Link href="/" className="brand" aria-label="Powerplants One home" aria-describedby={tip?.label === "Overview" ? "shell-nav-tooltip" : undefined} onClick={leave}
-      onPointerEnter={event => showTip("Overview", event.currentTarget)} onPointerLeave={hideTip} onFocus={event => showTip("Overview", event.currentTarget)} onBlur={hideTip}>
-      <Image src="/brand/powerplants-logo-green-white.png" alt="Powerplants Australia" width={80} height={80} unoptimized loading="eager" className="brand-logo" />
-    </Link>
-    <div className="ppo-rail-divider" aria-hidden="true"/>
-    <nav className="ppo-primary-nav" aria-label="Main navigation" hidden={!wide}>
-      {primary.map(item => {
-        const label = `${railLabel(item.label)}${item.href ? "" : " — planned"}`;
-        const shared = { className: "ppo-rail-item", "aria-label": label, "aria-describedby": tip?.label === label ? "shell-nav-tooltip" : undefined,
-          onPointerEnter: (event: React.PointerEvent<HTMLElement>) => showTip(label, event.currentTarget), onPointerLeave: hideTip,
-          onFocus: (event: React.FocusEvent<HTMLElement>) => showTip(label, event.currentTarget), onBlur: hideTip };
-        return item.href ? <Link key={item.label} {...shared} href={item.href} aria-current={current === item.label ? "page" : undefined} onClick={leave}><ProductIcon name={item.icon}/></Link>
-          : <button key={item.label} {...shared} type="button" aria-disabled="true"><ProductIcon name={item.icon}/></button>;
-      })}
-    </nav>
-    <div className="ppo-rail-bottom"><button ref={moreToggle} id="desktop-more-toggle" className="ppo-rail-item" aria-label="More" aria-expanded={more} aria-controls="desktop-more-panel" aria-describedby={tip?.label === "More" ? "shell-nav-tooltip" : undefined}
-      onClick={() => { openShellPanel("navigation"); setMore(!more); }} onPointerEnter={event => showTip("More", event.currentTarget)} onPointerLeave={hideTip} onFocus={event => showTip("More", event.currentTarget)} onBlur={hideTip}><ProductIcon name="more"/></button></div>
-  </aside>
-  <section ref={morePanel} id="desktop-more-panel" className="ppo-more-panel" aria-labelledby="desktop-more-title" hidden={!more || !wide} data-shell-navigation>
-    <header><h2 id="desktop-more-title">More</h2><button className="ppo-top-action" aria-label="Close More menu" onClick={() => { setMore(false); moreToggle.current?.focus(); }}><ProductIcon name="close"/></button></header>
-    <nav aria-label="More navigation">{groups.map(group => <section className="ppo-menu-group" key={group.title}><h3>{group.title}</h3>{group.links.map(item => item.href ? <Link className="ppo-more-link" key={item.label} href={item.href} aria-current={matches(path, item.href) ? "page" : undefined} onClick={leave}><ProductIcon name={item.icon}/><span>{item.label}</span></Link> : <span className="ppo-more-link" key={item.label} aria-disabled="true"><ProductIcon name={item.icon}/><span>{item.label}</span><small>Planned</small></span>)}</section>)}</nav>
-    <footer>Powerplants One · Prototype</footer>
-  </section>
-  <div id="shell-nav-tooltip" className="ppo-nav-tooltip" role="tooltip" hidden={!tip || !wide} style={{ top: tip?.top }} onPointerEnter={() => { if (tipTimer.current) clearTimeout(tipTimer.current); }} onPointerLeave={hideTip}>{tip?.label}</div>
-  <nav className="mobile-navigation" aria-label="Mobile navigation">
-    {mobile.map(item=><Link key={item.label} href={item.href!} aria-current={current===item.label?"page":undefined}><ProductIcon name={item.icon}/><span>{item.label}</span></Link>)}
-    <button id="navigation-toggle" type="button" aria-label="Menu" aria-haspopup="dialog" aria-expanded={expanded} onClick={()=>setExpanded(true)}><ProductIcon name="menu"/><span>More</span></button>
-  </nav>
-  <dialog ref={dialog} onKeyDown={e => {
-    if(e.key !== "Tab") return;
-    const targets = [...e.currentTarget.querySelectorAll<HTMLElement>('a[href],button:not([disabled])')];
-    const first = targets[0], last = targets.at(-1);
-    if(e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
-    if(!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
-  }} className="mobile-menu" aria-labelledby="mobile-menu-title" onCancel={()=>setExpanded(false)} onClose={()=>setExpanded(false)}>
-    <header><h2 id="mobile-menu-title">Powerplants One</h2><button type="button" aria-label="Close menu" onClick={()=>setExpanded(false)}><ProductIcon name="close"/></button></header>
-    <nav aria-label="All modules">{navigationItems}</nav>
-  </dialog></>;
+    if (more) search.current?.focus();
+  }, [more, wide]);
+  useEffect(() => {
+    const outside = (event: Event) => {
+      if (
+        wide &&
+        !(event.target as Element | null)?.closest("[data-shell-navigation]")
+      )
+        setMore(false);
+    };
+    const other = (event: Event) => {
+      if ((event as CustomEvent).detail !== "navigation") setMore(false);
+    };
+    const key = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && more) {
+        setMore(false);
+        toggle.current?.focus();
+      }
+    };
+    document.addEventListener("pointerdown", outside);
+    document.addEventListener("focusin", outside);
+    window.addEventListener(shellPanelEvent, other);
+    document.addEventListener("keydown", key);
+    return () => {
+      document.removeEventListener("pointerdown", outside);
+      document.removeEventListener("focusin", outside);
+      window.removeEventListener(shellPanelEvent, other);
+      document.removeEventListener("keydown", key);
+    };
+  }, [more, wide]);
+  const groups = menuGroups(query)
+    .map((g) => ({
+      ...g,
+      items: g.items.filter((item) => !item.localOnly || !shell.hosted),
+    }))
+    .filter((g) => g.items.length);
+  const showHelp = !query.trim() || "help quick help administration support".includes(query.trim().toLowerCase());
+  const count = groups.reduce((sum, group) => sum + group.items.length, 0) + Number(showHelp);
+  const link = (item: ShellDestination, mobile = false) => {
+    const root = workspaces.find((w) => w.primary === item.id);
+    const label = mobile
+      ? item.id === "tickets"
+        ? "Service"
+        : item.label
+      : (root?.label ?? item.menuLabel ?? item.label);
+    const contents = (
+      <>
+        <ProductIcon name={root ? (root.id === "estimate" ? "estimate" : root.id) : item.id === "equipment" ? "equipment" : item.id === "reports" ? "reports" : item.icon} />
+        <span>{label}</span>
+      </>
+    );
+    return allowed(item) ? (
+      <Link
+        key={item.id}
+        className={mobile ? undefined : "ppo-more-link"}
+        href={item.href!}
+        aria-label={label}
+        aria-current={current?.id === item.id || (!mobile && !!root && current?.workspace === root.id) ? "page" : undefined}
+        onClick={() => setMore(false)}
+      >
+        {contents}
+      </Link>
+    ) : (
+      <span
+        key={item.id}
+        className={mobile ? "ppo-planned-tab" : "ppo-more-link"}
+        aria-disabled="true"
+        title={`${label} — ${item.href ? "Unavailable for this identity" : "Planned"}`}
+      >
+        {contents}
+        {!mobile && (
+          <small>
+            {item.href ? (shell.context ? "No access" : "Sign in") : "Planned"}
+          </small>
+        )}
+      </span>
+    );
+  };
+  const menu = (
+    <>
+      <header>
+        <h2 id="desktop-more-title">More</h2>
+        <button
+          className="ppo-top-action"
+          aria-label={wide ? "Close More menu" : "Close menu"}
+          onClick={close}
+        >
+          <ProductIcon name="close" />
+        </button>
+      </header>
+      <div className="ppo-more-body">
+        <label className="ppo-menu-search">
+          <ProductIcon name="search" />
+          <input
+            ref={search}
+            type="search"
+            aria-label="Find a menu item"
+            placeholder="Find a menu item"
+            maxLength={100}
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+          />
+        </label>
+        {shell.error && (
+          <p className="ppo-menu-notice" role="status">
+            {shell.error} <button onClick={shell.reload}>Try again</button>
+          </p>
+        )}
+        <nav aria-label={wide ? "More navigation" : "All modules"}>
+          {groups.length ? (
+            groups.map((group) => (
+              <section className="ppo-menu-group" key={group.title}>
+                <h3>{group.title}</h3>
+                {group.items.map((item) => link(item))}
+              </section>
+            ))
+          ) : showHelp ? null : (
+            <p className="ppo-panel-status">
+              No matching pages.{" "}
+              <button
+                onClick={() => {
+                  setQuery("");
+                  search.current?.focus();
+                }}
+              >
+                Clear search
+              </button>
+            </p>
+          )}
+        </nav>
+        {showHelp && <button
+          className="ppo-more-link ppo-help-link"
+          onClick={() => {
+            dialog.current?.close();
+            setMore(false);
+            window.dispatchEvent(
+              new CustomEvent("ppo-shell-utility", { detail: "help" }),
+            );
+          }}
+        >
+          <ProductIcon name="help" />
+          <span>Help</span>
+        </button>}
+        {!wide && (
+          <div className="ppo-mobile-tools">
+            {(["quick", "notifications"] as const).map((kind) => (
+              <button
+                key={kind}
+                onClick={() => {
+                  dialog.current?.close();
+                  setMore(false);
+                  window.dispatchEvent(
+                    new CustomEvent("ppo-shell-utility", { detail: kind }),
+                  );
+                }}
+              >
+                <ProductIcon name={kind === "quick" ? "plus" : "bell"} />
+                {kind === "quick" ? "Quick add" : "Notifications"}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+      <footer>
+        <span>
+          Powerplants One · r17
+        </span>
+        <span>{count} destinations</span>
+      </footer>
+    </>
+  );
+  return (
+    <>
+      <aside
+        className="sidebar ppo-rail"
+        aria-label="Application navigation"
+        data-shell-navigation
+      >
+        <Link
+          href="/"
+          className="brand"
+          aria-label="Powerplants One home"
+          title="Home"
+        >
+          <Image
+            src="/brand/powerplants-logo-green-white.png"
+            alt="Powerplants Australia"
+            width={54}
+            height={54}
+            unoptimized
+            loading="eager"
+            className="brand-logo"
+          />
+        </Link>
+        <div className="ppo-rail-bottom">
+          {wide && (
+            <button
+              ref={toggle}
+              id="desktop-more-toggle"
+              className="ppo-rail-item"
+              aria-label="More"
+              title="More"
+              aria-expanded={more}
+              aria-controls="desktop-more-panel"
+              onClick={() => {
+                openShellPanel("navigation");
+                setMore(!more);
+              }}
+            >
+              <ProductIcon name="more" />
+            </button>
+          )}
+        </div>
+      </aside>
+      {wide ? (
+        <section
+          id="desktop-more-panel"
+          className="ppo-more-panel"
+          aria-labelledby="desktop-more-title"
+          hidden={!more}
+          data-shell-navigation
+        >
+          {menu}
+        </section>
+      ) : (
+        <dialog
+          ref={dialog}
+          className="ppo-more-panel ppo-mobile-menu"
+          aria-labelledby="desktop-more-title"
+          data-shell-navigation
+          onCancel={() => setMore(false)}
+          onClose={() => setMore(false)}
+          onClick={(event) => {
+            if (event.target === event.currentTarget) close();
+          }}
+        >
+          {menu}
+        </dialog>
+      )}
+      <nav className="mobile-navigation" aria-label="Mobile navigation">
+        {[
+          destination("work"),
+          destination(workspace.primary),
+          destination(workspace.secondary),
+        ].map((item) => link(item, true))}
+        {!wide && (
+          <button
+            ref={toggle}
+            id="navigation-toggle"
+            aria-label="Menu"
+            aria-haspopup="dialog"
+            aria-expanded={more}
+            onClick={() => {
+              openShellPanel("navigation");
+              setMore(true);
+            }}
+          >
+            <ProductIcon name="more" />
+            <span>More</span>
+          </button>
+        )}
+      </nav>
+    </>
+  );
 }
 export function ProductHeader() {
-  const path = usePathname(), current = moduleFor(path);
-  const opportunities = path === "/crm/opportunities";
-  return <>
-    <header className="topbar ppo-shell-header"><Link className="mobile-brand" href="/" aria-label="Powerplants One home"><Image src="/brand/powerplants-logo-green-white.png" alt="Powerplants Australia" width={36} height={36} unoptimized loading="eager" className="brand-logo" /></Link><div className="product-heading"><span>{opportunities ? "Sales" : "Powerplants One"}</span><span aria-hidden="true">/</span><strong>{opportunities ? "Opportunities" : current.name}</strong></div><ShellControls key={path} module={current.name}/><div className="header-tools"><div id="header-search"/><span className="prototype-label">Synthetic data only</span><div id="header-account" className="header-account"/></div></header>
-    {!!current.tabs.length && <nav className="module-navigation" aria-label={`${current.name} navigation`}>{current.tabs.map(([href, label]) => <Link key={href} href={href} aria-current={matches(path, href) || (href === "/schedule" && matches(path, "/service/appointments")) ? "page" : undefined}>{label}</Link>)}</nav>}
-
-  </>;
+  const path = usePathname(),
+    page = pageForPath(path),
+    shell = useShell();
+  const label = path === "/" ? "" : (page?.label ?? "Page unavailable");
+  const currentModule =
+    page?.workspace === "estimate"
+      ? "Estimating"
+      : page?.workspace === "service"
+        ? "Service"
+        : (page?.label ?? "Home");
+  const tabIds =
+    page?.workspace === "service"
+      ? [
+          "planner",
+          "technicians",
+          "tickets",
+          "orders",
+          "packs",
+          "reports",
+          "jobs",
+        ]
+      : page?.workspace === "sales"
+        ? ["deals", "leads"]
+        : page?.workspace === "estimate"
+          ? ["estimates", "intake"]
+          : page?.id === "mail" || page?.id === "calendar"
+            ? ["mail", "calendar"]
+      : ["customers", "sites", "equipment"].includes(page?.id ?? "")
+        ? ["customers", "sites", "equipment"]
+        : [];
+  const tabs = tabIds
+    .map(destination)
+    .filter((item) =>
+      canOpen(item, shell.context?.navigation ?? [], shell.hosted),
+    );
+  return (
+    <>
+      <header className="topbar ppo-shell-header">
+        <Link
+          className="mobile-brand"
+          href="/"
+          aria-label="Powerplants One home"
+        >
+          <Image
+            src="/brand/powerplants-logo-green-white.png"
+            alt="Powerplants Australia"
+            width={34}
+            height={34}
+            unoptimized
+            className="brand-logo"
+          />
+        </Link>
+        <div className="product-heading">
+          <span className="ppo-product-name">Powerplants One</span>
+          {label && (
+            <>
+              <span className="ppo-heading-divider" aria-hidden="true" />
+              <strong title={label}>{label}</strong>
+            </>
+          )}
+        </div>
+        <ShellControls
+          key={path}
+          module={currentModule}
+          page={label || "Application shell"}
+        />
+        <div className="header-tools">
+          <div id="header-search" />
+          <div id="header-account" className="header-account" />
+        </div>
+      </header>
+      {!!tabs.length && (
+        <nav
+          className={`module-navigation${page?.workspace === "sales" ? " ppo-sales-navigation" : ""}`}
+          aria-label={`${currentModule} navigation`}
+        >
+          {tabs.map((item) => (
+            <Link
+              key={item.id}
+              href={item.href!}
+              aria-current={page?.id === item.id ? "page" : undefined}
+            >
+              {item.tabLabel ?? item.label}
+            </Link>
+          ))}
+        </nav>
+      )}
+    </>
+  );
 }

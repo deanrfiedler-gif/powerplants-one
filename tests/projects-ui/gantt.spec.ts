@@ -159,7 +159,7 @@ test("shared shell fits desktops; Task padding and view-toggle widths remain equ
     expect(geometry.rightPadding).toBe(15);
     expect(geometry.leftPadding).toBe(15);
     expect(geometry.buttonWidth).toBeGreaterThanOrEqual(86);
-    expect(geometry.rail).toBe(96);
+    expect(geometry.rail).toBe(76);
     expect(geometry.headerBottom).toBeCloseTo(geometry.rowTop, 2);
     await page.screenshot({
       path: info.outputPath(`project-${width}x${height}.png`),

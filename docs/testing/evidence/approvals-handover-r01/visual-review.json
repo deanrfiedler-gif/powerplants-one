@@ -1,0 +1,34 @@
+{
+  "source_head": "3d5ca696c26d359829dcd91f8c9b17c51140173c",
+  "html_sha256": "c2ed70b59fba7b10e1bf874aeed88a72f22407d3a6152f9fd2622305e9965668",
+  "run_id": 35166067713,
+  "artifact_id": 10474562813,
+  "reviewed_on": "2026-09-17",
+  "captures": [
+    {
+      "name": "desktop-inbox",
+      "mime_type": "image/jpeg",
+      "identical_to_visually_inspected_capture": true
+    },
+    {
+      "name": "desktop-domain-review",
+      "mime_type": "image/jpeg",
+      "identical_to_visually_inspected_capture": true
+    },
+    {
+      "name": "390-detail",
+      "mime_type": "image/jpeg",
+      "identical_to_visually_inspected_capture": true
+    }
+  ],
+  "findings": [
+    "Desktop queue and selected detail aligned with r20; no text overlap observed.",
+    "Domain destination retains clear revision, evidence and owning-domain context.",
+    "390 px detail has readable fields, Back to list and a clear source action; summary/filter controls are set aside while inspecting an item.",
+    "Native checks verified no horizontal page overflow at 320, 390, 768, 1024 and 1440 px."
+  ],
+  "limits": [
+    "Owner design acceptance, real-device and assistive-technology review remain separate.",
+    "Reviewed JPEG captures emitted by native workflow; original PNG screenshots retained in GitHub artifact for 14 days."
+  ]
+}
