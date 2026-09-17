@@ -7,7 +7,7 @@ export const initialWorklistFilters = {
   sort: "Reference", limit: "50", cursor: "",
 };
 export type WorklistFilters = typeof initialWorklistFilters;
-export type WorklistLocation = { filters: WorklistFilters; view: "Board" | "Grid"; selected: string };
+export type WorklistLocation = { filters: WorklistFilters; view: "Board" | "Grid" | "Forecast" | "Archive"; selected: string };
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 // This is presentation input only. The existing server validates every read
@@ -23,12 +23,15 @@ export function readWorklistLocation(params: URLSearchParams): WorklistLocation 
   }
   if (!one("pipeline_definition_id") && one("pipeline") === "I1") filters.pipeline_definition_id = LEGACY_PIPELINE_ID;
   filters.q = one("q").slice(0, 200);
-  filters.outcome = choice("outcome", ["Open", "Won", "Lost", "All"], "Open");
+  filters.outcome = choice("outcome", ["Open", "Won", "Lost", "All", "Closed"], "Open");
   filters.sort = choice("sort", ["Reference", "Title", "Newest"], "Reference");
   filters.limit = choice("limit", ["10", "25", "50"], "50");
   filters.stage_id = choice("stage_id", opportunityStages);
   filters.next_action = choice("next_action", ["Needed", "DueNeeded", "Overdue", "Upcoming", "Unavailable"]);
-  return { filters, view: choice("view", ["Board", "Grid"], "Board") as WorklistLocation["view"], selected: choice("selected", opportunityStages) };
+  const view = choice("view", ["Board", "Grid", "Forecast", "Archive"], "Board") as WorklistLocation["view"];
+  if (view === "Archive" && !["Won", "Lost", "Closed"].includes(filters.outcome)) filters.outcome = "Closed";
+  if (view === "Forecast") filters.outcome = "Open";
+  return { filters, view, selected: choice("selected", opportunityStages) };
 }
 
 export function worklistSearch(state: WorklistLocation) {

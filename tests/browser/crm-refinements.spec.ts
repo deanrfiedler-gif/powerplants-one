@@ -1,3 +1,4 @@
+import { toggleWorklistFilters } from "../helpers/crm-worklist-ui";
 import { captureTransferComparison } from "../helpers/crm-transfer-capture";
 import { keyActivate, keySelect, keyType } from "../helpers/quality-keyboard";
 import { committed } from "../helpers/quality-prepare";
@@ -143,8 +144,9 @@ test("owned Won handover and structured Lost survive reload on desktop and phone
     await page.goto("/crm/opportunities");
     await page.getByLabel("Search opportunities",{exact:true}).fill(input.title);
     await expect(page.locator(`[data-opportunity-id="${input.id}"]`)).toHaveCount(0);
-    await page.getByRole("button",{name:"Filters and sort"}).click();
+    await toggleWorklistFilters(page);
     await page.getByLabel("Sales outcome",{exact:true}).selectOption(outcome);
+    await toggleWorklistFilters(page);
     if(info.project.use.isMobile) await page.getByRole("group",{name:"Choose Board stage"}).getByRole("button",{name:outcome === "Won" ? /^Closing / : /^Discovery /}).click();
     const card=page.locator(`[data-opportunity-id="${input.id}"]`);
     await expect(card).toBeVisible(); await expect(card).toHaveAttribute("draggable","false");
@@ -192,7 +194,7 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
   );
   if (!info.project.use.isMobile) {
     await expect(card).toHaveAttribute("draggable", "true");
-    await card.locator(".crm-card-company").click();
+    await card.getByRole("button", { name: /^Snapshot:/ }).click();
     const snapshot = page.getByRole("dialog");
     await expect(snapshot).toBeVisible();
     await expect(
@@ -201,8 +203,8 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
     await expect(page).toHaveURL(url => url.pathname === "/crm/opportunities" && url.search === `?${new URLSearchParams({ pipeline: "I1", q: input.title })}`);
     await page.keyboard.press("Escape");
     await expect(snapshot).not.toBeVisible();
-    await expect(card.locator(".crm-card-body")).toBeFocused();
-    await card.locator(".crm-card-contact").click();
+    await expect(card.getByRole("button", { name: /^Snapshot:/ })).toBeFocused();
+    await card.getByRole("button", { name: /^Snapshot:/ }).click();
     await page
       .getByRole("link", { name: "Open full deal", exact: true })
       .click();
@@ -261,7 +263,7 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
     await page
       .getByLabel("Search opportunities", { exact: true })
       .fill(input.title);
-    await card.dragTo(page.locator('[data-drop-stage="Qualified"]'));
+    await card.dragTo(page.locator('[data-drop-stage="Qualified"]'), { sourcePosition: { x: 8, y: 8 } });
   } else {
     await page.locator(".crm-stage-track button").last().click();
   }
@@ -531,7 +533,7 @@ test("SA-07/08 refused drag returns to saved stage and Undo sends no replacement
       await route.continue();
     },
   );
-  await card.dragTo(page.locator('[data-drop-stage="Enquiry"]'));
+  await card.dragTo(page.locator('[data-drop-stage="Enquiry"]'), { sourcePosition: { x: 8, y: 8 } });
   await expect(page.locator(".crm-change-feedback")).toContainText(
     "This opportunity changed",
   );
@@ -582,7 +584,7 @@ test("SA-08 lost drag response confirms the exact original receipt before undo i
       await route.abort("failed");
     },
   );
-  await card.dragTo(page.locator('[data-drop-stage="Enquiry"]'));
+  await card.dragTo(page.locator('[data-drop-stage="Enquiry"]'), { sourcePosition: { x: 8, y: 8 } });
   await expect(page.locator(".crm-change-feedback")).toContainText(
     "Save outcome uncertain",
   );

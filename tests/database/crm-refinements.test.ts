@@ -61,6 +61,23 @@ async function closing(p: Awaited<ReturnType<typeof principal>>, id: string) {
   for (const next of ["Scoping", "Quoting", "Negotiation", "Closing"])
     await changeDealStage(p, id, stage(version++, next));
 }
+test("r38 Archive returns only permitted closed outcomes and keeps signed pagination exact", async () => {
+  const p = await principal(), open = crmDiscovery(), won = crmDiscovery(), lost = crmDiscovery();
+  for (const item of [open, won, lost]) await createOpportunity(p, item);
+  await closing(p, won.id);
+  await recordOpportunityOutcome(p, won.id, outcome(5, "Won"));
+  await recordOpportunityOutcome(p, lost.id, outcome(1));
+  const input = { pipeline_definition_id: won.pipeline_definition_id, outcome: "Closed" };
+  const all = await listOpportunities(p, input);
+  assert.deepEqual(all.items.map(item => item.id).sort(), [won.id, lost.id].sort());
+  assert.ok(all.items.every(item => item.close_outcome !== "Open"));
+  const first = await listOpportunities(p, { ...input, limit: 1 });
+  const next = await listOpportunities(p, { ...input, limit: 1, cursor: first.next_cursor! });
+  assert.deepEqual([...first.items, ...next.items].map(item => item.id), all.items.map(item => item.id));
+  await assert.rejects(listOpportunities(p, { ...input, outcome: "Open", limit: 1, cursor: first.next_cursor! }), code("InvalidData"));
+  await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.read'", [p.actor_id]);
+  await assert.rejects(listOpportunities(p, input), code("Forbidden"));
+});
 test("Won from Closing records one owned handover due and preserves original activities and receipts", async () => {
   const p = await principal(), input = crmDiscovery();
   await createOpportunity(p,input);
