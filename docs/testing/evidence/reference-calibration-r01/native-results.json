@@ -1,0 +1,141 @@
+{
+  "source": "e5e3eb233e7dc865a67a7d8867757dc5d510e19b",
+  "browser": "153.0.8010.47",
+  "htmlSha256": "bd4b762dd9985b063591adf97f163b95ac979f75227da2178de582697ecf0410",
+  "passed": 18,
+  "groups": [
+    "Register renders all nine cases and selected count",
+    "Search and filter preserve selection",
+    "No-result search provides recovery",
+    "Snapshot opens full case and preserves incoming state",
+    "Comparison excludes partial ES-09 while retaining reason",
+    "Draft save failure retains form and retry creates one record",
+    "Editable draft retains user text safely",
+    "Submit locks content and requires reviewer role",
+    "Saved review survives reload",
+    "Source revision invalidates original proposal; successor retains history",
+    "Observer cannot prepare or review proposals",
+    "Estimator scenario is isolated and validates units",
+    "Keyboard tabs use arrows and maintain selected semantics",
+    "Export preserves synthetic warning and proposal evidence",
+    "A second tab detects concurrent changes",
+    "Corrupt saved data is retained and saving paused",
+    "All five views fit desktop, tablet and phone widths",
+    "Phone snapshot is full width and closes with Escape"
+  ],
+  "errors": [],
+  "captures": [
+    {
+      "file": "desktop-incoming-snapshot.png",
+      "sha256": "e2b8d09062b1ccc4a1254d4f2bfc1f970c9884ddc4348e93edde1c48c8718f9a"
+    },
+    {
+      "file": "desktop-proposal-review.png",
+      "sha256": "57bc72d2bf549011b067f4ecefdda09ad22a573f3d148ab0a698c86780f0adb2"
+    },
+    {
+      "file": "1440-reference-cases.png",
+      "sha256": "be15c7edc0620f15f9ca8d0428c2edf2df83fd962ef72ef156e35e6507db1900"
+    },
+    {
+      "file": "1440-case-detail.png",
+      "sha256": "0be39d025b9b11454860ce3c50ca812055b39228619f1fb68f8f11b13eba21f1"
+    },
+    {
+      "file": "1440-compare-cases.png",
+      "sha256": "225e25b49316daa74fb536b13bc8ae2e5b374fdd38fa5450d0ad582e7d027554"
+    },
+    {
+      "file": "1440-calibration-proposals.png",
+      "sha256": "b304f6b4382454e48040d4c0471a5e71ade819f8ccaba73c6294c798db37e1b4"
+    },
+    {
+      "file": "1440-estimator-panel.png",
+      "sha256": "356cdb913f82b7d67003345b4fce275476850deec61cd7b3be5ed7a628e59e73"
+    },
+    {
+      "file": "1024-reference-cases.png",
+      "sha256": "27b64ee3d2f005a76dbb7d4bbd408efbcc8fa5cc1bf435fc8430ade8a8b2c7d8"
+    },
+    {
+      "file": "1024-case-detail.png",
+      "sha256": "531befb31cd5e88765ea7618b967a12c75e57f156e1f1fd2d7998cf26831ab3e"
+    },
+    {
+      "file": "1024-compare-cases.png",
+      "sha256": "31cffefa0f9a6badf2cd109b1e5ccb7e2d4ea31de89b85fdde9d9d39abc39bd0"
+    },
+    {
+      "file": "1024-calibration-proposals.png",
+      "sha256": "911e1a5ee01c68c3cda4d405c26f41bbfeaaf23be41e1c0710787c0767f7a434"
+    },
+    {
+      "file": "1024-estimator-panel.png",
+      "sha256": "acd2a63030c3e45dcca4ecee0426a6258fd41065fe119198511b9b961d84b99e"
+    },
+    {
+      "file": "820-reference-cases.png",
+      "sha256": "0b23ccd55613913a9505f0140f745a33a6733dbbfb66e0460e87e2b595086186"
+    },
+    {
+      "file": "820-case-detail.png",
+      "sha256": "1dd9fcaefd4c6b371bd07dee003fba66bed30947282a1f3528cc5621999fa52f"
+    },
+    {
+      "file": "820-compare-cases.png",
+      "sha256": "af744a0fc510c9eb368e4fc72c92575ff8e85f9720a910b83d41ad0df214c90d"
+    },
+    {
+      "file": "820-calibration-proposals.png",
+      "sha256": "7c38524eb806672edc74a2f26cce3fe7e2ab82bdf3ee1a38c311dac1e8079579"
+    },
+    {
+      "file": "820-estimator-panel.png",
+      "sha256": "9ab013d5e0b3e0018b28871366c3265aa6093b40bbbee5db0f4e62ebc6364846"
+    },
+    {
+      "file": "390-reference-cases.png",
+      "sha256": "eabd56d229e0a435a07f1baf3b464d62d50a948470bdbf883223ef1dd633c63f"
+    },
+    {
+      "file": "390-case-detail.png",
+      "sha256": "3b231e5b9d128916cb6c05a085be18bdbf83aa01ef1634f2a5d65766476ac9ac"
+    },
+    {
+      "file": "390-compare-cases.png",
+      "sha256": "e00c16294242090a2edbeee88d8a0e6599759fee93bdfd2b034b44d316d44163"
+    },
+    {
+      "file": "390-calibration-proposals.png",
+      "sha256": "444272bf05ad906dddce0ee38fad87b3cc1c08827b0ddfa65d8e5d0edf5e67f7"
+    },
+    {
+      "file": "390-estimator-panel.png",
+      "sha256": "f8dff01c50e5e3f296e10458e659bd486ed7b6c16d9da50240b2c6daa29d1b59"
+    },
+    {
+      "file": "320-reference-cases.png",
+      "sha256": "8b2abc6378c6295bab3e0ab739d08b5be0266028787615cbb14a23ec63e76df3"
+    },
+    {
+      "file": "320-case-detail.png",
+      "sha256": "5eb4b95fd50310f9a2fdafaab2065f0b794db14a464539442625ae9b017efe75"
+    },
+    {
+      "file": "320-compare-cases.png",
+      "sha256": "45525d8b12868e3a6a79aa40db00cede189a7c9c5c17afe60ba415c3cdbd382b"
+    },
+    {
+      "file": "320-calibration-proposals.png",
+      "sha256": "87925711ad6838502694ca3338cb5ea691f33458fd2a54d9c85484869c51387f"
+    },
+    {
+      "file": "320-estimator-panel.png",
+      "sha256": "d78d6a560f425b5b13f8012925a4fafa0f95746cb1e47e47b37c49c867445cb5"
+    },
+    {
+      "file": "320-snapshot.png",
+      "sha256": "5c645fdd34b3b7eca4268b3f694aa586b21508ee4b7311cd037b280f9fdecd34"
+    }
+  ]
+}

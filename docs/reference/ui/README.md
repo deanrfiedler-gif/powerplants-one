@@ -69,6 +69,8 @@ These are the latest uploaded shared visual references. Their presence does not 
 
 ## Estimating and quotation
 
+**ES-10 design contribution, 17 September 2026:** [Reference Cases & Calibration Proposals r01](reference-calibration/PPO-Reference-Cases-and-Calibration-Proposals-r01.html) · [detailed report](reference-calibration/PPO-Reference-Cases-and-Calibration-Proposals-Report-r01.md). Five-view standalone r20 design; source eligibility, retained proposal reviews and estimator evidence panel. Proposed design; owner acceptance and application integration separate. [Receiving handover](../../decisions/reference-calibration-design.md), [verification](../../testing/evidence/reference-calibration-r01/README.md). This contribution is additional to the historical inventory count above.
+
 
 | Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
 |---|---|---|---|
@@ -258,3 +260,4 @@ git diff --check
 ```
 
 The maintenance pull request records the actual check results and publication source. Reconcile the inventory and the two pending contribution records against current main before a later update; this dated audit is not an automatic synchronisation service.
+
