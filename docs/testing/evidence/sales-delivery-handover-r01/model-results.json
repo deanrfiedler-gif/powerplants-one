@@ -1,0 +1,106 @@
+{
+  "html_sha256": "1e47efa70938127b644a9e5dda9a61d1d4f929b548610d515ec21d1d09ed30a5",
+  "groups": 25,
+  "results": [
+    {
+      "name": "The seeded register reproduces the exact accepted Riverbend basis",
+      "result": "Passed"
+    },
+    {
+      "name": "Every seeded handover reports a known state, destination and conversion outcome",
+      "result": "Passed"
+    },
+    {
+      "name": "A fully allocated destination carries the accepted discount; a partial one does not",
+      "result": "Passed"
+    },
+    {
+      "name": "A Won opportunity with no bound acceptance cannot be prepared into a submission",
+      "result": "Passed"
+    },
+    {
+      "name": "Roles and receiving scope are enforced atomically",
+      "result": "Passed"
+    },
+    {
+      "name": "A stale expected version is refused without changing anything",
+      "result": "Passed"
+    },
+    {
+      "name": "A return must identify what is missing, who responds and by when",
+      "result": "Passed"
+    },
+    {
+      "name": "Responsibility cannot be accepted while acceptance evidence is outstanding",
+      "result": "Passed"
+    },
+    {
+      "name": "A return preserves the submitted revision unchanged",
+      "result": "Passed"
+    },
+    {
+      "name": "A missing supporting document needs an exact revision and source, not a tick",
+      "result": "Passed"
+    },
+    {
+      "name": "Requirement outcomes retain their earlier finding and need a reason when not applicable",
+      "result": "Passed"
+    },
+    {
+      "name": "Correction creates a successor revision and a readable comparison",
+      "result": "Passed"
+    },
+    {
+      "name": "Acceptance binds the exact revision and does not clear release prerequisites",
+      "result": "Passed"
+    },
+    {
+      "name": "An accepted handover cannot be accepted twice and rejects a new decision without a submission",
+      "result": "Passed"
+    },
+    {
+      "name": "A later source change requires renewed acceptance and keeps the original decision",
+      "result": "Passed"
+    },
+    {
+      "name": "A bound source that changes during review invalidates the submitted revision",
+      "result": "Passed"
+    },
+    {
+      "name": "An unresolved conversion blocks fulfilment acceptance and names ES-07",
+      "result": "Passed"
+    },
+    {
+      "name": "An unavailable receiving record blocks acceptance and is stated, not hidden",
+      "result": "Passed"
+    },
+    {
+      "name": "An original operation replays once and never surfaces under another identity or handover",
+      "result": "Passed"
+    },
+    {
+      "name": "One obligation is one record and cannot be duplicated or completed twice",
+      "result": "Passed"
+    },
+    {
+      "name": "A receiving link is prepared once and creates no second record",
+      "result": "Passed"
+    },
+    {
+      "name": "Withdrawal preserves the submission and records no responsibility",
+      "result": "Passed"
+    },
+    {
+      "name": "The nine-event responsibility chain is never collapsed",
+      "result": "Passed"
+    },
+    {
+      "name": "A serialised session validates and round-trips exactly",
+      "result": "Passed"
+    },
+    {
+      "name": "Money and dates use Australian conventions",
+      "result": "Passed"
+    }
+  ]
+}
