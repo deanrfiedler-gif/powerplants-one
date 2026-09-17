@@ -41,6 +41,10 @@ The updated component assertions cover 1366×768, 1920×1080, 800×500 and 960×
 
 The original CRM and Projects geometry expectations are updated for the explicitly changed rail and More selection. Existing data, persistence, board scrolling and permission assertions are retained. No timeout, retry, required workflow or business acceptance criterion is relaxed.
 
+## Initial CI corrections
+
+[Initial component job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35169245645/job/105037085746), source `1b8bdbe3`, passed 22 cases, skipped eight desktop-only cases on phone projects, and failed three. Desktop geometry, global search/Quick add and stale-response lock protection passed. Two failures found the existing CRM phone page filter hidden by the new header rules; `548c2c2` restores its established second-row slot. The third found the new preview select lacked an unambiguous label because the wrapping label included option text; the follow-up uses an explicit label/control association. Assertions and timeouts are unchanged. Final-source CI must verify these fixes; earlier passing counts do not certify the correction.
+
 ## Review and rollout
 
 1. Review PR checks against its final commit, including the six enforced contexts and any additional applicable suites. A component screenshot run is not owner acceptance.
