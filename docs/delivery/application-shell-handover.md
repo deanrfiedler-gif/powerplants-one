@@ -70,6 +70,8 @@ The native component suite compares actual shell typography and panel geometry w
 
 The initial follow-up native component run on `b425c8e6` passed 24 cases (ten desktop-only cases skipped on phone projects) and caught two defects: a more-specific legacy CRM heading rule still reduced the product name to 14px, and Chrome's native Escape action could clear the search field and reopen its panel through `onChange`. The correction explicitly sets the shell product font and prevents that native Escape default while retaining the shared close/focus handler. The final PR run must verify both; the assertions remain unchanged. Additional scoped fixes retain the product heading on compact desktops, prevent legacy account flex wrapping, mark the parent workspace when a child page is open, and avoid a misleading empty-state message when a menu search finds Help.
 
+The corrected component run on `847a9d6f` passed all 26 applicable cases, with ten desktop-only cases skipped on phone projects, including the independent reference comparison. Manual inspection of its paired screenshots found that the legacy `button:hover:not(:disabled)` rule still overrode some shell hover colours. The next scoped CSS correction and reference-based hover assertions cover utility buttons, guide links/jumps and preview reset. Search-result secondary text also uses the reference's line height and spacing. Final-source verification remains the gate.
+
 ## Review and rollout
 
 1. Review PR checks against its final commit, including the six enforced contexts and any additional applicable suites. A component screenshot run is not owner acceptance.

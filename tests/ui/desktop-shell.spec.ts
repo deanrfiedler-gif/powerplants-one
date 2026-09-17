@@ -147,11 +147,32 @@ test("runtime shell matches the retained r17 reference typography, panel geometr
     if (kind !== "more") expect(a.y, kind + " vertical anchor").toBeCloseTo(b.y, 0);
     expect(await style(actualPanel, ["border-radius", "box-shadow", "border-color"])).toEqual(await style(referencePanel, ["border-radius", "box-shadow", "border-color"]));
     expect(await style(actualPanel.locator("h2"), ["font-size", "font-weight", "line-height"])).toEqual(await style(referencePanel.locator("h2"), ["font-size", "font-weight", "line-height"]));
+    if (["quick", "help", "notifications", "guide"].includes(kind)) {
+      const referenceTrigger = reference.locator(`[data-panel="${kind}"]:visible`).first();
+      await referenceTrigger.evaluate(element => element.getAnimations().forEach(animation => animation.finish()));
+      expect(await style(page.getByRole("button", { name, exact: true }), ["background-color", "color"])).toEqual(await style(referenceTrigger, ["background-color", "color"]));
+    }
+    if (kind === "help") {
+      const actualHelp = actualPanel.getByRole("button", { name: "Open page guide" });
+      const referenceHelp = referencePanel.getByRole("button", { name: "Open page guide" });
+      await actualHelp.hover(); await referenceHelp.hover();
+      expect(await style(actualHelp, ["background-color", "color"])).toEqual(await style(referenceHelp, ["background-color", "color"]));
+    }
+    if (kind === "account") {
+      const actualReset = actualPanel.getByRole("button", { name: "Reset preview preference" });
+      const referenceReset = referencePanel.getByRole("button", { name: "Reset preview preference" });
+      await actualReset.hover(); await referenceReset.hover();
+      expect(await style(actualReset, ["background-color", "color"])).toEqual(await style(referenceReset, ["background-color", "color"]));
+    }
     if (kind === "guide") {
       await actualPanel.getByRole("button", { name: "Read the application shell guide" }).click();
       expect(await style(actualPanel.locator(".ppo-guide-intro h3"), typography)).toEqual(await style(referencePanel.locator(".sh-guide-intro h3"), typography));
       await expect(actualPanel.getByRole("button", { name: "Journey map", exact: true })).toBeVisible();
-      await actualPanel.getByRole("button", { name: "Journey map", exact: true }).click();
+      const actualJourney = actualPanel.getByRole("button", { name: "Journey map", exact: true });
+      const referenceJourney = referencePanel.getByRole("button", { name: "Journey map", exact: true });
+      await actualJourney.hover(); await referenceJourney.hover();
+      expect(await style(actualJourney, ["background-color", "color"])).toEqual(await style(referenceJourney, ["background-color", "color"]));
+      await actualJourney.click();
       await expect(actualPanel.getByRole("heading", { name: "Your journey", exact: true })).toBeFocused();
       await actualPanel.locator(".ppo-panel-body").evaluate(element => { element.scrollTop = 0; });
     }

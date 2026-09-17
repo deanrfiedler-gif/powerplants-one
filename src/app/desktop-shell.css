@@ -7,8 +7,8 @@
 .ppo-shell-controls { display: contents; }
 .ppo-top-action { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; min-height: 44px; flex-shrink: 0; margin: 0; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #667181; }
 .ppo-top-action .product-icon { width: 22px; height: 22px; stroke-width: 1.7; }
-.ppo-top-action:is(:hover,[aria-expanded=true]) { background: #f0f2f6; color: #242a37; }
-.ppo-top-action.ppo-quick-add { isolation: isolate; color: white; background: transparent; }
+.ppo-top-action:is(:hover,[aria-expanded=true]), .ppo-top-action:hover:not(:disabled) { background: #f0f2f6; color: #242a37; }
+.ppo-top-action.ppo-quick-add, .ppo-top-action.ppo-quick-add:hover:not(:disabled) { isolation: isolate; color: white; background: transparent; }
 .ppo-quick-add::before { position: absolute; content: ''; inset: 2px; border-radius: 50%; background: #242a37; z-index: -1; }
 .ppo-quick-add:is(:hover,[aria-expanded=true])::before { background: #343c4c; }
 .topbar.ppo-shell-header, body:has(.crm-workspace) .topbar.ppo-shell-header { position: relative; display: flex; align-items: center; gap: 12px; height: 64px; min-height: 64px; padding: 0 20px 0 24px; background: white; border-bottom: 1px solid #e2e6ec; overflow: visible; z-index: 60; }
@@ -61,7 +61,7 @@
 .ppo-search-option, .ppo-quick-option { display: flex; align-items: center; gap: 12px; padding: 9px 11px; margin: 0 0 2px; min-height: 40px; border-radius: 7px; text-align: left; color: #34455b; font-size: 13px; line-height: 1.4; text-decoration: none; cursor: pointer; }
 .ppo-search-option > span, .ppo-quick-option > span { min-width: 0; flex: 1; }
 .ppo-search-option strong, .ppo-search-option small { display: block; font-weight: 400; }
-.ppo-search-option small, .ppo-quick-option small { color: #7a8594; font-size: 11px; margin-top: 3px; }
+.ppo-search-option small, .ppo-quick-option small { color: #7a8594; font-size: 11px; margin-top: 1px; line-height: 1.5; }
 .ppo-search-option > small { max-width: 100px; flex-shrink: 0; }
 .ppo-search-option:is(:hover,[aria-selected=true]), .ppo-quick-option:hover { background: #f0f3f7; }
 :is(.ppo-search-option,.ppo-quick-option) .product-icon { width: 19px; height: 19px; flex-shrink: 0; color: #667181; }
@@ -104,7 +104,7 @@
 .ppo-development p { font-size: 11px; color: #7a8593; line-height: 1.55; margin: 9px 0 5px; }
 .ppo-development p:empty { display: none; }
 .ppo-development .ppo-reset-preview { background: transparent; border: 0; padding: 8px 0; color: #64758a; font-size: 11px; font-weight: 400; min-height: 36px; }
-.ppo-reset-preview:hover { text-decoration: underline; }
+.ppo-development .ppo-reset-preview:hover:not(:disabled) { background: transparent; color: #242a37; text-decoration: underline; }
 .ppo-account-panel .identity-explanation { margin: 16px 8px 10px; font-size: 11px; line-height: 1.55; }
 .ppo-account-panel .identity-choice { margin: 8px; }
 .ppo-account-panel .ppo-panel-body > button, .ppo-account-panel .ppo-panel-body > form { margin: 8px; }
@@ -117,7 +117,7 @@
 .ppo-guide-eyebrow{font-size:10px;letter-spacing:.85px;text-transform:uppercase;font-weight:500;color:#627084}
 .ppo-guide-contents{display:flex;gap:6px;flex-wrap:wrap;padding:5px 0 16px;border-bottom:1px solid #e6eaf0}
 .ppo-guide-contents button{background:#f3f5f8;border:1px solid #e2e7ed;color:#465a72;font-size:12px;padding:8px 12px;border-radius:6px;min-height:36px}
-.ppo-guide-contents button:hover{background:#eaf0f5;border-color:#c5d1df}
+.ppo-guide-contents button:hover:not(:disabled){background:#eaf0f5;border-color:#c5d1df;color:#465a72}
 .ppo-guide-section{padding:22px 0 0;scroll-margin-top:16px}
 .ppo-guide-section h3{font-size:15px;line-height:1.4;font-weight:500;margin:0 0 12px;scroll-margin-top:18px}
 .ppo-page-guide h4{font-size:13px;line-height:1.5;font-weight:500;margin:0 0 4px}
@@ -138,7 +138,7 @@
 .ppo-guide-note,.ppo-guide-pending{padding:14px 16px;border-radius:8px;background:#f5f7fa;border:1px solid #e5eaf0;color:#627084;font-size:12px;line-height:1.7}
 .ppo-guide-pending{margin:8px 0 16px}
 .ppo-guide-link{display:flex;align-items:center;gap:10px;min-height:44px;width:100%;padding:10px 12px;border:1px solid #dce3eb;border-radius:7px;background:#fff;color:#425d78;text-align:left;font-size:12px}
-.ppo-guide-link:hover{background:#f4f7fa}.ppo-guide-link span{flex:1}.ppo-guide-link .product-icon{width:18px;height:18px}
+.ppo-guide-link:hover:not(:disabled){background:#f4f7fa;color:#425d78}.ppo-guide-link span{flex:1}.ppo-guide-link .product-icon{width:18px;height:18px}
 @media (min-width: 781px) {
   .app-frame { grid-template-columns: 76px minmax(0, 1fr); }
   .sidebar.ppo-rail { width: 76px; padding: 0; height: 100dvh; min-height: 0; overflow: visible; display: flex; flex-direction: column; align-items: center; background: #242a37; z-index: 70; }
