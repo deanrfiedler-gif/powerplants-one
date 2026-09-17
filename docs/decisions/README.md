@@ -73,3 +73,7 @@ The [PPO Assistant direction and architecture decision](ppo-assistant-direction.
 [Package decision](naming-communications-sharepoint.md) records Dean's authorisation of the shared design package, r04 naming extension, exact r18 theme source, architecture choices and operational boundaries. It continues ADR-0005 and existing D-012/D-024/D-025 evidence obligations without renumbering the master decisions.
 
 - [Application Shell r17 integration](application-shell-integration.md) — authorised shared-frame successor, runtime identity and permission mapping, fixed More frames, preview workspaces and contextual guide boundary.
+
+## Documents, issue and distribution
+
+[Output, Issue & Distribution Centre design and receiving handover](output-issue-distribution-design.md) records the DK-03 standalone workspace built from the authorised [build plan](../delivery/output-issue-distribution-build-plan.md): exact output and bundle manifests, readiness and domain review, reserved preparation against actual issue time, original-operation recovery, per-recipient distribution evidence and explicit responses. It creates no new module, domain or requirement identity. Owner acceptance and application integration remain separate.
