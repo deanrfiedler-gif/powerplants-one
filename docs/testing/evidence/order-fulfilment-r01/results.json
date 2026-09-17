@@ -1,0 +1,287 @@
+{
+  "design": "PPO Order Fulfilment & Customer Delivery r01",
+  "browser_channel": "chrome",
+  "browser_version": "141.0.7390.37",
+  "bundled_executable_path": "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
+  "browser_binary_note": "Playwright does not report the binary a channel resolved to. Where the environment aliases the chrome channel to the bundled Chromium, browser_version equals the bundled version and this run is a Chromium run, not a Google Chrome run.",
+  "html_sha256": "ad331e08d6b2bb1fb5a43b3237fe7dcbd6c948a8b631d5569f350d48f5e2dfd7",
+  "groups": 32,
+  "results": [
+    {
+      "name": "Five connected views render with their scope identifiers and the central question",
+      "result": "Passed"
+    },
+    {
+      "name": "The register shows source order, account, purchase order, handover and three separate dates",
+      "result": "Passed"
+    },
+    {
+      "name": "Search, filters and the empty state explain themselves and clear cleanly",
+      "result": "Passed"
+    },
+    {
+      "name": "A snapshot card opens the exact contributing records and preserves filter context",
+      "result": "Passed"
+    },
+    {
+      "name": "Coordination views are labelled as PPO views, not source statuses",
+      "result": "Passed"
+    },
+    {
+      "name": "The order drawer separates acceptance, Won, ERP order creation and receiving responsibility",
+      "result": "Passed"
+    },
+    {
+      "name": "Stock shows unknown, quarantined, unresolved-unit and anomalous observations as themselves",
+      "result": "Passed"
+    },
+    {
+      "name": "An incomplete observation cannot be reserved from the interface",
+      "result": "Passed"
+    },
+    {
+      "name": "Reserving binds evidenced usable stock and refuses a second allocation of the same quantity",
+      "result": "Passed"
+    },
+    {
+      "name": "A competing order can take only the remaining evidenced quantity",
+      "result": "Passed"
+    },
+    {
+      "name": "Picking and staging are separate physical observations recorded by the warehouse role",
+      "result": "Passed"
+    },
+    {
+      "name": "Dispatch preparation records the receiving point and moves nothing",
+      "result": "Passed"
+    },
+    {
+      "name": "Issuing a pick list does not dispatch the goods",
+      "result": "Passed"
+    },
+    {
+      "name": "Physical dispatch and the source shipment outcome are recorded separately",
+      "result": "Passed"
+    },
+    {
+      "name": "Delivery capture records the actual receiving point and keeps the use area separate",
+      "result": "Passed"
+    },
+    {
+      "name": "An acknowledgement names its exact delivery and excludes wider acceptance",
+      "result": "Passed"
+    },
+    {
+      "name": "The remaining four units stay outstanding and become an owned exception",
+      "result": "Passed"
+    },
+    {
+      "name": "The same impact identity cannot create a second follow-up obligation",
+      "result": "Passed"
+    },
+    {
+      "name": "A later confirmed receipt is a refreshed observation, then the second shipment completes the line",
+      "result": "Passed"
+    },
+    {
+      "name": "The original shortage and both shipments remain visible after completion",
+      "result": "Passed"
+    },
+    {
+      "name": "A correction supersedes its predecessor and retains the original capture",
+      "result": "Passed"
+    },
+    {
+      "name": "A lost response blocks further effect and the original operation recovers without duplication",
+      "result": "Passed"
+    },
+    {
+      "name": "A simulated save failure records nothing and retains the entries",
+      "result": "Passed"
+    },
+    {
+      "name": "Partial, failed and empty source scenarios explain themselves without showing zero",
+      "result": "Passed"
+    },
+    {
+      "name": "Company and identity switching isolates records without mixing them",
+      "result": "Passed"
+    },
+    {
+      "name": "Restricted commercial values never reach a non-commercial role anywhere on the page",
+      "result": "Passed"
+    },
+    {
+      "name": "A read-only identity can inspect everything and record nothing",
+      "result": "Passed"
+    },
+    {
+      "name": "Reload restores the exact saved records, context and filters",
+      "result": "Passed"
+    },
+    {
+      "name": "A damaged saved session preserves the original content and offers an export",
+      "result": "Passed"
+    },
+    {
+      "name": "Keyboard navigation reaches the views and opens a record without a pointer",
+      "result": "Passed"
+    },
+    {
+      "name": "Every view renders at 1440, 1024, 820, 390 and 320 px with no horizontal page overflow",
+      "result": "Passed"
+    },
+    {
+      "name": "The phone picking and delivery forms present full-width controls with large targets",
+      "result": "Passed"
+    }
+  ],
+  "responsive": [
+    {
+      "width": 1440,
+      "view": "register",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 1440,
+      "view": "stock",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 1440,
+      "view": "picking",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 1440,
+      "view": "delivery",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 1440,
+      "view": "exceptions",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 1024,
+      "view": "register",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 1024,
+      "view": "stock",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 1024,
+      "view": "picking",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 1024,
+      "view": "delivery",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 1024,
+      "view": "exceptions",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 820,
+      "view": "register",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 820,
+      "view": "stock",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 820,
+      "view": "picking",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 820,
+      "view": "delivery",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 820,
+      "view": "exceptions",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 390,
+      "view": "register",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 390,
+      "view": "stock",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 390,
+      "view": "picking",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 390,
+      "view": "delivery",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 390,
+      "view": "exceptions",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 320,
+      "view": "register",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 320,
+      "view": "stock",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 320,
+      "view": "picking",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 320,
+      "view": "delivery",
+      "horizontalOverflowPx": 0
+    },
+    {
+      "width": 320,
+      "view": "exceptions",
+      "horizontalOverflowPx": 0
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "1440-01-register.png",
+    "1440-02-order-drawer.png",
+    "1440-03-stock.png",
+    "1440-04-competing.png",
+    "1440-05-picking.png",
+    "1440-06-delivery.png",
+    "1440-07-exceptions.png",
+    "1440-08-two-shipments.png",
+    "1440-09-correction.png",
+    "1440-10-partial.png",
+    "1440-11-company-isolation.png",
+    "1440-responsive-register.png",
+    "1024-responsive-register.png",
+    "820-responsive-register.png",
+    "390-responsive-register.png",
+    "320-responsive-register.png",
+    "390-picking.png",
+    "390-delivery.png"
+  ]
+}
