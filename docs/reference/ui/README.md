@@ -1,8 +1,8 @@
 ---
 document_id: PPO-UI-DESIGN-INDEX
 title: HTML design index and maintenance guide
-revision: r05
-updated: 2026-09-16
+revision: r06
+updated: 2026-09-17
 owner: Dean Fiedler
 status: Repository inventory; individual design approvals remain in linked decisions
 source_commit: 9921be2439ca479135482c51fbf3ed4b28615f37
@@ -67,9 +67,12 @@ These are the latest uploaded shared visual references. Their presence does not 
 
 ## Estimating and quotation
 
+**17 September addition:** ES-04 Estimate Review & Pricing Exceptions r01 adds a dedicated internal review, correction and estimate-approval boundary between ES-03 and ES-05. Standalone design; acceptance and application integration remain separate.
+
 
 | Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
 |---|---|---|---|
+| Estimate review & pricing exceptions — ES-04 | [r01](estimate-review/PPO-Estimate-Review-and-Pricing-Exceptions-r01.html) · [Detailed report](estimate-review/PPO-Estimate-Review-and-Pricing-Exceptions-Report-r01.md) | Proposed six-view design; owner acceptance and application integration separate | Exact scope/cost review, pricing exceptions, retained corrections, independent review, separate estimate approval and prepared ES-05 handover. [Decision](../../decisions/estimate-review-pricing-exceptions-design.md) · [Verification](../../testing/evidence/estimate-review-r01/README.md). |
 | Sales → Estimating intake | [r02 preview](estimating/sales-estimating-intake-preview-r02.html) | Proposed design | [r02 change record](sales/sales-estimating-intake-change-record-r02.md). Original field-bank/design reference is retained below. |
 | Wizard data review | [r02](estimation-wizard/PPO-Wizard-Data-Review-r02.html) | Latest uploaded design; acceptance not established by this audit | Distinct from the advanced estimating-container study and bounded guided pilot. |
 | Quotation module | [r03](quoting/ppo-quotation-module-r03.html) | Latest uploaded design; acceptance not established by this audit | [r03 audit](quoting/ppo-quotation-audit-r03.md); separate from the legacy Quotation Builder concept below. |
