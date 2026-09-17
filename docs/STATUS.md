@@ -33,6 +33,8 @@ This file is a snapshot of the current state, kept short enough to read in one s
 
 **Deal Workspace HTML, 17 September 2026:** [CR-01 standalone workspace and detailed report](decisions/deal-workspace-design.md) implement eight views and a shared Board/List preview with owned activities/tasks, exact quotation basis, versioned intake and prepared receiving context. Synthetic design only; source-owned decisions, server integration and acceptance remain separate. [Verification](testing/evidence/deal-workspace-r01/README.md) records actual model and browser evidence.
 
+**Order Fulfilment package recovered, 17 September 2026:** [PR #216 recovery](testing/pr-216-repair-status.md) restores the exact original source, HTML, report and verification scripts from Dean's ZIP and Git bundle. The builder matches the original HTML; 40 model groups pass. Fresh native CI and required checks gate the merge. Owner acceptance and application integration remain separate.
+
 ## 1. Stage in one paragraph
 
 Powerplants One is Dean's personal synthetic prototype of a seven-domain operations platform. The PP-01 planned-service journey code (P01–P12), including isolated recovery, is implemented and merged. P12 bounded delivery and PT-22 synthetic recovery are complete; full PT-28/PT-30 and independent owner/device acceptance remain separate, so **PP-01 is not complete**. [#165](https://github.com/deanrfiedler-gif/powerplants-one/issues/165) is closed for bounded delivery; [ADR-0024](decisions/ADR-0024-p12-isolated-recovery.md) retains the limits. Bounded slices of CRM, Estimating, Engineering, Projects and Email/Calendar are merged alongside it. The latest observed owner-triggered Azure update deployed `b8d33696`; signed-in synthetic saved-record and Draft rendering checks passed, while full owner acceptance remains separate. MYOB Acumatica, SharePoint, Pipedrive, Smartsheet and native CAD retain their operational roles; every external interface in the application is a simulated adapter. Company ownership, production approval and external write authority are not implied by anything below.
@@ -82,7 +84,7 @@ Powerplants One is Dean's personal synthetic prototype of a seven-domain operati
 
 | Group | Items | Next action |
 |---|---|---|
-| Open pull requests | Authorised 17 September repair covers #212, #215–#217, #220, #223, #225, #227–#229 and #231. Eight complete design/reference packages are reconciled; #212 carries the final repair handover. | [Repair evidence and exact source heads](testing/pr-repair-2026-09-17.md). #216–#217 remain incomplete uploads pending their original packages. Final merge and fresh CI results are recorded on the linked PRs; owner acceptance remains separate. |
+| Open pull requests | Authorised 17 September repair covers #212, #215–#217, #220, #223, #225, #227–#229 and #231. Eight complete design/reference packages are reconciled; #212 carries the final repair handover. | [Repair evidence and exact source heads](testing/pr-repair-2026-09-17.md). #216 now has its complete original package restored; #217 recovery is tracked separately. Final merge and fresh CI results are recorded on the linked PRs; owner acceptance remains separate. |
 | CRM board follow-through | Earlier #135/#136 keyboard, focus and lost-response work is delivered. #121 scroll/layer guidance and #120 URL state are now the authorised follow-through. | Source, original browser evidence and normal merge are tracked in the [reconciliation](delivery/issue-reconciliation-handover.md). |
 | Current repository-writing session | Owner-authorised repair of all eight open PRs, 16 September 2026; main #219 is retained. | Repair conflicts, lint and missing package references. Record unresolved original-file gaps. No main merge or deployment is included. |
 | Independent runtime maintenance | #163 merged as `6d46e0e5`; the latest owner-triggered hosted run uses the maintained runtime. | #160 remains open only for the listed hosted evidence, not for reimplementing the Node/Azure/browser update. [Maintenance handover](delivery/runtime-maintenance.md). |
@@ -125,4 +127,3 @@ D-003 is resolved for this personal prototype (Powerplants One, PPO, independent
 | Which decisions exist? | [Decision control](decisions/README.md) |
 | How do I run and verify locally? | README and the [P11 handover](delivery/p11-handover.md) |
 | What happened before 11 September 2026? | [STATUS-log.md](STATUS-log.md) |
-
