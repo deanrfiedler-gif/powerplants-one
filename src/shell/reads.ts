@@ -10,6 +10,7 @@ import { listTickets } from "../service/intake";
 import { actionsForCapabilities, type ShellContext } from "./model";
 import { collectSearch, searchQuery } from "./search";
 import { listProjects } from "../projects/service";
+import { navigationForCapabilities } from "./navigation";
 
 export async function shellContext(p: Principal, input: unknown): Promise<ShellContext> {
   object(input, []);
@@ -20,7 +21,12 @@ export async function shellContext(p: Principal, input: unknown): Promise<ShellC
      AND g.valid_from<=clock_timestamp() AND (g.valid_to IS NULL OR g.valid_to>clock_timestamp())`,
     [p.workspace_id, p.actor_id],
   );
-  return { display_name: p.display_name, actions: actionsForCapabilities(new Set(grants.rows.map(g => g.capability))) };
+  const capabilities = new Set(grants.rows.map(g => g.capability));
+  return { display_name: p.display_name, actions: actionsForCapabilities(capabilities),
+    navigation: navigationForCapabilities(capabilities, process.env.PPO_ENV === "azure-demo"),
+    // This is a presentation preference for authenticated synthetic/demo users,
+    // never an impersonation or permission switch. No production mode is enabled.
+    can_preview: ["local-synthetic", "azure-demo"].includes(process.env.PPO_ENV ?? "") };
 }
 export async function shellSearch(p: Principal, input: unknown) {
   return collectSearch(searchQuery(input), [
