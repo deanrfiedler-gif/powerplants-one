@@ -403,7 +403,7 @@ export function ProductHeader() {
               href={item.href!}
               aria-current={page?.id === item.id ? "page" : undefined}
             >
-              {item.label}
+              {item.tabLabel ?? item.label}
             </Link>
           ))}
         </nav>

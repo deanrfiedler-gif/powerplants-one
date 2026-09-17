@@ -45,6 +45,12 @@ The original CRM and Projects geometry expectations are updated for the explicit
 
 [Initial component job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35169245645/job/105037085746), source `1b8bdbe3`, passed 22 cases, skipped eight desktop-only cases on phone projects, and failed three. Desktop geometry, global search/Quick add and stale-response lock protection passed. Two failures found the existing CRM phone page filter hidden by the new header rules; `548c2c2` restores its established second-row slot. The third found the new preview select lacked an unambiguous label because the wrapping label included option text; the follow-up uses an explicit label/control association. Assertions and timeouts are unchanged. Final-source CI must verify these fixes; earlier passing counts do not certify the correction.
 
+## Retained navigation regression repair
+
+On `4037c881`, [CRM component checks](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35169617515/job/105038243544) passed, including the phone filter and workspace-label corrections. The [retained CRM journey](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35169617515/job/105038243410) passed 16 I2 cases and failed the shared-brand phone case because its locator still required the predecessor menu title, Powerplants One. The wider [P11 diagnostic replay](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35169617489/job/105038243217) also found an outdated generic Service heading assertion and the inadvertently renamed Service review tab.
+
+The repair binds both retained phone-menu cases to r17's visible More title, sets up an authenticated coordinator before checking permitted home-page links, and checks the actual Service planner breadcrumb while retaining the active-tab assertion. The application restores the established Service review tab name independently of the global Service reports destination, and restores Exceptions and recovery in More. This preserves the Service-to-Finance and recovery journeys. No access grant, save behaviour, timeout, retry or assertion is removed. Lint, TypeScript and existing shell unit checks are run before publication; final-source CI must verify the repaired integration.
+
 ## Review and rollout
 
 1. Review PR checks against its final commit, including the six enforced contexts and any additional applicable suites. A component screenshot run is not owner acceptance.

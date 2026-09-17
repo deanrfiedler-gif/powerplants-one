@@ -45,6 +45,7 @@ export type ShellDestination = {
   id: string;
   label: string;
   icon: ProductIconName;
+  tabLabel?: string;
   href?: string;
   workspace?: WorkspaceId;
   requires?: Capability[];
@@ -230,6 +231,7 @@ export const destinations: ShellDestination[] = [
   {
     id: "reports",
     label: "Service reports",
+    tabLabel: "Service review",
     icon: "list",
     href: "/service/reports",
     workspace: "service",
@@ -237,7 +239,7 @@ export const destinations: ShellDestination[] = [
   },
   {
     id: "recovery",
-    label: "Exceptions & recovery",
+    label: "Exceptions and recovery",
     icon: "warning",
     href: "/admin",
     requires: [
