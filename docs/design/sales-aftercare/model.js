@@ -433,7 +433,7 @@
   const reviewDone = r => r.review.state === 'Completed';
   const nextAction = r => {
     if (r.state === 'Closed') return {title: 'No further action; record closed.', owner: '—', due: null};
-    const step = r.review.steps.find(x => true);
+    const step = r.review.steps.find(() => true);
     if (!reviewDone(r) && r.planned) return {title: 'Prepare and hold the customer review', owner: r.reviewOwner, due: r.planned};
     if (!reviewDone(r)) return {title: 'Choose a review date with an explicit basis', owner: r.reviewOwner, due: null};
     if (openCommitments(r).length) return {title: 'Give every outstanding commitment a disposition', owner: r.reviewOwner, due: openCommitments(r)[0].due};

@@ -32,7 +32,7 @@ jobs:
         run: |
           mkdir -p verification-evidence/sales-aftercare-recovery
           python3 scripts/build-sales-aftercare.py
-          git diff --exit-code -- docs/reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist-r01.html
+          git diff --exit-code -- docs/reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist.html
           npx eslint docs/design/sales-aftercare/*.js scripts/check-sales-aftercare-*.mjs
           node scripts/check-sales-aftercare-model.mjs > verification-evidence/sales-aftercare-recovery/model-results.json
           node scripts/check-sales-aftercare-browser.mjs

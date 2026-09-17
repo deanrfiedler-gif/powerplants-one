@@ -162,4 +162,4 @@ test('Malformed imports with invalid feedback, duplicate IDs or missing outcomes
   }
 });
 const hash=relative=>createHash('sha256').update(fs.readFileSync(fileURLToPath(new URL(relative,import.meta.url)))).digest('hex');
-console.log(JSON.stringify({module:'CR-05',suite:'Recovery model verification authored 2026-09-17',node:process.version,html_sha256:hash('../docs/reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist-r01.html'),model_sha256:hash('../docs/design/sales-aftercare/model.js'),groups:results.length,results},null,2));
+console.log(JSON.stringify({module:'CR-05',suite:'Recovery model verification authored 2026-09-17',node:process.version,html_sha256:hash('../docs/reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist.html'),model_sha256:hash('../docs/design/sales-aftercare/model.js'),groups:results.length,results},null,2));

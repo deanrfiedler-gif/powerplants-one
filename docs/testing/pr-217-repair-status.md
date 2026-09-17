@@ -16,6 +16,10 @@ The new 15-group browser suite exercises visible controls, saved records after r
 
 No application, database, dependency pin or deployment changes are included. Owner acceptance and runtime integration remain separate. Main `86802e9cbaa7f0f72a5108018802a3d95e0a4285` is reconciled while retaining the original PR history.
 
+## Fresh CI source cleanup
+
+[Run 35220962231](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35220962231) identified five unused bindings in the recovered source: the always-true first-step predicate parameter, the unused degraded-source predicate, two unused record-chip projections and an unused customer-select projection. These bindings are removed without changing business behavior. The maintained [versionless HTML](../reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist.html) is generated and tested from the corrected source. The uploaded r01 HTML/report stay unchanged; the model hash above identifies the exact original recovery before this cleanup. Fresh model and browser artifacts identify the actual maintained hashes.
+
 The earlier missing-file inventory below is retained as history; its source and deliverable blockers are now resolved and the missing tests have been replaced with the separately identified recovery suites.
 
 ---

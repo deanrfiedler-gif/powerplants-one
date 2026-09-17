@@ -7,7 +7,7 @@ import path from 'node:path';
 import {fileURLToPath,pathToFileURL} from 'node:url';
 import {createHash} from 'node:crypto';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const file=path.join(root,'docs/reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist-r01.html');
+const file=path.join(root,'docs/reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist.html');
 const out=path.join(root,'verification-evidence/sales-aftercare-recovery');
 await fs.mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'chrome',headless:true});

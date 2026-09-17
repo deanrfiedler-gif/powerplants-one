@@ -1,6 +1,6 @@
 # CR-05 Sales Aftercare & Renewal Worklist source
 
-This source produces the [standalone r01 HTML](../../reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist-r01.html). The [companion report](../../reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist-Report-r01.md) documents its actual views, fields, actions, state transitions, provenance, permissions, recovery behaviour, synthetic scenarios and application receiving requirements.
+This source produces the [standalone r01 HTML](../../reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist.html). The [companion report](../../reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist-Report-r01.md) documents its actual views, fields, actions, state transitions, provenance, permissions, recovery behaviour, synthetic scenarios and application receiving requirements.
 
 | File | Responsibility |
 |---|---|
@@ -25,3 +25,5 @@ Edit the sources and rebuild the HTML; do not edit the generated file. No applic
 ## 17 September recovery
 
 The supplied HTML and report are unchanged. Source files were extracted from that exact HTML and the deterministic builder reproduces it byte-for-byte. The missing model/browser scripts were recreated as explicitly labelled recovery suites. Read [provenance and fresh verification](../../testing/pr-217-repair-status.md); earlier evidence remains historical.
+
+The maintained versionless HTML contains only the unused-binding cleanup needed by current lint. The uploaded r01 HTML/report remain unchanged. The recovery note distinguishes original hashes from this maintained source.

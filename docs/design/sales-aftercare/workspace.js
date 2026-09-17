@@ -53,7 +53,6 @@
   const receivingLink = key => `<a class="button small-button" href="${receiving[key][1]}" target="_blank" rel="noopener">Open ${esc(receiving[key][0])} ${icon('arrow')}</a>`;
 
   /* ---- Source-result scenarios (partial / failed / empty reads) ---- */
-  const degraded = () => mode !== 'complete';
   const rows = () => {
     if (mode === 'failed' || mode === 'empty') return [];
     const all = M.query(state, ui.role, ui.filters, ui.saved);
@@ -153,15 +152,12 @@
     return ui.returnTo ? `<div class="row" style="margin-bottom:14px">${button(icon('back') + ' Back to ' + esc(M.viewTitles[ui.returnTo.view]), 'back', '', 'small-button')}<span class="tiny">Filters and the selected view are preserved.</span></div>` : '';
   }
   function recordChips(r) {
-    const o = M.org(state, r.customer);
-    const areas = M.areaNames(state, r);
     return `<div class="chip-row">${tag(r.source.kind, 'source')}${tag(r.reason, 'info')}${tag(r.state)}${M.reviewDone(r) ? tag('Review conducted', 'success') : ''}${M.openObligations(r).length ? tag(M.openObligations(r).length + ' open obligation(s)', 'warning') : ''}${r.source.completeness.startsWith('Partial') || r.source.completeness.startsWith('Changed') ? tag('Source ' + r.source.completeness.split(' · ')[0].toLowerCase(), 'danger') : ''}</div>`;
   }
 
   function contextCard() {
     const r = current();
     const customers = state.customers.filter(c => M.roles[ui.role].customers.includes(c.id));
-    const selectOptions = customers.map(c => [c.id, c.name]);
     const o = r ? M.org(state, r.customer) : customers[0];
     const site = r ? M.site(state, r) : null;
     if (['worklist', 'training', 'commercial'].includes(ui.view)) {
