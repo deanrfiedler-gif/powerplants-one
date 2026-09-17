@@ -41,7 +41,7 @@ The secondary source is the private screen-estimator analysis workbook r04, SHA-
 
 ## Browser execution
 
-`node scripts/check-specialist-r03-browser.mjs` passed **29 groups** with no console or page errors ([results.json](results.json)). The tested HTML has SHA-256 `3dbcb516b5eeba5d677c7dc64adc0539250885cf32120d2f2a830ebdedeb6008`.
+`node scripts/check-specialist-r03-browser.mjs` passed **32 groups** with no console or page errors ([results.json](results.json)). The tested HTML has SHA-256 `bf6377dd99f554505c1bb65ab68b4d03424c3c4d6f26821210ef027614e19a46`. An earlier pass on the first r03 build (`3dbcb516…`) passed 29 groups; the second pass added the plan, screen-cut and date groups after the plan redesign.
 
 **Runtime disclosure.** The design session ran with `PPO_BROWSER_CHANNEL=` (empty), Playwright 1.56 and bundled Chromium `141.0.7390.37`. It did not use the repository's pinned Node, Playwright or native Chrome channel. The workflow default remains `channel: 'chrome'`, and the pinned-runtime result must be read from the Screen Systems workflow run on the pull request.
 
@@ -66,19 +66,16 @@ The secondary source is the private screen-estimator analysis workbook r04, SHA-
   - All six views fit widths from 1440 to 320 px, with Definition review opened on coverage.
   - Arrow, Home and End keys move between views.
   - Phone controls are at least 44 px high.
+- **Greenhouse plan:** the drawn footprint keeps the true width-to-length ratio; drive lines equal the calculated drive count; one motor per group across and along; wall-screen spans, the odd bay and the motors-along boundary appear only when configured.
+- **Screen cut:** the toggle moves focus, sets `aria-pressed`, and the diagram terms follow the overhang input.
+- **Dates:** run history and snapshots show dd Month yyyy · HH:mm.
 - **Storage:**
   - The export filename is r03.
   - The r03 storage key is isolated, and an existing r02 session value is left untouched.
 
 ## Visual review
 
-Seven captures were inspected at original scale ([visual-review.json](visual-review.json)). Three layout refinements followed:
-
-- Balanced the parts-table column widths.
-- Renamed a coverage header that rendered with a narrow space.
-- Stopped parameter buttons wrapping.
-
-The checks were rerun after these changes, and the final results above belong to the refined HTML. This was a design-session review, not owner or device acceptance.
+Ten captures were inspected at original scale across two passes ([visual-review.json](visual-review.json)). The first pass produced three layout refinements: balanced parts-table column widths, a renamed coverage header that rendered with a narrow space, and non-wrapping parameter buttons. The second pass audited the module for professional finish and redesigned the greenhouse plan: true-scale footprint, computed drive positions, motor groups both ways, wall-screen spans and odd bay, a screen-cut diagram, readable dates and a print layout. Seven plan configurations were captured and reviewed before the final run. The checks were rerun after each pass, and the final results above belong to the final HTML. This was a design-session review, not owner or device acceptance.
 
 ## Reproduction
 

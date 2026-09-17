@@ -1,11 +1,11 @@
 {
   "reviewer": "Claude (design session), not owner acceptance",
-  "html_sha256": "3dbcb516b5eeba5d677c7dc64adc0539250885cf32120d2f2a830ebdedeb6008",
+  "html_sha256": "bf6377dd99f554505c1bb65ab68b4d03424c3c4d6f26821210ef027614e19a46",
   "browser": "141.0.7390.37",
   "reviewed": [
     {
       "capture": "1440-configure-drive.png",
-      "sha256": "3dc6b9c075909d31af5d7a736d88a8d6cc8f9da51274beb6bf271100addb2900",
+      "sha256": "d7bf374303fa62cc429d05f9d87d118df3aead7cacd61f3a17b39f2ec0eb95c0",
       "finding": "Pinion attention notice sits under the drive selection; release cell shows one untested selection; Pinion tube, Cable location and drive pipe diameter read as separate controls."
     },
     {
@@ -37,6 +37,33 @@
       "capture": "320-parts.png",
       "sha256": "cabd0374835d1e1b233730dd88b43f35a5e73c1d7eebc1d598881f3332bceab6",
       "finding": "Same card structure at 320 px; long part numbers wrap."
+    },
+    {
+      "capture": "1440-configure.png",
+      "sha256": "f18ba01b51dca25408fad9e4fb26f546a5d52fa7b332de21e3dcbade9d477a66",
+      "finding": "Second pass. Plan card redrawn to scale (48 by 38.4 ratio visible), drive lines at computed positions, motors per group, legend and statistics beneath; card fits the sticky sidebar beside the Greenhouse section."
+    },
+    {
+      "capture": "1440-plan-extended.png",
+      "sha256": "659e62dd523070f6783aac2c54c357240bd18155e2f17b70a62e65e6bd94a836",
+      "finding": "Second pass. Two wall-screen spans hatched beyond the physical width, odd bay banded and labelled, motors-along boundary and second motor row drawn, legend entries appear only when relevant."
+    },
+    {
+      "capture": "1440-cut.png",
+      "sha256": "722afb2d3516a7ee85cfcc02bedfff3a82b13a48bac6f7a26decb94fc5c7c569",
+      "finding": "Second pass. Screen-cut strip shows coverage, shrinkage allowance, both overhangs and the rounding remainder to scale in length with separators; bay length dashed inside the cloth width; statistics list each term of the cut length."
+    }
+  ],
+  "passes": [
+    {
+      "pass": 1,
+      "html_sha256": "3dbcb516b5eeba5d677c7dc64adc0539250885cf32120d2f2a830ebdedeb6008",
+      "note": "Initial r03 build"
+    },
+    {
+      "pass": 2,
+      "html_sha256": "bf6377dd99f554505c1bb65ab68b4d03424c3c4d6f26821210ef027614e19a46",
+      "note": "Plan redesign, screen-cut diagram, readable dates, print layout"
     }
   ]
 }
