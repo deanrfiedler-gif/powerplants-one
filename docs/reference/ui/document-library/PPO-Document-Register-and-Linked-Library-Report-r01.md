@@ -280,6 +280,8 @@ The shared stylesheet is appropriate to this isolated standalone artifact. Appli
 
 ## 20. Verification, limitations and acceptance
 
+**Verified result:** 23 model groups and 23 native-browser groups passed on `cd4a942dfd1c511f4550c273b0161f8ce3338ef0`, with zero page/console errors. All six views fitted the five declared widths. Final desktop and phone captures were inspected. The delivered HTML is 165,771 bytes; SHA-256 `4e67700df87892ec9fc1af4dd06952c6016c9ad3f224bec4065a842b1d081d53`. [Exact evidence and repair history](../../../testing/evidence/document-library-r01/README.md) distinguish component verification from acceptance and broader runtime checks.
+
 The model suite covers scoped visibility, missing exact versions, restricted placeholders, independent decisions, invalid data, findings and responses, immutable reviews, source successors, retained receiving references, prepared-task deduplication, stale state and scoped export. The browser suite exercises complete workflows, actual controls, downloads, save/reload, failures, responsive layouts and keyboard behaviour.
 
 The [verification record](../../../testing/evidence/document-library-r01/README.md) is the authoritative location for actual results, tested source, HTML SHA-256, captured images and remaining limits. Check names in this report describe the supplied verification coverage, not a claim that an unrecorded run passed.
