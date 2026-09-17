@@ -1,0 +1,175 @@
+html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
+#ppo-outcome-review{--navy:#242a37;--green:#62bb46;--ink:#242a37;--paper:#f5f6f8;--surface:#f6f7f9;--line:#e1e5eb;--muted:#596779;--link:#355b80;--success:#416d33;--success-bg:#edf5e9;--warning:#80530e;--warning-bg:#fff2d9;--danger:#993b2a;--danger-bg:#fff1ed;--info:#346580;--info-bg:#e9f2f8;font:14px/1.5 PPOBoardRoboto,Roboto,Verdana,sans-serif;color:var(--ink);min-height:100dvh;isolation:isolate;-webkit-text-size-adjust:100%}
+#ppo-outcome-review,#ppo-outcome-review *{box-sizing:border-box}#ppo-outcome-review [hidden]{display:none!important}
+#ppo-outcome-review h1,#ppo-outcome-review h2,#ppo-outcome-review h3,#ppo-outcome-review h4,#ppo-outcome-review p{margin:0;letter-spacing:normal}
+#ppo-outcome-review h1{font-size:25px;line-height:1.25;font-weight:700}#ppo-outcome-review h2{font-size:18px;line-height:1.4;font-weight:500}#ppo-outcome-review h3{font-size:14px;font-weight:500}#ppo-outcome-review p+p{margin-top:9px}
+#ppo-outcome-review a{color:var(--link);text-underline-offset:3px}
+#ppo-outcome-review :is(button,input,textarea,select){font:inherit;color:inherit}
+#ppo-outcome-review button,#ppo-outcome-review .button{display:inline-flex;justify-content:center;align-items:center;gap:7px;min-height:40px;padding:8px 13px;border:1px solid #cbd2dc;border-radius:6px;background:white;color:var(--ink);font-size:13px;font-weight:500;line-height:1.4;cursor:pointer;text-decoration:none;touch-action:manipulation}
+#ppo-outcome-review button:hover,#ppo-outcome-review .button:hover{background:#f0f2f5}
+#ppo-outcome-review button:disabled{opacity:.5;cursor:not-allowed}
+#ppo-outcome-review .primary{background:var(--navy);color:#fff;border-color:var(--navy)}#ppo-outcome-review .primary:hover{background:#343c4c}
+#ppo-outcome-review .quiet{border-color:transparent;background:transparent}
+#ppo-outcome-review .link-button{border:0;background:none;color:var(--link);padding:3px 0;text-align:left;justify-content:flex-start;text-decoration:underline;text-underline-offset:3px;min-height:30px}
+#ppo-outcome-review .small-button{font-size:12px;min-height:34px;padding:6px 9px}
+#ppo-outcome-review .icon-button{width:40px;padding:8px;flex:none}
+#ppo-outcome-review .icon{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+#ppo-outcome-review :focus-visible{outline:2px solid #365d8b;outline-offset:3px}
+#ppo-outcome-review .skip{position:absolute;left:12px;top:12px;z-index:600;background:white;padding:12px;clip-path:inset(50%);width:1px;height:1px;overflow:hidden}#ppo-outcome-review .skip:focus{clip-path:none;width:auto;height:auto}
+#ppo-outcome-review .workspace{max-width:1600px;padding:26px 28px 18px;margin:auto}
+#ppo-outcome-review .module-header{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:17px}
+#ppo-outcome-review .module-header p{font-size:13px;color:var(--muted);max-width:820px;margin-top:8px}
+#ppo-outcome-review .eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:var(--muted);display:block;margin-bottom:7px}
+#ppo-outcome-review .divider{padding:0 8px;color:#a3acb7}
+#ppo-outcome-review .row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+#ppo-outcome-review .between{justify-content:space-between}
+#ppo-outcome-review .header-actions{flex:none}
+#ppo-outcome-review .demo-strip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:18px}
+#ppo-outcome-review .brand-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex:none}
+#ppo-outcome-review #role-label{padding-left:12px;border-left:1px solid #cbd2dc}
+#ppo-outcome-review #save-status{margin-left:auto;color:var(--success)}
+#ppo-outcome-review .tabs{display:flex;gap:2px;border-bottom:1px solid #dce2e9;margin-bottom:19px;overflow-x:auto;scrollbar-width:thin}
+#ppo-outcome-review .tabs button{border:0;border-bottom:3px solid transparent;border-radius:0;background:none;white-space:nowrap;flex:none;min-height:46px;padding:10px 15px 12px;color:var(--muted)}
+#ppo-outcome-review .tabs button[aria-current=page]{border-bottom-color:var(--green);color:var(--navy);font-weight:700}
+#ppo-outcome-review .tabs button:hover{background:#eef0f3}
+#ppo-outcome-review .context{background:white;border:1px solid var(--line);border-left:3px solid var(--green);border-radius:7px;padding:16px 18px;margin-bottom:20px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center}
+#ppo-outcome-review .context h2{font-size:17px}#ppo-outcome-review .context .small{margin-top:5px}
+#ppo-outcome-review .context-controls{display:grid;gap:8px;justify-items:end}
+#ppo-outcome-review .context-controls select{width:320px;font-size:12px;min-height:40px;padding:8px 30px 8px 10px}
+#ppo-outcome-review .context .eyebrow{margin-bottom:4px}
+#ppo-outcome-review .small{font-size:12px;color:var(--muted)}#ppo-outcome-review .tiny{font-size:11px;color:var(--muted)}#ppo-outcome-review .muted{color:var(--muted)}
+#ppo-outcome-review .tag{display:inline-flex;align-items:center;gap:5px;max-width:100%;font-size:11px;font-weight:500;line-height:1.5;padding:3px 8px;border-radius:5px;background:#edf0f5;color:#526078}
+#ppo-outcome-review .tag.warning{background:var(--warning-bg);color:var(--warning)}
+#ppo-outcome-review .tag.danger{background:var(--danger-bg);color:var(--danger)}
+#ppo-outcome-review .tag.success{background:var(--success-bg);color:var(--success)}
+#ppo-outcome-review .tag.info{background:var(--info-bg);color:var(--info)}
+#ppo-outcome-review .tag.source{background:white;border:1px solid var(--line);color:var(--muted)}
+#ppo-outcome-review .page-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin:0 0 16px}
+#ppo-outcome-review .page-heading h2{font-size:19px}#ppo-outcome-review .page-heading p{font-size:13px;color:var(--muted);margin-top:4px;max-width:760px}
+#ppo-outcome-review .snapshot{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1px solid var(--line);background:#fff;margin:10px 0 20px}
+#ppo-outcome-review .snapshot button{border:0;border-right:1px solid var(--line);border-radius:0;display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:3px;padding:17px 18px;min-height:116px}
+#ppo-outcome-review .snapshot button:last-child{border-right:0}
+#ppo-outcome-review .snapshot strong{font-size:24px;font-weight:500;line-height:1.25;overflow-wrap:anywhere}
+#ppo-outcome-review .snapshot span{font-size:12px;color:var(--muted)}
+#ppo-outcome-review .snapshot small{font-size:11px;color:var(--muted);font-weight:400}
+#ppo-outcome-review .snapshot button[aria-pressed=true]{background:#fcfcfd;box-shadow:inset 0 3px var(--green)}
+#ppo-outcome-review .columns{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:20px;align-items:start}
+#ppo-outcome-review .columns>*{min-width:0}
+#ppo-outcome-review .stack{display:grid;gap:16px}
+#ppo-outcome-review .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+#ppo-outcome-review .three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+#ppo-outcome-review .card{border:1px solid var(--line);border-radius:7px;background:#fff;min-width:0;overflow:hidden}
+#ppo-outcome-review .card-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 18px;border-bottom:1px solid var(--line)}
+#ppo-outcome-review .card-head h2{font-size:15px}#ppo-outcome-review .card-head p{font-size:12px;color:var(--muted);margin-top:3px}
+#ppo-outcome-review .pad{padding:18px}
+#ppo-outcome-review .card-foot{padding:12px 18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);background:#fcfcfd}
+#ppo-outcome-review .section-label{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:700;margin:18px 0 10px}
+#ppo-outcome-review .mt{margin-top:16px}#ppo-outcome-review .space-top{margin-top:9px}
+#ppo-outcome-review .source-row,#ppo-outcome-review .item-row{padding:17px 18px;border-bottom:1px solid var(--line)}
+#ppo-outcome-review .source-row:last-child,#ppo-outcome-review .item-row:last-child{border-bottom:0}
+#ppo-outcome-review .source-row p,#ppo-outcome-review .item-row p{font-size:12px;color:var(--muted);margin-top:7px}
+#ppo-outcome-review .source-row .row{align-items:flex-start}
+#ppo-outcome-review .source-meta{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:11px;color:var(--muted);margin:11px 0}
+#ppo-outcome-review .source-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:11px}
+#ppo-outcome-review .note{padding:12px 14px;border:1px solid #cfe0ec;border-radius:7px;background:var(--info-bg);color:var(--info);font-size:12px;line-height:1.65}
+#ppo-outcome-review .note.warning{background:#fff8ec;color:var(--warning);border-color:#efdbb6}
+#ppo-outcome-review .note.success{background:var(--success-bg);color:var(--success);border-color:#d4e3cb}
+#ppo-outcome-review .note.danger{background:var(--danger-bg);color:var(--danger);border-color:#edc6bd}
+#ppo-outcome-review .note.neutral{background:#fcfcfd;color:var(--muted);border-color:var(--line)}
+#ppo-outcome-review .note ul{padding-left:18px;margin:6px 0 0}#ppo-outcome-review .note li+li{margin-top:4px}
+#ppo-outcome-review .facts{display:grid;grid-template-columns:132px minmax(0,1fr);gap:10px 12px;font-size:12px;margin:0}
+#ppo-outcome-review .facts dt{color:var(--muted)}#ppo-outcome-review .facts dd{margin:0;overflow-wrap:anywhere}
+#ppo-outcome-review .avatar{display:grid;place-items:center;width:29px;height:29px;flex:none;border-radius:50%;background:#eaf1e5;color:#45623b;font-size:10px;font-weight:700}
+#ppo-outcome-review .owner{display:flex;align-items:center;gap:8px;font-size:12px}
+#ppo-outcome-review .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line)}
+#ppo-outcome-review .search{flex:1;min-width:170px;max-width:390px;position:relative}
+#ppo-outcome-review .search input{padding-left:36px;min-height:40px;font-size:13px}
+#ppo-outcome-review .search>.icon{position:absolute;left:11px;top:11px;color:var(--muted)}
+#ppo-outcome-review .toolbar select{width:auto;min-height:40px;font-size:12px;max-width:100%}
+#ppo-outcome-review .count-line{font-size:11px;color:var(--muted);padding:9px 18px;border-bottom:1px solid var(--line)}
+#ppo-outcome-review .chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 18px 12px}
+#ppo-outcome-review table{width:100%;border-collapse:collapse;text-align:left;font-size:12px}
+#ppo-outcome-review th{padding:11px 14px;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);background:#eef0f3;border-bottom:1px solid var(--line)}
+#ppo-outcome-review td{padding:15px 14px;border-bottom:1px solid #e9ecf1;vertical-align:top}
+#ppo-outcome-review tbody tr:last-child td{border-bottom:0}
+#ppo-outcome-review tbody tr:hover{background:#f7f8fa}
+#ppo-outcome-review .selected-row{background:#f3f7f1}
+#ppo-outcome-review .selected-row td:first-child{box-shadow:inset 3px 0 var(--green)}
+#ppo-outcome-review .record-title{font-size:13px;font-weight:500;display:block}
+#ppo-outcome-review .record-ref{font-size:11px;color:var(--muted);display:block;margin-top:4px}
+#ppo-outcome-review .next-action{margin-top:7px;font-size:11px;color:var(--muted);max-width:240px}
+#ppo-outcome-review .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+#ppo-outcome-review th.num{text-align:right}
+#ppo-outcome-review .pos{color:var(--danger)}#ppo-outcome-review .neg{color:var(--success)}#ppo-outcome-review .nil{color:var(--muted)}
+#ppo-outcome-review .withheld{color:var(--muted);font-style:normal}
+#ppo-outcome-review .scroll-x{overflow-x:auto;scrollbar-width:thin}
+#ppo-outcome-review .compare-table{min-width:880px}
+#ppo-outcome-review .compare-table tfoot td{background:#fcfcfd;border-top:2px solid var(--line);font-weight:500}
+#ppo-outcome-review .ladder{display:grid;gap:0;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:#fff}
+#ppo-outcome-review .ladder-row{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:12px;padding:13px 18px;border-bottom:1px solid var(--line);font-size:13px;align-items:baseline}
+#ppo-outcome-review .ladder-row:last-child{border-bottom:0}
+#ppo-outcome-review .ladder-row.total{background:#f6f8fa;font-weight:500}
+#ppo-outcome-review .ladder-row.check{background:var(--success-bg);color:var(--success)}
+#ppo-outcome-review .ladder-row.check.fail{background:var(--danger-bg);color:var(--danger)}
+#ppo-outcome-review .ladder-row small{display:block;font-size:11px;color:var(--muted);margin-top:4px}
+#ppo-outcome-review .ladder-row.check small{color:inherit}
+#ppo-outcome-review .bar{display:flex;height:8px;border-radius:4px;overflow:hidden;background:#eef0f3;margin-top:9px}
+#ppo-outcome-review .bar span{display:block;height:100%}
+#ppo-outcome-review .bar .b1{background:#62bb46}#ppo-outcome-review .bar .b2{background:#4b7fa8}#ppo-outcome-review .bar .b3{background:#c79a3a}#ppo-outcome-review .bar .b4{background:#cbd2dc}
+#ppo-outcome-review .legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:11px;color:var(--muted);margin-top:9px}
+#ppo-outcome-review .legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px}
+#ppo-outcome-review :is(input,select,textarea){width:100%;min-width:0;min-height:44px;border:1px solid #828e9f;border-radius:6px;background:white;padding:10px 11px;line-height:1.4}
+#ppo-outcome-review input[type=checkbox]{width:18px;height:18px;min-height:18px;accent-color:var(--navy);flex:none}
+#ppo-outcome-review label{display:block;font-size:12px;font-weight:500}
+#ppo-outcome-review label>span{display:block;margin-bottom:6px}
+#ppo-outcome-review textarea{resize:vertical;min-height:90px}
+#ppo-outcome-review .field{margin-bottom:15px}
+#ppo-outcome-review .check-label{display:flex;align-items:flex-start;gap:10px;font-size:12px;font-weight:400;line-height:1.6;margin:13px 0}
+#ppo-outcome-review .check-label input{margin:2px 0 0}
+#ppo-outcome-review .check-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin-top:16px}
+#ppo-outcome-review .check-grid .full{grid-column:1/-1}
+#ppo-outcome-review .form-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:15px 18px;border-top:1px solid var(--line);background:#fcfcfd}
+#ppo-outcome-review .form-error{margin:0 18px 15px;padding:12px 14px;background:var(--danger-bg);border:1px solid #edc6bd;border-radius:6px;color:var(--danger);font-size:13px}
+#ppo-outcome-review .empty{padding:35px 22px;text-align:center;background:white;border:1px solid var(--line);border-radius:7px}
+#ppo-outcome-review .empty p{font-size:13px;color:var(--muted);margin:8px 0 15px}
+#ppo-outcome-review .timeline{list-style:none;padding:0;margin:0}
+#ppo-outcome-review .timeline li{border-left:1px solid #dce2e9;margin-left:5px;position:relative;padding:0 0 20px 20px;font-size:12px}
+#ppo-outcome-review .timeline li:before{position:absolute;left:-5px;top:4px;width:7px;height:7px;border:2px solid var(--green);border-radius:50%;background:white;content:''}
+#ppo-outcome-review .timeline li:last-child{padding-bottom:0;border-color:transparent}
+#ppo-outcome-review .timeline small{font-size:10px;color:var(--muted);display:block;margin:4px 0}
+#ppo-outcome-review .decision{padding:14px;border:1px solid var(--line);border-radius:6px;margin-top:12px;background:#fcfcfd}
+#ppo-outcome-review .decision p{font-size:12px;color:var(--muted);margin:8px 0}
+#ppo-outcome-review .stamp{border:1px solid #d4e3cb;border-left:3px solid var(--green);background:#f7faf5;padding:20px;border-radius:7px}
+#ppo-outcome-review .stamp.provisional{border-color:#efdbb6;border-left-color:#c79a3a;background:#fffaf1}
+#ppo-outcome-review .stamp h2{font-size:20px;margin:7px 0}
+#ppo-outcome-review .stamp p{font-size:12px;color:var(--muted);margin-top:8px}
+#ppo-outcome-review .steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin:16px 0 20px;border:1px solid var(--line);background:#fff}
+#ppo-outcome-review .steps>div{padding:12px;border-right:1px solid var(--line);font-size:11px;color:var(--muted)}
+#ppo-outcome-review .steps>div:last-child{border:0}
+#ppo-outcome-review .steps b{display:block;font-size:12px;color:var(--ink);margin:4px 0}
+#ppo-outcome-review .steps .done{background:#f3f7f1}
+#ppo-outcome-review details summary{cursor:pointer;font-size:12px;font-weight:500;min-height:40px;display:flex;align-items:center}
+#ppo-outcome-review details .small{margin-top:8px}
+#ppo-outcome-review .guide-list{padding-left:20px;font-size:13px;line-height:1.8;color:var(--muted)}
+#ppo-outcome-review .guide-list li+li{margin-top:12px}
+#ppo-outcome-review footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:23px;margin-top:25px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}
+#ppo-outcome-review #recovery:not(:empty){margin-bottom:18px}
+#ppo-outcome-review .mono{font:11px/1.6 Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+#ppo-outcome-review dialog{border:0;border-radius:10px;width:min(680px,calc(100% - 32px));max-height:calc(100dvh - 32px);padding:0;color:var(--ink);background:white;box-shadow:0 16px 52px #242a372b,0 2px 8px #242a370f;overflow:auto}
+#ppo-outcome-review dialog::backdrop{background:#242a3745}
+#ppo-outcome-review dialog form{margin:0}
+#ppo-outcome-review .modal-head{display:flex;justify-content:space-between;gap:16px;padding:21px 22px 17px;border-bottom:1px solid var(--line)}
+#ppo-outcome-review .modal-head h2{font-size:20px}
+#ppo-outcome-review .modal-body{padding:20px 22px}
+#ppo-outcome-review .modal-body .note{margin-bottom:16px}
+#ppo-outcome-review .modal-foot{padding:14px 22px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:9px;position:sticky;bottom:0;background:white}
+#ppo-outcome-review dialog.drawer{margin:0 0 0 auto;height:100dvh;max-height:100dvh;width:min(560px,100%);border-radius:0 0 0 10px}
+#ppo-outcome-review .drawer .modal-body{min-height:calc(100dvh - 190px)}
+#ppo-outcome-review .drawer .modal-foot{justify-content:space-between}
+#ppo-outcome-review .toast{position:fixed;z-index:500;bottom:22px;left:50%;transform:translateX(-50%);max-width:min(680px,calc(100% - 28px));background:var(--navy);color:white;font-size:13px;padding:13px 18px;border-radius:7px;box-shadow:0 8px 25px #242a3740}
+@media(max-width:1250px){#ppo-outcome-review .snapshot{grid-template-columns:repeat(3,minmax(0,1fr))}#ppo-outcome-review .snapshot button:nth-child(3){border-right:0}#ppo-outcome-review .snapshot button:nth-child(n+4){border-top:1px solid var(--line)}}
+@media(max-width:1150px){#ppo-outcome-review .columns{grid-template-columns:minmax(0,1fr) 290px;gap:16px}#ppo-outcome-review .tabs button{font-size:12px;padding-left:11px;padding-right:11px}#ppo-outcome-review .module-header h1{font-size:23px}#ppo-outcome-review .three{grid-template-columns:minmax(0,1fr)}#ppo-outcome-review .queue-table th:nth-child(3),#ppo-outcome-review .queue-table td:nth-child(3){display:none}#ppo-outcome-review .steps{grid-template-columns:repeat(3,minmax(0,1fr))}#ppo-outcome-review .steps>div:nth-child(3){border-right:0}#ppo-outcome-review .steps>div:nth-child(n+4){border-top:1px solid var(--line)}}
+@media(max-width:850px){#ppo-outcome-review .columns{grid-template-columns:minmax(0,1fr)}#ppo-outcome-review .workspace{padding:22px 20px 16px}#ppo-outcome-review .module-header{display:block}#ppo-outcome-review .header-actions{margin-top:14px}#ppo-outcome-review .context{grid-template-columns:minmax(0,1fr)}#ppo-outcome-review .context-controls{justify-items:start;grid-template-columns:minmax(0,1fr) auto;align-items:center}#ppo-outcome-review .context-controls select{width:100%;max-width:380px}#ppo-outcome-review .snapshot button{padding:14px}#ppo-outcome-review .two{gap:12px}}
+@media(max-width:600px){#ppo-outcome-review .workspace{padding:18px 14px 16px}#ppo-outcome-review h1{font-size:23px}#ppo-outcome-review .module-header p{font-size:13px}#ppo-outcome-review .header-actions .icon-button{order:2;margin-left:auto}#ppo-outcome-review #save-status{margin-left:0;width:100%}#ppo-outcome-review #role-label{padding-left:0;border-left:0}#ppo-outcome-review .context{padding:14px;gap:12px}#ppo-outcome-review .context-controls{display:flex;flex-wrap:wrap;justify-content:space-between}#ppo-outcome-review .context-controls label{width:100%}#ppo-outcome-review .context-controls select{max-width:none}#ppo-outcome-review .context h2{font-size:16px}#ppo-outcome-review .snapshot{grid-template-columns:repeat(2,minmax(0,1fr))}#ppo-outcome-review .snapshot button{min-height:108px;border-bottom:1px solid var(--line);border-top:0}#ppo-outcome-review .snapshot button:nth-child(even){border-right:0}#ppo-outcome-review .snapshot button:nth-child(3){border-right:1px solid var(--line)}#ppo-outcome-review .snapshot button:last-child{border-bottom:0}#ppo-outcome-review .page-heading{flex-wrap:wrap}#ppo-outcome-review .two,#ppo-outcome-review .check-grid{grid-template-columns:minmax(0,1fr)}#ppo-outcome-review .check-grid .full{grid-column:auto}#ppo-outcome-review .toolbar{padding:12px}#ppo-outcome-review .toolbar .search{min-width:100%;max-width:none}#ppo-outcome-review .toolbar select{width:100%}#ppo-outcome-review .queue-table thead{display:none}#ppo-outcome-review .queue-table,#ppo-outcome-review .queue-table tbody,#ppo-outcome-review .queue-table tr,#ppo-outcome-review .queue-table td{display:block}#ppo-outcome-review .queue-table tr{padding:15px 14px;border-bottom:1px solid var(--line)}#ppo-outcome-review .queue-table td{padding:0;border:0;margin-bottom:10px;text-align:left}#ppo-outcome-review .queue-table td:nth-child(3){display:block}#ppo-outcome-review .queue-table td:before{display:block;content:attr(data-label);font-size:10px;color:var(--muted);margin-bottom:4px;text-transform:uppercase}#ppo-outcome-review .queue-table td:first-child:before{display:none}#ppo-outcome-review .queue-table td:last-child{margin-bottom:0}#ppo-outcome-review .selected-row td:first-child{box-shadow:none}#ppo-outcome-review .selected-row{box-shadow:inset 3px 0 var(--green)}#ppo-outcome-review .next-action{max-width:none}#ppo-outcome-review .scroll-x{overflow-x:visible}#ppo-outcome-review .compare-table{min-width:0}#ppo-outcome-review .compare-table thead{display:none}#ppo-outcome-review .compare-table,#ppo-outcome-review .compare-table tbody,#ppo-outcome-review .compare-table tfoot,#ppo-outcome-review .compare-table tr,#ppo-outcome-review .compare-table td{display:block}#ppo-outcome-review .compare-table tr{padding:15px 14px;border-bottom:1px solid var(--line)}#ppo-outcome-review .compare-table tfoot tr{background:#fcfcfd;border-top:2px solid var(--line)}#ppo-outcome-review .compare-table td{padding:0;border:0;margin-bottom:10px;text-align:left}#ppo-outcome-review .compare-table td.phone-hide{display:none}#ppo-outcome-review .compare-table td:before{display:block;content:attr(data-label);font-size:10px;color:var(--muted);margin-bottom:4px;text-transform:uppercase}#ppo-outcome-review .compare-table td:first-child:before{display:none}#ppo-outcome-review .compare-table td:last-child{margin-bottom:0}#ppo-outcome-review .card-head{flex-wrap:wrap;padding:14px}#ppo-outcome-review .pad,#ppo-outcome-review .source-row,#ppo-outcome-review .item-row{padding:15px 14px}#ppo-outcome-review .ladder-row{grid-template-columns:minmax(0,1fr);padding:13px 14px}#ppo-outcome-review .ladder-row .num{text-align:left}#ppo-outcome-review .steps{grid-template-columns:repeat(2,minmax(0,1fr))}#ppo-outcome-review .steps>div{border-bottom:1px solid var(--line)}#ppo-outcome-review .steps>div:nth-child(even){border-right:0}#ppo-outcome-review .facts{grid-template-columns:110px minmax(0,1fr);gap:9px 10px}#ppo-outcome-review .modal-head,#ppo-outcome-review .modal-body{padding:16px}#ppo-outcome-review .modal-foot{padding:12px 16px}#ppo-outcome-review dialog{width:calc(100% - 20px);max-height:calc(100dvh - 20px)}#ppo-outcome-review dialog.drawer{width:100%;max-height:100dvh}#ppo-outcome-review .form-actions>button{max-width:100%}#ppo-outcome-review .stamp{padding:16px}}
+#ppo-outcome-review .context,#ppo-outcome-review .page-heading,#ppo-outcome-review .source-row,#ppo-outcome-review .item-row,#ppo-outcome-review .decision,#ppo-outcome-review .note,#ppo-outcome-review .stamp,#ppo-outcome-review .modal-body{overflow-wrap:anywhere}
+@media print{#ppo-outcome-review .module-header .header-actions,#ppo-outcome-review .demo-strip,#ppo-outcome-review .tabs,#ppo-outcome-review .toast,#ppo-outcome-review footer,#ppo-outcome-review button,#ppo-outcome-review .context-controls{display:none}#ppo-outcome-review .workspace{padding:0}#ppo-outcome-review .columns{display:block}#ppo-outcome-review .card{break-inside:avoid;margin-bottom:15px}#ppo-outcome-review dialog{display:none}#ppo-outcome-review .scroll-x{overflow:visible}#ppo-outcome-review .compare-table{min-width:0}}
