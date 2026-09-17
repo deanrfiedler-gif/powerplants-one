@@ -1,0 +1,49 @@
+{
+  "foundation": {
+    "status": "passed",
+    "issued_sources": 15,
+    "requirements": 78,
+    "decisions": 29,
+    "planned_acceptance": 38,
+    "backlog_items": 16,
+    "linked_issues": 16,
+    "local_links_checked": 2764,
+    "files_scanned_for_markers": 1541,
+    "errors": [],
+    "scope": "Documentation assurance only; no business acceptance tests executed"
+  },
+  "prototype": {
+    "status": "passed",
+    "package": "PP-01",
+    "documents": 12,
+    "parent_dispositions": 78,
+    "dispositions": {
+      "Core": 24,
+      "Partial": 25,
+      "Deferred": 29
+    },
+    "master_decisions": 29,
+    "prototype_procedures": 30,
+    "implementation_packages": 12,
+    "registers": {
+      "SC": 15,
+      "CMP": 12,
+      "SR": 20,
+      "VAL": 24,
+      "TR": 16,
+      "API-C": 26,
+      "API-R": 10
+    },
+    "errors": [],
+    "scope": "Documentation consistency only; authored catalogue defaults are not execution evidence; see recorded runs"
+  },
+  "naming": {
+    "status": "passed",
+    "document_records": 248,
+    "standing_exceptions": 9,
+    "front_matter_revisions_compared": 110,
+    "project_instruction_characters": 7962,
+    "errors": [],
+    "scope": "Naming and documentation consistency only; runtime behaviour is verified separately"
+  }
+}
