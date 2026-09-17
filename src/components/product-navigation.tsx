@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { ProductIcon } from "./product-icons";
+import { ShellIcon as ProductIcon } from "./shell-icon";
 import { ShellControls } from "./shell-controls";
 import { useShell } from "./shell-provider";
 import { openShellPanel, shellPanelEvent } from "./shell-events";
@@ -95,21 +95,19 @@ function ProductNavigationView({
       items: g.items.filter((item) => !item.localOnly || !shell.hosted),
     }))
     .filter((g) => g.items.length);
-  const count = groups.reduce((sum, group) => sum + group.items.length, 0);
+  const showHelp = !query.trim() || "help quick help administration support".includes(query.trim().toLowerCase());
+  const count = groups.reduce((sum, group) => sum + group.items.length, 0) + Number(showHelp);
   const link = (item: ShellDestination, mobile = false) => {
     const root = workspaces.find((w) => w.primary === item.id);
     const label = mobile
       ? item.id === "tickets"
         ? "Service"
         : item.label
-      : (root?.label ?? item.label);
+      : (root?.label ?? item.menuLabel ?? item.label);
     const contents = (
       <>
-        <ProductIcon name={item.icon} />
+        <ProductIcon name={root ? (root.id === "estimate" ? "estimate" : root.id) : item.id === "equipment" ? "equipment" : item.id === "reports" ? "reports" : item.icon} />
         <span>{label}</span>
-        {!mobile && root && root.label !== item.label && (
-          <small>{item.label}</small>
-        )}
       </>
     );
     return allowed(item) ? (
@@ -117,8 +115,8 @@ function ProductNavigationView({
         key={item.id}
         className={mobile ? undefined : "ppo-more-link"}
         href={item.href!}
-        aria-label={item.label}
-        aria-current={current?.id === item.id ? "page" : undefined}
+        aria-label={label}
+        aria-current={current?.id === item.id || (!mobile && !!root && current?.workspace === root.id) ? "page" : undefined}
         onClick={() => setMore(false)}
       >
         {contents}
@@ -177,7 +175,7 @@ function ProductNavigationView({
                 {group.items.map((item) => link(item))}
               </section>
             ))
-          ) : (
+          ) : showHelp ? null : (
             <p className="ppo-panel-status">
               No matching pages.{" "}
               <button
@@ -191,7 +189,7 @@ function ProductNavigationView({
             </p>
           )}
         </nav>
-        <button
+        {showHelp && <button
           className="ppo-more-link ppo-help-link"
           onClick={() => {
             dialog.current?.close();
@@ -202,8 +200,8 @@ function ProductNavigationView({
           }}
         >
           <ProductIcon name="help" />
-          <span>Quick Help</span>
-        </button>
+          <span>Help</span>
+        </button>}
         {!wide && (
           <div className="ppo-mobile-tools">
             {(["quick", "notifications"] as const).map((kind) => (
@@ -226,7 +224,7 @@ function ProductNavigationView({
       </div>
       <footer>
         <span>
-          Powerplants One · r17<small>Synthetic data only</small>
+          Powerplants One · r17
         </span>
         <span>{count} destinations</span>
       </footer>
@@ -348,6 +346,12 @@ export function ProductHeader() {
           "reports",
           "jobs",
         ]
+      : page?.workspace === "sales"
+        ? ["deals", "leads"]
+        : page?.workspace === "estimate"
+          ? ["estimates", "intake"]
+          : page?.id === "mail" || page?.id === "calendar"
+            ? ["mail", "calendar"]
       : ["customers", "sites", "equipment"].includes(page?.id ?? "")
         ? ["customers", "sites", "equipment"]
         : [];
@@ -394,7 +398,7 @@ export function ProductHeader() {
       </header>
       {!!tabs.length && (
         <nav
-          className="module-navigation"
+          className={`module-navigation${page?.workspace === "sales" ? " ppo-sales-navigation" : ""}`}
           aria-label={`${currentModule} navigation`}
         >
           {tabs.map((item) => (

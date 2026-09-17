@@ -360,10 +360,9 @@ test("CA-06/13 initial identity must settle before an actor can switch", async (
 });
 
 test("CA-13 shared brand consumers retain navigation, readable actions and original identity controls", async ({ page }, info) => {
-  // The neutral home page has no identity form; permitted destinations now
-  // require the same authenticated context as the business pages below.
+  // Home opens the existing authenticated My Work page.
   await call(page, "local-session", { profile: "coordinator" });
-  for (const [path, title] of [["/", "A connected view"], ["/customers", "Organisations"], ["/work", "Owned follow-up"], ["/service/reports", "Service review"]]) {
+  for (const [path, title] of [["/", "Owned follow-up"], ["/customers", "Organisations"], ["/work", "Owned follow-up"], ["/service/reports", "Service review"]]) {
     await page.goto(path);
     if (path !== "/") await identity(page);
     // Streaming navigation briefly retains both the loading and page headings.
@@ -376,7 +375,7 @@ test("CA-13 shared brand consumers retain navigation, readable actions and origi
       const menu = page.getByRole("dialog", { name: "More", exact: true });
       await expect(menu).toBeVisible();
       // Scoped to the menu: the phone's bottom navigation also carries Deals.
-      await expect(menu.getByRole("link", { name: "Deals", exact: true })).toBeVisible();
+      await expect(menu.getByRole("link", { name: "Sales", exact: true })).toBeVisible();
       await page.getByRole("button", { name: "Close menu", exact: true }).click();
     }
     await capture(page, info, `shared-${path.replaceAll("/", "-") || "overview"}`);
@@ -394,11 +393,11 @@ test("Accepted r08 shell and board retain full-width stages, fixed headers and s
   await page.getByLabel("Search opportunities", { exact: true }).fill(marker);
   await expect.poll(() => ids(page)).toHaveLength(10);
   const board = page.locator(".crm-board-scroll");
-  const activeLink = page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "More navigation", exact: true }).getByRole("link", { name: "Deals", exact: true });
+  const activeLink = page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "More navigation", exact: true }).getByRole("link", { name: "Sales", exact: true });
   await page.getByRole("button", { name: info.project.use.isMobile ? "Menu" : "More", exact: true }).click();
   await expect(activeLink).toHaveAttribute("aria-current", "page");
   const activeStyle = await activeLink.evaluate(e => ({ fill: getComputedStyle(e).backgroundColor, icon: getComputedStyle(e.querySelector("svg")!).color }));
-  expect(activeStyle).toEqual({ fill: "rgb(238, 247, 233)", icon: "rgb(71, 125, 53)" });
+  expect(activeStyle).toEqual({ fill: "rgb(240, 246, 237)", icon: "rgb(49, 94, 67)" });
   await page.getByRole("button", { name: info.project.use.isMobile ? "Close menu" : "Close More menu", exact: true }).click();
   for (const width of info.project.use.isMobile ? [390, 320] : [1920, 1440, 1280, 1024]) {
     await page.setViewportSize({ width, height: 844 });

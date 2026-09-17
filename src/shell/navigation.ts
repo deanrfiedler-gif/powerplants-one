@@ -46,12 +46,14 @@ export type ShellDestination = {
   label: string;
   icon: ProductIconName;
   tabLabel?: string;
+  menuLabel?: string;
   href?: string;
   workspace?: WorkspaceId;
   requires?: Capability[];
   localOnly?: boolean;
 };
 export const destinations: ShellDestination[] = [
+  { id: "settings", label: "Settings", icon: "settings" },
   { id: "home", label: "Home", icon: "home", href: "/" },
   {
     id: "work",
@@ -222,7 +224,7 @@ export const destinations: ShellDestination[] = [
   {
     id: "equipment",
     label: "Equipment",
-    icon: "supply",
+    icon: "engineering",
     href: "/equipment",
     requires: ["shared.read"],
   },
@@ -231,6 +233,7 @@ export const destinations: ShellDestination[] = [
   {
     id: "reports",
     label: "Service reports",
+    menuLabel: "Reports",
     tabLabel: "Service review",
     icon: "list",
     href: "/service/reports",
@@ -250,7 +253,7 @@ export const destinations: ShellDestination[] = [
     ],
   },
   {
-    id: "settings",
+    id: "foundation",
     label: "Foundation checks",
     icon: "settings",
     href: "/foundation",
@@ -314,24 +317,9 @@ export function menuGroups(query: string) {
   const groups = [
     {
       title: "Workspaces",
-      ids: [
-        "deals",
-        "leads",
-        "estimates",
-        "intake",
-        "engineering",
-        "projects",
-        "tickets",
-        "planner",
-        "technicians",
-        "orders",
-        "packs",
-        "jobs",
-        "supply",
-        "finance",
-      ],
+      ids: workspaces.map((w) => w.primary),
     },
-    { title: "My workspace", ids: ["home", "work", "mail", "calendar"] },
+    { title: "My workspace", ids: ["home", "work", "mail"] },
     {
       title: "Shared records",
       ids: [
@@ -346,6 +334,9 @@ export function menuGroups(query: string) {
     },
     { title: "Administration & support", ids: ["settings", "recovery"] },
   ];
+  // The resting menu matches r17's seven domain entries. Search also discovers
+  // retained child routes; desktop module tabs keep them reachable without search.
+  if (q) groups.push({ title: "Workspace pages", ids: ["leads", "intake", "planner", "technicians", "orders", "packs", "jobs", "calendar", "foundation"] });
   return groups
     .map((g) => ({
       title: g.title,
@@ -354,6 +345,7 @@ export function menuGroups(query: string) {
         .filter((d) =>
           [
             d.label,
+            d.menuLabel ?? "",
             g.title,
             workspaces.find((w) => w.id === d.workspace)?.label ?? "",
           ]

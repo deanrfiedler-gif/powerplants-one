@@ -5,7 +5,8 @@ import { lockLocal } from "../offline/store";
 import { lockOtherBusinessViews, sessionReadyEvent } from "./session-signal";
 import { HeaderContent } from "./header-content";
 import { openShellPanel, shellPanelEvent } from "./shell-events";
-import { ShellWorkspaceSelector } from "./shell-workspace-selector";
+import { ShellAccountProfile, accountInitials } from "./shell-account-profile";
+import { ShellIcon } from "./shell-icon";
 type Identity = {
   actor_id: string;
   workspace_id: string;
@@ -51,7 +52,10 @@ export function BusinessSession({ children, hosted = false }: { children: React.
     return () => { document.removeEventListener("pointerdown", outside); window.removeEventListener(shellPanelEvent, other); };
   }, []);
   const toggleAccount = () => { openShellPanel("account"); setShowIdentity(!showIdentity); };
-  const initials = (p?.display_name ?? "PPO").split(/\s+/).filter(Boolean).slice(-2).map(word => word[0]).join("");
+  const initials = accountInitials(p?.display_name);
+  const closeAccount = () => { setShowIdentity(false); document.getElementById(hosted ? "hosted-account-toggle" : "identity-toggle")?.focus(); };
+  const accountTitle = <div className="ppo-panel-titlebar"><h2>Account</h2><button className="ppo-top-action ppo-account-close" aria-label="Close account" onClick={closeAccount}><ShellIcon name="close" /></button></div>;
+  const accountFooter = <footer className="ppo-panel-footer"><span className="ppo-preview-label">Powerplants One · r17</span></footer>;
   async function select() {
     if (hosted) return;
     lockOtherBusinessViews();
@@ -75,10 +79,11 @@ export function BusinessSession({ children, hosted = false }: { children: React.
       <HeaderContent slot="account">
       {hosted ? <section ref={account} className="identity-strip identity-compact identity-hosted" aria-label="Private demo account" onKeyDown={event => { if (event.key === "Escape") { setShowIdentity(false); document.getElementById("hosted-account-toggle")?.focus(); } }}>
         <div className="hosted-account-summary"><strong title={p?.display_name}>{p?.display_name ?? "Private prototype"}</strong><button id="hosted-account-toggle" className="ppo-account-toggle" aria-label="Account" aria-expanded={showIdentity} aria-controls="hosted-account-controls" onClick={toggleAccount}><span className="account-avatar" aria-hidden="true">{initials}</span></button></div>
-        <div id="hosted-account-controls" className="ppo-hosted-account-controls" data-open={showIdentity}>
-          <strong className="ppo-account-name">{p?.display_name ?? "Private prototype"}</strong>
-          {p && <ShellWorkspaceSelector />}
+        <div id="hosted-account-controls" className="ppo-hosted-account-controls ppo-account-panel" data-open={showIdentity} role="dialog" aria-label="Account">
+          {accountTitle}<div className="ppo-panel-body">
+          <ShellAccountProfile name={p?.display_name} />
           {p ? <form action="/auth/logout" method="post" onSubmit={() => lockOtherBusinessViews()}><button className="secondary">Sign out</button></form> : <a href="/login">Sign in with Microsoft</a>}
+          </div>{accountFooter}
         </div>
       </section> : <>
       <section
@@ -94,9 +99,9 @@ export function BusinessSession({ children, hosted = false }: { children: React.
           </strong>
           {p && <button id="identity-toggle" className="secondary identity-toggle" aria-expanded={showIdentity} aria-controls="identity-controls" aria-label="Change identity" onClick={toggleAccount}><span className="ppo-identity-label">Change identity</span><span className="account-avatar ppo-local-avatar" aria-hidden="true">{initials}</span></button>}
         </div>
-        <div id="identity-controls" className="identity-controls" hidden={!!(p && !showIdentity)}>
-        <strong className="ppo-account-name">{p?.display_name ?? "Choose an identity"}</strong>
-        {p && <ShellWorkspaceSelector />}
+        <div id="identity-controls" className="identity-controls ppo-account-panel" hidden={!!(p && !showIdentity)} role="dialog" aria-label="Account">
+        {accountTitle}<div className="ppo-panel-body">
+        <ShellAccountProfile name={p?.display_name} />
         <p className="identity-explanation">Changing identity clears displayed records and unsaved forms. Saved offline originals stay locked to their original owner.</p>
         <div className="identity-choice">
           <label htmlFor="business-profile">Identity</label>
@@ -133,7 +138,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
           {busy ? "Selecting…" : "Use this identity"}
         </button>
       {p && <button className="secondary" onClick={() => { lockOtherBusinessViews(); setP(null); setEpoch(x=>x+1); void (async()=>{try{if(localStorage.getItem("ppo-offline-marker"))await lockLocal();await api("local-session/sign-out",{});}catch(e){setError(e);}finally{lockOtherBusinessViews();}})();}}>Sign out</button>}
-        </div>
+        </div>{accountFooter}</div>
       </section>
       </>}
       </HeaderContent>

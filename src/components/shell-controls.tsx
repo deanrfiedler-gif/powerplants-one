@@ -9,9 +9,10 @@ import {
   type KeyboardEvent,
 } from "react";
 import { useShell } from "./shell-provider";
-import { ShellWorkspaceSelector } from "./shell-workspace-selector";
+import { ShellAccountProfile, accountInitials } from "./shell-account-profile";
+import { canOpen, destination, menuGroups, workspaces } from "../shell/navigation";
 import { ShellPageGuide } from "./shell-page-guide";
-import { ProductIcon } from "./product-icons";
+import { ShellIcon as ProductIcon } from "./shell-icon";
 import { businessViewChannel, sessionLockEvent } from "./session-signal";
 import { openShellPanel, shellPanelEvent } from "./shell-events";
 import { contextualActions, type SearchResults } from "../shell/model";
@@ -20,7 +21,7 @@ type Panel =
   "search" | "quick" | "help" | "notifications" | "account" | "guide" | null;
 const panelNames = {
   guide: "Page guide",
-  search: "Search Powerplants One",
+  search: "Search",
   quick: "Quick add",
   help: "Quick Help",
   notifications: "Notifications",
@@ -33,28 +34,12 @@ const subscribe = (changed: () => void) => {
 };
 function panelPosition(panel: Exclude<Panel, null>, target: HTMLElement) {
   const mobile = window.innerWidth <= 780;
-  const width = Math.min(
-    panel === "search" || panel === "guide"
-      ? 550
-      : panel === "quick"
-        ? 330
-        : 380,
-    window.innerWidth - (mobile ? 24 : 108),
-  );
-  const rect = (
-    panel === "search" ? (target.closest("label") ?? target) : target
-  ).getBoundingClientRect();
+  const rect = (panel === "search" ? (target.closest("label") ?? target) : target).getBoundingClientRect();
+  const width = mobile ? window.innerWidth - 24 : panel === "search" ? rect.width : panel === "guide" ? 560 : panel === "quick" ? 320 : 344;
   return {
     width,
-    left: mobile
-      ? (window.innerWidth - width) / 2
-      : Math.max(
-          88,
-          Math.min(
-            window.innerWidth - width - 18,
-            panel === "search" ? rect.left : rect.right - width,
-          ),
-        ),
+    top: mobile ? 76 : panel === "guide" ? 76 : 60,
+    left: mobile ? 12 : panel === "search" ? rect.left : panel === "quick" ? Math.max(86, Math.min(window.innerWidth - width - 20, rect.right - width)) : window.innerWidth - width - (panel === "guide" ? 16 : 20),
     right: "auto" as const,
   };
 }
@@ -79,7 +64,7 @@ export function ShellControls({
   page: string;
 }) {
   const router = useRouter();
-  const { context, error: contextError, reload } = useShell();
+  const { context, error: contextError, reload, hosted, preview } = useShell();
   const wide = useSyncExternalStore(
     subscribe,
     () => window.matchMedia("(min-width: 781px)").matches,
@@ -244,8 +229,18 @@ export function ShellControls({
     restoringFocus.current = false;
   };
   const actions = contextualActions(context?.actions ?? [], module);
+  const query = q.trim();
+  const suggested = [workspaces.find(w => w.id === preview)!.primary, "work", "customers", "equipment"].map(destination);
+  const pageMatches = context ? (query.length >= 2 ? menuGroups(query).flatMap(group => group.items) : query ? [] : suggested).filter(item => canOpen(item, context.navigation, hosted)) : [];
+  const searchItems = [
+    ...pageMatches.map(item => ({ id: `page:${item.id}`, label: workspaces.find(w => w.primary === item.id)?.label ?? item.menuLabel ?? item.label, reference: item.workspace ? "Workspaces" : ["home", "work", "mail"].includes(item.id) ? "My workspace" : "Shared records", href: item.href!, kind: "Page", icon: workspaces.find(w => w.primary === item.id)?.id ?? (item.id === "equipment" ? "equipment" : item.icon) })),
+    ...(results?.items ?? []).map(item => ({ ...item, icon: "search" as const })),
+  ];
   const onSearchKey = (event: KeyboardEvent<HTMLInputElement>) => {
-    const count = results?.items.length ?? 0;
+    // Chrome otherwise clears type=search on Escape and fires onChange, reopening
+    // the panel after the document-level close handler has restored focus.
+    if (event.key === "Escape") event.preventDefault();
+    const count = searchItems.length;
     if (event.key === "ArrowDown" || event.key === "ArrowUp") {
       event.preventDefault();
       openShellPanel("header");
@@ -262,11 +257,11 @@ export function ShellControls({
     if (
       event.key === "Enter" &&
       panel === "search" &&
-      results?.items[selected]
+      searchItems[selected]
     ) {
       event.preventDefault();
       setPanel(null);
-      router.push(results.items[selected].href);
+      router.push(searchItems[selected].href);
     }
   };
   const searchField = (
@@ -281,7 +276,7 @@ export function ShellControls({
         aria-controls="shell-search-list"
         aria-expanded={panel === "search"}
         aria-activedescendant={
-          panel === "search" && results?.items[selected]
+          panel === "search" && searchItems[selected]
             ? `shell-result-${selected}`
             : undefined
         }
@@ -394,7 +389,7 @@ export function ShellControls({
           aria-controls="shell-utility-panel"
           onClick={(event) => show("account", event.currentTarget)}
         >
-          <ProductIcon name="person" />
+          <span className="account-avatar" aria-hidden="true">{accountInitials(context?.display_name)}</span>
         </button>
       </div>
       <section
@@ -407,7 +402,7 @@ export function ShellControls({
         data-shell-header-control
       >
         <div className="ppo-panel-titlebar">
-          <h2>Search Powerplants One</h2>
+          <h2>Search</h2>
           <button
             className="ppo-top-action"
             aria-label="Close search"
@@ -421,11 +416,9 @@ export function ShellControls({
             <div className="ppo-mobile-search-field">{searchField}</div>
           )}
           <p className="ppo-panel-hint">
-            Leads, engineering requests, projects, opportunities, customers,
-            contacts, sites, equipment, activities and service requests you can
-            access.
+            {query ? "Find a page or a record you can access" : "Go to a workspace or shared page"}
           </p>
-          <div role="status" className="ppo-panel-status">
+          <div role="status" className="ppo-panel-status" hidden={!!context && !contextError && !searchError && !query}>
             {contextError ||
               searchError ||
               (!context
@@ -434,9 +427,9 @@ export function ShellControls({
                   ? "Enter at least 2 characters."
                   : searching || !results
                     ? "Searching…"
-                    : results.items.length
-                      ? `${results.items.length} results${results.has_more ? "; more matches available — refine your search" : ""}.`
-                      : "No matching records in the supported record types.")}
+                    : searchItems.length
+                      ? `${searchItems.length} results${results.has_more ? "; more matches available — refine your search" : ""}.`
+                      : "No matching pages or records.")}
           </div>
           {(contextError || searchError) && (
             <button
@@ -456,7 +449,7 @@ export function ShellControls({
             role="listbox"
             aria-label="Search results"
           >
-            {results?.items.map((item, index) => (
+            {searchItems.map((item, index) => (
               <div
                 id={`shell-result-${index}`}
                 key={item.id}
@@ -470,25 +463,25 @@ export function ShellControls({
                   router.push(item.href);
                 }}
               >
+                <ProductIcon name={item.icon as Parameters<typeof ProductIcon>[0]["name"]} />
                 <span>
                   <strong>{item.label}</strong>
                   <small>{item.reference}</small>
                 </span>
-                <small>{item.kind}</small>
+                {item.kind !== "Page" && <small>{item.kind}</small>}
               </div>
             ))}
           </div>
         </div>
         <div className="ppo-panel-footer">
-          Up to 5 matches per record type. Search within a module for other
-          records.
+          <span className="ppo-preview-label">Powerplants One · r17</span><span>{query ? "Up to 5 per record type" : "Pages & records"}</span>
         </div>
       </section>
       <section
         ref={popup}
         style={position}
         id="shell-utility-panel"
-        className={`ppo-header-panel ppo-utility-panel${panel === "quick" ? " ppo-quick-panel" : ""}`}
+        className={`ppo-header-panel ppo-utility-panel${panel === "quick" ? " ppo-quick-panel" : panel === "guide" ? " ppo-guide-panel" : ""}`}
         role="dialog"
         aria-labelledby="shell-utility-title"
         hidden={!panel || panel === "search"}
@@ -536,7 +529,7 @@ export function ShellControls({
           </button>
         </div>
         <div className="ppo-panel-body">
-          {panel === "guide" && <ShellPageGuide page={page} />}
+          {panel === "guide" && <ShellPageGuide key={page} page={page} />}
           {panel === "quick" && (
             <>
               <p className="ppo-panel-hint">
@@ -577,52 +570,23 @@ export function ShellControls({
           )}
           {panel === "help" && (
             <div className="ppo-help-content">
-              <details open>
-                <summary>Move around PPO</summary>
-                <p>
-                  Open More for workspaces, My Work, Email & Calendar and shared
-                  records. Search the menu by page or workspace name. On a
-                  phone, the bottom bar follows your current workspace.
-                </p>
-              </details>
-              <details>
-                <summary>Find or create a record</summary>
-                <p>
-                  Use the top search bar to find permitted records. Quick add
-                  opens an existing form; available actions depend on your
-                  identity. Use the search inside a page to filter that page.
-                </p>
-              </details>
-              <details>
-                <summary>Keyboard controls</summary>
-                <p>
-                  Ctrl or Command + K focuses global search. Use Up and Down to
-                  select a result, Enter to open it, and Escape to close a
-                  panel. Tab moves between controls.
-                </p>
-              </details>
+              <h3>Quick tips</h3>
+              <ul><li>Use More to open a workspace or shared page.</li><li>Open your account to choose a development workspace.</li><li>Search finds pages and permitted records.</li><li>Use the information icon for the detailed page guide.</li></ul>
+              <h3>Keyboard shortcuts</h3>
+              <p><kbd>Ctrl K</kbd> Search <kbd>Esc</kbd> Close a panel</p>
+              <button className="ppo-guide-link" onClick={() => { const target = document.querySelector<HTMLButtonElement>('.ppo-header-utilities button[aria-label="Page guide"]'); if (target) show("guide", target); }}><ProductIcon name="info" /><span>Open page guide</span><ProductIcon name="chevron-right" /></button>
             </div>
           )}
           {panel === "notifications" && (
-            <p className="ppo-panel-status">
-              Notifications are not connected yet. This control will show your
-              permitted updates when the notification feed is available.
-            </p>
+            <div className="ppo-notification-empty"><span className="ppo-empty-icon"><ProductIcon name="bell" /></span><h3>Notifications are not connected</h3><p>Updates will appear here when their source modules are connected.</p></div>
           )}
-          {panel === "account" && (
-            <div className="ppo-help-content">
-              <p>{context?.display_name ?? "No identity loaded"}</p>
-              <ShellWorkspaceSelector />
-              <Link href="/work" onClick={() => setPanel(null)}>
-                Open My Work and account controls
-              </Link>
-            </div>
-          )}
+          {panel === "account" && <><ShellAccountProfile name={context?.display_name} /><Link className="ppo-account-link" href="/work" onClick={() => setPanel(null)}>Open My Work and account controls</Link></>}
+
         </div>
         <div className="ppo-panel-footer">
-          {panel === "guide"
-            ? `${page} · Shared shell guide`
-            : "Powerplants One · Synthetic data only"}
+          <span className="ppo-preview-label">Powerplants One · r17</span>
+          {panel === "guide" && <span>User guide & journey</span>}
+          {panel === "notifications" && <span>No live feed</span>}
         </div>
       </section>
     </div>

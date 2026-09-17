@@ -2,9 +2,12 @@ import { test, expect } from "@playwright/test";
 test("responsive shell, keyboard focus, server save, read-only refusal and storage feasibility", async ({
   page,
 }, info) => {
+  const session = await page.request.post("/api/v1/local-session", { headers: { Origin: "http://127.0.0.1:3000" }, data: { profile: "coordinator" } });
+  expect(session.ok()).toBe(true);
   await page.goto("/");
+  await expect(page).toHaveURL(/\/work$/);
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "A connected view",
+    "Owned follow-up",
   );
   await page.keyboard.press("Tab");
   await expect(
@@ -25,11 +28,13 @@ test("responsive shell, keyboard focus, server save, read-only refusal and stora
     fullPage: true,
   });
   await page.keyboard.press("Tab");
-  await expect(page.getByRole("link", { name: "Open My Work" })).toBeFocused();
+  await expect(page.getByRole("link", { name: "New activity" })).toBeFocused();
+  await page.getByRole("button", { name: "Change identity", exact: true }).click();
+  await expect(page.getByText("Powerplants One · Synthetic data only", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Close account", exact: true }).click();
   await page.getByRole("button", { name: info.project.use.isMobile ? "Menu" : "More", exact: true }).click();
-  await expect(page.getByText("Synthetic data only", { exact: true })).toBeVisible();
-  await page.getByRole("button", { name: info.project.use.isMobile ? "Close menu" : "Close More menu", exact: true }).click();
-  await page.getByRole("link", { name: "Open foundation checks" }).click();
+  await page.getByRole("searchbox", { name: "Find a menu item" }).fill("Foundation");
+  await page.getByRole("link", { name: "Foundation checks", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Foundation checks" }),
   ).toBeVisible();
