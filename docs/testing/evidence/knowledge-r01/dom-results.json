@@ -1,0 +1,58 @@
+{
+  "suite": "Knowledge local non-rendered DOM",
+  "groups": 13,
+  "results": [
+    {
+      "name": "Initial search shows seven articles and preserves superseded visibility control",
+      "result": "Passed"
+    },
+    {
+      "name": "Search and no-result recovery work",
+      "result": "Passed"
+    },
+    {
+      "name": "Contextual metric filters to one current applicable procedure",
+      "result": "Passed"
+    },
+    {
+      "name": "Snapshot opens exact full article and all sections",
+      "result": "Passed"
+    },
+    {
+      "name": "Bookmarks survive reload without changing article status",
+      "result": "Passed"
+    },
+    {
+      "name": "Changed firmware recalculates warning and source applicability",
+      "result": "Passed"
+    },
+    {
+      "name": "Review requests retain exact revision context ownership and due date without approval",
+      "result": "Passed"
+    },
+    {
+      "name": "Missing-guidance request does not fabricate an article relationship",
+      "result": "Passed"
+    },
+    {
+      "name": "Save failure retains request and recovers without duplication",
+      "result": "Passed"
+    },
+    {
+      "name": "Denied scenario hides article identity and context",
+      "result": "Passed"
+    },
+    {
+      "name": "Unsupported exact revision does not silently fall forward",
+      "result": "Passed"
+    },
+    {
+      "name": "Malformed stored data remains untouched",
+      "result": "Passed"
+    },
+    {
+      "name": "No script exceptions in exercised local interactions",
+      "result": "Passed"
+    }
+  ]
+}
