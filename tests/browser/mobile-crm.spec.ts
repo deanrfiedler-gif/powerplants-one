@@ -67,7 +67,7 @@ test("organisation summary opens the full Sites hierarchy; mobile menu contains 
     await page.setViewportSize({width:320,height:640});
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
     await page.getByRole("button",{name:"Menu",exact:true}).click();
-    const dialog=page.getByRole("dialog",{name:"Powerplants One"}); await expect(dialog).toBeVisible();
+    const dialog=page.getByRole("dialog", { name: "More", exact: true }); await expect(dialog).toBeVisible();
     for(let i=0;i<16;i++){await page.keyboard.press("Tab");expect(await dialog.evaluate(e=>e.contains(document.activeElement))).toBe(true);}
     await page.keyboard.press("Escape"); await expect(dialog).not.toBeVisible();
     await expect(page.getByRole("button",{name:"Menu",exact:true})).toBeFocused();

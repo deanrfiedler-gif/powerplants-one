@@ -1,0 +1,29 @@
+{
+  "passed": 24,
+  "groups": [
+    "Nine fixtures; five eligible; Northbank retains incomplete incoming state",
+    "Median and full range use per-job hours, not sell or total cost",
+    "Repeated selection does not inflate n",
+    "Below three cases withholds aggregate",
+    "Three and four are explicitly indicative",
+    "Even sample uses two central values",
+    "Partial, bespoke, superseded and other context stay visible and excluded",
+    "Unknown quantity and zero denominator are not zero variance",
+    "Incompatible units and currencies are excluded",
+    "Command does not mutate original state",
+    "Observer and reviewer cannot create a proposal",
+    "Required evidence, supported kind and valid factor enforced",
+    "Scope checklist can preserve a single eligible case without a ratio",
+    "Draft content can be edited without mutating original snapshot",
+    "Stale state version rejects writes",
+    "Submission is exact and duplicate submit is refused",
+    "Submitted content is immutable",
+    "Estimator cannot self-review; reviewer requires a rationale",
+    "Independent review never adopts or reprices",
+    "Source change makes original evidence stale and retains old values",
+    "Successor carries new evidence but no inherited review decision",
+    "Changed comparison context invalidates retained evidence",
+    "Stale in-review proposal can only be returned",
+    "Versioned save structure rejects incompatible schemas"
+  ]
+}

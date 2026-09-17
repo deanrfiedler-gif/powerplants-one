@@ -1,3 +1,5 @@
+import { ShellProvider } from "../../src/components/shell-provider";
+import { destinations } from "../../src/shell/navigation";
 import { createRoot } from "react-dom/client";
 import { BusinessSession } from "../../src/components/business-session";
 import {
@@ -85,7 +87,9 @@ window.fetch = async (input) => {
       display_name: "SYN Demo tester with a long display name",
     };
   else if (url.pathname.endsWith("/shell/context")) data = {
-    display_name: "SYN Demo tester with a long display name",
+    navigation: destinations.filter(item => item.href).map(item => item.id),
+      can_preview: true,
+      display_name: "SYN Demo tester with a long display name",
     actions: [
       { id: "opportunity", label: "Opportunity", module: "Deals", href: "/crm/opportunities/new" },
       { id: "activity", label: "Activity", module: "My Work", href: "/work/new" },
@@ -165,7 +169,7 @@ window.fetch = async (input) => {
   });
 };
 createRoot(document.getElementById("root")!).render(
-  <div className="app-frame">
+  <ShellProvider hosted={new URLSearchParams(location.search).get("mode") !== "local"}><div className="app-frame">
     <ProductNavigation />
     <div className="workspace">
       <ProductHeader />
@@ -177,5 +181,5 @@ createRoot(document.getElementById("root")!).render(
         </BusinessSession>
       </main>
     </div>
-  </div>,
+  </div></ShellProvider>,
 );

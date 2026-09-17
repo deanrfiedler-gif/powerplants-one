@@ -1,8 +1,8 @@
 ---
 document_id: PPO-UI-DESIGN-INDEX
 title: HTML design index and maintenance guide
-revision: r05
-updated: 2026-09-16
+revision: r06
+updated: 2026-09-17
 owner: Dean Fiedler
 status: Repository inventory; individual design approvals remain in linked decisions
 source_commit: 9921be2439ca479135482c51fbf3ed4b28615f37
@@ -15,6 +15,8 @@ Use this page to find the **latest available HTML for each design family**, its 
 **Inventory checked:** 15 September 2026, against [main at d041de7](https://github.com/deanrfiedler-gif/powerplants-one/commit/d041de7c40e7ba73acdef3252d5f18f1bf8ccb2f). All **139 HTML paths under `docs/`** are linked below: **120 UI reference files, 15 blueprint previews and four generator templates**. This is a file count, including earlier revisions and duplicates, not a count of distinct modules. Application HTML in `src/` and `public/` is outside this inventory. Open PRs #205 and #206 are listed separately and excluded from these main-branch counts. Unpublished conversation/download files cannot be established from GitHub alone.
 
 **Scoped additions, 16 September 2026:** ES-05 presentation correction r02, ES-06 response/negotiation r01 and ES-07 item resolution/conversion r01 with detailed reports are linked below. ES-05 r01 and customer quotation r03 remain retained references. This amendment does not repeat the dated full-inventory audit above or change existing design acceptance.
+
+**Scoped addition, 17 September 2026:** Application Shell r17 and its exact companion report are retained with the authorised implementation contribution. This does not repeat the dated inventory audit or claim deployment.
 
 **Latest available does not mean approved or implemented.** A higher filename revision, a successful check or a merged pull request does not establish design approval. **Approved** requires a linked Dean decision; **Proposed** and **Uploaded reference** do not establish acceptance; **Study** is explicitly unadopted scope. Recorded desktop and phone approvals retain their separate scopes. Where filenames and embedded revision labels disagree, the discrepancy is stated instead of silently choosing a new baseline.
 
@@ -30,7 +32,7 @@ These are the latest uploaded shared visual references. Their presence does not 
 | Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
 |---|---|---|---|
 | Theme / style board | [r20](theme-style-board/powerplants-one-theme-style-board-r20.html) | Latest uploaded visual reference | Matches the supplied r20 attachment byte for byte. [Shared UI specification](../../standards/ui-style-specification.md) and accepted baseline register retain implementation authority. |
-| Application shell | [r14](application-shell/PPO-Application-Shell-r14.html) | Latest uploaded visual reference | Shared container reference for module-only designs; accepted application shell scope remains separate. |
+| Application shell | [r17](application-shell/PPO-Application-Shell-r17.html) · [report](application-shell/PPO-Application-Shell-Report-r17.md) · [retained r14](application-shell/PPO-Application-Shell-r14.html) | r17 integration authorised by Dean; native review remains pending | Shared-frame implementation contribution: [decision](../../decisions/application-shell-integration.md), [handover](../../delivery/application-shell-handover.md). Existing module interiors and permissions remain authoritative. |
 
 ## Shared customer and platform pages
 
@@ -67,6 +69,8 @@ These are the latest uploaded shared visual references. Their presence does not 
 | Email & Calendar | [Working preview](../../blueprints/email-calendar-prototype/index.html) | Authorised r02 design package; visual acceptance separate | Bounded synthetic email/link/Activity journey exists; live provider behaviour is separate. [Design](../../decisions/email-calendar-design.md), [runtime handover](../../delivery/email-calendar-journey-handover.md), [preview instructions](../../blueprints/email-calendar-prototype/README.md). |
 
 ## Estimating and quotation
+
+**ES-10 design contribution, 17 September 2026:** [Reference Cases & Calibration Proposals r01](reference-calibration/PPO-Reference-Cases-and-Calibration-Proposals-r01.html) · [detailed report](reference-calibration/PPO-Reference-Cases-and-Calibration-Proposals-Report-r01.md). Five-view standalone r20 design; source eligibility, retained proposal reviews and estimator evidence panel. Proposed design; owner acceptance and application integration separate. [Receiving handover](../../decisions/reference-calibration-design.md), [verification](../../testing/evidence/reference-calibration-r01/README.md). This contribution is additional to the historical inventory count above.
 
 
 | Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
@@ -257,3 +261,4 @@ git diff --check
 ```
 
 The maintenance pull request records the actual check results and publication source. Reconcile the inventory and the two pending contribution records against current main before a later update; this dated audit is not an automatic synchronisation service.
+
