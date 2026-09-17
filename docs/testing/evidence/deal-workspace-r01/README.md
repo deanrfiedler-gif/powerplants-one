@@ -4,10 +4,40 @@ title: Deal Workspace r01 verification evidence
 revision: r01
 date: 2026-09-17
 owner: Dean Fiedler
-status: Verification in progress; design delivery and acceptance are separate
+status: Standalone delivery verified; owner acceptance and runtime integration separate
 ---
 
 # CR-01 r01 verification
+
+## Verified delivery
+
+[Native run 35181456330](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35181456330) passed on source 091e7ec6d0e382e098bd8966904d92af8e7720f5.
+
+| Evidence | Result |
+|---|---|
+| Delivered HTML SHA-256 | 8fd467547d5369de0a42cde05700495ceb0068a433d5e1c4dea0fbd1485d507a |
+| Browser | Chrome 153.0.8010.47 |
+| Model | 31 groups passed |
+| Native journeys | 22 groups passed; no browser errors |
+| Responsive coverage | Eight views at 1440, 1024, 768, 390 and 320 pixels; no page overflow |
+| Native captures | 47 originals; every capture hash checked against results.json |
+| Assembly and lint | Deterministic output and focused ESLint passed |
+| Documentation | Foundation, prototype and naming gates passed |
+
+The [complete native manifest](results.json) and [model results](model-results.json) are retained here. [Archive 10480907235](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35181456330/artifacts/10480907235) contained 49 files and matched SHA-256 228b75e5eb8685f955f7d230e702309dbf137fc8684cc54cd121b64c8d1e405d. Its GitHub retention expires on 1 October 2026; six original captures are retained permanently below.
+
+| Retained original | Review |
+|---|---|
+| [Desktop overview](captures/desktop-overview.png) | Record identity, five facts, stage strip, local tabs and two-column composition |
+| [Tablet tasks](captures/1024-tasks.png) | Header wrapping, aligned filter/actions and separation between Edit and Complete |
+| [Phone overview](captures/390-overview.png) | Stacked content, wrapped actions and independent tab scrolling |
+| [Phone Board](captures/320-board.png) | Explicit Board selection, five stages, readable wrapped filters and card navigation |
+| [Phone List](captures/320-list.png) | Distinct List selection, labelled records and shared filters |
+| [Phone document panel](captures/320-document-panel.png) | Full viewport panel, readable evidence and reachable download/context controls |
+
+The final 1440 Activities capture was also inspected for action spacing and filter alignment. Earlier complete native captures supplied review of all eight desktop views, commercial acceptance and prepared handover; the changes after that review are recorded below. Transient synthetic-session notification toasts are retained in original captures. No image was edited to hide an interface state.
+
+This is developer verification of the standalone synthetic HTML. Physical-device, screen-reader, owner design acceptance, durable server integration and integrated business acceptance remain separate. The subsequent evidence/report commit changes no tested HTML, JavaScript, CSS, fixtures or browser assertions.
 
 ## Initial local checkpoint
 
@@ -23,7 +53,7 @@ The dedicated Deal workspace design workflow uses the existing repository runtim
 
 All eight views are captured at 1440, 1024, 768, 390 and 320 pixels. The artifact contains results.json with source, browser version, exact HTML SHA-256, passed groups, errors and image hashes. Review original captures before recording visual acceptance.
 
-The initial native run and any corrections will be recorded here. Tests exercise a standalone synthetic model; they are not proof of runtime database permissions, durability, external integration, physical-device accessibility or owner business acceptance.
+The native runs and corrections are recorded below. Tests exercise a standalone synthetic model; they are not proof of runtime database permissions, durability, external integration, physical-device accessibility or owner business acceptance.
 
 ## First CI correction
 

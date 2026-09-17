@@ -293,7 +293,7 @@ Keyboard users can navigate tabs with arrows, Home and End; dialogs combine nati
 
 Forms retain visible labels and error summaries. Status is conveyed by words and colour. Document text and user-entered content are escaped. Long names and narratives wrap rather than expanding the page.
 
-The target review widths are 1440, 1024, 768, 390 and 320 pixels. Exact native-browser captures and results are recorded in the evidence folder once verified; physical devices and independent assistive-technology review remain separate.
+The verified responsive review widths are 1440, 1024, 768, 390 and 320 pixels. All eight views fit these widths without page overflow. Exact native-browser captures and results are recorded in the evidence folder; physical devices and independent assistive-technology review remain separate.
 
 ## 18. Source structure, verification and integration
 
@@ -313,7 +313,7 @@ The package has versionless editable sources:
 
 The HTML needs no server, fonts CDN, network request, installation or browser storage. It opens directly in a browser. A simple local server or repository CI is used for native verification and download testing.
 
-At the initial build checkpoint, 31 model groups and 14 local DOM-adapter groups passed. The local Chromium process was blocked by the execution environment’s socket restriction; that is not browser-layout evidence. The dedicated repository workflow supplies native-browser verification. The maintained evidence record is the authoritative source for the final tested HTML hash, source commit, run and capture review.
+Verification passed 31 model groups, 14 local DOM-adapter groups and 22 native-browser journeys. The native run checks actual forms, temporary attachments, exact quotation and intake bases, owned work, adverse saves, keyboard navigation, reload and shared Board/List navigation. It produces 47 original screenshots, including all eight views at five widths, with no browser errors. The maintained evidence record identifies the exact tested HTML hash, source commit, workflow run and reviewed captures. Model and standalone-browser passes do not claim live application integration or business acceptance.
 
 The application integration should reuse the existing /crm/opportunities/[id] route, CRM reads/commands, shared record components and architecture. This design introduces no runtime shortcut around the existing permission, version or terminal-outcome guards.
 

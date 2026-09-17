@@ -33,4 +33,4 @@ All local work is session-only. Destination panels are explanatory previews. Reo
 
 ## Evidence
 
-[Verification record](../testing/evidence/deal-workspace-r01/README.md) separates model/DOM results, native browser evidence and physical-device/owner acceptance. Initial local model and DOM checks passed; the local browser restriction is retained rather than treated as a visual pass. The dedicated workflow is responsible for native rendering evidence.
+[Verification record](../testing/evidence/deal-workspace-r01/README.md) separates model/DOM results, native browser evidence and physical-device/owner acceptance. The exact delivered HTML passes 31 model groups and 22 native browser journeys, with 47 original captures across five widths. Six reviewed originals and the complete manifest are retained. Initial local DOM evidence and the local browser restriction are distinguished from the subsequent native CI pass.
