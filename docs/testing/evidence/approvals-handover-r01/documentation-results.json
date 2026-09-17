@@ -7,8 +7,8 @@
     "planned_acceptance": 38,
     "backlog_items": 16,
     "linked_issues": 16,
-    "local_links_checked": 2758,
-    "files_scanned_for_markers": 1537,
+    "local_links_checked": 2764,
+    "files_scanned_for_markers": 1541,
     "errors": [],
     "scope": "Documentation assurance only; no business acceptance tests executed"
   },

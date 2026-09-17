@@ -1,0 +1,75 @@
+{
+  "checks": 16,
+  "status": "passed",
+  "browser": "153.0.8010.47",
+  "results": [
+    {
+      "name": "Default queue, summary and exact selection",
+      "status": "passed"
+    },
+    {
+      "name": "Search, filters and no-matches clear stale detail",
+      "status": "passed"
+    },
+    {
+      "name": "Returned work shows correction reason, owner and original age",
+      "status": "passed"
+    },
+    {
+      "name": "Evidence and history do not close or alter source tasks",
+      "status": "passed"
+    },
+    {
+      "name": "Every domain opens its own exact context and returns safely",
+      "status": "passed"
+    },
+    {
+      "name": "Handover receipt and acceptance are separate",
+      "status": "passed"
+    },
+    {
+      "name": "Changed source requires explicit successor review and survives reload",
+      "status": "passed"
+    },
+    {
+      "name": "Tampered deep link never opens a different screen",
+      "status": "passed"
+    },
+    {
+      "name": "Visibility examples filter counts before rendering and preserve read-only state",
+      "status": "passed"
+    },
+    {
+      "name": "Unavailable and revoked sources redact destination content",
+      "status": "passed"
+    },
+    {
+      "name": "Partial, failed, empty and retry states have truthful counts",
+      "status": "passed"
+    },
+    {
+      "name": "Saved filters restore and corrupt storage is retained until explicit reset",
+      "status": "passed"
+    },
+    {
+      "name": "Quota failure leaves view usable and does not claim save",
+      "status": "passed"
+    },
+    {
+      "name": "History retains terminal evidence and no active obligation",
+      "status": "passed"
+    },
+    {
+      "name": "Desktop, tablet and phone layouts fit; phone detail retains a reachable queue",
+      "status": "passed"
+    },
+    {
+      "name": "Dialog Escape and keyboard focus return work natively",
+      "status": "passed"
+    }
+  ],
+  "console_errors": [],
+  "source_head": "3d5ca696c26d359829dcd91f8c9b17c51140173c",
+  "run_id": 35166067713,
+  "job_id": 105027320324
+}
