@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 14 September 2026 · **Owner:** Dean Fiedler · **Repository:** `deanrfiedler-gif/powerplants-one`, **public** visibility, default branch `main` · **Baseline commit:** `10625815187f26179f316b887fcdee33467ac81f` (#177 merged; E2 API/screens/costing and performance remedy included) · **Naming:** [PPO-STD-001](standards/naming-conventions.md) / [ADR-0005](decisions/ADR-0005-project-naming-adoption.md)
+**Updated:** 17 September 2026 · **Owner:** Dean Fiedler · **Repository:** `deanrfiedler-gif/powerplants-one`, **public** visibility, default branch `main` · **Baseline commit:** `10625815187f26179f316b887fcdee33467ac81f` (#177 merged; E2 API/screens/costing and performance remedy included) · **Naming:** [PPO-STD-001](standards/naming-conventions.md) / [ADR-0005](decisions/ADR-0005-project-naming-adoption.md)
 
 This file is a snapshot of the current state, kept short enough to read in one sitting. It is not the evidence record: exact verification, run IDs, hashes and publication results remain in each package's handover, decision record and authoritative external record. The chronological entries that previously lived here are retained unchanged in [STATUS-log.md](STATUS-log.md). Update this file by replacing rows, not by appending narrative.
 
@@ -80,7 +80,7 @@ Powerplants One is Dean's personal synthetic prototype of a seven-domain operati
 
 | Group | Items | Next action |
 |---|---|---|
-| Open pull requests | Current repair covers #211–#218 and replacement #220 against main `d565a9d`; component histories and uploaded aliases are preserved. | [Repair record](testing/pr-repair-2026-09-16.md). #216–#217 require the missing original packages; #218 is closed in favour of complete #220. Current CI and owner acceptance remain distinct. |
+| Open pull requests | Authorised 17 September repair covers #212, #215–#217, #220, #223, #225, #227–#229 and #231. Eight complete design/reference packages are reconciled; #212 carries the final repair handover. | [Repair evidence and exact source heads](testing/pr-repair-2026-09-17.md). #216–#217 remain incomplete uploads pending their original packages. Final merge and fresh CI results are recorded on the linked PRs; owner acceptance remains separate. |
 | CRM board follow-through | Earlier #135/#136 keyboard, focus and lost-response work is delivered. #121 scroll/layer guidance and #120 URL state are now the authorised follow-through. | Source, original browser evidence and normal merge are tracked in the [reconciliation](delivery/issue-reconciliation-handover.md). |
 | Current repository-writing session | Owner-authorised repair of all eight open PRs, 16 September 2026; main #219 is retained. | Repair conflicts, lint and missing package references. Record unresolved original-file gaps. No main merge or deployment is included. |
 | Independent runtime maintenance | #163 merged as `6d46e0e5`; the latest owner-triggered hosted run uses the maintained runtime. | #160 remains open only for the listed hosted evidence, not for reimplementing the Node/Azure/browser update. [Maintenance handover](delivery/runtime-maintenance.md). |

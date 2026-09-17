@@ -89,6 +89,9 @@ try {
     assert.match(line, /1 record\(s\) are not available to this identity/);
     assert.doesNotMatch(await page.locator('#content').innerText(), /Cedar Vale/);
     await page.getByLabel('Search handovers').fill('Cedar');
+    // fill() can return before the input event has refreshed the register.
+    // Observe the required empty result before reading its exact row count.
+    await page.waitForFunction(() => document.querySelectorAll('.queue-table tbody tr').length === 0, null, {timeout: 8000});
     assert.equal(await page.locator('.queue-table tbody tr').count(), 0);
     await action('clear').first().click();
     await nav('basis').click();
