@@ -1,0 +1,42 @@
+{
+  "reviewer": "Claude (design session), not owner acceptance",
+  "html_sha256": "3dbcb516b5eeba5d677c7dc64adc0539250885cf32120d2f2a830ebdedeb6008",
+  "browser": "141.0.7390.37",
+  "reviewed": [
+    {
+      "capture": "1440-configure-drive.png",
+      "sha256": "3dc6b9c075909d31af5d7a736d88a8d6cc8f9da51274beb6bf271100addb2900",
+      "finding": "Pinion attention notice sits under the drive selection; release cell shows one untested selection; Pinion tube, Cable location and drive pipe diameter read as separate controls."
+    },
+    {
+      "capture": "1440-parts.png",
+      "sha256": "a9f6b434e19ea50f77d2e3b475e1bb148958e7839bf5e7cf79023c6014c2b6b9",
+      "finding": "PPO part column is leftmost. Initial capture wrapped manual-row actions; column widths were rebalanced and the final capture keeps actions on one line."
+    },
+    {
+      "capture": "1440-part-identity.png",
+      "sha256": "30ab3c308177832aa8d3590e8114f1ae5b699245fcae6ee83c136414fd653d71",
+      "finding": "Working dialog shows CE-LINE key, PPO part number, catalogue description, category, drive branch, part rule and provisional status."
+    },
+    {
+      "capture": "1440-coverage.png",
+      "sha256": "151633646bdb8b3c41ee3612715b96627478ace56db4334c23f6b231f053f2d2",
+      "finding": "Untested options table, active Pinion row highlighted. Initial header text rendered with a narrow space; header renamed to Risk if selected."
+    },
+    {
+      "capture": "1440-parameters.png",
+      "sha256": "746af3464a6c3e0e7a374e9a394ad725203b85e56aa97f4bac79133c18c521dd",
+      "finding": "Twelve records with bound and recorded-only status. Initial Edit value buttons wrapped; nowrap applied."
+    },
+    {
+      "capture": "390-parts.png",
+      "sha256": "d516e77fb4aab02dde59ecf70718af5c6fd5c91a3fc647491ece0bb14abf4735",
+      "finding": "Row cards show PPO part, source position, quantity, basis and actions without horizontal overflow."
+    },
+    {
+      "capture": "320-parts.png",
+      "sha256": "cabd0374835d1e1b233730dd88b43f35a5e73c1d7eebc1d598881f3332bceab6",
+      "finding": "Same card structure at 320 px; long part numbers wrap."
+    }
+  ]
+}
