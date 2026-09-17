@@ -36,3 +36,7 @@ Source 36a3813a5fc7eb225e5b504303a2afb065de642c, [run 35180091893](https://githu
 ## Asynchronous attachment check correction
 
 Source 9b719c39b5087eef3d9219ff52ac22145c5df853, [run 35180506059](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35180506059), passed 14 native groups through private/filed correspondence. The attachment assertion read the error before asynchronous File.arrayBuffer validation finished. The check now waits for the specific visible validation result, or for the successful panel close, before asserting the record and continuing. Signature, escaped-text and duplicate-byte assertions remain intact. The HTML is unchanged by this correction.
+
+## Keyboard containment and capture correction
+
+Source f62fe2648f344407e4e72c599cf8178e7f83399c, [run 35180717145](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35180717145), passed 17 native groups. The keyboard check found Tab could leave the modal's document focus sequence. Explicit forward/reverse focus wrapping now supplements the native dialog. Skip-to-content keeps the current deal URL rather than entering hash routing. The native check covers reverse wrapping and skip-link identity as well as forward focus and return. Full-page captures now begin at document top so sticky/fixed elements are not captured at a previous viewport offset; the unfocused skip link is clipped.

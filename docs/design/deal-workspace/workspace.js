@@ -176,7 +176,16 @@
     else if(action==='reset'){state=M.initial();server=M.clone(state);Object.assign(ui,{actor:'kate',read:'ready',fault:'none',q:'',owner:'',outcome:'Open',stage:'',docQ:'',docType:'',docHistory:false,historyQ:'',historyKind:'',taskFilter:'Open work',activityFilter:'All activities'});closePanel(true);navigate('deal/berry/overview');notify('Synthetic session reset.');}
   });
   $('#panel').addEventListener('cancel',e=>{e.preventDefault();closePanel();});
-  document.addEventListener('keydown',e=>{if(e.target.matches('[role=tab]')&&['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const n=tabs.findIndex(x=>x[0]===ui.tab),next=e.key==='Home'?0:e.key==='End'?tabs.length-1:(n+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;setTab(tabs[next][0]);}});
+  $('.skip').addEventListener('click',e=>{e.preventDefault();const content=$('#content');if(content){content.setAttribute('tabindex','-1');content.focus({preventScroll:true});content.scrollIntoView({block:'start'});}});
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Tab'&&$('#panel').open){
+      const panel=$('#panel'),items=[...panel.querySelectorAll('a[href],button,input:not([type=hidden]),select,textarea,summary,[tabindex]')].filter(x=>!x.matches(':disabled')&&x.tabIndex>=0&&x.getClientRects().length&&!x.closest('[hidden],[inert]'));
+      const index=items.indexOf(document.activeElement);
+      if(!items.length){e.preventDefault();$('#panel-title').focus();return;}
+      if(index<0||(e.shiftKey&&index===0)||(!e.shiftKey&&index===items.length-1)){e.preventDefault();items[e.shiftKey?items.length-1:0].focus();}
+      return;
+    }
+    if(e.target.matches('[role=tab]')&&['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const n=tabs.findIndex(x=>x[0]===ui.tab),next=e.key==='Home'?0:e.key==='End'?tabs.length-1:(n+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;setTab(tabs[next][0]);}});
   window.addEventListener('popstate',()=>{if($('#panel').open&&(panelContext?.dirty||panelContext?.uncertain)){history.pushState(null,'',ui.route);notify('Finish or discard the active edit before navigating back.');return;}closePanel(true);parseRoute();window.scrollTo(0,ui.board?ui.boardY:0);if(ui.board&&$('.board-scroll'))$('.board-scroll').scrollLeft=ui.boardX;});
   window.addEventListener('beforeunload',e=>{if(panelContext?.dirty||panelContext?.uncertain){e.preventDefault();e.returnValue='';}});
   history.scrollRestoration='manual';
