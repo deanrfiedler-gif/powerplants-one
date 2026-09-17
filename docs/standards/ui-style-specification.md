@@ -1,7 +1,7 @@
 ---
 title: Powerplants One - Shared UI style specification
-revision: r07
-date: 2026-09-14
+revision: r08
+date: 2026-09-17
 status: Brand-derived visual direction; functional extensions proposed
 owner: Dean Fiedler
 scope: Shared visual foundation; BP-03 C02 CRM board and grid mockups; UI design baseline requirements
@@ -205,3 +205,8 @@ Dean accepted the [full Job Pack design](../decisions/job-pack-design.md) on 10 
 [Field Technicians r04](../decisions/field-technicians-design.md) is Dean’s accepted presentation baseline for `/service/technicians`. Preserve its 24 px desktop / 16 px phone outer padding, white bordered workspace, compact Roboto table typography, green selected-tab underline and four-tab right drawer inside the shared application shell. Do not duplicate global navigation or the logo. The [handover](../delivery/field-technicians-handover.md) records bounded data adaptations and verification status.
 
 Revision r07: #121 records bounded-scroll mechanics and a scale reconciled to existing shell layering; 14 September 2026. No CSS or domain authority change.
+
+
+## Application Shell r17 implementation direction
+
+Dean authorised r17 as the next shared-frame integration on 17 September 2026. The [decision](../decisions/application-shell-integration.md) and [handover](../delivery/application-shell-handover.md) govern this bounded successor: 76px rail, 54px logo, bottom More, actual page breadcrumbs, Quick add right of centred search, 44px utility targets and a distinct Page guide. Existing working module interiors and their approved baselines remain authoritative; the accepted Leads phone header remains a documented exception. The More popover uses the overlay band at 80; its 65 entry in the earlier layering inventory records the predecessor. This contribution is not a claim of Azure deployment or native visual acceptance.
