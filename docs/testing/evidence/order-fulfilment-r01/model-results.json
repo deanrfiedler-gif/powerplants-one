@@ -1,0 +1,169 @@
+{
+  "design": "PPO Order Fulfilment & Customer Delivery r01",
+  "html_sha256": "ad331e08d6b2bb1fb5a43b3237fe7dcbd6c948a8b631d5569f350d48f5e2dfd7",
+  "model_sha256": "c5a742154bb4b4f889d8eec64a81b4e5a3734a25d783ed7cd2c3a6fae824d73c",
+  "groups": 40,
+  "final_session_version": 37,
+  "results": [
+    {
+      "name": "The seed fixture validates and every declared collection invariant holds",
+      "result": "Passed"
+    },
+    {
+      "name": "Company grants isolate records from search, counts, snapshots and projections",
+      "result": "Passed"
+    },
+    {
+      "name": "Commercial values never enter a projection for a role without the commercial grant",
+      "result": "Passed"
+    },
+    {
+      "name": "Warehouse scope limits the availability view without inventing a quantity",
+      "result": "Passed"
+    },
+    {
+      "name": "A partial observation is unknown, not zero, and cannot support a reservation",
+      "result": "Passed"
+    },
+    {
+      "name": "Quarantined stock is physically present but never usable",
+      "result": "Passed"
+    },
+    {
+      "name": "An internally inconsistent source value is preserved and excluded, not corrected",
+      "result": "Passed"
+    },
+    {
+      "name": "An unresolved unit basis is never summed and never satisfies a differing unit",
+      "result": "Passed"
+    },
+    {
+      "name": "Incoming supply is promised, not usable",
+      "result": "Passed"
+    },
+    {
+      "name": "The register condition and blockers describe the Northbank shortage exactly",
+      "result": "Passed"
+    },
+    {
+      "name": "Requested, confirmed and expected dates are separate values with their own versions",
+      "result": "Passed"
+    },
+    {
+      "name": "Reservation binds evidenced usable stock and records a confirmed source reference",
+      "result": "Passed"
+    },
+    {
+      "name": "Double allocation against the same evidenced quantity is refused, not netted to a negative",
+      "result": "Passed"
+    },
+    {
+      "name": "Competing demand against one observation lets exactly one request succeed",
+      "result": "Passed"
+    },
+    {
+      "name": "Only permitted roles may reserve, pick, capture delivery or decide a substitution",
+      "result": "Passed"
+    },
+    {
+      "name": "Picking is a physical observation bounded by its confirmed reservation",
+      "result": "Passed"
+    },
+    {
+      "name": "Staging is its own observation and cannot exceed the picked quantity",
+      "result": "Passed"
+    },
+    {
+      "name": "A short pick needs a recorded finding and blocks dispatch readiness until reviewed",
+      "result": "Passed"
+    },
+    {
+      "name": "Reviewing a finding records an outcome without altering the physical observation",
+      "result": "Passed"
+    },
+    {
+      "name": "A substitution is a proposal only, requires two independent positions and never changes the order",
+      "result": "Passed"
+    },
+    {
+      "name": "A prepared dispatch moves nothing and cannot exceed the uncommitted staged quantity",
+      "result": "Passed"
+    },
+    {
+      "name": "Issuing a pick list or packing document never dispatches goods",
+      "result": "Passed"
+    },
+    {
+      "name": "Physical dispatch, source shipment and delivery are three separate records",
+      "result": "Passed"
+    },
+    {
+      "name": "Delivery capture records received quantities against exact source lines and cannot exceed the consignment",
+      "result": "Passed"
+    },
+    {
+      "name": "An acknowledgement names its exact delivery and quantities and excludes wider acceptance",
+      "result": "Passed"
+    },
+    {
+      "name": "The retained shortage is owned, and the same impact identity cannot create a second obligation",
+      "result": "Passed"
+    },
+    {
+      "name": "Later confirmed supply is a refreshed observation with its own receipt evidence",
+      "result": "Passed"
+    },
+    {
+      "name": "The second shipment completes the line and quantity conservation holds in the declared unit",
+      "result": "Passed"
+    },
+    {
+      "name": "The original shortage history and both shipments remain visible after completion",
+      "result": "Passed"
+    },
+    {
+      "name": "A correction supersedes its predecessor instead of overwriting or double counting it",
+      "result": "Passed"
+    },
+    {
+      "name": "A failed delivery attempt records no received quantity and is retained",
+      "result": "Passed"
+    },
+    {
+      "name": "An unknown source outcome blocks further effect until the original operation is reconciled",
+      "result": "Passed"
+    },
+    {
+      "name": "An identical operation identity replays once; different content under the same identity is refused",
+      "result": "Passed"
+    },
+    {
+      "name": "A stale session version or a stale source snapshot retains the original state",
+      "result": "Passed"
+    },
+    {
+      "name": "Changing an expected date does not replace the confirmed commitment",
+      "result": "Passed"
+    },
+    {
+      "name": "Changing a confirmed commitment retains the earlier version, needs a review role and reschedules nothing",
+      "result": "Passed"
+    },
+    {
+      "name": "Recovery matters are routed, not rebuilt, and retain their resolution evidence here",
+      "result": "Passed"
+    },
+    {
+      "name": "Quantity parsing rejects invalid precision, negatives and non-numeric entries",
+      "result": "Passed"
+    },
+    {
+      "name": "A malformed saved session is refused and a valid one round-trips without loss",
+      "result": "Passed"
+    },
+    {
+      "name": "Every recorded command produced exactly one receipt and one history entry",
+      "result": "Passed"
+    }
+  ]
+}

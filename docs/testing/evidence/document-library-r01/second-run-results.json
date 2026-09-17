@@ -1,0 +1,184 @@
+{
+  "source": "1613517f51fd7a4360dc8ca85e25c29ae2d267fe",
+  "browser": "153.0.8010.47",
+  "htmlSha256": "14e71182734e53c8fed0abc4053b26273912f544cb41b7249d888f695974f1e0",
+  "passed": 21,
+  "groups": [
+    "Ten source identities render with four exact source exceptions",
+    "Search filters exact equipment and clears excluded selection",
+    "Location filters retain no-match and restore states",
+    "Docked snapshot opens full document and preserves register return",
+    "Exact extract download contains only the chosen authored revision",
+    "Text size and exact source identity controls work",
+    "Revision comparison shows changed isolation and retains original r02",
+    "Failed finding save retains entries and retry creates one finding",
+    "Open finding blocks Reviewed and preserves exact decision form",
+    "Response and independent acceptance preserve review evidence",
+    "Exact technical decision survives reload without issue or delivery",
+    "Source successor has no inherited decision or current-use review on r03",
+    "Three receiving records retain r02 and one owned follow-up is prepared",
+    "Source recovery stays unresolved after an owned follow-up",
+    "Restricted and missing historical sources disclose no substitute content",
+    "Partial relationship failure retains readable exact document",
+    "Role scope and exported review copy omit commercial records",
+    "Loading empty and failed reads have explicit recovery",
+    "Cross-tab change pauses writes and preserves the open form",
+    "Malformed storage is preserved and cannot be silently overwritten",
+    "All six views fit 1440 1024 820 390 and 320 pixels"
+  ],
+  "errors": [],
+  "captures": [
+    {
+      "file": "desktop-register.png",
+      "sha256": "e27d2ee20b4da194609f29c790e7255ad2762cc6b79bf7b54e0dbdaf82732b13"
+    },
+    {
+      "file": "desktop-snapshot.png",
+      "sha256": "e8c112d3477ad8b602865f1e1c3f0b16bfd5d9b9ec398e7bf32848379574d262"
+    },
+    {
+      "file": "desktop-document.png",
+      "sha256": "9a88e4910476d6413e07e05b7317b71716ecd9786ad38c81f6be597e1c0d56fc"
+    },
+    {
+      "file": "desktop-comparison.png",
+      "sha256": "5a3619e07f9260a5eb690375c6c2774bfb09367fd024779f4489fbb0b369964e"
+    },
+    {
+      "file": "desktop-reviewed.png",
+      "sha256": "6636cb0377f7222a0875d1e80d4c843fb50b987570e90ee5097bfab466827d0a"
+    },
+    {
+      "file": "desktop-usage.png",
+      "sha256": "84c8eaa282871e7a84618c8c53f9df9162704a7de169a26d4cc44377021c4e0f"
+    },
+    {
+      "file": "desktop-exceptions.png",
+      "sha256": "17559b1a01c14808e6cfa03daa56c1defe61f6671c992282fc03ad32ba9aa039"
+    },
+    {
+      "file": "1440-document-register.png",
+      "sha256": "e27d2ee20b4da194609f29c790e7255ad2762cc6b79bf7b54e0dbdaf82732b13"
+    },
+    {
+      "file": "1440-document-detail.png",
+      "sha256": "9a88e4910476d6413e07e05b7317b71716ecd9786ad38c81f6be597e1c0d56fc"
+    },
+    {
+      "file": "1440-revision-review.png",
+      "sha256": "28a3ff3305c8e58da9b38bfcccc5d1e985dacdc780bebcf37e1fd85ec4773d07"
+    },
+    {
+      "file": "1440-usage-impact.png",
+      "sha256": "7f8846eca965bb978d0426d077e47579e459401257cf01d53c197451f79e4838"
+    },
+    {
+      "file": "1440-source-exceptions.png",
+      "sha256": "8ceef6c0bea46b2a47bdbbaf809d123664bd1b07887556a4599a72deec570788"
+    },
+    {
+      "file": "1440-history.png",
+      "sha256": "f16f7051e274b278ac78a23b4dfeb32b9454df587eccf23ebfec43a8558a52dc"
+    },
+    {
+      "file": "1024-document-register.png",
+      "sha256": "657e4d4a324ccc4801e591e617d7ef3043e550169976eabf9e289d1ea1804e9a"
+    },
+    {
+      "file": "1024-document-detail.png",
+      "sha256": "e7aa1d314c0b59a29f4185e9a2b651a0b3c076513d289554970a370376ebf981"
+    },
+    {
+      "file": "1024-revision-review.png",
+      "sha256": "96e1528250b14b088883c5c8bc53257f49e58f035060ccc56f18aa218002e9a3"
+    },
+    {
+      "file": "1024-usage-impact.png",
+      "sha256": "c58b256b1b0200482ea8417a20475b1005621cf71f2c6fce3c75f02ab30afeb9"
+    },
+    {
+      "file": "1024-source-exceptions.png",
+      "sha256": "a1e0e48ad34ba8eadb5e259994fbc70efb65ac93bcf890a98735152cb0db209e"
+    },
+    {
+      "file": "1024-history.png",
+      "sha256": "70f1db9b4be49ade5a2d0bf303f1a9a943fd56dd7e8a0a3855f1937422ad8f11"
+    },
+    {
+      "file": "820-document-register.png",
+      "sha256": "38aba8f2e2f66152167dd2d5c74f67ad9eb206b8dc65c1b7750d44a4e889657c"
+    },
+    {
+      "file": "820-document-detail.png",
+      "sha256": "b460b3f588e5d404457e8228b67a9dc3c71995f7d0fd27f17383cb8a5b9a5da5"
+    },
+    {
+      "file": "820-revision-review.png",
+      "sha256": "3c6c6b48b44f26074b298fe0efa077baa992c3bc2e3cf703ffffd6a0baf12169"
+    },
+    {
+      "file": "820-usage-impact.png",
+      "sha256": "4dc5e1aa03c18c11c8940193b10c6e382e2825da412b200278d70f169a3f2f32"
+    },
+    {
+      "file": "820-source-exceptions.png",
+      "sha256": "ea857d86e3ed7edb0dea10c91a3c30ce65d0b09dd53ce0644c350780dd3b9aad"
+    },
+    {
+      "file": "820-history.png",
+      "sha256": "155838b945ae211af13edcf868bdc9a536b90f77e04f6137b0869e4bcc8c660e"
+    },
+    {
+      "file": "390-document-register.png",
+      "sha256": "36395a39b8c8330c2fe832dfc4e45ac1cc9b5c473d0ab443b82203de4526627c"
+    },
+    {
+      "file": "390-document-detail.png",
+      "sha256": "f9cef565a727ada97b918fddc03f948a887a49ee606fb703f405968cb9bfbb9d"
+    },
+    {
+      "file": "390-revision-review.png",
+      "sha256": "aa75b1ce8436a5372425b05065690f1b9227f7ff94f36ec8fb0375738e3672ee"
+    },
+    {
+      "file": "390-usage-impact.png",
+      "sha256": "3d2a270dde30c1cd9ee2b77349bff76d6fe9e84dbf1615f387c0137a7c42edca"
+    },
+    {
+      "file": "390-source-exceptions.png",
+      "sha256": "f9d73e26f2aecede53bd995777a91fbec465cfd150a76216c03a496aed8425c6"
+    },
+    {
+      "file": "390-history.png",
+      "sha256": "d713374a11ea49eb4b4c00fa9d9ca99bcc560e780af8163ecf34fffdb0ee2840"
+    },
+    {
+      "file": "320-document-register.png",
+      "sha256": "3e4cd621d498d3dd9e9d561d9e3262d95601561acdaadc39f73800a5a985e92c"
+    },
+    {
+      "file": "320-document-detail.png",
+      "sha256": "0ac55bbf69a7648e1bc2c089c02f3a18e7dec9568dce60df78a3da49b71423fa"
+    },
+    {
+      "file": "320-revision-review.png",
+      "sha256": "c7087fb20aafd9f621ae2dfefe9c92a7d1a200b613304137228018b5df7ab7a1"
+    },
+    {
+      "file": "320-usage-impact.png",
+      "sha256": "9fc9d6c8e8537f1074ff008979f277e227c904aeece6ca084f6a1b48ff1cb845"
+    },
+    {
+      "file": "320-source-exceptions.png",
+      "sha256": "1b96f23d422e7727794c7c8127a132f20a2e4a81d25ae88ee3ce5395a8aae43f"
+    },
+    {
+      "file": "320-history.png",
+      "sha256": "1d8fbe32ad891222edd9f27aaa2b6dcac42c771075ff67d70c248bb422da580b"
+    },
+    {
+      "file": "failure.png",
+      "sha256": "96d6489bc0a75025bf2bb9e0ee78b3146cf91d801f4a1fd60bcc0f9a9bd4e336"
+    }
+  ]
+}

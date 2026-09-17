@@ -1,0 +1,35 @@
+{
+  "base_commit": "e1b705acc5457dab6fc0b6a2f0c977132cbd2215",
+  "references": [
+    {
+      "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r20.html",
+      "sha256": "c68a499e857b1705d47bd6598d4b2e89526bf0861a0d234394c3da023f19b617",
+      "bytes": 16022237
+    },
+    {
+      "path": "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+      "sha256": "672f626ddfdfc2c67287c646e97485681872b1bb29ddddedf4072917db71a770",
+      "bytes": 589749
+    },
+    {
+      "path": "docs/reference/ui/quoting/PPO-Quotation-Approval-Issue-and-Distribution-r02.html",
+      "sha256": "bf80f562ad0dce83158c50c530c5222a5f29164d4ba601833d761f24f426c842",
+      "bytes": 988953
+    },
+    {
+      "path": "docs/design/notifications/fonts.css",
+      "sha256": "57b4aafb71296b18d80408cb10aa972c87f5185deafd748c7fdcfb33e2bd4bef",
+      "bytes": 63656
+    }
+  ],
+  "adjacent_open_prs": [
+    {
+      "pr": 222,
+      "head": "3bdb08cd1b78884eaa740a5434e3da55466626ee"
+    },
+    {
+      "pr": 223,
+      "head": "2ca71cb6bda629c98e9142cbc2bae1cfca061ccd"
+    }
+  ]
+}

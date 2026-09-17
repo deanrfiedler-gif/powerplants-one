@@ -1,0 +1,92 @@
+[
+  {
+    "file": "1024-responsive-register.png",
+    "sha256": "302c8001164937f3449fd0e39ea130658fc686247578e4c9cc5fd153e07b6e31",
+    "bytes": 357647
+  },
+  {
+    "file": "1440-01-register.png",
+    "sha256": "5d2fbb23464025ff55fe4f612454e87dd5410dc2532e8ba5f622ee67c30ea973",
+    "bytes": 436132
+  },
+  {
+    "file": "1440-02-order-drawer.png",
+    "sha256": "f6468a1fa8e55d3a3b190462d285e455a8314472ec0332424a9f7182fbb7842a",
+    "bytes": 514599
+  },
+  {
+    "file": "1440-03-stock.png",
+    "sha256": "6d674c4206d409957cf565867f920dbfd9405c3856ea2f42e9fa5df485a483dc",
+    "bytes": 551996
+  },
+  {
+    "file": "1440-04-competing.png",
+    "sha256": "dc7073be324e05437dfed680d2f44f2e0855dcdd49014f5a30851f1409312ed6",
+    "bytes": 575160
+  },
+  {
+    "file": "1440-05-picking.png",
+    "sha256": "fc2130a195b1894cd3b8d8ada38306c76ab32b3b1e0ea66c24746f4facba58b1",
+    "bytes": 328794
+  },
+  {
+    "file": "1440-06-delivery.png",
+    "sha256": "bb7bc57d35833b7c4f423e70199998cca512fbc4c50f7a6ff6fe47ac4ae1e9ab",
+    "bytes": 300033
+  },
+  {
+    "file": "1440-07-exceptions.png",
+    "sha256": "98a68e988d90be2791d7c4e8e9421447c919abea5976043ecff24c76a9e12734",
+    "bytes": 393207
+  },
+  {
+    "file": "1440-08-two-shipments.png",
+    "sha256": "c66cc101ff202e4c6a662d0da37f6b46b060c977750fe2b06c59e06d658efc68",
+    "bytes": 395330
+  },
+  {
+    "file": "1440-09-correction.png",
+    "sha256": "0595f217877c92f61ad8ee0506065668f82b7d19f20eedd233570ccce7aa8c2c",
+    "bytes": 500895
+  },
+  {
+    "file": "1440-10-partial.png",
+    "sha256": "5d95db09c5b94aa9a55d803e6d33a43377b2de04639909a0a6e6a229843e8ff6",
+    "bytes": 551254
+  },
+  {
+    "file": "1440-11-company-isolation.png",
+    "sha256": "e158f08692455179372d23948110bbd91e8dde4d7f57f47ebe8d33d113aa6ccf",
+    "bytes": 241874
+  },
+  {
+    "file": "1440-responsive-register.png",
+    "sha256": "570296175e0756b8f7dc723174490aeb69eca30dda3b3b89b03ad02f405b92f0",
+    "bytes": 435760
+  },
+  {
+    "file": "320-responsive-register.png",
+    "sha256": "daa042855586671d1899198971b1ecc8f32dfcb78076428252d5b606fbef5e16",
+    "bytes": 399735
+  },
+  {
+    "file": "390-delivery.png",
+    "sha256": "269c8992861542da5a2977be95eb07e30782ccfa29465d864899e4b4f36a17c0",
+    "bytes": 215307
+  },
+  {
+    "file": "390-picking.png",
+    "sha256": "a4d1c88775c3bb502f199133b479687ba2c85c9ab06d2702a9ed590611d1c2a4",
+    "bytes": 291279
+  },
+  {
+    "file": "390-responsive-register.png",
+    "sha256": "740f8d5dec648ba15c37c0d052301ea87f8c107e2bf129a10fb50c205d0a2b1e",
+    "bytes": 409667
+  },
+  {
+    "file": "820-responsive-register.png",
+    "sha256": "f23d83c8c951e62102e33ca4ffca92f7f28b11db32059a4befeba740940c49a0",
+    "bytes": 356526
+  }
+]

@@ -360,7 +360,9 @@ test("CA-06/13 initial identity must settle before an actor can switch", async (
 });
 
 test("CA-13 shared brand consumers retain navigation, readable actions and original identity controls", async ({ page }, info) => {
-  for (const [path, title] of [["/", "A connected view"], ["/customers", "Organisations"], ["/work", "Owned follow-up"], ["/service/reports", "Service review"]]) {
+  // Home opens the existing authenticated My Work page.
+  await call(page, "local-session", { profile: "coordinator" });
+  for (const [path, title] of [["/", "Owned follow-up"], ["/customers", "Organisations"], ["/work", "Owned follow-up"], ["/service/reports", "Service review"]]) {
     await page.goto(path);
     if (path !== "/") await identity(page);
     // Streaming navigation briefly retains both the loading and page headings.
@@ -370,10 +372,10 @@ test("CA-13 shared brand consumers retain navigation, readable actions and origi
     await expect(page.locator(".brand-logo:visible")).toBeVisible();
     if (info.project.use.isMobile) {
       await page.getByRole("button", { name: "Menu", exact: true }).click();
-      const menu = page.getByRole("dialog",{name:"Powerplants One"});
+      const menu = page.getByRole("dialog", { name: "More", exact: true });
       await expect(menu).toBeVisible();
       // Scoped to the menu: the phone's bottom navigation also carries Deals.
-      await expect(menu.getByRole("link", { name: "Deals", exact: true })).toBeVisible();
+      await expect(menu.getByRole("link", { name: "Sales", exact: true })).toBeVisible();
       await page.getByRole("button", { name: "Close menu", exact: true }).click();
     }
     await capture(page, info, `shared-${path.replaceAll("/", "-") || "overview"}`);
@@ -391,12 +393,12 @@ test("Accepted r08 shell and board retain full-width stages, fixed headers and s
   await page.getByLabel("Search opportunities", { exact: true }).fill(marker);
   await expect.poll(() => ids(page)).toHaveLength(10);
   const board = page.locator(".crm-board-scroll");
-  const activeLink = page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "Main navigation", exact: true }).getByRole("link", { name: "Deals", exact: true });
-  if (info.project.use.isMobile) await page.getByRole("button", { name: "Menu", exact: true }).click();
+  const activeLink = page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "More navigation", exact: true }).getByRole("link", { name: "Sales", exact: true });
+  await page.getByRole("button", { name: info.project.use.isMobile ? "Menu" : "More", exact: true }).click();
   await expect(activeLink).toHaveAttribute("aria-current", "page");
   const activeStyle = await activeLink.evaluate(e => ({ fill: getComputedStyle(e).backgroundColor, icon: getComputedStyle(e.querySelector("svg")!).color }));
-  expect(activeStyle).toEqual({ fill: "rgb(52, 60, 76)", icon: "rgb(255, 255, 255)" });
-  if (info.project.use.isMobile) await page.getByRole("button", { name: "Close menu", exact: true }).click();
+  expect(activeStyle).toEqual({ fill: "rgb(240, 246, 237)", icon: "rgb(49, 94, 67)" });
+  await page.getByRole("button", { name: info.project.use.isMobile ? "Close menu" : "Close More menu", exact: true }).click();
   for (const width of info.project.use.isMobile ? [390, 320] : [1920, 1440, 1280, 1024]) {
     await page.setViewportSize({ width, height: 844 });
     if (info.project.use.isMobile) await expect(page.getByRole('navigation',{name:'Mobile navigation'})).toBeVisible();

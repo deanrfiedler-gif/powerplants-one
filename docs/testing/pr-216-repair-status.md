@@ -1,3 +1,24 @@
+# PR #216 recovery update — 17 September 2026
+
+**Original package restored; fresh CI required before merge.** Dean supplied the original Git bundle, ZIP, HTML and report. All recovered ZIP files match bundle commit `9dfbb27f4594351a6993e132a763639c5d60937e`; the separately uploaded HTML/report match the ZIP. Main `86802e9cbaa7f0f72a5108018802a3d95e0a4285` is retained as a merge parent.
+
+| Original | SHA-256 |
+|---|---|
+| ZIP | `c39f201ab2e33c06f27d324cb615e4586e69dbfc650f0f55d9b383aed4ed28d3` |
+| Git bundle | `db89bf71fab1ebaab7a7943efec7c1fcb5b96c20f4f87c801b63c72ccf5c5c2e` |
+| HTML | `ad331e08d6b2bb1fb5a43b3237fe7dcbd6c948a8b631d5569f350d48f5e2dfd7` |
+| Report | `a5acef84922d4b2670ad88aabc47559f013d3a59557be50536b7c5d288954289` |
+
+The deterministic builder reproduces the uploaded HTML exactly. All **40 original model groups** pass on Node 24.19.0. Foundation, prototype and naming assurance pass. Original model/browser scripts, focused workflow and historical evidence are restored. Historical browser results remain historical.
+
+Local Chrome cannot start because the execution environment denies its socket creation. The restored workflow installs the repository-pinned runtime and browser, and must pass with all required checks before merge. Read fresh results and the authoritative merge outcome on [PR #216](https://github.com/deanrfiedler-gif/powerplants-one/pull/216).
+
+No application, database, dependency pin or deployment changes. Owner acceptance and runtime integration remain separate.
+
+The earlier inventory below is retained as history; its missing-file blocker is now resolved.
+
+---
+
 # PR #216 repair status — Order Fulfilment & Customer Delivery
 
 Date: 16 September 2026. Status: **incomplete source upload; blocked**.

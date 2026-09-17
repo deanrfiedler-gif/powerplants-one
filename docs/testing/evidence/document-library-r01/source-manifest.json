@@ -1,0 +1,45 @@
+{
+  "tested_source": "cd4a942dfd1c511f4550c273b0161f8ce3338ef0",
+  "files": [
+    {
+      "path": "docs/design/document-library/model.js",
+      "bytes": 22619,
+      "sha256": "4bb125ddab9fa27ff174c71a8651f5a68532d432d8a3429fc80306fde189703e"
+    },
+    {
+      "path": "docs/design/document-library/workspace.js",
+      "bytes": 40903,
+      "sha256": "1e3a08d193d9ed5198b8e85d6b540647087daa41ecc63f52963a1610731a53a6"
+    },
+    {
+      "path": "docs/design/document-library/workspace.css",
+      "bytes": 14882,
+      "sha256": "ddf53078b03dccb5fcefc4aadf0f06ab6ee5c1ff2072cc4897eb6e10789c74f9"
+    },
+    {
+      "path": "docs/design/document-library/template.html",
+      "bytes": 2516,
+      "sha256": "8210fc3a2ff7c20ce794eef8c5a5583df6abb83af83e38fe71bf362fed0a59c0"
+    },
+    {
+      "path": "docs/reference/ui/document-library/PPO-Document-Register-and-Linked-Library-r01.html",
+      "bytes": 165771,
+      "sha256": "4e67700df87892ec9fc1af4dd06952c6016c9ad3f224bec4065a842b1d081d53"
+    },
+    {
+      "path": "scripts/check-document-library-model.mjs",
+      "bytes": 7916,
+      "sha256": "0754fdadf84933509487d7243513d9c437bb33b14769878579b463ebcfbfc10e"
+    },
+    {
+      "path": "scripts/check-document-library-browser.mjs",
+      "bytes": 16527,
+      "sha256": "89d3662d4b6ba83db5cde2dd66ed47233ea92afc8525f72438377b2dd240f1da"
+    },
+    {
+      "path": "scripts/build-document-library.py",
+      "bytes": 1291,
+      "sha256": "86f2331b8767010535c1943f0e367ffe19a978a46b629b4172ac323aec6c2e90"
+    }
+  ]
+}

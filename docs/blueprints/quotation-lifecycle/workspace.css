@@ -1,0 +1,5 @@
+/* r20 workspace-only composition: inspection surfaces dock; decisions centre. */
+dialog.inspection-panel{inset:0 0 0 auto;margin:0;width:448px;max-width:100vw;height:100dvh;max-height:100dvh;border-radius:0;overflow:auto}
+dialog.inspection-panel .dialog-head{position:sticky;top:0;background:white;z-index:1}
+dialog.inspection-panel .dialog-body{padding:24px}
+@media(max-width:600px){dialog.inspection-panel{width:100vw}}
