@@ -1,7 +1,7 @@
 ---
 document_id: PPO-UI-DESIGN-INDEX
 title: HTML design index and maintenance guide
-revision: r06
+revision: r07
 updated: 2026-09-17
 owner: Dean Fiedler
 status: Repository inventory; individual design approvals remain in linked decisions
@@ -34,6 +34,8 @@ These are the latest uploaded shared visual references. Their presence does not 
 | Theme / style board | [r20](theme-style-board/powerplants-one-theme-style-board-r20.html) | Latest uploaded visual reference | Matches the supplied r20 attachment byte for byte. [Shared UI specification](../../standards/ui-style-specification.md) and accepted baseline register retain implementation authority. |
 | Application shell | [r17](application-shell/PPO-Application-Shell-r17.html) · [report](application-shell/PPO-Application-Shell-Report-r17.md) · [retained r14](application-shell/PPO-Application-Shell-r14.html) | r17 integration authorised by Dean; native review remains pending | Shared-frame implementation contribution: [decision](../../decisions/application-shell-integration.md), [handover](../../delivery/application-shell-handover.md). Existing module interiors and permissions remain authoritative. |
 
+**Scoped addition, 17 September 2026:** DK-06 Document & form template management r01 and its detailed report are listed under shared platform pages below. The 15 September inventory counts remain the historical audited snapshot and exclude this new HTML and its generator sources. Listing it here is navigation, not design acceptance.
+
 ## Shared customer and platform pages
 
 **16 September addition:** SH-03 below is a new proposed design on this contribution. The 15 September inventory counts above remain the historical audited snapshot and exclude this new HTML and its generator template.
@@ -47,6 +49,7 @@ These are the latest uploaded shared visual references. Their presence does not 
 | Customer 360 | [r01](customers/PPO-Customer-360-Workspace-r01.html) · [detailed report](customers/PPO-Customer-360-Workspace-Report-r01.md) | Proposed CS-01 workspace; owner acceptance and application integration separate | Extends the customer-location workspace with deals, sales orders, cases, projects, accounts and activity; MYOB remains the intended ERP authority and live integration is outstanding. 87 model/DOM and 12 native browser groups passed. [Design and receiving handover](../../decisions/customer-360-workspace-design.md), [evidence](../../testing/evidence/customer-360-r01/README.md), [sources](../../design/customer-360/README.md). |
 | Site Access & Horticultural Readiness | [r01](site-access/PPO-Site-Access-and-Horticultural-Readiness-r01.html) | Proposed CS-06 / F08 standalone design; acceptance and integration separate | Six views with explicit facility applicability, sourced visitor/biosecurity evidence, seasonal windows, scoped preparation and retained history. [Detailed report](site-access/PPO-Site-Access-and-Horticultural-Readiness-Report-r01.md) · [Handover](../../decisions/site-access-readiness-design.md). |
 | Knowledge search & article detail | [r01](knowledge/PPO-Knowledge-Search-and-Article-Detail-r01.html) | Proposed DK-04; 15 model and 13 local DOM groups passed; native visual review pending | Search, saved references, watchlist, article/source applicability and exact revision history. [Detailed companion report](knowledge/PPO-Knowledge-Search-and-Article-Detail-Report-r01.md) · [Design handover](../../decisions/knowledge-search-article-design.md). |
+| Document & form template management | [r01](template-management/PPO-Document-and-Form-Template-Management-r01.html) · [detailed report](template-management/PPO-Document-and-Form-Template-Management-Report-r01.md) | Proposed DK-06 design; owner acceptance, operational template approval and application integration separate | Six views separate authoring, review, publication and current eligibility over eight synthetic template families, with a bounded typed editor, three-valued conditions, a fourteen-case preview matrix, applicability refusals and original-operation recovery. 35 model and 38 native browser groups passed. [Design and receiving handover](../../decisions/document-form-template-management-design.md), [verification](../../testing/evidence/template-management-r01/README.md), [sources](../../design/template-management/README.md). |
 | Site Survey & As-Found | [r01](customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html) | Proposed CS-08 workspace | [Design and receiving handover](../../decisions/site-survey-workspace-design.md). |
 | Equipment & Installed Base | [r02](equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html) | Proposed refinement; not an accepted application baseline | Shared equipment context exists; this workspace/inspection experience requires integration. [Decision and receiving boundary](../../decisions/equipment-workspace-design.md). |
 | Customer portal | [Working preview](../../blueprints/customer-portal-mockup.html) | Direction authorised; detailed design proposed | CP1–CP5 remain staged delivery work. [Decision](../../decisions/customer-portal-direction.md), [handover](../../delivery/customer-portal-handover.md). |
