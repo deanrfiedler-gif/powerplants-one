@@ -237,6 +237,9 @@ export function ShellControls({
     ...(results?.items ?? []).map(item => ({ ...item, icon: "search" as const })),
   ];
   const onSearchKey = (event: KeyboardEvent<HTMLInputElement>) => {
+    // Chrome otherwise clears type=search on Escape and fires onChange, reopening
+    // the panel after the document-level close handler has restored focus.
+    if (event.key === "Escape") event.preventDefault();
     const count = searchItems.length;
     if (event.key === "ArrowDown" || event.key === "ArrowUp") {
       event.preventDefault();

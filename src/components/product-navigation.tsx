@@ -116,7 +116,7 @@ function ProductNavigationView({
         className={mobile ? undefined : "ppo-more-link"}
         href={item.href!}
         aria-label={label}
-        aria-current={current?.id === item.id ? "page" : undefined}
+        aria-current={current?.id === item.id || (!mobile && !!root && current?.workspace === root.id) ? "page" : undefined}
         onClick={() => setMore(false)}
       >
         {contents}
@@ -175,7 +175,7 @@ function ProductNavigationView({
                 {group.items.map((item) => link(item))}
               </section>
             ))
-          ) : (
+          ) : showHelp ? null : (
             <p className="ppo-panel-status">
               No matching pages.{" "}
               <button
