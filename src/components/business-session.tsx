@@ -5,6 +5,7 @@ import { lockLocal } from "../offline/store";
 import { lockOtherBusinessViews, sessionReadyEvent } from "./session-signal";
 import { HeaderContent } from "./header-content";
 import { openShellPanel, shellPanelEvent } from "./shell-events";
+import { ShellWorkspaceSelector } from "./shell-workspace-selector";
 type Identity = {
   actor_id: string;
   workspace_id: string;
@@ -76,6 +77,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
         <div className="hosted-account-summary"><strong title={p?.display_name}>{p?.display_name ?? "Private prototype"}</strong><button id="hosted-account-toggle" className="ppo-account-toggle" aria-label="Account" aria-expanded={showIdentity} aria-controls="hosted-account-controls" onClick={toggleAccount}><span className="account-avatar" aria-hidden="true">{initials}</span></button></div>
         <div id="hosted-account-controls" className="ppo-hosted-account-controls" data-open={showIdentity}>
           <strong className="ppo-account-name">{p?.display_name ?? "Private prototype"}</strong>
+          {p && <ShellWorkspaceSelector />}
           {p ? <form action="/auth/logout" method="post" onSubmit={() => lockOtherBusinessViews()}><button className="secondary">Sign out</button></form> : <a href="/login">Sign in with Microsoft</a>}
         </div>
       </section> : <>
@@ -94,6 +96,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
         </div>
         <div id="identity-controls" className="identity-controls" hidden={!!(p && !showIdentity)}>
         <strong className="ppo-account-name">{p?.display_name ?? "Choose an identity"}</strong>
+        {p && <ShellWorkspaceSelector />}
         <p className="identity-explanation">Changing identity clears displayed records and unsaved forms. Saved offline originals stay locked to their original owner.</p>
         <div className="identity-choice">
           <label htmlFor="business-profile">Identity</label>

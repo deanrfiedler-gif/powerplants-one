@@ -28,9 +28,11 @@ test("shell search and quick add preserve tenant, company and current-grant boun
     assert.deepEqual(hidden.items, [], `${profile} must not discover another scope's record`);
   }
   assert.ok((await shellContext(p, {})).actions.some(action => action.id === "opportunity"));
+  assert.ok((await shellContext(p, {})).navigation.includes("deals"));
   await database().query("DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='crm.opportunity.read'", [p.workspace_id, p.actor_id]);
   assert.deepEqual((await shellSearch(p, { q: input.id })).items, []);
   assert.ok(!(await shellContext(p, {})).actions.some(action => action.id === "opportunity"));
+  assert.ok(!(await shellContext(p, {})).navigation.includes("deals"));
 });
 
 test("Leads participate in shell search and quick add only within current grants", async () => {

@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }, info) => {
   await page.goto(fixture + "?mode=local");
   await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeVisible();
 });
-test("approved shell fits laptop, desktop and compact viewports with persistent labels and no rail scroll", async ({ page }, info) => {
+test("approved shell fits laptop, desktop and compact viewports with centred search, right-hand Quick add and no rail scroll", async ({ page }, info) => {
   for (const [width, height] of [[1366, 768], [1920, 1080], [800, 500], [960, 540]]) {
     await page.setViewportSize({ width, height });
     const geometry = await page.evaluate(() => {
@@ -17,29 +17,38 @@ test("approved shell fits laptop, desktop and compact viewports with persistent 
       const logo = document.querySelector(".ppo-rail .brand-logo")!.getBoundingClientRect();
       const controls = [...document.querySelectorAll(".ppo-header-centre,.ppo-header-utilities,.header-account")].map(element => element.getBoundingClientRect());
       return { railWidth: rail.clientWidth, railFits: rail.scrollHeight <= rail.clientHeight, pageFits: document.documentElement.scrollWidth <= innerWidth,
-        headerHeight: top.height, moreBottom: more.bottom, logoCentre: logo.left + logo.width / 2,
+        headerHeight: top.height, moreBottom: more.bottom, logoCentre: logo.left + logo.width / 2, logoWidth: logo.width, logoY: logo.top + logo.height / 2,
+        searchCentre: document.querySelector(".ppo-global-search")!.getBoundingClientRect().left + document.querySelector(".ppo-global-search")!.getBoundingClientRect().width / 2,
+        plusGap: document.querySelector(".ppo-quick-add")!.getBoundingClientRect().left - document.querySelector(".ppo-global-search")!.getBoundingClientRect().right,
         icons: [...document.querySelectorAll(".ppo-primary-nav .product-icon")].map(element => element.getBoundingClientRect().width),
         controlsFit: controls.every(rect => rect.top >= top.top && rect.bottom <= top.bottom && rect.right <= innerWidth),
         noOverlap: controls.every((rect, index) => index === 0 || controls[index - 1].right <= rect.left), zoom: getComputedStyle(document.documentElement).zoom };
     });
-    expect(geometry.railWidth).toBe(96); expect(geometry.headerHeight).toBe(64); expect(geometry.logoCentre).toBe(48);
+    expect(geometry.railWidth).toBe(76); expect(geometry.headerHeight).toBe(64); expect(geometry.logoCentre).toBe(38);
+    expect(geometry.logoWidth).toBe(54); expect(geometry.logoY).toBe(32); expect(geometry.searchCentre).toBeCloseTo(width / 2, 0); expect(geometry.plusGap).toBeCloseTo(12, 0);
     expect(geometry.railFits && geometry.pageFits && geometry.controlsFit && geometry.noOverlap).toBe(true);
-    expect(geometry.moreBottom).toBeLessThanOrEqual(height); expect(geometry.icons).toEqual(Array(8).fill(30));
+    expect(geometry.moreBottom).toBeLessThanOrEqual(height); expect(geometry.icons).toEqual([]);
     expect(["1", "normal"]).toContain(geometry.zoom);
     await page.screenshot({ path: info.outputPath(`shell-${width}x${height}.png`) });
     await page.getByRole("button", { name: "More", exact: true }).click();
     await expect(page.getByRole("navigation", { name: "More navigation" })).toBeVisible();
-    for (const label of ["Pulse — planned", "Leads", "Deals", "Inbox", "Activities", "Contacts", "Products — planned", "Insights — planned"]) {
-      const target = page.getByRole("navigation", { name: "Main navigation", exact: true }).getByLabel(label, { exact: true });
-      await target.hover();
-      await expect(page.getByRole("tooltip")).toHaveText(label);
-      await expect(page.getByRole("navigation", { name: "More navigation" })).toBeVisible();
-    }
-    await page.getByRole("tooltip").hover(); await expect(page.getByRole("tooltip")).toBeVisible();
-    await page.screenshot({ path: info.outputPath(`more-hover-${width}x${height}.png`) });
+    await expect(page.getByRole("navigation", { name: "More navigation" }).getByRole("link", { name: "Deals", exact: true })).toHaveAttribute("aria-current", "page");
+    const frames = await page.locator("#desktop-more-panel").evaluate(panel => {
+      const body = panel.querySelector<HTMLElement>(".ppo-more-body")!, header = panel.querySelector("header")!, footer = panel.querySelector("footer")!;
+      const before = { head: header.getBoundingClientRect().bottom, foot: footer.getBoundingClientRect().top };
+      body.scrollTop = body.scrollHeight;
+      return { before, after: { head: header.getBoundingClientRect().bottom, foot: footer.getBoundingClientRect().top }, bodyTop: body.getBoundingClientRect().top, bodyBottom: body.getBoundingClientRect().bottom, scrolled: body.scrollTop > 0 };
+    });
+    expect(frames.after).toEqual(frames.before); expect(frames.bodyTop).toBeCloseTo(frames.before.head); expect(frames.bodyBottom).toBeCloseTo(frames.before.foot); expect(frames.scrolled).toBe(true);
+    await page.getByRole("searchbox", { name: "Find a menu item" }).fill("Sales");
+    await expect(page.getByRole("navigation", { name: "More navigation" }).getByRole("link")).toHaveCount(2);
+    await page.screenshot({ path: info.outputPath(`more-filter-${width}x${height}.png`) });
     await page.keyboard.press("Escape");
     await expect(page.getByRole("button", { name: "More", exact: true })).toBeFocused();
-    await expect(page.getByRole("tooltip")).toBeHidden();
+    await expect(page.getByRole("navigation", { name: "More navigation" })).toBeHidden();
+    await page.getByRole("button", { name: "More", exact: true }).click();
+    await page.getByRole("searchbox", { name: "Find a menu item" }).fill("");
+    await page.keyboard.press("Escape");
   }
 });
 test("global search is independent of page filtering, keyboard selection and quick-add routes", async ({ page }) => {
@@ -80,4 +89,20 @@ test("identity lock clears results and rejects a late response even if transport
   await search.focus();
   await expect(page.getByText("SYN Late private result", { exact: true })).toHaveCount(0);
   await expect(page.locator("#shell-search-list").getByRole("option")).toHaveCount(0);
+});
+
+test("page guide is contextual and planned preview preserves the working page", async ({ page }) => {
+  await page.getByRole("button", { name: "Page guide", exact: true }).click();
+  const guide = page.getByRole("dialog", { name: "Page guide", exact: true });
+  await expect(guide.getByRole("heading", { name: "Deals", exact: true })).toBeVisible();
+  await expect(guide.getByText("The detailed Deals guide is being prepared.", { exact: false })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button", { name: "Page guide", exact: true })).toBeFocused();
+  await page.getByRole("button", { name: "Change identity", exact: true }).click();
+  await page.getByLabel("Preview workspace", { exact: true }).selectOption("supply");
+  await expect(page.getByText("This workspace is planned; your current page stays open.", { exact: false })).toBeVisible();
+  await expect(page.locator(".crm-card:visible")).toHaveCount(8);
+  await page.reload();
+  await page.getByRole("button", { name: "Change identity", exact: true }).click();
+  await expect(page.getByLabel("Preview workspace", { exact: true })).toHaveValue("supply");
 });
