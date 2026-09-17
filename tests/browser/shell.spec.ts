@@ -61,11 +61,14 @@ test("responsive shell, keyboard focus, server save, read-only refusal and stora
       .getByRole("alert")
       .filter({ hasText: "This identity cannot read service requests." }),
   ).toBeVisible();
-  await page.getByText("Browser-storage experiment", { exact: true }).click();
+  const storagePanel = page.locator("#main details.storage");
+  await storagePanel.getByText("Browser-storage experiment", { exact: true }).click();
   await page.getByRole("button", { name: "Check browser storage" }).click();
   await expect(page.getByText(/Synthetic marker committed/)).toBeVisible();
   await page.reload();
-  await page.getByText("Browser-storage experiment", { exact: true }).click();
+  // Scope the reloaded control to the live page, excluding streamed content outside main.
+  await expect(storagePanel).toHaveCount(1);
+  await storagePanel.getByText("Browser-storage experiment", { exact: true }).click();
   await page.getByRole("button", { name: "Check browser storage" }).click();
   await expect(page.getByText(/Previous marker recovered/)).toBeVisible();
   const storage = await page.getByText(/Previous marker recovered/).innerText();
