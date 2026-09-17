@@ -9,6 +9,7 @@ import {
 } from "../shell/navigation";
 import { useShell } from "./shell-provider";
 import { openShellPanel } from "./shell-events";
+import { ShellIcon } from "./shell-icon";
 
 export function ShellWorkspaceSelector() {
   const shell = useShell(),
@@ -20,10 +21,10 @@ export function ShellWorkspaceSelector() {
     <section className="ppo-development" aria-label="Development preview">
       <div className="ppo-development-title">
         <h3>Development</h3>
-        <span>Preview</span>
+        <span>Shell preview</span>
       </div>
       <label htmlFor={selectId}>Preview workspace</label>
-      <select
+      <div className="ppo-workspace-choice"><ShellIcon name={shell.preview} /><select
         id={selectId}
         value={shell.preview}
         onChange={(event) => {
@@ -46,11 +47,11 @@ export function ShellWorkspaceSelector() {
             {w.label}
           </option>
         ))}
-      </select>
+      </select><ShellIcon name="down" /></div>
       <p>
-        Remembered on this browser. Available workspaces open with your current
-        access.
+        Your last workspace is remembered on this browser.
       </p>
+      <button className="ppo-reset-preview" onClick={() => setNotice(shell.resetPreview() ? "Preview preference reset to Sales. Your current page stays open." : "Preview reset for this visit; browser storage is unavailable.")}>Reset preview preference</button>
       <p role="status">{notice}</p>
     </section>
   );

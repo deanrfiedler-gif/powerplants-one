@@ -1,9 +1,13 @@
 import { test, expect } from "@playwright/test";
 
+// Home now redirects to authenticated My Work. These storage-boundary probes
+// need a stable same-origin document before importing and exercising IndexedDB.
+// The diagnostic page has no automatic identity selection or redirect.
+
 test("P08 compatible IndexedDB upgrade preserves pending originals and exact Blob; abort and blocked upgrade retain evidence", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/foundation");
   const result = await page.evaluate(async () => {
     const path = "/offline/modules/offline/store.js",
       protocol = "/offline/modules/offline/protocol.js";
@@ -167,7 +171,7 @@ test("P08 unavailable IndexedDB and detected eviction refuse persistence claims"
 test("P08 retained ownership locks deny cross-actor context, originals, bytes and receipts", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/foundation");
   const result = await page.evaluate(async () => {
     const path = "/offline/modules/offline/store.js",
       s = await import(path);
@@ -220,7 +224,7 @@ test("P08 retained ownership locks deny cross-actor context, originals, bytes an
 test("P08 partial browser storage clearing is detected without a false receipt or recovery claim", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/foundation");
   await page.evaluate(async () => {
     const path = "/offline/modules/offline/store.js",
       s = await import(path);
