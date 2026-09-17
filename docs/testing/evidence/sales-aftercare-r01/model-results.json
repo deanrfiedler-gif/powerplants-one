@@ -1,0 +1,124 @@
+{
+  "module": "CR-05",
+  "html_sha256": "403a0a182bdc353333a1e387b2f3fa3b32d6c8c3245085acb31919ff79435f48",
+  "model_sha256": "9c3939f987401edb78464b97af1243e1306c1b586f3cd4d7211680c9553b595c",
+  "groups": 29,
+  "results": [
+    {
+      "name": "Seed fixture validates and every planned date states where it came from",
+      "result": "Passed"
+    },
+    {
+      "name": "A planned date cannot be recorded without an explicit basis, and Date needed is a real value",
+      "result": "Passed"
+    },
+    {
+      "name": "Restricted customer scope applies to permitted records, queries and counts",
+      "result": "Passed"
+    },
+    {
+      "name": "Owner, source, reason, state and due filters combine without losing source context",
+      "result": "Passed"
+    },
+    {
+      "name": "Read-only and out-of-capability roles refuse writes atomically",
+      "result": "Passed"
+    },
+    {
+      "name": "Customer feedback must state whether it is quoted, paraphrased or interpreted",
+      "result": "Passed"
+    },
+    {
+      "name": "A positive comment does not change any measured or independently sourced outcome",
+      "result": "Passed"
+    },
+    {
+      "name": "A review cannot be completed while a commitment has no disposition",
+      "result": "Passed"
+    },
+    {
+      "name": "Completing a review sets only the aftercare outcome and leaves the rest untouched",
+      "result": "Passed"
+    },
+    {
+      "name": "A completed review retains its open obligations and shows them separately",
+      "result": "Passed"
+    },
+    {
+      "name": "A completed review is corrected by appending, never by overwriting",
+      "result": "Passed"
+    },
+    {
+      "name": "An existing case is linked once and similar wording never merges records",
+      "result": "Passed"
+    },
+    {
+      "name": "A referral requires the duplicate check and every receiving field",
+      "result": "Passed"
+    },
+    {
+      "name": "Prepared, submitted, returned and accepted stay four separate states",
+      "result": "Passed"
+    },
+    {
+      "name": "A returned referral is corrected without rewriting the original request",
+      "result": "Passed"
+    },
+    {
+      "name": "Training material applicability is resolved against the exact model and configuration",
+      "result": "Passed"
+    },
+    {
+      "name": "Planned, confirmed, attended, delivered and assessed remain five separate states",
+      "result": "Passed"
+    },
+    {
+      "name": "Document requests are prepared for the document workflow and never duplicated",
+      "result": "Passed"
+    },
+    {
+      "name": "A commercial discussion carries its source observation and every open issue",
+      "result": "Passed"
+    },
+    {
+      "name": "MA-05 owns the agreement; CR-05 only links a renewal review",
+      "result": "Passed"
+    },
+    {
+      "name": "A new CRM handover needs a deliberate review and cannot duplicate a linked opportunity",
+      "result": "Passed"
+    },
+    {
+      "name": "An unknown receiving outcome blocks a second submission until it is reconciled",
+      "result": "Passed"
+    },
+    {
+      "name": "A confirmed receiving reference cannot be recorded twice",
+      "result": "Passed"
+    },
+    {
+      "name": "Stale record and stale session versions refuse and retain the original state",
+      "result": "Passed"
+    },
+    {
+      "name": "An original operation replays idempotently and a reused identity with different content refuses",
+      "result": "Passed"
+    },
+    {
+      "name": "A source change retains earlier content and flags the record for reassessment",
+      "result": "Passed"
+    },
+    {
+      "name": "Closing requires a completed review, dispositioned commitments and reconciled outcomes",
+      "result": "Passed"
+    },
+    {
+      "name": "Ownership changes are recorded without silently transferring the other owners",
+      "result": "Passed"
+    },
+    {
+      "name": "Malformed sessions refuse and a valid serialised session round-trips unchanged",
+      "result": "Passed"
+    }
+  ]
+}
