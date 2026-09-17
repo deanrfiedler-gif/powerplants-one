@@ -1,0 +1,51 @@
+{
+  "source": "ce069eedb046ae83ee18140d8e64e31c35ddaae9",
+  "browser": "153.0.8010.47",
+  "htmlSha256": "2fc2547b04804a0534986e757712232e124570d7383f6bc2b0a0681d3d41e97c",
+  "passed": 12,
+  "groups": [
+    "Ten source identities render with four exact source exceptions",
+    "Search filters exact equipment and clears excluded selection",
+    "Location filters retain no-match and restore states",
+    "Docked snapshot opens full document and preserves register return",
+    "Exact extract download contains only the chosen authored revision",
+    "Text size and exact source identity controls work",
+    "Revision comparison shows changed isolation and retains original r02",
+    "Failed finding save retains entries and retry creates one finding",
+    "Open finding blocks Reviewed and preserves exact decision form",
+    "Response and independent acceptance preserve review evidence",
+    "Exact technical decision survives reload without issue or delivery",
+    "Source successor has no inherited decision or current-use review on r03"
+  ],
+  "errors": [],
+  "captures": [
+    {
+      "file": "desktop-register.png",
+      "sha256": "e27d2ee20b4da194609f29c790e7255ad2762cc6b79bf7b54e0dbdaf82732b13"
+    },
+    {
+      "file": "desktop-snapshot.png",
+      "sha256": "e8c112d3477ad8b602865f1e1c3f0b16bfd5d9b9ec398e7bf32848379574d262"
+    },
+    {
+      "file": "desktop-document.png",
+      "sha256": "9a88e4910476d6413e07e05b7317b71716ecd9786ad38c81f6be597e1c0d56fc"
+    },
+    {
+      "file": "desktop-comparison.png",
+      "sha256": "5a3619e07f9260a5eb690375c6c2774bfb09367fd024779f4489fbb0b369964e"
+    },
+    {
+      "file": "desktop-reviewed.png",
+      "sha256": "2378d2016038e4cd003e2993f1738c985f9a2a95dde2e35cdd48672c3194ee16"
+    },
+    {
+      "file": "desktop-usage.png",
+      "sha256": "9366e76a314f5f49830aa5581107effb2bdedcd8ec91fc5034fe6e47a20980d4"
+    },
+    {
+      "file": "failure.png",
+      "sha256": "acdf70e0b862ef1ac830702ee940eca0984bce0e8b291da42ddc27c128d567cc"
+    }
+  ]
+}
