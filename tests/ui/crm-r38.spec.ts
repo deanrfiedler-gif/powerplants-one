@@ -88,3 +88,23 @@ test("r38 named views, list resize, triage, totals and unavailable data commands
   await page.getByRole("button", { name: "Help", exact: true }).click();
   await expect(page.getByRole("dialog", { name: "Deal board guide", exact: true })).toContainText("existing saved workflows");
 });
+
+test("r38 outcome drops open the selected decision without saving", async ({ page }) => {
+  const card = page.locator('.crm-stage[data-drop-stage="Closing"] .crm-card').first();
+  for (const outcome of ["Lost", "Won"]) {
+    const box = (await card.boundingBox())!;
+    await page.mouse.move(box.x + 8, box.y + 8);
+    await page.mouse.down();
+    await page.mouse.move(box.x + 12, box.y + 28, { steps: 4 });
+    const target = page.locator(".crm-drag-actions>div").filter({ hasText: new RegExp(`^${outcome}$`) });
+    await expect(target).toHaveAttribute("data-disabled", "false");
+    const drop = (await target.boundingBox())!;
+    await page.mouse.move(drop.x + drop.width / 2, drop.y + drop.height / 2, { steps: 5 });
+    await page.mouse.up();
+    const dialog = page.getByRole("dialog", { name: "Record sales outcome", exact: true });
+    await expect(dialog.getByLabel("Sales outcome", { exact: true })).toHaveValue(outcome);
+    await expect(dialog.getByLabel(outcome === "Lost" ? "Lost reason" : "Acceptance or order evidence", { exact: true })).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(page.locator(".crm-card")).toHaveCount(18);
+  }
+});
