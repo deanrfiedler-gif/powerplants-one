@@ -71,3 +71,5 @@ The [PPO Assistant direction and architecture decision](ppo-assistant-direction.
 ## Naming, communications and SharePoint
 
 [Package decision](naming-communications-sharepoint.md) records Dean's authorisation of the shared design package, r04 naming extension, exact r18 theme source, architecture choices and operational boundaries. It continues ADR-0005 and existing D-012/D-024/D-025 evidence obligations without renumbering the master decisions.
+
+- [Application Shell r17 integration](application-shell-integration.md) — authorised shared-frame successor, runtime identity and permission mapping, fixed More frames, preview workspaces and contextual guide boundary.

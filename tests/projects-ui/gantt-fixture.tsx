@@ -1,3 +1,5 @@
+import { ShellProvider } from "../../src/components/shell-provider";
+import { destinations } from "../../src/shell/navigation";
 import { createRoot } from "react-dom/client";
 import { BusinessSession } from "../../src/components/business-session";
 import {
@@ -86,6 +88,8 @@ window.fetch = async (input, init) => {
     };
   else if (url.pathname.endsWith("/shell/context"))
     data = {
+      navigation: destinations.filter(item => item.href).map(item => item.id),
+      can_preview: true,
       display_name: "SYN Alex Morgan",
       actions: [
         {
@@ -174,7 +178,7 @@ window.fetch = async (input, init) => {
   });
 };
 createRoot(document.getElementById("root")!).render(
-  <>
+  <ShellProvider hosted>
     <div className="app-frame">
       <ProductNavigation />
       <div className="workspace">
@@ -186,5 +190,5 @@ createRoot(document.getElementById("root")!).render(
         </main>
       </div>
     </div>
-  </>,
+  </ShellProvider>,
 );

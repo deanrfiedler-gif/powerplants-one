@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ProductHeader, ProductNavigation } from "../components/product-navigation";
 import { SessionViewBoundary } from "../components/session-view-boundary";
+import { ShellProvider } from "../components/shell-provider";
 import "./globals.css";
 import "./shared-layout.css";
 import "./mobile-layout.css";
@@ -27,7 +28,7 @@ export default function RootLayout({
         <a className="skip-link" href="#main">
           Skip to main content
         </a>
-        <div className="app-frame">
+        <ShellProvider hosted={process.env.PPO_ENV === "azure-demo"}><div className="app-frame">
           <ProductNavigation />
           <div className="workspace">
             <ProductHeader />
@@ -36,7 +37,7 @@ export default function RootLayout({
             </main>
 
           </div>
-        </div>
+        </div></ShellProvider>
       </body>
     </html>
   );
