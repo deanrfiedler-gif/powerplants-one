@@ -3,9 +3,9 @@ test("P02 diagnostic context, labels, keyboard focus and scoped error state", as
   page,
 }, info) => {
   await page.goto("/foundation");
-  await page.getByRole("button", { name: info.project.use.isMobile ? "Menu" : "More", exact: true }).click();
-  await expect(page.getByText("Synthetic data only", { exact: true })).toBeVisible();
-  await page.getByRole("button", { name: info.project.use.isMobile ? "Close menu" : "Close More menu", exact: true }).click();
+  await page.getByRole("button", { name: "Account", exact: true }).click();
+  await expect(page.getByText("Powerplants One · Synthetic data only", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Close panel", exact: true }).click();
   await page.getByLabel("Demonstration identity").selectOption("coordinator");
   await page.getByRole("button", { name: "Use this identity" }).click();
   const load = page.getByRole("button", { name: "Load shared context" });
