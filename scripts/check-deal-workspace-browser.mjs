@@ -9,7 +9,7 @@ const out='verification-evidence/deal-workspace';await fs.mkdir(out,{recursive:t
 const server=http.createServer((req,res)=>{res.setHeader('Content-Type','text/html; charset=utf-8');res.end(html);});
 await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
 const url='http://127.0.0.1:'+server.address().port;
-const browser=await chromium.launch({headless:true});
+const browser=await chromium.launch({headless:true,channel:'chrome'});
 const ctx=await browser.newContext({viewport:{width:1440,height:1000},acceptDownloads:true});
 const page=await ctx.newPage(),errors=[],groups=[],captures=[];
 page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
