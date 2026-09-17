@@ -35,7 +35,7 @@
   const fingerprint = (d,v) => JSON.stringify([d.id,d.item,v.number,v.sourceVersion,v.sections,d.coverage,d.areas,d.model,d.firmware]);
   const stateOf = (s,d,n=current(s,d)) => d.withdrawn?'Withdrawn':Number(n)===current(s,d)?'Current':'Superseded';
   const canRead = (s,actor,d,n) => allowed(actor,d)&&getRevision(s,d,n)?.availability==='Available';
-  const reviewOf = (s,d,n=current(s,d)) => s.decisions.findLast(x=>x.doc===d.id&&x.revision===Number(n))?.outcome || (d.id==='irrigation'&&Number(n)===2?'Reviewed':Number(n)===d.current?d.review:'Review needed');
+  const reviewOf = (s,d,n=current(s,d)) => (s.findings.some(f=>f.doc===d.id&&f.revision===Number(n)&&f.status!=='Closed')?'Review needed':null) || s.decisions.findLast(x=>x.doc===d.id&&x.revision===Number(n))?.outcome || (d.id==='irrigation'&&Number(n)===2?'Reviewed':Number(n)===d.current?d.review:'Review needed');
   const visibleDocs = (s,actor,filter={}) => docs.filter(d=>allowed(actor,d)).filter(d=>{
     const fields=[d.title,d.ref,d.customer,d.site,d.equipment,d.project,d.type,d.model,d.firmware,...d.areas].join(' ').toLowerCase();
     if(filter.search&&!fields.includes(filter.search.toLowerCase())) return false;
@@ -91,13 +91,14 @@
     if(!s||s.schema!==1||!Number.isInteger(s.version)||s.version<0||typeof s.sourceAdvanced!=='boolean'||!Number.isInteger(s.sourceEpoch))return false;
     if(!['findings','decisions','tasks','events'].every(k=>Array.isArray(s[k])))return false;
     if(s.sourceEpoch!==(s.sourceAdvanced?1:0)||s.events.length!==s.version)return false;
+    const validInstant=x=>typeof x==='string'&&!Number.isNaN(Date.parse(x));
     const exact=x=>!!x&&!!getDoc(x.doc)&&!!getRevision(s,getDoc(x.doc),x.revision);
-    if(!s.findings.every(f=>exact(f)&&typeof f.text==='string'&&Object.values(PEOPLE).includes(f.owner)&&validDate(f.due)&&['Open','Response awaiting review','Closed'].includes(f.status)&&Array.isArray(f.responses)&&f.responses.every(r=>r&&typeof r.text==='string'&&Object.values(PEOPLE).includes(r.actor))&&(f.status==='Open'||f.responses.length>0)&&(f.status!=='Closed'||(f.accepted?.actor==='Sam Taylor'&&f.responses.at(-1).actor!=='Sam Taylor'))))return false;
-    if(!s.decisions.every(x=>exact(x)&&x.actor==='Sam Taylor'&&['Reviewed','Returned'].includes(x.outcome)&&typeof x.reason==='string'&&typeof x.purpose==='string'&&JSON.stringify(x.basis)===JSON.stringify(getRevision(s,getDoc(x.doc),x.revision))&&x.fingerprint===fingerprint(getDoc(x.doc),x.basis)))return false;
+    if(!s.findings.every(f=>exact(f)&&typeof f.id==='string'&&Object.values(PEOPLE).includes(f.author)&&validInstant(f.at)&&typeof f.text==='string'&&Object.values(PEOPLE).includes(f.owner)&&validDate(f.due)&&['Open','Response awaiting review','Closed'].includes(f.status)&&Array.isArray(f.responses)&&f.responses.every(r=>r&&validInstant(r.at)&&typeof r.text==='string'&&Object.values(PEOPLE).includes(r.actor))&&(f.status==='Open'||f.responses.length>0)&&(f.status!=='Closed'||(f.accepted?.actor==='Sam Taylor'&&typeof f.accepted.text==='string'&&validInstant(f.accepted.at)&&f.responses.at(-1).actor!=='Sam Taylor'))))return false;
+    if(!s.decisions.every(x=>exact(x)&&validInstant(x.at)&&x.actor==='Sam Taylor'&&['Reviewed','Returned'].includes(x.outcome)&&typeof x.reason==='string'&&typeof x.purpose==='string'&&JSON.stringify(x.basis)===JSON.stringify(getRevision(s,getDoc(x.doc),x.revision))&&x.fingerprint===fingerprint(getDoc(x.doc),x.basis)))return false;
     if(new Set(s.decisions.map(x=>x.doc+':'+x.revision)).size!==s.decisions.length)return false;
-    if(!s.tasks.every(t=>exact(t)&&typeof t.target==='string'&&typeof t.reason==='string'&&Object.values(PEOPLE).includes(t.owner)&&validDate(t.due)&&t.status==='Prepared locally'))return false;
+    if(!s.tasks.every(t=>exact(t)&&validInstant(t.at)&&Object.values(PEOPLE).includes(t.actor)&&typeof t.target==='string'&&typeof t.reason==='string'&&Object.values(PEOPLE).includes(t.owner)&&validDate(t.due)&&t.status==='Prepared locally'&&(USES.some(u=>u.id===t.target&&u.doc===t.doc&&u.revision===t.revision)||exceptions(s,'steward').some(e=>e.id===t.target&&e.doc===t.doc&&e.revision===t.revision))))return false;
     if(new Set(s.tasks.map(t=>t.target)).size!==s.tasks.length)return false;
-    return s.events.every((e,i)=>exact(e)&&e.id===`E${i+1}`&&Object.values(PEOPLE).includes(e.actor));
+    return s.events.every((e,i)=>exact(e)&&validInstant(e.at)&&['advanceSource','addFinding','respondFinding','acceptResponse','decide','addTask'].includes(e.action)&&e.id===`E${i+1}`&&Object.values(PEOPLE).includes(e.actor));
   }
   function exportState(s,actor) {
     const allowedId=id=>allowed(actor,getDoc(id));

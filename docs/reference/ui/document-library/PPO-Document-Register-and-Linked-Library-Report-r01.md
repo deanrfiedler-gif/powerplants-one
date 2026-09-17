@@ -135,7 +135,7 @@ Applicability text is inspectable evidence in this design. The workspace does no
 
 ## 8. Revision comparison and findings
 
-Revision review compares a selected document revision with another available revision of the same document. Authored sections appear side by side, with changed or added content highlighted. Unchanged text remains visible. Both exact sources must be available before comparison; otherwise the interface explains why comparison cannot be performed.
+Revision review compares a selected document revision with another available revision of the same document. Authored sections appear side by side on desktop and as labelled earlier/selected pairs on phones, with changed or added content highlighted. Unchanged text remains visible. Both exact sources must be available before comparison; otherwise the interface explains why comparison cannot be performed.
 
 This is a section-level comparison of the embedded extracts. It does not claim native CAD, PDF redline, binary-file comparison or dependency inspection.
 
@@ -147,7 +147,7 @@ An editable finding records:
 - Author and capture time.
 - Retained responses and independent acceptance evidence.
 
-The demonstrated finding lifecycle is **Open → Response awaiting review → Closed**. A response does not close the finding. The reviewer must independently accept it, and a response author cannot accept their own response. The original finding text and response remain visible after acceptance.
+The demonstrated finding lifecycle is **Open → Response awaiting review → Closed**. A response does not close the finding. The reviewer must independently accept it, and a response author cannot accept their own response. The original finding text and response remain visible after acceptance. A new unresolved finding returns the current review display to Review needed while preserving any earlier exact decision; that decision is not silently overwritten.
 
 ## 9. Technical review decision
 
