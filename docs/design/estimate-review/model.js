@@ -140,7 +140,9 @@
       if(scaled(p.quantity,3)===0n) fail('Quantity must be greater than zero.');
       scaled(p.cost);scaled(p.sell);if(scaled(p.discount)>10000n) fail('Discount cannot exceed 100%.');
       if(!validDate(p.validUntil)) fail('Enter a source expiry date.');
-      Object.assign(l,{quantity:p.quantity,cost:p.cost,sell:p.sell,discount:p.discount,source:text(p.source,'Source'),sourceRevision:text(p.sourceRevision,'Source revision'),validUntil:p.validUntil,quantityBasis:text(p.quantityBasis,'Quantity basis'),reviewed:false});
+      const sourceDate=p.sourceDate||l.sourceDate;
+      if(!validDate(sourceDate)||sourceDate>TODAY||p.validUntil<sourceDate) fail('Source dates must be valid, already effective and in order.');
+      Object.assign(l,{quantity:p.quantity,cost:p.cost,sell:p.sell,discount:p.discount,source:text(p.source,'Source'),sourceRevision:text(p.sourceRevision,'Source revision'),sourceDate,validUntil:p.validUntil,quantityBasis:text(p.quantityBasis,'Quantity basis'),reviewed:false});
       log('Draft line updated',`${l.description}. ${text(command.reason,'Change reason')}`);
     } else if(command.type === 'submit') {
       requireRole('estimator');if(v.state!=='Draft') fail('Only a draft can be submitted.');
@@ -165,7 +167,7 @@
         if(!validDate(command.due)) fail('A follow-up due date is required.');
         if(command.lineId && !v.lines.some(l=>l.id===command.lineId)) fail('The selected cost line is unavailable.');
         if(!['Blocking','Advisory'].includes(command.severity)) fail('Choose the finding classification.');
-        const id=`F-${String(v.findings.length+1).padStart(2,'0')}`;
+        const id=`F-${String(Math.max(0,...r.versions.flatMap(x=>x.findings.map(f=>Number(f.id.slice(2)))))+1).padStart(2,'0')}`;
         v.findings.push({id,title,owner,due:command.due,lineId:command.lineId||null,severity:command.severity,state:'Open',response:null,resolution:null,createdBy:actor,createdRevision:v.revision});v.review=null;log('Finding raised',`${id}: ${title}`);
       } else if(command.type==='acceptFinding') {
         requireRole('reviewer');const f=v.findings.find(f=>f.id===command.findingId);if(!f||f.state!=='Responded'||f.response.actor===actor) fail('An independent reviewer must inspect the response.');
@@ -191,7 +193,8 @@
       } else if(command.type==='prepare') {
         requireRole('approver');if(v.state!=='Approved'||!v.approval||v.approval.basis!==basis(v)) fail('An exact current estimate approval is required.');
         if(v.handover) fail('The original handover is already prepared; inspect it instead.');
-        v.handover={id:`${r.ref}-${v.revision}-ES05`,state:'Prepared',revision:v.revision,basis:basis(v),receiver:'Quotation author · Morgan Ellis',preparedBy:actor,preparedAt:context.now||new Date().toISOString()};log('ES-05 handover prepared','Prepared only. No transmission, quotation approval or issue.');
+        const preparationReason=text(command.reason,'Preparation reason');
+        v.handover={reason:preparationReason,id:`${r.ref}-${v.revision}-ES05`,state:'Prepared',revision:v.revision,basis:basis(v),receiver:'Quotation author · Morgan Ellis',preparedBy:actor,preparedAt:context.now||new Date().toISOString()};log('ES-05 handover prepared',preparationReason+' Prepared only. No transmission, quotation approval or issue.');
       } else fail('The requested action is not supported.');
     }
     next.version++;return next;

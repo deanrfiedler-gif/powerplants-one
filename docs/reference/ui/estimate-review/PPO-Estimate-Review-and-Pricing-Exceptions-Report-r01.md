@@ -126,11 +126,11 @@ Submitted and approved commercial lines cannot be edited directly. An estimator 
 
 The predecessor remains byte-for-byte identical within the saved model. The successor receives a new revision, predecessor link and change reason. Its scope and line checks are reset. It inherits no completed review, exception decisions, estimate approval or prepared handover. Unaccepted findings carry forward as open items requiring a response against the new revision; resolved predecessor findings remain inspectable in history.
 
-Included draft lines expose quantity, unit cost, unit sell, discount, source title, source revision, valid-through date and quantity basis. Each edit requires a reason. This is a bounded correction surface: it does not add/remove products, change units, replace the estimator or regenerate specialist parts.
+Included draft lines expose quantity, unit cost, unit sell, discount, source title, source revision, source date, valid-through date and quantity basis. Each edit requires a reason. This is a bounded correction surface: it does not add/remove products, change units, replace the estimator or regenerate specialist parts.
 
 Before resubmission, required numerical and current-source data must be complete and carried findings must have responses. Resubmission freezes the new commercial basis for independent checking. The reviewer must inspect the new scope and lines even when most numbers are unchanged.
 
-The right-side revision comparison shows predecessor/current revisions, change reason, previous/current net values and changed quantity, cost, sell, discount, source, source revision, validity and quantity-basis fields. A source-scope change also shows the former and new wording. If no commercial field has changed yet, that is explicitly stated; a new revision label alone is not evidence of correction.
+The right-side revision comparison shows predecessor/current revisions, change reason, previous/current net values and changed quantity, cost, sell, discount, source, source revision, source date, validity and quantity-basis fields. A source-scope change also shows the former and new wording. If no commercial field has changed yet, that is explicitly stated; a new revision label alone is not evidence of correction.
 
 ## 10. Independent review, approval and quotation handover
 
