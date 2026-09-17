@@ -2,16 +2,18 @@
 import Link from "next/link";
 import { initialWorklistFilters as initial } from "../crm/worklist-location";
 import { useWorklistLocation } from "./crm-worklist-location";
-import { useEffect, useState, useRef, useLayoutEffect, useCallback, useMemo } from "react";
-import type { CSSProperties } from "react";
-import { DealDialog, dealAmount, dealClose, stageRequiresEvidence, useDesktopCRM, type DealRecord, type StageUndo } from "./crm-deal-controls";
+import { useEffect, useState, useRef, useCallback, useMemo } from "react";
+import { DealDialog, stageRequiresEvidence, useDesktopCRM, type DealRecord, type StageUndo } from "./crm-deal-controls";
 import type { OperationReceipt } from "../platform/operations";
 import { ProductIcon } from "./product-icons";
 import { HeaderContent } from "./header-content";
+import { Board, Grid } from "./crm-worklist-board";
+import { ForecastWorklist, WorklistMenu, WorklistPanel, WorklistReview, WorklistViews } from "./crm-worklist-tools";
+import { needsAttention, worklistCsv } from "../crm/worklist-presentation";
 import { valueSummary } from "../crm/value-summary";
 import type { listOpportunities, worklistOptions, WorklistItem } from "../crm/worklist";
 import { useIdentity } from "./business-session";
-import { ErrorNotice, Field, SelectField, Stamp, Status } from "./business-ui";
+import { ErrorNotice, Field, SelectField, Stamp } from "./business-ui";
 import { denied, useCrmCommand, useCrmResource } from "./crm-state";
 
 type Results = Awaited<ReturnType<typeof listOpportunities>>;
@@ -27,39 +29,6 @@ function FilterPicker({ kind, value, company, set, enabled }: { kind: "Company" 
     <ErrorNotice error={data.error} />
     {data.data?.next_cursor && <small>More options exist. Refine this filter search.</small>}
   </div>;
-}
-function Action({ item }: { item: WorklistItem }) {
-  const active = ["Upcoming", "Overdue", "DueNeeded"].includes(item.next_action_state);
-  return <div className={`crm-next-action state-${item.next_action_state}`}>
-    <strong>{labels[item.next_action_state]}</strong>
-    {active && <>
-      <p className="crm-action-text">{item.next_action_summary}</p>
-      <p>Action owner: {item.action_owner_name}</p>
-      {item.due_at && <p>Due <Stamp value={item.due_at} /> (Brisbane)</p>}
-    </>}
-    {item.next_action_state === "Needed" && <p>Open the opportunity to plan the next action.</p>}
-    {item.next_action_state === "Unavailable" && <p>Open the opportunity to check current access.</p>}
-  </div>;
-}
-function Identity({ item }: { item: WorklistItem }) {
-  return <>
-    <small>{item.display_number}</small>
-    <Link className="crm-opportunity-title" href={`/crm/opportunities/${item.id}`}>{item.title}</Link>
-    <p>{item.organisation_name}<br />{item.contact_name ?? "Contact not yet identified"}<br />{item.site_name ?? "Site not yet identified"}</p>
-  </>;
-}
-const initials = (name: string) => name.split(/\s+/).filter(Boolean).slice(-2).map(w => w[0]).join("").toUpperCase();
-const dueDate = new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "short", timeZone: "Australia/Brisbane" });
-function CardAction({ item, onOpen }: { item: WorklistItem; onOpen: (item: WorklistItem) => void }) {
-  const [dismissed, setDismissed] = useState(false);
-  const ownerDescription = `Activity owner: ${item.action_owner_name ?? "Not assigned"}`;
-  const active = ["Upcoming", "Overdue", "DueNeeded"].includes(item.next_action_state);
-  const status = item.due_at && active ? `${item.next_action_state === "Overdue" ? "Overdue" : "Due"} · ${dueDate.format(new Date(item.due_at))}` : labels[item.next_action_state];
-  return <button type="button" className={`crm-next-action crm-card-activity state-${item.next_action_state}`} draggable={false} aria-describedby={`crm-owner-${item.id}`} aria-haspopup="dialog" onFocus={() => setDismissed(false)} onKeyDown={e => { if (e.key === "Escape") { e.stopPropagation(); setDismissed(true); } }} onClick={() => onOpen(item)}>
-    <strong><ProductIcon name="clock"/><span>{status}</span></strong>
-    <span className="crm-action-text">{active?item.next_action_summary:item.next_action_state==="Needed"?"Plan the next activity":"Check current activity access"}</span>
-    <span id={`crm-owner-${item.id}`} className="crm-owner-label crm-help-trigger" aria-label={ownerDescription} data-tooltip={ownerDescription} data-dismissed={dismissed} onMouseEnter={() => setDismissed(false)}><span className="crm-owner-avatar" aria-hidden="true">{initials(item.action_owner_name ?? "?")}</span><span>{item.action_owner_name??"Not assigned"}</span></span>
-  </button>;
 }
 function ActivitySnapshot({ item, onClose }: { item: WorklistItem; onClose: () => void }) {
   const ref = useRef<HTMLDialogElement>(null);
@@ -92,63 +61,10 @@ function useScrollMemory() {
   // that would race the scroll event from keyboard focus return after a save.
   return useMemo(() => ({ read, save }), [read, save]);
 }
-function Board({ data, selected, scroll, onOpen, onStage, blocked, onMove, onActivity }: { data: Results; selected: string; scroll: ReturnType<typeof useScrollMemory>; onOpen:(id:string)=>void; onStage:(id:string)=>void; blocked:boolean; onMove:(id:string,stage:string)=>void; onActivity:(item: WorklistItem)=>void }) {
-  const desktop=useDesktopCRM(),drag=useRef<string|null>(null),suppress=useRef(0),[destination,setDestination]=useState<string|null>(null);
-  const endDrag=()=>{drag.current=null;setDestination(null);suppress.current=Date.now()+400;};
-  useEffect(()=>{const cancel=(e:KeyboardEvent)=>{if(e.key==="Escape"&&drag.current)endDrag();};document.addEventListener("keydown",cancel);return()=>document.removeEventListener("keydown",cancel);},[]);
-
-  const ref = useRef<HTMLDivElement>(null);
-  useLayoutEffect(() => { if (ref.current) { const saved = scroll.read(); ref.current.scrollTop = saved.top; ref.current.scrollLeft = saved.left; } }, [scroll]);
-  return <div ref={ref} className="crm-board-scroll" role="region" aria-label="Opportunity Board — stage sequence" tabIndex={0} onScroll={e => { scroll.save(e.currentTarget.scrollTop, e.currentTarget.scrollLeft); }}>
-    <div className="crm-board" style={{ "--crm-stage-count": data.stages.length } as CSSProperties}>
-      <div className="crm-board-headers">{data.stages.map(stage => <header key={stage.stage_id} className="crm-stage-heading" data-selected={stage.stage_id === selected}>
-        <h2 id={`board-${stage.stage_id}`}>{stage.stage_id}</h2><div className="crm-stage-total"><span>{valueSummary(data.items.filter(item => item.stage_id === stage.stage_id)).formatted} known</span><span>{stage.count} {stage.count === 1 ? "deal" : "deals"}</span></div>
-      </header>)}</div>
-      <div className="crm-board-columns">{data.stages.map((stage) => <section key={stage.stage_id} className="crm-stage" data-selected={stage.stage_id === selected} data-drop-stage={stage.stage_id} data-drop-active={destination===stage.stage_id}
-        onDragOver={e=>{if(!desktop||!drag.current)return;e.preventDefault();e.dataTransfer.dropEffect="move";setDestination(stage.stage_id);const node=ref.current,bounds=node?.getBoundingClientRect();if(node&&bounds){if(e.clientY<bounds.top+75)node.scrollTop-=12;else if(e.clientY>bounds.bottom-40)node.scrollTop+=12;if(e.clientX<bounds.left+40)node.scrollLeft-=12;else if(e.clientX>bounds.right-40)node.scrollLeft+=12;}}}
-        onDrop={e=>{if(!desktop||!drag.current)return;e.preventDefault();const id=drag.current,old=data.items.find(x=>x.id===id);endDrag();if(old?.can_edit&&old.close_outcome==="Open"&&old.stage_id!==stage.stage_id)onMove(id,stage.stage_id);}} aria-labelledby={`board-${stage.stage_id}`}>
-        <ul className="crm-worklist">
-          {data.items.filter((item) => item.stage_id === stage.stage_id).map((item) => <li key={item.id} data-opportunity-id={item.id} className="crm-card" draggable={desktop&&item.can_edit&&item.close_outcome==="Open"&&!blocked}
-            onDragStart={e=>{if(!desktop||blocked||!item.can_edit||item.close_outcome!=="Open"||(e.target as HTMLElement).closest(".crm-card-activity")){e.preventDefault();return;}drag.current=item.id;e.dataTransfer.effectAllowed="move";e.dataTransfer.setData("text/x-ppo-opportunity",item.id);}} onDragEnd={endDrag}>
-            <Link className="crm-card-body crm-opportunity-title" href={`/crm/opportunities/${item.id}`} aria-label={item.title} draggable={false}
-              onClick={e=>{if(Date.now()<suppress.current){e.preventDefault();return;}if(desktop&&!e.ctrlKey&&!e.metaKey&&!e.shiftKey&&!e.altKey){e.preventDefault();onOpen(item.id);}}}>
-              <span className="crm-card-heading"><span className="crm-card-title">{item.title}</span>{item.close_outcome !== "Open" && <span>{item.close_outcome}</span>}</span>
-              <span className="crm-card-company" title={item.organisation_name}>{item.organisation_name}</span>
-              <span className="crm-card-value"><strong>{dealAmount(item.value_amount)}</strong><span className="crm-card-close"><ProductIcon name="service"/>{dealClose(item.expected_close_date)}</span></span>
-              <span className="crm-card-contact" title={`Customer contact: ${item.contact_name??"Not yet identified"}`}><ProductIcon name="person"/><span>{item.contact_name??"Contact not yet identified"}</span></span>
-            </Link>
-            {["Needed", "DueNeeded"].includes(item.next_action_state) && <Link className="crm-card-warning" href={`/crm/opportunities/${item.id}?section=timeline&activity=new`} draggable={false} title={`${labels[item.next_action_state]} — plan an activity`} aria-label={`${labels[item.next_action_state]} for ${item.title}. Plan an activity`}><ProductIcon name="warning"/></Link>}
-            {item.can_edit && item.close_outcome === "Open" && <button type="button" className="crm-card-stage" aria-label={`Change stage for ${item.title}`} title="Change stage" aria-haspopup="dialog" disabled={blocked} draggable={false} onClick={()=>onStage(item.id)}><ProductIcon name="board"/></button>}
-            <CardAction item={item} onOpen={onActivity} />
-          </li>)}
-        </ul>
-        {stage.count === 0 && <p className="crm-stage-empty">No {stage.stage_id.toLowerCase()} opportunities on this page.</p>}
-      </section>)}</div>
-    </div>
-  </div>;
-}
-function Grid({ data, scroll }: { data: Results; scroll: ReturnType<typeof useScrollMemory> }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useLayoutEffect(() => { if (ref.current) { const saved = scroll.read(); ref.current.scrollTop = saved.top; ref.current.scrollLeft = saved.left; } }, [scroll]);
-  return <div ref={ref} className="crm-grid-scroll" role="region" aria-label="Opportunity List — scroll for all columns" tabIndex={0} onScroll={e => { scroll.save(e.currentTarget.scrollTop, e.currentTarget.scrollLeft); }}>
-    <table className="crm-grid">
-      <caption>Permitted opportunities on this page · {data.items.length} rows · {data.sort} order</caption>
-      <thead><tr><th scope="col">Opportunity</th><th scope="col">Opportunity owner</th><th scope="col">Stage / outcome</th><th scope="col">Next action / action owner</th><th scope="col">Saved record</th></tr></thead>
-      <tbody>{data.items.map((item) => <tr key={item.id} data-opportunity-id={item.id}>
-        <th scope="row"><Identity item={item} /></th>
-        <td>{item.owner_name}<p className="crm-grid-secondary">{item.company_name}</p></td>
-        <td><Status value={item.stage_id} /><p>Outcome: {item.close_outcome}</p><small>Stage entered <Stamp value={item.stage_entered_at} /></small></td>
-        <td><Action item={item} /></td>
-        <td>Saved · version {item.version}<p><Stamp value={item.updated_at} /></p></td>
-      </tr>)}</tbody>
-    </table>
-  </div>;
-}
-
 export function SalesWorklist() {
   const desktop = useDesktopCRM();
   const p = useIdentity();
-  const [dialog,setDialog]=useState<{id:string;mode:"snapshot"|"stage";stage?:string;undo?:StageUndo}|null>(null),[feedback,setFeedback]=useState("");
+  const [dialog,setDialog]=useState<{id:string;mode:"snapshot"|"stage"|"information"|"outcome";stage?:string;undo?:StageUndo}|null>(null),[feedback,setFeedback]=useState("");
   const [moved,setMoved]=useState<Record<string,string>>({});
   // One undo for both save paths. `record` is present only when the dialog saved
   // the move, because only the dialog reads the qualification fields the worklist
@@ -160,6 +76,8 @@ export function SalesWorklist() {
   const { filters, setFilters, view, setView, selected, setSelected, clear: clearLocation } = useWorklistLocation();
   const boardScroll = useScrollMemory(), gridScroll = useScrollMemory();
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [review, setReview] = useState<"triage" | "changes" | "help" | null>(null);
+  const [density, setDensity] = useState("comfortable");
   const data = useCrmResource<Results>(`crm/opportunities?${query(filters)}`, true);
   // On acceptance drop the optimistic override and let the server be the truth.
   // The undo target is kept: it is what the actor reverses after a move lands.
@@ -170,7 +88,7 @@ export function SalesWorklist() {
   useEffect(() => {
     if (!isDenied) return;
     let live = true;
-    queueMicrotask(() => { if (live) { clearLocation();setFeedback("");setUndoMove(null);setMoved({});setDialog(null);setActivity(null);setFiltersOpen(false); } });
+    queueMicrotask(() => { if (live) { clearLocation();setFeedback("");setUndoMove(null);setMoved({});setDialog(null);setActivity(null);setFiltersOpen(false);setReview(null); } });
     return () => { live = false; };
   }, [isDenied, clearLocation]);
   useEffect(() => {
@@ -253,36 +171,50 @@ export function SalesWorklist() {
     });
   };
   const totals = data.data ? valueSummary(data.data.items) : null;
-  return <section className="crm-workspace" aria-label="Sales worklist">
+  const ready = !data.error && !!data.data;
+  const activeFilters = (["q", "company_id", "site_id", "owner_id", "stage_id", "next_action"] as const).filter(key => filters[key]);
+  const filterLabel = (key: typeof activeFilters[number]) => ({ q: "Search", company_id: "Company", site_id: "Site", owner_id: "Owner", stage_id: "Stage", next_action: "Activity" })[key];
+  const exportPage = () => {
+    if (!ready || !data.data) return;
+    const url = URL.createObjectURL(new Blob([worklistCsv(data.data.items)], { type: "text/csv;charset=utf-8" }));
+    const link = document.createElement("a"); link.href = url; link.download = "PPO-Deals-current-page.csv"; link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
+  return <section className="crm-workspace crm-r38" aria-label="Sales worklist" data-density={density}>
     <h1 className="sr-only">Sales worklist</h1>
     {!desktop && <HeaderContent slot="search">{scopedSearch}</HeaderContent>}
-    <div className="crm-toolbar"><fieldset className="crm-pipeline-picker" disabled={stageCommand.busy||stageCommand.uncertain}><SelectField name="pipeline" label="Pipeline" value={filters.pipeline_definition_id} onChange={value=>{if(!value)return;setFilters(old=>({...old,pipeline_definition_id:value,stage_id:"",cursor:""}), "push");setSelected("");setMoved({});setUndoMove(null);setFeedback("");}} options={data.data?.pipelines ?? []}/></fieldset><div className="crm-view-controls" role="group" aria-label="Opportunity presentation">
-      {(["Board", "Grid"] as const).map((value) => <button key={value} className={view === value ? "" : "secondary"} aria-pressed={view === value} onClick={() => setView(value)}><ProductIcon name={value === "Board" ? "board" : "list"} />{value === "Grid" ? "List" : value}</button>)}
+    <div className="crm-toolbar crm-toolbar-r38">
+      <div className="crm-toolbar-views"><div className="crm-view-controls" role="group" aria-label="Opportunity presentation">
+        {(["Board", "Grid", "Forecast"] as const).map(value => <button key={value} className="secondary" aria-pressed={view === value} onClick={() => setView(value)}><ProductIcon name={value === "Board" ? "board" : value === "Grid" ? "list" : "insights"}/><span>{value === "Grid" ? "List" : value}</span></button>)}
+      </div><button className="secondary crm-archive-button" aria-pressed={view === "Archive"} onClick={() => setView("Archive")}><ProductIcon name="archive"/><span>Archive</span></button>
+      {ready && data.data?.can_create && <Link className="primary-link crm-new-opportunity" href="/crm/opportunities/new" aria-label="New opportunity"><ProductIcon name="plus"/>Opportunity</Link>}</div>
+      {!isDenied && <div className="crm-toolbar-context">
+        <WorklistMenu label="Pipeline totals" text={<><span>{ready ? data.data!.items.length : "—"} <span className="crm-count-label">deals</span></span><ProductIcon name="info"/></>} disabled={!ready}>
+          <p>{data.data?.completeness === "Complete" ? "All matching results" : "Current result page only"} · {filters.outcome} · Current filters apply</p>
+          <dl className="crm-total-grid"><div><dt>Total value</dt><dd>{totals?.formatted}</dd></div><div><dt>Deals</dt><dd>{data.data?.items.length}</dd></div><div><dt>Not estimated</dt><dd>{totals?.unknown}</dd></div><div><dt>Weighted value</dt><dd>Not configured</dd></div></dl><p>AUD excluding GST. Unknown values count as deals and do not contribute to monetary totals.</p>
+        </WorklistMenu>
+        <fieldset className="crm-pipeline-picker" disabled={stageCommand.busy || stageCommand.uncertain}><SelectField name="pipeline" label="Pipeline" value={filters.pipeline_definition_id} onChange={value => { if (!value) return; setFilters(old => ({ ...old, pipeline_definition_id: value, stage_id: "", cursor: "" }), "push"); setSelected(""); setMoved({}); setUndoMove(null); setFeedback(""); }} options={data.data?.pipelines ?? []}/></fieldset>
+        <button className="secondary crm-icon-button" aria-label="Help" onClick={() => setReview("help")}><ProductIcon name="help"/></button>
+        <button className="secondary crm-filter-toggle" aria-label="Filters and sort" aria-expanded={filtersOpen} aria-controls="crm-filter-panel" onClick={() => setFiltersOpen(true)}><ProductIcon name="filter"/><span>Filters{activeFilters.length ? ` ${activeFilters.length}` : ""}</span></button>
+        <WorklistMenu label="Opportunity data options" icon="more" className="crm-icon-button"><button className="secondary crm-menu-choice" data-menu-close disabled={!ready} onClick={exportPage}><ProductIcon name="download"/>Export current page as CSV</button><button className="secondary crm-menu-choice" disabled>Import data · unavailable</button><button className="secondary crm-menu-choice" disabled>Clean up data · unavailable</button><button className="secondary crm-menu-choice" disabled>Restore deleted data · unavailable</button><p>Import, bulk cleanup and deletion recovery require app services that are not implemented. Existing saved records remain available through their current workflows.</p></WorklistMenu>
+      </div>}
     </div>
-    {!data.error && data.data?.can_create && <Link className="primary-link crm-new-opportunity" href="/crm/opportunities/new" aria-label="New opportunity"><ProductIcon name="plus" />Opportunity</Link>}
-    {!isDenied && <>
+    {!isDenied && <div className="crm-workbar" aria-label="Views, filters and review">
+      <div className="crm-workbar-filters"><WorklistViews key={filters.pipeline_definition_id + (view === "Archive" ? "archive" : "open")} filters={filters} actor={p.actor_id} setFilters={value => setFilters(value, "push")}/><button className="secondary crm-add-condition" onClick={() => setFiltersOpen(true)}><ProductIcon name="filter"/>Add condition</button><div className="crm-condition-chips" aria-label="Active filter conditions">{activeFilters.map(key => <button className="secondary" key={key} title={filters[key]} aria-label={`Remove ${filterLabel(key)} condition`} onClick={() => change(key, "")}><span>{filterLabel(key)}{["q", "stage_id", "next_action"].includes(key) ? `: ${filters[key]}` : ""}</span><ProductIcon name="close"/></button>)}</div></div>
+      {desktop && !filtersOpen && scopedSearch}<div className="crm-workbar-review"><button className="secondary" disabled={!ready} onClick={() => setReview("changes")}><ProductIcon name="changes"/><span>What changed</span></button><button className="secondary" disabled={!ready || view === "Archive"} onClick={() => setReview("triage")}><ProductIcon name="pulse"/>Triage{data.data?.items.filter(needsAttention).length ? <small>{data.data.items.filter(needsAttention).length}</small> : null}</button>{!filtersOpen && <label className="crm-sort"><span>Sort by:</span><select aria-label="Sort" value={filters.sort} onChange={e => change("sort", e.target.value)}><option value="Reference">Default order</option><option value="Title">Title A–Z</option><option value="Newest">Newest first</option></select></label>}<WorklistMenu label="View options" icon="more" className="crm-icon-button"><button className="secondary crm-menu-choice" onClick={() => setDensity(old => old === "comfortable" ? "compact" : "comfortable")}>Density: {density}</button><button className="secondary crm-menu-choice" data-menu-close disabled={!ready} onClick={exportPage}>Export current page as CSV</button><Link className="crm-menu-choice" href="/work">My activities</Link><p>Collapse a Board stage with its header arrow. Resize List columns by dragging a divider, or focus it and use the arrow keys.</p></WorklistMenu></div>
+    </div>}
+    {filtersOpen && !isDenied && <WorklistPanel title="Filter opportunities" drawer onClose={() => setFiltersOpen(false)}><section id="crm-filter-panel" className="crm-secondary-filters" aria-label="Opportunity filters"><div className="crm-filter-grid">
       {desktop && scopedSearch}
-      <span className="crm-pipeline-label"><ProductIcon name="sales"/>Sales pipeline</span>
-      <button className="secondary crm-filter-toggle" aria-expanded={filtersOpen} aria-controls="crm-filter-panel" onClick={() => setFiltersOpen(!filtersOpen)}><ProductIcon name="filter" /><span>Filters<span className="sr-only"> and sort</span></span></button>
-      <label className="crm-sort"><span className="sr-only">Sort</span><select aria-label="Sort" value={filters.sort} onChange={e => change("sort", e.target.value)}><option value="Reference">Reference order</option><option value="Title">Title A–Z</option><option value="Newest">Newest first</option></select></label>
-    </>}
-    </div>
-    {!isDenied && <>
-      <section id="crm-filter-panel" className="crm-secondary-filters" aria-label="Opportunity filters" hidden={!filtersOpen}>
-        <div className="crm-filter-grid">
-          {(["Company", "Site", "Owner"] as const).map((kind) => <FilterPicker key={kind} kind={kind} value={filters[kind === "Company" ? "company_id" : kind === "Site" ? "site_id" : "owner_id"]} company={filters.company_id} enabled={filtersOpen && !data.error} set={(v) => change(kind === "Company" ? "company_id" : kind === "Site" ? "site_id" : "owner_id", v)} />)}
-          <label className="field">Sales outcome<select aria-label="Sales outcome" value={filters.outcome} onChange={e=>change("outcome",e.target.value)}>{["Open","Won","Lost","All"].map(value=><option key={value} value={value}>{value}</option>)}</select></label>
-          <SelectField name="next-state" label="Next action" value={filters.next_action} onChange={(v) => change("next_action", v)} options={Object.entries(labels).map(([id, display_name]) => ({ id, display_name }))} empty="All action states" />
-          <SelectField name="stage" label="Stage" value={filters.stage_id} onChange={(v) => { change("stage_id", v); if (v) setSelected(v); }} options={(data.data?.stages ?? []).map((s) => ({ id: s.stage_id, display_name: s.stage_id }))} empty="All stages" />
-          <label className="field">Page size<select aria-label="Page size" value={filters.limit} onChange={(e) => change("limit", e.target.value)}><option value="10">10 records</option><option value="25">25 records</option><option value="50">50 records</option></select></label>
-          <label className="crm-check"><input type="checkbox" checked={filters.owner_id === p.actor_id} onChange={(e) => change("owner_id", e.target.checked ? p.actor_id : "")} />Owned by me</label>
-        </div>
-        <button className="secondary" onClick={() => setFilters(old=>({...initial,pipeline_definition_id:old.pipeline_definition_id}))}>Clear filters</button>
-      </section>
-    </>}
+      {(["Company", "Site", "Owner"] as const).map(kind => <FilterPicker key={kind} kind={kind} value={filters[kind === "Company" ? "company_id" : kind === "Site" ? "site_id" : "owner_id"]} company={filters.company_id} enabled={!data.error} set={v => change(kind === "Company" ? "company_id" : kind === "Site" ? "site_id" : "owner_id", v)}/>)}
+      <label className="field">Sales outcome<select aria-label="Sales outcome" value={filters.outcome} onChange={e => change("outcome", e.target.value)}>{(view === "Archive" ? ["Closed", "Won", "Lost"] : ["Open", "Won", "Lost", "All"]).map(value => <option key={value} value={value}>{value === "Closed" ? "Won and Lost" : value}</option>)}</select></label>
+      <SelectField name="next-state" label="Next action" value={filters.next_action} onChange={v => change("next_action", v)} options={Object.entries(labels).map(([id, display_name]) => ({ id, display_name }))} empty="All action states"/>
+      <SelectField name="stage" label="Stage" value={filters.stage_id} onChange={v => { change("stage_id", v); if (v) setSelected(v); }} options={(data.data?.stages ?? []).map(stage => ({ id: stage.stage_id, display_name: stage.stage_id }))} empty="All stages"/>
+      <label className="field">Sort<select aria-label="Sort" value={filters.sort} onChange={e => change("sort", e.target.value)}><option value="Reference">Default order</option><option value="Title">Title A–Z</option><option value="Newest">Newest first</option></select></label><label className="field">Page size<select aria-label="Page size" value={filters.limit} onChange={e => change("limit", e.target.value)}><option value="10">10 records</option><option value="25">25 records</option><option value="50">50 records</option></select></label><label className="crm-check"><input type="checkbox" checked={filters.owner_id === p.actor_id} onChange={e => change("owner_id", e.target.checked ? p.actor_id : "")}/>Owned by me</label>
+    </div><button className="secondary" onClick={() => setFilters(old => ({ ...initial, pipeline_definition_id: old.pipeline_definition_id, outcome: view === "Archive" ? "Closed" : "Open" }))}>Clear filters</button></section></WorklistPanel>}
+    {review && !isDenied && <WorklistReview kind={review} items={data.data?.items ?? []} asOf={data.data?.window.as_of ?? new Date().toISOString()} onClose={() => setReview(null)} onOpen={id => setDialog({ id, mode: "snapshot" })}/>}
     {feedback&&!isDenied&&<div className="crm-change-feedback" role="status"><span>{feedback}</span><span className="crm-save-status">{undoMove?.record ? "Saved to the server" : stageCommand.status}</span><ErrorNotice error={stageCommand.error} />{stageCommand.uncertain&&<button disabled={stageCommand.busy} onClick={()=>void stageCommand.reconcile()}>Confirm original save outcome</button>}{!!stageCommand.error&&!stageCommand.uncertain&&<button className="secondary" onClick={()=>{setMoved({});refresh();}}>Load current saved version for comparison</button>}{undoMove&&<button className="secondary" disabled={stageCommand.busy||stageCommand.uncertain} onClick={undoLastMove}>Undo stage move</button>}<button className="secondary" disabled={stageCommand.busy||stageCommand.uncertain} onClick={()=>{setFeedback("");setUndoMove(null);}}>Dismiss</button></div>}
     {activity&&!isDenied&&<ActivitySnapshot item={activity} onClose={()=>setActivity(null)}/>}
-    {dialog&&!isDenied&&<DealDialog id={dialog.id} mode={dialog.mode} targetStage={dialog.stage} undo={dialog.undo} onClose={()=>setDialog(null)} onSaved={saved}/>}
+    {dialog&&!isDenied&&<DealDialog key={dialog.id + dialog.mode} id={dialog.id} mode={dialog.mode} targetStage={dialog.stage} undo={dialog.undo} onClose={()=>setDialog(null)} onSaved={saved}/>}
     <ErrorNotice error={data.error} />
     {data.loading && <p role="status">Loading permitted sales records…</p>}
     {data.error != null && <button className="secondary" onClick={refresh}>Try loading again</button>}
@@ -290,8 +222,8 @@ export function SalesWorklist() {
       <div className="source-stamp crm-worklist-stamp"><strong>{data.data.items.length} {data.data.items.length === 1 ? "opportunity" : "opportunities"}{data.data.completeness === "Complete" ? "" : " on this page"}</strong><span>{totals?.formatted} known{totals?.unknown ? ` · ${totals.unknown} not estimated` : ""}</span><span className="crm-summary-basis">{filters.outcome} · AUD, excl. GST</span></div>
       {view === "Board" ? <>
         <div className="crm-stage-navigation" role="group" aria-label="Choose Board stage">{data.data.stages.map((stage) => <button key={stage.stage_id} aria-pressed={activeStage === stage.stage_id} className={activeStage === stage.stage_id ? "" : "secondary"} onClick={() => setSelected(stage.stage_id, "push")}>{stage.stage_id} ({stage.count})</button>)}</div>
-        <Board data={boardData!} selected={activeStage} scroll={boardScroll} onOpen={id=>{if(!stageCommand.busy&&!stageCommand.uncertain)setDialog({id,mode:"snapshot"});}} onStage={id=>setDialog({id,mode:"stage"})} blocked={stageCommand.busy||stageCommand.uncertain} onMove={move} onActivity={setActivity} />
-      </> : <Grid data={data.data} scroll={gridScroll} />}
+        <Board data={boardData!} selected={activeStage} scroll={boardScroll} onOpen={id=>{if(!stageCommand.busy&&!stageCommand.uncertain)setDialog({id,mode:"snapshot"});}} onStage={id=>setDialog({id,mode:"stage"})} blocked={stageCommand.busy||stageCommand.uncertain} onMove={move} onActivity={setActivity} onEdit={id => setDialog({id, mode:"information"})} onOutcome={id => setDialog({id, mode:"outcome"})} />
+      </> : view === "Forecast" ? <ForecastWorklist items={data.data.items} asOf={data.data.window.as_of} onEdit={id => setDialog({ id, mode: "information" })}/> : <>{view === "Archive" && <div className="crm-archive-intro"><h2>Archive</h2><div role="group" aria-label="Archive status">{["Closed", "Won", "Lost"].map(value => <button className="secondary" key={value} aria-pressed={filters.outcome === value} onClick={() => change("outcome", value)}>{value === "Closed" ? "All closed" : value}</button>)}</div><p>Saved sales outcomes. Manual archiving and restoration are not yet available.</p></div>}<Grid data={data.data} scroll={gridScroll} onOpen={id => setDialog({id, mode:"snapshot"})}/></>}
       <div className="crm-actions"><span className="crm-page-context">{data.data.completeness === "Complete" ? "All matching results" : data.data.window.has_more ? "Page counts and values · more pages" : "Page counts and values · final page"} · As at <Stamp value={data.data.window.as_of} /></span><button className="secondary" onClick={refresh}>Refresh from start</button>{data.data.next_cursor && <button onClick={() => setFilters((old) => ({ ...old, cursor: data.data!.next_cursor! }))}>Next page</button>}</div>
 
     </>}

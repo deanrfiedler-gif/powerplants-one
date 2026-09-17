@@ -354,9 +354,9 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   await page.keyboard.press("Tab");
   await expect(page.getByLabel("Stage", { exact: true })).toBeFocused();
   await capture(page, info, "reflow-320-keyboard");
-  await filterToggle.focus();
-  await page.keyboard.press("Enter");
+  await page.keyboard.press("Escape");
   await expect(filterToggle).toHaveAttribute("aria-expanded", "false");
+  await expect(filterToggle).toBeFocused();
   await page.setViewportSize(info.project.use.viewport!);
   await page.route("**/api/v1/crm/opportunities?**", (route) =>
     route.fulfill({

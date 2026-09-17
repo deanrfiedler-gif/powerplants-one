@@ -80,6 +80,11 @@ const records: ReviewItem[] = seeds.map(
   }),
 );
 
+records.push(
+  { ...records[0], id: "c2000000-0000-4000-8000-000000000021", display_number: "SYN-PPO-OPP-000021", title: "SYN Won irrigation upgrade", stage_id: "Closing", close_outcome: "Won" },
+  { ...records[1], id: "c2000000-0000-4000-8000-000000000022", display_number: "SYN-PPO-OPP-000022", title: "SYN Lost controls upgrade", close_outcome: "Lost" },
+);
+
 const envelope = (items: unknown[]) => ({
   items,
   next_cursor: null,
@@ -126,6 +131,8 @@ window.fetch = async (input) => {
     let items = records.filter(
       (r) =>
         r.title.toLowerCase().includes(search) &&
+        (url.searchParams.get("outcome") === "All" || (url.searchParams.get("outcome") === "Closed" ? r.close_outcome !== "Open" : r.close_outcome === (url.searchParams.get("outcome") ?? "Open"))) &&
+        (!url.searchParams.get("next_action") || r.next_action_state === url.searchParams.get("next_action")) &&
         (!url.searchParams.get("stage_id") ||
           r.stage_id === url.searchParams.get("stage_id")),
     );
