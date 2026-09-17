@@ -1,0 +1,85 @@
+{
+  "module": "CR-05",
+  "html_sha256": "403a0a182bdc353333a1e387b2f3fa3b32d6c8c3245085acb31919ff79435f48",
+  "browser": "141.0.7390.37",
+  "browser_channel": "chrome",
+  "viewports_captured": [
+    "1440x960",
+    "390x844"
+  ],
+  "inspected": [
+    {
+      "name": "1440-01-worklist.png",
+      "sha256": "f8aeb9923635d948e212495f6b650c40b36d3a0eea9b25b742181bdade279367",
+      "view": "Aftercare worklist, 1440x960",
+      "finding": "Six records, four counts, provenance chips for all four date bases including No date basis on SYN-PPO-ACR-000905. Column balance corrected during this session after the first capture showed the Next action column too narrow."
+    },
+    {
+      "name": "1440-02-record-snapshot.png",
+      "sha256": "e4bd43eee7ac13711616c0e82756e172a6ba4fec5bbcb4b82e39d1b01a9fb046",
+      "view": "Record snapshot drawer",
+      "finding": "Eleven-line outcome ledger, due-date basis detail and the account-owner conflict note all render. The full-page capture clips the drawer because it is a full-height side panel; in the viewport it scrolls internally. Screenshot artefact, not a layout defect."
+    },
+    {
+      "name": "1440-03-review-refusal.png",
+      "sha256": "0afd51a4e44ed8b55134df0fd642a806afd17f48884ab5329b627532c86a8690",
+      "view": "Review completion refused",
+      "finding": "The dialog states that completing a review completes nothing else, lists the two undispositioned commitments and shows the refusal in the form error region."
+    },
+    {
+      "name": "1440-04-review-completed.png",
+      "sha256": "597fd1a02f7af9e0da2c2ffd08dbcbc2aa78980b39603905e15d317801b4edc4",
+      "view": "Completed review",
+      "finding": "Only the aftercare outcome changed to Conducted on 2026-09-16. Technical issue stays Open, training Not delivered, competence Not assessed, opportunity and both renewal lines None. Three obligations remain listed under the review. Rating and feedback headings were reworded after this capture to remove duplicated wording."
+    },
+    {
+      "name": "1440-05-referral-accepted.png",
+      "sha256": "dbfd114a6d19d81a75380e845f302cd280dab1ba80f048f11b4e74ceb95b06ae",
+      "view": "Referral accepted",
+      "finding": "Prepared, submitted, returned, corrected, resubmitted and accepted as SYN-PPO-TKT-000204, with the original request and the return reason retained."
+    },
+    {
+      "name": "1440-06-training.png",
+      "sha256": "1edf7849708441f08f0a970954b988fcd98d79ef3f8eea16252dba292f193dce",
+      "view": "Training register",
+      "finding": "Superseded material flagged with r03 named as the current issue for firmware 4.x. Attendance, delivery and assessment render as three separate badges."
+    },
+    {
+      "name": "1440-07-commercial.png",
+      "sha256": "7099eb1d84c0792e484089a71f7e3c0ac0b900dbf124ad0f825054b7dcf32126",
+      "view": "Maintenance and renewal",
+      "finding": "Agreement revision, source-defined expiry and review date, MA-05 renewal review with its proposal count and Activity-preparation-only state, and the open pump case carried as an open issue."
+    },
+    {
+      "name": "1440-08-history-handover.png",
+      "sha256": "b730439a682c3fd23d3a882255b2e516981ceb705a2106058d09791d5208ffb7",
+      "view": "History and handover",
+      "finding": "Duplicate timeline entries were found in this capture and fixed during the session: the record timeline is now the single chronological log and item history stays in each item drawer. The handover panel shows scope, evidence, assumptions, open issues, qualification and the confirmed receiving reference."
+    },
+    {
+      "name": "1440-09-restored.png",
+      "sha256": "7f08d808169e17e8491ab77e70383fcc25b6d0bc0945c8e78c64f8adb54e7d9b",
+      "view": "Sources restored",
+      "finding": "After the partial, failed and empty scenarios, retry restores six records and four live counts."
+    },
+    {
+      "name": "1440-10-damaged-session.png",
+      "sha256": "d31b0efc83464cc83a960bc9bead5f0ee6fa90edb535e98489c0e0f1484c3eeb",
+      "view": "Damaged stored session",
+      "finding": "Original stored content preserved and offered for export before any reset."
+    },
+    {
+      "name": "390-01-worklist.png",
+      "sha256": "eb3554a2fb318cb82b5b94ed571e2f29077e7c4447299fb28ed238241878df39",
+      "view": "Worklist at 390px",
+      "finding": "Table rows convert to labelled blocks, filters stack, no horizontal scroll, every control at or above 44px."
+    },
+    {
+      "name": "390-02-review.png",
+      "sha256": "6136515a38f1c97eb9d86d55212728a7fe206b90c03832c7b823501c7057b7b7",
+      "view": "Customer review at 390px",
+      "finding": "Preparation briefing stacks above capture. A Jump to review capture control was added after this capture so a phone user reaches the capture form without scrolling the whole briefing."
+    }
+  ],
+  "limits": "Two viewport widths only. No screen-reader pass, assistive-technology testing, contrast-measurement tool, zoom or reflow testing, multi-browser run, device testing or owner acceptance."
+}
