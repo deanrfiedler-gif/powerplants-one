@@ -16,7 +16,7 @@ This file is a snapshot of the current state, kept short enough to read in one s
 
 **Uploaded-module repair, 16 September 2026:** Restored the original CS-06 Site Access and DK-04 Knowledge source packages, verification records and build scripts alongside their uploaded HTML. Notification and quotation/conversion dependencies retain their original PR histories. Earlier acceptance and native-review limits remain separate.
 
-**Estimate Review HTML, 17 September 2026:** [ES-04 r01 and detailed report](decisions/estimate-review-pricing-exceptions-design.md) add exact estimate/source checks, pricing exceptions, owned findings and immutable corrections, independent review, separate estimate approval and one prepared ES-05 handover. Twenty model groups passed; native and visual results are tracked in the [verification record](testing/evidence/estimate-review-r01/README.md). Demonstration policy is fictional; missing operational authority remains Not configured. No application integration or deployment.
+**Estimate Review HTML, 17 September 2026:** [ES-04 r01 and detailed report](decisions/estimate-review-pricing-exceptions-design.md) add exact estimate/source checks, pricing exceptions, owned findings and immutable corrections, independent review, separate estimate approval and one prepared ES-05 handover. Twenty model and fourteen native browser groups passed; desktop/phone captures were inspected. Exact source and results are retained in the [verification record](testing/evidence/estimate-review-r01/README.md). Demonstration policy is fictional; missing operational authority remains Not configured. No application integration or deployment.
 
 ## 1. Stage in one paragraph
 

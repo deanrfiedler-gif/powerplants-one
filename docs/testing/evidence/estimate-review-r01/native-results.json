@@ -1,0 +1,135 @@
+{
+  "source": "a4bd33ab76d56df285f8a87b434a02f9ca7f4fbf",
+  "html_sha256": "ae0c87ab33d6995c9b382c6247c4cacaaae0a1b327753ff5e6d8ab92ee2dfa99",
+  "browser": "153.0.8010.47",
+  "groups": 14,
+  "results": [
+    {
+      "name": "Five initial estimates and incomplete subtotal are visible",
+      "result": "Passed"
+    },
+    {
+      "name": "Search, no-matches recovery and selected detail remain aligned",
+      "result": "Passed"
+    },
+    {
+      "name": "Review, separate approval and one exact prepared handover persist",
+      "result": "Passed"
+    },
+    {
+      "name": "Internal handover downloads exact content and SHA-256 without sending",
+      "result": "Passed"
+    },
+    {
+      "name": "Approved predecessor remains intact after a fresh unapproved successor",
+      "result": "Passed"
+    },
+    {
+      "name": "Returned finding flows through edit, response, resubmission and review",
+      "result": "Passed"
+    },
+    {
+      "name": "Unconfigured policy remains visible and approval blocked",
+      "result": "Passed"
+    },
+    {
+      "name": "Read-only identity cannot make findings, checks or approvals",
+      "result": "Passed"
+    },
+    {
+      "name": "Failed save retains original state and retries the original proposed change once",
+      "result": "Passed"
+    },
+    {
+      "name": "Malformed and concurrently changed storage are preserved for recovery",
+      "result": "Passed"
+    },
+    {
+      "name": "Loading, saving, failed, empty, denied, partial and stale states are distinct",
+      "result": "Passed"
+    },
+    {
+      "name": "All six views fit desktop, tablet, phone and narrow phone widths",
+      "result": "Passed"
+    },
+    {
+      "name": "Phone snapshot traps focus and Escape restores the source control",
+      "result": "Passed"
+    },
+    {
+      "name": "Tab keyboard navigation and exact stale deep links remain safe",
+      "result": "Passed"
+    }
+  ],
+  "errors": [],
+  "images": [
+    {
+      "name": "desktop-queue.png",
+      "sha256": "ea3b00beeee104fb7f7e383283a671cd95465111da36fd31965269fa3c231685"
+    },
+    {
+      "name": "desktop-approved-handover.png",
+      "sha256": "3db0932ba9dfe0ea3715d63fba426d4b3223575657098fda594653883fdf68ce"
+    },
+    {
+      "name": "desktop-revision-comparison.png",
+      "sha256": "586809714c8dd77115c4dc68ca5c7df905ee3d88e2f4baaf055aee7b59a19b37"
+    },
+    {
+      "name": "desktop-policy-gap.png",
+      "sha256": "dba882f89891878a01fc45b0a77729430ef0bd9dd7ee3d56b773017150d631b9"
+    },
+    {
+      "name": "1440-queue.png",
+      "sha256": "52ca7052093af4473d7c030ecd1dfb79a66dd86ce65fc5375219df765bde9111"
+    },
+    {
+      "name": "1440-basis.png",
+      "sha256": "a675730f37f3074740f5752c342565566a3d0260e5302a107f42f0452980cdc8"
+    },
+    {
+      "name": "1440-pricing.png",
+      "sha256": "0bd717034890ac18b355943b5a5dee61a7d3ca66029d12141135a7c4464946f1"
+    },
+    {
+      "name": "1440-findings.png",
+      "sha256": "fe5e45c1c17e7eb6ee1c04a7ef6b883799fbf176e67639e259b104798f93bfe1"
+    },
+    {
+      "name": "1440-decision.png",
+      "sha256": "efa22e21c49f1320e668f32f7b1321afbc5305a45724bb30961c51d2dfc79937"
+    },
+    {
+      "name": "1440-history.png",
+      "sha256": "8b4fd7a43c76f4894c5addafa8669bf09b5641aefd9b3b2cce9afeb0b9022406"
+    },
+    {
+      "name": "390-queue.png",
+      "sha256": "f93ee236299b406c1a7341362d5a724c4e4c260f4bef3fd2af19a28cf444530e"
+    },
+    {
+      "name": "390-basis.png",
+      "sha256": "be92fb2de5a951c27fb0a2cceb49e02e8eb2bed21bd981d527edb98b75806a57"
+    },
+    {
+      "name": "390-pricing.png",
+      "sha256": "f6c66b20a33ed58ab048e87fff9d7818d463d8b9a002e838a9e2cc8d1aa14f09"
+    },
+    {
+      "name": "390-findings.png",
+      "sha256": "71dc2de4e04ecfa971c78fd72386ffca342e3e37b2875b675b7d1cfb2932e2e4"
+    },
+    {
+      "name": "390-decision.png",
+      "sha256": "6f1a9cf6da0f8f38d92db02bb7a03230107a0bac3abe5f814ba838856d57e5a6"
+    },
+    {
+      "name": "390-history.png",
+      "sha256": "9aa4286021adae75cc907dc39fc8ba0afb0674a505fede24f4bf8e584e0232ff"
+    },
+    {
+      "name": "phone-source-snapshot.png",
+      "sha256": "20a9b9c24f2fb54057d917297c1bde2d06c4f439dbc84fb279d3a6b4644fad05"
+    }
+  ]
+}
