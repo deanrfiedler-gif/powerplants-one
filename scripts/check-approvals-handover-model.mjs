@@ -1,0 +1,25 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+const context={URLSearchParams};vm.createContext(context);vm.runInContext(fs.readFileSync('docs/design/approvals-handover/model.js','utf8'),context);
+const M=context.PPOInboxModel,results=[],config={role:'coordinator',scenario:'ready'};
+function check(name,fn){fn();results.push({name,status:'passed'});}
+check('Seven domains and fourteen distinct source tasks',()=>{assert.equal(Object.keys(M.DOMAINS).length,7);assert.equal(M.records(config).length,14);assert.equal(new Set(M.items.map(x=>x.source_task_id)).size,14);});
+check('Duplicate source delivery does not duplicate workload',()=>{assert.equal(M.records(config).filter(x=>x.id===M.items[0].id).length,1);assert.equal(M.records(config).length,M.records(config).length);});
+check('Service visibility filters before counts and routing',()=>{const c={...config,role:'service'};assert(M.records(c).every(x=>x.domain==='Service'));assert.equal(M.resolve(M.target(M.items[0]),c).state,'unavailable');});
+check('Overdue, due today and unknown dates remain distinct',()=>{assert.equal(M.due(M.items[0]).label,'3 days overdue');assert.equal(M.due(M.items[1]).key,'today');assert.equal(M.due(M.items[4]).key,'unknown');assert.equal(M.due(M.items[8]).key,'unknown');});
+check('Returned work retains first-submitted and current-cycle age',()=>{const x=M.items[3];assert.equal(M.days(x.submitted_on),11);assert.equal(M.days(x.cycle_on),2);assert.equal(x.history.length,2);assert(x.return_reason);});
+check('Queue views separate ownership, submission, returns and history',()=>{assert.equal(M.filter(M.records(config),M.defaults()).length,9);assert.equal(M.filter(M.records(config),{...M.defaults(),view:'returned'}).length,2);assert.equal(M.filter(M.records(config),{...M.defaults(),view:'history'}).length,3);assert.equal(M.filter(M.records(config),{...M.defaults(),view:'all'}).length,11);});
+check('Search and domain filters never retain unrelated rows',()=>{const l=M.filter(M.records(config),{...M.defaults(),view:'all',query:'Northbank',domain:'Engineering'});assert.equal(l.length,1);assert.equal(l[0].reference,'SYN-PPO-ENG-000064');});
+check('Unknown due dates sort after known source dates',()=>{const a=M.filter(M.records(config),{...M.defaults(),view:'all'});assert.equal(a.at(-1).due_on,null);assert.equal(a.at(-2).due_on,null);});
+check('Every source resolves to its domain-owned destination',()=>{for(const x of M.items){const r=M.resolve(M.target(x),config);assert.equal(r.state,x.state==='Source changed'?'changed':'open');if(r.state==='open')assert.equal(r.item.id,x.id);}});
+check('Mismatched source, screen and unsupported revision fail closed',()=>{const x=M.items[0],p=new URLSearchParams(M.target(x).slice(1));for(const k of ['source','screen','revision']){const q=new URLSearchParams(p);q.set(k,'unknown');assert.equal(M.resolve('#'+q,config).state,'mismatch');}});
+check('Stale revision requires explicit current revision selection',()=>{const x=M.items[9];assert.equal(M.resolve(M.target(x),config).state,'changed');assert.equal(M.resolve(M.target(x,x.current_revision),config).revision,'r03');assert.equal(x.revision,'r02');});
+check('Historical superseded source cannot be relabelled as its successor',()=>{const x=M.items[11];assert(M.resolve(M.target(x),config).read_only);assert.equal(M.resolve(M.target(x,x.current_revision),config).state,'mismatch');});
+check('Unavailable and revoked links do not expose source data',()=>{for(const scenario of ['unavailable','revoked']){const r=M.resolve(M.target(M.items[0]),{...config,scenario});assert.equal(r.state,'unavailable');assert.equal(r.item,undefined);}});
+check('Read-only observer and terminal items remain read-only',()=>{assert(M.resolve(M.target(M.items[0]),{...config,role:'observer'}).read_only);assert(M.resolve(M.target(M.items[10]),config).read_only);});
+check('Partial result omits unavailable domain; failed and empty distinct input states',()=>{assert.equal(M.records({...config,scenario:'partial'}).length,13);assert(!M.records({...config,scenario:'partial'}).some(x=>x.domain==='Finance'));for(const scenario of ['failed','empty'])assert.equal(M.records({...config,scenario}).length,0);});
+check('Sent, received and accepted carry distinct evidence',()=>{assert.equal(M.items[13].received_on,null);assert.equal(M.items[2].receipt,null);assert.equal(M.items[10].receipt,'SYN-PPO-RCP-000024');});
+check('Malformed saved view criteria cannot be applied',()=>{assert(M.validateCriteria(M.defaults()));for(const c of [{...M.defaults(),view:'approve'},{...M.defaults(),query:42},{...M.defaults(),domain:'Unknown'},{...M.defaults(),query:'x'.repeat(151)}])assert(!M.validateCriteria(c));});
+check('Reading, filtering and routing never mutate source records',()=>{const before=JSON.stringify(M.items);for(const x of M.items){M.resolve(M.target(x),config);M.filter(M.records(config),M.defaults());}assert.equal(JSON.stringify(M.items),before);assert.equal(M.approve,undefined);assert.equal(M.complete,undefined);});
+console.log(JSON.stringify({scope:'SH-06 r01',checks:results.length,results},null,2));
