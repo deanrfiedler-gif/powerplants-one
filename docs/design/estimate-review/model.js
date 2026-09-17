@@ -130,6 +130,7 @@
       const reason = text(command.reason,'Change reason'), previous = v;
       v = clone(previous); v.revision = `r${String(Number(previous.revision.slice(1))+1).padStart(2,'0')}`; v.state='Draft'; v.predecessor=previous.revision;
       v.scopeRevision = previous.sourceCurrent; v.scope=previous.currentScope || previous.scope; delete v.currentScope;
+      if(previous.scopeRevision!==previous.sourceCurrent)v.documents=v.documents.map(d=>d.name==='Synthetic scope brief'?{...d,revision:previous.sourceCurrent}:d);
       v.scopeChecked=false;v.review=null;v.approval=null;v.handover=null;v.exceptions={};v.changeReason=reason;
       v.lines.forEach(l=>{l.reviewed=false;});v.findings=v.findings.filter(f=>f.state!=='Accepted').map(f=>({...f,state:'Open',response:null,resolution:null}));
       v.events=[]; r.versions.push(v);log('Draft successor created',`${previous.revision} → ${v.revision}. ${reason}`);

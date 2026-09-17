@@ -149,8 +149,8 @@
 #ppo-estimate-review #recovery{padding:15px 20px;margin:18px 32px 0;background:var(--warning-surface);border:1px solid #efdbb6;border-radius:6px;color:var(--warning);font-size:13px}
 #ppo-estimate-review #recovery .actions{margin-top:10px}
 #ppo-estimate-review #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:12px 18px;background:var(--navy);color:#fff;border-radius:7px;max-width:calc(100vw - 28px);font-size:13px;z-index:25;box-shadow:0 5px 20px #242a3720}
-#ppo-estimate-review .skip{position:fixed;top:10px;left:10px;transform:translateY(-200%);padding:12px;background:white;z-index:28}
-#ppo-estimate-review .skip:focus{transform:none}
+#ppo-estimate-review .skip{opacity:0;pointer-events:none;position:fixed;top:10px;left:10px;transform:translateY(-200%);padding:12px;background:white;z-index:28}
+#ppo-estimate-review .skip:focus{transform:none;opacity:1;pointer-events:auto}
 #ppo-estimate-review .skeleton{height:18px;border-radius:5px;background:#e9ecf1;margin:18px 0;width:75%}
 #ppo-estimate-review .skeleton:nth-child(even){width:50%}
 #ppo-estimate-review details{margin-top:15px;font-size:12px}
@@ -304,6 +304,7 @@
       const reason = text(command.reason,'Change reason'), previous = v;
       v = clone(previous); v.revision = `r${String(Number(previous.revision.slice(1))+1).padStart(2,'0')}`; v.state='Draft'; v.predecessor=previous.revision;
       v.scopeRevision = previous.sourceCurrent; v.scope=previous.currentScope || previous.scope; delete v.currentScope;
+      if(previous.scopeRevision!==previous.sourceCurrent)v.documents=v.documents.map(d=>d.name==='Synthetic scope brief'?{...d,revision:previous.sourceCurrent}:d);
       v.scopeChecked=false;v.review=null;v.approval=null;v.handover=null;v.exceptions={};v.changeReason=reason;
       v.lines.forEach(l=>{l.reviewed=false;});v.findings=v.findings.filter(f=>f.state!=='Accepted').map(f=>({...f,state:'Open',response:null,resolution:null}));
       v.events=[]; r.versions.push(v);log('Draft successor created',`${previous.revision} → ${v.revision}. ${reason}`);
@@ -487,7 +488,7 @@
   root.addEventListener('input',e=>{if(e.target.id==='search'){query=e.target.value;renderQueue();}});
   root.addEventListener('change',e=>{if(e.target.id==='filter'){filter=e.target.value;renderQueue();}else if(e.target.id==='record-picker'){selected=e.target.value;render();}else if(e.target.id==='role'){role=e.target.value;if($('snapshot').open)$('snapshot').close();if($('modal').open)$('modal').close();render();say('Preview identity changed. No business state changed.');}});
   $('tabs').addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();let index=views.findIndex(x=>x[0]===view);index=e.key==='Home'?0:e.key==='End'?views.length-1:(index+(e.key==='ArrowRight'?1:-1)+views.length)%views.length;view=views[index][0];render();$('tab-'+view).focus();});
-  for(const id of ['modal','snapshot'])$(id).addEventListener('close',()=>{if(!$('modal').open&&!$('snapshot').open&&dialogReturn?.isConnected)dialogReturn.focus({preventScroll:true});});
+  for(const id of ['modal','snapshot'])$(id).addEventListener('close',()=>{if(!$('modal').open&&!$('snapshot').open){if(dialogReturn?.isConnected)dialogReturn.focus({preventScroll:true});else $('main').focus({preventScroll:true});}});
   window.addEventListener('storage',e=>{if(e.key===KEY){storageProblem='Another tab changed this review workspace. Reload the saved data before making a decision.';render();}});
   function hashTarget(){const p=new URLSearchParams(location.hash.slice(1));if(!p.has('estimate'))return;const r=state.records.find(r=>r.ref===p.get('estimate'));if(!r||!p.get('revision')){readState='link';say('The review link is incomplete or unavailable.');return;}selected=r.id;view='decision';if(p.get('revision')!==M.current(r).revision){readState='stale';say('The linked revision is no longer current. No decision was made.');}}
   window.addEventListener('hashchange',()=>{hashTarget();render();});

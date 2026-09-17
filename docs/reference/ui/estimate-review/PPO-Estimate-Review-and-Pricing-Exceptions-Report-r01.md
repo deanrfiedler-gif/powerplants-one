@@ -205,7 +205,7 @@ The required review widths are 1440, 1024, 820, 390 and 320 px. Exact native-bro
 
 The source is retained under `docs/design/estimate-review/`; the Python builder assembles the font, scoped CSS, model and controller into one standalone HTML file. It requires no new framework or runtime dependency. The repository's existing pinned browser/runtime workflow performs the native check.
 
-Nineteen model groups cover exact arithmetic, unknown/excluded inputs, zero denominators, role/ref/version guards, current source requirements, immutable commercial content, review prerequisites, missing policy, duplicate handover prevention, successor preservation, the full correction loop, invalid inputs, discount dispositions, review invalidation and malformed data.
+Twenty model groups cover exact arithmetic, unknown/excluded inputs, zero denominators, role/ref/version guards, current source requirements, immutable commercial content, review prerequisites, missing policy, duplicate handover prevention, successor preservation, the full correction loop, invalid inputs, discount dispositions, review invalidation and malformed data.
 
 The native browser procedure exercises queue/filter behaviour, the complete review/approval/handover journey, export hash integrity, successor preservation, correction/resubmission, policy gaps, read-only controls, failed-save retry, corrupt/concurrent storage, source states, all six views across five widths, snapshot focus, tab navigation and stale links. Native results are reported only after execution; planned checks are not passes. Repository foundation, prototype and naming assurance remain documentation checks rather than business acceptance.
 
