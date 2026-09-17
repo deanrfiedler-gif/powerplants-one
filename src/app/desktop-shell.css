@@ -218,3 +218,7 @@
 @media (max-width: 780px) { .header-account .identity-strip .ppo-account-close { min-height: 44px; } }
 
 .header-account .identity-strip .identity-choice { width: calc(100% - 16px); }
+
+/* Phone Sales already exposes Deals and Leads in the bottom navigation. An extra
+   desktop tab row would leave too little room for a focused card after a save. */
+@media (max-width: 780px) { .module-navigation.ppo-sales-navigation { display: none; } }

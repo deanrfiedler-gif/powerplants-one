@@ -398,7 +398,7 @@ export function ProductHeader() {
       </header>
       {!!tabs.length && (
         <nav
-          className="module-navigation"
+          className={`module-navigation${page?.workspace === "sales" ? " ppo-sales-navigation" : ""}`}
           aria-label={`${currentModule} navigation`}
         >
           {tabs.map((item) => (

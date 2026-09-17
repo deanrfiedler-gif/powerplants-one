@@ -72,6 +72,8 @@ The initial follow-up native component run on `b425c8e6` passed 24 cases (ten de
 
 The corrected component run on `847a9d6f` passed all 26 applicable cases, with ten desktop-only cases skipped on phone projects, including the independent reference comparison. Manual inspection of its paired screenshots found that the legacy `button:hover:not(:disabled)` rule still overrode some shell hover colours. The next scoped CSS correction and reference-based hover assertions cover utility buttons, guide links/jumps and preview reset. Search-result secondary text also uses the reference's line height and spacing. Final-source verification remains the gate.
 
+The first full compiled run on `b425c8e6` passed 179 cases and caught two integration issues: six storage-boundary cases imported modules while Home's new redirect destroyed their document context, and the extra Sales tab row reduced the 320px phone board area enough to clip the focused stage action. The storage probes now start on the stable same-origin Foundation diagnostic page; every IndexedDB, ownership, original-Blob and partial-clear assertion is retained. The Sales tab row is desktop-only because the phone's bottom bar already exposes Deals and Leads. The saved stage action must still be fully in the viewport; that assertion is unchanged. The original Home-to-My-Work test continues to verify the redirect itself.
+
 ## Review and rollout
 
 1. Review PR checks against its final commit, including the six enforced contexts and any additional applicable suites. A component screenshot run is not owner acceptance.
