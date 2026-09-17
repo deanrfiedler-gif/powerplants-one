@@ -77,6 +77,8 @@
 .crm-r38 .crm-card-warning .product-icon { width:17px; height:17px; }
 .crm-r38 .crm-card .crm-card-activity { display:flex; flex-direction:row; align-items:flex-start; justify-content:flex-start; gap:6px; height:51px; min-height:51px; padding:7px 0 3px; border:0; border-radius:0; background:transparent; font-size:12px; text-align:left; color:#606977; }
 .crm-r38 .crm-card .crm-card-activity>.product-icon { width:15px; height:15px; margin-top:2px; flex:none; }
+.crm-r38 .crm-card .crm-card-activity { position:relative; }
+.crm-r38 .crm-card .crm-activity-owner-help { position:absolute; top:0; left:0; width:0; height:0; min-height:0; padding:0; margin:0; }
 .crm-r38 .crm-activity-copy { display:flex; flex-direction:column; min-width:0; }
 .crm-r38 .crm-card .crm-action-text { font-size:12px; font-weight:500; line-height:17px; height:17px; min-height:17px; white-space:nowrap; display:block; overflow:hidden; text-overflow:ellipsis; color:#242a37; }
 .crm-r38 .crm-activity-copy small { font-size:10px; line-height:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -192,7 +194,7 @@
  .crm-r38 .crm-condition-chips { max-width:90px; }
  .crm-r38 .crm-workbar { gap:4px; padding-inline:8px; }
  .crm-r38 .crm-workbar .crm-header-search { width:120px; flex-basis:120px; }
- .crm-r38 .crm-workbar-review>button>.product-icon { display:none; }
+ .crm-r38 .crm-workbar-review>button:not(.crm-icon-button)>.product-icon { display:none; }
 }
 @media(max-width:780px) {
  .crm-workspace.crm-r38 { margin:0; border-radius:0; border:0; }
@@ -224,7 +226,7 @@
  .crm-r38 .crm-card-shortcuts :is(button,a),.crm-r38 .crm-card .crm-card-stage { height:34px; min-height:34px; width:30px; flex-basis:30px; }
  .crm-r38 .crm-card-footer { padding-top:4px; }
  .crm-r38 .crm-stage-navigation { display:flex; padding:4px 8px; overflow:auto; gap:4px; }
- .crm-r38 .crm-stage-navigation button { font-size:11px; padding:5px 7px; min-height:34px; white-space:nowrap; }
+ .crm-r38 .crm-stage-navigation button { flex:0 0 auto; font-size:11px; padding:5px 7px; min-height:34px; white-space:nowrap; }
  .crm-r38 .crm-filter-grid { grid-template-columns:1fr; }
  .crm-r38 .crm-r38-panel-body { padding:14px; }
  .crm-r38 .crm-view-intro { padding:10px; }

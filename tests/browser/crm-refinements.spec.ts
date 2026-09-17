@@ -263,7 +263,7 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
     await page
       .getByLabel("Search opportunities", { exact: true })
       .fill(input.title);
-    await card.dragTo(page.locator('[data-drop-stage="Qualified"]'));
+    await card.dragTo(page.locator('[data-drop-stage="Qualified"]'), { sourcePosition: { x: 8, y: 8 } });
   } else {
     await page.locator(".crm-stage-track button").last().click();
   }
@@ -533,7 +533,7 @@ test("SA-07/08 refused drag returns to saved stage and Undo sends no replacement
       await route.continue();
     },
   );
-  await card.dragTo(page.locator('[data-drop-stage="Enquiry"]'));
+  await card.dragTo(page.locator('[data-drop-stage="Enquiry"]'), { sourcePosition: { x: 8, y: 8 } });
   await expect(page.locator(".crm-change-feedback")).toContainText(
     "This opportunity changed",
   );
@@ -584,7 +584,7 @@ test("SA-08 lost drag response confirms the exact original receipt before undo i
       await route.abort("failed");
     },
   );
-  await card.dragTo(page.locator('[data-drop-stage="Enquiry"]'));
+  await card.dragTo(page.locator('[data-drop-stage="Enquiry"]'), { sourcePosition: { x: 8, y: 8 } });
   await expect(page.locator(".crm-change-feedback")).toContainText(
     "Save outcome uncertain",
   );

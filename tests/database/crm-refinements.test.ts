@@ -76,7 +76,7 @@ test("r38 Archive returns only permitted closed outcomes and keeps signed pagina
   assert.deepEqual([...first.items, ...next.items].map(item => item.id), all.items.map(item => item.id));
   await assert.rejects(listOpportunities(p, { ...input, outcome: "Open", limit: 1, cursor: first.next_cursor! }), code("InvalidData"));
   await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.read'", [p.actor_id]);
-  await assert.rejects(listOpportunities(p, input), code("PermissionDenied"));
+  await assert.rejects(listOpportunities(p, input), code("Forbidden"));
 });
 test("Won from Closing records one owned handover due and preserves original activities and receipts", async () => {
   const p = await principal(), input = crmDiscovery();
