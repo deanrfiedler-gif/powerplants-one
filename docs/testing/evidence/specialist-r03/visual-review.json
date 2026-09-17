@@ -1,11 +1,11 @@
 {
   "reviewer": "Claude (design session), not owner acceptance",
-  "html_sha256": "bf6377dd99f554505c1bb65ab68b4d03424c3c4d6f26821210ef027614e19a46",
+  "html_sha256": "3cc832c3368f5b7ac9eb3352eee0fc3525e5220984214eb6c459c6ae2fb79881",
   "browser": "141.0.7390.37",
   "reviewed": [
     {
       "capture": "1440-configure-drive.png",
-      "sha256": "d7bf374303fa62cc429d05f9d87d118df3aead7cacd61f3a17b39f2ec0eb95c0",
+      "sha256": "530f451b979e24cc8c14cc612f8fdb9ee64697305b1eed2728249e5846c8b6d2",
       "finding": "Pinion attention notice sits under the drive selection; release cell shows one untested selection; Pinion tube, Cable location and drive pipe diameter read as separate controls."
     },
     {
@@ -15,12 +15,12 @@
     },
     {
       "capture": "1440-part-identity.png",
-      "sha256": "30ab3c308177832aa8d3590e8114f1ae5b699245fcae6ee83c136414fd653d71",
+      "sha256": "f71ab7a5f03ec292ca9a105a477ecc25579da6f1ef8646b8057f5a17b897d413",
       "finding": "Working dialog shows CE-LINE key, PPO part number, catalogue description, category, drive branch, part rule and provisional status."
     },
     {
       "capture": "1440-coverage.png",
-      "sha256": "151633646bdb8b3c41ee3612715b96627478ace56db4334c23f6b231f053f2d2",
+      "sha256": "2d21454f63e93ee20b286b6c4cd45f91aa8cc17fe6b09255afc29202973673aa",
       "finding": "Untested options table, active Pinion row highlighted. Initial header text rendered with a narrow space; header renamed to Risk if selected."
     },
     {
@@ -40,18 +40,28 @@
     },
     {
       "capture": "1440-configure.png",
-      "sha256": "f18ba01b51dca25408fad9e4fb26f546a5d52fa7b332de21e3dcbade9d477a66",
+      "sha256": "bb59fe70a41a90c0f4591cce18e1ea4dbe0fb7225b0aaf4f1ae9b9f29dd73b6f",
       "finding": "Second pass. Plan card redrawn to scale (48 by 38.4 ratio visible), drive lines at computed positions, motors per group, legend and statistics beneath; card fits the sticky sidebar beside the Greenhouse section."
     },
     {
       "capture": "1440-plan-extended.png",
-      "sha256": "659e62dd523070f6783aac2c54c357240bd18155e2f17b70a62e65e6bd94a836",
+      "sha256": "5503084d5018672b420dbb8b3079d684222fd8d32b1c285cc5c45abff549ba6d",
       "finding": "Second pass. Two wall-screen spans hatched beyond the physical width, odd bay banded and labelled, motors-along boundary and second motor row drawn, legend entries appear only when relevant."
     },
     {
       "capture": "1440-cut.png",
-      "sha256": "722afb2d3516a7ee85cfcc02bedfff3a82b13a48bac6f7a26decb94fc5c7c569",
+      "sha256": "ea1b4cdc986b31af8ca762d213f65484b01baa02e47b14394da795702f87804d",
       "finding": "Second pass. Screen-cut strip shows coverage, shrinkage allowance, both overhangs and the rounding remainder to scale in length with separators; bay length dashed inside the cloth width; statistics list each term of the cut length."
+    },
+    {
+      "capture": "1440-cross-section.png",
+      "sha256": "8cb9fc2f5d4467754ef9e44a23982f20d9c643bbb0bba641363571b0e85836ae",
+      "finding": "Third pass. Cross section: Venlo roof after the profile change, wall-screen extension hatched, screen strips per motor group with weight fittings at both ends, drive lines as dots, motors above the gutter line, height-to-screen dimension. Seven configurations were captured during design (gable, Venlo, arch; hooks, weights) before the final run."
+    },
+    {
+      "capture": "1440-bay-section.png",
+      "sha256": "e1842b29a0c55daf33a540eb9f757510725ea5447692df384425e9f8c4c3adb1",
+      "finding": "Third pass. Bay section: round 50 mm chords with truss clips, profile leading edge, dashed cable drive line and couplings, cloth lap over each truss, break symbols below the screen. The first draft crowded chord, coupling and leading edge on one line; the stack was separated and symbols enlarged before the final run. Closed and open states were both inspected."
     }
   ],
   "passes": [
@@ -64,6 +74,11 @@
       "pass": 2,
       "html_sha256": "bf6377dd99f554505c1bb65ab68b4d03424c3c4d6f26821210ef027614e19a46",
       "note": "Plan redesign, screen-cut diagram, readable dates, print layout"
+    },
+    {
+      "pass": 3,
+      "html_sha256": "3cc832c3368f5b7ac9eb3352eee0fc3525e5220984214eb6c459c6ae2fb79881",
+      "note": "Cross section and bay section drawings, roof profile and truss chord height inputs, C102 rules activated"
     }
   ]
 }

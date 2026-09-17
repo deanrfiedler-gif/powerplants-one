@@ -6,20 +6,20 @@ This record covers the r03 successor to the r02 workbench. It keeps separate: so
 
 The secondary source is the private screen-estimator analysis workbook r04, SHA-256 `de427bd99369bae35df6e29b6d9ffd9d340aa7d3a886c52698d76cc275e69c4a`. It was read without modification.
 
-- **What was extracted.** `scripts/extract-specialist-r03-catalogue.py` reads the WEB_APP_SPEC, TEST_CASES and OPTION_SETS sheets. It writes `docs/design/specialist/r03/catalogue.js`, SHA-256 `650c11cafe1f29ceea70f44e27d4bbd6e913f68c8e1b185eee7d9b120aa96e7c`, and rerunning it reproduces those bytes.
+- **What was extracted.** `scripts/extract-specialist-r03-catalogue.py` reads the WEB_APP_SPEC, TEST_CASES and OPTION_SETS sheets. It writes `docs/design/specialist/r03/catalogue.js`, SHA-256 `bf3df55264fccc846905e29b2806842b5f21d9593f27b912d4cf9484af2a2dbe`, and rerunning it reproduces those bytes.
 - **What the extract contains.**
   - 101 part numbers, with no prices.
-  - 143 reviewed position rules, which reach 80 of the 101 parts.
+  - 143 reviewed position rules, which reach 83 of the 101 parts.
   - 12 parameters.
   - Coverage for 142 fields, 77 varying and 65 constant. Values for 21 commercial fields are withheld.
-  - 20 untested options.
-  - 9 source discrepancies.
+  - 21 untested options.
+  - 12 source discrepancies.
 - **Confidentiality.** The extractor refuses output that contains a quote identifier or a price field. The workbook itself is not committed.
-- **What the part rules are.** The rules were derived by hand from the recovered description formulas, `TABLES!J1:K37`, `TABLES!C18:E26` and the EdgeHooks table. They are a provisional design-time mapping for catalogue owner review, not an approved catalogue.
+- **What the part rules are.** The rules were derived by hand from the recovered description formulas, `TABLES!J1:K37` (including the `C102`-dependent expressions at K2, K3, K4 and J10 and the couplings at M10:M11), `TABLES!C18:E26` and the EdgeHooks table. They are a provisional design-time mapping for catalogue owner review, not an approved catalogue.
 
 ## Model execution
 
-`node scripts/check-specialist-r03-model.mjs` passed **39 groups** ([model-results.json](model-results.json)):
+`node scripts/check-specialist-r03-model.mjs` passed **41 groups** ([model-results.json](model-results.json)):
 
 - **The 26 r02 groups**, run against the r03 model.
 - **Exact cloth lookup:** six rows exact, including 5 → 5.3, with unsupported bays still withheld.
@@ -27,7 +27,9 @@ The secondary source is the private screen-estimator analysis workbook r04, SHA-
 - **Catalogue integrity**, including no prices and no quote identifiers.
 - **Drive-family part resolution**, with stored diameters and location left unchanged.
 - **Separate identities** for Pinion tube diameter, drive pipe diameter and cable location.
-- **Pipe diameter** changes part identity only, never quantities.
+- **Drive pipe diameter** applies the recovered `C102` rules: Cable drums double above 25 NB (`TABLES!K3`), drive protectors follow, sprockets are two per included motor at 50 NB (`C297`), and the drum, bearing, coupling and pipe parts follow their tables. Pinion quantities are unchanged by the diameter.
+- **Truss chord height** selects the truss clip part without changing any quantity; five values have no historical example.
+- **Roof profile** has no source cell and no quantity effect.
 - **Conflicts and unresolved dependencies** are never silently mapped.
 - **Saved lines** store part numbers only and resolve their descriptions when shown; restore rejects altered identity.
 - **Untested selections** are counted and non-blocking.
@@ -41,7 +43,7 @@ The secondary source is the private screen-estimator analysis workbook r04, SHA-
 
 ## Browser execution
 
-`node scripts/check-specialist-r03-browser.mjs` passed **32 groups** with no console or page errors ([results.json](results.json)). The tested HTML has SHA-256 `bf6377dd99f554505c1bb65ab68b4d03424c3c4d6f26821210ef027614e19a46`. An earlier pass on the first r03 build (`3dbcb516…`) passed 29 groups; the second pass added the plan, screen-cut and date groups after the plan redesign.
+`node scripts/check-specialist-r03-browser.mjs` passed **35 groups** with no console or page errors ([results.json](results.json)). The tested HTML has SHA-256 `3cc832c3368f5b7ac9eb3352eee0fc3525e5220984214eb6c459c6ae2fb79881`. Earlier passes: 29 groups on the first build (`3dbcb516…`), 32 on the second (`bf6377dd…`); the third pass added the cross section, bay section and drive-pipe groups.
 
 **Runtime disclosure.** The design session ran with `PPO_BROWSER_CHANNEL=` (empty), Playwright 1.56 and bundled Chromium `141.0.7390.37`. It did not use the repository's pinned Node, Playwright or native Chrome channel. The workflow default remains `channel: 'chrome'`, and the pinned-runtime result must be read from the Screen Systems workflow run on the pull request.
 
@@ -68,6 +70,9 @@ The secondary source is the private screen-estimator analysis workbook r04, SHA-
   - Phone controls are at least 44 px high.
 - **Greenhouse plan:** the drawn footprint keeps the true width-to-length ratio; drive lines equal the calculated drive count; one motor per group across and along; wall-screen spans, the odd bay and the motors-along boundary appear only when configured.
 - **Screen cut:** the toggle moves focus, sets `aria-pressed`, and the diagram terms follow the overhang input.
+- **Cross section:** one roof path per span that changes with the roof profile; drive dots equal the drive lines; one strip per motor group with a fixing glyph at each end that changes with the edge fixing; the wall-screen extension appears when configured.
+- **Bay section:** chord glyphs are squares or circles per truss shape and follow the chord height; crosswire dots equal supports × bays shown, or clips per chord with Truss Clip; leading-edge tubes or profiles per bay; the drive line is dashed for Cable; the open state redraws gathered cloth and moves focus.
+- **Drive pipe activation through the UI:** enabling gate 263 and choosing 50 NB doubles the drum quantity, quadruples protectors, and shows the Ultra Groove drum part in the parts view.
 - **Dates:** run history and snapshots show dd Month yyyy · HH:mm.
 - **Storage:**
   - The export filename is r03.
@@ -75,7 +80,7 @@ The secondary source is the private screen-estimator analysis workbook r04, SHA-
 
 ## Visual review
 
-Ten captures were inspected at original scale across two passes ([visual-review.json](visual-review.json)). The first pass produced three layout refinements: balanced parts-table column widths, a renamed coverage header that rendered with a narrow space, and non-wrapping parameter buttons. The second pass audited the module for professional finish and redesigned the greenhouse plan: true-scale footprint, computed drive positions, motor groups both ways, wall-screen spans and odd bay, a screen-cut diagram, readable dates and a print layout. Seven plan configurations were captured and reviewed before the final run. The checks were rerun after each pass, and the final results above belong to the final HTML. This was a design-session review, not owner or device acceptance.
+Twelve captures were inspected at original scale across three passes ([visual-review.json](visual-review.json)). The first pass produced three layout refinements: balanced parts-table column widths, a renamed coverage header that rendered with a narrow space, and non-wrapping parameter buttons. The second pass audited the module for professional finish and redesigned the greenhouse plan: true-scale footprint, computed drive positions, motor groups both ways, wall-screen spans and odd bay, a screen-cut diagram, readable dates and a print layout. Seven plan configurations were captured and reviewed before the final run. The third pass added the cross section and bay section: seven section configurations were captured, the bay section's crowded screen-level stack was separated and its height compressed with break symbols, and the roof pitch and vertical exaggeration were softened. The checks were rerun after each pass, and the final results above belong to the final HTML. This was a design-session review, not owner or device acceptance.
 
 ## Reproduction
 
@@ -86,4 +91,4 @@ node scripts/check-specialist-r03-model.mjs
 node scripts/check-specialist-r03-browser.mjs
 ```
 
-Still open: native Chrome execution in CI, owner visual acceptance, catalogue owner review of the part rules and descriptions, engineering acceptance, and a decision on activating the `C102` quantity consumers. EA-16/17, AT-04/28, G06 and production approval are not closed by these results.
+Still open: native Chrome execution in CI, owner visual acceptance, catalogue owner review of the part rules and descriptions, engineering acceptance, and catalogue confirmation of the drum, bearing and coupling descriptions the `C102` rules now select. EA-16/17, AT-04/28, G06 and production approval are not closed by these results.
