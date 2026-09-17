@@ -21,6 +21,6 @@ The browser check uses the repository's existing Playwright/Chromium pins after 
 
 The source deliberately separates synthetic fixtures, copied-state commands, presentation, styles and retained shared assets. The compact Board/List and detail use one model. No network or persistent browser storage is used by the HTML.
 
-Source checkpoint: main aa94dcdcb1dd08798be240325857c3d32d04af02. The user's Deals r36 and build report supply the detailed direction; the r20 record layout, Customer 360 font/icon assets and current CRM outcome/transfer contracts supply the reuse boundary. Exact source hashes are embedded by the deterministic builder.
+Reviewed source checkpoint: main aa94dcdcb1dd08798be240325857c3d32d04af02. Delivery branch base: main a5406a81c02d37c4a23e75c1b71c7653fcec0d80 after the Shell r17 merge. The user's Deals r36 and build report supply the detailed direction; the r20 record layout, Customer 360 font/icon assets and current CRM outcome/transfer contracts supply the reuse boundary. Exact source hashes are embedded by the deterministic builder.
 
 [Design and receiving handover](../../decisions/deal-workspace-design.md) · [Verification](../../testing/evidence/deal-workspace-r01/README.md)

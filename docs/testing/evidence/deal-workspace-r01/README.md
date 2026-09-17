@@ -40,3 +40,9 @@ Source 9b719c39b5087eef3d9219ff52ac22145c5df853, [run 35180506059](https://githu
 ## Keyboard containment and capture correction
 
 Source f62fe2648f344407e4e72c599cf8178e7f83399c, [run 35180717145](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35180717145), passed 17 native groups. The keyboard check found Tab could leave the modal's document focus sequence. Explicit forward/reverse focus wrapping now supplements the native dialog. Skip-to-content keeps the current deal URL rather than entering hash routing. The native check covers reverse wrapping and skip-link identity as well as forward focus and return. Full-page captures now begin at document top so sticky/fixed elements are not captured at a previous viewport offset; the unfocused skip link is clipped.
+
+## Complete native pass and visual polish
+
+Source e2122bac5d614e13649ff2fd56b767dcb8266254, [run 35181003558](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35181003558), passed all gates: 31 model groups, 22 native browser groups, no browser errors, deterministic assembly, focused lint and documentation checks. Chrome 153.0.8010.47 captured 47 original PNGs. HTML SHA-256 was 3f2a863975e79635b6d560b5b891f6c7cc4bbfcf6d4661423aa6724a0062acb9. Downloaded archive 10480776707 matched f414287541761d98291be2029ee7abb95c16d3e5bb00a28738132a95147b8b76; all 47 capture hashes matched the manifest.
+
+Inspection of all eight desktop views plus phone overview, commercial and document panel found two minor spacing improvements: adjacent Edit/Complete actions needed a gap, and labelled activity/task/correspondence filters needed their default form margin removed to align with action buttons. These CSS-only changes are included in the delivery candidate. Native verification and original captures will be recorded for that exact HTML below.

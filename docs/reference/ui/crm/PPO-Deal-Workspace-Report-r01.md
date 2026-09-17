@@ -42,6 +42,8 @@ This is a design package. It adds no application route, schema, migration, netwo
 
 The issued HTML embeds a metadata manifest with the base commit and source hashes. r36 input SHA-256 is 918f8c54798d7844ce5b16d5d8cf3b9ff5a6b25940bca94563a3b9cb978b06f1. The inspected r20 Git blob is 462dac4943fb4350cf5739787a1d29e7e096716d.
 
+The contribution was rebased onto main a5406a81c02d37c4a23e75c1b71c7653fcec0d80 after the Shell r17 merge. Its reviewed design-source checkpoint remains the earlier commit identified above.
+
 The existing modular Next.js/TypeScript application remains the runtime destination. The standalone HTML uses the same dependency-free browser-script approach as neighbouring design modules. No new application technology or dependency is introduced.
 
 ## 3. Page composition
@@ -287,7 +289,7 @@ The two-column workspace stacks as width narrows. Key facts reduce from five col
 
 Board uses stage columns on desktop and a vertical stage sequence on phone. List changes to labelled record cards at narrow widths. The evidence panel fills the available phone viewport.
 
-Keyboard users can navigate tabs with arrows, Home and End; dialogs use native focus containment and Escape handling. Closing returns focus to the initiating control where it still exists. A skip link goes to the main tab content.
+Keyboard users can navigate tabs with arrows, Home and End; dialogs combine native modality with explicit forward/reverse focus wrapping and Escape handling. Closing returns focus to the initiating control where it still exists. A skip link goes to the main tab content without changing the deal route.
 
 Forms retain visible labels and error summaries. Status is conveyed by words and colour. Document text and user-entered content are escaped. Long names and narratives wrap rather than expanding the page.
 
