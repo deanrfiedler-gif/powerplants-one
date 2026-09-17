@@ -15,7 +15,7 @@ test("CRM shared URL preserves criteria and presentation but never an actor-boun
   assert.equal(worklistSearch({ filters: initialWorklistFilters, view: "Board", selected: "" }), "");
 });
 test("CRM location input ignores duplicate/unsupported controls and retains legacy links without deriving authority", () => {
-  const input = new URLSearchParams("view=Grid&view=Board&sort=delete&limit=200000&company_id=invalid&owner_id=invalid&stage_id=Won&selected=hidden&outcome=Closed&cursor=foreign&actor_id=admin&pipeline=I1&q=" + "a".repeat(201));
+  const input = new URLSearchParams("view=Grid&view=Board&sort=delete&limit=200000&company_id=invalid&owner_id=invalid&stage_id=Won&selected=hidden&outcome=Invalid&cursor=foreign&actor_id=admin&pipeline=I1&q=" + "a".repeat(201));
   const state = readWorklistLocation(input);
   assert.deepEqual(state, { filters: { ...initialWorklistFilters, pipeline_definition_id: LEGACY_PIPELINE_ID, q: "a".repeat(200) }, view: "Board", selected: "" });
   assert.doesNotMatch(worklistSearch(state), /delete|foreign|admin|200000/);

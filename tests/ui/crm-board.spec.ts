@@ -1,3 +1,4 @@
+import { toggleWorklistFilters } from "../helpers/crm-worklist-ui";
 import { test, expect } from "@playwright/test";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -98,7 +99,7 @@ test("hosted header, populated board, filtering and independent card targets", a
     page.getByRole("link", { name: "Open full activity", exact: true }),
   ).toBeHidden();
   if (info.project.name === "desktop") {
-    await card.locator(".crm-card-body").click();
+    await card.getByRole("button", { name: /^Snapshot:/ }).click();
     await expect(
       page.getByRole("heading", { name: "Deal summary", exact: true }),
     ).toBeVisible();
@@ -106,7 +107,7 @@ test("hosted header, populated board, filtering and independent card targets", a
       page.getByRole("link", { name: "Open full deal" }),
     ).toHaveAttribute("href", /^\/crm\/opportunities\//);
     await page.keyboard.press("Escape");
-    await expect(card.locator(".crm-card-body")).toBeFocused();
+    await expect(card.getByRole("button", { name: /^Snapshot:/ })).toBeFocused();
   } else await expect(card).toHaveAttribute("draggable", "false");
   await page
     .getByLabel("Search opportunities", { exact: true })
@@ -120,13 +121,9 @@ test("hosted header, populated board, filtering and independent card targets", a
     page.getByLabel("Search opportunities", { exact: true }),
   ).toHaveValue("Glasshouse");
   await page.getByRole("button", { name: "Board", exact: true }).click();
-  await page
-    .getByRole("button", { name: "Filters and sort", exact: true })
-    .click();
+  await toggleWorklistFilters(page);
   await expect(page.getByLabel("Stage", { exact: true })).toBeVisible();
-  await page
-    .getByRole("button", { name: "Filters and sort", exact: true })
-    .click();
+  await toggleWorklistFilters(page);
   await page
     .getByLabel("Search opportunities", { exact: true })
     .fill("no matching records");

@@ -28,7 +28,12 @@ export function useWorklistLocation() {
     setPage({ criteria: JSON.stringify({ ...value, cursor: "" }), cursor: value.cursor });
     writeLocation({ ...current, filters: value }, mode);
   };
-  const setView = (view: WorklistLocation["view"]) => writeLocation({ ...readWorklistLocation(new URLSearchParams(window.location.search)), view }, "push");
+  const setView = (view: WorklistLocation["view"]) => {
+    const current = readWorklistLocation(new URLSearchParams(window.location.search));
+    const outcome = view === "Archive" ? "Closed" : view === "Forecast" || current.view === "Archive" ? "Open" : current.filters.outcome;
+    if (outcome !== current.filters.outcome) setPage({ criteria: "", cursor: "" });
+    writeLocation({ ...current, filters: { ...current.filters, outcome, cursor: "" }, view }, "push");
+  };
   const setSelected = (selected: string, mode: Mode = "replace") => writeLocation({ ...readWorklistLocation(new URLSearchParams(window.location.search)), selected }, mode);
   const clear = useCallback((keepPipeline = false) => {
     const current = readWorklistLocation(new URLSearchParams(window.location.search));

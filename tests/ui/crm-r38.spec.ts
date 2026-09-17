@@ -1,0 +1,110 @@
+import { test, expect } from "@playwright/test";
+import { execFileSync } from "node:child_process";
+import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
+const fixture = pathToFileURL(resolve("verification-evidence/crm-r38-five/index.html")).href;
+test.beforeAll(() => { execFileSync(process.execPath, ["scripts/build-crm-ui-review.mjs", "verification-evidence/crm-r38-five", "tests/ui/crm-five-stage-fixture.tsx"]); });
+test.beforeEach(async ({ page }, info) => { test.skip(info.project.name !== "desktop", "This case explicitly checks all five viewport sizes."); await page.goto(fixture); await expect(page.locator(".crm-card")).toHaveCount(18); });
+
+test("r38 two-row toolbar, single board scroll and uniform cards at desktop and phone widths", async ({ page }, info) => {
+  for (const width of [1440, 1280, 1024, 390, 320]) {
+    await page.setViewportSize({ width, height: width > 780 ? 1000 : 844 });
+    await expect(page.locator(".crm-card:visible")).toHaveCount(width > 780 ? 18 : 4);
+    const geometry = await page.evaluate(() => {
+      const root = document.querySelector(".crm-r38")!, toolbar = root.querySelector(".crm-toolbar-r38")!.getBoundingClientRect(), workbar = root.querySelector(".crm-workbar")!.getBoundingClientRect();
+      const cards = [...root.querySelectorAll(".crm-card")].map(card => card.getBoundingClientRect()).filter(rect => rect.width);
+      return { pageFits: document.documentElement.scrollWidth <= innerWidth, heights: cards.map(rect => rect.height), controlsFit: [...root.querySelectorAll(".crm-toolbar-r38 button,.crm-new-opportunity,.crm-workbar button,.crm-workbar input,.crm-workbar select")].filter(node => node.getBoundingClientRect().width).every(node => { const rect = node.getBoundingClientRect(); return rect.left >= 0 && rect.right <= innerWidth; }), secondRow: workbar.top >= toolbar.bottom - 1, innerScrolls: [...root.querySelectorAll(".crm-stage")].some(node => getComputedStyle(node).overflowY === "auto") };
+    });
+    expect(geometry, `Toolbar geometry at ${width}px`).toMatchObject({ pageFits: true, controlsFit: true, secondRow: true });
+    expect(new Set(geometry.heights).size).toBe(1);
+    expect(geometry.innerScrolls).toBe(false);
+    const activityFits = await page.locator(".crm-card:visible .crm-card-activity").evaluateAll(nodes => nodes.every(node => {
+      const button = node.getBoundingClientRect(), copy = node.querySelector(".crm-activity-copy")!.getBoundingClientRect();
+      return copy.top >= button.top && copy.bottom <= button.bottom && copy.right <= button.right;
+    }));
+    expect(activityFits, `Activity dates fit their cards at ${width}px`).toBe(true);
+    await page.screenshot({ path: info.outputPath(`r38-board-${width}.png`) });
+  }
+});
+test("r38 collapse, snapshot, filter focus, shared forecast and archive populations", async ({ page }, info) => {
+  await page.getByRole("button", { name: "Collapse Quoting", exact: true }).click();
+  await expect(page.locator('.crm-stage[data-drop-stage="Quoting"]')).toHaveAttribute("data-collapsed", "true");
+  await page.getByRole("button", { name: "Expand Quoting", exact: true }).click();
+  await expect(page.locator(".crm-card")).toHaveCount(18);
+  await page.getByRole("button", { name: "Snapshot: Glasshouse climate control upgrade", exact: true }).click();
+  const snapshot = page.locator(".crm-deal-dialog");
+  await expect(snapshot.getByRole("link", { name: "Open full deal", exact: true })).toBeVisible();
+  expect((await snapshot.boundingBox())!.x).toBeGreaterThan(700);
+  await page.screenshot({ path: info.outputPath("r38-snapshot.png") });
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", { name: "Filters and sort", exact: true }).click();
+  const filter = page.getByRole("dialog", { name: "Filter opportunities", exact: true });
+  await expect(filter).toBeVisible();
+  expect((await filter.boundingBox())!.y).toBe(0);
+  expect(await filter.locator(".crm-secondary-filters").evaluate(node => node.scrollHeight <= node.clientHeight + 1)).toBe(true);
+  await filter.getByLabel("Next action", { exact: true }).selectOption("Overdue");
+  await page.screenshot({ path: info.outputPath("r38-filters.png") });
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button", { name: "Filters and sort", exact: true })).toBeFocused();
+  await expect(page.locator(".crm-card")).toHaveCount(3);
+  await page.getByRole("button", { name: "Forecast", exact: true }).click();
+  await expect(page.locator(".crm-forecast-card")).toHaveCount(3);
+  await page.reload();
+  await expect(page.locator(".crm-forecast-card")).toHaveCount(3);
+  await page.getByRole("button", { name: "Remove Activity condition", exact: true }).click();
+  await expect(page.locator(".crm-forecast-card")).toHaveCount(18);
+  await page.screenshot({ path: info.outputPath("r38-forecast.png") });
+  await page.getByRole("button", { name: "Archive", exact: true }).click();
+  await expect(page.locator("tbody tr")).toHaveCount(2);
+  await page.getByRole("button", { name: "Won", exact: true }).click();
+  await expect(page.locator("tbody tr")).toHaveCount(1);
+  await expect(page.locator("tbody")).toContainText("SYN Won irrigation upgrade");
+  await page.screenshot({ path: info.outputPath("r38-archive.png") });
+  await page.getByRole("button", { name: "Board", exact: true }).click();
+  await expect(page.locator(".crm-card")).toHaveCount(18);
+});
+test("r38 named views, list resize, triage, totals and unavailable data commands", async ({ page }, info) => {
+  await page.getByLabel("Sort", { exact: true }).selectOption("Title");
+  await page.getByRole("button", { name: "Views", exact: true }).click();
+  await page.getByLabel("New view name", { exact: true }).fill("Weekly review");
+  await page.getByRole("button", { name: "Save as new view", exact: true }).click();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button", { name: "Views", exact: true })).toContainText("Weekly review");
+  await page.getByRole("button", { name: "List", exact: true }).click();
+  const first = page.getByRole("columnheader", { name: "Opportunity", exact: true }), before = (await first.boundingBox())!.width;
+  await page.getByRole("button", { name: "Resize Opportunity column", exact: true }).focus();
+  await page.keyboard.press("ArrowRight");
+  expect((await first.boundingBox())!.width).toBeCloseTo(before + 20, 0);
+  await page.screenshot({ path: info.outputPath("r38-list.png") });
+  await page.getByRole("button", { name: /^Triage/ }).click();
+  await expect(page.locator(".crm-review-list article")).toHaveCount(5);
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", { name: "Pipeline totals", exact: true }).click();
+  await expect(page.getByRole("dialog", { name: "Pipeline totals", exact: true })).toContainText("Current filters apply");
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", { name: "Opportunity data options", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Import data · unavailable", exact: true })).toBeDisabled();
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", { name: "Help", exact: true }).click();
+  await expect(page.getByRole("dialog", { name: "Deal board guide", exact: true })).toContainText("existing saved workflows");
+});
+
+test("r38 outcome drops open the selected decision without saving", async ({ page }) => {
+  const card = page.locator('.crm-stage[data-drop-stage="Closing"] .crm-card').first();
+  for (const outcome of ["Lost", "Won"]) {
+    const box = (await card.boundingBox())!;
+    await page.mouse.move(box.x + 8, box.y + 8);
+    await page.mouse.down();
+    await page.mouse.move(box.x + 12, box.y + 28, { steps: 4 });
+    const target = page.locator(".crm-drag-actions>div").filter({ hasText: new RegExp(`^${outcome}$`) });
+    await expect(target).toHaveAttribute("data-disabled", "false");
+    const drop = (await target.boundingBox())!;
+    await page.mouse.move(drop.x + drop.width / 2, drop.y + drop.height / 2, { steps: 5 });
+    await page.mouse.up();
+    const dialog = page.getByRole("dialog", { name: "Record sales outcome", exact: true });
+    await expect(dialog.getByLabel("Sales outcome", { exact: true })).toHaveValue(outcome);
+    await expect(dialog.getByLabel(outcome === "Lost" ? "Lost reason" : "Acceptance or order evidence", { exact: true })).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(page.locator(".crm-card")).toHaveCount(18);
+  }
+});
