@@ -144,7 +144,7 @@ Opening, reading or returning from a handover changes none of these states. No c
 
 ## 10. Domain destinations and ownership
 
-Every item creates a local route containing the task UUID, source-record UUID, exact revision and allowlisted screen key. The source resolver checks their consistency before displaying a destination. Readable names are never used to resolve a target.
+Every item creates a local route containing the task UUID, source-record UUID, exact revision and allowlisted screen key. The source resolver checks their consistency before displaying a destination. Readable names are never used to resolve a target. The local route also carries validated return-view criteria, preserving the selected item and filters across a destination reload. Malformed return criteria cannot change source resolution.
 
 | Domain | Local destination preview | Review content and retained boundary |
 |---|---|---|
@@ -218,7 +218,7 @@ The supplied r20 file matches the repository byte for byte: SHA-256 `c68a499e857
 | Geometry | 6 px controls, 7 px cards, 10 px dialogs; restrained borders and spacing. |
 | Workspace | Header, context/environment row, tabs, measures, tools and one queue/detail composition. No competing app masthead or logo. |
 | Desktop | 360–385 px queue beside flexible persistent detail. Queue and detail own their vertical scroll regions, following r20 processing-layout guidance. |
-| Narrow screens | Below 760 px, selecting a card shows detail with a prominent Back to list control. The existing filters and queue remain recoverable. |
+| Narrow screens | Below 760 px, summary counts are compact and additional filters expand on demand. Selecting a card shows detail with Back to list; summary/filter controls are set aside while the selected item is open. Returning restores the queue and criteria. |
 | Source preview | Flexible evidence area plus review-context panel; panels stack on smaller screens. |
 | Focus and controls | Semantic buttons, labelled form inputs, visible focus rings, keyboard card selection, focused phone detail and dialog Escape/focus return. |
 | Motion and print | Reduced-motion rules and print treatment favour selected source content. Print is a review convenience, not an issued business document. |
