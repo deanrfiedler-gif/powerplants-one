@@ -3,13 +3,24 @@ document_id: PPO-SC08-WORKSPACE-RPT
 revision: r01
 date: 2026-09-16
 owner: Dean Fiedler
-status: Proposed HTML design and detailed companion report; owner acceptance and application integration separate
+status: Uploaded reference HTML and companion report; source package, suites and evidence record not published (see section 0); owner acceptance and application integration separate
 source_commit: 0769a16dd842e9dc1c349a853036ab71949e7807
 ---
 
 # Returns, Supplier Claims & Credit Tracking — workspace report
 
-Companion to the standalone [SC-08 workspace r01](PPO-Returns-Supplier-Claims-and-Credit-Tracking-Workspace-r01.html) and its [design and receiving handover](../../../decisions/returns-supplier-claims-credit-design.md).
+Companion to the standalone [SC-08 workspace r01](PPO-Returns-Supplier-Claims-and-Credit-Tracking-Workspace-r01.html). The design and receiving handover this report refers to throughout was written in the authoring session and is not published in this repository; §0 records exactly what is and is not here.
+
+## 0. Publication state of this contribution
+
+This contribution publishes **two files**: the workspace HTML and this report. The maintainable source package, deterministic builder, model and browser suites, design workflow, decision record and verification evidence record described in §16 and §19 were built in the authoring session and were **never pushed to this repository**. References to them are retained as a description of that authoring work, not as links to repository artefacts.
+
+Two consequences follow. Both are facts about this repository, not judgements about the design:
+
+- **Nothing in §16 is reproducible here.** The results recorded there were run against a tree containing the full package. This repository holds no `scripts/build-returns-design.py`, `scripts/check-returns-model.mjs`, `scripts/check-returns-browser.mjs` or `.github/workflows/returns-design.yml`, so builder determinism, the 34 model groups and the 23 native browser groups can be neither re-run nor confirmed from what is published here.
+- **The published HTML does not match the hash the authoring handover recorded.** That handover recorded SHA-256 `530da6a0ed5e803e186e467cd4893bea14ed499d6d4992be3fb95f33026d636f` at 268,024 bytes. The file published here is also 268,024 bytes, with SHA-256 `6b9321bf3c5296f94850530f66b64860338d01deee03acdb5a5b1e2dd368bacc`. Identical size, different content. Without the builder or the original bytes, which of the two is authoritative cannot be established here.
+
+The published HTML is therefore an **uploaded reference**, not a verified issued baseline. Restoring the source package, rebuilding against the published bytes and recording a fresh evidence record is a separate bounded contribution, and must happen before r01 is treated as issued.
 
 The central question the workspace answers is: **what happened to the goods, how are we resolving the customer's issue, and what recovery or credit remains outstanding?**
 
@@ -45,7 +56,7 @@ Based on `main` at **`0769a16dd842e9dc1c349a853036ab71949e7807`** (16 September 
 |---|---|---|
 | [Coverage register r06](../module-page-register/PPO-HTML-Page-Coverage-Register-r06.html) | SC-08 entry: title, placement, family, reviewer, entities, authority, priority, dependency on SC-04, parents SCM-01–08, checks | Fixed the page scope, the dependency on SC-04 and the three recorded checks used in §12 |
 | [Supply Chain readiness receiving contract](../../../contracts/supply-chain-readiness.md) (PPO-013-READINESS r01) | SCM-01–08 bounded receiving facts, invariants, quantity conservation, incompleteness rules, fictional acceptance cases | Supplied the quantity, completeness and observation discipline, and the *carrier arrival is not an ERP receipt or usable stock* rule reused verbatim in behaviour |
-| [Supply Chain Material Readiness r03](PPO-Supply-Chain-Material-Readiness-r03.html) | Its four views, and the received / quarantined / usable vocabulary, receipt and inspection references, demand, supplier and item fixtures | SC-04 receipt and quarantine concepts reused rather than reinvented; its damaged-fan-guard case (`SYN-PPO-RC-028`, `SYN-PPO-INS-028`, demand `SYN-PPO-MD-004`) is the origin of return `SYN-PPO-RET-0902` |
+| [Supply Chain Material Readiness r03](../supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html) | Its four views, and the received / quarantined / usable vocabulary, receipt and inspection references, demand, supplier and item fixtures | SC-04 receipt and quarantine concepts reused rather than reinvented; its damaged-fan-guard case (`SYN-PPO-RC-028`, `SYN-PPO-INS-028`, demand `SYN-PPO-MD-004`) is the origin of return `SYN-PPO-RET-0902` |
 | [Warranty & Customer Resolution r01](../warranty/PPO-Warranty-and-Customer-Resolution-Workspace-r01.html) and its [decision](../../../decisions/warranty-customer-resolution-design.md) | MA-06 coverage decision, MA-07 recovery context, the retained replacement result, and the recorded statement that *future SC-08 owns a separately implemented return/claim/credit workflow* | Supplied the incoming handover: `SYN-PPO-RET-0903` receives the removed Willowbank pump and **adopts** claim identity `SYN-WAR-CLAIM-090101` instead of creating a second claim |
 | [Theme style board r20](../theme-style-board/powerplants-one-theme-style-board-r20.html) | Register/worklist, detail workspace and review/comparison patterns, tokens, snapshot cells, tables, pills, dialogs | The entire component layer; `workspace.css` is the Warranty r20 composition re-scoped to `#ppo-returns`, plus SC-08-specific composition |
 | [Customers, Sites & Growing Areas r03](../customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html) | Customer, site and growing-area identity shape | Customer 360 link target and the `site` / `siteId` fields on every return |
@@ -460,11 +471,11 @@ These are prototype choices made to keep the demonstration coherent. None is cor
 
 ## 16. Verification record
 
-Run from the repository root at `0769a16dd842e9dc1c349a853036ab71949e7807` with the returns package applied.
+Run in the **authoring session** from the repository root at `0769a16dd842e9dc1c349a853036ab71949e7807`, with the full returns package applied. That package is not published here (§0), so no row below has been reproduced in this repository.
 
 | Check | Result |
 |---|---|
-| `python3 scripts/check_foundation.py` | **Passed** — see the [evidence record](../../../testing/evidence/returns-r01/README.md) for the exact counters |
+| `python3 scripts/check_foundation.py` | **Passed in the authoring session.** The evidence record holding the exact counters is not published in this repository |
 | `python3 scripts/check_prototype.py` | **Passed** — 78 parent dispositions and 29 master decisions unchanged |
 | `python3 scripts/check_naming.py` | **Passed** — document register consistent; project instructions within the 8,000-character limit |
 | `git --no-pager grep -n -E "^(<<<<<<<\|=======$\|>>>>>>>)" -- docs` | **No match** — no merge-conflict markers |
@@ -506,16 +517,16 @@ It is the right first increment because it is the point at which the prototype's
 
 ## 19. Files and maintenance
 
-| File | Purpose |
+| File | State in this repository |
 |---|---|
-| [`PPO-Returns-Supplier-Claims-and-Credit-Tracking-Workspace-r01.html`](PPO-Returns-Supplier-Claims-and-Credit-Tracking-Workspace-r01.html) | The issued standalone workspace. Open it directly in a browser. |
-| This report | The companion record. |
-| [`docs/design/returns/`](../../../design/returns/) | Maintainable source: template, fonts, styles, icons, model and controller. |
-| [`scripts/build-returns-design.py`](../../../../scripts/build-returns-design.py) | Deterministic builder. |
-| [`scripts/check-returns-model.mjs`](../../../../scripts/check-returns-model.mjs) | 34 model groups. |
-| [`scripts/check-returns-browser.mjs`](../../../../scripts/check-returns-browser.mjs) | 23 native browser groups and original captures. |
-| [`.github/workflows/returns-design.yml`](../../../../.github/workflows/returns-design.yml) | Runs the builder determinism check and both suites on any pull request touching this family. |
-| [`docs/decisions/returns-supplier-claims-credit-design.md`](../../../decisions/returns-supplier-claims-credit-design.md) | Design and receiving handover. |
-| [`docs/testing/evidence/returns-r01/`](../../../testing/evidence/returns-r01/) | Exact verification record and retained results. |
+| [`PPO-Returns-Supplier-Claims-and-Credit-Tracking-Workspace-r01.html`](PPO-Returns-Supplier-Claims-and-Credit-Tracking-Workspace-r01.html) | **Published**, as an uploaded reference. Open it directly in a browser. |
+| This report | **Published.** |
+| `docs/design/returns/` | **Not published.** Maintainable source: template, fonts, styles, icons, model and controller. |
+| `scripts/build-returns-design.py` | **Not published.** Deterministic builder. |
+| `scripts/check-returns-model.mjs` | **Not published.** 34 model groups. |
+| `scripts/check-returns-browser.mjs` | **Not published.** 23 native browser groups and original captures. |
+| `.github/workflows/returns-design.yml` | **Not published.** Would run the builder determinism check and both suites on any pull request touching this family. |
+| `docs/decisions/returns-supplier-claims-credit-design.md` | **Not published.** Design and receiving handover. |
+| `docs/testing/evidence/returns-r01/` | **Not published.** Exact verification record and retained results. |
 
-Edit the source files, rebuild, run both suites, and update this report and the [design index](../README.md) in the same pull request. Retain r01 once it is accepted as an issued baseline; material design changes use a reviewed successor revision.
+Until the source package is restored this HTML can be read but not rebuilt, re-checked or regression-tested. Restoring it, rebuilding against the published bytes, resolving the §0 hash discrepancy and recording a fresh evidence record is the maintenance step this family needs before r01 is treated as an issued baseline. Update the [design index](../README.md) in the same pull request as any successor revision.
