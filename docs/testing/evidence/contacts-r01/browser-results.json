@@ -1,0 +1,272 @@
+{
+  "scope": "CS-02 / CS-03",
+  "revision": "r01",
+  "html_sha256": "e625f700f16e7945f699ac2df7cb46499f070d4341c1b0d2b8ca0206da18a8db",
+  "browser_channel": "chrome",
+  "browser_path": null,
+  "browser_version": "153.0.8010.52",
+  "pinned_runtime_evidence": true,
+  "viewports": [
+    "1440x960",
+    "1024x768",
+    "820x800",
+    "390x844"
+  ],
+  "groups": 57,
+  "passed": 57,
+  "failed": 0,
+  "page_errors": [],
+  "images": [
+    "1440-directory.png",
+    "1440-technician-directory.png",
+    "1440-restricted-queue.png",
+    "1440-restricted-panel.png",
+    "1440-stakeholders-restricted.png",
+    "1440-visibility-explanation.png",
+    "1440-contact-record.png",
+    "1440-reliance.png",
+    "1440-reliance-blocked.png",
+    "1440-stakeholders.png",
+    "1440-proposals.png",
+    "1440-duplicates.png",
+    "1440-failed.png",
+    "1440-conflict.png",
+    "1440x960-directory.png",
+    "1024x768-directory.png",
+    "820x800-directory.png",
+    "390x844-directory.png",
+    "390-cards.png",
+    "390-panel.png",
+    "390-dialog.png"
+  ],
+  "results": [
+    {
+      "name": "Six views, the synthetic banner and the authority boundary render without errors",
+      "result": "Passed"
+    },
+    {
+      "name": "Exactly one scope container and no duplicated application shell",
+      "result": "Passed"
+    },
+    {
+      "name": "The fixed clock is stated and never drifts to the real time",
+      "result": "Passed"
+    },
+    {
+      "name": "The six attention queues render with counts and toggle the register",
+      "result": "Passed"
+    },
+    {
+      "name": "Non-sortable columns carry no sort control, as parseDirectory refuses them",
+      "result": "Passed"
+    },
+    {
+      "name": "Sorting by a permitted column reorders the register and announces aria-sort",
+      "result": "Passed"
+    },
+    {
+      "name": "Search matches an organisation name and a role label through the affiliation JSON",
+      "result": "Passed"
+    },
+    {
+      "name": "An empty result offers recovery and never reads as a permission problem",
+      "result": "Passed"
+    },
+    {
+      "name": "The status filter offers exactly the contract statuses",
+      "result": "Passed"
+    },
+    {
+      "name": "The page size offers exactly 25, 50 and 100",
+      "result": "Passed"
+    },
+    {
+      "name": "An inactive contact is marked and states that no command can change it",
+      "result": "Passed"
+    },
+    {
+      "name": "The site technician sees exactly one contact and nine withheld",
+      "result": "Passed"
+    },
+    {
+      "name": "Restricted renders as restricted, never as empty",
+      "result": "Passed"
+    },
+    {
+      "name": "The restricted explanation names the failing clause without naming the person",
+      "result": "Passed"
+    },
+    {
+      "name": "A stakeholder list shows restricted rows beside a permitted one",
+      "result": "Passed"
+    },
+    {
+      "name": "The visibility explanation traces both clauses for the site technician",
+      "result": "Passed"
+    },
+    {
+      "name": "A company reader satisfies both clauses, and the basis names the first",
+      "result": "Passed"
+    },
+    {
+      "name": "The contact record states the absent reference and the absent command",
+      "result": "Passed"
+    },
+    {
+      "name": "Affiliation concurrency is stated as belonging to the organisation",
+      "result": "Passed"
+    },
+    {
+      "name": "A stale organisation version produces a conflict, not a silent write",
+      "result": "Passed"
+    },
+    {
+      "name": "An ended affiliation shows its period and whether a successor is recorded",
+      "result": "Passed"
+    },
+    {
+      "name": "The reliance view lists every binding with its owning module",
+      "result": "Passed"
+    },
+    {
+      "name": "An inactive primary contact shows a blocked approval owned by SV-06",
+      "result": "Passed"
+    },
+    {
+      "name": "A finance-held binding is restricted for a non-finance reader and shown for finance",
+      "result": "Passed"
+    },
+    {
+      "name": "Authority basis renders one of three values and explains itself",
+      "result": "Passed"
+    },
+    {
+      "name": "Coverage gaps name a site without a primary contact and its consequence",
+      "result": "Passed"
+    },
+    {
+      "name": "An organisation with history but no current affiliation is a stated gap",
+      "result": "Passed"
+    },
+    {
+      "name": "A proposal refuses a short reason and keeps what was entered",
+      "result": "Passed"
+    },
+    {
+      "name": "A proposal cannot be reviewed by its proposer",
+      "result": "Passed"
+    },
+    {
+      "name": "Every apply is confirmed, labelled Simulated, and changes no record",
+      "result": "Passed"
+    },
+    {
+      "name": "A returned proposal produces a successor that inherits no review",
+      "result": "Passed"
+    },
+    {
+      "name": "Duplicate resolution proposes a pointer and merges nothing",
+      "result": "Passed"
+    },
+    {
+      "name": "A duplicate candidate set the reader cannot reach is withheld, not hidden",
+      "result": "Passed"
+    },
+    {
+      "name": "Two people who share a name are listed separately and never auto-merged",
+      "result": "Passed"
+    },
+    {
+      "name": "A role without shared.edit cannot raise a proposal, and says why",
+      "result": "Passed"
+    },
+    {
+      "name": "Loading, failed, partial and denied states are distinct and never read as zero",
+      "result": "Passed"
+    },
+    {
+      "name": "A failed save keeps entries and changes nothing",
+      "result": "Passed"
+    },
+    {
+      "name": "A competing tab raises a conflict that overwrites nothing",
+      "result": "Passed"
+    },
+    {
+      "name": "The assistant refuses to answer from a stale copy",
+      "result": "Passed"
+    },
+    {
+      "name": "The assistant answers only from the rendered record",
+      "result": "Passed"
+    },
+    {
+      "name": "A refused restore changes nothing and says why",
+      "result": "Passed"
+    },
+    {
+      "name": "Reset returns to the built-in fixture and discards local proposals",
+      "result": "Passed"
+    },
+    {
+      "name": "A dialog returns focus to the control that opened it",
+      "result": "Passed"
+    },
+    {
+      "name": "A panel returns focus and closes on Escape",
+      "result": "Passed"
+    },
+    {
+      "name": "A proposal can be completed with the keyboard alone",
+      "result": "Passed"
+    },
+    {
+      "name": "A duplicate review can be completed with the keyboard alone",
+      "result": "Passed"
+    },
+    {
+      "name": "Cancelling a changed form asks before discarding",
+      "result": "Passed"
+    },
+    {
+      "name": "The skip link reaches the workspace content",
+      "result": "Passed"
+    },
+    {
+      "name": "No horizontal overflow at 1440x960",
+      "result": "Passed"
+    },
+    {
+      "name": "No horizontal overflow at 1024x768",
+      "result": "Passed"
+    },
+    {
+      "name": "No horizontal overflow at 820x800",
+      "result": "Passed"
+    },
+    {
+      "name": "No horizontal overflow at 390x844",
+      "result": "Passed"
+    },
+    {
+      "name": "Phone targets meet the 44 px minimum",
+      "result": "Passed"
+    },
+    {
+      "name": "The register becomes cards on the phone viewport with labelled fields",
+      "result": "Passed"
+    },
+    {
+      "name": "The inspection panel is full width on the phone viewport",
+      "result": "Passed"
+    },
+    {
+      "name": "A dialog fits the phone viewport without overflow",
+      "result": "Passed"
+    },
+    {
+      "name": "No page error, console error or failed request occurred during the run",
+      "result": "Passed"
+    }
+  ]
+}
