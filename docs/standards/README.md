@@ -5,6 +5,7 @@ Powerplants One / PPO uses an independently adopted naming system. The other pro
 | Item | Purpose |
 |---|---|
 | [PPO-STD-001](naming-conventions.md) | Current adopted naming standard; r03 records adoption of the accepted r02 scheme |
+| [PPO-STD-002](PPO-STD-002-repository-structure.md) | Repository structure, layer model and naming; adopted as a forward target |
 | [Accepted r02](../reference/baselines/PPO-STD-001-naming-conventions-r02.md) | Exact user-adopted source, hash-protected |
 | [ADR-0005](../decisions/ADR-0005-project-naming-adoption.md) | Adoption, supersession and scope |
 | [Implementation record](naming-adoption.md) | Old/new paths, design-contract changes and assurance |
