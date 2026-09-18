@@ -1,0 +1,39 @@
+{
+  "scope": "CS-02 / CS-03",
+  "revision": "r01",
+  "buildDate": "2026-09-18",
+  "sourceCommit": "01b9824a63e468b393265b159fa681f83f6e668c",
+  "themeEdition": "r20 shared token core plus theme r22’s selection family (--ss22-*), adopted from the r22 board itself after PR #239 merged. r22 measured against r20 at this commit: 0 tokens removed, 0 values changed, 24 added, all --nca-* / --ss22-* component-local aliases over existing brand tokens.",
+  "themeFile": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+  "themeSHA256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+  "htmlSHA256": "aa97680dadf459aa6fbeaf39c761df124adf6737fb68c62b106589c38eac9a52",
+  "htmlBytes": 254547,
+  "sources": {
+    "fixtures.json": "f100464bd1aebed27d050a797ada23ff035152165289e7b92b31bd2fe912edcf",
+    "fonts.css": "57b4aafb71296b18d80408cb10aa972c87f5185deafd748c7fdcfb33e2bd4bef",
+    "icons.json": "cf868d77b2c07f14f07985afd218649ba4362067ff2d55ef625c56bc2df1fcae",
+    "model.js": "6fbd9feb93f2504286052bb38a18894c3159d6b56d567346f693170be494f7fe",
+    "source-pins.json": "9a640faf73eb905e04ec643eeee46e2174ce3a8516c3432d7192e95488061661",
+    "template.html": "032a9f2a17708db237fe0c90e647f1bc0e8d36dc4d243f8effce1d3d1fb51295",
+    "workspace.css": "5a7489540c1103b6ee600c30950b9ef76116d5dc8bfad58427367a746e308312",
+    "workspace.js": "6d8fa58e00a8f8ed26cd1e4f422bed0dd99ea98594aa6a856da7c5ac5b7b9b11"
+  },
+  "contractPins": {
+    "db/migrations/0002-shared-foundation.sql": "9f817da163dc168b61fe363665f1b1bc3308e75ddb44aa71fac96e99a1225bdb",
+    "db/migrations/0003-customer-intake.sql": "3a7e3ed9cea0707b260a5f105775c9c64a683c1722cc64b8b2d76d5ce708720f",
+    "db/migrations/0010-crm-opportunities.sql": "4e750f4ba1a27ece94985081d2d56cecc88542fa40b70b4b76a43944d4ae082a",
+    "db/migrations/0017-crm-ui-refinements.sql": "55651d39a66368ee033adc818a7a26f1178b3888d776308ac7881c39bd1768b3",
+    "db/migrations/0018-crm-leads.sql": "2c36b8e173f805e0184e59284c0856d982ecc5a71ea60d61d64854f3ec186255",
+    "db/migrations/0019-projects-gantt.sql": "9b58480eb0daebe8bbe4af4ac952d0d43bb2b6cd621b87f095547e426a4f1043",
+    "src/shared/commands.ts": "8aa4564c50a98e7320c3e4f1c329209c62e5682aa16a4843ffed60c97a8e8f6b",
+    "src/shared/reads.ts": "27c9995fde64a25a82f60cad9290f304e72f3d97289f8cf7b403e02bea4bf8e5",
+    "src/crm/directory.ts": "5812d66b1edd4d791128e568d18226fedf21f9ce3f6059aa8c42ab5cef5336e5",
+    "src/shared/context.ts": "1859ee53bb9a4f0831a5ea1ce1c7bfe93450f01cf1ba1f5605c8c1ec8583d2d8",
+    "src/projects/service.ts": "6cba9b5ad63909d88ad6e134fc5df9a99eb3d49a3617db7a8201c3a430a07b2e",
+    "src/finance/context.ts": "5cf34bf9c0ded84218b2f9948698e2d59ae070a957b1ab186a80c94b02ddfc73",
+    "src/scheduling/planner.ts": "ff302dd3b520fbfa2b2b1bdad9d03611275a2a13be38639b1095bacc576af16c",
+    "src/reports/service.ts": "ef84d39ef647d4447b31f5e85806d1f2cbe188943b48826e09d68fd1f3362e78",
+    "db/seed.sql": "3a5460878e57f6d803affee8ff10a09f1888d2167a78755c9af12a09769c5b81"
+  },
+  "receivingBoundary": "Local synthetic contact records only. No API connection, no send, no issue, no acknowledgement."
+}
