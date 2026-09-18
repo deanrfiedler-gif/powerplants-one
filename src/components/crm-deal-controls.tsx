@@ -104,14 +104,27 @@ export function DealDialog({
     onClose();
   };
   useEffect(() => {
-    const d = ref.current,
-      previous = document.activeElement as HTMLElement | null;
-    d?.showModal();
+    const previous = document.activeElement as HTMLElement | null;
     return () => {
-      d?.close();
       previous?.focus({ preventScroll: true });
     };
   }, []);
+  useEffect(() => {
+    const d = ref.current;
+    if (currentMode === "snapshot") d?.show();
+    else d?.showModal();
+    return () => d?.close();
+  }, [currentMode]);
+  useEffect(() => {
+    if (currentMode !== "snapshot") return;
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && !document.querySelector(":modal, :popover-open")) {
+        event.preventDefault(); onClose();
+      }
+    };
+    document.addEventListener("keydown", escape);
+    return () => document.removeEventListener("keydown", escape);
+  }, [currentMode, onClose]);
   const accepted = (
     receipt: OperationReceipt,
     old: DealRecord,
@@ -265,7 +278,7 @@ export function DealDialog({
             Close
           </button>
           {o && !resource.error && (
-            <Link className="primary-link" href={`/crm/opportunities/${o.id}`}>
+            <Link className="primary-link" href={`/sales/opportunities/${o.id}`}>
               Open full deal
             </Link>
           )}
