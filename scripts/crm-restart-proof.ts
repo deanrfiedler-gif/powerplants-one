@@ -13,6 +13,7 @@ import {
   crmAction,
   crmDiscovery,
 } from "../tests/helpers/crm";
+import { fillOpportunitySearch } from "../tests/helpers/crm-worklist-ui";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 const phase = process.argv[2];
@@ -266,7 +267,12 @@ try {
     ),
   );
   await page.goto(origin + "/crm/opportunities?pipeline=I1");
-  await page.getByLabel("Search opportunities", {exact:true}).fill(proof.input.title);
+  // r38 moved desktop search into the Filters drawer, and the compact shell
+  // portal unmounts as soon as useDesktopCRM() resolves wide: taking the field
+  // directly at this viewport grabs a node that detaches mid-fill. Wait for the
+  // client-rendered worklist, then use the same layout decision the specs use.
+  await expect(page.getByRole("button", {name:"Refresh from start", exact:true})).toBeVisible();
+  await fillOpportunitySearch(page, proof.input.title);
   for (const view of ["Board", "List"]) {
     await page.getByRole("button", {name:view,exact:true}).click();
     await expect(page.getByRole("link", {name:proof.input.title,exact:true})).toBeVisible();

@@ -45,3 +45,11 @@ Keep issued references unchanged and publish a new revision for a correction. Up
 Do not change the accepted UI baseline register simply because an HTML file was generated or a check passed. Record an owner decision with its screen/device scope before promoting a proposed departure. This does not introduce another permission step for work the user already authorised: prepare and publish the concrete reviewable package first.
 
 This standard governs package discipline, not new business scope or architecture. It authorises no live customer communication, operative commercial terms, pricing formula, ERP write, deployment or migration.
+
+## Application integration gate
+
+When moving an HTML module into the app, declare its canonical route, stable scope, layout mode (`full-bleed`, `padded` or `constrained`), scrolling owner, source hashes, shared-control edition and adaptations in the baseline register. Match the route to the runtime module-workspace registry. The shell owns navigation and viewport height; the module owns its interior. Do not carry a standalone demo frame or second viewport into the application by default.
+
+Preview with the complete root stylesheet order. Independently load the issued HTML and shared theme in browser verification, comparing source measurements and authorised host adaptations. Include compiled-application checks in an existing required job. Capturing the implementation, matching its own tokens or passing save tests does not establish design conformance. A newly registered module without retained sources, component comparison proof or compiled proof fails conformance. Add a negative control for a previously observed defect.
+
+Before release, inspect original paired captures at agreed CSS viewports, menus, inspection panels, forms, long/unknown content and scrolling. Do not update expected images merely to make an implementation pass. Keep component, PR and deployed evidence separate. The [Deals correction](../decisions/crm-deals-design-correction.md) is the first enforced application contract.

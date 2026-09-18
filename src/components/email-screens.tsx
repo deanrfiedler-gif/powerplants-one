@@ -173,7 +173,7 @@ export function EmailDetail({ id }: { id: string }) {
                 <section>
                   <h2>Linked opportunity</h2>
                   {m.opportunity ? (
-                    <Link href={`/crm/opportunities/${m.opportunity.id}`}>
+                    <Link href={`/sales/opportunities/${m.opportunity.id}`}>
                       {m.opportunity.display_number} · {m.opportunity.title}
                     </Link>
                   ) : (
@@ -205,7 +205,7 @@ export function EmailDetail({ id }: { id: string }) {
                       </label>
                       <ErrorNotice error={options.error} />
                       {options.data && !options.data.items.length && (
-                        <Link href="/crm/opportunities/new">
+                        <Link href="/sales/opportunities/new">
                           Create an opportunity
                         </Link>
                       )}

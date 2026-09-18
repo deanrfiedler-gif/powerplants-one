@@ -117,7 +117,7 @@ test("unavailable dependency and missing page show useful recoverable states", a
 test("r17 preview preserves permissions, contextual navigation and page guidance", async ({ page }, info) => {
   const response = await page.request.post("/api/v1/local-session", { headers: { Origin: "http://127.0.0.1:3000" }, data: { profile: "coordinator" } });
   expect(response.ok()).toBe(true);
-  await page.goto("/crm/opportunities");
+  await page.goto("/sales/opportunities");
   await page.getByRole("button", { name: "Change identity", exact: true }).click();
   await page.getByLabel("Preview workspace", { exact: true }).selectOption("engineering");
   await expect(page).toHaveURL(/\/engineering$/);
