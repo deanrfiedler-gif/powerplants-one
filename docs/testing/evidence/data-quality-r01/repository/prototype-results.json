@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "package": "PP-01",
+  "documents": 12,
+  "parent_dispositions": 78,
+  "dispositions": {
+    "Core": 24,
+    "Partial": 25,
+    "Deferred": 29
+  },
+  "master_decisions": 29,
+  "prototype_procedures": 30,
+  "implementation_packages": 12,
+  "registers": {
+    "SC": 15,
+    "CMP": 12,
+    "SR": 20,
+    "VAL": 24,
+    "TR": 16,
+    "API-C": 26,
+    "API-R": 10
+  },
+  "errors": [],
+  "scope": "Documentation consistency only; authored catalogue defaults are not execution evidence; see recorded runs"
+}
