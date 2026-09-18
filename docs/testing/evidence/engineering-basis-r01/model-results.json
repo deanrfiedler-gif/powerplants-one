@@ -1,0 +1,199 @@
+{
+  "artifact": "EN-02 r01",
+  "method": "Node model assertions; no native browser or operational acceptance",
+  "runtime": "v24.19.0",
+  "passed": 38,
+  "failed": 0,
+  "results": [
+    {
+      "id": "M01",
+      "name": "Project and Opportunity identity remains distinct",
+      "status": "passed"
+    },
+    {
+      "id": "M02",
+      "name": "CS-08 exact location fixture is reused",
+      "status": "passed"
+    },
+    {
+      "id": "M03",
+      "name": "Cross-site assignment refused",
+      "status": "passed"
+    },
+    {
+      "id": "M04",
+      "name": "Customer statement provenance retained",
+      "status": "passed"
+    },
+    {
+      "id": "M05",
+      "name": "Incomplete draft criterion and source blocks readiness",
+      "status": "passed"
+    },
+    {
+      "id": "M06",
+      "name": "Unknown zero and not-applicable survive serialisation",
+      "status": "passed"
+    },
+    {
+      "id": "M07",
+      "name": "Numeric quantity requires finite value and unit",
+      "status": "passed"
+    },
+    {
+      "id": "M08",
+      "name": "Unowned material assumption blocks submission",
+      "status": "passed"
+    },
+    {
+      "id": "M09",
+      "name": "Response receipt and acceptance are separate",
+      "status": "passed"
+    },
+    {
+      "id": "M10",
+      "name": "Rejected assumption has indirect impacts once each",
+      "status": "passed"
+    },
+    {
+      "id": "M11",
+      "name": "One-sided agreement is insufficient",
+      "status": "passed"
+    },
+    {
+      "id": "M12",
+      "name": "Changed interface retains earlier agreement",
+      "status": "passed"
+    },
+    {
+      "id": "M13",
+      "name": "Same party on both sides refused",
+      "status": "passed"
+    },
+    {
+      "id": "M14",
+      "name": "Changed indirect input displays reassessment and retains result",
+      "status": "passed"
+    },
+    {
+      "id": "M15",
+      "name": "Restricted content removed from normal review projection",
+      "status": "passed"
+    },
+    {
+      "id": "M16",
+      "name": "Submitted basis is immutable until successor",
+      "status": "passed"
+    },
+    {
+      "id": "M17",
+      "name": "Self-review refused; reviewer can return same submission",
+      "status": "passed"
+    },
+    {
+      "id": "M18",
+      "name": "Finding response needs independent acceptance",
+      "status": "passed"
+    },
+    {
+      "id": "M19",
+      "name": "Nonblocking limitations included in exact receiving pack",
+      "status": "passed"
+    },
+    {
+      "id": "M20",
+      "name": "Unconfigured review authority has no permissive fallback",
+      "status": "passed"
+    },
+    {
+      "id": "M21",
+      "name": "Changed source after submission refuses stale decision",
+      "status": "passed"
+    },
+    {
+      "id": "M22",
+      "name": "Changed policy after submission refuses stale decision",
+      "status": "passed"
+    },
+    {
+      "id": "M23",
+      "name": "Unknown receiving outcome reconciles original receipt once",
+      "status": "passed"
+    },
+    {
+      "id": "M24",
+      "name": "Operation replay is exact and changed content conflicts",
+      "status": "passed"
+    },
+    {
+      "id": "M25",
+      "name": "Later source retains review and receiving pack but holds current use",
+      "status": "passed"
+    },
+    {
+      "id": "M26",
+      "name": "Scope removal cannot orphan linked records",
+      "status": "passed"
+    },
+    {
+      "id": "M27",
+      "name": "Cyclic impact traversal terminates with unique references",
+      "status": "passed"
+    },
+    {
+      "id": "M28",
+      "name": "Partial context blocks positive review",
+      "status": "passed"
+    },
+    {
+      "id": "M29",
+      "name": "Stale package expected version preserves state",
+      "status": "passed"
+    },
+    {
+      "id": "M30",
+      "name": "Damaged schema duplicate records and invalid site refused",
+      "status": "passed"
+    },
+    {
+      "id": "M31",
+      "name": "Observer and wrong discipline commands refused",
+      "status": "passed"
+    },
+    {
+      "id": "M32",
+      "name": "Unadopted evidence cannot enter response or submission",
+      "status": "passed"
+    },
+    {
+      "id": "M33",
+      "name": "Exact source predecessors remain inspectable",
+      "status": "passed"
+    },
+    {
+      "id": "M34",
+      "name": "Requirement edit invalidates dependent calculation",
+      "status": "passed"
+    },
+    {
+      "id": "M35",
+      "name": "Withdrawal retains positive decision but holds current use",
+      "status": "passed"
+    },
+    {
+      "id": "M36",
+      "name": "Nonblocking limitation needs consequence and date",
+      "status": "passed"
+    },
+    {
+      "id": "M37",
+      "name": "Changed evidence cannot accept stale response",
+      "status": "passed"
+    },
+    {
+      "id": "M38",
+      "name": "Snapshot fingerprint uses retained exact bytes",
+      "status": "passed"
+    }
+  ]
+}

@@ -1,0 +1,285 @@
+{
+  "label": "Synthetic scoped review copy — not an importable backup",
+  "case": "DQ-02",
+  "title": "Serial transcription needs correction",
+  "state": "Closed",
+  "owner": "Alex Morgan",
+  "due": "2026-09-17",
+  "coverage": "Current",
+  "proposal": {
+    "rev": 2,
+    "predecessor": 1,
+    "author": "Alex Morgan",
+    "status": "Accepted",
+    "kind": "serial",
+    "target": "SYN-EQP-101",
+    "expectedVersion": 1,
+    "before": "00-EP-102",
+    "after": "00-EP-101",
+    "rationale": "Exact nameplate source SYN-SRC-002-B v2 confirms a separate North pump.",
+    "evidence": [
+      "SYN-SRC-002@1",
+      "SYN-SRC-002-B@2"
+    ],
+    "sourceVersion": 1,
+    "impactVersion": 1,
+    "policy": 1,
+    "impactAcknowledged": true,
+    "disposition": "Keep separate",
+    "response": "Exact source SYN-SRC-002-B v2 is the retained confirmation.",
+    "responseDigest": "48e47ff983529100df69edac013024f6593faf3c436c47b35e9ab16d58586c7a",
+    "submitted": "2026-09-17T02:07:00.000Z",
+    "digest": "48e47ff983529100df69edac013024f6593faf3c436c47b35e9ab16d58586c7a"
+  },
+  "records": [
+    {
+      "id": "SYN-EQP-101",
+      "name": "Pump 1",
+      "org": "SYN-ORG-101",
+      "organisation": "Banksia Demonstration Nurseries",
+      "site": "north",
+      "location": "Irrigation shed",
+      "served": [
+        "Block A",
+        "Block B",
+        "Block C"
+      ],
+      "manufacturer": "Example Pumps",
+      "model": "EP-40",
+      "serial": "00-EP-101",
+      "version": 2
+    },
+    {
+      "id": "SYN-EQP-102",
+      "name": "Pump 1",
+      "org": "SYN-ORG-101",
+      "organisation": "Banksia Demonstration Nurseries",
+      "site": "south",
+      "location": "Irrigation shed",
+      "served": [
+        "Block A",
+        "Block B",
+        "Block C"
+      ],
+      "manufacturer": "Example Pumps",
+      "model": "EP-40",
+      "serial": "00-EP-102",
+      "version": 1
+    }
+  ],
+  "sources": [
+    {
+      "id": "SYN-SRC-002",
+      "version": 1,
+      "title": "Retained nameplate transcription",
+      "owner": "Equipment",
+      "asAt": "2026-09-16T22:00:00Z",
+      "text": "Fictional observed evidence for SYN-EQP-101. A typed serial resembles the South propagation pump. The North nameplate reads 00-EP-101.",
+      "available": true
+    },
+    {
+      "id": "SYN-SRC-002-B",
+      "version": 2,
+      "title": "North pump identity confirmation",
+      "owner": "Equipment",
+      "asAt": "2026-09-17T00:15:00Z",
+      "text": "North nursery / Irrigation shed / SYN-EQP-101. Exact nameplate serial: 00-EP-101; model EP-40. Separate from SYN-EQP-102 at South propagation. Fictional evidence.",
+      "available": true
+    }
+  ],
+  "decisions": [
+    {
+      "action": "accept",
+      "rev": 2,
+      "digest": "48e47ff983529100df69edac013024f6593faf3c436c47b35e9ab16d58586c7a",
+      "reason": "Response and exact field correction independently checked.",
+      "reviewer": "Jordan Lee",
+      "time": "2026-09-17T02:08:00.000Z"
+    }
+  ],
+  "findings": [
+    {
+      "id": "DQ-02-F1",
+      "rev": 1,
+      "digest": "6a63ca0d720e130783adff825289f85fd067b9dbcfae25fb9454cdbed191049f",
+      "reason": "Explain the exact evidence revision.",
+      "blocking": true,
+      "owner": "Alex Morgan",
+      "acceptances": [
+        {
+          "digest": "48e47ff983529100df69edac013024f6593faf3c436c47b35e9ab16d58586c7a",
+          "reviewer": "Jordan Lee",
+          "time": "2026-09-17T02:08:00.000Z"
+        }
+      ]
+    }
+  ],
+  "outcome": "Applied",
+  "operations": [
+    {
+      "id": "DQ-02-OP-2",
+      "status": "Applied",
+      "digest": "48e47ff983529100df69edac013024f6593faf3c436c47b35e9ab16d58586c7a",
+      "result": {
+        "id": "DQ-02-OP-2-RESULT",
+        "operation": "DQ-02-OP-2",
+        "case": "DQ-02",
+        "digest": "48e47ff983529100df69edac013024f6593faf3c436c47b35e9ab16d58586c7a",
+        "target": "SYN-EQP-101",
+        "before": {
+          "id": "SYN-EQP-101",
+          "name": "Pump 1",
+          "org": "SYN-ORG-101",
+          "organisation": "Banksia Demonstration Nurseries",
+          "site": "north",
+          "location": "Irrigation shed",
+          "served": [
+            "Block A",
+            "Block B",
+            "Block C"
+          ],
+          "manufacturer": "Example Pumps",
+          "model": "EP-40",
+          "serial": "00-EP-102",
+          "version": 1
+        },
+        "after": {
+          "id": "SYN-EQP-101",
+          "name": "Pump 1",
+          "org": "SYN-ORG-101",
+          "organisation": "Banksia Demonstration Nurseries",
+          "site": "north",
+          "location": "Irrigation shed",
+          "served": [
+            "Block A",
+            "Block B",
+            "Block C"
+          ],
+          "manufacturer": "Example Pumps",
+          "model": "EP-40",
+          "serial": "00-EP-101",
+          "version": 2
+        },
+        "actor": "Sam Taylor",
+        "time": "2026-09-17T02:09:00.000Z",
+        "simulated": true
+      }
+    }
+  ],
+  "followups": [
+    {
+      "id": "DQ-02-FOLLOW-1",
+      "key": "OBS-20260917-002|48e47ff983529100df69edac013024f6593faf3c436c47b35e9ab16d58586c7a|draft",
+      "kind": "draft",
+      "domain": "Service preparation",
+      "target": "SYN-EQP-101",
+      "owner": "Service preparation owner",
+      "due": null,
+      "dateReason": "Date needed from receiver",
+      "reason": "Review the draft visit against the corrected current serial; preserve the issued pack and acknowledgement.",
+      "proposal": 2,
+      "status": "Prepared locally"
+    }
+  ],
+  "history": [
+    {
+      "id": "EV-2-1",
+      "time": "2026-09-16T22:00:00Z",
+      "actor": "Fixture observation",
+      "action": "Finding recorded",
+      "detail": "A typed serial resembles the South propagation pump. The North nameplate reads 00-EP-101."
+    },
+    {
+      "id": "DQ-02-EV-2",
+      "time": "2026-09-17T02:03:00.000Z",
+      "actor": "Alex Morgan",
+      "action": "Draft saved",
+      "detail": "Proposal r1"
+    },
+    {
+      "id": "DQ-02-EV-3",
+      "time": "2026-09-17T02:04:00.000Z",
+      "actor": "Alex Morgan",
+      "action": "Proposal submitted",
+      "detail": "Exact r1 · 6a63ca0d720e130783adff825289f85fd067b9dbcfae25fb9454cdbed191049f"
+    },
+    {
+      "id": "DQ-02-EV-4",
+      "time": "2026-09-17T02:05:00.000Z",
+      "actor": "Jordan Lee",
+      "action": "Review: return",
+      "detail": "r1 · Explain the exact evidence revision."
+    },
+    {
+      "id": "DQ-02-EV-5",
+      "time": "2026-09-17T02:06:00.000Z",
+      "actor": "Alex Morgan",
+      "action": "Successor created",
+      "detail": "r2 succeeds r1; current target and source basis captured."
+    },
+    {
+      "id": "DQ-02-EV-6",
+      "time": "2026-09-17T02:07:00.000Z",
+      "actor": "Alex Morgan",
+      "action": "Draft saved",
+      "detail": "Proposal r2"
+    },
+    {
+      "id": "DQ-02-EV-7",
+      "time": "2026-09-17T02:08:00.000Z",
+      "actor": "Alex Morgan",
+      "action": "Proposal submitted",
+      "detail": "Exact r2 · 48e47ff983529100df69edac013024f6593faf3c436c47b35e9ab16d58586c7a"
+    },
+    {
+      "id": "DQ-02-EV-8",
+      "time": "2026-09-17T02:09:00.000Z",
+      "actor": "Jordan Lee",
+      "action": "Review: accept",
+      "detail": "r2 · Response and exact field correction independently checked."
+    },
+    {
+      "id": "DQ-02-EV-9",
+      "time": "2026-09-17T02:10:00.000Z",
+      "actor": "Sam Taylor",
+      "action": "Outcome unknown",
+      "detail": "Original intent retained; look up its result before another attempt."
+    },
+    {
+      "id": "DQ-02-EV-10",
+      "time": "2026-09-17T02:11:00.000Z",
+      "actor": "Sam Taylor",
+      "action": "Original result recovered",
+      "detail": "DQ-02-OP-2; no new correction performed."
+    },
+    {
+      "id": "DQ-02-EV-11",
+      "time": "2026-09-17T02:12:00.000Z",
+      "actor": "Sam Taylor",
+      "action": "Follow-up prepared",
+      "detail": "Review the draft visit against the corrected current serial; preserve the issued pack and acknowledgement."
+    },
+    {
+      "id": "DQ-02-EV-12",
+      "time": "2026-09-17T02:13:00.000Z",
+      "actor": "Alex Morgan",
+      "action": "Case closed",
+      "detail": "Exact current v2 and original receipt verified. Service review remains separately owned. Open prepared follow-ups retain their own owners."
+    }
+  ],
+  "issued": {
+    "id": "SYN-PACK-014",
+    "version": 1,
+    "bytes": "SYNTHETIC ISSUED PACK | SYN-EQP-101 | serial 00-EP-102 | North nursery | issued 2026-09-10",
+    "acknowledgement": {
+      "id": "SYN-ACK-014",
+      "issue": "SYN-PACK-014",
+      "version": 1,
+      "actor": "Fictional technician",
+      "time": "2026-09-11T00:30:00Z",
+      "response": "Acknowledged original issue"
+    },
+    "hash": "8c64000f1189dacfb4253cfdc0b1b55c01085678f8ccdff467bdabff834f868f",
+    "ackHash": "6433735da6567df97a9ed95492823eafdec948d3c0e378f8ea77698753810845"
+  }
+}
