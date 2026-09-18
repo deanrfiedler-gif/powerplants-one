@@ -1,4 +1,4 @@
-import { toggleWorklistFilters, fillOpportunitySearch, chooseWorklistSort } from "../helpers/crm-worklist-ui";
+import { toggleWorklistFilters, fillOpportunitySearch, chooseWorklistSort, searchNeedsDrawer } from "../helpers/crm-worklist-ui";
 import { test, expect, type Page, type TestInfo } from "@playwright/test";
 import { randomUUID, randomBytes, createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
@@ -42,7 +42,8 @@ test("CRM URL restores filtered List, Board stage and sort through reload, a cop
   const commands: string[] = [];
   page.on("request", r => { if (r.url().includes("/api/v1/") && r.method() !== "GET") commands.push(r.method()); });
   const search = page.getByLabel("Search opportunities", { exact: true });
-  if (!(await search.isVisible())) await toggleWorklistFilters(page);
+  if (await searchNeedsDrawer(page)) await toggleWorklistFilters(page);
+  await expect(search).toBeVisible();
   const historyLength = await page.evaluate(() => history.length);
   await search.pressSequentially(marker);
   await expect.poll(() => ids(page)).toHaveLength(3);

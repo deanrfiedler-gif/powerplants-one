@@ -1,4 +1,4 @@
-import { toggleWorklistFilters, fillOpportunitySearch } from "../helpers/crm-worklist-ui";
+import { toggleWorklistFilters, fillOpportunitySearch, keyOpportunitySearch } from "../helpers/crm-worklist-ui";
 import { captureTransferComparison } from "../helpers/crm-transfer-capture";
 import { keyActivate, keySelect, keyType } from "../helpers/quality-keyboard";
 import { committed } from "../helpers/quality-prepare";
@@ -438,14 +438,7 @@ test("SA-09 board stage change uses native keyboard controls on desktop and phon
   input.title = `SYN keyboard stage ${info.project.name}`;
   await call(page, "crm/opportunities", input);
   await page.goto("/sales/opportunities?pipeline=I1");
-  const searchNeedsPanel = !(await page.getByLabel("Search opportunities", {exact:true}).isVisible());
-  if (searchNeedsPanel) await keyActivate(page, page.getByRole("button", {name:"Filters and sort", exact:true}));
-  await keyType(
-    page,
-    page.getByLabel("Search opportunities", { exact: true }),
-    input.title,
-  );
-  if (searchNeedsPanel) await keyActivate(page, page.getByRole("button", {name:"Close Filter opportunities", exact:true}));
+  await keyOpportunitySearch(page, input.title);
   const action = page.getByRole("button", {
     name: `Change stage for ${input.title}`,
     exact: true,
@@ -635,11 +628,10 @@ test("SA-12 default five-stage board persists Discovery movement and qualificati
   const input = crmDiscovery(); input.title = `SYN Discovery cutover ${info.project.name}`;
   await call(page, "crm/opportunities", input);
   await page.goto("/sales/opportunities");
-  const searchNeedsPanel = !(await page.getByLabel("Search opportunities", {exact:true}).isVisible());
-  if (searchNeedsPanel) await keyActivate(page, page.getByRole("button", {name:"Filters and sort", exact:true}));
-  await keyType(page, page.getByLabel("Search opportunities", { exact: true }), input.title);
-  if (searchNeedsPanel) await keyActivate(page, page.getByRole("button", {name:"Close Filter opportunities", exact:true}));
-  await expect(page.locator(".crm-board-headers h2")).toHaveText(["Discovery", "Scoping", "Quoting", "Negotiation", "Closing"]);
+  await keyOpportunitySearch(page, input.title);
+  // Stage names only: the r22 stage-options menu carries its own dialog title
+  // heading inside the same header row.
+  await expect(page.locator(".crm-board-headers .crm-stage-heading-copy h2")).toHaveText(["Discovery", "Scoping", "Quoting", "Negotiation", "Closing"]);
   const action = page.getByRole("button", { name: `Change stage for ${input.title}`, exact: true });
   await keyActivate(page, action);
   const dialog = page.getByRole("dialog", { name: "Change deal stage", exact: true });

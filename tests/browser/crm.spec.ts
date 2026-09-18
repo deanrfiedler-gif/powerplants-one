@@ -156,7 +156,7 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await page
     .getByRole("button", { name: "Create opportunity and action" })
     .click();
-  await expect(page).toHaveURL(/crm\/opportunities\/[a-f0-9-]+$/);
+  await expect(page).toHaveURL(/sales\/opportunities\/[a-f0-9-]+$/);
   const detailUrl = page.url();
   await expect(
     page.getByRole("heading", { name: title, exact: true }),
