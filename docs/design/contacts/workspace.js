@@ -145,7 +145,7 @@
       root.localStorage.setItem(KEY, JSON.stringify(state));
       ui.lastSavedAt = CLOCK;
       ui.storage = 'saved';
-    } catch (e) {
+    } catch {
       ui.storage = 'unavailable';
       throw new Error('Local storage is unavailable in this browser. Nothing was saved.');
     }
@@ -154,7 +154,7 @@
   function save(afterLabel) {
     const outcome = ui.save;
     if (outcome === 'unknown') {
-      try { writeStorage(outcome); } catch (e) { /* the outcome is unknown, not the write */ }
+      try { writeStorage(outcome); } catch { /* the outcome is unknown, not the write */ }
       ui.recovery = { kind: 'unknown', text: 'Outcome unknown. The save may or may not have '
         + 'been accepted. Re-check before repeating it; repeating creates no duplicate.' };
       render();
@@ -1311,7 +1311,7 @@
           }, text: 'Show a backup' }),
           el('button', { type: 'button', onclick: () => restoreDialog(), text: 'Restore' }),
           el('button', { type: 'button', class: 'danger-button', onclick: () => {
-            try { root.localStorage.removeItem(KEY); } catch (e) { /* storage unavailable */ }
+            try { root.localStorage.removeItem(KEY); } catch { /* storage unavailable */ }
             state = M.seed();
             ui.conflict = false;
             ui.recovery = null;
@@ -1339,7 +1339,7 @@
       submit: form => {
         let parsed;
         try { parsed = JSON.parse(form.backup.value); }
-        catch (e) { throw new Error('That is not valid JSON. Nothing was changed.'); }
+        catch { throw new Error('That is not valid JSON. Nothing was changed.'); }
         M.validate(parsed);
         state = parsed;
         ui.selectedPerson = state.people[0].id;
@@ -1566,7 +1566,7 @@
       if (again) {
         again.focus();
         if (selStart !== null && again.setSelectionRange) {
-          try { again.setSelectionRange(selStart, selStart); } catch (e) { /* not a text input */ }
+          try { again.setSelectionRange(selStart, selStart); } catch { /* not a text input */ }
         }
       }
     }
@@ -1623,6 +1623,11 @@
   $('#modal').addEventListener('close', () => { if (lastFocus && lastFocus.isConnected) lastFocus.focus(); });
 
   /* A competing tab writing the same key is a conflict, not a silent overwrite. */
+  $('.skip').addEventListener('click', () => {
+    /* After the default fragment navigation, not instead of it. */
+    setTimeout(() => $('#content').focus(), 0);
+  });
+
   root.addEventListener('storage', e => {
     if (e.key !== KEY) return;
     ui.conflict = true;

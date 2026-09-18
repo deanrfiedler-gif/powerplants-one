@@ -15,8 +15,8 @@ source_commit: 01b9824a63e468b393265b159fa681f83f6e668c
 | Field | Value |
 |---|---|
 | File | [`PPO-Contacts-Stakeholders-and-Relationships-r01.html`](PPO-Contacts-Stakeholders-and-Relationships-r01.html) |
-| SHA-256 | `7eed3e1b4937bd6ad3b39cb3f45cd231bb60316ce9e835b85bc8b64909ae9945` |
-| Bytes | 254,450 |
+| SHA-256 | `aa97680dadf459aa6fbeaf39c761df124adf6737fb68c62b106589c38eac9a52` |
+| Bytes | 254,547 |
 | Predecessor | **None.** First issue. CS-02 is register state D — a refinement of the live `/people` and `/people/[id]` surfaces — but no standalone design file preceded this one, so there is no predecessor SHA-256 to record |
 | Scope container | `#ppo-contacts` |
 | Base commit | `01b9824a63e468b393265b159fa681f83f6e668c`, with `origin/main` `be219114` merged in after PR #239 landed |

@@ -25,7 +25,7 @@ try {
     ? {executablePath: substitute, headless: true}
     : {channel: 'chrome', headless: true});
   channel = substitute ? 'substitute' : 'chrome';
-} catch (e) {
+} catch {
   browser = await chromium.launch({headless: true});
   channel = 'bundled-chromium';
 }
@@ -750,16 +750,22 @@ await check('The skip link reaches the workspace content', async () => {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
   });
-  /* The dialog in the preceding group restores focus to whatever opened it when it
-     closes, and that restore can land after this group has already focused the skip
-     link. Wait for focus to settle here rather than racing it. */
+  /* A skip link is a page-entry affordance, so it is exercised on a fresh load. That is
+     also the only way to be free of the preceding dialog, which restores focus to whatever
+     opened it asynchronously as it closes and can steal focus back mid-group. */
+  await page.reload();
+  await content().locator('table').first().waitFor();
   await page.locator('.skip').focus();
   await page.waitForFunction(
     () => document.activeElement && document.activeElement.classList.contains('skip'),
     null, {timeout: 6000});
   await page.keyboard.press('Enter');
-  await page.waitForFunction(() => document.location.hash === '#content', null, {timeout: 6000});
-  assert.equal(await page.evaluate(() => document.activeElement.id), 'content');
+  /* Wait for the outcome rather than sampling it. CI caught the hash moving while focus
+     had not: the page now moves focus itself, just after the default navigation. */
+  await page.waitForFunction(
+    () => document.location.hash === '#content'
+      && document.activeElement && document.activeElement.id === 'content',
+    null, {timeout: 6000});
   assert.equal(await page.evaluate(() => document.activeElement.tagName), 'MAIN');
 });
 

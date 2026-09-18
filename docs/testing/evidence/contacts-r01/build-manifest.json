@@ -6,17 +6,17 @@
   "themeEdition": "r20 shared token core plus theme r22’s selection family (--ss22-*), adopted from the r22 board itself after PR #239 merged. r22 measured against r20 at this commit: 0 tokens removed, 0 values changed, 24 added, all --nca-* / --ss22-* component-local aliases over existing brand tokens.",
   "themeFile": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
   "themeSHA256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
-  "htmlSHA256": "7eed3e1b4937bd6ad3b39cb3f45cd231bb60316ce9e835b85bc8b64909ae9945",
-  "htmlBytes": 254450,
+  "htmlSHA256": "aa97680dadf459aa6fbeaf39c761df124adf6737fb68c62b106589c38eac9a52",
+  "htmlBytes": 254547,
   "sources": {
     "fixtures.json": "f100464bd1aebed27d050a797ada23ff035152165289e7b92b31bd2fe912edcf",
     "fonts.css": "57b4aafb71296b18d80408cb10aa972c87f5185deafd748c7fdcfb33e2bd4bef",
     "icons.json": "cf868d77b2c07f14f07985afd218649ba4362067ff2d55ef625c56bc2df1fcae",
-    "model.js": "274a1d2d99b5fc0b25ba5435dd2525ead772e048855908fd85da0b1c4c987de9",
+    "model.js": "6fbd9feb93f2504286052bb38a18894c3159d6b56d567346f693170be494f7fe",
     "source-pins.json": "9a640faf73eb905e04ec643eeee46e2174ce3a8516c3432d7192e95488061661",
     "template.html": "032a9f2a17708db237fe0c90e647f1bc0e8d36dc4d243f8effce1d3d1fb51295",
     "workspace.css": "5a7489540c1103b6ee600c30950b9ef76116d5dc8bfad58427367a746e308312",
-    "workspace.js": "90ea986fa3334241163d6925bc7e1d33ef3ab86be3c662aeec6df18c2d2f0e9c"
+    "workspace.js": "6d8fa58e00a8f8ed26cd1e4f422bed0dd99ea98594aa6a856da7c5ac5b7b9b11"
   },
   "contractPins": {
     "db/migrations/0002-shared-foundation.sql": "9f817da163dc168b61fe363665f1b1bc3308e75ddb44aa71fac96e99a1225bdb",

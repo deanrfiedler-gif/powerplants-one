@@ -10,7 +10,7 @@ source_commit: 01b9824a63e468b393265b159fa681f83f6e668c
 
 # CS-02 / CS-03 — Contacts, Stakeholders & Relationships design report
 
-**Design HTML:** [`PPO-Contacts-Stakeholders-and-Relationships-r01.html`](PPO-Contacts-Stakeholders-and-Relationships-r01.html) · SHA-256 `7eed3e1b4937bd6ad3b39cb3f45cd231bb60316ce9e835b85bc8b64909ae9945` · 254,450 bytes, one self-contained file with no external request.
+**Design HTML:** [`PPO-Contacts-Stakeholders-and-Relationships-r01.html`](PPO-Contacts-Stakeholders-and-Relationships-r01.html) · SHA-256 `aa97680dadf459aa6fbeaf39c761df124adf6737fb68c62b106589c38eac9a52` · 254,547 bytes, one self-contained file with no external request.
 
 **Built from:** [`docs/design/contacts/`](../../../design/contacts/README.md) by `scripts/build-contacts-design.py`, deterministically, on any platform.
 
@@ -278,7 +278,23 @@ Two defects survived every automated check and were found by Dean opening the pa
 6. **No icon-only control rendered its icon.** The template ships four static `data-icon` placeholders — the page-guide button, the Assistant and Preview options buttons, and the two close controls — and **nothing in the controller ever painted them**. The guide button rendered as a blank white square; the close controls were empty boxes carrying only an `aria-label`. Screen-reader users were unaffected; everyone else got a button with nothing in it. One of the four also named `spark`, which does not exist in the Customer 360 icon set at all. The controller now paints the placeholders at startup, the template names only icons that exist, and three new groups assert it — one model group checking every placeholder name resolves and is painted, two browser groups checking the header and both close controls render an `svg`.
 7. **Only the selected row had column rules.** The r22 *ring* treatment was applied as a `box-shadow` on each `<td>` rather than on the `<tr>`, so every cell drew its own 2 px halo and the adjacent halos read as column separators. The selected row was therefore the only row in a seven-column register whose columns could be tracked — an accident that looked deliberate. The halo and lift now sit on the row, the navy boundary is drawn by the edge cells, and **column rules are drawn on every row**, which is the improvement the accident had revealed. A model group asserts the cells carry no halo of their own, and a browser group reads the computed styles to confirm the ring is on the row.
 
-### 10.3 What is not verified
+### 10.3 Defects the first CI run found
+
+The focused workflow had never run when this package was first committed. Its first run on
+PR #241 found two more:
+
+8. **`eslint .` failed on seven unused bindings in this package.** The repository lints
+   everything, and that lint is a shared step in six workflows, so seven errors here turned
+   six unrelated checks red — the CRM, E1, Email Calendar and three P11 proofs. None of
+   those was an application problem; all of them were this package. The local verification
+   plan ran the package's own checks but never the repository lint, which is the gap that
+   let it through. `npm run lint` is now in the recorded command list.
+9. **The skip-link group failed on the runner but not locally**, because the fragment
+   navigation moved the hash without moving focus. The page now moves focus to the content
+   explicitly rather than relying on browser behaviour, and the check waits for that
+   outcome rather than sampling it.
+
+### 10.4 What is not verified
 
 - **Native visual review is partially done.** Dean opened the page and found the two defects in §10.2. Physical 320/390 devices, zoom, print and top-layer dialog rendering on real hardware remain **not claimable from this environment**; screenshots were captured and reviewed by the agent that took them, which is not owner acceptance.
 - **The focused workflow has not executed.** `contacts-design.yml` is committed but this branch has not been pushed, so no CI run exists.
