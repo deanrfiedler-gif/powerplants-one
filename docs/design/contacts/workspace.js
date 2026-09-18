@@ -340,21 +340,23 @@
       return nodes;
     }
 
-    const table = el('table', { class: 'cards' });
-    const headRow = el('tr');
+    const table = el('table', { class: 'cards register' });
     const columns = [
-      { id: 'name', label: 'Name', sortable: true },
-      { id: 'organisations', label: 'Organisations', sortable: false },
-      { id: 'email', label: 'Email', sortable: true },
-      { id: 'phone', label: 'Phone', sortable: true },
-      { id: 'preference', label: 'Preference', sortable: false },
-      { id: 'status', label: 'Status', sortable: true },
-      { id: 'deals', label: 'Deals', sortable: true }
+      { id: 'name', label: 'Name', sortable: true, col: 'c-identity', identity: true },
+      { id: 'organisations', label: 'Organisations', sortable: false, col: 'c-org' },
+      { id: 'email', label: 'Email', sortable: true, col: 'c-email' },
+      { id: 'phone', label: 'Phone', sortable: true, col: 'c-phone' },
+      { id: 'preference', label: 'Preference', sortable: false, col: 'c-pref' },
+      { id: 'status', label: 'Status', sortable: true, col: 'c-status' },
+      { id: 'deals', label: 'Deals', sortable: true, col: 'c-deals' }
     ];
+    table.appendChild(el('colgroup', {}, columns.map(c => el('col', { class: c.col }))));
+    const headRow = el('tr');
     for (const c of columns) {
+      const cls = (c.sortable ? 'sortable' : 'fixed') + (c.identity ? ' identity' : '');
       if (c.sortable) {
         const active = ui.sort === c.id;
-        headRow.appendChild(el('th', { class: 'sortable', scope: 'col',
+        headRow.appendChild(el('th', { class: cls, scope: 'col',
           'aria-sort': active ? (ui.direction === 'asc' ? 'ascending' : 'descending') : 'none' }, [
           el('button', { type: 'button', onclick: () => {
             if (ui.sort === c.id) ui.direction = ui.direction === 'asc' ? 'desc' : 'asc';
@@ -366,7 +368,7 @@
       } else {
         /* parseDirectory refuses these two with "Choose a sortable column." so no sort
            affordance is drawn over a sort that would fail. */
-        headRow.appendChild(el('th', { class: 'fixed', scope: 'col' }, [
+        headRow.appendChild(el('th', { class: cls, scope: 'col' }, [
           document.createTextNode(c.label),
           el('em', { text: 'not sortable' })
         ]));
@@ -378,31 +380,26 @@
     for (const row of result.items) {
       const selected = row.id === ui.selectedPerson;
       const tr = el('tr', { 'aria-selected': selected ? 'true' : 'false' });
-      tr.appendChild(el('td', { 'data-label': 'Name' }, [
-        el('button', { type: 'button', class: 'name-button',
+      tr.appendChild(el('td', { 'data-label': 'Name', class: 'identity' }, [
+        el('button', { type: 'button', class: 'name-button', title: row.display_name,
           'aria-label': 'Open contact record for ' + row.display_name,
           onclick: () => { ui.selectedPerson = row.id; ui.view = 'contact'; render(); } },
-          [document.createTextNode(row.display_name)]),
-        el('span', { class: 'rowsub', text: 'No contact reference is allocated' })
+          [document.createTextNode(row.display_name)])
       ]));
-      const orgCell = el('td', { 'data-label': 'Organisations' });
-      if (row.organisations.length) {
-        orgCell.appendChild(el('div', { class: 'chips' }, row.organisations.map(o =>
-          el('span', { class: 'tag', text: o.name + ' · ' + o.role }))));
-      } else {
-        orgCell.appendChild(el('span', { class: 'tag none', text: 'No current affiliation' }));
-      }
-      tr.appendChild(orgCell);
-      tr.appendChild(el('td', { 'data-label': 'Email', class: 'wrap' }, [orNone(row.email, 'No email recorded')]));
-      tr.appendChild(el('td', { 'data-label': 'Phone', class: 'wrap' }, [orNone(row.phone, 'No phone recorded')]));
-      tr.appendChild(el('td', { 'data-label': 'Preference', class: 'wrap' },
+      const orgs = row.organisations.map(o => o.name + ' · ' + o.role).join(', ');
+      tr.appendChild(el('td', { 'data-label': 'Organisations', title: orgs || null },
+        row.organisations.length
+          ? [document.createTextNode(orgs)]
+          : [el('span', { class: 'tag none', text: 'No current affiliation' })]));
+      tr.appendChild(el('td', { 'data-label': 'Email', title: row.email || null },
+        [orNone(row.email, 'No email recorded')]));
+      tr.appendChild(el('td', { 'data-label': 'Phone' }, [orNone(row.phone, 'No phone recorded')]));
+      tr.appendChild(el('td', { 'data-label': 'Preference', title: row.contact_preference || null },
         [orNone(row.contact_preference, 'Not stated')]));
       tr.appendChild(el('td', { 'data-label': 'Status' }, [
-        el('span', { class: 'tag ' + (row.status === 'Active' ? 'ok' : 'warn'), text: row.status }),
-        row.status === 'Inactive' ? el('span', { class: 'rowsub',
-          text: 'No command can write this column' }) : null
+        el('span', { class: 'tag ' + (row.status === 'Active' ? 'ok' : 'warn'), text: row.status })
       ]));
-      tr.appendChild(el('td', { 'data-label': 'Deals', text: String(row.deals) }));
+      tr.appendChild(el('td', { 'data-label': 'Deals', class: 'number', text: String(row.deals) }));
       body.appendChild(tr);
     }
     table.appendChild(body);
@@ -421,9 +418,14 @@
         ])
       ]),
       el('div', { class: 'scroll' }, [table]),
-      el('div', { class: 'card-foot', style: 'display:flex;gap:12px;flex-wrap:wrap;align-items:center' }, [
-        el('span', { text: 'Exact total ' + result.total + ' · page ' + result.page + ' of ' + pages
-          + ' · ' + result.limit + ' rows' }),
+      el('div', { class: 'card-foot' }, [
+        el('span', {}, [document.createTextNode('Exact total '),
+          el('strong', { text: String(result.total) }),
+          document.createTextNode(' · page ' + result.page + ' of ' + pages
+            + ' · ' + result.limit + ' rows')]),
+        el('span', { text: 'Contacts carry no reference: register_identity(\'Person\',\'\') allocates none.' }),
+        state.people.some(x => !x.active)
+          ? el('span', { text: 'Inactive is read-only. No command can write this column.' }) : null,
         result.withheld ? el('span', { class: 'tag restricted',
           text: result.withheld + ' withheld from you' }) : null,
         el('span', { style: 'margin-left:auto;display:flex;gap:8px' }, [
@@ -1501,7 +1503,7 @@
         type: 'button', role: 'tab', 'data-view': v.id,
         'aria-selected': ui.view === v.id ? 'true' : 'false',
         onclick: () => { ui.view = v.id; render(); }
-      }, [el('span', { class: 'tab-kicker', text: v.kicker }), el('span', { text: v.label })]));
+      }, [el('span', { text: v.label })]));
     }
   }
 

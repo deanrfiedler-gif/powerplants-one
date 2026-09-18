@@ -57,15 +57,12 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
 #ppo-contacts .demo-strip strong{color:var(--ink)}
 #ppo-contacts #save-status{margin-left:auto}
 #ppo-contacts .authority{margin-top:12px;padding:12px 14px;border:1px solid #cfe0ec;border-radius:7px;background:var(--info-bg);color:var(--info);font-size:13px;line-height:1.6}
-#ppo-contacts .tabs{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line);margin-top:18px;padding:0 4px}
-#ppo-contacts .tabs button{flex:none;background:transparent;border:1px solid transparent;border-bottom:0;border-radius:7px 7px 0 0;font-size:13px;color:var(--muted);min-height:46px;position:relative;flex-direction:column;gap:2px;align-items:flex-start}
-#ppo-contacts .tabs button .tab-kicker{font-size:10px;letter-spacing:.8px;text-transform:uppercase}
-/* r22 selection family, "tabs" treatment: the selected tab becomes the panel, its
-   bottom border dissolving into it, with a green top marker so selection is not carried
-   by colour alone. */
-#ppo-contacts .tabs button{border-radius:var(--ss22-radius) var(--ss22-radius) 0 0;border-bottom-color:var(--ss22-border)}
-#ppo-contacts .tabs button[aria-selected=true]{background:var(--ss22-panel);border-color:var(--ss22-border);border-bottom-color:var(--ss22-panel);color:var(--ss22-navy);font-weight:500;box-shadow:0 3px 0 var(--ss22-panel)}
-#ppo-contacts .tabs button[aria-selected=true]:before{content:'';position:absolute;top:0;left:12px;right:12px;height:3px;background:var(--green);border-radius:0 0 3px 3px}
+/* Theme board r07 tab treatment: a quiet underline row rather than folder tabs. The
+   selected tab is carried by ink, weight and a green rule, so not by colour alone. */
+#ppo-contacts .tabs{display:flex;gap:20px;overflow-x:auto;border-bottom:1px solid var(--line);margin-top:18px;padding:0}
+#ppo-contacts .tabs button{flex:none;border:0;border-radius:0;border-bottom:3px solid transparent;background:none;padding:10px 0;min-height:44px;font-size:13px;line-height:1.3;color:var(--text-secondary);font-weight:500;justify-content:flex-start;gap:0}
+#ppo-contacts .tabs button:hover{background:none;color:var(--ink)}
+#ppo-contacts .tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--green);font-weight:700}
 #ppo-contacts #recovery:empty{display:none}
 #ppo-contacts #recovery{margin-top:14px}
 #ppo-contacts .toolbar:empty{display:none}
@@ -81,7 +78,8 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
 #ppo-contacts .card{border:1px solid var(--line);border-radius:8px;background:#fff;min-width:0}
 #ppo-contacts .card-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;padding:15px 18px;border-bottom:1px solid var(--line)}
 #ppo-contacts .card-body{padding:18px}
-#ppo-contacts .card-foot{padding:11px 18px;border-top:1px solid var(--line);background:#fcfcfd;color:var(--muted);font-size:12px}
+#ppo-contacts .card-foot{display:flex;align-items:center;flex-wrap:wrap;gap:10px 20px;padding:12px 16px;border-top:1px solid #e3e7ec;background:#fff;color:#606977;font-size:12px}
+#ppo-contacts .card-foot strong{color:var(--ink);font-variant-numeric:tabular-nums}
 #ppo-contacts .stack{display:grid;gap:16px;min-width:0}
 #ppo-contacts .split{display:grid;grid-template-columns:minmax(0,1fr) var(--support);gap:18px;align-items:start;min-width:0}
 #ppo-contacts .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
@@ -94,28 +92,40 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
 #ppo-contacts .queue.attention strong{color:var(--warning)}
 #ppo-contacts .queue.restricted strong{color:var(--info)}
 
-/* bounded scroll region: the register owns overflow, the page never scrolls sideways */
-#ppo-contacts .scroll{max-height:620px;overflow:auto;min-height:0;scroll-padding-top:42px}
-#ppo-contacts table{width:100%;border-collapse:collapse;font-size:13px}
-#ppo-contacts thead th{position:sticky;top:0;z-index:1;background:var(--surface);border-bottom:1px solid var(--line);border-right:1px solid var(--line-soft);text-align:left;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);font-weight:500;padding:10px 12px;white-space:nowrap}
-#ppo-contacts thead th:last-child{border-right:0}
-#ppo-contacts tbody td{border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft);padding:11px 12px;vertical-align:top}
-#ppo-contacts tbody td:last-child{border-right:0}
-#ppo-contacts tbody tr:last-child td{border-bottom:0}
-#ppo-contacts tbody tr:hover td{background:var(--surface-hover)}
-/* r22 selection family, "ring" treatment: white plate, navy boundary, halo and lift.
-   The halo and lift belong to the row, not to each cell: put them on the cells and every
-   cell draws its own ring, which reads as a column rule the other rows do not have.
-   The green inset marker keeps selection legible without relying on colour alone. */
-#ppo-contacts tbody tr[aria-selected=true]{box-shadow:0 0 0 2px var(--ss22-halo),var(--ss22-lift)}
-#ppo-contacts tbody tr[aria-selected=true] td{background:var(--ss22-panel);border-top:1px solid var(--ss22-navy);border-bottom:1px solid var(--ss22-navy)}
-#ppo-contacts tbody tr[aria-selected=true] td:first-child{border-left:1px solid var(--ss22-navy);box-shadow:inset 3px 0 var(--green)}
-#ppo-contacts tbody tr[aria-selected=true] td:last-child{border-right:1px solid var(--ss22-navy)}
-#ppo-contacts th.sortable button{border:0;background:none;padding:0;min-height:26px;font:inherit;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);gap:4px}
-#ppo-contacts th.fixed{color:var(--muted)}
-#ppo-contacts th.fixed em{font-style:normal;text-transform:none;letter-spacing:0;font-size:10px;display:block;font-weight:400;opacity:.85}
-#ppo-contacts .name-button{border:0;background:none;padding:0;min-height:26px;font-size:13px;font-weight:500;text-align:left;justify-content:flex-start;text-decoration:underline;text-underline-offset:3px;color:var(--link)}
+/* Theme board r23 List treatment. Grey sticky header at 43 px, 52 px rows, white cells,
+   fine horizontal dividers, and no vertical rule except the one after the pinned identity
+   column. Pale hover #f8faf7, pale green full-row selection #edf6e9. The register owns its
+   scroll in both axes, so the page still never scrolls sideways. */
+#ppo-contacts .scroll{max-height:560px;overflow:auto;min-height:0;overscroll-behavior:contain;scrollbar-gutter:stable;background:#fff;scroll-padding-left:248px}
+#ppo-contacts table{border-collapse:separate;border-spacing:0;font-size:12px;width:100%}
+#ppo-contacts thead th{height:43px;padding:0 10px;text-align:left;background:#eef0f3;color:var(--text-secondary);font-weight:500;font-size:11px;position:sticky;top:0;z-index:4;border:0;border-bottom:1px solid #dce0e5;white-space:nowrap;vertical-align:middle}
+#ppo-contacts tbody td{height:52px;padding:10px;background:#fff;border:0;border-bottom:1px solid #edf0f4;vertical-align:middle}
+#ppo-contacts tbody tr:hover td{background:#f8faf7}
+#ppo-contacts tbody tr[aria-selected=true] td{background:#edf6e9}
+/* The identity column stays put while the rest of the record scrolls, and carries the
+   only vertical rule in the register. */
+/* Fills the container when there is room and scrolls inside it when there is not.
+   1296px is the sum of the declared column widths. */
+#ppo-contacts .register{table-layout:fixed;width:100%;min-width:1296px}
+#ppo-contacts .register th.identity,#ppo-contacts .register td.identity{position:sticky;left:0;z-index:3;border-right:1px solid #dce0e5}
+#ppo-contacts .register th.identity{z-index:6}
+#ppo-contacts .register tbody tr:hover td.identity{background:#f8faf7}
+#ppo-contacts .register tbody tr[aria-selected=true] td.identity{background:#edf6e9;box-shadow:inset 3px 0 var(--green)}
+#ppo-contacts .register td,#ppo-contacts .register th{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#ppo-contacts .register col.c-identity{width:248px}
+#ppo-contacts .register col.c-org{width:250px}
+#ppo-contacts .register col.c-email{width:220px}
+#ppo-contacts .register col.c-phone{width:150px}
+#ppo-contacts .register col.c-pref{width:230px}
+#ppo-contacts .register col.c-status{width:120px}
+#ppo-contacts .register col.c-deals{width:78px}
+#ppo-contacts th.sortable button{border:0;background:none;padding:0;min-height:30px;font:inherit;font-size:11px;font-weight:500;color:var(--text-secondary);gap:5px}
+#ppo-contacts th.sortable button:hover{background:none;color:var(--ink)}
+#ppo-contacts th.fixed em{font-style:normal;font-size:10px;font-weight:400;opacity:.8;margin-left:5px}
+#ppo-contacts .name-button{border:0;background:none;padding:0;min-height:30px;height:30px;line-height:30px;font-size:12px;font-weight:700;text-align:left;justify-content:flex-start;text-decoration:none;color:var(--ink);display:block;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#ppo-contacts .name-button:hover{color:var(--link);text-decoration:underline;text-underline-offset:3px}
 #ppo-contacts .rowsub{display:block;font-size:11px;color:var(--muted);margin-top:4px}
+#ppo-contacts .register td.number{text-align:right;font-variant-numeric:tabular-nums}
 
 /* the vocabulary of presence — restricted, none and unknown never look like each other */
 #ppo-contacts .tag{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:5px;font-size:11px;font-weight:500;line-height:1.5;background:#edf0f5;color:#526078;max-width:100%;overflow-wrap:anywhere}
@@ -211,9 +221,11 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
  #ppo-contacts table.cards thead{display:none}
  #ppo-contacts table.cards tr{border:1px solid var(--line);border-radius:8px;margin-bottom:10px;padding:4px 2px;background:#fff}
  #ppo-contacts table.cards tr[aria-selected=true]{border-color:var(--green);box-shadow:inset 3px 0 var(--sel-marker)}
- #ppo-contacts table.cards td{border-bottom:0;border-right:0;padding:7px 12px}
- #ppo-contacts table.cards tr[aria-selected=true]{box-shadow:none}
- #ppo-contacts table.cards tr[aria-selected=true] td{border:0;box-shadow:none;background:transparent}
+ #ppo-contacts table.cards td{border-bottom:0;border-right:0;padding:7px 12px;height:auto;white-space:normal;overflow:visible;text-overflow:clip}
+ #ppo-contacts table.cards.register{table-layout:auto;width:100%;min-width:0}
+ #ppo-contacts table.cards .identity{position:static;border-right:0}
+ #ppo-contacts table.cards tr[aria-selected=true] td,#ppo-contacts table.cards tr[aria-selected=true] td.identity{background:#edf6e9;box-shadow:none}
+ #ppo-contacts table.cards .name-button{white-space:normal;height:auto;line-height:1.4;min-height:44px}
  #ppo-contacts table.cards td:before{content:attr(data-label);display:block;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
  #ppo-contacts table.cards td:empty{display:none}
  #ppo-contacts .scroll{max-height:none;overflow:visible}

@@ -103,6 +103,6 @@ None of this is proposed for adoption here. It is recorded so the design is not 
 
 ## Verification
 
-102 model groups and 60 native browser groups passed, with zero page, console or request errors, zero horizontal overflow at the four declared viewports, no phone target under 44 px, and keyboard-only completion of a proposal and a duplicate resolution. Five defects were found by the checks and fixed before issue; they are listed in report §10.1. Full detail in the [evidence record](../testing/evidence/contacts-r01/README.md).
+103 model groups and 62 native browser groups passed, with zero page, console or request errors, zero horizontal overflow at the four declared viewports, no phone target under 44 px, and keyboard-only completion of a proposal and a duplicate resolution. Five defects were found by the checks and fixed before issue; they are listed in report §10.1. Full detail in the [evidence record](../testing/evidence/contacts-r01/README.md).
 
 **Not verified:** native visual review by Dean in a browser; CI execution of `contacts-design.yml`, because this branch has not been pushed; owner acceptance; application integration; production readiness.

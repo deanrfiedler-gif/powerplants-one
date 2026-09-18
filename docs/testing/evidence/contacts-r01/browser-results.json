@@ -1,7 +1,7 @@
 {
   "scope": "CS-02 / CS-03",
   "revision": "r01",
-  "html_sha256": "cd5f0be8e9000bcec683e44d806fd9e2a6147efc2cee4f72ca2554eea2287d40",
+  "html_sha256": "7eed3e1b4937bd6ad3b39cb3f45cd231bb60316ce9e835b85bc8b64909ae9945",
   "browser_channel": "chrome",
   "browser_path": null,
   "browser_version": "153.0.8010.52",
@@ -12,8 +12,8 @@
     "820x800",
     "390x844"
   ],
-  "groups": 60,
-  "passed": 60,
+  "groups": 62,
+  "passed": 62,
   "failed": 0,
   "page_errors": [],
   "images": [
@@ -57,7 +57,15 @@
       "result": "Passed"
     },
     {
-      "name": "The register is gridded and the selected row reads as one plate",
+      "name": "The register renders the board List: grey header, 52 px rows, pinned identity",
+      "result": "Passed"
+    },
+    {
+      "name": "The register scrolls inside its own region and pins identity while it does",
+      "result": "Passed"
+    },
+    {
+      "name": "The view tabs render as the board underline row, not folder tabs",
       "result": "Passed"
     },
     {

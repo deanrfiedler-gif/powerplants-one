@@ -61,7 +61,11 @@ const act = name => page.locator(`[data-action="${name}"]:visible`);
 
 const check = async (name, fn) => {
   try { await fn(); results.push({name, result: 'Passed'}); }
-  catch (e) { results.push({name, result: 'Failed', detail: String(e.message).split(/\r?\n/)[0]}); }
+  catch (e) {
+    const detail = String(e.message).split(/\r?\n/).map(s => s.trim())
+      .filter(Boolean).slice(0, 4).join(' | ');
+    results.push({name, result: 'Failed', detail});
+  }
 };
 const snap = async (name, fullPage = false) => {
   await page.locator('#toast').waitFor({state: 'hidden', timeout: 6000}).catch(() => {});
@@ -125,17 +129,77 @@ await check('The dialog and panel close controls carry their icon', async () => 
   assert.equal(await panel().locator('[data-action=closePanel] svg.icon').count(), 1);
 });
 
-await check('The register is gridded and the selected row reads as one plate', async () => {
-  const rule = sel => page.locator(sel).first().evaluate(e => getComputedStyle(e).borderRightWidth);
-  assert.notEqual(await rule('#content tbody td'), '0px', 'body cells carry a column rule');
-  assert.notEqual(await rule('#content thead th'), '0px', 'header cells carry the same rule');
-  const selected = page.locator('#content tbody tr[aria-selected="true"]');
+await check('The register renders the board List: grey header, 52 px rows, pinned identity',
+  async () => {
+    const head = await page.locator('#content thead th').first().evaluate(e => {
+      const s = getComputedStyle(e);
+      return {bg: s.backgroundColor, h: Math.round(e.getBoundingClientRect().height), pos: s.position};
+    });
+    assert.equal(head.bg, 'rgb(238, 240, 243)', 'the board grey header band');
+    assert.equal(head.h, 43);
+    assert.equal(head.pos, 'sticky');
+
+    const body = await page.locator('#content tbody td').nth(1).evaluate(e => {
+      const s = getComputedStyle(e);
+      return {h: Math.round(e.getBoundingClientRect().height), right: s.borderRightWidth,
+        bottom: s.borderBottomWidth, bg: s.backgroundColor};
+    });
+    assert.equal(body.h, 52);
+    assert.equal(body.right, '0px', 'ordinary cells carry no vertical rule');
+    assert.equal(body.bottom, '1px', 'a fine horizontal divider');
+    assert.equal(body.bg, 'rgb(255, 255, 255)');
+
+    /* The identity column is pinned and carries the only vertical rule. */
+    const identity = await page.locator('#content tbody td.identity').first().evaluate(e => {
+      const s = getComputedStyle(e);
+      return {pos: s.position, right: s.borderRightWidth};
+    });
+    assert.equal(identity.pos, 'sticky');
+    assert.equal(identity.right, '1px');
+
+    /* Full-row selection is the board's pale green, and still carries a green marker. */
+    const selected = page.locator('#content tbody tr[aria-selected="true"]');
+    assert.equal(await selected.count(), 1);
+    const tints = await selected.locator('td').evaluateAll(list =>
+      [...new Set(list.map(e => getComputedStyle(e).backgroundColor))]);
+    assert.deepEqual(tints, ['rgb(237, 246, 233)'], 'every cell of the row takes the tint');
+    assert.match(await selected.locator('td.identity')
+      .evaluate(e => getComputedStyle(e).boxShadow), /rgb\(98, 187, 70\)/);
+  });
+
+await check('The register scrolls inside its own region and pins identity while it does',
+  async () => {
+    await page.setViewportSize({width: 1024, height: 768});
+    const scroll = page.locator('#content .scroll');
+    assert(await scroll.evaluate(e => e.scrollWidth > e.clientWidth),
+      'the register scrolls horizontally at 1024');
+    const before = await page.locator('#content tbody td.identity').first().boundingBox();
+    await scroll.evaluate(e => { e.scrollLeft = 300; });
+    const after = await page.locator('#content tbody td.identity').first().boundingBox();
+    assert.equal(Math.round(before.x), Math.round(after.x), 'the identity column stays put');
+    assert.equal(await horizontalOverflow(), 0, 'the page itself still does not scroll sideways');
+    await scroll.evaluate(e => { e.scrollLeft = 0; });
+    await page.setViewportSize({width: 1440, height: 960});
+  });
+
+await check('The view tabs render as the board underline row, not folder tabs', async () => {
+  const selected = page.locator('#tabs [aria-selected="true"]');
   assert.equal(await selected.count(), 1);
-  /* The ring is on the row. If it were on the cells, every cell would report one. */
-  assert.notEqual(await selected.evaluate(e => getComputedStyle(e).boxShadow), 'none');
-  const cellShadows = await selected.locator('td').evaluateAll(list =>
-    list.map(e => getComputedStyle(e).boxShadow).filter(s => s.includes('rgba(36, 42, 55, 0.12)')));
-  assert.deepEqual(cellShadows, [], 'no cell draws its own halo');
+  const s = await selected.evaluate(e => {
+    const c = getComputedStyle(e);
+    return {bottom: c.borderBottomColor, weight: c.fontWeight, bg: c.backgroundColor,
+      radius: c.borderTopLeftRadius, h: Math.round(e.getBoundingClientRect().height)};
+  });
+  assert.equal(s.bottom, 'rgb(98, 187, 70)', 'the brand green rule marks the tab');
+  assert.equal(s.weight, '700');
+  assert.equal(s.radius, '0px', 'no folder chrome');
+  assert.equal(s.bg, 'rgba(0, 0, 0, 0)', 'no filled tab');
+  assert(s.h >= 44, 'the tab still meets the phone target height');
+  /* The stacked CS-02 / CS-03 kicker is gone from the tab, and not lost: it heads the
+     card inside each view. */
+  assert.equal(await page.locator('#tabs .tab-kicker').count(), 0);
+  /* The eyebrow is upper-cased by the stylesheet, so innerText comes back shouting. */
+  assert.match(await text(), /CS-02 · Contact directory/i);
 });
 
 await check('The fixed clock is stated and never drifts to the real time', async () => {
@@ -214,8 +278,12 @@ await check('The page size offers exactly 25, 50 and 100', async () => {
 
 await check('An inactive contact is marked and states that no command can change it', async () => {
   await page.locator('#f-status').selectOption('Inactive');
-  assert.match(await text(), /No command can write this column/);
+  /* Read, then reset, then assert. A failed assertion here used to leave the filter set
+     and every group after it looked at an empty register. */
+  const shown = await text();
   await page.locator('#f-status').selectOption('');
+  assert.match(shown, /Inactive/);
+  assert.match(shown, /No command can write this column/);
 });
 
 /* ------------------------------------------------------------------ the visibility rule */
@@ -682,8 +750,13 @@ await check('The skip link reaches the workspace content', async () => {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
   });
+  /* The dialog in the preceding group restores focus to whatever opened it when it
+     closes, and that restore can land after this group has already focused the skip
+     link. Wait for focus to settle here rather than racing it. */
   await page.locator('.skip').focus();
-  assert.equal(await page.locator('.skip').evaluate(e => e === document.activeElement), true);
+  await page.waitForFunction(
+    () => document.activeElement && document.activeElement.classList.contains('skip'),
+    null, {timeout: 6000});
   await page.keyboard.press('Enter');
   await page.waitForFunction(() => document.location.hash === '#content', null, {timeout: 6000});
   assert.equal(await page.evaluate(() => document.activeElement.id), 'content');

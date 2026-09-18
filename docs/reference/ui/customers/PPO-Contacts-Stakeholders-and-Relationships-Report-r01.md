@@ -10,7 +10,7 @@ source_commit: 01b9824a63e468b393265b159fa681f83f6e668c
 
 # CS-02 / CS-03 — Contacts, Stakeholders & Relationships design report
 
-**Design HTML:** [`PPO-Contacts-Stakeholders-and-Relationships-r01.html`](PPO-Contacts-Stakeholders-and-Relationships-r01.html) · SHA-256 `cd5f0be8e9000bcec683e44d806fd9e2a6147efc2cee4f72ca2554eea2287d40` · 253,388 bytes, one self-contained file with no external request.
+**Design HTML:** [`PPO-Contacts-Stakeholders-and-Relationships-r01.html`](PPO-Contacts-Stakeholders-and-Relationships-r01.html) · SHA-256 `7eed3e1b4937bd6ad3b39cb3f45cd231bb60316ce9e835b85bc8b64909ae9945` · 254,450 bytes, one self-contained file with no external request.
 
 **Built from:** [`docs/design/contacts/`](../../../design/contacts/README.md) by `scripts/build-contacts-design.py`, deterministically, on any platform.
 
@@ -37,7 +37,7 @@ The module reads. It issues nothing, sends nothing and acknowledges nothing.
 |---|---|
 | Scope identity | CS-02 (D, Pages) and CS-03 (N, Tab), page coverage register r06; parents CRM-01, CRM-04, CRM-06, SVC-06; increment = coordinated contact directory, contact record, stakeholder map, downstream reliance, proposed corrections and visibility explanation |
 | Page type | Register / worklist with persistent inspection as the primary type; Record detail for the contact record; Review / comparison for the stakeholder and reliance views |
-| Reused components | r20 shared token core reused by name from AD-01 r01; `fonts.css` byte-identical to `docs/design/my-work/fonts.css`; the Customer 360 line-icon set; theme r22’s complete `--ss22-*` selection family with the board’s own values, pinned by content at SHA-256 `a305361c…`. See §9 |
+| Reused components | r20 shared token core reused by name from AD-01 r01; `fonts.css` byte-identical to `docs/design/my-work/fonts.css`; the Customer 360 line-icon set; the theme board’s **r23 List** treatment for the register, its **r07 tabs** treatment for the view tabs, and theme r22’s complete `--ss22-*` selection family, all pinned by content at SHA-256 `a305361c…`. See §9 |
 | Source authority | Contract items cite a migration or `src/shared` file and the pinned commit; Seed items cite the fixture; Proposed items are labelled in the page itself |
 | Incoming handover | Canonical shared records: Organisation, Site, Facility, Person, Relationship, SiteParty, read under `shared.read` with the derived Person visibility rule |
 | Outgoing handover | A named, permitted, currently valid contact for CS-01, CR-01, SV-02/SV-06, FI-07, DK-03 and MA-06/07 to bind — and, where none exists, an explicit recorded reason. **This module issues nothing, sends nothing and acknowledges nothing** |
@@ -224,7 +224,18 @@ When this branch was taken, **#239 had not merged**, and the r22 board was not i
 | Zero token values changed | **0 changed** |
 | 24 added, all component-local aliases | **24 added**, every one `--nca-*` or `--ss22-*` |
 
-Decision 1 is correct in every particular. The module therefore adopts the r22 selection family properly rather than approximating it: the whole `--ss22-*` family is declared on the scope container with the board's own values, the selected directory row uses r22's **ring** treatment, the view tabs use its **tabs** treatment, the attention queues use ring, and the filter group uses **recessed**. `--line-strong`, `--text-secondary`, `--control-border` and `--focus` are reused by name from the board rather than invented, as §7.4 requires. A green marker is retained on the selected row and tab so selection is never carried by colour alone.
+Decision 1 is correct in every particular. The module therefore adopts the board's own treatments rather than approximating them. `--line-strong`, `--text-secondary`, `--control-border` and `--focus` are reused by name from the board rather than invented, as §7.4 requires.
+
+**Owner review, 18 September 2026.** Dean reviewed the rendered page and asked for the view tabs and the contact register to follow the board rather than this module's own invention. Both now do:
+
+| Element | Board pattern | What it is |
+|---|---|---|
+| View tabs | **r07 tabs** | A quiet underline row. No folder chrome, no fill, no radius; the selected tab is carried by ink, weight 700 and a brand-green 3 px rule. The stacked CS-02 / CS-03 kicker above each label is gone — that provenance still heads the card inside every view, so nothing is lost |
+| Contact register | **r23 List** | A grey sticky header band at 43 px, 52 px rows, white cells, fine horizontal dividers and **no vertical rules** except the one after the pinned identity column. Pale hover `#f8faf7`, pale green full-row selection `#edf6e9`. The Name column stays pinned while the rest of the record scrolls, so the register is readable at 1024 px and below without the page ever scrolling sideways |
+| Attention queues, organisation chooser | **r22 ring** | Retained. A selectable tile is what the ring treatment is for |
+| Filter group | **r22 recessed** | Retained |
+
+Both are asserted by reading the values **out of the board file and comparing**, not by restating them: the header band, row height, divider, hover, selection tint and pinned-column rule are all matched against `.r23-table`, and the tab treatment against `.r07-tabs`. A green marker is retained on the selected row so selection is never carried by the tint alone.
 
 Every `--ss22-*` value either aliases a token this module already declares or is a shadow built from the brand navy `rgba(36,42,55,…)`, so the family introduces no new colour. Two model-check groups assert all of this, comparing the two boards directly; the builder now pins the r22 board by content and refuses to run if it changes.
 
@@ -237,8 +248,8 @@ The r22 board also carries `--surface-hover: #f0f2f5`, `--line-soft: #e9ecf1` an
 | Check | Result |
 |---|---|
 | `python scripts/build-contacts-design.py --check` | Verified byte for byte |
-| `node scripts/check-contacts-model.mjs --write-evidence` | **102 groups, 102 passed, 0 failed** (plan floor 45) |
-| `node scripts/check-contacts-browser.mjs` | **60 groups, 60 passed, 0 failed** (plan floor 25), on the pinned Chrome channel |
+| `node scripts/check-contacts-model.mjs --write-evidence` | **103 groups, 103 passed, 0 failed** (plan floor 45) |
+| `node scripts/check-contacts-browser.mjs` | **62 groups, 62 passed, 0 failed** (plan floor 25), on the pinned Chrome channel |
 | Page, console and request errors | **Zero** |
 | Horizontal overflow at 1440×960, 1024×768, 820×800, 390×844 | **0 px on every view at every viewport** |
 | Phone targets | No interactive target under 44 px at 390 px width |

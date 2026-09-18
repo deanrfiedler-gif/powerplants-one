@@ -10,15 +10,15 @@ source_commit: 01b9824a63e468b393265b159fa681f83f6e668c
 
 # CS-02 / CS-03 r01 — verification evidence
 
-Evidence for the [design HTML](../../../reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html), SHA-256 `cd5f0be8e9000bcec683e44d806fd9e2a6147efc2cee4f72ca2554eea2287d40`, 253,388 bytes.
+Evidence for the [design HTML](../../../reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html), SHA-256 `7eed3e1b4937bd6ad3b39cb3f45cd231bb60316ce9e835b85bc8b64909ae9945`, 254,450 bytes.
 
 ## Files in this folder
 
 | File | Contents |
 |---|---|
 | `build-manifest.json` | The deterministic build: HTML hash and byte count, per-source hashes, the pinned contract-source hashes, the base commit and the declared theme edition |
-| `model-results.json` | All 102 model groups with their names and results, bound to the HTML SHA-256 and the fixture manifest hash |
-| `browser-results.json` | All 60 native browser groups, the browser channel and version, the four viewports, the captured images and the page-error list |
+| `model-results.json` | All 103 model groups with their names and results, bound to the HTML SHA-256 and the fixture manifest hash |
+| `browser-results.json` | All 62 native browser groups, the browser channel and version, the four viewports, the captured images and the page-error list |
 
 Screenshots are written to `verification-evidence/contacts/`, which `.gitignore` excludes from the repository; the workflow retains them as a build artefact for 14 days.
 
@@ -42,8 +42,8 @@ git diff --check
 | Check | Floor | Result |
 |---|---|---|
 | Deterministic rebuild | byte for byte | **Verified** |
-| Model and contract fidelity | 45 groups | **102 groups, 102 passed, 0 failed** |
-| Native browser | 25 groups | **60 groups, 60 passed, 0 failed** |
+| Model and contract fidelity | 45 groups | **103 groups, 103 passed, 0 failed** |
+| Native browser | 25 groups | **62 groups, 62 passed, 0 failed** |
 | Page errors, console errors, failed requests | zero | **Zero** |
 | Horizontal overflow at 1440×960, 1024×768, 820×800, 390×844 | 0 px | **0 px on all six views at all four viewports** |
 | Phone targets at 390 px | 44 px | **No interactive target under 44 px** |
@@ -60,7 +60,7 @@ git diff --check
 
 ## What the checks specifically assert
 
-The model check is written against the real repository sources rather than a copy of them, so the design cannot drift from the rules the running application applies. Among the 102 groups:
+The model check is written against the real repository sources rather than a copy of them, so the design cannot drift from the rules the running application applies. Among the 103 groups:
 
 - The Person projection is derived from `src/shared/reads.ts` itself and compared field for field, and its absence of `can_edit` and `company_id` is asserted against the Organisation branch that has them.
 - `visibility("Person")` is checked clause by clause against the template literal in `reads.ts`, and `scopeSql` against `src/platform/permissions.ts`, including the specific fact that a site-scoped grant can never satisfy a call whose site argument is `NULL`.

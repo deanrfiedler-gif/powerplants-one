@@ -15,8 +15,8 @@ source_commit: 01b9824a63e468b393265b159fa681f83f6e668c
 | Field | Value |
 |---|---|
 | File | [`PPO-Contacts-Stakeholders-and-Relationships-r01.html`](PPO-Contacts-Stakeholders-and-Relationships-r01.html) |
-| SHA-256 | `cd5f0be8e9000bcec683e44d806fd9e2a6147efc2cee4f72ca2554eea2287d40` |
-| Bytes | 253,388 |
+| SHA-256 | `7eed3e1b4937bd6ad3b39cb3f45cd231bb60316ce9e835b85bc8b64909ae9945` |
+| Bytes | 254,450 |
 | Predecessor | **None.** First issue. CS-02 is register state D — a refinement of the live `/people` and `/people/[id]` surfaces — but no standalone design file preceded this one, so there is no predecessor SHA-256 to record |
 | Scope container | `#ppo-contacts` |
 | Base commit | `01b9824a63e468b393265b159fa681f83f6e668c`, with `origin/main` `be219114` merged in after PR #239 landed |
@@ -39,8 +39,8 @@ First issue. The package introduces, against page-register entries CS-02 and CS-
 | Check | Result |
 |---|---|
 | `scripts/build-contacts-design.py --check` | Verified byte for byte |
-| `scripts/check-contacts-model.mjs` | 102 groups, 102 passed, 0 failed |
-| `scripts/check-contacts-browser.mjs` | 60 groups, 60 passed, 0 failed, pinned Chrome channel |
+| `scripts/check-contacts-model.mjs` | 103 groups, 103 passed, 0 failed |
+| `scripts/check-contacts-browser.mjs` | 62 groups, 62 passed, 0 failed, pinned Chrome channel |
 | Page / console / request errors | Zero |
 | Horizontal overflow, four declared viewports | 0 px, every view |
 | Phone targets at 390 px | None under 44 px |
@@ -49,6 +49,10 @@ First issue. The package introduces, against page-register entries CS-02 and CS-
 | Conflict markers in `docs` / `git diff --check` | No output |
 
 Full detail is in [§10 of the report](PPO-Contacts-Stakeholders-and-Relationships-Report-r01.md): five defects found by the checks, and two more found by the owner's visual review — unpainted icon placeholders, and a selection ring applied per cell that gave the selected row column rules no other row had. All seven are fixed, and the two visual ones now have checks that fail when they return.
+
+## Owner review, 18 September 2026
+
+Dean reviewed the rendered page and asked for the view tabs and the contact register to follow the theme board rather than this module's own invention. Both were replaced with the board's patterns — **r07 tabs** for the view tabs and the **r23 List** for the register, including its pinned identity column — and both are now asserted by reading the values out of the board file and comparing, rather than by restating them. See report §9.
 
 ## What was deliberately left unchanged
 

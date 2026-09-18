@@ -571,6 +571,10 @@ test('active is never rendered as editable', () => {
   assert(!/name="active"|id="f-active"/.test(page));
   const kind = M.PROPOSAL_KINDS.find(k => k.id === 'deactivate');
   assert(kind.missing.includes('never written again'));
+  /* This previously passed on a copy of the sentence inside the embedded fixture, which
+     is not rendered anywhere a reader would look. Assert the controller renders it. */
+  assert(app.includes('No command can write this column'),
+    'the rendered copy, not just the fixture, must say the column is read-only');
   assert(page.includes('No command can write this column'));
 });
 
@@ -924,19 +928,82 @@ test('Every template icon placeholder names an icon that exists and is painted',
     assert(page.includes('data-icon="' + n + '"'), n + ' survives assembly');
 });
 
-test('The register is gridded and the selected row is ringed once, not once per cell', () => {
-  assert(css.includes('#ppo-contacts tbody td:last-child{border-right:0}'));
-  assert(/tbody td\{[^}]*border-right:1px solid var\(--line-soft\)/.test(css),
-    'every body cell carries a column rule');
-  assert(/thead th\{[^}]*border-right:1px solid var\(--line-soft\)/.test(css),
-    'the header carries the same column rule so the columns line up');
-  /* The halo and lift belong to the row. On the cells, each cell draws its own ring and
-     the selected row grows column rules the other rows do not have. */
-  assert(css.includes("tbody tr[aria-selected=true]{box-shadow:0 0 0 2px var(--ss22-halo),var(--ss22-lift)}"));
-  const selectedCell = css.match(/tbody tr\[aria-selected=true\] td\{([^}]*)\}/)[1];
-  assert(!/box-shadow/.test(selectedCell), 'no per-cell halo: ' + selectedCell);
-  assert(css.includes('table.cards tr[aria-selected=true]{box-shadow:none}'),
-    'the row ring is reset where the register becomes cards');
+/* The board is the authority for these two treatments, so the values are read out of it
+   and compared, rather than restated here and trusted. */
+const board = read(path.join(root,
+  'docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html'));
+const boardRule = pattern => {
+  const m = board.match(pattern);
+  assert(m, 'board rule not found: ' + pattern);
+  return m[1];
+};
+
+test('The register follows the board r23 List treatment, measured against the board', () => {
+  const th = boardRule(/\.r23-table th\{([^}]*)\}/);
+  /* Anchored on height: so this matches the standalone cell rule, not the combined
+     `th, td` rule that sets only box-sizing and truncation. */
+  const td = boardRule(/\.r23-table td\{(height:[^}]*)\}/);
+  const hover = boardRule(/\.r23-table tbody tr:hover td\{background:(#[0-9a-f]{6})\}/);
+  const selected = boardRule(/\.r23-table tbody tr\.selected td\{background:(#[0-9a-f]{6})\}/);
+  const pinned = boardRule(/\.r23-table \.r23-title-cell\{([^}]*)\}/);
+
+  const ourTh = css.match(/#ppo-contacts thead th\{([^}]*)\}/)[1];
+  const ourTd = css.match(/#ppo-contacts tbody td\{([^}]*)\}/)[1];
+
+  /* Header: the board's grey band, its height and its divider. */
+  for (const bit of ['height:43px', 'background:#eef0f3', 'border-bottom:1px solid #dce0e5'])
+    assert(th.includes(bit) && ourTh.includes(bit), 'header ' + bit);
+  assert(ourTh.includes('position:sticky'));
+
+  /* Rows: the board's height, white ground and fine horizontal divider, and no others. */
+  for (const bit of ['height:52px', 'border-bottom:1px solid #edf0f4'])
+    assert(td.includes(bit) && ourTd.includes(bit), 'row ' + bit);
+  assert(/background:(#fff|white)/.test(ourTd));
+  assert(!/border-right/.test(ourTd), 'the board List draws no vertical rule on ordinary cells');
+
+  /* Hover and selection are the board's, not an invention. */
+  assert.equal(hover, '#f8faf7');
+  assert.equal(selected, '#edf6e9');
+  assert(css.includes('tbody tr:hover td{background:' + hover + '}'));
+  assert(css.includes('tbody tr[aria-selected=true] td{background:' + selected + '}'));
+
+  /* The identity column is pinned and carries the only vertical rule, as the board does. */
+  assert(pinned.includes('position:sticky'));
+  assert(pinned.includes('border-right:1px solid #dce0e5'));
+  const ourPinned = css.match(/#ppo-contacts \.register th\.identity,#ppo-contacts \.register td\.identity\{([^}]*)\}/)[1];
+  assert(ourPinned.includes('position:sticky'));
+  assert(ourPinned.includes('border-right:1px solid #dce0e5'));
+  /* Selection still carries a green marker, so it never depends on the tint alone. */
+  assert(css.includes("tbody tr[aria-selected=true] td.identity{background:#edf6e9;box-shadow:inset 3px 0 var(--green)}"));
+  /* The register scrolls inside its own bounded region; the page never scrolls sideways. */
+  assert(/\.scroll\{[^}]*overflow:auto/.test(css));
+  assert(css.includes('#ppo-contacts .register{table-layout:fixed;width:100%;min-width:1296px}'));
+  assert(css.includes('table.cards .identity{position:static;border-right:0}'),
+    'the pin is released where the register becomes cards');
+});
+
+test('The view tabs follow the board r07 tab treatment', () => {
+  const rest = boardRule(/\.r07-tabs button\{([^}]*)\}/);
+  const sel = boardRule(/\.r07-tabs button\[aria-selected=true\]\{([^}]*)\}/);
+  const ourRest = css.match(/#ppo-contacts \.tabs button\{([^}]*)\}/)[1];
+  const ourSel = css.match(/#ppo-contacts \.tabs button\[aria-selected=true\]\{([^}]*)\}/)[1];
+
+  for (const bit of ['border:0', 'border-radius:0', 'border-bottom:3px solid transparent',
+    'background:none'])
+    assert(rest.includes(bit) && ourRest.includes(bit), 'tab ' + bit);
+  assert(sel.includes('font-weight:700') && ourSel.includes('font-weight:700'));
+  assert(sel.includes('border-bottom-color:#62bb46'), 'the board marks the tab in brand green');
+  assert(ourSel.includes('border-bottom-color:var(--green)'));
+  assert(ourSel.includes('color:var(--ink)'), 'selection is carried by ink as well as colour');
+  /* Folder chrome and the stacked kicker are gone. */
+  assert(!/\.tabs button\[aria-selected=true\][^}]*box-shadow/.test(css));
+  assert(!css.includes('.tab-kicker'));
+  assert(!app.includes('tab-kicker'));
+  /* The scope identity is not lost: it still heads every card inside the view. */
+  assert(page.includes('CS-02 · Contact directory'));
+  assert(page.includes('CS-03 · Stakeholders and relationships'));
+  /* The tab row still meets the phone target height. */
+  assert(ourRest.includes('min-height:44px'));
 });
 
 test('Tokens are declared on the scope container, not on :root, reusing the shared core', () => {
@@ -1008,10 +1075,14 @@ test('The r22 selection family is declared with the board’s own values', () =>
         name + ' introduces a value that is not brand navy, white or a radius: ' + value);
     }
   }
-  /* The selected directory row and the view tabs use the family, not an invention. */
-  assert(css.includes('tbody tr[aria-selected=true] td{background:var(--ss22-panel)'));
-  assert(css.includes('--ss22-halo'));
-  assert(css.includes('.tabs button[aria-selected=true]{background:var(--ss22-panel)'));
+  /* The family is still declared in full and still used. The register and the tabs now
+     follow the board's r23 List and r07 tab treatments instead, which are asserted
+     separately; the ss22 ring remains on the attention queues and the organisation
+     chooser, where a selectable tile is what the board's ring is for. */
+  assert(/\.queue\[aria-pressed=true\]\{[^}]*var\(--ss22-halo\)[^}]*var\(--ss22-lift\)/.test(css));
+  assert(app.includes('var(--ss22-halo),var(--ss22-lift)'), 'the organisation chooser uses the ring');
+  assert(css.includes('outline:2px solid var(--ss22-focus)'));
+  assert(css.includes('var(--ss22-well)'), 'the filter group uses the recessed treatment');
 });
 
 test('The three known token divergences adopt one side and say which', () => {
