@@ -1,4 +1,4 @@
-import { toggleWorklistFilters } from "../helpers/crm-worklist-ui";
+import { toggleWorklistFilters, fillOpportunitySearch, chooseWorklistSort, searchNeedsDrawer } from "../helpers/crm-worklist-ui";
 import { test, expect, type Page, type TestInfo } from "@playwright/test";
 import { randomUUID, randomBytes, createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
@@ -33,7 +33,7 @@ const ids = (page: Page) => page.locator(".crm-workspace [data-opportunity-id]")
 const snapshot = async () => Promise.all(["opportunities", "activities", "activity_links", "opportunity_events", "business_identities", "operation_receipts", "audit_events", "outbox_jobs", "reference_counters"].map(async (table) => (await database().query(`SELECT md5(coalesce(string_agg(to_jsonb(t)::text,'' ORDER BY to_jsonb(t)::text),'')) AS hash FROM ppo.${table} t`)).rows[0].hash));
 
 test("CRM URL restores filtered List, Board stage and sort through reload, a copied link and Back without business writes", async ({ page, context }, info) => {
-  await page.goto("/crm/opportunities?pipeline=I1"); await identity(page);
+  await page.goto("/sales/opportunities?pipeline=I1"); await identity(page);
   const marker = `SYN URL ${randomUUID().slice(0, 8)}`;
   const inputs = ["Zulu", "Alpha", "Bravo"].map(title => ({ ...crmCreate(), title: `${marker} ${title}` }));
   for (const input of inputs) await call(page, "crm/opportunities", input);
@@ -42,13 +42,15 @@ test("CRM URL restores filtered List, Board stage and sort through reload, a cop
   const commands: string[] = [];
   page.on("request", r => { if (r.url().includes("/api/v1/") && r.method() !== "GET") commands.push(r.method()); });
   const search = page.getByLabel("Search opportunities", { exact: true });
+  if (await searchNeedsDrawer(page)) await toggleWorklistFilters(page);
+  await expect(search).toBeVisible();
   const historyLength = await page.evaluate(() => history.length);
   await search.pressSequentially(marker);
   await expect.poll(() => ids(page)).toHaveLength(3);
   expect(await page.evaluate(() => history.length)).toBe(historyLength);
   await expect(search).toBeFocused();
-  await page.getByLabel("Sort", { exact: true }).selectOption("Title");
-  await toggleWorklistFilters(page);
+  await chooseWorklistSort(page, "Title");
+  if (!(await page.getByRole("dialog", { name:"Filter opportunities",exact:true }).isVisible())) await toggleWorklistFilters(page);
   await page.getByLabel("Company", { exact: true }).selectOption(CRM.company);
   await page.getByLabel("Site", { exact: true }).selectOption(CRM.site);
   await page.getByLabel("Opportunity owner", { exact: true }).selectOption(CRM.owner);
@@ -73,7 +75,7 @@ test("CRM URL restores filtered List, Board stage and sort through reload, a cop
     await expect(copy.getByRole("button", { name: "List", exact: true })).toHaveAttribute("aria-pressed", "true");
   } finally { await copy.close(); }
   await page.getByRole("link", { name: inputs[1].title, exact: true }).click();
-  await expect(page).toHaveURL(new RegExp(`/crm/opportunities/${inputs[1].id}$`));
+  await expect(page).toHaveURL(new RegExp(`/sales/opportunities/${inputs[1].id}$`));
   await page.goBack(); await expect(page).toHaveURL(linked);
   await expect.poll(() => ids(page)).toEqual(expected);
   await page.getByRole("button", { name: "Board", exact: true }).click();
@@ -85,10 +87,10 @@ test("CRM URL restores filtered List, Board stage and sort through reload, a cop
 });
 
 test("CRM URL clears sensitive criteria on identity lock and a copied link never grants another actor access", async ({ page, context }, info) => {
-  await page.goto("/crm/opportunities?pipeline=I1"); await identity(page);
+  await page.goto("/sales/opportunities?pipeline=I1"); await identity(page);
   const input = { ...crmCreate(), title: `SYN Private URL ${randomUUID()}` };
   await call(page, "crm/opportunities", input);
-  await page.getByLabel("Search opportunities", { exact: true }).fill(input.title);
+  await fillOpportunitySearch(page, input.title);
   await expect.poll(() => ids(page)).toEqual([input.id]);
   await page.getByRole("button", { name: "List", exact: true }).click();
   const linked = page.url();
@@ -113,7 +115,7 @@ async function waitForCompactSearch(page: Page) {
 }
 
 test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone stage and business records", async ({ page }, info) => {
-  await page.goto("/crm/opportunities?pipeline=I1"); await identity(page);
+  await page.goto("/sales/opportunities?pipeline=I1"); await identity(page);
   const marker = `SYN ${randomUUID().slice(0, 8)}`;
   const actionOwner = randomUUID();
   await database().query("INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1,$2,'PPO-LocalSynthetic',$3,'SYN Action colleague')", [actionOwner, CRM.workspace, randomUUID()]);
@@ -122,7 +124,7 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   inputs[0].initial_action.owner_id = actionOwner;
   for (const input of inputs) await call(page, "crm/opportunities", input);
   await call(page, `crm/opportunities/${inputs[1].id}/qualify`, crmQualify());
-  await page.getByLabel("Search opportunities", { exact: true }).fill(marker);
+  await fillOpportunitySearch(page, marker);
   await expect.poll(() => ids(page)).toHaveLength(3);
   await capture(page, info, "loaded-board");
   if (info.project.use.isMobile) {
@@ -142,7 +144,7 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   await page.getByLabel("Site", { exact: true }).selectOption(CRM.site);
   await page.getByLabel("Opportunity owner", { exact: true }).selectOption(CRM.owner);
   await page.getByLabel("Next action", { exact: true }).selectOption("DueNeeded");
-  await page.getByLabel("Sort", { exact: true }).selectOption("Title");
+  await chooseWorklistSort(page, "Title");
   await expect.poll(() => ids(page)).toHaveLength(3);
   await toggleWorklistFilters(page);
   const before = await snapshot();
@@ -182,7 +184,7 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   expect(await snapshot()).toEqual(before);
   await page.getByRole("button", { name: "List", exact: true }).click();
   await page.getByRole("link", { name: inputs[0].title, exact: true }).click();
-  await expect(page).toHaveURL(new RegExp(`/crm/opportunities/${inputs[0].id}$`));
+  await expect(page).toHaveURL(new RegExp(`/sales/opportunities/${inputs[0].id}$`));
   await page.getByRole("tab",{name:"Details",exact:true}).click();
   await expect(page.getByLabel("Qualification outcome", { exact: true })).toBeVisible();
   await page.reload();
@@ -190,7 +192,7 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
 });
 
 test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error completeness", async ({ page }, info) => {
-  await page.goto("/crm/opportunities?pipeline=I1"); await identity(page);
+  await page.goto("/sales/opportunities?pipeline=I1"); await identity(page);
   const marker = `SYN page ${randomUUID().slice(0, 8)}`;
   const inputs = Array.from({ length: 12 }, (_, n) => ({ ...crmCreate(), title: `${marker} ${String(n).padStart(2, "0")}`, initial_action: { ...crmAction(), summary: n === 0 ? `SYN ${"X".repeat(1983)}END OF ACTION` : "SYN Arrange follow-up" } }));
   inputs[0].title = `${marker} 00 ${"LongReference".repeat(13)}`.slice(0, 200);
@@ -199,9 +201,9 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   const [, time, version, variant, node] = randomUUID().split("-");
   inputs[0].initial_action.id = `00000000-${time}-${version}-${variant}-${node}`;
   for (const input of inputs) await call(page, "crm/opportunities", input);
-  await page.getByLabel("Search opportunities", { exact: true }).fill(marker);
+  await fillOpportunitySearch(page, marker);
   await toggleWorklistFilters(page);
-  await page.getByLabel("Sort", { exact: true }).selectOption("Title");
+  await chooseWorklistSort(page, "Title");
   await page.getByLabel("Page size", { exact: true }).selectOption("10");
   await expect.poll(() => ids(page)).toHaveLength(10);
   await toggleWorklistFilters(page);
@@ -298,8 +300,8 @@ test("CA-06/10/13 I2 revocation clears list, filter labels and late responses; i
   await database().query("INSERT INTO ppo.sessions(token_hash,workspace_id,actor_id,expires_at) VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')", [createHash("sha256").update(token).digest("hex"), CRM.workspace, user]);
   await page.context().addCookies([{ name: "ppo_local_session", value: token, domain: "127.0.0.1", path: "/", httpOnly: true, sameSite: "Strict" }]);
   const input = { ...crmCreate(), title: `SYN private ${randomUUID()}`, owner_id: user, initial_action: crmAction(user) };
-  await page.goto("/crm/opportunities?pipeline=I1"); await call(page, "crm/opportunities", input);
-  await page.getByLabel("Search opportunities", { exact: true }).fill(input.title);
+  await page.goto("/sales/opportunities?pipeline=I1"); await call(page, "crm/opportunities", input);
+  await fillOpportunitySearch(page, input.title);
   await expect.poll(() => ids(page)).toHaveLength(1);
   let release!: () => void, held = false, intercept = true;
   const pending = new Promise<void>((resolve) => { release = resolve; });
@@ -327,8 +329,8 @@ test("CA-06/10/13 I2 revocation clears list, filter labels and late responses; i
   await capture(page, info, "board-denied-after-revocation");
   expect((await page.request.get(`/api/v1/operations/${input.operation_id}`)).status()).toBe(404);
   await identity(page);
-  await expect(page.getByLabel("Search opportunities", { exact: true })).toHaveValue("");
-  await page.getByLabel("Search opportunities", { exact: true }).fill(input.title);
+  expect(new URL(page.url()).searchParams.get("q")).toBeNull();
+  await fillOpportunitySearch(page, input.title);
   await identity(page, "systems");
   await expect(page.locator('.crm-workspace > .business-error[role="alert"]')).toBeVisible();
   expect(await page.locator("body").innerText()).not.toContain(input.title);
@@ -345,7 +347,7 @@ test("CA-06/13 initial identity must settle before an actor can switch", async (
     await held;
     await route.fulfill({ response });
   });
-  await page.goto("/crm/opportunities?pipeline=I1");
+  await page.goto("/sales/opportunities?pipeline=I1");
   const strip = page.getByRole("region", { name: "Local demonstration identity", exact: true });
   await expect(strip).toHaveAttribute("aria-busy", "true");
   await expect(page.getByLabel("Identity", { exact: true })).toBeDisabled();
@@ -356,7 +358,7 @@ test("CA-06/13 initial identity must settle before an actor can switch", async (
   await expect(strip).toContainText("SYN Systems");
   await identity(page);
   await expect(strip).toContainText("SYN Coordinator");
-  await expect(page.getByLabel("Search opportunities", { exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name:"Filters and sort",exact:true })).toBeVisible();
   expect((await call(page, "local-session")).actor_id).toBe(CRM.owner);
 });
 
@@ -384,14 +386,14 @@ test("CA-13 shared brand consumers retain navigation, readable actions and origi
 });
 
 test("Accepted r08 shell and board retain full-width stages, fixed headers and shared scrolling", async ({ page }, info) => {
-  await page.goto("/crm/opportunities?pipeline=I1"); await identity(page);
+  await page.goto("/sales/opportunities?pipeline=I1"); await identity(page);
   const marker = `SYN r08 ${randomUUID().slice(0, 8)}`;
   for (let n = 0; n < 10; n++) {
     const input = { ...crmCreate(), title: `${marker} ${n} ${n === 0 ? "Long climate control and irrigation opportunity" : "Controls upgrade"}`, initial_action: { ...crmAction(), summary: n % 2 ? "SYN Confirm installation scope and arrange the next technical review" : "SYN Call customer" } };
     await call(page, "crm/opportunities", input);
     if (n % 2) await call(page, `crm/opportunities/${input.id}/qualify`, crmQualify());
   }
-  await page.getByLabel("Search opportunities", { exact: true }).fill(marker);
+  await fillOpportunitySearch(page, marker);
   await expect.poll(() => ids(page)).toHaveLength(10);
   const board = page.locator(".crm-board-scroll");
   const activeLink = page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "More navigation", exact: true }).getByRole("link", { name: "Sales", exact: true });

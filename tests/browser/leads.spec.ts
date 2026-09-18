@@ -28,9 +28,9 @@ test("approved leads list/detail and atomic conversion persist through reload", 
     activity_id: null,
     new_action: action,
   });
-  await page.goto(`/crm/leads?q=${encodeURIComponent(input.title)}`);
+  await page.goto(`/sales/leads?q=${encodeURIComponent(input.title)}`);
   await expect(
-    page.locator(`a[href*="/crm/leads/${input.id}"]:visible`).first(),
+    page.locator(`a[href*="/sales/leads/${input.id}"]:visible`).first(),
   ).toBeVisible();
   if (info.project.use.isMobile) {
     await expect(
@@ -41,7 +41,7 @@ test("approved leads list/detail and atomic conversion persist through reload", 
   }
   await page.screenshot({ path: info.outputPath("leads-list.png") });
   await page
-    .locator(`a[href*="/crm/leads/${input.id}"]:visible`)
+    .locator(`a[href*="/sales/leads/${input.id}"]:visible`)
     .first()
     .click();
   await expect(page.getByRole("dialog")).toContainText(input.title);
@@ -76,7 +76,7 @@ test("Add lead has one scroll body, fixed actions, focus return and navy add but
   page,
 }, info) => {
   await call(page, "local-session", { profile: "coordinator" });
-  await page.goto("/crm/leads");
+  await page.goto("/sales/leads");
   await expect(
     page.getByRole("button", { name: "Add lead", exact: true }),
   ).toBeVisible();
@@ -142,7 +142,7 @@ test("manual lead saves with an unverified organisation and survives reload", as
   page,
 }) => {
   await call(page, "local-session", { profile: "coordinator" });
-  await page.goto("/crm/leads");
+  await page.goto("/sales/leads");
   await page.getByRole("button", { name: "Add lead", exact: true }).click();
   await page
     .getByLabel("Lead title", { exact: true })
@@ -179,7 +179,7 @@ test("approved desktop columns resize independently and retain widths with quiet
   await call(page, "local-session", { profile: "coordinator" });
   const input = leadCreate();
   await call(page, "crm/leads", input);
-  await page.goto(`/crm/leads?q=${encodeURIComponent(input.title)}`);
+  await page.goto(`/sales/leads?q=${encodeURIComponent(input.title)}`);
   await expect(page.locator(".lead-table tbody tr")).toHaveCount(1);
   await expect(page.locator(".lead-add")).toHaveText("Lead");
   await page.getByRole("button", { name: "Reset columns" }).click();

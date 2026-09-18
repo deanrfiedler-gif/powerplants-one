@@ -31,9 +31,9 @@ export async function shellContext(p: Principal, input: unknown): Promise<ShellC
 export async function shellSearch(p: Principal, input: unknown) {
   return collectSearch(searchQuery(input), [
     { kind: "Engineering package", path: "/engineering", label: "title", read: q => listEngineering(p, q) },
-    { kind: "Lead", path: "/crm/leads", label: "title", read: q => listLeads(p, q) },
+    { kind: "Lead", path: "/sales/leads", label: "title", read: q => listLeads(p, q) },
     { kind: "Project", path: "/projects", label: "title", read: q => listProjects(p, q) },
-    { kind: "Opportunity", path: "/crm/opportunities", label: "title", read: q => listOpportunities(p, q) },
+    { kind: "Opportunity", path: "/sales/opportunities", label: "title", read: q => listOpportunities(p, q) },
     { kind: "Customer", path: "/customers", label: "display_name", read: q => listShared(p, "Organisation", q) },
     { kind: "Contact", path: "/people", label: "display_name", read: q => listShared(p, "Person", q) },
     { kind: "Site", path: "/sites", label: "display_name", read: q => listShared(p, "Site", q) },

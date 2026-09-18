@@ -8,7 +8,7 @@ import type { OperationReceipt } from "../platform/operations";
 import { ProductIcon } from "./product-icons";
 import { HeaderContent } from "./header-content";
 import { Board, Grid } from "./crm-worklist-board";
-import { ForecastWorklist, WorklistMenu, WorklistPanel, WorklistReview, WorklistViews } from "./crm-worklist-tools";
+import { ForecastWorklist, WorklistChoice, WorklistMenu, WorklistPanel, WorklistReview, WorklistViews } from "./crm-worklist-tools";
 import { needsAttention, worklistCsv } from "../crm/worklist-presentation";
 import { valueSummary } from "../crm/value-summary";
 import type { listOpportunities, worklistOptions, WorklistItem } from "../crm/worklist";
@@ -47,7 +47,7 @@ function ActivitySnapshot({ item, onClose }: { item: WorklistItem; onClose: () =
     </div>
     <footer className="crm-dialog-footer">
       <button className="secondary" onClick={() => ref.current?.close()}>Close</button>
-      <Link className="primary-link" href={active && item.next_action_id ? `/work/${item.next_action_id}` : `/crm/opportunities/${item.id}?section=timeline&activity=new`}>
+      <Link className="primary-link" href={active && item.next_action_id ? `/work/${item.next_action_id}` : `/sales/opportunities/${item.id}?section=timeline&activity=new`}>
         {active ? "Open full activity" : "Plan an activity"}
       </Link>
     </footer>
@@ -180,20 +180,21 @@ export function SalesWorklist() {
     const link = document.createElement("a"); link.href = url; link.download = "PPO-Deals-current-page.csv"; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
-  return <section className="crm-workspace crm-r38" aria-label="Sales worklist" data-density={density}>
+  return <section id="ppo-deals" data-module-layout="full-bleed" className="crm-workspace crm-r38" aria-label="Sales worklist" data-density={density}>
     <h1 className="sr-only">Sales worklist</h1>
     {!desktop && <HeaderContent slot="search">{scopedSearch}</HeaderContent>}
     <div className="crm-toolbar crm-toolbar-r38">
       <div className="crm-toolbar-views"><div className="crm-view-controls" role="group" aria-label="Opportunity presentation">
         {(["Board", "Grid", "Forecast"] as const).map(value => <button key={value} className="secondary" aria-pressed={view === value} onClick={() => setView(value)}><ProductIcon name={value === "Board" ? "board" : value === "Grid" ? "list" : "insights"}/><span>{value === "Grid" ? "List" : value}</span></button>)}
       </div><button className="secondary crm-archive-button" aria-pressed={view === "Archive"} onClick={() => setView("Archive")}><ProductIcon name="archive"/><span>Archive</span></button>
-      {ready && data.data?.can_create && <Link className="primary-link crm-new-opportunity" href="/crm/opportunities/new" aria-label="New opportunity"><ProductIcon name="plus"/>Opportunity</Link>}</div>
+      {ready && data.data?.can_create && <Link className="primary-link crm-new-opportunity" href="/sales/opportunities/new" aria-label="New opportunity"><ProductIcon name="plus"/>Opportunity</Link>}</div>
       {!isDenied && <div className="crm-toolbar-context">
-        <WorklistMenu label="Pipeline totals" text={<><span>{ready ? data.data!.items.length : "—"} <span className="crm-count-label">deals</span></span><ProductIcon name="info"/></>} disabled={!ready}>
+        <WorklistMenu label="Pipeline totals" text={<><span>{ready ? data.data!.items.length : "—"} <span className="crm-count-label">{data.data?.items.length === 1 ? "deal" : "deals"}</span></span><ProductIcon name="info"/></>} disabled={!ready}>
           <p>{data.data?.completeness === "Complete" ? "All matching results" : "Current result page only"} · {filters.outcome} · Current filters apply</p>
           <dl className="crm-total-grid"><div><dt>Total value</dt><dd>{totals?.formatted}</dd></div><div><dt>Deals</dt><dd>{data.data?.items.length}</dd></div><div><dt>Not estimated</dt><dd>{totals?.unknown}</dd></div><div><dt>Weighted value</dt><dd>Not configured</dd></div></dl><p>AUD excluding GST. Unknown values count as deals and do not contribute to monetary totals.</p>
         </WorklistMenu>
-        <fieldset className="crm-pipeline-picker" disabled={stageCommand.busy || stageCommand.uncertain}><SelectField name="pipeline" label="Pipeline" value={filters.pipeline_definition_id} onChange={value => { if (!value) return; setFilters(old => ({ ...old, pipeline_definition_id: value, stage_id: "", cursor: "" }), "push"); setSelected(""); setMoved({}); setUndoMove(null); setFeedback(""); }} options={data.data?.pipelines ?? []}/></fieldset>
+        <WorklistChoice label="Pipeline" icon="sales" className="crm-pipeline-picker" disabled={stageCommand.busy || stageCommand.uncertain} value={filters.pipeline_definition_id} onChange={value => { setFilters(old => ({ ...old, pipeline_definition_id: value, stage_id: "", cursor: "" }), "push"); setSelected(""); setMoved({}); setUndoMove(null); setFeedback(""); }} options={data.data?.pipelines.map(pipeline => ({id:pipeline.id,label:pipeline.display_name})) ?? []}/>
+
         <button className="secondary crm-icon-button" aria-label="Help" onClick={() => setReview("help")}><ProductIcon name="help"/></button>
         <button className="secondary crm-filter-toggle" aria-label="Filters and sort" aria-expanded={filtersOpen} aria-controls="crm-filter-panel" onClick={() => setFiltersOpen(true)}><ProductIcon name="filter"/><span>Filters{activeFilters.length ? ` ${activeFilters.length}` : ""}</span></button>
         <WorklistMenu label="Opportunity data options" icon="more" className="crm-icon-button"><button className="secondary crm-menu-choice" data-menu-close disabled={!ready} onClick={exportPage}><ProductIcon name="download"/>Export current page as CSV</button><button className="secondary crm-menu-choice" disabled>Import data · unavailable</button><button className="secondary crm-menu-choice" disabled>Clean up data · unavailable</button><button className="secondary crm-menu-choice" disabled>Restore deleted data · unavailable</button><p>Import, bulk cleanup and deletion recovery require app services that are not implemented. Existing saved records remain available through their current workflows.</p></WorklistMenu>
@@ -201,7 +202,7 @@ export function SalesWorklist() {
     </div>
     {!isDenied && <div className="crm-workbar" aria-label="Views, filters and review">
       <div className="crm-workbar-filters"><WorklistViews key={filters.pipeline_definition_id + (view === "Archive" ? "archive" : "open")} filters={filters} actor={p.actor_id} setFilters={value => setFilters(value, "push")}/><button className="secondary crm-add-condition" onClick={() => setFiltersOpen(true)}><ProductIcon name="filter"/>Add condition</button><div className="crm-condition-chips" aria-label="Active filter conditions">{activeFilters.map(key => <button className="secondary" key={key} title={filters[key]} aria-label={`Remove ${filterLabel(key)} condition`} onClick={() => change(key, "")}><span>{filterLabel(key)}{["q", "stage_id", "next_action"].includes(key) ? `: ${filters[key]}` : ""}</span><ProductIcon name="close"/></button>)}</div></div>
-      {desktop && !filtersOpen && scopedSearch}<div className="crm-workbar-review"><button className="secondary" disabled={!ready} onClick={() => setReview("changes")}><ProductIcon name="changes"/><span>What changed</span></button><button className="secondary" disabled={!ready || view === "Archive"} onClick={() => setReview("triage")}><ProductIcon name="pulse"/>Triage{data.data?.items.filter(needsAttention).length ? <small>{data.data.items.filter(needsAttention).length}</small> : null}</button>{!filtersOpen && <label className="crm-sort"><span>Sort by:</span><select aria-label="Sort" value={filters.sort} onChange={e => change("sort", e.target.value)}><option value="Reference">Default order</option><option value="Title">Title A–Z</option><option value="Newest">Newest first</option></select></label>}<WorklistMenu label="View options" icon="more" className="crm-icon-button"><button className="secondary crm-menu-choice" onClick={() => setDensity(old => old === "comfortable" ? "compact" : "comfortable")}>Density: {density}</button><button className="secondary crm-menu-choice" data-menu-close disabled={!ready} onClick={exportPage}>Export current page as CSV</button><Link className="crm-menu-choice" href="/work">My activities</Link><p>Collapse a Board stage with its header arrow. Resize List columns by dragging a divider, or focus it and use the arrow keys.</p></WorklistMenu></div>
+      <div className="crm-workbar-review"><button className="secondary" disabled={!ready} onClick={() => setReview("changes")}><ProductIcon name="changes"/><span>What changed</span></button><button className="secondary" disabled={!ready || view === "Archive"} onClick={() => setReview("triage")}><ProductIcon name="pulse"/>Triage{data.data?.items.filter(needsAttention).length ? <small>{data.data.items.filter(needsAttention).length}</small> : null}</button><WorklistChoice label="Sort" prefix="Sort by: " className="crm-sort" value={filters.sort} onChange={value => change("sort", value)} options={[{id:"Reference",label:"Default order"},{id:"Title",label:"Title A–Z"},{id:"Newest",label:"Newest first"}]}/><WorklistMenu label="View options" icon="more" className="crm-icon-button"><button className="secondary crm-menu-choice" onClick={() => setDensity(old => old === "comfortable" ? "compact" : "comfortable")}>Density: {density}</button><button className="secondary crm-menu-choice" data-menu-close disabled={!ready} onClick={exportPage}>Export current page as CSV</button><Link className="crm-menu-choice" href="/work">My activities</Link><Link className="crm-menu-choice" href="/sales/leads">Leads</Link><p>Collapse a Board stage through its header menu. Resize List columns by dragging a divider, or focus it and use the arrow keys.</p></WorklistMenu></div>
     </div>}
     {filtersOpen && !isDenied && <WorklistPanel title="Filter opportunities" drawer onClose={() => setFiltersOpen(false)}><section id="crm-filter-panel" className="crm-secondary-filters" aria-label="Opportunity filters"><div className="crm-filter-grid">
       {desktop && scopedSearch}

@@ -901,7 +901,7 @@ function LeadDetail({
             {lead.deal ? (
               <>
                 <strong>Converted to deal</strong>
-                <Link href={`/crm/opportunities/${lead.deal.id}`}>
+                <Link href={`/sales/opportunities/${lead.deal.id}`}>
                   Open deal · {lead.deal.display_number}
                 </Link>
               </>
@@ -945,7 +945,7 @@ function LeadDetail({
           </button>
         )}
         {lead.deal && (
-          <Link href={`/crm/opportunities/${lead.deal.id}`}>Open deal</Link>
+          <Link href={`/sales/opportunities/${lead.deal.id}`}>Open deal</Link>
         )}
       </footer>
     </>
@@ -989,7 +989,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
     else next.delete(key);
     next.delete("cursor");
     if (key === "view") next.delete("status");
-    router.replace(`/crm/leads?${next}`);
+    router.replace(`/sales/leads?${next}`);
   };
   useEffect(() => {
     if (search === (params.get("q") ?? "")) return;
@@ -999,7 +999,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
       else next.delete("q");
       next.delete("cursor");
       lastSentSearch.current = search;
-      router.replace(`/crm/leads?${next}`);
+      router.replace(`/sales/leads?${next}`);
     }, 200);
     return () => clearTimeout(timer);
   }, [search, params, query, router]);
@@ -1007,8 +1007,8 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
     setPending(false);
     if (mode) {
       setMode(null);
-      if (requestedCreate) router.replace(`/crm/leads${query ? `?${query}` : ""}`);
-    } else router.push(`/crm/leads?${query ? `${query}&` : ""}focus=${leadId}`);
+      if (requestedCreate) router.replace(`/sales/leads${query ? `?${query}` : ""}`);
+    } else router.push(`/sales/leads?${query ? `${query}&` : ""}focus=${leadId}`);
   };
   const accepted = (id: string) => {
     setPending(false);
@@ -1020,7 +1020,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
     );
     list.reload();
     detail.reload();
-    if (!leadId) router.push(`/crm/leads/${id}${query ? `?${query}` : ""}`);
+    if (!leadId) router.push(`/sales/leads/${id}${query ? `?${query}` : ""}`);
   };
   const focused = useRef(false);
   useEffect(() => {
@@ -1032,7 +1032,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
         ),
       ].find(
         (a) =>
-          a.href.includes(`/crm/leads/${id}`) && a.getClientRects().length > 0,
+          a.href.includes(`/sales/leads/${id}`) && a.getClientRects().length > 0,
       );
       if (target) {
         target.focus({ preventScroll: true });
@@ -1041,7 +1041,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
     }
   }, [leadId, list.data, params]);
   const openLead = (id: string) =>
-    `/crm/leads/${id}${query ? `?${query}` : ""}`;
+    `/sales/leads/${id}${query ? `?${query}` : ""}`;
   const items = list.data?.items ?? [],
     view = params.get("view") ?? "Active";
   const hasFilters = ["q", "owner_id", "status", "source"].some(
@@ -1049,17 +1049,17 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
   );
   const clearFilters = () =>
     router.replace(
-      `/crm/leads?${qs({ view, sort: params.get("sort") ?? "Newest" })}`,
+      `/sales/leads?${qs({ view, sort: params.get("sort") ?? "Newest" })}`,
     );
   const firstPage = () => {
     const next = new URLSearchParams(query);
     next.delete("cursor");
-    router.push(`/crm/leads?${next}`);
+    router.push(`/sales/leads?${next}`);
   };
   const nextPage = () => {
     const next = new URLSearchParams(query);
     next.set("cursor", list.data!.next_cursor!);
-    router.push(`/crm/leads?${next}`);
+    router.push(`/sales/leads?${next}`);
   };
   const filterControls = (
     <>
@@ -1106,7 +1106,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
   return (
     <section className="leads-workspace">
       <header className="lead-mobile-header">
-        <Link href="/crm/opportunities" aria-label="Back to deals">
+        <Link href="/sales/opportunities" aria-label="Back to deals">
           <Icon name="back" />
         </Link>
         <button
@@ -1319,7 +1319,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
                 onClick={() => {
                   const next = new URLSearchParams(query);
                   next.set("cursor", list.data!.next_cursor!);
-                  router.push(`/crm/leads?${next}`);
+                  router.push(`/sales/leads?${next}`);
                 }}
               >
                 Next page

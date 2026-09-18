@@ -158,7 +158,7 @@ async function exerciseBoth() {
   );
   const result = await shellSearch(p, { q: lead.title });
   for (const [id, path] of [
-    [lead.id, "/crm/leads"],
+    [lead.id, "/sales/leads"],
     [project.id, "/projects"],
   ])
     assert.ok(result.items.some((r) => r.href === `${path}/${id}`));
@@ -172,7 +172,7 @@ async function exerciseBoth() {
     assert.ok(
       !hidden.items.some(
         (r) =>
-          r.href === `/crm/leads/${lead.id}` ||
+          r.href === `/sales/leads/${lead.id}` ||
           r.href === `/projects/${project.id}`,
       ),
     );
