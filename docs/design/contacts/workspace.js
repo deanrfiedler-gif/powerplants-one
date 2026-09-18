@@ -627,7 +627,10 @@
     const chooser = el('div', { class: 'row', style: 'margin-bottom:14px' }, orgs.map(o =>
       el('button', {
         type: 'button', class: 'small', 'aria-pressed': o.id === ui.selectedOrg ? 'true' : 'false',
-        style: o.id === ui.selectedOrg ? 'border-color:var(--navy);background:var(--sel-surface)' : null,
+        style: o.id === ui.selectedOrg
+          ? 'background:var(--ss22-panel);border-color:var(--ss22-navy);'
+            + 'box-shadow:0 0 0 2px var(--ss22-halo),var(--ss22-lift);color:var(--ss22-navy)'
+          : null,
         onclick: () => { ui.selectedOrg = o.id; render(); }, text: o.name
       })));
 

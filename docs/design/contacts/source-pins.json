@@ -1,6 +1,6 @@
 {
   "sourceCommit": "01b9824a63e468b393265b159fa681f83f6e668c",
-  "themeEdition": "r20 shared token core, with the r22 selection and menu vocabulary as it appears in the merged AD-03 source. The r22 board file is not in the repository at this commit; it arrives with PR #239, which has not merged.",
+  "themeEdition": "r20 shared token core plus theme r22’s selection family (--ss22-*), adopted from the r22 board itself after PR #239 merged. r22 measured against r20 at this commit: 0 tokens removed, 0 values changed, 24 added, all --nca-* / --ss22-* component-local aliases over existing brand tokens.",
   "assetPins": {
     "fonts.css": "57b4aafb71296b18d80408cb10aa972c87f5185deafd748c7fdcfb33e2bd4bef",
     "icons.json": "cf868d77b2c07f14f07985afd218649ba4362067ff2d55ef625c56bc2df1fcae"
@@ -21,5 +21,8 @@
     "src/scheduling/planner.ts": "ff302dd3b520fbfa2b2b1bdad9d03611275a2a13be38639b1095bacc576af16c",
     "src/reports/service.ts": "ef84d39ef647d4447b31f5e85806d1f2cbe188943b48826e09d68fd1f3362e78",
     "db/seed.sql": "3a5460878e57f6d803affee8ff10a09f1888d2167a78755c9af12a09769c5b81"
-  }
+  },
+  "themeFile": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+  "themeSHA256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+  "mergedMain": "be219114b445624c49fd69772f3a8b435fd1ce07"
 }

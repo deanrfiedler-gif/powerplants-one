@@ -641,12 +641,20 @@ await check('Cancelling a changed form asks before discarding', async () => {
 });
 
 await check('The skip link reaches the workspace content', async () => {
-  await page.keyboard.press('Home');
+  /* Clear any fragment first. If the hash is already #content, activating the link is
+     not a navigation and focus would legitimately stay put, which made this check
+     depend on what ran before it. */
+  await page.evaluate(() => {
+    history.replaceState(null, '', location.pathname);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  });
   await page.locator('.skip').focus();
   assert.equal(await page.locator('.skip').evaluate(e => e === document.activeElement), true);
   await page.keyboard.press('Enter');
-  assert.equal(await page.evaluate(() => document.location.hash), '#content');
+  await page.waitForFunction(() => document.location.hash === '#content', null, {timeout: 6000});
   assert.equal(await page.evaluate(() => document.activeElement.id), 'content');
+  assert.equal(await page.evaluate(() => document.activeElement.tagName), 'MAIN');
 });
 
 /* ------------------------------------------------------------------ viewports */

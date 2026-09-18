@@ -69,6 +69,15 @@ def main() -> int:
         raise SystemExit("Pinned contract sources changed; re-read them before rebuilding:\n  "
                          + "\n  ".join(drift))
 
+    # The theme board is pinned by content once it exists. Before PR #239 merged there was
+    # no r22 board in the repository; the pin is now checkable and is checked.
+    board = ROOT / pins["themeFile"]
+    if not board.exists():
+        raise SystemExit(f"Pinned theme board missing: {pins['themeFile']}")
+    board_sha = sha(board.read_bytes())
+    if board_sha != pins["themeSHA256"]:
+        raise SystemExit(f"Theme board changed: expected {pins['themeSHA256']}, got {board_sha}")
+
     icons = json.loads(text(SOURCE / "icons.json"))
     html = text(SOURCE / "template.html")
 
@@ -114,6 +123,8 @@ def main() -> int:
         "buildDate": "2026-09-18",
         "sourceCommit": pins["sourceCommit"],
         "themeEdition": pins["themeEdition"],
+        "themeFile": pins["themeFile"],
+        "themeSHA256": pins["themeSHA256"],
         "htmlSHA256": sha(data),
         "htmlBytes": len(data),
         "sources": {name: sha(text(SOURCE / name).encode("utf-8"))

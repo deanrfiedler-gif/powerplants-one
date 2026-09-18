@@ -3,18 +3,20 @@
   "revision": "r01",
   "buildDate": "2026-09-18",
   "sourceCommit": "01b9824a63e468b393265b159fa681f83f6e668c",
-  "themeEdition": "r20 shared token core, with the r22 selection and menu vocabulary as it appears in the merged AD-03 source. The r22 board file is not in the repository at this commit; it arrives with PR #239, which has not merged.",
-  "htmlSHA256": "e625f700f16e7945f699ac2df7cb46499f070d4341c1b0d2b8ca0206da18a8db",
-  "htmlBytes": 250170,
+  "themeEdition": "r20 shared token core plus theme r22’s selection family (--ss22-*), adopted from the r22 board itself after PR #239 merged. r22 measured against r20 at this commit: 0 tokens removed, 0 values changed, 24 added, all --nca-* / --ss22-* component-local aliases over existing brand tokens.",
+  "themeFile": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+  "themeSHA256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+  "htmlSHA256": "6f6acf8bfc89cb350312cffac934dda6ab7b46a6bf62adcdfa79ec16f5c977c9",
+  "htmlBytes": 252234,
   "sources": {
     "fixtures.json": "f100464bd1aebed27d050a797ada23ff035152165289e7b92b31bd2fe912edcf",
     "fonts.css": "57b4aafb71296b18d80408cb10aa972c87f5185deafd748c7fdcfb33e2bd4bef",
     "icons.json": "cf868d77b2c07f14f07985afd218649ba4362067ff2d55ef625c56bc2df1fcae",
     "model.js": "274a1d2d99b5fc0b25ba5435dd2525ead772e048855908fd85da0b1c4c987de9",
-    "source-pins.json": "87acef848fbeb6a319f0b14358278b32005068fdf80ef54ad96ed254d409af90",
+    "source-pins.json": "9a640faf73eb905e04ec643eeee46e2174ce3a8516c3432d7192e95488061661",
     "template.html": "82af969ebdd5fa714908c88a7a4b38d8427d8da05061f0a38fa7b3723808719d",
-    "workspace.css": "d6796c17cf38d17265fd65c7f6834d004b3761d79f87f7faa7ee6159f9ee6736",
-    "workspace.js": "d9bde6adcd1a8ec4801a4eb43517f159de7d5171bd255ba6f1986e9bfab52b64"
+    "workspace.css": "052618e9a6b080c01a75efc0459a9e335528ab304b9361f4ad8588b477b01f9b",
+    "workspace.js": "7bbaa23464d7b6443d8168cc88c45bb6efd15a89c2af5c0089121bd14e8df229"
   },
   "contractPins": {
     "db/migrations/0002-shared-foundation.sql": "9f817da163dc168b61fe363665f1b1bc3308e75ddb44aa71fac96e99a1225bdb",

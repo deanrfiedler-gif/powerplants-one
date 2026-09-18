@@ -4,7 +4,7 @@ title: Contacts, Stakeholders and Relationships design and receiving handover
 revision: r01
 date: 2026-09-18
 owner: Dean Fiedler
-status: Standalone CS-02 / CS-03 design delivered against the build plan; owner acceptance, the open role-vocabulary question, the theme-edition departure and application integration remain separate
+status: Standalone CS-02 / CS-03 design delivered against the build plan; owner acceptance, the open role-vocabulary question and application integration remain separate
 source_commit: 01b9824a63e468b393265b159fa681f83f6e668c
 ---
 
@@ -34,7 +34,7 @@ Deliver CS-02 and CS-03 as one standalone design package under the `PPO-CS02-` r
 
 | # | Plan decision | Outcome |
 |---|---|---|
-| 1 | Theme edition | **Departed. Needs Dean.** See below |
+| 1 | Theme edition | **Followed, after a departure that closed during the build.** See below |
 | 2 | One package covering CS-02 and CS-03, stem `PPO-CS02-` | Followed |
 | 3 | Simulate corrections; record a receiving contract | Followed |
 | 4 | Three-value authority basis | Followed |
@@ -44,23 +44,21 @@ Deliver CS-02 and CS-03 as one standalone design package under the `PPO-CS02-` r
 | 8 | Branch after #239, or from `01b9824a` if it stalls | **Fallback taken.** #239 had not merged; the branch is based on `01b9824a` |
 | 9 | Deterministic Python builder | Followed |
 
-### The theme-edition departure
+### The theme edition
 
-Plan decision 1 recorded r22 as measured, strictly additive over r20, and introduced by PR #239, and instructed this module to adopt r22's selection family and menu patterns. **#239 has not merged**, and at the base commit:
+When this branch was taken, **#239 had not merged** and the r22 board was not in the repository: the theme-board directory ended at r20, and the merged AD-03 package pinned an r22 file that did not exist, so its own build check silently skipped that assertion. The design was built on the shared token core and the departure was recorded as needing Dean.
 
-- the theme board directory contains boards up to **r20**; there is no r22 file;
-- the merged AD-03 package pins `powerplants-one-theme-style-board-r22.html` at SHA-256 `a305361c…` but that file is absent, so AD-03's own build check skips the assertion;
-- AD-03's stylesheet carries **no `--nca-*` or `--ss22-*` tokens** — the 24 component-local aliases decision 1 describes are not observable here.
+**#239 merged during the build.** `origin/main` `be219114` was merged into this branch, the r22 board arrived, and decision 1's claim was measured rather than taken on trust: the board's SHA-256 is `a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0`, matching the plan and the AD-03 pin; r22 removes no token, changes no token value, and adds exactly 24, every one an `--nca-*` or `--ss22-*` component-local alias. **Decision 1 is correct in every particular.**
 
-This design therefore builds on the **shared token core**, which is present and identical in both editions, and adopts the r22 **selection and menu vocabulary as it appears in the merged AD-03 source** — the selected-row surface with a green inset marker, the tab underline, the choice-card treatment — expressed as a local `--sel-*` family aliasing existing brand tokens and introducing no new colour. Nothing is claimed about the r22 board, which was not seen.
+The module therefore adopts the r22 selection family properly: the whole `--ss22-*` family is declared on the scope container with the board's own values, the selected directory row uses r22's **ring** treatment, the view tabs its **tabs** treatment, the attention queues ring, and the filter group **recessed**. `--line-strong`, `--text-secondary`, `--control-border` and `--focus` are reused by name from the board rather than invented. A green marker is retained on the selected row and tab so selection is never carried by colour alone, and every `--ss22-*` value either aliases a token already declared here or is a shadow built from the brand navy, so the family adds no new colour.
 
-**Dean's decision.** If r22 adoption matters in name, rebase this package after #239 merges and revise the reused-components declaration. If the shared core is what matters, nothing changes. Either way the estimate is unaffected.
+Two model-check groups assert all of this by parsing both boards directly, and the builder pins the r22 board by content and refuses to run if it changes. **No decision is left open here.**
 
 ## Status of the build plan's open questions
 
 | # | Question | Resolution |
 |---|---|---|
-| 1 | Theme edition | **Re-opened.** See above |
+| 1 | Theme edition | **Closed, and now measured rather than asserted.** See above |
 | 2 | Communication preference | Closed by contract. `contact_preference` is rendered as the free text it is, with no consent semantics; the data dictionary states *"No automatic marketing consent inferred"* and the API contract *"no inferred consent"*. A structured preference stays Proposed |
 | 3 | Role vocabulary | **Open — needs Dean.** No vocabulary exists anywhere in the repository; the seed carries only `SYN site contact` and `SYN supplier liaison`. `role_label` stays free text, fixture roles are plausible and explicitly fictional, and a responsibility taxonomy stays Proposed |
 | 4 | "No contact available" reason | Closed by precedent. `opportunities.contact_unknown_reason` and `tickets.requester_description` are both free text; r01 matches them |
@@ -105,6 +103,6 @@ None of this is proposed for adoption here. It is recorded so the design is not 
 
 ## Verification
 
-98 model groups and 57 native browser groups passed, with zero page, console or request errors, zero horizontal overflow at the four declared viewports, no phone target under 44 px, and keyboard-only completion of a proposal and a duplicate resolution. Five defects were found by the checks and fixed before issue; they are listed in report §10.1. Full detail in the [evidence record](../testing/evidence/contacts-r01/README.md).
+100 model groups and 57 native browser groups passed, with zero page, console or request errors, zero horizontal overflow at the four declared viewports, no phone target under 44 px, and keyboard-only completion of a proposal and a duplicate resolution. Five defects were found by the checks and fixed before issue; they are listed in report §10.1. Full detail in the [evidence record](../testing/evidence/contacts-r01/README.md).
 
 **Not verified:** native visual review by Dean in a browser; CI execution of `contacts-design.yml`, because this branch has not been pushed; owner acceptance; application integration; production readiness.

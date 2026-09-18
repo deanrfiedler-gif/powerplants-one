@@ -1,12 +1,12 @@
 {
   "scope": "CS-02 / CS-03",
   "revision": "r01",
-  "html_sha256": "e625f700f16e7945f699ac2df7cb46499f070d4341c1b0d2b8ca0206da18a8db",
-  "html_bytes": 250170,
+  "html_sha256": "6f6acf8bfc89cb350312cffac934dda6ab7b46a6bf62adcdfa79ec16f5c977c9",
+  "html_bytes": 252234,
   "fixture_sha256": "9cbb53da18964a4691921f32122515d4ff6c6810375f612b983d889c3dab32e4",
   "fixture_manifest_sha256": "f100464bd1aebed27d050a797ada23ff035152165289e7b92b31bd2fe912edcf",
   "source_commit": "01b9824a63e468b393265b159fa681f83f6e668c",
-  "groups": 98,
+  "groups": 100,
   "results": [
     {
       "name": "Person projection equals exactly the fields src/shared/reads.ts returns",
@@ -366,6 +366,14 @@
     },
     {
       "name": "Tokens are declared on the scope container, not on :root, reusing the shared core",
+      "result": "Passed"
+    },
+    {
+      "name": "Theme r22 is strictly additive over r20, measured rather than asserted",
+      "result": "Passed"
+    },
+    {
+      "name": "The r22 selection family is declared with the board’s own values",
       "result": "Passed"
     },
     {

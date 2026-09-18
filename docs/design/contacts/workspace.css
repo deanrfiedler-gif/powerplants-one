@@ -1,10 +1,15 @@
 html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
-/* r20 token core, reused from the My Work r01 / AD-01 r01 source without renaming.
+/* r20 token core, reused from the My Work r01 / AD-01 r01 source without renaming,
+   plus --line-strong, --text-secondary, --control-border and --focus reused by name
+   from the theme board rather than invented here.
    The three known divergences (--surface-hover, --line-soft, --success-tint) are not
-   resolved here; this module adopts the Field Technicians r05 side and records it.
-   The --sel-* family carries the r22 selection vocabulary as it appears in the merged
-   AD-03 source; it aliases existing brand tokens and introduces no new colour. */
-#ppo-contacts{--navy:#242a37;--green:#62bb46;--ink:#242a37;--paper:#f5f6f8;--surface:#f6f7f9;--line:#e1e5eb;--muted:#596779;--link:#355b80;--success:#416d33;--success-bg:#edf5e9;--warning:#80530e;--warning-bg:#fff2d9;--danger:#993b2a;--danger-bg:#fff1ed;--info:#346580;--info-bg:#e9f2f8;--surface-hover:#f0f2f5;--line-soft:#e9ecf1;--success-tint:#f3f7f1;--sel-surface:#f4f7f2;--sel-marker:var(--green);--sel-line:#d4e3cb;--support:292px;--panel:448px;font:14px/1.5 PPOBoardRoboto,Roboto,Verdana,sans-serif;color:var(--ink);min-height:100dvh;isolation:isolate;-webkit-text-size-adjust:100%}
+   resolved by this package. It adopts the Field Technicians r05 side, which is also the
+   side the r22 board itself carries: #f0f2f5 / #e9ecf1 / #f3f7f1.
+   The --ss22-* family is theme r22's selection vocabulary, declared here with the board's
+   own values (SHA-256 a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0).
+   Every one of them aliases an existing brand token or a shadow built from the brand
+   navy, so the family adds no new colour. */
+#ppo-contacts{--navy:#242a37;--green:#62bb46;--ink:#242a37;--paper:#f5f6f8;--surface:#f6f7f9;--line:#e1e5eb;--muted:#596779;--link:#355b80;--success:#416d33;--success-bg:#edf5e9;--warning:#80530e;--warning-bg:#fff2d9;--danger:#993b2a;--danger-bg:#fff1ed;--info:#346580;--info-bg:#e9f2f8;--surface-hover:#f0f2f5;--line-soft:#e9ecf1;--success-tint:#f3f7f1;--line-strong:#dce2e9;--text-secondary:#596779;--control-border:#7d8794;--focus:#365d8b;--ss22-navy:var(--navy);--ss22-text:var(--ink);--ss22-muted:var(--text-secondary);--ss22-track:var(--surface-hover);--ss22-panel:#fff;--ss22-border:var(--line-strong);--ss22-focus:var(--focus);--ss22-halo:rgba(36,42,55,.12);--ss22-lift:0 5px 14px rgba(36,42,55,.10);--ss22-thumb:0 1px 3px rgba(36,42,55,.14);--ss22-well:inset 0 1px 3px rgba(36,42,55,.14);--ss22-radius:8px;--sel-line:#d4e3cb;--support:292px;--panel:448px;font:14px/1.5 PPOBoardRoboto,Roboto,Verdana,sans-serif;color:var(--ink);min-height:100dvh;isolation:isolate;-webkit-text-size-adjust:100%}
 #ppo-contacts,#ppo-contacts *{box-sizing:border-box}
 #ppo-contacts [hidden]{display:none!important}
 #ppo-contacts :is(h1,h2,h3,h4,p,dl,dd,ul,ol){margin:0;letter-spacing:normal}
@@ -27,11 +32,11 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
 #ppo-contacts .small{font-size:12px;min-height:34px;padding:6px 9px}
 #ppo-contacts .icon-button{width:40px;padding:8px;flex:none}
 #ppo-contacts .icon{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
-#ppo-contacts :focus-visible{outline:2px solid #365d8b;outline-offset:3px}
+#ppo-contacts :focus-visible{outline:2px solid var(--ss22-focus);outline-offset:3px}
 #ppo-contacts .skip{position:absolute;left:12px;top:12px;z-index:600;background:#fff;padding:12px;clip-path:inset(50%);width:1px;height:1px;overflow:hidden}
 #ppo-contacts .skip:focus{clip-path:none;width:auto;height:auto}
 #ppo-contacts .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-#ppo-contacts :is(input,select,textarea){width:100%;min-width:0;min-height:44px;padding:10px 11px;border:1px solid #7d8794;border-radius:6px;background:#fff}
+#ppo-contacts :is(input,select,textarea){width:100%;min-width:0;min-height:44px;padding:10px 11px;border:1px solid var(--control-border);border-radius:6px;background:#fff}
 #ppo-contacts textarea{min-height:96px;resize:vertical}
 #ppo-contacts input[type=checkbox],#ppo-contacts input[type=radio]{width:18px;height:18px;min-height:18px;accent-color:var(--navy)}
 #ppo-contacts label{display:block;font-size:13px;font-weight:500}
@@ -55,12 +60,18 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
 #ppo-contacts .tabs{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line);margin-top:18px;padding:0 4px}
 #ppo-contacts .tabs button{flex:none;background:transparent;border:1px solid transparent;border-bottom:0;border-radius:7px 7px 0 0;font-size:13px;color:var(--muted);min-height:46px;position:relative;flex-direction:column;gap:2px;align-items:flex-start}
 #ppo-contacts .tabs button .tab-kicker{font-size:10px;letter-spacing:.8px;text-transform:uppercase}
-#ppo-contacts .tabs button[aria-selected=true]{background:#fff;border-color:var(--line);color:var(--ink);font-weight:500;box-shadow:0 3px 0 #fff}
-#ppo-contacts .tabs button[aria-selected=true]:before{content:'';position:absolute;top:0;left:12px;right:12px;height:3px;background:var(--sel-marker);border-radius:0 0 3px 3px}
+/* r22 selection family, "tabs" treatment: the selected tab becomes the panel, its
+   bottom border dissolving into it, with a green top marker so selection is not carried
+   by colour alone. */
+#ppo-contacts .tabs button{border-radius:var(--ss22-radius) var(--ss22-radius) 0 0;border-bottom-color:var(--ss22-border)}
+#ppo-contacts .tabs button[aria-selected=true]{background:var(--ss22-panel);border-color:var(--ss22-border);border-bottom-color:var(--ss22-panel);color:var(--ss22-navy);font-weight:500;box-shadow:0 3px 0 var(--ss22-panel)}
+#ppo-contacts .tabs button[aria-selected=true]:before{content:'';position:absolute;top:0;left:12px;right:12px;height:3px;background:var(--green);border-radius:0 0 3px 3px}
 #ppo-contacts #recovery:empty{display:none}
 #ppo-contacts #recovery{margin-top:14px}
 #ppo-contacts .toolbar:empty{display:none}
 #ppo-contacts .toolbar{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-top:16px}
+/* r22 "recessed" treatment for the filter and sort group. */
+#ppo-contacts .toolbar .field button[aria-pressed=true]{background:var(--ss22-track);border-color:var(--control-border);box-shadow:var(--ss22-well);color:var(--ss22-navy)}
 #ppo-contacts .toolbar .field{min-width:150px}
 #ppo-contacts .toolbar .grow{flex:1;min-width:210px}
 #ppo-contacts main{margin-top:18px;min-width:0;min-height:0}
@@ -79,7 +90,7 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
 #ppo-contacts .queue{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:12px 13px;border:1px solid var(--line);border-radius:8px;background:#fff;min-height:74px;text-align:left}
 #ppo-contacts .queue strong{font-size:22px;font-weight:500;line-height:1.1}
 #ppo-contacts .queue span{font-size:11px;color:var(--muted);line-height:1.35}
-#ppo-contacts .queue[aria-pressed=true]{border-color:var(--navy);box-shadow:0 0 0 1px var(--navy)}
+#ppo-contacts .queue[aria-pressed=true]{background:var(--ss22-panel);border-color:var(--ss22-navy);box-shadow:0 0 0 2px var(--ss22-halo),var(--ss22-lift);color:var(--ss22-navy)}
 #ppo-contacts .queue.attention strong{color:var(--warning)}
 #ppo-contacts .queue.restricted strong{color:var(--info)}
 
@@ -90,8 +101,11 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
 #ppo-contacts tbody td{border-bottom:1px solid var(--line-soft);padding:11px 12px;vertical-align:top}
 #ppo-contacts tbody tr:last-child td{border-bottom:0}
 #ppo-contacts tbody tr:hover td{background:var(--surface-hover)}
-#ppo-contacts tbody tr[aria-selected=true] td{background:var(--sel-surface)}
-#ppo-contacts tbody tr[aria-selected=true] td:first-child{box-shadow:inset 3px 0 var(--sel-marker)}
+/* r22 selection family, "ring" treatment: white plate, navy boundary, halo and lift.
+   The green inset marker on the first cell keeps selection legible without colour alone. */
+#ppo-contacts tbody tr[aria-selected=true] td{background:var(--ss22-panel);border-top:1px solid var(--ss22-navy);border-bottom:1px solid var(--ss22-navy);box-shadow:0 0 0 2px var(--ss22-halo)}
+#ppo-contacts tbody tr[aria-selected=true] td:first-child{box-shadow:inset 3px 0 var(--green),0 0 0 2px var(--ss22-halo);border-left:1px solid var(--ss22-navy)}
+#ppo-contacts tbody tr[aria-selected=true] td:last-child{border-right:1px solid var(--ss22-navy)}
 #ppo-contacts th.sortable button{border:0;background:none;padding:0;min-height:26px;font:inherit;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);gap:4px}
 #ppo-contacts th.fixed{color:var(--muted)}
 #ppo-contacts th.fixed em{font-style:normal;text-transform:none;letter-spacing:0;font-size:10px;display:block;font-weight:400;opacity:.85}

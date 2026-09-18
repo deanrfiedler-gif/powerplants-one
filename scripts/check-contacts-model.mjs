@@ -920,12 +920,84 @@ test('Tokens are declared on the scope container, not on :root, reusing the shar
   assert(names.includes('surface-hover') && names.includes('line-soft') && names.includes('success-tint'));
 });
 
+test('Theme r22 is strictly additive over r20, measured rather than asserted', () => {
+  const pins = JSON.parse(read(path.join(src, 'source-pins.json')));
+  const board = path.join(root, pins.themeFile);
+  assert(fs.existsSync(board), 'the pinned r22 board must exist');
+  assert.equal(shaBytes(board), pins.themeSHA256);
+  assert.equal(pins.themeSHA256,
+    'a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0');
+  const declarations = file => {
+    const out = new Map();
+    for (const m of read(file).matchAll(/(--[A-Za-z0-9_-]+)\s*:\s*([^;}\n]+)/g)) {
+      const name = m[1], value = m[2].trim();
+      if (!out.has(name)) out.set(name, new Set());
+      out.get(name).add(value);
+    }
+    return out;
+  };
+  const r20 = declarations(path.join(root,
+    'docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r20.html'));
+  const r22 = declarations(board);
+  const removed = [...r20.keys()].filter(n => !r22.has(n));
+  const added = [...r22.keys()].filter(n => !r20.has(n));
+  const changed = [...r20.keys()].filter(n => r22.has(n)
+    && [...r20.get(n)].sort().join('|') !== [...r22.get(n)].sort().join('|'));
+  assert.deepEqual(removed, [], 'r22 removes no token');
+  assert.deepEqual(changed, [], 'r22 changes no token value');
+  assert.equal(added.length, 24, 'r22 adds exactly 24 tokens');
+  assert(added.every(n => n.startsWith('--nca-') || n.startsWith('--ss22-')),
+    'every added token is a component-local alias: ' + added.join(', '));
+});
+
+test('The r22 selection family is declared with the board’s own values', () => {
+  const board = read(path.join(root,
+    'docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html'));
+  const boardBlock = board.match(/#selection-states \{([^}]*--ss22-[^}]*)\}/)[1];
+  const boardTokens = new Map([...boardBlock.matchAll(/(--ss22-[a-z]+)\s*:\s*([^;}]+)/g)]
+    .map(m => [m[1], m[2].trim()]));
+  const ours = css.match(/#ppo-contacts\{([^}]*)\}/)[1];
+  const ourTokens = new Map([...ours.matchAll(/(--ss22-[a-z]+)\s*:\s*([^;}]+)/g)]
+    .map(m => [m[1], m[2].trim()]));
+  assert.equal(ourTokens.size, boardTokens.size, 'the whole family is adopted, not part of it');
+  for (const [name, value] of boardTokens)
+    assert.equal(ourTokens.get(name), value, name + ' must carry the board value');
+  /* Each alias resolves to a token this module already declares, or to a shadow built
+     from the brand navy, so the family introduces no new colour. */
+  for (const [name, value] of ourTokens) {
+    if (value.startsWith('var(')) {
+      const target = value.slice(4, -1);
+      assert(ours.includes(target + ':'), name + ' aliases an undeclared token ' + target);
+    } else {
+      /* Permitted: white, a radius, or a shadow/tint whose only colour is the brand
+         navy #242a37 expressed as rgba(36,42,55,…). Anything else is a new colour. */
+      const literal = value === '#fff' || /^\d+px$/.test(value);
+      const navyOnly = /rgba\(/.test(value)
+        && [...value.matchAll(/rgba\(([^)]*)\)/g)].every(m => /^36,42,55,\./.test(m[1].trim()))
+        && !/#(?!fff\b)[0-9a-f]{3,8}\b/i.test(value);
+      assert(literal || navyOnly,
+        name + ' introduces a value that is not brand navy, white or a radius: ' + value);
+    }
+  }
+  /* The selected directory row and the view tabs use the family, not an invention. */
+  assert(css.includes('tbody tr[aria-selected=true] td{background:var(--ss22-panel)'));
+  assert(css.includes('--ss22-halo'));
+  assert(css.includes('.tabs button[aria-selected=true]{background:var(--ss22-panel)'));
+});
+
 test('The three known token divergences adopt one side and say which', () => {
   const block = css.match(/#ppo-contacts\{([^}]*)\}/)[1];
   assert(block.includes('--surface-hover:#f0f2f5'));
   assert(block.includes('--line-soft:#e9ecf1'));
   assert(block.includes('--success-tint:#f3f7f1'));
   assert(css.includes('Field Technicians r05 side'));
+  /* The r22 board carries the same three values, so this package's choice is the one
+     the current theme already makes. That is measured here, not asserted in prose. */
+  const board = read(path.join(root,
+    'docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html'));
+  for (const [name, value] of [['--surface-hover', '#f0f2f5'], ['--line-soft', '#e9ecf1'],
+    ['--success-tint', '#f3f7f1']])
+    assert(board.includes(name + ':' + value), name + ' in the r22 board');
 });
 
 test('Embedded fonts are byte-identical to the declared shared source', () => {

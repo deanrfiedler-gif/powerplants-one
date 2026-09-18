@@ -15,11 +15,11 @@ source_commit: 01b9824a63e468b393265b159fa681f83f6e668c
 | Field | Value |
 |---|---|
 | File | [`PPO-Contacts-Stakeholders-and-Relationships-r01.html`](PPO-Contacts-Stakeholders-and-Relationships-r01.html) |
-| SHA-256 | `e625f700f16e7945f699ac2df7cb46499f070d4341c1b0d2b8ca0206da18a8db` |
-| Bytes | 250,170 |
+| SHA-256 | `6f6acf8bfc89cb350312cffac934dda6ab7b46a6bf62adcdfa79ec16f5c977c9` |
+| Bytes | 252,234 |
 | Predecessor | **None.** First issue. CS-02 is register state D — a refinement of the live `/people` and `/people/[id]` surfaces — but no standalone design file preceded this one, so there is no predecessor SHA-256 to record |
 | Scope container | `#ppo-contacts` |
-| Base commit | `01b9824a63e468b393265b159fa681f83f6e668c` |
+| Base commit | `01b9824a63e468b393265b159fa681f83f6e668c`, with `origin/main` `be219114` merged in after PR #239 landed |
 | Fixture manifest SHA-256 | `9cbb53da18964a4691921f32122515d4ff6c6810375f612b983d889c3dab32e4` |
 
 ## What changed
@@ -39,7 +39,7 @@ First issue. The package introduces, against page-register entries CS-02 and CS-
 | Check | Result |
 |---|---|
 | `scripts/build-contacts-design.py --check` | Verified byte for byte |
-| `scripts/check-contacts-model.mjs` | 98 groups, 98 passed, 0 failed |
+| `scripts/check-contacts-model.mjs` | 100 groups, 100 passed, 0 failed |
 | `scripts/check-contacts-browser.mjs` | 57 groups, 57 passed, 0 failed, pinned Chrome channel |
 | Page / console / request errors | Zero |
 | Horizontal overflow, four declared viewports | 0 px, every view |
@@ -52,7 +52,7 @@ Full detail, including the five defects the checks found and the fixes applied, 
 
 ## What was deliberately left unchanged
 
-- **The three known token divergences.** `--surface-hover`, `--line-soft` and `--success-tint` are not resolved by this package. It adopts the Field Technicians r05 side and records that in the stylesheet.
+- **The three known token divergences.** `--surface-hover`, `--line-soft` and `--success-tint` are not resolved by this package. It adopts the Field Technicians r05 side, which is also the side the r22 board itself carries; the stylesheet records that and the model check measures it.
 - **`docs/standards/ui-baselines.json`.** This module is a standalone design, not an application integration, so it triggers no registration and none was made.
 - **Every existing file under `docs/reference/ui/`** other than `README.md`. Issued bytes are untouched.
 - **Everything under `src/` and `db/`.** No application, API, migration, seed, permission or deployment change.
@@ -70,9 +70,8 @@ Two statements in `docs/delivery/contacts-stakeholders-build-plan.md` did not su
 ## Decisions the owner still has to make
 
 1. **Role vocabulary.** Build-plan open question 3, still open. `role_label` stays free text; fixture roles are fictional. If a real Powerplants vocabulary exists it belongs in a later revision.
-2. **The theme edition.** Build-plan decision 1 treated this as closed on the basis that PR #239 had introduced theme r22. **#239 has not merged**, and at this base commit there is no r22 board in the repository and no `--nca-*` / `--ss22-*` tokens in the merged r22-derived package. This design builds on the shared token core and adopts the r22 selection vocabulary as it appears in the merged AD-03 source. If r22 adoption matters in name, rebase after #239 merges and revise the declaration. See report §9.
-3. **Whether any of the seven proposed extensions should be adopted**, each costed in the [decision record](../../../decisions/contacts-stakeholders-design.md).
-4. **Native visual review.** Not claimable from the build environment.
+2. **Whether any of the seven proposed extensions should be adopted**, each costed in the [decision record](../../../decisions/contacts-stakeholders-design.md).
+3. **Native visual review.** Not claimable from the build environment.
 
 ## What this record does not establish
 

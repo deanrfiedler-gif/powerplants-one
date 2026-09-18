@@ -10,11 +10,11 @@ source_commit: 01b9824a63e468b393265b159fa681f83f6e668c
 
 # CS-02 / CS-03 — Contacts, Stakeholders & Relationships design report
 
-**Design HTML:** [`PPO-Contacts-Stakeholders-and-Relationships-r01.html`](PPO-Contacts-Stakeholders-and-Relationships-r01.html) · SHA-256 `e625f700f16e7945f699ac2df7cb46499f070d4341c1b0d2b8ca0206da18a8db` · 250,170 bytes, one self-contained file with no external request.
+**Design HTML:** [`PPO-Contacts-Stakeholders-and-Relationships-r01.html`](PPO-Contacts-Stakeholders-and-Relationships-r01.html) · SHA-256 `6f6acf8bfc89cb350312cffac934dda6ab7b46a6bf62adcdfa79ec16f5c977c9` · 252,234 bytes, one self-contained file with no external request.
 
 **Built from:** [`docs/design/contacts/`](../../../design/contacts/README.md) by `scripts/build-contacts-design.py`, deterministically, on any platform.
 
-**Base:** `main` at `01b9824a63e468b393265b159fa681f83f6e668c`. PR #239 had not merged when this branch was taken, so the fallback base permitted by build-plan decision 8 applies. See §9.
+**Base:** `main` at `01b9824a63e468b393265b159fa681f83f6e668c`. PR #239 had not merged when this branch was taken, so the fallback base permitted by build-plan decision 8 applies. #239 merged during the build and `origin/main` `be219114` was merged into this branch; see §9.
 
 ---
 
@@ -37,7 +37,7 @@ The module reads. It issues nothing, sends nothing and acknowledges nothing.
 |---|---|
 | Scope identity | CS-02 (D, Pages) and CS-03 (N, Tab), page coverage register r06; parents CRM-01, CRM-04, CRM-06, SVC-06; increment = coordinated contact directory, contact record, stakeholder map, downstream reliance, proposed corrections and visibility explanation |
 | Page type | Register / worklist with persistent inspection as the primary type; Record detail for the contact record; Review / comparison for the stakeholder and reliance views |
-| Reused components | r20 shared token core reused by name from AD-01 r01; `fonts.css` byte-identical to `docs/design/my-work/fonts.css`; the Customer 360 line-icon set; the r22 selection and menu vocabulary as it appears in the merged AD-03 source. See §9 |
+| Reused components | r20 shared token core reused by name from AD-01 r01; `fonts.css` byte-identical to `docs/design/my-work/fonts.css`; the Customer 360 line-icon set; theme r22’s complete `--ss22-*` selection family with the board’s own values, pinned by content at SHA-256 `a305361c…`. See §9 |
 | Source authority | Contract items cite a migration or `src/shared` file and the pinned commit; Seed items cite the fixture; Proposed items are labelled in the page itself |
 | Incoming handover | Canonical shared records: Organisation, Site, Facility, Person, Relationship, SiteParty, read under `shared.read` with the derived Person visibility rule |
 | Outgoing handover | A named, permitted, currently valid contact for CS-01, CR-01, SV-02/SV-06, FI-07, DK-03 and MA-06/07 to bind — and, where none exists, an explicit recorded reason. **This module issues nothing, sends nothing and acknowledges nothing** |
@@ -209,19 +209,26 @@ All seven elements of `ui-style-specification.md` §7.1: a single `#ppo-contacts
 
 The three known token divergences are not resolved by this package. It adopts the **Field Technicians r05** side — `--surface-hover: #f0f2f5`, `--line-soft: #e9ecf1`, `--success-tint: #f3f7f1` — and the stylesheet records that choice in a comment.
 
-### Departure: the theme edition
+### The theme edition — resolved during the build
 
 Build-plan decision 1 records theme **r22** as measured and strictly additive over r20, introduced by PR #239, and instructs this module to adopt r22's selection family and menu patterns.
 
-**PR #239 has not merged.** This branch is based on `01b9824a`, the fallback decision 8 permits, and at that commit:
+When this branch was taken, **#239 had not merged**, and the r22 board was not in the repository: the theme-board directory ended at r20, and the merged AD-03 package pinned an r22 file that did not exist, so its own build check silently skipped that assertion. The design was therefore built on the shared token core alone, and the departure was recorded as needing Dean.
 
-- `docs/reference/ui/theme-style-board/` contains boards up to **r20**. There is no r22 board file in the repository.
-- The merged AD-03 package (`docs/design/data-quality/`) is described as the r22 package and its `source-pins.json` names `powerplants-one-theme-style-board-r22.html` with SHA-256 `a305361c…`, but the file it pins is absent, so its own build check skips that assertion.
-- AD-03's stylesheet carries **no `--nca-*` or `--ss22-*` tokens**. The 24 component-local aliases decision 1 describes are not observable in the repository at this commit.
+**#239 merged during this work.** `origin/main` `be219114` was merged into this branch, the r22 board arrived, and decision 1's claim is now measurable — so it was measured rather than taken on trust:
 
-So this module builds on the shared token core — which is present, verifiable, and identical in both editions — and adopts the r22 **selection and menu vocabulary as it appears in the merged AD-03 source**: the selected-row surface with a green inset marker, the tab underline, and the choice-card treatment. Those are expressed as a local `--sel-*` family aliasing existing brand tokens, introducing no new colour. Nothing is claimed about the r22 board itself, which this agent has not seen.
+| Claim | Measured |
+|---|---|
+| r22 board SHA-256 `a305361c…` | **`a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0`** — matches the plan and the AD-03 pin |
+| Zero tokens removed | **0 removed** (103 names in r20, 127 in r22) |
+| Zero token values changed | **0 changed** |
+| 24 added, all component-local aliases | **24 added**, every one `--nca-*` or `--ss22-*` |
 
-**This departure needs Dean's decision.** If r22's adoption matters in name, this package should be rebased after #239 merges and the declaration revised. If the shared core is what matters, nothing changes. The estimate is unaffected either way.
+Decision 1 is correct in every particular. The module therefore adopts the r22 selection family properly rather than approximating it: the whole `--ss22-*` family is declared on the scope container with the board's own values, the selected directory row uses r22's **ring** treatment, the view tabs use its **tabs** treatment, the attention queues use ring, and the filter group uses **recessed**. `--line-strong`, `--text-secondary`, `--control-border` and `--focus` are reused by name from the board rather than invented, as §7.4 requires. A green marker is retained on the selected row and tab so selection is never carried by colour alone.
+
+Every `--ss22-*` value either aliases a token this module already declares or is a shadow built from the brand navy `rgba(36,42,55,…)`, so the family introduces no new colour. Two model-check groups assert all of this, comparing the two boards directly; the builder now pins the r22 board by content and refuses to run if it changes.
+
+The r22 board also carries `--surface-hover: #f0f2f5`, `--line-soft: #e9ecf1` and `--success-tint: #f3f7f1` — the Field Technicians r05 side of the three known divergences, which is the side this package had already adopted. That is measured by the check, not asserted here. The divergences remain formally unresolved; resolving them means reissuing the losing baseline, which is out of scope.
 
 ---
 
@@ -230,7 +237,7 @@ So this module builds on the shared token core — which is present, verifiable,
 | Check | Result |
 |---|---|
 | `python scripts/build-contacts-design.py --check` | Verified byte for byte |
-| `node scripts/check-contacts-model.mjs --write-evidence` | **98 groups, 98 passed, 0 failed** (plan floor 45) |
+| `node scripts/check-contacts-model.mjs --write-evidence` | **100 groups, 100 passed, 0 failed** (plan floor 45) |
 | `node scripts/check-contacts-browser.mjs` | **57 groups, 57 passed, 0 failed** (plan floor 25), on the pinned Chrome channel |
 | Page, console and request errors | **Zero** |
 | Horizontal overflow at 1440×960, 1024×768, 820×800, 390×844 | **0 px on every view at every viewport** |
@@ -275,7 +282,7 @@ Five of the six build-plan questions were answered from the repository and are r
 
 > **Role vocabulary.** `role_label` is free text, 1–200 characters, and no vocabulary exists anywhere in the repository — the seed carries only `SYN site contact` and `SYN supplier liaison`. The fixtures use plausible horticultural roles labelled as fictional, and a responsibility taxonomy stays Proposed. If Dean has a real Powerplants vocabulary, it belongs in a later revision.
 
-**One further decision is now open** that the plan treated as closed: the theme edition, §9 above.
+**The theme edition is no longer open.** It was briefly a departure, because #239 had not merged when this branch was taken. #239 merged during the build, the r22 board was measured against r20, decision 1 was confirmed correct in every particular, and the r22 selection family is adopted with the board’s own values. See §9.
 
 ---
 
