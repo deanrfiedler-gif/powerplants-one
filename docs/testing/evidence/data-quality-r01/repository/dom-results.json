@@ -1,0 +1,102 @@
+{
+  "status": "passed",
+  "count": 24,
+  "results": [
+    {
+      "name": "Generated HTML initialises with six views and 16 fixtures",
+      "status": "passed"
+    },
+    {
+      "name": "Combined search and finding filters work",
+      "status": "passed"
+    },
+    {
+      "name": "Summary filters correspond to states",
+      "status": "passed"
+    },
+    {
+      "name": "Comparison renders distinct IDs, sites and serial text",
+      "status": "passed"
+    },
+    {
+      "name": "One modeless exact evidence panel and full detail",
+      "status": "passed"
+    },
+    {
+      "name": "Unsaved navigation preserves fields",
+      "status": "passed"
+    },
+    {
+      "name": "Draft save and frozen submission work through UI",
+      "status": "passed"
+    },
+    {
+      "name": "Reviewer return keeps original submission",
+      "status": "passed"
+    },
+    {
+      "name": "Corrected successor response binds exact submission",
+      "status": "passed"
+    },
+    {
+      "name": "Independent exact response accepted through UI",
+      "status": "passed"
+    },
+    {
+      "name": "Interrupted correction recovers exact original result",
+      "status": "passed"
+    },
+    {
+      "name": "Prepared follow-up and verified closure remain separate",
+      "status": "passed"
+    },
+    {
+      "name": "Old exact revision persists between views",
+      "status": "passed"
+    },
+    {
+      "name": "Missing exact revision does not substitute latest",
+      "status": "passed"
+    },
+    {
+      "name": "Unsafe note text escaped and excluded from review copy",
+      "status": "passed"
+    },
+    {
+      "name": "Partial read retains snapshot and withholds complete totals",
+      "status": "passed"
+    },
+    {
+      "name": "All six views and 16 scenarios render without exceptions",
+      "status": "passed"
+    },
+    {
+      "name": "Revoked counterpart details withheld",
+      "status": "passed"
+    },
+    {
+      "name": "Denied scope hides names counts detail and exports",
+      "status": "passed"
+    },
+    {
+      "name": "Failed write retains command result and same-save retry",
+      "status": "passed"
+    },
+    {
+      "name": "Exact saved state survives generated-DOM reload",
+      "status": "passed"
+    },
+    {
+      "name": "Damaged schema pauses writes and retains raw bytes",
+      "status": "passed"
+    },
+    {
+      "name": "No external fetch tags or runtime resources",
+      "status": "passed"
+    },
+    {
+      "name": "No generated-DOM runtime errors",
+      "status": "passed"
+    }
+  ]
+}

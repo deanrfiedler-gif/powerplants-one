@@ -1,0 +1,23 @@
+{
+  "scope": "AD-03",
+  "revision": "r01",
+  "buildDate": "2026-09-18",
+  "repositoryBaseline": "108b1600152ee12443c75ffaf7feb7cc857316f5",
+  "theme": "Powerplants One Theme & Style Board r22",
+  "themeSHA256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+  "planSHA256": "f33dc29f24f911ad01e6a38c7b27436034b7665141e78ff167dbf700de5c4b61",
+  "sources": {
+    "model.js": "ed63b6a1fd49745ce1874da2de9f69a3a49dc7af186511814ba8d07da8c59010",
+    "template.html": "4a64ece666033c007c808a88b05226f61cc674a9dcbe5d668a0c432411f73dcf",
+    "fonts.css": "a3c83afa45da8ccb05686729f4cfdd2f4694e6771334b025f00207ef381185e9",
+    "workspace.css": "349bed6916f7b0ef0fc9d59decb757726ee54c42d0c54ec3ee8ec505a0017e97",
+    "fixtures.json": "cb50cf06659deedc15765c5d381b71f6b8aa201032dab0b219be1fb2e51e763c",
+    "source-pins.json": "147fc477779bdfd32c25e03c49589896c46b149243a738ae7a17544ad15ebd69",
+    "workspace.js": "2d380116f8d1cc6eb45869b3f5195c28881367ba86caa2c0d998379b2fe244f9",
+    "icons.json": "cf868d77b2c07f14f07985afd218649ba4362067ff2d55ef625c56bc2df1fcae"
+  },
+  "receivingBoundary": "Local synthetic Equipment simulator only; no API connections",
+  "fontProvenance": "Embedded PPOBoardRoboto from supplied theme board; original source attribution and accompanying repository Roboto licence retained in the source package.",
+  "htmlSHA256": "be9d546dfc8826f99e3219e2dd46243d0760206c0f79cd0311b408c81f371c97",
+  "htmlBytes": 203639
+}

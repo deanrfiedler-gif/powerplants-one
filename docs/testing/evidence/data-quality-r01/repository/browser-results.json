@@ -1,0 +1,77 @@
+{
+  "status": "passed",
+  "browser": "153.0.8010.0",
+  "count": 15,
+  "results": [
+    {
+      "name": "Portable file initialises and makes no network requests",
+      "status": "passed"
+    },
+    {
+      "name": "Native source snapshot keyboard close returns focus",
+      "status": "passed"
+    },
+    {
+      "name": "Dialog name, native focus containment and Escape",
+      "status": "passed"
+    },
+    {
+      "name": "Native unsaved navigation and field retention",
+      "status": "passed"
+    },
+    {
+      "name": "Native submit and independent return",
+      "status": "passed"
+    },
+    {
+      "name": "Native successor and exact response acceptance",
+      "status": "passed"
+    },
+    {
+      "name": "Native lost response reload and original recovery",
+      "status": "passed"
+    },
+    {
+      "name": "Native prepared follow-up verified closure and scoped download",
+      "status": "passed"
+    },
+    {
+      "name": "Real browser Back retains exact revision",
+      "status": "passed"
+    },
+    {
+      "name": "Five widths and six views have no page overflow",
+      "status": "passed"
+    },
+    {
+      "name": "200 percent CSS zoom reflow has no page overflow",
+      "status": "passed"
+    },
+    {
+      "name": "All scenario comparisons render natively",
+      "status": "passed"
+    },
+    {
+      "name": "Failed save retry does not duplicate draft",
+      "status": "passed"
+    },
+    {
+      "name": "Native second-tab stale-state guard",
+      "status": "passed"
+    },
+    {
+      "name": "No native runtime errors or external requests",
+      "status": "passed"
+    }
+  ],
+  "widths": [
+    1440,
+    1024,
+    768,
+    390,
+    320
+  ],
+  "zoom": "200% CSS zoom proxy; browser-toolbar zoom untested",
+  "errors": [],
+  "network": []
+}

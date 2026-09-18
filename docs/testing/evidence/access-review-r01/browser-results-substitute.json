@@ -1,0 +1,257 @@
+{
+  "source": "local-pre-commit",
+  "html_sha256": "a15ecb01ff596e5eaa9cc784977ab103fe664de6258ac41c66aaed58397d6363",
+  "browser": "141.0.7390.37",
+  "browser_channel": "substitute",
+  "substitute_path": "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
+  "groups": 40,
+  "results": [
+    {
+      "name": "Six views, synthetic banner and authority statement render without errors",
+      "result": "Passed"
+    },
+    {
+      "name": "Queue tile filters the register and toggles off",
+      "result": "Passed"
+    },
+    {
+      "name": "Search matches capability keys and empty results offer recovery",
+      "result": "Passed"
+    },
+    {
+      "name": "A filter that hides the selected person clears the selection with a notice",
+      "result": "Passed"
+    },
+    {
+      "name": "Site-scoped person: matrix and explanation show the failing scope step",
+      "result": "Passed"
+    },
+    {
+      "name": "Grant detail discloses contract fields and absent audit",
+      "result": "Passed"
+    },
+    {
+      "name": "Inactive identity separates server refusal from offline device content",
+      "result": "Passed"
+    },
+    {
+      "name": "Hosted tester is masked, read-only and never offers a change",
+      "result": "Passed"
+    },
+    {
+      "name": "Partial source keeps local identities and marks hosted status unknown",
+      "result": "Passed"
+    },
+    {
+      "name": "Loading, failed and empty states never imply an all-clear",
+      "result": "Passed"
+    },
+    {
+      "name": "Catalogue lists all 61 contract capabilities with proposed labels declared",
+      "result": "Passed"
+    },
+    {
+      "name": "Bundle comparison lists affected holders and offers no adoption",
+      "result": "Passed"
+    },
+    {
+      "name": "Teams are shown with no authority",
+      "result": "Passed"
+    },
+    {
+      "name": "New request refuses a duplicate of an expired grant and keeps entries",
+      "result": "Passed"
+    },
+    {
+      "name": "Cancelling a changed form asks before discarding",
+      "result": "Passed"
+    },
+    {
+      "name": "Guided request with several operations saves a draft with a new reference",
+      "result": "Passed"
+    },
+    {
+      "name": "Submission shows restricted-access warnings",
+      "result": "Passed"
+    },
+    {
+      "name": "Approver decides with a required reason and cannot raise requests",
+      "result": "Passed"
+    },
+    {
+      "name": "Simulated apply requires confirmation; a lost response recovers the original operation",
+      "result": "Passed"
+    },
+    {
+      "name": "Applied grant appears in effective access with request provenance",
+      "result": "Passed"
+    },
+    {
+      "name": "Failed save keeps entries and changes nothing",
+      "result": "Passed"
+    },
+    {
+      "name": "Another session saving first produces a conflict that overwrites nothing",
+      "result": "Passed"
+    },
+    {
+      "name": "A storage change from another tab raises the conflict banner",
+      "result": "Passed"
+    },
+    {
+      "name": "Team lead sees only the team and submits a team member change",
+      "result": "Passed"
+    },
+    {
+      "name": "Team lead sees only assigned, completed reviews as read-only",
+      "result": "Passed"
+    },
+    {
+      "name": "Review decisions: keep, revoke to a draft request, owner required for unable",
+      "result": "Passed"
+    },
+    {
+      "name": "Completion stays blocked until every item is decided, then becomes read-only",
+      "result": "Passed"
+    },
+    {
+      "name": "Evidence exports are synthetic, complete and formula-safe",
+      "result": "Passed"
+    },
+    {
+      "name": "A review recommendation must be decided by a different approver",
+      "result": "Passed"
+    },
+    {
+      "name": "Ordinary user sees only their own access and cannot open workflow views",
+      "result": "Passed"
+    },
+    {
+      "name": "Auditor has read-only access to every view",
+      "result": "Passed"
+    },
+    {
+      "name": "History shows workflow events and explanations update from the selectors",
+      "result": "Passed"
+    },
+    {
+      "name": "Assistant answers from visible records and cannot act",
+      "result": "Passed"
+    },
+    {
+      "name": "Page guide closes with Escape and returns focus",
+      "result": "Passed"
+    },
+    {
+      "name": "Arrow keys move between view tabs and the skip link reaches content",
+      "result": "Passed"
+    },
+    {
+      "name": "Reload retains the exact session and preview settings",
+      "result": "Passed"
+    },
+    {
+      "name": "Backup restore refuses a tampered file without replacing the session",
+      "result": "Passed"
+    },
+    {
+      "name": "A malformed stored session is preserved and can be reset",
+      "result": "Passed"
+    },
+    {
+      "name": "All six views fit five widths with phone-sized targets",
+      "result": "Passed"
+    },
+    {
+      "name": "Inspection panel fits a phone and closes with Escape",
+      "result": "Passed"
+    }
+  ],
+  "errors": [],
+  "images": [
+    {
+      "name": "1440-people.png",
+      "sha256": "d7adf66f9efbaf1aba674a0d50d2f33ffddbd30443ac3be7ba3cd23a61b2fe6f"
+    },
+    {
+      "name": "1440-explain-panel.png",
+      "sha256": "13f43f973ff4cde808ef54a4478a0b5de4066145924c757945927fd064d974a9"
+    },
+    {
+      "name": "1440-person.png",
+      "sha256": "3aaad1fc0068b6f35531bfeb2920d1401670a1eec045f1cd362e3063ebbfdc66"
+    },
+    {
+      "name": "1440-partial.png",
+      "sha256": "0479343f0f753ea6ad72cb71e642162b45133704b9ac33df8111c6e33020966d"
+    },
+    {
+      "name": "1440-catalogue.png",
+      "sha256": "fcbed1ece0a40486c2b25077eaaa6550cbe89de12f6fb992b294e7fd67b3b760"
+    },
+    {
+      "name": "1440-changes.png",
+      "sha256": "73d128f7917c7f7bb9a32f71268cb7b954a002a725f3f50d1d77bc97bcd8d7bc"
+    },
+    {
+      "name": "1440-reviews.png",
+      "sha256": "1ef8b98f42fe7fe09ef3b3c59e57575c58577e905a9494a9a5c785b776843e3b"
+    },
+    {
+      "name": "1440-history.png",
+      "sha256": "fb90e87b4eb1bef3d0527b0d294dce5608b65acaaa965b7cf1d9879105ab3254"
+    },
+    {
+      "name": "390-people.png",
+      "sha256": "b449b44d7a7123416614346cc34f326a58355cb95d3b09c6e66253928ff7611c"
+    },
+    {
+      "name": "390-person.png",
+      "sha256": "dce49f5d30dcb280212c143a91389f00e8d5851fe14bca98047c1b3dd0e58e69"
+    },
+    {
+      "name": "390-catalogue.png",
+      "sha256": "669cb3b956a01e7fa4f75db02dbcdfe765d85101bd82d77d0e47451e592b122e"
+    },
+    {
+      "name": "390-changes.png",
+      "sha256": "8467e96aee1c55fb96e262fcef742f0675018e578c16fedb8df19420f87af9f9"
+    },
+    {
+      "name": "390-reviews.png",
+      "sha256": "8b8f79057445c1316dd3e7abbce2c46234b597a4543c0d83d6d4f01b2c398c1d"
+    },
+    {
+      "name": "390-history.png",
+      "sha256": "8ae0677cb07675a189c06283ed2dc3dab0ef24568c3ca56710a979a5c0567fee"
+    },
+    {
+      "name": "320-people.png",
+      "sha256": "d611ff433ea87fa42ed85f3d6aac79998829b90023cae6ee3832d3de75a41498"
+    },
+    {
+      "name": "320-person.png",
+      "sha256": "3b4192c3ede8e6269eeab22c2852d1644f4d52493021f2b34bba9a6faf632279"
+    },
+    {
+      "name": "320-catalogue.png",
+      "sha256": "400c53a32f83437c416c586c0ed1648dc04555fe79cf8e4c538b84cba0355338"
+    },
+    {
+      "name": "320-changes.png",
+      "sha256": "0e028271f57953099746691b9ef11de817e7b17eb132206df9a6a80e8856e26a"
+    },
+    {
+      "name": "320-reviews.png",
+      "sha256": "bc6423ab4598c773dbb3a78e354409e1d5462046fac00968cceeadfb92ce4b8a"
+    },
+    {
+      "name": "320-history.png",
+      "sha256": "7605c7475ed96da17d43b43c00e2d9231f89f628ec37b5bcc39bf19e3a3398e4"
+    },
+    {
+      "name": "390-panel.png",
+      "sha256": "573d458ace6bae26aa3d712f0fedd86bfa1befd23b68b326cb4b6246870bec76"
+    }
+  ]
+}

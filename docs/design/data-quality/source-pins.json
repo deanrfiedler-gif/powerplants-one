@@ -1,0 +1,10 @@
+{
+  "themeFile": "powerplants-one-theme-style-board-r22.html",
+  "themeSHA256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+  "planFile": "PPO-AD-03-Data-Quality-Workbench-Build-Plan-r01.md",
+  "planSHA256": "f33dc29f24f911ad01e6a38c7b27436034b7665141e78ff167dbf700de5c4b61",
+  "assetPins": {
+    "fonts.css": "a3c83afa45da8ccb05686729f4cfdd2f4694e6771334b025f00207ef381185e9",
+    "icons.json": "cf868d77b2c07f14f07985afd218649ba4362067ff2d55ef625c56bc2df1fcae"
+  }
+}
