@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useId, useRef } from "react";
+import { ProductIcon } from "./product-icons";
 import type { listLeads } from "../crm/leads/reads";
 
 type Item = Awaited<ReturnType<typeof listLeads>>["items"][number];
@@ -411,6 +412,7 @@ export function LeadsDesktopList({
         </table>
         {!items.length && (
           <div className="lead-empty">
+            <ProductIcon name="sales" />
             <h2>
               {filtered
                 ? "No leads match your filters"

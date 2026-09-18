@@ -80,6 +80,11 @@
   max-width: 160px;
   margin-bottom: 18px;
 }
+/* The toolbar leading icons are a desktop-container affordance only. */
+.lead-search .product-icon,
+.lead-sort .product-icon {
+  display: none;
+}
 .lead-table-wrap {
   background: white;
   border: 1px solid #dce1e8;
@@ -729,16 +734,25 @@
   .lead-heading {
     padding: 22px 26px 17px;
     margin: 0;
-    gap: 11px;
+    gap: 16px;
   }
   .lead-heading h1 {
     font-size: 24px;
     font-weight: 600;
   }
-  .lead-add {
+  .lead-heading .lead-count {
+    padding: 3px 9px;
+    font-weight: 500;
+    background: #edf0f5;
+    color: #596779;
+  }
+  /* Outranks the generic .leads-workspace button and .lead-primary rules. */
+  .leads-workspace .lead-add {
     padding-inline: 17px;
     min-height: 38px;
     border-radius: 6px;
+    font-size: 14px;
+    font-weight: 400;
   }
   .lead-lifecycle-tabs {
     display: flex;
@@ -755,6 +769,7 @@
     min-height: 38px;
     padding: 0 1px 12px;
     font-size: 14px;
+    font-weight: 400;
   }
   .lead-lifecycle-tabs button[aria-current="page"] {
     color: #242a37;
@@ -769,7 +784,7 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 9px;
     padding: 15px 26px;
     border-bottom: 1px solid #e1e5eb;
   }
@@ -779,6 +794,36 @@
     max-width: 350px;
     margin-right: 5px;
   }
+  .lead-list-controls .lead-search label {
+    position: relative;
+    display: block;
+  }
+  .lead-list-controls .lead-search .product-icon {
+    display: block;
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    transform: translateY(-50%);
+    color: #667181;
+    pointer-events: none;
+  }
+  .lead-list-controls .lead-search input {
+    padding-left: 36px;
+  }
+  .lead-list-controls .lead-sort label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .lead-list-controls .lead-sort .product-icon {
+    display: block;
+    flex: none;
+    width: 16px;
+    height: 16px;
+    color: #667181;
+  }
   .lead-list-controls .lead-toolbar {
     margin: 0;
     gap: 9px;
@@ -786,17 +831,20 @@
   }
   .lead-list-controls .lead-sort {
     margin: 0 0 0 auto;
+    max-width: 182px;
   }
   .lead-list-controls label {
     font-size: 0;
     color: transparent;
+    font-weight: 400;
   }
   .lead-list-controls input,
   .lead-list-controls select {
     font-size: 14px;
+    font-weight: 400;
     color: #242a37;
     margin: 0;
-    min-height: 38px;
+    min-height: 39px;
     border: 1px solid #cbd2dc;
     border-radius: 6px;
   }
@@ -822,6 +870,30 @@
   .leads-workspace > [role="status"]:not(:empty) {
     padding: 8px 26px;
     margin: 0;
+  }
+  /* The retry control is a direct flex child; without this it stretches full-bleed. */
+  .leads-workspace > button {
+    align-self: flex-start;
+    margin: 4px 26px 12px;
+    min-height: 36px;
+    padding: 8px 13px;
+    border: 1px solid #cbd2dc;
+    border-radius: 6px;
+    background: #fff;
+    color: #242a37;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .leads-workspace > button:hover {
+    background: #f0f2f5;
+  }
+  .leads-workspace > .lead-loading {
+    display: grid;
+    place-items: center;
+    flex: 1;
+    min-height: 0;
+    color: #727c89;
+    font-size: 14px;
   }
   .lead-desktop-results {
     display: flex;
@@ -958,22 +1030,51 @@
     font-size: 12px;
     color: #667181;
   }
+  .lead-empty {
+    padding: 80px 24px;
+  }
+  .lead-empty .product-icon {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 12px;
+  }
+  .lead-empty h2 {
+    font-size: 19px;
+    margin: 0 0 8px;
+  }
+  .lead-empty p {
+    margin: 0 0 17px;
+    color: #667181;
+  }
+  .lead-empty button {
+    min-height: 36px;
+    padding: 8px 13px;
+    border: 1px solid #cbd2dc;
+    border-radius: 6px;
+    background: #fff;
+    color: #242a37;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .lead-empty button:hover {
+    background: #f0f2f5;
+  }
   .lead-list-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
+    gap: 18px;
     flex-wrap: wrap;
     flex: none;
     min-height: 46px;
-    padding: 10px 26px;
+    padding: 11px 26px;
     border-top: 1px solid #e1e5eb;
     color: #667181;
     font-size: 12px;
   }
   .lead-list-footer > div {
     display: flex;
-    gap: 12px;
+    gap: 16px;
     align-items: center;
   }
   .lead-list-footer button {

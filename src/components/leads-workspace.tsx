@@ -1104,7 +1104,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
     </>
   );
   return (
-    <section className="leads-workspace">
+    <section className="leads-workspace" aria-label="Leads workspace">
       <header className="lead-mobile-header">
         <Link href="/sales/opportunities" aria-label="Back to deals">
           <Icon name="back" />
@@ -1179,6 +1179,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
         <div className={`lead-search ${searchOpen ? "open" : ""}`}>
           <label>
             Search leads
+            <Icon name="search" />
             <input
               type="search"
               value={search}
@@ -1206,6 +1207,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
         <div className={`lead-sort ${sortOpen ? "open" : ""}`}>
           <label>
             Sort by
+            <Icon name="sort" />
             <select
               value={params.get("sort") ?? "Newest"}
               onChange={(e) => change("sort", e.target.value)}
@@ -1224,7 +1226,11 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
       {list.error != null && (
         <button onClick={list.reload}>Try loading again</button>
       )}
-      {list.loading && <p role="status">Loading permitted leads…</p>}
+      {list.loading && (
+        <p className="lead-loading" role="status">
+          Loading permitted leads…
+        </p>
+      )}
       {list.data && (
         <>
           <LeadsDesktopList
