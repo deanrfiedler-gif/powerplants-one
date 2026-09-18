@@ -9,12 +9,49 @@ import { initialWorklistFilters, type WorklistFilters } from "../crm/worklist-lo
 import { forecastGroups, needsAttention, actionLabels } from "../crm/worklist-presentation";
 import { valueSummary } from "../crm/value-summary";
 
-export function WorklistMenu({ label, icon, children, className = "", text, disabled = false }: { label: string; icon?: ProductIconName; children: ReactNode; className?: string; text?: ReactNode; disabled?: boolean }) {
-  const id = useId(), ref = useRef<HTMLDivElement>(null);
-  return <><button type="button" className={`secondary crm-r38-menu-trigger ${className}`} aria-label={label} popoverTarget={id} disabled={disabled} onClick={e => {
-    const bounds = e.currentTarget.getBoundingClientRect(), menu = ref.current;
-    if (menu) { menu.style.left = `${Math.max(8, Math.min(bounds.left, window.innerWidth - 330))}px`; menu.style.top = `${bounds.bottom + 6}px`; menu.style.maxHeight = `calc(100dvh - ${bounds.bottom + 14}px)`; }
-  }}>{icon && <ProductIcon name={icon}/>} {text}</button><div id={id} ref={ref} popover="auto" role="dialog" aria-label={label} className="crm-r38-popover" onClick={e => { if ((e.target as HTMLElement).closest("[data-menu-close]")) ref.current?.hidePopover(); }}><h2>{label}</h2>{children}</div></>;
+export function WorklistMenu({ label, icon, children, className = "", text, disabled = false, choices = false }: { label: string; icon?: ProductIconName; children: ReactNode; className?: string; text?: ReactNode; disabled?: boolean; choices?: boolean }) {
+  const id = useId(), ref = useRef<HTMLDivElement>(null), trigger = useRef<HTMLButtonElement>(null), typed = useRef({ text: "", at: 0 });
+  const [open, setOpen] = useState(false);
+  const position = () => {
+    const menu = ref.current, anchor = trigger.current;
+    if (!menu || !anchor) return;
+    const bounds = anchor.getBoundingClientRect();
+    menu.style.maxHeight = `${Math.max(80, window.innerHeight - 16)}px`;
+    const width = menu.offsetWidth || Math.min(320, window.innerWidth - 16), height = menu.offsetHeight;
+    menu.style.left = `${Math.max(8, Math.min(bounds.left, window.innerWidth - width - 8))}px`;
+    menu.style.top = `${Math.max(8, Math.min(bounds.bottom + 6, window.innerHeight - height - 8))}px`;
+  };
+  useEffect(() => {
+    if (!open) return;
+    window.addEventListener("resize", position);
+    return () => window.removeEventListener("resize", position);
+  }, [open]);
+  return <><button ref={trigger} type="button" className={`secondary crm-r38-menu-trigger ${className}`} aria-label={label} aria-haspopup={choices ? "menu" : "dialog"} aria-expanded={open} aria-controls={id} popoverTarget={id} disabled={disabled} onClick={position} onKeyDown={e => {
+    if (["ArrowDown", "ArrowUp"].includes(e.key)) { e.preventDefault(); ref.current?.showPopover(); }
+  }}>{icon && <ProductIcon name={icon}/>} {text}</button><div id={id} ref={ref} popover="auto" role={choices ? "menu" : "dialog"} aria-label={label} className="crm-r38-popover" onToggle={e => {
+    const shown = e.newState === "open"; setOpen(shown);
+    if (shown) { position(); if (choices) ref.current?.querySelector<HTMLElement>('[aria-checked="true"],button:not(:disabled),a[href]')?.focus(); }
+  }} onKeyDown={e => {
+    if (e.key === "Escape") { e.preventDefault(); ref.current?.hidePopover(); trigger.current?.focus(); return; }
+    if ((e.target as HTMLElement).matches("input,textarea,select")) return;
+    const items = [...(ref.current?.querySelectorAll<HTMLElement>('button:not(:disabled),a[href]') ?? [])], current = items.indexOf(document.activeElement as HTMLElement);
+    let next: HTMLElement | undefined;
+    if (e.key === "Home") next = items[0];
+    else if (e.key === "End") next = items.at(-1);
+    else if (e.key === "ArrowDown") next = items[(current + 1) % items.length];
+    else if (e.key === "ArrowUp") next = items[(current - 1 + items.length) % items.length];
+    else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && e.key !== " ") {
+      typed.current = { text: (Date.now() - typed.current.at < 600 ? typed.current.text : "") + e.key.toLowerCase(), at: Date.now() };
+      next = items.find(item => item.textContent?.trim().toLowerCase().startsWith(typed.current.text));
+    }
+    if (next) { e.preventDefault(); next.focus(); }
+  }} onClick={e => { if ((e.target as HTMLElement).closest("[data-menu-close]")) { ref.current?.hidePopover(); trigger.current?.focus(); } }}><h2>{label}</h2>{children}</div></>;
+}
+
+export function WorklistChoice({ label, value, options, onChange, icon, prefix = "", className = "", disabled = false }: { label: string; value: string; options: { id: string; label: string }[]; onChange: (value: string) => void; icon?: ProductIconName; prefix?: string; className?: string; disabled?: boolean }) {
+  return <WorklistMenu label={label} choices icon={icon} disabled={disabled} className={className} text={<><span>{prefix}{options.find(option => option.id === value)?.label ?? "Choose…"}</span><ProductIcon name="chevron"/></>}>
+    {options.map(option => <button key={option.id} type="button" className="secondary crm-menu-choice" role="menuitemradio" aria-checked={option.id === value} data-menu-close onClick={() => onChange(option.id)}>{option.label}{option.id === value && <ProductIcon name="check"/>}</button>)}
+  </WorklistMenu>;
 }
 
 export function WorklistPanel({ title, children, onClose, drawer = false }: { title: string; children: ReactNode; onClose: () => void; drawer?: boolean }) {
@@ -25,13 +62,13 @@ export function WorklistPanel({ title, children, onClose, drawer = false }: { ti
 
 const viewBasis = (filters: WorklistFilters) => JSON.stringify({ ...filters, cursor: "" });
 export function WorklistViews({ filters, actor, setFilters }: { filters: WorklistFilters; actor: string; setFilters: (filters: WorklistFilters) => void }) {
-  const [saved, setSaved] = useState<{ name: string; filters: WorklistFilters }[]>([]), [current, setCurrent] = useState("All opportunities"), [name, setName] = useState("");
+  const [saved, setSaved] = useState<{ name: string; filters: WorklistFilters }[]>([]), [current, setCurrent] = useState(filters.outcome === "Open" ? "All open" : "All closed"), [name, setName] = useState("");
   const defaults = { ...initialWorklistFilters, pipeline_definition_id: filters.pipeline_definition_id, outcome: filters.outcome };
-  const views = [{ name: "All opportunities", filters: defaults }, { name: "Owned by me", filters: { ...defaults, owner_id: actor } }, { name: "Overdue activities", filters: { ...defaults, next_action: "Overdue" } }, { name: "No next activity", filters: { ...defaults, next_action: "Needed" } }, ...saved];
+  const views = [{ name: filters.outcome === "Open" ? "All open" : "All closed", filters: defaults }, { name: "Owned by me", filters: { ...defaults, owner_id: actor } }, { name: "Overdue activities", filters: { ...defaults, next_action: "Overdue" } }, { name: "No next activity", filters: { ...defaults, next_action: "Needed" } }, ...saved];
   const basis = views.find(view => view.name === current)?.filters;
   const modified = basis && viewBasis(basis) !== viewBasis(filters);
   return <WorklistMenu label="Views" icon="search" text={<><span className="crm-saved-name">{current}</span>{modified && <small>Modified</small>}<ProductIcon name="chevron"/></>}>
-    {views.map(view => <button className="secondary crm-menu-choice" key={view.name} data-menu-close onClick={() => { setCurrent(view.name); setFilters({ ...view.filters, cursor: "" }); }}>{view.name}{current === view.name && <ProductIcon name="check"/>}</button>)}
+    {views.map(view => <button className="secondary crm-menu-choice" key={view.name} aria-pressed={current === view.name} data-menu-close onClick={() => { setCurrent(view.name); setFilters({ ...view.filters, cursor: "" }); }}>{view.name}{current === view.name && <ProductIcon name="check"/>}</button>)}
     <form className="crm-save-view" onSubmit={e => { e.preventDefault(); const clean = name.trim(); if (!clean || views.some(view => view.name === clean)) return; setSaved(old => [...old, { name: clean, filters: { ...filters, cursor: "" } }]); setCurrent(clean); setName(""); }}>
       <label>New view name<input value={name} maxLength={60} required onChange={e => setName(e.target.value)} /></label><button disabled={!name.trim() || views.some(view => view.name === name.trim())}>Save as new view</button>
     </form><p>Named views keep filters and sorting for this visit. The address bar retains your current view on reload.</p>
@@ -40,7 +77,7 @@ export function WorklistViews({ filters, actor, setFilters }: { filters: Worklis
 
 export function ForecastWorklist({ items, asOf, onEdit }: { items: WorklistItem[]; asOf: string; onEdit: (id: string) => void }) {
   const [months, setMonths] = useState(3);
-  return <section className="crm-forecast-workspace" aria-label="Opportunity forecast"><header className="crm-view-intro"><div><h2>Forecast</h2><p>Expected close dates · {valueSummary(items).formatted} known · AUD excl. GST</p></div><label>Show<select aria-label="Forecast period" value={months} onChange={e => setMonths(Number(e.target.value))}>{[3, 6, 12].map(n => <option key={n} value={n}>{n} months</option>)}</select></label></header><div className="crm-forecast-scroll"><div className="crm-forecast-grid">{forecastGroups(items, asOf, months).map(group => <section className="crm-forecast-month" key={group.id} aria-label={group.label}><header><h3>{group.label}</h3><strong>{valueSummary(group.items).formatted}</strong><span>{group.items.length} deals · {valueSummary(group.items).unknown} not estimated</span></header><div>{group.items.map(item => <article key={item.id} className="crm-forecast-card"><Link href={`/crm/opportunities/${item.id}`}>{item.title}</Link><p>{item.organisation_name}</p><div><span>{item.stage_id}</span><strong>{dealAmount(item.value_amount)}</strong></div><p>{item.owner_name}</p><button className="secondary" disabled={!item.can_edit || item.close_outcome !== "Open"} aria-label={`Change expected close date for ${item.title}`} onClick={() => onEdit(item.id)}><ProductIcon name="calendar"/>{dealClose(item.expected_close_date)}</button></article>)}{!group.items.length && <p className="crm-stage-empty">No matching opportunities</p>}</div></section>)}</div></div><p className="crm-view-footnote">Totals cover this result page. Stage probabilities are not configured; values are unweighted and are not committed revenue.</p></section>;
+  return <section className="crm-forecast-workspace" aria-label="Opportunity forecast"><header className="crm-view-intro"><div><h2>Forecast</h2><p>Expected close dates · {valueSummary(items).formatted} known · AUD excl. GST</p></div><label>Show<select aria-label="Forecast period" value={months} onChange={e => setMonths(Number(e.target.value))}>{[3, 6, 12].map(n => <option key={n} value={n}>{n} months</option>)}</select></label></header><div className="crm-forecast-scroll"><div className="crm-forecast-grid">{forecastGroups(items, asOf, months).map(group => <section className="crm-forecast-month" key={group.id} aria-label={group.label}><header><h3>{group.label}</h3><strong>{valueSummary(group.items).formatted}</strong><span>{group.items.length} deals · {valueSummary(group.items).unknown} not estimated</span></header><div>{group.items.map(item => <article key={item.id} className="crm-forecast-card"><Link href={`/sales/opportunities/${item.id}`}>{item.title}</Link><p>{item.organisation_name}</p><div><span>{item.stage_id}</span><strong>{dealAmount(item.value_amount)}</strong></div><p>{item.owner_name}</p><button className="secondary" disabled={!item.can_edit || item.close_outcome !== "Open"} aria-label={`Change expected close date for ${item.title}`} onClick={() => onEdit(item.id)}><ProductIcon name="calendar"/>{dealClose(item.expected_close_date)}</button></article>)}{!group.items.length && <p className="crm-stage-empty">No matching opportunities</p>}</div></section>)}</div></div><p className="crm-view-footnote">Totals cover this result page. Stage probabilities are not configured; values are unweighted and are not committed revenue.</p></section>;
 }
 
 export function WorklistReview({ kind, items, asOf, onOpen, onClose }: { kind: "triage" | "changes" | "help"; items: WorklistItem[]; asOf: string; onOpen: (id: string) => void; onClose: () => void }) {

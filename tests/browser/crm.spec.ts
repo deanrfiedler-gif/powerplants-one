@@ -1,3 +1,4 @@
+import { fillOpportunitySearch } from "../helpers/crm-worklist-ui";
 import { test, expect, type Page, type TestInfo } from "@playwright/test";
 import { createHash, randomUUID } from "node:crypto";
 import { execFileSync } from "node:child_process";
@@ -100,7 +101,7 @@ async function call(page: Page, path: string, body?: unknown) {
   return r.json();
 }
 async function seeded(page: Page) {
-  await page.goto("/crm/opportunities");
+  await page.goto("/sales/opportunities");
   await identity(page);
   const i = {
     ...crmCreate(),
@@ -108,7 +109,7 @@ async function seeded(page: Page) {
     initial_action: {...crmAction(), due_at:"2026-01-01T00:00:00Z", due_needed:false},
   };
   await call(page, "crm/opportunities", i);
-  await page.goto(`/crm/opportunities/${i.id}`);
+  await page.goto(`/sales/opportunities/${i.id}`);
   await expect(
     page.getByRole("heading", { name: i.title, exact: true }),
   ).toBeVisible();
@@ -117,7 +118,7 @@ async function seeded(page: Page) {
 test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, completion and reload", async ({
   page,
 }, info) => {
-  await page.goto("/crm/opportunities/new");
+  await page.goto("/sales/opportunities/new");
   await identity(page);
   await expect(
     page.getByRole("heading", { name: "New opportunity", exact: true }),
@@ -155,7 +156,7 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await page
     .getByRole("button", { name: "Create opportunity and action" })
     .click();
-  await expect(page).toHaveURL(/crm\/opportunities\/[a-f0-9-]+$/);
+  await expect(page).toHaveURL(/sales\/opportunities\/[a-f0-9-]+$/);
   const detailUrl = page.url();
   await expect(
     page.getByRole("heading", { name: title, exact: true }),
@@ -223,8 +224,8 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   ).toBeVisible();
   await capture(page, info, "qualified-successor");
   await capture(page, info, "successor-action");
-  await page.goto("/crm/opportunities");
-  await page.getByLabel("Search opportunities", { exact: true }).fill(title);
+  await page.goto("/sales/opportunities");
+  await fillOpportunitySearch(page, title);
   if (info.project.use.isMobile) await page.getByRole("button", { name: /^Scoping \(/ }).click();
   await expect(
     page.getByRole("link", { name: title, exact: true }),
@@ -325,11 +326,9 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   ).toHaveCount(0);
   await expect(page.locator('.business-error[role="alert"]')).toBeVisible();
   await capture(page, info, "denied");
-  await page.goto("/crm/opportunities");
+  await page.goto("/sales/opportunities");
   await identity(page);
-  await page
-    .getByLabel("Search opportunities", { exact: true })
-    .fill(`absent-${randomUUID()}`);
+  await fillOpportunitySearch(page, `absent-${randomUUID()}`);
   await expect(page.locator(".crm-worklist-stamp strong")).toHaveText(
     "0 opportunities",
   );
@@ -381,7 +380,7 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
     await new Promise((resolve) => setTimeout(resolve, 1200));
     await route.continue();
   });
-  await page.goto("/crm/opportunities");
+  await page.goto("/sales/opportunities");
   await expect(
     page.getByText("Loading permitted sales records…", { exact: true }),
   ).toBeVisible();
@@ -401,14 +400,14 @@ test("CA-06/10 real CRM permission revocation clears linked Activity content aft
   await database().query("INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id) SELECT DISTINCT workspace_id,$1::uuid,$3::uuid,capability,'Site',$4::uuid,$4::uuid FROM ppo.permission_grants WHERE user_id=$2 AND capability IN ('shared.read','shared.internal.read','crm.opportunity.read','crm.opportunity.create','crm.opportunity.edit','activity.read','activity.edit')",[user,CRM.owner,CRM.company,CRM.site]);
   await database().query("INSERT INTO ppo.sessions(token_hash,workspace_id,actor_id,expires_at) VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')",[createHash("sha256").update(token).digest("hex"),CRM.workspace,user]);
   await page.context().addCookies([{name:"ppo_local_session",value:token,url:"http://127.0.0.1:3000",httpOnly:true,sameSite:"Strict"}]);
-  await page.goto("/crm/opportunities/new");await expect(page.getByRole("heading",{name:"New opportunity",exact:true})).toBeVisible();
+  await page.goto("/sales/opportunities/new");await expect(page.getByRole("heading",{name:"New opportunity",exact:true})).toBeVisible();
   await page.getByLabel("Visibility company",{exact:true}).selectOption(CRM.company);await pick(page, "Organisation", CRM.org);
   await expect(page.getByText("Choose a permitted site. Your creation authority is limited to that site.",{exact:true})).toBeVisible();await expect(page.getByRole("button",{name:"Create opportunity and action"})).toBeDisabled();
   await pick(page, "Site", CRM.site);await pick(page, "Contact", CRM.person);await pick(page, "Opportunity owner", user);await pick(page, "Activity owner", user);await expect(page.getByRole("button",{name:"Create opportunity and action"})).toBeEnabled();await capture(page,info,"site-scoped-selectors");
   const i={...crmCreate(),title:"SYN Revoked opportunity private title",owner_id:user,initial_action:{...crmAction(user),summary:"SYN Revoked Activity private content"}};
   await call(page,"crm/opportunities",i);
   const detail = await page.context().newPage();
-  await detail.goto(`/crm/opportunities/${i.id}`);
+  await detail.goto(`/sales/opportunities/${i.id}`);
   await expect(detail.getByRole("heading", {name:i.title,exact:true})).toBeVisible();
   await detail.getByRole("tab", {name:"Details",exact:true}).click();
   await detail.getByLabel("Qualification outcome", {exact:true}).fill("SYN Private proposal before revocation");

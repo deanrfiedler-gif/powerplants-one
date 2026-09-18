@@ -47,12 +47,12 @@ test("public login and protected routes retain distinct HTTP and access boundari
   assert.doesNotMatch(policy, /unsafe-inline/);
   assert.match(policy, /form-action 'self' https:\/\/login\.microsoftonline\.com; frame-ancestors 'none'/);
   assert.equal(login.headers["cache-control"], "private, no-store");
-  const protectedPage = await f.call("/crm/opportunities"); assert.equal(protectedPage.status, 401); assert.match(protectedPage.body, /Welcome back/);
-  const expired = await f.call("/crm/opportunities", "GET", { cookie: "__Host-ppo_session=expired" });
+  const protectedPage = await f.call("/sales/opportunities"); assert.equal(protectedPage.status, 401); assert.match(protectedPage.body, /Welcome back/);
+  const expired = await f.call("/sales/opportunities", "GET", { cookie: "__Host-ppo_session=expired" });
   assert.equal(expired.status, 401); assert.match(expired.body, /Your session has expired/);
   const api = await f.call("/api/v1/crm/opportunities"); assert.equal(api.status, 401); assert.equal(JSON.parse(api.body).code, "AuthenticationRequired");
   assert.equal(f.counts().appCount, 0);
-  assert.equal((await f.call("/crm/opportunities", "GET", { cookie: "__Host-ppo_session=valid" })).body, "Synthetic authorised application");
+  assert.equal((await f.call("/sales/opportunities", "GET", { cookie: "__Host-ppo_session=valid" })).body, "Synthetic authorised application");
   for (const [path, method] of [["/offline/index.html", "GET"], ["/sw.js", "GET"], ["/api/v1/local-session", "POST"]])
     assert.equal((await f.call(path, method, { cookie: "__Host-ppo_session=valid", origin })).status, 403);
   assert.equal(f.counts().appCount, 1);
@@ -66,7 +66,7 @@ test("native Microsoft handoff, callback and logout preserve fixed destinations 
   assert.match(begin.headers["set-cookie"]![0], /Path=\/; HttpOnly; Secure; SameSite=Lax; Max-Age=600/);
   const callback = await f.call("/auth/callback?code=synthetic", "GET", { cookie: "__Host-ppo_login=attempt; __Host-ppo_session=previous", "sec-fetch-site": "cross-site" });
   assert.deepEqual(f.callback(), ["attempt", "previous"]);
-  assert.equal(callback.status, 303); assert.equal(callback.headers.location, origin + "/crm/opportunities");
+  assert.equal(callback.status, 303); assert.equal(callback.headers.location, origin + "/sales/opportunities");
   assert.match(callback.headers["set-cookie"]![0], /Max-Age=0/); assert.match(callback.headers["set-cookie"]![1], /Max-Age=3600/);
   assert.equal((await f.call("/auth/logout", "POST", { origin: "https://attacker.invalid" })).status, 403);
   const logout = await f.call("/auth/logout", "POST", { origin, cookie: "__Host-ppo_session=valid" });

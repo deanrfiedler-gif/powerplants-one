@@ -1,0 +1,7 @@
+/* Host contract. Do not give standalone modules another viewport or frame. */
+main:has([data-module-layout]) { display:flex; flex-direction:column; min-height:0; overflow:hidden; padding:0; }
+main:has([data-module-layout]) .business-content { display:flex; flex:1; min-width:0; min-height:0; overflow:hidden; }
+[data-module-layout] { flex:1; min-width:0; min-height:0; box-sizing:border-box; }
+[data-module-layout="full-bleed"] { margin:0; padding:0; border:0; border-radius:0; }
+[data-module-layout="padded"] { padding:16px; }
+[data-module-layout="constrained"] { width:min(100%,1120px); align-self:center; padding:16px; }

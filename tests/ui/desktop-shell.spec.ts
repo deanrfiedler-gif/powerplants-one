@@ -58,11 +58,11 @@ test("global search is independent of page filtering, keyboard selection and qui
   const options = page.locator("#shell-search-list").getByRole("option"); await expect(options).toHaveCount(2);
   await search.press("ArrowUp"); await expect(options.last()).toHaveAttribute("aria-selected", "true");
   await search.press("ArrowDown"); await expect(options.first()).toHaveAttribute("aria-selected", "true");
-  await expect(page.getByLabel("Search opportunities", { exact: true })).toHaveValue("");
+  expect(new URL(page.url()).searchParams.get("q")).toBeNull();
   await expect(page.locator(".crm-card:visible")).toHaveCount(8);
   await search.press("Escape"); await expect(search).toBeFocused(); await expect(page.getByRole("listbox")).toBeHidden();
   await page.getByRole("button", { name: "Quick add", exact: true }).click();
-  await expect(page.getByRole("navigation", { name: "Create a record" }).getByRole("link").first()).toHaveAttribute("href", "/crm/opportunities/new");
+  await expect(page.getByRole("navigation", { name: "Create a record" }).getByRole("link").first()).toHaveAttribute("href", "/sales/opportunities/new");
   await page.keyboard.press("ArrowUp"); await expect(page.getByRole("link", { name: "Contact", exact: true })).toBeFocused();
   await page.keyboard.press("Escape"); await expect(page.getByRole("button", { name: "Quick add", exact: true })).toBeFocused();
   await page.getByRole("button", { name: "Quick Help", exact: true }).click();

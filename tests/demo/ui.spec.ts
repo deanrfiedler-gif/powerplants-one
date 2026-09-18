@@ -65,7 +65,7 @@ test("invited actor: mailbox to refined deal, follow-up, calendar and another br
   o.owner_id = p.actor_id;
   o.initial_action.owner_id = p.actor_id;
   await call(page, "crm/opportunities", o);
-  await page.goto("/crm/opportunities");
+  await page.goto("/sales/opportunities");
   if (info.project.use.isMobile)
     await page.getByRole("button", { name: "Menu", exact: true }).click();
   else await page.getByRole("button", { name: "More", exact: true }).click();
@@ -114,7 +114,7 @@ test("invited actor: mailbox to refined deal, follow-up, calendar and another br
   await page.getByRole("button").filter({ hasText: summary }).first().click();
   await expect(page.getByRole("dialog")).toContainText("Internal follow-up");
   await page.keyboard.press("Escape");
-  await page.goto(`/crm/opportunities/${o.id}`);
+  await page.goto(`/sales/opportunities/${o.id}`);
   await page
     .getByRole("button", { name: "Edit deal information", exact: true })
     .click();

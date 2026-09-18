@@ -1,2 +1,2 @@
-import { OpportunityDetail } from "../../../../../components/crm-screens";
-export default async function Page({params}:{params:Promise<{id:string}>}) {return <OpportunityDetail id={(await params).id}/>;}
+// Compatibility page; next.config.ts redirects bookmarks to Sales.
+export { default } from "../../../sales/opportunities/[id]/page";

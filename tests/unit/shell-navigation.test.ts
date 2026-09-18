@@ -32,7 +32,7 @@ test("nested pages resolve to their actual workspace instead of a remembered Sal
   assert.equal(pageForPath("/engineering/example")?.workspace, "engineering");
   assert.equal(pageForPath("/estimating/discovery/example")?.id, "intake");
   assert.equal(pageForPath("/service/appointments/example")?.id, "planner");
-  assert.equal(pageForPath("/crm/opportunities-other"), undefined);
+  assert.equal(pageForPath("/sales/opportunities-other"), undefined);
   assert.equal(pageForPath("/people")?.workspace, undefined);
 });
 test("seven workspace preferences validate schema and retain r15 identifiers", () => {

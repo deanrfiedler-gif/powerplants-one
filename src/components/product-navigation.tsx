@@ -7,6 +7,7 @@ import { ShellIcon as ProductIcon } from "./shell-icon";
 import { ShellControls } from "./shell-controls";
 import { useShell } from "./shell-provider";
 import { openShellPanel, shellPanelEvent } from "./shell-events";
+import { moduleWorkspaceForPath } from "../shell/module-workspaces";
 import {
   canOpen,
   destination,
@@ -396,7 +397,7 @@ export function ProductHeader() {
           <div id="header-account" className="header-account" />
         </div>
       </header>
-      {!!tabs.length && (
+      {!!tabs.length && moduleWorkspaceForPath(path)?.navigation !== "workspace" && (
         <nav
           className={`module-navigation${page?.workspace === "sales" ? " ppo-sales-navigation" : ""}`}
           aria-label={`${currentModule} navigation`}

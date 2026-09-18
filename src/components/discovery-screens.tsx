@@ -349,7 +349,7 @@ export function NewDiscovery() {
           {!choices.data.items.length && (
             <p>
               No eligible opportunities without an estimating workspace are
-              available. <Link href="/crm/opportunities">Open CRM Sales</Link>.
+              available. <Link href="/sales/opportunities">Open CRM Sales</Link>.
             </p>
           )}
           {selected && (
@@ -845,7 +845,7 @@ export function DiscoveryDetail({ id }: { id: string }) {
           <Heading title="Estimating workspace" />
           <p>
             Saved workspace version {d.workspace.version} ·{" "}
-            <Link href={`/crm/opportunities/${d.workspace.opportunity_id}`}>
+            <Link href={`/sales/opportunities/${d.workspace.opportunity_id}`}>
               Open the sales opportunity
             </Link>
           </p>

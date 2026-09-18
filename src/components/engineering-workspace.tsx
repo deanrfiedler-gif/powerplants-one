@@ -1070,7 +1070,7 @@ function PackageDrawer({
                 <p>{p.brief}</p>
                 <Link
                   className="eng-meta-link"
-                  href={`${p.context_kind === "Project" ? "/projects" : "/crm/opportunities"}/${p.context_id}`}
+                  href={`${p.context_kind === "Project" ? "/projects" : "/sales/opportunities"}/${p.context_id}`}
                 >
                   Open {p.context_reference}
                 </Link>

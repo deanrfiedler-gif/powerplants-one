@@ -36,7 +36,7 @@ await build({
                  }
                  const subscribe = listener => { window.addEventListener("popstate", listener); window.addEventListener("fixture-location", listener); return () => { window.removeEventListener("popstate", listener); window.removeEventListener("fixture-location", listener); }; };
                  export const useSearchParams=()=>new URLSearchParams(useSyncExternalStore(subscribe,()=>window.location.search,()=>""));
-                 export const usePathname=()=>"/crm/opportunities"; export const useRouter=()=>({push:()=>{},refresh:()=>{}});`
+                 export const usePathname=()=>"/sales/opportunities"; export const useRouter=()=>({push:()=>{},refresh:()=>{}});`
               : args.path === "next/link"
                 ? 'import React from "react"; export default function Link({href,children,...props}){return <a href={href} {...props}>{children}</a>}'
                 : 'import React from "react"; export default function Image({unoptimized,src,...props}){return <img src={src.replace("/brand/","brand/")} {...props}/>}',
@@ -46,15 +46,8 @@ await build({
   ],
 });
 const styles = await Promise.all(
-  [
-    "globals.css",
-    "shared-layout.css",
-    "mobile-layout.css",
-    "crm-refinements.css",
-    "crm-board-polish.css",
-    "desktop-shell.css",
-    "crm-r38.css",
-  ].map((f) => readFile("src/app/" + f, "utf8")),
+  [...(await readFile("src/app/layout.tsx", "utf8")).matchAll(/import "\.\/(.+\.css)";/g)]
+    .map((match) => readFile("src/app/" + match[1], "utf8")),
 );
 await writeFile(
   out + "/review.css",

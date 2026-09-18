@@ -1,3 +1,4 @@
+import { chooseWorklistSort } from "../helpers/crm-worklist-ui";
 import { test, expect } from "@playwright/test";
 import { execFileSync } from "node:child_process";
 import { resolve } from "node:path";
@@ -27,6 +28,7 @@ test("r38 two-row toolbar, single board scroll and uniform cards at desktop and 
   }
 });
 test("r38 collapse, snapshot, filter focus, shared forecast and archive populations", async ({ page }, info) => {
+  await page.getByRole("button", { name: "Quoting options", exact: true }).click();
   await page.getByRole("button", { name: "Collapse Quoting", exact: true }).click();
   await expect(page.locator('.crm-stage[data-drop-stage="Quoting"]')).toHaveAttribute("data-collapsed", "true");
   await page.getByRole("button", { name: "Expand Quoting", exact: true }).click();
@@ -64,7 +66,7 @@ test("r38 collapse, snapshot, filter focus, shared forecast and archive populati
   await expect(page.locator(".crm-card")).toHaveCount(18);
 });
 test("r38 named views, list resize, triage, totals and unavailable data commands", async ({ page }, info) => {
-  await page.getByLabel("Sort", { exact: true }).selectOption("Title");
+  await chooseWorklistSort(page, "Title");
   await page.getByRole("button", { name: "Views", exact: true }).click();
   await page.getByLabel("New view name", { exact: true }).fill("Weekly review");
   await page.getByRole("button", { name: "Save as new view", exact: true }).click();
