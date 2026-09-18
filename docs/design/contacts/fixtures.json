@@ -1,0 +1,725 @@
+{
+ "schema": "ppo-contacts-r01",
+ "version": 1,
+ "observedAt": "2026-09-18T10:00:00+10:00",
+ "workspaceId": "10000000-0000-4000-8000-000000000001",
+ "companies": [
+  {
+   "id": "20000000-0000-4000-8000-000000000001",
+   "name": "SYN Northern Operations",
+   "erp": "SYN-A"
+  },
+  {
+   "id": "20000000-0000-4000-8000-000000000002",
+   "name": "SYN Southern Operations",
+   "erp": "SYN-B"
+  }
+ ],
+ "organisations": [
+  {
+   "id": "SYN-PPO-ORG-000101",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "name": "Willowbank Horticulture",
+   "version": 14,
+   "sector": "Protected cropping — propagation and field",
+   "status": "Active"
+  },
+  {
+   "id": "SYN-PPO-ORG-000102",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "name": "Rothwell Glasshouse Group",
+   "version": 6,
+   "sector": "Protected cropping — glasshouse tomato",
+   "status": "Active"
+  },
+  {
+   "id": "SYN-PPO-ORG-000103",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "name": "Hadley Pastoral Trust",
+   "version": 3,
+   "sector": "Landholder — leased production ground",
+   "status": "Active"
+  },
+  {
+   "id": "SYN-PPO-ORG-000104",
+   "companyId": "20000000-0000-4000-8000-000000000002",
+   "name": "Marchmont Produce Group",
+   "version": 5,
+   "sector": "Protected cropping — coastal nursery",
+   "status": "Active"
+  }
+ ],
+ "sites": [
+  {
+   "id": "SYN-PPO-SITE-000201",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "organisationId": "SYN-PPO-ORG-000101",
+   "name": "Willowbank Nursery & Propagation",
+   "location": "12 Demonstration Road, Sampletown VIC 3999, Australia (fictional)",
+   "primaryContactId": "60000000-0000-4000-8000-000000000101",
+   "version": 9
+  },
+  {
+   "id": "SYN-PPO-SITE-000202",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "organisationId": "SYN-PPO-ORG-000101",
+   "name": "Willowbank Field Production",
+   "location": "84 Example Orchard Lane, Sampletown VIC 3999, Australia (fictional)",
+   "primaryContactId": "60000000-0000-4000-8000-000000000104",
+   "version": 7
+  },
+  {
+   "id": "SYN-PPO-SITE-000211",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "organisationId": "SYN-PPO-ORG-000102",
+   "name": "Rothwell Glasshouse — Northbank",
+   "location": "6 Synthetic Grove, Examplefield QLD 4999, Australia (fictional)",
+   "primaryContactId": "60000000-0000-4000-8000-000000000105",
+   "version": 4
+  },
+  {
+   "id": "SYN-PPO-SITE-000203",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "organisationId": "SYN-PPO-ORG-000101",
+   "name": "Willowbank Propagation Annexe",
+   "location": "12A Demonstration Road, Sampletown VIC 3999, Australia (fictional)",
+   "primaryContactId": null,
+   "version": 2
+  },
+  {
+   "id": "SYN-PPO-SITE-000212",
+   "companyId": "20000000-0000-4000-8000-000000000002",
+   "organisationId": "SYN-PPO-ORG-000104",
+   "name": "Marchmont Coastal Nursery",
+   "location": "3 Fictional Esplanade, Sampleport QLD 4998, Australia (fictional)",
+   "primaryContactId": "60000000-0000-4000-8000-000000000109",
+   "version": 2
+  }
+ ],
+ "siteParties": [
+  {
+   "id": "sp-01",
+   "siteId": "SYN-PPO-SITE-000201",
+   "organisationId": "SYN-PPO-ORG-000101",
+   "role": "Operator",
+   "validFrom": "2019-06-01",
+   "validTo": null
+  },
+  {
+   "id": "sp-02",
+   "siteId": "SYN-PPO-SITE-000201",
+   "organisationId": "SYN-PPO-ORG-000101",
+   "role": "Owner",
+   "validFrom": "2019-06-01",
+   "validTo": null
+  },
+  {
+   "id": "sp-03",
+   "siteId": "SYN-PPO-SITE-000201",
+   "organisationId": "SYN-PPO-ORG-000101",
+   "role": "BillingParty",
+   "validFrom": "2019-06-01",
+   "validTo": null
+  },
+  {
+   "id": "sp-04",
+   "siteId": "SYN-PPO-SITE-000202",
+   "organisationId": "SYN-PPO-ORG-000101",
+   "role": "Operator",
+   "validFrom": "2020-08-17",
+   "validTo": null
+  },
+  {
+   "id": "sp-05",
+   "siteId": "SYN-PPO-SITE-000202",
+   "organisationId": "SYN-PPO-ORG-000103",
+   "role": "Owner",
+   "validFrom": "2020-08-17",
+   "validTo": null
+  },
+  {
+   "id": "sp-06",
+   "siteId": "SYN-PPO-SITE-000202",
+   "organisationId": "SYN-PPO-ORG-000101",
+   "role": "BillingParty",
+   "validFrom": "2020-08-17",
+   "validTo": null
+  },
+  {
+   "id": "sp-10",
+   "siteId": "SYN-PPO-SITE-000203",
+   "organisationId": "SYN-PPO-ORG-000101",
+   "role": "Operator",
+   "validFrom": "2025-11-03",
+   "validTo": null
+  },
+  {
+   "id": "sp-07",
+   "siteId": "SYN-PPO-SITE-000211",
+   "organisationId": "SYN-PPO-ORG-000102",
+   "role": "Operator",
+   "validFrom": "2024-08-02",
+   "validTo": null
+  },
+  {
+   "id": "sp-08",
+   "siteId": "SYN-PPO-SITE-000211",
+   "organisationId": "SYN-PPO-ORG-000102",
+   "role": "BillingParty",
+   "validFrom": "2024-08-02",
+   "validTo": null
+  },
+  {
+   "id": "sp-09",
+   "siteId": "SYN-PPO-SITE-000212",
+   "organisationId": "SYN-PPO-ORG-000104",
+   "role": "Operator",
+   "validFrom": "2025-02-10",
+   "validTo": null
+  }
+ ],
+ "people": [
+  {
+   "id": "60000000-0000-4000-8000-000000000101",
+   "version": 5,
+   "displayName": "Dale Whitmore",
+   "email": "dale.whitmore@example.invalid",
+   "phone": "+61 3 5550 0101",
+   "active": true,
+   "contactPreference": "Prefers a call before 7am during propagation runs",
+   "updatedAt": "2026-08-21T09:12:00+10:00"
+  },
+  {
+   "id": "60000000-0000-4000-8000-000000000102",
+   "version": 3,
+   "displayName": "Ilse Brandt",
+   "email": "ilse.brandt@example.invalid",
+   "phone": null,
+   "active": true,
+   "contactPreference": null,
+   "updatedAt": "2026-07-02T14:40:00+10:00"
+  },
+  {
+   "id": "60000000-0000-4000-8000-000000000103",
+   "version": 4,
+   "displayName": "Ruth Okafor",
+   "email": "ruth.okafor@example.invalid",
+   "phone": "+61 3 5550 0103",
+   "active": true,
+   "contactPreference": "Email only — no site phone",
+   "updatedAt": "2026-01-19T11:05:00+11:00"
+  },
+  {
+   "id": "60000000-0000-4000-8000-000000000104",
+   "version": 6,
+   "displayName": "Curtis Lane",
+   "email": null,
+   "phone": "+61 3 5550 0104",
+   "active": false,
+   "contactPreference": "Radio via irrigation shed",
+   "updatedAt": "2026-09-02T08:30:00+10:00"
+  },
+  {
+   "id": "60000000-0000-4000-8000-000000000105",
+   "version": 2,
+   "displayName": "Marion Espie",
+   "email": "marion.espie@example.invalid",
+   "phone": "+61 7 5550 0211",
+   "active": true,
+   "contactPreference": null,
+   "updatedAt": "2026-06-14T10:20:00+10:00"
+  },
+  {
+   "id": "60000000-0000-4000-8000-000000000106",
+   "version": 3,
+   "displayName": "Jonas Reddick",
+   "email": "jonas.reddick@example.invalid",
+   "phone": null,
+   "active": true,
+   "contactPreference": "Email, copy the maintenance inbox",
+   "updatedAt": "2026-05-30T16:05:00+10:00"
+  },
+  {
+   "id": "60000000-0000-4000-8000-000000000107",
+   "version": 2,
+   "displayName": "Sasha Villalobos",
+   "email": "sasha.villalobos@example.invalid",
+   "phone": null,
+   "active": true,
+   "contactPreference": null,
+   "updatedAt": "2026-06-30T17:00:00+10:00"
+  },
+  {
+   "id": "60000000-0000-4000-8000-000000000108",
+   "version": 2,
+   "displayName": "Gregor Halloran",
+   "email": null,
+   "phone": "+61 3 5550 0108",
+   "active": true,
+   "contactPreference": null,
+   "updatedAt": "2026-03-31T15:45:00+11:00"
+  },
+  {
+   "id": "60000000-0000-4000-8000-000000000109",
+   "version": 1,
+   "displayName": "Marion Espie",
+   "email": null,
+   "phone": "+61 7 5550 0212",
+   "active": true,
+   "contactPreference": null,
+   "updatedAt": "2026-02-10T09:00:00+10:00"
+  },
+  {
+   "id": "60000000-0000-4000-8000-000000000110",
+   "version": 1,
+   "displayName": "Jonas Reddick",
+   "email": null,
+   "phone": "+61 7 5550 0213",
+   "active": true,
+   "contactPreference": "Phone — site mobile",
+   "updatedAt": "2026-07-21T13:15:00+10:00"
+  }
+ ],
+ "contexts": [
+  {
+   "personId": "60000000-0000-4000-8000-000000000101",
+   "companyId": "20000000-0000-4000-8000-000000000001"
+  },
+  {
+   "personId": "60000000-0000-4000-8000-000000000102",
+   "companyId": "20000000-0000-4000-8000-000000000001"
+  },
+  {
+   "personId": "60000000-0000-4000-8000-000000000103",
+   "companyId": "20000000-0000-4000-8000-000000000001"
+  },
+  {
+   "personId": "60000000-0000-4000-8000-000000000104",
+   "companyId": "20000000-0000-4000-8000-000000000001"
+  },
+  {
+   "personId": "60000000-0000-4000-8000-000000000105",
+   "companyId": "20000000-0000-4000-8000-000000000001"
+  },
+  {
+   "personId": "60000000-0000-4000-8000-000000000106",
+   "companyId": "20000000-0000-4000-8000-000000000001"
+  },
+  {
+   "personId": "60000000-0000-4000-8000-000000000107",
+   "companyId": "20000000-0000-4000-8000-000000000001"
+  },
+  {
+   "personId": "60000000-0000-4000-8000-000000000108",
+   "companyId": "20000000-0000-4000-8000-000000000001"
+  },
+  {
+   "personId": "60000000-0000-4000-8000-000000000109",
+   "companyId": "20000000-0000-4000-8000-000000000002"
+  },
+  {
+   "personId": "60000000-0000-4000-8000-000000000110",
+   "companyId": "20000000-0000-4000-8000-000000000001"
+  }
+ ],
+ "affiliations": [
+  {
+   "id": "rel-01",
+   "organisationId": "SYN-PPO-ORG-000101",
+   "personId": "60000000-0000-4000-8000-000000000101",
+   "roleLabel": "Site contact — nursery",
+   "validFrom": "2019-06-01",
+   "validTo": null
+  },
+  {
+   "id": "rel-02",
+   "organisationId": "SYN-PPO-ORG-000101",
+   "personId": "60000000-0000-4000-8000-000000000102",
+   "roleLabel": "Agronomist",
+   "validFrom": "2022-03-14",
+   "validTo": null
+  },
+  {
+   "id": "rel-03",
+   "organisationId": "SYN-PPO-ORG-000101",
+   "personId": "60000000-0000-4000-8000-000000000103",
+   "roleLabel": "Pack room supervisor",
+   "validFrom": "2021-02-01",
+   "validTo": "2024-11-30"
+  },
+  {
+   "id": "rel-04",
+   "organisationId": "SYN-PPO-ORG-000101",
+   "personId": "60000000-0000-4000-8000-000000000104",
+   "roleLabel": "Irrigation lead",
+   "validFrom": "2020-08-17",
+   "validTo": null
+  },
+  {
+   "id": "rel-05",
+   "organisationId": "SYN-PPO-ORG-000102",
+   "personId": "60000000-0000-4000-8000-000000000105",
+   "roleLabel": "Site contact — glasshouse",
+   "validFrom": "2024-08-02",
+   "validTo": null
+  },
+  {
+   "id": "rel-06",
+   "organisationId": "SYN-PPO-ORG-000102",
+   "personId": "60000000-0000-4000-8000-000000000106",
+   "roleLabel": "Maintenance coordinator",
+   "validFrom": "2024-09-10",
+   "validTo": null
+  },
+  {
+   "id": "rel-07",
+   "organisationId": "SYN-PPO-ORG-000102",
+   "personId": "60000000-0000-4000-8000-000000000107",
+   "roleLabel": "Accounts contact",
+   "validFrom": "2024-08-02",
+   "validTo": "2025-06-30"
+  },
+  {
+   "id": "rel-08",
+   "organisationId": "SYN-PPO-ORG-000103",
+   "personId": "60000000-0000-4000-8000-000000000108",
+   "roleLabel": "Property representative",
+   "validFrom": "2023-01-01",
+   "validTo": "2025-03-31"
+  },
+  {
+   "id": "rel-09",
+   "organisationId": "SYN-PPO-ORG-000104",
+   "personId": "60000000-0000-4000-8000-000000000109",
+   "roleLabel": "Site contact — coastal",
+   "validFrom": "2025-02-10",
+   "validTo": null
+  },
+  {
+   "id": "rel-10",
+   "organisationId": "SYN-PPO-ORG-000102",
+   "personId": "60000000-0000-4000-8000-000000000110",
+   "roleLabel": "Maintenance coordinator",
+   "validFrom": "2025-07-21",
+   "validTo": null
+  }
+ ],
+ "successors": [
+  {
+   "affiliationId": "rel-03",
+   "successorPersonId": "60000000-0000-4000-8000-000000000102",
+   "basis": "Recorded at handover"
+  },
+  {
+   "affiliationId": "rel-07",
+   "successorPersonId": null,
+   "basis": "Not recorded"
+  },
+  {
+   "affiliationId": "rel-08",
+   "successorPersonId": null,
+   "basis": "Not recorded"
+  }
+ ],
+ "bindings": [
+  {
+   "id": "bd-01",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "siteId": "SYN-PPO-SITE-000201",
+   "kind": "SitePrimaryContact",
+   "personId": "60000000-0000-4000-8000-000000000101",
+   "owner": "CS-04 / CS-05",
+   "column": "sites.primary_contact_id",
+   "subject": "SYN-PPO-SITE-000201",
+   "label": "Site primary contact — Willowbank Nursery & Propagation",
+   "consequence": "Report approval, finance handoff and the planner contact command all read this one column."
+  },
+  {
+   "id": "bd-02",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "siteId": "SYN-PPO-SITE-000202",
+   "kind": "SitePrimaryContact",
+   "personId": "60000000-0000-4000-8000-000000000104",
+   "owner": "CS-04 / CS-05",
+   "column": "sites.primary_contact_id",
+   "subject": "SYN-PPO-SITE-000202",
+   "label": "Site primary contact — Willowbank Field Production",
+   "consequence": "No command updates this column after createSite."
+  },
+  {
+   "id": "bd-03",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "siteId": "SYN-PPO-SITE-000202",
+   "kind": "ReportApproval",
+   "personId": "60000000-0000-4000-8000-000000000104",
+   "owner": "SV-06",
+   "column": "ADR-0014 · src/reports/service.ts",
+   "subject": "SYN-PPO-RPT-000262",
+   "label": "Service report approval audience",
+   "blocked": true,
+   "consequence": "ADR-0014: “The currently permitted active site primary contact is shown by name and explicitly selected before approval… If that contact is unavailable, approval is blocked and return remains available.”"
+  },
+  {
+   "id": "bd-04",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "siteId": "SYN-PPO-SITE-000201",
+   "capability": "shared.finance.read",
+   "kind": "FinanceHandoff",
+   "personId": "60000000-0000-4000-8000-000000000101",
+   "owner": "FN family",
+   "column": "src/finance/context.ts",
+   "subject": "SYN-PPO-FIN-000118",
+   "label": "Finance handoff audience",
+   "consequence": "Finance selects the site primary contact with AND u.active inside the company context; a changed audience blocks with SourceAudienceChanged."
+  },
+  {
+   "id": "bd-05",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "siteId": "SYN-PPO-SITE-000202",
+   "kind": "PlannerContact",
+   "personId": "60000000-0000-4000-8000-000000000104",
+   "owner": "SV-04",
+   "column": "src/scheduling/planner.ts",
+   "subject": "SYN-PPO-APP-000442",
+   "blocked": true,
+   "label": "Planner customer-contact command",
+   "consequence": "The planner refuses the contact command when !person.active or when the recipient is no longer the site primary contact."
+  },
+  {
+   "id": "bd-06",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "siteId": null,
+   "kind": "DealPrimaryContact",
+   "personId": "60000000-0000-4000-8000-000000000102",
+   "owner": "CR-01",
+   "column": "opportunities.primary_person_id",
+   "subject": "SYN-PPO-OPP-000144",
+   "label": "Deal primary contact — Propagation house climate upgrade",
+   "consequence": "A database trigger refuses the deal unless the person holds a current affiliation: “Contact affiliation required”."
+  },
+  {
+   "id": "bd-07",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "siteId": null,
+   "kind": "DealContactUnknown",
+   "personId": null,
+   "owner": "CR-01",
+   "column": "opportunities.contact_unknown_reason",
+   "subject": "SYN-PPO-OPP-000151",
+   "label": "Deal with no contact recorded",
+   "reason": "Introduced by the grower association; no individual named yet.",
+   "consequence": "The record carries a recorded reason instead of a person. This is not a restricted contact."
+  },
+  {
+   "id": "bd-08",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "siteId": null,
+   "kind": "LeadContact",
+   "personId": "60000000-0000-4000-8000-000000000105",
+   "owner": "CRM Leads",
+   "column": "lead_candidates.primary_person_id",
+   "subject": "SYN-PPO-LED-000064",
+   "label": "Lead primary contact",
+   "consequence": "Lead source, owner and accepted versions are retained; the person cannot be swapped silently."
+  },
+  {
+   "id": "bd-09",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "siteId": "SYN-PPO-SITE-000201",
+   "kind": "TicketRequester",
+   "personId": "60000000-0000-4000-8000-000000000103",
+   "owner": "SV-01 / SV-02",
+   "column": "tickets.requester_id",
+   "subject": "SYN-PPO-TKT-000731",
+   "stale": true,
+   "label": "Open case requester",
+   "consequence": "The requester column has no affiliation requirement, so this open case still names a person whose affiliation ended on 30 November 2024."
+  },
+  {
+   "id": "bd-10",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "siteId": "SYN-PPO-SITE-000201",
+   "kind": "TicketRequesterDescription",
+   "personId": null,
+   "owner": "SV-01 / SV-02",
+   "column": "tickets.requester_description",
+   "subject": "SYN-PPO-TKT-000744",
+   "label": "Case raised without an identified requester",
+   "reason": "Caller gave the nursery name only.",
+   "consequence": "ck_tickets_context requires requester_id OR requester_description; the free text satisfies it."
+  },
+  {
+   "id": "bd-11",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "siteId": null,
+   "kind": "ProjectExternalOwner",
+   "personId": "60000000-0000-4000-8000-000000000102",
+   "owner": "PJ family",
+   "column": "project_tasks.external_owner_id",
+   "subject": "SYN-PPO-PRJ-000021 · task 14",
+   "label": "Project task external owner",
+   "consequence": "A trigger requires pe.active and a current affiliation: “Current external affiliation required”. The read returns ‘Unavailable owner’ with owner_unavailable when the reader cannot see the person."
+  },
+  {
+   "id": "bd-12",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "siteId": "SYN-PPO-SITE-000201",
+   "kind": "AppointmentContact",
+   "personId": "60000000-0000-4000-8000-000000000101",
+   "owner": "SV-04",
+   "column": "/api/v1/appointments/[id]/contacts",
+   "subject": "SYN-PPO-APP-000437",
+   "label": "Appointment contact record",
+   "consequence": "Recorded customer agreement to proposed dates is checked against the site primary contact before initial confirmation."
+  },
+  {
+   "id": "bd-13",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "siteId": "SYN-PPO-SITE-000201",
+   "kind": "ContactOutcome",
+   "personId": "60000000-0000-4000-8000-000000000101",
+   "owner": "SV-04",
+   "column": "ppo.contact_outcomes",
+   "subject": "SYN-PPO-APP-000437 · outcome 2",
+   "label": "Recorded contact outcome",
+   "consequence": "The outcome is evidence of a conversation; it is not consent and not distribution authority."
+  },
+  {
+   "id": "bd-14",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "siteId": "SYN-PPO-SITE-000201",
+   "kind": "PackRecipient",
+   "personId": "60000000-0000-4000-8000-000000000101",
+   "owner": "SV-05",
+   "column": "ADR-0011",
+   "subject": "SYN-PPO-PCK-000188",
+   "label": "Job pack recipient assignment",
+   "consequence": "Final issue requires a complete set of individually identified recipient assignments; retry rechecks assignments and recipients before issuing."
+  }
+ ],
+ "derivedActivity": [
+  {
+   "id": "ac-01",
+   "when": "2026-09-12T16:20:00+10:00",
+   "kind": "CustomerContact",
+   "linkedType": "Site",
+   "linkedId": "SYN-PPO-SITE-000201",
+   "personId": "60000000-0000-4000-8000-000000000101",
+   "derivation": "Activity linked to the site where this person is the primary contact",
+   "summary": "Confirmed propagation house access window"
+  },
+  {
+   "id": "ac-02",
+   "when": "2026-09-04T08:40:00+10:00",
+   "kind": "CustomerContact",
+   "linkedType": "Ticket",
+   "linkedId": "SYN-PPO-TKT-000731",
+   "personId": "60000000-0000-4000-8000-000000000103",
+   "derivation": "Activity linked to a case whose requester_id is this person",
+   "summary": "Pack room humidity complaint intake"
+  },
+  {
+   "id": "ac-03",
+   "when": "2026-08-28T11:10:00+10:00",
+   "kind": "RelationshipReview",
+   "linkedType": "Organisation",
+   "linkedId": "SYN-PPO-ORG-000102",
+   "personId": null,
+   "derivation": "Activity linked to the organisation; no person is named on the link",
+   "summary": "Quarterly relationship review — no individual recorded"
+  },
+  {
+   "id": "ac-04",
+   "when": "2026-07-19T09:35:00+10:00",
+   "kind": "CustomerContact",
+   "linkedType": "Organisation",
+   "linkedId": "SYN-PPO-ORG-000101",
+   "personId": "60000000-0000-4000-8000-000000000102",
+   "derivation": "Activity linked to the organisation where this person holds a current affiliation",
+   "summary": "Agronomy programme discussion"
+  }
+ ],
+ "duplicates": [
+  {
+   "id": "dup-01",
+   "companyId": "20000000-0000-4000-8000-000000000001",
+   "members": [
+    "60000000-0000-4000-8000-000000000106",
+    "60000000-0000-4000-8000-000000000110"
+   ],
+   "evidence": [
+    "Identical display_name within one company context",
+    "Identical role_label at the same organisation",
+    "Overlapping current affiliation periods with different relationship ids",
+    "Disjoint channels: one holds an email, the other a phone"
+   ],
+   "proposedSurvivor": "60000000-0000-4000-8000-000000000106",
+   "survivorBasis": "Earlier valid_from and a recorded email",
+   "state": "Open"
+  },
+  {
+   "id": "dup-02",
+   "companyId": null,
+   "members": [
+    "60000000-0000-4000-8000-000000000105",
+    "60000000-0000-4000-8000-000000000109"
+   ],
+   "evidence": [
+    "Identical display_name",
+    "Different company contexts, different organisations, different sites",
+    "No shared affiliation, no shared channel"
+   ],
+   "proposedSurvivor": null,
+   "survivorBasis": "Not a duplicate. Two people who share a name.",
+   "state": "NotDuplicate"
+  }
+ ],
+ "proposals": [],
+ "events": [
+  {
+   "id": "ev-01",
+   "when": "2019-06-01T09:00:00+10:00",
+   "type": "SharedRecordCreated",
+   "objectType": "Person",
+   "objectId": "60000000-0000-4000-8000-000000000101",
+   "contract": true,
+   "detail": "CreatePerson · version 1"
+  },
+  {
+   "id": "ev-02",
+   "when": "2019-06-01T09:00:00+10:00",
+   "type": "SharedRecordCreated",
+   "objectType": "Relationship",
+   "objectId": "rel-01",
+   "contract": true,
+   "detail": "AddAffiliation · organisation version 1 → 2"
+  },
+  {
+   "id": "ev-03",
+   "when": "2024-11-30T17:00:00+11:00",
+   "type": "NotRecorded",
+   "objectType": "Relationship",
+   "objectId": "rel-03",
+   "contract": false,
+   "provenanceOnly": true,
+   "detail": "The affiliation shows valid_to 2024-11-30. No command wrote it and no audit row exists."
+  },
+  {
+   "id": "ev-04",
+   "when": "2026-09-02T08:30:00+10:00",
+   "type": "NotRecorded",
+   "objectType": "Person",
+   "objectId": "60000000-0000-4000-8000-000000000104",
+   "contract": false,
+   "provenanceOnly": true,
+   "detail": "people.active is false. No command can write this column; how it became false is not recorded."
+  }
+ ],
+ "savedViews": {
+  "version": 0,
+  "views": []
+ },
+ "counters": {
+  "proposal": 0
+ }
+}
