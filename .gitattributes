@@ -1,3 +1,6 @@
+# Any file whose bytes are hashed must check out identically on every platform.
+# Migration checksums, the UI baseline register and design source pins all
+# compare raw bytes, so a CRLF rewrite on Windows reads as a changed file.
 * text=auto
 *.md text eol=lf
 *.py text eol=lf
@@ -5,6 +8,13 @@
 *.yml text eol=lf
 *.yaml text eol=lf
 *.csv text eol=lf
+*.html text eol=lf
+*.sql text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.mjs text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+*.svg text eol=lf
 docs/blueprints/projects-starter-visuals/*.pdf binary
 docs/blueprints/projects-starter-visuals/r02/*.pdf binary
-*.html text eol=lf
