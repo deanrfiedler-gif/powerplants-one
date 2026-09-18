@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "01b9824a63e468b393265b159fa681f83f6e668c",
+  "themeEdition": "r20 shared token core, with the r22 selection and menu vocabulary as it appears in the merged AD-03 source. The r22 board file is not in the repository at this commit; it arrives with PR #239, which has not merged.",
+  "assetPins": {
+    "fonts.css": "57b4aafb71296b18d80408cb10aa972c87f5185deafd748c7fdcfb33e2bd4bef",
+    "icons.json": "cf868d77b2c07f14f07985afd218649ba4362067ff2d55ef625c56bc2df1fcae"
+  },
+  "contractPins": {
+    "db/migrations/0002-shared-foundation.sql": "9f817da163dc168b61fe363665f1b1bc3308e75ddb44aa71fac96e99a1225bdb",
+    "db/migrations/0003-customer-intake.sql": "3a7e3ed9cea0707b260a5f105775c9c64a683c1722cc64b8b2d76d5ce708720f",
+    "db/migrations/0010-crm-opportunities.sql": "4e750f4ba1a27ece94985081d2d56cecc88542fa40b70b4b76a43944d4ae082a",
+    "db/migrations/0017-crm-ui-refinements.sql": "55651d39a66368ee033adc818a7a26f1178b3888d776308ac7881c39bd1768b3",
+    "db/migrations/0018-crm-leads.sql": "2c36b8e173f805e0184e59284c0856d982ecc5a71ea60d61d64854f3ec186255",
+    "db/migrations/0019-projects-gantt.sql": "9b58480eb0daebe8bbe4af4ac952d0d43bb2b6cd621b87f095547e426a4f1043",
+    "src/shared/commands.ts": "8aa4564c50a98e7320c3e4f1c329209c62e5682aa16a4843ffed60c97a8e8f6b",
+    "src/shared/reads.ts": "27c9995fde64a25a82f60cad9290f304e72f3d97289f8cf7b403e02bea4bf8e5",
+    "src/crm/directory.ts": "5812d66b1edd4d791128e568d18226fedf21f9ce3f6059aa8c42ab5cef5336e5",
+    "src/shared/context.ts": "1859ee53bb9a4f0831a5ea1ce1c7bfe93450f01cf1ba1f5605c8c1ec8583d2d8",
+    "src/projects/service.ts": "6cba9b5ad63909d88ad6e134fc5df9a99eb3d49a3617db7a8201c3a430a07b2e",
+    "src/finance/context.ts": "5cf34bf9c0ded84218b2f9948698e2d59ae070a957b1ab186a80c94b02ddfc73",
+    "src/scheduling/planner.ts": "ff302dd3b520fbfa2b2b1bdad9d03611275a2a13be38639b1095bacc576af16c",
+    "src/reports/service.ts": "ef84d39ef647d4447b31f5e85806d1f2cbe188943b48826e09d68fd1f3362e78",
+    "db/seed.sql": "3a5460878e57f6d803affee8ff10a09f1888d2167a78755c9af12a09769c5b81"
+  }
+}
