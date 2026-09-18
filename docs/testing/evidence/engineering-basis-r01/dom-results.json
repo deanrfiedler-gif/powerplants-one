@@ -1,0 +1,119 @@
+{
+  "artifact": "EN-02 r01",
+  "method": "jsdom 26.1.0; native dialogs, print, URLs and narrow-width value modeled; no browser render or native keyboard assurance",
+  "runtime": "v24.19.0",
+  "passed": 22,
+  "failed": 0,
+  "results": [
+    {
+      "id": "D01",
+      "name": "Six tabs render and maintain one selected panel",
+      "status": "passed"
+    },
+    {
+      "id": "D02",
+      "name": "All visible buttons have names and IDs are unique",
+      "status": "passed"
+    },
+    {
+      "id": "D03",
+      "name": "Manual tab activation and arrow key handler",
+      "status": "passed"
+    },
+    {
+      "id": "D04",
+      "name": "Record inspection and close restores modeled focus",
+      "status": "passed"
+    },
+    {
+      "id": "D05",
+      "name": "Requirement form saves and survives reload",
+      "status": "passed"
+    },
+    {
+      "id": "D06",
+      "name": "Markup and active URL strings remain inert text",
+      "status": "passed"
+    },
+    {
+      "id": "D07",
+      "name": "Search empty state and recovery work",
+      "status": "passed"
+    },
+    {
+      "id": "D08",
+      "name": "Matrix selection survives rerender and tab return",
+      "status": "passed"
+    },
+    {
+      "id": "D09",
+      "name": "Observer has disabled edit actions and sanitized export",
+      "status": "passed"
+    },
+    {
+      "id": "D10",
+      "name": "Opportunity package keeps exact context and missing policy",
+      "status": "passed"
+    },
+    {
+      "id": "D11",
+      "name": "Primary journey completes exact review and interrupted recovery",
+      "status": "passed"
+    },
+    {
+      "id": "D12",
+      "name": "Returned review opens a retained successor and finding",
+      "status": "passed"
+    },
+    {
+      "id": "D13",
+      "name": "Interrupted local save can retry original operation inside dialog",
+      "status": "passed"
+    },
+    {
+      "id": "D14",
+      "name": "Changed storage preserves unsaved form and exports input",
+      "status": "passed"
+    },
+    {
+      "id": "D15",
+      "name": "Corrupt storage remains intact and writes pause",
+      "status": "passed"
+    },
+    {
+      "id": "D16",
+      "name": "Partial and failed reads do not show zero readiness",
+      "status": "passed"
+    },
+    {
+      "id": "D17",
+      "name": "Selected source comparison can open a reachable inspection panel",
+      "status": "passed"
+    },
+    {
+      "id": "D18",
+      "name": "Numeric zero is saved from the actual interface form",
+      "status": "passed"
+    },
+    {
+      "id": "D19",
+      "name": "Narrow-width overlay applies modeled modal semantics",
+      "status": "passed"
+    },
+    {
+      "id": "D20",
+      "name": "Print surface has identity purpose limitation and review-copy label",
+      "status": "passed"
+    },
+    {
+      "id": "D21",
+      "name": "Modal form fields have associated labels",
+      "status": "passed"
+    },
+    {
+      "id": "D22",
+      "name": "Self-contained artifact has no external script image or stylesheet loads",
+      "status": "passed"
+    }
+  ]
+}

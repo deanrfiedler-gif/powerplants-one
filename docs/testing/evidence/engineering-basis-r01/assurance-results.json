@@ -1,0 +1,115 @@
+{
+  "artifact_sha256": "1e6c40e6bf5200322ad98313bd47d934cc6f71aafdd44f19549337749d9ce9f7",
+  "node": "v24.19.0",
+  "qa_dependencies": {
+    "eslint": "10.10.0",
+    "typescript-eslint": "8.69.0",
+    "@next/eslint-plugin-next": "16.3.4",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "jsdom": "26.1.0"
+  },
+  "repository_dependencies_changed": false,
+  "native_browser": "Not executed: browser URL policy rejected local file navigation",
+  "results": [
+    {
+      "command": [
+        "node",
+        "--check",
+        "docs/design/engineering-basis/model.js"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "docs/design/engineering-basis/workspace.js"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "scripts/verify-engineering-basis-design.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "scripts/verify-engineering-basis-dom.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/tmp/ppo-en02-qa/node_modules/.bin/eslint",
+        "--config",
+        "/tmp/ppo-en02-qa/eslint.config.mjs",
+        "docs/design/engineering-basis/model.js",
+        "docs/design/engineering-basis/workspace.js",
+        "scripts/verify-engineering-basis-design.mjs",
+        "scripts/verify-engineering-basis-dom.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/check_foundation.py"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"issued_sources\": 15,\n  \"requirements\": 78,\n  \"decisions\": 29,\n  \"planned_acceptance\": 38,\n  \"backlog_items\": 16,\n  \"linked_issues\": 16,\n  \"local_links_checked\": 3338,\n  \"files_scanned_for_markers\": 1813,\n  \"errors\": [],\n  \"scope\": \"Documentation assurance only; no business acceptance tests executed\"\n}",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/check_prototype.py"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"package\": \"PP-01\",\n  \"documents\": 12,\n  \"parent_dispositions\": 78,\n  \"dispositions\": {\n    \"Core\": 24,\n    \"Partial\": 25,\n    \"Deferred\": 29\n  },\n  \"master_decisions\": 29,\n  \"prototype_procedures\": 30,\n  \"implementation_packages\": 12,\n  \"registers\": {\n    \"SC\": 15,\n    \"CMP\": 12,\n    \"SR\": 20,\n    \"VAL\": 24,\n    \"TR\": 16,\n    \"API-C\": 26,\n    \"API-R\": 10\n  },\n  \"errors\": [],\n  \"scope\": \"Documentation consistency only; authored catalogue defaults are not execution evidence; see recorded runs\"\n}",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/check_naming.py"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"document_records\": 295,\n  \"standing_exceptions\": 9,\n  \"front_matter_revisions_compared\": 145,\n  \"project_instruction_characters\": 7971,\n  \"errors\": [],\n  \"scope\": \"Naming and documentation consistency only; runtime behaviour is verified separately\"\n}",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "108b1600152ee12443c75ffaf7feb7cc857316f5"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "deterministic-rebuild-and-manifest-check"
+      ],
+      "exit_code": 0,
+      "stdout": "HTML and manifest byte-identical; all input/artifact hashes match",
+      "stderr": ""
+    }
+  ]
+}

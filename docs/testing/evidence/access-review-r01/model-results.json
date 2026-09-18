@@ -1,0 +1,436 @@
+{
+  "html_sha256": "a15ecb01ff596e5eaa9cc784977ab103fe664de6258ac41c66aaed58397d6363",
+  "fixture_sha256": "13d0e64db11afa36104a55be883c5c605947b84bc3a9471acbeaa36a57ede37d",
+  "capability_source_sha256": "a589022f8fdfaf109a58b3ad97f4856bbad472fa2e2b94803e50ea9b4402bcfc",
+  "groups": 107,
+  "results": [
+    {
+      "name": "Capability catalogue equals the application Capability union exactly",
+      "result": "Passed"
+    },
+    {
+      "name": "Hosted demo capability set equals scripts/demo-database.ts",
+      "result": "Passed"
+    },
+    {
+      "name": "Every capability has a plain-English label and a known family",
+      "result": "Passed"
+    },
+    {
+      "name": "Only email.connect is hosted-only, matching the hosted migration track",
+      "result": "Passed"
+    },
+    {
+      "name": "Administrative capabilities stay outside the application contract",
+      "result": "Passed"
+    },
+    {
+      "name": "Scope rule mirrors ck_grants_scope in migration 0002",
+      "result": "Passed"
+    },
+    {
+      "name": "Evaluation rule text matches hasPermission in permissions.ts",
+      "result": "Passed"
+    },
+    {
+      "name": "Grant and user changes have no application audit type today",
+      "result": "Passed"
+    },
+    {
+      "name": "Seeded identities and scopes use the real seed identifiers",
+      "result": "Passed"
+    },
+    {
+      "name": "Hosted testers mirror setup: Company A, tester set, end at tester expiry",
+      "result": "Passed"
+    },
+    {
+      "name": "Tester expiry is within fourteen days of provisioning in the fixture",
+      "result": "Passed"
+    },
+    {
+      "name": "Initial fixture validates and has no duplicate grants",
+      "result": "Passed"
+    },
+    {
+      "name": "Evaluation: active company grant allows company record",
+      "result": "Passed"
+    },
+    {
+      "name": "Evaluation: company grant allows its sites",
+      "result": "Passed"
+    },
+    {
+      "name": "Evaluation: company grant does not reach another company",
+      "result": "Passed"
+    },
+    {
+      "name": "Evaluation: expired grant refuses",
+      "result": "Passed"
+    },
+    {
+      "name": "Evaluation: site grant allows its own site",
+      "result": "Passed"
+    },
+    {
+      "name": "Evaluation: site grant refuses a sibling site",
+      "result": "Passed"
+    },
+    {
+      "name": "Evaluation: site grant refuses a company-level record",
+      "result": "Passed"
+    },
+    {
+      "name": "Evaluation: capability check without a company passes on any scope",
+      "result": "Passed"
+    },
+    {
+      "name": "Evaluation: workspace grant reaches a second company",
+      "result": "Passed"
+    },
+    {
+      "name": "Evaluation: workspace grant does not add other capabilities",
+      "result": "Passed"
+    },
+    {
+      "name": "Evaluation: second-company coordinator is isolated from Company A",
+      "result": "Passed"
+    },
+    {
+      "name": "Evaluation: inactive identity refuses despite current grant",
+      "result": "Passed"
+    },
+    {
+      "name": "Evaluation: future grant refuses before its start",
+      "result": "Passed"
+    },
+    {
+      "name": "Evaluation: current hosted tester allowed within tester set",
+      "result": "Passed"
+    },
+    {
+      "name": "Evaluation: expired hosted tester refused",
+      "result": "Passed"
+    },
+    {
+      "name": "Evaluation: no grant refuses",
+      "result": "Passed"
+    },
+    {
+      "name": "Explanation trace names the failing step",
+      "result": "Passed"
+    },
+    {
+      "name": "Own-record capability discloses the module limit it does not reproduce",
+      "result": "Passed"
+    },
+    {
+      "name": "Matrix counts agree with per-capability evaluation",
+      "result": "Passed"
+    },
+    {
+      "name": "Matrix marks access that arrives through a workspace grant",
+      "result": "Passed"
+    },
+    {
+      "name": "Queues identify inactive, tester, expiring, workspace, restricted, SoD and pending cases",
+      "result": "Passed"
+    },
+    {
+      "name": "Queue filter returns the exact attention set",
+      "result": "Passed"
+    },
+    {
+      "name": "Search covers capability keys and scope names",
+      "result": "Passed"
+    },
+    {
+      "name": "Identical company display names remain distinguishable by ERP key",
+      "result": "Passed"
+    },
+    {
+      "name": "Bundle matching is derived and orders the strongest match first",
+      "result": "Passed"
+    },
+    {
+      "name": "Bundles are never adopted and a new revision lists holders without changing grants",
+      "result": "Passed"
+    },
+    {
+      "name": "Separation-of-duties pairs are limited to runtime-evidenced separations",
+      "result": "Passed"
+    },
+    {
+      "name": "Pending request surfaces an SoD warning without an existing breach",
+      "result": "Passed"
+    },
+    {
+      "name": "Teams carry no authority",
+      "result": "Passed"
+    },
+    {
+      "name": "Ended team membership is not current",
+      "result": "Passed"
+    },
+    {
+      "name": "Ordinary user sees only their own identity and events",
+      "result": "Passed"
+    },
+    {
+      "name": "Ordinary user cannot open changes or reviews",
+      "result": "Passed"
+    },
+    {
+      "name": "Team lead sees current team members only",
+      "result": "Passed"
+    },
+    {
+      "name": "Team lead sees only reviews assigned to them",
+      "result": "Passed"
+    },
+    {
+      "name": "Hosted object identifiers are masked",
+      "result": "Passed"
+    },
+    {
+      "name": "Auditor and ordinary user cannot propose",
+      "result": "Passed"
+    },
+    {
+      "name": "Approver cannot raise a request",
+      "result": "Passed"
+    },
+    {
+      "name": "You cannot change your own access",
+      "result": "Passed"
+    },
+    {
+      "name": "Hosted testers cannot be changed in the page",
+      "result": "Passed"
+    },
+    {
+      "name": "Inactive identities cannot receive changes",
+      "result": "Passed"
+    },
+    {
+      "name": "Reviewer must be an approver and independent",
+      "result": "Passed"
+    },
+    {
+      "name": "Team lead cannot propose outside the team",
+      "result": "Passed"
+    },
+    {
+      "name": "Unknown capability and hosted-only capability are refused",
+      "result": "Passed"
+    },
+    {
+      "name": "Invalid scope combinations are refused",
+      "result": "Passed"
+    },
+    {
+      "name": "An existing grant, even expired, blocks a duplicate",
+      "result": "Passed"
+    },
+    {
+      "name": "A request cannot add the same grant twice",
+      "result": "Passed"
+    },
+    {
+      "name": "End before effective date and past effective date are refused",
+      "result": "Passed"
+    },
+    {
+      "name": "Reason is required and bounded",
+      "result": "Passed"
+    },
+    {
+      "name": "Invalid calendar date is refused",
+      "result": "Passed"
+    },
+    {
+      "name": "Future grant cannot be revoked; it must change validity",
+      "result": "Passed"
+    },
+    {
+      "name": "Administrator drafts a valid request with an allocated reference",
+      "result": "Passed"
+    },
+    {
+      "name": "Stale request version is refused as a conflict",
+      "result": "Passed"
+    },
+    {
+      "name": "Stale workspace version is refused atomically",
+      "result": "Passed"
+    },
+    {
+      "name": "Submitting requires an independent reviewer and records warnings",
+      "result": "Passed"
+    },
+    {
+      "name": "Only the named reviewer can decide and a reason is required",
+      "result": "Passed"
+    },
+    {
+      "name": "Nothing changes before apply",
+      "result": "Passed"
+    },
+    {
+      "name": "Only an administrator can apply",
+      "result": "Passed"
+    },
+    {
+      "name": "Simulated apply creates the grant, a proposed event and before/after evidence",
+      "result": "Passed"
+    },
+    {
+      "name": "Retrying the same apply returns the original result without duplication",
+      "result": "Passed"
+    },
+    {
+      "name": "Reusing an operation ID with different content is refused",
+      "result": "Passed"
+    },
+    {
+      "name": "An applied request cannot be applied again under a new operation",
+      "result": "Passed"
+    },
+    {
+      "name": "Approver cannot decide a change to their own access",
+      "result": "Passed"
+    },
+    {
+      "name": "Return records the reason and editing reopens the draft",
+      "result": "Passed"
+    },
+    {
+      "name": "Revocation keeps the grant row and ends it at the effective time",
+      "result": "Passed"
+    },
+    {
+      "name": "Team lead drafts and submits a change for a team member",
+      "result": "Passed"
+    },
+    {
+      "name": "Withdrawal needs a reason and is limited to the requester or an administrator",
+      "result": "Passed"
+    },
+    {
+      "name": "Only the assigned reviewer can attest",
+      "result": "Passed"
+    },
+    {
+      "name": "Review cannot complete with undecided items",
+      "result": "Passed"
+    },
+    {
+      "name": "Unable to confirm requires a reason and an owner",
+      "result": "Passed"
+    },
+    {
+      "name": "Change and Revoke create a draft request for the administrator without changing grants",
+      "result": "Passed"
+    },
+    {
+      "name": "Review-originated request records who recommended it",
+      "result": "Passed"
+    },
+    {
+      "name": "The deputy approver is an independent reviewer; the attester is not",
+      "result": "Passed"
+    },
+    {
+      "name": "The attesting approver cannot decide the resulting request even if named",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore refuses a request decided by the reviewer who recommended it",
+      "result": "Passed"
+    },
+    {
+      "name": "A decided item cannot be decided twice",
+      "result": "Passed"
+    },
+    {
+      "name": "Stale review version is refused",
+      "result": "Passed"
+    },
+    {
+      "name": "Completing after every decision makes the review read-only",
+      "result": "Passed"
+    },
+    {
+      "name": "Only session events claim application audit; all others are proposed or not recorded",
+      "result": "Passed"
+    },
+    {
+      "name": "No event claims to have created a seeded grant",
+      "result": "Passed"
+    },
+    {
+      "name": "Every workflow event carries an actor, reason and operation",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore refuses an unknown capability",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore refuses an invalid scope",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore refuses a grant ending before it starts",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore refuses a duplicate grant",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore refuses a self-decided request",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore refuses a complete review with undecided items",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore refuses email.connect on a local identity",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore refuses a foreign schema",
+      "result": "Passed"
+    },
+    {
+      "name": "Valid serialised state round-trips unchanged",
+      "result": "Passed"
+    },
+    {
+      "name": "Assembled page is the module only, with one scope container and six views",
+      "result": "Passed"
+    },
+    {
+      "name": "Embedded fonts are byte-identical to the declared My Work r20 source",
+      "result": "Passed"
+    },
+    {
+      "name": "Token core names match the My Work r01 source",
+      "result": "Passed"
+    },
+    {
+      "name": "Page makes no remote requests and stores only under its own key",
+      "result": "Passed"
+    },
+    {
+      "name": "Page never claims enforcement and states the authority boundary",
+      "result": "Passed"
+    },
+    {
+      "name": "Page contains no secrets, tokens or unmasked hosted object identifiers in rendered copy",
+      "result": "Passed"
+    }
+  ]
+}

@@ -67,7 +67,7 @@ test("global search is independent of page filtering, keyboard selection and qui
   await page.keyboard.press("Escape"); await expect(page.getByRole("button", { name: "Quick add", exact: true })).toBeFocused();
   await page.getByRole("button", { name: "Quick Help", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Quick Help" })).toBeVisible();
-  await page.locator(".crm-worklist-stamp").click(); await expect(page.getByRole("heading", { name: "Quick Help" })).toBeHidden();
+  await page.locator(".crm-workbar").click({position:{x:2,y:2}}); await expect(page.getByRole("heading", { name: "Quick Help" })).toBeHidden();
   await page.getByRole("button", { name: "Notifications", exact: true }).click();
   await expect(page.getByText("Notifications are not connected", { exact: false })).toBeVisible();
 });

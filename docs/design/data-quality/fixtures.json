@@ -1,0 +1,1222 @@
+{
+  "schema": 1,
+  "generation": 0,
+  "records": {
+    "SYN-EQP-101": {
+      "id": "SYN-EQP-101",
+      "name": "Pump 1",
+      "org": "SYN-ORG-101",
+      "organisation": "Banksia Demonstration Nurseries",
+      "site": "north",
+      "location": "Irrigation shed",
+      "served": [
+        "Block A",
+        "Block B",
+        "Block C"
+      ],
+      "manufacturer": "Example Pumps",
+      "model": "EP-40",
+      "serial": "00-EP-102",
+      "version": 1
+    },
+    "SYN-EQP-102": {
+      "id": "SYN-EQP-102",
+      "name": "Pump 1",
+      "org": "SYN-ORG-101",
+      "organisation": "Banksia Demonstration Nurseries",
+      "site": "south",
+      "location": "Irrigation shed",
+      "served": [
+        "Block A",
+        "Block B",
+        "Block C"
+      ],
+      "manufacturer": "Example Pumps",
+      "model": "EP-40",
+      "serial": "00-EP-102",
+      "version": 1
+    },
+    "SYN-EQP-103": {
+      "id": "SYN-EQP-103",
+      "name": "Irrigation pump 3",
+      "org": "SYN-ORG-101",
+      "organisation": "Banksia Demonstration Nurseries",
+      "site": "north",
+      "location": "Irrigation shed",
+      "served": [
+        "Block A",
+        "Block B",
+        "Block C"
+      ],
+      "manufacturer": "Example Pumps",
+      "model": "EP-40",
+      "serial": "00-EP-103",
+      "version": 1
+    },
+    "SYN-EQP-104": {
+      "id": "SYN-EQP-104",
+      "name": "Irrigation pump 4",
+      "org": "SYN-ORG-101",
+      "organisation": "Banksia Demonstration Nurseries",
+      "site": "north",
+      "location": "Irrigation shed",
+      "served": [
+        "Block A",
+        "Block B",
+        "Block C"
+      ],
+      "manufacturer": "Example Pumps",
+      "model": "EP-40",
+      "serial": null,
+      "version": 1
+    },
+    "SYN-EQP-105": {
+      "id": "SYN-EQP-105",
+      "name": "Irrigation pump 5",
+      "org": "SYN-ORG-101",
+      "organisation": "Banksia Demonstration Nurseries",
+      "site": "north",
+      "location": "Irrigation shed",
+      "served": [
+        "Block A",
+        "Block B",
+        "Block C"
+      ],
+      "manufacturer": "Example Pumps",
+      "model": "EP-40",
+      "serial": "00-EP-105",
+      "version": 1
+    },
+    "SYN-EQP-106": {
+      "id": "SYN-EQP-106",
+      "name": "Irrigation pump 6",
+      "org": "SYN-ORG-101",
+      "organisation": "Banksia Demonstration Nurseries",
+      "site": "north",
+      "location": "Irrigation shed",
+      "served": [
+        "Block A",
+        "Block B",
+        "Block C"
+      ],
+      "manufacturer": "Example Pumps",
+      "model": "EP-40",
+      "serial": "00-EP-106",
+      "version": 1
+    },
+    "SYN-EQP-107": {
+      "id": "SYN-EQP-107",
+      "name": "Irrigation pump 7",
+      "org": "SYN-ORG-101",
+      "organisation": "Banksia Demonstration Nurseries",
+      "site": "north",
+      "location": "Irrigation shed",
+      "served": [
+        "Block A",
+        "Block B",
+        "Block C"
+      ],
+      "manufacturer": "Example Pumps",
+      "model": "EP-40",
+      "serial": "00-EP-107",
+      "version": 1
+    },
+    "SYN-EQP-108": {
+      "id": "SYN-EQP-108",
+      "name": "Irrigation pump 8",
+      "org": "SYN-ORG-101",
+      "organisation": "Banksia Demonstration Nurseries",
+      "site": "north",
+      "location": "Irrigation shed",
+      "served": [
+        "Block A",
+        "Block B",
+        "Block C"
+      ],
+      "manufacturer": "Example Pumps",
+      "model": "EP-40",
+      "serial": "00-EP-108",
+      "version": 1
+    },
+    "SYN-EQP-109": {
+      "id": "SYN-EQP-109",
+      "name": "Irrigation pump 9",
+      "org": "SYN-ORG-101",
+      "organisation": "Banksia Demonstration Nurseries",
+      "site": "north",
+      "location": "Irrigation shed",
+      "served": [
+        "Block A",
+        "Block B",
+        "Block C"
+      ],
+      "manufacturer": "Example Pumps",
+      "model": "EP-40",
+      "serial": "00-EP-109",
+      "version": 1
+    },
+    "SYN-EQP-110": {
+      "id": "SYN-EQP-110",
+      "name": "Irrigation pump 10",
+      "org": "SYN-ORG-101",
+      "organisation": "Banksia Demonstration Nurseries",
+      "site": "north",
+      "location": "Irrigation shed",
+      "served": [
+        "Block A",
+        "Block B",
+        "Block C"
+      ],
+      "manufacturer": "Example Pumps",
+      "model": "EP-40",
+      "serial": "00-EP-110",
+      "version": 1
+    },
+    "SYN-EQP-111": {
+      "id": "SYN-EQP-111",
+      "name": "Irrigation pump 11",
+      "org": "SYN-ORG-101",
+      "organisation": "Banksia Demonstration Nurseries",
+      "site": "north",
+      "location": "Irrigation shed",
+      "served": [
+        "Block A",
+        "Block B",
+        "Block C"
+      ],
+      "manufacturer": "Example Pumps",
+      "model": "EP-40",
+      "serial": "00-EP-111",
+      "version": 1
+    },
+    "SYN-EQP-112": {
+      "id": "SYN-EQP-112",
+      "name": "Irrigation pump 12",
+      "org": "SYN-ORG-101",
+      "organisation": "Banksia Demonstration Nurseries",
+      "site": "south",
+      "location": "Irrigation shed",
+      "served": [
+        "Block A",
+        "Block B",
+        "Block C"
+      ],
+      "manufacturer": "Example Pumps",
+      "model": "EP-40",
+      "serial": "00-EP-112",
+      "version": 1
+    },
+    "SYN-EQP-113": {
+      "id": "SYN-EQP-113",
+      "name": "Irrigation pump 13",
+      "org": "SYN-ORG-101",
+      "organisation": "Banksia Demonstration Nurseries",
+      "site": "north",
+      "location": "Irrigation shed",
+      "served": [
+        "Block A",
+        "Block B",
+        "Block C"
+      ],
+      "manufacturer": "Example Pumps",
+      "model": "EP-40",
+      "serial": "00-EP-113",
+      "version": 1
+    },
+    "SYN-EQP-114": {
+      "id": "SYN-EQP-114",
+      "name": "Irrigation pump 14",
+      "org": "SYN-ORG-101",
+      "organisation": "Banksia Demonstration Nurseries",
+      "site": "north",
+      "location": "Irrigation shed",
+      "served": [
+        "Block A",
+        "Block B",
+        "Block C"
+      ],
+      "manufacturer": "Example Pumps",
+      "model": "EP-40",
+      "serial": "00-EP-114",
+      "version": 1
+    },
+    "SYN-EQP-115": {
+      "id": "SYN-EQP-115",
+      "name": "Irrigation pump 15",
+      "org": "SYN-ORG-101",
+      "organisation": "Banksia Demonstration Nurseries",
+      "site": "north",
+      "location": "Irrigation shed",
+      "served": [
+        "Block A",
+        "Block B",
+        "Block C"
+      ],
+      "manufacturer": "Example Pumps",
+      "model": "EP-40",
+      "serial": "00-EP-115",
+      "version": 1
+    },
+    "SYN-EQP-116": {
+      "id": "SYN-EQP-116",
+      "name": "Irrigation pump 16",
+      "org": "SYN-ORG-101",
+      "organisation": "Banksia Demonstration Nurseries",
+      "site": "north",
+      "location": "Irrigation shed",
+      "served": [
+        "Block A",
+        "Block B",
+        "Block C"
+      ],
+      "manufacturer": "Example Pumps",
+      "model": "EP-40",
+      "serial": "00-EP-116",
+      "version": 1
+    }
+  },
+  "sites": {
+    "north": {
+      "id": "SYN-SITE-101",
+      "name": "North nursery",
+      "address": "18 Example Growers Lane, Exampleville QLD 4000"
+    },
+    "south": {
+      "id": "SYN-SITE-102",
+      "name": "South propagation",
+      "address": "42 Demonstration Road, Sampleton QLD 4000"
+    }
+  },
+  "cases": [
+    {
+      "id": "DQ-01",
+      "title": "Two pumps share a local name",
+      "family": "Duplicate candidates",
+      "domain": "Equipment",
+      "site": "north",
+      "kind": "keep",
+      "target": "SYN-EQP-101",
+      "subjects": [
+        "SYN-EQP-101",
+        "SYN-EQP-102"
+      ],
+      "state": "Investigating",
+      "coverage": "Current",
+      "priority": "High",
+      "due": "2026-09-18",
+      "dateReason": "",
+      "owner": "Alex Morgan",
+      "created": "2026-09-11T00:00:00Z",
+      "observation": "Different addressed sites and retained nameplates establish two separate physical assets.",
+      "next": "Keep separate; retain both stable identities.",
+      "policy": 1,
+      "sourceVersion": 1,
+      "impactVersion": 1,
+      "impactComplete": true,
+      "evidence": [
+        {
+          "id": "SYN-SRC-001",
+          "version": 1,
+          "title": "Retained nameplate transcription",
+          "owner": "Equipment",
+          "asAt": "2026-09-16T22:00:00Z",
+          "text": "Fictional observed evidence for SYN-EQP-101. Different addressed sites and retained nameplates establish two separate physical assets.",
+          "available": true
+        }
+      ],
+      "proposals": [],
+      "findings": [],
+      "decisions": [],
+      "operations": [],
+      "followups": [],
+      "events": [
+        {
+          "id": "EV-1-1",
+          "time": "2026-09-16T22:00:00Z",
+          "actor": "Fixture observation",
+          "action": "Finding recorded",
+          "detail": "Different addressed sites and retained nameplates establish two separate physical assets."
+        }
+      ],
+      "disposition": "Unassessed",
+      "outcome": "Not required",
+      "privateNotes": {},
+      "origin": "OBS-20260917-001",
+      "rule": "NAME-01",
+      "ruleVersion": 1
+    },
+    {
+      "id": "DQ-02",
+      "title": "Serial transcription needs correction",
+      "family": "Identity & serials",
+      "domain": "Equipment",
+      "site": "north",
+      "kind": "serial",
+      "target": "SYN-EQP-101",
+      "subjects": [
+        "SYN-EQP-101",
+        "SYN-EQP-102"
+      ],
+      "state": "Investigating",
+      "coverage": "Current",
+      "priority": "High",
+      "due": "2026-09-17",
+      "dateReason": "",
+      "owner": "Alex Morgan",
+      "created": "2026-09-12T00:00:00Z",
+      "observation": "A typed serial resembles the South propagation pump. The North nameplate reads 00-EP-101.",
+      "next": "Correct the current serial; retain both assets and all history.",
+      "policy": 1,
+      "sourceVersion": 1,
+      "impactVersion": 1,
+      "impactComplete": true,
+      "evidence": [
+        {
+          "id": "SYN-SRC-002",
+          "version": 1,
+          "title": "Retained nameplate transcription",
+          "owner": "Equipment",
+          "asAt": "2026-09-16T22:00:00Z",
+          "text": "Fictional observed evidence for SYN-EQP-101. A typed serial resembles the South propagation pump. The North nameplate reads 00-EP-101.",
+          "available": true
+        },
+        {
+          "id": "SYN-SRC-002-B",
+          "version": 2,
+          "title": "North pump identity confirmation",
+          "owner": "Equipment",
+          "asAt": "2026-09-17T00:15:00Z",
+          "text": "North nursery / Irrigation shed / SYN-EQP-101. Exact nameplate serial: 00-EP-101; model EP-40. Separate from SYN-EQP-102 at South propagation. Fictional evidence.",
+          "available": true
+        }
+      ],
+      "proposals": [],
+      "findings": [],
+      "decisions": [],
+      "operations": [],
+      "followups": [],
+      "events": [
+        {
+          "id": "EV-2-1",
+          "time": "2026-09-16T22:00:00Z",
+          "actor": "Fixture observation",
+          "action": "Finding recorded",
+          "detail": "A typed serial resembles the South propagation pump. The North nameplate reads 00-EP-101."
+        }
+      ],
+      "disposition": "Unassessed",
+      "outcome": "Not required",
+      "privateNotes": {},
+      "origin": "OBS-20260917-002",
+      "rule": "CONTEXT-01",
+      "ruleVersion": 1
+    },
+    {
+      "id": "DQ-03",
+      "title": "Two records may be one physical pump",
+      "family": "Duplicate candidates",
+      "domain": "Equipment",
+      "site": "north",
+      "kind": "consolidation",
+      "target": "SYN-EQP-103",
+      "subjects": [
+        "SYN-EQP-103",
+        "SYN-EQP-106"
+      ],
+      "state": "Investigating",
+      "coverage": "Current",
+      "priority": "High",
+      "due": "2026-09-19",
+      "dateReason": "",
+      "owner": "Alex Morgan",
+      "created": "2026-09-13T00:00:00Z",
+      "observation": "An import produced two canonical records. Evidence requires an Equipment-owner consolidation decision.",
+      "next": "Prepare a reviewed consolidation request.",
+      "policy": 1,
+      "sourceVersion": 1,
+      "impactVersion": 1,
+      "impactComplete": true,
+      "evidence": [
+        {
+          "id": "SYN-SRC-003",
+          "version": 1,
+          "title": "Retained nameplate transcription",
+          "owner": "Equipment",
+          "asAt": "2026-09-16T22:00:00Z",
+          "text": "Fictional observed evidence for SYN-EQP-103. An import produced two canonical records. Evidence requires an Equipment-owner consolidation decision.",
+          "available": true
+        }
+      ],
+      "proposals": [],
+      "findings": [],
+      "decisions": [],
+      "operations": [],
+      "followups": [],
+      "events": [
+        {
+          "id": "EV-3-1",
+          "time": "2026-09-16T22:00:00Z",
+          "actor": "Fixture observation",
+          "action": "Finding recorded",
+          "detail": "An import produced two canonical records. Evidence requires an Equipment-owner consolidation decision."
+        }
+      ],
+      "disposition": "Unassessed",
+      "outcome": "Not required",
+      "privateNotes": {},
+      "origin": "OBS-20260917-003",
+      "rule": "NAME-01",
+      "ruleVersion": 1
+    },
+    {
+      "id": "DQ-04",
+      "title": "Nameplate evidence is missing",
+      "family": "Identity & serials",
+      "domain": "Equipment",
+      "site": "north",
+      "kind": "serial",
+      "target": "SYN-EQP-104",
+      "subjects": [
+        "SYN-EQP-104"
+      ],
+      "state": "Needs information",
+      "coverage": "Missing",
+      "priority": "Normal",
+      "due": null,
+      "dateReason": "Owner to confirm required date",
+      "owner": null,
+      "created": "2026-09-14T00:00:00Z",
+      "observation": "The identity label is unreadable. No verified replacement serial has been supplied.",
+      "next": "Request a legible nameplate and model confirmation.",
+      "policy": 1,
+      "sourceVersion": 1,
+      "impactVersion": 1,
+      "impactComplete": true,
+      "evidence": [
+        {
+          "id": "SYN-SRC-004",
+          "version": 1,
+          "title": "Retained nameplate transcription",
+          "owner": "Equipment",
+          "asAt": "2026-09-16T22:00:00Z",
+          "text": "Fictional observed evidence for SYN-EQP-104. The identity label is unreadable. No verified replacement serial has been supplied.",
+          "available": false
+        }
+      ],
+      "proposals": [],
+      "findings": [],
+      "decisions": [],
+      "operations": [],
+      "followups": [],
+      "events": [
+        {
+          "id": "EV-4-1",
+          "time": "2026-09-16T22:00:00Z",
+          "actor": "Fixture observation",
+          "action": "Finding recorded",
+          "detail": "The identity label is unreadable. No verified replacement serial has been supplied."
+        }
+      ],
+      "disposition": "Unassessed",
+      "outcome": "Not required",
+      "privateNotes": {},
+      "origin": "OBS-20260917-004",
+      "rule": "CONTEXT-01",
+      "ruleVersion": 1
+    },
+    {
+      "id": "DQ-05",
+      "title": "Billing address used as site address",
+      "family": "Missing context",
+      "domain": "Customers & Sites",
+      "site": "north",
+      "kind": "site",
+      "target": "SYN-EQP-105",
+      "subjects": [
+        "SYN-EQP-105"
+      ],
+      "state": "Assigned",
+      "coverage": "Current",
+      "priority": "Normal",
+      "due": "2026-09-20",
+      "dateReason": "",
+      "owner": "Alex Morgan",
+      "created": "2026-09-15T00:00:00Z",
+      "observation": "The billing office was copied into the physical site record. Site operator and bill-to are distinct.",
+      "next": "Prepare the physical-location owner request.",
+      "policy": 1,
+      "sourceVersion": 1,
+      "impactVersion": 1,
+      "impactComplete": true,
+      "evidence": [
+        {
+          "id": "SYN-SRC-005",
+          "version": 1,
+          "title": "Retained source observation",
+          "owner": "Customers & Sites",
+          "asAt": "2026-09-16T22:00:00Z",
+          "text": "Fictional observed evidence for SYN-EQP-105. The billing office was copied into the physical site record. Site operator and bill-to are distinct.",
+          "available": true
+        }
+      ],
+      "proposals": [],
+      "findings": [],
+      "decisions": [],
+      "operations": [],
+      "followups": [],
+      "events": [
+        {
+          "id": "EV-5-1",
+          "time": "2026-09-16T22:00:00Z",
+          "actor": "Fixture observation",
+          "action": "Finding recorded",
+          "detail": "The billing office was copied into the physical site record. Site operator and bill-to are distinct."
+        }
+      ],
+      "disposition": "Unassessed",
+      "outcome": "Not required",
+      "privateNotes": {},
+      "origin": "OBS-20260917-005",
+      "rule": "CONTEXT-01",
+      "ruleVersion": 1
+    },
+    {
+      "id": "DQ-06",
+      "title": "Facility parent creates a loop",
+      "family": "Relationships",
+      "domain": "Customers & Sites",
+      "site": "north",
+      "kind": "hierarchy",
+      "target": "SYN-EQP-106",
+      "subjects": [
+        "SYN-EQP-106"
+      ],
+      "state": "Assigned",
+      "coverage": "Current",
+      "priority": "High",
+      "due": "2026-09-18",
+      "dateReason": "",
+      "owner": "Alex Morgan",
+      "created": "2026-09-10T00:00:00Z",
+      "observation": "Propagation area A points to B; B already points to A. A self-parent, cycle or cross-site reassignment is invalid.",
+      "next": "Propose the same-site root; preserve effective history.",
+      "policy": 1,
+      "sourceVersion": 1,
+      "impactVersion": 1,
+      "impactComplete": true,
+      "evidence": [
+        {
+          "id": "SYN-SRC-006",
+          "version": 1,
+          "title": "Retained source observation",
+          "owner": "Customers & Sites",
+          "asAt": "2026-09-16T22:00:00Z",
+          "text": "Fictional observed evidence for SYN-EQP-106. Propagation area A points to B; B already points to A. A self-parent, cycle or cross-site reassignment is invalid.",
+          "available": true
+        }
+      ],
+      "proposals": [],
+      "findings": [],
+      "decisions": [],
+      "operations": [],
+      "followups": [],
+      "events": [
+        {
+          "id": "EV-6-1",
+          "time": "2026-09-16T22:00:00Z",
+          "actor": "Fixture observation",
+          "action": "Finding recorded",
+          "detail": "Propagation area A points to B; B already points to A. A self-parent, cycle or cross-site reassignment is invalid."
+        }
+      ],
+      "disposition": "Unassessed",
+      "outcome": "Not required",
+      "privateNotes": {},
+      "origin": "OBS-20260917-006",
+      "rule": "CONTEXT-01",
+      "ruleVersion": 1
+    },
+    {
+      "id": "DQ-07",
+      "title": "Check installed and served locations",
+      "family": "Relationships",
+      "domain": "Equipment",
+      "site": "north",
+      "kind": "relationship",
+      "target": "SYN-EQP-107",
+      "subjects": [
+        "SYN-EQP-107"
+      ],
+      "state": "Investigating",
+      "coverage": "Current",
+      "priority": "Normal",
+      "due": "2026-09-21",
+      "dateReason": "",
+      "owner": "Alex Morgan",
+      "created": "2026-09-11T00:00:00Z",
+      "observation": "The pump is installed in the irrigation shed and validly serves Blocks A, B and C. An extra South-site link needs owner review.",
+      "next": "Remove only the unsupported served-area link via its owner.",
+      "policy": 1,
+      "sourceVersion": 1,
+      "impactVersion": 1,
+      "impactComplete": true,
+      "evidence": [
+        {
+          "id": "SYN-SRC-007",
+          "version": 1,
+          "title": "Retained source observation",
+          "owner": "Equipment",
+          "asAt": "2026-09-16T22:00:00Z",
+          "text": "Fictional observed evidence for SYN-EQP-107. The pump is installed in the irrigation shed and validly serves Blocks A, B and C. An extra South-site link needs owner review.",
+          "available": true
+        }
+      ],
+      "proposals": [],
+      "findings": [],
+      "decisions": [],
+      "operations": [],
+      "followups": [],
+      "events": [
+        {
+          "id": "EV-7-1",
+          "time": "2026-09-16T22:00:00Z",
+          "actor": "Fixture observation",
+          "action": "Finding recorded",
+          "detail": "The pump is installed in the irrigation shed and validly serves Blocks A, B and C. An extra South-site link needs owner review."
+        }
+      ],
+      "disposition": "Unassessed",
+      "outcome": "Not required",
+      "privateNotes": {},
+      "origin": "OBS-20260917-007",
+      "rule": "CONTEXT-01",
+      "ruleVersion": 1
+    },
+    {
+      "id": "DQ-08",
+      "title": "ERP key repeats across companies",
+      "family": "External mappings",
+      "domain": "AD-05 Mapping",
+      "site": "north",
+      "kind": "mapping",
+      "target": "SYN-EQP-108",
+      "subjects": [
+        "SYN-EQP-108"
+      ],
+      "state": "Assigned",
+      "coverage": "Current",
+      "priority": "High",
+      "due": "2026-09-18",
+      "dateReason": "",
+      "owner": "Alex Morgan",
+      "created": "2026-09-12T00:00:00Z",
+      "observation": "C0042 exists under two fictional MYOB companies. A display name or key alone cannot determine the debtor.",
+      "next": "Prepare company-scoped mapping reconciliation.",
+      "policy": 1,
+      "sourceVersion": 1,
+      "impactVersion": 1,
+      "impactComplete": true,
+      "evidence": [
+        {
+          "id": "SYN-SRC-008",
+          "version": 1,
+          "title": "Retained source observation",
+          "owner": "AD-05 Mapping",
+          "asAt": "2026-09-16T22:00:00Z",
+          "text": "Fictional observed evidence for SYN-EQP-108. C0042 exists under two fictional MYOB companies. A display name or key alone cannot determine the debtor.",
+          "available": true
+        }
+      ],
+      "proposals": [],
+      "findings": [],
+      "decisions": [],
+      "operations": [],
+      "followups": [],
+      "events": [
+        {
+          "id": "EV-8-1",
+          "time": "2026-09-16T22:00:00Z",
+          "actor": "Fixture observation",
+          "action": "Finding recorded",
+          "detail": "C0042 exists under two fictional MYOB companies. A display name or key alone cannot determine the debtor."
+        }
+      ],
+      "disposition": "Unassessed",
+      "outcome": "Not required",
+      "privateNotes": {},
+      "origin": "OBS-20260917-008",
+      "rule": "CONTEXT-01",
+      "ruleVersion": 1
+    },
+    {
+      "id": "DQ-09",
+      "title": "Area units do not match",
+      "family": "Units & measures",
+      "domain": "Source owner",
+      "site": "north",
+      "kind": "unit",
+      "target": "SYN-EQP-109",
+      "subjects": [
+        "SYN-EQP-109"
+      ],
+      "state": "Needs information",
+      "coverage": "Current",
+      "priority": "Normal",
+      "due": null,
+      "dateReason": "Owner to confirm required date",
+      "owner": null,
+      "created": "2026-09-13T00:00:00Z",
+      "observation": "Source footprint is 1.250 ha; a target field holds 1.250 m². Coverage and rounding require source-owner confirmation.",
+      "next": "Retain original precision and request an approved representation.",
+      "policy": 1,
+      "sourceVersion": 1,
+      "impactVersion": 1,
+      "impactComplete": true,
+      "evidence": [
+        {
+          "id": "SYN-SRC-009",
+          "version": 1,
+          "title": "Retained source observation",
+          "owner": "Source owner",
+          "asAt": "2026-09-16T22:00:00Z",
+          "text": "Fictional observed evidence for SYN-EQP-109. Source footprint is 1.250 ha; a target field holds 1.250 m². Coverage and rounding require source-owner confirmation.",
+          "available": true
+        }
+      ],
+      "proposals": [],
+      "findings": [],
+      "decisions": [],
+      "operations": [],
+      "followups": [],
+      "events": [
+        {
+          "id": "EV-9-1",
+          "time": "2026-09-16T22:00:00Z",
+          "actor": "Fixture observation",
+          "action": "Finding recorded",
+          "detail": "Source footprint is 1.250 ha; a target field holds 1.250 m². Coverage and rounding require source-owner confirmation."
+        }
+      ],
+      "disposition": "Unassessed",
+      "outcome": "Not required",
+      "privateNotes": {},
+      "origin": "OBS-20260917-009",
+      "rule": "CONTEXT-01",
+      "ruleVersion": 1
+    },
+    {
+      "id": "DQ-10",
+      "title": "Import observation is incomplete",
+      "family": "Source coverage",
+      "domain": "AD-06 Migration",
+      "site": "north",
+      "kind": "evidence",
+      "target": "SYN-EQP-110",
+      "subjects": [
+        "SYN-EQP-110"
+      ],
+      "state": "Needs information",
+      "coverage": "Partial",
+      "priority": "High",
+      "due": "2026-09-17",
+      "dateReason": "",
+      "owner": "Alex Morgan",
+      "created": "2026-09-14T00:00:00Z",
+      "observation": "The import inspected 8 of 12 declared records. Four records are unobserved, not verified clear.",
+      "next": "Request completion from the import owner.",
+      "policy": 1,
+      "sourceVersion": 1,
+      "impactVersion": 1,
+      "impactComplete": false,
+      "evidence": [
+        {
+          "id": "SYN-SRC-010",
+          "version": 1,
+          "title": "Retained source observation",
+          "owner": "AD-06 Migration",
+          "asAt": "2026-09-16T22:00:00Z",
+          "text": "Fictional observed evidence for SYN-EQP-110. The import inspected 8 of 12 declared records. Four records are unobserved, not verified clear.",
+          "available": true
+        }
+      ],
+      "proposals": [],
+      "findings": [],
+      "decisions": [],
+      "operations": [],
+      "followups": [],
+      "events": [
+        {
+          "id": "EV-10-1",
+          "time": "2026-09-16T22:00:00Z",
+          "actor": "Fixture observation",
+          "action": "Finding recorded",
+          "detail": "The import inspected 8 of 12 declared records. Four records are unobserved, not verified clear."
+        }
+      ],
+      "disposition": "Unassessed",
+      "outcome": "Not required",
+      "privateNotes": {},
+      "origin": "OBS-20260917-010",
+      "rule": "CONTEXT-01",
+      "ruleVersion": 1
+    },
+    {
+      "id": "DQ-11",
+      "title": "Accepted correction has a changed target",
+      "family": "Identity & serials",
+      "domain": "Equipment",
+      "site": "north",
+      "kind": "serial",
+      "target": "SYN-EQP-111",
+      "subjects": [
+        "SYN-EQP-111"
+      ],
+      "state": "Awaiting domain action",
+      "coverage": "Current",
+      "priority": "High",
+      "due": "2026-09-17",
+      "dateReason": "",
+      "owner": "Alex Morgan",
+      "created": "2026-09-15T00:00:00Z",
+      "observation": "A record changed after independent acceptance. The earlier acceptance remains attached to its exact basis.",
+      "next": "Review a successor against the current target.",
+      "policy": 1,
+      "sourceVersion": 1,
+      "impactVersion": 1,
+      "impactComplete": true,
+      "evidence": [
+        {
+          "id": "SYN-SRC-011",
+          "version": 1,
+          "title": "Retained nameplate transcription",
+          "owner": "Equipment",
+          "asAt": "2026-09-16T22:00:00Z",
+          "text": "Fictional observed evidence for SYN-EQP-111. A record changed after independent acceptance. The earlier acceptance remains attached to its exact basis.",
+          "available": true
+        }
+      ],
+      "proposals": [],
+      "findings": [],
+      "decisions": [],
+      "operations": [],
+      "followups": [],
+      "events": [
+        {
+          "id": "EV-11-1",
+          "time": "2026-09-16T22:00:00Z",
+          "actor": "Fixture observation",
+          "action": "Finding recorded",
+          "detail": "A record changed after independent acceptance. The earlier acceptance remains attached to its exact basis."
+        }
+      ],
+      "disposition": "Unassessed",
+      "outcome": "Not required",
+      "privateNotes": {},
+      "origin": "OBS-20260917-011",
+      "rule": "CONTEXT-01",
+      "ruleVersion": 1
+    },
+    {
+      "id": "DQ-12",
+      "title": "Comparison counterpart is unavailable",
+      "family": "Duplicate candidates",
+      "domain": "Equipment",
+      "site": "north",
+      "kind": "keep",
+      "target": "SYN-EQP-101",
+      "subjects": [
+        "SYN-EQP-101",
+        "SYN-EQP-112"
+      ],
+      "state": "Needs information",
+      "coverage": "Unavailable",
+      "priority": "Normal",
+      "due": null,
+      "dateReason": "Owner to confirm required date",
+      "owner": "Alex Morgan",
+      "created": "2026-09-10T00:00:00Z",
+      "observation": "The second comparison record is no longer in the permitted scope. Resolve access through the record owner.",
+      "next": "Request scoped evidence; no bypass through retained links.",
+      "policy": 1,
+      "sourceVersion": 1,
+      "impactVersion": 1,
+      "impactComplete": true,
+      "evidence": [
+        {
+          "id": "SYN-SRC-012",
+          "version": 1,
+          "title": "Retained nameplate transcription",
+          "owner": "Equipment",
+          "asAt": "2026-09-16T22:00:00Z",
+          "text": "Fictional observed evidence for SYN-EQP-101. The second comparison record is no longer in the permitted scope. Resolve access through the record owner.",
+          "available": false
+        }
+      ],
+      "proposals": [],
+      "findings": [],
+      "decisions": [],
+      "operations": [],
+      "followups": [],
+      "events": [
+        {
+          "id": "EV-12-1",
+          "time": "2026-09-16T22:00:00Z",
+          "actor": "Fixture observation",
+          "action": "Finding recorded",
+          "detail": "The second comparison record is no longer in the permitted scope. Resolve access through the record owner."
+        }
+      ],
+      "disposition": "Unassessed",
+      "outcome": "Not required",
+      "privateNotes": {},
+      "origin": "OBS-20260917-012",
+      "rule": "NAME-01",
+      "ruleVersion": 1
+    },
+    {
+      "id": "DQ-13",
+      "title": "Correction response was interrupted",
+      "family": "Identity & serials",
+      "domain": "Equipment",
+      "site": "north",
+      "kind": "serial",
+      "target": "SYN-EQP-113",
+      "subjects": [
+        "SYN-EQP-113"
+      ],
+      "state": "Awaiting domain action",
+      "coverage": "Current",
+      "priority": "High",
+      "due": "2026-09-17",
+      "dateReason": "",
+      "owner": "Alex Morgan",
+      "created": "2026-09-11T00:00:00Z",
+      "observation": "The mock Equipment receiver applied one correction; the first response was lost. Equivalent attempts remain held.",
+      "next": "Look up the original operation result.",
+      "policy": 1,
+      "sourceVersion": 1,
+      "impactVersion": 1,
+      "impactComplete": true,
+      "evidence": [
+        {
+          "id": "SYN-SRC-013",
+          "version": 1,
+          "title": "Retained nameplate transcription",
+          "owner": "Equipment",
+          "asAt": "2026-09-16T22:00:00Z",
+          "text": "Fictional observed evidence for SYN-EQP-113. The mock Equipment receiver applied one correction; the first response was lost. Equivalent attempts remain held.",
+          "available": true
+        }
+      ],
+      "proposals": [],
+      "findings": [],
+      "decisions": [],
+      "operations": [],
+      "followups": [],
+      "events": [
+        {
+          "id": "EV-13-1",
+          "time": "2026-09-16T22:00:00Z",
+          "actor": "Fixture observation",
+          "action": "Finding recorded",
+          "detail": "The mock Equipment receiver applied one correction; the first response was lost. Equivalent attempts remain held."
+        }
+      ],
+      "disposition": "Unassessed",
+      "outcome": "Not required",
+      "privateNotes": {},
+      "origin": "OBS-20260917-013",
+      "rule": "CONTEXT-01",
+      "ruleVersion": 1
+    },
+    {
+      "id": "DQ-14",
+      "title": "Field ownership is not configured",
+      "family": "Identity & serials",
+      "domain": "Equipment",
+      "site": "north",
+      "kind": "serial",
+      "target": "SYN-EQP-114",
+      "subjects": [
+        "SYN-EQP-114"
+      ],
+      "state": "Needs information",
+      "coverage": "Current",
+      "priority": "Normal",
+      "due": null,
+      "dateReason": "Owner to confirm required date",
+      "owner": null,
+      "created": "2026-09-12T00:00:00Z",
+      "observation": "No fixture field-owner/review policy is configured for this target. Support access is not approval authority.",
+      "next": "Prepare a policy clarification for the domain owner.",
+      "policy": null,
+      "sourceVersion": 1,
+      "impactVersion": 1,
+      "impactComplete": true,
+      "evidence": [
+        {
+          "id": "SYN-SRC-014",
+          "version": 1,
+          "title": "Retained nameplate transcription",
+          "owner": "Equipment",
+          "asAt": "2026-09-16T22:00:00Z",
+          "text": "Fictional observed evidence for SYN-EQP-114. No fixture field-owner/review policy is configured for this target. Support access is not approval authority.",
+          "available": true
+        }
+      ],
+      "proposals": [],
+      "findings": [],
+      "decisions": [],
+      "operations": [],
+      "followups": [],
+      "events": [
+        {
+          "id": "EV-14-1",
+          "time": "2026-09-16T22:00:00Z",
+          "actor": "Fixture observation",
+          "action": "Finding recorded",
+          "detail": "No fixture field-owner/review policy is configured for this target. Support access is not approval authority."
+        }
+      ],
+      "disposition": "Unassessed",
+      "outcome": "Not required",
+      "privateNotes": {},
+      "origin": "OBS-20260917-014",
+      "rule": "CONTEXT-01",
+      "ruleVersion": 1
+    },
+    {
+      "id": "DQ-15",
+      "title": "Candidate recurs on new evidence",
+      "family": "Duplicate candidates",
+      "domain": "Equipment",
+      "site": "north",
+      "kind": "keep",
+      "target": "SYN-EQP-115",
+      "subjects": [
+        "SYN-EQP-115",
+        "SYN-EQP-116"
+      ],
+      "state": "Investigating",
+      "coverage": "Current",
+      "priority": "Normal",
+      "due": "2026-09-20",
+      "dateReason": "",
+      "owner": "Alex Morgan",
+      "created": "2026-09-13T00:00:00Z",
+      "observation": "A previous no-issue decision is retained. A new nameplate observation requires reassessment of that decision.",
+      "next": "Review the new evidence without deleting the old outcome.",
+      "policy": 1,
+      "sourceVersion": 1,
+      "impactVersion": 1,
+      "impactComplete": true,
+      "evidence": [
+        {
+          "id": "SYN-SRC-015",
+          "version": 1,
+          "title": "Retained nameplate transcription",
+          "owner": "Equipment",
+          "asAt": "2026-09-16T22:00:00Z",
+          "text": "Fictional observed evidence for SYN-EQP-115. A previous no-issue decision is retained. A new nameplate observation requires reassessment of that decision.",
+          "available": true
+        }
+      ],
+      "proposals": [],
+      "findings": [],
+      "decisions": [],
+      "operations": [],
+      "followups": [],
+      "events": [
+        {
+          "id": "EV-15-1",
+          "time": "2026-09-16T22:00:00Z",
+          "actor": "Fixture observation",
+          "action": "Finding recorded",
+          "detail": "A previous no-issue decision is retained. A new nameplate observation requires reassessment of that decision."
+        }
+      ],
+      "disposition": "Unassessed",
+      "outcome": "Not required",
+      "privateNotes": {},
+      "origin": "OBS-20260917-015",
+      "rule": "NAME-01",
+      "ruleVersion": 1
+    },
+    {
+      "id": "DQ-16",
+      "title": "Serial correction touches prepared work",
+      "family": "Identity & serials",
+      "domain": "Equipment",
+      "site": "north",
+      "kind": "serial",
+      "target": "SYN-EQP-116",
+      "subjects": [
+        "SYN-EQP-116"
+      ],
+      "state": "Investigating",
+      "coverage": "Current",
+      "priority": "High",
+      "due": "2026-09-18",
+      "dateReason": "",
+      "owner": "Alex Morgan",
+      "created": "2026-09-14T00:00:00Z",
+      "observation": "Current display, a draft visit and an issued pack reference this asset. Only the current field is eligible for correction.",
+      "next": "Prepare a service follow-up; preserve issued bytes and acknowledgement.",
+      "policy": 1,
+      "sourceVersion": 1,
+      "impactVersion": 1,
+      "impactComplete": true,
+      "evidence": [
+        {
+          "id": "SYN-SRC-016",
+          "version": 1,
+          "title": "Retained nameplate transcription",
+          "owner": "Equipment",
+          "asAt": "2026-09-16T22:00:00Z",
+          "text": "Fictional observed evidence for SYN-EQP-116. Current display, a draft visit and an issued pack reference this asset. Only the current field is eligible for correction.",
+          "available": true
+        }
+      ],
+      "proposals": [],
+      "findings": [],
+      "decisions": [],
+      "operations": [],
+      "followups": [],
+      "events": [
+        {
+          "id": "EV-16-1",
+          "time": "2026-09-16T22:00:00Z",
+          "actor": "Fixture observation",
+          "action": "Finding recorded",
+          "detail": "Current display, a draft visit and an issued pack reference this asset. Only the current field is eligible for correction."
+        }
+      ],
+      "disposition": "Unassessed",
+      "outcome": "Not required",
+      "privateNotes": {},
+      "origin": "OBS-20260917-016",
+      "rule": "CONTEXT-01",
+      "ruleVersion": 1
+    }
+  ],
+  "ledger": {},
+  "clock": "2026-09-17T02:00:00Z",
+  "scan": {
+    "mode": "Complete",
+    "run": 0,
+    "lastSuccess": "2026-09-17T01:30:00Z"
+  },
+  "issued": {
+    "id": "SYN-PACK-014",
+    "version": 1,
+    "bytes": "SYNTHETIC ISSUED PACK | SYN-EQP-101 | serial 00-EP-102 | North nursery | issued 2026-09-10",
+    "acknowledgement": {
+      "id": "SYN-ACK-014",
+      "issue": "SYN-PACK-014",
+      "version": 1,
+      "actor": "Fictional technician",
+      "time": "2026-09-11T00:30:00Z",
+      "response": "Acknowledged original issue"
+    }
+  }
+}
