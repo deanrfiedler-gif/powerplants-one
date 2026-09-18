@@ -9,7 +9,7 @@ async function call(page:Page,path:string,body?:unknown) {
 test("mobile CRM completion, Brisbane follow-up and record links persist through reload",async({page},info)=>{
   await call(page,"local-session",{profile:"coordinator"});
   const input=crmCreate(); await call(page,"crm/opportunities",input);
-  await page.goto(`/crm/opportunities/${input.id}`);
+  await page.goto(`/sales/opportunities/${input.id}`);
   await page.getByRole("link",{name:"Open activity",exact:true}).click();
   await page.getByLabel("Completion outcome or cancellation reason",{exact:true}).fill("SYN Confirmed the required growing area with the customer.");
   await page.getByLabel("Reason for change",{exact:true}).fill("SYN Customer discussion completed");
@@ -77,7 +77,7 @@ test("organisation summary opens the full Sites hierarchy; mobile menu contains 
 });
 
 test("typing after organisation selection clears its ID and dependent context",async({page})=>{
-  await call(page,"local-session",{profile:"coordinator"});await page.goto("/crm/opportunities/new");
+  await call(page,"local-session",{profile:"coordinator"});await page.goto("/sales/opportunities/new");
   await page.getByLabel("Visibility company",{exact:true}).selectOption(CRM.company);
   const organisation=page.getByRole("combobox",{name:"Organisation",exact:true});await organisation.fill("SYN");
   await page.locator(`[role=option][data-record-id="${CRM.org}"]`).click();
@@ -87,6 +87,6 @@ test("typing after organisation selection clears its ID and dependent context",a
   await expect(page.getByText("No matches. Try another name or reference.",{exact:true})).toBeVisible();
   page.once("dialog",d=>d.dismiss());
   await page.getByRole("link",{name:"Back to sales worklist",exact:true}).click();
-  await expect(page).toHaveURL(/\/crm\/opportunities\/new$/);
+  await expect(page).toHaveURL(/\/sales\/opportunities\/new$/);
   await expect(organisation).toHaveValue("SYN no match for mobile lookup");
 });

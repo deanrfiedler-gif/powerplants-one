@@ -1,4 +1,4 @@
-import { toggleWorklistFilters } from "../helpers/crm-worklist-ui";
+import { toggleWorklistFilters, fillOpportunitySearch } from "../helpers/crm-worklist-ui";
 import { captureTransferComparison } from "../helpers/crm-transfer-capture";
 import { keyActivate, keySelect, keyType } from "../helpers/quality-keyboard";
 import { committed } from "../helpers/quality-prepare";
@@ -33,7 +33,7 @@ async function call(page: Page, path: string, body?: unknown) {
 test("owner transfer compares separate activities and persists original/current ownership on desktop and phone",async({page},info)=>{
   await call(page,"local-session",{profile:"coordinator"});
   const input={...crmDiscovery(),title:`SYN Transfer journey ${info.project.name}`};input.initial_action.summary=("SYN Long separate activity comparison "+"scopeword".repeat(220)).slice(0,2000);await call(page,"crm/opportunities",input);
-  await page.goto(`/crm/opportunities/${input.id}`);
+  await page.goto(`/sales/opportunities/${input.id}`);
   await keyActivate(page,page.getByRole("button",{name:"Transfer opportunity owner",exact:true}));
   const dialog=page.getByRole("dialog");
   await expect(dialog.getByRole("region",{name:"Activity comparison"})).toContainText("SYN Coordinator");
@@ -56,13 +56,13 @@ test("owner transfer compares separate activities and persists original/current 
   await call(page,"local-session",{profile:"crm-receiver"});await page.reload();
   await expect(page.getByRole("button",{name:"Transfer opportunity owner",exact:true})).toHaveCount(0);
   await expect(page.getByRole("button",{name:"Edit deal information",exact:true})).toBeVisible();
-  await page.goto("/crm/opportunities");await page.getByLabel("Search opportunities",{exact:true}).fill(input.title);
+  await page.goto("/sales/opportunities");await fillOpportunitySearch(page, input.title);
   await expect(page.locator(`[data-opportunity-id="${input.id}"]`)).toBeVisible();
   await page.getByRole("button",{name:"List",exact:true}).click();await expect(page.getByRole("link",{name:input.title,exact:true})).toBeVisible();
 });
 test("lost accepted transfer response recovers the original actor receipt and stale activity comparison requires review",async({page},info)=>{
   await call(page,"local-session",{profile:"coordinator"});
-  const input=crmDiscovery();await call(page,"crm/opportunities",input);await page.goto(`/crm/opportunities/${input.id}`);
+  const input=crmDiscovery();await call(page,"crm/opportunities",input);await page.goto(`/sales/opportunities/${input.id}`);
   await page.getByRole("button",{name:"Transfer opportunity owner",exact:true}).click();const dialog=page.getByRole("dialog");
   await dialog.getByLabel("New opportunity owner").selectOption("30000000-0000-4000-8000-000000000015");await dialog.getByLabel("Transfer reason").fill("SYN Deliberate transfer after reviewing separate activity completion");
   await call(page,`activities/${input.initial_action.id}/complete`,{...crmBase(),expected_version:1,outcome:"SYN Completed while comparison remained open"});
@@ -91,7 +91,7 @@ test("revoked transfer access clears comparison and discards a late eligible-own
   await database().query("INSERT INTO ppo.sessions(token_hash,workspace_id,actor_id,expires_at) VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')",[createHash("sha256").update(token).digest("hex"),CRM.workspace,user]);
   await page.context().addCookies([{name:"ppo_local_session",value:token,domain:"127.0.0.1",path:"/",httpOnly:true,sameSite:"Strict"}]);
   const input={...crmDiscovery(),title:`SYN Private transfer ${randomUUID()}`,owner_id:user,initial_action:crmAction(user)};
-  await call(page,"crm/opportunities",input);await page.goto(`/crm/opportunities/${input.id}`);
+  await call(page,"crm/opportunities",input);await page.goto(`/sales/opportunities/${input.id}`);
   await page.getByRole("button",{name:"Transfer opportunity owner",exact:true}).click();const dialog=page.getByRole("dialog");
   await expect(dialog.getByRole("region",{name:"Activity comparison"})).toBeVisible();
   await dialog.getByLabel("Transfer reason").fill("SYN confidential proposed transfer reason");
@@ -119,7 +119,7 @@ test("owned Won handover and structured Lost survive reload on desktop and phone
     let version=1;
     if(outcome==="Won") for(const stage_id of ["Scoping","Quoting","Negotiation","Closing"])
       await call(page,`crm/opportunities/${input.id}/stage`,{...crmBase(),expected_version:version++,stage_id,qualification_note:null,identification_activity_id:null});
-    await page.goto(`/crm/opportunities/${input.id}`);
+    await page.goto(`/sales/opportunities/${input.id}`);
     await page.getByRole("button",{name:"Record sales outcome",exact:true}).click();
     const dialog=page.getByRole("dialog");
     if(outcome==="Won") await dialog.getByLabel("Acceptance or order evidence").fill("SYN Fictional accepted scope for controlled handover");
@@ -141,8 +141,8 @@ test("owned Won handover and structured Lost survive reload on desktop and phone
     expect(saved.close_outcome).toBe(outcome); expect(saved.version).toBe(version+1);
     expect(saved.actions[0].owner_id).toBe(input.initial_action.owner_id);
     await page.screenshot({path:info.outputPath(`crm-${outcome.toLowerCase()}-persisted.png`),fullPage:false});
-    await page.goto("/crm/opportunities");
-    await page.getByLabel("Search opportunities",{exact:true}).fill(input.title);
+    await page.goto("/sales/opportunities");
+    await fillOpportunitySearch(page, input.title);
     await expect(page.locator(`[data-opportunity-id="${input.id}"]`)).toHaveCount(0);
     await toggleWorklistFilters(page);
     await page.getByLabel("Sales outcome",{exact:true}).selectOption(outcome);
@@ -157,7 +157,7 @@ test("owned Won handover and structured Lost survive reload on desktop and phone
 test("accepted outcome with a lost response recovers its original receipt without another effect", async ({page})=>{
   await call(page,"local-session",{profile:"coordinator"});
   const input=crmDiscovery(); await call(page,"crm/opportunities",input);
-  await page.goto(`/crm/opportunities/${input.id}`);
+  await page.goto(`/sales/opportunities/${input.id}`);
   await page.getByRole("button",{name:"Record sales outcome",exact:true}).click();
   const dialog=page.getByRole("dialog"); await dialog.getByLabel("Lost reason").selectOption("Timing");
   let acceptedOperation:string|undefined;
@@ -182,10 +182,8 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
   const input = crmCreate();
   input.title = `SYN CRM refinements ${info.project.name}`;
   await call(page, "crm/opportunities", input);
-  await page.goto("/crm/opportunities?pipeline=I1");
-  await page
-    .getByLabel("Search opportunities", { exact: true })
-    .fill(input.title);
+  await page.goto("/sales/opportunities?pipeline=I1");
+  await fillOpportunitySearch(page, input.title);
   const card = page.locator(`[data-opportunity-id="${input.id}"]`);
   await expect(card).toBeVisible();
   expect(await card.locator(".crm-card-body a").count()).toBe(0);
@@ -200,7 +198,7 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
     await expect(
       snapshot.getByRole("heading", { name: "Deal summary" }),
     ).toBeVisible();
-    await expect(page).toHaveURL(url => url.pathname === "/crm/opportunities" && url.search === `?${new URLSearchParams({ pipeline: "I1", q: input.title })}`);
+    await expect(page).toHaveURL(url => url.pathname === "/sales/opportunities" && url.search === `?${new URLSearchParams({ pipeline: "I1", q: input.title })}`);
     await page.keyboard.press("Escape");
     await expect(snapshot).not.toBeVisible();
     await expect(card.getByRole("button", { name: /^Snapshot:/ })).toBeFocused();
@@ -213,7 +211,7 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
     await card.locator(".crm-card-company").click();
     await expect(page.getByRole("dialog")).toHaveCount(0);
   }
-  await expect(page).toHaveURL(new RegExp(`/crm/opportunities/${input.id}$`));
+  await expect(page).toHaveURL(new RegExp(`/sales/opportunities/${input.id}$`));
   await page
     .getByRole("button", { name: "Edit deal information", exact: true })
     .click();
@@ -259,10 +257,8 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
     "SYN Sensors and commissioning",
   );
   if (!info.project.use.isMobile) {
-    await page.goto("/crm/opportunities?pipeline=I1");
-    await page
-      .getByLabel("Search opportunities", { exact: true })
-      .fill(input.title);
+    await page.goto("/sales/opportunities?pipeline=I1");
+    await fillOpportunitySearch(page, input.title);
     await card.dragTo(page.locator('[data-drop-stage="Qualified"]'), { sourcePosition: { x: 8, y: 8 } });
   } else {
     await page.locator(".crm-stage-track button").last().click();
@@ -293,16 +289,14 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
     record = (await call(page, `crm/opportunities/${input.id}`)).items[0];
     expect(record.stage_id).toBe("Enquiry");
   }
-  await page.goto(`/crm/opportunities/${input.id}`);
+  await page.goto(`/sales/opportunities/${input.id}`);
   await page.getByRole("tab", { name: "Files", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Deal documents", exact: true }),
   ).toBeVisible();
   await page.screenshot({ path: info.outputPath("crm-deal-files.png") });
-  await page.goto("/crm/opportunities?pipeline=I1");
-  await page
-    .getByLabel("Search opportunities", { exact: true })
-    .fill(input.title);
+  await page.goto("/sales/opportunities?pipeline=I1");
+  await fillOpportunitySearch(page, input.title);
   if (info.project.use.isMobile)
     await page.getByRole("button", { name: /^Qualified \(/ }).click();
   await card.locator(".crm-card-activity").click();
@@ -443,12 +437,15 @@ test("SA-09 board stage change uses native keyboard controls on desktop and phon
   const input = crmCreate();
   input.title = `SYN keyboard stage ${info.project.name}`;
   await call(page, "crm/opportunities", input);
-  await page.goto("/crm/opportunities?pipeline=I1");
+  await page.goto("/sales/opportunities?pipeline=I1");
+  const searchNeedsPanel = !(await page.getByLabel("Search opportunities", {exact:true}).isVisible());
+  if (searchNeedsPanel) await keyActivate(page, page.getByRole("button", {name:"Filters and sort", exact:true}));
   await keyType(
     page,
     page.getByLabel("Search opportunities", { exact: true }),
     input.title,
   );
+  if (searchNeedsPanel) await keyActivate(page, page.getByRole("button", {name:"Close Filter opportunities", exact:true}));
   const action = page.getByRole("button", {
     name: `Change stage for ${input.title}`,
     exact: true,
@@ -475,7 +472,7 @@ test("SA-09 board stage change uses native keyboard controls on desktop and phon
     ),
   );
   await expect(dialog).not.toBeVisible();
-  await expect(page).toHaveURL(url => url.pathname === "/crm/opportunities" && url.search === `?${new URLSearchParams({ pipeline: "I1", q: input.title, selected: "Qualified" })}`);
+  await expect(page).toHaveURL(url => url.pathname === "/sales/opportunities" && url.search === `?${new URLSearchParams({ pipeline: "I1", q: input.title, selected: "Qualified" })}`);
   await expect(action).toBeFocused();
   await expect(action).toBeInViewport({ ratio: 1 });
   const record = (await call(page, `crm/opportunities/${input.id}`)).items[0];
@@ -497,8 +494,8 @@ async function qualifiedBoard(page: Page, title: string) {
   input.title = title;
   await call(page, "crm/opportunities", input);
   await call(page, `crm/opportunities/${input.id}/qualify`, crmQualify());
-  await page.goto("/crm/opportunities?pipeline=I1");
-  await page.getByLabel("Search opportunities", { exact: true }).fill(title);
+  await page.goto("/sales/opportunities?pipeline=I1");
+  await fillOpportunitySearch(page, title);
   const card = page.locator(`[data-opportunity-id="${input.id}"]`);
   await expect(
     page.locator('[data-drop-stage="Qualified"]').locator(card),
@@ -637,8 +634,11 @@ test("SA-12 default five-stage board persists Discovery movement and qualificati
   await call(page, "local-session", { profile: "coordinator" });
   const input = crmDiscovery(); input.title = `SYN Discovery cutover ${info.project.name}`;
   await call(page, "crm/opportunities", input);
-  await page.goto("/crm/opportunities");
+  await page.goto("/sales/opportunities");
+  const searchNeedsPanel = !(await page.getByLabel("Search opportunities", {exact:true}).isVisible());
+  if (searchNeedsPanel) await keyActivate(page, page.getByRole("button", {name:"Filters and sort", exact:true}));
   await keyType(page, page.getByLabel("Search opportunities", { exact: true }), input.title);
+  if (searchNeedsPanel) await keyActivate(page, page.getByRole("button", {name:"Close Filter opportunities", exact:true}));
   await expect(page.locator(".crm-board-headers h2")).toHaveText(["Discovery", "Scoping", "Quoting", "Negotiation", "Closing"]);
   const action = page.getByRole("button", { name: `Change stage for ${input.title}`, exact: true });
   await keyActivate(page, action);
@@ -667,7 +667,7 @@ test("SA-12 default five-stage board persists Discovery movement and qualificati
 test("an accepted detail stage save preserves an independently edited next-action proposal for comparison", async ({ page }) => {
   await call(page, "local-session", { profile: "coordinator" });
   const input = crmDiscovery(); await call(page, "crm/opportunities", input);
-  await page.goto(`/crm/opportunities/${input.id}`);
+  await page.goto(`/sales/opportunities/${input.id}`);
   const purpose = page.getByLabel("Action purpose", { exact: true });
   await purpose.fill("SYN independently edited follow-up must retain its original version");
   await page.locator(".crm-stage-track").getByRole("button", { name: "Scoping", exact: true }).click();

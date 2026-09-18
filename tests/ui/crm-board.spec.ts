@@ -1,4 +1,4 @@
-import { toggleWorklistFilters } from "../helpers/crm-worklist-ui";
+import { toggleWorklistFilters, fillOpportunitySearch, chooseWorklistSort } from "../helpers/crm-worklist-ui";
 import { test, expect } from "@playwright/test";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -21,7 +21,7 @@ test("hosted header, populated board, filtering and independent card targets", a
   await expect(page.getByText("Powerplants One · Synthetic data only", { exact: true })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(
-    page.getByLabel("Search opportunities", { exact: true }),
+    page.getByRole("button", { name:"Filters and sort", exact:true }),
   ).toBeVisible();
   await page.getByRole("button", { name: info.project.name === "desktop" ? "More" : "Menu", exact: true }).click();
   await expect(page.getByRole("searchbox", { name: "Find a menu item" })).toBeVisible();
@@ -32,7 +32,7 @@ test("hosted header, populated board, filtering and independent card targets", a
       .querySelector(".identity-hosted")!
       .getBoundingClientRect();
     const search = document
-      .querySelector(".crm-header-search")!
+      .querySelector(".crm-header-search,.ppo-global-search")!
       .getBoundingClientRect();
     const heading = document.querySelector<HTMLElement>(".product-heading")!;
     const headingBounds = heading.getBoundingClientRect();
@@ -70,11 +70,11 @@ test("hosted header, populated board, filtering and independent card targets", a
     info.project.name === "desktop" ? 2 : 1,
   );
   await page.screenshot({ path: info.outputPath("populated-board.png") });
-  await page.getByLabel("Sort", { exact: true }).selectOption("Title");
+  await chooseWorklistSort(page, "Title");
   await expect(page.locator(".crm-card:visible").first()).toContainText(
     "Automated fertigation system",
   );
-  await page.getByLabel("Sort", { exact: true }).selectOption("Reference");
+  await chooseWorklistSort(page, "Reference");
   await expect(page.locator(".crm-card:visible").first()).toContainText(
     "Glasshouse climate control upgrade",
   );
@@ -105,35 +105,29 @@ test("hosted header, populated board, filtering and independent card targets", a
     ).toBeVisible();
     await expect(
       page.getByRole("link", { name: "Open full deal" }),
-    ).toHaveAttribute("href", /^\/crm\/opportunities\//);
+    ).toHaveAttribute("href", /^\/sales\/opportunities\//);
     await page.keyboard.press("Escape");
     await expect(card.getByRole("button", { name: /^Snapshot:/ })).toBeFocused();
   } else await expect(card).toHaveAttribute("draggable", "false");
-  await page
-    .getByLabel("Search opportunities", { exact: true })
-    .fill("Glasshouse");
+  await fillOpportunitySearch(page, "Glasshouse");
   await expect(page.locator(".crm-worklist-stamp")).toContainText(
     "1 opportunity",
   );
   await page.getByRole("button", { name: "List", exact: true }).click();
   await expect(page.locator("tbody tr")).toHaveCount(1);
-  await expect(
-    page.getByLabel("Search opportunities", { exact: true }),
-  ).toHaveValue("Glasshouse");
+  expect(new URL(page.url()).searchParams.get("q")).toBe("Glasshouse");
   await page.getByRole("button", { name: "Board", exact: true }).click();
   await toggleWorklistFilters(page);
   await expect(page.getByLabel("Stage", { exact: true })).toBeVisible();
   await toggleWorklistFilters(page);
-  await page
-    .getByLabel("Search opportunities", { exact: true })
-    .fill("no matching records");
+  await fillOpportunitySearch(page, "no matching records");
   await expect(page.locator(".crm-worklist-stamp")).toContainText(
     "0 opportunities",
   );
   await expect(page.locator(".crm-board-scroll")).toBeVisible();
   await expect(page.locator(".crm-workspace > .empty-state")).toHaveCount(0);
   await page.screenshot({ path: info.outputPath("empty-board.png") });
-  await page.getByLabel("Search opportunities", { exact: true }).fill("denied");
+  await fillOpportunitySearch(page, "denied");
   await expect(page.locator(".crm-workspace > .business-error")).toBeVisible();
   await expect(
     page.getByLabel("Search opportunities", { exact: true }),

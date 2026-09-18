@@ -33,7 +33,7 @@ These are the latest uploaded shared visual references. Their presence does not 
 
 | Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
 |---|---|---|---|
-| Theme / style board | [r20](theme-style-board/powerplants-one-theme-style-board-r20.html) | Latest uploaded visual reference | Matches the supplied r20 attachment byte for byte. [Shared UI specification](../../standards/ui-style-specification.md) and accepted baseline register retain implementation authority. |
+| Theme / style board | [r22](theme-style-board/powerplants-one-theme-style-board-r22.html) | Latest uploaded visual reference | Matches the supplied r22 attachment byte for byte. r20 is retained unchanged. [Shared UI specification](../../standards/ui-style-specification.md) and accepted baseline register retain implementation authority. |
 | Application shell | [r17](application-shell/PPO-Application-Shell-r17.html) · [report](application-shell/PPO-Application-Shell-Report-r17.md) · [retained r14](application-shell/PPO-Application-Shell-r14.html) | r17 integration authorised by Dean; native review remains pending | Shared-frame implementation contribution: [decision](../../decisions/application-shell-integration.md), [handover](../../delivery/application-shell-handover.md). Existing module interiors and permissions remain authoritative. |
 
 **Scoped addition, 17 September 2026:** DK-06 Document & form template management r01 and its detailed report are listed under shared platform pages below. The 15 September inventory counts remain the historical audited snapshot and exclude this new HTML and its generator sources. Listing it here is navigation, not design acceptance.

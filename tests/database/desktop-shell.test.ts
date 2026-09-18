@@ -21,7 +21,7 @@ test("shell search and quick add preserve tenant, company and current-grant boun
   await createOpportunity(p, input);
   const results = await shellSearch(p, { q: input.id });
   assert.equal(results.items.length, 1);
-  assert.equal(results.items[0].href, `/crm/opportunities/${input.id}`);
+  assert.equal(results.items[0].href, `/sales/opportunities/${input.id}`);
   assert.equal(results.items[0].label, input.title);
   for (const profile of ["second-company", "other-workspace", "systems"]) {
     const hidden = await shellSearch(await principal(profile), { q: input.id });
@@ -41,7 +41,7 @@ test("Leads participate in shell search and quick add only within current grants
   const p = await principal(), lead = leadCreate();
   await createLead(p, lead);
   const query = { q: lead.title };
-  assert.ok((await shellSearch(p, query)).items.some(item => item.href === `/crm/leads/${lead.id}`));
+  assert.ok((await shellSearch(p, query)).items.some(item => item.href === `/sales/leads/${lead.id}`));
   assert.ok((await shellContext(p, {})).actions.some(action => action.id === "lead"));
   for (const profile of ["second-company", "other-workspace", "systems"]) {
     assert.ok(!(await shellSearch(await principal(profile), query)).items.some(item => item.id === lead.id));
