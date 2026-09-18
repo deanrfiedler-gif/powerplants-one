@@ -14,6 +14,16 @@ The original `a5bb80d` checks expected CRM page routes and the previous search/s
 
 These changes repair test interactions and measurements. No runtime UI, permissions, data, API, dependency or workflow changes are introduced by this follow-up. Negative controls for the original framing/menu defects remain enabled.
 
+### Retained restart journey, run 35327559113
+
+[Run 35327559113](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35327559113) left one failed job: the retained CRM journey across application and database restarts. `locator.fill` on **Search opportunities** waited 30 seconds and reported the field detached from the DOM.
+
+| Cause | Repair |
+|---|---|
+| `scripts/crm-restart-proof.ts` takes the search field directly at 1440x1000. Under r38 the desktop field belongs to the Filters drawer, and `useDesktopCRM()` starts `false`, so the compact shell portal mounts the field for one client render and unmounts it when the media query resolves. The script resolved that node and then waited for a field this viewport no longer has. | Wait for the client-rendered worklist, then call the shared `fillOpportunitySearch` helper, which asks the page the same media query the component asks and opens the drawer on desktop. |
+
+Reproduced and corrected locally against real PostgreSQL 16 and the launched application: the `write` phase failed identically before the change, and `write`, an actual PostgreSQL restart and `verify` all passed after it. That run used Chromium 141 rather than the reviewed stable Chrome 153, with the version guard bypassed for the run only and unchanged in the tree; CI remains the authority for the supported browser.
+
 ## Verification and limits
 
 - Local lint, TypeScript and all 115 unit tests passed for the route/control correction. The final changed test files are linted and type-checked again.
