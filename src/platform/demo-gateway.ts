@@ -50,7 +50,7 @@ export function demoGateway(config: Gateway) {
       res.setHeader("Set-Cookie", secureCookie(config.loginCookie, "", 0, true));
       try {
         const session = await config.finishLogin(url, readCookie(req.headers.cookie, config.loginCookie), token);
-        res.writeHead(303, { Location: `${config.origin}/crm/opportunities`, "Set-Cookie": [secureCookie(config.loginCookie, "", 0, true), secureCookie(config.sessionCookie, session, 3600, true)] });
+        res.writeHead(303, { Location: `${config.origin}/sales/opportunities`, "Set-Cookie": [secureCookie(config.loginCookie, "", 0, true), secureCookie(config.sessionCookie, session, 3600, true)] });
       } catch (error) {
         // Never reflect OAuth descriptions/codes/tokens or accept a return URL from a caller.
         res.writeHead(303, { Location: `${config.origin}/login?status=${loginFailure(error)}` });

@@ -209,7 +209,7 @@ export function NewOpportunity() {
   const available = useCrmResource<Options>("crm/options?kind=Company");
   const siteRequired=available.data?.items.find(x=>x.id===company)?.requires_site ?? false;
   const command = useCrmCommand((r) =>
-    router.push(`/crm/opportunities/${r.record_id}`),
+    router.push(`/sales/opportunities/${r.record_id}`),
   );
   const context = {
     company_id: company,
@@ -226,7 +226,7 @@ export function NewOpportunity() {
         title="New opportunity"
         description="Select existing customer context. Creating saves one Open opportunity and its initial owned Activity together."
       />
-      <Link href="/crm/opportunities">Back to sales worklist</Link>
+      <Link href="/sales/opportunities">Back to sales worklist</Link>
       <ResourceState {...available} />
       {available.data && (
         <>
@@ -461,7 +461,7 @@ function OpportunityContent({
   return (
     <>
       <div className="crm-deal-page-heading">
-        <Link className="crm-back-link" href="/crm/opportunities">← Back to sales worklist</Link>
+        <Link className="crm-back-link" href="/sales/opportunities">← Back to sales worklist</Link>
         <PageHeader eyebrow={`${o.display_number} · ${o.close_outcome}`} title={o.title}
           description={`${o.organisation_name} · ${o.site_name ?? "Site to be confirmed"}`}
           action={o.can_edit ? <button className="secondary crm-main-edit" aria-label="Edit deal information" onClick={() => setDialog("information")}><ProductIcon name="edit"/><span>Edit deal</span></button> : undefined} />
@@ -587,7 +587,7 @@ function OpportunityContent({
         </ValidationFields>}
       </RecordPanel>
       <RecordPanel id="opportunity" tab="timeline" value={tab}>
-      {o.source_lead && <section><h3>Source lead</h3><Link href={`/crm/leads/${o.source_lead.id}`}>{o.source_lead.display_number}</Link>{o.source_lead.events.filter(e=>e.note).map(e=><article key={e.id}><p style={{whiteSpace:"pre-wrap"}}>{e.note}</p><small>{e.actor_name} · {new Date(e.created_at).toLocaleString("en-AU")}</small></article>)}</section>}
+      {o.source_lead && <section><h3>Source lead</h3><Link href={`/sales/leads/${o.source_lead.id}`}>{o.source_lead.display_number}</Link>{o.source_lead.events.filter(e=>e.note).map(e=><article key={e.id}><p style={{whiteSpace:"pre-wrap"}}>{e.note}</p><small>{e.actor_name} · {new Date(e.created_at).toLocaleString("en-AU")}</small></article>)}</section>}
 
         <section className="crm-panel">
           <h2>{NEXT_LABELS[o.next_action_state]}</h2>

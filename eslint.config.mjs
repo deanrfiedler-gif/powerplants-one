@@ -44,6 +44,7 @@ export default defineConfig([
     "test-results/**",
     "playwright-report/**",
     "verification-evidence/crm-ui/**",
+    "verification-evidence/crm-r38-five/**",
     "verification-evidence/projects-ui/**",
     "next-env.d.ts",
   ]),
