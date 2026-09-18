@@ -1,0 +1,49 @@
+{
+  "scope": "EN-02",
+  "revision": "r01",
+  "source_checkpoint": "108b1600152ee12443c75ffaf7feb7cc857316f5",
+  "status": "Synthetic design; native browser and owner review pending",
+  "artifact": {
+    "path": "docs/reference/ui/engineering-basis/PPO-Design-Basis-and-Interface-Register-r01.html",
+    "bytes": 207017,
+    "sha256": "1e6c40e6bf5200322ad98313bd47d934cc6f71aafdd44f19549337749d9ce9f7"
+  },
+  "inputs": [
+    {
+      "path": "docs/design/engineering-basis/template.html",
+      "sha256": "0788e102ff607c960863f6115e73eda2db3f6fd25aca58667d7bf5222f08e26a"
+    },
+    {
+      "path": "docs/design/engineering-basis/fonts.css",
+      "sha256": "a3c83afa45da8ccb05686729f4cfdd2f4694e6771334b025f00207ef381185e9"
+    },
+    {
+      "path": "docs/design/engineering-basis/workspace.css",
+      "sha256": "d336750fc0c268e8cc322167cd881857fe1f12a807319168e501bd6ce3909851"
+    },
+    {
+      "path": "docs/design/engineering-basis/location-context.json",
+      "sha256": "62bfa164b9ee8594373708a62bf952f367a43e0d1f36a0250869104133c88ead"
+    },
+    {
+      "path": "docs/design/engineering-basis/model.js",
+      "sha256": "34ecfc2c26374b3e129ff2c6cecae1b132283a28805f9bae6975f3d270e7c114"
+    },
+    {
+      "path": "docs/design/engineering-basis/workspace.js",
+      "sha256": "4388403169ab6b6e8981d7e456d069a41fb07c9f5161ac847cecb9fbd63a7a71"
+    }
+  ],
+  "references": {
+    "theme": {
+      "name": "powerplants-one-theme-style-board-r22.html",
+      "supplied_version": 2,
+      "sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0"
+    },
+    "location_source": {
+      "path": "docs/reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html",
+      "sha256": "5645a89430f081cc32edea9c748614b7c3c9ebbf43f5f393d1d18d1a55ee40bd",
+      "extraction": "Unchanged parsed location-context JSON; authored EN-02 successor evidence is separate"
+    }
+  }
+}
