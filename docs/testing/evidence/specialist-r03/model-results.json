@@ -1,0 +1,171 @@
+{
+  "definition": "SS-RECOVERED-QTY-r02",
+  "parts": "SS-PART-IDENTITY-r03-PROVISIONAL",
+  "groups": 41,
+  "tests": [
+    {
+      "name": "Source register separates 340 entered and 138 calculated fields",
+      "result": "Passed"
+    },
+    {
+      "name": "Independent synthetic geometry and cloth arithmetic",
+      "result": "Passed"
+    },
+    {
+      "name": "Exact bay lookups do not interpolate",
+      "result": "Passed"
+    },
+    {
+      "name": "Physical and wall-span widths are separate",
+      "result": "Passed"
+    },
+    {
+      "name": "Whole counts, missing input, zero denominator and excessive values block outputs",
+      "result": "Passed"
+    },
+    {
+      "name": "Standard and additional cut rounding retain different order",
+      "result": "Passed"
+    },
+    {
+      "name": "Wider sheet rejects negative offcuts and computes area and cutting length",
+      "result": "Passed"
+    },
+    {
+      "name": "Recovered motor thresholds are exact and preserve cable N/A",
+      "result": "Passed"
+    },
+    {
+      "name": "Later additional screens remain visible but omitted from legacy motor area",
+      "result": "Passed"
+    },
+    {
+      "name": "Wire, strainers, twine and clips follow independent arithmetic",
+      "result": "Passed"
+    },
+    {
+      "name": "Manual blank, zero and reason remain distinct",
+      "result": "Passed"
+    },
+    {
+      "name": "Changed inputs invalidate allowances without changing their values",
+      "result": "Passed"
+    },
+    {
+      "name": "Explicit scope exclusions suppress manual and bypassed rows while retaining originals",
+      "result": "Passed"
+    },
+    {
+      "name": "Six gates stay excluded until explicitly enabled",
+      "result": "Passed"
+    },
+    {
+      "name": "Gross margin, quoted FX and source rounding use explicit arithmetic",
+      "result": "Passed"
+    },
+    {
+      "name": "No-purchase remains priced and empty rate makes total unavailable",
+      "result": "Passed"
+    },
+    {
+      "name": "Installation is unavailable rather than silently zero",
+      "result": "Passed"
+    },
+    {
+      "name": "First snapshot preserves exact source evidence and fixed context",
+      "result": "Passed"
+    },
+    {
+      "name": "Rerun detects a saved manual edit and preserves original run",
+      "result": "Passed"
+    },
+    {
+      "name": "Removed manual line requires keep or remove disposition",
+      "result": "Passed"
+    },
+    {
+      "name": "Stale preview, reader, lock and cross-tab gates block writes",
+      "result": "Passed"
+    },
+    {
+      "name": "Precommit failure leaves the exact state intact",
+      "result": "Passed"
+    },
+    {
+      "name": "Lost-response recovery is idempotent and rechecks grants",
+      "result": "Passed"
+    },
+    {
+      "name": "Totals repair uses saved commercial input basis without regeneration",
+      "result": "Passed"
+    },
+    {
+      "name": "Backup restore validates context, units, quantities, rates and duplicate keys",
+      "result": "Passed"
+    },
+    {
+      "name": "Discount position cannot be manually adjusted independently of the price policy",
+      "result": "Passed"
+    },
+    {
+      "name": "Six-row cloth lookup is exact, including 5 m to 5.3 m",
+      "result": "Passed"
+    },
+    {
+      "name": "Default parameters reproduce every r02 quantity, total and torque in 28 scenarios",
+      "result": "Passed"
+    },
+    {
+      "name": "Catalogue identities are stable, complete and carry no prices or quote identifiers",
+      "result": "Passed"
+    },
+    {
+      "name": "Drive family resolves branch part numbers without reinterpreting stored diameters",
+      "result": "Passed"
+    },
+    {
+      "name": "Pinion tube and drive pipe diameters are separate recovered identities",
+      "result": "Passed"
+    },
+    {
+      "name": "Drive pipe diameter applies the recovered C102 rules for drums, protectors, sprockets and parts",
+      "result": "Passed"
+    },
+    {
+      "name": "Truss chord height selects the truss clip part without changing quantities",
+      "result": "Passed"
+    },
+    {
+      "name": "Roof profile is a drawing input with no source cell or quantity effect",
+      "result": "Passed"
+    },
+    {
+      "name": "Conflicts and unconfigured dependencies are never silently mapped",
+      "result": "Passed"
+    },
+    {
+      "name": "Saved lines keep the part number only and resolve descriptions when shown",
+      "result": "Passed"
+    },
+    {
+      "name": "Untested selections are counted, explained and never blocking",
+      "result": "Passed"
+    },
+    {
+      "name": "Tunable parameters are editable records that recalculate their consumers",
+      "result": "Passed"
+    },
+    {
+      "name": "Cable first-band torque result is a bound parameter",
+      "result": "Passed"
+    },
+    {
+      "name": "Parameter changes need a reason, respect write gates and invalidate allowances",
+      "result": "Passed"
+    },
+    {
+      "name": "Historical coverage uses the full comparison with recorded corrections",
+      "result": "Passed"
+    }
+  ]
+}
