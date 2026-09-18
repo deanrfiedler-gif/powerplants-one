@@ -1,4 +1,4 @@
-import type { Page } from "@playwright/test";
+import { expect, type Page } from "@playwright/test";
 
 // r38's filter form is a modal drawer. Close it with its own control before
 // exercising the worklist; the background correctly remains inert.
@@ -20,11 +20,16 @@ export async function fillOpportunitySearch(page: Page, value: string) {
   const opened = !(await search.isVisible());
   if (opened) await toggleWorklistFilters(page);
   await search.fill(value);
-  const close = page.getByRole("button", {
-    name: "Close Filter opportunities",
-    exact: true,
-  });
-  if (opened && (await close.isVisible())) await close.click();
+  if (opened) {
+    // A denied response removes the drawer immediately. Leave the search
+    // input first (it consumes Escape), then dismiss any remaining drawer.
+    // This also works after denial, unlike clicking a disappearing button.
+    await page.keyboard.press("Tab");
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog", {
+      name: "Filter opportunities", exact: true,
+    })).toBeHidden();
+  }
 }
 export async function chooseWorklistSort(page: Page, value: string) {
   const form = page.getByRole("dialog", {

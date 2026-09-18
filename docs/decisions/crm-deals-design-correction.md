@@ -46,6 +46,8 @@ Paired full-page screenshots contain different synthetic record content and are 
 
 ## Release status
 
+The [PR #239 verification repair](../testing/pr-239-ci-repair.md) records the failed route/control checks, compact reference comparison, visible-header measurement and denied-search timing correction. Required CI results remain tied to the current PR head.
+
 Code checkpoint is published. Local lint, type checks, all 115 unit tests, production build and documentation checks pass. Required CI verification, screenshot review, final merge and Azure revision are pending. Do not describe the live app as corrected until the deployed revision has been inspected.
 
 Use the existing **Update Azure private demo** workflow from protected main after required checks and compatibility review. This change introduces no migrations, reset, tester reconciliation, infrastructure or outbound integration. Verify the source/image revision, health and anonymous-access refusal, then inspect the authenticated Sales worklist and old-link redirects with Dean's authorised personal Microsoft account.

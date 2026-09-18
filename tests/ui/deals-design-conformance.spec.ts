@@ -82,15 +82,23 @@ test("r38 geometry agrees with the full-shell application across the viewport ma
           Object.fromEntries(props.map((k) => [k, getComputedStyle(n)[k]])),
         keys,
       );
-    const expected = await reference
-      .locator("#ppo-deals .card:visible")
-      .first()
-      .evaluate(
-        (n, props) =>
-          Object.fromEntries(props.map((k) => [k, getComputedStyle(n)[k]])),
-        keys,
-      );
-    expect(actual, `Card geometry at ${width}px`).toEqual(expected);
+    if (width >= 1024) {
+      // The reference replaces its cards in a resize animation frame. Resolve
+      // and measure the current node atomically instead of holding a stale one.
+      const expected = await reference.evaluate((props) => {
+        const card = document.querySelector("#ppo-deals .card")!;
+        return Object.fromEntries(
+          props.map((key) => [key, getComputedStyle(card)[key]]),
+        );
+      }, keys);
+      expect(actual, `Card geometry at ${width}px`).toEqual(expected);
+    } else {
+      // r38 switches to List below 1024px. The documented app adaptation keeps
+      // the Board and, below 781px, its touch stage selector.
+      await expect(reference.locator("#ppo-deals .list-scroll")).toBeVisible();
+      await expect(page.locator(".crm-board-scroll")).toBeVisible();
+      await expect(page.locator(".crm-card:visible")).toHaveCount(width > 780 ? 18 : 4);
+    }
     if (width >= 1280)
       for (const [app, source] of [
         [".crm-card-title", ".card-title"],

@@ -31,11 +31,15 @@ test("hosted header, populated board, filtering and independent card targets", a
     const account = document
       .querySelector(".identity-hosted")!
       .getBoundingClientRect();
-    const search = document
-      .querySelector(".crm-header-search,.ppo-global-search")!
+    const search = [...document.querySelectorAll(
+      ".crm-header-search,.ppo-global-search",
+    )].find((node) => node.getBoundingClientRect().width > 0)!
       .getBoundingClientRect();
     const heading = document.querySelector<HTMLElement>(".product-heading")!;
     const headingBounds = heading.getBoundingClientRect();
+    const title = document.createRange();
+    title.selectNodeContents(heading.querySelector("strong")!);
+    const titleBounds = title.getBoundingClientRect();
     const rail = document.querySelector(".sidebar")!;
     const cards = [...document.querySelectorAll(".crm-card")].filter(
       (e) => e.getBoundingClientRect().width > 0,
@@ -45,7 +49,9 @@ test("hosted header, populated board, filtering and independent card targets", a
       railFits: rail.scrollWidth <= rail.clientWidth,
       headingFits:
         heading.scrollWidth <= heading.clientWidth &&
-        headingBounds.width >= 100 &&
+        titleBounds.width > 0 &&
+        titleBounds.left >= headingBounds.left &&
+        titleBounds.right <= headingBounds.right &&
         headingBounds.top >= header.top &&
         headingBounds.top < search.bottom,
       accountInside:
