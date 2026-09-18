@@ -1,0 +1,91 @@
+---
+document_id: PPO-CS02-VERIFY
+title: Contacts, Stakeholders and Relationships r01 verification evidence
+revision: r01
+date: 2026-09-18
+owner: Dean Fiedler
+status: Executed local verification on the pinned Chrome channel; CI execution and owner visual review pending
+source_commit: 01b9824a63e468b393265b159fa681f83f6e668c
+---
+
+# CS-02 / CS-03 r01 — verification evidence
+
+Evidence for the [design HTML](../../../reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html), SHA-256 `e625f700f16e7945f699ac2df7cb46499f070d4341c1b0d2b8ca0206da18a8db`, 250,170 bytes.
+
+## Files in this folder
+
+| File | Contents |
+|---|---|
+| `build-manifest.json` | The deterministic build: HTML hash and byte count, per-source hashes, the pinned contract-source hashes, the base commit and the declared theme edition |
+| `model-results.json` | All 98 model groups with their names and results, bound to the HTML SHA-256 and the fixture manifest hash |
+| `browser-results.json` | All 57 native browser groups, the browser channel and version, the four viewports, the captured images and the page-error list |
+
+Screenshots are written to `verification-evidence/contacts/`, which `.gitignore` excludes from the repository; the workflow retains them as a build artefact for 14 days.
+
+## Commands executed
+
+From the repository root, on 18 September 2026:
+
+```bash
+python scripts/build-contacts-design.py --check
+node scripts/check-contacts-model.mjs --write-evidence
+node scripts/check-contacts-browser.mjs
+python scripts/check_foundation.py
+python scripts/check_prototype.py
+python scripts/check_naming.py
+git --no-pager grep -n -E "^(<<<<<<<|=======$|>>>>>>>)" -- docs
+git diff --check
+```
+
+## Results
+
+| Check | Floor | Result |
+|---|---|---|
+| Deterministic rebuild | byte for byte | **Verified** |
+| Model and contract fidelity | 45 groups | **98 groups, 98 passed, 0 failed** |
+| Native browser | 25 groups | **57 groups, 57 passed, 0 failed** |
+| Page errors, console errors, failed requests | zero | **Zero** |
+| Horizontal overflow at 1440×960, 1024×768, 820×800, 390×844 | 0 px | **0 px on all six views at all four viewports** |
+| Phone targets at 390 px | 44 px | **No interactive target under 44 px** |
+| Keyboard-only completion | proposal and duplicate review | **Both completed; dialog and panel focus return confirmed** |
+| `check_foundation.py` | pass | **Passed, 0 errors, 3,400 local links checked** |
+| `check_prototype.py` | pass | **Passed, 0 errors** |
+| `check_naming.py` | pass | **Passed, 0 errors; instructions 7,971 of 8,000 characters** |
+| Conflict-marker scan over `docs` | no output | **No output** |
+| `git diff --check` | no output | **No output** |
+
+### Browser runtime
+
+`browser-results.json` records `browser_channel: "chrome"` and `pinned_runtime_evidence: true`. The run used the repository's pinned Chrome channel, not a substitute. `PPO_BROWSER_PATH` is available for environments without that channel; a substitute run records `browser_channel: "substitute"` and `pinned_runtime_evidence: false`, and **is not evidence for the pinned runtime**.
+
+## What the checks specifically assert
+
+The model check is written against the real repository sources rather than a copy of them, so the design cannot drift from the rules the running application applies. Among the 98 groups:
+
+- The Person projection is derived from `src/shared/reads.ts` itself and compared field for field, and its absence of `can_edit` and `company_id` is asserted against the Organisation branch that has them.
+- `visibility("Person")` is checked clause by clause against the template literal in `reads.ts`, and `scopeSql` against `src/platform/permissions.ts`, including the specific fact that a site-scoped grant can never satisfy a call whose site argument is `NULL`.
+- Eleven visibility cases cover both clauses, the site-primary-contact-only case and the cross-company case.
+- The directory's sortable and non-sortable columns are derived from `sortSql` in `src/crm/directory.ts`, not asserted from memory.
+- The affiliation exclusion constraint is exercised three ways: an overlapping same-label refusal, a different-label acceptance over the same period, and an adjacent-period acceptance.
+- Restricted-versus-empty is asserted across every role × organisation × person combination, with zero occurrences of an empty state standing in for a denied one.
+- Command honesty: the exported command list is read from `src/shared/commands.ts` and asserted to contain exactly `createPerson` and `addAffiliation` for this record type; a simulated apply is asserted to leave the fixture byte-identical.
+- Authority honesty: a banned-phrase scan over the rendered page, permitting only an explicit short list of sentences that deny the claim, each asserted present.
+
+## Defects found by these checks
+
+Five defects were found during verification and fixed before issue. They are recorded because a check that has never failed has not been tested:
+
+1. `simulateApply` reached its state gate before its idempotency guard, so a repeated apply was refused instead of reporting itself as already simulated.
+2. A simulated save failure was masked, because the transient `saving` status overwrote the configured outcome before the write was attempted.
+3. A failed or refused dialog submission left the raised proposal in state. The submit handler now snapshots the record collection and restores it on any error.
+4. `<label for>` on two toolbar buttons overrode their accessible names.
+5. The record-opening name button (26 px) and the pagination controls (38 px) were below 44 px at 390 px width.
+
+A sixth issue was found before the checks could run: the source file carried literal control bytes where escape sequences were intended, which broke a regular expression at page load. The control-character test is now written as an explicit code-point comparison, and the builder output is asserted free of stray control bytes.
+
+## What is not evidence here
+
+- **Native visual review.** Desktop geometry, top-layer dialog rendering, physical 320/390 devices, zoom and print are **not claimable from this environment**. The captured screenshots were reviewed by the agent that took them; that is not owner acceptance.
+- **CI execution.** `.github/workflows/contacts-design.yml` is committed but has not run, because this branch has not been pushed. No run ID exists.
+- **Business acceptance.** These are component checks against a synthetic fixture. They establish no owner acceptance, no application integration, no accessibility certification and no production readiness.
+- **The theme edition.** Theme r22 could not be inspected: no r22 board exists in the repository at this base commit. See report §9.

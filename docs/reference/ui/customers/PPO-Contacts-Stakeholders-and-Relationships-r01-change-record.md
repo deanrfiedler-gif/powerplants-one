@@ -1,0 +1,79 @@
+---
+document_id: PPO-CS02-CHANGE
+title: Contacts, Stakeholders and Relationships r01 change record
+revision: r01
+date: 2026-09-18
+owner: Dean Fiedler
+status: First issue record
+source_commit: 01b9824a63e468b393265b159fa681f83f6e668c
+---
+
+# CS-02 / CS-03 Contacts, Stakeholders & Relationships r01 — change record
+
+## Deliverable
+
+| Field | Value |
+|---|---|
+| File | [`PPO-Contacts-Stakeholders-and-Relationships-r01.html`](PPO-Contacts-Stakeholders-and-Relationships-r01.html) |
+| SHA-256 | `e625f700f16e7945f699ac2df7cb46499f070d4341c1b0d2b8ca0206da18a8db` |
+| Bytes | 250,170 |
+| Predecessor | **None.** First issue. CS-02 is register state D — a refinement of the live `/people` and `/people/[id]` surfaces — but no standalone design file preceded this one, so there is no predecessor SHA-256 to record |
+| Scope container | `#ppo-contacts` |
+| Base commit | `01b9824a63e468b393265b159fa681f83f6e668c` |
+| Fixture manifest SHA-256 | `9cbb53da18964a4691921f32122515d4ff6c6810375f612b983d889c3dab32e4` |
+
+## What changed
+
+First issue. The package introduces, against page-register entries CS-02 and CS-03:
+
+- Six connected views over one synthetic contact collection: directory, contact record, stakeholders and relationships, reliance and obligations, proposals and duplicates, history and explanation.
+- Four preview roles producing genuinely different result sets, including a site-scoped technician who sees exactly one of ten contacts.
+- The derived Person visibility rule rendered as a step-by-step explanation rather than applied silently.
+- A four-value presence vocabulary — present, restricted, none, unknown — used by every list, count and panel.
+- A downstream reliance view over fourteen bindings, each naming its contract column and its owning module.
+- A correction and duplicate workflow in which every apply is labelled **Simulated**, because no command exists for any of it.
+- Maintained sources under `docs/design/contacts/` and a deterministic Python builder.
+
+## What was verified
+
+| Check | Result |
+|---|---|
+| `scripts/build-contacts-design.py --check` | Verified byte for byte |
+| `scripts/check-contacts-model.mjs` | 98 groups, 98 passed, 0 failed |
+| `scripts/check-contacts-browser.mjs` | 57 groups, 57 passed, 0 failed, pinned Chrome channel |
+| Page / console / request errors | Zero |
+| Horizontal overflow, four declared viewports | 0 px, every view |
+| Phone targets at 390 px | None under 44 px |
+| Keyboard-only completion | Correction proposal and duplicate resolution |
+| `check_foundation.py` / `check_prototype.py` / `check_naming.py` | All passed, 0 errors |
+| Conflict markers in `docs` / `git diff --check` | No output |
+
+Full detail, including the five defects the checks found and the fixes applied, is in [§10 of the report](PPO-Contacts-Stakeholders-and-Relationships-Report-r01.md).
+
+## What was deliberately left unchanged
+
+- **The three known token divergences.** `--surface-hover`, `--line-soft` and `--success-tint` are not resolved by this package. It adopts the Field Technicians r05 side and records that in the stylesheet.
+- **`docs/standards/ui-baselines.json`.** This module is a standalone design, not an application integration, so it triggers no registration and none was made.
+- **Every existing file under `docs/reference/ui/`** other than `README.md`. Issued bytes are untouched.
+- **Everything under `src/` and `db/`.** No application, API, migration, seed, permission or deployment change.
+- **`role_label` as free text.** No vocabulary exists in the repository; any taxonomy is labelled Proposed.
+- **`contact_preference` as free text.** Rendered with no consent semantics, matching the data dictionary and the API contract.
+- **One optional primary contact per site.** The contract limit is held, not extended.
+
+## Corrections to the build plan
+
+Two statements in `docs/delivery/contacts-stakeholders-build-plan.md` did not survive contact with the repository. Both are recorded rather than silently worked around:
+
+1. **§10 describes the Person projection as "the seven fields in `reads.ts`".** It returns nine, which the plan's own §4.1 enumerates correctly. The check derives the list from the source.
+2. **§8 describes "Northbank and Willowbank Hort" as organisations already in issued designs.** Willowbank Horticulture is an organisation in CS-01 r01; **Northbank is a site name** — `Rothwell Glasshouse — Northbank` — belonging to Rothwell Glasshouse Group. CS-01 r01 also carries no customer contacts at all, so every contact here is new.
+
+## Decisions the owner still has to make
+
+1. **Role vocabulary.** Build-plan open question 3, still open. `role_label` stays free text; fixture roles are fictional. If a real Powerplants vocabulary exists it belongs in a later revision.
+2. **The theme edition.** Build-plan decision 1 treated this as closed on the basis that PR #239 had introduced theme r22. **#239 has not merged**, and at this base commit there is no r22 board in the repository and no `--nca-*` / `--ss22-*` tokens in the merged r22-derived package. This design builds on the shared token core and adopts the r22 selection vocabulary as it appears in the merged AD-03 source. If r22 adoption matters in name, rebase after #239 merges and revise the declaration. See report §9.
+3. **Whether any of the seven proposed extensions should be adopted**, each costed in the [decision record](../../../decisions/contacts-stakeholders-design.md).
+4. **Native visual review.** Not claimable from the build environment.
+
+## What this record does not establish
+
+Owner acceptance, application integration, browser or print acceptance, accessibility certification, or production readiness. A passing check is component evidence. Publication is not approval.
