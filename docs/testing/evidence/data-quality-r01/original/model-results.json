@@ -1,0 +1,150 @@
+{
+  "status": "passed",
+  "count": 36,
+  "results": [
+    {
+      "name": "16 distinct fixtures and stable identity",
+      "status": "passed"
+    },
+    {
+      "name": "Denied and restricted scope projections",
+      "status": "passed"
+    },
+    {
+      "name": "Missing evidence refuses submit without mutation",
+      "status": "passed"
+    },
+    {
+      "name": "Blank serial and no-effect proposals refused",
+      "status": "passed"
+    },
+    {
+      "name": "Serial text case and leading zero preserved",
+      "status": "passed"
+    },
+    {
+      "name": "Unknown serial retained distinctly from zero",
+      "status": "passed"
+    },
+    {
+      "name": "Hierarchy cycle, self and cross-site requests held",
+      "status": "passed"
+    },
+    {
+      "name": "Supported same-site parent prepares only",
+      "status": "passed"
+    },
+    {
+      "name": "Installed and served links retained",
+      "status": "passed"
+    },
+    {
+      "name": "Independent canonical SHA256 agrees",
+      "status": "passed"
+    },
+    {
+      "name": "Submitted content cannot be edited in place",
+      "status": "passed"
+    },
+    {
+      "name": "Steward self-review and observer changes refused",
+      "status": "passed"
+    },
+    {
+      "name": "Missing field-owner policy refuses submission",
+      "status": "passed"
+    },
+    {
+      "name": "Return successor and exact response acceptance",
+      "status": "passed"
+    },
+    {
+      "name": "Acceptance is not receiving authority",
+      "status": "passed"
+    },
+    {
+      "name": "Partial impact blocks apply",
+      "status": "passed"
+    },
+    {
+      "name": "Target, source and policy changes each hold apply",
+      "status": "passed"
+    },
+    {
+      "name": "Bounded correction retains issued hashes and identities",
+      "status": "passed"
+    },
+    {
+      "name": "Replay returns original result without another version",
+      "status": "passed"
+    },
+    {
+      "name": "Operation identity cannot bind changed payload",
+      "status": "passed"
+    },
+    {
+      "name": "Lost response holds repeats, recovers original once",
+      "status": "passed"
+    },
+    {
+      "name": "Historical receipt recovers after source change",
+      "status": "passed"
+    },
+    {
+      "name": "Unknown lookup stays held",
+      "status": "passed"
+    },
+    {
+      "name": "Confirmed not-applied retry is original and guarded",
+      "status": "passed"
+    },
+    {
+      "name": "Not-applied original retry refuses changed source",
+      "status": "passed"
+    },
+    {
+      "name": "Keep separate closes with no mutation",
+      "status": "passed"
+    },
+    {
+      "name": "Consolidation preserves canonical records and awaits owner",
+      "status": "passed"
+    },
+    {
+      "name": "MYOB mapping remains prepared only",
+      "status": "passed"
+    },
+    {
+      "name": "Follow-up deduplicates same origin target purpose",
+      "status": "passed"
+    },
+    {
+      "name": "Closure requires matching receipt and owned draft follow-up",
+      "status": "passed"
+    },
+    {
+      "name": "Post-apply independent target change prevents closure",
+      "status": "passed"
+    },
+    {
+      "name": "Private note does not change digest or enter export",
+      "status": "passed"
+    },
+    {
+      "name": "Denied export and unavailable counterpart refused",
+      "status": "passed"
+    },
+    {
+      "name": "Missing exact proposal not substituted",
+      "status": "passed"
+    },
+    {
+      "name": "Seeded stale target and interrupted cases usable",
+      "status": "passed"
+    },
+    {
+      "name": "Frozen content tampering refuses apply",
+      "status": "passed"
+    }
+  ]
+}
