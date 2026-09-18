@@ -1,0 +1,424 @@
+{
+  "scope": "CS-02 / CS-03",
+  "revision": "r01",
+  "html_sha256": "aa97680dadf459aa6fbeaf39c761df124adf6737fb68c62b106589c38eac9a52",
+  "html_bytes": 254547,
+  "fixture_sha256": "9cbb53da18964a4691921f32122515d4ff6c6810375f612b983d889c3dab32e4",
+  "fixture_manifest_sha256": "f100464bd1aebed27d050a797ada23ff035152165289e7b92b31bd2fe912edcf",
+  "source_commit": "01b9824a63e468b393265b159fa681f83f6e668c",
+  "groups": 103,
+  "results": [
+    {
+      "name": "Person projection equals exactly the fields src/shared/reads.ts returns",
+      "result": "Passed"
+    },
+    {
+      "name": "Person projection carries no can_edit and no company_id, unlike the other kinds",
+      "result": "Passed"
+    },
+    {
+      "name": "visibility(\"Person\") is reproduced clause for clause",
+      "result": "Passed"
+    },
+    {
+      "name": "scopeSql is reproduced: a site-scoped grant cannot satisfy a NULL site argument",
+      "result": "Passed"
+    },
+    {
+      "name": "listShared refuses company_id and site_id for Person with the exact contract text",
+      "result": "Passed"
+    },
+    {
+      "name": "listShared orders by UUID and searches display_name only",
+      "result": "Passed"
+    },
+    {
+      "name": "listShared reports Partial completeness when a next cursor exists",
+      "result": "Passed"
+    },
+    {
+      "name": "The directory columns and the sortable subset match src/crm/directory.ts",
+      "result": "Passed"
+    },
+    {
+      "name": "parseDirectory refuses a non-sortable column with the contract message",
+      "result": "Passed"
+    },
+    {
+      "name": "The directory status filter and page sizes match the contract exactly",
+      "result": "Passed"
+    },
+    {
+      "name": "The owner filter is refused for people, as the contract refuses it",
+      "result": "Passed"
+    },
+    {
+      "name": "Directory search covers the same concatenation the contract searches",
+      "result": "Passed"
+    },
+    {
+      "name": "Directory organisations are current affiliations only, in the contract order",
+      "result": "Passed"
+    },
+    {
+      "name": "Directory returns an exact total, page, limit, observed_at and kind",
+      "result": "Passed"
+    },
+    {
+      "name": "Saved views reproduce the twelve-view, sixty-character and version rules",
+      "result": "Passed"
+    },
+    {
+      "name": "createPerson company-context rule is reproduced: 1–10, deduplicated, sorted, all checked",
+      "result": "Passed"
+    },
+    {
+      "name": "people.active defaults true, is never written again, and is enforced in three runtimes",
+      "result": "Passed"
+    },
+    {
+      "name": "No command exists to update, deactivate, end-affiliate or merge a person",
+      "result": "Passed"
+    },
+    {
+      "name": "addAffiliation is concurrency-owned by the organisation, not the person",
+      "result": "Passed"
+    },
+    {
+      "name": "The affiliation exclusion constraint is reproduced exactly",
+      "result": "Passed"
+    },
+    {
+      "name": "An affiliation requires a context row in the organisation’s company",
+      "result": "Passed"
+    },
+    {
+      "name": "valid_to must be after valid_from, as the CHECK constraint requires",
+      "result": "Passed"
+    },
+    {
+      "name": "register_identity('Person','') allocates no reference, and no counter type exists",
+      "result": "Passed"
+    },
+    {
+      "name": "immutable_evidence refuses deletion of people and relationships",
+      "result": "Passed"
+    },
+    {
+      "name": "activity_links admits no Person value, so interaction history can only be derived",
+      "result": "Passed"
+    },
+    {
+      "name": "site_parties allows one current Operator per site, with the contract roles",
+      "result": "Passed"
+    },
+    {
+      "name": "sites.primary_contact_id requires a context row and has no updating command",
+      "result": "Passed"
+    },
+    {
+      "name": "erp_account_mappings binds an organisation, never a person",
+      "result": "Passed"
+    },
+    {
+      "name": "Visibility: company reader sees a person with a context in that company",
+      "result": "Passed"
+    },
+    {
+      "name": "Visibility: company reader sees an inactive person",
+      "result": "Passed"
+    },
+    {
+      "name": "Visibility: company reader does not reach another company",
+      "result": "Passed"
+    },
+    {
+      "name": "Visibility: service coordinator matches the sales population",
+      "result": "Passed"
+    },
+    {
+      "name": "Visibility: finance reviewer matches the sales population",
+      "result": "Passed"
+    },
+    {
+      "name": "Visibility: site technician sees the primary contact of their own site",
+      "result": "Passed"
+    },
+    {
+      "name": "Visibility: site technician does not see another contact of the same organisation",
+      "result": "Passed"
+    },
+    {
+      "name": "Visibility: site technician does not see the primary contact of a sibling site",
+      "result": "Passed"
+    },
+    {
+      "name": "Visibility: site technician does not see an ended affiliate",
+      "result": "Passed"
+    },
+    {
+      "name": "Visibility: site technician does not reach another organisation",
+      "result": "Passed"
+    },
+    {
+      "name": "Visibility: site technician does not reach another company",
+      "result": "Passed"
+    },
+    {
+      "name": "Visibility trace names the clause that passed and the clause that failed",
+      "result": "Passed"
+    },
+    {
+      "name": "The four preview roles produce genuinely different result sets",
+      "result": "Passed"
+    },
+    {
+      "name": "customerContext returns the same empty array for restricted and for none",
+      "result": "Passed"
+    },
+    {
+      "name": "Presence is a four-value fact and every value has distinct copy",
+      "result": "Passed"
+    },
+    {
+      "name": "An organisation with restricted contacts never reports none",
+      "result": "Passed"
+    },
+    {
+      "name": "Every list, count and panel distinguishes restricted, none and unknown",
+      "result": "Passed"
+    },
+    {
+      "name": "A site with no primary contact reports none, not restricted",
+      "result": "Passed"
+    },
+    {
+      "name": "The owner_unavailable precedent in src/projects/service.ts is the pattern followed",
+      "result": "Passed"
+    },
+    {
+      "name": "Zero occurrences of an empty state standing in for a denied one, in the rendered page",
+      "result": "Passed"
+    },
+    {
+      "name": "No control implies a command that does not exist",
+      "result": "Passed"
+    },
+    {
+      "name": "Every apply carries a visible Simulated label and changes no record",
+      "result": "Passed"
+    },
+    {
+      "name": "An apply is refused without explicit confirmation and is idempotent",
+      "result": "Passed"
+    },
+    {
+      "name": "A proposal requires a reason, a subject and an independent reviewer",
+      "result": "Passed"
+    },
+    {
+      "name": "A stale subject version is refused rather than silently overwritten",
+      "result": "Passed"
+    },
+    {
+      "name": "A review is refused to anyone but the named independent reviewer",
+      "result": "Passed"
+    },
+    {
+      "name": "A changed proposal is a successor and inherits no review",
+      "result": "Passed"
+    },
+    {
+      "name": "Duplicate resolution proposes a pointer and executes no merge and no delete",
+      "result": "Passed"
+    },
+    {
+      "name": "active is never rendered as editable",
+      "result": "Passed"
+    },
+    {
+      "name": "Authority basis is one of three values on every stakeholder row",
+      "result": "Passed"
+    },
+    {
+      "name": "No rendered string asserts purchasing authority",
+      "result": "Passed"
+    },
+    {
+      "name": "Every downstream binding names a real contract column or decision",
+      "result": "Passed"
+    },
+    {
+      "name": "ADR-0014 is quoted exactly and the blocked approval is owned by SV-06",
+      "result": "Passed"
+    },
+    {
+      "name": "The planner and finance refusals are reproduced from their own sources",
+      "result": "Passed"
+    },
+    {
+      "name": "A deal and a task require a current affiliation, which the database enforces",
+      "result": "Passed"
+    },
+    {
+      "name": "A ticket requester survives an ended affiliation, and the fixture proves it",
+      "result": "Passed"
+    },
+    {
+      "name": "Unknown is distinguished from restricted for a record with no contact",
+      "result": "Passed"
+    },
+    {
+      "name": "The six attention queues are all reachable and all non-empty for some role",
+      "result": "Passed"
+    },
+    {
+      "name": "Register check 1: the exact addressed site and named on-site location are identifiable",
+      "result": "Passed"
+    },
+    {
+      "name": "Register check 2: a changed name or relationship retains stable identity and references",
+      "result": "Passed"
+    },
+    {
+      "name": "Register check 3: normal, missing-source and interrupted cases are all reachable",
+      "result": "Passed"
+    },
+    {
+      "name": "The fixture population reconciles with CS-01 r01 and the application seed",
+      "result": "Passed"
+    },
+    {
+      "name": "All six required fixture scenarios are present and reachable",
+      "result": "Passed"
+    },
+    {
+      "name": "The two same-named people are in different company contexts and are not duplicates",
+      "result": "Passed"
+    },
+    {
+      "name": "The duplicate pair shares one company context and overlapping current affiliations",
+      "result": "Passed"
+    },
+    {
+      "name": "Every fixture affiliation satisfies the contract constraints",
+      "result": "Passed"
+    },
+    {
+      "name": "Fixture role labels are plausible and explicitly fictional, with no claimed vocabulary",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore refuses a foreign schema",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore refuses an over-long display_name",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore refuses an invalid email",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore refuses a person with no company context",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore refuses an affiliation without a context row in that company",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore refuses overlapping affiliations for one role label",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore refuses a duplicate person id",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore refuses a self-reviewed proposal",
+      "result": "Passed"
+    },
+    {
+      "name": "Restore refuses an applied duplicate pointer",
+      "result": "Passed"
+    },
+    {
+      "name": "Valid serialised state round-trips unchanged",
+      "result": "Passed"
+    },
+    {
+      "name": "Every proposed extension is labelled, costed and states what exists today",
+      "result": "Passed"
+    },
+    {
+      "name": "contact_preference is rendered as free text with no consent semantics",
+      "result": "Passed"
+    },
+    {
+      "name": "Relationship health is derived, labelled proposed, and never asserted",
+      "result": "Passed"
+    },
+    {
+      "name": "The assembled page is the module only, with one scope container and six views",
+      "result": "Passed"
+    },
+    {
+      "name": "Every template icon placeholder names an icon that exists and is painted",
+      "result": "Passed"
+    },
+    {
+      "name": "The register follows the board r23 List treatment, measured against the board",
+      "result": "Passed"
+    },
+    {
+      "name": "The view tabs follow the board r07 tab treatment",
+      "result": "Passed"
+    },
+    {
+      "name": "Tokens are declared on the scope container, not on :root, reusing the shared core",
+      "result": "Passed"
+    },
+    {
+      "name": "Theme r22 is strictly additive over r20, measured rather than asserted",
+      "result": "Passed"
+    },
+    {
+      "name": "The r22 selection family is declared with the board’s own values",
+      "result": "Passed"
+    },
+    {
+      "name": "The three known token divergences adopt one side and say which",
+      "result": "Passed"
+    },
+    {
+      "name": "Embedded fonts are byte-identical to the declared shared source",
+      "result": "Passed"
+    },
+    {
+      "name": "The page makes no remote request and stores only under its own key",
+      "result": "Passed"
+    },
+    {
+      "name": "All eight UI states are reachable and distinct in the assembled page",
+      "result": "Passed"
+    },
+    {
+      "name": "The page never claims enforcement and states the authority boundary",
+      "result": "Passed"
+    },
+    {
+      "name": "The page states that a contact has no user-facing reference",
+      "result": "Passed"
+    },
+    {
+      "name": "Phone viewport treatment exists and no layout is wider than its container",
+      "result": "Passed"
+    },
+    {
+      "name": "The builder is deterministic and the committed HTML matches its sources",
+      "result": "Passed"
+    }
+  ]
+}

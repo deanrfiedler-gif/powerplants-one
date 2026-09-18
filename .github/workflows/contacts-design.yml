@@ -1,0 +1,55 @@
+name: Contacts design review
+on:
+  pull_request:
+    paths:
+      - 'docs/design/contacts/**'
+      - 'docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-*'
+      - 'scripts/*contacts*'
+      - 'src/shared/reads.ts'
+      - 'src/shared/commands.ts'
+      - 'src/crm/directory.ts'
+      - 'src/projects/service.ts'
+      - 'db/migrations/0002-shared-foundation.sql'
+      - '.github/workflows/contacts-design.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  design:
+    name: Contacts model and native browser review
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Use existing runtime and browser pins
+        run: |
+          npm install --global npm@11.19.0
+          npm ci
+          npm run browser:install
+      # The builder refuses to run if a pinned contract source has changed, so a change
+      # to reads.ts, commands.ts or directory.ts fails here rather than silently leaving
+      # the design describing a rule that no longer exists. It also proves the rebuild is
+      # byte for byte identical to the committed HTML.
+      - name: Verify the deterministic build and the committed page
+        env:
+          PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          mkdir -p verification-evidence/contacts
+          python3 scripts/build-contacts-design.py --check
+          git diff --exit-code -- docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html
+      - name: Verify the model, the contract fidelity and the native interactions
+        run: |
+          node scripts/check-contacts-model.mjs --write-evidence
+          node scripts/check-contacts-browser.mjs
+      - name: Retain verification evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Contacts-design-evidence
+          path: verification-evidence/contacts/
+          retention-days: 14
