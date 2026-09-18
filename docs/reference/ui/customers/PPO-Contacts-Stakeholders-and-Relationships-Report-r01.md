@@ -10,7 +10,7 @@ source_commit: 01b9824a63e468b393265b159fa681f83f6e668c
 
 # CS-02 / CS-03 — Contacts, Stakeholders & Relationships design report
 
-**Design HTML:** [`PPO-Contacts-Stakeholders-and-Relationships-r01.html`](PPO-Contacts-Stakeholders-and-Relationships-r01.html) · SHA-256 `6f6acf8bfc89cb350312cffac934dda6ab7b46a6bf62adcdfa79ec16f5c977c9` · 252,234 bytes, one self-contained file with no external request.
+**Design HTML:** [`PPO-Contacts-Stakeholders-and-Relationships-r01.html`](PPO-Contacts-Stakeholders-and-Relationships-r01.html) · SHA-256 `cd5f0be8e9000bcec683e44d806fd9e2a6147efc2cee4f72ca2554eea2287d40` · 253,388 bytes, one self-contained file with no external request.
 
 **Built from:** [`docs/design/contacts/`](../../../design/contacts/README.md) by `scripts/build-contacts-design.py`, deterministically, on any platform.
 
@@ -237,8 +237,8 @@ The r22 board also carries `--surface-hover: #f0f2f5`, `--line-soft: #e9ecf1` an
 | Check | Result |
 |---|---|
 | `python scripts/build-contacts-design.py --check` | Verified byte for byte |
-| `node scripts/check-contacts-model.mjs --write-evidence` | **100 groups, 100 passed, 0 failed** (plan floor 45) |
-| `node scripts/check-contacts-browser.mjs` | **57 groups, 57 passed, 0 failed** (plan floor 25), on the pinned Chrome channel |
+| `node scripts/check-contacts-model.mjs --write-evidence` | **102 groups, 102 passed, 0 failed** (plan floor 45) |
+| `node scripts/check-contacts-browser.mjs` | **60 groups, 60 passed, 0 failed** (plan floor 25), on the pinned Chrome channel |
 | Page, console and request errors | **Zero** |
 | Horizontal overflow at 1440×960, 1024×768, 820×800, 390×844 | **0 px on every view at every viewport** |
 | Phone targets | No interactive target under 44 px at 390 px width |
@@ -260,9 +260,16 @@ Five defects were found during verification and fixed before this issue. They ar
 4. **`<label for>` on two toolbar buttons overrode their accessible names**, so they were announced as "Saved views" and "Local workspace" rather than by their own text.
 5. **Phone targets below 44 px**: the record-opening name button (26 px) and the pagination controls (38 px) at 390 px width.
 
-### 10.2 What is not verified
+### 10.2 Defects the owner's visual review found
 
-- **Native visual review by Dean, in a browser.** Desktop geometry, top-layer dialog rendering, physical 320/390 devices, zoom and print are **not claimable from this environment**. Screenshots were captured and reviewed by the agent that took them, which is not owner acceptance.
+Two defects survived every automated check and were found by Dean opening the page. Both are fixed, and both now have checks that fail when they return:
+
+6. **No icon-only control rendered its icon.** The template ships four static `data-icon` placeholders — the page-guide button, the Assistant and Preview options buttons, and the two close controls — and **nothing in the controller ever painted them**. The guide button rendered as a blank white square; the close controls were empty boxes carrying only an `aria-label`. Screen-reader users were unaffected; everyone else got a button with nothing in it. One of the four also named `spark`, which does not exist in the Customer 360 icon set at all. The controller now paints the placeholders at startup, the template names only icons that exist, and three new groups assert it — one model group checking every placeholder name resolves and is painted, two browser groups checking the header and both close controls render an `svg`.
+7. **Only the selected row had column rules.** The r22 *ring* treatment was applied as a `box-shadow` on each `<td>` rather than on the `<tr>`, so every cell drew its own 2 px halo and the adjacent halos read as column separators. The selected row was therefore the only row in a seven-column register whose columns could be tracked — an accident that looked deliberate. The halo and lift now sit on the row, the navy boundary is drawn by the edge cells, and **column rules are drawn on every row**, which is the improvement the accident had revealed. A model group asserts the cells carry no halo of their own, and a browser group reads the computed styles to confirm the ring is on the row.
+
+### 10.3 What is not verified
+
+- **Native visual review is partially done.** Dean opened the page and found the two defects in §10.2. Physical 320/390 devices, zoom, print and top-layer dialog rendering on real hardware remain **not claimable from this environment**; screenshots were captured and reviewed by the agent that took them, which is not owner acceptance.
 - **The focused workflow has not executed.** `contacts-design.yml` is committed but this branch has not been pushed, so no CI run exists.
 - **Owner acceptance, application integration and production readiness.** A passing check is component evidence. Publication is not approval.
 

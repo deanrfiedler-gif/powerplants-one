@@ -10,15 +10,15 @@ source_commit: 01b9824a63e468b393265b159fa681f83f6e668c
 
 # CS-02 / CS-03 r01 — verification evidence
 
-Evidence for the [design HTML](../../../reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html), SHA-256 `6f6acf8bfc89cb350312cffac934dda6ab7b46a6bf62adcdfa79ec16f5c977c9`, 252,234 bytes.
+Evidence for the [design HTML](../../../reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html), SHA-256 `cd5f0be8e9000bcec683e44d806fd9e2a6147efc2cee4f72ca2554eea2287d40`, 253,388 bytes.
 
 ## Files in this folder
 
 | File | Contents |
 |---|---|
 | `build-manifest.json` | The deterministic build: HTML hash and byte count, per-source hashes, the pinned contract-source hashes, the base commit and the declared theme edition |
-| `model-results.json` | All 100 model groups with their names and results, bound to the HTML SHA-256 and the fixture manifest hash |
-| `browser-results.json` | All 57 native browser groups, the browser channel and version, the four viewports, the captured images and the page-error list |
+| `model-results.json` | All 102 model groups with their names and results, bound to the HTML SHA-256 and the fixture manifest hash |
+| `browser-results.json` | All 60 native browser groups, the browser channel and version, the four viewports, the captured images and the page-error list |
 
 Screenshots are written to `verification-evidence/contacts/`, which `.gitignore` excludes from the repository; the workflow retains them as a build artefact for 14 days.
 
@@ -42,8 +42,8 @@ git diff --check
 | Check | Floor | Result |
 |---|---|---|
 | Deterministic rebuild | byte for byte | **Verified** |
-| Model and contract fidelity | 45 groups | **100 groups, 100 passed, 0 failed** |
-| Native browser | 25 groups | **57 groups, 57 passed, 0 failed** |
+| Model and contract fidelity | 45 groups | **102 groups, 102 passed, 0 failed** |
+| Native browser | 25 groups | **60 groups, 60 passed, 0 failed** |
 | Page errors, console errors, failed requests | zero | **Zero** |
 | Horizontal overflow at 1440×960, 1024×768, 820×800, 390×844 | 0 px | **0 px on all six views at all four viewports** |
 | Phone targets at 390 px | 44 px | **No interactive target under 44 px** |
@@ -60,7 +60,7 @@ git diff --check
 
 ## What the checks specifically assert
 
-The model check is written against the real repository sources rather than a copy of them, so the design cannot drift from the rules the running application applies. Among the 100 groups:
+The model check is written against the real repository sources rather than a copy of them, so the design cannot drift from the rules the running application applies. Among the 102 groups:
 
 - The Person projection is derived from `src/shared/reads.ts` itself and compared field for field, and its absence of `can_edit` and `company_id` is asserted against the Organisation branch that has them.
 - `visibility("Person")` is checked clause by clause against the template literal in `reads.ts`, and `scopeSql` against `src/platform/permissions.ts`, including the specific fact that a site-scoped grant can never satisfy a call whose site argument is `NULL`.
@@ -82,7 +82,12 @@ Five defects were found during verification and fixed before issue. They are rec
 4. `<label for>` on two toolbar buttons overrode their accessible names.
 5. The record-opening name button (26 px) and the pagination controls (38 px) were below 44 px at 390 px width.
 
-A sixth issue was found before the checks could run: the source file carried literal control bytes where escape sequences were intended, which broke a regular expression at page load. The control-character test is now written as an explicit code-point comparison, and the builder output is asserted free of stray control bytes.
+Two further defects survived every automated check and were found by the owner opening the page. Both are fixed and both now have checks that fail when they return:
+
+6. No icon-only control rendered its icon: the template's four static `data-icon` placeholders were never painted, so the page-guide button was a blank square and the close controls were empty boxes carrying only an `aria-label`. One placeholder also named an icon absent from the set. Three new groups assert the fix.
+7. Only the selected row had column rules, because the r22 ring was applied per cell rather than per row, so adjacent per-cell halos read as column separators. The ring now sits on the row and column rules are drawn on every row. Two new groups assert the fix.
+
+A further issue was found before the checks could run: the source file carried literal control bytes where escape sequences were intended, which broke a regular expression at page load. The control-character test is now written as an explicit code-point comparison, and the builder output is asserted free of stray control bytes.
 
 ## What is not evidence here
 

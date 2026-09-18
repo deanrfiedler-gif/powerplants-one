@@ -15,8 +15,8 @@ source_commit: 01b9824a63e468b393265b159fa681f83f6e668c
 | Field | Value |
 |---|---|
 | File | [`PPO-Contacts-Stakeholders-and-Relationships-r01.html`](PPO-Contacts-Stakeholders-and-Relationships-r01.html) |
-| SHA-256 | `6f6acf8bfc89cb350312cffac934dda6ab7b46a6bf62adcdfa79ec16f5c977c9` |
-| Bytes | 252,234 |
+| SHA-256 | `cd5f0be8e9000bcec683e44d806fd9e2a6147efc2cee4f72ca2554eea2287d40` |
+| Bytes | 253,388 |
 | Predecessor | **None.** First issue. CS-02 is register state D — a refinement of the live `/people` and `/people/[id]` surfaces — but no standalone design file preceded this one, so there is no predecessor SHA-256 to record |
 | Scope container | `#ppo-contacts` |
 | Base commit | `01b9824a63e468b393265b159fa681f83f6e668c`, with `origin/main` `be219114` merged in after PR #239 landed |
@@ -39,8 +39,8 @@ First issue. The package introduces, against page-register entries CS-02 and CS-
 | Check | Result |
 |---|---|
 | `scripts/build-contacts-design.py --check` | Verified byte for byte |
-| `scripts/check-contacts-model.mjs` | 100 groups, 100 passed, 0 failed |
-| `scripts/check-contacts-browser.mjs` | 57 groups, 57 passed, 0 failed, pinned Chrome channel |
+| `scripts/check-contacts-model.mjs` | 102 groups, 102 passed, 0 failed |
+| `scripts/check-contacts-browser.mjs` | 60 groups, 60 passed, 0 failed, pinned Chrome channel |
 | Page / console / request errors | Zero |
 | Horizontal overflow, four declared viewports | 0 px, every view |
 | Phone targets at 390 px | None under 44 px |
@@ -48,7 +48,7 @@ First issue. The package introduces, against page-register entries CS-02 and CS-
 | `check_foundation.py` / `check_prototype.py` / `check_naming.py` | All passed, 0 errors |
 | Conflict markers in `docs` / `git diff --check` | No output |
 
-Full detail, including the five defects the checks found and the fixes applied, is in [§10 of the report](PPO-Contacts-Stakeholders-and-Relationships-Report-r01.md).
+Full detail is in [§10 of the report](PPO-Contacts-Stakeholders-and-Relationships-Report-r01.md): five defects found by the checks, and two more found by the owner's visual review — unpainted icon placeholders, and a selection ring applied per cell that gave the selected row column rules no other row had. All seven are fixed, and the two visual ones now have checks that fail when they return.
 
 ## What was deliberately left unchanged
 

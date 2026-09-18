@@ -910,6 +910,35 @@ test('The assembled page is the module only, with one scope container and six vi
   assert(page.includes('<meta name="ppo-design-revision" content="r01">'));
 });
 
+test('Every template icon placeholder names an icon that exists and is painted', () => {
+  const template = read(path.join(src, 'template.html'));
+  const icons = JSON.parse(read(path.join(src, 'icons.json')));
+  const names = [...template.matchAll(/data-icon="([a-z-]+)"/g)].map(m => m[1]);
+  assert(names.length >= 4, 'the template ships icon placeholders');
+  for (const n of names) assert(icons[n], 'template asks for an icon that does not exist: ' + n);
+  /* The placeholders are static markup; nothing fills them unless the controller does.
+     Without this the icon-only controls render as blank boxes with only an aria-label. */
+  assert(app.includes('function paintIcons'), 'workspace.js must paint the placeholders');
+  assert(/paintIcons\(\);/.test(app), 'paintIcons must be called at startup');
+  for (const n of new Set(names))
+    assert(page.includes('data-icon="' + n + '"'), n + ' survives assembly');
+});
+
+test('The register is gridded and the selected row is ringed once, not once per cell', () => {
+  assert(css.includes('#ppo-contacts tbody td:last-child{border-right:0}'));
+  assert(/tbody td\{[^}]*border-right:1px solid var\(--line-soft\)/.test(css),
+    'every body cell carries a column rule');
+  assert(/thead th\{[^}]*border-right:1px solid var\(--line-soft\)/.test(css),
+    'the header carries the same column rule so the columns line up');
+  /* The halo and lift belong to the row. On the cells, each cell draws its own ring and
+     the selected row grows column rules the other rows do not have. */
+  assert(css.includes("tbody tr[aria-selected=true]{box-shadow:0 0 0 2px var(--ss22-halo),var(--ss22-lift)}"));
+  const selectedCell = css.match(/tbody tr\[aria-selected=true\] td\{([^}]*)\}/)[1];
+  assert(!/box-shadow/.test(selectedCell), 'no per-cell halo: ' + selectedCell);
+  assert(css.includes('table.cards tr[aria-selected=true]{box-shadow:none}'),
+    'the row ring is reset where the register becomes cards');
+});
+
 test('Tokens are declared on the scope container, not on :root, reusing the shared core', () => {
   assert(!/:root\s*\{[^}]*--navy/.test(css));
   const block = css.match(/#ppo-contacts\{([^}]*)\}/)[1];

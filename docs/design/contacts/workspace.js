@@ -64,6 +64,18 @@
     span.innerHTML = '<svg class="icon" aria-hidden="true" viewBox="0 0 24 24">' + svg + '</svg>';
     return span.firstChild;
   };
+  /* The template ships static [data-icon] placeholders and the icon set is injected by
+     the builder, so nothing paints them unless this runs. Without it the icon-only
+     controls render as blank boxes carrying an aria-label and nothing visible. */
+  function paintIcons(scope) {
+    for (const node of (scope || document).querySelectorAll('[data-icon]')) {
+      const glyph = ICONS[node.getAttribute('data-icon')];
+      if (!glyph) continue;
+      node.innerHTML = '<svg class="icon" aria-hidden="true" viewBox="0 0 24 24">'
+        + glyph + '</svg>';
+    }
+  }
+
   const dash = '—';
   const orNone = (v, label) => v === null || v === undefined || v === ''
     ? el('span', { class: 'tag none', text: label || 'Not recorded' })
@@ -1617,6 +1629,7 @@
 
   /* ------------------------------------------------------------------ start */
 
+  paintIcons();
   const restored = readStorage();
   if (restored) state = restored;
   render();

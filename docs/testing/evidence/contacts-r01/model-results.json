@@ -1,12 +1,12 @@
 {
   "scope": "CS-02 / CS-03",
   "revision": "r01",
-  "html_sha256": "6f6acf8bfc89cb350312cffac934dda6ab7b46a6bf62adcdfa79ec16f5c977c9",
-  "html_bytes": 252234,
+  "html_sha256": "cd5f0be8e9000bcec683e44d806fd9e2a6147efc2cee4f72ca2554eea2287d40",
+  "html_bytes": 253388,
   "fixture_sha256": "9cbb53da18964a4691921f32122515d4ff6c6810375f612b983d889c3dab32e4",
   "fixture_manifest_sha256": "f100464bd1aebed27d050a797ada23ff035152165289e7b92b31bd2fe912edcf",
   "source_commit": "01b9824a63e468b393265b159fa681f83f6e668c",
-  "groups": 100,
+  "groups": 102,
   "results": [
     {
       "name": "Person projection equals exactly the fields src/shared/reads.ts returns",
@@ -362,6 +362,14 @@
     },
     {
       "name": "The assembled page is the module only, with one scope container and six views",
+      "result": "Passed"
+    },
+    {
+      "name": "Every template icon placeholder names an icon that exists and is painted",
+      "result": "Passed"
+    },
+    {
+      "name": "The register is gridded and the selected row is ringed once, not once per cell",
       "result": "Passed"
     },
     {

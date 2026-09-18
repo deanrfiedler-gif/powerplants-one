@@ -102,14 +102,19 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
 /* bounded scroll region: the register owns overflow, the page never scrolls sideways */
 #ppo-contacts .scroll{max-height:620px;overflow:auto;min-height:0;scroll-padding-top:42px}
 #ppo-contacts table{width:100%;border-collapse:collapse;font-size:13px}
-#ppo-contacts thead th{position:sticky;top:0;z-index:1;background:var(--surface);border-bottom:1px solid var(--line);text-align:left;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);font-weight:500;padding:10px 12px;white-space:nowrap}
-#ppo-contacts tbody td{border-bottom:1px solid var(--line-soft);padding:11px 12px;vertical-align:top}
+#ppo-contacts thead th{position:sticky;top:0;z-index:1;background:var(--surface);border-bottom:1px solid var(--line);border-right:1px solid var(--line-soft);text-align:left;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);font-weight:500;padding:10px 12px;white-space:nowrap}
+#ppo-contacts thead th:last-child{border-right:0}
+#ppo-contacts tbody td{border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft);padding:11px 12px;vertical-align:top}
+#ppo-contacts tbody td:last-child{border-right:0}
 #ppo-contacts tbody tr:last-child td{border-bottom:0}
 #ppo-contacts tbody tr:hover td{background:var(--surface-hover)}
 /* r22 selection family, "ring" treatment: white plate, navy boundary, halo and lift.
-   The green inset marker on the first cell keeps selection legible without colour alone. */
-#ppo-contacts tbody tr[aria-selected=true] td{background:var(--ss22-panel);border-top:1px solid var(--ss22-navy);border-bottom:1px solid var(--ss22-navy);box-shadow:0 0 0 2px var(--ss22-halo)}
-#ppo-contacts tbody tr[aria-selected=true] td:first-child{box-shadow:inset 3px 0 var(--green),0 0 0 2px var(--ss22-halo);border-left:1px solid var(--ss22-navy)}
+   The halo and lift belong to the row, not to each cell: put them on the cells and every
+   cell draws its own ring, which reads as a column rule the other rows do not have.
+   The green inset marker keeps selection legible without relying on colour alone. */
+#ppo-contacts tbody tr[aria-selected=true]{box-shadow:0 0 0 2px var(--ss22-halo),var(--ss22-lift)}
+#ppo-contacts tbody tr[aria-selected=true] td{background:var(--ss22-panel);border-top:1px solid var(--ss22-navy);border-bottom:1px solid var(--ss22-navy)}
+#ppo-contacts tbody tr[aria-selected=true] td:first-child{border-left:1px solid var(--ss22-navy);box-shadow:inset 3px 0 var(--green)}
 #ppo-contacts tbody tr[aria-selected=true] td:last-child{border-right:1px solid var(--ss22-navy)}
 #ppo-contacts th.sortable button{border:0;background:none;padding:0;min-height:26px;font:inherit;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);gap:4px}
 #ppo-contacts th.fixed{color:var(--muted)}
@@ -211,7 +216,9 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
  #ppo-contacts table.cards thead{display:none}
  #ppo-contacts table.cards tr{border:1px solid var(--line);border-radius:8px;margin-bottom:10px;padding:4px 2px;background:#fff}
  #ppo-contacts table.cards tr[aria-selected=true]{border-color:var(--green);box-shadow:inset 3px 0 var(--sel-marker)}
- #ppo-contacts table.cards td{border-bottom:0;padding:7px 12px}
+ #ppo-contacts table.cards td{border-bottom:0;border-right:0;padding:7px 12px}
+ #ppo-contacts table.cards tr[aria-selected=true]{box-shadow:none}
+ #ppo-contacts table.cards tr[aria-selected=true] td{border:0;box-shadow:none;background:transparent}
  #ppo-contacts table.cards td:before{content:attr(data-label);display:block;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
  #ppo-contacts table.cards td:empty{display:none}
  #ppo-contacts .scroll{max-height:none;overflow:visible}
@@ -230,7 +237,7 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
 @media(prefers-reduced-motion:reduce){#ppo-contacts *{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 @media print{#ppo-contacts .header-actions,#ppo-contacts .tabs,#ppo-contacts .toolbar,#ppo-contacts .panel,#ppo-contacts dialog,#ppo-contacts .toast{display:none!important}#ppo-contacts .card{break-inside:avoid}#ppo-contacts .split{display:block}}
 </style></head><body><div id="ppo-contacts"><a class="skip" href="#content">Skip to workspace</a><div class="workspace">
-<header class="module-header"><div><span class="eyebrow">Powerplants One <span aria-hidden="true">/</span> Customers &amp; Sites · CS-02 &amp; CS-03</span><h1>Contacts, Stakeholders &amp; Relationships</h1><p>Who the named contact is, why this reader can see them, what depends on them, and what can be proposed where no command exists.</p></div><div class="row header-actions"><button type="button" data-action="guide" class="icon-button" aria-label="Page guide"><span data-icon="help"></span></button><button type="button" data-action="assistant"><span data-icon="spark"></span>Assistant</button><button type="button" data-action="options"><span data-icon="settings"></span>Preview options</button></div></header>
+<header class="module-header"><div><span class="eyebrow">Powerplants One <span aria-hidden="true">/</span> Customers &amp; Sites · CS-02 &amp; CS-03</span><h1>Contacts, Stakeholders &amp; Relationships</h1><p>Who the named contact is, why this reader can see them, what depends on them, and what can be proposed where no command exists.</p></div><div class="row header-actions"><button type="button" data-action="guide" class="icon-button" aria-label="Page guide"><span data-icon="info"></span></button><button type="button" data-action="assistant"><span data-icon="help"></span>Assistant</button><button type="button" data-action="options"><span data-icon="settings"></span>Preview options</button></div></header>
 <div class="demo-strip"><span class="brand-dot" aria-hidden="true"></span><span><strong>Synthetic prototype</strong> · no real people, organisations or contact details · CS-02 / CS-03 r01</span><span>As at 18 September 2026, 10:00 AEST</span><span id="role-label"></span><span id="save-status" role="status" aria-live="polite">Opening workspace…</span></div>
 <p class="authority"><strong>The server decides who you can see.</strong> This page renders the derived Person visibility rule, explains it and proposes corrections; it enforces nothing and sends nothing. Preview roles are a local demonstration, not authentication. <strong>This module issues nothing, sends nothing and acknowledges nothing.</strong></p>
 <nav id="tabs" class="tabs" role="tablist" aria-label="Contact views"></nav><div id="recovery" aria-live="polite"></div><div id="toolbar" class="toolbar"></div>
@@ -2111,6 +2118,18 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
     span.innerHTML = '<svg class="icon" aria-hidden="true" viewBox="0 0 24 24">' + svg + '</svg>';
     return span.firstChild;
   };
+  /* The template ships static [data-icon] placeholders and the icon set is injected by
+     the builder, so nothing paints them unless this runs. Without it the icon-only
+     controls render as blank boxes carrying an aria-label and nothing visible. */
+  function paintIcons(scope) {
+    for (const node of (scope || document).querySelectorAll('[data-icon]')) {
+      const glyph = ICONS[node.getAttribute('data-icon')];
+      if (!glyph) continue;
+      node.innerHTML = '<svg class="icon" aria-hidden="true" viewBox="0 0 24 24">'
+        + glyph + '</svg>';
+    }
+  }
+
   const dash = '—';
   const orNone = (v, label) => v === null || v === undefined || v === ''
     ? el('span', { class: 'tag none', text: label || 'Not recorded' })
@@ -3664,6 +3683,7 @@ html,body{margin:0;min-height:100%;background:#f5f6f8;color-scheme:light}
 
   /* ------------------------------------------------------------------ start */
 
+  paintIcons();
   const restored = readStorage();
   if (restored) state = restored;
   render();

@@ -1,7 +1,7 @@
 {
   "scope": "CS-02 / CS-03",
   "revision": "r01",
-  "html_sha256": "6f6acf8bfc89cb350312cffac934dda6ab7b46a6bf62adcdfa79ec16f5c977c9",
+  "html_sha256": "cd5f0be8e9000bcec683e44d806fd9e2a6147efc2cee4f72ca2554eea2287d40",
   "browser_channel": "chrome",
   "browser_path": null,
   "browser_version": "153.0.8010.52",
@@ -12,8 +12,8 @@
     "820x800",
     "390x844"
   ],
-  "groups": 57,
-  "passed": 57,
+  "groups": 60,
+  "passed": 60,
   "failed": 0,
   "page_errors": [],
   "images": [
@@ -46,6 +46,18 @@
     },
     {
       "name": "Exactly one scope container and no duplicated application shell",
+      "result": "Passed"
+    },
+    {
+      "name": "Every icon-only control renders a visible icon, not just an aria-label",
+      "result": "Passed"
+    },
+    {
+      "name": "The dialog and panel close controls carry their icon",
+      "result": "Passed"
+    },
+    {
+      "name": "The register is gridded and the selected row reads as one plate",
       "result": "Passed"
     },
     {

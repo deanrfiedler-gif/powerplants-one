@@ -105,6 +105,39 @@ await check('Exactly one scope container and no duplicated application shell', a
   assert.equal(await page.locator('nav.rail, .masthead').count(), 0);
 });
 
+await check('Every icon-only control renders a visible icon, not just an aria-label', async () => {
+  assert.equal(await page.locator('.header-actions svg.icon').count(), 3);
+  /* An unpainted placeholder is a blank button: the label reaches a screen reader and
+     nothing reaches anyone else. */
+  assert.equal(await page.locator('[data-icon]:not(:has(svg))').count(), 0);
+  const guide = page.getByRole('button', {name: 'Page guide'});
+  assert.equal(await guide.locator('svg').count(), 1);
+  const guideBox = await guide.boundingBox();
+  assert(guideBox.width >= 36 && guideBox.height >= 36, 'the icon-only control keeps its target');
+});
+
+await check('The dialog and panel close controls carry their icon', async () => {
+  await page.getByRole('button', {name: 'Preview options', exact: true}).click();
+  await modal().waitFor({state: 'visible'});
+  assert.equal(await modal().locator('[data-close] svg.icon').count(), 1);
+  await page.keyboard.press('Escape');
+  await modal().waitFor({state: 'hidden'});
+  assert.equal(await panel().locator('[data-action=closePanel] svg.icon').count(), 1);
+});
+
+await check('The register is gridded and the selected row reads as one plate', async () => {
+  const rule = sel => page.locator(sel).first().evaluate(e => getComputedStyle(e).borderRightWidth);
+  assert.notEqual(await rule('#content tbody td'), '0px', 'body cells carry a column rule');
+  assert.notEqual(await rule('#content thead th'), '0px', 'header cells carry the same rule');
+  const selected = page.locator('#content tbody tr[aria-selected="true"]');
+  assert.equal(await selected.count(), 1);
+  /* The ring is on the row. If it were on the cells, every cell would report one. */
+  assert.notEqual(await selected.evaluate(e => getComputedStyle(e).boxShadow), 'none');
+  const cellShadows = await selected.locator('td').evaluateAll(list =>
+    list.map(e => getComputedStyle(e).boxShadow).filter(s => s.includes('rgba(36, 42, 55, 0.12)')));
+  assert.deepEqual(cellShadows, [], 'no cell draws its own halo');
+});
+
 await check('The fixed clock is stated and never drifts to the real time', async () => {
   const strip = await page.locator('.demo-strip').innerText();
   assert.match(strip, /18 September 2026, 10:00 AEST/);
