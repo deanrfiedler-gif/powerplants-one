@@ -4,6 +4,7 @@ import pg from "pg";
 import { transaction } from "../src/platform/database";
 import { migrationFiles, seedFiles, latestMigrationVersion, demoMigrationFiles, latestDemoMigrationVersion, existingDemoChecksumMatches } from "./migration-registry";
 import { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-runtime";
+import { ensurePackReviewer } from "./demo-reviewer";
 
 const additions = ["crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert",
   "project.read", "project.create", "project.edit", "engineering.read", "engineering.create", "engineering.edit",
@@ -43,7 +44,7 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // database/storage epoch; this function neither resets nor activates that epoch.
   if (latestMigrationVersion !== 27) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
-  if (latestDemoMigrationVersion !== 2) throw Error("Review the existing-demo upgrade for this release.");
+  if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
     version: Number(file.slice(0, 4)), sql: await read(`migrations/${file}`),
   })));
@@ -137,6 +138,26 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
       INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_id,valid_from,valid_to)
       VALUES($1,$2,$3,$4,$3,clock_timestamp(),$5) ON CONFLICT DO NOTHING`,
     [demoWorkspace, row.user_id, demoCompany, row.cap, row.expires_at]);
+    console.log("Demo upgrade stage: tester-role-profiles");
+    const missingReviewers = await db.query(`
+      SELECT t.object_id,t.expires_at
+      FROM ppo.demo_testers t
+      JOIN ppo.users u ON (u.workspace_id,u.id)=(t.workspace_id,t.user_id)
+      JOIN ppo.permission_grants g ON (g.workspace_id,g.user_id)=(t.workspace_id,t.user_id)
+        AND g.capability='crm.opportunity.edit' AND g.company_id=$2 AND g.scope_type='Company' AND g.scope_id=$2
+      JOIN ppo.permission_grants r ON (r.workspace_id,r.user_id)=(t.workspace_id,t.user_id)
+        AND r.capability='shared.internal.read' AND r.company_id=$2 AND r.scope_type='Company' AND r.scope_id=$2
+      WHERE t.workspace_id=$1 AND t.tenant_id=$3 AND t.enabled AND u.active
+        AND u.issuer='PPO-EntraDemo' AND u.subject_id=t.tenant_id::text||'/'||t.object_id::text
+        AND t.expires_at>clock_timestamp() AND g.valid_from<=clock_timestamp() AND r.valid_from<=clock_timestamp()
+        AND (g.valid_to IS NULL OR g.valid_to>clock_timestamp()) AND (r.valid_to IS NULL OR r.valid_to>clock_timestamp())
+        AND NOT EXISTS(SELECT 1 FROM ppo.demo_tester_roles dr WHERE dr.tenant_id=t.tenant_id
+          AND dr.object_id=t.object_id AND dr.role_key='pack-reviewer')`,
+    [demoWorkspace, demoCompany, tenant]);
+    if (!apply && missingReviewers.rowCount)
+      throw Error("Existing testers need the explicit hosted-role upgrade-and-deploy operation.");
+    for (const row of missingReviewers.rows)
+      await ensurePackReviewer(db, tenant, row.object_id, row.expires_at);
     console.log("Demo upgrade stage: verify-privileges");
     for (const table of ["ppo.lead_candidates", "ppo.projects", "ppo.engineering_packages", ...gmailTables]) {
       for (const privilege of ["SELECT", "INSERT", "UPDATE", "DELETE"]) {
@@ -145,8 +166,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
       }
     }
     // Exercise the restricted role: the upgrade must not make identity writable.
-    const identityAccess = await db.query("SELECT has_table_privilege($1,'ppo.demo_testers','UPDATE') AS allowed", [role]);
-    if (identityAccess.rows[0].allowed) throw Error("Runtime role has unexpected identity privileges.");
+    for (const table of ["ppo.demo_testers", "ppo.demo_tester_roles", "ppo.users", "ppo.permission_grants"]) {
+      const identityAccess = await db.query("SELECT has_table_privilege($1,$2,'UPDATE') AS allowed", [role, table]);
+      if (identityAccess.rows[0].allowed) throw Error("Runtime role has unexpected identity privileges.");
+    }
     console.log("Demo upgrade stage: exercise-runtime-role");
     await db.query(`SET LOCAL ROLE ${pg.escapeIdentifier(role)}`);
     await db.query("SELECT id FROM ppo.lead_candidates LIMIT 0");

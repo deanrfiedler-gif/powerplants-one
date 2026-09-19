@@ -95,3 +95,28 @@ The bounded invited-tester set adds `service.work_order.edit`, `service.readines
 New invitations receive the standard 31-capability Company A demo set. Existing eligible invitations gain only missing grants through the explicit `upgrade-and-deploy` operation. Current enabled identity, company scope, prerequisite grants and the earliest existing expiry still bound eligibility. Existing revoked or expired grants are retained. The runtime cannot edit identity or permission tables. There is no migration, reset, reseed, tester reconciliation, Azure role change or infrastructure change.
 
 Verification covers real invited-actor proposals, required preparation and customer agreement, crew confirmation, conflict rejection without changing the original booking, a valid move, reload persistence and immediate expiry enforcement. Upgrade tests cover the already-current database missing only these four grants, retained revoked command grants, ineligible invitations and idempotence. Desktop and phone browser cases exercise the existing forms. The generated access-review catalogue mirrors the 31-capability set. Exact CI, merge, release and hosted verification evidence are recorded in the contribution PR.
+
+## 19 September — hosted Pack Reviewer profile
+
+Dean authorised the next acceptance control after the moved booking persisted with confirmed
+customer commitment and dispatch still held. [ADR-0029](ADR-0029-hosted-pack-reviewer-profile.md)
+adds a separate, attributable Pack Reviewer profile linked to each invited Entra tester. T6 keeps
+its existing 31 capabilities and still has no pack authority.
+
+The reviewer receives the three pack actions `pack.read`, `pack.prepare` and `pack.check`, plus
+only the four read dependencies required by the existing visibility chain: `shared.read`,
+`schedule.read`, `service.work_order.read` and `service.ticket.read`. It has no issue,
+acknowledgement, scheduling command, work-order edit, readiness-assessment, field, report or
+Finance permission. The account selector can switch only to role actors linked to the currently
+authenticated tester; the application runtime cannot change the mapping or its grants.
+
+Hosted migration 0003 adds the mapping without changing the local migration track. The explicit
+upgrade creates one stable reviewer actor for each eligible current tester, expiry-bound to that
+tester. Verify refuses a pending role migration; upgrade, retry and later verification are
+idempotent. Disabling or expiring an invitation invalidates both identities and their sessions.
+No fixture reset, invitation reconciliation, Azure role change or infrastructure change occurs.
+
+This reviewer can finish TR-04 at **Checked**. It cannot clear `needs_review`: the existing P06
+worker does that only after a separate `pack.issue` authority finalises an exact current issue.
+Live acceptance must therefore end with dispatch held and identify pack issue as the next explicit
+authority decision, not silently widen the reviewer.

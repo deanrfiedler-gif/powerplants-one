@@ -10,6 +10,7 @@ import { demoConfig } from "../src/platform/demo-config";
 import { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-runtime";
 import { demoMigrationFiles, existingDemoChecksumMatches } from "./migration-registry";
 import { operatorFailureCode } from "./demo-diagnostics";
+import { ensurePackReviewer } from "./demo-reviewer";
 
 export { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-runtime";
 export const demoCapabilities = ["shared.read", "shared.internal.read", "activity.read", "activity.edit",
@@ -68,6 +69,8 @@ export async function reconcileTesters(tenant: string, entries: ReturnType<typeo
     // Removed entries lose existing sessions immediately; retained actor IDs stay stable.
     await c.query("UPDATE ppo.demo_testers SET enabled=false WHERE tenant_id=$1", [tenant]);
     await c.query("UPDATE ppo.users u SET active=false FROM ppo.demo_testers t WHERE (u.workspace_id,u.id)=(t.workspace_id,t.user_id) AND t.tenant_id=$1", [tenant]);
+    await c.query("UPDATE ppo.demo_tester_roles SET enabled=false WHERE tenant_id=$1", [tenant]);
+    await c.query("UPDATE ppo.users u SET active=false FROM ppo.demo_tester_roles r WHERE (u.workspace_id,u.id)=(r.workspace_id,r.user_id) AND r.tenant_id=$1", [tenant]);
     for (const e of entries) {
       const subject = `${tenant}/${e.object_id}`;
       const user = await c.query(
@@ -83,9 +86,14 @@ export async function reconcileTesters(tenant: string, entries: ReturnType<typeo
       for (const capability of demoCapabilities) await c.query(
         "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_id,valid_to) VALUES($1,$2,$3,$4,$3,$5)",
         [demoWorkspace, id, demoCompany, capability, e.expires_at]);
+      await ensurePackReviewer(c, tenant, e.object_id, e.expires_at);
       await seedTesterMailbox(c, demoWorkspace, demoCompany, id);
     }
-    await c.query("DELETE FROM ppo.sessions s USING ppo.demo_testers t WHERE (s.workspace_id,s.actor_id)=(t.workspace_id,t.user_id) AND (NOT t.enabled OR t.expires_at<=clock_timestamp())");
+    await c.query(`DELETE FROM ppo.sessions s WHERE EXISTS(
+      SELECT 1 FROM ppo.demo_testers t WHERE (s.workspace_id,s.actor_id)=(t.workspace_id,t.user_id)
+        AND (NOT t.enabled OR t.expires_at<=clock_timestamp())) OR EXISTS(
+      SELECT 1 FROM ppo.demo_tester_roles r WHERE (s.workspace_id,s.actor_id)=(r.workspace_id,r.user_id)
+        AND (NOT r.enabled OR r.expires_at<=clock_timestamp()))`);
   });
 }
 

@@ -9,6 +9,7 @@ import { verifiedDemoObject } from "../../src/platform/demo-auth";
 import { testerInput, demoCapabilities } from "../../scripts/demo-database";
 import { operatorFailureCode } from "../../scripts/demo-diagnostics";
 import { existingDemoChecksumMatches } from "../../scripts/demo-upgrade";
+import { packReviewerCapabilities } from "../../src/platform/demo-roles";
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 
@@ -69,6 +70,11 @@ test("tester grants are distinct, expiring and limited to Company A commercial j
     ["schedule.contact", "schedule.manage", "schedule.read", "service.readiness.assess",
       "service.ticket.read", "service.work_order.edit", "service.work_order.read"]);
   assert.equal(demoCapabilities.some(c => /finance|pack|report|field/.test(c)), false);
+  assert.deepEqual([...packReviewerCapabilities].sort(), [
+    "pack.check", "pack.prepare", "pack.read", "schedule.read", "service.ticket.read",
+    "service.work_order.read", "shared.read",
+  ]);
+  assert.equal(packReviewerCapabilities.some(c => /issue|finance|field|report|manage|contact|edit/.test(c)), false);
 });
 
 test("legacy Windows migration bytes match the observed baseline without accepting changed SQL", async () => {
