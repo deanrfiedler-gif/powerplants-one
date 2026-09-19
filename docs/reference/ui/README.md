@@ -20,6 +20,18 @@ Use this page to find the **latest available HTML for each design family**, its 
 
 **Scoped addition, 17 September 2026:** DK-03 Output, Issue & Distribution Centre r01 and its detailed report are linked below as a new proposed design. This does not repeat the dated inventory audit, change any existing design acceptance or claim application integration.
 
+**Scoped addition, 18 September 2026 — uploaded module HTML:** five files supplied by Dean are published for navigation only and are **uploaded references**, not proposed designs and not accepted baselines. None has a decision record, source package or verification evidence record in this repository.
+
+| Uploaded reference | Family | What is absent |
+|---|---|---|
+| [Deal Workspace r02](deals/PPO-Deal-Workspace-r02.html) | CR-01; successor to the merged [r01](crm/PPO-Deal-Workspace-r01.html) | No r02 report, decision or evidence; r01 and its report remain the described revision |
+| [Deals pipeline r37](deals/ppo-deal-pipeline_r37.html) | CRM board; sits between the merged [r35](crm/ppo-deal-pipeline_r35.html) and [r38](crm/ppo-deal-pipeline_r38.html) | No report, decision or evidence; r38 remains the later board |
+| [Knowledge Authoring, Review & Learning Intake r01](knowledge-authoring/PPO-Knowledge-Authoring-Review-and-Learning-Intake-r01.html) · [report](knowledge-authoring/PPO-Knowledge-Authoring-Review-and-Learning-Intake-Report-r01.md) | Knowledge; distinct from the merged DK-04 [search and article detail](knowledge/PPO-Knowledge-Search-and-Article-Detail-r01.html) | No decision record, source package or evidence record |
+| [Returns, Supplier Claims & Credit Tracking r01](returns-claims/PPO-Returns-Supplier-Claims-and-Credit-Tracking-Workspace-r01.html) · [report](returns-claims/PPO-Returns-Supplier-Claims-and-Credit-Tracking-Workspace-Report-r01.md) | SC-08 | Source package, builder, both suites, workflow, decision record and evidence record; the report's section 0 also records a hash discrepancy against the authoring handover |
+| [Theme / style board r21](theme-style-board/powerplants-one-theme-style-board-r21.html) | Shared visual reference | Not registered in the accepted [UI baseline register](../../standards/ui-baselines.json); r20 remains the row above until a registered successor lands |
+
+Listing these is navigation, not design acceptance, and does not repeat the dated inventory audit above.
+
 **Latest available does not mean approved or implemented.** A higher filename revision, a successful check or a merged pull request does not establish design approval. **Approved** requires a linked Dean decision; **Proposed** and **Uploaded reference** do not establish acceptance; **Study** is explicitly unadopted scope. Recorded desktop and phone approvals retain their separate scopes. Where filenames and embedded revision labels disagree, the discrepancy is stated instead of silently choosing a new baseline.
 
 The [accepted UI baseline register](../../standards/ui-baselines.json) retains exact baseline hashes and application mappings. This index does not replace those controls. Consult [current project status](../../STATUS.md) and the receiving handovers for application delivery evidence. Historical handovers and uploaded closeouts may still describe their original publication or browser-review checkpoints.

@@ -1,6 +1,10 @@
 <!doctype html>
 <!--
-Powerplants One — CRM Deal Pipeline | r36 | 2026-09-17 | Design for review
+Powerplants One — CRM Deal Pipeline | r37 | 2026-09-17 | Design for review
+r37 refines toolbar sizing and order, tightens stage gaps, highlights rotting
+cards, top-aligns Create opportunity, and keeps board notifications outside
+dialogs. Adds session-only CSV import, data cleanup and deleted-deal restore.
+Predecessor r36 SHA256: 918f8c54798d7844ce5b16d5d8cf3b9ff5a6b25940bca94563a3b9cb978b06f1.
 Standalone, synthetic, in-memory interaction reference. No server, API, persistent
 storage, authentication, permission enforcement, production integration or handover.
 Issued-series context: r12/r13 delivered; r14/r15 issued then withdrawn. Those
@@ -155,15 +159,15 @@ ownership. Won does not convert an order or authorise downstream work.
 Stage keys remain stable on rename; stage removal retains old history and requires
 an explicit destination for affected deals. Historical labels are preserved.
 Session-only save; reload restores original fixtures. No external writes.
-VERIFICATION: 29 focused JavaScript model and DOM interaction checks passed for r36.
-Native Chromium could not start because local sockets are unavailable; rendered
-layout and real-device verification remain outstanding. No live app integration
+VERIFICATION: r37 passes the 29 retained pipeline checks and 30 focused
+refinement checks using a JavaScript model and DOM adapter. Native rendered
+layout remains unverified: cloud browser security policy blocks local HTML URLs. No live app integration
 or whole-product accessibility acceptance is implied.
 -->
 <html lang="en-AU"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; frame-src blob:; object-src blob:; connect-src 'none'; font-src 'none'; base-uri 'none'; form-action 'none'">
-<title>Powerplants One — Deal Pipeline r36</title><link rel="icon" href="data:,">
+<title>Powerplants One — Deal Pipeline r37</title><link rel="icon" href="data:,">
 <style>
 /* Scoped tokens. PPO UI r06 + its accepted r08 supersession govern brand and geometry. */
 #deal-board {height:100dvh;min-height:0;overflow:hidden;}
@@ -379,7 +383,7 @@ or whole-product accessibility acceptance is implied.
 #ppo-deals .triage-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;}
 #ppo-deals .triage-progress{height:3px;background:var(--line);}
 #ppo-deals .triage-progress span{display:block;height:100%;background:var(--green);}
-#ppo-deals .toast-stack{position:absolute;bottom:28px;right:30px;display:flex;flex-direction:column;gap:7px;z-index:var(--z-toast);max-width:min(540px,calc(100% - 40px));}
+#ppo-deals .toast-stack{position:fixed;bottom:28px;right:30px;display:flex;flex-direction:column;gap:7px;z-index:var(--z-toast);max-width:min(540px,calc(100% - 40px));}
 #ppo-deals .toast{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--navy);color:var(--paper);padding:10px 13px;border-radius:var(--radius-control);box-shadow:var(--shadow);font-size:var(--text-xs);animation:ppo-dialog-in var(--motion-standard) var(--ease-in);}
 #ppo-deals .toast.error{background:var(--paper);color:var(--danger);border:1px solid var(--danger);}
 #ppo-deals .toast>span{flex:1;min-width:170px;}
@@ -402,7 +406,6 @@ or whole-product accessibility acceptance is implied.
 
 #ppo-deals .detail[open]{animation-duration:var(--motion-deliberate);}
 
-#ppo-deals dialog > .toast-stack{position:sticky;bottom:10px;right:auto;max-width:none;margin:8px 14px;}
 #ppo-deals dialog .toast{box-shadow:var(--shadow-card);}
 #ppo-deals .page-search{width:210px;min-width:130px;}
 
@@ -500,7 +503,6 @@ or whole-product accessibility acceptance is implied.
 #ppo-deals .triage .dialog-header{flex:none;position:static;}
 #ppo-deals .triage .dialog-body{flex:1;min-height:0;overflow:hidden;padding:0;}
 /* Empty notifications must not reserve space below the Triage footer. */
-#ppo-deals .triage>.toast-stack:empty{display:none;}
 #ppo-deals .triage-step{height:100%;display:flex;flex-direction:column;}
 #ppo-deals .triage-context{padding:18px 24px 0;flex:none;}
 #ppo-deals .triage .triage-title{font-size:23px;margin:14px 0 5px;min-height:62px;}
@@ -621,8 +623,6 @@ or whole-product accessibility acceptance is implied.
  flex:none;position:static;
  border-radius:0 0 var(--radius-dialog) var(--radius-dialog);
 }
-#ppo-deals .overlay[data-type=new]>.toast-stack,#ppo-deals .overlay[data-type=filters]>.toast-stack{flex:none;}
-#ppo-deals .overlay[data-type=new]>.toast-stack:empty,#ppo-deals .overlay[data-type=filters]>.toast-stack:empty{display:none;}
 #ppo-deals .stage-header{height:var(--stage-header-height,78px);min-height:var(--stage-header-height,78px);padding:10px 16px 12px;border-bottom:0;box-shadow:none;}
 #ppo-deals .stage-column:last-child .stage-header{border-radius:0 6px 0 0;}
 #ppo-deals .stage-heading{padding-right:1px;gap:2px;}
@@ -930,7 +930,6 @@ or whole-product accessibility acceptance is implied.
 #ppo-deals .task-shortcut.needs-attention .task-count{background:var(--warning-surface);color:var(--warning)}
 #ppo-deals .card .card-actions{gap:0;flex:1;min-width:0;justify-content:flex-end}
 #ppo-deals .card .card-action{flex:0 1 25px;min-width:20px;padding:3px}
-#ppo-deals .task-panel>.toast-stack:empty{display:none}
 #ppo-deals .task-panel .dialog-body{padding:16px 20px 22px}
 #ppo-deals .task-context{margin-bottom:18px}
 #ppo-deals .task-context>p{font-size:12px;color:var(--muted);margin-bottom:4px}
@@ -1060,11 +1059,11 @@ or whole-product accessibility acceptance is implied.
 
 /* r36 — tighter gutters and a full-height, top-aligned filter form. */
 #ppo-deals .board-scroll{overflow-x:auto;}
-#ppo-deals .board-grid{--stage-gap:10px;}
-#ppo-deals .toolbar .pipeline-selector{width:clamp(230px,20vw,320px);min-width:0;justify-content:flex-start;}
+#ppo-deals .board-grid{--stage-gap:9px;}
+#ppo-deals .toolbar .pipeline-selector{width:clamp(210px,18vw,290px);min-width:0;justify-content:flex-start;}
 #ppo-deals .pipeline-selector>span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;text-align:left;}
 #ppo-deals .pipeline-selector>.icon{flex:none;}
-#ppo-deals .overlay[data-type=filters]{position:fixed;inset:0 0 auto;margin:0 auto;height:100dvh;max-height:100dvh;}
+#ppo-deals .overlay[data-type=filters],#ppo-deals .overlay[data-type=new]{position:fixed;inset:0 0 auto;margin:0 auto;height:100dvh;max-height:100dvh;}
 #ppo-deals .stage-heading h2{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 #ppo-deals .stage-summary{min-width:0;gap:6px;}
 #ppo-deals .board-grid.has-many-stages{width:max(100%,var(--pipeline-min-width));}
@@ -1127,9 +1126,52 @@ or whole-product accessibility acceptance is implied.
 #ppo-deals .pipeline-editor .field-error{font-size:11px;line-height:1.6;}
 #ppo-deals .pipeline-menu-actions{border-top:1px solid var(--line);margin-top:8px;padding-top:7px;}
 #ppo-deals .pipeline-menu-actions .menu-item:last-child{font-weight:600;}
-@media(max-width:1279px){#ppo-deals .board-grid{--stage-gap:8px;}#ppo-deals .toolbar .pipeline-selector{width:240px;}#ppo-deals .pipeline-config{grid-template-columns:1fr 1fr;gap:20px;}#ppo-deals .pipeline-name-field{grid-column:1/-1;}#ppo-deals .pipeline-name-field>input{max-width:520px;}}
+@media(max-width:1279px){#ppo-deals .board-grid{--stage-gap:7px;}#ppo-deals .toolbar .pipeline-selector{width:220px;}#ppo-deals .pipeline-config{grid-template-columns:1fr 1fr;gap:20px;}#ppo-deals .pipeline-name-field{grid-column:1/-1;}#ppo-deals .pipeline-name-field>input{max-width:520px;}}
 @media(max-width:699px){#ppo-deals .toolbar .pipeline-selector{flex:1;width:100%;max-width:none;}#ppo-deals .toolbar-context{flex:1 1 100%;width:100%;}#ppo-deals .toolbar-context .new-button{flex:none;margin-left:0;}#ppo-deals .overlay.pipeline-editor{inset:0;width:100vw;height:100dvh;max-height:100dvh;border-radius:0;}#ppo-deals .pipeline-config{grid-template-columns:1fr;padding:18px;gap:18px;}#ppo-deals .pipeline-editor>.dialog-header{padding:18px;}#ppo-deals .pipeline-stages-section{padding:18px;}#ppo-deals .pipeline-stage-grid{grid-auto-columns:min(280px,calc(100vw - 52px));}#ppo-deals .pipeline-stages-heading{align-items:flex-start;}#ppo-deals .pipeline-stages-heading p{max-width:200px;}#ppo-deals .pipeline-editor>.dialog-footer{padding:12px 18px;flex-wrap:wrap;}#ppo-deals .pipeline-save-note{flex:1 1 100%;}#ppo-deals .pipeline-editor>.dialog-footer>.btn{margin-left:auto;}#ppo-deals .pipeline-stage-card input[type=text],#ppo-deals .pipeline-stage-card input[type=number]{font-size:16px;}#ppo-deals .pipeline-migrations{margin-inline:18px;}#ppo-deals .pipeline-editor-error{margin-inline:18px;}}
 @media(prefers-reduced-motion:reduce){#ppo-deals .switch-control input,#ppo-deals .switch-control input::after{transition:none;}}
+
+
+/* r37 — small spacing adjustments, rotting state and opportunity data tools. */
+#ppo-deals .opportunity-actions{display:flex;align-items:center;gap:6px;flex:none;}
+#ppo-deals .opportunity-actions .new-button{margin-left:0;}
+#ppo-deals .toolbar .data-options-button{width:36px;min-width:36px;padding:0;}
+#ppo-deals .card.is-rotting{background:#fff4f3;}
+#ppo-deals .card.is-rotting:hover{background:#ffefed;}
+#ppo-deals .data-tools-dialog{width:min(760px,calc(100vw - 32px));}
+#ppo-deals .data-tools-dialog .dialog-body{padding:24px;}
+#ppo-deals .data-tools-intro{color:var(--muted);font-size:14px;line-height:1.55;margin:0 0 20px;}
+#ppo-deals .data-tools-intro strong{color:var(--ink);}
+#ppo-deals .data-import-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:20px 0 8px;}
+#ppo-deals .data-import-heading h3{margin:0;font-size:15px;}
+#ppo-deals .data-tools-dialog input[type=file]{max-width:100%;font-size:14px;padding:10px 0;}
+#ppo-deals .data-tools-dialog textarea{width:100%;min-height:150px;resize:vertical;font-family:inherit;font-size:14px;line-height:1.5;}
+#ppo-deals .data-tools-dialog .hint{display:block;margin-top:6px;line-height:1.5;}
+#ppo-deals .data-feedback{font-size:14px;line-height:1.5;margin:12px 0;white-space:pre-line;color:var(--danger,#a12626);}
+#ppo-deals .data-feedback:empty{display:none;}
+#ppo-deals .data-preview{margin-top:20px;}
+#ppo-deals .data-preview-scroll{overflow:auto;border:1px solid var(--line);border-radius:8px;max-height:280px;}
+#ppo-deals .data-preview table{border-collapse:collapse;width:100%;font-size:13px;}
+#ppo-deals .data-preview th,#ppo-deals .data-preview td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;min-width:130px;overflow-wrap:anywhere;}
+#ppo-deals .data-preview th{position:sticky;top:0;background:#f2f4f7;font-weight:600;}
+#ppo-deals .data-preview td.numeric{text-align:right;white-space:nowrap;}
+#ppo-deals .data-record-list{list-style:none;margin:16px 0 0;padding:0;}
+#ppo-deals .data-record{display:flex;align-items:center;gap:18px;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--line);}
+#ppo-deals .data-record:first-child{padding-top:0;}
+#ppo-deals .data-record:last-child{border-bottom:0;}
+#ppo-deals .data-record-copy{min-width:0;flex:1;overflow-wrap:anywhere;}
+#ppo-deals .data-record-copy strong{display:block;font-size:14px;line-height:1.45;margin-bottom:5px;}
+#ppo-deals .data-record-copy p{margin:4px 0;font-size:13px;color:var(--muted);line-height:1.5;}
+#ppo-deals .data-record-actions{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex:none;}
+#ppo-deals .data-record select{max-width:220px;margin-top:8px;}
+#ppo-deals .data-empty{padding:28px 20px;text-align:center;background:#f5f7f8;border:1px solid var(--line);border-radius:10px;line-height:1.6;}
+#ppo-deals .data-empty strong{display:block;margin-bottom:5px;}
+@media(max-width:699px){
+ #ppo-deals .data-tools-dialog .dialog-body{padding:18px;}
+ #ppo-deals .data-tools-dialog .dialog-footer{flex-wrap:wrap;}
+ #ppo-deals .data-import-heading{align-items:flex-start;flex-direction:column;}
+ #ppo-deals .data-record{align-items:flex-start;gap:12px;}
+ #ppo-deals .data-record-actions .btn{padding:7px 10px;}
+}
 
 </style></head><body style="margin:0;overflow:hidden"><div id="deal-board" data-testid="board-root" data-page-search="off"><div id="ppo-deals"></div></div>
 <script>
@@ -1368,13 +1410,13 @@ function tipAttr(text){return `data-tip="${esc(text)}"`;}
 function healthChip(d){const all=derived.health[d.id]||[],h=all[0];return h?`<button type="button" class="health-chip ${severityName(h.severity)}" data-action="health-detail" data-id="${d.id}" data-testid="deal-card-health-${d.id}" aria-label="Review health: ${esc(h.label)}${all.length>1?`, plus ${all.length-1} other signals`:''}">${icon(h.icon)}<span class="health-label">${esc(h.text)}</span>${all.length>1?`<span class="health-extra">+${all.length-1}</span>`:''}</button>`:'';}
 
 function nextAction(d){const a=d.nextActivity;return `<div class="next-action ${!a?'none':new Date(a.dueAt)<REFERENCE_NOW?'overdue':''}">${icon(!a?'calendar':({Call:'call',Email:'email',Meeting:'users',Note:'document'}[a.type]||'task'))}<div class="action-copy"><span class="action-title" ${tipAttr(a?.title||'Nothing scheduled')}>${esc(a?.title||'Nothing scheduled')}</span><span title="${esc(a?(d.waitingOn?'Waiting on '+d.waitingOn.party+' · ':'')+dueText(a.dueAt):'Schedule a follow-up')}">${a?(d.waitingOn?'Waiting on '+esc(d.waitingOn.party)+' · ':'')+dueText(a.dueAt):'Schedule a follow-up'}</span></div></div>`;}
-function card(d){const h=derived.health[d.id]||[],urgent=h.find(s=>['no-action','overdue','idle','delivery-late','task-overdue','task-blocked'].includes(s.id)),m=state.movement==='off'?null:movementFor(d,windowStart(state.movement));return `<article class="card ${urgent?'has-caution':''} ${pending.has(d.id)?'pending':''} ${failed.has(d.id)?'failed':''} ${highlighted.has(d.id)?'highlight':''} ${state.selection.has(d.id)?'selected':''}" data-testid="deal-card-${d.id}" data-deal="${d.id}" tabindex="0" draggable="${!pending.has(d.id)}" aria-label="${esc(`${d.title}, ${d.organisation}, ${money(d.value)}, ${stageName(d.stage,pipelineFor(d))}. Enter opens the deal; Space starts a move.`)}" aria-busy="${pending.has(d.id)}">${m?.new?'<span class="movement-badge">New</span>':m?.changed?`<span class="movement-badge ${m.back?'back':''}">${m.back?'Moved back':'Moved forward'}</span>`:''}<div class="card-heading"><button type="button" class="card-title" data-action="deal-page" data-id="${d.id}" data-testid="deal-title-${d.id}" title="${esc(d.title)}"><span class="card-title-text">${esc(d.title)}</span></button>${urgent?btn('health-detail','','alert','card-caution',`data-id="${d.id}" aria-label="${esc(urgent.label)}: review health" ${tipAttr(urgent.text)}`):''}</div><p class="card-org" title="${esc(d.organisation)}">${esc(d.organisation)}</p><p class="card-contact" title="Primary contact: ${esc(d.contacts[0]?.name||'Not recorded')}">${esc(d.contacts[0]?.name||'No primary contact')}</p><div class="card-value"><span class="close" title="Expected close ${fmtDate(d.expectedCloseDate)}">${icon('finish')}${shortDate(d.expectedCloseDate)}</span><strong class="${d.value===null?'unknown':''}">${money(d.value)}</strong></div>${nextAction(d)}<div class="health-line">${h.length?healthChip(d):`<span class="ready-label">${icon('check')}${d.exitCriteria.length&&d.exitCriteria.every(c=>c.met)?'Ready to advance':'Next action planned'}</span>`}</div><div class="card-footer"><div class="card-owners">${personAvatar(d.owner,'Opportunity owner')}${d.nextActivity?personAvatar(d.nextActivity.owner,'Activity owner'):''}</div><div class="card-actions" role="group" aria-label="Quick actions for ${esc(d.title)}">${quickAction('detail','Snapshot','eye',d.id)}${taskShortcut(d)}${quickAction('documents','Documents ('+documentsFor(d).length+')','paperclip',d.id)}${quickAction('email','Email contact','email',d.id)}${quickAction('schedule','Set next activity','calendar',d.id)}${quickAction('edit','Edit opportunity','edit',d.id)}</div></div></article>`;}
+function card(d){const h=derived.health[d.id]||[],urgent=h.find(s=>['no-action','overdue','idle','delivery-late','task-overdue','task-blocked'].includes(s.id)),m=state.movement==='off'?null:movementFor(d,windowStart(state.movement));return `<article class="card ${h.some(s=>s.id==='idle')?'is-rotting':''} ${urgent?'has-caution':''} ${pending.has(d.id)?'pending':''} ${failed.has(d.id)?'failed':''} ${highlighted.has(d.id)?'highlight':''} ${state.selection.has(d.id)?'selected':''}" data-testid="deal-card-${d.id}" data-deal="${d.id}" tabindex="0" draggable="${!pending.has(d.id)}" aria-label="${esc(`${d.title}, ${d.organisation}, ${money(d.value)}, ${stageName(d.stage,pipelineFor(d))}${h.some(s=>s.id==='idle')?', rotting: past the stage’s inactivity limit':''}. Enter opens the deal; Space starts a move.`)}" aria-busy="${pending.has(d.id)}">${m?.new?'<span class="movement-badge">New</span>':m?.changed?`<span class="movement-badge ${m.back?'back':''}">${m.back?'Moved back':'Moved forward'}</span>`:''}<div class="card-heading"><button type="button" class="card-title" data-action="deal-page" data-id="${d.id}" data-testid="deal-title-${d.id}" title="${esc(d.title)}"><span class="card-title-text">${esc(d.title)}</span></button>${urgent?btn('health-detail','','alert','card-caution',`data-id="${d.id}" aria-label="${esc(urgent.label)}: review health" ${tipAttr(urgent.text)}`):''}</div><p class="card-org" title="${esc(d.organisation)}">${esc(d.organisation)}</p><p class="card-contact" title="Primary contact: ${esc(d.contacts[0]?.name||'Not recorded')}">${esc(d.contacts[0]?.name||'No primary contact')}</p><div class="card-value"><span class="close" title="Expected close ${fmtDate(d.expectedCloseDate)}">${icon('finish')}${shortDate(d.expectedCloseDate)}</span><strong class="${d.value===null?'unknown':''}">${money(d.value)}</strong></div>${nextAction(d)}<div class="health-line">${h.length?healthChip(d):`<span class="ready-label">${icon('check')}${d.exitCriteria.length&&d.exitCriteria.every(c=>c.met)?'Ready to advance':'Next action planned'}</span>`}</div><div class="card-footer"><div class="card-owners">${personAvatar(d.owner,'Opportunity owner')}${d.nextActivity?personAvatar(d.nextActivity.owner,'Activity owner'):''}</div><div class="card-actions" role="group" aria-label="Quick actions for ${esc(d.title)}">${quickAction('detail','Snapshot','eye',d.id)}${taskShortcut(d)}${quickAction('documents','Documents ('+documentsFor(d).length+')','paperclip',d.id)}${quickAction('email','Email contact','email',d.id)}${quickAction('schedule','Set next activity','calendar',d.id)}${quickAction('edit','Edit opportunity','edit',d.id)}</div></div></article>`;}
 
 function quickAction(action,label,ic,id){return btn(action,'',ic,'card-action',`data-id="${id}" data-testid="deal-${action}-${id}" aria-label="${label}: ${esc(byId(id)?.title||'opportunity')}" ${tipAttr(label)}`);}
 
 function filterLabels(){const f=state.filters,r=[];if(f.stages.length)r.push(['stages','Stage: '+f.stages.map(id=>stageName(id)).join(', ')]);if(state.q&&host.dataset.pageSearch==='on')r.push(['q','Search: '+state.q]);if(f.owners.length)r.push(['owners','Owner: '+f.owners.map(id=>USERS.find(u=>u.id===id)?.name||id).join(', ')]);if(f.signals.length)r.push(['signals',f.signals.length===2&&f.signals.includes('no-action')&&f.signals.includes('overdue')?'At risk':f.signals.map(id=>SIGNALS.find(s=>s.id===id)?.label||id).join(', ')]);if(f.categories.length)r.push(['categories','Forecast: '+f.categories.join(', ')]);if(f.tags.length)r.push(['tags','Tags: '+f.tags.join(', ')]);if(f.value)r.push(['value',{under50:'Value under $50,000','50to100':'Value $50,000–$100,000',over100:'Value over $100,000'}[f.value]]);if(f.period)r.push(['period','Close: '+({this:'this month',next:'next month',after:'month after next',quarter:'this quarter',overdue:'overdue',custom:`${f.from||'any date'} to ${f.to||'any date'}`}[f.period])]);if(f.days)r.push(['days',`In stage > ${f.days} days`]);if(f.slipped)r.push(['slipped','Slipped 2+ times']);if(f.unknown)r.push(['unknown','Not estimated']);return r;}
 function isModified(){return JSON.stringify(state.filters)!==JSON.stringify(SAVED_VIEWS[state.saved]||EMPTY_FILTERS);}
-function toolbar(){const narrow=innerWidth<1024,labels=filterLabels();return `<div class="toolbar" data-testid="toolbar"><div class="toolbar-views" role="group" aria-label="View and filter controls"><div class="segment" role="group" aria-label="View mode" data-testid="view-toggle">${btn('view-board','Board','board','',`aria-pressed="${state.view==='board'&&!narrow}" data-testid="view-toggle-board" ${narrow?'disabled title="Board view requires a width of at least 1024 pixels"':''}`)}${btn('view-list','List','list','',`aria-pressed="${state.view==='list'||narrow}" data-testid="view-toggle-list"`)}</div>${host.dataset.pageSearch==='on'?'<input type="search" class="page-search" id="page-search" data-testid="page-search" aria-label="Search opportunities" placeholder="Search opportunities" value="'+esc(state.q)+'">':''}${btn('filters','Filters'+(labels.length?' '+labels.length:''),'filter','btn '+(labels.length?'active-control':''),'data-testid="filters-button" aria-haspopup="dialog"')}${btn('saved-views',`Views${isModified()?'<span class="view-modified" aria-hidden="true"></span>':''}${icon('chevron')}`,'search','btn saved-button',`data-testid="saved-views" aria-haspopup="dialog" aria-expanded="false" aria-label="Views. Current view: ${esc(state.saved)}${isModified()?', modified':''}" title="Current view: ${esc(state.saved)}"`)}${btn('more','','more','icon-btn','aria-label="View options" data-testid="more-options" aria-haspopup="dialog" aria-expanded="false" '+tipAttr('View options'))}</div><div class="toolbar-review" role="group" aria-label="Pipeline review">${btn('movement',`<span class="movement-text">What changed</span>${state.movement!=='off'?'<span class="dot"></span>':''}`,'changes','quiet '+(state.movement!=='off'?'active-control':''),`data-testid="movement-toggle" aria-label="What changed" aria-haspopup="dialog" aria-expanded="false" aria-pressed="${state.movement!=='off'}"`)}${btn('triage','Triage'+(triageCandidates().length?` <span class="triage-count">${triageCandidates().length}</span>`:''),'triage','quiet triage-button','data-testid="triage-button"')}</div><div class="toolbar-context" role="group" aria-label="Pipeline and creation">${btn('pipeline-menu',`<span>${esc(activePipeline().name)}</span>${icon('chevron')}`,'pipeline','btn pipeline-selector',`data-testid="pipeline-selector" data-menu-align="end" aria-label="Choose pipeline: ${esc(activePipeline().name)}" title="${esc(activePipeline().name)}" aria-haspopup="dialog" aria-expanded="false"`)}${btn('help','','help','icon-btn','aria-label="Deal board guide" data-testid="help-button" '+tipAttr('Deal board guide'))}${btn('new','<span>Opportunity</span>','plus','primary new-button','data-testid="new-opportunity-button"')}</div></div>`;}
+function toolbar(){const narrow=innerWidth<1024,labels=filterLabels();return `<div class="toolbar" data-testid="toolbar"><div class="toolbar-views" role="group" aria-label="View and opportunity controls"><div class="segment" role="group" aria-label="View mode" data-testid="view-toggle">${btn('view-board','Board','board','',`aria-pressed="${state.view==='board'&&!narrow}" data-testid="view-toggle-board" ${narrow?'disabled title="Board view requires a width of at least 1024 pixels"':''}`)}${btn('view-list','List','list','',`aria-pressed="${state.view==='list'||narrow}" data-testid="view-toggle-list"`)}</div>${host.dataset.pageSearch==='on'?'<input type="search" class="page-search" id="page-search" data-testid="page-search" aria-label="Search opportunities" placeholder="Search opportunities" value="'+esc(state.q)+'">':''}<div class="opportunity-actions" role="group" aria-label="Opportunity actions">${btn('new','<span>Opportunity</span>','plus','primary new-button','data-testid="new-opportunity-button"')}${btn('data-options','','more','btn icon-btn data-options-button','aria-label="Opportunity data options" data-testid="data-options-button" aria-haspopup="dialog" aria-expanded="false" '+tipAttr('Import, clean up or restore data'))}</div>${btn('saved-views',`Views${isModified()?'<span class="view-modified" aria-hidden="true"></span>':''}${icon('chevron')}`,'search','btn saved-button',`data-testid="saved-views" aria-haspopup="dialog" aria-expanded="false" aria-label="Views. Current view: ${esc(state.saved)}${isModified()?', modified':''}" title="Current view: ${esc(state.saved)}"`)}${btn('more','','more','icon-btn','aria-label="View options" data-testid="more-options" aria-haspopup="dialog" aria-expanded="false" '+tipAttr('View options'))}</div><div class="toolbar-review" role="group" aria-label="Pipeline review">${btn('movement',`<span class="movement-text">What changed</span>${state.movement!=='off'?'<span class="dot"></span>':''}`,'changes','quiet '+(state.movement!=='off'?'active-control':''),`data-testid="movement-toggle" aria-label="What changed" aria-haspopup="dialog" aria-expanded="false" aria-pressed="${state.movement!=='off'}"`)}${btn('triage','Triage'+(triageCandidates().length?` <span class="triage-count">${triageCandidates().length}</span>`:''),'triage','quiet triage-button','data-testid="triage-button"')}</div><div class="toolbar-context" role="group" aria-label="Pipeline and filters">${btn('pipeline-menu',`<span>${esc(activePipeline().name)}</span>${icon('chevron')}`,'pipeline','btn pipeline-selector',`data-testid="pipeline-selector" data-menu-align="end" aria-label="Choose pipeline: ${esc(activePipeline().name)}" title="${esc(activePipeline().name)}" aria-haspopup="dialog" aria-expanded="false"`)}${btn('help','','help','icon-btn','aria-label="Deal board guide" data-testid="help-button" '+tipAttr('Deal board guide'))}${btn('filters','Filters'+(labels.length?' '+labels.length:''),'filter','btn '+(labels.length?'active-control':''),'data-testid="filters-button" aria-haspopup="dialog"')}</div></div>`;}
 
 function summary(){const labels=filterLabels();return `<section class="compact-strip" data-testid="summary-strip" aria-label="Pipeline status"><button class="strip-metric" data-action="insights" aria-label="Open pipeline insights"><span class="muted">Open</span><strong data-testid="summary-open">${money(derived.value)}</strong></button><span class="strip-divider"></span><button class="strip-metric" data-action="insights" aria-label="Weighted forecast insights"><span class="muted">Weighted</span><strong data-testid="summary-weighted">${forecastMoney(derived.weighted)}</strong>${probabilityEnabled()?'<span class="muted">est.</span>':''}</button><span class="strip-divider"></span>${btn('risk-filter',`${derived.risk.length} at risk`,'alert','strip-metric strip-risk','data-testid="summary-at-risk"')}<div class="strip-scope">${labels.length?btn('active-filters',labels.length+' active','','filter-count','data-testid="active-filters" aria-label="Review active filters"'):''}${state.selection.size?btn('selection-panel',state.selection.size+' selected','','filter-count','data-testid="selection-count"'):''}<span class="scope-count" data-testid="result-count" title="Current view: ${esc(state.saved)}${isModified()?' · modified':''}">${esc(state.saved)}${isModified()?' *':''} · ${derived.visible.length} deals</span><span class="strip-unit">AUD excl. GST</span>${btn('insights','Insights','flag','strip-action','data-testid="insights-button"')}</div><div id="forecast-preview" class="drag-preview" data-testid="forecast-preview" hidden></div></section>`;}
 function openInsights(){openDialog('insights','Pipeline insights',insightBody()+attentionInsights(),'','insight-dialog',{subtitle:'Current view · Illustrative forecast assumptions'});}
@@ -1644,7 +1686,7 @@ function positionMenu(dialog,anchor){const margin=12,gap=6,r=anchor||{left:Math.
 function openSidePanel(type,title,body,footer='',extra={}){for(const r of [...dialogStack])if(r.dialog.classList.contains('side-panel')){if(r.dirty){requestClose(r.dialog);return null;}closeDialog(r.dialog,true);}const hasModal=dialogStack.some(r=>r.dialog.getAttribute('aria-modal')==='true');return openDialog(type,title,body,footer,'side-panel '+(extra.className||''),{...extra,modeless:!hasModal});}
 function replacePanel(dialog,title,body,footer=''){dialog.querySelector('h2').textContent=title;const content=dialog.querySelector('.dialog-body');if(content)content.innerHTML=body;dialog.querySelector('.dialog-footer')?.remove();if(footer)dialog.insertAdjacentHTML('beforeend',`<div class="dialog-footer">${footer}</div>`);dialog.querySelectorAll('form').forEach(f=>f.noValidate=true);enhance(dialog);}
 
-function syncToastHost(){const destination=dialogStack.at(-1)?.dialog||root;for(const selector of ['.toast-stack','.tooltip']){const node=root.querySelector(selector);if(node)destination.append(node);}}
+function syncToastHost(){const stack=root.querySelector('.toast-stack');if(stack&&stack.parentElement!==root)root.append(stack);const tip=root.querySelector('.tooltip'),destination=dialogStack.at(-1)?.dialog||root;if(tip)destination.append(tip);}
 function closeDialog(dialog=dialogStack.at(-1)?.dialog,force=false){if(!dialog)return;const rec=dialogStack.find(x=>x.dialog===dialog);if(!force&&rec?.dirty){requestClose(dialog);return;}if(rec?.menuAnchor?.testid)root.querySelector(`[data-testid="${CSS.escape(rec.menuAnchor.testid)}"]`)?.setAttribute('aria-expanded','false');if(rec?.objectURL)URL.revokeObjectURL(rec.objectURL);dialog.close();dialogStack=dialogStack.filter(x=>x.dialog!==dialog);syncToastHost();dialog.remove();if(rec?.type==='detail')root.dataset.detail='closed';const ret=rec?.returnElement?.isConnected?rec.returnElement:rec?.returnTest&&root.querySelector(`[data-testid="${CSS.escape(rec.returnTest)}"]`);if(ret)ret.focus({preventScroll:true});else if(dialogStack.length)dialogStack.at(-1).dialog.querySelector('button,input')?.focus();else root.querySelector('[data-testid="new-opportunity-button"]')?.focus();}
 function requestClose(dialog){if(dialog.getAttribute('aria-busy')==='true'){announce('Wait for the current change to finish saving.');return;}const r=dialogStack.find(x=>x.dialog===dialog);if(r?.type==='triage'){finishTriage();return;}if(r?.dirty){openDialog('discard','Discard changes?','<p>Your entered changes have not been applied.</p>',btn('close-dialog','Keep editing','','btn')+btn('discard-confirm','Discard changes','','danger-btn btn','data-target="'+r.type+'"'));return;}closeDialog(dialog,true);}
 function menu(title,items,extra={}){closeMenu();return openDialog('menu',title,items,'','menu',extra);}
@@ -1718,7 +1760,7 @@ function openMore(){menu('View options',menuItem('global-sort','Sort opportuniti
 
 function openHelp(){openGuide();}
 
-function exportCSV(){const heads=COLUMNS.map(c=>c[1]),quote=x=>'"'+String(x??'').replace(/"/g,'""')+'"';const rows=derived.visible.map(d=>COLUMNS.map(([f])=>{let x=valueFor(d,f);if(f==='stage')x=stageName(d.stage);if(f==='weighted'&&!probabilityEnabled())x='Off';if(f==='health')x=derived.health[d.id].map(h=>h.label).join('; ');if(f==='stage')x=d.stage;return quote(x);}));const blob=new Blob(['\uFEFF'+[heads.map(quote),...rows].map(r=>r.join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ppo-deal-pipeline-current-view.csv';a.click();URL.revokeObjectURL(url);toast('Current list exported.');}
+function exportCSV(){const heads=COLUMNS.map(c=>c[1]),quote=x=>'"'+String(x??'').replace(/"/g,'""')+'"';const rows=derived.visible.map(d=>COLUMNS.map(([f])=>{let x=valueFor(d,f);if(f==='stage')x=stageName(d.stage);if(f==='weighted'&&!probabilityEnabled())x='Off';if(f==='health')x=derived.health[d.id].map(h=>h.label).join('; ');return quote(x);}));const blob=new Blob(['\uFEFF'+[heads.map(quote),...rows].map(r=>r.join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ppo-deal-pipeline-current-view.csv';a.click();URL.revokeObjectURL(url);toast('Current list exported.');}
 function newValidation(form,name=null){return validateOpportunity(form,true,name);}
 
 root.addEventListener('submit',async e=>{const form=e.target.closest('form[data-form]');if(!form)return;e.preventDefault();const v=values(form),dlg=form.closest('dialog'),submit=dlg.querySelector('[type=submit]');const lock=()=>{if(submit){submit.disabled=true;submit.dataset.oldLabel=submit.textContent;submit.textContent='Saving…';}dlg.setAttribute('aria-busy','true');};const unlock=()=>{if(submit){submit.disabled=false;submit.textContent=submit.dataset.oldLabel||submit.textContent;}dlg.setAttribute('aria-busy','false');};const done=()=>{const wasBulk=dlg.dataset.type==='bulk-panel';closeDialog(dlg,true);renderTriage();if(wasBulk)syncSelectionPanel(true);};
@@ -1753,7 +1795,7 @@ root.addEventListener('click',async e=>{const el=e.target.closest('[data-action]
  case'deal-page':openDealPage(id);break;case'back-board':backToBoard();break;case'record-tab':recordTab=el.dataset.tab;renderDealPage();break;
  case'email':openEmail(id);break;case'email-save':saveEmailDraft(el.closest('dialog'));break;case'email-preview':previewEmail(el.closest('dialog'));break;
  case'stage-menu':openStageMenu(el.dataset.stage);break;case'collapse-stage':closeMenu();toggleStage(el.dataset.stage);break;case'focus-stage':closeMenu();state.filters.stages=[el.dataset.stage];render();break;case'column-sort':state.columnSort[el.dataset.stage]=[{field:el.dataset.sort,dir:['value','days'].includes(el.dataset.sort)?'desc':'asc'}];closeMenu();render();break;case'insight-signal':closeInsights();state.filters.signals=[el.dataset.signal];render();break;
- case'pipeline-menu':openPipelineMenu();break;case'choose-pipeline':switchPipeline(el.dataset.pipeline);break;case'pipeline-create':openPipelineEditor(true);break;case'pipeline-edit':openPipelineEditor(false);break;case'pipeline-add-stage':addPipelineStage();break;case'pipeline-delete-stage':requestStageRemoval(el.dataset.stage);break;case'pipeline-reorder-stage':reorderPipelineStage(el.dataset.stage,Number(el.dataset.direction));break;case'pipeline-info':openPipelineInfo(el.dataset.topic);break;
+ case'data-options':openDataOptions();break;case'data-import':openDataImport();break;case'data-cleanup':openDataCleanup();break;case'data-restore':openDataRestore();break;case'import-template':downloadImportTemplate();break;case'import-review':reviewDataImport();break;case'import-apply':applyDataImport();break;case'cleanup-refresh':refreshDataCleanup();break;case'cleanup-edit':closeDialog(el.closest('dialog'),true);openEdit(id);break;case'cleanup-schedule':closeDialog(el.closest('dialog'),true);openActivity([id]);break;case'restore-opportunity':restoreDataOpportunity(id,el);break;case'pipeline-menu':openPipelineMenu();break;case'choose-pipeline':switchPipeline(el.dataset.pipeline);break;case'pipeline-create':openPipelineEditor(true);break;case'pipeline-edit':openPipelineEditor(false);break;case'pipeline-add-stage':addPipelineStage();break;case'pipeline-delete-stage':requestStageRemoval(el.dataset.stage);break;case'pipeline-reorder-stage':reorderPipelineStage(el.dataset.stage,Number(el.dataset.direction));break;case'pipeline-info':openPipelineInfo(el.dataset.topic);break;
  case'insights':openInsights();break;case'active-filters':openActiveFilters();break;case'selection-panel':syncSelectionPanel(true);break;
  case'bulk-home':{const r=dialogStack.find(x=>x.type==='bulk-panel');if(r){r.editing=null;r.dirty=false;syncSelectionPanel();}break;}
  case'deselect-one':state.selection.delete(id);render();syncSelectionPanel(true);break;
@@ -1954,9 +1996,119 @@ root.addEventListener('change',e=>{const el=e.target;if(el.closest('#pipeline-ed
 });
 
 HELP_TOPICS.push(['pipelines','Pipelines & stages','pipeline']);
-HELP_CONTENT.pipelines='<h3>Configure your pipeline</h3><p>Open the pipeline selector, then choose Edit pipeline or Create new pipeline. Set a name, add stages, rename them and use the left and right arrows to change their order.</p><p>Each stage has its own probability and rotting settings. The information buttons explain how these work. Global switches turn either feature off without losing saved settings.</p><h3>Safe changes</h3><p>Deleting a stage with deals requires a destination. The changes apply only when you save. Cancel retains the original pipeline. Stage names do not change record identities or erase history. The final stage is the only stage that allows Won; Lost stays available from any stage.</p><h3>Preview scope</h3><p>PPO-009 · CRM deals worklist · r36. These are synthetic, session-only interactions. Refreshing the page restores the supplied fixtures. No live customer, ERP or application settings are changed.</p>';
+HELP_CONTENT.pipelines='<h3>Configure your pipeline</h3><p>Open the pipeline selector, then choose Edit pipeline or Create new pipeline. Set a name, add stages, rename them and use the left and right arrows to change their order.</p><p>Each stage has its own probability and rotting settings. The information buttons explain how these work. Global switches turn either feature off without losing saved settings.</p><h3>Safe changes</h3><p>Deleting a stage with deals requires a destination. The changes apply only when you save. Cancel retains the original pipeline. Stage names do not change record identities or erase history. The final stage is the only stage that allows Won; Lost stays available from any stage.</p><h3>Preview scope</h3><p>PPO-009 · CRM deals worklist · r37. These are synthetic, session-only interactions. Refreshing the page restores the supplied fixtures. No live customer, ERP or application settings are changed.</p>';
 HELP_CONTENT.health='<h3>Follow-up signals</h3><p>Missing and overdue next activities are urgent signals. Rotting is a separate reminder based on days since the last deal update. You can turn it on for the pipeline, then choose a limit or switch it off for each stage. The information icon explains the timer.</p><p>Other signals include slipped or past close dates, forecast category, unestimated values, quotation expiry, delivery timing and internal tasks. They are advisory, not automatic outcomes.</p>';
 HELP_CONTENT.forecast='<h3>Forecast confidence</h3><p>Open value totals known values in the current view, in AUD excluding GST. Unknown values stay Not estimated.</p><p>Weighted value uses the probabilities in Edit pipeline. It excludes Omitted deals. Turning probability off displays Off and leaves open values and owner categories unchanged. Sample coverage targets are illustrative; historical comparisons use current probability assumptions.</p>';
+/* r37 data tools. All operations remain inside this synthetic, in-memory preview. */
+function openDataOptions(){menu('Opportunity data',menuItem('data-import','Import data','download')+menuItem('data-cleanup','Open data cleanup','edit')+menuItem('data-restore','Restore data','history'),{testid:'data-options-menu'});}
+const IMPORT_HEADERS=['title','organisation','value','stage','owner','expected_close_date','qualification_note'];
+const dataKey=(title,organisation)=>[title,organisation].map(s=>s.trim().replace(/\s+/g,' ').toLocaleLowerCase()).join('\u0000');
+function dataDialogRecord(type){return dialogStack.find(r=>r.type===type);}
+function dataMessage(rec,message){const target=rec?.dialog.querySelector('[data-data-feedback]');if(target){target.textContent=message;if(message){target.setAttribute('tabindex','-1');target.focus();}}}
+function openDataImport(){closeMenu();openDialog('data-import','Import data',
+ `<p class="data-tools-intro">Add opportunities to <strong>${esc(activePipeline().name)}</strong> from a CSV file. Review every row before importing. Existing opportunities will not be overwritten.</p>
+ <p class="notice">This preview imports into the current session. Reloading the HTML resets all changes.</p>
+ <div class="data-import-heading"><h3>1. Prepare your CSV</h3>${btn('import-template','Download template','download','btn small-btn')}</div>
+ <p class="hint">Required: title, organisation and expected_close_date (YYYY-MM-DD). For the first stage, include a qualification_note. Optional: value (AUD excl. GST), stage and owner. Blank stages use ${esc(stageName(STAGES[0]))}; blank owners use ${esc(CURRENT_USER.name)}. Maximum 200 opportunities, 1 MB.</p>
+ <div class="field"><label for="deal-import-file">Choose a CSV file</label><input id="deal-import-file" type="file" accept=".csv,text/csv" data-import-file></div>
+ <div class="field"><label for="deal-import-csv">Or paste CSV data</label><textarea id="deal-import-csv" data-import-csv maxlength="1000000" spellcheck="false" placeholder="${IMPORT_HEADERS.join(',')}" aria-describedby="import-csv-hint"></textarea><span class="hint" id="import-csv-hint">Use the column names in the template. Stage and owner names must match this board. Possible duplicates are flagged before import.</span></div>
+ <p class="data-feedback" data-data-feedback role="alert"></p><div class="data-preview" data-import-preview></div>`,
+ btn('close-dialog','Cancel','','btn')+btn('import-review','Review import','','btn','data-testid="import-review"')+btn('import-apply','Import opportunities','plus','primary','disabled data-testid="import-apply"'),
+ 'data-tools-dialog',{pipelineId:activePipelineId,importRows:null,importReadToken:0,testid:'data-import-dialog'});}
+function downloadImportTemplate(){
+ const quote=x=>'"'+String(x).replace(/"/g,'""')+'"',rows=[IMPORT_HEADERS,['Example opportunity','Example organisation','25000',stageName(STAGES[0]),CURRENT_USER.name,endNextMonth(),'Discovery completed; customer confirmed the next step.']];
+ const url=URL.createObjectURL(new Blob(['\uFEFF'+rows.map(r=>r.map(quote).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}));
+ const a=document.createElement('a');a.href=url;a.download='ppo-opportunities-import-template.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function parseImportCSV(text){
+ text=text.replace(/^\uFEFF/,'');if(new Blob([text]).size>1000000)throw Error('The CSV is larger than 1 MB. Split it into smaller files.');
+ const rows=[];let row=[],cell='',quoted=false,closed=false;
+ function endCell(){row.push(cell.trim());cell='';closed=false;}
+ function endRow(){endCell();if(row.some(Boolean))rows.push(row);row=[];if(rows.length>201)throw Error('Import up to 200 opportunities at a time.');}
+ for(let i=0;i<text.length;i++){
+  const c=text[i];
+  if(quoted){if(c==='"'){if(text[i+1]==='"'){cell+='"';i++;}else{quoted=false;closed=true;}}else cell+=c;continue;}
+  if(c===','){endCell();continue;}
+  if(c==='\r'||c==='\n'){if(c==='\r'&&text[i+1]==='\n')i++;endRow();continue;}
+  if(closed){if(c===' '||c==='\t')continue;throw Error('A quoted value has text after its closing quote. Check the CSV formatting.');}
+  if(c==='"'){if(cell.trim())throw Error('Quotes must surround the entire CSV value.');cell='';quoted=true;}else cell+=c;
+ }
+ if(quoted)throw Error('A quoted value is not closed. Check the CSV formatting.');if(cell||row.length||closed)endRow();
+ if(rows.length<2)throw Error('Include a header row and at least one opportunity.');
+ return rows;
+}
+function validateImportData(text,pipelineId){
+ const p=PIPELINES.find(p=>p.id===pipelineId);if(!p)throw Error('The selected pipeline is no longer available.');
+ const rows=parseImportCSV(text),headers=rows.shift().map(h=>h.toLowerCase());
+ if(new Set(headers).size!==headers.length)throw Error('Each column name must appear only once.');
+ const unknown=headers.filter(h=>!IMPORT_HEADERS.includes(h));if(unknown.length)throw Error('Unrecognised columns: '+unknown.join(', ')+'. Use the template column names.');
+ const missing=['title','organisation','expected_close_date'].filter(h=>!headers.includes(h));if(missing.length)throw Error('Missing required columns: '+missing.join(', ')+'.');
+ const existing=new Set(deals.filter(d=>!d.deletedAt&&(d.pipelineId||'sales')===pipelineId).map(d=>dataKey(d.title,d.organisation))),seen=new Set(),errors=[],valid=[];
+ rows.forEach((cells,index)=>{
+  const rowNo=index+2;if(cells.length!==headers.length){errors.push(`Row ${rowNo}: the number of values does not match the header.`);return;}
+  const v=Object.fromEntries(headers.map((h,i)=>[h,cells[i]])),issues=[];
+  const stage=v.stage?p.stages.find(s=>s.name.toLocaleLowerCase()===v.stage.toLocaleLowerCase()||s.id===v.stage):p.stages[0];
+  const owner=v.owner?USERS.find(u=>u.name.toLocaleLowerCase()===v.owner.toLocaleLowerCase()||u.id===v.owner):CURRENT_USER;
+  if(!v.title||v.title.length>200)issues.push('title must contain 1–200 characters');
+  if(!v.organisation||v.organisation.length>200)issues.push('organisation must contain 1–200 characters');
+  if(!stage)issues.push('stage does not match this pipeline');if(!owner)issues.push('owner does not match a Powerplants employee');
+  if(v.value&&!/^\d+(?:\.\d{1,2})?$/.test(v.value))issues.push('value must be a positive amount with up to two decimal places, without a currency symbol or thousands separators');
+  if(v.value&&(!Number.isFinite(Number(v.value))||Number(v.value)>999999999999.99))issues.push('value is too large');
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(v.expected_close_date)||!Number.isFinite(Date.parse(v.expected_close_date+'T12:00:00Z'))||new Date(v.expected_close_date+'T12:00:00Z').toISOString().slice(0,10)!==v.expected_close_date)issues.push('expected_close_date must be a valid date in YYYY-MM-DD format');
+  if(stage?.id===p.stages[0].id&&!v.qualification_note)issues.push('a qualification_note is required for the first stage');
+  if((v.qualification_note||'').length>2000)issues.push('qualification_note must be 2,000 characters or fewer');
+  const key=dataKey(v.title||'',v.organisation||'');if(existing.has(key))issues.push('this title and organisation already exist in the pipeline');if(seen.has(key))issues.push('this title and organisation are repeated in the CSV');seen.add(key);
+  if(issues.length)errors.push(`Row ${rowNo}: ${issues.join('; ')}.`);else valid.push({title:v.title,organisation:v.organisation,value:v.value?Number(v.value):null,stage:stage.id,owner,expectedCloseDate:localDate(v.expected_close_date),qualificationNote:v.qualification_note||''});
+ });
+ if(errors.length)throw Error(errors.slice(0,10).join('\n')+(errors.length>10?`\nPlus ${errors.length-10} more rows to correct.`:'')+'\nNo opportunities have been imported.');
+ return valid;
+}
+function invalidateDataImport(rec){if(!rec)return;rec.importRows=null;rec.dirty=!!rec.dialog.querySelector('[data-import-csv]').value.trim();rec.dialog.querySelector('[data-import-preview]').innerHTML='';rec.dialog.querySelector('[data-action=import-apply]').disabled=true;dataMessage(rec,'');}
+function reviewDataImport(){
+ const rec=dataDialogRecord('data-import');if(!rec)return;invalidateDataImport(rec);
+ try{const text=rec.dialog.querySelector('[data-import-csv]').value,rows=validateImportData(text,rec.pipelineId);rec.importRows=rows;rec.importText=text;
+  rec.dialog.querySelector('[data-import-preview]').innerHTML=`<h3>2. Review ${rows.length} ${rows.length===1?'opportunity':'opportunities'}</h3><p class="hint">${money(total(rows))} known value · ${rows.filter(d=>d.value===null).length} not estimated · ${esc(PIPELINES.find(p=>p.id===rec.pipelineId).name)}</p><div class="data-preview-scroll" tabindex="0" role="region" aria-label="Import preview"><table><thead><tr><th scope="col">Opportunity</th><th scope="col">Stage / owner</th><th scope="col">Value / close date</th></tr></thead><tbody>${rows.map(d=>`<tr><td><strong>${esc(d.title)}</strong><br>${esc(d.organisation)}</td><td>${esc(stageName(d.stage))}<br>${esc(d.owner.name)}</td><td class="numeric">${money(d.value)}<br>${fmtDate(d.expectedCloseDate)}</td></tr>`).join('')}</tbody></table></div>`;
+  const apply=rec.dialog.querySelector('[data-action=import-apply]');apply.disabled=false;apply.textContent=`Import ${rows.length} ${rows.length===1?'opportunity':'opportunities'}`;announce(`${rows.length} opportunities ready for review.`);
+ }catch(error){dataMessage(rec,error.message);}
+}
+function applyDataImport(){
+ const rec=dataDialogRecord('data-import');if(!rec?.importRows)return;
+ if(activePipelineId!==rec.pipelineId){dataMessage(rec,'The active pipeline changed. Close this window and start the import again.');return;}
+ const text=rec.dialog.querySelector('[data-import-csv]').value;if(text!==rec.importText){invalidateDataImport(rec);dataMessage(rec,'The CSV changed. Review it again before importing.');return;}
+ let rows;try{rows=validateImportData(text,rec.pipelineId);}catch(error){invalidateDataImport(rec);dataMessage(rec,error.message);return;}
+ const time=new Date().toISOString();let sequence=Math.max(18,...deals.map(d=>Number(d.id.split('-').at(-1))||0));
+ const imported=rows.map((v,index)=>{const id=`SYN-PPO-OP-${String(++sequence).padStart(6,'0')}`;return {...v,id,pipelineId:rec.pipelineId,forecastCategory:'Pipeline',version:1,myobReference:null,contacts:[],stageHistory:[{stage:v.stage,stageLabel:stageName(v.stage),pipelineId:rec.pipelineId,enteredAt:time,exitedAt:null,movedBy:CURRENT_USER.name,reason:'Imported from CSV'}],lastTouchedAt:time,nextActivity:null,closeDateHistory:[],createdAt:time,linkedEstimateRef:null,tags:[],exitCriteria:exitFor(v.stage),activityLog:[{at:time,text:'Opportunity imported from CSV',by:CURRENT_USER.name}],order:deals.length+index,organisationId:canonicalOrganisation(v.organisation),documentIds:[],quoteIssue:null,waitingOn:null,intake:null,delivery:null,correspondence:[]};});
+ for(const d of imported){deals.push(d);serverRecords.set(d.id,clone(d));highlighted.add(d.id);}
+ recordChange({kind:'import',ids:imported.map(d=>d.id),label:`Imported ${imported.length} opportunities from CSV`});rec.dirty=false;closeDialog(rec.dialog,true);state.read='ready';render();
+ const hidden=imported.filter(d=>!derived.visible.some(x=>x.id===d.id)).length;toast(`Imported ${imported.length} ${imported.length===1?'opportunity':'opportunities'}.${hidden?' '+hidden+' hidden by the current filters.':''}`,hidden?{action:'clear-all',actionLabel:'Clear filters'}:{});
+}
+root.addEventListener('input',e=>{if(e.target.matches('[data-import-csv]')){const rec=dataDialogRecord('data-import');if(rec){rec.importReadToken++;invalidateDataImport(rec);}}});
+root.addEventListener('change',async e=>{
+ if(!e.target.matches('[data-import-file]'))return;const input=e.target,rec=dataDialogRecord('data-import'),file=input.files?.[0];if(!rec||!file)return;
+ const token=++rec.importReadToken;invalidateDataImport(rec);
+ if(file.size>1000000){dataMessage(rec,'The CSV is larger than 1 MB. Split it into smaller files.');input.value='';return;}
+ try{const text=await file.text();if(!rec.dialog.isConnected||rec.importReadToken!==token)return;rec.dialog.querySelector('[data-import-csv]').value=text;invalidateDataImport(rec);reviewDataImport();}catch{if(rec.dialog.isConnected&&rec.importReadToken===token)dataMessage(rec,'The file could not be read. Choose it again or paste the CSV data.');}finally{if(rec.importReadToken===token)input.value='';}
+});
+function cleanupIssues(d,counts){const issues=[];if(!d.nextActivity)issues.push('No next activity');if(d.value===null)issues.push('Value not estimated');if(!d.contacts.length)issues.push('No primary contact');if(counts.get(dataKey(d.title,d.organisation))>1)issues.push('Possible duplicate title and organisation');if(!d.expectedCloseDate)issues.push('No expected close date');return issues;}
+function dataCleanupBody(){const open=deals.filter(isOpen),counts=new Map();for(const d of open){const key=dataKey(d.title,d.organisation);counts.set(key,(counts.get(key)||0)+1);}const rows=open.map(d=>({d,issues:cleanupIssues(d,counts)})).filter(r=>r.issues.length);
+ return `<p class="data-tools-intro"><strong>${esc(activePipeline().name)}</strong> · ${rows.length} ${rows.length===1?'opportunity needs':'opportunities need'} review. This checks all open deals in the pipeline, including those hidden by board filters. Review each record before changing it; possible duplicates are never merged automatically.</p>${rows.length?`<ul class="data-record-list">${rows.map(({d,issues})=>`<li class="data-record"><div class="data-record-copy"><strong>${esc(d.title)}</strong><p>${esc(d.organisation)} · ${esc(stageName(d.stage))}</p><p>${issues.map(esc).join(' · ')}</p></div><div class="data-record-actions">${btn('cleanup-edit','Review details','edit','btn small-btn',`data-id="${d.id}" aria-label="Review details for ${esc(d.title)}"`)}${!d.nextActivity?btn('cleanup-schedule','Set next activity','calendar','btn small-btn',`data-id="${d.id}" aria-label="Set next activity for ${esc(d.title)}"`):''}</div></li>`).join('')}</ul>`:'<div class="data-empty"><strong>All checked details are complete</strong>No missing details or possible duplicates were found in this pipeline.</div>'}`;
+}
+function openDataCleanup(){closeMenu();openDialog('data-cleanup','Data cleanup',dataCleanupBody(),btn('close-dialog','Close','','btn')+btn('cleanup-refresh','Refresh checks','back','btn'),'data-tools-dialog',{testid:'data-cleanup-dialog'});}
+function refreshDataCleanup(){const rec=dataDialogRecord('data-cleanup');if(rec){rec.dialog.querySelector('.dialog-body').innerHTML=dataCleanupBody();enhance(rec.dialog);announce('Data cleanup checks refreshed.');}}
+function openDataRestore(){closeMenu();const deleted=deals.filter(d=>d.deletedAt&&(d.pipelineId||'sales')===activePipelineId).sort((a,b)=>b.deletedAt.localeCompare(a.deletedAt));
+ openDialog('data-restore','Restore data',`<p class="data-tools-intro">Recover deleted opportunities in <strong>${esc(activePipeline().name)}</strong>. Their contacts, documents, activities and history are retained. Only records deleted during this session are available.</p><p class="data-feedback" data-data-feedback role="alert"></p>${deleted.length?`<ul class="data-record-list">${deleted.map(d=>`<li class="data-record"><div class="data-record-copy"><strong>${esc(d.title)}</strong><p>${esc(d.organisation)} · ${esc(stageName(d.stage))}</p><p>Deleted ${fmtDate(d.deletedAt)} · ${money(d.value)}</p>${!STAGES.includes(d.stage)?`<label class="hint" for="restore-stage-${d.id}">The former stage was removed. Restore into:</label><select id="restore-stage-${d.id}" data-restore-stage="${d.id}"><option value="">Choose a stage</option>${stageOptions().map(([id,name])=>`<option value="${id}">${esc(name)}</option>`).join('')}</select>`:''}</div>${btn('restore-opportunity','Restore','history','btn small-btn',`data-id="${d.id}" data-version="${d.version}" aria-label="Restore ${esc(d.title)}"`)}</li>`).join('')}</ul>`:'<div class="data-empty"><strong>No deleted opportunities</strong>Opportunities deleted from this pipeline will appear here until the page is reloaded.</div>'}`,btn('close-dialog','Close','','btn'),'data-tools-dialog',{pipelineId:activePipelineId,testid:'data-restore-dialog'});
+}
+function restoreDataOpportunity(id,button){
+ const rec=dataDialogRecord('data-restore'),d=byId(id);if(!rec)return;
+ if(!d?.deletedAt||rec.pipelineId!==activePipelineId||(d.pipelineId||'sales')!==activePipelineId||pending.has(id)||d.version!==Number(button.dataset.version)||serverRecords.get(id)?.version!==d.version){dataMessage(rec,'This opportunity changed or is no longer available. Close and reopen Restore data to refresh the list.');return;}
+ const stage=STAGES.includes(d.stage)?d.stage:rec.dialog.querySelector(`[data-restore-stage="${id}"]`)?.value;
+ if(!STAGES.includes(stage)){dataMessage(rec,'Choose a current stage for this opportunity.');return;}
+ if(stage!==d.stage){appendStage(d,stage);d.stageHistory.at(-1).reason='Restored after the original stage was removed';}
+ d.deletedAt=null;d.deletedBy=null;d.version++;d.lastTouchedAt=new Date().toISOString();d.activityLog.unshift({at:d.lastTouchedAt,text:'Restored deleted opportunity',by:CURRENT_USER.name});serverRecords.set(id,clone(d));
+ recordChange({kind:'restore',id,label:'Restored '+d.title,version:d.version});closeDialog(rec.dialog,true);render();const shown=derived.visible.some(x=>x.id===id);toast(`Restored ${d.title}.${shown?'':' Hidden by the current filters.'}`,shown?{}:{action:'clear-all',actionLabel:'Clear filters'});
+}
+HELP_CONTENT.health+='<h3>Rotting card colour</h3><p>A faint pastel red background marks an opportunity that has reached its configured inactivity limit. The colour follows the pipeline and stage rotting switches. Updating the opportunity restarts its inactivity timer.</p>';
+
 initialRoute();render();
 
 </script></body></html>
