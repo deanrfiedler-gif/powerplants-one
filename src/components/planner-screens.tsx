@@ -1692,12 +1692,23 @@ export function PlannerScreen() {
           it carries no authorised scope. This list is read-only — open a work
           order to propose a visit.
         </p>
-        <ReadState {...demand} retry={demand.reload} />
+        {demand.loading && <p role="status">Loading permitted records…</p>}
+        {/* Demand is a secondary read on this page, so it reports its own
+            failure in place — the same treatment the site selector above
+            gets — instead of raising a second page-level alert. When one
+            identity is refused both reads fail for the same reason, and two
+            identical permission banners carrying two different support
+            references tell the reader nothing the first did not. */}
         {!!demand.error && (
-          <p className="planner-warning">
-            Unassigned demand is unknown. A failed read does not mean every
-            authorised work order is scheduled.
-          </p>
+          <>
+            <p className="planner-warning" role="status">
+              Unassigned demand is unknown. A failed read does not mean every
+              authorised work order is scheduled.
+            </p>
+            <button className="secondary compact" onClick={demand.reload}>
+              Retry loading demand
+            </button>
+          </>
         )}
         {demand.data && !demand.error && (
           <>
