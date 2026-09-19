@@ -7,7 +7,8 @@ import { hasPermission, type QueryClient } from "../platform/permissions";
 import { AppError, unavailable } from "../platform/errors";
 import { visibleAppointment } from "../scheduling/planner";
 import { sameVersion } from "../scheduling/validation";
-import { envelope } from "../shared/reads";
+import { scopeDetail, readiness as criteriaFor } from "../service/work-orders";
+import { envelope, visible } from "../shared/reads";
 import {
   common,
   commonKeys,
@@ -28,6 +29,13 @@ import {
   fail,
 } from "./context";
 import { digest } from "./store";
+import type { PackSnapshot } from "./render";
+import {
+  basisOf,
+  basisDrift,
+  type PackBasis,
+  type PackCriterion,
+} from "./pack-view";
 export async function insert(
   c: QueryClient,
   table: string,
@@ -530,36 +538,139 @@ export async function recordDistribution(
     "PackDistributionRecorded",
   );
 }
+type PackScope = Awaited<ReturnType<typeof packContext>>;
+const unreadable = (e: unknown) =>
+  e instanceof AppError && [403, 404, 422].includes(e.status);
+// Readiness rows for the pack page come from the same registry the appointment read uses; the page never
+// evaluates readiness itself. A dependency this identity cannot read yields null, which is not an empty list.
+async function packCriteria(
+  c: QueryClient,
+  p: Principal,
+  { a, w }: Pick<PackScope, "a" | "w">,
+) {
+  try {
+    const r = await scopeDetail(c, p, w, a.scope_revision_id),
+      rows = [
+        ...(await criteriaFor(c, p, r)),
+        ...(await criteriaFor(c, p, r, a.id)),
+      ];
+    const names = new Map<string, string>(
+      (
+        await c.query(
+          "SELECT id,display_name FROM ppo.users WHERE workspace_id=$1 AND id=ANY($2::uuid[])",
+          [
+            p.workspace_id,
+            [...new Set(rows.map((x) => x.assessed_by).filter(Boolean))],
+          ],
+        )
+      ).rows.map((u) => [u.id, u.display_name]),
+    );
+    const policy = (
+      await c.query(
+        "SELECT key,version FROM ppo.policy_versions WHERE workspace_id=$1 AND id=$2",
+        [p.workspace_id, r.policy_version_id],
+      )
+    ).rows[0];
+    return {
+      policy: policy ?? null,
+      // Allowlisted: evidence text and internal identifiers stay out of the pack read.
+      criteria: rows.map((x): PackCriterion => ({
+        criterion_code: x.criterion_code,
+        label: x.label,
+        blocking_stage: x.blocking_stage,
+        exception_allowed: x.exception_allowed,
+        not_applicable_allowed: x.not_applicable_allowed,
+        outcome: x.outcome,
+        recorded_outcome: x.recorded_outcome,
+        stale: x.stale,
+        expired: x.expired,
+        reason: x.reason ?? null,
+        assessed_by_name: names.get(x.assessed_by) ?? null,
+        assessed_at: x.assessed_at ?? null,
+        valid_until: x.valid_until ?? null,
+        evidence_title: x.evidence_title ?? null,
+      })),
+    };
+  } catch (e) {
+    if (!unreadable(e)) throw e;
+    return null;
+  }
+}
+// The current value of every versioned field a snapshot records. Advisory: checkPack and requestIssue
+// recompute the exact snapshot and remain the authority on whether a revision is stale.
+async function currentBasis(
+  c: QueryClient,
+  p: Principal,
+  { a, w }: Pick<PackScope, "a" | "w">,
+): Promise<PackBasis> {
+  const version = async (kind: "Site" | "Organisation", id: string) => {
+    try {
+      return (await visible(c, p, kind, id)).version as number;
+    } catch (e) {
+      if (!unreadable(e)) throw e;
+      return null;
+    }
+  };
+  const scope = w.scope_revision_id
+    ? (
+        await c.query(
+          "SELECT id,version,content_hash FROM ppo.scope_revisions WHERE workspace_id=$1 AND work_order_id=$2 AND id=$3",
+          [p.workspace_id, w.id, w.scope_revision_id],
+        )
+      ).rows[0]
+    : null;
+  const template = (
+    await c.query(
+      "SELECT t.version,p.version AS policy_version FROM ppo.pack_templates t JOIN ppo.pack_policy p ON (p.workspace_id,p.template_id)=(t.workspace_id,t.id) WHERE t.workspace_id=$1",
+      [p.workspace_id],
+    )
+  ).rows[0];
+  return {
+    appointment_version: a.version,
+    schedule_version: a.schedule_version,
+    assignment_version: a.assignment_version,
+    booking_hash:
+      (a as typeof a & { booking_hash?: string }).booking_hash ?? null,
+    work_version: w.version,
+    scope_id: scope?.id ?? null,
+    scope_version: scope?.version ?? null,
+    scope_hash: scope?.content_hash ?? null,
+    site_version: await version("Site", a.site_id),
+    customer_version: await version("Organisation", w.customer_id),
+    template_version: template?.version ?? null,
+    policy_version: template?.policy_version ?? null,
+  };
+}
 export async function readPack(p: Principal, id: string) {
   return transaction(async (c) => {
-    const { pack, a } = await packContext(c, p, uuid(id, "pack_id"));
+    const { pack, a, w } = await packContext(c, p, uuid(id, "pack_id"));
     const revisions = (
       await c.query(
-        "SELECT * FROM ppo.pack_revisions WHERE workspace_id=$1 AND pack_id=$2 ORDER BY revision DESC",
+        "SELECT r.*,u.display_name AS created_by_name FROM ppo.pack_revisions r JOIN ppo.users u ON (u.workspace_id,u.id)=(r.workspace_id,r.created_by) WHERE r.workspace_id=$1 AND r.pack_id=$2 ORDER BY r.revision DESC",
         [p.workspace_id, id],
       )
     ).rows;
     const checks = (
       await c.query(
-        "SELECT * FROM ppo.pack_checks WHERE workspace_id=$1 AND pack_id=$2 ORDER BY checked_at DESC",
+        "SELECT k.*,u.display_name AS actor_name FROM ppo.pack_checks k JOIN ppo.users u ON (u.workspace_id,u.id)=(k.workspace_id,k.actor_id) WHERE k.workspace_id=$1 AND k.pack_id=$2 ORDER BY k.checked_at DESC",
         [p.workspace_id, id],
       )
     ).rows;
     const issues = (
       await c.query(
-        "SELECT i.*,r.revision FROM ppo.pack_issues i JOIN ppo.pack_revisions r ON r.id=i.revision_id WHERE i.workspace_id=$1 AND i.pack_id=$2 ORDER BY i.issued_at DESC",
+        "SELECT i.*,r.revision,u.display_name AS issued_by_name FROM ppo.pack_issues i JOIN ppo.pack_revisions r ON r.id=i.revision_id JOIN ppo.users u ON (u.workspace_id,u.id)=(i.workspace_id,i.issued_by) WHERE i.workspace_id=$1 AND i.pack_id=$2 ORDER BY i.issued_at DESC",
         [p.workspace_id, id],
       )
     ).rows;
     const events = (
       await c.query(
-        "SELECT e.* FROM ppo.pack_issue_events e JOIN ppo.pack_issues i ON i.id=e.issue_id WHERE e.workspace_id=$1 AND i.pack_id=$2 ORDER BY e.occurred_at DESC",
+        "SELECT e.*,u.display_name AS actor_name FROM ppo.pack_issue_events e JOIN ppo.pack_issues i ON i.id=e.issue_id JOIN ppo.users u ON (u.workspace_id,u.id)=(e.workspace_id,e.actor_id) WHERE e.workspace_id=$1 AND i.pack_id=$2 ORDER BY e.occurred_at DESC",
         [p.workspace_id, id],
       )
     ).rows;
     const jobs = (
       await c.query(
-        "SELECT id,revision_id,state,attempts,error_code,requested_at,recovery_owner_id,issue_id FROM ppo.pack_render_jobs WHERE workspace_id=$1 AND pack_id=$2 ORDER BY requested_at DESC",
+        "SELECT j.id,j.revision_id,j.state,j.attempts,j.error_code,j.requested_at,j.recovery_owner_id,j.issue_id,u.display_name AS actor_name FROM ppo.pack_render_jobs j JOIN ppo.users u ON (u.workspace_id,u.id)=(j.workspace_id,j.actor_id) WHERE j.workspace_id=$1 AND j.pack_id=$2 ORDER BY j.requested_at DESC",
         [p.workspace_id, id],
       )
     ).rows;
@@ -597,6 +708,12 @@ export async function readPack(p: Principal, id: string) {
       : revisions.filter((r) =>
           currentIssues.some((i) => i.revision_id === r.id),
         );
+    // Staff-only presentation context. Null means not provided to this identity, never "none".
+    const prepared = revisions.find((r) => r.id === pack.current_revision_id),
+      basis =
+        staff && prepared ? basisOf(prepared.snapshot as PackSnapshot) : null,
+      current_basis = basis ? await currentBasis(c, p, { a, w }) : null,
+      assessed = staff ? await packCriteria(c, p, { a, w }) : null;
     const follow_ups = [];
     if (staff)
       for (const f of (
@@ -625,9 +742,29 @@ export async function readPack(p: Principal, id: string) {
           staff || currentIssues.length ? pack.current_issue_id : null,
         current_revision_id:
           staff || permittedRevisions.length ? pack.current_revision_id : null,
-        revisions: permittedRevisions,
+        revisions: staff
+          ? permittedRevisions
+          : permittedRevisions.map((r) => ({ ...r, created_by_name: null })),
         checks: staff ? checks : [],
-        issues: currentIssues,
+        issues: staff
+          ? currentIssues
+          : currentIssues.map((i) => ({ ...i, issued_by_name: null })),
+        criteria: assessed?.criteria ?? null,
+        readiness_policy: assessed?.policy ?? null,
+        basis,
+        current_basis,
+        basis_drift:
+          basis && current_basis
+            ? basisDrift(
+                basis,
+                current_basis,
+                issues.some(
+                  (i) =>
+                    i.id === pack.current_issue_id &&
+                    i.revision_id === pack.current_revision_id,
+                ),
+              )
+            : null,
         events: events
           .filter((e) => currentIssues.some((i) => i.id === e.issue_id))
           .map((e) =>
@@ -711,6 +848,14 @@ export async function preparationOptions(p: Principal, id: string) {
     return {
       appointment: a,
       work_order_reference: w.display_number,
+      // One pack per appointment: the preparation page opens the existing pack instead of creating a second.
+      existing_pack_id:
+        (
+          await c.query(
+            "SELECT id FROM ppo.packs WHERE workspace_id=$1 AND appointment_id=$2",
+            [p.workspace_id, a.id],
+          )
+        ).rows[0]?.id ?? null,
       sources: await availableSources(c, p, a.company_id, a.site_id),
       history: (
         await c.query(
@@ -718,6 +863,47 @@ export async function preparationOptions(p: Principal, id: string) {
           [p.workspace_id, a.company_id, a.site_id],
         )
       ).rows,
+    };
+  });
+}
+// Canonical pack identity for an appointment this identity can already see, so a job's Job pack section opens
+// the pack itself. A pack that does not exist and a pack outside this identity's scope both read as null.
+export async function packForAppointment(p: Principal, id: string) {
+  return transaction(async (c) => {
+    const { a } = await visibleAppointment(
+      c,
+      p,
+      uuid(id, "appointment_id"),
+      "pack.read",
+    );
+    const row = (
+      await c.query(
+        "SELECT id FROM ppo.packs WHERE workspace_id=$1 AND appointment_id=$2",
+        [p.workspace_id, a.id],
+      )
+    ).rows[0];
+    let pack = null;
+    if (row)
+      try {
+        const found = (await packContext(c, p, row.id)).pack;
+        pack = {
+          id: found.id,
+          display_number: found.display_number,
+          status: found.status,
+          needs_review: found.needs_review,
+        };
+      } catch (e) {
+        if (!(e instanceof AppError) || e.status !== 404) throw e;
+      }
+    return {
+      pack,
+      can_prepare: await hasPermission(
+        c,
+        p,
+        "pack.prepare",
+        a.company_id,
+        a.site_id,
+      ),
     };
   });
 }

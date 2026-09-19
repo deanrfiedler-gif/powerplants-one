@@ -15,14 +15,19 @@ import {
   acknowledgePack,
   dispatchReadiness,
   recordDistribution,
+  packForAppointment,
+  preparationOptions,
 } from "../../src/documents/packs";
+import { snapshot } from "../../src/documents/context";
+import { basisOf } from "../../src/documents/pack-view";
+import { canonical } from "../../src/platform/operations";
 import {
   readBundle,
   processRenderJob,
   readRenderJob,
 } from "../../src/documents/worker";
 import { saveWorkScope, readWorkOrder } from "../../src/service/work-orders";
-import { documentStore } from "../../src/documents/store";
+import { documentStore, digest } from "../../src/documents/store";
 import { readOperation } from "../../src/shared/receipts";
 import {
   readAppointment,
@@ -128,6 +133,132 @@ test("P06 prepare/check while dispatch held; queued is not Issued; same operatio
     requestIssue(q.p, q.pack.id, { ...q.cmd, reason: "changed" }),
     code("OperationConflict"),
   );
+});
+test("SC-06 pack read adds registry readiness, actors and an advisory basis for staff only, and leaves the checked snapshot alone", async () => {
+  const p = await principal(),
+    a = await confirmed();
+  // Before a pack exists the appointment's identity read is an honest empty answer, not a failure.
+  assert.deepEqual(await packForAppointment(p, a.id), {
+    pack: null,
+    can_prepare: true,
+  });
+  assert.equal((await preparationOptions(p, a.id)).existing_pack_id, null);
+  const pid = randomUUID();
+  await createPack(p, {
+    ...base(),
+    id: pid,
+    appointment_id: a.id,
+    expected_appointment_version: a.version,
+    content: content(),
+  });
+  const pack = (await readPack(p, pid)).items[0],
+    revision = pack.revisions[0],
+    coordinator = (
+      await rows("SELECT display_name FROM ppo.users WHERE id=$1", [p.actor_id])
+    )[0].display_name;
+  assert.deepEqual(await packForAppointment(p, a.id), {
+    pack: {
+      id: pid,
+      display_number: pack.display_number,
+      status: "Draft",
+      needs_review: true,
+    },
+    can_prepare: true,
+  });
+  assert.equal((await preparationOptions(p, a.id)).existing_pack_id, pid);
+  assert.equal(revision.created_by_name, coordinator);
+  // Readiness comes from the policy registry with its stage and exception rule; nothing is evaluated by the page.
+  assert.ok(pack.criteria.length > 0);
+  assert.ok(pack.readiness_policy.version > 0);
+  assert.equal(typeof pack.readiness_policy.key, "string");
+  const tool = pack.criteria.find(
+    (c: { criterion_code: string }) => c.criterion_code === "ToolPreparation",
+  );
+  assert.equal(tool.exception_allowed, true);
+  for (const c of pack.criteria) {
+    assert.deepEqual(Object.keys(c).sort(), [
+      "assessed_at",
+      "assessed_by_name",
+      "blocking_stage",
+      "criterion_code",
+      "evidence_title",
+      "exception_allowed",
+      "expired",
+      "label",
+      "not_applicable_allowed",
+      "outcome",
+      "reason",
+      "recorded_outcome",
+      "stale",
+      "valid_until",
+    ]);
+    assert.ok(
+      ["Authorisation", "Booking", "Dispatch", "Completion"].includes(
+        c.blocking_stage,
+      ),
+    );
+    // Only ToolPreparation may ever carry a permitted exception.
+    assert.equal(c.exception_allowed, c.criterion_code === "ToolPreparation");
+  }
+  // The basis is read from the saved snapshot and nothing has drifted from a revision just prepared.
+  assert.deepEqual(pack.basis, basisOf(revision.snapshot));
+  assert.deepEqual(pack.current_basis, pack.basis);
+  assert.deepEqual(pack.basis_drift, []);
+  // None of the new reads moved the hash that Check and Issue compare.
+  assert.equal(
+    digest(
+      canonical(
+        await snapshot(
+          database(),
+          p,
+          a.id,
+          pack.display_number,
+          revision.revision,
+          revision.input,
+        ),
+      ),
+    ),
+    revision.content_hash,
+  );
+  await checkPack(p, pid, {
+    ...base(),
+    expected_version: pack.version,
+    decision: "Checked",
+  });
+  const checked = (await readPack(p, pid)).items[0];
+  assert.equal(checked.checks[0].actor_name, coordinator);
+  assert.deepEqual(checked.basis_drift, []);
+  // An assigned technician sees the pack exists but receives no staff presentation context.
+  const technician = await principal("assigned-technician"),
+    mine = (await readPack(technician, pid)).items[0];
+  assert.equal(mine.criteria, null);
+  assert.equal(mine.readiness_policy, null);
+  assert.equal(mine.basis, null);
+  assert.equal(mine.current_basis, null);
+  assert.equal(mine.basis_drift, null);
+  assert.deepEqual(mine.revisions, []);
+  assert.equal((await packForAppointment(technician, a.id)).can_prepare, false);
+  await assert.rejects(
+    packForAppointment(await principal("observer"), a.id),
+    (e: unknown) => [403, 404].includes((e as { status: number }).status),
+  );
+});
+test("SC-06 issue and acknowledgement advance the appointment record without reporting a source change", async () => {
+  const q = await issued();
+  assert.equal(typeof q.pack.issues[0].issued_by_name, "string");
+  assert.equal(typeof q.pack.jobs[0].actor_name, "string");
+  assert.deepEqual(q.pack.basis_drift, []);
+  const first = await ack(q.pack, "assigned-technician");
+  await acknowledgePack(first.p, q.issue_id, first.input);
+  const after = (await readPack(q.p, q.pack.id)).items[0];
+  assert.notEqual(
+    after.current_basis.appointment_version,
+    after.basis.appointment_version,
+  );
+  assert.deepEqual(after.basis_drift, []);
+  const mine = (await readPack(first.p, q.pack.id)).items[0];
+  assert.equal(mine.issues[0].issued_by_name, null);
+  assert.equal(mine.revisions[0].created_by_name, null);
 });
 test("P06 exact immutable output and two independent acknowledgements control component readiness", async () => {
   const q = await issued();
@@ -527,12 +658,25 @@ test("P06 P05 confirmed move invalidates real pack/assignment applicability and 
     readPack(await principal("assigned-technician"), p.id),
     code("RecordUnavailable"),
   );
+  // SC-06: the advisory basis names the move, and a removed technician learns nothing from the identity read.
+  assert.ok(
+    p.basis_drift.some(
+      (d: { source: string; field: string }) =>
+        d.source === "Appointment" && d.field === "schedule_version",
+    ),
+  );
+  assert.deepEqual(
+    await packForAppointment(await principal("assigned-technician"), a.id),
+    { pack: null, can_prepare: false },
+  );
   await revisePack(q.p, p.id, {
     ...base(),
     expected_version: p.version,
     content: content(),
   });
   let next = (await readPack(q.p, p.id)).items[0];
+  // The successor was prepared against the moved appointment, so nothing has drifted from it.
+  assert.deepEqual(next.basis_drift, []);
   await checkPack(q.p, p.id, {
     ...base(),
     expected_version: next.version,
