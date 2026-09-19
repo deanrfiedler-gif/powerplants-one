@@ -196,11 +196,11 @@ Under the default for D3, **Print preview** opens the server preview of the save
 
 | Addition | Where | Visible to | Purpose |
 |---|---|---|---|
-| `revisions[].created_by_name`, `checks[].actor_name`, `events[].actor_name` | `readPack` | Staff | Actor on every event; "Prepared by" |
+| `revisions[].created_by_name`, `checks[].actor_name`, `jobs[].actor_name`, `issues[].issued_by_name`, `events[].actor_name` | `readPack` | Staff | Actor on every event; "Prepared by" |
 | `criteria[]`: criterion code, label, blocking stage, `exception_allowed`, `not_applicable_allowed`, outcome, recorded outcome, stale, expired, reason, assessor name, assessed at, valid until, evidence title; plus `policy { key, version }` | `readPack`, from the existing `scopeDetail` and `readiness()`; a denied dependency yields `criteria: null`, never an empty list | Staff | Readiness card (M2) from the real registry |
-| `basis`, `current_basis`, `basis_drift[]` over every versioned field the snapshot records (appointment version, schedule version, assignment version, booking hash; work version, scope version, scope hash; site version; customer version; template and policy version) | `readPack` | Staff | Source tags and the source-change notice (M3). Advisory; the digest check stays authoritative |
+| `basis`, `current_basis`, `basis_drift[]` over every versioned field the snapshot records (appointment version, schedule version, assignment version, booking hash; work version, scope version, scope hash; site version; customer version; template and policy version) | `readPack` | Staff | Source tags and the source-change notice (M3). Advisory; the digest check stays authoritative. **Once the current revision is the current issue, only schedule and assignment version are compared**: issue finalisation and acknowledgement themselves advance the appointment record version, so a full comparison would report a source change on every issued pack (found in I1) |
 | `existing_pack_id` | `preparationOptions` | `pack.prepare` | `/service/packs/new` redirects instead of failing `UNIQUE(workspace_id, appointment_id)` |
-| `GET /api/v1/appointments/:id/pack` → permitted `{ id, display_number, status, needs_review, current_issue_id }` or the same 404 | New route beside `pack-options`, served from `src/documents/` through `packContext` | `pack.read` in scope, or current assignment | Canonical pack identity for the Field Technicians drawer. Kept in the documents domain so `scheduling` gains no import of `documents` |
+| `GET /api/v1/appointments/:id/pack` → `{ pack: { id, display_number, status, needs_review } \| null, can_prepare }`. `pack` is `null` both when none exists and when it is outside scope; an appointment outside scope is the same 404 | New route beside `pack-options`, served from `src/documents/` through `packContext` | `pack.read` in scope, or current assignment | Canonical pack identity for the Field Technicians drawer, which must tell "no pack yet" from a failure in order to offer preparation (refined in I1; it discloses nothing the appointment's own `pack_requirement` does not). Kept in the documents domain so `scheduling` gains no import of `documents` |
 
 Pure presentation logic — input diff, timeline assembly, readiness summary, status presentation, stamp and zone formatting — lives in `src/documents/pack-view.ts`, free of server imports and unit-tested.
 
@@ -284,8 +284,8 @@ Strings and selectors other suites rely on. **Keep** unless the row says otherwi
 | `Check this revision`, `Queue exact output for issue`, `Process or recover original output`, `Withdraw current issue`, `Open exact issued document`, `/Acknowledge this exact issue/` | `packs.spec.ts` | Keep |
 | `Dispatch held`, `Pack dispatch checks complete` (exact) | `packs.spec.ts` | Keep, in the readiness card |
 | `Decision / change reason` | `packs.spec.ts` | Keep as the dialog field label; ordering changes (I2) |
-| `#section-<key>` ×9, checkbox `/SYN visual inspection/`, `Save preparation` | `packs.spec.ts` | Keep |
-| `Prepare nine-section job pack`, `Preparation / change reason` | `packs.spec.ts` | Replaced in I3; test updated in the same pull request |
+| `#section-<key>` ×9, checkbox `/SYN visual inspection/`, `Save preparation` | `packs.spec.ts`, `tests/helpers/quality-prepare.ts` | Keep |
+| `Prepare nine-section job pack`, `Preparation / change reason`, `Prepare successor revision` | `packs.spec.ts`; **`tests/helpers/quality-prepare.ts`**, which drives pack creation and a successor revision through the screen for `quality-journey.spec.ts`, `finance.spec.ts` and `crm-refinements.spec.ts` | Replaced in I3; the spec and the helper are updated in the same pull request |
 | `.business-error`; `Loading …` status inside `main` | `packs.spec.ts`, `quality-states.spec.ts` | Keep |
 | `Draft · Not issued`, `No job packs are available` | `quality-states.spec.ts` | Untouched — list screen |
 | `Exact issued job pack`, `Current applicable issue`, `Not currently applicable` | `packs.spec.ts` | Untouched — SC-14 |
@@ -305,6 +305,13 @@ python3 scripts/check_foundation.py && python3 scripts/check_naming.py
 ```
 
 A local machine without the document renderer reports `RenderOrStorageFailure` in report-producing tests; confirm any failure against unmodified `main` before attributing it. Record what was executed and what was only authored, as the Field Technicians handover does.
+
+Measured on the owner's Windows machine during I1, 20 September 2026, so that later increments do not rediscover them:
+
+- `ppo_synthetic_test` does not exist and the local role has no `CREATEDB`, so the database suites cannot run there. CI is their first execution until that database is created by a privileged role.
+- The dev database held no pack, so a pack page has nothing to show until one is prepared through the planner.
+- `tsconfig.json` includes every `.ts` under the root. A git-ignored `tmp/` holding 641 of them exhausts the default heap; the type check passes on the tracked tree with `tmp/` excluded. CI's clean checkout is unaffected.
+- Four unit tests fail there and fail identically on unmodified `main`, because they assume POSIX paths and file modes: `document-store` (2), `recovery` (1) and `warm-routes` (1).
 
 ## 11. Risks
 
