@@ -8,7 +8,7 @@ export const sessionCookie = isHostedDemo() ? "__Host-ppo_demo_session" : "ppo_l
 export async function endSession(token:string|undefined) {
   if(token) await database().query("DELETE FROM ppo.sessions WHERE token_hash=$1",[tokenHash(token)]);
 }
-const tokenHash = (token: string) =>
+export const tokenHash = (token: string) =>
   createHash("sha256").update(token).digest("hex");
 export type Principal = {
   actor_id: string;
@@ -114,9 +114,16 @@ export async function readInvitedSession(client: QueryClient, token: string | un
   const result = await client.query(
     `SELECT u.id AS actor_id,u.workspace_id,u.display_name
      FROM ppo.sessions s JOIN ppo.users u ON (u.workspace_id,u.id)=(s.workspace_id,s.actor_id)
-     JOIN ppo.demo_testers t ON (t.workspace_id,t.user_id)=(u.workspace_id,u.id)
-     WHERE s.token_hash=$1 AND s.expires_at>clock_timestamp() AND u.active
-     AND u.issuer='PPO-EntraDemo' AND t.tenant_id=$2 AND t.enabled AND t.expires_at>clock_timestamp()`,
+     WHERE s.token_hash=$1 AND s.expires_at>clock_timestamp() AND u.active AND (
+       EXISTS(SELECT 1 FROM ppo.demo_testers t
+         WHERE (t.workspace_id,t.user_id)=(u.workspace_id,u.id) AND u.issuer='PPO-EntraDemo'
+         AND t.tenant_id=$2 AND t.enabled AND t.expires_at>clock_timestamp())
+       OR EXISTS(SELECT 1 FROM ppo.demo_tester_roles r
+         JOIN ppo.demo_testers t ON (t.tenant_id,t.object_id)=(r.tenant_id,r.object_id)
+         WHERE (r.workspace_id,r.user_id)=(u.workspace_id,u.id) AND u.issuer='PPO-EntraDemoRole'
+         AND r.tenant_id=$2 AND r.enabled AND r.expires_at>clock_timestamp()
+         AND t.enabled AND t.expires_at>clock_timestamp())
+     )`,
     [tokenHash(token), tenant],
   );
   if (!result.rows[0]) throw new AppError(401, "AuthenticationRequired", "Your demo access has expired or been removed. Sign in again or contact the demo owner.");

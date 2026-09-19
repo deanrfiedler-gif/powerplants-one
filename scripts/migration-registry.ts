@@ -57,8 +57,9 @@ export const latestMigrationVersion = 27;
 export const demoMigrationFiles = [
   "0001-identity.sql",
   "0002-gmail-connection.sql",
+  "0003-hosted-pack-reviewer.sql",
 ] as const;
-export const latestDemoMigrationVersion = 2;
+export const latestDemoMigrationVersion = 3;
 
 // The original Windows-built demo recorded CRLF bytes. Recognize only that
 // exact alternate encoding for the reviewed baseline; never rewrite its ledger.

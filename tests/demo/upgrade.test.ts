@@ -11,6 +11,7 @@ import { migrationFiles } from "../../scripts/migration-registry";
 import { seedTesterMailbox } from "../../scripts/demo-mailbox";
 import { createInvitedSession } from "../../src/platform/demo-auth";
 import { readInvitedSession } from "../../src/platform/identity";
+import { packReviewerCapabilities } from "../../src/platform/demo-roles";
 import { createOpportunity } from "../../src/crm/opportunities";
 import { readOpportunity } from "../../src/crm/reads";
 import { crmCreate } from "../helpers/crm";
@@ -71,8 +72,12 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   await upgradeExistingDemo(name, tenant, true);
   const upgradedRows=await Promise.all(tables.map(rows));
   const addedUsers=upgradedRows[1].filter(r=>!before[1].some(old=>old.row.id===r.row.id));
-  assert.deepEqual(addedUsers.map(r=>[r.row.id,r.row.subject_id,r.row.display_name]),[["30000000-0000-4000-8000-000000000015","crm-receiver","SYN Sales receiver"]]);
-  assert.deepEqual(upgradedRows.map((rs,i)=>i===1?rs.filter(r=>r.row.id!=="30000000-0000-4000-8000-000000000015"):rs),before);
+  assert.equal(addedUsers.length,2);
+  assert.ok(addedUsers.some(r=>r.row.id==="30000000-0000-4000-8000-000000000015"&&r.row.subject_id==="crm-receiver"&&r.row.display_name==="SYN Sales receiver"));
+  const reviewer=addedUsers.find(r=>r.row.issuer==="PPO-EntraDemoRole");
+  assert.equal(reviewer?.row.subject_id,`${tenant}/${objects[0]}/pack-reviewer`);
+  assert.match(reviewer?.row.display_name??"",/^SYN Pack reviewer /);
+  assert.deepEqual(upgradedRows.map((rs,i)=>i===1?rs.filter(r=>!addedUsers.some(a=>a.row.id===r.row.id)):rs),before);
   const reloaded = await readOpportunity(actor, proposal.id);
   assert.equal(reloaded.original_owner?.original_owner_id,proposal.owner_id);
   assert.equal(reloaded.original_owner?.source_version,saved.version);
@@ -87,6 +92,9 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   assert.ok(additions.every(g => g.user_id === users[0] && g.company_id === demoCompany && g.scope_type === "Company" && g.scope_id === demoCompany));
   const limit = (await database().query("SELECT valid_to FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.edit'", [users[0]])).rows[0].valid_to;
   assert.ok(additions.every(g => g.valid_to.getTime() <= limit.getTime()));
+  const reviewerGrants=(await database().query("SELECT capability,scope_type,scope_id FROM ppo.permission_grants WHERE user_id=$1 ORDER BY capability",[reviewer!.row.id])).rows;
+  assert.deepEqual(reviewerGrants.map(g=>g.capability),[...packReviewerCapabilities].sort());
+  assert.ok(reviewerGrants.every(g=>g.scope_type==="Company"&&g.scope_id===demoCompany));
   const schedule = await readSchedule(actor, {
     from: "2026-09-20T14:00:00Z", to: "2026-09-27T14:00:00Z", timezone: "Australia/Brisbane",
   });
@@ -143,15 +151,18 @@ test("a baseline executed from Windows CRLF SQL upgrades without rewriting histo
   await upgradeExistingDemo(name, tenant, true);
   const final = await ledger();
   assert.deepEqual(final.filter(r => r.row.version <= 17), baseline);
-  // The hosted track now carries 0002 (Gmail connection): the CRLF identity
-  // baseline row must survive with its original checksum, and version 2 must be
-  // recorded once with the LF digest of its source.
+  // The hosted track now carries Gmail and Pack Reviewer migrations: the CRLF
+  // identity baseline survives and each successor is recorded once.
   const demoLedger = await rows("public.ppo_demo_migrations");
   assert.deepEqual(demoLedger.filter(r => r.row.version === 1), identities);
-  assert.deepEqual(demoLedger.map(r => r.row.version).sort(), [1, 2]);
+  assert.deepEqual(demoLedger.map(r => r.row.version).sort(), [1, 2, 3]);
   assert.equal(
     demoLedger.find(r => r.row.version === 2)?.row.sha256,
     digest(await readFile(new URL("../../db/demo/0002-gmail-connection.sql", import.meta.url), "utf8")),
+  );
+  assert.equal(
+    demoLedger.find(r => r.row.version === 3)?.row.sha256,
+    digest(await readFile(new URL("../../db/demo/0003-hosted-pack-reviewer.sql", import.meta.url), "utf8")),
   );
   // 0018 Leads, 0019 Projects, 0020 Engineering, 0021 stages, 0022 Discovery conversion and 0023 owned outcomes and 0024 owner transfer, 0025 versioned estimating taxonomy and 0026 preserved discovery identities and 0027 exact cost bases.
   assert.equal(final.length, baseline.length + 10);

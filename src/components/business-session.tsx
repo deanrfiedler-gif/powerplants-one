@@ -1,5 +1,6 @@
 "use client";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { api, ErrorNotice } from "./business-ui";
 import { lockLocal } from "../offline/store";
 import { lockOtherBusinessViews, sessionReadyEvent } from "./session-signal";
@@ -12,6 +13,8 @@ type Identity = {
   workspace_id: string;
   display_name: string;
 };
+type HostedRole = "tester" | "pack-reviewer";
+type HostedRoles = { current: HostedRole; available: HostedRole[] };
 const Session = createContext<Identity | null>(null);
 export function useIdentity() {
   const p = useContext(Session);
@@ -19,6 +22,7 @@ export function useIdentity() {
   return p;
 }
 export function BusinessSession({ children, hosted = false }: { children: React.ReactNode; hosted?: boolean }) {
+  const router = useRouter();
   const account = useRef<HTMLElement>(null);
   const [showIdentity, setShowIdentity] = useState(false);
   const [p, setP] = useState<Identity | null>(null),
@@ -26,7 +30,9 @@ export function BusinessSession({ children, hosted = false }: { children: React.
     [error, setError] = useState<unknown>(null),
     [loading, setLoading] = useState(true),
     [busy, setBusy] = useState(false),
-    [epoch, setEpoch] = useState(0);
+    [epoch, setEpoch] = useState(0),
+    [hostedRoles, setHostedRoles] = useState<HostedRoles | null>(null),
+    [hostedRole, setHostedRole] = useState<HostedRole>("tester");
   useEffect(() => {
     let live = true;
     api<Identity>("local-session").then(
@@ -42,6 +48,14 @@ export function BusinessSession({ children, hosted = false }: { children: React.
     };
   }, []);
   useEffect(() => { if (p) window.dispatchEvent(new Event(sessionReadyEvent)); }, [p]);
+  useEffect(() => {
+    if (!hosted || !p) return;
+    let live = true;
+    api<HostedRoles>("demo-role").then(value => {
+      if (live) { setHostedRoles(value); setHostedRole(value.current); }
+    }, e => { if (live) setError(e); });
+    return () => { live = false; };
+  }, [hosted, p]);
   useEffect(() => {
     const outside = (event: Event) => { if (!account.current?.contains(event.target as Node)) setShowIdentity(false); };
     const other = (event: Event) => { if ((event as CustomEvent).detail !== "account") setShowIdentity(false); };
@@ -74,6 +88,25 @@ export function BusinessSession({ children, hosted = false }: { children: React.
       setBusy(false);
     }
   }
+  async function selectHostedRole() {
+    if (!hosted || !hostedRoles || hostedRole === hostedRoles.current) return;
+    lockOtherBusinessViews();
+    setBusy(true);
+    setError(null);
+    try {
+      const next = await api<Identity>("demo-role", { role: hostedRole });
+      setP(next);
+      setHostedRoles({ ...hostedRoles, current: hostedRole });
+      setEpoch(x => x + 1);
+      setShowIdentity(false);
+      router.push(hostedRole === "pack-reviewer" ? "/service/packs" : "/schedule");
+    } catch (e) {
+      setError(e);
+    } finally {
+      lockOtherBusinessViews();
+      setBusy(false);
+    }
+  }
   return (
     <>
       <HeaderContent slot="account">
@@ -82,6 +115,16 @@ export function BusinessSession({ children, hosted = false }: { children: React.
         <div id="hosted-account-controls" className="ppo-hosted-account-controls ppo-account-panel" data-open={showIdentity} role="dialog" aria-label="Account">
           {accountTitle}<div className="ppo-panel-body">
           <ShellAccountProfile name={p?.display_name} />
+          {p && hostedRoles && <div className="identity-choice">
+            <label htmlFor="hosted-role">Demo role</label>
+            <select id="hosted-role" value={hostedRole} onChange={event => setHostedRole(event.target.value as HostedRole)} disabled={busy}>
+              {hostedRoles.available.map(role => <option key={role} value={role}>{role === "tester" ? "Booking tester" : "Pack reviewer"}</option>)}
+            </select>
+            <button type="button" onClick={selectHostedRole} disabled={busy || hostedRole === hostedRoles.current}>
+              {busy ? "Switching…" : "Use this role"}
+            </button>
+            <p className="identity-explanation">Each role has separate permissions and an attributable synthetic actor. Switching clears displayed business records.</p>
+          </div>}
           {p ? <form action="/auth/logout" method="post" onSubmit={() => lockOtherBusinessViews()}><button className="secondary">Sign out</button></form> : <a href="/login">Sign in with Microsoft</a>}
           </div>{accountFooter}
         </div>

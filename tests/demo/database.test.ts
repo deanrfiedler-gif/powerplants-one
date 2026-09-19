@@ -8,6 +8,7 @@ import {
 } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { createSession, readInvitedSession } from "../../src/platform/identity";
+import { packReviewerCapabilities, readHostedRoles, switchHostedRole } from "../../src/platform/demo-roles";
 import { reset } from "../../scripts/database";
 import {
   migrateDemo,
@@ -252,6 +253,13 @@ test("hosted identity mapping, persisted CRM and immediate removal stay scoped",
       /permission denied/,
     );
     await client.query("ROLLBACK");
+    await client.query("BEGIN");
+    await client.query(`SET LOCAL ROLE ${role}`);
+    await assert.rejects(
+      client.query("UPDATE ppo.demo_tester_roles SET enabled=true"),
+      /permission denied/,
+    );
+    await client.query("ROLLBACK");
   } finally {
     await client.query("ROLLBACK");
     await client.query(`DROP OWNED BY ${role}`);
@@ -313,6 +321,33 @@ test("hosted identity mapping, persisted CRM and immediate removal stay scoped",
     ).rows[0].owner_id,
     p.actor_id,
   );
+});
+
+test("hosted tester switches to an attributable pack reviewer without widening T6", async () => {
+  const token = await transaction(c => createInvitedSession(c, tenant, first));
+  const tester = await readInvitedSession(database(), token, tenant);
+  assert.deepEqual(await readHostedRoles(database(), token, tenant), {
+    current: "tester",
+    available: ["tester", "pack-reviewer"],
+  });
+  const reviewer = await transaction(c => switchHostedRole(c, token, tenant, "pack-reviewer"));
+  assert.notEqual(reviewer.actor_id, tester.actor_id);
+  assert.match(reviewer.display_name, /^SYN Pack reviewer /);
+  assert.equal((await readInvitedSession(database(), token, tenant)).actor_id, reviewer.actor_id);
+  assert.deepEqual(await readHostedRoles(database(), token, tenant), {
+    current: "pack-reviewer",
+    available: ["tester", "pack-reviewer"],
+  });
+  for (const capability of packReviewerCapabilities)
+    assert.equal(await hasPermission(database(), reviewer, capability, CRM.company), true);
+  for (const capability of [
+    "pack.issue", "pack.acknowledge", "schedule.manage", "schedule.contact",
+    "service.work_order.edit", "service.readiness.assess", "finance.read", "field.read.own",
+  ] as const)
+    assert.equal(await hasPermission(database(), reviewer, capability, CRM.company), false);
+  assert.equal(await hasPermission(database(), tester, "pack.read", CRM.company), false);
+  const restored = await transaction(c => switchHostedRole(c, token, tenant, "tester"));
+  assert.equal(restored.actor_id, tester.actor_id);
 });
 
 test("invited actor persists proposal, preparation, contact and crew; conflicting move and revoked authority preserve booking", async () => {
