@@ -78,3 +78,17 @@ Recorded with the acceptance:
 - The shared appointment `SYN-PPO-APT-000242` keeps the Job Pack values (11 September, 09:00–12:00, Draft r01 not issued); Field Technicians r05 is aligned to them.
 
 The integration boundary above is unchanged: r03 is presentation, not P06 code; its in-memory simulation of source change and review remains a demonstration of TR-07 and TR-04 intent to be mapped to verified behaviour.
+
+## Application integration — authorised 20 September 2026
+
+Dean authorised the [integration build plan](../delivery/job-pack-integration-build-plan.md) and, asked to choose on its five open questions, answered: “Proceed based on your professional recommendations.” The adopted answers map the preview's demonstrations to verified P06 behaviour, as this record requires:
+
+| # | Adopted |
+|---|---|
+| D1 | No persisted “Review requested” state. The page presents Draft, Returned, Checked, Issued, Withdrawn and `needs_review`; a saved Draft is already awaiting check under TR-04. |
+| D2 | No material / not-material assessment. A source change is resolved by a successor revision with a reason, as ADR-0011 already requires. |
+| D3 | Print preview opens the server preview of the saved revision, the controlled OUT-09 output. Browser print styling is secondary. |
+| D4 | Tool and access readiness are shown from recorded readiness assessments and assessed at the appointment; they are not entered on the pack page in this build. |
+| D5 | r03 section titles appear on screen. OUT-09 keeps its current headings until its next template version, so two of nine headings differ between workbench and issued document meanwhile. |
+
+This authorises application work under the plan's constraints: no change to the pack snapshot, the OUT-09 template, the command contracts or server permission filtering, and no migration. It is not delivery, browser acceptance or operational acceptance; each increment records its own evidence.
