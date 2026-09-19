@@ -1182,7 +1182,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
         </button>
       </WorklistMenu>
       <WorklistChoice
-        label="Sort leads"
+        label="Sort order"
         icon="sort"
         className="lead-filter-choice"
         value={params.get("sort") ?? "Newest"}
@@ -1418,34 +1418,33 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
                       className="lead-mobile-row"
                       key={l.id}
                       href={openLead(l.id)}
-                      aria-label={`${l.title}, ${l.owner_name}, ${l.status}`}
+                      aria-label={`${l.title}, ${l.owner_name}, ${l.status}${
+                        l.next_action_state === "Upcoming"
+                          ? ""
+                          : `, ${actionLabels[l.next_action_state as keyof typeof actionLabels]}`
+                      }`}
                     >
+                      <span className={`lead-pill ${l.status.toLowerCase()}`}>
+                        {l.status}
+                      </span>
                       <strong>{l.title}</strong>
-                      <span>
+                      <span className="lead-mobile-who">
                         {[l.organisation_name, l.contact_name]
                           .filter(Boolean)
                           .join(" · ") || "Details to confirm"}
                       </span>
-                      <span className="lead-row-meta">
+                      {l.next_action_state !== "Upcoming" && (
                         <span
-                          className={`lead-row-status ${l.status.toLowerCase()}`}
-                        >
-                          {l.status}
-                        </span>
-                        <span
-                          className={
-                            l.next_action_state !== "Upcoming"
-                              ? "lead-attention"
-                              : ""
-                          }
-                        >
-                          {
+                          className="lead-mobile-flag lead-attention"
+                          title={
                             actionLabels[
                               l.next_action_state as keyof typeof actionLabels
                             ]
                           }
+                        >
+                          <ProductIcon name="warning" />
                         </span>
-                      </span>
+                      )}
                     </Link>
                   ))}
                 </div>

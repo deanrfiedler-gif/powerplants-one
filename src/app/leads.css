@@ -544,7 +544,8 @@
   }
   .lead-search,
   .lead-toolbar,
-  .lead-sort {
+  .lead-sort,
+  .lead-filter-menus {
     display: none;
     max-width: none;
   }
@@ -573,20 +574,6 @@
     font-size: 16px;
     min-height: 44px;
   }
-  .lead-mobile-summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 11px 16px;
-    min-height: 44px;
-    color: #596575;
-    font-size: 12px;
-  }
-  .lead-mobile-summary strong {
-    font-size: 13px;
-    font-weight: 500;
-    color: #394454;
-  }
   .lead-table-wrap {
     display: none;
   }
@@ -595,57 +582,52 @@
     background: white;
   }
   .lead-mobile-row {
-    display: block;
-    padding: 14px 16px;
-    min-height: 98px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 14px;
+    row-gap: 3px;
+    padding: 13px 16px;
+    min-height: 88px;
     border-bottom: 1px solid #e1e6ec;
     text-decoration: none;
     color: #242a37;
     background: white;
   }
+  .lead-mobile-row > .lead-pill {
+    grid-column: 1;
+    justify-self: start;
+    margin: 0 0 2px;
+  }
   .lead-mobile-row > strong {
+    grid-column: 1;
     display: block;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
-    line-height: 23px;
+    line-height: 24px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .lead-mobile-row > span {
+  .lead-mobile-row > .lead-mobile-who {
+    grid-column: 1;
     display: block;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 21px;
     color: #596575;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .lead-mobile-row .lead-row-meta {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    margin-top: 5px;
-    font-size: 12px;
-    line-height: 18px;
+  .lead-mobile-row > .lead-mobile-flag {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    display: grid;
+    place-items: center;
   }
-  .lead-row-status {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .lead-row-status:before {
-    content: "";
-    width: 5px;
-    height: 5px;
-    background: #7b8796;
-    border-radius: 50%;
-  }
-  .lead-row-status.contacting:before {
-    background: #367394;
-  }
-  .lead-row-status.nurturing:before {
-    background: #8a699d;
+  .lead-mobile-row > .lead-mobile-flag .product-icon {
+    width: 24px;
+    height: 24px;
   }
   .lead-empty {
     min-height: calc(100dvh - 204px);
