@@ -7,7 +7,7 @@ This source produces the [standalone r01 HTML](../../reference/ui/access-review/
 | `template.html` | Semantic page shell, scope metadata (`ppo-scope-id` AD-01, `ppo-design-revision` r01) and assembly markers. |
 | `fonts.css` | Embedded Roboto, byte-identical to `docs/design/my-work/fonts.css` (SHA-256 `57b4aafb71296b18d80408cb10aa972c87f5185deafd748c7fdcfb33e2bd4bef`), itself taken from the r20 board. |
 | `workspace.css` | r20 token core (same names and values as My Work r01), scoped under `#ppo-access-review`, with register, matrix, panel and phone treatments. |
-| `capabilities.js` | **Generated. Do not edit.** The 61-value `Capability` union from `src/platform/permissions.ts` and the 24-value hosted tester set from `scripts/demo-database.ts`, with the SHA-256 of both sources. |
+| `capabilities.js` | **Generated. Do not edit.** The 61-value `Capability` union from `src/platform/permissions.ts` and the 27-value hosted tester set from `scripts/demo-database.ts`, with the SHA-256 of both sources. |
 | `model.js` | Contract rules (scope, uniqueness, validity, evaluation), the proposed workflow (bundles, teams, change requests, reviews, events), guards, visibility, queues, restore validation and the synthetic fixture. |
 | `workspace.js` | Six views, dialogs, the 448 px inspection panel, local storage, backup/restore, evidence export, fixed clock, scripted assistant and the eight UI states. |
 

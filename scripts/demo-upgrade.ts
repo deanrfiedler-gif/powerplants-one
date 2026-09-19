@@ -7,7 +7,7 @@ import { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-runti
 
 const additions = ["crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert",
   "project.read", "project.create", "project.edit", "engineering.read", "engineering.create", "engineering.edit",
-  "email.connect"];
+  "email.connect", "schedule.read", "service.work_order.read", "service.ticket.read"];
 const gmailTables = ["ppo.mail_connections", "ppo.provider_messages", "ppo.mail_message_links", "ppo.mail_sync_checkpoints"];
 const read = (file: string) => readFile(new URL(`../db/${file}`, import.meta.url), "utf8");
 const hash = (sql: string) => createHash("sha256").update(sql).digest("hex");

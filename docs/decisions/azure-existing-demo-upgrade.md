@@ -16,6 +16,44 @@ Verification covers executable deployment-helper failure paths, native PostgreSQ
 
 References: [GitHub expression context availability](https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#context-availability), [Azure Container Apps job CLI](https://learn.microsoft.com/en-us/cli/azure/containerapp/job?view=azure-cli-latest), [combined migration decision](leads-projects-integration.md).
 
+## 19 September — hosted service planner read access
+
+Dean asked to fix the schedule page on the web app. Signed-in inspection of
+`/schedule` reproduced a permission refusal for both the calendar and unassigned
+demand. The hosted invitation capability list omitted `schedule.read`; the
+planner also requires `service.work_order.read` and `service.ticket.read` through
+its existing work-order and linked-ticket visibility predicates. The local
+Coordinator used by the planner browser suite already has these permissions,
+which is why those checks did not cover the hosted failure.
+
+The demo definition now includes exactly those three read capabilities.
+New tester setup and the bounded existing-demo upgrade use the same list. Existing
+actors receive only missing Company A grants under the existing eligibility and
+expiry caps. Revoked grants are retained, disabled/expired invitations remain
+disabled/expired, and no scheduling command, work-order edit, scope authorisation,
+readiness assessment or second-company authority is added. Server permission
+checks remain in force. No migration, fixture reset or invitation reconciliation
+is needed to repair the existing demo.
+
+This release requires **upgrade-and-deploy**, even when schema version 27 is
+already installed: ordinary **deploy** verifies rather than adds missing grants.
+The upgrade remains transactional and idempotent. Merged PL-01 (including its
+cancelled-only demand correction) is retained; the optional demand-to-booking
+enhancement is outside this repair.
+
+Regression coverage exercises actual invited-actor schedule, appointment,
+work-order and populated demand reads; Company A and command restrictions;
+preserved invitations, saved records, grant expiry and revocation; and an
+already-current schema missing only the three planner grants. The invited-actor
+browser suite covers desktop and phone schedule rendering and appointment links.
+Executed check results and deployment evidence belong in the repair PR; source
+changes alone do not establish that the hosted account has been upgraded.
+
+The access-review design's generated capability catalogue and HTML are rebuilt
+from the literal demo list, with its model count updated from 24 to 27. This keeps
+the maintained access preview consistent with the runtime grants; its historical
+acceptance record and issued report remain unchanged.
+
 
 ## 10 September — operator CLI import-cycle repair
 
