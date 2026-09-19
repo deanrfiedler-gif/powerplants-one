@@ -20,8 +20,8 @@ export type RowAction =
   | "unarchive"
   | "reopen";
 const scrollPositions = new Map<string, { top: number; left: number }>();
-const selectWidth = 46,
-  actionWidth = 62;
+const selectWidth = 52,
+  actionWidth = 67;
 const day = (s: string) =>
   new Date(s).toLocaleDateString("en-AU", {
     day: "numeric",
@@ -90,40 +90,52 @@ const columns: Column[] = [
     id: "title",
     heading: "Lead title",
     min: 190,
-    max: 650,
-    weight: 0.23,
+    max: 520,
+    weight: 0.2,
     cell: (l, href) => (
-      <>
-        <Link href={href(l.id)} title={l.title}>
-          {l.title}
-        </Link>
-        <small>{l.display_number}</small>
-      </>
+      <Link href={href(l.id)} title={l.title}>
+        {l.title}
+      </Link>
     ),
   },
   {
+    id: "reference",
+    heading: "Lead ID",
+    min: 130,
+    max: 240,
+    weight: 0.09,
+    cell: (l) => <span className="lead-date">{l.display_number}</span>,
+  },
+  {
     id: "organisation",
-    heading: "Organisation / contact",
-    min: 170,
-    max: 600,
-    weight: 0.2,
+    heading: "Organisation",
+    min: 140,
+    max: 380,
+    weight: 0.14,
     cell: (l) => (
-      <>
-        <span className="lead-truncate" title={l.organisation_name ?? undefined}>
-          {l.organisation_name ?? "Organisation to confirm"}
-        </span>
-        <small title={l.contact_name ?? undefined}>
-          {l.contact_name ?? "Contact to confirm"}
-        </small>
-      </>
+      <span className="lead-truncate" title={l.organisation_name ?? undefined}>
+        {l.organisation_name ?? "Organisation to confirm"}
+      </span>
+    ),
+  },
+  {
+    id: "contact",
+    heading: "Contact",
+    min: 125,
+    max: 340,
+    weight: 0.12,
+    cell: (l) => (
+      <span className="lead-truncate" title={l.contact_name ?? undefined}>
+        {l.contact_name ?? "Contact to confirm"}
+      </span>
     ),
   },
   {
     id: "status",
     heading: "Status",
-    min: 110,
-    max: 260,
-    weight: 0.1,
+    min: 100,
+    max: 240,
+    weight: 0.09,
     cell: (l) => (
       <span className="lead-status-stack">
         <span className={`lead-pill ${l.status.toLowerCase()}`}>{l.status}</span>
@@ -135,8 +147,8 @@ const columns: Column[] = [
     id: "owner",
     heading: "Lead owner",
     min: 110,
-    max: 300,
-    weight: 0.11,
+    max: 280,
+    weight: 0.1,
     cell: (l) => (
       <span className="lead-owner-cell">
         <Avatar name={l.owner_name} />
@@ -149,98 +161,36 @@ const columns: Column[] = [
   {
     id: "activity",
     heading: "Next activity",
-    min: 205,
-    max: 650,
-    weight: 0.19,
+    min: 180,
+    max: 520,
+    weight: 0.16,
     cell: (l) => (
-      <>
-        <span className="lead-truncate" title={l.next_activity?.summary}>
-          {l.next_activity?.summary ??
-            (l.next_action_state === "Unavailable"
-              ? "Next action unavailable"
-              : "Next action needed")}
-        </span>
-        {l.next_activity && (
-          <span
-            className={`lead-activity-meta ${l.next_action_state === "Overdue" ? "lead-attention" : ""}`}
-          >
-            <span>
-              {l.next_action_state === "Overdue" ? "Overdue · " : ""}
-              {l.next_activity.due_at
-                ? day(l.next_activity.due_at)
-                : "Due date needed"}
-            </span>
-            <Avatar name={l.next_activity.owner_name} activity />
-          </span>
-        )}
-      </>
-    ),
-  },
-  {
-    id: "source",
-    heading: "Source",
-    min: 105,
-    max: 300,
-    weight: 0.09,
-    cell: (l) => (
-      <span className="lead-truncate" title={l.source_channel}>
-        {l.source_channel}
-      </span>
-    ),
-  },
-  {
-    id: "created",
-    heading: "Date added",
-    min: 110,
-    max: 230,
-    weight: 0.08,
-    cell: (l) => <span className="lead-date">{day(l.created_at)}</span>,
-  },
-  {
-    id: "reference",
-    heading: "Lead ID",
-    min: 130,
-    max: 240,
-    weight: 0.08,
-    cell: (l) => <span className="lead-date">{l.display_number}</span>,
-  },
-  {
-    id: "organisation_only",
-    heading: "Organisation",
-    min: 150,
-    max: 400,
-    weight: 0.12,
-    cell: (l) => (
-      <span className="lead-truncate" title={l.organisation_name ?? undefined}>
-        {l.organisation_name ?? "Organisation to confirm"}
-      </span>
-    ),
-  },
-  {
-    id: "contact_only",
-    heading: "Contact",
-    min: 140,
-    max: 360,
-    weight: 0.11,
-    cell: (l) => (
-      <span className="lead-truncate" title={l.contact_name ?? undefined}>
-        {l.contact_name ?? "Contact to confirm"}
+      <span
+        className={`lead-truncate ${l.next_action_state === "Overdue" ? "lead-attention" : ""}`}
+        title={l.next_activity?.summary}
+      >
+        {l.next_activity?.summary ??
+          (l.next_action_state === "Unavailable"
+            ? "Next action unavailable"
+            : "Next action needed")}
       </span>
     ),
   },
   {
     id: "activity_due",
     heading: "Next activity due",
-    min: 140,
+    min: 120,
     max: 260,
-    weight: 0.1,
+    weight: 0.11,
     cell: (l) => (
       <span
         className={`lead-date ${l.next_action_state === "Overdue" ? "lead-attention" : ""}`}
       >
         {l.next_activity?.due_at
-          ? day(l.next_activity.due_at)
-          : "Due date needed"}
+          ? `${l.next_action_state === "Overdue" ? "Overdue · " : ""}${day(l.next_activity.due_at)}`
+          : l.next_activity
+            ? "Due date needed"
+            : "Not scheduled"}
       </span>
     ),
   },
@@ -253,7 +203,7 @@ const columns: Column[] = [
     cell: (l) =>
       l.next_activity ? (
         <span className="lead-owner-cell">
-          <Avatar name={l.next_activity.owner_name} />
+          <Avatar name={l.next_activity.owner_name} activity />
           <span title={l.next_activity.owner_name}>
             {l.next_activity.owner_name.replace(/^SYN\s+/, "").split(" ")[0]}
           </span>
@@ -261,6 +211,26 @@ const columns: Column[] = [
       ) : (
         <span className="lead-truncate">Not scheduled</span>
       ),
+  },
+  {
+    id: "source",
+    heading: "Source",
+    min: 100,
+    max: 280,
+    weight: 0.09,
+    cell: (l) => (
+      <span className="lead-truncate" title={l.source_channel}>
+        {l.source_channel}
+      </span>
+    ),
+  },
+  {
+    id: "created",
+    heading: "Date added",
+    min: 100,
+    max: 220,
+    weight: 0.08,
+    cell: (l) => <span className="lead-date">{day(l.created_at)}</span>,
   },
   {
     id: "archived",
@@ -276,10 +246,11 @@ const columns: Column[] = [
 const defaultVisible = [
   "title",
   "organisation",
+  "contact",
   "status",
   "owner",
   "activity",
-  "source",
+  "activity_due",
   "created",
 ];
 const rowActions = (view: string): { mode: RowAction; label: string }[] =>
@@ -329,7 +300,7 @@ export function LeadsDesktopList({
     reset = useRef<() => void>(() => {}),
     everyBox = useRef<HTMLInputElement>(null),
     help = useId();
-  const key = `ppo.leads.columns.v2:${preferenceKey}`;
+  const key = `ppo.leads.columns.v3:${preferenceKey}`;
   const [chosen, setChosen] = useState<string[]>([]);
   const [columnSearch, setColumnSearch] = useState("");
   const saved = useSyncExternalStore(
@@ -532,7 +503,7 @@ export function LeadsDesktopList({
           ];
           widths[i] = clamp(
             Math.ceil(Math.max(...text.map((s) => ctx.measureText(s).width))) +
-              (live[i].id === "owner" ? 70 : live[i].id === "activity" ? 78 : 50),
+              (live[i].id === "owner" || live[i].id === "activity_owner" ? 70 : 50),
             i,
           );
           custom = true;
@@ -801,7 +772,18 @@ export function LeadsDesktopList({
                   />
                 </td>
                 {shown.map((c) => (
-                  <td key={c.id}>{c.cell(l, href)}</td>
+                  <td
+                    key={c.id}
+                    className={
+                      dragged === c.id
+                        ? "lead-column-lifted"
+                        : landing?.id === c.id
+                          ? `lead-column-landing-${landing.after ? "after" : "before"}`
+                          : undefined
+                    }
+                  >
+                    {c.cell(l, href)}
+                  </td>
                 ))}
                 <td className="lead-cell-actions">
                   {rowActions(view).length > 0 && (

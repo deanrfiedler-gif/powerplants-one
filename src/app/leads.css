@@ -1135,7 +1135,7 @@
     border-right: 0;
   }
   .lead-table td {
-    height: 77px;
+    height: 52px;
     padding: 12px 14px;
     overflow: hidden;
     border-top: 0;
@@ -1224,10 +1224,10 @@
   }
   /* Fixed rails either side of the resizable columns. */
   .lead-table col.lead-col-select {
-    width: 46px;
+    width: 52px;
   }
   .lead-table col.lead-col-actions {
-    width: 62px;
+    width: 67px;
   }
   .lead-table th.lead-cell-select,
   .lead-table td.lead-cell-select,
@@ -1239,16 +1239,15 @@
   }
   .lead-table th.lead-cell-select,
   .lead-table td.lead-cell-select {
-    padding-left: 18px;
-    text-align: left;
+    text-align: center;
+    border-right: 1px solid #e1e5eb;
   }
   /* item 3: the gear and row menus share the account button's centre line.
      The left border belongs to the frozen rail itself, so it survives the
      data columns scrolling underneath it. */
   .lead-table th.lead-cell-actions,
   .lead-table td.lead-cell-actions {
-    padding-right: 18px;
-    text-align: right;
+    text-align: center;
     border-left: 1px solid #e1e5eb;
   }
   /* Data columns reorder by dragging their heading. */
@@ -1256,12 +1255,28 @@
     cursor: grab;
     user-select: none;
   }
+  /* The whole dragged column greys out, and the landing rule runs the full
+     height of the table because every cell draws its own segment. */
+  .lead-table th.lead-column-lifted,
+  .lead-table td.lead-column-lifted {
+    background: #e9ecf1;
+    color: #727c89;
+  }
   .lead-table th.lead-column-lifted {
-    opacity: 0.45;
     cursor: grabbing;
   }
+  .lead-table td.lead-column-lifted a,
+  .lead-table td.lead-column-lifted .lead-truncate {
+    color: #727c89;
+  }
+  .lead-table td.lead-column-landing-before,
+  .lead-table td.lead-column-landing-after {
+    position: relative;
+  }
   .lead-table th.lead-column-landing-before::before,
-  .lead-table th.lead-column-landing-after::after {
+  .lead-table td.lead-column-landing-before::before,
+  .lead-table th.lead-column-landing-after::after,
+  .lead-table td.lead-column-landing-after::after {
     content: "";
     position: absolute;
     top: 0;
@@ -1269,11 +1284,14 @@
     width: 3px;
     background: var(--green);
     z-index: 4;
+    pointer-events: none;
   }
-  .lead-table th.lead-column-landing-before::before {
+  .lead-table th.lead-column-landing-before::before,
+  .lead-table td.lead-column-landing-before::before {
     left: -1px;
   }
-  .lead-table th.lead-column-landing-after::after {
+  .lead-table th.lead-column-landing-after::after,
+  .lead-table td.lead-column-landing-after::after {
     right: -1px;
   }
   .lead-column-group {
@@ -1331,6 +1349,9 @@
   .lead-table td.lead-cell-select {
     border-left: 0;
   }
+  .lead-table th.lead-cell-select {
+    border-right-color: #e1e5eb;
+  }
   .lead-table tbody tr:hover td.lead-cell-select,
   .lead-table tbody tr:hover td.lead-cell-actions {
     background: #f8fafb;
@@ -1342,7 +1363,8 @@
   .lead-columns-menu.crm-r38-menu-trigger,
   .lead-row-menu.crm-r38-menu-trigger {
     min-height: 30px;
-    width: 44px;
+    width: 30px;
+    margin: 0 auto;
     padding: 0;
     gap: 0;
     border: 0;
