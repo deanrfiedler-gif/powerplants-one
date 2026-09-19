@@ -7,7 +7,8 @@ import { useIdentity } from "./business-session";
 import { ErrorNotice, type Envelope, type Option } from "./business-ui";
 import { LookupField } from "./record-ui";
 import { denied, useCrmCommand, useCrmResource } from "./crm-state";
-import { ProductIcon } from "./product-icons";
+import { ProductIcon, type ProductIconName } from "./product-icons";
+import { WorklistMenu } from "./crm-worklist-tools";
 import type { listLeads, readLead } from "../crm/leads/reads";
 type Lead = Awaited<ReturnType<typeof readLead>>;
 type List = Awaited<ReturnType<typeof listLeads>>;
@@ -22,6 +23,12 @@ type Mode =
   | "disqualify"
   | "reopen";
 const sourceOptions = ["Phone", "Email", "Meeting", "Referral", "Other"];
+const leadViews: { id: string; label: string; icon: ProductIconName }[] = [
+  { id: "Active", label: "Inbox", icon: "inbox" },
+  { id: "Archived", label: "Archived", icon: "archive" },
+  { id: "Disqualified", label: "Disqualified", icon: "disqualified" },
+  { id: "Converted", label: "Converted", icon: "converted" },
+];
 const actionLabels = {
   Needed: "Next action needed",
   DueNeeded: "Due date needed",
@@ -1147,35 +1154,53 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
           <ProductIcon name="filter" />
         </button>
       </header>
-      <div className="lead-heading">
-        <h1>Leads</h1>
-        <span className="lead-count">
-          {items.length}
-          {list.data?.next_cursor ? "+" : ""}
-        </span>
-        {list.data?.can_create && (
+      <div className="lead-toolbar-row">
+        <nav className="lead-lifecycle-tabs" aria-label="Lead lifecycle">
+        {leadViews.map((v) => (
           <button
-            className="lead-add lead-primary"
-            aria-label="Add lead"
-            onClick={() => setMode("add")}
+            key={v.id}
+            aria-current={view === v.id ? "page" : undefined}
+            aria-label={v.label}
+            title={v.label}
+            onClick={() => change("view", v.id)}
           >
-            <ProductIcon name="plus" />
-            <span>Lead</span>
-          </button>
-        )}
-      </div>
-      <nav className="lead-lifecycle-tabs" aria-label="Lead lifecycle">
-        {["Active", "Archived", "Disqualified", "Converted"].map((v) => (
-          <button
-            key={v}
-            aria-current={view === v ? "page" : undefined}
-            onClick={() => change("view", v)}
-          >
-            {v === "Active" ? "Inbox" : v}
+            <ProductIcon name={v.icon} />
           </button>
         ))}
       </nav>
+      <div className="lead-heading">
+        <h1 className="sr-only">Leads</h1>
+        {list.data?.can_create && (
+          <div className="lead-add-group">
+            <button
+              className="lead-add lead-primary"
+              aria-label="Add lead"
+              onClick={() => setMode("add")}
+            >
+              <ProductIcon name="plus" />
+              <span>Lead</span>
+            </button>
+            <WorklistMenu
+              label="Add lead options"
+              className="lead-add-more"
+              text={<ProductIcon name="chevron" />}
+            >
+              <p className="lead-menu-note">
+                This action is not yet available.
+              </p>
+              <button type="button" className="secondary" disabled>
+                Import data
+              </button>
+            </WorklistMenu>
+          </div>
+        )}
+      </div>
       <div className="lead-list-controls">
+        <span className="lead-result-count">
+          {items.length}
+          {list.data?.next_cursor ? "+" : ""}{" "}
+          {items.length === 1 ? "lead" : "leads"}
+        </span>
         <div className={`lead-search ${searchOpen ? "open" : ""}`}>
           <label>
             Search leads
@@ -1218,6 +1243,27 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
             </select>
           </label>
         </div>
+        <WorklistMenu
+          label="Leads options"
+          className="lead-toolbar-more"
+          text={<ProductIcon name="more" />}
+        >
+          <p className="lead-menu-note">
+            These actions are not yet available.
+          </p>
+          {[
+            "Export filter results",
+            "Import data",
+            "Open data cleanup",
+            "Restore data",
+            "Settings",
+          ].map((v) => (
+            <button key={v} type="button" className="secondary" disabled>
+              {v}
+            </button>
+          ))}
+        </WorklistMenu>
+        </div>
       </div>
       <p className="lead-notice" role="status">
         {notice}
@@ -1241,6 +1287,10 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
             view={view}
             queryKey={query}
             filtered={hasFilters}
+            onAction={(id, next) => {
+              router.push(openLead(id));
+              setMode(next);
+            }}
             more={!!list.data.next_cursor}
             firstPage={!params.get("cursor")}
             onNext={nextPage}
