@@ -1,7 +1,7 @@
 ---
 document_id: PPO-STD-002
 title: Repository structure, layer model and naming
-revision: r02
+revision: r03
 date: 19 September 2026
 owner: Dean Fiedler
 status: Adopted as a forward target; existing files move only when already being changed
@@ -13,7 +13,7 @@ status: Adopted as a forward target; existing files move only when already being
 |---|---|
 | Document ID | **PPO-STD-002** |
 | Short title | Repository Structure Standard |
-| Revision | **r02** |
+| Revision | **r03** |
 | Status | **Adopted as a forward target** |
 | Prepared for | Dean Fiedler — private prototype owner |
 | Authoritative working path | `docs/standards/PPO-STD-002-repository-structure.md` |
@@ -64,9 +64,41 @@ Two further rules apply across the domain layer:
 - **A lower layer never imports a higher one.** `shared` does not know that `crm` exists,
   and `platform` does not import from `app`.
 
-The authoritative, machine-checkable statement of these rules is the eslint boundary
-configuration. Where this section and that configuration disagree, the configuration is
-the one that runs, and the disagreement is a defect in one of them.
+The rules above are **not currently enforced**. No eslint boundary configuration
+exists in this repository. When one is added it becomes the authoritative,
+machine-checkable statement of these rules, and where this section and that
+configuration disagree, the configuration is the one that runs.
+
+### The current position
+
+Measured on `main` at the commit this revision was written against, the domain
+layer does not follow these rules. This is recorded as a fact, not a defect list:
+the rules describe where the code is going, not where it is.
+
+- **122 cross-domain imports** across **34 ordered domain pairs**
+- **No domain has an `index.ts`**, so every cross-domain import reaches into
+  another domain's internal files — `../crm/context`, `../documents/packs`,
+  `../scheduling/planner` and so on
+- At least **4 circular pairs** exist, where each domain imports the other:
+  `activities` and `crm`, `activities` and `service`, `documents` and `finance`,
+  and `documents` and `reports`
+
+The heaviest couplings are `finance` to `documents` (13 imports), `reports` to
+`documents` (13), `crm` to `activities` (10) and `offline` to `field` (10).
+
+Two consequences follow for section 13:
+
+- **Adding eslint boundary rules is not step 1 and is not low risk.** Enabled
+  against the current tree it fails lint at every one of those imports. It is
+  enforceable only after public surfaces exist.
+- **A circular pair cannot be resolved by adding a surface at each end.** A cycle
+  needs one direction broken, which means deciding which domain owns the shared
+  concept. Those are design decisions, and they are unresolved.
+
+`scheduling` is worth noting separately: it is imported by `documents`, `field`,
+`finance` and `reports`, and imports `activities` and `service`. Work that extends
+scheduling should read through existing paths rather than adding new cross-domain
+edges.
 
 ## 3. Folder map
 
@@ -413,19 +445,23 @@ it records the order to take things in if and when they are taken on.
 
 | # | Step | Risk | Blast radius | Notes |
 |---|---|---|---|---|
-| 1 | eslint boundary rules | Low | Configuration only | Makes section 2 enforceable |
-| 2 | Domain `index.ts` surfaces | Low | Additive | Adding a surface breaks nothing |
-| 3 | `scripts/` and `config/` grouping | Low | Workflows, `package.json` | Path updates only |
-| 4 | `db/seeds` grouping | Low | Seed commands | Path updates only |
-| 5 | `docs/reference/ui` family taxonomy | Medium | Documentation links | `check_foundation` catches every broken link |
-| 6 | CSS consolidation | Medium | Deals board styling | Opportunistic only; visual regressions are not caught by a check |
-| 7 | `src/components` into domains | **High** | Imports across the application | **One domain per pull request. Never while a pull request touching that domain is open.** |
+| 1 | Resolve the circular domain pairs | Medium | Design decision, then code | Each cycle needs one direction broken; a public surface at each end does not resolve it |
+| 2 | Domain `index.ts` surfaces | Low | Additive | Adding a surface breaks nothing. Least-coupled domains first |
+| 3 | eslint boundary rules | **High until 1 and 2 are done** | All of `src/` | Fails lint at every cross-domain import until public surfaces exist. Not a configuration-only change |
+| 4 | `scripts/` and `config/` grouping | Low | Workflows, `package.json` | Path updates only |
+| 5 | `db/seeds` grouping | Low | Seed commands | Path updates only |
+| 6 | `docs/reference/ui` family taxonomy | Medium | Documentation links | `check_foundation` catches every broken link |
+| 7 | CSS consolidation | Medium | Deals board styling | Opportunistic only; visual regressions are not caught by a check |
+| 8 | `src/components` into domains | **High** | Imports across the application | **One domain per pull request. Never while a pull request touching that domain is open.** |
 
-Steps 1 to 4 are safe to take at any time. Step 5 is safe because a check verifies it.
-Steps 6 and 7 are the ones that can cause real damage, and both are constrained: step 6 to
-opportunistic changes only, step 7 to one domain at a time with no concurrent open work on
-that domain. A large move landing under an open pull request produces conflicts that are
-resolved by hand in exactly the files least able to tolerate a mistake.
+Steps 1 and 3 are no longer safe to take at any time. Step 1 is a design decision
+before it is a change, and step 3 cannot be taken until steps 1 and 2 are done: enabled
+earlier it fails lint at every cross-domain import. Step 2 is additive and safe at any
+time, and so are steps 4 and 5. Step 6 is safe because a check verifies it. Steps 7 and 8
+are the ones that can cause real damage, and both are constrained: step 7 to opportunistic
+changes only, step 8 to one domain at a time with no concurrent open work on that domain. A
+large move landing under an open pull request produces conflicts that are resolved by hand
+in exactly the files least able to tolerate a mistake.
 
 ## 14. Open questions
 
