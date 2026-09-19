@@ -252,6 +252,9 @@ test("hosted identity mapping, persisted CRM and immediate removal stay scoped",
       client.query("UPDATE ppo.demo_testers SET enabled=true"),
       /permission denied/,
     );
+    await client.query("ROLLBACK");
+    await client.query("BEGIN");
+    await client.query(`SET LOCAL ROLE ${role}`);
     await assert.rejects(
       client.query("UPDATE ppo.demo_tester_roles SET enabled=true"),
       /permission denied/,

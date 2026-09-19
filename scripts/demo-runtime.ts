@@ -11,6 +11,9 @@ export async function grantRuntimePrivileges(db: pg.PoolClient, databaseName: st
   await db.query(`GRANT USAGE ON SCHEMA ppo TO ${name}`);
   await db.query(`GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA ppo TO ${name}`);
   await db.query(`GRANT USAGE,SELECT ON ALL SEQUENCES IN SCHEMA ppo TO ${name}`);
-  await db.query(`REVOKE INSERT,UPDATE,DELETE ON ppo.users,ppo.permission_grants,ppo.demo_testers,ppo.demo_tester_roles,ppo.seed_receipts FROM ${name}`);
+  await db.query(`REVOKE INSERT,UPDATE,DELETE ON ppo.users,ppo.permission_grants,ppo.demo_testers,ppo.seed_receipts FROM ${name}`);
+  const roleProfiles = await db.query("SELECT to_regclass('ppo.demo_tester_roles') AS relation");
+  if (roleProfiles.rows[0]?.relation)
+    await db.query(`REVOKE INSERT,UPDATE,DELETE ON ppo.demo_tester_roles FROM ${name}`);
   await db.query(`REVOKE CREATE ON SCHEMA public FROM PUBLIC`);
 }
