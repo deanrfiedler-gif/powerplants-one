@@ -8,7 +8,7 @@ import { ErrorNotice, type Envelope, type Option } from "./business-ui";
 import { LookupField } from "./record-ui";
 import { denied, useCrmCommand, useCrmResource } from "./crm-state";
 import { ProductIcon, type ProductIconName } from "./product-icons";
-import { WorklistMenu } from "./crm-worklist-tools";
+import { WorklistChoice, WorklistMenu } from "./crm-worklist-tools";
 import type { listLeads, readLead } from "../crm/leads/reads";
 type Lead = Awaited<ReturnType<typeof readLead>>;
 type List = Awaited<ReturnType<typeof listLeads>>;
@@ -1110,6 +1110,87 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
       </button>
     </>
   );
+  /* Desktop consolidates the same filters into themed menus; the selects above
+     stay for the phone filter panel. */
+  const narrowed = ["q", "status", "source"].filter((k) => !!params.get(k)).length;
+  const desktopFilters = (
+    <div className="lead-filter-menus">
+      <WorklistChoice
+        label="Lead owner"
+        icon="person"
+        className="lead-filter-choice"
+        value={params.get("owner_id") ?? ""}
+        options={[
+          { id: "", label: "Everyone" },
+          { id: identity.actor_id, label: "My leads" },
+        ]}
+        onChange={(v) => change("owner_id", v)}
+      />
+      <WorklistMenu
+        label="Filters"
+        icon="filter"
+        className="lead-filter-menu"
+        text={
+          <>
+            <span>Filters{narrowed ? ` · ${narrowed}` : ""}</span>
+            <ProductIcon name="chevron" />
+          </>
+        }
+      >
+        <label className="lead-filter-field">
+          <span>Search leads</span>
+          <input
+            type="search"
+            value={search}
+            placeholder="Search leads"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </label>
+        <label className="lead-filter-field">
+          <span>Status</span>
+          <select
+            disabled={view !== "Active"}
+            value={params.get("status") ?? ""}
+            onChange={(e) => change("status", e.target.value)}
+          >
+            <option value="">All statuses</option>
+            {["New", "Contacting", "Nurturing"].map((v) => (
+              <option key={v}>{v}</option>
+            ))}
+          </select>
+        </label>
+        <label className="lead-filter-field">
+          <span>Source</span>
+          <select
+            value={params.get("source") ?? ""}
+            onChange={(e) => change("source", e.target.value)}
+          >
+            <option value="">All sources</option>
+            {sourceOptions.map((v) => (
+              <option key={v}>{v}</option>
+            ))}
+          </select>
+        </label>
+        <button
+          type="button"
+          className="secondary lead-filter-clear"
+          disabled={!hasFilters}
+          data-menu-close
+          onClick={clearFilters}
+        >
+          Clear filters
+        </button>
+      </WorklistMenu>
+      <WorklistChoice
+        label="Sort leads"
+        icon="sort"
+        className="lead-filter-choice"
+        value={params.get("sort") ?? "Newest"}
+        options={["Newest", "Oldest", "Name"].map((v) => ({ id: v, label: v }))}
+        onChange={(v) => change("sort", v)}
+      />
+    </div>
+  );
   return (
     <section className="leads-workspace" aria-label="Leads workspace">
       <header className="lead-mobile-header">
@@ -1183,7 +1264,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
             <WorklistMenu
               label="Add lead options"
               className="lead-add-more"
-              text={<ProductIcon name="chevron" />}
+              text={<ProductIcon name="caret" />}
             >
               <p className="lead-menu-note">
                 This action is not yet available.
@@ -1201,6 +1282,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
           {list.data?.next_cursor ? "+" : ""}{" "}
           {items.length === 1 ? "lead" : "leads"}
         </span>
+        {desktopFilters}
         <div className={`lead-search ${searchOpen ? "open" : ""}`}>
           <label>
             Search leads

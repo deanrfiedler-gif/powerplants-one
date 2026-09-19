@@ -20,8 +20,8 @@ export type RowAction =
   | "unarchive"
   | "reopen";
 const scrollPositions = new Map<string, { top: number; left: number }>();
-const selectWidth = 44,
-  actionWidth = 52;
+const selectWidth = 46,
+  actionWidth = 62;
 const day = (s: string) =>
   new Date(s).toLocaleDateString("en-AU", {
     day: "numeric",

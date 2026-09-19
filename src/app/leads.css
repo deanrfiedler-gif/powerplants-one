@@ -752,7 +752,7 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 12px;
-    padding: 12px 26px;
+    padding: 12px 18px;
     border-bottom: 1px solid #e1e5eb;
   }
   .lead-heading {
@@ -790,16 +790,23 @@
     background: #3a4252;
   }
   .lead-add-more .product-icon {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+    stroke: none;
+  }
+  .leads-workspace .lead-add .product-icon {
+    width: 13px;
+    height: 13px;
+    stroke-width: 3.2;
   }
   .lead-lifecycle-tabs {
     display: flex;
-    gap: 2px;
+    gap: 3px;
     padding: 3px;
-    border: 1px solid #cbd2dc;
-    border-radius: 8px;
-    background: #fff;
+    border: 1px solid #e1e5eb;
+    border-radius: 10px;
+    background: #f6f7f9;
   }
   .lead-lifecycle-tabs button {
     display: grid;
@@ -808,7 +815,7 @@
     background: transparent;
     color: #667181;
     border: 0;
-    border-radius: 6px;
+    border-radius: 7px;
     min-height: 32px;
     padding: 0;
     font-size: 14px;
@@ -820,16 +827,138 @@
   }
   .lead-lifecycle-tabs button[aria-current="page"] {
     color: #242a37;
-    background: #f3f7f1;
+    background: #fff;
+    box-shadow: 0 1px 2px #242a3708;
   }
-  .lead-lifecycle-tabs button:hover {
-    background: #f0f2f5;
+  .lead-lifecycle-tabs button:hover:not([aria-current="page"]) {
+    background: #e9ecf1;
     color: #242a37;
   }
   .lead-result-count {
     font-size: 13px;
     color: #667181;
     white-space: nowrap;
+  }
+  /* crm-r38.css scopes every popover rule under #ppo-deals, so these menus
+     arrive unstyled here and the whole surface is defined below. */
+  .leads-workspace .crm-r38-popover {
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    width: 268px;
+    max-width: calc(100vw - 16px);
+    padding: 7px;
+    overflow: auto;
+    border: 1px solid #e1e5eb;
+    border-radius: 12px;
+    background: #fff;
+    color: #242a37;
+    box-shadow: 0 12px 32px #242a3733;
+    font-size: 14px;
+  }
+  .leads-workspace .crm-r38-popover h2 {
+    margin: 4px 8px 9px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #667181;
+  }
+  .leads-workspace .crm-r38-popover button {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    min-height: 34px;
+    padding: 6px 8px;
+    justify-content: flex-start;
+    text-align: left;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: #242a37;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .leads-workspace .crm-r38-popover button:hover:not(:disabled) {
+    background: #f0f2f5;
+  }
+  .leads-workspace .crm-r38-popover button:disabled {
+    opacity: 0.55;
+    background: transparent;
+    cursor: not-allowed;
+  }
+  .leads-workspace .crm-r38-popover button .product-icon:last-child {
+    margin-left: auto;
+    color: var(--green);
+  }
+  /* These triggers all sit on the right gutter, so their menus align there. */
+  .lead-toolbar-more + .crm-r38-popover,
+  .lead-columns-menu + .crm-r38-popover,
+  .lead-row-menu + .crm-r38-popover {
+    left: auto !important;
+    right: 18px;
+  }
+  .lead-filter-menus {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .lead-filter-choice.crm-r38-menu-trigger,
+  .lead-filter-menu.crm-r38-menu-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 38px;
+    padding: 0 11px;
+    border: 1px solid #cbd2dc;
+    border-radius: 8px;
+    background: #fff;
+    color: #242a37;
+    font-size: 14px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  .lead-filter-choice.crm-r38-menu-trigger:hover,
+  .lead-filter-menu.crm-r38-menu-trigger:hover {
+    background: #f6f7f9;
+  }
+  .lead-filter-choice .product-icon,
+  .lead-filter-menu .product-icon {
+    width: 16px;
+    height: 16px;
+    color: #667181;
+  }
+  /* Outranks the .lead-list-controls label rule that blanks toolbar labels. */
+  .lead-list-controls .lead-filter-field,
+  .lead-list-controls .lead-filter-field > span {
+    display: block;
+    padding: 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: #667181;
+  }
+  .lead-filter-field {
+    padding: 4px 8px 8px !important;
+  }
+  .lead-filter-field input,
+  .lead-filter-field select {
+    width: 100%;
+    min-height: 36px;
+    margin: 5px 0 0;
+    padding: 8px 10px;
+    border: 1px solid #cbd2dc;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #242a37;
+  }
+  .lead-filter-clear {
+    margin-top: 2px;
+    border-top: 1px solid #e1e5eb !important;
+    border-radius: 0 !important;
+    padding-top: 10px !important;
   }
   .lead-menu-note {
     margin: 0 0 8px;
@@ -838,7 +967,7 @@
   }
   .lead-toolbar-more.crm-r38-menu-trigger {
     min-height: 38px;
-    width: 38px;
+    width: 44px;
     padding: 0;
     gap: 0;
     border-radius: 8px;
@@ -851,12 +980,12 @@
     padding: 0;
     margin-left: auto;
   }
-  .lead-list-controls .lead-search {
-    flex: none;
-    width: 240px;
-    min-width: 160px;
-    max-width: 240px;
-    margin: 0;
+  /* Search, filters and sort are consolidated into the menus below; these
+     native controls remain for the phone filter panel. */
+  .lead-list-controls .lead-search,
+  .lead-list-controls .lead-toolbar,
+  .lead-list-controls .lead-sort {
+    display: none;
   }
   .lead-list-controls .lead-search label {
     position: relative;
@@ -974,7 +1103,6 @@
     border-radius: 0;
     overflow: auto;
     overscroll-behavior: contain;
-    scrollbar-gutter: stable;
   }
   .lead-table {
     border-collapse: separate;
@@ -1096,10 +1224,10 @@
   }
   /* Fixed rails either side of the resizable columns. */
   .lead-table col.lead-col-select {
-    width: 44px;
+    width: 46px;
   }
   .lead-table col.lead-col-actions {
-    width: 52px;
+    width: 62px;
   }
   .lead-table th.lead-cell-select,
   .lead-table td.lead-cell-select,
@@ -1107,8 +1235,18 @@
   .lead-table td.lead-cell-actions {
     position: sticky;
     padding: 0;
-    text-align: center;
     background: #fff;
+  }
+  .lead-table th.lead-cell-select,
+  .lead-table td.lead-cell-select {
+    padding-left: 18px;
+    text-align: left;
+  }
+  /* item 3: the gear and row menus share the account button's centre line. */
+  .lead-table th.lead-cell-actions,
+  .lead-table td.lead-cell-actions {
+    padding-right: 18px;
+    text-align: right;
   }
   .lead-table th.lead-cell-select,
   .lead-table td.lead-cell-select {
@@ -1142,11 +1280,11 @@
   .lead-columns-menu.crm-r38-menu-trigger,
   .lead-row-menu.crm-r38-menu-trigger {
     min-height: 30px;
-    width: 30px;
+    width: 44px;
     padding: 0;
     gap: 0;
     border: 0;
-    border-radius: 6px;
+    border-radius: 7px;
     background: transparent;
     color: #667181;
   }
@@ -1194,7 +1332,7 @@
     flex: none;
     width: 16px;
     height: 16px;
-    color: #62bb46;
+    color: var(--green);
   }
   .lead-column-tick .product-icon {
     width: 14px;
