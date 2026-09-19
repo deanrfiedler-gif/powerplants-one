@@ -196,3 +196,11 @@ ADR was written on:
 
 Remaining questions are those recorded in PPO-STD-002 section 14, which this decision does
 not resolve.
+
+## Amendments
+
+**19 September 2026 — named permission constants requirement withdrawn.**
+PPO-STD-002 r02 withdrew the requirement for named permission constants. The
+`Capability` union already constrains every parameter that accepts a capability,
+so the compile-time enforcement the requirement aimed at was already present.
+The decision recorded here is otherwise unchanged.
