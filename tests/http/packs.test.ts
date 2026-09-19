@@ -59,6 +59,12 @@ test("P06 HTTP narrow issue and file scope reject unauthorised identities, arbit
     JSON.stringify(options.body),
     /PRIVATE_FINANCE|CONFIDENTIAL-MARGIN/,
   );
+  // SC-06: the preparation page learns whether this appointment already has its one pack.
+  assert.ok("existing_pack_id" in options.body);
+  // The appointment's pack identity follows the same scope rules as every other pack read.
+  const identity = `appointments/${randomUUID()}/pack`;
+  assert.equal((await call(technician, identity)).status, 404);
+  assert.equal((await call(other, identity)).status, 403);
   assert.equal(
     (
       await call(coordinator, "packs", {
@@ -112,6 +118,25 @@ test("P06 real issued preview/download/manifest/job/receipt traversal uses curre
     (await call(technician, `render-jobs/${job.id}/pdf`)).status,
     403,
   );
+  // SC-06 read model: staff receive registry readiness and the advisory basis; a recipient receives neither,
+  // and the evidence text behind an assessment never travels with the pack.
+  assert.ok(Array.isArray(pack.criteria) && pack.criteria.length > 0);
+  assert.ok(Array.isArray(pack.basis_drift));
+  assert.doesNotMatch(JSON.stringify(pack.criteria), /evidence_text|evidence_ref/);
+  const mine = (await call(technician, `packs/${pack.id}`)).body.items[0];
+  assert.equal(mine.criteria, null);
+  assert.equal(mine.basis, null);
+  assert.equal(mine.basis_drift, null);
+  const byAppointment = await call(
+    coordinator,
+    `appointments/${pack.appointment_id}/pack`,
+  );
+  assert.equal(byAppointment.status, 200);
+  assert.equal(byAppointment.body.pack.id, pack.id);
+  assert.equal(byAppointment.body.can_prepare, true);
+  const hidden = await call(other, `appointments/${pack.appointment_id}/pack`);
+  assert.equal(hidden.status, 404);
+  assert.equal(hidden.body.code, "RecordUnavailable");
   const manifest = await call(technician, `pack-issues/${issue.id}/manifest`);
   assert.equal(manifest.status, 200);
   assert.doesNotMatch(
