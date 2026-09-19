@@ -1,7 +1,7 @@
 ---
 document_id: PPO-STD-002
 title: Repository structure, layer model and naming
-revision: r01
+revision: r02
 date: 19 September 2026
 owner: Dean Fiedler
 status: Adopted as a forward target; existing files move only when already being changed
@@ -13,7 +13,7 @@ status: Adopted as a forward target; existing files move only when already being
 |---|---|
 | Document ID | **PPO-STD-002** |
 | Short title | Repository Structure Standard |
-| Revision | **r01** |
+| Revision | **r02** |
 | Status | **Adopted as a forward target** |
 | Prepared for | Dean Fiedler — private prototype owner |
 | Authoritative working path | `docs/standards/PPO-STD-002-repository-structure.md` |
@@ -159,44 +159,59 @@ export { OpportunityBoard } from "./components/opportunity-board";
 re-export; those are internal to the domain and can be changed without co-ordinating with
 any other part of the application. That freedom is the point of the rule.
 
-## 5. Permission registry
+## 5. Capability enforcement
 
-**One definition per permission, in `src/platform/permissions.ts`, exported as named
-constants. No raw permission string appears anywhere else.**
+**Capabilities are declared once, in the `Capability` union in
+`src/platform/permissions.ts`. Every parameter that accepts a capability must be
+typed `Capability`, never `string`.**
 
-```ts
-export const CRM_OPPORTUNITY_READ = "crm.opportunity.read" as const;
-export const CRM_OPPORTUNITY_EDIT = "crm.opportunity.edit" as const;
-```
-
-Call sites use the constant, never the literal:
+That is the enforceable rule, and the compiler enforces it. A mistyped capability
+fails `npm run typecheck` before it can reach a permission check.
 
 ```ts
-await requireCapability(client, principal, CRM_OPPORTUNITY_READ);
+export async function requireCapability(
+  client: QueryClient,
+  p: Principal,
+  capability: Capability,
+) { /* ... */ }
 ```
+
+A capability literal at a call site is therefore acceptable. It is checked
+against the union at compile time, and is not a raw string in the sense that
+matters.
 
 ### The current position
 
-`src/platform/permissions.ts` already exists and already declares a central `Capability`
-union type listing every permission. That union constrains the three functions that
-consume a permission — `hasPermission`, `requireCapability` and `scopeSql` — so a mistyped
-permission passed to one of those **does** fail at compile time today. This standard does
-not claim otherwise, and the existing union is the reason the remaining work in section 13
-is mechanical rather than risky.
+Measured at the commit this revision was written against:
 
-What is missing is the named constants. Measured at the commit this revision was written
-against, **26 distinct permission strings appear as raw literals across 42 files under
-`src/`**. The consequences are narrower than a missing registry, but real:
+- **53** capabilities are declared in the `Capability` union
+- **50** distinct capability literals appear across `src/`, in **48** files
+- **Zero** functions accept a capability typed as `string`. The single
+  `capability: string` occurrence, in `src/shell/reads.ts`, is a database row
+  type for reading whatever grants exist, which is correct and is not a
+  parameter.
 
-- The literal text of a permission is repeated at every call site, so renaming one is a
-  42-file edit rather than a one-line edit.
-- A permission string assembled dynamically, or passed through a variable typed more
-  loosely than `Capability`, escapes the compile-time check.
-- There is no single place that ties a permission to its meaning, its grants, or the
-  decision that introduced it.
+The enforcement gap that r01 described does not exist.
 
-Named constants close all three. They are a refactor of how an already-centralised list is
-referenced, not the introduction of a registry that does not exist.
+### What is genuinely missing
+
+Nothing ties a capability to its meaning, the grants that carry it, or the
+decision that introduced it. The union gives the authoritative set; it gives no
+explanation of any member.
+
+Named constants do not close that gap — a constant name restates the string. A
+capability register does: one row per capability recording its meaning, the
+scope types it accepts, and the decision or requirement that introduced it.
+
+That register is **not yet written**, and is recorded here as an open item rather
+than a rule. It is documentation work, not a refactor of application code.
+
+### Superseded in r02
+
+r01 required named constants for every capability and forbade capability
+literals at call sites. That requirement is withdrawn. It would have changed 48
+files to restate a set the compiler already enforces, and it addressed a gap
+that does not exist. No code was changed under the r01 wording.
 
 ## 6. Naming conventions
 
@@ -398,18 +413,17 @@ it records the order to take things in if and when they are taken on.
 
 | # | Step | Risk | Blast radius | Notes |
 |---|---|---|---|---|
-| 1 | Permission registry | Low | 43 files | Mechanical; the central `Capability` union already exists |
-| 2 | eslint boundary rules | Low | Configuration only | Makes section 2 enforceable |
-| 3 | Domain `index.ts` surfaces | Low | Additive | Adding a surface breaks nothing |
-| 4 | `scripts/` and `config/` grouping | Low | Workflows, `package.json` | Path updates only |
-| 5 | `db/seeds` grouping | Low | Seed commands | Path updates only |
-| 6 | `docs/reference/ui` family taxonomy | Medium | Documentation links | `check_foundation` catches every broken link |
-| 7 | CSS consolidation | Medium | Deals board styling | Opportunistic only; visual regressions are not caught by a check |
-| 8 | `src/components` into domains | **High** | Imports across the application | **One domain per pull request. Never while a pull request touching that domain is open.** |
+| 1 | eslint boundary rules | Low | Configuration only | Makes section 2 enforceable |
+| 2 | Domain `index.ts` surfaces | Low | Additive | Adding a surface breaks nothing |
+| 3 | `scripts/` and `config/` grouping | Low | Workflows, `package.json` | Path updates only |
+| 4 | `db/seeds` grouping | Low | Seed commands | Path updates only |
+| 5 | `docs/reference/ui` family taxonomy | Medium | Documentation links | `check_foundation` catches every broken link |
+| 6 | CSS consolidation | Medium | Deals board styling | Opportunistic only; visual regressions are not caught by a check |
+| 7 | `src/components` into domains | **High** | Imports across the application | **One domain per pull request. Never while a pull request touching that domain is open.** |
 
-Steps 1 to 5 are safe to take at any time. Step 6 is safe because a check verifies it.
-Steps 7 and 8 are the ones that can cause real damage, and both are constrained: step 7 to
-opportunistic changes only, step 8 to one domain at a time with no concurrent open work on
+Steps 1 to 4 are safe to take at any time. Step 5 is safe because a check verifies it.
+Steps 6 and 7 are the ones that can cause real damage, and both are constrained: step 6 to
+opportunistic changes only, step 7 to one domain at a time with no concurrent open work on
 that domain. A large move landing under an open pull request produces conflicts that are
 resolved by hand in exactly the files least able to tolerate a mistake.
 
