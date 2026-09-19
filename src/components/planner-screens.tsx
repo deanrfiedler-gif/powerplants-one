@@ -152,6 +152,19 @@ export type Schedule = Envelope<ScheduleAppointment> & {
   from: string;
   to: string;
 };
+export type Demand = {
+  id: string;
+  display_number: string;
+  version: number;
+  site_id: string;
+  customer_name: string;
+  site_name: string;
+  site_timezone: string;
+  authorised_scope_revision: number;
+  authorised_scope_version: number;
+  authorised_scope_summary: string;
+  projection: "UnassignedDemand";
+};
 const dayFormatter = new Intl.DateTimeFormat("en-AU", {
   weekday: "short",
   day: "numeric",
@@ -1227,6 +1240,12 @@ export function PlannerScreen() {
       useResource<Envelope<{ id: string; display_name: string }>>(
         "sites?limit=50",
       );
+  // Demand is authorised work with no appointment, so it is not bounded by the
+  // displayed period. It reads separately from the schedule: a failed schedule
+  // read must never render as "no unassigned demand".
+  const demand = useResource<Envelope<Demand>>(
+    "schedule/demand" + (site ? "?site_id=" + site : ""),
+  );
   const data = result.data,
     usable = !!data && !result.error && !result.loading;
   const modal = useRef<HTMLDialogElement>(null);
@@ -1668,6 +1687,74 @@ export function PlannerScreen() {
           )}
         </>
       )}
+      <section className="panel proposal-section">
+        <h2>Unassigned demand</h2>
+        <p>
+          Authorised work orders with no appointment. Draft work is not shown:
+          it carries no authorised scope. This list is read-only — open a work
+          order to propose a visit.
+        </p>
+        {demand.loading && <p role="status">Loading permitted records…</p>}
+        {/* Demand is a secondary read on this page, so it reports its own
+            failure in place — the same treatment the site selector above
+            gets — instead of raising a second page-level alert. When one
+            identity is refused both reads fail for the same reason, and two
+            identical permission banners carrying two different support
+            references tell the reader nothing the first did not. */}
+        {!!demand.error && (
+          <>
+            <p className="planner-warning" role="status">
+              Unassigned demand is unknown. A failed read does not mean every
+              authorised work order is scheduled.
+            </p>
+            <button className="secondary compact" onClick={demand.reload}>
+              Retry loading demand
+            </button>
+          </>
+        )}
+        {demand.data && !demand.error && (
+          <>
+            <div className="proposal-grid">
+              {demand.data.items.map((w) => (
+                <article
+                  className="appointment-card proposed"
+                  key={w.id}
+                  aria-label={`${w.display_number} unassigned`}
+                >
+                  <Link href={`/service/work-orders/${w.id}`}>
+                    {w.display_number}
+                  </Link>
+                  <p>{w.site_name}</p>
+                  <p className="card-scope">{w.authorised_scope_summary}</p>
+                  <small>
+                    {w.customer_name} · Authorised scope r
+                    {String(w.authorised_scope_revision).padStart(2, "0")}
+                  </small>
+                  <p className="card-hold">No appointment · not scheduled</p>
+                  <small>
+                    Work order v{w.version} · {w.site_timezone}
+                  </small>
+                </article>
+              ))}
+            </div>
+            {!demand.data.items.length && (
+              <p className="empty-state">
+                No unassigned demand
+                {site ? " for the selected site" : ""}. Every permitted
+                authorised work order already has an appointment.
+              </p>
+            )}
+            <p className="read-meta">
+              {demand.data.items.length} shown ·{" "}
+              {demand.data.completeness === "Complete"
+                ? "Complete permitted result"
+                : "Partial result · raise the limit to read the remainder"}{" "}
+              · Observed{" "}
+              <Stamp value={demand.data.observed_at} timezone={zone} />
+            </p>
+          </>
+        )}
+      </section>
       {dragNotice && (
         <p role="status" className="planner-warning">
           {dragNotice}
