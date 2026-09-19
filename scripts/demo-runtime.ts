@@ -4,6 +4,12 @@ import pg from "pg";
 export const demoWorkspace = "10000000-0000-4000-8000-000000000001";
 export const demoCompany = "20000000-0000-4000-8000-000000000001";
 
+// The planner also checks the work order and every linked ticket. These are
+// read-only Company A capabilities, not the local Coordinator's command set.
+export const demoPlannerReadCapabilities = [
+  "schedule.read", "service.work_order.read", "service.ticket.read",
+] as const;
+
 export async function grantRuntimePrivileges(db: pg.PoolClient, databaseName: string, role: string) {
   const name = pg.escapeIdentifier(role);
   await db.query(`REVOKE ALL ON DATABASE ${pg.escapeIdentifier(databaseName)} FROM PUBLIC`);

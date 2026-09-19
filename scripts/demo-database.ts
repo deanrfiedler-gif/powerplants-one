@@ -7,12 +7,13 @@ import { migrate, seed } from "./database";
 import { transaction, closeDatabase } from "../src/platform/database";
 import { seedTesterMailbox } from "./demo-mailbox";
 import { demoConfig } from "../src/platform/demo-config";
-import { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-runtime";
+import { demoWorkspace, demoCompany, demoPlannerReadCapabilities, grantRuntimePrivileges } from "./demo-runtime";
 import { demoMigrationFiles, existingDemoChecksumMatches } from "./migration-registry";
 import { operatorFailureCode } from "./demo-diagnostics";
 
 export { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-runtime";
 export const demoCapabilities = ["shared.read", "shared.internal.read", "activity.read", "activity.edit",
+  ...demoPlannerReadCapabilities,
   "crm.opportunity.read", "crm.opportunity.create", "crm.opportunity.edit",
   "crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert", "estimating.read", "estimating.edit",
   "estimating.quote.read", "estimating.quote.prepare", "email.read", "email.edit", "email.connect",

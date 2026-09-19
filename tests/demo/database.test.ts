@@ -28,6 +28,9 @@ import {
   readCalendar,
 } from "../../src/email/service";
 import { editDealInformation, editDealScope } from "../../src/crm/refinements";
+import { readSchedule, readAppointment } from "../../src/scheduling/planner";
+import { readUnassignedDemand } from "../../src/scheduling/demand";
+import { authoriseWorkOrder, readWorkOrder } from "../../src/service/work-orders";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable local test database required.");
@@ -172,6 +175,44 @@ test("each invited tester retains a private mailbox, CRM follow-up and calendar 
   );
 });
 after(closeDatabase);
+
+test("invited tester can read the Company A planner, demand and linked work without scheduling authority", async () => {
+  const token = await transaction(c => createInvitedSession(c, tenant, first));
+  const p = await readInvitedSession(database(), token, tenant);
+  const schedule = await readSchedule(p, {
+    from: "2026-09-20T14:00:00Z", to: "2026-09-27T14:00:00Z", timezone: "Australia/Brisbane",
+  });
+  assert.ok(schedule.items.length > 0, "seeded visits must be visible, not an empty permission-filtered result");
+  assert.ok(schedule.resources.length > 0);
+  for (const a of schedule.items) {
+    assert.equal(a.company_id, CRM.company);
+    assert.equal(a.actions.can_manage, false);
+    assert.equal(a.actions.can_request, false);
+    assert.equal(a.actions.can_contact, false);
+  }
+  assert.equal((await readAppointment(p, schedule.items[0].id)).items[0].id, schedule.items[0].id);
+  // Authorise a disposable seeded draft as the local coordinator, then prove
+  // the invited actor sees real demand and can follow its work-order link.
+  const coordinator = (await createSession("coordinator")).principal;
+  const work = (await readWorkOrder(coordinator, "90000000-0000-4000-8000-000000000001")).items[0];
+  const scope = work.scopes.find(s => s.id === work.scope_revision_id)!;
+  await authoriseWorkOrder(coordinator, work.id, {
+    operation_id: randomUUID(), schema_version: 1, reason: "SYN invited planner read proof",
+    expected_version: work.version, scope_revision_id: scope.id, scope_version: scope.version,
+    policy_version_id: scope.policy_version_id,
+  });
+  const demand = await readUnassignedDemand(p);
+  assert.ok(demand.items.some(w => w.id === work.id));
+  assert.ok(demand.items.every(w => w.company_id === CRM.company));
+  const linked = (await readWorkOrder(p, work.id)).items[0];
+  assert.deepEqual(linked.actions, { can_edit: false, can_authorise: false, can_assess: false });
+  for (const capability of ["schedule.manage", "schedule.request", "schedule.contact", "service.work_order.edit", "service.scope.authorise", "service.readiness.assess"] as const)
+    assert.equal(await hasPermission(database(), p, capability, CRM.company), false);
+  for (const capability of ["schedule.read", "service.work_order.read", "service.ticket.read"] as const)
+    assert.equal(await hasPermission(database(), p, capability, CRM.companyB), false);
+  await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='schedule.read'", [p.actor_id]);
+  await assert.rejects(readUnassignedDemand(p), (e: unknown) => (e as { code: string }).code === "Forbidden");
+});
 
 test("hosted identity mapping, persisted CRM and immediate removal stay scoped", async () => {
   const db = database();

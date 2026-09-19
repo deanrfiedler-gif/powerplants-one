@@ -54,6 +54,38 @@ async function call(page: Page, path: string, body?: unknown) {
   return response.json();
 }
 
+test("invited actor: schedule lanes, demand and appointment links load without booking controls", async ({ page, context }, info) => {
+  await signInFixture(context, objectId);
+  await page.goto("/schedule");
+  await expect(page.getByRole("region", { name: "Week resource planner", exact: true })).toBeVisible();
+  await expect(page.getByText("Loading permitted records…", { exact: true })).toHaveCount(0);
+  await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "Unassigned demand", exact: true })).toBeVisible();
+  await expect(page.getByText(/Unassigned demand is unknown/)).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Move or reassign", exact: true })).toHaveCount(0);
+  const schedule = await call(page, "schedule?from=2026-09-20T14%3A00%3A00Z&to=2026-09-27T14%3A00%3A00Z&timezone=Australia%2FBrisbane");
+  expect(schedule.items.length).toBeGreaterThan(0);
+  expect(schedule.resources.length).toBeGreaterThan(0);
+  await call(page, "schedule/demand");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: info.outputPath("private-schedule-week.png"), fullPage: true });
+  await page.getByRole("button", { name: "Day", exact: true }).click();
+  await expect(page.getByRole("region", { name: "Day resource planner", exact: true })).toBeVisible();
+  await page.setViewportSize({ width: 320, height: 844 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: info.outputPath("private-schedule-day-320.png"), fullPage: true });
+  await page.getByRole("button", { name: "Week", exact: true }).click();
+  await expect(page.getByText("Loading permitted records…", { exact: true })).toHaveCount(0);
+  const appointment = schedule.items[0];
+  await page.locator(`a[href="/service/appointments/${appointment.id}"]`).first().click();
+  await expect(page.getByRole("heading", { name: appointment.display_number, exact: true })).toBeVisible();
+  await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Confirm appointment", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Move or reassign", exact: true })).toHaveCount(0);
+  const work = await call(page, `service/work-orders/${appointment.work_order_id}`);
+  expect(work.items[0].id).toBe(appointment.work_order_id);
+});
+
 test("invited actor: mailbox to refined deal, follow-up, calendar and another browser", async ({
   page,
   context,
