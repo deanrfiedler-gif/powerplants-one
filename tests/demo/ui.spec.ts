@@ -54,7 +54,7 @@ async function call(page: Page, path: string, body?: unknown) {
   return response.json();
 }
 
-test("invited actor: schedule lanes, demand and appointment links load without booking controls", async ({ page, context }, info) => {
+test("invited actor: schedule lanes, demand and appointment links load with booking controls", async ({ page, context }, info) => {
   await signInFixture(context, objectId);
   await page.goto("/schedule");
   await expect(page.getByRole("region", { name: "Week resource planner", exact: true })).toBeVisible();
@@ -62,7 +62,7 @@ test("invited actor: schedule lanes, demand and appointment links load without b
   await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "Unassigned demand", exact: true })).toBeVisible();
   await expect(page.getByText(/Unassigned demand is unknown/)).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "Move or reassign", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Move or reassign", exact: true }).first()).toBeVisible();
   const schedule = await call(page, "schedule?from=2026-09-20T14%3A00%3A00Z&to=2026-09-27T14%3A00%3A00Z&timezone=Australia%2FBrisbane");
   expect(schedule.items.length).toBeGreaterThan(0);
   expect(schedule.resources.length).toBeGreaterThan(0);
@@ -80,8 +80,8 @@ test("invited actor: schedule lanes, demand and appointment links load without b
   await page.locator(`a[href="/service/appointments/${appointment.id}"]`).first().click();
   await expect(page.getByRole("heading", { name: appointment.display_number, exact: true })).toBeVisible();
   await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "Confirm appointment", exact: true })).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "Move or reassign", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Record contact", exact: true })).toBeVisible();
+  expect(appointment.actions.can_manage).toBe(true);
   const work = await call(page, `service/work-orders/${appointment.work_order_id}`);
   expect(work.items[0].id).toBe(appointment.work_order_id);
 });
@@ -223,4 +223,72 @@ test("invited actor: mailbox to refined deal, follow-up, calendar and another br
   } finally {
     await another.close();
   }
+});
+
+test("invited actor books and reschedules a prepared visit through the UI and reloads saved crew", async ({ page, context }, info) => {
+  await signInFixture(context, objectId);
+  const day = info.project.name.startsWith("mobile") ? "2026-10-13" : "2026-10-08";
+  const next = info.project.name.startsWith("mobile") ? "2026-10-14" : "2026-10-09";
+  const workId = "a9000000-0000-4000-8000-000000000001";
+  await page.goto(`/service/work-orders/${workId}`);
+  await page.getByText("Propose a visit", { exact: true }).click();
+  await page.getByLabel("Proposed start (device timezone)", { exact: true }).fill(`${day}T00:00`);
+  await page.getByLabel("Proposed finish (device timezone)", { exact: true }).fill(`${day}T02:00`);
+  await page.getByLabel("Customer commitment", { exact: true }).selectOption("Proposed");
+  await page.getByLabel("Preparation state", { exact: true }).selectOption("Preparing");
+  await page.getByRole("button", { name: "Save proposed visit", exact: true }).click();
+  await expect.poll(async () => (await call(page, `service/work-orders/${workId}`)).items[0].visits
+    .some((a: { start_at: string }) => a.start_at === `${day}T00:00:00.000Z`)).toBe(true);
+  const work = (await call(page, `service/work-orders/${workId}`)).items[0];
+  const visit = work.visits.find((a: { start_at: string }) => a.start_at === `${day}T00:00:00.000Z`);
+  const article = page.locator("article").filter({ has: page.getByRole("link", { name: visit.display_number, exact: true }) });
+  await article.getByText("Review proposed visit preparation", { exact: true }).click();
+  await article.getByLabel("Readiness criterion", { exact: true }).selectOption("ToolPreparation");
+  await article.getByLabel("Readiness decision", { exact: true }).selectOption("Pass");
+  await article.getByLabel("Review reason", { exact: true }).fill("SYN inspection kit reviewed for hosted booking proof");
+  await article.getByLabel("Evidence source time (your device timezone)", { exact: true }).fill("2026-09-19T00:00");
+  await article.getByLabel("Evidence title", { exact: true }).fill("SYN booking preparation");
+  await article.getByLabel("Synthetic source reference", { exact: true }).fill("SYN-PPO-HOSTED-BOOKING");
+  await article.getByLabel("Source version", { exact: true }).fill("1");
+  await article.getByLabel("Exact manual evidence", { exact: true }).fill("SYN inspection kit prepared. Dispatch remains held.");
+  await article.getByRole("button", { name: "Record readiness review", exact: true }).click();
+  await expect.poll(async () => (await call(page, `appointments/${visit.id}`)).items[0].readiness
+    .find((a: { criterion_code: string }) => a.criterion_code === "ToolPreparation").outcome).toBe("Pass");
+  await article.getByRole("link", { name: visit.display_number, exact: true }).click();
+  await page.getByRole("button", { name: "Record contact", exact: true }).click();
+  await page.getByLabel("Contact outcome", { exact: true }).selectOption("Confirmed");
+  await page.getByLabel("Contact notes", { exact: true }).fill("SYN customer agreed to exact dates; simulated record only.");
+  await page.getByRole("button", { name: "Save contact outcome", exact: true }).click();
+  await expect(page.getByText("Contact outcome saved.", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Confirm appointment", exact: true }).click();
+  const form = page.getByRole("region", { name: "Confirm appointment", exact: true });
+  await form.getByLabel("Resource 1", { exact: true }).selectOption("a4000000-0000-4000-8000-000000000001");
+  await form.getByRole("button", { name: "Add crew member", exact: true }).click();
+  await form.getByLabel("Resource 2", { exact: true }).selectOption("a4000000-0000-4000-8000-000000000002");
+  for (const n of [1, 2]) {
+    await form.getByLabel(`Travel before ${n} (minutes)`, { exact: true }).fill("0");
+    await form.getByLabel(`Travel after ${n} (minutes)`, { exact: true }).fill("0");
+    await form.getByLabel(`Travel basis ${n}`, { exact: true }).fill("SYN same-site zero travel allowance reviewed");
+  }
+  await form.getByLabel("Booking reason", { exact: true }).fill("SYN invited actor booking verification");
+  await form.getByRole("button", { name: "Confirm booking", exact: true }).click();
+  await expect(page.getByText("Appointment saved. Dispatch remains held.", { exact: true })).toBeVisible();
+  await page.reload();
+  await page.getByRole("button", { name: "Move or reassign", exact: true }).click();
+  const move = page.getByRole("region", { name: "Move or reassign", exact: true });
+  await move.getByLabel("Start (site time)", { exact: true }).fill(`${next}T10:00`);
+  await move.getByLabel("Finish (site time)", { exact: true }).fill(`${next}T12:00`);
+  await move.getByLabel("Change reason", { exact: true }).fill("SYN reschedule and persistence verification");
+  await move.getByRole("button", { name: "Save proposed move", exact: true }).click();
+  await expect(page.getByText("Appointment saved. Dispatch remains held.", { exact: true })).toBeVisible();
+  await page.reload();
+  const saved = (await call(page, `appointments/${visit.id}`)).items[0];
+  expect(saved.status).toBe("Confirmed");
+  expect(saved.start_at).toBe(`${next}T00:00:00.000Z`);
+  expect(saved.assignments.filter((a: { active: boolean }) => a.active)).toHaveLength(2);
+  expect(saved.customer_commitment).toBe("Changed");
+  await expect(page.getByRole("heading", { name: visit.display_number, exact: true })).toBeVisible();
+  await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: info.outputPath("private-booking-reloaded.png"), fullPage: true });
 });

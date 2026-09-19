@@ -82,8 +82,8 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   assert.equal((await readInvitedSession(database(), token, tenant)).actor_id, actor.actor_id);
   const grants = await rows("ppo.permission_grants");
   for (const old of oldGrants) assert.ok(grants.some(g => JSON.stringify(g) === JSON.stringify(old)));
-  const additions = (await database().query("SELECT * FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND (capability LIKE 'crm.lead.%' OR capability LIKE 'project.%' OR capability LIKE 'engineering.%' OR capability IN ('email.connect','schedule.read','service.work_order.read','service.ticket.read'))", [users])).rows;
-  assert.equal(additions.length, 14);
+  const additions = (await database().query("SELECT * FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND (capability LIKE 'crm.lead.%' OR capability LIKE 'project.%' OR capability LIKE 'engineering.%' OR capability IN ('email.connect','schedule.read','service.work_order.read','service.ticket.read','service.work_order.edit','service.readiness.assess','schedule.contact','schedule.manage'))", [users])).rows;
+  assert.equal(additions.length, 18);
   assert.ok(additions.every(g => g.user_id === users[0] && g.company_id === demoCompany && g.scope_type === "Company" && g.scope_id === demoCompany));
   const limit = (await database().query("SELECT valid_to FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.edit'", [users[0]])).rows[0].valid_to;
   assert.ok(additions.every(g => g.valid_to.getTime() <= limit.getTime()));
@@ -94,7 +94,7 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   assert.ok(schedule.resources.length > 0);
   await readUnassignedDemand(actor);
   // An explicit later revocation must survive both verify and upgrade retries.
-  await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability IN ('project.edit','schedule.read')", [users[0]]);
+  await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability IN ('project.edit','schedule.read','schedule.manage','service.readiness.assess')", [users[0]]);
   const retained = await rows("ppo.permission_grants"), migrated = await ledger(), receipts = await rows("ppo.seed_receipts");
   await upgradeExistingDemo(name, tenant, false);
   await upgradeExistingDemo(name, tenant, true);
@@ -104,17 +104,17 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   await assert.rejects(readUnassignedDemand(actor), (e: unknown) => (e as { code: string }).code === "Forbidden");
 });
 
-test("an already-current demo requires explicit upgrade for missing planner grants", async () => {
+test("an already-current demo requires explicit upgrade for missing booking grants", async () => {
   await upgradeExistingDemo(name, tenant, true);
-  await database().query("DELETE FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND capability IN ('schedule.read','service.work_order.read','service.ticket.read')", [users]);
+  await database().query("DELETE FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND capability IN ('service.work_order.edit','service.readiness.assess','schedule.contact','schedule.manage')", [users]);
   const before = await rows("ppo.permission_grants"), migrated = await ledger();
   await assert.rejects(upgradeExistingDemo(name, tenant, false), /explicit upgrade-and-deploy/);
   assert.deepEqual(await rows("ppo.permission_grants"), before);
   await upgradeExistingDemo(name, tenant, true);
   await upgradeExistingDemo(name, tenant, false);
   assert.deepEqual(await ledger(), migrated);
-  const additions = (await database().query("SELECT * FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND capability IN ('schedule.read','service.work_order.read','service.ticket.read')", [users])).rows;
-  assert.equal(additions.length, 3);
+  const additions = (await database().query("SELECT * FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND capability IN ('service.work_order.edit','service.readiness.assess','schedule.contact','schedule.manage')", [users])).rows;
+  assert.equal(additions.length, 4);
   assert.ok(additions.every(g => g.user_id === users[0] && g.scope_type === "Company" && g.scope_id === demoCompany));
 });
 

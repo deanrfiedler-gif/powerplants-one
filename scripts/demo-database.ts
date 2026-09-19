@@ -13,7 +13,8 @@ import { operatorFailureCode } from "./demo-diagnostics";
 
 export { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-runtime";
 export const demoCapabilities = ["shared.read", "shared.internal.read", "activity.read", "activity.edit",
-  "schedule.read", "service.work_order.read", "service.ticket.read",
+  "schedule.read", "service.work_order.read", "service.ticket.read", "service.work_order.edit",
+  "service.readiness.assess", "schedule.contact", "schedule.manage",
   "crm.opportunity.read", "crm.opportunity.create", "crm.opportunity.edit",
   "crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert", "estimating.read", "estimating.edit",
   "estimating.quote.read", "estimating.quote.prepare", "email.read", "email.edit", "email.connect",

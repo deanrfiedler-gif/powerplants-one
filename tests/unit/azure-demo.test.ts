@@ -57,7 +57,7 @@ test("only the validated selected tenant and stable object ID can map to a teste
     assert.throws(() => verifiedDemoObject({ ...claims, ...patch }, tenant));
 });
 
-test("tester grants are distinct, expiring and limited to Company A commercial journeys and planner reads", () => {
+test("tester grants are distinct, expiring and limited to Company A commercial journeys and controlled booking", () => {
   const now = Date.parse("2026-09-09T00:00:00Z"), entry = { object_id: tenant, expires_at: "2026-09-10T00:00:00Z" };
   assert.equal(testerInput([entry], now).length, 1);
   assert.equal(testerInput([], now).length, 0);
@@ -66,7 +66,8 @@ test("tester grants are distinct, expiring and limited to Company A commercial j
     assert.throws(() => testerInput(value, now));
   assert.ok(["crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert"].every(cap => (demoCapabilities as readonly string[]).includes(cap)));
   assert.deepEqual(demoCapabilities.filter(c => /service|schedule/.test(c)).sort(),
-    ["schedule.read", "service.ticket.read", "service.work_order.read"]);
+    ["schedule.contact", "schedule.manage", "schedule.read", "service.readiness.assess",
+      "service.ticket.read", "service.work_order.edit", "service.work_order.read"]);
   assert.equal(demoCapabilities.some(c => /finance|pack|report|field/.test(c)), false);
 });
 
