@@ -154,9 +154,12 @@ test("P05 SC-07 day/week lanes, explicit filters, empty/error and keyboard focus
 }, info) => {
   await page.goto("/schedule");
   await identity(page);
+  // The visible heading block was removed: the shell banner and the module tab
+  // strip already name the page. The h1 stays in the document for heading order
+  // and assistive technology, so it is asserted as present rather than painted.
   await expect(
-    page.getByRole("heading", { name: "Service planner", exact: true }),
-  ).toBeVisible();
+    page.getByRole("heading", { name: "Service planner", exact: true, level: 1 }),
+  ).toBeAttached();
   await capture(page, info, "week");
   if (info.project.name.startsWith("mobile")) {
     const strip = page.getByRole("region", {

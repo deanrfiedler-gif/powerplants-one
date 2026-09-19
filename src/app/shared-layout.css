@@ -19,10 +19,17 @@ body{font-size:14px;line-height:1.45}
 .product-heading>span{color:var(--muted)}
 .prototype-label{font-size:11px;white-space:nowrap;color:var(--muted);margin-left:auto}
 .workspace:has(.identity-strip) .prototype-label{margin-right:270px}
-.module-navigation{display:flex;flex:none;gap:4px;overflow:auto;padding:5px 14px;background:#fff;border-bottom:1px solid var(--line)}
-.module-navigation a{padding:7px 10px;white-space:nowrap;font-size:12px;border-radius:5px;text-decoration:none}
-.module-navigation a:hover{background:#f0f2f5}
-.module-navigation a[aria-current=page]{background:var(--navy);color:#fff}
+/* Module navigation, theme style board r22. The board limits strong inversion
+   to a small exclusive set, so the filled navy pill is replaced by the board's
+   tab treatment: the strip carries the rule, the current page interrupts it.
+   Selection changes weight and colour only, never size or position, so the
+   row does not reflow as the current page changes. */
+.module-navigation{display:flex;flex:none;gap:2px;overflow-x:auto;padding:0 16px;background:#fff;border-bottom:1px solid var(--line-strong);scrollbar-width:thin}
+.module-navigation a{position:relative;padding:12px 12px 10px;white-space:nowrap;font-size:13px;font-weight:500;color:var(--text-secondary);text-decoration:none;border-radius:6px 6px 0 0;border-bottom:2px solid transparent;transition:color .14s ease,background-color .14s ease,border-color .14s ease}
+.module-navigation a:hover{background:var(--surface-hover);color:var(--ink)}
+.module-navigation a[aria-current=page]{color:var(--navy);border-bottom-color:var(--navy)}
+.module-navigation a[aria-current=page]:hover{background:transparent}
+.module-navigation a:focus-visible{outline:2px solid var(--focus);outline-offset:-3px}
 main{width:100%;max-width:none;min-height:0;margin:0;flex:1;overflow:auto;padding:18px 20px 24px}
 .business-heading{margin:0 0 16px;gap:16px;align-items:center}
 .business-heading h1{font-size:26px;letter-spacing:-.5px;margin:0}

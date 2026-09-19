@@ -1312,16 +1312,10 @@ export function PlannerScreen() {
   }
   return (
     <>
-      <PageHeader
-        eyebrow="Service Operations · SC-07"
-        title="Service planner"
-        description="Coordinate authorised work, crew availability and controlled visit changes."
-        action={
-          <Link className="button secondary" href="/service/work-orders">
-            Work orders
-          </Link>
-        }
-      />
+      {/* The shell banner and the module tab strip both already name this
+          page, so the heading block is redundant on screen. It stays in the
+          document for assistive technology and heading order. */}
+      <h1 className="sr-only">Service planner</h1>
       <section className="planner-toolbar" aria-label="Planner controls">
         <div className="planner-date">
           <button
@@ -1348,17 +1342,14 @@ export function PlannerScreen() {
             →
           </button>
         </div>
+        {/* aria-pressed drives the selected thumb, so the class no longer
+            has to carry the state as well. */}
         <div className="view-switch" aria-label="Planner view">
-          <button
-            aria-pressed={mode === "day"}
-            className={mode === "day" ? "" : "secondary"}
-            onClick={() => setMode("day")}
-          >
+          <button aria-pressed={mode === "day"} onClick={() => setMode("day")}>
             Day
           </button>
           <button
             aria-pressed={mode === "week"}
-            className={mode === "week" ? "" : "secondary"}
             onClick={() => setMode("week")}
           >
             Week
@@ -1371,9 +1362,16 @@ export function PlannerScreen() {
           onChange={setZone}
           values={["Australia/Brisbane", "Australia/Melbourne", "UTC"]}
         />
-        <button className="secondary" onClick={result.reload}>
-          Refresh planner
-        </button>
+        {/* The removed heading block carried the only route to work orders,
+            so it moves into the control bar with the other page actions. */}
+        <div className="planner-toolbar-actions">
+          <button className="secondary" onClick={result.reload}>
+            Refresh planner
+          </button>
+          <Link className="button secondary" href="/service/work-orders">
+            Work orders
+          </Link>
+        </div>
       </section>
       <div className="planner-filters">
         <SelectField

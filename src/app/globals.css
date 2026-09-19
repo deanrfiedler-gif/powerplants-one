@@ -13,6 +13,39 @@
   --line: #dce4e4;
   --paper: #f5f7f6;
   --white: #fff;
+  /* Theme style board r22 tokens. Added alongside the existing seven rather
+     than replacing them, so pages adopt the board surface, rule and status
+     scale deliberately instead of every border in the product shifting at
+     once. Values are taken verbatim from the r22 source. */
+  --surface-2: #eef0f3;
+  --surface-3: #fcfcfd;
+  --surface-hover: #f0f2f5;
+  --text-secondary: #596779;
+  --line-strong: #dce2e9;
+  --line-soft: #e9ecf1;
+  --hairline: #cbd2dc;
+  --control-border: #828e9f;
+  --focus: #365d8b;
+  --link: #355b80;
+  --success: #416d33;
+  --success-surface: #edf5e9;
+  --success-border: #d4e3cb;
+  --warning: #80530e;
+  --warning-surface: #fff2d9;
+  --warning-border: #efdbb6;
+  --danger: #993b2a;
+  --danger-surface: #fff1ed;
+  --danger-border: #edc6bd;
+  --info: #346580;
+  --info-surface: #e9f2f8;
+  --info-border: #cfe0ec;
+  --neutral: #526078;
+  --neutral-surface: #edf0f5;
+  --radius-control: 6px;
+  --radius-card: 8px;
+  --shadow-card: 0 3px 10px rgba(36, 42, 55, 0.1), 0 1px 2px rgba(36, 42, 55, 0.04);
+  --shadow-raise: 0 1px 2px rgba(36, 42, 55, 0.06);
+  --shadow-thumb: 0 1px 3px rgba(36, 42, 55, 0.14);
 }
 * {
   box-sizing: border-box;
@@ -825,9 +858,9 @@ button:disabled {
 }
 .status-chip {
   display: inline-block;
-  border: 1px solid #c4d4d1;
-  background: #eaf3ef;
-  color: #245346;
+  border: 1px solid var(--success-border);
+  background: var(--success-surface);
+  color: var(--success);
   border-radius: 20px;
   padding: 0.25rem 0.65rem;
   font-size: 0.8rem;
@@ -837,6 +870,24 @@ button:disabled {
   background: #fff1d6;
   color: #744c0a;
   border-color: #ddb874;
+}
+/* The tone classes carried a background and colour but inherited the default
+   border, so an amber chip was drawn with a green rule. Each tone now owns its
+   own border from the r22 status scale. */
+.status-chip.tone-neutral {
+  border-color: #d3d9e3;
+}
+.status-chip.tone-info {
+  border-color: var(--info-border);
+}
+.status-chip.tone-success {
+  border-color: var(--success-border);
+}
+.status-chip.tone-attention {
+  border-color: var(--warning-border);
+}
+.status-chip.tone-danger {
+  border-color: var(--danger-border);
 }
 .record-banner {
   display: flex;
@@ -850,16 +901,18 @@ button:disabled {
   font-size: 0.9rem;
 }
 .read-meta {
-  font-size: 0.78rem;
-  color: #49646c;
-  line-height: 1.6;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 18px;
 }
 .empty-state {
-  padding: 2rem;
-  border: 1px dashed #99b2b7;
-  border-radius: 12px;
-  background: #f6f8f7;
-  color: #425e65;
+  padding: 22px 24px;
+  border: 1px dashed var(--hairline);
+  border-radius: var(--radius-card);
+  background: var(--surface-3);
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 20px;
 }
 .business-error {
   padding: 1rem 1.2rem;
@@ -1133,25 +1186,123 @@ button:disabled {
   align-items: center;
   flex-wrap: wrap;
 }
+/* One control plate rather than two floating boxes: the period and view row
+   sits on the board's tinted surface, the filter row on white beneath it, and
+   a single rule wraps both. r22 toolbar geometry. */
 .planner-toolbar {
-  background: #fff;
-  padding: 1.15rem;
-  border: 1px solid var(--line, #dce4e5);
-  border-radius: 12px;
-  justify-content: space-between;
-  margin: 1.3rem 0;
+  background: var(--surface-3);
+  padding: 12px 16px;
+  border: 1px solid var(--line-strong);
+  border-bottom: 0;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 14px;
+  margin: 0;
 }
 .planner-date .field,
 .planner-toolbar .field {
   margin: 0;
 }
+.planner-date {
+  gap: 8px;
+  align-items: flex-end;
+}
 .planner-date input {
-  max-width: 175px;
+  max-width: 168px;
+}
+.planner-date button {
+  min-height: 38px;
+  padding: 0 12px;
+}
+.planner-toolbar > .field:last-of-type {
+  min-width: 190px;
+}
+.planner-toolbar-actions {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+.planner-toolbar-actions .secondary,
+.planner-toolbar-actions .button {
+  min-height: 38px;
+  font-size: 13px;
 }
 .planner-filters {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 14px;
+  background: var(--white);
+  padding: 14px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 0 0 var(--radius-card) var(--radius-card);
+  margin: 0 0 20px;
+}
+.planner-filters .field {
+  margin: 0;
+}
+/* The control plate sets its own density. The global input rule carries an
+   18px bottom margin and a 46px control, which is right for a stacked form
+   and too loose for a filter bar, so both are reset inside the plate only. */
+.planner-toolbar .field,
+.planner-filters .field {
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.planner-toolbar .field input,
+.planner-toolbar .field select,
+.planner-filters .field input,
+.planner-filters .field select {
+  margin: 0;
+  min-height: 38px;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink);
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+}
+.planner-toolbar .field input:focus-visible,
+.planner-toolbar .field select:focus-visible,
+.planner-filters .field input:focus-visible,
+.planner-filters .field select:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+/* r22 segmented control: a shared track whose thumb moves between options.
+   Geometry is identical in both states, so the row never shifts. */
+.view-switch {
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--surface-hover);
+  flex: none;
+}
+.view-switch button {
+  min-height: 30px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: none;
+}
+.view-switch button:hover {
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--ink);
+}
+.view-switch button[aria-pressed="true"] {
+  background: var(--white);
+  border-color: var(--line);
+  box-shadow: var(--shadow-thumb);
+  color: var(--navy);
 }
 .planner-stat-row {
   display: grid;
@@ -1159,27 +1310,54 @@ button:disabled {
   gap: 0.8rem;
   margin: 1.3rem 0;
 }
+/* No coloured edge. The figure carries the emphasis; the rule is the same
+   hairline used by every other surface on the page. */
 .planner-stat-row > div {
-  border-left: 4px solid #1e765b;
-  background: #fff;
-  border-radius: 8px;
-  padding: 1rem;
+  border: 1px solid var(--line-strong);
+  background: var(--white);
+  border-radius: var(--radius-card);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-raise);
 }
 .planner-stat-row strong {
   display: block;
-  font-size: 1.7rem;
-  color: #12374b;
+  font-size: 26px;
+  line-height: 32px;
+  font-weight: 500;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
 }
 .planner-stat-row span {
-  font-size: 0.82rem;
-  line-height: 1.4;
-  color: #45616e;
+  display: block;
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--text-secondary);
+  margin-top: 2px;
 }
 .planner-legend {
-  font-size: 0.8rem;
-  gap: 1.3rem;
-  color: #365461;
-  margin: 1rem 0;
+  font-size: 12px;
+  gap: 18px;
+  color: var(--text-secondary);
+  margin: 14px 0;
+}
+.planner-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.planner-legend span::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--hairline);
+  flex: none;
+}
+.planner-legend span:first-child::before {
+  background: var(--success);
+}
+.planner-legend span:nth-child(2)::before {
+  background: var(--warning);
 }
 .planner-board {
   display: grid;
@@ -1187,35 +1365,49 @@ button:disabled {
 }
 .resource-lane {
   min-width: 0;
-  border: 1px solid #ccdcdf;
-  border-radius: 12px;
-  background: #fff;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  background: var(--white);
   overflow: hidden;
 }
 .resource-lane > header {
-  padding: 1rem 1.2rem;
-  background: #edf4f3;
+  padding: 12px 16px;
+  background: var(--surface-3);
+  border-bottom: 1px solid var(--line-soft);
   display: flex;
   align-items: baseline;
-  gap: 0.9rem;
+  gap: 10px;
   flex-wrap: wrap;
 }
 .resource-lane h2 {
-  font-size: 1rem;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
   margin: 0;
+  color: var(--ink);
+}
+.resource-lane header > span {
+  font-size: 12px;
+  color: var(--text-secondary);
 }
 .resource-lane header > small {
-  font-size: 0.75rem;
+  font-size: 12px;
+  color: var(--text-secondary);
 }
 .resource-lane details {
   margin-left: auto;
-  font-size: 0.8rem;
+  font-size: 12px;
   max-width: 100%;
 }
 .resource-lane summary {
   cursor: pointer;
-  color: #145c46;
-  font-weight: 700;
+  color: var(--link);
+  font-weight: 500;
+}
+.resource-lane summary:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 .lane-days {
   display: grid;
@@ -1223,118 +1415,221 @@ button:disabled {
 }
 .planner-day-cell {
   min-width: 0;
-  border-right: 1px solid #dce5e7;
-  padding: 0.6rem;
+  border-right: 1px solid var(--line-soft);
+  padding: 10px;
   min-height: 150px;
 }
 .planner-day-cell:last-child {
   border-right: 0;
 }
 .planner-day-cell h3 {
-  font-size: 0.77rem;
-  color: #264b5a;
-  margin: 0.15rem 0 0.65rem;
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0 0 8px;
 }
 .calendar-slot {
-  font-size: 0.65rem;
-  line-height: 1.4;
-  color: #526e78;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--text-secondary);
 }
 .lane-empty {
-  font-size: 0.73rem;
-  color: #74848a;
-  margin: 1rem 0;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--muted);
+  margin: 14px 0;
 }
 .lane-empty small {
-  font-size: 0.65rem;
+  font-size: 11px;
 }
+/* Advisory bands read as a tinted panel, not a flagged edge. */
 .availability-block {
-  font-size: 0.7rem;
-  padding: 0.5rem;
-  background: #fff2d8;
-  border-left: 3px solid #a87516;
-  color: #664a12;
-  border-radius: 4px;
+  font-size: 11px;
+  line-height: 16px;
+  padding: 7px 9px;
+  background: var(--warning-surface);
+  border: 1px solid var(--warning-border);
+  color: var(--warning);
+  border-radius: var(--radius-control);
+  margin: 6px 0;
 }
+/* One card, one rule, one radius. State is carried by the status chip at the
+   head of the card and by the muted body copy beneath it, never by a coloured
+   edge: a row of cards each flagged with a different bar reads as decoration
+   and stops distinguishing anything once there are more than a few. */
 .appointment-card {
-  border: 1px solid #b8d3c8;
-  border-left: 4px solid #197451;
-  border-radius: 7px;
-  background: #f5fbf8;
-  padding: 0.65rem;
-  margin: 0.65rem 0;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  background: var(--white);
+  padding: 12px;
+  margin: 8px 0;
   overflow-wrap: anywhere;
-  line-height: 1.45;
+  line-height: 1.5;
+  box-shadow: var(--shadow-raise);
+  transition:
+    box-shadow 0.16s ease,
+    border-color 0.16s ease;
 }
-.appointment-card.proposed {
-  background: #f4f7fc;
-  border-color: #bccbdf;
-  border-left-style: dashed;
-  border-left-color: #5273a0;
+.appointment-card:hover {
+  border-color: var(--hairline);
+  box-shadow: var(--shadow-card);
 }
 .appointment-card.cancelled {
-  background: #f7f5f5;
-  border-color: #d2c8c8;
-  border-left-color: #796666;
+  background: var(--surface-3);
+}
+.appointment-card.cancelled > a {
+  text-decoration-line: line-through;
+  text-decoration-color: var(--hairline);
 }
 .appointment-card[draggable="true"] {
   cursor: grab;
 }
 .appointment-card[draggable="true"]:active {
   cursor: grabbing;
+  box-shadow: var(--shadow-card);
 }
 .appointment-card a {
-  font-size: 0.76rem;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--navy);
+  text-decoration: none;
+  display: inline-block;
+}
+.appointment-card a:hover {
+  text-decoration: underline;
+}
+.appointment-card a:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 3px;
 }
 .appointment-card p {
-  font-size: 0.74rem;
-  margin: 0.45rem 0;
+  font-size: 12px;
+  line-height: 17px;
+  margin: 5px 0 0;
+  color: var(--text-secondary);
+}
+.appointment-card .card-scope {
+  color: var(--ink);
 }
 .appointment-card small {
   display: block;
-  font-size: 0.66rem;
-  color: #45616d;
-  margin-top: 0.4rem;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--muted);
+  margin-top: 5px;
 }
 .appointment-card .status-chip {
-  font-size: 0.63rem;
-  padding: 0.15rem 0.4rem;
+  font-size: 11px;
+  line-height: 15px;
+  padding: 2px 8px;
+  border-radius: 4px;
 }
+/* The time is the card's anchor in a day column, so it reads first and the
+   chip sits opposite it on the same baseline. */
 .planner-card-head {
   justify-content: space-between;
-  gap: 0.35rem;
-  font-size: 0.75rem;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  margin-bottom: 6px;
 }
+.planner-card-head strong {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+/* Inside a day column a card has roughly 150px to work with, so the scope
+   summary is clamped rather than allowed to set the height of the whole lane.
+   The full text stays available on the appointment record. */
+.planner-day-cell .appointment-card {
+  padding: 10px;
+}
+.planner-day-cell .appointment-card .card-scope {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.planner-day-cell .appointment-card .status-chip {
+  padding: 2px 6px;
+}
+.planner-day-cell .appointment-card .compact {
+  width: 100%;
+  margin-top: 10px;
+}
+/* The dispatch hold is a standing condition, not an alarm. It reads as a
+   quiet footnote rule above the version line rather than bold amber body. */
 .appointment-card .card-hold {
-  font-size: 0.66rem;
-  font-weight: 600;
-  color: #75531a;
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 400;
+  color: var(--warning);
+  margin-top: 8px;
+  padding-top: 7px;
+  border-top: 1px solid var(--line-soft);
 }
 .compact {
-  font-size: 0.72rem !important;
-  padding: 0.45rem 0.55rem !important;
-  min-height: 36px;
+  font-size: 12px !important;
+  padding: 6px 10px !important;
+  min-height: 32px;
+  border-radius: var(--radius-control);
 }
+/* The wide sections get a responsive track rather than a fixed three, so the
+   cards keep a readable measure at 1280 and do not stretch at 1920. */
 .proposal-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+  gap: 14px;
+  margin-top: 4px;
 }
 .proposal-grid .appointment-card {
-  padding: 1rem;
+  padding: 14px 16px;
+  margin: 0;
+  height: 100%;
 }
 .proposal-grid .appointment-card a {
-  font-size: 0.95rem;
+  font-size: 14px;
 }
 .proposal-grid .appointment-card p {
-  font-size: 0.85rem;
+  font-size: 13px;
+  line-height: 19px;
 }
 .proposal-grid .appointment-card small {
-  font-size: 0.75rem;
+  font-size: 12px;
 }
 .proposal-section {
-  margin-top: 1.4rem;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line-soft);
+}
+/* Section headings sit on one scale across the page: 16px medium, with the
+   standing explanation immediately beneath in secondary text. */
+.proposal-section > h2 {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 500;
+  margin: 0 0 4px;
+  color: var(--ink);
+}
+.proposal-section > p {
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--text-secondary);
+  margin: 0 0 14px;
+  max-width: 88ch;
+}
+.planner-board > .empty-state {
+  grid-column: 1 / -1;
+}
+.planner-scroll-hint {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--text-secondary);
+  margin: 10px 0;
 }
 .planner-summary {
   display: grid;
@@ -1367,17 +1662,20 @@ button:disabled {
 .planner-holds strong {
   white-space: nowrap;
 }
+/* An enclosed advisory panel rather than a flagged edge, matching the r22
+   status surfaces used by the cards and availability bands. */
 .planner-warning {
-  padding: 0.85rem 1rem;
-  border-left: 4px solid #ac781d;
-  background: #fff5df;
-  color: #644910;
-  border-radius: 5px;
-  font-size: 0.87rem;
-  line-height: 1.55;
+  padding: 12px 14px;
+  border: 1px solid var(--warning-border);
+  background: var(--warning-surface);
+  color: var(--warning);
+  border-radius: var(--radius-control);
+  font-size: 13px;
+  line-height: 20px;
+  margin: 12px 0;
 }
 .planner-warning p {
-  margin: 0.3rem 0;
+  margin: 4px 0;
 }
 .planner-form {
   padding: 1.4rem;
@@ -1483,8 +1781,12 @@ button:disabled {
 .danger {
   background: #874035 !important;
 }
-.view-switch button[aria-pressed="true"] {
-  outline: 2px solid #226d56;
+/* The green selection outline this rule used to add is replaced by the r22
+   segmented thumb defined with the control above: a raised white tile on the
+   shared track. Focus keeps its own ring, so the selected option is no longer
+   drawn as though it were permanently focused. */
+.view-switch button:focus-visible {
+  outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
 @media (min-width: 1200px) {
@@ -1616,12 +1918,24 @@ button:disabled {
   line-height: 1.5;
 }
 .reserved-periods {
-  margin: 0.55rem 0 !important;
-  color: #255b49;
-  font-size: 0.75rem;
+  margin: 8px 0 !important;
+  color: var(--text-secondary);
+  font-size: 11px;
+  line-height: 16px;
+}
+.reserved-periods summary {
+  cursor: pointer;
+  color: var(--link);
+  font-weight: 500;
+}
+.reserved-periods summary:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 .reserved-periods p {
   line-height: 1.5;
+  margin: 5px 0;
 }
 .planner-board.week .lane-days {
   overflow-x: auto;
