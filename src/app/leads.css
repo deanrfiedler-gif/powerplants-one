@@ -1242,11 +1242,73 @@
     padding-left: 18px;
     text-align: left;
   }
-  /* item 3: the gear and row menus share the account button's centre line. */
+  /* item 3: the gear and row menus share the account button's centre line.
+     The left border belongs to the frozen rail itself, so it survives the
+     data columns scrolling underneath it. */
   .lead-table th.lead-cell-actions,
   .lead-table td.lead-cell-actions {
     padding-right: 18px;
     text-align: right;
+    border-left: 1px solid #e1e5eb;
+  }
+  /* Data columns reorder by dragging their heading. */
+  .lead-table th[draggable="true"] {
+    cursor: grab;
+    user-select: none;
+  }
+  .lead-table th.lead-column-lifted {
+    opacity: 0.45;
+    cursor: grabbing;
+  }
+  .lead-table th.lead-column-landing-before::before,
+  .lead-table th.lead-column-landing-after::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--green);
+    z-index: 4;
+  }
+  .lead-table th.lead-column-landing-before::before {
+    left: -1px;
+  }
+  .lead-table th.lead-column-landing-after::after {
+    right: -1px;
+  }
+  .lead-column-group {
+    margin: 10px 8px 4px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #667181;
+  }
+  .lead-column-row {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+  .lead-column-row .lead-column-toggle {
+    flex: 1;
+    min-width: 0;
+  }
+  .lead-column-move {
+    display: flex;
+    flex: none;
+    gap: 2px;
+  }
+  .leads-workspace .crm-r38-popover .lead-column-move button {
+    width: 26px;
+    min-height: 26px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 6px;
+    color: #667181;
+  }
+  .lead-column-move .product-icon {
+    width: 14px;
+    height: 14px;
   }
   .lead-table th.lead-cell-select,
   .lead-table td.lead-cell-select {

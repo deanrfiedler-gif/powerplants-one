@@ -337,8 +337,10 @@ export function LeadsDesktopList({
     () => storedColumns(key),
     () => "",
   );
+  /* Stored order is the user's own column order, so it is kept as written
+     rather than sorted back into the declaration order. */
   const stored = saved ? saved.split(",") : [];
-  const preferred = columns.map((c) => c.id).filter((id) => stored.includes(id));
+  const preferred = stored.filter((id) => columns.some((c) => c.id === id));
   const visible = preferred.includes("title") ? preferred : defaultVisible;
   const shown = visible
     .map((id) => columns.find((c) => c.id === id))
@@ -350,6 +352,28 @@ export function LeadsDesktopList({
   const ticked = chosen.filter((id) => present.has(id));
   const every = items.length > 0 && ticked.length === items.length;
   const showVisible = (next: string[]) => keep(key, { visible: next });
+  /* Reordering only ever rearranges the data columns; the selection and
+     row-action rails are rendered outside this list and cannot move. */
+  const [dragged, setDragged] = useState<string | null>(null);
+  const [landing, setLanding] = useState<{ id: string; after: boolean } | null>(
+    null,
+  );
+  const place = (from: string, to: string, after: boolean) => {
+    if (from === to) return;
+    const next = visible.filter((id) => id !== from);
+    const at = next.indexOf(to);
+    if (at < 0) return;
+    next.splice(after ? at + 1 : at, 0, from);
+    showVisible(next);
+  };
+  const shift = (id: string, by: -1 | 1) => {
+    const at = visible.indexOf(id),
+      to = at + by;
+    if (at < 0 || to < 0 || to >= visible.length) return;
+    const next = [...visible];
+    next.splice(to, 0, ...next.splice(at, 1));
+    showVisible(next);
+  };
   useEffect(() => {
     if (everyBox.current)
       everyBox.current.indeterminate = ticked.length > 0 && !every;
@@ -611,10 +635,52 @@ export function LeadsDesktopList({
                 />
               </th>
               {shown.map((c) => (
-                <th key={c.id} scope="col">
+                <th
+                  key={c.id}
+                  scope="col"
+                  draggable
+                  title={`${c.heading} — drag to reorder`}
+                  className={
+                    dragged === c.id
+                      ? "lead-column-lifted"
+                      : landing?.id === c.id
+                        ? `lead-column-landing-${landing.after ? "after" : "before"}`
+                        : undefined
+                  }
+                  onDragStart={(e) => {
+                    setDragged(c.id);
+                    e.dataTransfer.effectAllowed = "move";
+                    e.dataTransfer.setData("text/plain", c.id);
+                  }}
+                  onDragEnd={() => {
+                    setDragged(null);
+                    setLanding(null);
+                  }}
+                  onDragOver={(e) => {
+                    if (!dragged || dragged === c.id) return;
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = "move";
+                    const box = e.currentTarget.getBoundingClientRect();
+                    setLanding({
+                      id: c.id,
+                      after: e.clientX > box.left + box.width / 2,
+                    });
+                  }}
+                  onDragLeave={() =>
+                    setLanding((prior) => (prior?.id === c.id ? null : prior))
+                  }
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    if (dragged)
+                      place(dragged, c.id, landing?.after ?? false);
+                    setDragged(null);
+                    setLanding(null);
+                  }}
+                >
                   {c.heading}
                   <span
                     className="lead-column-resizer"
+                    draggable={false}
                     role="separator"
                     tabIndex={0}
                     aria-orientation="vertical"
@@ -642,38 +708,71 @@ export function LeadsDesktopList({
                       onChange={(e) => setColumnSearch(e.target.value)}
                     />
                   </label>
-                  {columns
-                    .filter((c) => c.heading.toLowerCase().includes(search))
-                    .map((c) => {
-                      const on = visible.includes(c.id);
-                      return (
+                  {shown.filter((c) => c.heading.toLowerCase().includes(search))
+                    .length > 0 && <h3 className="lead-column-group">Visible</h3>}
+                  {shown.map((c, i) =>
+                    c.heading.toLowerCase().includes(search) ? (
+                      <div key={c.id} className="lead-column-row">
                         <button
-                          key={c.id}
                           type="button"
                           className="secondary lead-column-toggle"
-                          role="menuitemcheckbox"
-                          aria-checked={on}
+                          aria-pressed
                           disabled={c.id === "title"}
                           onClick={() =>
-                            showVisible(
-                              on
-                                ? visible.filter((id) => id !== c.id)
-                                : columns
-                                    .map((x) => x.id)
-                                    .filter(
-                                      (id) =>
-                                        visible.includes(id) || id === c.id,
-                                    ),
-                            )
+                            showVisible(visible.filter((id) => id !== c.id))
                           }
                         >
                           <span className="lead-column-tick">
-                            {on && <ProductIcon name="check" />}
+                            <ProductIcon name="check" />
                           </span>
                           <span>{c.heading}</span>
                         </button>
-                      );
-                    })}
+                        <span className="lead-column-move">
+                          <button
+                            type="button"
+                            className="secondary"
+                            aria-label={`Move ${c.heading} left`}
+                            disabled={i === 0}
+                            onClick={() => shift(c.id, -1)}
+                          >
+                            <ProductIcon name="collapse" />
+                          </button>
+                          <button
+                            type="button"
+                            className="secondary"
+                            aria-label={`Move ${c.heading} right`}
+                            disabled={i === shown.length - 1}
+                            onClick={() => shift(c.id, 1)}
+                          >
+                            <ProductIcon name="expand" />
+                          </button>
+                        </span>
+                      </div>
+                    ) : null,
+                  )}
+                  {columns.some(
+                    (c) =>
+                      !visible.includes(c.id) &&
+                      c.heading.toLowerCase().includes(search),
+                  ) && <h3 className="lead-column-group">Available</h3>}
+                  {columns
+                    .filter(
+                      (c) =>
+                        !visible.includes(c.id) &&
+                        c.heading.toLowerCase().includes(search),
+                    )
+                    .map((c) => (
+                      <button
+                        key={c.id}
+                        type="button"
+                        className="secondary lead-column-toggle"
+                        aria-pressed={false}
+                        onClick={() => showVisible([...visible, c.id])}
+                      >
+                        <span className="lead-column-tick" />
+                        <span>{c.heading}</span>
+                      </button>
+                    ))}
                   {!columns.some((c) => c.heading.toLowerCase().includes(search)) && (
                     <p className="lead-menu-note">No columns match.</p>
                   )}
