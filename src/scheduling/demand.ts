@@ -10,7 +10,9 @@ import {
 import { orderVisibility } from "../service/work-orders";
 import { envelope, visibility, visible } from "../shared/reads";
 import { invalid, object, optionalId } from "../shared/validation";
-// Unassigned demand is an authorised work order with no appointment row. A
+// Unassigned demand is an authorised work order with no live appointment. A
+// Cancelled appointment is not a visit: the row survives because appointments
+// are immutable evidence, but the work is unscheduled and is demand again. A
 // Draft order is not demand: it carries no authorised scope. The read exposes
 // no scheduling action; it names work that has not been given a visit.
 const DEMAND_CAPABILITY: Capability = "schedule.read";
@@ -77,7 +79,7 @@ export async function readUnassignedDemand(p: Principal, input: unknown = {}) {
          JOIN ppo.organisations o ON (o.workspace_id,o.id)=(w.workspace_id,w.customer_id)
          JOIN ppo.scope_revisions sr ON (sr.workspace_id,sr.work_order_id,sr.id)=(w.workspace_id,w.id,w.authorised_scope_revision_id)
          WHERE w.workspace_id=$1 AND w.status='Authorised'
-           AND NOT EXISTS(SELECT 1 FROM ppo.appointments a WHERE a.workspace_id=w.workspace_id AND a.work_order_id=w.id)
+           AND NOT EXISTS(SELECT 1 FROM ppo.appointments a WHERE a.workspace_id=w.workspace_id AND a.work_order_id=w.id AND a.status<>'Cancelled')
            AND ${scopeSql("w.company_id", "w.site_id", DEMAND_CAPABILITY)}
            AND ${orderVisibility("w")} AND ${visibility("Site", "site")}
            AND ($3::uuid IS NULL OR w.site_id=$3)

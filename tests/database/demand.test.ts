@@ -7,6 +7,10 @@ import { createSession } from "../../src/platform/identity";
 import { reset } from "../../scripts/database";
 import { readUnassignedDemand } from "../../src/scheduling/demand";
 import {
+  cancelAppointment,
+  readAppointment,
+} from "../../src/scheduling/planner";
+import {
   authoriseWorkOrder,
   proposeVisit,
   readWorkOrder,
@@ -38,7 +42,7 @@ async function current(n = 1) {
   return { w, r: w.scopes.find((s) => s.id === w.scope_revision_id)! };
 }
 // Authorise a seeded draft without proposing a visit. That is exactly the
-// definition: an authorised work order with no appointment row.
+// definition: an authorised work order with no live appointment.
 async function authorise(n = 1) {
   const { w, r } = await current(n);
   await authoriseWorkOrder(await principal(), w.id, {
@@ -50,7 +54,7 @@ async function authorise(n = 1) {
   });
   return w.id;
 }
-test("unassigned demand is authorised work with no appointment; Draft and booked work are excluded", async () => {
+test("unassigned demand is authorised work with no live appointment; Draft and booked work are excluded", async () => {
   const p = await principal();
   // Every authorised work order in the seed already has an appointment, so the
   // stock fixture legitimately has no demand at all.
@@ -78,9 +82,10 @@ test("unassigned demand is authorised work with no appointment; Draft and booked
   assert.ok(drafts.length > 0);
   for (const d of drafts)
     assert.ok(!result.items.some((x) => x.id === d.id), `Draft ${d.id} leaked`);
-  // An authorised work order that already has an appointment is not demand.
+  // An authorised work order with a live appointment is not demand. A
+  // Cancelled appointment is not a live one and does not disqualify.
   const booked = await rows(
-    "SELECT DISTINCT w.id FROM ppo.work_orders w JOIN ppo.appointments a ON (a.workspace_id,a.work_order_id)=(w.workspace_id,w.id) WHERE w.status='Authorised' ORDER BY 1",
+    "SELECT DISTINCT w.id FROM ppo.work_orders w JOIN ppo.appointments a ON (a.workspace_id,a.work_order_id)=(w.workspace_id,w.id) WHERE w.status='Authorised' AND a.status<>'Cancelled' ORDER BY 1",
   );
   assert.ok(booked.length > 0);
   for (const b of booked)
@@ -105,7 +110,8 @@ test("proposing a visit removes a work order from unassigned demand", async () =
     customer_commitment: "Proposed",
     preparation_status: "Preparing",
   });
-  // The appointment row alone disqualifies it; no status value is consulted.
+  // A Proposed appointment is a live visit, so the work order is no longer
+  // unscheduled. The row count below is what the cancellation test then acts on.
   assert.deepEqual((await readUnassignedDemand(p)).items, []);
   assert.equal(
     (
@@ -113,6 +119,64 @@ test("proposing a visit removes a work order from unassigned demand", async () =
     )[0].n,
     1,
   );
+});
+// A cancelled visit returns the work order to demand. ppo.appointments has no
+// delete path: immutable_evidence() refuses DELETE, and cancellation sets
+// status='Cancelled' rather than removing the row. The disqualifying test is
+// therefore a live appointment. Row existence would hide this work forever,
+// and it is the case a planner most needs to see.
+test("a work order whose only appointment was cancelled is unassigned demand again", async () => {
+  const p = await principal();
+  await authorise(1);
+  const appointment_id = randomUUID();
+  const { w, r } = await current(1);
+  await proposeVisit(p, w.id, {
+    ...base(),
+    id: appointment_id,
+    expected_version: w.version,
+    scope_revision_id: r.id,
+    scope_version: r.version,
+    start_at: "2026-09-25T00:00:00Z",
+    end_at: "2026-09-25T02:00:00Z",
+    customer_commitment: "Proposed",
+    preparation_status: "Preparing",
+  });
+  assert.deepEqual((await readUnassignedDemand(p)).items, []);
+  const a = (await readAppointment(p, appointment_id)).items[0];
+  await cancelAppointment(p, appointment_id, {
+    ...base(),
+    expected_version: a.version,
+    expected_work_order_version: a.work_order_version,
+    expected_assignment_version: a.assignment_version,
+  });
+  // The row survives and is Cancelled: the evidence is intact, not deleted.
+  assert.deepEqual(
+    await rows(
+      "SELECT status FROM ppo.appointments WHERE work_order_id=$1 ORDER BY status",
+      [w.id],
+    ),
+    [{ status: "Cancelled" }],
+  );
+  // The work order is unscheduled again, so it is demand again.
+  const back = await readUnassignedDemand(p);
+  assert.equal(back.completeness, "Complete");
+  assert.equal(back.items.length, 1);
+  assert.equal(back.items[0].id, order);
+  assert.equal(back.items[0].projection, "UnassignedDemand");
+  // A second live visit takes it back out, so cancellation is not a one-way door.
+  const again = await current(1);
+  await proposeVisit(p, again.w.id, {
+    ...base(),
+    id: randomUUID(),
+    expected_version: again.w.version,
+    scope_revision_id: again.r.id,
+    scope_version: again.r.version,
+    start_at: "2026-09-26T00:00:00Z",
+    end_at: "2026-09-26T02:00:00Z",
+    customer_commitment: "Proposed",
+    preparation_status: "Preparing",
+  });
+  assert.deepEqual((await readUnassignedDemand(p)).items, []);
 });
 test("unassigned demand refuses without schedule.read and never crosses a scope boundary", async () => {
   const p = await principal();
