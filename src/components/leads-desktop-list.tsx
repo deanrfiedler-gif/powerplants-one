@@ -361,7 +361,7 @@ export function LeadsDesktopList({
       .split(",")
       .map((id) => columns.find((c) => c.id === id))
       .filter((c): c is Column => !!c);
-    if (cols.length !== live.length || handles.length !== live.length) return;
+    if (cols.length !== live.length || handles.length !== live.length - 1) return;
     const fixed = selectWidth + actionWidth;
     const defaults = () => {
       const floor = live.reduce((a, c) => a + c.min, 0);
@@ -390,8 +390,8 @@ export function LeadsDesktopList({
       table.style.width = `${widths.reduce((a, b) => a + b, 0) + fixed}px`;
       cols.forEach((c, i) => {
         c.style.width = `${widths[i]}px`;
-        handles[i].setAttribute("aria-valuenow", String(widths[i]));
-        handles[i].setAttribute("aria-valuetext", `${widths[i]} pixels`);
+        handles[i]?.setAttribute("aria-valuenow", String(widths[i]));
+        handles[i]?.setAttribute("aria-valuetext", `${widths[i]} pixels`);
       });
     };
     const save = () =>
@@ -605,7 +605,7 @@ export function LeadsDesktopList({
                   }
                 />
               </th>
-              {shown.map((c) => (
+              {shown.map((c, i) => (
                 <th
                   key={c.id}
                   scope="col"
@@ -649,6 +649,7 @@ export function LeadsDesktopList({
                   }}
                 >
                   {c.heading}
+                  {i < shown.length - 1 && (
                   <span
                     className="lead-column-resizer"
                     draggable={false}
@@ -662,6 +663,7 @@ export function LeadsDesktopList({
                     aria-valuenow={c.min}
                     title="Drag to resize · double-click to fit content"
                   />
+                  )}
                 </th>
               ))}
               <th scope="col" className="lead-cell-actions">

@@ -1134,6 +1134,11 @@
   .lead-table th:last-child {
     border-right: 0;
   }
+  /* The gear rail carries the seam itself, so the last data heading must not
+     add a second border beside it. */
+  .lead-table thead th:nth-last-child(2) {
+    border-right: 0;
+  }
   .lead-table td {
     height: 52px;
     padding: 12px 14px;
