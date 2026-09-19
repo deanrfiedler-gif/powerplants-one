@@ -183,9 +183,10 @@ test("approved desktop columns resize independently and retain widths with quiet
   await expect(page.locator(".lead-table tbody tr")).toHaveCount(1);
   await expect(page.locator(".lead-add")).toHaveText("Lead");
   await page.getByRole("button", { name: "Reset columns" }).click();
+  // The selection and row-action rails are fixed; only .lead-col resizes.
   const widths = () =>
     page
-      .locator(".lead-table col")
+      .locator(".lead-table col.lead-col")
       .evaluateAll((cs) => cs.map((c) => c.getBoundingClientRect().width));
   const handle = page.getByRole("separator", {
     name: "Resize Lead title column",
@@ -208,7 +209,7 @@ test("approved desktop columns resize independently and retain widths with quiet
   expect(after[0] - before[0]).toBeCloseTo(120, 0);
   expect(after.slice(1)).toEqual(before.slice(1));
   for (const offset of await page
-    .locator(".lead-table th")
+    .locator(".lead-table th:has(.lead-column-resizer)")
     .evaluateAll((ths) =>
       ths.map(
         (th) =>

@@ -28,12 +28,6 @@
   margin: 0;
   font-size: 25px;
 }
-.lead-count {
-  background: #e8edf2;
-  border-radius: 20px;
-  padding: 2px 8px;
-  font-size: 13px;
-}
 .lead-add {
   margin-left: auto;
   display: flex;
@@ -79,6 +73,23 @@
 .lead-sort {
   max-width: 160px;
   margin-bottom: 18px;
+}
+/* The toolbar leading icons are a desktop-container affordance only. */
+.lead-search .product-icon,
+.lead-sort .product-icon {
+  display: none;
+}
+/* Selection boxes must escape the full-width control rules above. */
+.leads-workspace input[type="checkbox"] {
+  display: inline-block;
+  width: 16px;
+  min-width: 16px;
+  height: 16px;
+  min-height: 16px;
+  margin: 0;
+  padding: 0;
+  accent-color: #62bb46;
+  cursor: pointer;
 }
 .lead-table-wrap {
   background: white;
@@ -495,11 +506,16 @@
     padding: 8px 0;
     min-height: 44px;
   }
-  .lead-heading {
+  /* The desktop toolbar band is not used here; its children keep their own rules. */
+  .lead-toolbar-row,
+  .lead-heading,
+  .lead-add-group {
     display: contents;
   }
   .lead-heading h1,
-  .lead-count {
+  .lead-add-more,
+  .lead-result-count,
+  .lead-toolbar-more {
     display: none;
   }
   .leads-workspace .lead-add {
@@ -528,7 +544,8 @@
   }
   .lead-search,
   .lead-toolbar,
-  .lead-sort {
+  .lead-sort,
+  .lead-filter-menus {
     display: none;
     max-width: none;
   }
@@ -557,20 +574,6 @@
     font-size: 16px;
     min-height: 44px;
   }
-  .lead-mobile-summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 11px 16px;
-    min-height: 44px;
-    color: #596575;
-    font-size: 12px;
-  }
-  .lead-mobile-summary strong {
-    font-size: 13px;
-    font-weight: 500;
-    color: #394454;
-  }
   .lead-table-wrap {
     display: none;
   }
@@ -579,57 +582,52 @@
     background: white;
   }
   .lead-mobile-row {
-    display: block;
-    padding: 14px 16px;
-    min-height: 98px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 14px;
+    row-gap: 3px;
+    padding: 13px 16px;
+    min-height: 88px;
     border-bottom: 1px solid #e1e6ec;
     text-decoration: none;
     color: #242a37;
     background: white;
   }
+  .lead-mobile-row > .lead-pill {
+    grid-column: 1;
+    justify-self: start;
+    margin: 0 0 2px;
+  }
   .lead-mobile-row > strong {
+    grid-column: 1;
     display: block;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
-    line-height: 23px;
+    line-height: 24px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .lead-mobile-row > span {
+  .lead-mobile-row > .lead-mobile-who {
+    grid-column: 1;
     display: block;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 21px;
     color: #596575;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .lead-mobile-row .lead-row-meta {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    margin-top: 5px;
-    font-size: 12px;
-    line-height: 18px;
+  .lead-mobile-row > .lead-mobile-flag {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    display: grid;
+    place-items: center;
   }
-  .lead-row-status {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .lead-row-status:before {
-    content: "";
-    width: 5px;
-    height: 5px;
-    background: #7b8796;
-    border-radius: 50%;
-  }
-  .lead-row-status.contacting:before {
-    background: #367394;
-  }
-  .lead-row-status.nurturing:before {
-    background: #8a699d;
+  .lead-mobile-row > .lead-mobile-flag .product-icon {
+    width: 24px;
+    height: 24px;
   }
   .lead-empty {
     min-height: calc(100dvh - 204px);
@@ -726,58 +724,280 @@
   .leads-workspace > :not(.lead-desktop-results) {
     flex-shrink: 0;
   }
+  /* The shell's module row is redundant here; the rail still carries navigation. */
+  body:has(.leads-workspace) .module-navigation {
+    display: none;
+  }
+  /* One toolbar band between the shell header and the table. */
+  .lead-toolbar-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px 18px;
+    border-bottom: 1px solid #e1e5eb;
+  }
   .lead-heading {
-    padding: 22px 26px 17px;
+    display: flex;
+    align-items: center;
+    padding: 0;
     margin: 0;
-    gap: 11px;
+    gap: 0;
   }
-  .lead-heading h1 {
-    font-size: 24px;
-    font-weight: 600;
+  .lead-add-group {
+    display: flex;
+    align-items: stretch;
   }
-  .lead-add {
-    padding-inline: 17px;
+  /* Outranks the generic .leads-workspace button and .lead-primary rules. */
+  .leads-workspace .lead-add {
+    padding-inline: 14px;
     min-height: 38px;
-    border-radius: 6px;
+    border-radius: 8px 0 0 8px;
+    font-size: 14px;
+    font-weight: 400;
+    gap: 6px;
+  }
+  .lead-add-more.crm-r38-menu-trigger {
+    min-height: 38px;
+    width: 32px;
+    padding: 0;
+    gap: 0;
+    border: 1px solid #242a37;
+    border-left-color: #3a4252;
+    border-radius: 0 8px 8px 0;
+    background: #242a37;
+    color: #fff;
+  }
+  .lead-add-more.crm-r38-menu-trigger:hover {
+    background: #3a4252;
+  }
+  .lead-add-more .product-icon {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+    stroke: none;
+  }
+  .leads-workspace .lead-add .product-icon {
+    width: 13px;
+    height: 13px;
+    stroke-width: 3.2;
   }
   .lead-lifecycle-tabs {
     display: flex;
-    gap: 25px;
-    padding: 0 26px;
-    border-bottom: 1px solid #e1e5eb;
+    gap: 3px;
+    padding: 3px;
+    border: 1px solid #e1e5eb;
+    border-radius: 10px;
+    background: #f6f7f9;
   }
   .lead-lifecycle-tabs button {
+    display: grid;
+    place-items: center;
+    width: 38px;
     background: transparent;
     color: #667181;
     border: 0;
-    border-bottom: 3px solid transparent;
-    border-radius: 0;
-    min-height: 38px;
-    padding: 0 1px 12px;
+    border-radius: 7px;
+    min-height: 32px;
+    padding: 0;
     font-size: 14px;
+    font-weight: 400;
+  }
+  .lead-lifecycle-tabs button .product-icon {
+    width: 18px;
+    height: 18px;
   }
   .lead-lifecycle-tabs button[aria-current="page"] {
     color: #242a37;
-    border-bottom-color: #62bb46;
-    font-weight: 600;
+    background: #fff;
+    box-shadow: 0 1px 2px #242a3708;
   }
-  .lead-lifecycle-tabs button:hover {
+  .lead-lifecycle-tabs button:hover:not([aria-current="page"]) {
+    background: #e9ecf1;
+    color: #242a37;
+  }
+  .lead-result-count {
+    font-size: 13px;
+    color: #667181;
+    white-space: nowrap;
+  }
+  /* crm-r38.css scopes every popover rule under #ppo-deals, so these menus
+     arrive unstyled here and the whole surface is defined below. */
+  .leads-workspace .crm-r38-popover {
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    width: 268px;
+    max-width: calc(100vw - 16px);
+    padding: 7px;
+    overflow: auto;
+    border: 1px solid #e1e5eb;
+    border-radius: 12px;
+    background: #fff;
+    color: #242a37;
+    box-shadow: 0 12px 32px #242a3733;
+    font-size: 14px;
+  }
+  .leads-workspace .crm-r38-popover h2 {
+    margin: 4px 8px 9px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #667181;
+  }
+  .leads-workspace .crm-r38-popover button {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    min-height: 34px;
+    padding: 6px 8px;
+    justify-content: flex-start;
+    text-align: left;
+    border: 0;
+    border-radius: 7px;
     background: transparent;
     color: #242a37;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .leads-workspace .crm-r38-popover button:hover:not(:disabled) {
+    background: #f0f2f5;
+  }
+  .leads-workspace .crm-r38-popover button:disabled {
+    opacity: 0.55;
+    background: transparent;
+    cursor: not-allowed;
+  }
+  .leads-workspace .crm-r38-popover button .product-icon:last-child {
+    margin-left: auto;
+    color: var(--green);
+  }
+  /* These triggers all sit on the right gutter, so their menus align there. */
+  .lead-toolbar-more + .crm-r38-popover,
+  .lead-columns-menu + .crm-r38-popover,
+  .lead-row-menu + .crm-r38-popover {
+    left: auto !important;
+    right: 18px;
+  }
+  .lead-filter-menus {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .lead-filter-choice.crm-r38-menu-trigger,
+  .lead-filter-menu.crm-r38-menu-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 38px;
+    padding: 0 11px;
+    border: 1px solid #cbd2dc;
+    border-radius: 8px;
+    background: #fff;
+    color: #242a37;
+    font-size: 14px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  .lead-filter-choice.crm-r38-menu-trigger:hover,
+  .lead-filter-menu.crm-r38-menu-trigger:hover {
+    background: #f6f7f9;
+  }
+  .lead-filter-choice .product-icon,
+  .lead-filter-menu .product-icon {
+    width: 16px;
+    height: 16px;
+    color: #667181;
+  }
+  /* Outranks the .lead-list-controls label rule that blanks toolbar labels. */
+  .lead-list-controls .lead-filter-field,
+  .lead-list-controls .lead-filter-field > span {
+    display: block;
+    padding: 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: #667181;
+  }
+  .lead-filter-field {
+    padding: 4px 8px 8px !important;
+  }
+  .lead-filter-field input,
+  .lead-filter-field select {
+    width: 100%;
+    min-height: 36px;
+    margin: 5px 0 0;
+    padding: 8px 10px;
+    border: 1px solid #cbd2dc;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #242a37;
+  }
+  .lead-filter-clear {
+    margin-top: 2px;
+    border-top: 1px solid #e1e5eb !important;
+    border-radius: 0 !important;
+    padding-top: 10px !important;
+  }
+  .lead-menu-note {
+    margin: 0 0 8px;
+    font-size: 12px;
+    color: #667181;
+  }
+  .lead-toolbar-more.crm-r38-menu-trigger {
+    min-height: 38px;
+    width: 44px;
+    padding: 0;
+    gap: 0;
+    border-radius: 8px;
   }
   .lead-list-controls {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
-    padding: 15px 26px;
-    border-bottom: 1px solid #e1e5eb;
+    gap: 9px;
+    padding: 0;
+    margin-left: auto;
   }
-  .lead-list-controls .lead-search {
-    flex: 1;
-    min-width: 200px;
-    max-width: 350px;
-    margin-right: 5px;
+  /* Search, filters and sort are consolidated into the menus below; these
+     native controls remain for the phone filter panel. */
+  .lead-list-controls .lead-search,
+  .lead-list-controls .lead-toolbar,
+  .lead-list-controls .lead-sort {
+    display: none;
+  }
+  .lead-list-controls .lead-search label {
+    position: relative;
+    display: block;
+  }
+  .lead-list-controls .lead-search .product-icon {
+    display: block;
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    transform: translateY(-50%);
+    color: #667181;
+    pointer-events: none;
+  }
+  .lead-list-controls .lead-search input {
+    padding-left: 36px;
+  }
+  .lead-list-controls .lead-sort label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .lead-list-controls .lead-sort .product-icon {
+    display: block;
+    flex: none;
+    width: 16px;
+    height: 16px;
+    color: #667181;
   }
   .lead-list-controls .lead-toolbar {
     margin: 0;
@@ -786,19 +1006,22 @@
   }
   .lead-list-controls .lead-sort {
     margin: 0 0 0 auto;
+    max-width: 182px;
   }
   .lead-list-controls label {
     font-size: 0;
     color: transparent;
+    font-weight: 400;
   }
   .lead-list-controls input,
   .lead-list-controls select {
     font-size: 14px;
+    font-weight: 400;
     color: #242a37;
     margin: 0;
     min-height: 38px;
     border: 1px solid #cbd2dc;
-    border-radius: 6px;
+    border-radius: 8px;
   }
   .lead-list-controls select {
     min-width: 125px;
@@ -823,6 +1046,30 @@
     padding: 8px 26px;
     margin: 0;
   }
+  /* The retry control is a direct flex child; without this it stretches full-bleed. */
+  .leads-workspace > button {
+    align-self: flex-start;
+    margin: 4px 26px 12px;
+    min-height: 36px;
+    padding: 8px 13px;
+    border: 1px solid #cbd2dc;
+    border-radius: 8px;
+    background: #fff;
+    color: #242a37;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .leads-workspace > button:hover {
+    background: #f0f2f5;
+  }
+  .leads-workspace > .lead-loading {
+    display: grid;
+    place-items: center;
+    flex: 1;
+    min-height: 0;
+    color: #727c89;
+    font-size: 14px;
+  }
   .lead-desktop-results {
     display: flex;
     flex-direction: column;
@@ -838,7 +1085,6 @@
     border-radius: 0;
     overflow: auto;
     overscroll-behavior: contain;
-    scrollbar-gutter: stable;
   }
   .lead-table {
     border-collapse: separate;
@@ -870,8 +1116,13 @@
   .lead-table th:last-child {
     border-right: 0;
   }
+  /* The gear rail carries the seam itself, so the last data heading must not
+     add a second border beside it. */
+  .lead-table thead th:nth-last-child(2) {
+    border-right: 0;
+  }
   .lead-table td {
-    height: 77px;
+    height: 52px;
     padding: 12px 14px;
     overflow: hidden;
     border-top: 0;
@@ -958,22 +1209,268 @@
     font-size: 12px;
     color: #667181;
   }
+  /* Fixed rails either side of the resizable columns. */
+  .lead-table col.lead-col-select {
+    width: 52px;
+  }
+  .lead-table col.lead-col-actions {
+    width: 67px;
+  }
+  .lead-table th.lead-cell-select,
+  .lead-table td.lead-cell-select,
+  .lead-table th.lead-cell-actions,
+  .lead-table td.lead-cell-actions {
+    position: sticky;
+    padding: 0;
+    background: #fff;
+  }
+  .lead-table th.lead-cell-select,
+  .lead-table td.lead-cell-select {
+    text-align: center;
+    border-right: 1px solid #e1e5eb;
+  }
+  /* item 3: the gear and row menus share the account button's centre line.
+     The left border belongs to the frozen rail itself, so it survives the
+     data columns scrolling underneath it. */
+  .lead-table th.lead-cell-actions,
+  .lead-table td.lead-cell-actions {
+    text-align: center;
+    border-left: 1px solid #e1e5eb;
+  }
+  /* Data columns reorder by dragging their heading. */
+  .lead-table th[draggable="true"] {
+    cursor: grab;
+    user-select: none;
+  }
+  /* The whole dragged column greys out, and the landing rule runs the full
+     height of the table because every cell draws its own segment. */
+  .lead-table th.lead-column-lifted,
+  .lead-table td.lead-column-lifted {
+    background: #e9ecf1;
+    color: #727c89;
+  }
+  .lead-table th.lead-column-lifted {
+    cursor: grabbing;
+  }
+  .lead-table td.lead-column-lifted a,
+  .lead-table td.lead-column-lifted .lead-truncate {
+    color: #727c89;
+  }
+  .lead-table td.lead-column-landing-before,
+  .lead-table td.lead-column-landing-after {
+    position: relative;
+  }
+  .lead-table th.lead-column-landing-before::before,
+  .lead-table td.lead-column-landing-before::before,
+  .lead-table th.lead-column-landing-after::after,
+  .lead-table td.lead-column-landing-after::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--green);
+    z-index: 4;
+    pointer-events: none;
+  }
+  .lead-table th.lead-column-landing-before::before,
+  .lead-table td.lead-column-landing-before::before {
+    left: -1px;
+  }
+  .lead-table th.lead-column-landing-after::after,
+  .lead-table td.lead-column-landing-after::after {
+    right: -1px;
+  }
+  .lead-column-group {
+    margin: 10px 8px 4px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #667181;
+  }
+  .lead-column-row {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+  .lead-column-row .lead-column-toggle {
+    flex: 1;
+    min-width: 0;
+  }
+  .lead-column-move {
+    display: flex;
+    flex: none;
+    gap: 2px;
+  }
+  .leads-workspace .crm-r38-popover .lead-column-move button {
+    width: 26px;
+    min-height: 26px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 6px;
+    color: #667181;
+  }
+  .lead-column-move .product-icon {
+    width: 14px;
+    height: 14px;
+  }
+  .lead-table th.lead-cell-select,
+  .lead-table td.lead-cell-select {
+    left: 0;
+  }
+  .lead-table th.lead-cell-actions,
+  .lead-table td.lead-cell-actions {
+    right: 0;
+    border-right: 0;
+  }
+  .lead-table th.lead-cell-select,
+  .lead-table th.lead-cell-actions {
+    z-index: 3;
+    background: #f6f7f9;
+  }
+  .lead-table td.lead-cell-select,
+  .lead-table td.lead-cell-actions {
+    z-index: 1;
+  }
+  .lead-table td.lead-cell-select {
+    border-left: 0;
+  }
+  .lead-table th.lead-cell-select {
+    border-right-color: #e1e5eb;
+  }
+  .lead-table tbody tr:hover td.lead-cell-select,
+  .lead-table tbody tr:hover td.lead-cell-actions {
+    background: #f8fafb;
+  }
+  .lead-table tr.lead-selected td.lead-cell-select,
+  .lead-table tr.lead-selected td.lead-cell-actions {
+    background: #f3f7f1;
+  }
+  .lead-columns-menu.crm-r38-menu-trigger,
+  .lead-row-menu.crm-r38-menu-trigger {
+    min-height: 30px;
+    width: 30px;
+    margin: 0 auto;
+    padding: 0;
+    gap: 0;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: #667181;
+  }
+  .lead-columns-menu.crm-r38-menu-trigger:hover,
+  .lead-row-menu.crm-r38-menu-trigger:hover {
+    background: #e9ecf1;
+    color: #242a37;
+  }
+  .lead-columns-menu .product-icon,
+  .lead-row-menu .product-icon {
+    width: 16px;
+    height: 16px;
+  }
+  .lead-column-search input {
+    width: 100%;
+    min-height: 36px;
+    margin: 0 0 8px;
+    padding: 8px 10px;
+    border: 1px solid #cbd2dc;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .lead-column-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    justify-content: flex-start;
+    min-height: 32px;
+    padding: 4px 6px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: left;
+  }
+  .lead-column-toggle:hover:not(:disabled) {
+    background: #f0f2f5;
+  }
+  .lead-column-tick {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 16px;
+    height: 16px;
+    color: var(--green);
+  }
+  .lead-column-tick .product-icon {
+    width: 14px;
+    height: 14px;
+  }
+  .lead-selection-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: none;
+    padding: 8px 26px;
+    border-bottom: 1px solid #e1e5eb;
+    background: #f3f7f1;
+    font-size: 13px;
+  }
+  .lead-selection-bar button {
+    min-height: 30px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 400;
+  }
+  .lead-empty {
+    padding: 80px 24px;
+  }
+  .lead-empty .product-icon {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 12px;
+  }
+  .lead-empty h2 {
+    font-size: 19px;
+    margin: 0 0 8px;
+  }
+  .lead-empty p {
+    margin: 0 0 17px;
+    color: #667181;
+  }
+  .lead-empty button {
+    min-height: 36px;
+    padding: 8px 13px;
+    border: 1px solid #cbd2dc;
+    border-radius: 8px;
+    background: #fff;
+    color: #242a37;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .lead-empty button:hover {
+    background: #f0f2f5;
+  }
   .lead-list-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
+    gap: 18px;
     flex-wrap: wrap;
     flex: none;
     min-height: 46px;
-    padding: 10px 26px;
+    padding: 11px 26px;
     border-top: 1px solid #e1e5eb;
     color: #667181;
     font-size: 12px;
   }
   .lead-list-footer > div {
     display: flex;
-    gap: 12px;
+    gap: 16px;
     align-items: center;
   }
   .lead-list-footer button {

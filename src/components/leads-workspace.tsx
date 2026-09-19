@@ -7,7 +7,8 @@ import { useIdentity } from "./business-session";
 import { ErrorNotice, type Envelope, type Option } from "./business-ui";
 import { LookupField } from "./record-ui";
 import { denied, useCrmCommand, useCrmResource } from "./crm-state";
-import { ProductIcon } from "./product-icons";
+import { ProductIcon, type ProductIconName } from "./product-icons";
+import { WorklistChoice, WorklistMenu } from "./crm-worklist-tools";
 import type { listLeads, readLead } from "../crm/leads/reads";
 type Lead = Awaited<ReturnType<typeof readLead>>;
 type List = Awaited<ReturnType<typeof listLeads>>;
@@ -22,6 +23,12 @@ type Mode =
   | "disqualify"
   | "reopen";
 const sourceOptions = ["Phone", "Email", "Meeting", "Referral", "Other"];
+const leadViews: { id: string; label: string; icon: ProductIconName }[] = [
+  { id: "Active", label: "Inbox", icon: "inbox" },
+  { id: "Archived", label: "Archived", icon: "archive" },
+  { id: "Disqualified", label: "Disqualified", icon: "disqualified" },
+  { id: "Converted", label: "Converted", icon: "converted" },
+];
 const actionLabels = {
   Needed: "Next action needed",
   DueNeeded: "Due date needed",
@@ -1103,8 +1110,89 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
       </button>
     </>
   );
+  /* Desktop consolidates the same filters into themed menus; the selects above
+     stay for the phone filter panel. */
+  const narrowed = ["q", "status", "source"].filter((k) => !!params.get(k)).length;
+  const desktopFilters = (
+    <div className="lead-filter-menus">
+      <WorklistChoice
+        label="Lead owner"
+        icon="person"
+        className="lead-filter-choice"
+        value={params.get("owner_id") ?? ""}
+        options={[
+          { id: "", label: "Everyone" },
+          { id: identity.actor_id, label: "My leads" },
+        ]}
+        onChange={(v) => change("owner_id", v)}
+      />
+      <WorklistMenu
+        label="Filters"
+        icon="filter"
+        className="lead-filter-menu"
+        text={
+          <>
+            <span>Filters{narrowed ? ` · ${narrowed}` : ""}</span>
+            <ProductIcon name="chevron" />
+          </>
+        }
+      >
+        <label className="lead-filter-field">
+          <span>Search leads</span>
+          <input
+            type="search"
+            value={search}
+            placeholder="Search leads"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </label>
+        <label className="lead-filter-field">
+          <span>Status</span>
+          <select
+            disabled={view !== "Active"}
+            value={params.get("status") ?? ""}
+            onChange={(e) => change("status", e.target.value)}
+          >
+            <option value="">All statuses</option>
+            {["New", "Contacting", "Nurturing"].map((v) => (
+              <option key={v}>{v}</option>
+            ))}
+          </select>
+        </label>
+        <label className="lead-filter-field">
+          <span>Source</span>
+          <select
+            value={params.get("source") ?? ""}
+            onChange={(e) => change("source", e.target.value)}
+          >
+            <option value="">All sources</option>
+            {sourceOptions.map((v) => (
+              <option key={v}>{v}</option>
+            ))}
+          </select>
+        </label>
+        <button
+          type="button"
+          className="secondary lead-filter-clear"
+          disabled={!hasFilters}
+          data-menu-close
+          onClick={clearFilters}
+        >
+          Clear filters
+        </button>
+      </WorklistMenu>
+      <WorklistChoice
+        label="Sort order"
+        icon="sort"
+        className="lead-filter-choice"
+        value={params.get("sort") ?? "Newest"}
+        options={["Newest", "Oldest", "Name"].map((v) => ({ id: v, label: v }))}
+        onChange={(v) => change("sort", v)}
+      />
+    </div>
+  );
   return (
-    <section className="leads-workspace">
+    <section className="leads-workspace" aria-label="Leads workspace">
       <header className="lead-mobile-header">
         <Link href="/sales/opportunities" aria-label="Back to deals">
           <Icon name="back" />
@@ -1147,38 +1235,58 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
           <ProductIcon name="filter" />
         </button>
       </header>
-      <div className="lead-heading">
-        <h1>Leads</h1>
-        <span className="lead-count">
-          {items.length}
-          {list.data?.next_cursor ? "+" : ""}
-        </span>
-        {list.data?.can_create && (
+      <div className="lead-toolbar-row">
+        <nav className="lead-lifecycle-tabs" aria-label="Lead lifecycle">
+        {leadViews.map((v) => (
           <button
-            className="lead-add lead-primary"
-            aria-label="Add lead"
-            onClick={() => setMode("add")}
+            key={v.id}
+            aria-current={view === v.id ? "page" : undefined}
+            aria-label={v.label}
+            title={v.label}
+            onClick={() => change("view", v.id)}
           >
-            <ProductIcon name="plus" />
-            <span>Lead</span>
-          </button>
-        )}
-      </div>
-      <nav className="lead-lifecycle-tabs" aria-label="Lead lifecycle">
-        {["Active", "Archived", "Disqualified", "Converted"].map((v) => (
-          <button
-            key={v}
-            aria-current={view === v ? "page" : undefined}
-            onClick={() => change("view", v)}
-          >
-            {v === "Active" ? "Inbox" : v}
+            <ProductIcon name={v.icon} />
           </button>
         ))}
       </nav>
+      <div className="lead-heading">
+        <h1 className="sr-only">Leads</h1>
+        {list.data?.can_create && (
+          <div className="lead-add-group">
+            <button
+              className="lead-add lead-primary"
+              aria-label="Add lead"
+              onClick={() => setMode("add")}
+            >
+              <ProductIcon name="plus" />
+              <span>Lead</span>
+            </button>
+            <WorklistMenu
+              label="Add lead options"
+              className="lead-add-more"
+              text={<ProductIcon name="caret" />}
+            >
+              <p className="lead-menu-note">
+                This action is not yet available.
+              </p>
+              <button type="button" className="secondary" disabled>
+                Import data
+              </button>
+            </WorklistMenu>
+          </div>
+        )}
+      </div>
       <div className="lead-list-controls">
+        <span className="lead-result-count">
+          {items.length}
+          {list.data?.next_cursor ? "+" : ""}{" "}
+          {items.length === 1 ? "lead" : "leads"}
+        </span>
+        {desktopFilters}
         <div className={`lead-search ${searchOpen ? "open" : ""}`}>
           <label>
             Search leads
+            <Icon name="search" />
             <input
               type="search"
               value={search}
@@ -1206,6 +1314,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
         <div className={`lead-sort ${sortOpen ? "open" : ""}`}>
           <label>
             Sort by
+            <Icon name="sort" />
             <select
               value={params.get("sort") ?? "Newest"}
               onChange={(e) => change("sort", e.target.value)}
@@ -1216,6 +1325,27 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
             </select>
           </label>
         </div>
+        <WorklistMenu
+          label="Leads options"
+          className="lead-toolbar-more"
+          text={<ProductIcon name="more" />}
+        >
+          <p className="lead-menu-note">
+            These actions are not yet available.
+          </p>
+          {[
+            "Export filter results",
+            "Import data",
+            "Open data cleanup",
+            "Restore data",
+            "Settings",
+          ].map((v) => (
+            <button key={v} type="button" className="secondary" disabled>
+              {v}
+            </button>
+          ))}
+        </WorklistMenu>
+        </div>
       </div>
       <p className="lead-notice" role="status">
         {notice}
@@ -1224,7 +1354,11 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
       {list.error != null && (
         <button onClick={list.reload}>Try loading again</button>
       )}
-      {list.loading && <p role="status">Loading permitted leads…</p>}
+      {list.loading && (
+        <p className="lead-loading" role="status">
+          Loading permitted leads…
+        </p>
+      )}
       {list.data && (
         <>
           <LeadsDesktopList
@@ -1235,6 +1369,10 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
             view={view}
             queryKey={query}
             filtered={hasFilters}
+            onAction={(id, next) => {
+              router.push(openLead(id));
+              setMode(next);
+            }}
             more={!!list.data.next_cursor}
             firstPage={!params.get("cursor")}
             onNext={nextPage}
@@ -1280,34 +1418,33 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
                       className="lead-mobile-row"
                       key={l.id}
                       href={openLead(l.id)}
-                      aria-label={`${l.title}, ${l.owner_name}, ${l.status}`}
+                      aria-label={`${l.title}, ${l.owner_name}, ${l.status}${
+                        l.next_action_state === "Upcoming"
+                          ? ""
+                          : `, ${actionLabels[l.next_action_state as keyof typeof actionLabels]}`
+                      }`}
                     >
+                      <span className={`lead-pill ${l.status.toLowerCase()}`}>
+                        {l.status}
+                      </span>
                       <strong>{l.title}</strong>
-                      <span>
+                      <span className="lead-mobile-who">
                         {[l.organisation_name, l.contact_name]
                           .filter(Boolean)
                           .join(" · ") || "Details to confirm"}
                       </span>
-                      <span className="lead-row-meta">
+                      {l.next_action_state !== "Upcoming" && (
                         <span
-                          className={`lead-row-status ${l.status.toLowerCase()}`}
-                        >
-                          {l.status}
-                        </span>
-                        <span
-                          className={
-                            l.next_action_state !== "Upcoming"
-                              ? "lead-attention"
-                              : ""
-                          }
-                        >
-                          {
+                          className="lead-mobile-flag lead-attention"
+                          title={
                             actionLabels[
                               l.next_action_state as keyof typeof actionLabels
                             ]
                           }
+                        >
+                          <ProductIcon name="warning" />
                         </span>
-                      </span>
+                      )}
                     </Link>
                   ))}
                 </div>

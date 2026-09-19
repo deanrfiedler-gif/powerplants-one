@@ -1,22 +1,27 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useId, useRef } from "react";
+import {
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
+import { ProductIcon } from "./product-icons";
+import { WorklistMenu } from "./crm-worklist-tools";
 import type { listLeads } from "../crm/leads/reads";
 
 type Item = Awaited<ReturnType<typeof listLeads>>["items"][number];
+export type RowAction =
+  | "convert"
+  | "archive"
+  | "disqualify"
+  | "unarchive"
+  | "reopen";
 const scrollPositions = new Map<string, { top: number; left: number }>();
-const headings = [
-  "Lead title",
-  "Organisation / contact",
-  "Status",
-  "Lead owner",
-  "Next activity",
-  "Source",
-  "Date added",
-];
-const minimum = [190, 170, 110, 110, 205, 105, 110];
-const maximum = [650, 600, 260, 300, 650, 300, 230];
-const weights = [0.23, 0.2, 0.1, 0.11, 0.19, 0.09, 0.08];
+const selectWidth = 52,
+  actionWidth = 67;
 const day = (s: string) =>
   new Date(s).toLocaleDateString("en-AU", {
     day: "numeric",
@@ -24,6 +29,32 @@ const day = (s: string) =>
     year: "numeric",
     timeZone: "Australia/Brisbane",
   });
+const store = (key: string): { visible?: string[]; widths?: Record<string, number> } => {
+  try {
+    const value = JSON.parse(localStorage.getItem(key) ?? "null");
+    return value && typeof value === "object" ? value : {};
+  } catch {
+    return {};
+  }
+};
+const keep = (key: string, patch: object) => {
+  try {
+    localStorage.setItem(key, JSON.stringify({ ...store(key), ...patch }));
+  } catch {
+    /* Columns still work without persistence. */
+  }
+  watchers.forEach((cb) => cb());
+};
+/* Column choice lives in storage, so it is read as an external store rather
+   than mirrored into state after mount. */
+const watchers = new Set<() => void>();
+const watchColumns = (cb: () => void) => {
+  watchers.add(cb);
+  return () => {
+    watchers.delete(cb);
+  };
+};
+const storedColumns = (key: string) => (store(key).visible ?? []).join(",");
 function Avatar({
   name,
   activity = false,
@@ -46,6 +77,194 @@ function Avatar({
     </span>
   );
 }
+type Column = {
+  id: string;
+  heading: string;
+  min: number;
+  max: number;
+  weight: number;
+  cell: (l: Item, href: (id: string) => string) => ReactNode;
+};
+const columns: Column[] = [
+  {
+    id: "title",
+    heading: "Lead title",
+    min: 190,
+    max: 520,
+    weight: 0.2,
+    cell: (l, href) => (
+      <Link href={href(l.id)} title={l.title}>
+        {l.title}
+      </Link>
+    ),
+  },
+  {
+    id: "reference",
+    heading: "Lead ID",
+    min: 130,
+    max: 240,
+    weight: 0.09,
+    cell: (l) => <span className="lead-date">{l.display_number}</span>,
+  },
+  {
+    id: "organisation",
+    heading: "Organisation",
+    min: 140,
+    max: 380,
+    weight: 0.14,
+    cell: (l) => (
+      <span className="lead-truncate" title={l.organisation_name ?? undefined}>
+        {l.organisation_name ?? "Organisation to confirm"}
+      </span>
+    ),
+  },
+  {
+    id: "contact",
+    heading: "Contact",
+    min: 125,
+    max: 340,
+    weight: 0.12,
+    cell: (l) => (
+      <span className="lead-truncate" title={l.contact_name ?? undefined}>
+        {l.contact_name ?? "Contact to confirm"}
+      </span>
+    ),
+  },
+  {
+    id: "status",
+    heading: "Status",
+    min: 100,
+    max: 240,
+    weight: 0.09,
+    cell: (l) => (
+      <span className="lead-status-stack">
+        <span className={`lead-pill ${l.status.toLowerCase()}`}>{l.status}</span>
+        {l.is_archived && <span className="lead-pill">Archived</span>}
+      </span>
+    ),
+  },
+  {
+    id: "owner",
+    heading: "Lead owner",
+    min: 110,
+    max: 280,
+    weight: 0.1,
+    cell: (l) => (
+      <span className="lead-owner-cell">
+        <Avatar name={l.owner_name} />
+        <span title={l.owner_name}>
+          {l.owner_name.replace(/^SYN\s+/, "").split(" ")[0]}
+        </span>
+      </span>
+    ),
+  },
+  {
+    id: "activity",
+    heading: "Next activity",
+    min: 180,
+    max: 520,
+    weight: 0.16,
+    cell: (l) => (
+      <span
+        className={`lead-truncate ${l.next_action_state === "Overdue" ? "lead-attention" : ""}`}
+        title={l.next_activity?.summary}
+      >
+        {l.next_activity?.summary ??
+          (l.next_action_state === "Unavailable"
+            ? "Next action unavailable"
+            : "Next action needed")}
+      </span>
+    ),
+  },
+  {
+    id: "activity_due",
+    heading: "Next activity due",
+    min: 120,
+    max: 260,
+    weight: 0.11,
+    cell: (l) => (
+      <span
+        className={`lead-date ${l.next_action_state === "Overdue" ? "lead-attention" : ""}`}
+      >
+        {l.next_activity?.due_at
+          ? `${l.next_action_state === "Overdue" ? "Overdue · " : ""}${day(l.next_activity.due_at)}`
+          : l.next_activity
+            ? "Due date needed"
+            : "Not scheduled"}
+      </span>
+    ),
+  },
+  {
+    id: "activity_owner",
+    heading: "Next activity owner",
+    min: 150,
+    max: 300,
+    weight: 0.11,
+    cell: (l) =>
+      l.next_activity ? (
+        <span className="lead-owner-cell">
+          <Avatar name={l.next_activity.owner_name} activity />
+          <span title={l.next_activity.owner_name}>
+            {l.next_activity.owner_name.replace(/^SYN\s+/, "").split(" ")[0]}
+          </span>
+        </span>
+      ) : (
+        <span className="lead-truncate">Not scheduled</span>
+      ),
+  },
+  {
+    id: "source",
+    heading: "Source",
+    min: 100,
+    max: 280,
+    weight: 0.09,
+    cell: (l) => (
+      <span className="lead-truncate" title={l.source_channel}>
+        {l.source_channel}
+      </span>
+    ),
+  },
+  {
+    id: "created",
+    heading: "Date added",
+    min: 100,
+    max: 220,
+    weight: 0.08,
+    cell: (l) => <span className="lead-date">{day(l.created_at)}</span>,
+  },
+  {
+    id: "archived",
+    heading: "Archived",
+    min: 100,
+    max: 200,
+    weight: 0.07,
+    cell: (l) => (
+      <span className="lead-date">{l.is_archived ? "Yes" : "No"}</span>
+    ),
+  },
+];
+const defaultVisible = [
+  "title",
+  "organisation",
+  "contact",
+  "status",
+  "owner",
+  "activity",
+  "activity_due",
+  "created",
+];
+const rowActions = (view: string): { mode: RowAction; label: string }[] =>
+  view === "Archived"
+    ? [{ mode: "unarchive", label: "Restore from archive" }]
+    : view === "Disqualified"
+      ? [{ mode: "reopen", label: "Reopen lead" }]
+      : view === "Converted"
+        ? []
+        : [
+            { mode: "convert", label: "Convert to deal" },
+            { mode: "archive", label: "Archive lead" },
+            { mode: "disqualify", label: "Disqualify lead" },
+          ];
 export function LeadsDesktopList({
   items,
   selected,
@@ -60,6 +279,7 @@ export function LeadsDesktopList({
   emptyLabel,
   filtered,
   queryKey,
+  onAction,
 }: {
   items: Item[];
   selected?: string;
@@ -74,28 +294,89 @@ export function LeadsDesktopList({
   emptyLabel: string;
   filtered: boolean;
   queryKey: string;
+  onAction: (id: string, mode: RowAction) => void;
 }) {
   const container = useRef<HTMLDivElement>(null),
     reset = useRef<() => void>(() => {}),
+    everyBox = useRef<HTMLInputElement>(null),
     help = useId();
+  const key = `ppo.leads.columns.v3:${preferenceKey}`;
+  const [chosen, setChosen] = useState<string[]>([]);
+  const [columnSearch, setColumnSearch] = useState("");
+  const saved = useSyncExternalStore(
+    watchColumns,
+    () => storedColumns(key),
+    () => "",
+  );
+  /* Stored order is the user's own column order, so it is kept as written
+     rather than sorted back into the declaration order. */
+  const stored = saved ? saved.split(",") : [];
+  const preferred = stored.filter((id) => columns.some((c) => c.id === id));
+  const visible = preferred.includes("title") ? preferred : defaultVisible;
+  const shown = visible
+    .map((id) => columns.find((c) => c.id === id))
+    .filter((c): c is Column => !!c);
+  const shownKey = shown.map((c) => c.id).join(",");
+  /* Selections are scoped to the rows on screen, so a page or view change
+     retires them without a reset pass. */
+  const present = new Set(items.map((i) => i.id));
+  const ticked = chosen.filter((id) => present.has(id));
+  const every = items.length > 0 && ticked.length === items.length;
+  const showVisible = (next: string[]) => keep(key, { visible: next });
+  /* Reordering only ever rearranges the data columns; the selection and
+     row-action rails are rendered outside this list and cannot move. */
+  const [dragged, setDragged] = useState<string | null>(null);
+  const [landing, setLanding] = useState<{ id: string; after: boolean } | null>(
+    null,
+  );
+  const place = (from: string, to: string, after: boolean) => {
+    if (from === to) return;
+    const next = visible.filter((id) => id !== from);
+    const at = next.indexOf(to);
+    if (at < 0) return;
+    next.splice(after ? at + 1 : at, 0, from);
+    showVisible(next);
+  };
+  const shift = (id: string, by: -1 | 1) => {
+    const at = visible.indexOf(id),
+      to = at + by;
+    if (at < 0 || to < 0 || to >= visible.length) return;
+    const next = [...visible];
+    next.splice(to, 0, ...next.splice(at, 1));
+    showVisible(next);
+  };
+  useEffect(() => {
+    if (everyBox.current)
+      everyBox.current.indeterminate = ticked.length > 0 && !every;
+  }, [ticked, every]);
   useEffect(() => {
     const el = container.current!,
       table = el.querySelector("table")!,
       scroll = el.querySelector<HTMLElement>(".lead-table-wrap")!;
-    const cols = [...table.querySelectorAll("col")],
+    const cols = [...table.querySelectorAll<HTMLElement>("col.lead-col")],
       handles = [
         ...table.querySelectorAll<HTMLElement>(".lead-column-resizer"),
       ];
-    const key = `ppo.leads.columns.v1:${preferenceKey}`;
+    const live = shownKey
+      .split(",")
+      .map((id) => columns.find((c) => c.id === id))
+      .filter((c): c is Column => !!c);
+    if (cols.length !== live.length || handles.length !== live.length - 1) return;
+    const fixed = selectWidth + actionWidth;
     const defaults = () => {
-      const extra = Math.max(
-        0,
-        scroll.clientWidth - minimum.reduce((a, b) => a + b, 0),
-      );
-      return minimum.map((n, i) => Math.round(n + extra * weights[i]));
+      const floor = live.reduce((a, c) => a + c.min, 0);
+      const share = live.reduce((a, c) => a + c.weight, 0) || 1;
+      const extra = Math.max(0, scroll.clientWidth - fixed - floor);
+      return live.map((c) => Math.round(c.min + extra * (c.weight / share)));
     };
-    let widths = defaults(),
-      custom = false;
+    const clamp = (n: number, i: number) =>
+      Math.round(Math.max(live[i].min, Math.min(live[i].max, n)));
+    const saved = store(key).widths ?? {};
+    const base = defaults();
+    let widths = live.map((c, i) =>
+      Number.isFinite(saved[c.id]) ? clamp(saved[c.id], i) : base[i],
+    );
+    let custom = live.some((c) => Number.isFinite(saved[c.id]));
     let drag: {
       index: number;
       start: number;
@@ -105,38 +386,21 @@ export function LeadsDesktopList({
       pointer: number;
       handle: HTMLElement;
     } | null = null;
-    try {
-      const saved = JSON.parse(localStorage.getItem(key) ?? "null");
-      if (
-        Array.isArray(saved) &&
-        saved.length === 7 &&
-        saved.every(
-          (n, i) => Number.isFinite(n) && n >= minimum[i] && n <= maximum[i],
-        )
-      ) {
-        widths = saved;
-        custom = true;
-      }
-    } catch {
-      /* Storage is optional. */
-    }
     const apply = () => {
-      table.style.width = `${widths.reduce((a, b) => a + b, 0)}px`;
+      table.style.width = `${widths.reduce((a, b) => a + b, 0) + fixed}px`;
       cols.forEach((c, i) => {
         c.style.width = `${widths[i]}px`;
-        handles[i].setAttribute("aria-valuenow", String(widths[i]));
-        handles[i].setAttribute("aria-valuetext", `${widths[i]} pixels`);
+        handles[i]?.setAttribute("aria-valuenow", String(widths[i]));
+        handles[i]?.setAttribute("aria-valuetext", `${widths[i]} pixels`);
       });
     };
-    const save = () => {
-      try {
-        localStorage.setItem(key, JSON.stringify(widths));
-      } catch {
-        /* Resize still works without persistence. */
-      }
-    };
-    const clamp = (n: number, i: number) =>
-      Math.round(Math.max(minimum[i], Math.min(maximum[i], n)));
+    const save = () =>
+      keep(key, {
+        widths: {
+          ...(store(key).widths ?? {}),
+          ...Object.fromEntries(live.map((c, i) => [c.id, widths[i]])),
+        },
+      });
     const end = (cancel = false) => {
       if (!drag) return;
       const old = drag;
@@ -209,9 +473,9 @@ export function LeadsDesktopList({
           const step = e.shiftKey ? 50 : 10;
           widths[i] = clamp(
             e.key === "Home"
-              ? minimum[i]
+              ? live[i].min
               : e.key === "End"
-                ? maximum[i]
+                ? live[i].max
                 : widths[i] + (e.key === "ArrowRight" ? step : -step),
             i,
           );
@@ -228,10 +492,10 @@ export function LeadsDesktopList({
           if (!ctx) return;
           ctx.font = getComputedStyle(table).font;
           const text = [
-            headings[i],
+            live[i].heading,
             ...[...table.tBodies[0].rows].flatMap((r) =>
-              r.cells[i]
-                ? [...r.cells[i].querySelectorAll("a,span,small")]
+              r.cells[i + 1]
+                ? [...r.cells[i + 1].querySelectorAll("a,span,small")]
                     .filter((n) => !n.children.length)
                     .map((n) => n.textContent ?? "")
                 : [],
@@ -239,7 +503,7 @@ export function LeadsDesktopList({
           ];
           widths[i] = clamp(
             Math.ceil(Math.max(...text.map((s) => ctx.measureText(s).width))) +
-              (i === 3 ? 70 : i === 4 ? 78 : 50),
+              (live[i].id === "owner" || live[i].id === "activity_owner" ? 70 : 50),
             i,
           );
           custom = true;
@@ -256,7 +520,10 @@ export function LeadsDesktopList({
       apply();
       try {
         localStorage.removeItem(key);
-      } catch {}
+      } catch {
+        /* Reset still applies to the current view. */
+      }
+      watchers.forEach((cb) => cb());
       scroll.scrollLeft = 0;
     };
     apply();
@@ -291,7 +558,8 @@ export function LeadsDesktopList({
       abort.abort();
       reset.current = () => {};
     };
-  }, [preferenceKey, queryKey]);
+  }, [preferenceKey, queryKey, key, shownKey]);
+  const search = columnSearch.trim().toLowerCase();
   return (
     <div className="lead-desktop-results" ref={container}>
       <p id={help} className="sr-only">
@@ -299,6 +567,16 @@ export function LeadsDesktopList({
         Shift by 50. Home and End set minimum and maximum widths. Double-click
         fits this page’s content. Escape cancels dragging.
       </p>
+      {ticked.length > 0 && (
+        <div className="lead-selection-bar" role="status">
+          <strong>
+            {ticked.length} {ticked.length === 1 ? "lead" : "leads"} selected
+          </strong>
+          <button className="secondary" onClick={() => setChosen([])}>
+            Clear selection
+          </button>
+        </div>
+      )}
       <div
         className="lead-table-wrap"
         tabIndex={0}
@@ -307,29 +585,172 @@ export function LeadsDesktopList({
       >
         <table className="lead-table">
           <colgroup>
-            {headings.map((h) => (
-              <col key={h} />
+            <col className="lead-col-select" />
+            {shown.map((c) => (
+              <col key={c.id} className="lead-col" />
             ))}
+            <col className="lead-col-actions" />
           </colgroup>
           <thead>
             <tr>
-              {headings.map((h, i) => (
-                <th key={h} scope="col">
-                  {h}
+              <th scope="col" className="lead-cell-select">
+                <input
+                  ref={everyBox}
+                  type="checkbox"
+                  aria-label="Select all leads on this page"
+                  checked={every}
+                  disabled={!items.length}
+                  onChange={(e) =>
+                    setChosen(e.target.checked ? items.map((i) => i.id) : [])
+                  }
+                />
+              </th>
+              {shown.map((c, i) => (
+                <th
+                  key={c.id}
+                  scope="col"
+                  draggable
+                  title={`${c.heading} — drag to reorder`}
+                  className={
+                    dragged === c.id
+                      ? "lead-column-lifted"
+                      : landing?.id === c.id
+                        ? `lead-column-landing-${landing.after ? "after" : "before"}`
+                        : undefined
+                  }
+                  onDragStart={(e) => {
+                    setDragged(c.id);
+                    e.dataTransfer.effectAllowed = "move";
+                    e.dataTransfer.setData("text/plain", c.id);
+                  }}
+                  onDragEnd={() => {
+                    setDragged(null);
+                    setLanding(null);
+                  }}
+                  onDragOver={(e) => {
+                    if (!dragged || dragged === c.id) return;
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = "move";
+                    const box = e.currentTarget.getBoundingClientRect();
+                    setLanding({
+                      id: c.id,
+                      after: e.clientX > box.left + box.width / 2,
+                    });
+                  }}
+                  onDragLeave={() =>
+                    setLanding((prior) => (prior?.id === c.id ? null : prior))
+                  }
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    if (dragged)
+                      place(dragged, c.id, landing?.after ?? false);
+                    setDragged(null);
+                    setLanding(null);
+                  }}
+                >
+                  {c.heading}
+                  {i < shown.length - 1 && (
                   <span
                     className="lead-column-resizer"
+                    draggable={false}
                     role="separator"
                     tabIndex={0}
                     aria-orientation="vertical"
-                    aria-label={`Resize ${h} column`}
+                    aria-label={`Resize ${c.heading} column`}
                     aria-describedby={help}
-                    aria-valuemin={minimum[i]}
-                    aria-valuemax={maximum[i]}
-                    aria-valuenow={minimum[i]}
+                    aria-valuemin={c.min}
+                    aria-valuemax={c.max}
+                    aria-valuenow={c.min}
                     title="Drag to resize · double-click to fit content"
                   />
+                  )}
                 </th>
               ))}
+              <th scope="col" className="lead-cell-actions">
+                <WorklistMenu
+                  label="Columns"
+                  className="lead-columns-menu"
+                  text={<ProductIcon name="gear" />}
+                >
+                  <label className="lead-column-search">
+                    <span className="sr-only">Search columns</span>
+                    <input
+                      type="search"
+                      value={columnSearch}
+                      placeholder="Search columns"
+                      onChange={(e) => setColumnSearch(e.target.value)}
+                    />
+                  </label>
+                  {shown.filter((c) => c.heading.toLowerCase().includes(search))
+                    .length > 0 && <h3 className="lead-column-group">Visible</h3>}
+                  {shown.map((c, i) =>
+                    c.heading.toLowerCase().includes(search) ? (
+                      <div key={c.id} className="lead-column-row">
+                        <button
+                          type="button"
+                          className="secondary lead-column-toggle"
+                          aria-pressed
+                          disabled={c.id === "title"}
+                          onClick={() =>
+                            showVisible(visible.filter((id) => id !== c.id))
+                          }
+                        >
+                          <span className="lead-column-tick">
+                            <ProductIcon name="check" />
+                          </span>
+                          <span>{c.heading}</span>
+                        </button>
+                        <span className="lead-column-move">
+                          <button
+                            type="button"
+                            className="secondary"
+                            aria-label={`Move ${c.heading} left`}
+                            disabled={i === 0}
+                            onClick={() => shift(c.id, -1)}
+                          >
+                            <ProductIcon name="collapse" />
+                          </button>
+                          <button
+                            type="button"
+                            className="secondary"
+                            aria-label={`Move ${c.heading} right`}
+                            disabled={i === shown.length - 1}
+                            onClick={() => shift(c.id, 1)}
+                          >
+                            <ProductIcon name="expand" />
+                          </button>
+                        </span>
+                      </div>
+                    ) : null,
+                  )}
+                  {columns.some(
+                    (c) =>
+                      !visible.includes(c.id) &&
+                      c.heading.toLowerCase().includes(search),
+                  ) && <h3 className="lead-column-group">Available</h3>}
+                  {columns
+                    .filter(
+                      (c) =>
+                        !visible.includes(c.id) &&
+                        c.heading.toLowerCase().includes(search),
+                    )
+                    .map((c) => (
+                      <button
+                        key={c.id}
+                        type="button"
+                        className="secondary lead-column-toggle"
+                        aria-pressed={false}
+                        onClick={() => showVisible([...visible, c.id])}
+                      >
+                        <span className="lead-column-tick" />
+                        <span>{c.heading}</span>
+                      </button>
+                    ))}
+                  {!columns.some((c) => c.heading.toLowerCase().includes(search)) && (
+                    <p className="lead-menu-note">No columns match.</p>
+                  )}
+                </WorklistMenu>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -338,72 +759,56 @@ export function LeadsDesktopList({
                 key={l.id}
                 className={selected === l.id ? "lead-selected" : ""}
               >
-                <td>
-                  <Link href={href(l.id)} title={l.title}>
-                    {l.title}
-                  </Link>
-                  <small>{l.display_number}</small>
+                <td className="lead-cell-select">
+                  <input
+                    type="checkbox"
+                    aria-label={`Select ${l.title}`}
+                    checked={ticked.includes(l.id)}
+                    onChange={(e) =>
+                      setChosen((prior) =>
+                        e.target.checked
+                          ? [...prior, l.id]
+                          : prior.filter((id) => id !== l.id),
+                      )
+                    }
+                  />
                 </td>
-                <td>
-                  <span
-                    className="lead-truncate"
-                    title={l.organisation_name ?? undefined}
+                {shown.map((c) => (
+                  <td
+                    key={c.id}
+                    className={
+                      dragged === c.id
+                        ? "lead-column-lifted"
+                        : landing?.id === c.id
+                          ? `lead-column-landing-${landing.after ? "after" : "before"}`
+                          : undefined
+                    }
                   >
-                    {l.organisation_name ?? "Organisation to confirm"}
-                  </span>
-                  <small title={l.contact_name ?? undefined}>
-                    {l.contact_name ?? "Contact to confirm"}
-                  </small>
-                </td>
-                <td>
-                  <span className="lead-status-stack">
-                    <span className={`lead-pill ${l.status.toLowerCase()}`}>
-                      {l.status}
-                    </span>
-                    {l.is_archived && (
-                      <span className="lead-pill">Archived</span>
-                    )}
-                  </span>
-                </td>
-                <td>
-                  <span className="lead-owner-cell">
-                    <Avatar name={l.owner_name} />
-                    <span title={l.owner_name}>
-                      {l.owner_name.replace(/^SYN\s+/, "").split(" ")[0]}
-                    </span>
-                  </span>
-                </td>
-                <td>
-                  <span
-                    className="lead-truncate"
-                    title={l.next_activity?.summary}
-                  >
-                    {l.next_activity?.summary ??
-                      (l.next_action_state === "Unavailable"
-                        ? "Next action unavailable"
-                        : "Next action needed")}
-                  </span>
-                  {l.next_activity && (
-                    <span
-                      className={`lead-activity-meta ${l.next_action_state === "Overdue" ? "lead-attention" : ""}`}
+                    {c.cell(l, href)}
+                  </td>
+                ))}
+                <td className="lead-cell-actions">
+                  {rowActions(view).length > 0 && (
+                    <WorklistMenu
+                      label={`Actions for ${l.title}`}
+                      className="lead-row-menu"
+                      choices
+                      text={<ProductIcon name="more" />}
                     >
-                      <span>
-                        {l.next_action_state === "Overdue" ? "Overdue · " : ""}
-                        {l.next_activity.due_at
-                          ? day(l.next_activity.due_at)
-                          : "Due date needed"}
-                      </span>
-                      <Avatar name={l.next_activity.owner_name} activity />
-                    </span>
+                      {rowActions(view).map((a) => (
+                        <button
+                          key={a.mode}
+                          type="button"
+                          className="secondary"
+                          role="menuitem"
+                          data-menu-close
+                          onClick={() => onAction(l.id, a.mode)}
+                        >
+                          {a.label}
+                        </button>
+                      ))}
+                    </WorklistMenu>
                   )}
-                </td>
-                <td>
-                  <span className="lead-truncate" title={l.source_channel}>
-                    {l.source_channel}
-                  </span>
-                </td>
-                <td>
-                  <span className="lead-date">{day(l.created_at)}</span>
                 </td>
               </tr>
             ))}
@@ -411,6 +816,7 @@ export function LeadsDesktopList({
         </table>
         {!items.length && (
           <div className="lead-empty">
+            <ProductIcon name="sales" />
             <h2>
               {filtered
                 ? "No leads match your filters"
