@@ -28,9 +28,9 @@ import {
   readCalendar,
 } from "../../src/email/service";
 import { editDealInformation, editDealScope } from "../../src/crm/refinements";
-import { readSchedule, readAppointment } from "../../src/scheduling/planner";
+import { readSchedule, readAppointment, confirmAppointment, moveAppointment, recordContact } from "../../src/scheduling/planner";
 import { readUnassignedDemand } from "../../src/scheduling/demand";
-import { authoriseWorkOrder, readWorkOrder } from "../../src/service/work-orders";
+import { authoriseWorkOrder, readWorkOrder, proposeVisit, assessWorkReadiness } from "../../src/service/work-orders";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable local test database required.");
@@ -176,7 +176,7 @@ test("each invited tester retains a private mailbox, CRM follow-up and calendar 
 });
 after(closeDatabase);
 
-test("invited tester can read the Company A planner, demand and linked work without scheduling authority", async () => {
+test("invited tester can read the Company A planner, demand and linked work with bounded scheduling authority", async () => {
   const token = await transaction(c => createInvitedSession(c, tenant, first));
   const p = await readInvitedSession(database(), token, tenant);
   const schedule = await readSchedule(p, {
@@ -186,9 +186,9 @@ test("invited tester can read the Company A planner, demand and linked work with
   assert.ok(schedule.resources.length > 0);
   for (const a of schedule.items) {
     assert.equal(a.company_id, CRM.company);
-    assert.equal(a.actions.can_manage, false);
+    assert.equal(a.actions.can_manage, true);
     assert.equal(a.actions.can_request, false);
-    assert.equal(a.actions.can_contact, false);
+    assert.equal(a.actions.can_contact, true);
   }
   assert.equal((await readAppointment(p, schedule.items[0].id)).items[0].id, schedule.items[0].id);
   // Authorise a disposable seeded draft as the local coordinator, then prove
@@ -205,10 +205,10 @@ test("invited tester can read the Company A planner, demand and linked work with
   assert.ok(demand.items.some(w => w.id === work.id));
   assert.ok(demand.items.every(w => w.company_id === CRM.company));
   const linked = (await readWorkOrder(p, work.id)).items[0];
-  assert.deepEqual(linked.actions, { can_edit: false, can_authorise: false, can_assess: false });
-  for (const capability of ["schedule.manage", "schedule.request", "schedule.contact", "service.work_order.edit", "service.scope.authorise", "service.readiness.assess"] as const)
+  assert.deepEqual(linked.actions, { can_edit: true, can_authorise: false, can_assess: true });
+  for (const capability of ["schedule.request", "service.scope.authorise"] as const)
     assert.equal(await hasPermission(database(), p, capability, CRM.company), false);
-  for (const capability of ["schedule.read", "service.work_order.read", "service.ticket.read"] as const)
+  for (const capability of ["schedule.read", "service.work_order.read", "service.ticket.read", "schedule.manage", "schedule.contact", "service.work_order.edit", "service.readiness.assess"] as const)
     assert.equal(await hasPermission(database(), p, capability, CRM.companyB), false);
   await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='schedule.read'", [p.actor_id]);
   await assert.rejects(readUnassignedDemand(p), (e: unknown) => (e as { code: string }).code === "Forbidden");
@@ -313,4 +313,61 @@ test("hosted identity mapping, persisted CRM and immediate removal stay scoped",
     ).rows[0].owner_id,
     p.actor_id,
   );
+});
+
+test("invited actor persists proposal, preparation, contact and crew; conflicting move and revoked authority preserve booking", async () => {
+  const token = await transaction(c => createInvitedSession(c, tenant, first));
+  const actor = await readInvitedSession(database(), token, tenant);
+  const id = (prefix: string, n = 1) => `${prefix}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
+  const base = () => ({ operation_id: randomUUID(), schema_version: 1, reason: "SYN invited booking workflow proof" });
+  const work = (await readWorkOrder(actor, id("a9"))).items[0];
+  const scope = work.scopes.find(s => s.id === work.authorised_scope_revision_id)!;
+  const visit = randomUUID();
+  const proposal = { ...base(), id: visit, expected_version: work.version,
+    scope_revision_id: scope.id, scope_version: scope.version,
+    start_at: "2026-10-06T00:00:00Z", end_at: "2026-10-06T02:00:00Z",
+    customer_commitment: "Proposed", preparation_status: "Preparing" };
+  await proposeVisit(actor, work.id, proposal);
+  await proposeVisit(actor, work.id, proposal); // Same operation recovers the original, without another visit.
+  const read = async () => (await readAppointment(actor, visit)).items[0];
+  const crew = [1, 2].map((n, i) => ({ resource_id: id("a4", n), resource_version: 1,
+    calendar_version: 1, crew_role: i ? "Technician" : "Lead", travel_before_minutes: 0,
+    travel_after_minutes: 0, travel_reason: "SYN explicit same-site zero travel allowance" }));
+  const booking = async () => { const a = await read(); return { ...base(),
+    expected_version: a.version, expected_work_order_version: a.work_order_version,
+    expected_assignment_version: a.assignment_version, scope_revision_id: a.scope_revision_id,
+    scope_version: a.scope_version, policy_version_id: a.policy_version_id,
+    scheduling_policy_id: id("a0"), scheduling_policy_version: 1, crew }; };
+  const code = (value: string) => (e: unknown) => (e as { code: string }).code === value;
+  await assert.rejects(confirmAppointment(actor, visit, await booking()), code("BookingBlocked"));
+  await assessWorkReadiness(actor, work.id, { ...base(), expected_version: (await read()).work_order_version,
+    assessment: { scope_revision_id: scope.id, scope_version: scope.version, appointment_id: visit,
+      criterion_code: "ToolPreparation", outcome: "Pass", reason: "SYN inspection kit preparation reviewed",
+      source_as_at: "2026-09-19T00:00:00Z", evidence: { title: "SYN booking preparation",
+        content_text: "SYN inspection kit ready; dispatch remains held.", source_reference: "SYN-PPO-HOSTED-BOOKING", source_version: "1" } } });
+  await assert.rejects(confirmAppointment(actor, visit, await booking()), code("CustomerContactRequired"));
+  await recordContact(actor, visit, { ...base(), id: randomUUID(), expected_version: (await read()).version,
+    recipient_id: id("60"), channel: "Simulated", outcome: "Confirmed", occurred_at: new Date().toISOString(),
+    notes: "SYN customer agreed to these exact proposed dates; no communication sent." });
+  await confirmAppointment(actor, visit, await booking());
+  const confirmed = await read();
+  assert.equal(confirmed.status, "Confirmed");
+  assert.equal(confirmed.assignments.length, 2);
+  assert.equal(confirmed.start_at.toISOString(), proposal.start_at.replace("Z", ".000Z"));
+  // Seeded Monday appointment occupies these exact resources. Failure preserves all versions and reservations.
+  await assert.rejects(moveAppointment(actor, visit, { ...await booking(),
+    start_at: "2026-09-21T00:00:00Z", end_at: "2026-09-21T02:00:00Z" }), code("ResourceConflict"));
+  const afterConflict = await read();
+  assert.equal(afterConflict.version, confirmed.version);
+  assert.deepEqual(afterConflict.assignments, confirmed.assignments);
+  assert.equal(afterConflict.start_at.toISOString(), confirmed.start_at.toISOString());
+  await moveAppointment(actor, visit, { ...await booking(), start_at: "2026-10-07T00:00:00Z", end_at: "2026-10-07T02:00:00Z" });
+  const moved = await read();
+  assert.equal(moved.schedule_version, confirmed.schedule_version + 1);
+  assert.equal(moved.customer_commitment, "Changed");
+  const freshActor = await readInvitedSession(database(), token, tenant);
+  assert.equal((await readAppointment(freshActor, visit)).items[0].start_at.toISOString(), "2026-10-07T00:00:00.000Z");
+  await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='schedule.manage'", [actor.actor_id]);
+  await assert.rejects(moveAppointment(actor, visit, { ...await booking(), start_at: "2026-10-08T00:00:00Z", end_at: "2026-10-08T02:00:00Z" }), code("Forbidden"));
+  assert.equal((await read()).version, moved.version);
 });
