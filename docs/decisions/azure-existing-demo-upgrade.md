@@ -26,7 +26,7 @@ its existing work-order and linked-ticket visibility predicates. The local
 Coordinator used by the planner browser suite already has these permissions,
 which is why those checks did not cover the hosted failure.
 
-The shared demo definition now includes exactly those three read capabilities.
+The demo definition now includes exactly those three read capabilities.
 New tester setup and the bounded existing-demo upgrade use the same list. Existing
 actors receive only missing Company A grants under the existing eligibility and
 expiry caps. Revoked grants are retained, disabled/expired invitations remain
@@ -48,6 +48,11 @@ already-current schema missing only the three planner grants. The invited-actor
 browser suite covers desktop and phone schedule rendering and appointment links.
 Executed check results and deployment evidence belong in the repair PR; source
 changes alone do not establish that the hosted account has been upgraded.
+
+The access-review design's generated capability catalogue and HTML are rebuilt
+from the literal demo list, with its model count updated from 24 to 27. This keeps
+the maintained access preview consistent with the runtime grants; its historical
+acceptance record and issued report remain unchanged.
 
 
 ## 10 September — operator CLI import-cycle repair
