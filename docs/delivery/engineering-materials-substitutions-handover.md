@@ -3,13 +3,13 @@ document_id: PPO-EN06-HO
 revision: r01
 date: 2026-09-20
 owner: Dean Fiedler
-status: Local synthetic increment on an unpushed branch; owner review, visual and business acceptance pending
+status: Local synthetic increment, open as draft PR #265; CI results, owner review, visual and business acceptance pending
 source_commit: 99c32aed5032393b7658713cca53aa4c1a2ab2dd
 ---
 
 # EN-06 Released Materials & Substitutions: local handover
 
-Branch `feat/en06-released-materials`, from `main` at `99c32ae`. Local commits only: nothing was pushed, no pull request was opened and nothing was deployed. Decisions and departures are in the [integration record](../decisions/engineering-materials-substitutions-design.md); commands and results are in the [evidence record](../testing/evidence/engineering-materials-local-r01/README.md).
+Branch `feat/en06-released-materials`, from `main` at `99c32ae` with `main` at `1a69e93` merged in. On Dean's authority of 20 September it was pushed and opened as draft PR [#265](https://github.com/deanrfiedler-gif/powerplants-one/pull/265). Nothing was merged or deployed. Decisions and departures are in the [integration record](../decisions/engineering-materials-substitutions-design.md); commands and results are in the [evidence record](../testing/evidence/engineering-materials-local-r01/README.md).
 
 ## 1. Open it
 
@@ -69,7 +69,7 @@ Other journeys: Casey returns CI-120 on line 030, Sam creates the corrected succ
 
 ## 5. What remains open
 
-- **Not run:** the database suite, `npm run build` and the compiled-application browser suite. The first needs `ppo_synthetic_test`, which this machine cannot create; the build cannot run beside the dev server. CI is their first run, and the registry edits in eight existing suites are likewise unexecuted.
+- **Not run:** the database suite, `npm run build` and the compiled-application browser suite. The first needs `ppo_synthetic_test`, which this machine cannot create; the build cannot run beside the dev server. The draft PR's CI is their first run, and the registry edits in eight existing suites are likewise unexecuted locally. Read the EN-06 suites' own per-test results there: the fixture-date expiry of ADR-0030 can turn the PostgreSQL job red for unrelated reasons.
 - **Not built:** a kit parent chooser in the line form; impact entry in the alternate form; pointer drag column resize; a focused full-detail route for the inspector (it overlays instead).
 - **Not decided:** real technical competence and release authority (D-002, D-019), the operational issue-purpose contract, MYOB items and units, commercial routing and thresholds, source currentness policy, the live receiving contract, external distribution (DK-03).
 - **Not registered:** the mockup is not in the repository, so no UI baseline is registered.

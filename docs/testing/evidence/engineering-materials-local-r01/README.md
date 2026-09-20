@@ -35,7 +35,7 @@ Screenshots, logs and the supplied mockup are local and git-ignored, as for My W
 
 ## 2. What was not run
 
-- **`tests/database/engineering-materials.test.ts` is authored and was not executed.** It refuses any database but `ppo_synthetic_test`; only `ppo_synthetic` exists here and the local role cannot create databases. The guard was not defeated. It reuses the scenario helper through an in-process router, so its flows are the ones the HTTP and browser suites proved over HTTP, but its own assertions have never run. CI is its first run.
+- **`tests/database/engineering-materials.test.ts` is authored and was not executed.** It refuses any database but `ppo_synthetic_test`; only `ppo_synthetic` exists here and the local role cannot create databases. The guard was not defeated. It reuses the scenario helper through an in-process router, so its flows are the ones the HTTP and browser suites proved over HTTP, but its own assertions have never run. The CI of draft PR #265 is its first run; this record is of local checks only and is not updated with CI results.
 - **The registry edits in eight existing suites were not executed** for the same reason: the six applied-version lists, `atVersion(29)` and both `>=18` lists in `leads-projects-integration.test.ts`, the grant allowlist in `quality-upgrade.test.ts`, and the added-migration count and added-user assertions in `tests/demo/upgrade.test.ts`.
 - **`npm run build` and the compiled-application browser suite were not run.** A build cannot run beside the development server. The development server hides timing faults that the compiled application exposes.
 - No physical device, screen reader, or second browser engine was used. The 200% zoom check is a 720 CSS-pixel viewport at twice the device scale.
