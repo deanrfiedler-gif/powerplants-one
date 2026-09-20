@@ -69,12 +69,15 @@ const subscribeOnline = (changed: () => void) => {
 };
 const calm = () => (window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth");
 
-// The agenda's day and expansion travel with this history entry, so Back from a record returns to
-// the same day. A fresh visit always starts on today; `null` means "today, and follow it past midnight".
-type AgendaMemory = { day: string | null; expanded: boolean };
+// The agenda's day and expansion travel with this history entry, so Back from a record (or a reload)
+// returns to the same day. A fresh visit starts on today, and so does a memory made on an earlier
+// day: a tab left open overnight never comes back parked on a stale date. `day: null` means "today,
+// and follow it past midnight".
+type AgendaMemory = { day: string | null; expanded: boolean; on: string };
 function rememberedAgenda(): AgendaMemory {
+  const on = localDay(new Date().toISOString());
   const saved = (window.history.state as { mwAgenda?: Partial<AgendaMemory> } | null)?.mwAgenda;
-  return { day: isCivilDay(saved?.day) ? saved.day : null, expanded: saved?.expanded === true };
+  return saved?.on === on ? { day: isCivilDay(saved.day) ? saved.day : null, expanded: saved.expanded === true, on } : { day: null, expanded: false, on };
 }
 
 function MyWorkMobileOverview() {
@@ -262,8 +265,8 @@ function MyWorkMobileOverview() {
             selected={selected}
             expanded={memory.expanded}
             showOwner={!mine}
-            pick={(day) => setMemory((old) => ({ ...old, day: day === today ? null : day }))}
-            setExpanded={(expanded) => setMemory((old) => ({ ...old, expanded }))}
+            pick={(day) => setMemory((old) => ({ ...old, day: day === today ? null : day, on: today }))}
+            setExpanded={(expanded) => setMemory((old) => ({ ...old, expanded, on: today }))}
             open={dialogs.open}
             moreHref={queue({})}
           />

@@ -91,6 +91,8 @@ Status words: *existing* (reused unchanged), *implemented* (added in this change
 
 ## 5. Shell drift found, not fixed here
 
+*Later note, 20 September 2026:* the phone presentation of mobile r07 gives My Work a one-row phone header and removes its in-page menu bar, so SD-1 no longer affects My Work; it remains open for every other page. See [the mobile r07 record](my-work-sales-mobile-r07-integration.md), which also governs wherever this record describes `/work` at phone width (DP-7, the phone menu trigger).
+
 **SD-1.** At phone width with the local identity strip present, a global rule makes the header a three-column grid and the search and page-guide buttons wrap onto a second row over the top of **every** page (visible on Customers as well). It predates this change. My Work keeps its phone menu trigger clear of that row in exactly that case; the shell rule itself is left for a separate correction, as the brief asks.
 
 ## 6. Verification on 20 September 2026 (local, Windows, dev server on 127.0.0.1:3000)

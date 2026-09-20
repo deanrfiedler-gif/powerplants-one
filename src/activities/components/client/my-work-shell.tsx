@@ -245,7 +245,7 @@ export function MyWorkShell({ children }: { children: React.ReactNode }) {
           <p>{views.error ? "Saved views could not be loaded." : "Pin a saved view to keep it here."}</p>
         )}
       </div>
-      {!docked && (
+      {phone && (
         <div className="mw-menu-pinned">
           <h2>Overview</h2>
           <button
