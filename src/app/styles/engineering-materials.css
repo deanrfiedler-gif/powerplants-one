@@ -1,4 +1,6 @@
-/* EN-06 Released Materials & Substitutions (parent ENG-05). Composition from desktop mockup r04, behaviour and data
+/* EN-06 Released Materials & Substitutions (parent ENG-05). Composition from desktop mockup r04 as refined by the
+   owner's register image of 20 September 2026 (two-row context, banner above the table, state chips, full-height
+   inspector), behaviour and data
    rules from build plan r02, values from theme style board r22. The shell owns the rail, header and viewport. The
    secondary menu, its tokens, the local reset, controls, menus, forms and dialogs are My Work's own rules, shared by
    scope id in my-work.css: nothing here restyles them. This file adds only what is EN-06's: the compact context row,
@@ -7,39 +9,68 @@
 #ppo-materials{background:var(--surface-white);--row-emphasis:#edf6e9;--row-hover:#f8faf7;--header-fill:#f4f5f7}
 /* One scroll owner per surface: the register scrolls its table, the inspector its own body, a working page itself. */
 #ppo-materials .mw-content{overflow:hidden;display:flex;flex-direction:column}
-#ppo-materials .em-workspace{display:flex;flex-direction:column;flex:1;min-height:0;min-width:0}
+/* The workspace is a two-column grid so the inspector stands beside the context rows as well as the register. A view
+   without an inspector spans both columns. The register's split wrapper contributes no box of its own. */
+#ppo-materials .mw-content{container:em-split / inline-size}
+/* The shared menu's longest label here carries a count; it stays on one line as the refined image shows it. */
+#ppo-materials .mw-menu li a{gap:8px}
+#ppo-materials .mw-menu li a>span:not(.mw-badge){flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#ppo-materials .em-workspace{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto minmax(0,1fr);flex:1;min-height:0;min-width:0}
+#ppo-materials .em-workspace>*{grid-column:1 / -1;min-width:0;min-height:0}
+#ppo-materials .em-workspace>.em-context{grid-row:1}
+#ppo-materials .em-workspace>.em-page,#ppo-materials .em-workspace>.em-empty-page{grid-row:3}
+#ppo-materials .em-split{display:contents}
+#ppo-materials .em-split>.em-register{grid-column:1 / -1;grid-row:3}
+#ppo-materials .em-split[data-inspector=open]>.em-register{grid-column:1}
+#ppo-materials .em-split>.em-inspector{grid-column:2;grid-row:1 / -1}
+#ppo-materials .em-workspace:has(.em-split[data-inspector=open])>.em-context{grid-column:1}
 
-/* Compact context row. No title block, eyebrow or introduction: the breadcrumb in the header is the title. */
-#ppo-materials .em-context{display:flex;align-items:stretch;flex:none;flex-wrap:nowrap;gap:0;padding:10px 16px 10px 18px;border-bottom:1px solid var(--line);background:var(--surface-white)}
-#ppo-materials .em-context-cell{display:flex;flex-direction:column;justify-content:center;flex:0 1 auto;min-width:0;padding:2px 18px 2px 0;margin-right:18px;border-right:1px solid var(--line-soft);font-weight:400}
-#ppo-materials .em-context-cell>span{color:var(--text-secondary);font-size:13px;line-height:18px}
-#ppo-materials .em-context-cell strong{font-size:15px;line-height:22px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#ppo-materials .em-context-cell small{color:var(--text-secondary);font-size:13px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#ppo-materials .em-context-project{flex-shrink:0}
-#ppo-materials .em-context-project select{max-width:270px;min-height:26px;padding:0 22px 0 0;border:0;background-color:transparent;font-size:17px;line-height:24px;font-weight:700;color:var(--ink);text-overflow:ellipsis;cursor:pointer}
-#ppo-materials .em-context-set{flex:none;border-right:0;margin-right:0}
-#ppo-materials .em-context-set>div{display:flex;align-items:center;gap:10px}
-#ppo-materials .em-context-set select{min-height:26px;padding:0 20px 0 0;border:0;background-color:transparent;font-size:15px;font-weight:500}
-#ppo-materials .em-chip{padding:3px 12px;border-radius:5px;background:var(--neutral-surface);color:var(--ink);font-size:14px;font-weight:500;line-height:20px;white-space:nowrap}
-#ppo-materials .em-context-actions{display:flex;align-items:center;flex:none;gap:10px;margin-left:auto;padding-left:8px}
-#ppo-materials .em-context-actions .mw-button{min-height:40px;font-weight:500}
+/* Compact context, two rows. No title block, eyebrow or introduction: the breadcrumb in the header is the title.
+   Row one says where you are; row two names the material set and carries the two page actions. */
+#ppo-materials .em-context{display:flex;flex-direction:column;flex:none;background:var(--surface-white)}
+#ppo-materials .em-context-row{display:flex;align-items:stretch;flex-wrap:nowrap;gap:0;min-width:0;padding:12px 16px 12px 22px;border-bottom:1px solid var(--line)}
+#ppo-materials .em-context-cell{display:flex;flex-direction:column;justify-content:center;flex:0 1 auto;min-width:0;padding:0 30px 0 0;margin-right:22px;border-right:1px solid var(--line-soft);font-weight:400}
+#ppo-materials .em-context-cell:last-child{border-right:0;margin-right:0}
+#ppo-materials .em-context-cell>span:first-child{color:var(--text-secondary);font-size:13px;line-height:18px}
+#ppo-materials .em-context-cell strong{font-size:15px;line-height:24px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#ppo-materials .em-context-cell small{color:var(--text-secondary);font-size:12px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#ppo-materials .em-context-project{flex-shrink:0;max-width:46%}
+#ppo-materials .em-picker{position:relative;display:flex;align-items:center;gap:22px;min-width:0;border-radius:4px}
+#ppo-materials .em-picker strong{font-size:16px;font-weight:700;color:var(--ink)}
+#ppo-materials .em-picker .mw-icon{flex:none;width:18px;height:18px;color:var(--text-secondary)}
+#ppo-materials .em-picker select{position:absolute;inset:0;width:100%;min-height:0;height:100%;padding:0;border:0;opacity:0;cursor:pointer}
+#ppo-materials .em-picker:focus-within{outline:2px solid var(--focus);outline-offset:3px}
+#ppo-materials .em-context-setrow{align-items:center;gap:12px;padding:9px 16px 9px 18px;border-bottom:0}
+#ppo-materials .em-context-set{display:flex;align-items:center;gap:14px;min-width:0}
+#ppo-materials .em-context-set>span:first-child{color:var(--text-secondary)}
+#ppo-materials .em-context-set strong{font-size:15px;font-weight:700;white-space:nowrap}
+#ppo-materials .em-context-set select{min-height:30px;padding:0 22px 0 0;border:0;background-color:transparent;font-size:15px;font-weight:700}
+#ppo-materials .em-context-actions{display:flex;align-items:center;flex:none;gap:12px;margin-left:auto;padding-left:8px}
+#ppo-materials .em-context-actions .mw-button{min-height:42px;padding-inline:18px;font-weight:500}
+/* State chips. Green with a check only for a completed positive state, amber with a warning only where someone must
+   act, grey words for everything in progress. Colour never stands alone: the words and the icon say it too. */
+#ppo-materials .em-chip{display:inline-flex;align-items:center;gap:7px;max-width:100%;padding:3px 10px;border:1px solid transparent;border-radius:5px;background:#f0f2f5;color:#3d4757;font-size:13px;font-weight:500;line-height:20px;white-space:nowrap}
+#ppo-materials .em-chip .mw-icon{flex:none;width:15px;height:15px;stroke-width:2}
+#ppo-materials .em-chip-positive{background:#edf6e9;color:#2f6b24}
+#ppo-materials .em-chip-attention{background:#fdf1e2;color:#a3510c}
+#ppo-materials .em-chip-attention .mw-icon{color:#d9792b}
+#ppo-materials .em-chip-negative{background:#fdecec;color:var(--danger)}
 
 /* Register and inspector. The split is a container so the inspector docks only while the register keeps a usable width. */
-#ppo-materials .em-split{position:relative;display:flex;flex:1;min-height:0;min-width:0;container:em-split / inline-size}
 #ppo-materials .em-register{display:flex;flex-direction:column;flex:1;min-width:0;min-height:0;overflow-y:auto}
 /* Scrolling columns keep their children at full height; a shrinking flex child would overlap its neighbour. */
 #ppo-materials :is(.em-register,.em-inspector-body,.em-page)>*{flex-shrink:0}
-#ppo-materials .em-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:12px 16px 0}
+#ppo-materials .em-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:10px 16px 0}
 #ppo-materials .em-toolbar-second{padding:10px 16px 12px}
-#ppo-materials .em-toolbar .mw-button{min-height:38px}
+#ppo-materials .em-toolbar .mw-button{min-height:40px;color:var(--ink)}
 #ppo-materials .em-tabs{display:inline-flex;border:1px solid var(--hairline);border-radius:var(--radius-control);overflow:hidden;background:var(--surface-white)}
-#ppo-materials .em-tabs button{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:6px 12px;border-right:1px solid var(--hairline);white-space:nowrap}
+#ppo-materials .em-tabs button{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:6px 11px;font-size:14px;border-right:1px solid var(--hairline);white-space:nowrap}
 #ppo-materials .em-tabs button:last-child{border-right:0}
 #ppo-materials .em-tabs button:hover:not(:disabled){background:var(--surface-hover)}
 #ppo-materials .em-tabs button[aria-pressed=true],#ppo-materials .em-tabs button[aria-pressed=true]:hover:not(:disabled){background:var(--navy);color:#fff;font-weight:500}
 #ppo-materials .em-tab-count{display:inline-grid;place-items:center;min-width:24px;height:22px;padding:0 7px;border-radius:999px;background:var(--neutral-surface);color:var(--ink);font-size:12px;font-weight:500}
 #ppo-materials .em-tabs button[aria-pressed=true] .em-tab-count{background:rgba(255,255,255,.22);color:#fff}
-#ppo-materials .em-search{display:flex;align-items:center;gap:8px;flex:0 1 210px;min-width:150px;min-height:38px;padding:0 12px;border:1px solid var(--control-border);border-radius:var(--radius-control);background:var(--surface-white);color:var(--text-secondary)}
+#ppo-materials .em-search{display:flex;align-items:center;gap:8px;flex:1 1 150px;min-width:130px;max-width:260px;min-height:40px;padding:0 12px;border:1px solid var(--control-border);border-radius:var(--radius-control);background:var(--surface-white);color:var(--text-secondary)}
 #ppo-materials .em-search:focus-within{outline:2px solid var(--focus);outline-offset:2px}
 #ppo-materials .em-search input{flex:1;min-width:0;border:0;padding:0;background:transparent;outline:0}
 #ppo-materials .em-select select{min-height:38px;padding:7px 30px 7px 12px;border:1px solid var(--control-border);border-radius:var(--radius-control);background-color:var(--surface-white)}
@@ -52,14 +83,15 @@
 /* The table meets both edges of the register pane: no exterior padding, margin, frame, card or radius. Cells keep 14px. */
 #ppo-materials .em-table-scroll{flex:none;width:100%;overflow-x:auto;overflow-y:visible;margin:0;padding:0;border-top:1px solid var(--line)}
 #ppo-materials .em-table-scroll[data-stale]{opacity:.72;transition:opacity .15s ease}
-#ppo-materials .em-table{width:100%;min-width:960px;margin:0;border:0;border-collapse:separate;border-spacing:0;border-radius:0;table-layout:auto;font-variant-numeric:tabular-nums}
-#ppo-materials .em-table th{height:43px;padding:0;border-bottom:1px solid var(--line);border-right:1px solid var(--line-soft);background:var(--header-fill);color:var(--ink);font-size:14px;font-weight:500;text-align:left;white-space:nowrap}
+#ppo-materials .em-table{width:100%;min-width:860px;margin:0;border:0;border-collapse:separate;border-spacing:0;border-radius:0;table-layout:auto;font-variant-numeric:tabular-nums}
+#ppo-materials .em-table th{height:43px;padding:0;border-bottom:1px solid var(--line);border-right:1px solid var(--line-soft);background:var(--header-fill);color:var(--text-secondary);font-size:13px;font-weight:400;text-align:left;white-space:nowrap}
 #ppo-materials .em-table th:last-child{border-right:0}
-#ppo-materials .em-table th button{display:flex;align-items:center;justify-content:flex-start;width:100%;height:42px;padding:0 14px;font-weight:500;white-space:nowrap}
+#ppo-materials .em-table th button{display:flex;align-items:center;justify-content:flex-start;width:100%;height:42px;padding:0 12px;color:inherit;font-weight:400;white-space:nowrap}
 #ppo-materials .em-table th[aria-sort] button::after{content:"";margin-left:8px;border:4px solid transparent}
 #ppo-materials .em-table th[aria-sort=ascending] button::after{border-bottom-color:var(--text-secondary);transform:translateY(-2px)}
 #ppo-materials .em-table th[aria-sort=descending] button::after{border-top-color:var(--text-secondary);transform:translateY(2px)}
-#ppo-materials .em-table td{height:52px;padding:6px 14px;border-bottom:1px solid var(--line-soft);background:var(--surface-white);vertical-align:middle;line-height:20px}
+#ppo-materials .em-table td{height:50px;padding:6px 12px;border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft);background:var(--surface-white);vertical-align:middle;line-height:20px}
+#ppo-materials .em-table td:last-child,#ppo-materials .em-table td.em-col-check{border-right:0}
 #ppo-materials .em-table tbody tr{cursor:pointer}
 #ppo-materials .em-table tbody tr:hover td{background:var(--row-hover)}
 #ppo-materials .em-table tbody tr:is([data-inspected],[data-selected]) td{background:var(--row-emphasis)}
@@ -70,10 +102,9 @@
 #ppo-materials .em-col-check{width:48px;padding:0 0 0 16px!important;text-align:left;position:sticky;left:0;z-index:2}
 #ppo-materials .em-table th.em-col-check{z-index:3}
 #ppo-materials .em-col-check input{display:block;width:18px;height:18px;min-height:0;margin:0;accent-color:var(--navy);cursor:pointer}
-#ppo-materials .em-col-line{width:70px;position:sticky;left:48px;z-index:2;border-right:1px solid var(--line-soft)}
+#ppo-materials .em-col-line{width:70px;position:sticky;left:48px;z-index:2;color:var(--text-secondary)}
 #ppo-materials .em-table th.em-col-line{position:sticky;left:48px;z-index:3}
-#ppo-materials .em-col-quantity{text-align:right;white-space:nowrap}
-#ppo-materials .em-table th.em-col-quantity button{justify-content:flex-end}
+#ppo-materials .em-register .em-table td:not(.em-col-requirement){white-space:nowrap}
 #ppo-materials .em-table[data-wide] .em-col-requirement{min-width:360px}
 #ppo-materials :is(a,button).em-row-title{display:block;max-width:100%;color:var(--navy);font-weight:700;text-align:left;overflow-wrap:anywhere}
 #ppo-materials :is(a,button).em-row-title:hover{text-decoration:underline;text-underline-offset:3px}
@@ -92,25 +123,28 @@
 #ppo-materials .em-empty-page{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:520px;margin:0 auto;padding-top:64px}
 #ppo-materials .em-empty-page .mw-field{width:100%;text-align:left}
 #ppo-materials .em-table-foot{display:flex;align-items:center;gap:8px;padding:8px 8px 8px 18px;color:var(--text-secondary);font-size:14px}
-#ppo-materials .em-attention{display:flex;align-items:center;gap:16px;padding:12px 24px;border-top:1px solid var(--warning-border);border-bottom:1px solid var(--warning-border);background:var(--warning-surface)}
-#ppo-materials .em-attention>.mw-icon{width:30px;height:30px;color:#e08a12;flex:none}
-#ppo-materials .em-attention>div{flex:1;min-width:0}
-#ppo-materials .em-attention strong{font-size:15px;font-weight:700}
-#ppo-materials .em-attention p{color:var(--text-secondary)}
-#ppo-materials a.em-attention-link{display:inline-flex;align-items:center;gap:8px;color:var(--link);font-weight:700;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
-#ppo-materials .em-states{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-bottom:1px solid var(--line)}
-#ppo-materials .em-states>div{display:flex;flex-direction:column;padding:14px 32px}
-#ppo-materials .em-states>div+div{border-left:1px solid var(--line)}
-#ppo-materials .em-states strong{font-weight:700}
+#ppo-materials .em-attention{display:flex;align-items:center;gap:14px;min-height:46px;padding:8px 20px 8px 18px;border-top:1px solid var(--warning-border);background:var(--warning-surface)}
+#ppo-materials .em-attention>.mw-icon{width:20px;height:20px;color:#c9701a;flex:none}
+#ppo-materials .em-attention>p{flex:1;min-width:0}
+#ppo-materials .em-attention strong{color:#8a4a0d;font-weight:500}
+#ppo-materials a.em-attention-link{display:inline-flex;align-items:center;gap:8px;color:var(--link);font-weight:500;white-space:nowrap}
+#ppo-materials a.em-attention-link:hover{text-decoration:underline;text-underline-offset:3px}
+#ppo-materials .em-attention-link .mw-icon{width:18px;height:18px}
+#ppo-materials .em-attention+.em-table-scroll{border-top-color:var(--warning-border)}
 #ppo-materials .em-page-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;margin-top:auto;padding:14px 20px;color:var(--text-secondary);font-size:13px}
 
 /* Inspector: a square, closable right dock. It overlays the register when the split is too narrow for both. */
-#ppo-materials .em-inspector{display:flex;flex-direction:column;flex:none;width:388px;min-height:0;border-left:1px solid var(--line);background:var(--surface-white);border-radius:0}
-#ppo-materials .em-inspector-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:16px 12px 8px 20px}
+#ppo-materials .em-inspector{display:flex;flex-direction:column;flex:none;width:368px;min-height:0;border-left:1px solid var(--line);background:var(--surface-white);border-radius:0}
+#ppo-materials .em-inspector-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px 12px 8px 20px}
 #ppo-materials .em-eyebrow{color:var(--text-secondary);font-size:12px;letter-spacing:.5px;text-transform:uppercase}
 #ppo-materials .em-inspector h2{font-size:21px;line-height:28px;font-weight:700;overflow-wrap:anywhere}
 #ppo-materials .em-inspector h2:focus{outline:none}
-#ppo-materials .em-inspector-body{display:flex;flex-direction:column;gap:10px;flex:1;min-height:0;overflow-y:auto;padding:4px 20px 20px}
+#ppo-materials .em-inspector-body{display:flex;flex-direction:column;gap:12px;flex:1;min-height:0;overflow-y:auto;padding:2px 20px 20px}
+#ppo-materials .em-inspector-section{display:flex;flex-direction:column;gap:4px;padding-top:12px;border-top:1px solid var(--line-soft)}
+#ppo-materials .em-inspector-section h3{display:flex;align-items:center;gap:8px;margin:0 0 4px}
+#ppo-materials .em-inspector-section h3 .mw-icon{width:16px;height:16px}
+#ppo-materials .em-note{color:var(--text-secondary);font-size:13px}
+#ppo-materials .em-next{font-size:15px}
 #ppo-materials .em-inspector h3,#ppo-materials .em-page h3{margin-top:6px;font-size:15px;font-weight:700}
 #ppo-materials .em-reasons{padding-left:18px;list-style:disc;color:var(--text-secondary);font-size:13px}
 #ppo-materials .em-compare{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px}
@@ -118,28 +152,52 @@
 #ppo-materials .em-compare span{color:var(--text-secondary);font-size:13px}
 #ppo-materials .em-compare strong{font-size:16px;font-weight:700}
 #ppo-materials .em-compare small{color:var(--text-secondary);font-size:12px;overflow-wrap:anywhere}
+/* In the inspector the pair is the refined image's plain two columns with a rule between them. */
+#ppo-materials .em-inspector .em-compare{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:0}
+#ppo-materials .em-inspector .em-compare>div{min-width:0;padding:0;border:0;border-radius:0;background:transparent}
+#ppo-materials .em-inspector .em-compare>div+div{padding-left:20px;border-left:1px solid var(--line)}
+#ppo-materials .em-inspector .em-compare span{font-size:12px}
+#ppo-materials .em-inspector .em-compare strong{font-size:15px;overflow-wrap:anywhere}
 #ppo-materials .em-criteria>div{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;min-height:30px;padding:4px 0;border-top:1px solid var(--line-soft)}
+#ppo-materials .em-inspector .em-criteria>div{grid-template-columns:minmax(0,1fr) 138px;min-height:28px;padding:1px 0;border-top:0}
+#ppo-materials .em-inspector .em-criteria dt{color:var(--text-secondary)}
+#ppo-materials .em-inspector .em-criteria .em-chip:not(.em-chip-attention){padding-left:0;background:transparent}
+#ppo-materials .em-inspector .em-criteria .em-chip-positive .mw-icon{width:18px;height:18px;padding:2px;border:1.7px solid currentColor;border-radius:50%}
 #ppo-materials .em-criteria dd{display:flex;flex-direction:column;align-items:flex-start}
 #ppo-materials .em-criteria dd small{color:var(--text-secondary);font-size:12px}
 #ppo-materials .em-mandatory{color:var(--text-secondary);font-size:12px}
-#ppo-materials .em-action{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border:1px solid var(--warning-border);border-radius:var(--radius-control);background:var(--warning-surface)}
-#ppo-materials .em-action .mw-icon{width:26px;height:26px;color:#e08a12;flex:none}
-#ppo-materials .em-action strong{font-weight:700}
-#ppo-materials .em-action p{color:var(--text-secondary)}
+
 #ppo-materials .em-pair{display:grid;grid-template-columns:150px minmax(0,1fr);align-items:center;gap:12px;min-height:28px}
+#ppo-materials .em-inspector-section .em-pair{grid-template-columns:minmax(0,1fr) 138px;min-height:24px}
+#ppo-materials .em-inspector-section .em-pair strong{color:var(--text-secondary);font-weight:400}
 #ppo-materials .em-pair>span{color:var(--text-secondary)}
 #ppo-materials .em-pair strong{display:inline-flex;align-items:center;gap:8px;font-weight:500;overflow-wrap:anywhere}
 #ppo-materials .em-pair-rule{padding-top:10px;border-top:1px solid var(--line)}
-#ppo-materials .em-needed{color:var(--ink)}
-#ppo-materials .em-needed .mw-icon{color:#d9792b}
-#ppo-materials .em-source{display:flex;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius-control)}
-#ppo-materials .em-source .mw-icon{width:26px;height:26px;flex:none;color:var(--ink)}
-#ppo-materials .em-source p{color:var(--text-secondary);font-size:13px}
-#ppo-materials .em-inspector-actions{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+#ppo-materials .em-source{display:flex;flex-direction:column;gap:2px}
+#ppo-materials .em-source strong{font-weight:700}
+#ppo-materials .em-source p{color:var(--text-secondary)}
+#ppo-materials .em-source-use{display:flex;align-items:center;gap:8px;margin-top:4px;font-weight:500}
+#ppo-materials .em-source-use .mw-icon{width:20px;height:20px;flex:none}
+#ppo-materials p.em-source-use-positive{color:#2f6b24}
+#ppo-materials p.em-source-use-attention,#ppo-materials p.em-source-use-negative{color:#a3510c}
+#ppo-materials .em-source-checked,#ppo-materials .em-source-link{margin-left:28px;font-size:13px}
+#ppo-materials a.em-source-link{align-self:flex-start;text-decoration:underline;text-underline-offset:3px}
+#ppo-materials .em-inspector-actions{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+#ppo-materials .em-details{display:flex;flex-direction:column}
+#ppo-materials .em-details summary{display:inline-flex;align-items:center;gap:8px;color:var(--link);cursor:pointer;list-style:none}
+#ppo-materials .em-details summary::-webkit-details-marker{display:none}
+#ppo-materials .em-details summary .mw-icon{width:18px;height:18px;transition:transform .15s ease}
+#ppo-materials .em-details[open] summary .mw-icon{transform:rotate(90deg)}
+#ppo-materials .em-details[open]{gap:8px}
+#ppo-materials .em-details[open]>*:not(summary){margin-top:8px}
+#ppo-materials .em-details .em-pair{grid-template-columns:130px minmax(0,1fr)}
+#ppo-materials .em-details .em-pair strong{color:var(--ink)}
 #ppo-materials .em-inspector-actions .mw-button{width:100%;min-height:44px}
-#ppo-materials .em-inspector-actions .mw-link{align-self:center}
+#ppo-materials .em-inspector-actions .mw-link{align-self:flex-start}
+/* An absolutely positioned grid child is contained by its grid area, so the overlay takes the whole grid as its area. */
 @container em-split (max-width:1140px){
- #ppo-materials .em-inspector{position:absolute;z-index:6;inset:0 0 0 auto;width:min(420px,100%);box-shadow:var(--shadow)}
+ #ppo-materials .em-split>.em-inspector{position:absolute;z-index:6;grid-column:1 / -1;inset:0 0 0 auto;width:min(420px,100%);box-shadow:var(--shadow)}
+ #ppo-materials .em-split[data-inspector=open]>.em-register,#ppo-materials .em-workspace:has(.em-split[data-inspector=open])>.em-context{grid-column:1 / -1}
 }
 
 /* Working pages of the other five destinations: padded content over the same surface, tables flush inside their panel. */
@@ -185,39 +243,35 @@
 #ppo-materials .em-timeline>li:last-child{border-color:transparent}
 #ppo-materials .em-timeline p{color:var(--text-secondary);font-size:13px}
 
-/* The breadcrumb is the page title on these routes, so the redundant product name yields the room. The destination
-   follows the module only while the secondary menu is hidden; open, the menu already names it. */
+/* The breadcrumb is the page title on these routes, so the redundant product name yields the room. It reads
+   "Engineering / Released Materials & Substitutions" and is never cut short to make room for anything else. While the
+   secondary menu is hidden the destination follows it, but only where the whole of it fits: it sits on a wrapped
+   second line that the one-line heading clips, so it is either fully shown or absent, never an ellipsis. The full
+   path stays in the title attribute and in the page's own heading. */
 .ppo-shell-header .product-heading[data-module-crumb] :is(.ppo-product-name,.ppo-heading-divider){display:none}
-.ppo-shell-header .product-heading[data-module-crumb] strong{font-size:16px;color:#596779}
-.ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-view{font-weight:700;color:#242a37}
-.ppo-shell-header .ppo-heading-subview{color:#596779}
-/* Accessible collapse: when room runs out it is the module name that gives way, with an ellipsis, and never the
-   destination. The full path stays in the title attribute and in the page's own heading. */
-.ppo-shell-header .product-heading[data-module-crumb] strong{display:flex;align-items:baseline;min-width:0;overflow:visible}
+.ppo-shell-header .product-heading[data-module-crumb] strong{display:flex;flex-wrap:wrap;align-items:baseline;min-width:0;height:24px;line-height:24px;overflow:hidden;font-size:14px;font-weight:400;color:#4a5668}
+.ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-trail{display:flex;flex:0 1 auto;min-width:0;max-width:100%}
 .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-root{flex:none;white-space:pre}
-.ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-view{flex:0 1 auto;min-width:3ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-view{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-subview{flex:none;white-space:pre}
 .workspace:has(#ppo-materials[data-menu=docked]) .ppo-shell-header .ppo-heading-subview{display:none}
 /* Narrower desktops: the module name outranks its parent, which the rail and the page heading still give. */
 @media (max-width:1560px){
  .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-root{display:none}
- .ppo-shell-header .product-heading[data-module-crumb] strong{font-size:15px}
 }
 
 @media (max-width:1100px){
- #ppo-materials .em-context{flex-wrap:wrap;gap:6px 0;padding:8px 12px}
+ #ppo-materials .em-context-row{flex-wrap:wrap;gap:6px 0;padding:8px 12px}
  #ppo-materials .em-context-cell{padding-right:14px;margin-right:14px}
  #ppo-materials .em-two{grid-template-columns:minmax(0,1fr)}
  #ppo-materials .em-page{padding:12px 14px 20px}
 }
 /* Phone: one column. The context reflows, the inspector takes the width, and the table keeps readable text in its own scroll. */
 @media (max-width:780px){
- #ppo-materials .em-context{gap:6px 0}
  #ppo-materials .em-context-cell{border-right:0;margin-right:16px;padding-right:0}
- #ppo-materials .em-context-project{flex-basis:100%}
- #ppo-materials .em-context-project select{max-width:100%}
- #ppo-materials .em-context-actions{flex-basis:100%;margin-left:0;padding-left:0}
- #ppo-materials .em-context-actions .mw-button{flex:1 1 auto;min-height:44px}
+ #ppo-materials .em-context-project{flex-basis:100%;max-width:100%}
+ #ppo-materials .em-context-actions{flex-basis:100%;flex-wrap:wrap;margin-left:0;padding-left:0}
+ #ppo-materials .em-context-actions .mw-button{flex:1 1 auto;min-height:44px;padding-inline:12px}
  #ppo-materials .em-toolbar{padding:10px 12px 0;gap:8px}
  #ppo-materials .em-toolbar-second{padding:8px 12px 10px}
  #ppo-materials .em-tabs{width:100%;overflow-x:auto}
@@ -225,10 +279,7 @@
  #ppo-materials .em-search{flex:1 1 100%}
  #ppo-materials .em-toolbar>.mw-spacer{display:none}
  #ppo-materials .em-inspector{position:fixed;z-index:40;inset:64px 0 0 0;width:auto;border-left:0}
- #ppo-materials .em-states{grid-template-columns:minmax(0,1fr)}
- #ppo-materials .em-states>div+div{border-left:0;border-top:1px solid var(--line)}
- #ppo-materials .em-states>div{padding:12px 16px}
- #ppo-materials .em-attention{padding:12px 16px;flex-wrap:wrap}
+ #ppo-materials .em-attention{padding:8px 12px;flex-wrap:wrap}
  #ppo-materials .em-pair{grid-template-columns:120px minmax(0,1fr)}
  #ppo-materials .em-col-line{position:static}
  #ppo-materials .em-table th.em-col-line{position:static}
