@@ -31,7 +31,8 @@
     'email.read':'Read linked email and calendar items','email.edit':'Link and follow up email items','email.connect':'Connect a demo mailbox',
     'project.read':'Read projects','project.create':'Create projects','project.edit':'Edit projects',
     'engineering.read':'Read engineering requests','engineering.create':'Create engineering requests','engineering.edit':'Edit engineering requests',
-    'engineering.material.review':'Review released materials and substitutions','engineering.material.release':'Authorise and issue material releases','engineering.material.receive':'Receive material handovers','engineering.material.source':'Operate the synthetic source adapter'};
+    'engineering.material.review':'Review released materials and substitutions','engineering.material.release':'Authorise and issue material releases','engineering.material.receive':'Receive material handovers','engineering.material.source':'Operate the synthetic source adapter',
+    'engineering.change.review':'Review engineering change proposals','engineering.change.decide':'Record technical decisions on engineering changes','engineering.change.receive':'Receive engineering change requests','engineering.change.verify':'Record retest results for engineering changes','engineering.change.close':'Close engineering changes'};
   const FAMILY_NAMES={shared:'Shared records',service:'Service',activity:'Activities',schedule:'Scheduling',pack:'Job packs',field:'Field work (own)',report:'Service reports',crm:'CRM',finance:'Finance',estimating:'Estimating',email:'Email & calendar',project:'Projects',engineering:'Engineering'};
   const capability=key=>({key,label:LABELS[key],family:key.split('.')[0],familyName:FAMILY_NAMES[key.split('.')[0]],
     reads:/\.read(\.own)?$/.test(key),own:key.endsWith('.own'),
@@ -41,7 +42,7 @@
   const families=()=>[...new Set(CAPS.keys.map(k=>k.split('.')[0]))];
   const isCap=k=>CAPS.keys.includes(k);
 
-  /* Proposed administrative capabilities: deliberately outside the 65-value contract. */
+  /* Proposed administrative capabilities: deliberately outside the 70-value contract. */
   const ADMIN_CAPS=['admin.access.read','admin.access.propose','admin.access.approve','admin.access.review'];
   const roles={
     admin:{person:D(1),title:'Access administrator',admin:['admin.access.read','admin.access.propose']},

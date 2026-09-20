@@ -6,7 +6,7 @@ owner: Dean Fiedler
 scope_id: EN-07
 principal_requirement: ENG-06
 status: Implemented on a local branch for owner review; visual acceptance, business acceptance and the accepted UI baseline register remain separate
-source_commit: 60004ed (EN-06 branch tip this work is stacked on; main was 1a69e93 at the planning checkpoint)
+source_commit: c8261e9 (EN-06 branch tip this work is stacked on, draft PR #265; main was 1a69e93 at the planning checkpoint)
 ---
 
 # EN-07 Engineering Change-Impact Review: application integration
@@ -36,13 +36,13 @@ The plan, prompt and mockup are not committed. This is a public repository and t
 
 | # | Decision | Evidence and effect |
 |---|---|---|
-| D1 | Stack on the EN-06 branch, in an isolated worktree | EN-07 needs migration 0029, EN-06's retained sources and the menu primitive EN-06 extracted. The shared checkout was in use, so the work was done in `tmp/en07-change-impact` and rebased once onto EN-06's tip. It must merge after EN-06 |
-| D2 | Migration **0030**, additive | 0029 was already taken. Sixteen tables (`ppo.engineering_changes`, fifteen `ppo.change_*`), nine guard functions, five CHECK constraints widened by the 0020 idiom, typed identity dispatch extended in place |
+| D1 | Stack on the EN-06 branch, in an isolated worktree | EN-07 needs migration 0029, EN-06's retained sources and the menu primitive EN-06 extracted. The shared checkout was in use, so the work was done in `tmp/en07-change-impact` and rebased twice onto EN-06's moving tip (last `c8261e9`). It must merge after EN-06 |
+| D2 | Migration **0030**, additive | 0029 was already taken. Sixteen tables (`ppo.engineering_changes`, fifteen `ppo.change_*`), nine guard functions, five CHECK constraints widened by the 0020 idiom, typed identity dispatch extended in place. Because it alters `ppo.business_identities`, it settles the deferred `identity_target` checks first and restores deferral straight after, as AGENTS.md has required since 0029 met that failure in CI |
 | D3 | No new reference type | PPO-STD-001 catalogues none for an engineering change, so none is invented. References are package-local `SYN-EN07-nnn` aliases, constrained to that form in the schema, and consume no SYN-PPO counter. A real type is an STD-001 amendment for Dean |
 | D4 | Sources are EN-06's retained upstream snapshots | EN-07 reads `ppo.material_sources` and never copies, publishes, edits or withdraws one. Three kinds are added for it (TestProcedure, TestEvidence, InstalledConfiguration); no material line can name them. One line of EN-06's parser changed to accept them |
 | D5 | One identity, numbered revisions, one hash | Submitting freezes content, affected objects, source links and retest definitions under one hash. Reviews, the decision, every payload and the closure bind to it. Coordination (owner, date, priority) is outside it and never invalidates anything |
 | D6 | Every command advances the change version | A closure or decision made against version N cannot race past a result recorded after N. Child records keep their own version for their own commands |
-| D7 | Five capabilities and a separate versioned policy, both required | `engineering.change.review/decide/receive/verify/close`. `engineering.edit` is authorship only. An absent policy answers "Authority not configured". Independence is checked against everyone who authored or changed the proposal, in the service and again in the database |
+| D7 | Five capabilities and a separate versioned policy, both required | `engineering.change.review/decide/receive/verify/close`. The AD-01 access-review catalogue is regenerated for them on LF bytes, with a plain-English label each and its pinned contract size moved from 65 to 70. `engineering.edit` is authorship only. An absent policy answers "Authority not configured". Independence is checked against everyone who authored or changed the proposal, in the service and again in the database |
 | D8 | Commercial and scheduling are an in-module synthetic prerequisite | No commercial or scheduling runtime exists. Accepting a change raises owned prerequisites from its cost and dates findings; their outcome carries the authority label `SyntheticPrerequisiteFixture` for ever and is never a Project, Finance or booking approval |
 | D9 | Receivers are local fictional people | No Supply, Service, Commissioning or document-control runtime exists to receive anything. A receiver accepts, returns or declines their own destination's exact payload. Accepting records receipt; it proves no physical work and rewrites nothing upstream |
 | D10 | Whole-scope implementation only | No command accepts a subset of the assessed scope, so hiding rows or ticking boxes cannot narrow an assessment. An independent child scope is future work |
@@ -88,6 +88,8 @@ The plan, prompt and mockup are not committed. This is a public repository and t
 | `tests/browser/engineering-changes.spec.ts` on a task-owned server (port 3107) | 3 desktop and 1 phone journeys pass. Includes computed r22 colours, flush geometry, dock and overlay, menu geometry compared with `/work` itself, lost-reply recovery and cost withholding |
 | `tests/http/engineering-changes.test.ts` on the same server | Passes, on two consecutive runs after one flaky assertion of mine was corrected (a bare `1250` can occur inside a content hash) |
 | EN-06's own browser suite on this branch | 5 pass (4 desktop, 1 phone): the shared style and header changes regressed nothing there |
+| The two traps EN-06's CI found (AGENTS.md) | Met before CI. With a real pending identity event, 0030 without the settle pair fails with `cannot ALTER TABLE "business_identities" because it has pending trigger events`; with it, it runs and deferral is restored (rolled back). The access-review model check and all 40 native browser groups pass at 70 capabilities. Python wrote CRLF into the two generated files on Windows; they are committed as the LF bytes CI regenerates |
+| Re-run after the second rebase | Whole-project `tsc` and tracked-tree `eslint` clean; unit 152 of 156 (the four known Windows path failures, which also fail on `main`); HTTP passes; 9 of 9 applicable browser journeys pass (EN-07 four, EN-06 five) |
 | Restart | The same digest of records, versions, 41 events and recorded check time before the stop, after the restart and after a scenario rerun |
 | Captures inspected | 1920, 1672, 1440, 1366, 1280, 960 (200% of 1920) and 390 wide; see the evidence folder |
 
@@ -137,5 +139,6 @@ All were *planned* in the plan. Status here is task-local and none is a parent a
 1. **Publishing the supplied sources.** If the plan, prompt and mockup should be retained under `docs/reference/`, say so; without them no UI baseline is registered for EN-07.
 2. **Reference type.** `SYN-EN07-nnn` is a labelled alias (D3). A catalogued type is an STD-001 amendment.
 3. **My Work and inbox integration** (section 4) is the largest functional gap against the plan's ownership table.
-4. **Merge order.** EN-06 first. Nothing here is pushed.
-5. D-008 and D-019 (source systems, technical authority), real commercial and scheduling rules, and verified receiving contracts remain operational dependencies, exactly as the plan's section 21 lists them.
+4. **Merge order.** EN-06 (draft PR #265) first. Nothing of EN-07 is pushed; the prompt puts remote publication outside this instruction.
+5. **Development database ledger.** 0030 was applied to `ppo_synthetic` before the settle pair was added, exactly as happened to EN-06's 0029, so `npm run db:migrate` refuses both until the ledger is told. The schema each produced is unchanged and the running application is unaffected. It was left for Dean, as EN-06's was, because it is a direct write outside the runner: `UPDATE public.ppo_migrations SET sha256 = CASE version WHEN 29 THEN 'a4f348864915c24262a2819cf9da33bb5171f7e04bdb7b1e04f045017d41d2b4' WHEN 30 THEN '3674efdd59991fca4b6caa8cc4caa6f8507eccb2a0934db53785c067d44be67a' END WHERE version IN (29,30);` The values are the SHA-256 of the two files as they now stand on LF bytes; 0030 must not be edited again.
+6. D-008 and D-019 (source systems, technical authority), real commercial and scheduling rules, and verified receiving contracts remain operational dependencies, exactly as the plan's section 21 lists them.
