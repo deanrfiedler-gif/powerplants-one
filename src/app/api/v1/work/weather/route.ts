@@ -1,0 +1,4 @@
+import { readWorkWeather } from "../../../../../activities/work-weather";
+import { readRoute } from "../../../../../shared/http";
+export const dynamic = "force-dynamic";
+export const GET = readRoute((p, _id, q) => readWorkWeather(p, q));

@@ -14,10 +14,12 @@ import {
   destination,
   menuGroups,
   pageForPath,
+  salesPhoneBar,
   workViewForPath,
   workspaces,
   type ShellDestination,
 } from "../shell/navigation";
+import { localDay } from "../activities/work-view";
 
 const subscribe = (changed: () => void) => {
   const media = window.matchMedia("(min-width: 781px)");
@@ -141,6 +143,34 @@ function ProductNavigationView({
             {item.href ? (shell.context ? "No access" : "Sign in") : "Planned"}
           </small>
         )}
+      </span>
+    );
+  };
+  // Mobile r07, Sales: icon-only cells. The name stays in the link for assistive technology and
+  // as a tooltip; the calendar opens on the reader's current local day, as My Work links to it.
+  const phoneCell = (entry: (typeof salesPhoneBar)[number]) => {
+    const item = destination(entry.id);
+    const contents = (
+      <>
+        <ProductIcon name={entry.icon} />
+        <span>{entry.label}</span>
+      </>
+    );
+    return allowed(item) ? (
+      <Link
+        key={entry.id}
+        href={entry.id === "calendar" ? `${item.href}?day=${localDay(new Date().toISOString())}` : item.href!}
+        aria-label={entry.label}
+        title={entry.label}
+        aria-current={current?.id === item.id ? "page" : undefined}
+        onClick={() => setMore(false)}
+        suppressHydrationWarning
+      >
+        {contents}
+      </Link>
+    ) : (
+      <span key={entry.id} className="ppo-planned-tab" aria-disabled="true" title={`${entry.label} — Unavailable for this identity`}>
+        {contents}
       </span>
     );
   };
@@ -313,17 +343,23 @@ function ProductNavigationView({
           {menu}
         </dialog>
       )}
-      <nav className="mobile-navigation" aria-label="Mobile navigation">
-        {[
-          destination("work"),
-          destination(workspace.primary),
-          destination(workspace.secondary),
-        ].map((item) => link(item, true))}
+      <nav
+        className={`mobile-navigation${workspace.id === "sales" ? " ppo-phone-bar-r07" : ""}`}
+        aria-label="Mobile navigation"
+      >
+        {workspace.id === "sales"
+          ? salesPhoneBar.map(phoneCell)
+          : [
+              destination("work"),
+              destination(workspace.primary),
+              destination(workspace.secondary),
+            ].map((item) => link(item, true))}
         {!wide && (
           <button
             ref={toggle}
             id="navigation-toggle"
-            aria-label="Menu"
+            aria-label="More"
+            title="More"
             aria-haspopup="dialog"
             aria-expanded={more}
             onClick={() => {
@@ -331,7 +367,7 @@ function ProductNavigationView({
               setMore(true);
             }}
           >
-            <ProductIcon name="more" />
+            <ProductIcon name={workspace.id === "sales" ? "bar-more" : "more"} />
             <span>More</span>
           </button>
         )}

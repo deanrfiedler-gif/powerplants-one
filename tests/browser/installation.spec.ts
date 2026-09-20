@@ -31,6 +31,23 @@ async function withSyntheticPrompt(page: Page) {
   });
 }
 
+/**
+ * Sign in, open My Work and wait until the shell is interactive. Opening the More
+ * surface only works once React has hydrated, which is also when the controller is
+ * certainly listening, so a synthetic event cannot be dispatched into a dead page.
+ * The compiled application in CI reaches this point far sooner than a dev server, so
+ * the wait is what makes the test deterministic rather than the ordering of the lines.
+ */
+async function openWorkspace(page: Page, baseURL: string) {
+  await signIn(page, baseURL);
+  await page.goto("/work");
+  await openMore(page);
+  const help = page.getByRole("button", { name: "How to install this app" });
+  await expect(help).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(help).toBeHidden();
+}
+
 async function signIn(page: Page, baseURL: string) {
   const session = await page.request.post("/api/v1/local-session", {
     headers: { Origin: baseURL, "Content-Type": "application/json" },
@@ -39,8 +56,10 @@ async function signIn(page: Page, baseURL: string) {
   expect(session.ok()).toBe(true);
 }
 
-const openMore = async (page: Page, mobile: boolean) =>
-  page.getByRole("button", { name: mobile ? "Menu" : "More", exact: true }).click();
+// Since mobile r07 the phone bar's trigger is also named "More"; the rail shows its own
+// only on wide viewports, so exactly one "More" button exists at any width.
+const openMore = async (page: Page) =>
+  page.getByRole("button", { name: "More", exact: true }).click();
 
 test("the app head and manifest describe one installable identity", async ({ page, baseURL }) => {
   await signIn(page, baseURL!);
@@ -85,14 +104,12 @@ test("install appears only with a real event, prompts once per event and reports
   page,
   baseURL,
 }, info) => {
-  const mobile = !!info.project.use.isMobile;
   await withSyntheticPrompt(page);
-  await signIn(page, baseURL!);
-  await page.goto("/work");
+  await openWorkspace(page, baseURL!);
 
   // No event: an enabled Install button that could do nothing is never shown; the
   // manual instructions remain reachable instead.
-  await openMore(page, mobile);
+  await openMore(page);
   await expect(page.getByRole("button", { name: "Install Powerplants One" })).toHaveCount(0);
   await expect(page.getByRole("button", { name: "How to install this app" })).toBeVisible();
   await page.keyboard.press("Escape");
@@ -101,7 +118,7 @@ test("install appears only with a real event, prompts once per event and reports
   // Taking ownership of the browser prompt means preventing its default.
   expect(await page.evaluate(() => (window as unknown as { __ppoInstall: { prevented: number } }).__ppoInstall.prevented)).toBe(1);
 
-  await openMore(page, mobile);
+  await openMore(page);
   const install = page.getByRole("button", { name: "Install Powerplants One" });
   await expect(install).toBeVisible();
   await expect(install).toBeEnabled();
@@ -122,13 +139,11 @@ test("install appears only with a real event, prompts once per event and reports
 test("a dismissed prompt stays closed until the browser offers another event", async ({
   page,
   baseURL,
-}, info) => {
-  const mobile = !!info.project.use.isMobile;
+}) => {
   await withSyntheticPrompt(page);
-  await signIn(page, baseURL!);
-  await page.goto("/work");
+  await openWorkspace(page, baseURL!);
   await page.evaluate(() => (window as unknown as { __ppoFire: (a: string) => void }).__ppoFire("dismissed"));
-  await openMore(page, mobile);
+  await openMore(page);
   await page.getByRole("button", { name: "Install Powerplants One" }).click();
   await page.evaluate(() => (window as unknown as { __ppoRelease: () => void }).__ppoRelease());
   await expect(page.getByText("Installation was not completed.")).toBeVisible();
@@ -139,13 +154,13 @@ test("a dismissed prompt stays closed until the browser offers another event", a
 
   // A later eligible event enables the action again.
   await page.evaluate(() => (window as unknown as { __ppoFire: (a: string) => void }).__ppoFire("accepted"));
-  await openMore(page, mobile);
+  await openMore(page);
   await expect(page.getByRole("button", { name: "Install Powerplants One" })).toBeVisible();
   await page.keyboard.press("Escape");
 
   // A browser that rejects its own prompt is reported truthfully, not as success.
   await page.evaluate(() => (window as unknown as { __ppoFire: (a: string) => void }).__ppoFire("throw"));
-  await openMore(page, mobile);
+  await openMore(page);
   await page.getByRole("button", { name: "Install Powerplants One" }).click();
   await expect(page.getByText("could not show its installation prompt")).toBeVisible();
 });
@@ -155,12 +170,11 @@ test("appinstalled removes the offer without claiming anything it cannot see", a
   baseURL,
 }) => {
   await withSyntheticPrompt(page);
-  await signIn(page, baseURL!);
-  await page.goto("/work");
+  await openWorkspace(page, baseURL!);
   await page.evaluate(() => (window as unknown as { __ppoFire: (a: string) => void }).__ppoFire("accepted"));
   // The browser reports the installation without our prompt having been used.
   await page.evaluate(() => window.dispatchEvent(new Event("appinstalled")));
-  await openMore(page, !!test.info().project.use.isMobile);
+  await openMore(page);
   await expect(page.getByRole("button", { name: "Install Powerplants One" })).toHaveCount(0);
   await expect(page.getByText("Powerplants One was installed on this device.")).toBeVisible();
   // Nothing was written to storage: a new tab cannot claim an installation it never saw.
@@ -175,10 +189,9 @@ test("the manual instructions are complete, keyboard reachable and never claim s
   page,
   baseURL,
 }, info) => {
-  const mobile = !!info.project.use.isMobile;
   await signIn(page, baseURL!);
   await page.goto("/work");
-  await openMore(page, mobile);
+  await openMore(page);
   const help = page.getByRole("button", { name: "How to install this app" });
   await help.focus();
   await expect(help).toBeFocused();
@@ -209,14 +222,13 @@ test("the manual instructions are complete, keyboard reachable and never claim s
   await expect(panel).toBeHidden();
   // The trigger closed with the More surface behind the panel, so focus returns to the
   // control that opened that surface rather than being dropped on the document.
-  await expect(page.getByRole("button", { name: mobile ? "Menu" : "More", exact: true })).toBeFocused();
+  await expect(page.getByRole("button", { name: "More", exact: true })).toBeFocused();
 });
 
 test("an installed window hides the offer and offers a reload that respects unsaved work", async ({
   page,
   baseURL,
 }) => {
-  const mobile = !!test.info().project.use.isMobile;
   // A test browser cannot be launched as an installed window, so the display mode is
   // emulated. This proves the controller reacts to the signal, not that iOS or Android
   // report it — that stays a physical-device check.
@@ -238,7 +250,7 @@ test("an installed window hides the offer and offers a reload that respects unsa
   });
   await signIn(page, baseURL!);
   await page.goto("/work");
-  await openMore(page, mobile);
+  await openMore(page);
   await expect(page.getByRole("button", { name: "Install Powerplants One" })).toHaveCount(0);
   await expect(page.getByRole("button", { name: "How to install this app" })).toHaveCount(0);
   const reload = page.getByRole("button", { name: "Reload app" });

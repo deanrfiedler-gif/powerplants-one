@@ -85,6 +85,12 @@ function start() {
   publish({ standalone: detectStandalone() });
 }
 
+// Attach as early as the client bundle runs, rather than waiting for a subscriber's
+// effect: Chromium can fire beforeinstallprompt during hydration, and an event we are
+// not listening for is gone. Anything earlier than this still reaches the browser's own
+// menu, which stays a supported installation route.
+start();
+
 // One controller for the session: the listeners outlive every route change and every
 // remount of the surface that renders the action.
 function subscribe(notify: () => void) {

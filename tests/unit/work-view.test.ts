@@ -1,18 +1,25 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
+  agendaDayLabel,
+  agendaSlot,
   attentionGroup,
+  compareAgenda,
   compareDue,
+  dayParts,
   durationLabel,
   durationMinutes,
   endOfLocalDay,
   firstName,
   greeting,
+  isCivilDay,
   localDayBounds,
   longDate,
   nextScheduleId,
   shortDate,
   timing,
+  weekLabel,
+  weekOf,
   type Timed,
 } from "../../src/activities/work-view";
 
@@ -140,6 +147,33 @@ test("due-time order is stable for equal times and the next entry skips ended ap
     nextScheduleId([{ ...call, status: "Completed" }, scope], NOW),
     "a5",
   );
+});
+
+// Mobile build report r02, section 11: the same Monday, read as a weekly agenda.
+test("the week is Monday first, crosses months and years, and refuses a malformed day", () => {
+  assert.deepEqual(weekOf("2026-09-21"), ["2026-09-21", "2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25", "2026-09-26", "2026-09-27"]);
+  // A Sunday belongs to the week that began the Monday before it.
+  assert.deepEqual(weekOf("2026-09-27"), weekOf("2026-09-21"));
+  assert.equal(weekLabel(weekOf("2026-09-21")), "21 – 27 Sep");
+  assert.equal(weekLabel(weekOf("2026-09-30")), "28 Sep – 4 Oct");
+  assert.equal(weekLabel(weekOf("2027-01-01")), "28 Dec – 3 Jan");
+  assert.deepEqual(dayParts("2026-09-21"), { weekday: "Mon", date: 21, month: "Sep" });
+  assert.equal(agendaDayLabel("2026-09-21", "2026-09-21"), "Today");
+  assert.equal(agendaDayLabel("2026-09-23", "2026-09-21"), "Wed 23 Sep");
+  for (const bad of ["2026-02-30", "2026-9-21", "21/09/2026", "", null, 20260921]) assert.equal(isCivilDay(bad), false);
+  assert.equal(isCivilDay("2028-02-29"), true);
+});
+
+test("an agenda slot says By for a deadline, a bare time for an appointment and never invents a time", () => {
+  assert.deepEqual(agendaSlot(firstContact), { kind: "deadline", label: "By 9:00", spoken: "Due by 9:00 am" });
+  assert.deepEqual(agendaSlot(call), { kind: "appointment", label: "9:30", spoken: "Starts at 9:30 am" });
+  assert.equal(agendaSlot(row("p", { starts_at: brisbane("2026-09-21T14:30"), due_at: brisbane("2026-09-21T15:00") })).label, "14:30");
+  const dateOnly = row("d", { due_at: endOfLocalDay("2026-09-21"), due_date_only: true });
+  assert.deepEqual(agendaSlot(dateOnly), { kind: "anytime", label: "Any time", spoken: "Any time on this day" });
+  // Timed entries in time order, untimed tasks after them, identifiers breaking ties.
+  assert.deepEqual([dateOnly, visit, firstContact, scope, call].toSorted(compareAgenda).map((a) => a.id), ["a3", "a4", "a5", "a6", "d"]);
+  // "Next" is the next booked appointment, never the 9:00 deadline that precedes it.
+  assert.equal(nextScheduleId([firstContact, call, scope, visit, dateOnly], NOW), "a4");
 });
 
 test("durations, greeting and civil-day helpers use the documented time zone", () => {

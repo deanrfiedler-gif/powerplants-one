@@ -5,6 +5,9 @@ import { MY_WORK, seedScenario, type Call } from "../helpers/my-work";
 // scenario, so its counts reconcile exactly; every record is created and changed through the
 // real API and the real page. The tests run in order and share the scenario the first one builds.
 test.describe.configure({ mode: "serial" });
+// These are the desktop overview's journeys. A phone gets its own presentation of the same reads
+// and commands (mobile r07), proved in my-work-mobile.spec.ts.
+test.skip(({ isMobile }) => !!isMobile, "The phone overview is proved in my-work-mobile.spec.ts");
 
 const origin = "http://127.0.0.1:3000";
 const caller = (page: Page): Call => async (path, body) => {
@@ -86,17 +89,6 @@ test("the overview reconciles its four counts, the list, the schedule and the no
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.screenshot({ path: info.outputPath("overview-expanded.png") });
 
-  if (info.project.use.isMobile) {
-    // Phone: a dismissible drawer. Escape closes it and focus returns to its trigger.
-    const trigger = page.locator("#mw-content").getByRole("button", { name: "Show menu", exact: true });
-    await trigger.click();
-    const drawer = page.getByRole("dialog", { name: "My Work menu" });
-    await expect(drawer.getByRole("link", { name: "My actions" })).toBeVisible();
-    await page.keyboard.press("Escape");
-    await expect(drawer).toBeHidden();
-    await expect(trigger).toBeFocused();
-    return;
-  }
   // Desktop: the header control and the edge handle both toggle; content, filters and scroll stay.
   const menu = page.getByRole("navigation", { name: "My Work views" });
   await expect(menu.getByRole("link", { name: "Overview" })).toHaveAttribute("aria-current", "page");

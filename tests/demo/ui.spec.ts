@@ -99,7 +99,7 @@ test("invited actor: mailbox to refined deal, follow-up, calendar and another br
   await call(page, "crm/opportunities", o);
   await page.goto("/sales/opportunities");
   if (info.project.use.isMobile)
-    await page.getByRole("button", { name: "Menu", exact: true }).click();
+    await page.getByRole("button", { name: "More", exact: true }).click();
   else await page.getByRole("button", { name: "More", exact: true }).click();
   await page
     .getByRole("navigation", {

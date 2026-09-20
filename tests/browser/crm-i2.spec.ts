@@ -372,9 +372,11 @@ test("CA-13 shared brand consumers retain navigation, readable actions and origi
     // Retry the complete one-heading/title condition before inspecting the shell.
     await expect(page.locator("h1")).toHaveText([new RegExp(title)]);
     await expect(page.locator("h1")).toBeVisible();
-    await expect(page.locator(".brand-logo:visible")).toBeVisible();
+    // On a phone, My Work's header carries its own menu trigger where the brand sits elsewhere (mobile r07).
+    if (info.project.use.isMobile && ["/", "/work"].includes(path)) await expect(page.getByRole("banner").getByRole("button", { name: "My Work menu", exact: true })).toBeVisible();
+    else await expect(page.locator(".brand-logo:visible")).toBeVisible();
     if (info.project.use.isMobile) {
-      await page.getByRole("button", { name: "Menu", exact: true }).click();
+      await page.getByRole("button", { name: "More", exact: true }).click();
       const menu = page.getByRole("dialog", { name: "More", exact: true });
       await expect(menu).toBeVisible();
       // Scoped to the menu: the phone's bottom navigation also carries Deals.
@@ -397,7 +399,7 @@ test("Accepted r08 shell and board retain full-width stages, fixed headers and s
   await expect.poll(() => ids(page)).toHaveLength(10);
   const board = page.locator(".crm-board-scroll");
   const activeLink = page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "More navigation", exact: true }).getByRole("link", { name: "Sales", exact: true });
-  await page.getByRole("button", { name: info.project.use.isMobile ? "Menu" : "More", exact: true }).click();
+  await page.getByRole("button", { name: "More", exact: true }).click();
   await expect(activeLink).toHaveAttribute("aria-current", "page");
   const activeStyle = await activeLink.evaluate(e => ({ fill: getComputedStyle(e).backgroundColor, icon: getComputedStyle(e.querySelector("svg")!).color }));
   expect(activeStyle).toEqual({ fill: "rgb(240, 246, 237)", icon: "rgb(49, 94, 67)" });

@@ -17,7 +17,7 @@ import { defaultCriteria } from "../../src/activities/work-criteria";
 import { endOfLocalDay, localDay } from "../../src/activities/work-view";
 import { createOpportunity, planOpportunityAction } from "../../src/crm/opportunities";
 import { readOpportunity } from "../../src/crm/reads";
-import { listPlanningGaps } from "../../src/crm/planning-gaps";
+import { listOverdueOpportunities, listPlanningGaps } from "../../src/crm/planning-gaps";
 import { CRM, crmAction, crmBase, crmDiscovery } from "../helpers/crm";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
@@ -177,6 +177,36 @@ test("MW-DB04 a planning gap is the Deals rule: the designated next action is fi
   assert.equal((await listPlanningGaps(p, { owner_id: randomUUID(), company_id: null, limit: 10 }))!.total, 0);
   assert.equal(await listPlanningGaps(await principal("observer"), { owner_id: null, company_id: null, limit: 10 }), null);
   assert.equal((await readWorkOverview(await principal("observer"))).gaps.status, "not_permitted");
+});
+
+test("MW-DB07 an opportunity becomes overdue when its designated next action does: the Deals rule, asked at one instant", async () => {
+  const p = await principal();
+  const asked = async (now: string, owner_id: string | null = p.actor_id, reader = p) => await listOverdueOpportunities(reader, { owner_id, company_id: null, now, limit: 50 });
+  // The seed may hold overdue opportunities of its own; this test counts from them.
+  const seeded = (await asked(at(61)))!.total;
+  const input = { ...crmDiscovery(), title: "SYN overdue opportunity" };
+  await createOpportunity(p, input);
+  assert.equal((await asked(at(61)))!.total, seeded, "an undated next action is 'Due date needed', never overdue");
+  const due = at(60),
+    action = { ...crmAction(), activity_type: "Call", due_needed: false, due_at: due };
+  await planOpportunityAction(p, input.id, { ...crmBase(), expected_version: 1, activity_id: null, new_action: action });
+  // The same records, asked one minute before the deadline and one minute after it.
+  assert.equal((await asked(at(59)))!.total, seeded);
+  const late = (await asked(at(61)))!;
+  assert.equal(late.total, seeded + 1);
+  assert.deepEqual(
+    late.items.filter((o) => o.id === input.id).map((o) => [o.title, o.action_id, o.action_due_at, o.action_owner_id]),
+    [["SYN overdue opportunity", action.id, due, action.owner_id]],
+  );
+  // Another owner's scope, and an identity without Sales access, learn nothing.
+  assert.equal((await asked(at(61), randomUUID()))!.total, 0);
+  assert.equal(await asked(at(61), null, await principal("observer")), null);
+  assert.equal((await readWorkOverview(await principal("observer"))).overdue_opportunities.status, "not_permitted");
+  assert.equal((await readWorkOverview(p)).overdue_opportunities.status, "ok");
+  // Finishing the action ends the overdue state: the opportunity is then a planning gap, a different question.
+  await activityCommand(p, action.id, { ...crmBase(), expected_version: 1, outcome: "SYN outcome recorded" }, "complete");
+  assert.equal((await asked(at(61)))!.total, seeded);
+  assert.equal((await listPlanningGaps(p, { owner_id: p.actor_id, company_id: null, limit: 50 }))!.items.some((g) => g.id === input.id), true);
 });
 
 test("MW-DB05 reads follow current grants: team coordination needs activity.edit and another workspace sees nothing", async () => {
