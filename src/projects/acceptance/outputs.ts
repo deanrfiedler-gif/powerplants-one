@@ -6,7 +6,17 @@ import {
 } from "../../engineering/commissioning/outputs";
 import type { Detail, ProjectContext } from "./model";
 import { hash } from "./context";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 export const acceptanceTemplate = "ppo-out13-acceptance-v1";
+export async function currentAcceptanceTemplate() {
+  const bytes = await Promise.all([
+    readFile(join(process.cwd(), "src/projects/acceptance/outputs.ts")),
+    readFile(join(process.cwd(), "src/engineering/commissioning/outputs.ts")),
+    readFile(join(process.cwd(), "src/documents/render.ts")),
+  ]);
+  return acceptanceTemplate + ":" + hash(bytes.map((b) => b.toString("utf8")));
+}
 // An explicit allowlist, shared by preview, immutable manifest and rendered bytes. Internal source details,
 // private commercial values, notes, provider paths and credentials never enter this projection.
 export function packProjection(
@@ -15,9 +25,10 @@ export function packProjection(
   audience: "Customer" | "Service",
   recipient: { id: string; name: string },
   purpose: string,
+  templateVersion = acceptanceTemplate,
 ) {
   return {
-    template: acceptanceTemplate,
+    template: templateVersion,
     synthetic: true,
     audience,
     recipient,
@@ -119,7 +130,7 @@ export async function preparePack(
     kind: "OUT-13",
     audience: "Customer",
     manifest_hash: hash(manifest),
-    template_version: acceptanceTemplate,
+    template_version: manifest.template,
     html: (prepared) => packHtml(manifest, prepared),
     head: "Powerplants One · Stage handover",
     foot: manifest.stage.reference,

@@ -334,6 +334,9 @@ import {
 } from "../../src/projects/acceptance/intents";
 import { parseCommand } from "../../src/projects/acceptance/validation";
 import { actionDuty } from "../../src/projects/acceptance/ui-actions";
+import { readFile, rename } from "node:fs/promises";
+import { join } from "node:path";
+import { homedir } from "node:os";
 test("PJ09-34/44/46/47/48: server-held original, payload conflict, current authority and restricted Finance projection", async () => {
   const actor = await p(),
     d = await detail(PJ.project, ready.stage),
@@ -528,4 +531,55 @@ test("PJ09-11/13/36/38: authorised scope disposition retains the ledger and cann
     ),
     /immutable|retained|append/i,
   );
+});
+
+test("PJ09-35/43: missing exact original blocks closeout, retains its reference and creates one owned recovery", async () => {
+  const project = stable("db:journey"),
+    stage = stable(project + ":journey:stage"),
+    d = await detail(project, stage),
+    manifest = d.manifests.find(
+      (m) => m.revision === d.stage.revision && m.issue_id,
+    )!;
+  await act("coordinator", project, stage, "reopen", {
+    unit_ids: d.units
+      .filter((u) => u.disposition === "Included")
+      .map((u) => u.id),
+  });
+  const path = join(
+      process.env.PPO_DOCUMENT_DIRECTORY ??
+        join(homedir(), ".ppo-synthetic-documents"),
+      (await p()).workspace_id,
+      manifest.id,
+    ),
+    missing = path + ".pj09-proof-missing",
+    original = await readFile(path);
+  await rename(path, missing);
+  try {
+    await assert.rejects(
+      file(await p(), manifest.id, "pdf"),
+      (e) => Number((e as { status: number }).status) === 503,
+    );
+    await assert.rejects(
+      act("coordinator", project, stage, "closeStage"),
+      (e) => Number((e as { status: number }).status) === 503,
+    );
+    await act("coordinator", project, stage, "check");
+    await act("coordinator", project, stage, "check");
+    assert.equal((await detail(project, stage)).source_state, "Unavailable");
+    assert.equal(
+      (
+        await rows(
+          "SELECT * FROM ppo.acceptance_followups WHERE stage_id=$1 AND cause=$2",
+          [stage, "original:" + manifest.id],
+        )
+      ).length,
+      1,
+    );
+  } finally {
+    await rename(missing, path);
+  }
+  assert.deepEqual(await readFile(path), original);
+  await act("coordinator", project, stage, "check");
+  assert.equal((await detail(project, stage)).source_state, "Current");
+  await act("coordinator", project, stage, "closeStage");
 });

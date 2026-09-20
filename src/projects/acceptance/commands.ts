@@ -3,7 +3,7 @@ import { randomUUID } from "node:crypto";
 import type { PoolClient } from "pg";
 import type { Principal } from "../../platform/identity";
 import { database, transaction } from "../../platform/database";
-import { unavailable } from "../../platform/errors";
+import { AppError, unavailable } from "../../platform/errors";
 import { sharedOperation } from "../../platform/operations";
 import { hasPermission, type QueryClient } from "../../platform/permissions";
 import { visible } from "../../shared/reads";
@@ -37,7 +37,7 @@ import {
   packProjection,
   preparePack,
   readBundle,
-  acceptanceTemplate,
+  currentAcceptanceTemplate,
 } from "./outputs";
 
 import { actionDuty } from "./ui-actions";
@@ -300,6 +300,7 @@ async function executeCommand(p: Principal, value: unknown) {
             need(f.recipient_id, "recipient_id"),
           ),
           need(f.purpose, "purpose"),
+          await currentAcceptanceTemplate(),
         );
       });
       output = await preparePack(p, need(f.id, "id"), preparedManifest);
@@ -792,6 +793,25 @@ async function executeCommand(p: Principal, value: unknown) {
         subject = f.id!;
       } else if (cmd.action === "check") {
         const detail = requireDetail();
+        const missingOriginals: string[] = [];
+        for (const manifest of detail.manifests) {
+          try {
+            await readBundle(p, manifest.prepared);
+          } catch (error) {
+            if (!(error instanceof AppError && error.status === 503))
+              throw error;
+            missingOriginals.push(manifest.id);
+            await followup(
+              c,
+              p,
+              project,
+              detail.stage,
+              `original:${manifest.id}`,
+              "Recover the exact retained acceptance output",
+              manifest.prepared_by,
+            );
+          }
+        }
         await c.query(
           "INSERT INTO ppo.acceptance_checks(id,workspace_id,project_id,stage_id,facts_hash,result,checked_by,snapshot) VALUES($1,$2,$3,$4,$5,$6,$7,$8)",
           [
@@ -800,7 +820,18 @@ async function executeCommand(p: Principal, value: unknown) {
             project.id,
             detail.stage.id,
             detail.facts_hash,
-            detail.source_state,
+            missingOriginals.length
+              ? "Unavailable"
+              : ((
+                  [
+                    "Restricted",
+                    "Unavailable",
+                    "Changed",
+                    "Not checked",
+                  ] as const
+                ).find((s) =>
+                  detail.requirements.some((r) => r.source.availability === s),
+                ) ?? "Current"),
             p.actor_id,
             JSON.stringify(
               detail.requirements.map((r) => ({
@@ -986,6 +1017,7 @@ async function executeCommand(p: Principal, value: unknown) {
             need(f.recipient_id, "recipient_id"),
           ),
           need(f.purpose, "purpose"),
+          await currentAcceptanceTemplate(),
         );
         if (!output || !preparedManifest || hash(m) !== hash(preparedManifest))
           fail(
@@ -1008,7 +1040,7 @@ async function executeCommand(p: Principal, value: unknown) {
             m,
             hash(m),
             detail.facts_hash,
-            acceptanceTemplate,
+            m.template,
             output,
             p.actor_id,
             output!.prepared_at,
@@ -1024,7 +1056,7 @@ async function executeCommand(p: Principal, value: unknown) {
           detail.handover_gates.length ||
           m.revision !== detail.stage.revision ||
           m.facts_hash !== detail.facts_hash ||
-          m.template_version !== acceptanceTemplate
+          m.template_version !== (await currentAcceptanceTemplate())
         )
           fail(
             "Scope, evidence or template changed after preparation. Create a fresh reviewed candidate.",
@@ -1277,6 +1309,10 @@ async function executeCommand(p: Principal, value: unknown) {
         if (detail.stage.closeout === "Closed")
           fail("This stage already has a closeout decision.");
         if (detail.closeout_gates.length) fail(detail.closeout_gates.join(" "));
+        for (const m of detail.manifests.filter(
+          (m) => m.revision === detail.stage.revision && m.issue_id,
+        ))
+          await readBundle(p, m.prepared);
         await decide(c, p, cmd, detail, "Stage closeout", "Closed", null, {
           remaining_obligations: detail.obligations
             .filter((o) => o.state !== "Completed")
@@ -1294,6 +1330,11 @@ async function executeCommand(p: Principal, value: unknown) {
           ledger = await projectUnits(c, p, project.id),
           decisions = await decisionsFor(c, p, project.id),
           gates = projectClosureGates(ledger, details, decisions, sources);
+        for (const d of details)
+          for (const m of d.manifests.filter(
+            (m) => m.revision === d.stage.revision && m.issue_id,
+          ))
+            await readBundle(p, m.prepared);
         const current = hash({
           ledger,
           stages: details.map((d) => [

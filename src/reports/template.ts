@@ -8,10 +8,19 @@ import { reportTemplateDefinition } from "./render";
 // identity covers the actual renderer/projection/escaping source bytes, not
 // just a descriptive version label. Re-read at request and final release.
 export async function currentReportTemplate() {
-  const sources = [];
-  for (const path of ["src/reports/render.ts", "src/documents/render.ts"]) {
-    const bytes = await readFile(join(process.cwd(), path));
-    sources.push({ path, sha256: digest(bytes), byte_count: bytes.length });
-  }
+  // Keep the two paths literal so the compiler does not trace every file in
+  // the checkout (including ignored worktrees). Order and hashed bytes remain
+  // identical to the original template contract.
+  const bytes = await Promise.all([
+    readFile(join(process.cwd(), "src/reports/render.ts")),
+    readFile(join(process.cwd(), "src/documents/render.ts")),
+  ]);
+  const sources = ["src/reports/render.ts", "src/documents/render.ts"].map(
+    (path, i) => ({
+      path,
+      sha256: digest(bytes[i]),
+      byte_count: bytes[i].length,
+    }),
+  );
   return canonical({ definition: reportTemplateDefinition, sources });
 }

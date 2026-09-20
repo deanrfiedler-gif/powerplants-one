@@ -55,6 +55,7 @@ export type Unit = {
   relationship?: string | null;
 };
 export type SourceFacts = {
+  handover_requirements?: string[];
   id: string;
   version: number;
   title: string;

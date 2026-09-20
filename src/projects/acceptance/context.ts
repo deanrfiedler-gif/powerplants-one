@@ -25,6 +25,7 @@ import {
   type ResponseRecord,
 } from "./model";
 import { closeoutGates, requirementGates, requirementOutcome } from "./policy";
+import { outstandingFor } from "../../engineering/commissioning/model";
 export const hash = (x: unknown) =>
   createHash("sha256").update(canonical(x)).digest("hex");
 export const iso = (x: Date | string | null) =>
@@ -235,6 +236,15 @@ export async function sourcesFor(
                   : "Changed";
         item = {
           ...item,
+          handover_requirements: outstandingFor(r.facts, [
+            "TestPrerequisite",
+            "TechnicalIssue",
+            "CustomerHandover",
+            "ServiceAcceptance",
+          ]).map(
+            (o) =>
+              `${o.title}: ${o.state} in EN-08 (${o.owner_name ?? "Owner needed"})`,
+          ),
           availability,
           outcome: hard
             ? "Blocked"
@@ -537,6 +547,9 @@ export async function loadDetail(
   const handover_gates = [
     ...technical_gates,
     ...requirementGates(requirements, ["Handover"]),
+    ...new Set(
+      requirements.flatMap((r) => r.source.handover_requirements ?? []),
+    ),
   ];
   if (outcomes.technical !== "Accepted")
     handover_gates.push(
@@ -626,7 +639,10 @@ export async function loadDetail(
     responses,
     outcomes,
     facts_hash,
-    source_state,
+    source_state:
+      checks?.facts_hash === facts_hash && checks.result === "Unavailable"
+        ? "Unavailable"
+        : source_state,
     checked_at:
       checks?.facts_hash === facts_hash && checks.result === "Current"
         ? iso(checks.checked_at)
@@ -639,6 +655,11 @@ export async function loadDetail(
     revisions,
     source_history,
   };
-  detail.closeout_gates = closeoutGates(detail);
+  detail.closeout_gates = [
+    ...new Set([
+      ...closeoutGates(detail),
+      ...requirements.flatMap((r) => r.source.handover_requirements ?? []),
+    ]),
+  ];
   return detail;
 }

@@ -203,7 +203,7 @@ try {
   ]) {
     await page.setViewportSize(size);
     await page.goto(root + "&panel=closed");
-    await page.locator(".ac-count").waitFor();
+    await page.locator(".ac-footer").waitFor();
     assert.equal(
       await page.evaluate(
         () => document.documentElement.scrollWidth > innerWidth,
