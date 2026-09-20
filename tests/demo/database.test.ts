@@ -94,7 +94,7 @@ test("each invited tester retains a private mailbox, CRM follow-up and calendar 
     primary_person_id: CRM.person,
     contact_unknown_reason: null,
     value_amount: "12500.50",
-    expected_close_date: "2026-11-30",
+    expected_close_date: "2031-12-01",
   });
   await editDealScope(p, o.id, {
     ...crmBase(),
@@ -181,7 +181,7 @@ test("invited tester can read the Company A planner, demand and linked work with
   const token = await transaction(c => createInvitedSession(c, tenant, first));
   const p = await readInvitedSession(database(), token, tenant);
   const schedule = await readSchedule(p, {
-    from: "2026-09-20T14:00:00Z", to: "2026-09-27T14:00:00Z", timezone: "Australia/Brisbane",
+    from: "2031-09-21T14:00:00Z", to: "2031-09-28T14:00:00Z", timezone: "Australia/Brisbane",
   });
   assert.ok(schedule.items.length > 0, "seeded visits must be visible, not an empty permission-filtered result");
   assert.ok(schedule.resources.length > 0);
@@ -360,7 +360,7 @@ test("invited actor persists proposal, preparation, contact and crew; conflictin
   const visit = randomUUID();
   const proposal = { ...base(), id: visit, expected_version: work.version,
     scope_revision_id: scope.id, scope_version: scope.version,
-    start_at: "2026-10-06T00:00:00Z", end_at: "2026-10-06T02:00:00Z",
+    start_at: "2031-10-07T00:00:00Z", end_at: "2031-10-07T02:00:00Z",
     customer_commitment: "Proposed", preparation_status: "Preparing" };
   await proposeVisit(actor, work.id, proposal);
   await proposeVisit(actor, work.id, proposal); // Same operation recovers the original, without another visit.
@@ -391,18 +391,18 @@ test("invited actor persists proposal, preparation, contact and crew; conflictin
   assert.equal(confirmed.start_at.toISOString(), proposal.start_at.replace("Z", ".000Z"));
   // Seeded Monday appointment occupies these exact resources. Failure preserves all versions and reservations.
   await assert.rejects(moveAppointment(actor, visit, { ...await booking(),
-    start_at: "2026-09-21T00:00:00Z", end_at: "2026-09-21T02:00:00Z" }), code("ResourceConflict"));
+    start_at: "2031-09-22T00:00:00Z", end_at: "2031-09-22T02:00:00Z" }), code("ResourceConflict"));
   const afterConflict = await read();
   assert.equal(afterConflict.version, confirmed.version);
   assert.deepEqual(afterConflict.assignments, confirmed.assignments);
   assert.equal(afterConflict.start_at.toISOString(), confirmed.start_at.toISOString());
-  await moveAppointment(actor, visit, { ...await booking(), start_at: "2026-10-07T00:00:00Z", end_at: "2026-10-07T02:00:00Z" });
+  await moveAppointment(actor, visit, { ...await booking(), start_at: "2031-10-08T00:00:00Z", end_at: "2031-10-08T02:00:00Z" });
   const moved = await read();
   assert.equal(moved.schedule_version, confirmed.schedule_version + 1);
   assert.equal(moved.customer_commitment, "Changed");
   const freshActor = await readInvitedSession(database(), token, tenant);
-  assert.equal((await readAppointment(freshActor, visit)).items[0].start_at.toISOString(), "2026-10-07T00:00:00.000Z");
+  assert.equal((await readAppointment(freshActor, visit)).items[0].start_at.toISOString(), "2031-10-08T00:00:00.000Z");
   await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='schedule.manage'", [actor.actor_id]);
-  await assert.rejects(moveAppointment(actor, visit, { ...await booking(), start_at: "2026-10-08T00:00:00Z", end_at: "2026-10-08T02:00:00Z" }), code("Forbidden"));
+  await assert.rejects(moveAppointment(actor, visit, { ...await booking(), start_at: "2031-10-09T00:00:00Z", end_at: "2031-10-09T02:00:00Z" }), code("Forbidden"));
   assert.equal((await read()).version, moved.version);
 });

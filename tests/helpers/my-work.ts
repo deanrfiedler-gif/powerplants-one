@@ -164,17 +164,17 @@ export async function seedScenario(call: Call, now = new Date()) {
 // are never seeded, stored or served by the application itself.
 export const WEATHER_SAMPLE = {
   status: "ok",
-  observed_at: "2026-09-20T22:40:00.000Z",
+  observed_at: "2031-09-21T22:40:00.000Z",
   location: "Brisbane",
   locations: ["Brisbane", "Toowoomba", "Bundaberg"],
   condition: "PartlyCloudy",
   summary: "Partly cloudy",
   temperature_c: 23,
-  today: { valid_from: "2026-09-20T14:00:00.000Z", valid_to: "2026-09-21T14:00:00.000Z", label: "Today", condition: "PartlyCloudy", summary: "Partly cloudy", high_c: 27, low_c: 17, rain_chance_pct: 20, rain_mm: null },
+  today: { valid_from: "2031-09-21T14:00:00.000Z", valid_to: "2031-09-22T14:00:00.000Z", label: "Today", condition: "PartlyCloudy", summary: "Partly cloudy", high_c: 27, low_c: 17, rain_chance_pct: 20, rain_mm: null },
   forecast: [
-    { valid_from: "2026-09-21T14:00:00.000Z", valid_to: "2026-09-22T14:00:00.000Z", label: "Tuesday", condition: "Rain", summary: "Showers", high_c: 24, low_c: 16, rain_chance_pct: 70, rain_mm: 4 },
+    { valid_from: "2031-09-22T14:00:00.000Z", valid_to: "2031-09-23T14:00:00.000Z", label: "Tuesday", condition: "Rain", summary: "Showers", high_c: 24, low_c: 16, rain_chance_pct: 70, rain_mm: 4 },
   ],
-  issued_at: "2026-09-20T22:10:00.000Z",
+  issued_at: "2031-09-21T22:10:00.000Z",
   stale: false,
   provider: { name: "SYN sample forecast", attribution: "Sample values for a test. Not a forecast.", url: null },
 } as const;

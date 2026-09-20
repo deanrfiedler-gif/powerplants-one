@@ -37,7 +37,7 @@ const base = () => ({
   reason: "SYN P05 HTTP component proof",
 });
 const period =
-  "from=2026-09-20T14:00:00Z&to=2026-09-27T14:00:00Z&timezone=Australia/Brisbane";
+  "from=2031-09-21T14:00:00Z&to=2031-09-28T14:00:00Z&timezone=Australia/Brisbane";
 test("P05 HTTP confirms exact crew, recovers original receipt and exposes distinct saved state/holds", async () => {
   const cookie = await session("coordinator"),
     schedule = await call(cookie, "schedule?" + period);

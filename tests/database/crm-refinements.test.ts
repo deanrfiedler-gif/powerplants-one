@@ -39,7 +39,7 @@ const information = (version = 1) => ({
   primary_person_id: CRM.person,
   contact_unknown_reason: null,
   value_amount: "12,345.67",
-  expected_close_date: "2026-11-30",
+  expected_close_date: "2031-12-01",
 });
 const stage = (version: number, stage_id: string) => ({
   ...crmBase(),
@@ -158,7 +158,7 @@ test("core and scope commands persist separate data, replay once and retain next
   let saved = await readOpportunity(p, input.id);
   assert.equal(saved.title, body.title);
   assert.equal(saved.value_amount, "12345.67");
-  assert.equal(saved.expected_close_date, "2026-11-30");
+  assert.equal(saved.expected_close_date, "2031-12-01");
   assert.equal(saved.need_summary, input.need_summary);
   assert.equal(saved.next_activity?.id, input.initial_action.id);
   await editDealScope(p, input.id, {
