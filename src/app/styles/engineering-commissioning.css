@@ -1,0 +1,140 @@
+/* EN-08 Commissioning Basis & As-Built Release (principal requirement ENG-07). Composition from the accepted desktop
+   mockup r02; behaviour and data rules from build plan r02; values from theme style board r22 (repository blob
+   d830d455, SHA-256 a305361c…df0, byte-identical to the supplied upload). The secondary menu, tokens, reset, controls,
+   menus, forms and dialogs are My Work's own rules, and the context row, flush register, inspector shell and working
+   pages are EN-06's: both are shared here by scope id and nothing in this file restyles them. This file adds only
+   what is EN-08's: the r22 status tag, the readable 14px register profile, the spacious inspector and the detail
+   building blocks. Class names carry a cm- prefix.
+
+   Typography (plan 5.4): normal-width Roboto 400/500/700 from the application's own font assets, Verdana fallback.
+   Nothing here condenses, scales or tracks text to make it fit; rows grow to their content instead. */
+#ppo-commissioning{--information:#346580;--information-surface:#e9f2f8;--information-border:#cfe0ec;font-stretch:normal;letter-spacing:normal}
+
+/* r22 .tag verbatim: inline-flex, 5px gap, 3px 8px padding, 5px corners, 12px/500, line-height 1.5, 13px outline icon
+   at stroke 1.7. One condition has one tone, one icon and one label; colour never carries a rule that words do not. */
+#ppo-commissioning .cm-tag{display:inline-flex;align-items:center;gap:5px;max-width:100%;padding:3px 8px;border-radius:5px;background:var(--neutral-surface);color:var(--neutral);font-size:12px;font-weight:500;line-height:1.5;white-space:nowrap}
+#ppo-commissioning .cm-tag svg{flex:none;width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#ppo-commissioning .cm-tag>span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+#ppo-commissioning .cm-tag-neutral{background:#edf0f5;color:#526078}
+#ppo-commissioning .cm-tag-information{background:var(--information-surface);color:var(--information)}
+#ppo-commissioning .cm-tag-caution{background:#fff2d9;color:#80530e}
+#ppo-commissioning .cm-tag-failure{background:#fff1ed;color:#993b2a}
+#ppo-commissioning .cm-tag-positive{background:#edf5e9;color:#416d33}
+#ppo-commissioning .cm-tag-wrap{white-space:normal}
+#ppo-commissioning .cm-tag-wrap>span{overflow:visible}
+/* An ordinary next step is plain words with a quiet document glyph. It is not a status and is not dressed as one. */
+#ppo-commissioning .cm-step{display:inline-flex;align-items:center;gap:6px;color:var(--ink);font-size:14px;line-height:20px}
+#ppo-commissioning .cm-step svg{flex:none;width:16px;height:16px;fill:none;stroke:#667181;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* Register: six default columns on the readable 14/20 working-text profile. r22 List header (#eef0f3, #606977, 43px);
+   rows are content-led (reference under title, date under owner), typically 60-68px. Flush to both edges of its
+   container: no side padding, card margin, radius or shadow on the scroll region; cells keep 12-16px of their own. */
+#ppo-commissioning .em-table-scroll{margin:0;padding:0;border-radius:0;box-shadow:none;border-left:0;border-right:0}
+#ppo-commissioning :is(.cm-register-table,.cm-queue-table,.cm-table){width:100%;min-width:760px;border-collapse:collapse;font-size:14px;line-height:20px}
+#ppo-commissioning :is(.cm-register-table,.cm-queue-table,.cm-table) thead th{height:43px;padding:0;background:#eef0f3;color:#606977;font-size:13px;font-weight:500;text-align:left;white-space:nowrap;border-bottom:1px solid #e1e5eb}
+#ppo-commissioning :is(.cm-register-table,.cm-queue-table,.cm-table) thead th>:is(span,button){display:flex;align-items:center;height:43px;padding:0 16px;font:inherit;color:inherit}
+#ppo-commissioning :is(.cm-register-table,.cm-queue-table,.cm-table) thead th+th>:is(span,button){box-shadow:inset 1px 0 0 #e1e5eb}
+#ppo-commissioning :is(.cm-register-table,.cm-queue-table,.cm-table) tbody td{padding:12px 16px;vertical-align:middle;border-bottom:1px solid #e9ecf1;background:#fff;color:var(--ink)}
+#ppo-commissioning :is(.cm-register-table,.cm-queue-table) tbody tr{cursor:pointer}
+#ppo-commissioning :is(.cm-register-table,.cm-queue-table) tbody tr:hover td{background:#f8faf7}
+/* The inspected row is an interaction state, shown in pale green with a navy edge. It approves and selects nothing. */
+#ppo-commissioning :is(.cm-register-table,.cm-queue-table) tbody tr[data-inspected] td{background:#edf6e9}
+#ppo-commissioning :is(.cm-register-table,.cm-queue-table) tbody tr[data-inspected] td:first-child{box-shadow:inset 3px 0 0 #242a37}
+#ppo-commissioning .cm-col-package{min-width:200px}
+#ppo-commissioning .em-row-title{font-weight:500;color:var(--ink)}
+#ppo-commissioning .em-cell-sub{display:block;margin-top:2px;color:#667181;font-size:12px;line-height:16px}
+#ppo-commissioning .cm-due-overdue{color:#993b2a}
+#ppo-commissioning .em-toolbar :is(.mw-button,select,input){min-height:42px}
+#ppo-commissioning .em-search{flex:1 1 320px;max-width:520px}
+#ppo-commissioning .cm-view{min-width:190px}
+#ppo-commissioning .cm-view select{min-height:42px;width:100%;padding:8px 30px 8px 12px;border:1px solid var(--control-border);border-radius:var(--radius-control);background-color:var(--surface-white);font-weight:500}
+#ppo-commissioning .em-context-actions .mw-button-primary{min-height:42px;background:#242a37;border-color:#242a37;color:#fff}
+
+/* Inspector: the shared modeless profile at 448px, 480px from 1600px. It docks only while the register keeps about
+   760px; below that it overlays. Generous section spacing and labelled rows, never a grid of small bordered cells. */
+#ppo-commissioning .em-inspector{width:448px}
+@media (min-width:1600px){#ppo-commissioning .em-inspector{width:480px}}
+@container em-split (max-width:1208px){
+ #ppo-commissioning .em-inspector{position:absolute;z-index:6;inset:0 0 0 auto;width:min(448px,100%);box-shadow:var(--shadow)}
+}
+#ppo-commissioning .em-inspector-head{padding:20px 24px 0}
+#ppo-commissioning .em-inspector-head h2{margin:2px 0;font-size:20px;line-height:28px;font-weight:700}
+#ppo-commissioning .em-inspector-body{padding:12px 24px 24px;display:flex;flex-direction:column;gap:0}
+#ppo-commissioning .cm-ref{color:#596779;font-size:13px;line-height:18px}
+#ppo-commissioning .cm-sub{color:#596779;font-size:14px;line-height:20px}
+#ppo-commissioning .cm-tags{display:flex;flex-wrap:wrap;gap:8px;padding:12px 0 20px}
+#ppo-commissioning .cm-section{padding:20px 0;border-top:1px solid #e1e5eb;display:flex;flex-direction:column;gap:8px}
+#ppo-commissioning .cm-section h3{margin:0 0 4px;font-size:16px;line-height:24px;font-weight:500}
+#ppo-commissioning .cm-row{display:grid;grid-template-columns:minmax(120px,40%) minmax(0,1fr);align-items:start;gap:12px;min-height:24px;font-size:14px;line-height:20px}
+#ppo-commissioning .cm-row>span:first-child{color:#596779}
+#ppo-commissioning .cm-row>:last-child{min-width:0;overflow-wrap:anywhere}
+#ppo-commissioning .cm-row small{display:block;color:#667181;font-size:12px;line-height:16px}
+#ppo-commissioning .cm-link-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;font-size:14px}
+#ppo-commissioning .cm-link-row .mw-muted{font-size:13px}
+#ppo-commissioning .cm-callout{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;padding:12px 14px;border:1px solid #efdbb6;border-radius:6px;background:#fff2d9;color:#80530e}
+#ppo-commissioning .cm-callout svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#ppo-commissioning .cm-callout strong{display:block;font-weight:500;color:#80530e}
+#ppo-commissioning .cm-callout p{margin:2px 0 0;font-size:13px;line-height:18px}
+#ppo-commissioning .cm-inspector-foot{flex:none;display:flex;flex-direction:column;gap:12px;padding:16px 24px 20px;border-top:1px solid #e1e5eb;background:#fff}
+#ppo-commissioning .cm-inspector-foot .mw-button-primary{min-height:44px;justify-content:center;background:#242a37;border-color:#242a37;color:#fff;font-weight:500}
+#ppo-commissioning .cm-inspector-links{display:flex;justify-content:space-between;gap:12px;font-size:14px}
+#ppo-commissioning .cm-blockers{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:13px;line-height:18px}
+#ppo-commissioning .cm-blockers small{display:block;color:#667181}
+
+/* Working pages: a flush queue of the Engineering package, then the selected package's detail in plain sections. */
+#ppo-commissioning .cm-page{display:flex;flex-direction:column;min-height:0;overflow:auto}
+#ppo-commissioning .cm-flush{border-bottom:1px solid #e1e5eb;background:#fff}
+#ppo-commissioning .cm-flush .em-table-scroll{max-height:296px;overflow:auto}
+#ppo-commissioning .cm-detail{padding:20px 24px 40px;display:flex;flex-direction:column;gap:20px}
+#ppo-commissioning .cm-detail-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px}
+#ppo-commissioning .cm-detail-head h2{margin:2px 0 6px;font-size:20px;line-height:28px}
+#ppo-commissioning .cm-facts{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;color:#596779;font-size:14px}
+#ppo-commissioning .cm-panel{background:#fff;border:1px solid #e1e5eb;border-radius:6px;overflow:hidden}
+#ppo-commissioning .cm-panel:focus{outline:2px solid #365d8b;outline-offset:2px}
+#ppo-commissioning .cm-panel>header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;padding:16px 20px;border-bottom:1px solid #e9ecf1}
+#ppo-commissioning .cm-panel>header h3{margin:0;font-size:16px;line-height:24px;font-weight:500}
+#ppo-commissioning .cm-panel>header p{margin:2px 0 0;color:#596779;font-size:13px;line-height:18px}
+#ppo-commissioning .cm-panel-body{padding:16px 20px;display:flex;flex-direction:column;gap:12px}
+/* A table inside a panel is flush to the panel's own edges as well. */
+#ppo-commissioning .cm-panel>.em-table-scroll{border:0}
+#ppo-commissioning .cm-panel .cm-table{min-width:640px}
+#ppo-commissioning .cm-panel .cm-table tbody tr:last-child td{border-bottom:0}
+#ppo-commissioning .cm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:4px 32px}
+#ppo-commissioning .cm-stack{display:flex;flex-direction:column;gap:16px}
+#ppo-commissioning .cm-inline{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+#ppo-commissioning .cm-note{margin:0;color:#596779;font-size:13px;line-height:18px}
+#ppo-commissioning .cm-fictional{display:inline-block;padding:1px 6px;border:1px solid #e1e5eb;border-radius:4px;background:#fff;color:#667181;font-size:11px;line-height:16px}
+#ppo-commissioning .cm-hash{font-family:Consolas,"Liberation Mono",monospace;font-size:12px;color:#667181;overflow-wrap:anywhere}
+#ppo-commissioning .cm-gates{margin:0;padding:0;list-style:none;display:flex;flex-direction:column}
+#ppo-commissioning .cm-gates>li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;padding:12px 20px;border-bottom:1px solid #e9ecf1}
+#ppo-commissioning .cm-gates>li:last-child{border-bottom:0}
+#ppo-commissioning .cm-gates ul{grid-column:2;margin:0;padding-left:18px;color:#596779;font-size:13px;line-height:18px}
+#ppo-commissioning .cm-timeline{margin:0;padding:0;list-style:none}
+#ppo-commissioning .cm-timeline>li{display:grid;grid-template-columns:minmax(150px,190px) minmax(0,1fr);gap:4px 16px;padding:12px 20px;border-bottom:1px solid #e9ecf1;font-size:14px;line-height:20px}
+#ppo-commissioning .cm-timeline>li:last-child{border-bottom:0}
+#ppo-commissioning .cm-timeline time{color:#596779;font-size:13px}
+#ppo-commissioning .cm-timeline small{display:block;color:#667181;font-size:12px;line-height:16px}
+#ppo-commissioning :is(a,.mw-link){color:#355b80}
+#ppo-commissioning :focus-visible{outline:2px solid #365d8b;outline-offset:2px}
+
+/* Narrow desktop and tablet: the inspector overlays (above); the detail keeps its reading width. */
+@media (max-width:1100px){#ppo-commissioning .cm-detail{padding:16px 16px 32px}}
+/* Phone: flush stacked record summaries and full-width detail. Text is never scaled down to keep a desktop table:
+   each row becomes a labelled block, controls keep 44px targets and inputs keep 16px text. */
+@media (max-width:780px){
+ #ppo-commissioning :is(.cm-register-table,.cm-queue-table,.cm-table){min-width:0;display:block}
+ #ppo-commissioning :is(.cm-register-table,.cm-queue-table,.cm-table) thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+ #ppo-commissioning :is(.cm-register-table,.cm-queue-table,.cm-table) :is(tbody,tr,td){display:block;width:100%}
+ #ppo-commissioning :is(.cm-register-table,.cm-queue-table,.cm-table) tbody tr{padding:12px 16px;border-bottom:1px solid #e1e5eb;background:#fff}
+ #ppo-commissioning :is(.cm-register-table,.cm-queue-table,.cm-table) tbody td{padding:3px 0;border:0;background:transparent}
+ #ppo-commissioning :is(.cm-register-table,.cm-queue-table,.cm-table) tbody td[data-label]::before{content:attr(data-label);display:block;color:#667181;font-size:12px;line-height:16px}
+ #ppo-commissioning :is(.cm-register-table,.cm-queue-table) tbody tr[data-inspected]{background:#edf6e9;box-shadow:inset 3px 0 0 #242a37}
+ #ppo-commissioning :is(.cm-register-table,.cm-queue-table) tbody tr[data-inspected] td{background:transparent;box-shadow:none}
+ #ppo-commissioning .em-inspector{position:fixed;inset:0;width:100%;z-index:40}
+ #ppo-commissioning :is(.mw-button,select,input,textarea){min-height:44px}
+ #ppo-commissioning :is(select,input,textarea){font-size:16px}
+ #ppo-commissioning .cm-row{grid-template-columns:minmax(0,1fr)}
+ #ppo-commissioning .cm-timeline>li{grid-template-columns:minmax(0,1fr)}
+ #ppo-commissioning .cm-detail{padding:16px 16px 32px}
+}
+@media (prefers-reduced-motion:reduce){#ppo-commissioning *{transition:none!important;animation:none!important}}

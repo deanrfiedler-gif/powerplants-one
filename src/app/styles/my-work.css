@@ -8,7 +8,7 @@
    also the rules of any other workspace that mounts the shell's shared secondary menu: those selectors name both scope
    ids through :is(), which keeps the specificity of an id, so nothing about My Work's cascade changes. Everything
    else in this file is My Work's alone. EN-06 (#ppo-materials) is the first other workspace and EN-07 (#ppo-changes) the second. */
-:is(#ppo-my-work,#ppo-materials,#ppo-changes){
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning){
  --navy:#242a37;--green:#62bb46;--ink:var(--navy);
  --paper:#f5f6f8;--surface-white:#fff;--surface:#f6f7f9;--surface-2:#f7f8fa;--surface-3:#fcfcfd;--surface-hover:#f0f2f5;
  --muted:#667181;--text-secondary:#596779;--link:#355b80;
@@ -24,85 +24,85 @@
  --menu-width:220px;
  box-sizing:border-box;position:relative;display:flex;flex:1;width:100%;min-width:0;min-height:0;overflow:hidden;
  color:var(--ink);background:var(--paper);font:14px/1.45 Roboto,Verdana,sans-serif;font-variant-numeric:tabular-nums;color-scheme:light}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) *,:is(#ppo-my-work,#ppo-materials,#ppo-changes) *::before,:is(#ppo-my-work,#ppo-materials,#ppo-changes) *::after{box-sizing:border-box}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) [hidden]{display:none!important}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) *,:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) *::before,:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) *::after{box-sizing:border-box}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) [hidden]{display:none!important}
 
 /* Local reset for the shell's global element rules. */
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) :is(h1,h2,h3,h4,p,dl,dd,ul,ol,figure,hr){margin:0;padding:0;letter-spacing:normal}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) :is(ul,ol){list-style:none}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) :is(h1,h2,h3,h4){line-height:inherit;font-weight:700;color:var(--ink)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) :is(button,input,select,textarea){font:inherit;color:inherit;margin:0;width:auto;box-shadow:none}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) button{display:inline;min-height:0;padding:0;border:0;border-radius:0;background:none;color:inherit;text-align:inherit;cursor:pointer;gap:0;white-space:normal}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) button:hover:not(:disabled){background:none;color:inherit}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) button:disabled{cursor:default}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) label{font-weight:500;margin:0}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) fieldset{min-width:0;margin:0;padding:0;border:0}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) fieldset:disabled{opacity:1}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) footer{font-size:inherit;padding:0;margin:0;border:0;color:inherit;background:transparent;text-align:inherit;display:block}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) a{color:var(--ink);text-decoration:none}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) :is(button,a,input,select,textarea,summary,[tabindex]):focus-visible{outline:2px solid var(--focus);outline-offset:2px;box-shadow:none}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-icon{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-spacer{flex:1 1 0;min-width:0}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-muted{color:var(--muted)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) :is(h1,h2,h3,h4,p,dl,dd,ul,ol,figure,hr){margin:0;padding:0;letter-spacing:normal}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) :is(ul,ol){list-style:none}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) :is(h1,h2,h3,h4){line-height:inherit;font-weight:700;color:var(--ink)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) :is(button,input,select,textarea){font:inherit;color:inherit;margin:0;width:auto;box-shadow:none}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) button{display:inline;min-height:0;padding:0;border:0;border-radius:0;background:none;color:inherit;text-align:inherit;cursor:pointer;gap:0;white-space:normal}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) button:hover:not(:disabled){background:none;color:inherit}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) button:disabled{cursor:default}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) label{font-weight:500;margin:0}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) fieldset{min-width:0;margin:0;padding:0;border:0}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) fieldset:disabled{opacity:1}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) footer{font-size:inherit;padding:0;margin:0;border:0;color:inherit;background:transparent;text-align:inherit;display:block}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) a{color:var(--ink);text-decoration:none}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) :is(button,a,input,select,textarea,summary,[tabindex]):focus-visible{outline:2px solid var(--focus);outline-offset:2px;box-shadow:none}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-icon{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-spacer{flex:1 1 0;min-width:0}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-muted{color:var(--muted)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 
 /* Controls. Navy is reserved for the one primary action; everything else is outlined or quiet. */
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) :is(button,a).mw-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:8px 14px;border:1px solid var(--hairline);border-radius:var(--radius-control);background:var(--surface-white);color:var(--ink);font-weight:400;line-height:20px;white-space:nowrap;text-decoration:none}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) :is(button,a).mw-button:hover:not(:disabled){background:var(--surface-hover);color:var(--ink)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) :is(button,a).mw-button:disabled{opacity:.55}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) :is(button,a).mw-button-primary{background:var(--navy);border-color:var(--navy);color:#fff;font-weight:500}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) :is(button,a).mw-button-primary:hover:not(:disabled){background:#343c4c;color:#fff}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) :is(button,a).mw-button-quiet{border-color:transparent;background:transparent;color:var(--text-secondary)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) :is(button,a).mw-button-quiet:hover:not(:disabled){background:var(--surface-hover);color:var(--ink)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) button.mw-button-icon{width:40px;padding:0}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) button.mw-icon-button{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:var(--radius-control);color:var(--text-secondary)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) button.mw-icon-button:hover:not(:disabled){background:var(--surface-hover);color:var(--ink)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) button.mw-icon-button:disabled{opacity:.4}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) :is(a,button).mw-link{display:inline-flex;align-items:center;gap:6px;color:var(--link);font-weight:400;text-decoration:none;white-space:nowrap}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) :is(a,button).mw-link:hover{color:var(--link);text-decoration:underline;text-underline-offset:3px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-link .mw-icon{width:16px;height:16px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:5px;background:var(--neutral-surface);color:var(--neutral);font-size:12px;font-weight:400;line-height:18px;white-space:nowrap}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-tag-quiet{border:1px solid var(--line);background:var(--surface);color:var(--text-secondary);border-radius:999px;padding:2px 11px;font-size:13px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) :is(button,a).mw-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:8px 14px;border:1px solid var(--hairline);border-radius:var(--radius-control);background:var(--surface-white);color:var(--ink);font-weight:400;line-height:20px;white-space:nowrap;text-decoration:none}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) :is(button,a).mw-button:hover:not(:disabled){background:var(--surface-hover);color:var(--ink)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) :is(button,a).mw-button:disabled{opacity:.55}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) :is(button,a).mw-button-primary{background:var(--navy);border-color:var(--navy);color:#fff;font-weight:500}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) :is(button,a).mw-button-primary:hover:not(:disabled){background:#343c4c;color:#fff}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) :is(button,a).mw-button-quiet{border-color:transparent;background:transparent;color:var(--text-secondary)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) :is(button,a).mw-button-quiet:hover:not(:disabled){background:var(--surface-hover);color:var(--ink)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) button.mw-button-icon{width:40px;padding:0}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) button.mw-icon-button{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:var(--radius-control);color:var(--text-secondary)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) button.mw-icon-button:hover:not(:disabled){background:var(--surface-hover);color:var(--ink)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) button.mw-icon-button:disabled{opacity:.4}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) :is(a,button).mw-link{display:inline-flex;align-items:center;gap:6px;color:var(--link);font-weight:400;text-decoration:none;white-space:nowrap}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) :is(a,button).mw-link:hover{color:var(--link);text-decoration:underline;text-underline-offset:3px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-link .mw-icon{width:16px;height:16px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:5px;background:var(--neutral-surface);color:var(--neutral);font-size:12px;font-weight:400;line-height:18px;white-space:nowrap}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-tag-quiet{border:1px solid var(--line);background:var(--surface);color:var(--text-secondary);border-radius:999px;padding:2px 11px;font-size:13px}
 /* Where you are, not a status: the workspace context takes r22's soft brand tint, the one avatars use. */
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-tag-context{border-radius:999px;padding:3px 12px;background:var(--avatar-surface);color:var(--avatar-text);font-size:13px;font-weight:500}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-tag-overdue{background:var(--danger-surface);color:var(--danger);margin-left:8px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-tag-attention{background:var(--warning-surface);color:var(--warning)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-count{display:inline-grid;place-items:center;min-width:26px;height:24px;margin-left:8px;padding:0 8px;border-radius:999px;background:var(--neutral-surface);color:var(--ink);font-size:14px;font-weight:500;vertical-align:2px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-button .mw-count{min-width:20px;height:20px;margin-left:0;padding:0 6px;font-size:12px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-modified{font-style:normal;color:var(--warning)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-tag-context{border-radius:999px;padding:3px 12px;background:var(--avatar-surface);color:var(--avatar-text);font-size:13px;font-weight:500}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-tag-overdue{background:var(--danger-surface);color:var(--danger);margin-left:8px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-tag-attention{background:var(--warning-surface);color:var(--warning)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-count{display:inline-grid;place-items:center;min-width:26px;height:24px;margin-left:8px;padding:0 8px;border-radius:999px;background:var(--neutral-surface);color:var(--ink);font-size:14px;font-weight:500;vertical-align:2px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-button .mw-count{min-width:20px;height:20px;margin-left:0;padding:0 6px;font-size:12px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-modified{font-style:normal;color:var(--warning)}
 
 /* Secondary menu: beside the rail, under the header. Docked on wide screens, an overlay otherwise. */
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu{flex:none;width:var(--menu-width);min-height:0;overflow-y:auto;padding:18px 10px 18px;border:0;border-right:1px solid var(--line);background:var(--surface-white);color:var(--ink)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu-title{display:flex;flex-direction:column;padding:4px 10px 16px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu-title strong{font-size:18px;line-height:24px;font-weight:700}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu-title span{color:var(--text-secondary)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu nav li+li{margin-top:2px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu li a{position:relative;display:flex;align-items:center;gap:12px;min-height:42px;padding:8px 10px;border-radius:var(--radius-control);color:var(--ink);line-height:20px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu li a:hover{background:var(--surface-hover)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu li a[aria-current=page]{background:var(--neutral-surface);font-weight:500}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu li a[aria-current=page]::before{content:"";position:absolute;left:-10px;top:6px;bottom:6px;width:3px;border-radius:0 3px 3px 0;background:var(--navy)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu li a .mw-icon{width:20px;height:20px;color:var(--text-secondary)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu li a[aria-current=page] .mw-icon{color:var(--ink)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu li a>span:nth-of-type(1){flex:1;min-width:0}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-badge{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--neutral-surface);color:var(--ink);font-size:12px;font-weight:500}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu li a[aria-current=page] .mw-badge{background:var(--surface-white)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu-pinned{margin-top:18px;padding-top:18px;border-top:1px solid var(--line-soft)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu-pinned h2{padding:0 10px 8px;font-size:12px;line-height:16px;font-weight:500;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu-pinned p{padding:0 10px;color:var(--muted);font-size:13px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) dialog.mw-menu-overlay{position:fixed;inset:64px auto 0 76px;margin:0;width:min(300px,calc(100vw - 76px));max-width:none;height:calc(100dvh - 64px);max-height:none;padding-top:52px;border-right:1px solid var(--line);box-shadow:var(--shadow)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) dialog.mw-menu-overlay::backdrop{background:rgba(36,42,55,.18)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu-close{position:absolute;top:10px;right:10px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu{flex:none;width:var(--menu-width);min-height:0;overflow-y:auto;padding:18px 10px 18px;border:0;border-right:1px solid var(--line);background:var(--surface-white);color:var(--ink)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu-title{display:flex;flex-direction:column;padding:4px 10px 16px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu-title strong{font-size:18px;line-height:24px;font-weight:700}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu-title span{color:var(--text-secondary)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu nav li+li{margin-top:2px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu li a{position:relative;display:flex;align-items:center;gap:12px;min-height:42px;padding:8px 10px;border-radius:var(--radius-control);color:var(--ink);line-height:20px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu li a:hover{background:var(--surface-hover)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu li a[aria-current=page]{background:var(--neutral-surface);font-weight:500}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu li a[aria-current=page]::before{content:"";position:absolute;left:-10px;top:6px;bottom:6px;width:3px;border-radius:0 3px 3px 0;background:var(--navy)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu li a .mw-icon{width:20px;height:20px;color:var(--text-secondary)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu li a[aria-current=page] .mw-icon{color:var(--ink)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu li a>span:nth-of-type(1){flex:1;min-width:0}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-badge{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--neutral-surface);color:var(--ink);font-size:12px;font-weight:500}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu li a[aria-current=page] .mw-badge{background:var(--surface-white)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu-pinned{margin-top:18px;padding-top:18px;border-top:1px solid var(--line-soft)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu-pinned h2{padding:0 10px 8px;font-size:12px;line-height:16px;font-weight:500;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu-pinned p{padding:0 10px;color:var(--muted);font-size:13px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) dialog.mw-menu-overlay{position:fixed;inset:64px auto 0 76px;margin:0;width:min(300px,calc(100vw - 76px));max-width:none;height:calc(100dvh - 64px);max-height:none;padding-top:52px;border-right:1px solid var(--line);box-shadow:var(--shadow)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) dialog.mw-menu-overlay::backdrop{background:rgba(36,42,55,.18)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu-close{position:absolute;top:10px;right:10px}
 /* The edge handle is slim to look at and generous to hit: the visible tab is 14px, the target 28 by 56. */
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-edge{position:absolute;z-index:5;top:50%;left:var(--menu-width);display:grid;place-items:center;width:28px;height:56px;transform:translate(-50%,-50%);color:var(--text-secondary)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-edge::before{content:"";position:absolute;inset:4px 7px;border:1px solid var(--line);border-radius:7px;background:var(--surface-white)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-edge .mw-icon{position:relative;width:14px;height:14px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-edge:hover{color:var(--ink)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-edge:hover::before{background:var(--surface-hover);border-color:var(--hairline)}
-:is(:is(#ppo-my-work,#ppo-materials,#ppo-changes),#ppo-materials):is([data-menu=collapsed],[data-menu=overlay]) .mw-edge{left:0;transform:translate(-25%,-50%)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-edge{position:absolute;z-index:5;top:50%;left:var(--menu-width);display:grid;place-items:center;width:28px;height:56px;transform:translate(-50%,-50%);color:var(--text-secondary)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-edge::before{content:"";position:absolute;inset:4px 7px;border:1px solid var(--line);border-radius:7px;background:var(--surface-white)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-edge .mw-icon{position:relative;width:14px;height:14px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-edge:hover{color:var(--ink)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-edge:hover::before{background:var(--surface-hover);border-color:var(--hairline)}
+:is(:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning),#ppo-materials):is([data-menu=collapsed],[data-menu=overlay]) .mw-edge{left:0;transform:translate(-25%,-50%)}
 
 /* Content: the module's one scroll surface. Toggling the menu changes its width, never its contents. */
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-content{flex:1;min-width:0;min-height:0;overflow:auto;scroll-padding-top:16px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-content{flex:1;min-width:0;min-height:0;overflow:auto;scroll-padding-top:16px}
 #ppo-my-work .mw-page{display:flex;flex-direction:column;gap:10px;min-height:100%;padding:10px 24px 0;max-width:1760px}
 #ppo-my-work .mw-intro{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;min-height:44px}
 #ppo-my-work .mw-intro h1{font-size:28px;line-height:36px;font-weight:700;letter-spacing:-.3px;overflow-wrap:anywhere}
@@ -114,16 +114,16 @@
 #ppo-my-work .mw-toolbar .mw-button-primary{min-width:128px}
 
 /* Menus */
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu-root{position:relative;display:inline-flex}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu-list{position:absolute;z-index:30;top:calc(100% + 6px);min-width:240px;max-width:min(340px,calc(100vw - 32px));padding:6px;border:1px solid var(--line);border-radius:var(--radius-dialog);background:var(--surface-white);box-shadow:var(--shadow)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu-start{left:0}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu-end{right:0}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu-list hr{height:1px;margin:6px 4px;border:0;background:var(--line-soft)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu-list button{display:flex;align-items:flex-start;gap:8px;width:100%;min-height:40px;padding:9px 10px;border-radius:var(--radius-control);line-height:20px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu-list button:hover:not(:disabled),:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu-list button:focus-visible{background:var(--surface-hover)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu-list button:disabled{opacity:.5}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu-list small{display:block;color:var(--muted);font-size:12px;line-height:16px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-menu-check{flex:none;width:18px;height:20px;display:grid;place-items:center;color:var(--ink)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu-root{position:relative;display:inline-flex}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu-list{position:absolute;z-index:30;top:calc(100% + 6px);min-width:240px;max-width:min(340px,calc(100vw - 32px));padding:6px;border:1px solid var(--line);border-radius:var(--radius-dialog);background:var(--surface-white);box-shadow:var(--shadow)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu-start{left:0}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu-end{right:0}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu-list hr{height:1px;margin:6px 4px;border:0;background:var(--line-soft)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu-list button{display:flex;align-items:flex-start;gap:8px;width:100%;min-height:40px;padding:9px 10px;border-radius:var(--radius-control);line-height:20px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu-list button:hover:not(:disabled),:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu-list button:focus-visible{background:var(--surface-hover)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu-list button:disabled{opacity:.5}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu-list small{display:block;color:var(--muted);font-size:12px;line-height:16px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-menu-check{flex:none;width:18px;height:20px;display:grid;place-items:center;color:var(--ink)}
 
 /* Attention strip: one panel, four different sets. They are never added together. */
 #ppo-my-work .mw-attention{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface-white)}
@@ -239,63 +239,63 @@
 #ppo-my-work .mw-owner small{color:var(--muted);font-size:12px}
 
 /* Notices and states */
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-notice{padding:12px 16px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface-white)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-notice-attention{border-color:var(--warning-border);background:var(--warning-surface);color:var(--warning)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-notice-attention .mw-link{color:var(--warning);text-decoration:underline}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-inline-error{color:var(--danger);font-size:13px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-skeleton{padding:32px 20px;border:1px dashed var(--line-strong);border-radius:var(--radius-card);color:var(--text-secondary);text-align:center}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-refreshing{color:var(--text-secondary);font-size:13px;text-align:right}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-notice{padding:12px 16px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface-white)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-notice-attention{border-color:var(--warning-border);background:var(--warning-surface);color:var(--warning)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-notice-attention .mw-link{color:var(--warning);text-decoration:underline}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-inline-error{color:var(--danger);font-size:13px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-skeleton{padding:32px 20px;border:1px dashed var(--line-strong);border-radius:var(--radius-card);color:var(--text-secondary);text-align:center}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-refreshing{color:var(--text-secondary);font-size:13px;text-align:right}
 #ppo-my-work .mw-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;margin-top:auto;padding:12px 0 14px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
 
 /* Forms */
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-field{display:flex;flex-direction:column;gap:6px;min-width:0;margin-bottom:14px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-field label{font-size:13px;line-height:18px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-field small{color:var(--muted);font-size:12px;line-height:17px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-field :is(input,select,textarea){width:100%;min-height:42px;padding:9px 11px;border:1px solid var(--control-border);border-radius:var(--radius-control);background:var(--surface-white);line-height:20px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-field textarea{min-height:84px;resize:vertical}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-field-inline{margin-bottom:0;gap:3px;flex:0 1 164px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-field-inline :is(input,select){min-height:38px;padding:7px 10px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-field-search{flex:1 1 240px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-field-row{display:flex;gap:12px;flex-wrap:wrap}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-field-row>*{flex:1 1 180px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-field-short{flex:0 1 150px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-fieldset{margin-bottom:14px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-fieldset legend{padding:0;margin-bottom:8px;font-size:14px;font-weight:700}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-choice-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-choice{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 12px;border:1px solid var(--hairline);border-radius:var(--radius-control);background:var(--surface-white);font-weight:400;cursor:pointer}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-choice:has(input:checked){border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-choice:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:2px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-choice input{width:16px;height:16px;min-height:0;margin:0;padding:0;accent-color:var(--navy)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-hint{color:var(--text-secondary);font-size:13px;line-height:19px;margin-bottom:12px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-conflicts{margin-bottom:14px;padding:9px 12px;border-radius:var(--radius-control);background:var(--surface);color:var(--text-secondary);font-size:13px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-inline-form{display:flex;align-items:flex-end;flex-wrap:wrap;gap:10px;margin-bottom:12px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-inline-form .mw-field{flex:1 1 220px;margin-bottom:0}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-actions{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-field{display:flex;flex-direction:column;gap:6px;min-width:0;margin-bottom:14px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-field label{font-size:13px;line-height:18px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-field small{color:var(--muted);font-size:12px;line-height:17px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-field :is(input,select,textarea){width:100%;min-height:42px;padding:9px 11px;border:1px solid var(--control-border);border-radius:var(--radius-control);background:var(--surface-white);line-height:20px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-field textarea{min-height:84px;resize:vertical}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-field-inline{margin-bottom:0;gap:3px;flex:0 1 164px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-field-inline :is(input,select){min-height:38px;padding:7px 10px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-field-search{flex:1 1 240px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-field-row{display:flex;gap:12px;flex-wrap:wrap}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-field-row>*{flex:1 1 180px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-field-short{flex:0 1 150px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-fieldset{margin-bottom:14px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-fieldset legend{padding:0;margin-bottom:8px;font-size:14px;font-weight:700}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-choice-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-choice{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 12px;border:1px solid var(--hairline);border-radius:var(--radius-control);background:var(--surface-white);font-weight:400;cursor:pointer}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-choice:has(input:checked){border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-choice:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:2px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-choice input{width:16px;height:16px;min-height:0;margin:0;padding:0;accent-color:var(--navy)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-hint{color:var(--text-secondary);font-size:13px;line-height:19px;margin-bottom:12px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-conflicts{margin-bottom:14px;padding:9px 12px;border-radius:var(--radius-control);background:var(--surface);color:var(--text-secondary);font-size:13px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-inline-form{display:flex;align-items:flex-end;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-inline-form .mw-field{flex:1 1 220px;margin-bottom:0}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-actions{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 
 /* Dialogs and the detail drawer */
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) dialog.mw-dialog{width:min(620px,calc(100vw - 32px));max-width:none;max-height:calc(100dvh - 32px);padding:0;border:0;border-radius:var(--radius-dialog);background:var(--surface-white);color:var(--ink);box-shadow:var(--shadow);overflow:hidden}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) dialog.mw-dialog[open]{display:flex;flex-direction:column}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) dialog.mw-dialog::backdrop{background:rgba(36,42,55,.27)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) dialog.mw-drawer{position:fixed;inset:0 0 0 auto;margin:0;width:min(520px,100vw);height:100dvh;max-height:100dvh;border-radius:var(--radius-dialog) 0 0 var(--radius-dialog)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-dialog-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 16px 14px 22px;border-bottom:1px solid var(--line)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-dialog-head h2{font-size:20px;line-height:28px;font-weight:500;overflow-wrap:anywhere}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-dialog-head h2:focus{outline:none}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-dialog-head p{margin-top:2px;color:var(--text-secondary);overflow-wrap:anywhere}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-dialog-body{flex:1;min-height:0;overflow:auto;padding:18px 22px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-dialog-foot{display:flex;align-items:center;flex-wrap:wrap;gap:8px;justify-content:flex-end;padding:12px 22px;border-top:1px solid var(--line);background:var(--surface)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-facts{display:grid;gap:10px 16px;margin-bottom:16px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-facts>div{display:grid;grid-template-columns:104px minmax(0,1fr);gap:12px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-facts dt{color:var(--muted)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-facts dd{overflow-wrap:anywhere}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-facts-compact{padding:10px 12px;border-radius:var(--radius-control);background:var(--surface)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-narrative{white-space:pre-wrap;overflow-wrap:anywhere}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-section{padding-top:14px;margin-top:14px;border-top:1px solid var(--line-soft)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-section h3{margin-bottom:8px;font-size:14px;font-weight:700}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-plain-list li+li{margin-top:4px}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-history li{display:flex;flex-direction:column;padding:0 0 12px 16px;margin-left:4px;border-left:1px solid var(--line-strong);position:relative;font-size:13px;color:var(--text-secondary)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-history li::before{content:"";position:absolute;left:-4px;top:5px;width:7px;height:7px;border-radius:50%;background:var(--navy)}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-history li:last-child{border-color:transparent;padding-bottom:0}
-:is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-history strong{font-size:14px;font-weight:500;color:var(--ink)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) dialog.mw-dialog{width:min(620px,calc(100vw - 32px));max-width:none;max-height:calc(100dvh - 32px);padding:0;border:0;border-radius:var(--radius-dialog);background:var(--surface-white);color:var(--ink);box-shadow:var(--shadow);overflow:hidden}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) dialog.mw-dialog[open]{display:flex;flex-direction:column}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) dialog.mw-dialog::backdrop{background:rgba(36,42,55,.27)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) dialog.mw-drawer{position:fixed;inset:0 0 0 auto;margin:0;width:min(520px,100vw);height:100dvh;max-height:100dvh;border-radius:var(--radius-dialog) 0 0 var(--radius-dialog)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-dialog-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 16px 14px 22px;border-bottom:1px solid var(--line)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-dialog-head h2{font-size:20px;line-height:28px;font-weight:500;overflow-wrap:anywhere}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-dialog-head h2:focus{outline:none}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-dialog-head p{margin-top:2px;color:var(--text-secondary);overflow-wrap:anywhere}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-dialog-body{flex:1;min-height:0;overflow:auto;padding:18px 22px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-dialog-foot{display:flex;align-items:center;flex-wrap:wrap;gap:8px;justify-content:flex-end;padding:12px 22px;border-top:1px solid var(--line);background:var(--surface)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-facts{display:grid;gap:10px 16px;margin-bottom:16px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-facts>div{display:grid;grid-template-columns:104px minmax(0,1fr);gap:12px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-facts dt{color:var(--muted)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-facts dd{overflow-wrap:anywhere}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-facts-compact{padding:10px 12px;border-radius:var(--radius-control);background:var(--surface)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-narrative{white-space:pre-wrap;overflow-wrap:anywhere}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-section{padding-top:14px;margin-top:14px;border-top:1px solid var(--line-soft)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-section h3{margin-bottom:8px;font-size:14px;font-weight:700}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-plain-list li+li{margin-top:4px}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-history li{display:flex;flex-direction:column;padding:0 0 12px 16px;margin-left:4px;border-left:1px solid var(--line-strong);position:relative;font-size:13px;color:var(--text-secondary)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-history li::before{content:"";position:absolute;left:-4px;top:5px;width:7px;height:7px;border-radius:50%;background:var(--navy)}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-history li:last-child{border-color:transparent;padding-bottom:0}
+:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-history strong{font-size:14px;font-weight:500;color:var(--ink)}
 #ppo-my-work .mw-customise li,#ppo-my-work .mw-views li{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:8px 0;border-bottom:1px solid var(--line-soft)}
 #ppo-my-work .mw-customise .mw-choice{border:0;padding-left:0;box-shadow:none}
 #ppo-my-work .mw-turn-up{display:grid;transform:rotate(180deg)}
@@ -322,8 +322,8 @@
 /* Phone: one column, a dismissible menu drawer opened from the header, and actions that never depend on hover.
    The overview has its own phone presentation (my-work-mobile.css, mockup r07); the other five views use these. */
 @media (max-width:780px){
- :is(#ppo-my-work,#ppo-materials,#ppo-changes) dialog.mw-menu-overlay{inset:0 auto 0 0;width:min(320px,88vw);height:100dvh}
- :is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-edge{display:none}
+ :is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) dialog.mw-menu-overlay{inset:0 auto 0 0;width:min(320px,88vw);height:100dvh}
+ :is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-edge{display:none}
  #ppo-my-work .mw-page{gap:10px;padding:10px 12px 0}
  #ppo-my-work .mw-intro h1{font-size:22px;line-height:30px}
  #ppo-my-work .mw-date{order:3;flex-basis:100%}
@@ -352,13 +352,13 @@
  #ppo-my-work .mw-cards>li{flex-wrap:wrap}
  #ppo-my-work .mw-card-side{flex-direction:row;align-items:center;flex-basis:100%;justify-content:space-between}
  #ppo-my-work .mw-strip{padding:8px 14px;gap:12px}
- :is(#ppo-my-work,#ppo-materials,#ppo-changes) dialog.mw-dialog{width:100vw;max-height:100dvh;height:100dvh;border-radius:0}
- :is(#ppo-my-work,#ppo-materials,#ppo-changes) dialog.mw-drawer{width:100vw;border-radius:0}
- :is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-dialog-foot .mw-button{min-height:44px;flex:1 1 auto}
- :is(#ppo-my-work,#ppo-materials,#ppo-changes) .mw-field :is(input,select,textarea){min-height:44px;font-size:16px}
+ :is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) dialog.mw-dialog{width:100vw;max-height:100dvh;height:100dvh;border-radius:0}
+ :is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) dialog.mw-drawer{width:100vw;border-radius:0}
+ :is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-dialog-foot .mw-button{min-height:44px;flex:1 1 auto}
+ :is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) .mw-field :is(input,select,textarea){min-height:44px;font-size:16px}
 }
 @media (pointer:coarse){
- :is(#ppo-my-work,#ppo-materials,#ppo-changes) :is(button,a).mw-button{min-height:44px}
- :is(#ppo-my-work,#ppo-materials,#ppo-changes) button.mw-icon-button{width:44px;height:44px}
+ :is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) :is(button,a).mw-button{min-height:44px}
+ :is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) button.mw-icon-button{width:44px;height:44px}
 }
-@media (prefers-reduced-motion:reduce){:is(#ppo-my-work,#ppo-materials,#ppo-changes) *{transition:none!important}}
+@media (prefers-reduced-motion:reduce){:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning) *{transition:none!important}}
