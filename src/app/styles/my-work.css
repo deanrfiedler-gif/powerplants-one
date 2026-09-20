@@ -97,7 +97,6 @@
 /* Content: the module's one scroll surface. Toggling the menu changes its width, never its contents. */
 #ppo-my-work .mw-content{flex:1;min-width:0;min-height:0;overflow:auto;scroll-padding-top:16px}
 #ppo-my-work .mw-page{display:flex;flex-direction:column;gap:10px;min-height:100%;padding:10px 24px 0;max-width:1760px}
-#ppo-my-work .mw-phone-bar{display:none}
 #ppo-my-work .mw-intro{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;min-height:44px}
 #ppo-my-work .mw-intro h1{font-size:28px;line-height:36px;font-weight:700;letter-spacing:-.3px;overflow-wrap:anywhere}
 #ppo-my-work .mw-intro-view{align-items:flex-start}
@@ -313,15 +312,11 @@
  #ppo-my-work .mw-row{grid-template-columns:36px minmax(0,1fr) auto}
  #ppo-my-work .mw-row-actions{grid-column:2 / -1;justify-content:flex-start}
 }
-/* Phone: one column, a dismissible menu drawer, and actions that never depend on hover. */
+/* Phone: one column, a dismissible menu drawer opened from the header, and actions that never depend on hover.
+   The overview has its own phone presentation (my-work-mobile.css, mockup r07); the other five views use these. */
 @media (max-width:780px){
  #ppo-my-work dialog.mw-menu-overlay{inset:0 auto 0 0;width:min(320px,88vw);height:100dvh}
  #ppo-my-work .mw-edge{display:none}
- #ppo-my-work .mw-phone-bar{display:flex;align-items:center;gap:12px;padding:10px 12px 0;color:var(--text-secondary)}
- /* Shell drift, logged in the integration record (SD-1): with the local identity strip present the phone header
-    becomes a three-column grid and its search and guide buttons wrap onto a second row over the top of every
-    page. Until the shell is corrected, My Work keeps its menu trigger clear of that row in exactly that case. */
- .workspace:has(.identity-strip) #ppo-my-work .mw-phone-bar{padding-top:46px}
  #ppo-my-work .mw-page{gap:10px;padding:10px 12px 0}
  #ppo-my-work .mw-intro h1{font-size:22px;line-height:30px}
  #ppo-my-work .mw-date{order:3;flex-basis:100%}

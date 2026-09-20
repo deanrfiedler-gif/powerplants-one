@@ -27,18 +27,21 @@ test("responsive shell, keyboard focus, server save, read-only refusal and stora
     path: info.outputPath("P01-overview.png"),
     fullPage: true,
   });
-  // The first stop after the skip target is My Work's own navigation: the docked menu's current
-  // view on a wide screen, or the trigger that opens that menu on a narrow one.
+  // The first stop after the skip target is My Work itself: the docked menu's current view on a
+  // wide screen. On a phone the menu trigger is in the header, which the skip link passes over by
+  // design, so the first stop is the overview's own first control.
   await page.keyboard.press("Tab");
-  await expect(
-    info.project.use.isMobile
-      ? page.locator("#mw-content").getByRole("button", { name: "Show menu", exact: true })
-      : page.getByRole("navigation", { name: "My Work views" }).getByRole("link", { name: "Overview", exact: true }),
-  ).toBeFocused();
+  if (info.project.use.isMobile) {
+    await expect(page.getByRole("banner").getByRole("button", { name: "My Work menu", exact: true })).toBeVisible();
+    expect(await page.evaluate(() => !!document.activeElement?.closest("#mw-content .mw-mobile"))).toBe(true);
+  } else
+    await expect(
+      page.getByRole("navigation", { name: "My Work views" }).getByRole("link", { name: "Overview", exact: true }),
+    ).toBeFocused();
   await page.getByRole("button", { name: "Change identity", exact: true }).click();
   await expect(page.getByText("Powerplants One · Synthetic data only", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Close account", exact: true }).click();
-  await page.getByRole("button", { name: info.project.use.isMobile ? "Menu" : "More", exact: true }).click();
+  await page.getByRole("button", { name: "More", exact: true }).click();
   await page.getByRole("searchbox", { name: "Find a menu item" }).fill("Foundation");
   await page.getByRole("link", { name: "Foundation checks", exact: true }).click();
   await expect(
@@ -150,7 +153,7 @@ test("r17 preview preserves permissions, contextual navigation and page guidance
   await page.getByRole("button", { name: "Change identity", exact: true }).click();
   await expect(page.getByLabel("Preview workspace", { exact: true })).toHaveValue("supply");
   await page.keyboard.press("Escape");
-  const navButton = page.getByRole("button", { name: info.project.use.isMobile ? "Menu" : "More", exact: true });
+  const navButton = page.getByRole("button", { name: "More", exact: true });
   await navButton.click();
   await page.getByRole("searchbox", { name: "Find a menu item" }).fill("Customer");
   await page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "More navigation", exact: true }).getByRole("link", { name: "Customers", exact: true }).click();

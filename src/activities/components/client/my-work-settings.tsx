@@ -94,7 +94,10 @@ const panelNames: Record<PanelId, string> = {
 export function CustomiseDialog({ onClose }: { onClose: () => void }) {
   const work = useMyWork();
   const [panels, setPanels] = useState(work.layout.panels),
-    [hidden, setHidden] = useState(work.layout.hidden);
+    [hidden, setHidden] = useState(work.layout.hidden),
+    [weatherHidden, setWeatherHidden] = useState(work.layout.weather.hidden);
+  // A phone shows one weekly agenda in a fixed reading order, so only what can be hidden is offered.
+  const phone = !!work.phone;
   const move = (id: PanelId, by: number) => {
     const at = panels.indexOf(id),
       to = at + by;
@@ -116,6 +119,7 @@ export function CustomiseDialog({ onClose }: { onClose: () => void }) {
             onClick={() => {
               setPanels(defaultLayout.panels);
               setHidden([]);
+              setWeatherHidden(false);
             }}
           >
             Reset to {work.department} default
@@ -128,7 +132,7 @@ export function CustomiseDialog({ onClose }: { onClose: () => void }) {
             type="button"
             className="mw-button mw-button-primary"
             onClick={() => {
-              work.saveLayout({ ...work.layout, panels, hidden });
+              work.saveLayout({ ...work.layout, panels, hidden, weather: { ...work.layout.weather, hidden: weatherHidden } });
               work.announce("Overview layout saved.");
               onClose();
             }}
@@ -139,32 +143,46 @@ export function CustomiseDialog({ onClose }: { onClose: () => void }) {
       }
     >
       <ul className="mw-customise">
-        {panels.map((id, i) => (
+        {phone && (
+          <li>
+            <label className="mw-choice">
+              <input type="checkbox" checked={!weatherHidden} onChange={(e) => setWeatherHidden(!e.target.checked)} data-autofocus />
+              <span>Local weather</span>
+            </label>
+          </li>
+        )}
+        {panels.filter((id) => !phone || id !== "schedule").map((id, i) => (
           <li key={id}>
             <label className="mw-choice">
               <input
                 type="checkbox"
                 checked={!hidden.includes(id)}
                 onChange={(e) => setHidden(e.target.checked ? hidden.filter((h) => h !== id) : [...hidden, id])}
-                data-autofocus={i === 0 || undefined}
+                data-autofocus={(!phone && i === 0) || undefined}
               />
               <span>{panelNames[id]}</span>
             </label>
             <span className="mw-spacer" />
-            <button type="button" className="mw-icon-button" onClick={() => move(id, -1)} disabled={i === 0} aria-label={`Move ${panelNames[id]} up`}>
-              <span className="mw-turn-up">
-                <Icon name="chevron-down" />
-              </span>
-            </button>
-            <button type="button" className="mw-icon-button" onClick={() => move(id, 1)} disabled={i === panels.length - 1} aria-label={`Move ${panelNames[id]} down`}>
-              <Icon name="chevron-down" />
-            </button>
+            {!phone && (
+              <>
+                <button type="button" className="mw-icon-button" onClick={() => move(id, -1)} disabled={i === 0} aria-label={`Move ${panelNames[id]} up`}>
+                  <span className="mw-turn-up">
+                    <Icon name="chevron-down" />
+                  </span>
+                </button>
+                <button type="button" className="mw-icon-button" onClick={() => move(id, 1)} disabled={i === panels.length - 1} aria-label={`Move ${panelNames[id]} down`}>
+                  <Icon name="chevron-down" />
+                </button>
+              </>
+            )}
           </li>
         ))}
       </ul>
       <p className="mw-hint">
-        The activity list, the four counts and the date-needed and review notices always stay: hiding a panel never hides required work, and every hidden panel is still reachable from
-        the My Work menu. The layout is remembered for you in this browser.
+        {phone
+          ? "Needs attention and the weekly agenda always stay: hiding a section never hides required work, and everything hidden is still reachable from the My Work menu."
+          : "The activity list, the four counts and the date-needed and review notices always stay: hiding a panel never hides required work, and every hidden panel is still reachable from the My Work menu."}{" "}
+        The layout is remembered for you in this browser.
       </p>
     </WorkDialog>
   );

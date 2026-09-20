@@ -1,0 +1,173 @@
+/* My Work on a phone (SC-01). Composition from mockup r07, behaviour from mobile build report r02, values from
+   theme style board r22 through the tokens my-work.css already declares on #ppo-my-work. Nothing here is a second
+   palette. Two deliberate departures from the raster, both required by the report: the floating Create control
+   never covers a row's action (actions sit at the leading edge and the scroll surface keeps clearance), and
+   due-today and missing-next-step states stay neutral; brick is for work that is truly overdue.
+   The generic button reset in my-work.css clears a button's background on hover, so every filled control below
+   states its hover background too. */
+
+/* Bottom sheets: a menu or a short explanation. A sheet is the same modal dialog, docked to the bottom edge on
+   a phone; from tablet width up it is the ordinary centred dialog. */
+#ppo-my-work .mw-sheet-handle{display:none}
+#ppo-my-work .mw-sheet-actions{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 12px}
+#ppo-my-work .mw-create>li{border-bottom:1px solid var(--line-soft)}
+#ppo-my-work .mw-create>li:last-child{border-bottom:0}
+#ppo-my-work :is(a,button).mw-create-option{display:grid;grid-template-columns:32px minmax(0,1fr) 18px;align-items:center;gap:14px;width:100%;min-height:64px;padding:10px 4px;color:var(--ink);text-align:left;text-decoration:none;border-radius:var(--radius-control)}
+#ppo-my-work :is(a,button).mw-create-option:hover:not(:disabled){background:var(--surface-hover);color:var(--ink)}
+#ppo-my-work .mw-create-option>.mw-icon:first-child{width:28px;height:28px;stroke-width:1.5;justify-self:center}
+#ppo-my-work .mw-create-option>.mw-icon:last-child{color:var(--text-secondary)}
+#ppo-my-work .mw-create-option strong{display:block;font-size:16px;line-height:22px;font-weight:500}
+#ppo-my-work .mw-create-option small{display:block;color:var(--text-secondary);font-size:14px;line-height:20px}
+#ppo-my-work .mw-gaps>li{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;padding:12px 0;border-bottom:1px solid var(--line-soft)}
+#ppo-my-work .mw-gaps>li:last-child{border-bottom:0}
+#ppo-my-work .mw-gaps>li>div{flex:1 1 180px;min-width:0}
+#ppo-my-work .mw-gaps p{color:var(--muted);font-size:14px;line-height:20px;overflow-wrap:anywhere}
+#ppo-my-work .mw-gaps small{color:var(--muted);font-size:13px}
+#ppo-my-work .mw-forecast>li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid var(--line-soft)}
+#ppo-my-work .mw-forecast>li:last-child{border-bottom:0}
+#ppo-my-work .mw-forecast .mw-icon{width:28px;height:28px;stroke-width:1.5}
+#ppo-my-work .mw-forecast :is(strong,span,small){display:block}
+#ppo-my-work .mw-forecast strong{font-size:16px;font-weight:500}
+#ppo-my-work .mw-forecast small{color:var(--muted);font-size:13px;line-height:19px}
+/* The Customise entry in the overlay menu. */
+#ppo-my-work button.mw-menu-action{display:flex;align-items:center;justify-content:flex-start;gap:12px;width:100%;min-height:44px;padding:8px 10px;border-radius:var(--radius-control);color:var(--ink);line-height:20px}
+#ppo-my-work button.mw-menu-action:hover:not(:disabled){background:var(--surface-hover)}
+#ppo-my-work .mw-menu-action .mw-icon{width:20px;height:20px;color:var(--text-secondary)}
+
+@media (max-width:780px){
+ /* One page scroll, with room kept at the end so the last record clears the floating control, and the same
+    room kept for focus- and link-driven scrolling so a target is never brought to rest beneath it. */
+ #ppo-my-work[data-view=overview] .mw-content{scroll-padding-bottom:96px}
+ #ppo-my-work .mw-mobile{gap:20px;padding:16px 16px 88px;font-size:16px;line-height:1.4}
+ #ppo-my-work .mw-mobile>section{min-width:0}
+ #ppo-my-work .mw-mobile [data-stale]{opacity:.72}
+ #ppo-my-work .mw-mobile .mw-foot{margin-top:4px;padding:12px 0 0}
+
+ #ppo-my-work .mw-hello{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+ #ppo-my-work .mw-hello>div{min-width:0}
+ #ppo-my-work .mw-hello h1{font-size:23px;line-height:30px;font-weight:500;letter-spacing:-.2px;overflow-wrap:anywhere}
+ #ppo-my-work .mw-hello .mw-date{display:block;font-size:15px;line-height:22px;color:var(--text-secondary);white-space:normal}
+ #ppo-my-work .mw-hello .mw-tag{flex:none;margin-top:4px}
+ #ppo-my-work .mw-scope-note{padding:8px 12px;border-radius:var(--radius-control);background:var(--neutral-surface);color:var(--neutral);font-size:14px;line-height:20px}
+ #ppo-my-work .mw-scope-note .mw-link{min-height:0;white-space:normal;text-decoration:underline}
+
+ #ppo-my-work .mw-section-title{font-size:18px;line-height:26px;font-weight:500;overflow-wrap:anywhere}
+ #ppo-my-work .mw-mobile>section>.mw-section-title{margin-bottom:8px}
+ #ppo-my-work .mw-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;margin-top:-6px}
+ #ppo-my-work .mw-mobile :is(a,button).mw-link{min-height:44px;font-size:15px}
+ #ppo-my-work .mw-list-panel{border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface-white)}
+ #ppo-my-work .mw-list-panel>li+li{border-top:1px solid var(--line-soft)}
+ #ppo-my-work .mw-list-panel>li:first-child>*{border-radius:var(--radius-card) var(--radius-card) 0 0}
+ #ppo-my-work .mw-list-panel>li:last-child>*{border-radius:0 0 var(--radius-card) var(--radius-card)}
+ #ppo-my-work .mw-list-panel>li:only-child>*{border-radius:var(--radius-card)}
+ #ppo-my-work .mw-list-panel .mw-panel-note{padding:14px}
+ #ppo-my-work .mw-all-clear{padding:14px;color:var(--text-secondary);font-size:15px;line-height:22px}
+ #ppo-my-work .mw-quiet-note{margin:6px 2px 0;color:var(--muted);font-size:13px;line-height:19px}
+ #ppo-my-work .mw-quiet-note .mw-link{min-height:0;font-size:13px;white-space:normal;text-decoration:underline}
+ #ppo-my-work .mw-placeholder{min-height:56px;background:var(--surface-2)}
+
+ /* Quick Actions: four labelled tiles; two by two once a label would be squeezed. */
+ #ppo-my-work .mw-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+ #ppo-my-work :is(a,button,span).mw-tile{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:100%;min-height:80px;padding:10px 4px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface-white);color:var(--ink);font-size:14px;line-height:18px;text-align:center;text-decoration:none;overflow-wrap:anywhere}
+ #ppo-my-work :is(a,button).mw-tile:hover:not(:disabled){background:var(--surface-3);color:var(--ink)}
+ #ppo-my-work .mw-tile .mw-icon{width:28px;height:28px;stroke-width:1.5}
+ #ppo-my-work span.mw-tile{color:var(--muted);background:var(--surface-2)}
+ #ppo-my-work .mw-tile small{font-size:12px;color:var(--muted)}
+
+ /* Needs attention: a short list of different kinds of obligation. Counts are neutral unless truly overdue. */
+ #ppo-my-work :is(a,button,div).mw-attention-row{display:grid;grid-template-columns:28px auto minmax(0,1fr) 18px;align-items:center;gap:12px;width:100%;min-height:56px;padding:8px 14px;color:var(--ink);font-size:16px;line-height:22px;text-align:left;text-decoration:none;background:var(--surface-white)}
+ #ppo-my-work :is(a,button).mw-attention-row:hover:not(:disabled){background:var(--surface-3);color:var(--ink)}
+ #ppo-my-work .mw-attention-row strong{min-width:14px;font-size:21px;line-height:26px;font-weight:500}
+ #ppo-my-work .mw-attention-row>span:not(.mw-attention-row-icon){overflow-wrap:anywhere}
+ #ppo-my-work .mw-attention-row-icon{display:grid;place-items:center}
+ #ppo-my-work .mw-attention-row-icon .mw-icon{width:24px;height:24px;stroke-width:1.5}
+ #ppo-my-work .mw-attention-row>.mw-icon:last-child{color:var(--text-secondary)}
+ #ppo-my-work div.mw-attention-row{color:var(--warning);font-size:14px}
+
+ /* Weekly agenda. Only the strip of days may scroll sideways; the page never does. */
+ #ppo-my-work .mw-week-nav{display:flex;align-items:center;gap:2px;color:var(--text-secondary);font-size:14px;white-space:nowrap}
+ #ppo-my-work .mw-week{display:grid;grid-template-columns:repeat(7,minmax(44px,1fr));gap:6px;overflow-x:auto;padding:2px 2px 6px;margin:0 -2px;scroll-padding:0 8px;scrollbar-width:thin}
+ #ppo-my-work button.mw-day{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-width:44px;min-height:56px;border:1px solid var(--line);border-radius:var(--radius-control);background:var(--surface-white);color:var(--ink)}
+ #ppo-my-work button.mw-day:hover:not(:disabled){background:var(--surface-3);color:var(--ink)}
+ #ppo-my-work .mw-day span{font-size:13px;line-height:18px;color:var(--text-secondary)}
+ #ppo-my-work .mw-day strong{font-size:17px;line-height:22px;font-weight:500}
+ /* Today keeps its own mark when another day is selected: a green foot, and its weekday in ink. */
+ #ppo-my-work button.mw-day[aria-current=date]{box-shadow:inset 0 -3px 0 var(--green)}
+ #ppo-my-work .mw-day[aria-current=date] span{color:var(--ink);font-weight:500}
+ #ppo-my-work button.mw-day[aria-pressed=true],#ppo-my-work button.mw-day[aria-pressed=true]:hover:not(:disabled){border-color:var(--navy);background:var(--navy);color:#fff}
+ #ppo-my-work .mw-day[aria-pressed=true] span{color:#fff}
+ #ppo-my-work .mw-agenda-bar{display:flex;align-items:center;flex-wrap:wrap;gap:0 10px;min-height:48px}
+ #ppo-my-work .mw-agenda-count{flex:1 1 auto;min-width:0;font-size:16px;line-height:22px;font-weight:500}
+ #ppo-my-work .mw-goto{position:relative;display:grid;place-items:center;width:44px;height:44px;border-radius:var(--radius-control);color:var(--text-secondary);cursor:pointer}
+ #ppo-my-work .mw-goto:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:2px}
+ #ppo-my-work .mw-goto .mw-icon{width:22px;height:22px}
+ #ppo-my-work .mw-goto input{position:absolute;inset:0;width:100%;height:100%;min-height:0;padding:0;border:0;opacity:0;font-size:16px;cursor:pointer}
+ #ppo-my-work button.mw-agenda-row{display:grid;grid-template-columns:70px minmax(0,1fr) 18px;align-items:center;gap:0 10px;width:100%;min-height:64px;padding:9px 12px;background:var(--surface-white);color:var(--ink);text-align:left}
+ #ppo-my-work button.mw-agenda-row:hover:not(:disabled){background:var(--surface-3);color:var(--ink)}
+ #ppo-my-work .mw-agenda-row time{align-self:stretch;display:flex;align-items:center;padding-right:8px;border-right:1px solid var(--line-soft);color:var(--ink);font-size:14px;line-height:20px}
+ #ppo-my-work .mw-agenda-text{display:flex;flex-direction:column;min-width:0}
+ /* Navy at weight 500: a title that opens details. Never the bright bold blue of earlier mockups. */
+ #ppo-my-work .mw-agenda-title{color:var(--navy);font-size:16px;line-height:22px;font-weight:500;overflow-wrap:anywhere}
+ #ppo-my-work .mw-agenda-context{color:var(--muted);font-size:14px;line-height:20px;overflow-wrap:anywhere}
+ #ppo-my-work .mw-agenda-row .mw-tag{margin:0 0 0 8px;padding:0 9px;font-size:12px;line-height:18px;vertical-align:1px}
+ #ppo-my-work .mw-agenda-row>.mw-icon{color:var(--text-secondary)}
+
+ /* Waiting on others. The action is at the leading edge by design: see the note at the top of this file. */
+ #ppo-my-work .mw-waiting{display:flex;flex-direction:column;gap:10px}
+ #ppo-my-work .mw-waiting>li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;padding:12px 14px}
+ #ppo-my-work .mw-waiting-icon .mw-icon{width:24px;height:24px;stroke-width:1.5;margin-top:1px}
+ /* The title is a 44px target; the negative margins keep the card's reading rhythm, inside its own padding. */
+ #ppo-my-work .mw-waiting .mw-row-title{min-height:44px;margin:-11px 0 -9px;font-size:16px}
+ #ppo-my-work .mw-waiting p{color:var(--muted);font-size:14px;line-height:20px;overflow-wrap:anywhere}
+ #ppo-my-work .mw-waiting p.mw-tone-overdue{color:var(--danger)}
+ #ppo-my-work .mw-waiting .mw-button{margin-top:8px;min-height:44px}
+ #ppo-my-work button.mw-gap-link{display:grid;grid-template-columns:28px minmax(0,1fr) 18px;align-items:center;gap:12px;width:100%;min-height:58px;padding:8px 14px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface-white);color:var(--ink);font-size:16px;line-height:22px;text-align:left}
+ #ppo-my-work button.mw-gap-link:hover:not(:disabled){background:var(--surface-3);color:var(--ink)}
+ #ppo-my-work .mw-gap-link .mw-icon:first-child{width:24px;height:24px;stroke-width:1.5}
+ #ppo-my-work .mw-gap-link .mw-icon:last-child{color:var(--text-secondary)}
+
+ /* Weather: compact whether it has a forecast or an honest "not connected". Hidden means no space at all. */
+ #ppo-my-work .mw-weather{padding:6px 8px 10px 14px}
+ #ppo-my-work .mw-weather-quiet{display:grid;grid-template-columns:24px minmax(0,1fr) auto;align-items:center;gap:12px;min-height:48px;padding-top:4px}
+ #ppo-my-work .mw-weather-quiet>.mw-icon{width:24px;height:24px;color:var(--text-secondary)}
+ #ppo-my-work .mw-weather-quiet p{font-size:13px;line-height:19px;color:var(--muted)}
+ #ppo-my-work .mw-weather-quiet strong{display:block;font-size:15px;line-height:21px;font-weight:500;color:var(--ink)}
+ #ppo-my-work .mw-weather-quiet .mw-link{min-height:0;font-size:13px;text-decoration:underline}
+ #ppo-my-work .mw-weather-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+ #ppo-my-work button.mw-weather-place{display:inline-flex;align-items:center;gap:6px;min-height:44px;max-width:100%;font-size:15px;color:var(--ink)}
+ #ppo-my-work .mw-weather-place span{min-width:0;overflow-wrap:anywhere}
+ #ppo-my-work .mw-weather-place .mw-icon:last-child{width:16px;height:16px;color:var(--text-secondary)}
+ #ppo-my-work .mw-weather-now{display:flex;align-items:center;flex-wrap:wrap;gap:4px 14px}
+ #ppo-my-work .mw-weather-now .mw-icon{width:44px;height:44px;stroke-width:1.3}
+ #ppo-my-work .mw-weather-now strong{font-size:32px;line-height:38px;font-weight:500}
+ #ppo-my-work .mw-weather-now span{font-size:16px}
+ #ppo-my-work .mw-weather-foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0 12px;padding-right:6px;color:var(--muted);font-size:13px}
+ #ppo-my-work .mw-weather .mw-menu-root .mw-button-icon{width:44px;min-height:44px}
+
+ /* One navy Create control. It belongs to the module frame, not to the scrolling page, so it stays put above
+    the bottom bar (the frame already ends above the bar and the device's safe area). */
+ #ppo-my-work button.mw-fab{position:absolute;z-index:6;right:16px;bottom:16px;display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--navy);color:#fff;box-shadow:0 6px 16px rgba(36,42,55,.26),0 1px 3px rgba(36,42,55,.18)}
+ #ppo-my-work button.mw-fab:hover:not(:disabled){background:#343c4c;color:#fff}
+ #ppo-my-work button.mw-fab:focus-visible{outline-offset:3px}
+ #ppo-my-work .mw-fab .mw-icon{width:26px;height:26px;stroke-width:2}
+
+ #ppo-my-work dialog.mw-dialog.mw-sheet{position:fixed;inset:auto 0 0 0;margin:0;width:100vw;height:auto;max-height:calc(100dvh - 40px);border-radius:16px 16px 0 0;padding-bottom:env(safe-area-inset-bottom)}
+ #ppo-my-work .mw-sheet .mw-sheet-handle{display:block;flex:none;width:40px;height:4px;margin:8px auto 0;border-radius:2px;background:var(--hairline)}
+ #ppo-my-work .mw-sheet .mw-dialog-head{align-items:center;padding:8px 8px 8px 20px;border-bottom:0}
+ #ppo-my-work .mw-sheet .mw-dialog-head h2{font-size:22px;line-height:30px}
+ #ppo-my-work .mw-sheet .mw-dialog-body{padding:4px 20px 16px}
+ #ppo-my-work .mw-sheet-actions .mw-button{flex:1 1 auto}
+ #ppo-my-work .mw-menu-overlay li a,#ppo-my-work button.mw-menu-action{min-height:48px;font-size:16px}
+ /* A record reference is one long token; in the detail sheet it wraps instead of running off the edge. */
+ #ppo-my-work .mw-facts .mw-link{white-space:normal;overflow-wrap:anywhere}
+}
+/* Two by two before a tile label is squeezed; the same rule answers browser zoom, which narrows the viewport. */
+@media (max-width:350px){
+ #ppo-my-work .mw-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #ppo-my-work :is(a,button,span).mw-tile{min-height:68px}
+ #ppo-my-work .mw-mobile{padding-left:12px;padding-right:12px}
+}
+@media (max-width:780px) and (prefers-reduced-motion:no-preference){
+ #ppo-my-work dialog.mw-dialog.mw-sheet[open]{animation:mw-sheet-in .18s ease-out}
+}
+@keyframes mw-sheet-in{from{transform:translateY(24px);opacity:.6}to{transform:none;opacity:1}}

@@ -29,6 +29,9 @@ const shapes = {
   "overview": <><path d="m3 10 9-7 9 7v11H3V10Z M9 21v-8h6v8"/></>,
   "mail": <><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></>,
   "calendar": <><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/></>,
+  // Mobile r07 additions, drawn on the same grid and stroke as the r17 set.
+  "activities": <><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8.5 15.5l2.5 2.5 4.5-5"/></>,
+  "contact-card": <><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="12" cy="10.5" r="2.5"/><path d="M7.5 17a4.5 4.5 0 0 1 9 0"/></>,
   "down": <><path d="m6 9 6 6 6-6"/></>,
   "check": <><path d="m5 12 4 4L19 6"/></>,
   "chevron-right": <><path d="m9 5 7 7-7 7"/></>,

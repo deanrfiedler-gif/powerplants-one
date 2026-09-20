@@ -126,6 +126,61 @@ const paths = {
   refresh: <path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v4h-4" />,
   bell: <path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15ZM10 20.5a2 2 0 0 0 4 0" />,
   link: <path d="m10 14 4-4M8.5 15.5l-2 2a3 3 0 0 1-4-4l4-4a3 3 0 0 1 4 0m3 5a3 3 0 0 0 4 0l4-4a3 3 0 0 0-4-4l-2 2" />,
+  // Mobile r07.
+  menu: <path d="M4 7h16M4 12h16M4 17h16" />,
+  "calendar-check": (
+    <>
+      <rect x="4" y="5" width="16" height="15" rx="2" />
+      <path d="M4 10h16M8 3v4m8-4v4M9 15.2l2.1 2.1 4-4.6" />
+    </>
+  ),
+  briefcase: (
+    <>
+      <rect x="3.5" y="7" width="17" height="13" rx="2" />
+      <path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3.5 12.5h17" />
+    </>
+  ),
+  target: (
+    <>
+      <circle cx="12" cy="12" r="7" />
+      <circle cx="12" cy="12" r="2.6" />
+      <path d="M12 2.5V5m0 14v2.5M2.5 12H5m14 0h2.5" />
+    </>
+  ),
+  map: <path d="M9 4.5 3.5 6.8v12.7L9 17.2l6 2.3 5.5-2.3V4.5L15 6.8Zm0 0v12.7m6-10.4v12.7" />,
+  camera: (
+    <>
+      <path d="M4 9a2 2 0 0 1 2-2h2.2l1.5-2.2h4.6L15.8 7H18a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" />
+      <circle cx="12" cy="13" r="3.2" />
+    </>
+  ),
+  building: <path d="M5 20V5.5A1.5 1.5 0 0 1 6.5 4h7A1.5 1.5 0 0 1 15 5.5V20m0-10h3.5a1.5 1.5 0 0 1 1.5 1.5V20M3.5 20h17M8.5 8h3m-3 4h3m-3 4h3" />,
+  chat: <path d="M5 5h14a1.5 1.5 0 0 1 1.5 1.5v9A1.5 1.5 0 0 1 19 17h-7l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5v-9A1.5 1.5 0 0 1 5 5Z" />,
+  sun: (
+    <>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6 7 7m10 10 1.4 1.4m0-12.8L17 7M7 17l-1.4 1.4" />
+    </>
+  ),
+  cloud: <path d="M7.5 18.5a4 4 0 0 1-.6-7.96 5.5 5.5 0 0 1 10.6 1.5A3.25 3.25 0 0 1 17 18.5Z" />,
+  "cloud-sun": (
+    <>
+      <path d="M8 4v1.5M3.5 8.5H5m.3-3.2 1 1m6.4-1-1 1M5.6 11.2A3.2 3.2 0 0 1 10.9 7.7" />
+      <path d="M9.5 19.5a3.5 3.5 0 0 1-.5-6.96 4.8 4.8 0 0 1 9.2 1.3 2.85 2.85 0 0 1-.4 5.66Z" />
+    </>
+  ),
+  rain: (
+    <>
+      <path d="M7.5 15.5a4 4 0 0 1-.6-7.96 5.5 5.5 0 0 1 10.6 1.5A3.25 3.25 0 0 1 17 15.5Z" />
+      <path d="m9 18-1 2.5m4.5-2.5-1 2.5M16 18l-1 2.5" />
+    </>
+  ),
+  "cloud-off": (
+    <>
+      <path d="M9.2 7.2a5.5 5.5 0 0 1 8.3 3.34A3.25 3.25 0 0 1 19 16.6M16 18.5H7.5a4 4 0 0 1-1.9-7.5" />
+      <path d="m4 4 16 16" />
+    </>
+  ),
 } as const;
 export type IconName = keyof typeof paths;
 export function Icon({ name }: { name: IconName }) {
@@ -145,13 +200,15 @@ export function Tag({
   return <span className={`mw-tag mw-tag-${tone}`}>{children}</span>;
 }
 
-// A modal dialog, or a right-edge drawer for details. Focus goes to the first field marked
-// data-autofocus, else the heading; closing returns it to whatever opened the dialog. A command
-// in flight keeps the dialog open so its result is never hidden.
+// A modal dialog, a right-edge drawer for details, or (on a phone) a bottom sheet for a menu.
+// Focus goes to the first field marked data-autofocus, else the heading; closing returns it to
+// whatever opened the dialog. A command in flight keeps the dialog open so its result is never
+// hidden. The background is inert for as long as any of them is open, because all are modal.
 export function WorkDialog({
   title,
   subtitle,
   drawer = false,
+  sheet = false,
   busy = false,
   dirty = false,
   onClose,
@@ -161,6 +218,7 @@ export function WorkDialog({
   title: string;
   subtitle?: React.ReactNode;
   drawer?: boolean;
+  sheet?: boolean;
   busy?: boolean;
   dirty?: boolean;
   onClose: () => void;
@@ -194,7 +252,7 @@ export function WorkDialog({
   return (
     <dialog
       ref={dialog}
-      className={`mw-dialog${drawer ? " mw-drawer" : ""}`}
+      className={`mw-dialog${drawer ? " mw-drawer" : ""}${sheet ? " mw-sheet" : ""}`}
       aria-labelledby={`${id}-title`}
       onCancel={(e) => {
         e.preventDefault();
@@ -208,6 +266,7 @@ export function WorkDialog({
         outside.current = false;
       }}
     >
+      {sheet && <span className="mw-sheet-handle" aria-hidden="true" />}
       <header className="mw-dialog-head">
         <div>
           <h2 id={`${id}-title`} ref={heading} tabIndex={-1}>

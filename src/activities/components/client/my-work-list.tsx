@@ -18,7 +18,8 @@ import { Icon, Tag } from "./my-work-ui";
 export type DialogRequest =
   | { kind: "detail" | "outcome" | "reschedule" | "date" | "owner"; row: WorkRow }
   | { kind: "followup"; activityId: string }
-  | { kind: "create"; preset?: ParentPreset };
+  // `day` is the agenda day the person was looking at when they chose Create; the form shows it.
+  | { kind: "create"; preset?: ParentPreset; day?: string };
 export function useWorkDialogs(now: string, onChanged: (message: string) => void) {
   const [request, setRequest] = useState<DialogRequest | null>(null);
   const close = () => setRequest(null);
@@ -29,14 +30,14 @@ export function useWorkDialogs(now: string, onChanged: (message: string) => void
       now={now}
       onClose={close}
       onComplete={() => setRequest({ kind: "outcome", row: request.row })}
-      onReschedule={() => setRequest({ kind: "reschedule", row: request.row })}
+      onReschedule={() => setRequest({ kind: request.row.due_needed ? "date" : "reschedule", row: request.row })}
     />
   ) : request.kind === "outcome" ? (
     <OutcomeDialog row={request.row} now={now} onClose={close} onChanged={onChanged} />
   ) : request.kind === "followup" ? (
     <RescheduleDialog activityId={request.activityId} now={now} purpose="followup" onClose={close} onChanged={onChanged} />
   ) : request.kind === "create" ? (
-    <ActivityFormDialog preset={request.preset} now={now} onClose={close} onChanged={onChanged} />
+    <ActivityFormDialog preset={request.preset} initialDay={request.day} now={now} onClose={close} onChanged={onChanged} />
   ) : (
     <RescheduleDialog activityId={request.row.id} now={now} purpose={request.kind} onClose={close} onChanged={onChanged} />
   );
