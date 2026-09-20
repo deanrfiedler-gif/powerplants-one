@@ -12,7 +12,7 @@ import { exclusions, liveBlockers, presentRelease, replaced, type ReleaseRecord,
 import { parseHandoverCommand, parseImpactCommand, parseLineCommand, parseReleaseCommand, parseSetCommand, parseSourceCommand, parseSubstitutionCommand } from "./validation";
 import {
   acceptanceBlockers, formatQuantity, parseQuantity, policyAllows, quantityText,
-  type Blocker, type Manifest, type ManifestLine, type ReleasePurpose,
+  type Blocker, type Manifest, type ManifestLine,
 } from "./model";
 
 type Saved = { id: string; version: number; state: string; updated_at: Date; audit_details?: Record<string, unknown> };

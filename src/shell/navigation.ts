@@ -281,6 +281,30 @@ export const salesPhoneBar = [
   { id: "calendar", label: "Activities", icon: "bar-activities" },
   { id: "contacts", label: "Contacts", icon: "bar-contacts" },
 ] as const;
+// The EN-06 Released Materials & Substitutions secondary menu (build plan r02, section 6.2): six route-backed
+// destinations under one Engineering package, in this order. They replace horizontal module tabs completely.
+export const materialsModuleLabel = "Released Materials & Substitutions";
+export const materialViews = [
+  { id: "register", label: "Materials register", segment: "" },
+  { id: "mapping", label: "Item & unit mapping", segment: "mapping" },
+  { id: "substitutions", label: "Substitution review", segment: "substitutions" },
+  { id: "releases", label: "Review & release", segment: "releases" },
+  { id: "handover", label: "Supply handover", segment: "handover" },
+  { id: "history", label: "Changes & history", segment: "history" },
+] as const;
+export type MaterialViewId = (typeof materialViews)[number]["id"];
+export const materialsHref = (packageId: string, view: MaterialViewId = "register") => {
+  const segment = materialViews.find((v) => v.id === view)!.segment;
+  return `/engineering/${packageId}/materials${segment ? `/${segment}` : ""}`;
+};
+// The header names the module, and the destination too while the secondary menu is hidden. The entry
+// page has no destination; an unknown segment answers nothing rather than pretending to be the register.
+export function materialsPath(path: string) {
+  const match = /^\/engineering\/(?:([^/]+)\/)?materials(?:\/([a-z]+))?\/?$/.exec(path);
+  if (!match) return undefined;
+  const view = match[1] ? materialViews.find((v) => v.segment === (match[2] ?? "")) : undefined;
+  return match[1] && !view ? undefined : { package_id: match[1] ?? null, view };
+}
 export const workViewForPath = (path: string) =>
   workViews.find((view) => view.href === path);
 export const destination = (id: string) =>

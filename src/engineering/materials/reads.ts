@@ -23,7 +23,7 @@ function present(l: LoadedLine): MaterialLine {
     location: r.location, served_areas: r.served_areas, quantity: l.quantity, unit: l.row.unit, quantity_basis: r.quantity_basis,
     required_by: r.required_by, purpose: r.purpose, manufacturer: r.manufacturer, model: r.model, supplier_part: r.supplier_part, product_ref: r.product_ref,
     kit_role: r.kit_role, parent_line_id: r.parent_line_id, dependency_group: r.dependency_group, scope_decision_needed: r.scope_decision_needed,
-    scope_decision_owner: r.scope_decision_owner, author_id: l.row.author_id, author_name: r.author_name, next_owner_id: r.next_owner_id,
+    scope_decision_owner_id: r.scope_decision_owner_id, scope_decision_owner: r.scope_decision_owner, author_id: l.row.author_id, author_name: r.author_name, next_owner_id: r.next_owner_id,
     next_owner_name: r.next_owner_name, next_action: r.next_action, action_due: r.action_due, drawing: sourceRef(l.drawing), basis: sourceRef(l.basis),
     mapping: r.mapping, mapping_item: r.mapping_item_key, released_quantity: l.released_quantity, removed: !!l.row.removed_at, readiness: l.readiness,
     substitution: l.proposal && l.proposal.state !== "Rejected" && !(l.proposal.state === "Accepted" && l.proposal.adopted_at)
@@ -194,7 +194,7 @@ function presentSubstitution(s: Awaited<ReturnType<typeof substitutionRows>>[num
     proposer_id: s.proposer_id, proposer_name: s.proposer_name, submitted_hash: s.submitted_hash, submitted_at: s.submitted_at?.toISOString() ?? null,
     decided_by_name: s.decided_by_name, decided_at: s.decided_at?.toISOString() ?? null, decision_rationale: s.decision_rationale,
     decision_owner_name: s.decision_owner_name, decision_due: s.decision_due, policy_version: s.policy_version,
-    commercial_state: s.commercial_state, commercial_note: s.commercial_note, commercial_owner_name: s.commercial_owner_name,
+    commercial_state: s.commercial_state, commercial_note: s.commercial_note, commercial_owner_id: s.commercial_owner_id, commercial_owner_name: s.commercial_owner_name,
     commercial_decided_by_name: s.commercial_decided_by_name, commercial_decided_at: s.commercial_decided_at?.toISOString() ?? null,
     predecessor_id: s.predecessor_id, has_successor: s.has_successor, adopted_at: s.adopted_at?.toISOString() ?? null, adopted_content_revision: s.adopted_content_revision,
     // Reasons travel with the record, so a disabled positive decision always has its explanation beside it.

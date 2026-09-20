@@ -310,6 +310,10 @@ export function EngineeringWorkspace({ initialId }: { initialId?: string }) {
           <p>Work packages, drawings and technical reviews</p>
         </div>
         <div className="eng-heading-actions">
+          {/* EN-06: material requirements, substitutions, technical release and supply handover of a package. */}
+          <Link className="eng-meta-link" href="/engineering/materials">
+            Released materials &amp; substitutions
+          </Link>
           {shell.data?.actions.some((a) => a.id === "engineering") && (
             <button className="eng-primary" onClick={() => setRequest(true)}>
               ＋ Request
@@ -1073,6 +1077,9 @@ function PackageDrawer({
                   href={`${p.context_kind === "Project" ? "/projects" : "/sales/opportunities"}/${p.context_id}`}
                 >
                   Open {p.context_reference}
+                </Link>
+                <Link className="eng-meta-link" href={`/engineering/${p.id}/materials`}>
+                  Open released materials &amp; substitutions
                 </Link>
               </section>
               <div className="eng-next-box">

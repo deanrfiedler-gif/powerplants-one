@@ -3,28 +3,6 @@
 // and a unit test. Every record is synthetic. A technical release is never permission to spend,
 // order, reserve, install or commission; those remain separate facts owned elsewhere.
 
-export const materialViews = [
-  { id: "register", label: "Materials register", segment: "" },
-  { id: "mapping", label: "Item & unit mapping", segment: "mapping" },
-  { id: "substitutions", label: "Substitution review", segment: "substitutions" },
-  { id: "releases", label: "Review & release", segment: "releases" },
-  { id: "handover", label: "Supply handover", segment: "handover" },
-  { id: "history", label: "Changes & history", segment: "history" },
-] as const;
-export type MaterialViewId = (typeof materialViews)[number]["id"];
-export const materialsModuleLabel = "Released Materials & Substitutions";
-export const materialsHref = (packageId: string, view: MaterialViewId = "register") => {
-  const segment = materialViews.find((v) => v.id === view)!.segment;
-  return `/engineering/${packageId}/materials${segment ? `/${segment}` : ""}`;
-};
-// The header names the module and the current destination, so the view stays identifiable while
-// the secondary menu is hidden. Only package-scoped material routes answer; /engineering does not.
-export function materialViewForPath(path: string) {
-  const match = /^\/engineering\/(?:[^/]+\/)?materials(?:\/([a-z]+))?\/?$/.exec(path);
-  if (!match) return undefined;
-  return materialViews.find((v) => v.segment === (match[1] ?? "")) ?? materialViews[0];
-}
-
 // ---------------------------------------------------------------------------------------------
 // Exact quantities. Decimal strings with at most six fractional places are a fixture convention
 // of this prototype, not a claim about any ERP. Arithmetic is on integers of millionths; a float
@@ -407,7 +385,7 @@ export type MaterialLine = {
   location: string; served_areas: string[]; quantity: string; unit: Unit; quantity_basis: string;
   required_by: string | null; purpose: ReleasePurpose; manufacturer: string | null; model: string | null;
   supplier_part: string | null; product_ref: string | null; kit_role: KitRole; parent_line_id: string | null;
-  dependency_group: string | null; scope_decision_needed: boolean; scope_decision_owner: string | null;
+  dependency_group: string | null; scope_decision_needed: boolean; scope_decision_owner_id: string | null; scope_decision_owner: string | null;
   author_id: string; author_name: string; next_owner_id: string; next_owner_name: string;
   next_action: string; action_due: string | null; drawing: SourceRef | null; basis: SourceRef | null;
   mapping: MappingCondition; mapping_item: string | null; released_quantity: string; removed: boolean;
