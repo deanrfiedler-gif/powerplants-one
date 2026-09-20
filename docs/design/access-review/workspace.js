@@ -221,7 +221,7 @@
 
   /* ---------- Catalogue ---------- */
   function viewCatalogue(){
-    const tabs=[['capabilities','Capabilities (70)'],['bundles','Role bundles'],['teams','Teams']];
+    const tabs=[['capabilities','Capabilities (74)'],['bundles','Role bundles'],['teams','Teams']];
     let body='';
     if(ui.catalogueTab==='capabilities'){
       const cat=M.catalogue();
@@ -250,7 +250,7 @@
         facts([['Lead',esc(name(t.lead))],['Purpose',esc(t.purpose)]])+`<div class="table-wrap" style="margin-top:10px"><table class="cards"><thead><tr><th>Member</th><th>From</th><th>To</th><th>Status</th></tr></thead><tbody>${t.members.filter(m=>M.canSeePerson(state,ui.role,m.userId)).map(m=>`<tr><td data-label="Member">${esc(name(m.userId))}</td><td data-label="From">${esc(day(m.from+'T00:00:00+10:00'))}</td><td data-label="To">${m.to?esc(day(m.to+'T00:00:00+10:00')):'Current'}</td><td data-label="Status">${M.isTeamMember(state,t.id,m.userId)?tag('Current'):tag('Ended','neutral')}</td></tr>`).join('')}</tbody></table></div>`)).join('');
     }
     const support=card('Separation-of-duties pairs',M.SOD.map(s=>note(`${s.a} + ${s.b}`,`${esc(s.rationale)}<div class="meta">Source: ${esc(s.source)}</div>`)).join('')+note('Warnings only','Only separations the runtime already enforces are listed. Job pack check and issue are not separated by the runtime, so no pair is shown for them.','info'),'Proposed warnings; no policy adopted.')+
-      card(`Administrative capabilities ${proposed()}`,`<ul>${M.ADMIN_CAPS.map(k=>`<li><code>${esc(k)}</code></li>`).join('')}</ul><p class="meta">Not part of the 70-value application contract. Used only by the preview roles.</p>`);
+      card(`Administrative capabilities ${proposed()}`,`<ul>${M.ADMIN_CAPS.map(k=>`<li><code>${esc(k)}</code></li>`).join('')}</ul><p class="meta">Not part of the 74-value application contract. Used only by the preview roles.</p>`);
     return layout(`<div class="subtabs" role="group" aria-label="Catalogue sections">${tabs.map(([k,l])=>btn(l,'catTab',`data-tab="${k}" aria-pressed="${ui.catalogueTab===k}"`)).join('')}</div>`+body,support);
   }
 
@@ -387,7 +387,7 @@
   /* ---------- guide, options, assistant ---------- */
   function guide(){openModal({kicker:'Page guide',title:'Using the access workspace',body:`
     <p><strong>People</strong> lists identities with attention queues. <strong>Person access</strong> shows every grant, the effective-access matrix and why a cell is allowed.</p>
-    <p><strong>Roles, teams & capabilities</strong> lists the 70 application capabilities and the proposed bundles and teams. <strong>Access changes</strong> is the proposed request, review and simulated-apply workflow. <strong>Access reviews</strong> records keep, change, revoke or unable-to-confirm decisions. <strong>History & explanation</strong> shows audit events and a step-by-step explanation of any decision.</p>
+    <p><strong>Roles, teams & capabilities</strong> lists the 74 application capabilities and the proposed bundles and teams. <strong>Access changes</strong> is the proposed request, review and simulated-apply workflow. <strong>Access reviews</strong> records keep, change, revoke or unable-to-confirm decisions. <strong>History & explanation</strong> shows audit events and a step-by-step explanation of any decision.</p>
     ${note('What is real and what is proposed','Grants, scopes, validity, hosted testers and the evaluation rule are the application contract. Bundles, teams, requests, reviews, administrative capabilities and access events are proposals, labelled as such.','info')}
     <p>Keyboard: use arrow keys on the view tabs, Enter or Space on buttons, and Escape to close dialogs and panels.</p>`});}
   function options(){

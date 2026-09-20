@@ -72,7 +72,7 @@ export async function packageCommand(p: Principal, packageId: string, value: unk
       await record(c, p, access, command, { commissioning_id: command.id, subject_type: "Package", subject_id: command.id, event_type: "PackageCreated" });
       return { id: command.id, version: 1, state: "Draft", updated_at: new Date() };
     }
-    const { l, sources } = await opened(c, p, access, command.record_id);
+    const { l } = await opened(c, p, access, command.record_id);
     if (command.action === "check") {
       const id = await recordCheck(c, p, access, command, l);
       return done(c, p, access, command, l, { subject_type: "SourceCheck", subject_id: id, event_type: "SourcesChecked", note: l.condition.reasons.join(" ") || null }, l.condition.condition);

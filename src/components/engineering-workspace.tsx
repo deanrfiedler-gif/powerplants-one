@@ -318,6 +318,10 @@ export function EngineeringWorkspace({ initialId }: { initialId?: string }) {
           <Link className="eng-meta-link" href="/engineering/changes">
             Engineering change-impact review
           </Link>
+          {/* EN-08: the test basis, accepted evidence, reconciled as-built record and handover of what was installed. */}
+          <Link className="eng-meta-link" href="/engineering/commissioning">
+            Commissioning basis &amp; as-built release
+          </Link>
           {shell.data?.actions.some((a) => a.id === "engineering") && (
             <button className="eng-primary" onClick={() => setRequest(true)}>
               ＋ Request
@@ -1087,6 +1091,9 @@ function PackageDrawer({
                 </Link>
                 <Link className="eng-meta-link" href={`/engineering/${p.id}/changes`}>
                   Open engineering changes
+                </Link>
+                <Link className="eng-meta-link" href={`/engineering/commissioning?package=${p.id}`}>
+                  Open commissioning basis &amp; as-built release
                 </Link>
               </section>
               <div className="eng-next-box">
