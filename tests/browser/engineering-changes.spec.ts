@@ -89,10 +89,11 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
   await flush();
   expect(Math.round((await menu.boundingBox())!.x + 220)).toBe(Math.round((await page.locator(".em-register").boundingBox())!.x));
 
-  // A59: the audited fixture, row for row, from the server.
-  const expected = [["Valve assembly substitution", "In review", "21 Sep 2026", "Review required"], ["Pump duty amendment", "Assessing", "21 Sep 2026", "Source changed"], ["Control interface revision", "Decision recorded", "22 Sep 2026", "Cost review"],
-    ["Sensor relocation", "In review", "23 Sep 2026", "Review required"], ["Pipework reroute", "Returned", "24 Sep 2026", "Scope clarification"], ["Filter access clearance", "Assessing", "25 Sep 2026", "Evidence needed"],
-    ["Commissioning logic update", "Decision recorded", "25 Sep 2026", "Retest failed"], ["Valve isolation arrangement", "Draft", "Date needed", "Assessment needed"]];
+  // A59: the audited fixture, row for row, from the server. The due dates are the mockup's 21 to 25 September 2026 moved forward by ADR-0030's
+  // 261 whole weeks, as every still-future fixture is, so that this journey never starts failing on the calendar.
+  const expected = [["Valve assembly substitution", "In review", "22 Sep 2031", "Review required"], ["Pump duty amendment", "Assessing", "22 Sep 2031", "Source changed"], ["Control interface revision", "Decision recorded", "23 Sep 2031", "Cost review"],
+    ["Sensor relocation", "In review", "24 Sep 2031", "Review required"], ["Pipework reroute", "Returned", "25 Sep 2031", "Scope clarification"], ["Filter access clearance", "Assessing", "26 Sep 2031", "Evidence needed"],
+    ["Commissioning logic update", "Decision recorded", "26 Sep 2031", "Retest failed"], ["Valve isolation arrangement", "Draft", "Date needed", "Assessment needed"]];
   for (const [i, [title, stage, due, attention]] of expected.entries()) {
     const row = rows(page).nth(i);
     await expect(row.locator(".em-row-title")).toHaveText(title);
@@ -196,7 +197,7 @@ test("EN07-A54 A55 A56 A60 A25 A44: the inspector projects retained records, and
   await expect(inspector.locator(".ec-sources small")).toHaveText(checked);
   for (const [label, value] of [["Installed assets", "1 affected"], ["Material lines", "2 affected"], ["Retest", "Required"], ["Cost decision", "Pending review"]]) await expect(inspector.locator(".ec-row", { hasText: label })).toContainText(value);
   await expect(inspector.locator(".ec-row", { hasText: "Cost decision" }).locator("strong")).toHaveCSS("color", rgb("#80530e")); // the open review is the caution; it has no surface of its own
-  await expect(inspector.locator(".ec-owner")).toHaveText(/SYN Sam Jordan · Due 22 Sep 2026$/);
+  await expect(inspector.locator(".ec-owner")).toHaveText(/SYN Sam Jordan · Due 23 Sep 2031$/);
   await expect(inspector.locator(".ec-blocking")).toContainText("Commercial review required");
   await expect(inspector.locator(".ec-blocking")).toContainText("Implementation is not authorised until this prerequisite is resolved.");
   await expect(inspector.locator(".ec-blocking")).toHaveCSS("background-color", rgb("#fff2d9"));

@@ -40,7 +40,7 @@ async function built() {
   const people = Object.fromEntries(await Promise.all(roles.map(async (k) => [k, await directSignIn(CHANGES[k].profile)]))) as Record<(typeof roles)[number], Call>;
   const detail = async (change: string, call: Call = people.engineer) => ((await call(`${base}/impact?change=${change}`)).body as { selected: Detail }).selected;
   const preview = async (change: string, requests: Record<string, unknown>[], call: Call = people.engineer) => (await call(`${base}/handovers/preview?change=${change}&requests=${encodeURIComponent(JSON.stringify(requests))}`)).body as Preview;
-  const request = (purpose: string, destination: string, owner: string, action = "SYN requested action") => ({ id: randomUUID(), purpose, destination, owner_id: owner, requested_action: action, due: "2026-10-01" });
+  const request = (purpose: string, destination: string, owner: string, action = "SYN requested action") => ({ id: randomUUID(), purpose, destination, owner_id: owner, requested_action: action, due: "2031-10-02" });
   const confirm = async (change: string, requests: Record<string, unknown>[], hash?: string) => {
     const p = await preview(change, requests), d = await detail(change);
     return people.engineer(`${base}/handovers`, command("SYN exact previewed requests confirmed", { action: "confirm", change_id: change, expected_version: d.change.version, preview_hash: hash ?? p.preview_hash, requests }));
@@ -149,11 +149,11 @@ test("EN07-A25 A29 A32 A33 A37 A40 A41 A43 A50: accepted is not implemented; the
   // A31 A32 A33: each receiver answers only for their own destination; outcomes stay separate; a correction keeps the identity.
   assert.equal((await s.receive(s.supply, id, "Service", "Implementation", "Accepted")).status, 403);
   assert.equal((await s.receive(s.supply, id, "SupplyChain", "Implementation", "Accepted")).status, 201);
-  assert.equal((await s.receive(s.service, id, "Service", "Implementation", "Returned", { owner_id: CHANGES.engineer.id, due: "2026-10-02" })).status, 201);
+  assert.equal((await s.receive(s.service, id, "Service", "Implementation", "Returned", { owner_id: CHANGES.engineer.id, due: "2031-10-03" })).status, 201);
   let d = await s.detail(id);
   assert.deepEqual(d.requests.filter((r) => r.purpose === "Implementation").map((r) => `${r.destination}:${r.state}`).sort(), ["Commissioning:Pending", "Service:Returned", "SupplyChain:Accepted"]);
   const returned = d.requests.find((r) => r.destination === "Service" && r.purpose === "Implementation")!;
-  const again = await s.preview(id, [{ id: returned.id, purpose: "Implementation", destination: "Service", owner_id: CHANGES.service.id, requested_action: "SYN requested action", due: "2026-10-01" }]);
+  const again = await s.preview(id, [{ id: returned.id, purpose: "Implementation", destination: "Service", owner_id: CHANGES.service.id, requested_action: "SYN requested action", due: "2031-10-02" }]);
   assert.equal((await s.engineer(`${s.base}/handovers`, command("SYN corrected", { action: "resubmit", change_id: id, handover_id: returned.id, expected_version: returned.version, id: randomUUID(), preview_hash: again.preview_hash, correction_note: "SYN attendance date clarified" }))).status, 201);
   d = await s.detail(id);
   const corrected = d.requests.find((r) => r.id === returned.id)!;
@@ -164,9 +164,9 @@ test("EN07-A25 A29 A32 A33 A37 A40 A41 A43 A50: accepted is not implemented; the
 
   // A39 A40 A41: a fail blocks closure and is never edited; a pass binds the exact configuration and is its own record.
   const retest = (await s.detail(id)).verification[0];
-  const attempt = async (result: string, configuration: string, extra: Record<string, unknown> = {}) => s.verifier(`${s.base}/verification`, command("SYN retest", { action: "attempt", id: randomUUID(), change_id: id, expected_version: (await s.detail(id)).change.version, retest_id: retest.id, result, tested_at: "2026-10-05T01:00:00.000Z", configuration_present: configuration, evidence_reference: "SYN inspection sheet", ...extra }));
+  const attempt = async (result: string, configuration: string, extra: Record<string, unknown> = {}) => s.verifier(`${s.base}/verification`, command("SYN retest", { action: "attempt", id: randomUUID(), change_id: id, expected_version: (await s.detail(id)).change.version, retest_id: retest.id, result, tested_at: "2031-10-06T01:00:00.000Z", configuration_present: configuration, evidence_reference: "SYN inspection sheet", ...extra }));
   assert.equal(code(await attempt("Passed", "CI-100 as found")), "ConfigurationMismatch");
-  assert.equal((await attempt("Failed", "CI-120 r2 terminated to E-201 revision D", { corrective_action: "SYN reterminate channel 3", corrective_owner_id: CHANGES.engineer.id, corrective_due: "2026-10-07" })).status, 201);
+  assert.equal((await attempt("Failed", "CI-120 r2 terminated to E-201 revision D", { corrective_action: "SYN reterminate channel 3", corrective_owner_id: CHANGES.engineer.id, corrective_due: "2031-10-08" })).status, 201);
   assert.match((await s.detail(id)).closure_readiness.Implemented.join(" "), /must pass/);
   const close = async (meaning: string) => s.authority(`${s.base}/verification`, command("SYN closure on retained evidence", { action: "close", id: randomUUID(), change_id: id, expected_version: (await s.detail(id)).change.version, meaning }));
   assert.equal(code(await close("Implemented")), "ClosureBlocked");
