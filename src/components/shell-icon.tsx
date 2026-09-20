@@ -29,6 +29,14 @@ const shapes = {
   "overview": <><path d="m3 10 9-7 9 7v11H3V10Z M9 21v-8h6v8"/></>,
   "mail": <><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></>,
   "calendar": <><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/></>,
+  // The Sales phone bar (mobile r07), drawn as one family on the r17 grid and stroke, each filling the same
+  // optical box: a clipboard for My Work, a dollar in a circle for Opportunities, a calendar with one marked
+  // date for Activities, and a person with no frame for Contacts. The r17 shapes above are left as issued.
+  "bar-work": <><path d="M9 4.5H7a2 2 0 0 0-2 2V19a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6.5a2 2 0 0 0-2-2h-2"/><rect x="9" y="2.5" width="6" height="4" rx="1"/><path d="M9 11h6M9 14.5h6M9 18h3"/></>,
+  "bar-opportunities": <><circle cx="12" cy="12" r="9"/><path d="M15 8.4h-4.2a1.8 1.8 0 0 0 0 3.6h2.4a1.8 1.8 0 0 1 0 3.6H9M12 6.4v11.2"/></>,
+  "bar-activities": <><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17"/><rect x="14" y="14" width="3.4" height="3.4" rx=".8" fill="currentColor" stroke="none"/></>,
+  "bar-contacts": <><circle cx="12" cy="8" r="3.8"/><path d="M4.8 20.5a7.2 7.2 0 0 1 14.4 0"/></>,
+  "bar-more": <><circle cx="5" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.7" fill="currentColor" stroke="none"/></>,
   "down": <><path d="m6 9 6 6 6-6"/></>,
   "check": <><path d="m5 12 4 4L19 6"/></>,
   "chevron-right": <><path d="m9 5 7 7-7 7"/></>,

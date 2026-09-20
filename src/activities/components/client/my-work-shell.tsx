@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   createContext,
   useCallback,
@@ -23,8 +23,10 @@ import { Icon, useWorkResource, type IconName } from "./my-work-ui";
 
 type Navigation = Awaited<ReturnType<typeof readWorkNavigation>>;
 export type PanelId = "schedule" | "waiting" | "gaps";
-export type Layout = { menu: "open" | "closed"; panels: PanelId[]; hidden: PanelId[] };
-export const defaultLayout: Layout = { menu: "open", panels: ["schedule", "waiting", "gaps"], hidden: [] };
+// Weather is a personal presentation choice like the rest: whether the card shows, and the place
+// last chosen for it. It holds no forecast and implies no provider.
+export type Layout = { menu: "open" | "closed"; panels: PanelId[]; hidden: PanelId[]; weather: { hidden: boolean; location: string | null } };
+export const defaultLayout: Layout = { menu: "open", panels: ["schedule", "waiting", "gaps"], hidden: [], weather: { hidden: false, location: null } };
 const panelIds: PanelId[] = ["schedule", "waiting", "gaps"];
 
 // Layout preferences are presentation only, kept per person in this browser like the Leads
@@ -38,6 +40,10 @@ function parseLayout(raw: string | null): Layout {
       menu: v.menu === "closed" ? "closed" : "open",
       panels: [...new Set([...panels, ...panelIds])],
       hidden: Array.isArray(v.hidden) ? (v.hidden as unknown[]).filter((x): x is PanelId => panelIds.includes(x as PanelId)) : [],
+      weather: {
+        hidden: v.weather?.hidden === true,
+        location: typeof v.weather?.location === "string" && v.weather.location.trim() ? v.weather.location.trim().slice(0, 80) : null,
+      },
     };
   } catch {
     return defaultLayout;
@@ -94,6 +100,10 @@ type WorkContext = {
   saveLayout: (layout: Layout) => void;
   department: string;
   announce: (message: string) => void;
+  // Phone presentation (mobile r07) and the Customise request the menu can raise for the overview.
+  phone: boolean | null;
+  customise: boolean;
+  setCustomise: (open: boolean) => void;
 };
 const Context = createContext<WorkContext | null>(null);
 export function useMyWork() {
@@ -105,6 +115,12 @@ export function useMyWork() {
 const wideQuery = "(min-width: 1200px)";
 const subscribeWide = (changed: () => void) => {
   const media = window.matchMedia(wideQuery);
+  media.addEventListener("change", changed);
+  return () => media.removeEventListener("change", changed);
+};
+const phoneQuery = "(max-width: 780px)";
+const subscribePhone = (changed: () => void) => {
+  const media = window.matchMedia(phoneQuery);
   media.addEventListener("change", changed);
   return () => media.removeEventListener("change", changed);
 };
@@ -120,12 +136,16 @@ const viewIcons: Record<WorkViewId, IconName> = {
 export function MyWorkShell({ children }: { children: React.ReactNode }) {
   const identity = useIdentity(),
     shell = useShell(),
-    path = usePathname();
+    path = usePathname(),
+    router = useRouter();
   const [layout, saveLayout] = useLayout(`ppo.work.layout.v1:${identity.workspace_id}:${identity.actor_id}`);
   // Wide screens dock the menu beside the rail and the content reflows; narrower screens
   // overlay it so task titles are never squeezed. The remembered choice applies when docked.
   const docked = useSyncExternalStore(subscribeWide, () => window.matchMedia(wideQuery).matches, () => true);
-  const [overlayOpen, setOverlayOpen] = useState(false);
+  // Unknown until the browser answers, so a phone never paints the desktop overview first.
+  const phone = useSyncExternalStore<boolean | null>(subscribePhone, () => window.matchMedia(phoneQuery).matches, () => null);
+  const [overlayOpen, setOverlayOpen] = useState(false),
+    [customise, setCustomise] = useState(false);
   const open = docked ? layout.menu === "open" : overlayOpen;
   const overlay = useRef<HTMLDialogElement>(null),
     opener = useRef<HTMLElement | null>(null);
@@ -171,6 +191,9 @@ export function MyWorkShell({ children }: { children: React.ReactNode }) {
     saveLayout,
     department,
     announce: setMessage,
+    phone,
+    customise,
+    setCustomise,
   };
 
   const current = workViews.find((v) => v.href === path)?.id ?? "overview";
@@ -222,15 +245,35 @@ export function MyWorkShell({ children }: { children: React.ReactNode }) {
           <p>{views.error ? "Saved views could not be loaded." : "Pin a saved view to keep it here."}</p>
         )}
       </div>
+      {phone && (
+        <div className="mw-menu-pinned">
+          <h2>Overview</h2>
+          <button
+            type="button"
+            className="mw-menu-action"
+            onClick={() => {
+              // Focus returns to the menu trigger first, so closing Customise lands somewhere real.
+              closeOverlay();
+              setCustomise(true);
+              if (path !== "/work") router.push("/work");
+            }}
+          >
+            <Icon name="sliders" />
+            <span>Customise overview</span>
+          </button>
+        </div>
+      )}
     </>
   );
-  const label = open ? "Hide menu" : "Show menu";
+  // A phone has three separate menus (this one, More and Create), so its trigger says which it is.
+  const label = phone ? "My Work menu" : open ? "Hide menu" : "Show menu";
   return (
     <Context.Provider value={value}>
       <section
         id="ppo-my-work"
         data-module-layout="full-bleed"
         data-menu={docked ? (open ? "docked" : "collapsed") : "overlay"}
+        data-view={current}
         aria-label="My Work"
       >
         <HeaderContent slot="menu">
@@ -241,7 +284,7 @@ export function MyWorkShell({ children }: { children: React.ReactNode }) {
             aria-controls="mw-menu"
             onClick={(e) => toggle(e.currentTarget)}
           >
-            <Icon name="panel" />
+            <Icon name={phone ? "menu" : "panel"} />
             <span>{label}</span>
           </button>
         </HeaderContent>
@@ -281,13 +324,6 @@ export function MyWorkShell({ children }: { children: React.ReactNode }) {
           <Icon name={open ? "chevron-left" : "chevron-right"} />
         </button>
         <div className="mw-content" id="mw-content">
-          <div className="mw-phone-bar">
-            <button type="button" className="mw-button" aria-expanded={open} aria-controls="mw-menu" onClick={(e) => toggle(e.currentTarget)}>
-              <Icon name="panel" />
-              <span>{label}</span>
-            </button>
-            <span>{workViews.find((v) => v.id === current)?.label}</span>
-          </div>
           <p className="mw-live" role="status" aria-live="polite">
             {message}
           </p>

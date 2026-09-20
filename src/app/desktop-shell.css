@@ -229,14 +229,37 @@
 
 .header-account .identity-strip .identity-choice { width: calc(100% - 16px); }
 
-/* Phone Sales already exposes Deals and Leads in the bottom navigation. An extra
-   desktop tab row would leave too little room for a focused card after a save. */
+/* Phone Sales reaches Opportunities from the bottom bar, and Leads from My Work's Quick Actions and More.
+   An extra desktop tab row would leave too little room for a focused card after a save. */
 @media (max-width: 780px) { .module-navigation.ppo-sales-navigation { display: none; } }
 /* Header menu slot at narrower widths: the trigger keeps its accessible name but shows its icon only, so the
-   product name and current view stay readable; on phones the workspace shows its own trigger in the page. */
+   product name and current view stay readable. */
 @media (min-width: 781px) and (max-width: 1100px) {
   .ppo-header-menu-slot .ppo-menu-toggle { width: 40px; padding: 0; justify-content: center; }
   .ppo-header-menu-slot .ppo-menu-toggle span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading { max-width: calc(50vw - clamp(110px, 14vw, 210px) - 118px - 52px); }
 }
-@media (max-width: 780px) { .ppo-header-menu-slot { display: none; } }
+/* Phone header of a workspace with its own menu (mobile r07: My Work). The hamburger takes the brand's place:
+   menu, title, search, page guide, account, on one 64px row. The selector carries the header-menu id so it
+   outranks the older three-column grid that the local identity strip switches on (shell drift SD-1), and only
+   for such a workspace: every other page keeps the header it has. */
+@media (max-width: 780px) {
+  .workspace .topbar.ppo-shell-header:has(#header-menu:not(:empty)) { display: flex; align-items: center; gap: 2px; height: 64px; min-height: 64px; padding: 0 8px 0 6px; }
+  .ppo-shell-header:has(#header-menu:not(:empty)) .mobile-brand { display: none; }
+  .ppo-shell-header:has(#header-menu:not(:empty)) .ppo-header-menu-slot { display: flex; }
+  .ppo-header-menu-slot .ppo-menu-toggle { width: 44px; height: 44px; min-height: 44px; margin: 0; padding: 0; justify-content: center; border-color: transparent; background: transparent; }
+  .ppo-header-menu-slot .ppo-menu-toggle svg { width: 24px; height: 24px; }
+  .ppo-header-menu-slot .ppo-menu-toggle span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading { display: block; flex: 1; min-width: 0; margin: 0 0 0 6px; align-self: center; grid-column: auto; grid-row: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading strong { font-size: 20px; line-height: 28px; font-weight: 500; color: #242a37; }
+  .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .ppo-heading-view { font-size: 14px; font-weight: 400; color: #596779; }
+  /* The overview is the workspace's front page, so its header reads "My Work" alone, as in r07. */
+  .workspace:has(#ppo-my-work[data-view=overview]) .ppo-shell-header .ppo-heading-view { display: none; }
+  .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .header-account { grid-column: auto; grid-row: auto; }
+  /* The Sales phone bar, mobile r07: five equal cells, icons only. Each name stays in the link for assistive
+     technology; the current cell keeps the lighter surface and green top stripe of the labelled bar. */
+  .mobile-navigation.ppo-phone-bar-r07 { grid-template-columns: repeat(5, minmax(0,1fr)); padding-left: 0; padding-right: 0; }
+  .mobile-navigation.ppo-phone-bar-r07 > :is(a,button,span) { position: relative; }
+  .mobile-navigation.ppo-phone-bar-r07 > :is(a,button,span) > span { position: absolute; width: 1px; height: 1px; max-width: none; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .mobile-navigation.ppo-phone-bar-r07 .product-icon { width: 25px; height: 25px; }
+}

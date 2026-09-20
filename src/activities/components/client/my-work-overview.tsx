@@ -544,7 +544,14 @@ export function MyWorkOverview() {
 
       {dialogs.element}
       {settings === "filters" && <FiltersDialog criteria={c.criteria} onApply={c.set} onClose={() => setSettings(null)} />}
-      {settings === "customise" && <CustomiseDialog onClose={() => setSettings(null)} />}
+      {(settings === "customise" || work.customise) && (
+        <CustomiseDialog
+          onClose={() => {
+            setSettings(null);
+            work.setCustomise(false);
+          }}
+        />
+      )}
       {settings === "views" && <ViewsDialog target="overview" criteria={c.criteria} activeId={c.viewId} onUse={c.use} onClose={() => setSettings(null)} />}
     </div>
   );

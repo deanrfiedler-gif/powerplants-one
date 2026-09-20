@@ -16,7 +16,9 @@ import type { ActivityHistoryEvent, readActivity } from "../../activities";
 import type { readWorkConflicts, WorkRow } from "../../work-overview";
 import {
   activityTypeLabels,
+  agendaDayLabel,
   clockTime,
+  localDay,
   shortDate,
   timing,
   whenText,
@@ -105,13 +107,13 @@ export function ActivityDrawer({
           {row.can_edit && (
             <button type="button" className="mw-button mw-button-quiet" onClick={onReschedule}>
               <Icon name="calendar" />
-              Reschedule
+              {row.due_needed ? "Set date" : "Reschedule"}
             </button>
           )}
           {row.can_complete && (
             <button type="button" className="mw-button mw-button-primary" onClick={onComplete}>
               <Icon name="check" />
-              Record outcome
+              Complete
             </button>
           )}
         </>
@@ -122,6 +124,7 @@ export function ActivityDrawer({
           <dt>When</dt>
           <dd>
             {whenText(row)}
+            {!row.due_needed && <span className="mw-muted"> · {WORK_TIMEZONE.split("/")[1].replace("_", " ")} time</span>}
             {t.tone === "overdue" && <Tag tone="overdue">Overdue</Tag>}
           </dd>
         </div>
@@ -593,11 +596,14 @@ function RescheduleForm({
 export type ParentPreset = Pick<PlannableParent, "type" | "id" | "version" | "title" | "display_number" | "organisation_name" | "contact_name" | "company_id" | "site_id">;
 export function ActivityFormDialog({
   preset,
+  initialDay,
   now,
   onClose,
   onChanged,
 }: {
   preset?: ParentPreset;
+  // A day carried in from the weekly agenda. It only fills the form; the person can change it.
+  initialDay?: string;
   now: string;
   onClose: () => void;
   onChanged: (message: string) => void;
@@ -610,7 +616,10 @@ export function ActivityFormDialog({
     [type, setType] = useState<ActivityType>("Call"),
     [kind, setKind] = useState("CustomerContact"),
     [owner, setOwner] = useState(me.actor_id),
-    [when, setWhen] = useState<TimingState>(() => timingFrom(null, now)),
+    [when, setWhen] = useState<TimingState>(() =>
+      // A day with no time is all the agenda knows, so that is all that is prefilled.
+      initialDay ? { ...timingFrom(null, now), mode: "date", day: initialDay, at: `${initialDay}T09:00` } : timingFrom(null, now),
+    ),
     [local, setLocal] = useState("");
   const parent: ParentPreset | undefined = preset ?? parents.data?.items.find((p) => p.id === parentId);
   const owners = useResource<Envelope<Option>>(
@@ -711,6 +720,11 @@ export function ActivityFormDialog({
               </select>
             </div>
           </div>
+          {initialDay && (
+            <p className="mw-hint" role="note">
+              The date starts as {agendaDayLabel(initialDay, localDay(now))}, the agenda day you were viewing. Change it below if that is not what you want.
+            </p>
+          )}
           <TimingFields value={when} onChange={setWhen} now={now} />
           <div className="mw-field">
             <label htmlFor="mw-new-owner">Owner</label>

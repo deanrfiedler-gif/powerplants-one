@@ -3,7 +3,7 @@
 // permitted scope for the selected owner and filters, never just the rows shown.
 import { crmAvailable } from "../crm/context";
 import { leadsAvailable } from "../crm/leads/context";
-import { listPlanningGaps } from "../crm/planning-gaps";
+import { listOverdueOpportunities, listPlanningGaps } from "../crm/planning-gaps";
 import { readCalendar } from "../email/service";
 import { database } from "../platform/database";
 import { AppError } from "../platform/errors";
@@ -15,6 +15,8 @@ import { listWorkReviews } from "./work-reviews";
 import {
   activityTypes,
   attentionGroup,
+  dayDifference,
+  isCivilDay,
   localDay,
   localDayBounds,
   WORK_TIMEZONE,
@@ -247,9 +249,11 @@ export async function readWorkOverview(p: Principal, input: unknown = {}) {
       [...args.slice(0, 5), t.end, t.start],
     )
   ).rows;
-  const [waiting, gaps, reviews, meetings, canEdit] = await Promise.all([
+  const [waiting, gaps, overdueOpportunities, reviews, meetings, canEdit] = await Promise.all([
     settle(() => listWorkWaiting(p, { owner_id: scope.owner_id, company_id: scope.company_id, limit: 3 })),
     settle(() => listPlanningGaps(p, { owner_id: scope.owner_id, company_id: scope.company_id, limit: 3 })),
+    // Asked at this read's own instant, so it agrees with the overdue activity count beside it.
+    settle(() => listOverdueOpportunities(p, { owner_id: scope.owner_id, company_id: scope.company_id, now: t.now, limit: 3 })),
     settle(() => listWorkReviews(p, { company_id: scope.company_id, limit: 3 })),
     // Calendar meetings are the reader's own and are separate records, never merged with an
     // activity by title or time. They appear only in the reader's own scope.
@@ -288,7 +292,57 @@ export async function readWorkOverview(p: Principal, input: unknown = {}) {
     },
     waiting,
     gaps,
+    overdue_opportunities: overdueOpportunities,
     reviews,
+  };
+}
+
+// One local day of the weekly agenda. The count covers every permitted active activity anchored
+// on that day (an appointment's start, else its deadline), not just the rows returned. Overdue
+// status is not a filter here: a deadline that passed this morning is still on today's agenda,
+// which is why this count is a different set from the attention counts and is never added to them.
+export async function readWorkAgenda(p: Principal, input: unknown = {}) {
+  const c = database();
+  await requireCapability(c, p, "activity.read");
+  const r = object(input, ["day", "owner", "company_id", "kind"]);
+  const scope = scopeFilters(r, p),
+    t = await clock(c);
+  if (r.day !== undefined && !isCivilDay(r.day)) invalid("day", "Give the day as YYYY-MM-DD.");
+  const day = (r.day as string | undefined) ?? t.day;
+  if (Math.abs(dayDifference(t.day, day)) > 732) invalid("day", "Choose a day within two years of today.");
+  const bounds = localDayBounds(day),
+    sql = await rowSql(c);
+  const args = [p.workspace_id, p.actor_id, scope.owner_id, scope.company_id, scope.kind, bounds.start, bounds.end];
+  const onDay = `a.workspace_id=$1 AND ${sql.visibility}
+    AND ($3::uuid IS NULL OR a.owner_id=$3) AND ($4::uuid IS NULL OR a.company_id=$4) AND ($5::text IS NULL OR a.kind=$5)
+    AND a.due_at IS NOT NULL AND NOT a.due_needed AND coalesce(a.starts_at,a.due_at)>=$6 AND coalesce(a.starts_at,a.due_at)<$7`;
+  const counts = (
+    await c.query<{ active: number; completed: number }>(
+      `SELECT count(*) FILTER (WHERE a.status IN ('Open','InProgress'))::int AS active,
+        count(*) FILTER (WHERE a.status='Completed')::int AS completed
+       FROM ppo.activities a WHERE ${onDay}`,
+      args,
+    )
+  ).rows[0];
+  const rows = (
+    await c.query<Raw>(
+      `SELECT ${sql.select} FROM ppo.activities a ${sql.joins}
+       WHERE ${onDay} AND a.status IN ('Open','InProgress')
+       ORDER BY (a.starts_at IS NULL AND a.due_date_only),coalesce(a.starts_at,a.due_at),a.id LIMIT 51`,
+      args,
+    )
+  ).rows;
+  return {
+    observed_at: t.now,
+    timezone: WORK_TIMEZONE,
+    today: t.day,
+    day,
+    synthetic: true as const,
+    scope,
+    total: counts.active,
+    completed: counts.completed,
+    items: rows.slice(0, 50).map((row) => project(row, p, t.now)),
+    completeness: counts.active > Math.min(rows.length, 50) ? ("BoundedWindow" as const) : ("Complete" as const),
   };
 }
 
@@ -418,6 +472,41 @@ export async function readWorkWaiting(p: Principal, input: unknown = {}) {
     scope,
     waiting: await settle(() =>
       listWorkWaiting(p, { owner_id: scope.owner_id, company_id: scope.company_id, limit: 100 }),
+    ),
+  };
+}
+// The whole "no next activity" queue behind the overview's count and its three-item preview:
+// same source, same rule, same owner scope, larger window. Planning stays the source's command.
+export async function readWorkGaps(p: Principal, input: unknown = {}) {
+  const c = database();
+  await requireCapability(c, p, "activity.read");
+  const scope = scopeFilters(object(input, ["owner", "company_id"]), p),
+    t = await clock(c);
+  return {
+    observed_at: t.now,
+    timezone: WORK_TIMEZONE,
+    day: t.day,
+    synthetic: true as const,
+    scope,
+    gaps: await settle(() =>
+      listPlanningGaps(p, { owner_id: scope.owner_id, company_id: scope.company_id, limit: 50 }),
+    ),
+  };
+}
+// The whole overdue-opportunity queue behind the overview's count: same rule, same owner scope.
+export async function readWorkOverdueOpportunities(p: Principal, input: unknown = {}) {
+  const c = database();
+  await requireCapability(c, p, "activity.read");
+  const scope = scopeFilters(object(input, ["owner", "company_id"]), p),
+    t = await clock(c);
+  return {
+    observed_at: t.now,
+    timezone: WORK_TIMEZONE,
+    day: t.day,
+    synthetic: true as const,
+    scope,
+    opportunities: await settle(() =>
+      listOverdueOpportunities(p, { owner_id: scope.owner_id, company_id: scope.company_id, now: t.now, limit: 50 }),
     ),
   };
 }

@@ -177,6 +177,53 @@ export function nextScheduleId(entries: Timed[], now: string) {
   );
 }
 
+// ───────────────────────── Weekly agenda (mobile r07) ─────────────────────────
+// A day's agenda holds every activity whose anchor (an appointment's start, else its deadline)
+// falls on that local day. It is a different question from "overdue" and "due today": a deadline
+// that passed this morning is on today's agenda and is also overdue, so the two are never summed.
+const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const civil = (day: string) => new Date(day + "T12:00:00Z");
+export const isCivilDay = (value: unknown): value is string =>
+  typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value) && !Number.isNaN(civil(value).getTime()) && civil(value).toISOString().slice(0, 10) === value;
+// The Monday-first week containing a civil day.
+export function weekOf(day: string) {
+  const monday = addDays(day, -((civil(day).getUTCDay() + 6) % 7));
+  return Array.from({ length: 7 }, (_, i) => addDays(monday, i));
+}
+export const dayParts = (day: string) => ({
+  weekday: weekdays[civil(day).getUTCDay()],
+  date: Number(day.slice(8)),
+  month: months[Number(day.slice(5, 7)) - 1],
+});
+// "21 – 27 Sep", or "28 Sep – 4 Oct" when the week crosses a month.
+export function weekLabel(week: string[]) {
+  const a = dayParts(week[0]),
+    b = dayParts(week[6]);
+  return a.month === b.month ? `${a.date} – ${b.date} ${b.month}` : `${a.date} ${a.month} – ${b.date} ${b.month}`;
+}
+export function agendaDayLabel(day: string, today: string) {
+  const p = dayParts(day);
+  return day === today ? "Today" : `${p.weekday} ${p.date} ${p.month}`;
+}
+// The agenda's narrow time column uses the 24-hour clock of mockup r07 ("9:30", "14:30").
+const clock24 = (iso: string, zone = WORK_TIMEZONE) => {
+  const [hour, minute] = localDateTime(iso, zone).slice(11).split(":");
+  return `${Number(hour)}:${minute}`;
+};
+export type AgendaSlot = { kind: "appointment" | "deadline" | "anytime"; label: string; spoken: string };
+// "By" marks a deadline, a bare time a booked appointment, and a date-only task has no time at
+// all: it is never given an invented midnight.
+export function agendaSlot(a: Pick<Timed, "due_at" | "due_date_only" | "starts_at">, zone = WORK_TIMEZONE): AgendaSlot {
+  if (a.starts_at) return { kind: "appointment", label: clock24(a.starts_at, zone), spoken: `Starts at ${clock(a.starts_at, zone)}` };
+  if (a.due_date_only || !a.due_at) return { kind: "anytime", label: "Any time", spoken: "Any time on this day" };
+  return { kind: "deadline", label: `By ${clock24(a.due_at, zone)}`, spoken: `Due by ${clock(a.due_at, zone)}` };
+}
+// Timed entries in time order, then the day's untimed tasks; the identifier keeps ties stable.
+export function compareAgenda(a: Timed, b: Timed) {
+  const untimed = (x: Timed) => (!x.starts_at && x.due_date_only ? 1 : 0);
+  return untimed(a) - untimed(b) || compareDue(a, b);
+}
+
 export function greeting(now: string, zone = WORK_TIMEZONE) {
   const hour = Number(localDateTime(now, zone).slice(11, 13));
   return hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";

@@ -23,7 +23,7 @@ test("hosted header, populated board, filtering and independent card targets", a
   await expect(
     page.getByRole("button", { name:"Filters and sort", exact:true }),
   ).toBeVisible();
-  await page.getByRole("button", { name: info.project.name === "desktop" ? "More" : "Menu", exact: true }).click();
+  await page.getByRole("button", { name: "More", exact: true }).click();
   await expect(page.getByRole("searchbox", { name: "Find a menu item" })).toBeVisible();
   await page.getByRole("button", { name: info.project.name === "desktop" ? "Close More menu" : "Close menu", exact: true }).click();
   const geometry = await page.evaluate(() => {
