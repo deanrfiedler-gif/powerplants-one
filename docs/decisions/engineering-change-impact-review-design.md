@@ -6,7 +6,7 @@ owner: Dean Fiedler
 scope_id: EN-07
 principal_requirement: ENG-06
 status: Implemented on a local branch for owner review; visual acceptance, business acceptance and the accepted UI baseline register remain separate
-source_commit: c8261e9 (EN-06 branch tip this work is stacked on, draft PR #265; main was 1a69e93 at the planning checkpoint)
+source_commit: 49c7bcc (EN-06 branch tip this work is stacked on, draft PR #265; main was 1a69e93 at the planning checkpoint)
 ---
 
 # EN-07 Engineering Change-Impact Review: application integration
@@ -36,7 +36,7 @@ The plan, prompt and mockup are not committed. This is a public repository and t
 
 | # | Decision | Evidence and effect |
 |---|---|---|
-| D1 | Stack on the EN-06 branch, in an isolated worktree | EN-07 needs migration 0029, EN-06's retained sources and the menu primitive EN-06 extracted. The shared checkout was in use, so the work was done in `tmp/en07-change-impact` and rebased twice onto EN-06's moving tip (last `c8261e9`). It must merge after EN-06 |
+| D1 | Stack on the EN-06 branch, in an isolated worktree | EN-07 needs migration 0029, EN-06's retained sources and the menu primitive EN-06 extracted. The shared checkout was in use, so the work was done in `tmp/en07-change-impact` and rebased three times onto EN-06's moving tip (last `49c7bcc`). It must merge after EN-06 |
 | D2 | Migration **0030**, additive | 0029 was already taken. Sixteen tables (`ppo.engineering_changes`, fifteen `ppo.change_*`), nine guard functions, five CHECK constraints widened by the 0020 idiom, typed identity dispatch extended in place. Because it alters `ppo.business_identities`, it settles the deferred `identity_target` checks first and restores deferral straight after, as AGENTS.md has required since 0029 met that failure in CI |
 | D3 | No new reference type | PPO-STD-001 catalogues none for an engineering change, so none is invented. References are package-local `SYN-EN07-nnn` aliases, constrained to that form in the schema, and consume no SYN-PPO counter. A real type is an STD-001 amendment for Dean |
 | D4 | Sources are EN-06's retained upstream snapshots | EN-07 reads `ppo.material_sources` and never copies, publishes, edits or withdraws one. Three kinds are added for it (TestProcedure, TestEvidence, InstalledConfiguration); no material line can name them. One line of EN-06's parser changed to accept them |
@@ -88,8 +88,8 @@ The plan, prompt and mockup are not committed. This is a public repository and t
 | `tests/browser/engineering-changes.spec.ts` on a task-owned server (port 3107) | 3 desktop and 1 phone journeys pass. Includes computed r22 colours, flush geometry, dock and overlay, menu geometry compared with `/work` itself, lost-reply recovery and cost withholding |
 | `tests/http/engineering-changes.test.ts` on the same server | Passes, on two consecutive runs after one flaky assertion of mine was corrected (a bare `1250` can occur inside a content hash) |
 | EN-06's own browser suite on this branch | 5 pass (4 desktop, 1 phone): the shared style and header changes regressed nothing there |
-| The two traps EN-06's CI found (AGENTS.md) | Met before CI. With a real pending identity event, 0030 without the settle pair fails with `cannot ALTER TABLE "business_identities" because it has pending trigger events`; with it, it runs and deferral is restored (rolled back). The access-review model check and all 40 native browser groups pass at 70 capabilities. Python wrote CRLF into the two generated files on Windows; they are committed as the LF bytes CI regenerates |
-| Re-run after the second rebase | Whole-project `tsc` and tracked-tree `eslint` clean; unit 152 of 156 (the four known Windows path failures, which also fail on `main`); HTTP passes; 9 of 9 applicable browser journeys pass (EN-07 four, EN-06 five) |
+| The three traps EN-06's CI found (AGENTS.md) | Met before CI. Seed 30 adds 21 grants, so the exact added-grant set that the two Estimating upgrade proofs expect now covers seeds 29 and 30; checked read-only against the development database it accepts the real 52 additions in both row shapes and refuses an extra grant, a changed original, an unapplied seed 30 and a change duty given to an author. With a real pending identity event, 0030 without the settle pair fails with `cannot ALTER TABLE "business_identities" because it has pending trigger events`; with it, it runs and deferral is restored (rolled back). The access-review model check and all 40 native browser groups pass at 70 capabilities. Python wrote CRLF into the two generated files on Windows; they are committed as the LF bytes CI regenerates |
+| Re-run after the later rebases | Whole-project `tsc` and tracked-tree `eslint` clean; unit 152 of 156 (the four known Windows path failures, which also fail on `main`); HTTP passes; 9 of 9 applicable browser journeys pass (EN-07 four, EN-06 five) |
 | Restart | The same digest of records, versions, 41 events and recorded check time before the stop, after the restart and after a scenario rerun |
 | Captures inspected | 1920, 1672, 1440, 1366, 1280, 960 (200% of 1920) and 390 wide; see the evidence folder |
 
