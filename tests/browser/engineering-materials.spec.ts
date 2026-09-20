@@ -1,5 +1,5 @@
 import { test, expect, request as playwrightRequest, type APIRequestContext, type Page } from "@playwright/test";
-import { MATERIALS, scenarioIds, seedMaterialsScenario, type Call, type ScenarioIds, type SignIn } from "../helpers/engineering-materials";
+import { MATERIALS, scenarioIds, seedMaterialsScenario, type Call, type SignIn } from "../helpers/engineering-materials";
 
 // EN-06 Released Materials & Substitutions. Every journey builds a package of its own through the ordinary API, as the
 // fictional people who would do each step, so the persistent development database never makes a rerun fail. The origin

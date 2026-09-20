@@ -406,6 +406,8 @@ export async function releaseCommand(p: Principal, packageId: string, value: unk
     }
     if (command.action === "submit") {
       if (!["Draft"].includes(r.review_state) || r.issue_state !== "Prepared") throw refuse("NotSubmittable", "Only a prepared draft set is submitted. A returned set is corrected through a successor.", 409);
+      // Prepare refused a line already under review; submit asks again, because two drafts may have been prepared side by side.
+      if (lines.some((l) => inside.has(l.row.id) && l.locked)) throw refuse("LineLocked", "A line of this set is already inside another set under review. One line cannot sit in two live decisions; cancel one of them.", 409);
       const stops = await found();
       if (stops.length) throw blocked("ReleaseBlocked", stops);
       await set("review_state='Submitted',submitted_at=clock_timestamp()", []);

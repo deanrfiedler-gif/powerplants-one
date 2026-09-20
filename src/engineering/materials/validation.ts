@@ -8,6 +8,14 @@ import {
 // Every parser lists the keys it accepts, so a command carrying an approval flag, a hash, a role label
 // or a source purpose it was never asked for is refused before any rule runs.
 const base = (p: Record<string, unknown>) => common(p);
+// A parser that serves several actions first learns the action, then accepts that action's fields and no others:
+// a field that belongs to a sibling action is refused, not quietly ignored.
+function actionOf<T extends string>(value: unknown, actions: Record<T, readonly string[]>): { raw: Record<string, unknown>; action: T } {
+  const names = Object.keys(actions) as T[], all = [...commonKeys, "action", ...new Set(names.flatMap((n) => actions[n]))];
+  const raw = object(value, all), chosen = choice(raw.action, "action", names), allowed = [...commonKeys, "action", ...actions[chosen]];
+  for (const key of Object.keys(raw)) if (!allowed.includes(key)) invalid(key, `This field is not part of the "${chosen}" action.`);
+  return { raw, action: chosen };
+}
 function optionalDate(value: unknown, field: string) {
   if (value === null || value === undefined) return null;
   const date = dateOnly(value, field);
@@ -34,16 +42,14 @@ function list<T>(value: unknown, field: string, max: number, read: (item: unknow
 }
 
 export function parseSetCommand(value: unknown) {
-  const raw = object(value, [...commonKeys, "action", "id", "set_code", "revision", "title", "set_id", "expected_version"]);
-  const action = choice(raw.action, "action", ["create", "revise"] as const);
+  const { raw, action } = actionOf(value, { create: ["id", "set_code", "revision", "title"], revise: ["set_id", "expected_version"] });
   if (action === "create")
     return { ...base(raw), action, id: uuid(raw.id, "id"), set_code: label(raw.set_code, "set_code", 2).toUpperCase(), revision: wholeNumber(raw.revision ?? 1, "revision", 1, 999), title: label(raw.title, "title", 200) };
   return { ...base(raw), action, set_id: uuid(raw.set_id, "set_id"), expected_version: version(raw.expected_version) };
 }
 
 export function parseSourceCommand(value: unknown) {
-  const raw = object(value, [...commonKeys, "action", "id", "kind", "reference", "title", "revision", "file_version", "permitted_purpose", "content", "restricted", "supersedes_id", "source_id"]);
-  const action = choice(raw.action, "action", ["publish", "withdraw"] as const);
+  const { raw, action } = actionOf(value, { publish: ["id", "kind", "reference", "title", "revision", "file_version", "permitted_purpose", "content", "restricted", "supersedes_id"], withdraw: ["source_id"] });
   if (action === "withdraw") return { ...base(raw), action, source_id: uuid(raw.source_id, "source_id") };
   const revision = label(raw.revision, "revision", 12);
   if (!/^[A-Za-z0-9.]{1,12}$/.test(revision)) invalid("revision", "Use letters, digits and full stops only.");
@@ -144,10 +150,12 @@ function criteria(value: unknown): Criterion[] {
   }, 1);
 }
 export function parseSubstitutionCommand(value: unknown) {
-  const raw = object(value, [...commonKeys, "action", "id", "substitution_id", "expected_version", "line_id", "candidate_code", "candidate_description",
-    "candidate_manufacturer", "candidate_revision", "candidate_item_key", "proposal_reason", "scope_quantity", "criteria", "impacts", "commercial_state",
-    "commercial_note", "commercial_owner_id", "commercial_source_id", "result", "rationale", "owner_id", "due"]);
-  const action = choice(raw.action, "action", ["propose", "update", "submit", "decide", "successor", "adopt", "commercial"] as const);
+  const contentKeys = ["candidate_code", "candidate_description", "candidate_manufacturer", "candidate_revision", "candidate_item_key", "proposal_reason", "scope_quantity", "criteria", "impacts", "commercial_state", "commercial_owner_id"],
+    targetKeys = ["substitution_id", "expected_version"];
+  const { raw, action } = actionOf(value, {
+    propose: ["id", "line_id", ...contentKeys], update: [...targetKeys, ...contentKeys], submit: targetKeys, decide: [...targetKeys, "result", "rationale", "owner_id", "due"],
+    successor: ["id", ...targetKeys], adopt: targetKeys, commercial: [...targetKeys, "commercial_state", "commercial_note", "commercial_source_id"],
+  });
   const target = () => ({ substitution_id: uuid(raw.substitution_id, "substitution_id"), expected_version: version(raw.expected_version) });
   const content = () => ({
     candidate_code: label(raw.candidate_code, "candidate_code", 80), candidate_description: label(raw.candidate_description, "candidate_description", 200),
@@ -184,8 +192,8 @@ export function selection(value: unknown): Selection[] {
   }, 1);
 }
 export function parseReleaseCommand(value: unknown) {
-  const raw = object(value, [...commonKeys, "action", "id", "set_id", "purpose", "audience", "selection", "predecessor_id", "release_id", "expected_version", "result", "rationale", "owner_id", "due"]);
-  const action = choice(raw.action, "action", ["prepare", "submit", "review", "authorise", "issue", "cancel", "withdraw"] as const);
+  const releaseTarget = ["release_id", "expected_version"];
+  const { raw, action } = actionOf(value, { prepare: ["id", "set_id", "purpose", "audience", "selection", "predecessor_id"], submit: releaseTarget, review: [...releaseTarget, "result", "rationale", "owner_id", "due"], authorise: releaseTarget, issue: releaseTarget, cancel: releaseTarget, withdraw: releaseTarget });
   if (action === "prepare")
     return { ...base(raw), action, id: uuid(raw.id, "id"), set_id: uuid(raw.set_id, "set_id"), purpose: choice(raw.purpose, "purpose", releasePurposes), audience: label(raw.audience, "audience", 200), selection: selection(raw.selection), predecessor_id: optionalId(raw.predecessor_id, "predecessor_id") };
   const target = { release_id: uuid(raw.release_id, "release_id"), expected_version: version(raw.expected_version) };
@@ -199,8 +207,8 @@ export function parseReleaseCommand(value: unknown) {
 }
 
 export function parseHandoverCommand(value: unknown) {
-  const raw = object(value, [...commonKeys, "action", "id", "release_id", "requested_action", "demand_basis", "demand_source_id", "receiver_id", "required_by", "predecessor_id", "handover_id", "expected_version", "result", "reasons", "owner_id", "due"]);
-  const action = choice(raw.action, "action", ["prepare", "send", "decide"] as const);
+  const handoverTarget = ["handover_id", "expected_version"];
+  const { raw, action } = actionOf(value, { prepare: ["id", "release_id", "requested_action", "demand_basis", "demand_source_id", "receiver_id", "required_by", "predecessor_id"], send: handoverTarget, decide: [...handoverTarget, "result", "reasons", "owner_id", "due"] });
   if (action === "prepare") {
     const demand_basis = choice(raw.demand_basis, "demand_basis", demandBases),
       demand_source_id = optionalId(raw.demand_source_id, "demand_source_id"),
