@@ -228,7 +228,7 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
     .fill("12345.67");
   await dialog
     .getByLabel("Expected close date", { exact: true })
-    .fill("2026-11-30");
+    .fill("2031-12-01");
   await dialog.getByRole("button", { name: "Save deal", exact: true }).click();
   await expect(dialog).not.toBeVisible();
   await page.reload();

@@ -59,8 +59,8 @@ test("engineering requests and coordination persist with exact history, idempote
   const saved = await readEngineering(p, input.id);
   assert.equal(saved.package.version, 3);
   assert.equal(saved.package.state, "In design");
-  assert.equal(saved.package.required_date, "2028-03-31");
-  assert.equal(saved.package.action_due, "2028-03-21");
+  assert.equal(saved.package.required_date, "2033-04-01");
+  assert.equal(saved.package.action_due, "2033-03-22");
   assert.equal(saved.events.length, 3);
   assert.equal(saved.events[0].note, note.note);
   assert.ok(

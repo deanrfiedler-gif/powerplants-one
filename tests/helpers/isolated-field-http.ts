@@ -83,7 +83,7 @@ export async function prepareIsolatedFieldAppointment(
         reason: "SYN reviewed external visual scope; no shutdown or intervention.",
         evidence,
         source_as_at: "2026-09-05T00:00:00Z",
-        valid_until: "2027-01-01T00:00:00Z",
+        valid_until: "2032-01-02T00:00:00Z",
       },
     });
   }

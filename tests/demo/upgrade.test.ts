@@ -101,7 +101,7 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   assert.deepEqual(reviewerGrants.map(g=>g.capability),[...packReviewerCapabilities].sort());
   assert.ok(reviewerGrants.every(g=>g.scope_type==="Company"&&g.scope_id===demoCompany));
   const schedule = await readSchedule(actor, {
-    from: "2026-09-20T14:00:00Z", to: "2026-09-27T14:00:00Z", timezone: "Australia/Brisbane",
+    from: "2031-09-21T14:00:00Z", to: "2031-09-28T14:00:00Z", timezone: "Australia/Brisbane",
   });
   assert.ok(schedule.items.length > 0);
   assert.ok(schedule.resources.length > 0);

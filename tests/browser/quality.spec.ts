@@ -79,7 +79,7 @@ test("P11 PT-27/29 shared validation links the actual control and retains entere
 
 test("P11 PT-01/29 scoped recovery UI preserves originals and retries one uncertain disposition", async ({ page }, info) => {
   await call(page, "local-session", { profile: "coordinator" });
-  const setup = await prepareFieldAppointment((path, body) => call(page, path, body), info.project.name.startsWith("desktop") ? "2026-10-22" : "2026-10-23");
+  const setup = await prepareFieldAppointment((path, body) => call(page, path, body), info.project.name.startsWith("desktop") ? "2031-10-23" : "2031-10-24");
   for (const profile of ["assigned-technician", "second-technician"]) {
     const p = await call(page, "local-session", { profile });
     const recipient = setup.pack.readiness.recipients.find((r: { user_id: string }) => r.user_id === p.actor_id);

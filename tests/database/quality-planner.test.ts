@@ -13,8 +13,8 @@ process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
 beforeEach(reset);
 after(closeDatabase);
 const period = {
-  from: "2026-09-20T14:00:00Z",
-  to: "2026-09-27T14:00:00Z",
+  from: "2031-09-21T14:00:00Z",
+  to: "2031-09-28T14:00:00Z",
   timezone: "Australia/Brisbane",
 };
 const principal = async (profile = "coordinator") =>
