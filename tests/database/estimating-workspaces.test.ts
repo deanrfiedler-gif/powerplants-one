@@ -706,7 +706,7 @@ test("E2 migration formalises exact E1 identities and preserves every accepted c
     upgraded.filter((_, i) => i !== grantsAt),
     originals.filter((_, i) => i !== grantsAt),
   );
-  // Seeds 29 (EN-06) and 30 (EN-07) add their fictional profiles' grants; every
+  // Seeds 29 (EN-06), 30 (EN-07) and 31 (EN-08) add their fictional profiles' grants; every
   // earlier grant is unchanged and nothing else is added.
   assertOnlyEngineeringSeedGrantsAdded(
     originals[grantsAt].map((r) => r.v),

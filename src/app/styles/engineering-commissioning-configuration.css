@@ -1,1 +1,68 @@
 /* EN-08 view-specific rules (cm- prefix, scoped to #ppo-commissioning). The shared building blocks live in engineering-commissioning.css. */
+
+/* Installed configuration & redlines. The four tables are flush to their panel; a panel narrower than its table scrolls
+   that one region, and rows grow to their content rather than text being condensed to fit. */
+#ppo-commissioning .cm-panel :is(.cm-compare,.cm-redlines,.cm-assoc,.cm-backup-facts,.cm-record-table) tbody :is(td,th){vertical-align:top}
+#ppo-commissioning .cm-panel .cm-compare{min-width:1080px}
+#ppo-commissioning .cm-panel .cm-redlines{min-width:1680px}
+#ppo-commissioning .cm-panel .cm-assoc{min-width:1480px}
+#ppo-commissioning .cm-panel .cm-backup-facts{min-width:720px}
+#ppo-commissioning .cm-panel .cm-record-table{min-width:960px}
+#ppo-commissioning .cm-panel .cm-record-releases{min-width:1480px}
+#ppo-commissioning .cm-col-wide{min-width:260px}
+#ppo-commissioning .cm-table td .em-actions{flex-wrap:nowrap}
+#ppo-commissioning .cm-table td>.cm-tag+.em-cell-sub{margin-top:6px}
+#ppo-commissioning .cm-backup-facts tbody th{padding:12px 16px;border-bottom:1px solid #e9ecf1;background:#fff;color:var(--ink);font-weight:500;text-align:left}
+#ppo-commissioning .cm-backup-facts tbody tr:last-child th{border-bottom:0}
+/* A superseded association stays on the record in quieter text. Its state is said in words by its tag, never by a row fill. */
+#ppo-commissioning .cm-assoc tbody tr[data-superseded] :is(td,.em-row-title){color:#667181}
+#ppo-commissioning .cm-plain-list{display:flex;flex-direction:column;gap:2px}
+#ppo-commissioning .cm-submission{display:block}
+#ppo-commissioning .cm-submission+.cm-submission{margin-top:8px}
+
+/* Panel header: title and facts, the panel's actions, then the reason for every action that cannot be taken. */
+#ppo-commissioning .cm-panel>header>div:first-child{flex:1 1 420px;min-width:0}
+#ppo-commissioning .cm-config-facts{margin-top:4px}
+#ppo-commissioning .cm-config-facts strong{color:var(--ink);font-weight:500}
+#ppo-commissioning .cm-config-reasons{flex:1 1 100%;display:flex;flex-direction:column;gap:4px}
+#ppo-commissioning .cm-config-reasons:empty{display:none}
+#ppo-commissioning .cm-panel>header .mw-button-primary{background:#242a37;border-color:#242a37;color:#fff}
+#ppo-commissioning .cm-panel>header .mw-button-primary:disabled{background:#eef0f3;border-color:#dce2e9;color:#667181}
+#ppo-commissioning .cm-panel>.em-table-scroll+.cm-panel-body{border-top:1px solid #e1e5eb}
+#ppo-commissioning .cm-panel>.cm-panel-body+.em-table-scroll{border-top:1px solid #e9ecf1}
+#ppo-commissioning .cm-backup>strong{font-weight:500}
+#ppo-commissioning .cm-snapshots{display:flex;flex-direction:column;gap:6px}
+#ppo-commissioning .cm-snapshots>li{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;font-size:14px;line-height:20px}
+
+/* Drawers: a plain summary of the row being judged, and the list of checks an association rests on. */
+#ppo-commissioning .cm-section-plain{display:flex;flex-direction:column;gap:6px;padding:12px 14px;border:1px solid #e1e5eb;border-radius:6px;background:#f7f8fa}
+#ppo-commissioning .cm-stack>.mw-choice{align-self:flex-start;white-space:normal}
+#ppo-commissioning .cm-stack>.mw-field,#ppo-commissioning .cm-inline>.mw-field{margin-bottom:0}
+#ppo-commissioning .cm-checklist{display:flex;flex-direction:column;gap:6px}
+#ppo-commissioning .cm-checklist small{color:#667181;font-size:12px;line-height:16px}
+#ppo-commissioning .cm-checklist>div{display:flex;flex-direction:column;gap:6px;max-height:232px;overflow:auto;padding:2px}
+#ppo-commissioning .cm-checklist .mw-choice{white-space:normal}
+
+/* Full record: one scrolling, read-only page of anchored sections. A deep link scrolls to its section and focuses it. */
+#ppo-commissioning .cm-record-bare{flex:1;min-width:0;padding:24px}
+#ppo-commissioning .cm-record-nav{display:flex;flex-wrap:wrap;align-items:center;gap:6px 20px;font-size:14px;line-height:20px}
+#ppo-commissioning .cm-record-nav>span{color:#596779}
+#ppo-commissioning .cm-record-nav a{display:inline-flex;align-items:center;min-height:24px;text-decoration:underline;text-underline-offset:3px}
+#ppo-commissioning .cm-record-section{display:flex;flex-direction:column;gap:12px;padding-top:20px;border-top:1px solid #e1e5eb;scroll-margin-top:8px}
+#ppo-commissioning .cm-record-section:focus{outline:2px solid #365d8b;outline-offset:6px}
+#ppo-commissioning .cm-record-section>header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 24px}
+#ppo-commissioning .cm-record-section>header h2{margin:0;font-size:16px;line-height:24px;font-weight:700}
+#ppo-commissioning .cm-record-section>header a{font-size:14px;line-height:20px;text-decoration:underline;text-underline-offset:3px}
+#ppo-commissioning .cm-record .cm-gates>li>span:not(.cm-tag){align-self:center}
+
+@media (max-width:780px){
+ /* Rows reflow to labelled blocks, so no table keeps a desktop width on a phone. */
+ #ppo-commissioning .cm-panel :is(.cm-compare,.cm-redlines,.cm-assoc,.cm-backup-facts,.cm-record-table,.cm-record-releases){min-width:0}
+ #ppo-commissioning .cm-col-wide{min-width:0}
+ #ppo-commissioning .cm-backup-facts tbody th{display:block;width:100%;padding:3px 0;border:0;background:transparent}
+ #ppo-commissioning .cm-table td .em-actions{flex-wrap:wrap}
+ #ppo-commissioning .cm-table td .em-actions .mw-button{min-height:44px}
+ #ppo-commissioning .cm-record-nav a{min-height:44px}
+ #ppo-commissioning .cm-record-section>header a{display:inline-flex;align-items:center;min-height:44px}
+ #ppo-commissioning .cm-record-bare{padding:16px}
+}

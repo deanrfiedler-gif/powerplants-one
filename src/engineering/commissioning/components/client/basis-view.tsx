@@ -71,7 +71,7 @@ function ScopePanel({ d, options, zone, reload }: Shared) {
           {s.state === "Frozen" && !d.record.archived_at && <button type="button" className="mw-button" disabled={!!d.refusals.edit || act.command.busy} onClick={() => void rescope()}>{act.command.busy ? "Saving…" : "Create successor scope"}</button>}
         </div>
       </header>
-      {s.statement && <div className="cm-panel-body"><p className="cm-statement">{s.statement}</p></div>}
+      {s.statement && <div className="cm-panel-body"><p className="cm-test-statement">{s.statement}</p></div>}
       <div className="em-table-scroll">
         <table className="em-table cm-table">
           <caption className="mw-sr">Systems, areas and assets of scope {pad(s.number)}</caption>
@@ -79,7 +79,7 @@ function ScopePanel({ d, options, zone, reload }: Shared) {
           <tbody>
             {s.items.map((i) => (
               <tr key={i.key}>
-                <td><span className="em-row-title">{i.title}</span><span className="em-cell-sub">{i.reference}</span></td>
+                <td><span className="cm-test-title">{i.title}</span><span className="em-cell-sub">{i.reference}</span></td>
                 <td data-label="Kind">{i.kind}</td>
                 <td data-label="Installed at">{i.installed_location ?? "Unknown"}</td>
                 <td data-label="Areas served">{i.served_areas.length ? i.served_areas.join(", ") : "None recorded"}</td>
@@ -92,8 +92,8 @@ function ScopePanel({ d, options, zone, reload }: Shared) {
         </table>
         {!s.items.length && <div className="em-empty"><strong>Nothing is in this scope yet</strong><p>{s.editable ? "Add the systems, areas and assets this package commissions." : "No system, area or asset has been declared."}</p></div>}
       </div>
-      <div className="cm-panel-body cm-after-table">
-        <h4 className="cm-subhead">Shared interfaces</h4>
+      <div className="cm-panel-body cm-test-after-table">
+        <h4 className="cm-test-subhead">Shared interfaces</h4>
         {s.interfaces.map((f) => (
           <div className="cm-row" key={f.key}>
             <span>{f.label}<small>{f.items.map(title).join(" · ")}</small></span>
@@ -132,9 +132,9 @@ function ScopeEditor({ d, options, command, onClose }: { d: Detail; options: Opt
       footer={<><button type="button" className="mw-button" onClick={onClose} disabled={command.busy}>Cancel</button><button type="button" className="mw-button mw-button-primary" onClick={() => void save()} disabled={command.busy}>{command.busy ? "Saving…" : "Save scope"}</button></>}>
       <div className="cm-stack">
         <Field label="Scope statement" hint="What this package commissions, in words" error={fieldError(command.error, "statement")}><textarea data-autofocus value={statement} maxLength={2000} onChange={(e) => { setDirty(true); setStatement(e.target.value); }} /></Field>
-        <h3 className="cm-subhead">Systems, areas and assets</h3>
+        <h3 className="cm-test-subhead">Systems, areas and assets</h3>
         {items.map((i, n) => (
-          <fieldset className="cm-edit-block" key={n}>
+          <fieldset className="cm-test-block" key={n}>
             <legend>Item {n + 1}{i.title && `: ${i.title}`}</legend>
             {rowError(command, "items", n) && <p className="mw-inline-error" role="alert">{rowError(command, "items", n)}</p>}
             <div className="cm-inline">
@@ -158,16 +158,16 @@ function ScopeEditor({ d, options, command, onClose }: { d: Detail; options: Opt
               {i.disposition === "Excluded" && <Field label="Reason for excluding it"><input value={i.exclusion_reason} maxLength={600} onChange={(e) => item(n, { exclusion_reason: e.target.value })} /></Field>}
             </div>
             <div className="em-actions">
-              <label className="cm-check"><input type="checkbox" checked={i.critical} onChange={(e) => item(n, { critical: e.target.checked })} /><span>Critical: its identity must be verified before release</span></label>
+              <label className="cm-test-check"><input type="checkbox" checked={i.critical} onChange={(e) => item(n, { critical: e.target.checked })} /><span>Critical: its identity must be verified before release</span></label>
               <button type="button" className="mw-button mw-button-quiet" onClick={() => { setDirty(true); setItems((all) => all.filter((_, x) => x !== n)); }}>Remove item</button>
             </div>
           </fieldset>
         ))}
         <div className="em-actions"><button type="button" className="mw-button" onClick={() => { setDirty(true); setItems((all) => [...all, { key: "", kind: "System", asset_id: "", reference: "", title: "", installed_location: "", served_areas: "", disposition: "Included", exclusion_reason: "", critical: false }]); }}>Add item</button></div>
-        <h3 className="cm-subhead">Shared interfaces</h3>
+        <h3 className="cm-test-subhead">Shared interfaces</h3>
         <p className="cm-note">An interface shared by two or more items is assessed before any of them is released alone.</p>
         {faces.map((f, n) => (
-          <fieldset className="cm-edit-block" key={n}>
+          <fieldset className="cm-test-block" key={n}>
             <legend>Interface {n + 1}{f.label && `: ${f.label}`}</legend>
             {rowError(command, "interfaces", n) && <p className="mw-inline-error" role="alert">{rowError(command, "interfaces", n)}</p>}
             <div className="cm-inline">
@@ -175,8 +175,8 @@ function ScopeEditor({ d, options, command, onClose }: { d: Detail; options: Opt
               <Field label="Key"><input value={f.key} maxLength={80} onChange={(e) => face(n, { key: e.target.value })} /></Field>
               <Field label="Assessment"><select value={f.assessment} onChange={(e) => face(n, { assessment: e.target.value as FaceForm["assessment"] })}><option>Unassessed</option><option>Independent</option><option>Blocking</option></select></Field>
             </div>
-            <fieldset className="cm-checks"><legend>Items it joins (two or more)</legend>
-              {items.filter((i) => i.key.trim()).map((i) => <label className="cm-check" key={i.key}><input type="checkbox" checked={f.items.includes(i.key.trim())} onChange={(e) => face(n, { items: e.target.checked ? [...f.items, i.key.trim()] : f.items.filter((k) => k !== i.key.trim()) })} /><span>{i.title || i.key}</span></label>)}
+            <fieldset className="cm-test-checks"><legend>Items it joins (two or more)</legend>
+              {items.filter((i) => i.key.trim()).map((i) => <label className="cm-test-check" key={i.key}><input type="checkbox" checked={f.items.includes(i.key.trim())} onChange={(e) => face(n, { items: e.target.checked ? [...f.items, i.key.trim()] : f.items.filter((k) => k !== i.key.trim()) })} /><span>{i.title || i.key}</span></label>)}
             </fieldset>
             <Field label="Reasoning" hint="Required once the interface is assessed"><input value={f.note} maxLength={600} onChange={(e) => face(n, { note: e.target.value })} /></Field>
             <div className="em-actions"><button type="button" className="mw-button mw-button-quiet" onClick={() => { setDirty(true); setFaces((all) => all.filter((_, x) => x !== n)); }}>Remove interface</button></div>
@@ -216,7 +216,7 @@ function BasisPanel({ d, b, options, zone, reload }: Shared & { b: Basis | null 
               <div className="cm-row"><span>Approval purpose</span><span>{text(b.approval_purpose)}<small>Approval for test is not approval for issue</small></span></div>
               <div className="cm-row"><span>Row version</span><span>{b.identifiers.row_version}<small>Counts saves of this record; it is not a revision</small></span></div>
               <div className="cm-row"><span>Procedure revision</span><span>{b.identifiers.procedure_revision}</span></div>
-              <div className="cm-row"><span>Engineering issue revisions</span><span>{b.identifiers.issue_revisions.length ? b.identifiers.issue_revisions.map((r) => <span key={r} className="cm-line">{r}</span>) : "No source bound"}</span></div>
+              <div className="cm-row"><span>Engineering issue revisions</span><span>{b.identifiers.issue_revisions.length ? b.identifiers.issue_revisions.map((r) => <span key={r} className="cm-test-line">{r}</span>) : "No source bound"}</span></div>
               <div className="cm-row"><span>Prepared by</span><span>{b.created_by_name}</span></div>
               <div className="cm-row"><span>Submitted</span><span>{b.submitted_at ? <>{b.submitted_by_name}<small>{siteTime(b.submitted_at, zone)}</small></> : "Not submitted"}</span></div>
               {b.decided_at && <div className="cm-row"><span>{b.state === "Returned" ? "Returned by" : "Decided by"}</span><span>{b.decided_by_name}<small>{siteTime(b.decided_at, zone)} · policy version {b.policy_version ?? "unknown"} · independence {b.independence_required ? "required" : "not required"}</small></span></div>}
@@ -229,14 +229,14 @@ function BasisPanel({ d, b, options, zone, reload }: Shared & { b: Basis | null 
         )}
       </div>
       {b && (
-        <div className="em-table-scroll cm-after-body">
+        <div className="em-table-scroll cm-test-after-body">
           <table className="em-table cm-table">
             <caption className="mw-sr">Sources bound by basis {pad(b.number)}, as they were observed when it was saved</caption>
             <thead><tr>{["Role", "Source", "Revision", "File version", "Content hash", "Observed"].map((h) => <th key={h} scope="col"><span>{h}</span></th>)}</tr></thead>
             <tbody>
               {b.sources.map((s) => (
                 <tr key={s.source_id}>
-                  <td><span className="em-row-title">{role(s.source_id)}</span><span className="em-cell-sub">{text(s.kind)}</span></td>
+                  <td><span className="cm-test-title">{role(s.source_id)}</span><span className="em-cell-sub">{text(s.kind)}</span></td>
                   <td data-label="Source">{s.reference}</td><td data-label="Revision">{s.revision || "—"}</td><td data-label="File version">{s.file_version || "—"}</td>
                   <td data-label="Content hash"><span className="cm-hash">{s.content_hash ?? "Unavailable"}</span></td><td data-label="Observed">{siteTime(s.observed_at, zone)}</td>
                 </tr>
@@ -246,7 +246,7 @@ function BasisPanel({ d, b, options, zone, reload }: Shared & { b: Basis | null 
           {!b.sources.length && <div className="em-empty"><p>No source is bound yet. Bind the exact approved procedure before submitting.</p></div>}
         </div>
       )}
-      <div className="cm-panel-body cm-after-table">
+      <div className="cm-panel-body cm-test-after-table">
         {b?.editable && (
           <>
             <div className="em-actions">
@@ -269,8 +269,8 @@ function BasisPanel({ d, b, options, zone, reload }: Shared & { b: Basis | null 
         {!dialog && act.notice}
         {d.bases.length > 1 && (
           <>
-            <h4 className="cm-subhead">Every basis of this package</h4>
-            <ul className="cm-history">
+            <h4 className="cm-test-subhead">Every basis of this package</h4>
+            <ul className="cm-test-list">
               {d.bases.map((x) => (
                 <li key={x.id} aria-current={x.id === b?.id || undefined}>
                   <span>Basis {pad(x.number)} · {x.reference} {x.revision}</span><Tag view={x.state_view} />
@@ -391,14 +391,14 @@ function BasisEditor({ d, b, options, command, onClose }: { d: Detail; b: Basis;
         </div>
         <p className="cm-note">{options?.limits[0] ?? "Sources are the retained snapshots of the local synthetic upstream adapter."}</p>
 
-        <h3 className="cm-subhead">Checks</h3>
+        <h3 className="cm-test-subhead">Checks</h3>
         {checks.map((k, n) => <CheckEditor key={n} d={d} k={k} n={n} error={rowError(command, "checks", n)} change={(patch) => check(n, patch)} remove={() => { setDirty(true); setChecks((all) => all.filter((_, x) => x !== n)); }} />)}
         <div className="em-actions"><button type="button" className="mw-button" onClick={() => { setDirty(true); setChecks((all) => [...all, blankCheck]); }}>Add check</button></div>
 
-        <h3 className="cm-subhead">Readiness prerequisites</h3>
+        <h3 className="cm-test-subhead">Readiness prerequisites</h3>
         <p className="cm-note">What must be true before a test is performed. A mandatory hold or witness point has no general override.</p>
         {needs.map((x, n) => (
-          <fieldset className="cm-edit-block" key={n}>
+          <fieldset className="cm-test-block" key={n}>
             <legend>Prerequisite {n + 1}{x.label && `: ${x.label}`}</legend>
             {rowError(command, "prerequisites", n) && <p className="mw-inline-error" role="alert">{rowError(command, "prerequisites", n)}</p>}
             <div className="cm-inline">
@@ -408,7 +408,7 @@ function BasisEditor({ d, b, options, command, onClose }: { d: Detail; b: Basis;
             </div>
             <Field label="Source of the requirement (optional)"><input value={x.source} maxLength={300} onChange={(e) => need(n, { source: e.target.value })} /></Field>
             <div className="em-actions">
-              <label className="cm-check"><input type="checkbox" checked={x.mandatory} onChange={(e) => need(n, { mandatory: e.target.checked })} /><span>Mandatory: an attempt cannot be submitted while it is not met</span></label>
+              <label className="cm-test-check"><input type="checkbox" checked={x.mandatory} onChange={(e) => need(n, { mandatory: e.target.checked })} /><span>Mandatory: an attempt cannot be submitted while it is not met</span></label>
               <button type="button" className="mw-button mw-button-quiet" onClick={() => { setDirty(true); setNeeds((all) => all.filter((_, i) => i !== n)); }}>Remove prerequisite</button>
             </div>
           </fieldset>
@@ -427,7 +427,7 @@ function Limit({ label, value, onChange }: { label: string; value: string; onCha
 function CheckEditor({ d, k, n, error, change, remove }: { d: Detail; k: CheckForm; n: number; error?: string; change: (patch: Partial<CheckForm>) => void; remove: () => void }) {
   const choices = split(k.choices), conversion = (i: number, patch: Partial<CheckForm["conversions"][number]>) => change({ conversions: k.conversions.map((c, x) => (x === i ? { ...c, ...patch } : c)) });
   return (
-    <fieldset className="cm-edit-block">
+    <fieldset className="cm-test-block">
       <legend>Check {n + 1}{k.name && `: ${k.name}`}</legend>
       {error && <p className="mw-inline-error" role="alert">{error}</p>}
       <div className="cm-inline">
@@ -438,7 +438,7 @@ function CheckEditor({ d, k, n, error, change, remove }: { d: Detail; k: CheckFo
       </div>
       {k.check_type === "Numeric" ? (
         <>
-          <label className="cm-check"><input type="checkbox" checked={k.undefined_criterion} onChange={(e) => change({ undefined_criterion: e.target.checked })} /><span>Criterion not defined yet. The check shows as “Criteria missing”: a reading can be captured but not assessed, and no limit is borrowed from another asset, manufacturer or template.</span></label>
+          <label className="cm-test-check"><input type="checkbox" checked={k.undefined_criterion} onChange={(e) => change({ undefined_criterion: e.target.checked })} /><span>Criterion not defined yet. The check shows as “Criteria missing”: a reading can be captured but not assessed, and no limit is borrowed from another asset, manufacturer or template.</span></label>
           {!k.undefined_criterion && (
             <>
               <div className="cm-inline">
@@ -446,8 +446,8 @@ function CheckEditor({ d, k, n, error, change, remove }: { d: Detail; k: CheckFo
                 <Field label="Decimal places accepted" hint="Limits are stated to this precision"><input type="number" min={0} max={12} value={k.precision} onChange={(e) => change({ precision: e.target.value })} /></Field>
               </div>
               <div className="cm-inline">
-                <div><Limit label="Lower limit" value={k.lower} onChange={(lower) => change({ lower })} /><label className="cm-check"><input type="checkbox" checked={k.lower_inclusive} onChange={(e) => change({ lower_inclusive: e.target.checked })} /><span>Inclusive: a reading equal to it passes</span></label></div>
-                <div><Limit label="Upper limit" value={k.upper} onChange={(upper) => change({ upper })} /><label className="cm-check"><input type="checkbox" checked={k.upper_inclusive} onChange={(e) => change({ upper_inclusive: e.target.checked })} /><span>Inclusive: a reading equal to it passes</span></label></div>
+                <div><Limit label="Lower limit" value={k.lower} onChange={(lower) => change({ lower })} /><label className="cm-test-check"><input type="checkbox" checked={k.lower_inclusive} onChange={(e) => change({ lower_inclusive: e.target.checked })} /><span>Inclusive: a reading equal to it passes</span></label></div>
+                <div><Limit label="Upper limit" value={k.upper} onChange={(upper) => change({ upper })} /><label className="cm-test-check"><input type="checkbox" checked={k.upper_inclusive} onChange={(e) => change({ upper_inclusive: e.target.checked })} /><span>Inclusive: a reading equal to it passes</span></label></div>
               </div>
               {k.conversions.map((c, i) => (
                 <div className="cm-inline" key={i}>
@@ -464,14 +464,14 @@ function CheckEditor({ d, k, n, error, change, remove }: { d: Detail; k: CheckFo
       ) : (
         <>
           <Field label="Approved choices" hint="Two or more, separated with commas"><input value={k.choices} onChange={(e) => change({ choices: e.target.value })} /></Field>
-          <fieldset className="cm-checks"><legend>Accepted outcomes</legend>
-            {choices.map((c) => <label className="cm-check" key={c}><input type="checkbox" checked={k.accepted.includes(c)} onChange={(e) => change({ accepted: e.target.checked ? [...k.accepted, c] : k.accepted.filter((a) => a !== c) })} /><span>{c}</span></label>)}
+          <fieldset className="cm-test-checks"><legend>Accepted outcomes</legend>
+            {choices.map((c) => <label className="cm-test-check" key={c}><input type="checkbox" checked={k.accepted.includes(c)} onChange={(e) => change({ accepted: e.target.checked ? [...k.accepted, c] : k.accepted.filter((a) => a !== c) })} /><span>{c}</span></label>)}
             {!choices.some((c) => k.accepted.includes(c)) && <p className="cm-note">With no accepted outcome the check shows as “Criteria missing”.</p>}
           </fieldset>
         </>
       )}
-      <label className="cm-check"><input type="checkbox" checked={k.required} onChange={(e) => change({ required: e.target.checked })} /><span>Required</span></label>
-      <label className="cm-check"><input type="checkbox" checked={k.conditional} onChange={(e) => change({ conditional: e.target.checked })} /><span>Applies only under a stated condition</span></label>
+      <label className="cm-test-check"><input type="checkbox" checked={k.required} onChange={(e) => change({ required: e.target.checked })} /><span>Required</span></label>
+      <label className="cm-test-check"><input type="checkbox" checked={k.conditional} onChange={(e) => change({ conditional: e.target.checked })} /><span>Applies only under a stated condition</span></label>
       {k.conditional && (
         <div className="cm-inline">
           <Field label="Condition"><input value={k.statement} maxLength={300} onChange={(e) => change({ statement: e.target.value })} /></Field>
@@ -483,7 +483,7 @@ function CheckEditor({ d, k, n, error, change, remove }: { d: Detail; k: CheckFo
         <Field label="Witness or hold point"><select value={k.witness} onChange={(e) => change({ witness: e.target.value as CheckForm["witness"] })}>{witnessKinds.map((w) => <option key={w} value={w}>{w === "None" ? "None" : `${w} point`}</option>)}</select></Field>
       </div>
       <div className="em-actions">
-        <label className="cm-check"><input type="checkbox" checked={k.instrument_required} onChange={(e) => change({ instrument_required: e.target.checked })} /><span>A named instrument is required</span></label>
+        <label className="cm-test-check"><input type="checkbox" checked={k.instrument_required} onChange={(e) => change({ instrument_required: e.target.checked })} /><span>A named instrument is required</span></label>
         <button type="button" className="mw-button mw-button-quiet" onClick={remove}>Remove check</button>
       </div>
     </fieldset>
@@ -503,7 +503,7 @@ function CriteriaPanel({ d, b }: { d: Detail; b: Basis | null }) {
           <tbody>
             {b?.checks.map((k) => (
               <tr key={k.key}>
-                <td><span className="em-row-title">{k.name}</span><span className="em-cell-sub">{k.check_type} · {k.key}</span></td>
+                <td><span className="cm-test-title">{k.name}</span><span className="em-cell-sub">{k.check_type} · {k.key}</span></td>
                 <td data-label="Scope">{scope(k.scope_key)}</td>
                 <td data-label="Criterion">{k.has_criterion ? <>{k.criterion_text} <span className="cm-fictional">Fictional limit</span></> : <><Tag view={tag("Criteria missing", "caution", "alert")} /><span className="em-cell-sub">Owned by {owner}; {editable ? "define it before this draft is submitted, or it stays unassessable" : "define it in a successor basis"}</span></>}</td>
                 <td data-label="Required / conditional">{k.is_required ? "Required" : k.required ? "Not required: condition not met" : "Optional"}{k.condition && <span className="em-cell-sub">{k.condition.statement} — {k.condition.outcome.toLowerCase()}{k.condition.outcome === "Unknown" && "; an unknown condition never removes a requirement"}</span>}</td>
@@ -530,7 +530,7 @@ function PrerequisitesPanel({ b }: { b: Basis | null }) {
           <thead><tr>{["Prerequisite", "Kind", "Mandatory", "Source"].map((h) => <th key={h} scope="col"><span>{h}</span></th>)}</tr></thead>
           <tbody>
             {b?.prerequisites.map((x) => (
-              <tr key={x.key}><td><span className="em-row-title">{x.label}</span></td><td data-label="Kind">{x.kind === "Hold" || x.kind === "Witness" ? `${x.kind} point` : x.kind}</td><td data-label="Mandatory">{x.mandatory ? "Mandatory" : "Advisory"}</td><td data-label="Source">{x.source ?? "Not stated"}</td></tr>
+              <tr key={x.key}><td><span className="cm-test-title">{x.label}</span></td><td data-label="Kind">{x.kind === "Hold" || x.kind === "Witness" ? `${x.kind} point` : x.kind}</td><td data-label="Mandatory">{x.mandatory ? "Mandatory" : "Advisory"}</td><td data-label="Source">{x.source ?? "Not stated"}</td></tr>
             ))}
           </tbody>
         </table>
@@ -561,17 +561,17 @@ function SourcesPanel({ d, options, zone, reload }: Shared) {
         <Refusal reason={d.refusals.assess_source} />
         {!assessing && <CommandNotice command={act.command} saved="Source check recorded on the server." />}
       </div>
-      <div className="em-table-scroll cm-after-body">
+      <div className="em-table-scroll cm-test-after-body">
         <table className="em-table cm-table">
           <caption className="mw-sr">Bound sources as bound and as they are now</caption>
           <thead><tr>{["Role", "As bound", "Now", "Changed", "Reason for the change"].map((h) => <th key={h} scope="col"><span>{h}</span></th>)}</tr></thead>
           <tbody>
             {c.bound.map((x) => (x.live && !x.live.readable ? (
               // Nothing of a restricted source is disclosed: no reference, revision, hash or change.
-              <tr key={x.role}><td><span className="em-row-title">{roles[x.role]}</span></td><td data-label="As bound" colSpan={4}>Restricted source</td></tr>
+              <tr key={x.role}><td><span className="cm-test-title">{roles[x.role]}</span></td><td data-label="As bound" colSpan={4}>Restricted source</td></tr>
             ) : (
               <tr key={x.role}>
-                <td><span className="em-row-title">{roles[x.role]}</span></td>
+                <td><span className="cm-test-title">{roles[x.role]}</span></td>
                 <td data-label="As bound">{x.snapshot ? <>{x.snapshot.reference} · Rev {x.snapshot.revision}<span className="em-cell-sub">file {x.snapshot.file_version} · <span className="cm-hash">{x.snapshot.content_hash?.slice(0, 16) ?? "no hash"}</span></span></> : "Unavailable"}</td>
                 <td data-label="Now">{x.live ? <><Tag view={sourceUseView[x.live.use] ?? tag(x.live.use, "neutral", "document")} />{successor(x.live.successor_id) && <span className="em-cell-sub">Successor: {successor(x.live.successor_id)}</span>}</> : <Tag view={sourceUseView.Unavailable} />}</td>
                 <td data-label="Changed">{x.live?.changed_at ? siteTime(x.live.changed_at, zone) : "No change recorded"}</td>
@@ -582,8 +582,8 @@ function SourcesPanel({ d, options, zone, reload }: Shared) {
         </table>
         {!c.bound.length && <div className="em-empty"><p>No source is bound yet, so there is nothing to compare.</p></div>}
       </div>
-      <div className="cm-after-table">
-        <div className="cm-panel-body"><h4 className="cm-subhead">Recorded checks</h4><p className="cm-note">The time beside each check is when that check was recorded. It is never the moment this page was opened, and opening this page checks nothing.</p></div>
+      <div className="cm-test-after-table">
+        <div className="cm-panel-body"><h4 className="cm-test-subhead">Recorded checks</h4><p className="cm-note">The time beside each check is when that check was recorded. It is never the moment this page was opened, and opening this page checks nothing.</p></div>
         <ol className="cm-timeline">
           {d.checks_recorded.map((k) => (
             <li key={k.id}>
