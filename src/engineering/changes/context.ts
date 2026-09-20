@@ -284,7 +284,7 @@ function assemble(b: Bundle, sources: LiveSource[], access: Access) {
       issued = baseline && revision.proposed_revision ? sources.find((s) => s.kind === sourceById.get(baseline.source_id)?.kind && s.reference === baseline.snapshot.reference && s.revision === revision.proposed_revision && s.use === "Current") ?? null : null,
       condition = sourceCondition(liveLinks, issued?.id ?? null),
       definitions = retests.get(revision.id) ?? [],
-      verification = definitions.map((r) => ({ retest: r, attempts: attempts.get(r.id) ?? [], state: verificationState(r, attempts.get(r.id) ?? [], decision?.result === "Accepted") })),
+      verification = definitions.map((r) => ({ retest: r, attempts: attempts.get(r.id) ?? [], state: verificationState(attempts.get(r.id) ?? []) })),
       requests = (handovers.get(row.id) ?? []).map((h) => ({ handover: h, submissions: submissions.get(h.id) ?? [], stale: h.revision_id !== revision.id })),
       overlaps = b.overlaps.get(row.id) ?? [], resolved = b.resolved.get(row.id) ?? new Set<string>(),
       stage = row.stage,
@@ -305,18 +305,23 @@ function assemble(b: Bundle, sources: LiveSource[], access: Access) {
     };
   });
 }
-export function verificationState(r: RetestDefinition, attempts: AttemptRow[], accepted: boolean): VerificationState {
-  const last = attempts.at(-1);
-  if (last) return last.result;
-  return accepted ? (r.verifier_id ? "AwaitingEvidence" : "Required") : "Required";
+// The latest attempt decides. With no attempt the obligation is simply required: nothing here can know that a
+// test was performed and is waiting on its paperwork, so "awaiting evidence" is never inferred.
+export function verificationState(attempts: AttemptRow[]): VerificationState {
+  return attempts.at(-1)?.result ?? "Required";
 }
 export function documentOf(r: RevisionRow, objects: ObjectRow[], links: LinkRow[], retests: RetestRow[]): ProposalDocument {
   return {
     rationale: r.rationale, proposed_reference: r.proposed_reference, proposed_revision: r.proposed_revision, scope_statement: r.scope_statement, comparison: r.comparison, options: r.options,
     selected_option: r.selected_option, categories: r.categories, costs: r.costs, dates: r.dates, requires_revised_release: r.requires_revised_release,
-    objects: objects.map(({ revision_id: _r, sort_order: _s, owner_name: _n, ...o }) => { void [_r, _s, _n]; return o; }),
+    // Exactly the document's own fields, so a proposal reloaded from its rows hashes as it did when it was saved.
+    objects: objects.map((o) => ({
+      id: o.id, object_type: o.object_type, object_id: o.object_id, object_key: o.object_key, reference: o.reference, title: o.title, current_state: o.current_state, proposed_effect: o.proposed_effect,
+      relation: o.relation, disposition: o.disposition, exclusion_reason: o.exclusion_reason, finding: o.finding, evidence: o.evidence, owner_id: o.owner_id, next_action: o.next_action, location: o.location,
+      served_areas: o.served_areas, supply_state: o.supply_state,
+    })),
     sources: links.map((l) => ({ source_id: l.source_id, role: l.role, required: l.required })),
-    retests: retests.map(({ revision_id: _r, sort_order: _s, verifier_name: _n, ...t }) => { void [_r, _s, _n]; return t; }),
+    retests: retests.map((t) => ({ id: t.id, criterion: t.criterion, requirement_ref: t.requirement_ref, asset_or_system: t.asset_or_system, configuration: t.configuration, procedure_source_id: t.procedure_source_id, reason: t.reason, verifier_id: t.verifier_id, due: t.due })),
   };
 }
 export const stamp = iso;
