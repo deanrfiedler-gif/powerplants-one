@@ -134,10 +134,17 @@ const paths = {
       <path d="M4 10h16M8 3v4m8-4v4M9 15.2l2.1 2.1 4-4.6" />
     </>
   ),
-  briefcase: (
+  // An opportunity, wherever this page names one: the same mark as the Opportunities cell of the phone bar.
+  dollar: (
     <>
-      <rect x="3.5" y="7" width="17" height="13" rx="2" />
-      <path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3.5 12.5h17" />
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M14.8 8.6h-3.9a1.7 1.7 0 0 0 0 3.4h2.2a1.7 1.7 0 0 1 0 3.4H9.2M12 6.8v10.4" />
+    </>
+  ),
+  lock: (
+    <>
+      <rect x="6" y="11" width="12" height="9" rx="2" />
+      <path d="M8.5 11V8.2a3.5 3.5 0 0 1 7 0V11" />
     </>
   ),
   target: (
@@ -147,7 +154,6 @@ const paths = {
       <path d="M12 2.5V5m0 14v2.5M2.5 12H5m14 0h2.5" />
     </>
   ),
-  map: <path d="M9 4.5 3.5 6.8v12.7L9 17.2l6 2.3 5.5-2.3V4.5L15 6.8Zm0 0v12.7m6-10.4v12.7" />,
   camera: (
     <>
       <path d="M4 9a2 2 0 0 1 2-2h2.2l1.5-2.2h4.6L15.8 7H18a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" />
@@ -194,7 +200,7 @@ export function Tag({
   tone = "neutral",
   children,
 }: {
-  tone?: "neutral" | "overdue" | "attention" | "quiet";
+  tone?: "neutral" | "overdue" | "attention" | "quiet" | "context";
   children: React.ReactNode;
 }) {
   return <span className={`mw-tag mw-tag-${tone}`}>{children}</span>;

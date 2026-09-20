@@ -276,10 +276,10 @@ export type WorkViewId = (typeof workViews)[number]["id"];
 // label, and the destination keeps its own route and permission. Other workspaces keep the
 // labelled three-and-More bar.
 export const salesPhoneBar = [
-  { id: "work", label: "My Work", icon: "work" },
-  { id: "deals", label: "Opportunities", icon: "sales" },
-  { id: "calendar", label: "Activities", icon: "activities" },
-  { id: "contacts", label: "Contacts", icon: "contact-card" },
+  { id: "work", label: "My Work", icon: "bar-work" },
+  { id: "deals", label: "Opportunities", icon: "bar-opportunities" },
+  { id: "calendar", label: "Activities", icon: "bar-activities" },
+  { id: "contacts", label: "Contacts", icon: "bar-contacts" },
 ] as const;
 export const workViewForPath = (path: string) =>
   workViews.find((view) => view.href === path);

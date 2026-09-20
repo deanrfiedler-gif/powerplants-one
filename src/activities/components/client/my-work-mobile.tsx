@@ -9,10 +9,10 @@ import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "reac
 import { useIdentity } from "../../../components/business-session";
 import { ErrorNotice, isDenied, type Failure } from "../../../components/business-ui";
 import { useShell } from "../../../components/shell-provider";
-import type { PlanningGap } from "../../../crm/planning-gaps";
+import type { OverdueOpportunity, PlanningGap } from "../../../crm/planning-gaps";
 import { addDays } from "../../../scheduling/time";
 import { criteriaSearch, defaultCriteria, overviewQuery, sameCriteria } from "../../work-criteria";
-import type { readWorkAgenda, readWorkGaps, readWorkOverview, WorkRow } from "../../work-overview";
+import type { readWorkAgenda, readWorkGaps, readWorkOverdueOpportunities, readWorkOverview, WorkRow } from "../../work-overview";
 import {
   agendaDayLabel,
   agendaSlot,
@@ -27,6 +27,7 @@ import {
   longDate,
   nextScheduleId,
   shortDate,
+  timing,
   weekLabel,
   weekOf,
   WORK_TIMEZONE,
@@ -41,6 +42,7 @@ import { Icon, Menu, Tag, useWorkResource, WorkDialog, type IconName } from "./m
 type Overview = Awaited<ReturnType<typeof readWorkOverview>>;
 type Agenda = Awaited<ReturnType<typeof readWorkAgenda>>;
 type Gaps = Awaited<ReturnType<typeof readWorkGaps>>;
+type Overdue = Awaited<ReturnType<typeof readWorkOverdueOpportunities>>;
 type Status = "ok" | "loading" | "not_permitted" | "unavailable";
 
 // The overview a person sees depends on the screen, never on a guess made on the server: until the
@@ -117,7 +119,7 @@ function MyWorkMobileOverview() {
     work.reloadNavigation();
   };
   const dialogs = useWorkDialogs(now, changed);
-  const [sheet, setSheet] = useState<"create" | "scan" | "map" | "gaps" | null>(null);
+  const [sheet, setSheet] = useState<"create" | "scan" | "map" | "gaps" | "overdue" | null>(null);
   const online = useSyncExternalStore(subscribeOnline, () => navigator.onLine, () => true);
 
   const denied = isDenied(read.error);
@@ -133,14 +135,17 @@ function MyWorkMobileOverview() {
 
   // Needs attention: different kinds of obligation, each with its own unit and its own queue. They are
   // never added together. A category with nothing in it is left out; one that could not be read says so.
+  // An overdue opportunity is one whose designated next action is overdue, by the Deals worklist's own
+  // rule. That action may be a colleague's, so it is not always among the reader's overdue activities.
   const attention: { id: string; icon: IconName; status: Status; count: number | null; label: (n: number) => string; tone?: "overdue"; href?: string; onOpen?: () => void }[] = [
     { id: "overdue", icon: "calendar-alert", tone: "overdue", status: state(), count: data?.counts.overdue ?? null, label: (n) => plural(n, "overdue activity", "overdue activities"), href: queue({ due: "Overdue" }) },
+    { id: "overdue-opportunities", icon: "dollar", tone: "overdue", status: state(data?.overdue_opportunities), count: data?.overdue_opportunities.status === "ok" ? data.overdue_opportunities.total : null, label: (n) => plural(n, "overdue opportunity", "overdue opportunities"), onOpen: () => setSheet("overdue") },
     { id: "reviews", icon: "clock", status: state(data?.reviews), count: data?.reviews.status === "ok" ? data.reviews.total : null, label: (n) => `${plural(n, "review awaits", "reviews await")} your decision`, href: "/work/reviews" },
-    { id: "gaps", icon: "briefcase", status: state(data?.gaps), count: data?.gaps.status === "ok" ? data.gaps.total : null, label: (n) => `${plural(n, "opportunity", "opportunities")} without a next activity`, onOpen: () => setSheet("gaps") },
+    { id: "gaps", icon: "dollar", status: state(data?.gaps), count: data?.gaps.status === "ok" ? data.gaps.total : null, label: (n) => `${plural(n, "opportunity", "opportunities")} without a next activity`, onOpen: () => setSheet("gaps") },
     { id: "undated", icon: "calendar", status: state(), count: data?.counts.date_needed ?? null, label: (n) => `${plural(n, "activity needs", "activities need")} a date`, href: queue({ due: "Needed" }) },
   ];
+  // Every raised category is listed: there are five at most, and none is ever folded away.
   const raised = attention.filter((a) => a.status === "unavailable" || (a.status === "ok" && (a.count ?? 0) > 0));
-  const shown = raised.slice(0, 3);
 
   const createActivity = () => {
     setSheet(null);
@@ -163,7 +168,7 @@ function MyWorkMobileOverview() {
             {longDate(now).replace(/ \d{4}$/, "")}
           </time>
         </div>
-        <Tag tone="quiet">{work.department}</Tag>
+        <Tag tone="context">{work.department}</Tag>
       </header>
       {!sameCriteria(c.criteria, defaultCriteria) && (
         <p className="mw-scope-note">
@@ -184,7 +189,7 @@ function MyWorkMobileOverview() {
         <ul className="mw-tiles">
           <Tile icon="mail" label="Emails" href={can("mail") ? "/email" : null} />
           <Tile icon="target" label="Leads" href={can("leads") ? `/sales/leads?${new URLSearchParams({ owner_id: me.actor_id })}` : null} />
-          <Tile icon="map" label="Map" onOpen={() => setSheet("map")} />
+          <Tile icon="pin" label="Map" onOpen={() => setSheet("map")} />
           <Tile icon="task" label="Tasks" href={queue({ activity_type: "Task" })} />
         </ul>
       </section>
@@ -218,9 +223,9 @@ function MyWorkMobileOverview() {
                   <li key={i} className="mw-attention-row mw-placeholder" />
                 ))}
               </ul>
-            ) : shown.length ? (
+            ) : raised.length ? (
               <ul className="mw-list-panel">
-                {shown.map((a) => {
+                {raised.map((a) => {
                   const ok = a.status === "ok";
                   const body = (
                     <>
@@ -251,11 +256,6 @@ function MyWorkMobileOverview() {
               </ul>
             ) : (
               <p className="mw-list-panel mw-all-clear">Nothing of yours is overdue, undated or waiting on your decision right now. View all shows the rest of your work.</p>
-            )}
-            {raised.length > shown.length && (
-              <p className="mw-quiet-note">
-                {raised.length - shown.length} more {plural(raised.length - shown.length, "category", "categories")} in View all.
-              </p>
             )}
           </section>
 
@@ -327,7 +327,7 @@ function MyWorkMobileOverview() {
 
           {data && !hidden.includes("gaps") && data.gaps.status === "ok" && data.gaps.total > 0 && (
             <button type="button" className="mw-list-panel mw-gap-link" aria-haspopup="dialog" onClick={() => setSheet("gaps")}>
-              <Icon name="briefcase" />
+              <Icon name="dollar" />
               <span>
                 {data.gaps.total} {plural(data.gaps.total, "opportunity needs", "opportunities need")} a next activity
               </span>
@@ -381,6 +381,14 @@ function MyWorkMobileOverview() {
           onClose={() => setSheet(null)}
         />
       )}
+      {sheet === "overdue" && (
+        <OverdueOpportunitiesSheet
+          query={scope.toString()}
+          showOwner={!mine}
+          fullHref={can("deals") ? `/sales/opportunities?${new URLSearchParams({ next_action: "Overdue", ...(mine ? { owner_id: me.actor_id } : {}) })}` : null}
+          onClose={() => setSheet(null)}
+        />
+      )}
       {work.customise && <CustomiseDialog onClose={() => work.setCustomise(false)} />}
     </div>
   );
@@ -389,28 +397,25 @@ function MyWorkMobileOverview() {
 // ───────────────────────── Quick Actions ─────────────────────────
 // A tile is a link to something that exists, a door to an honest explanation, or plainly unavailable
 // to this identity. It never carries a number the application cannot vouch for: the mailbox records
-// no read state, so Emails has no unread badge.
+// no read state, so Emails has no unread badge. The tiles show an icon alone; each keeps its name for
+// assistive technology and as a tooltip, and one the identity cannot open is dimmed and marked locked.
 function Tile({ icon, label, href, onOpen }: { icon: IconName; label: string; href?: string | null; onOpen?: () => void }) {
-  const body = (
-    <>
-      <Icon name={icon} />
-      <span>{label}</span>
-    </>
-  );
   return (
     <li>
       {href ? (
-        <Link className="mw-tile" href={href}>
-          {body}
+        <Link className="mw-tile" href={href} aria-label={label} title={label}>
+          <Icon name={icon} />
         </Link>
       ) : onOpen ? (
-        <button type="button" className="mw-tile" aria-haspopup="dialog" onClick={onOpen}>
-          {body}
+        <button type="button" className="mw-tile" aria-haspopup="dialog" aria-label={label} title={label} onClick={onOpen}>
+          <Icon name={icon} />
         </button>
       ) : (
-        <span className="mw-tile" aria-disabled="true" title={`${label} is outside your current access`}>
-          {body}
-          <small>No access</small>
+        <span className="mw-tile" role="img" aria-label={`${label}: outside your current access`} title={`${label}: outside your current access`}>
+          <Icon name={icon} />
+          <span className="mw-tile-lock">
+            <Icon name="lock" />
+          </span>
         </span>
       )}
     </li>
@@ -822,7 +827,7 @@ function LocationSheet({
 // form's own permission. The record choices come from the shell's list of what this identity may
 // create, so nothing appears here that the server would then refuse.
 const createCopy = {
-  opportunity: { label: "Opportunity", copy: "Start a sales opportunity", icon: "briefcase" },
+  opportunity: { label: "Opportunity", copy: "Start a sales opportunity", icon: "dollar" },
   lead: { label: "Lead", copy: "Capture a new enquiry", icon: "target" },
   contact: { label: "Contact", copy: "Add a person", icon: "user" },
   customer: { label: "Organisation", copy: "Customer, supplier or other organisation", icon: "building" },
@@ -955,6 +960,66 @@ function MapSheet({ can, onClose }: { can: (id: string) => boolean; onClose: () 
             </li>
           ))}
       </ul>
+    </WorkDialog>
+  );
+}
+
+// ───────────────────────── Overdue opportunities ─────────────────────────
+// The queue behind the attention row. Each entry names the overdue action and whose it is; the work
+// itself is done on the activity or the opportunity, which keep their own commands and permissions.
+function OverdueOpportunitiesSheet({ query, showOwner, fullHref, onClose }: { query: string; showOwner: boolean; fullHref: string | null; onClose: () => void }) {
+  const read = useWorkResource<Overdue>(`work/overdue-opportunities?${query}`, 0);
+  const list = read.data?.opportunities;
+  const when = (o: OverdueOpportunity) => {
+    const t = timing({ id: o.action_id, status: "Open", due_at: o.action_due_at, due_needed: false, due_date_only: o.action_due_date_only, starts_at: o.action_starts_at }, read.data!.observed_at);
+    return t.caption ? `${t.caption} ${t.value}` : t.value;
+  };
+  return (
+    <WorkDialog sheet title="Overdue opportunities" subtitle="Open opportunities whose planned next action is overdue" onClose={onClose}>
+      {!list ? (
+        read.error ? (
+          <PanelState status="unavailable" what="Opportunities" retry={read.reload} />
+        ) : (
+          <p role="status">Loading opportunities…</p>
+        )
+      ) : list.status !== "ok" ? (
+        <PanelState status={list.status} what="Opportunities" retry={read.reload} />
+      ) : list.items.length ? (
+        <ul className="mw-gaps">
+          {list.items.map((o) => (
+            <li key={o.id}>
+              <div>
+                <Link className="mw-row-title" href={`/sales/opportunities/${o.id}`} onClick={onClose}>
+                  <span>{o.title}</span>
+                </Link>
+                <p>{[o.organisation_name, showOwner ? o.owner_name : null].filter(Boolean).join(" · ")}</p>
+                <p className="mw-tone-overdue">
+                  {o.action_summary} · {when(o)}
+                  {o.action_owner_id !== o.owner_id ? ` · ${o.action_owner_name}` : ""}
+                </p>
+                <Tag>{o.stage_id}</Tag>
+              </div>
+              <Link className="mw-button" href={`/work/${o.action_id}`} onClick={onClose} aria-label={`Open activity: ${o.action_summary}`}>
+                Open activity
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="mw-hint">No open opportunity in this scope has an overdue next action.</p>
+      )}
+      {list?.status === "ok" && list.total > list.items.length && (
+        <p className="mw-quiet-note">
+          The first {list.items.length} of {list.total} are listed, longest overdue first.
+        </p>
+      )}
+      {fullHref && (
+        <p className="mw-hint">
+          <Link className="mw-link" href={fullHref} onClick={onClose}>
+            Open these in Opportunities <Icon name="arrow-right" />
+          </Link>
+        </p>
+      )}
     </WorkDialog>
   );
 }

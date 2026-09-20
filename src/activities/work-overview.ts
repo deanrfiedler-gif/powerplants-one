@@ -3,7 +3,7 @@
 // permitted scope for the selected owner and filters, never just the rows shown.
 import { crmAvailable } from "../crm/context";
 import { leadsAvailable } from "../crm/leads/context";
-import { listPlanningGaps } from "../crm/planning-gaps";
+import { listOverdueOpportunities, listPlanningGaps } from "../crm/planning-gaps";
 import { readCalendar } from "../email/service";
 import { database } from "../platform/database";
 import { AppError } from "../platform/errors";
@@ -249,9 +249,11 @@ export async function readWorkOverview(p: Principal, input: unknown = {}) {
       [...args.slice(0, 5), t.end, t.start],
     )
   ).rows;
-  const [waiting, gaps, reviews, meetings, canEdit] = await Promise.all([
+  const [waiting, gaps, overdueOpportunities, reviews, meetings, canEdit] = await Promise.all([
     settle(() => listWorkWaiting(p, { owner_id: scope.owner_id, company_id: scope.company_id, limit: 3 })),
     settle(() => listPlanningGaps(p, { owner_id: scope.owner_id, company_id: scope.company_id, limit: 3 })),
+    // Asked at this read's own instant, so it agrees with the overdue activity count beside it.
+    settle(() => listOverdueOpportunities(p, { owner_id: scope.owner_id, company_id: scope.company_id, now: t.now, limit: 3 })),
     settle(() => listWorkReviews(p, { company_id: scope.company_id, limit: 3 })),
     // Calendar meetings are the reader's own and are separate records, never merged with an
     // activity by title or time. They appear only in the reader's own scope.
@@ -290,6 +292,7 @@ export async function readWorkOverview(p: Principal, input: unknown = {}) {
     },
     waiting,
     gaps,
+    overdue_opportunities: overdueOpportunities,
     reviews,
   };
 }
@@ -487,6 +490,23 @@ export async function readWorkGaps(p: Principal, input: unknown = {}) {
     scope,
     gaps: await settle(() =>
       listPlanningGaps(p, { owner_id: scope.owner_id, company_id: scope.company_id, limit: 50 }),
+    ),
+  };
+}
+// The whole overdue-opportunity queue behind the overview's count: same rule, same owner scope.
+export async function readWorkOverdueOpportunities(p: Principal, input: unknown = {}) {
+  const c = database();
+  await requireCapability(c, p, "activity.read");
+  const scope = scopeFilters(object(input, ["owner", "company_id"]), p),
+    t = await clock(c);
+  return {
+    observed_at: t.now,
+    timezone: WORK_TIMEZONE,
+    day: t.day,
+    synthetic: true as const,
+    scope,
+    opportunities: await settle(() =>
+      listOverdueOpportunities(p, { owner_id: scope.owner_id, company_id: scope.company_id, now: t.now, limit: 50 }),
     ),
   };
 }

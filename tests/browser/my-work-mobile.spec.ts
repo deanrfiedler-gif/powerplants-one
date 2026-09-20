@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import { expect, test, type Page } from "@playwright/test";
 import { MY_WORK, seedScenario, WEATHER_SAMPLE, type Call } from "../helpers/my-work";
 
@@ -57,6 +58,9 @@ test("the phone overview is one page: header, five-cell bar, Quick Actions, atte
 
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(/^Good (morning|afternoon|evening), /);
   await expect(page.locator(".mw-hello .mw-tag")).toHaveText("Sales");
+  // The workspace context carries r22's soft brand tint, not an outline.
+  expect(await style(page, ".mw-hello .mw-tag", "background-color")).toBe("rgb(234, 241, 229)");
+  expect(await style(page, ".mw-hello .mw-tag", "color")).toBe("rgb(69, 98, 59)");
 
   // The bar: five cells in order, names for assistive technology, nothing to read on screen.
   const bar = page.getByRole("navigation", { name: "Mobile navigation", exact: true });
@@ -72,31 +76,44 @@ test("the phone overview is one page: header, five-cell bar, Quick Actions, atte
   await expect(bar.getByRole("link", { name: "Activities", exact: true })).toHaveAttribute("href", `/calendar?day=${scenario.slots.day}`);
   await expect(bar.getByRole("link", { name: "Contacts", exact: true })).toHaveAttribute("href", "/people");
 
-  // Quick Actions: four labelled tiles in order. This identity holds no mail access and is told so;
-  // no unread number is shown to anyone, because the mailbox records no read state.
-  expect(await page.locator(".mw-tiles > li").evaluateAll((tiles) => tiles.map((t) => t.querySelector("span:not(.mw-tile)")!.textContent))).toEqual(["Emails", "Leads", "Map", "Tasks"]);
-  await expect(page.locator(".mw-tiles > li").first()).toContainText("No access");
+  // Quick Actions: four icon tiles in order, each named for assistive technology and nothing to read on
+  // screen. This identity holds no mail access, so that tile is a locked image, not a link; no unread
+  // number is shown to anyone, because the mailbox records no read state.
+  expect(await page.locator(".mw-tile").evaluateAll((tiles) => tiles.map((t) => t.getAttribute("aria-label")))).toEqual(["Emails: outside your current access", "Leads", "Map", "Tasks"]);
+  expect((await page.locator(".mw-tiles").innerText()).trim()).toBe("");
+  await expect(page.getByRole("img", { name: "Emails: outside your current access" })).toBeVisible();
+  expect(new Set(await page.locator(".mw-tile").evaluateAll((tiles) => tiles.map((t) => Math.round(t.getBoundingClientRect().top)))).size).toBe(1);
   await expect(page.getByRole("link", { name: "Leads", exact: true })).toHaveAttribute("href", `/sales/leads?owner_id=${MY_WORK.owner}`);
   await expect(page.getByRole("link", { name: "Tasks", exact: true })).toHaveAttribute("href", "/work/actions?activity_type=Task");
 
-  // Needs attention: different units, never summed. Reviews are outside this identity's access, so the
-  // third raised category is the undated activity; all of them are calculated from the records.
+  // Needs attention: different units, never summed, every raised category listed. Reviews are outside
+  // this identity's access; the rest are calculated from the records.
   const rows = attention(page).locator(".mw-attention-row");
-  await expect(rows).toHaveCount(3);
+  await expect(rows).toHaveCount(4);
   await expect(rows.nth(0)).toHaveText(/^2\s*overdue activities$/);
-  await expect(rows.nth(1)).toHaveText(/^2\s*opportunities without a next activity$/);
-  await expect(rows.nth(2)).toHaveText(/^1\s*activity needs a date$/);
+  await expect(rows.nth(1)).toHaveText(/^1\s*overdue opportunity$/);
+  await expect(rows.nth(2)).toHaveText(/^2\s*opportunities without a next activity$/);
+  await expect(rows.nth(3)).toHaveText(/^1\s*activity needs a date$/);
   await expect(rows.nth(0)).toHaveAttribute("href", "/work/actions?due=Overdue");
-  await expect(rows.nth(2)).toHaveAttribute("href", "/work/actions?due=Needed");
+  await expect(rows.nth(3)).toHaveAttribute("href", "/work/actions?due=Needed");
   await expect(attention(page).getByRole("link", { name: "View all" })).toHaveAttribute("href", "/work/actions");
-  // Brick is for work that is truly overdue; a missing next step is neutral.
+  // Brick is for what is truly overdue, activity or opportunity; a missing next step is neutral.
   expect(await rows.nth(0).locator("strong").evaluate((n) => getComputedStyle(n).color)).toBe("rgb(153, 59, 42)");
-  expect(await rows.nth(1).locator("strong").evaluate((n) => getComputedStyle(n).color)).toBe("rgb(36, 42, 55)");
+  expect(await rows.nth(1).locator("strong").evaluate((n) => getComputedStyle(n).color)).toBe("rgb(153, 59, 42)");
+  expect(await rows.nth(2).locator("strong").evaluate((n) => getComputedStyle(n).color)).toBe("rgb(36, 42, 55)");
 
   // One weekly agenda, Monday first, today selected. The preview says how much it is showing.
   await expect(page.locator(".mw-week")).toHaveCount(1);
   expect(await page.locator(".mw-day span").allTextContents()).toEqual(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]);
   await expect(page.locator('.mw-day[aria-pressed="true"]')).toHaveAttribute("aria-current", "date");
+  // Today is marked by a green tab on its top edge that stops short of the rounded corners.
+  expect(
+    await page.locator(".mw-day[aria-current=date]").evaluate((day) => {
+      const tab = getComputedStyle(day, "::before"),
+        card = day.getBoundingClientRect();
+      return { colour: tab.backgroundColor, top: tab.top, inset: parseFloat(tab.left) >= parseFloat(getComputedStyle(day).borderTopLeftRadius), foot: getComputedStyle(day).boxShadow, width: Math.round(card.width) > 0 };
+    }),
+  ).toEqual({ colour: "rgb(98, 187, 70)", top: "-1px", inset: true, foot: "none", width: true });
   await expect(agendaCount(page)).toHaveText(/^Today · 4 activities$/);
   await expect(page.locator(".mw-agenda-row")).toHaveCount(1);
   await expect(page.getByText("1 of 4 shown.")).toBeVisible();
@@ -134,6 +151,8 @@ test("the phone overview is one page: header, five-cell bar, Quick Actions, atte
   expect(await style(page, ".mw-agenda-title", "font-weight")).toBe("500");
   expect(await style(page, ".mw-agenda-title", "font-family")).toMatch(/^Roboto/);
   expect(await style(page, ".mw-fab", "background-color")).toBe("rgb(36, 42, 55)");
+  // One navy Create control, square with the theme's elevated-surface radius.
+  expect(await page.locator(".mw-fab").evaluate((n) => [n.getBoundingClientRect().width, n.getBoundingClientRect().height, getComputedStyle(n).borderRadius])).toEqual([56, 56, "10px"]);
   expect(await style(page, "#ppo-my-work", "background-color")).toBe("rgb(245, 246, 248)");
   expect(await style(page, ".mw-list-panel", "border-top-color")).toBe("rgb(225, 229, 235)");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
@@ -345,6 +364,38 @@ test("Follow up records the chase and clears nothing; Plan activity closes only 
   expect(cedar.next_activity.summary).toBe("Send climate control quotation summary");
 });
 
+test("an overdue opportunity is raised by the Deals worklist's own rule, and leaves when its next action is no longer overdue", async ({ page }) => {
+  await signIn(page);
+  await open(page);
+  const call = caller(page);
+  const row = attention(page).locator(".mw-attention-row").filter({ hasText: /overdue opportunit/ });
+  await expect(row).toHaveText(/^1\s*overdue opportunity$/);
+  // The count is the Deals worklist's "Overdue" state for the same owner, on the active pipeline.
+  const worklist = (await call(`crm/opportunities?next_action=Overdue&owner_id=${MY_WORK.owner}&pipeline_definition_id=${MY_WORK.pipeline}&limit=50`)).body.items as { id: string }[];
+  expect(worklist.map((o) => o.id)).toEqual([scenario.coastal.id]);
+  await row.click();
+  const queue = page.getByRole("dialog", { name: "Overdue opportunities" });
+  await expect(queue.locator(".mw-gaps > li")).toHaveCount(1);
+  await expect(queue.locator(".mw-gaps > li")).toContainText("Irrigation controls");
+  await expect(queue.locator(".mw-gaps > li")).toContainText("Coastal Berry Farms");
+  await expect(queue.locator(".mw-gaps > li")).toContainText("Send revised irrigation quotation · 1 day overdue");
+  await expect(queue.getByRole("link", { name: "Open activity: Send revised irrigation quotation" })).toHaveAttribute("href", `/work/${scenario.coastal.action}`);
+  await expect(queue.getByRole("link", { name: /^Open these in Opportunities/ })).toHaveAttribute("href", `/sales/opportunities?next_action=Overdue&owner_id=${MY_WORK.owner}`);
+  await page.keyboard.press("Escape");
+  await expect(row).toBeFocused();
+  // Moving that action to tomorrow, by the ordinary command, ends the overdue state for both the
+  // activity and the opportunity it serves. Nothing about the opportunity itself was changed.
+  const moved = await call(`activities/${scenario.coastal.action}/update`, {
+    operation_id: randomUUID(), schema_version: 1, reason: "Customer asked for the quotation tomorrow.", expected_version: 1,
+    owner_id: MY_WORK.owner, summary: "Send revised irrigation quotation", activity_type: "Email",
+    due_at: scenario.slots.tomorrow, due_needed: false, due_date_only: true, starts_at: null,
+  });
+  expect(moved.status).toBeLessThan(300);
+  await open(page);
+  await expect(attention(page).locator(".mw-attention-row").filter({ hasText: /overdue opportunit/ })).toHaveCount(0);
+  await expect(attention(page).locator(".mw-attention-row").first()).toHaveText(/^1\s*overdue activity$/);
+});
+
 test("weather is honest: not connected by default, a provider's answer renders, hiding frees the space, and failure blocks nothing", async ({ page }, info) => {
   await signIn(page);
   await open(page);
@@ -426,9 +477,9 @@ test("an unread source is never zero, the Create control never covers a focused 
     expect(report, `at ${width}px`).toEqual({ covered: [], small: [], lastClear: true, fits: true });
     await page.getByRole("button", { name: /^Show less/ }).click();
   }
-  // Two by two once four across would squeeze the labels.
+  // Icon tiles stay four in a row, even at 320.
   const tiles = await page.locator(".mw-tile").evaluateAll((all) => all.map((t) => Math.round(t.getBoundingClientRect().top)));
-  expect(new Set(tiles).size).toBe(2);
+  expect(new Set(tiles).size).toBe(1);
   await page.setViewportSize({ width: 390, height: 844 });
 
   // An observer reads activities but may not change them: details open without Complete or Reschedule,
@@ -444,5 +495,5 @@ test("an unread source is never zero, the Create control never covers a focused 
   await open(page);
   const emails = page.getByRole("link", { name: "Emails", exact: true });
   await expect(emails).toHaveAttribute("href", "/email");
-  await expect(emails).toHaveText("Emails");
+  await expect(emails).toHaveText("");
 });

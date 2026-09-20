@@ -66,6 +66,62 @@ export async function listPlanningGaps(
   };
 }
 
+// Open opportunities whose designated next action is overdue, for My Work. The rule is again the
+// Deals worklist's own, next_action_state = 'Overdue': the action is active, has a date, and its
+// overdue instant has passed. It is asked at the caller's observation instant, so this count and
+// the activity counts beside it describe the same moment. The action may belong to a colleague,
+// which is why an owner's overdue opportunity is not always among their own overdue activities.
+export type OverdueOpportunity = Omit<PlanningGap, "gap_since" | "can_plan"> & {
+  action_id: string;
+  action_summary: string;
+  action_due_at: string;
+  action_due_date_only: boolean;
+  action_starts_at: string | null;
+  action_owner_id: string;
+  action_owner_name: string;
+};
+export async function listOverdueOpportunities(
+  p: Principal,
+  filters: { owner_id: string | null; company_id: string | null; now: string; limit: number },
+) {
+  const c = database();
+  if (!(await hasPermission(c, p, "crm.opportunity.read"))) return null;
+  const from = `FROM ppo.opportunities o
+    JOIN ppo.users u ON (u.workspace_id,u.id)=(o.workspace_id,o.owner_id)
+    JOIN ppo.organisations r ON (r.workspace_id,r.id)=(o.workspace_id,o.organisation_id)
+    LEFT JOIN ppo.people pe ON (pe.workspace_id,pe.id)=(o.workspace_id,o.primary_person_id)
+    JOIN ppo.activities a ON (a.workspace_id,a.id)=(o.workspace_id,o.next_activity_id) AND ${activityVisibility("a", true, await leadsAvailable(c))}
+    JOIN ppo.users au ON (au.workspace_id,au.id)=(a.workspace_id,a.owner_id)
+    WHERE o.workspace_id=$1 AND ${opportunityVisibility()} AND o.close_outcome='Open'
+      AND a.status IN ('Open','InProgress') AND NOT a.due_needed AND a.due_at<$5::timestamptz
+      AND ($3::uuid IS NULL OR o.owner_id=$3) AND ($4::uuid IS NULL OR o.company_id=$4)`;
+  const scope = [p.workspace_id, p.actor_id, filters.owner_id, filters.company_id, filters.now];
+  const total = (
+    await c.query<{ total: number }>(`SELECT count(*)::int AS total ${from}`, scope)
+  ).rows[0].total;
+  // Longest overdue first; the identifier keeps equal instants in a stable order.
+  const rows = (
+    await c.query<Omit<OverdueOpportunity, "action_due_at" | "action_starts_at"> & { action_due_at: Date; action_starts_at: Date | null }>(
+      `SELECT o.id,o.display_number,o.title,o.version,o.stage_id,o.company_id,o.site_id,o.organisation_id,r.display_name AS organisation_name,
+        o.primary_person_id,pe.display_name AS contact_name,o.owner_id,u.display_name AS owner_name,
+        a.id AS action_id,a.summary AS action_summary,a.due_at AS action_due_at,a.due_date_only AS action_due_date_only,a.starts_at AS action_starts_at,
+        a.owner_id AS action_owner_id,au.display_name AS action_owner_name
+       ${from} ORDER BY a.due_at,o.id LIMIT $6`,
+      [...scope, filters.limit],
+    )
+  ).rows;
+  return {
+    total,
+    items: rows.map(
+      (row): OverdueOpportunity => ({
+        ...row,
+        action_due_at: row.action_due_at.toISOString(),
+        action_starts_at: row.action_starts_at?.toISOString() ?? null,
+      }),
+    ),
+  };
+}
+
 // The leads and open opportunities the reader may plan a next action for: their own, within
 // their edit scope. It feeds the My Work activity form's "linked record" choice, so the form
 // offers only records whose plan command the server would accept.

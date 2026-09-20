@@ -354,7 +354,7 @@ function ProductNavigationView({
               setMore(true);
             }}
           >
-            <ProductIcon name="more" />
+            <ProductIcon name={workspace.id === "sales" ? "bar-more" : "more"} />
             <span>More</span>
           </button>
         )}

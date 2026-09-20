@@ -14,6 +14,7 @@
  --warning:#80530e;--warning-surface:#fff2d9;--warning-border:#efdbb6;--warning-tint:#fffaf1;
  --danger:#993b2a;--danger-surface:#fff1ed;--danger-border:#edc6bd;
  --neutral:#526078;--neutral-surface:#edf0f5;
+ --avatar-surface:#eaf1e5;--avatar-text:#45623b;
  --radius-control:6px;--radius-card:7px;--radius-dialog:10px;
  --shadow:0 16px 52px rgba(36,42,55,.17),0 2px 8px rgba(36,42,55,.06);
  --menu-width:220px;
@@ -59,6 +60,8 @@
 #ppo-my-work .mw-link .mw-icon{width:16px;height:16px}
 #ppo-my-work .mw-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:5px;background:var(--neutral-surface);color:var(--neutral);font-size:12px;font-weight:400;line-height:18px;white-space:nowrap}
 #ppo-my-work .mw-tag-quiet{border:1px solid var(--line);background:var(--surface);color:var(--text-secondary);border-radius:999px;padding:2px 11px;font-size:13px}
+/* Where you are, not a status: the workspace context takes r22's soft brand tint, the one avatars use. */
+#ppo-my-work .mw-tag-context{border-radius:999px;padding:3px 12px;background:var(--avatar-surface);color:var(--avatar-text);font-size:13px;font-weight:500}
 #ppo-my-work .mw-tag-overdue{background:var(--danger-surface);color:var(--danger);margin-left:8px}
 #ppo-my-work .mw-tag-attention{background:var(--warning-surface);color:var(--warning)}
 #ppo-my-work .mw-count{display:inline-grid;place-items:center;min-width:26px;height:24px;margin-left:8px;padding:0 8px;border-radius:999px;background:var(--neutral-surface);color:var(--ink);font-size:14px;font-weight:500;vertical-align:2px}
