@@ -9,6 +9,12 @@
 -- the retained upstream snapshots of 0029 (ppo.material_sources); this module never copies or edits them.
 -- A technical acceptance is not a drawing issue, a material release, a commercial approval, a purchase
 -- amendment, a site instruction, a booking or a commissioning acceptance: nothing here records those facts.
+--
+-- The runner applies every pending migration in one transaction, and PostgreSQL refuses to ALTER a table that
+-- has pending trigger events. This migration alters ppo.business_identities, so, as AGENTS.md requires since
+-- 0029 met that failure in CI, it settles the deferred identity_target checks first and restores deferral
+-- straight afterwards: every later insert still registers an identity before its typed row exists.
+SET CONSTRAINTS ppo.identity_target IMMEDIATE;
 DO $$
 DECLARE item record; definition text;
 BEGIN
@@ -28,6 +34,7 @@ BEGIN
  IF position('CASE NEW.object_type' in definition)=0 THEN RAISE EXCEPTION 'Inspect changed typed identity dispatch'; END IF;
  EXECUTE replace(definition,'CASE NEW.object_type','CASE NEW.object_type WHEN ''EngineeringChange'' THEN ''engineering_changes''');
 END $$;
+SET CONSTRAINTS ppo.identity_target DEFERRED;
 
 -- The change. Its reference is a package-local synthetic alias; PPO-STD-001 catalogues no reference type
 -- for an engineering change, so none is invented and no SYN-PPO counter is consumed. Stage is the concise
