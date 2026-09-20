@@ -20,8 +20,8 @@ export { existingDemoChecksumMatches } from "./migration-registry";
 // A deliberately bounded existing-demo upgrade, not a second bootstrap path.
 // Every database change shares one transaction, including grants and receipts.
 export async function upgradeExistingDemo(databaseName: string, tenant: string, apply: boolean) {
-  // Reviewed for 0030 (EN-07 engineering change-impact review): fifteen new tables (ppo.engineering_changes
-  // and ppo.change_*), eight guard functions and their triggers. Five CHECK constraints are widened by the
+  // Reviewed for 0030 (EN-07 engineering change-impact review): sixteen new tables (ppo.engineering_changes
+  // and fifteen ppo.change_*), nine guard functions and their triggers. Five CHECK constraints are widened by the
   // 0020 OR-append idiom, including 0029's material_sources kind, and identity_has_typed_record() is extended
   // in place, so no existing row is rewritten and no value accepted before is refused. The new tables take
   // ordinary privileges from the generic table grant below. Seed 30 runs here because it is above 17: it
