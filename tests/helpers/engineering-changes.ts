@@ -88,8 +88,8 @@ export async function seedChangesScenario(as: SignIn, ids: ChangeScenarioIds, ta
   const asset = ids.named("asset:controller");
   if ((await coordinator(`assets/${asset}`)).status !== 200)
     await must(coordinator, "assets", { ...base(ids, "asset:controller", "SYN installed asset for the EN-07 review scenario"), id: asset, company_id: CRM.company, site_id: ids.materials.site, description: `SYN Irrigation pump controller${tag}`, identity_status: "Verified", manufacturer: "SYN Fictional Controls", model: "PC-200", lifecycle_status: "Active", installed_on: "2025-11-03", effective_at: "2025-11-03T00:00:00.000Z" }, "Installed asset");
-  const assetRef = ((await coordinator(`assets/${asset}`)).body as { asset?: { display_number: string }; display_number?: string });
-  const assetNumber = assetRef.asset?.display_number ?? assetRef.display_number ?? "SYN asset";
+  // The asset's own allocated reference, read back from the shared record. It is never typed in here.
+  const assetNumber = ((await coordinator(`assets/${asset}`)).body as { items: { display_number: string }[] }).items[0].display_number;
 
   const lineNames: Record<string, string> = { "010": "Pump assembly", "020": "Isolation valve set", "030": "Control interface module" };
   const documentOf = (s: Spec) => {
