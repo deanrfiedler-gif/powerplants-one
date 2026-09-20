@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   applicability, attention, attentionPresentation, categoryProblems, changesPath, closureBlockers, csvCell, duePresentation, implementationProgress, knownCostImpact, nextAction,
-  overlapsBlockingHandover, policyAllows, prerequisiteFrom, requestBlockers, scopeCompleteness, sourceCondition, sourcePresentation, stagePresentation, submitBlockers, decisionPresentation,
+  overlapsBlockingHandover, policyAllows, prerequisiteFrom, requestBlockers, scopeCompleteness, sourceCondition, sourcePresentation, stagePresentation, submitBlockers, decisionChip, decisionPresentation, receivingPresentation,
   assessmentCategories, type AffectedObject, type CategoryFinding, type ChangeFacts, type ClosureFacts, type HandoverContext, type Policy, type ProposalDocument, type SourceLink,
 } from "../../src/engineering/changes/model";
 
@@ -37,6 +37,13 @@ test("EN07-A53 one condition has one tone, icon and label; Decision recorded sta
   assert.equal(attentionPresentation.AssessmentNeeded.tone, "neutral");
   assert.equal(decisionPresentation("Accepted").tone, "positive");
   assert.equal(decisionPresentation("Rejected").tone, "neutral");
+  // Mockup r03 gives a condition its own glyph where it draws one; the tone, and so the colour, is unchanged by it.
+  assert.deepEqual([stagePresentation.Draft.icon, stagePresentation.Assessing.icon, stagePresentation.DecisionRecorded.icon, stagePresentation.Returned.icon], ["clock", "progress", "document", "error"]);
+  assert.deepEqual([stagePresentation.Returned.tone, attentionPresentation.AssessmentNeeded.icon, attentionPresentation.CostReview.icon], ["caution", "info", "warning"]);
+  // The chip beside the review state names which decision it is. An undecided change has no chip; a rejection is not red or green.
+  assert.deepEqual(decisionChip("Accepted"), { label: "Technical accepted", tone: "positive", icon: "tick" });
+  assert.deepEqual([decisionChip("Rejected")?.tone, decisionChip("None")], ["neutral", null]);
+  assert.equal(receivingPresentation.Pending.tone, "information");
   // A future date is neutral, a missing one is "Date needed" and never overdue; overdue says so in words.
   assert.deepEqual(duePresentation(null, "2026-09-20", true), { label: "Date needed", tone: "neutral", icon: "dot" });
   assert.equal(duePresentation("2026-09-22", "2026-09-20", true).tone, "neutral");

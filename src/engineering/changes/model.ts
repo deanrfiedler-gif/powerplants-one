@@ -119,12 +119,14 @@ export const label = (value: string) => labels[value] ?? value.replace(/([a-z])(
 // blocking condition carries its own words. "Decision recorded" stays neutral because the decision
 // underneath may be an acceptance or a rejection; green belongs only to the exact positive fact.
 export type Tone = "neutral" | "information" | "caution" | "failure" | "positive";
-export type ToneIcon = "dot" | "info" | "warning" | "error" | "check";
+export type ToneIcon = "dot" | "info" | "warning" | "error" | "check" | "tick" | "document" | "progress" | "clock";
 export type Presentation = { label: string; tone: Tone; icon: ToneIcon };
-const tone = (text: string, t: Tone): Presentation => ({ label: text, tone: t, icon: ({ neutral: "dot", information: "info", caution: "warning", failure: "error", positive: "check" } as const)[t] });
+// A tone has a default icon. Where mockup r03 draws a condition with a glyph of its own, the mapping names it here, so
+// the register, the queues and the inspector can never disagree about how one condition looks.
+const tone = (text: string, t: Tone, icon?: ToneIcon): Presentation => ({ label: text, tone: t, icon: icon ?? ({ neutral: "dot", information: "info", caution: "warning", failure: "error", positive: "check" } as const)[t] });
 export const stagePresentation: Record<Stage, Presentation> = {
-  Draft: tone("Draft", "neutral"), Assessing: tone("Assessing", "neutral"), InReview: tone("In review", "information"),
-  Returned: tone("Returned", "caution"), DecisionRecorded: tone("Decision recorded", "neutral"), Closed: tone("Closed", "neutral"), Withdrawn: tone("Withdrawn", "neutral"),
+  Draft: tone("Draft", "neutral", "clock"), Assessing: tone("Assessing", "neutral", "progress"), InReview: tone("In review", "information"),
+  Returned: tone("Returned", "caution", "error"), DecisionRecorded: tone("Decision recorded", "neutral", "document"), Closed: tone("Closed", "neutral"), Withdrawn: tone("Withdrawn", "neutral"),
 };
 export const attentionCodes = [
   "RetestFailed", "SourceWithdrawn", "SourceChanged", "SourceUnavailable", "OverlapConflict", "ReceivingReturned", "ScopeClarification", "EvidenceNeeded",
@@ -138,12 +140,14 @@ export const attentionPresentation: Record<AttentionCode, Presentation> = {
   ScopeClarification: tone("Scope clarification", "caution"), EvidenceNeeded: tone("Evidence needed", "caution"), CorrectionNeeded: tone("Correction needed", "caution"),
   ReviewRequired: tone("Review required", "information"), CostReview: tone("Cost review", "caution"), ScheduleReview: tone("Schedule review", "caution"),
   ReleaseNeeded: tone("Revised release needed", "information"), HandoverNeeded: tone("Handover to prepare", "information"), ReceivingAwaited: tone("Receiving awaited", "information"),
-  RetestRequired: tone("Retest required", "information"), ReadyToClose: tone("Ready to close", "information"), AssessmentNeeded: tone("Assessment needed", "neutral"),
+  RetestRequired: tone("Retest required", "information"), ReadyToClose: tone("Ready to close", "information"), AssessmentNeeded: tone("Assessment needed", "neutral", "info"),
   None: tone("No action needed", "neutral"),
 };
 export const decisionPresentation = (d: TechnicalDecision): Presentation => (d === "Accepted" ? tone("Accepted", "positive") : d === "Rejected" ? tone("Rejected", "neutral") : tone("Not decided", "neutral"));
+// The same fact where it stands beside the review state with no row label to say which decision it is.
+export const decisionChip = (d: TechnicalDecision): Presentation | null => (d === "Accepted" ? tone("Technical accepted", "positive", "tick") : d === "Rejected" ? tone("Technical rejected", "neutral") : null);
 export const receivingPresentation: Record<ReceivingOutcome, Presentation> = {
-  Pending: tone("Awaiting response", "neutral"), Accepted: tone("Accepted", "positive"), Returned: tone("Returned", "caution"), Declined: tone("Declined", "caution"), Cancelled: tone("Cancelled", "neutral"),
+  Pending: tone("Awaiting response", "information"), Accepted: tone("Accepted", "positive"), Returned: tone("Returned", "caution", "error"), Declined: tone("Declined", "caution"), Cancelled: tone("Cancelled", "neutral"),
 };
 export const verificationPresentation: Record<VerificationState | "TestBasisNeeded", Presentation> = {
   NotRequired: tone("Not required", "neutral"), Required: tone("Test pending", "neutral"), AwaitingEvidence: tone("Awaiting evidence", "neutral"),

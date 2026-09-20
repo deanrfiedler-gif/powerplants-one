@@ -90,9 +90,9 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
   expect(Math.round((await menu.boundingBox())!.x + 220)).toBe(Math.round((await page.locator(".em-register").boundingBox())!.x));
 
   // A59: the audited fixture, row for row, from the server.
-  const expected = [["Valve assembly substitution", "In review", "21 Sep", "Review required"], ["Pump duty amendment", "Assessing", "21 Sep", "Source changed"], ["Control interface revision", "Decision recorded", "22 Sep", "Cost review"],
-    ["Sensor relocation", "In review", "23 Sep", "Review required"], ["Pipework reroute", "Returned", "24 Sep", "Scope clarification"], ["Filter access clearance", "Assessing", "25 Sep", "Evidence needed"],
-    ["Commissioning logic update", "Decision recorded", "25 Sep", "Retest failed"], ["Valve isolation arrangement", "Draft", "Date needed", "Assessment needed"]];
+  const expected = [["Valve assembly substitution", "In review", "21 Sep 2026", "Review required"], ["Pump duty amendment", "Assessing", "21 Sep 2026", "Source changed"], ["Control interface revision", "Decision recorded", "22 Sep 2026", "Cost review"],
+    ["Sensor relocation", "In review", "23 Sep 2026", "Review required"], ["Pipework reroute", "Returned", "24 Sep 2026", "Scope clarification"], ["Filter access clearance", "Assessing", "25 Sep 2026", "Evidence needed"],
+    ["Commissioning logic update", "Decision recorded", "25 Sep 2026", "Retest failed"], ["Valve isolation arrangement", "Draft", "Date needed", "Assessment needed"]];
   for (const [i, [title, stage, due, attention]] of expected.entries()) {
     const row = rows(page).nth(i);
     await expect(row.locator(".em-row-title")).toHaveText(title);
@@ -101,16 +101,23 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
     await expect(row.locator("td[data-label='Attention']")).toHaveText(attention);
   }
   await expect(page.locator(".em-table-foot")).toContainText("8 changes · 0 selected");
+  // Mockup r03: one cell names the package and where it sits; the page closes with the synthetic notice alone.
+  await expect(page.locator("#ppo-changes .em-context-project > span")).toHaveText("Package / project");
+  await expect(page.locator("#ppo-changes .em-context .em-context-cell")).toHaveCount(3);
+  await expect(page.locator("#ppo-changes .em-page-foot")).toHaveText(/^Synthetic preview · \d{1,2} [A-Z][a-z]{2} \d{4}$/);
 
-  // A53: equal conditions render equal tone; the prescribed r22 values are what the browser computes.
-  const tones = await page.locator("#ppo-changes .em-register td[data-label='Attention'] .ec-tone").evaluateAll((els) => els.map((e) => [e.textContent, (e as HTMLElement).dataset.tone, getComputedStyle(e).color]));
+  // A53: equal conditions render equal tone; the prescribed r22 values are what the browser computes. Mockup r03 sets
+  // each condition as a pill, so the text colour and the plan's "Optional surface" are both checked, and no row is filled.
+  const tones = await page.locator("#ppo-changes .em-register td[data-label='Attention'] .ec-tone").evaluateAll((els) => els.map((e) => [e.textContent, (e as HTMLElement).dataset.tone, getComputedStyle(e).color, getComputedStyle(e).backgroundColor]));
   const reviewRequired = tones.filter(([text]) => text === "Review required");
   expect(reviewRequired).toHaveLength(2);
-  expect(new Set(reviewRequired.map(([, tone, c]) => `${tone}${c}`)).size).toBe(1);
-  expect(reviewRequired[0][2]).toBe(rgb("#346580"));
-  expect(tones.find(([text]) => text === "Cost review")![2]).toBe(rgb("#80530e"));
-  expect(tones.find(([text]) => text === "Retest failed")![2]).toBe(rgb("#993b2a"));
-  expect(tones.find(([text]) => text === "Assessment needed")![2]).toBe(rgb("#526078"));
+  expect(new Set(reviewRequired.map(([, tone, c, surface]) => `${tone}${c}${surface}`)).size).toBe(1);
+  expect(reviewRequired[0].slice(2)).toEqual([rgb("#346580"), rgb("#e9f2f8")]);
+  expect(tones.find(([text]) => text === "Cost review")!.slice(2)).toEqual([rgb("#80530e"), rgb("#fff2d9")]);
+  expect(tones.find(([text]) => text === "Retest failed")!.slice(2)).toEqual([rgb("#993b2a"), rgb("#fff1ed")]);
+  expect(tones.find(([text]) => text === "Assessment needed")!.slice(2)).toEqual([rgb("#526078"), rgb("#edf0f5")]);
+  expect(await page.locator("#ppo-changes .em-register td[data-label='Attention'] .ec-tone svg").count()).toBe(8); // a tone is never colour alone
+  await expect(rows(page).nth(6).locator("td").nth(1)).toHaveCSS("background-color", "rgb(255, 255, 255)"); // "Retest failed" fills its pill, never its row
   const states = await page.locator("#ppo-changes .em-register td[data-label='Review state'] .ec-tone").evaluateAll((els) => els.map((e) => [e.textContent, (e as HTMLElement).dataset.tone]));
   expect(states.filter(([text]) => text === "Decision recorded").every(([, tone]) => tone === "neutral")).toBe(true); // an acceptance or a rejection may lie underneath
   expect(new Set(states.filter(([text]) => text === "In review").map(([, tone]) => tone))).toEqual(new Set(["information"]));
@@ -168,24 +175,39 @@ test("EN07-A54 A55 A56 A60 A25 A44: the inspector projects retained records, and
   await signIn(page, CHANGES.engineer.profile);
   await page.goto(`${s.register}?change=${s.selected}`);
   const inspector = page.getByRole("complementary", { name: /Inspector: SYN-EN07-003/ });
-  await expect(inspector.locator(".ec-row", { hasText: "Technical decision" })).toContainText("Accepted");
-  await expect(inspector.locator(".ec-row", { hasText: "Technical decision" }).locator(".ec-tone")).toHaveAttribute("data-tone", "positive");
-  await expect(inspector.locator(".ec-row", { hasText: "Implementation" })).toContainText("Not authorised");
-  await expect(inspector.locator(".ec-revisions")).toContainText("E-201 · Revision C");
+  // Mockup r03: the review state and the one technical fact stand as chips under the title. "Decision recorded" stays
+  // neutral; only the acceptance is green. While the strip below explains implementation, no third chip repeats it.
+  const chips = inspector.locator(".ec-chips .ec-tone");
+  await expect(chips).toHaveText(["Decision recorded", "Technical accepted"]);
+  await expect(chips.nth(0)).toHaveAttribute("data-tone", "neutral");
+  await expect(chips.nth(1)).toHaveAttribute("data-tone", "positive");
+  await expect(chips.nth(1)).toHaveCSS("color", rgb("#416d33"));
+  await expect(chips.nth(1)).toHaveCSS("background-color", rgb("#edf5e9"));
+  await expect(inspector.getByRole("heading", { level: 3, name: "Technical basis" })).toBeVisible();
+  await expect(inspector.locator(".ec-revisions")).toContainText("E-201 · Rev C");
   await expect(inspector.locator(".ec-revisions")).toContainText("Purpose: Procurement");
-  await expect(inspector.locator(".ec-revisions")).toContainText("E-201 · Revision D");
+  await expect(inspector.locator(".ec-revisions")).toContainText("E-201 · Rev D");
   await expect(inspector.locator(".ec-revisions")).toContainText("Not issued");
   // A54: "Sources current" carries the time of a recorded check, not of this page load.
   await expect(inspector.locator(".ec-sources")).toContainText("Sources current");
   const checked = await inspector.locator(".ec-sources small").innerText();
-  expect(checked).toMatch(/^Checked /);
+  expect(checked).toMatch(/^Checked \d{1,2} [A-Z][a-z]{2} \d{4} · \d{1,2}:\d{2} (am|pm) AEST$/); // the application's own zone, named
   await page.reload();
   await expect(inspector.locator(".ec-sources small")).toHaveText(checked);
-  for (const [label, value] of [["Installed assets", "1 affected"], ["Material lines", "2 affected"], ["Retest", "Required"], ["Cost decision", "Pending"]]) await expect(inspector.locator(".ec-row", { hasText: label })).toContainText(value);
+  for (const [label, value] of [["Installed assets", "1 affected"], ["Material lines", "2 affected"], ["Retest", "Required"], ["Cost decision", "Pending review"]]) await expect(inspector.locator(".ec-row", { hasText: label })).toContainText(value);
+  await expect(inspector.locator(".ec-row", { hasText: "Cost decision" }).locator("strong")).toHaveCSS("color", rgb("#80530e")); // the open review is the caution; it has no surface of its own
+  await expect(inspector.locator(".ec-owner")).toHaveText(/SYN Sam Jordan · Due 22 Sep 2026$/);
   await expect(inspector.locator(".ec-blocking")).toContainText("Commercial review required");
+  await expect(inspector.locator(".ec-blocking")).toContainText("Implementation is not authorised until this prerequisite is resolved.");
   await expect(inspector.locator(".ec-blocking")).toHaveCSS("background-color", rgb("#fff2d9"));
-  // A55: one line per obligation, each from its own record.
+  // A55: one line per obligation, each from its own record, each a whole-row link to that record.
   await expect(inspector.locator(".ec-follow li")).toHaveText([/Revised technical release\s*Not requested/, /Supply Chain review\s*Awaiting response/, /Control interface retest\s*Test pending/]);
+  await expect(inspector.locator(".ec-follow li a")).toHaveCount(3);
+  await expect(inspector.locator(".ec-follow li").nth(1).locator(".ec-tone")).toHaveAttribute("data-tone", "information");
+  // Mockup r03 places the one amber strip under the follow-through it blocks, then the actions in order of weight.
+  expect((await inspector.locator(".ec-blocking").boundingBox())!.y).toBeGreaterThan((await inspector.locator(".ec-follow").boundingBox())!.y);
+  await expect(inspector.locator(".ec-inspector-foot a.mw-button")).toHaveText(["Open commercial review", "Review handover"]);
+  await expect(inspector.locator(".ec-inspector-links a")).toHaveText(/Open impact assessment/);
   // Another row's "Source changed" does not alter this record's indicator, and the reverse.
   await page.getByRole("link", { name: /Inspect SYN-EN07-002/ }).click();
   await expect(page.getByRole("complementary", { name: /Inspector: SYN-EN07-002/ }).locator(".ec-sources")).toContainText("Source changed");
@@ -221,7 +243,7 @@ test("EN07-A54 A55 A56 A60 A25 A44: the inspector projects retained records, and
   await expect(inspector.getByRole("link", { name: "Open commercial review" })).toHaveCount(0);
   await expect(inspector.locator(".ec-inspector-foot .mw-button-primary")).toHaveText("Review handover");
   // A25: technically accepted and commercially confirmed is still not implementation: the revised release is not issued.
-  await expect(inspector.locator(".ec-row", { hasText: "Implementation" })).toContainText("Not authorised");
+  await expect(inspector.locator(".ec-chips .ec-tone")).toHaveText(["Decision recorded", "Technical accepted", "Implementation: not authorised"]);
 
   // A44: a reader with no commercial duty never receives the amounts, in the page or in the payload behind it.
   const viewer = await s.as(CHANGES.viewer.profile), detail = JSON.stringify((await viewer(`${s.base}/impact?change=${s.selected}`)).body);

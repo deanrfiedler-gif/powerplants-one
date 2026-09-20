@@ -3,7 +3,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { attentionPresentation, decisionPresentation, stagePresentation } from "../../model";
 import type { readHistory } from "../../reads";
 import { useChanges } from "./changes-shell";
-import { Icon, ReadNotice, Tone, shortDate, stampText, text, useRead } from "./changes-ui";
+import { Icon, ReadNotice, Tone, stampText, text, useRead, dateText } from "./changes-ui";
 
 type History = Awaited<ReturnType<typeof readHistory>>;
 const subjects = ["Change", "Revision", "Review", "Decision", "Prerequisite", "Handover", "Submission", "RetestAttempt", "SourceCheck", "OverlapDecision", "Closure"] as const;
@@ -32,7 +32,7 @@ export function HistoryView() {
                 <tr key={r.id} data-current={r.id === changeId || undefined} onClick={() => go({ change: r.id })}>
                   <td><button type="button" className="em-row-title" onClick={() => go({ change: r.id })}>{r.title}</button><span className="em-cell-sub">{r.reference}</span></td>
                   <td className="ec-basis">{r.basis}</td><td><Tone view={stagePresentation[r.stage]} />{r.closure && <span className="em-cell-sub">{text(r.closure.meaning)} · {stampText(r.closure.closed_at)}</span>}</td>
-                  <td><Tone view={decisionPresentation(r.decision)} /></td><td>{r.revisions}</td><td>{shortDate(r.due)}</td><td>{r.attention === "None" ? "—" : <Tone view={attentionPresentation[r.attention]} />}</td>
+                  <td><Tone view={decisionPresentation(r.decision)} /></td><td>{r.revisions}</td><td>{dateText(r.due)}</td><td>{r.attention === "None" ? "—" : <Tone view={attentionPresentation[r.attention]} />}</td>
                 </tr>
               ))}
             </tbody>

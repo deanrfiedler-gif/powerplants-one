@@ -8,7 +8,7 @@ import {
 import type { ImpactQueueRow, readCandidates, readPeople } from "../../reads";
 import { useChanges } from "./changes-shell";
 import { Coordination } from "./coordination";
-import { CommandNotice, Field, Icon, Reason, Tone, ToneMark, dateText, fieldError, newId, shortDate, stampText, text, useChangeCommand, useRead } from "./changes-ui";
+import { CommandNotice, Field, Icon, Reason, Tone, ToneMark, dateText, fieldError, newId, stampText, text, useChangeCommand, useRead } from "./changes-ui";
 import { DetailHead, Page, lines, usePanelFocus, useSelect, useView, type Detail, type View } from "./view-common";
 
 type People = Awaited<ReturnType<typeof readPeople>>;
@@ -28,7 +28,7 @@ export function ImpactView() {
               {rows.map((r) => (
                 <tr key={r.id} data-current={r.id === view.changeId || undefined} onClick={() => select(r.id)}>
                   <td><button type="button" className="em-row-title" onClick={() => select(r.id)}>{r.title}</button><span className="em-cell-sub">{r.reference}</span></td>
-                  <td className="ec-basis">{r.basis}</td><td><Tone view={stagePresentation[r.stage]} /></td><td>{r.next_owner_name ?? "Unassigned"}</td><td>{shortDate(r.due)}</td><td><Tone view={attentionPresentation[r.attention]} /></td>
+                  <td className="ec-basis">{r.basis}</td><td><Tone view={stagePresentation[r.stage]} /></td><td>{r.next_owner_name ?? "Unassigned"}</td><td>{dateText(r.due)}</td><td><Tone view={attentionPresentation[r.attention]} /></td>
                 </tr>
               ))}
             </tbody>

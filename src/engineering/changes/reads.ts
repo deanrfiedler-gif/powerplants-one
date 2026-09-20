@@ -85,9 +85,11 @@ function inspect(l: LoadedChange, access: Access, packageId: string) {
     summary: {
       installed_assets: included.filter((o) => o.object_type === "InstalledAsset").length, material_lines: included.filter((o) => o.object_type === "MaterialLine").length,
       retest: l.verification.length ? "Required" : l.revision.categories.find((k) => k.key === "retest")?.status === "NotApplicable" ? "Not required" : "Not assessed",
-      cost_decision: commercial ? (commercial.applicability === "NotApplicable" ? "Not applicable" : commercial.state === "Open" ? "Pending" : commercial.state) : cost ? (cost.status === "NotAssessed" ? "Not assessed" : cost.status === "NotApplicable" ? "Not applicable" : "With technical review") : "Not assessed",
+      cost_decision: commercial ? (commercial.applicability === "NotApplicable" ? "Not applicable" : commercial.state === "Open" ? "Pending review" : commercial.state) : cost ? (cost.status === "NotAssessed" ? "Not assessed" : cost.status === "NotApplicable" ? "Not applicable" : "With technical review") : "Not assessed",
+      // Only the open review is a caution; a confirmed or inapplicable one is a plain fact, not a green one.
+      cost_tone: (commercial && commercial.applicability !== "NotApplicable" && commercial.state === "Open" ? "caution" : "neutral") as Presentation["tone"],
     },
-    blocking: waiting && owner ? { kind: waiting.kind, title: `${waiting.kind === "Commercial" ? "Commercial" : "Schedule"} review required`, text: waiting.kind === "Commercial" ? "Confirm cost impact before implementation handover." : "Confirm the date effect before implementation handover.", owner_name: owner.owner_name,
+    blocking: waiting && owner ? { kind: waiting.kind, title: `${waiting.kind === "Commercial" ? "Commercial" : "Schedule"} review required`, text: "Implementation is not authorised until this prerequisite is resolved.", owner_name: owner.owner_name,
       // Someone who cannot resolve it still reads it, and is told whose it is.
       permitted: access.can.commercial ? null : `You can read this review. Resolving it belongs to ${owner.owner_name ?? "the commercial coordinator"}.` } : null,
     follow_through: followThrough(l),
