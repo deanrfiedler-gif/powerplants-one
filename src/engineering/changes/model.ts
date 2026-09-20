@@ -267,7 +267,7 @@ export function categoryProblems(categories: CategoryFinding[]): { key: Category
     else if (c.status === "Assessed" && c.impact === "NoImpact" && !c.reason?.trim()) out.push({ key, message: `${name}: “no impact” needs the rationale that supports it.`, blocking: true });
     else if (c.status === "EvidenceNeeded") out.push({ key, message: `${name}: evidence is outstanding${c.owner_id ? "" : " and has no owner"}.`, blocking: isTechnical || !c.owner_id });
     // A cost or date impact is somebody else's decision. It may stay open through technical review only while it is visibly owned.
-    else if (!isTechnical && c.status === "Assessed" && c.impact === "Impact" && !c.owner_id) out.push({ key, message: `${name}: name who owns the decision this impact needs.`, blocking: true });
+    else if ((key === "cost" || key === "dates") && c.status === "Assessed" && c.impact === "Impact" && !c.owner_id) out.push({ key, message: `${name}: name who owns the decision this impact needs.`, blocking: true });
   }
   return out;
 }
