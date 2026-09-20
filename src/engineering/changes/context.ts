@@ -215,7 +215,9 @@ export async function loadPackageChanges(c: QueryClient, p: Principal, access: A
     changes: await q<ChangeRow>(`SELECT t.*,t.due::text,au.display_name AS author_name,nx.display_name AS next_owner_name FROM ppo.engineering_changes t ${user("au", "author_id", true)} ${user("nx", "next_owner_id")} WHERE t.workspace_id=$1 AND t.package_id=$2 ORDER BY t.change_number`),
     revisions: await q<RevisionRow>(`SELECT t.*,t.return_due::text,sb.display_name AS submitted_by_name,rb.display_name AS returned_by_name,ro.display_name AS return_owner_name FROM ppo.change_revisions t ${user("sb", "submitted_by")} ${user("rb", "returned_by")} ${user("ro", "return_owner_id")} ${inPackage} ORDER BY t.revision_number`),
     objects: await q<ObjectRow>(`SELECT t.*,ow.display_name AS owner_name FROM ppo.change_objects t ${user("ow", "owner_id")} ${viaRevision} ORDER BY t.sort_order,t.reference`),
-    links: await q<LinkRow>(`SELECT t.revision_id,t.source_id,t.role,t.required,t.snapshot FROM ppo.change_revision_sources t ${viaRevision}`),
+    // Ordered like every other list here: an unordered read let one revision's sources come back in a different order
+    // between a preview and its confirmation, which changed the hash and refused an unchanged preview as stale.
+    links: await q<LinkRow>(`SELECT t.revision_id,t.source_id,t.role,t.required,t.snapshot FROM ppo.change_revision_sources t ${viaRevision} ORDER BY t.role,t.source_id`),
     retests: await q<RetestRow>(`SELECT t.*,t.due::text,ve.display_name AS verifier_name FROM ppo.change_retests t ${user("ve", "verifier_id")} ${viaRevision} ORDER BY t.sort_order,t.criterion`),
     attempts: await q<AttemptRow>(`SELECT t.*,t.corrective_due::text,rc.display_name AS recorded_by_name,co.display_name AS corrective_owner_name FROM ppo.change_retest_attempts t ${user("rc", "recorded_by", true)} ${user("co", "corrective_owner_id")} ${inPackage} ORDER BY t.attempt_number`),
     reviews: await q<ReviewRow>(`SELECT t.*,rv.display_name AS reviewer_name FROM ppo.change_reviews t ${user("rv", "reviewer_id", true)} ${inPackage} ORDER BY t.created_at,t.discipline`),
