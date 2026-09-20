@@ -67,3 +67,19 @@ export function withSeededFixtureDates(sql: string, seededAt: Date): string {
  * where it is; P06's long-validity dates are a separate, later cliff.
  */
 export const seededFixtureVersions: readonly number[] = [5];
+
+/**
+ * Shift the calendar day at the front of a fixture value, keeping whatever follows it
+ * exactly as written. Browser specs name days ("2026-10-01") and site-local datetimes
+ * ("2026-10-10T10:00") that a UI control parses, so they cannot go through ISO instants
+ * without changing what is typed into the field.
+ */
+export function shiftFixtureCalendarDay(value: string, shiftDays: number): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})(.*)$/.exec(value);
+  if (!match) throw new Error(`Not a fixture date: ${value}`);
+  const [, year, month, day, rest] = match;
+  const moved = new Date(
+    Date.UTC(Number(year), Number(month) - 1, Number(day)) + shiftDays * dayMs,
+  );
+  return `${moved.toISOString().slice(0, 10)}${rest}`;
+}

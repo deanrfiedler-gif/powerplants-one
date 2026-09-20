@@ -1,4 +1,19 @@
+import { closeDatabase } from "../../src/platform/database";
+import { fixtureShift } from "../helpers/fixture-time";
+import { shiftFixtureCalendarDay } from "../../scripts/fixture-dates";
 import { test, expect, type Page } from "@playwright/test";
+
+// Seeding moves the P05 family into this database's own future (ADR-0031). These specs
+// book their own visits in the gap after that family, so their dates travel with it:
+// shifting both by the same whole-day offset keeps the authored gap and keeps the crew
+// free when the spec asks for it. The dates below are still written as authored.
+let shift = 0;
+test.beforeAll(async () => {
+  process.loadEnvFile(".env.local");
+  shift = await fixtureShift();
+});
+test.afterAll(closeDatabase);
+const t = (authored: string) => shiftFixtureCalendarDay(authored, shift);
 const id = (t: string, n = 1) =>
   `${t}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 async function identity(page: Page, profile = "coordinator") {
@@ -93,7 +108,7 @@ async function ready(page: Page, day: string, confirm = false) {
       criterion_code: "ToolPreparation",
       outcome: "Pass",
       reason: "SYN exact browser fixture preparation review",
-      source_as_at: "2026-09-05T00:00:00Z",
+      source_as_at: t("2026-09-05T00:00:00Z"),
       evidence: {
         title: "SYN browser preparation",
         content_text:
@@ -185,7 +200,7 @@ test("P05 SC-07 day/week lanes, explicit filters, empty/error and keyboard focus
   await expect(page.getByRole("dialog")).toBeVisible();
   await capture(page, info, "keyboard-move-form");
   await page.getByRole("button", { name: "Close move", exact: true }).click();
-  await page.getByLabel("Starting date").fill("2027-02-01");
+  await page.getByLabel("Starting date").fill(t("2027-02-01"));
   await expect(
     page.getByText(
       "No permitted appointments in this period. Resource evidence still applies.",
@@ -224,7 +239,7 @@ test("P05 SC-08 contact refusal, owned failure, exact agreement, full crew confi
   await identity(page);
   const aid = await ready(
     page,
-    info.project.name.startsWith("mobile") ? "2026-10-02" : "2026-10-01",
+    info.project.name.startsWith("mobile") ? t("2026-10-02") : t("2026-10-01"),
   );
   await page.goto("/service/appointments/" + aid);
   await page
@@ -307,8 +322,8 @@ test("P05 controlled move conflict keeps original position; uncertain accepted r
   await page.goto("/schedule");
   await identity(page);
   const day = info.project.name.startsWith("mobile")
-      ? "2026-10-08"
-      : "2026-10-07",
+      ? t("2026-10-08")
+      : t("2026-10-07"),
     aid = await ready(page, day, true);
   await page.getByLabel("Starting date").fill(day);
   await page.getByRole("button", { name: "Week", exact: true }).click();
@@ -323,7 +338,7 @@ test("P05 controlled move conflict keeps original position; uncertain accepted r
     const card = lane
       .locator(".appointment-card")
       .filter({ has: page.locator(`a[href="/service/appointments/${aid}"]`) });
-    await card.dragTo(lane.locator('[data-day="2026-10-09"]'));
+    await card.dragTo(lane.locator(`[data-day="${t("2026-10-09")}"]`));
     await expect(page.getByRole("dialog")).toBeVisible();
     await capture(page, info, "drag-proposal");
   } else {
@@ -334,8 +349,8 @@ test("P05 controlled move conflict keeps original position; uncertain accepted r
     await page.keyboard.press("Enter");
   }
   const dialog = page.getByRole("dialog");
-  await dialog.getByLabel("Start (site time)").fill("2026-10-10T10:00");
-  await dialog.getByLabel("Finish (site time)").fill("2026-10-10T12:00");
+  await dialog.getByLabel("Start (site time)").fill(t("2026-10-10T10:00"));
+  await dialog.getByLabel("Finish (site time)").fill(t("2026-10-10T12:00"));
   await dialog
     .getByLabel("Change reason")
     .fill("SYN attempted weekend move must retain the original booking.");
@@ -344,7 +359,7 @@ test("P05 controlled move conflict keeps original position; uncertain accepted r
     "published working interval",
   );
   await expect(dialog.getByLabel("Start (site time)")).toHaveValue(
-    "2026-10-10T10:00",
+    t("2026-10-10T10:00"),
   );
   expect((await call(page, "appointments/" + aid)).items[0].start_at).toContain(
     day,
@@ -367,7 +382,7 @@ test("P05 controlled move conflict keeps original position; uncertain accepted r
     "changed",
   );
   await expect(dialog.getByLabel("Start (site time)")).toHaveValue(
-    "2026-10-10T10:00",
+    t("2026-10-10T10:00"),
   );
   await dialog
     .getByRole("button", { name: "Review saved appointment", exact: true })
@@ -379,8 +394,8 @@ test("P05 controlled move conflict keeps original position; uncertain accepted r
   await dialog
     .getByRole("button", { name: "Use reviewed current versions" })
     .click();
-  await dialog.getByLabel("Start (site time)").fill("2026-09-21T10:00");
-  await dialog.getByLabel("Finish (site time)").fill("2026-09-21T12:00");
+  await dialog.getByLabel("Start (site time)").fill(t("2026-09-21T10:00"));
+  await dialog.getByLabel("Finish (site time)").fill(t("2026-09-21T12:00"));
   await dialog.getByRole("button", { name: "Save proposed move" }).click();
   await expect(dialog.locator(".business-error[role=alert]")).toContainText(
     "reserved",
@@ -390,8 +405,8 @@ test("P05 controlled move conflict keeps original position; uncertain accepted r
   );
   await capture(page, info, "crew-conflict-original-retained");
   const target = info.project.name.startsWith("mobile")
-    ? "2026-10-13"
-    : "2026-10-12";
+    ? t("2026-10-13")
+    : t("2026-10-12");
   await dialog.getByLabel("Start (site time)").fill(target + "T10:00");
   await dialog.getByLabel("Finish (site time)").fill(target + "T12:00");
   await dialog
@@ -443,7 +458,7 @@ test("P05 project requests reject then accept through keyboard; technician reque
   await identity(page);
   const aid = await ready(
     page,
-    info.project.name.startsWith("mobile") ? "2026-10-16" : "2026-10-15",
+    info.project.name.startsWith("mobile") ? t("2026-10-16") : t("2026-10-15"),
     true,
   );
   await page.goto("/service/appointments/" + aid);
@@ -457,8 +472,8 @@ test("P05 project requests reject then accept through keyboard; technician reque
   await form.getByLabel("Request source").selectOption("ProjectReference");
   await form.getByLabel("Source reference").fill("SYN-PPO-PROJECT-PLANNER");
   await form.getByLabel("Source version").fill("1");
-  await form.getByLabel("Start (site time)").fill("2026-10-19T10:00");
-  await form.getByLabel("Finish (site time)").fill("2026-10-19T12:00");
+  await form.getByLabel("Start (site time)").fill(t("2026-10-19T10:00"));
+  await form.getByLabel("Finish (site time)").fill(t("2026-10-19T12:00"));
   await form
     .getByLabel("Change reason")
     .fill(
@@ -496,8 +511,8 @@ test("P05 project requests reject then accept through keyboard; technician reque
   await fresh.getByLabel("Source reference").fill("SYN-PPO-PROJECT-PLANNER");
   await fresh.getByLabel("Source version").fill("2");
   const target = info.project.name.startsWith("mobile")
-    ? "2026-10-21"
-    : "2026-10-20";
+    ? t("2026-10-21")
+    : t("2026-10-20");
   await fresh.getByLabel("Start (site time)").fill(target + "T10:00");
   await fresh.getByLabel("Finish (site time)").fill(target + "T12:00");
   await fresh

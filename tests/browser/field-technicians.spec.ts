@@ -1,4 +1,19 @@
+import { closeDatabase } from "../../src/platform/database";
+import { fixtureShift } from "../helpers/fixture-time";
+import { shiftFixtureCalendarDay } from "../../scripts/fixture-dates";
 import { test, expect, type Page } from "@playwright/test";
+
+// Seeding moves the P05 family into this database's own future (ADR-0031). These specs
+// book their own visits in the gap after that family, so their dates travel with it:
+// shifting both by the same whole-day offset keeps the authored gap and keeps the crew
+// free when the spec asks for it. The dates below are still written as authored.
+let shift = 0;
+test.beforeAll(async () => {
+  process.loadEnvFile(".env.local");
+  shift = await fixtureShift();
+});
+test.afterAll(closeDatabase);
+const t = (authored: string) => shiftFixtureCalendarDay(authored, shift);
 
 async function identity(page: Page, profile = "coordinator") {
   await expect(
@@ -22,7 +37,7 @@ async function identity(page: Page, profile = "coordinator") {
 async function open(page: Page) {
   await page.goto("/service/technicians");
   await identity(page);
-  await page.getByLabel("Visit date", { exact: true }).fill("2026-09-21");
+  await page.getByLabel("Visit date", { exact: true }).fill(t("2026-09-21"));
   await expect(
     page.getByRole("table", { name: "Scheduled service visits", exact: true }),
   ).toBeVisible();

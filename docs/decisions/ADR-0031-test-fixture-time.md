@@ -107,11 +107,15 @@ and the clock alone.**
    moment that straddles now and a visit — the `valid_until` cases in
    `tests/database/planner.test.ts`, the helpers in `tests/helpers/packs.ts` — it reads the
    appointment it is exercising and computes from its `end_at`, instead of naming a date.
-3. **Browser specs that create their own visits are a separate step, not in this change.**
-   They name 2026-10-01 and 2026-11-17 and do not fail until 1 October. They run in the
-   required compiled browser suite, which is green today, and they cannot be exercised
-   locally either, so changing them here would risk a passing required check for no
-   immediate gain. They are scheduled ahead of 1 October as their own reviewed change.
+3. **Browser specs that book their own visits move with the family, in this change.**
+   An earlier revision of this record deferred them to a separate step before 1 October,
+   on the reasoning that they do not fail until then. **That was wrong, and CI proved it.**
+   They book into the gap *after* the seeded family, so moving the family alone closed that
+   gap: the seeded appointments landed on 1 October, the crew was already committed, and
+   `planner.spec.ts` and `field-technicians.spec.ts` failed with `ResourceConflict` —
+   "SYN Alex Lead: unavailable during the visit or travel allowance" — in the **required**
+   compiled browser suite. Shifting those specs by the same offset restores the authored
+   gap exactly, and closes the 1 October cliff as a consequence rather than as a promise.
 4. **Scope is limited to fixtures that are compared against the real clock.** Unit tests
    that pass a fixed "now" alongside fixed inputs and assert a fixed output are correct as
    they stand and are deliberately not touched. Of the 48 files containing future-dated
@@ -157,7 +161,7 @@ Three of its objections to option 2, measured against what was actually built:
 | --- | --- |
 | Seeded data becomes non-deterministic between runs | Correct. The offset is whole days from the seeding date, so it is fixed within a run and every interval between fixtures is invariant, but two databases seeded on different days hold different absolute instants. |
 | It diverges the hosted demo from freshly seeded databases | The demo's behaviour is not changed: its seed receipts mean the seeds never run again, so it keeps exactly the rows it has. A newly created demo gets dates in its own future, which is better than today. The divergence is real but is between *old* and *new* databases, not a regression to the running demo. |
-| Every absolute literal in the affected suites must move in the same change | Partly met. The database suites are done; the browser specs are not, and are scheduled separately before 1 October. |
+| Every absolute literal in the affected suites must move in the same change | **Correct, and the sharpest of the three.** Deferring the browser specs broke a required check on the first CI run, because a half-applied frame closes the gap the specs rely on. They are now in the same change. Any suite that books against the seeded family has to move with it; this is the standing cost of option 2. |
 
 **The strongest argument for option 3, stated plainly:** it would also repair the October browser
 cliff without touching those specs at all, because it keeps every authored literal valid. Option 2
@@ -205,10 +209,9 @@ realistic, only that it is legally positioned relative to the moment it is creat
 does not remove every fixed date from the suites, only those that are compared against
 the real clock.
 
-**What remains after this change.** The 1 October browser-spec cliff and the 2027-01-01
-long-validity literals — including `valid_until` in `tests/helpers/isolated-field-http.ts`
-— are untouched and still armed. Neither is failing yet; both need their own change before
-their date.
+**What remains after this change.** The 2027-01-01 long-validity literals, including
+`valid_until` in `tests/helpers/isolated-field-http.ts`, are untouched and still armed.
+The 1 October browser-spec cliff is closed here, not deferred.
 
 **Verification limit.** The database suites refuse any database but `ppo_synthetic_test`,
 and the local role `ppo_local` has neither `CREATEDB` nor superuser, with only

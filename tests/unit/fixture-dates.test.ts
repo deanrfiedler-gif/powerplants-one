@@ -7,6 +7,7 @@ import {
   fixtureShiftDays,
   seedAnchor,
   shiftFixtureDate,
+  shiftFixtureCalendarDay,
   withSeededFixtureDates,
 } from "../../scripts/fixture-dates";
 
@@ -101,5 +102,26 @@ test("the real P05 seed rewrites completely, leaving no authored instant behind"
   assert.equal(
     moved.replace(/'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z'/g, "@"),
     sql.replace(/'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z'/g, "@"),
+  );
+});
+
+test("a calendar-day shift keeps the shape of what a form field is given", () => {
+  // A whole week, so the weekday is unchanged and seeded availability still applies.
+  assert.equal(shiftFixtureCalendarDay("2026-10-01", 7), "2026-10-08");
+  assert.equal(shiftFixtureCalendarDay("2026-10-10T10:00", 7), "2026-10-17T10:00");
+  assert.equal(shiftFixtureCalendarDay("2026-09-21T10:00", 7), "2026-09-28T10:00");
+  assert.equal(shiftFixtureCalendarDay("2026-09-05T00:00:00Z", 7), "2026-09-12T00:00:00Z");
+  // Month and year ends carry properly.
+  assert.equal(shiftFixtureCalendarDay("2026-12-28", 7), "2027-01-04");
+  assert.equal(shiftFixtureCalendarDay("2026-02-25", 7), "2026-03-04");
+  assert.equal(shiftFixtureCalendarDay("2026-10-01", 0), "2026-10-01");
+  assert.throws(() => shiftFixtureCalendarDay("not-a-date", 7));
+  // The gap between two fixtures is preserved, which is what keeps a spec's own visit
+  // clear of the seeded family after both move.
+  const seeded = shiftFixtureCalendarDay("2026-09-21", 7);
+  const own = shiftFixtureCalendarDay("2026-10-01", 7);
+  assert.equal(
+    (Date.parse(own) - Date.parse(seeded)) / 86_400_000,
+    (Date.parse("2026-10-01") - Date.parse("2026-09-21")) / 86_400_000,
   );
 });
