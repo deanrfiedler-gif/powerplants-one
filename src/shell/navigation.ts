@@ -305,6 +305,30 @@ export function materialsPath(path: string) {
   const view = match[1] ? materialViews.find((v) => v.segment === (match[2] ?? "")) : undefined;
   return match[1] && !view ? undefined : { package_id: match[1] ?? null, view };
 }
+// The EN-07 Engineering Change-Impact Review secondary menu (build plan r02, section 6): six route-backed
+// destinations under one Engineering package, in this order. There are no horizontal module tabs.
+export const changesModuleLabel = "Engineering Change-Impact Review";
+export const changeViews = [
+  { id: "register", label: "Change register", segment: "" },
+  { id: "impact", label: "Impact assessment", segment: "impact" },
+  { id: "reviews", label: "Review & decisions", segment: "reviews" },
+  { id: "handovers", label: "Actions & handovers", segment: "handovers" },
+  { id: "verification", label: "Retest & verification", segment: "verification" },
+  { id: "history", label: "Changes & history", segment: "history" },
+] as const;
+export type ChangeViewId = (typeof changeViews)[number]["id"];
+// ?change=<uuid> names the selected change in every destination; the server validates it against the package.
+export const changesHref = (packageId: string, view: ChangeViewId = "register", changeId?: string | null) => {
+  const segment = changeViews.find((v) => v.id === view)!.segment;
+  return `/engineering/${packageId}/changes${segment ? `/${segment}` : ""}${changeId ? `?change=${changeId}` : ""}`;
+};
+// The entry page has no destination; an unknown segment answers nothing rather than pretending to be the register.
+export function changesPath(path: string) {
+  const match = /^\/engineering\/(?:([^/]+)\/)?changes(?:\/([a-z]+))?\/?$/.exec(path);
+  if (!match) return undefined;
+  const view = match[1] ? changeViews.find((v) => v.segment === (match[2] ?? "")) : undefined;
+  return match[1] && !view ? undefined : { package_id: match[1] ?? null, view };
+}
 export const workViewForPath = (path: string) =>
   workViews.find((view) => view.href === path);
 export const destination = (id: string) =>

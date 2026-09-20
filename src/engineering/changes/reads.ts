@@ -89,7 +89,7 @@ function inspect(l: LoadedChange, access: Access, packageId: string) {
     },
     blocking: waiting && owner ? { kind: waiting.kind, title: `${waiting.kind === "Commercial" ? "Commercial" : "Schedule"} review required`, text: waiting.kind === "Commercial" ? "Confirm cost impact before implementation handover." : "Confirm the date effect before implementation handover.", owner_name: owner.owner_name,
       // Someone who cannot resolve it still reads it, and is told whose it is.
-      permitted: access.can.commercial ? null : `You can read this review. Resolving it belongs to ${owner.owner_name ?? "the commercial coordinator"}; an information request to Projects is the owned way to ask.` } : null,
+      permitted: access.can.commercial ? null : `You can read this review. Resolving it belongs to ${owner.owner_name ?? "the commercial coordinator"}.` } : null,
     follow_through: followThrough(l),
     actions: {
       primary: { ...l.next, href: href(l.next.view, l.next.panel) },
@@ -199,20 +199,28 @@ async function detail(f: Frame, p: Principal, l: LoadedChange, packageId: string
   };
 }
 
+// The package queue of each focused destination. Each is the whole permitted package for that destination, never a page of it.
+const openOnly = (changes: LoadedChange[]) => changes.filter((l) => isOpen(l.row.stage));
+const impactQueue = (changes: LoadedChange[]) => openOnly(changes).filter((l) => ["Draft", "Assessing", "Returned"].includes(l.row.stage) || l.condition.condition !== "Current").map(row);
+const reviewsQueue = (changes: LoadedChange[], actor: string) => openOnly(changes).filter((l) => l.row.stage === "InReview" || l.row.stage === "DecisionRecorded")
+  .map((l) => ({ ...row(l), reviews: l.reviews.map((r) => ({ discipline: r.discipline, reviewer_name: r.reviewer_name, required: r.required, result: r.result, mine: r.reviewer_id === actor })) }));
+const handoversQueue = (changes: LoadedChange[], actor: string) => changes.flatMap((l) => [
+  ...l.prerequisites.filter((x) => x.applicability !== "NotApplicable").map((x) => ({ key: x.id, kind: "prerequisite" as const, change_id: l.row.id, reference: l.row.reference, title: l.row.title, what: `${x.kind} review`, destination: "Synthetic prerequisite", owner_name: x.owner_name, due: x.due,
+    state_view: x.state === "Open" ? tone(x.applicability === "Unknown" ? "Applicability unknown" : "Open", "caution") : tone(x.state, x.state === "Confirmed" ? "positive" : "caution"), mine: x.owner_id === actor })),
+  ...l.requests.map((r) => ({ key: r.handover.id, kind: "request" as const, change_id: l.row.id, reference: l.row.reference, title: l.row.title, what: label(r.handover.purpose), destination: label(r.handover.destination), owner_name: r.handover.owner_name as string | null, due: r.handover.due, state_view: receivingPresentation[r.handover.state], mine: r.handover.owner_id === actor })),
+]);
+const verificationQueue = (changes: LoadedChange[], actor: string) => changes.flatMap((l) => l.verification.map((v) => ({ key: v.retest.id, change_id: l.row.id, reference: l.row.reference, title: l.row.title, criterion: v.retest.criterion, asset_or_system: v.retest.asset_or_system, configuration: v.retest.configuration, verifier_name: v.retest.verifier_name, due: v.retest.due, attempts: v.attempts.length,
+  state_view: verificationPresentation[!v.retest.procedure_source_id && v.state !== "Passed" && v.state !== "Failed" ? "TestBasisNeeded" : v.state], mine: v.retest.verifier_id === actor })));
+export type ImpactQueueRow = ReturnType<typeof impactQueue>[number];
+export type ReviewsQueueRow = ReturnType<typeof reviewsQueue>[number];
+export type HandoversQueueRow = ReturnType<typeof handoversQueue>[number];
+export type VerificationQueueRow = ReturnType<typeof verificationQueue>[number];
+
 // The five focused destinations share one read: the package queue for that destination, and the selected
 // change in full when the address names one the reader may see.
-const views = ["impact", "reviews", "handovers", "verification"] as const;
-export async function readView(p: Principal, packageId: string, query: unknown, view: (typeof views)[number]) {
+export async function readView(p: Principal, packageId: string, query: unknown, view: "impact" | "reviews" | "handovers" | "verification") {
   const q = object(query, ["change"]), f = await frame(p, packageId), selectedId = optionalId(q.change || undefined, "change"), selected = selectedId ? f.changes.find((l) => l.row.id === selectedId) : undefined;
-  const open = f.changes.filter((l) => isOpen(l.row.stage));
-  const queue = view === "impact" ? open.filter((l) => ["Draft", "Assessing", "Returned"].includes(l.row.stage) || l.condition.condition !== "Current").map(row)
-    : view === "reviews" ? open.filter((l) => l.row.stage === "InReview" || l.row.stage === "DecisionRecorded").map((l) => ({ ...row(l), reviews: l.reviews.map((r) => ({ discipline: r.discipline, reviewer_name: r.reviewer_name, required: r.required, result: r.result, mine: r.reviewer_id === p.actor_id })) }))
-    : view === "handovers" ? f.changes.flatMap((l) => [
-        ...l.prerequisites.filter((x) => x.applicability !== "NotApplicable").map((x) => ({ key: x.id, kind: "prerequisite" as const, change_id: l.row.id, reference: l.row.reference, title: l.row.title, what: `${x.kind} review`, destination: "Synthetic prerequisite", owner_name: x.owner_name, due: x.due, state_view: x.state === "Open" ? tone(x.applicability === "Unknown" ? "Applicability unknown" : "Open", "caution") : tone(x.state, x.state === "Confirmed" ? "positive" : "caution"), mine: x.owner_id === p.actor_id })),
-        ...l.requests.map((r) => ({ key: r.handover.id, kind: "request" as const, change_id: l.row.id, reference: l.row.reference, title: l.row.title, what: label(r.handover.purpose), destination: label(r.handover.destination), owner_name: r.handover.owner_name, due: r.handover.due, state_view: receivingPresentation[r.handover.state], mine: r.handover.owner_id === p.actor_id })),
-      ])
-    : f.changes.flatMap((l) => l.verification.map((v) => ({ key: v.retest.id, change_id: l.row.id, reference: l.row.reference, title: l.row.title, criterion: v.retest.criterion, asset_or_system: v.retest.asset_or_system, configuration: v.retest.configuration, verifier_name: v.retest.verifier_name, due: v.retest.due, attempts: v.attempts.length,
-        state_view: verificationPresentation[!v.retest.procedure_source_id && v.state !== "Passed" && v.state !== "Failed" ? "TestBasisNeeded" : v.state], mine: v.retest.verifier_id === p.actor_id })));
+  const queue = view === "impact" ? impactQueue(f.changes) : view === "reviews" ? reviewsQueue(f.changes, p.actor_id) : view === "handovers" ? handoversQueue(f.changes, p.actor_id) : verificationQueue(f.changes, p.actor_id);
   return { ...f.shell, view, queue, selected: selected ? await detail(f, p, selected, packageId) : null, selection: selectedId ? (selected ? "Found" as const : "Unavailable" as const) : "None" as const,
     sources: f.sources.map(sourceView), site_timezone: f.access.site_timezone };
 }
@@ -312,12 +320,16 @@ export async function readEntry(p: Principal, query: unknown) {
 // Exports follow the reader's projection, keep source and decision times apart from the generated time, neutralise
 // formula-leading text and never carry a cost the reader may not see. Exporting issues and distributes nothing.
 export async function exportCsv(p: Principal, packageId: string, query: unknown) {
-  const q = object(query, ["kind", "change", "view", "q", "stage", "discipline", "owner_id", "location", "attention", "source", "receiving", "sort", "dir"]), kind = choice(q.kind ?? "register", "kind", ["register", "assessment", "handover", "verification"] as const);
+  const q = object(query, ["kind", "change", "ids", "view", "q", "stage", "discipline", "owner_id", "location", "attention", "source", "receiving", "sort", "dir"]), kind = choice(q.kind ?? "register", "kind", ["register", "assessment", "handover", "verification"] as const);
   const generated = new Date().toISOString(), head = (f: Frame, what: string) => [["Synthetic local prototype", "Powerplants One", what], ["Not an issue, approval, instruction or distribution of any controlled document"], ["Package", f.access.pkg.display_number, f.access.pkg.title], ["Generated", generated], []];
   if (kind === "register") {
-    const { kind: _k, change: _c, ...criteria } = q; void [_k, _c];
-    const data = await readRegister(p, packageId, { ...criteria, page: "1", page_size: "100" }), f = await frame(p, packageId);
-    return { name: `${f.access.pkg.display_number}-changes.csv`, body: csv([...head(f, "Change register"), ["Scope", `Filtered view “${data.criteria.view}” of this package; ${data.total} of ${data.counts.package_total} changes`], [],
+    const { kind: _k, change: _c, ids: _i, ...criteria } = q; void [_k, _c, _i];
+    // A ticked selection narrows the export to those records, each still read through this reader's own projection.
+    const chosen = typeof q.ids === "string" && q.ids ? new Set(q.ids.split(",").slice(0, 100).map((id, i) => uuid(id, `ids-${i}`))) : null;
+    const all = await readRegister(p, packageId, { ...(chosen ? {} : criteria), ...(chosen ? { view: "open" } : {}), page: "1", page_size: "100" }), f = await frame(p, packageId);
+    const closed = chosen ? await readRegister(p, packageId, { view: "closed", page: "1", page_size: "100" }) : null;
+    const data = chosen ? { ...all, items: [...all.items, ...closed!.items].filter((r) => chosen.has(r.id)), total: [...all.items, ...closed!.items].filter((r) => chosen.has(r.id)).length, criteria: { ...all.criteria, view: "ticked selection" as const } } : all;
+    return { name: `${f.access.pkg.display_number}-changes.csv`, body: csv([...head(f, "Change register"), ["Scope", `${chosen ? "Ticked selection" : `Filtered view “${data.criteria.view}”`} of this package; ${data.total} of ${data.counts.package_total} changes`], [],
       ["Reference", "Change", "Location", "System", "Basis → proposal", "Review state", "Technical decision", "Next action owner", "Due", "Attention", "Source condition"],
       ...data.items.map((r) => [r.reference, r.title, r.location, r.system_name, r.basis, r.stage_view.label, r.decision, r.next_owner_name ?? "Unassigned", r.due ?? "Date needed", r.attention_view.label, r.source])]) };
   }

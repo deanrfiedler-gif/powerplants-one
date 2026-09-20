@@ -17,8 +17,7 @@ export const CHANGES = {
   verifier: { profile: "changes-verifier", id: "30000000-0000-4000-8000-000000000024", name: "SYN Taylor Commissioning verifier" },
 } as const;
 
-const references = ["001", "002", "003", "004", "005", "006", "007", "008"] as const;
-type Ref = (typeof references)[number];
+type Ref = "001" | "002" | "003" | "004" | "005" | "006" | "007" | "008";
 function stableId(key: string) {
   const h = createHash("sha256").update(`ppo-en07-scenario:${key}`).digest("hex");
   return `${h.slice(0, 8)}-${h.slice(8, 12)}-4${h.slice(13, 16)}-8${h.slice(17, 20)}-${h.slice(20, 32)}`;

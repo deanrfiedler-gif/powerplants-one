@@ -17,6 +17,8 @@ import {
   workViewForPath,
   materialsPath,
   materialsModuleLabel,
+  changesPath,
+  changesModuleLabel,
   workspaces,
   type ShellDestination,
 } from "../shell/navigation";
@@ -372,8 +374,11 @@ export function ProductHeader() {
   // My Work names its current view beside the module, as its secondary menu does. EN-06 names its module
   // there, and its destination after it for as long as its own menu is hidden (engineering-materials.css).
   const materials = page?.id === "engineering" ? materialsPath(path) : undefined;
-  const view = page?.id === "work" ? workViewForPath(path)?.label : materials ? materialsModuleLabel : undefined;
-  const subview = materials?.view?.label;
+  // EN-07 does the same: "Engineering / Engineering Change-Impact Review", then its destination while its menu is hidden.
+  const changes = page?.id === "engineering" ? changesPath(path) : undefined;
+  const crumb = materials ?? changes;
+  const view = page?.id === "work" ? workViewForPath(path)?.label : materials ? materialsModuleLabel : changes ? changesModuleLabel : undefined;
+  const subview = crumb?.view?.label;
   const currentModule =
     page?.workspace === "estimate"
       ? "Estimating"
@@ -424,14 +429,14 @@ export function ProductHeader() {
         </Link>
         {/* A workspace with a secondary menu mounts its Show/Hide trigger here. Empty otherwise. */}
         <div id="header-menu" className="ppo-header-menu-slot" />
-        <div className="product-heading" data-module-crumb={materials ? "" : undefined}>
+        <div className="product-heading" data-module-crumb={crumb ? "" : undefined}>
           <span className="ppo-product-name">Powerplants One</span>
           {label && (
             <>
               <span className="ppo-heading-divider" aria-hidden="true" />
               <strong title={[label, view, subview].filter(Boolean).join(" / ")}>
-                {materials ? <span className="ppo-heading-root">{label} / </span> : label}
-                {view && <span className="ppo-heading-view">{materials ? view : ` / ${view}`}</span>}
+                {crumb ? <span className="ppo-heading-root">{label} / </span> : label}
+                {view && <span className="ppo-heading-view">{crumb ? view : ` / ${view}`}</span>}
                 {subview && <span className="ppo-heading-subview"> / {subview}</span>}
               </strong>
             </>

@@ -4,27 +4,9 @@
 // issues a drawing, releases material, approves cost, amends a purchase, instructs site work, moves a
 // booking or accepts commissioning. Those stay separate facts with separate owners.
 
-export const changeViews = [
-  { id: "register", label: "Change register", segment: "" },
-  { id: "impact", label: "Impact assessment", segment: "impact" },
-  { id: "reviews", label: "Review & decisions", segment: "reviews" },
-  { id: "handovers", label: "Actions & handovers", segment: "handovers" },
-  { id: "verification", label: "Retest & verification", segment: "verification" },
-  { id: "history", label: "Changes & history", segment: "history" },
-] as const;
-export type ChangeViewId = (typeof changeViews)[number]["id"];
-export const changesModuleLabel = "Engineering Change-Impact Review";
-export const changesHref = (packageId: string, view: ChangeViewId = "register", changeId?: string | null) => {
-  const segment = changeViews.find((v) => v.id === view)!.segment;
-  return `/engineering/${packageId}/changes${segment ? `/${segment}` : ""}${changeId ? `?change=${changeId}` : ""}`;
-};
-// The entry page has no destination; an unknown segment answers nothing rather than pretending to be the register.
-export function changesPath(path: string) {
-  const match = /^\/engineering\/(?:([^/]+)\/)?changes(?:\/([a-z]+))?\/?$/.exec(path);
-  if (!match) return undefined;
-  const view = match[1] ? changeViews.find((v) => v.segment === (match[2] ?? "")) : undefined;
-  return match[1] && !view ? undefined : { package_id: match[1] ?? null, view };
-}
+// The six destinations and their addresses live with the shell's navigation, where the header reads them.
+import { changeViews, changesHref, changesModuleLabel, changesPath, type ChangeViewId } from "../../shell/navigation";
+export { changeViews, changesHref, changesModuleLabel, changesPath, type ChangeViewId };
 
 // ---------------------------------------------------------------------------------------------
 // State families (build plan r02, section 10.1). One badge never stands for the whole process.
@@ -254,8 +236,6 @@ export type ProposalDocument = {
   costs: CostComponent[]; dates: DateEffect[]; objects: AffectedObject[]; sources: { source_id: string; role: SourceRole; required: boolean }[];
   retests: RetestDefinition[]; requires_revised_release: boolean;
 };
-const technical = new Set<CategoryKey>(assessmentCategories.filter(([, , t]) => t).map(([k]) => k));
-const categoryLabel = (key: CategoryKey) => assessmentCategories.find(([k]) => k === key)![1];
 export function categoryProblems(categories: CategoryFinding[]): { key: CategoryKey; message: string; blocking: boolean }[] {
   const out: { key: CategoryKey; message: string; blocking: boolean }[] = [], byKey = new Map(categories.map((c) => [c.key, c]));
   for (const [key, name, isTechnical] of assessmentCategories) {
