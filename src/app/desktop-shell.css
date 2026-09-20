@@ -263,3 +263,29 @@
   .mobile-navigation.ppo-phone-bar-r07 > :is(a,button,span) > span { position: absolute; width: 1px; height: 1px; max-width: none; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .mobile-navigation.ppo-phone-bar-r07 .product-icon { width: 25px; height: 25px; }
 }
+
+/* Installation entries and the manual instruction panel. Quiet secondary actions in the
+   existing More surface, reusing its link, dialog and title treatments; no new top bar,
+   floating action or banner. The panel keeps the shell dialog's safe-area inset on phones. */
+.ppo-install-actions { display: flex; flex-direction: column; border-top: 1px solid #e9edf2; margin-top: 6px; padding-top: 6px; }
+.ppo-install-actions .ppo-more-link { background: transparent; width: 100%; text-align: left; border: 0; }
+.ppo-install-actions .ppo-more-link:disabled { color: #788599; }
+.ppo-install-message { margin: 2px 11px 6px; font-size: 11px; line-height: 1.55; color: #627084; }
+.ppo-install-help { width: min(420px, calc(100vw - 24px)); max-height: calc(100dvh - 24px - env(safe-area-inset-bottom)); padding: 0; border: 1px solid #dce1e8; border-radius: 14px; background: white; color: #242a37; box-shadow: 0 8px 32px #242a3720, 0 2px 5px #242a370a; font: 14px/1.45 PPOShellRoboto, Roboto, Verdana, sans-serif; overflow: hidden; }
+.ppo-install-help::backdrop { background: #242a3740; }
+.ppo-install-help :is(button,input) { font-family: inherit; }
+.ppo-install-help-body { display: flex; flex-direction: column; max-height: inherit; overflow: auto; overscroll-behavior: contain; padding: 0 20px 16px; }
+.ppo-install-help header { display: flex; align-items: center; justify-content: space-between; gap: 12px; position: sticky; top: 0; z-index: 1; padding: 12px 0 8px; background: white; }
+.ppo-install-help h2 { margin: 0; font-size: 15px; font-weight: 500; line-height: 1.35; }
+.ppo-install-help header .ppo-top-action { width: 36px; height: 36px; min-height: 36px; border-radius: 7px; }
+.ppo-install-help header .ppo-top-action .product-icon { width: 18px; height: 18px; }
+.ppo-install-help h3 { margin: 14px 0 8px; font-size: 13px; font-weight: 500; }
+.ppo-install-intro { margin: 0; font-size: 12px; line-height: 1.65; color: #627084; }
+.ppo-install-platforms { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.ppo-install-platforms button { min-height: 34px; padding: 6px 12px; border: 1px solid #dce1e8; border-radius: 999px; background: white; color: #374152; font-size: 12px; }
+.ppo-install-platforms button[aria-pressed=true] { background: #242a37; border-color: #242a37; color: white; }
+.ppo-install-help ol { margin: 0; padding-left: 20px; font-size: 12px; line-height: 1.7; color: #374152; }
+.ppo-install-help ol li { margin-bottom: 8px; }
+.ppo-install-note { margin: 10px 0 0; font-size: 11px; line-height: 1.6; color: #7b8491; }
+.ppo-install-help footer { display: flex; justify-content: flex-end; padding-top: 14px; }
+.ppo-install-done { min-height: 40px; padding: 8px 18px; border: 0; border-radius: 7px; background: #242a37; color: white; font-size: 13px; }

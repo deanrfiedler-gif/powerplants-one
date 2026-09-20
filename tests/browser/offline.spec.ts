@@ -161,7 +161,7 @@ test("P08 real offline UI interruption retains typed evidence and exact PNG, ret
   test.setTimeout(120000);
   const setup = await prepared(
     page,
-    info.project.name.startsWith("desktop") ? "2026-12-15" : "2026-12-17",
+    info.project.name.startsWith("desktop") ? "2031-12-16" : "2031-12-18",
   );
   await open(page, setup.appointment_id);
   await screenshot(page, info, "current-context");
@@ -339,7 +339,7 @@ test("P08 real IndexedDB quota/abort, multi-tab claim, identity lock and schema 
   test.setTimeout(120000);
   const setup = await prepared(
     page,
-    info.project.name.startsWith("desktop") ? "2026-12-18" : "2026-12-21",
+    info.project.name.startsWith("desktop") ? "2031-12-19" : "2031-12-22",
   );
   await open(page, setup.appointment_id);
   await page
@@ -463,11 +463,11 @@ test("P08 persistent browser process restart retains two jobs and original evide
     page = context.pages()[0];
   const one = await prepared(
       page,
-      info.project.name.startsWith("desktop") ? "2026-12-23" : "2026-12-25",
+      info.project.name.startsWith("desktop") ? "2031-12-24" : "2031-12-26",
     ),
     two = await prepared(
       page,
-      info.project.name.startsWith("desktop") ? "2026-12-24" : "2026-12-28",
+      info.project.name.startsWith("desktop") ? "2031-12-25" : "2031-12-29",
     );
   await open(page, one.appointment_id);
   await page
@@ -561,7 +561,7 @@ test("P08 UI time conflict keeps original local evidence and keyboard recovery c
   test.setTimeout(120000);
   const setup = await prepared(
     page,
-    info.project.name.startsWith("desktop") ? "2026-12-29" : "2026-12-30",
+    info.project.name.startsWith("desktop") ? "2031-12-30" : "2031-12-31",
   );
   await open(page, setup.appointment_id);
   await page

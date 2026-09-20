@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import type { ServerResponse } from "node:http";
 import { AppError } from "../platform/errors";
+import { appleTouchIconPath, installationIcons, manifestPath, navy } from "../platform/installation";
 
 export type LoginState = "ready" | "cancelled" | "denied" | "expired" | "unavailable";
 const states = {
@@ -36,7 +37,10 @@ const microsoft = data("image/svg+xml", "./microsoft-symbol.svg");
 const hash = (text: string) => createHash("sha256").update(text).digest("base64");
 const escape = (text: string) => text.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]!);
 
-export const loginPolicy = `default-src 'none'; img-src data:; font-src data:; style-src 'sha256-${hash(style)}'; script-src 'sha256-${hash(script)}'; connect-src 'none'; form-action 'self' https://login.microsoftonline.com; frame-ancestors 'none'; base-uri 'none'; object-src 'none'`;
+// The page's own bytes stay inline. 'self' is added only for the same-origin installation
+// icon links, and manifest-src only for the one canonical manifest. No inline allowance,
+// wildcard source or external script is introduced.
+export const loginPolicy = `default-src 'none'; img-src 'self' data:; font-src data:; style-src 'sha256-${hash(style)}'; script-src 'sha256-${hash(script)}'; connect-src 'none'; manifest-src 'self'; form-action 'self' https://login.microsoftonline.com; frame-ancestors 'none'; base-uri 'none'; object-src 'none'`;
 
 /** Public, record-free entry page. All assets are existing local bytes; no authenticated asset exception is needed. */
 export function renderLoginPage(state: LoginState = "ready", local = false, rateLimited = false) {
@@ -48,6 +52,8 @@ export function renderLoginPage(state: LoginState = "ready", local = false, rate
     NOTICE_HIDDEN: spec.title ? "" : "hidden", TONE: spec.tone,
     NOTICE_TITLE: escape(spec.title), NOTICE_MESSAGE: escape(rateLimited ? "Please wait 10 minutes before trying again. If the problem continues, contact your administrator." : spec.message),
     ACTION: escape(spec.action), DISABLED: local ? "disabled" : "",
+    MANIFEST: manifestPath, APPLE_ICON: appleTouchIconPath, THEME: navy,
+    ICON: installationIcons.find(icon => icon.sizes === "192x192")!.path,
     HANDOFF: local ? "Microsoft sign-in is available in the hosted private prototype." : "You’ll continue to Microsoft to sign in.",
     LOCAL_ENTRY: local ? '<a class="secondary local-entry" href="/work">Open local prototype</a>' : "",
     YEAR: String(new Date().getFullYear()),

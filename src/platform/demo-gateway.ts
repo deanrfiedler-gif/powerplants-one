@@ -2,6 +2,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import { demoRequestAllowed, readCookie, secureCookie } from "./demo-request";
 import { AppError } from "./errors";
 import { loginFailure, loginState, sendLoginPage } from "../login/login-page";
+import { appStart, publicInstallationAsset } from "./installation";
 
 type Gateway = {
   origin: string;
@@ -50,7 +51,7 @@ export function demoGateway(config: Gateway) {
       res.setHeader("Set-Cookie", secureCookie(config.loginCookie, "", 0, true));
       try {
         const session = await config.finishLogin(url, readCookie(req.headers.cookie, config.loginCookie), token);
-        res.writeHead(303, { Location: `${config.origin}/sales/opportunities`, "Set-Cookie": [secureCookie(config.loginCookie, "", 0, true), secureCookie(config.sessionCookie, session, 3600, true)] });
+        res.writeHead(303, { Location: `${config.origin}${appStart}`, "Set-Cookie": [secureCookie(config.loginCookie, "", 0, true), secureCookie(config.sessionCookie, session, 3600, true)] });
       } catch (error) {
         // Never reflect OAuth descriptions/codes/tokens or accept a return URL from a caller.
         res.writeHead(303, { Location: `${config.origin}/login?status=${loginFailure(error)}` });
@@ -60,6 +61,14 @@ export function demoGateway(config: Gateway) {
     if (url.pathname === "/auth/logout" && method === "POST") {
       await config.endSession(token);
       res.writeHead(303, { Location: `${config.origin}/login`, "Set-Cookie": secureCookie(config.sessionCookie, "", 0, true) }); res.end(); return;
+    }
+    // Installation assets only: a browser or operating system reads the manifest and
+    // icons before any session exists. Exact paths, safe reads, still behind the origin,
+    // host and internal-header checks above, and served by the same application handler.
+    // Nothing else becomes public: business pages and APIs keep the identity gate below.
+    if (publicInstallationAsset(method, url.pathname)) {
+      req.headers["x-ppo-local-gateway"] = config.gatewayKey;
+      await config.handleApplication(req, res); return;
     }
     try { await config.resolveIdentity(token); }
     catch (error) {

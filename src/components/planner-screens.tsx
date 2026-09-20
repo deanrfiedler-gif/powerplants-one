@@ -1210,7 +1210,7 @@ function AppointmentCard({
 }
 export function PlannerScreen() {
   useIdentity();
-  const [day, setDay] = useState("2026-09-21"),
+  const [day, setDay] = useState("2031-09-22"),
     [mode, setMode] = useState<"day" | "week">("week"),
     [zone, setZone] = useState("Australia/Brisbane"),
     [site, setSite] = useState(""),

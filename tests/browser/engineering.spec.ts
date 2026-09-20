@@ -41,10 +41,10 @@ test("accepted container creates a real request; an uncertain note retries once 
   await requestDialog.locator(`[data-record-id="${CRM.owner}"]`).click();
   await requestDialog
     .getByLabel("Package required by", { exact: true })
-    .fill("2028-03-31");
+    .fill("2033-04-01");
   await requestDialog
     .getByLabel("Next action due", { exact: true })
-    .fill("2028-03-20");
+    .fill("2033-03-21");
   await requestDialog
     .getByRole("button", { name: "Create request", exact: true })
     .click();
