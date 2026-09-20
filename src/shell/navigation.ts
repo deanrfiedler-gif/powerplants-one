@@ -329,6 +329,34 @@ export function changesPath(path: string) {
   const view = match[1] ? changeViews.find((v) => v.segment === (match[2] ?? "")) : undefined;
   return match[1] && !view ? undefined : { package_id: match[1] ?? null, view };
 }
+// The EN-08 Commissioning Basis & As-Built Release secondary menu (build plan r02, section 4): six route-backed
+// destinations at static addresses. The Engineering package is context (?package=<uuid>) and the commissioning
+// package is the selected record (?record=<uuid>); they are different identities and neither is a display reference.
+export const commissioningModuleLabel = "Commissioning Basis & As-Built Release";
+export const commissioningViews = [
+  { id: "register", label: "Commissioning register", heading: "Commissioning register", segment: "" },
+  { id: "basis", label: "Test basis & criteria", heading: "Test basis & criteria", segment: "basis" },
+  { id: "results", label: "Results & retests", heading: "Results & retests", segment: "results" },
+  // A short menu label; the accessible heading says it in full.
+  { id: "configuration", label: "Configuration & redlines", heading: "Installed configuration & redlines", segment: "configuration" },
+  { id: "releases", label: "Review & as-built release", heading: "Review & as-built release", segment: "releases" },
+  { id: "handovers", label: "Handover & history", heading: "Handover & history", segment: "handovers" },
+] as const;
+export type CommissioningViewId = (typeof commissioningViews)[number]["id"];
+export const commissioningHref = (view: CommissioningViewId = "register", query: { package?: string | null; record?: string | null; panel?: string | null } = {}) => {
+  const segment = commissioningViews.find((v) => v.id === view)!.segment, q = new URLSearchParams();
+  for (const key of ["package", "record", "panel"] as const) if (query[key]) q.set(key, query[key]!);
+  return `/engineering/commissioning${segment ? `/${segment}` : ""}${q.size ? `?${q}` : ""}`;
+};
+export const commissioningRecordHref = (recordId: string, section: string | null = null) => `/engineering/commissioning/packages/${recordId}${section ? `#${section}` : ""}`;
+// Static segments: they take precedence over /engineering/:id, and an unknown segment answers nothing.
+export function commissioningPath(path: string) {
+  const match = /^\/engineering\/commissioning(?:\/(packages\/[^/]+|[a-z]+))?\/?$/.exec(path);
+  if (!match) return undefined;
+  if (match[1]?.startsWith("packages/")) return { view: undefined, record_id: match[1].slice(9) };
+  const view = commissioningViews.find((v) => v.segment === (match[1] ?? ""));
+  return view ? { view, record_id: null } : undefined;
+}
 export const workViewForPath = (path: string) =>
   workViews.find((view) => view.href === path);
 export const destination = (id: string) =>

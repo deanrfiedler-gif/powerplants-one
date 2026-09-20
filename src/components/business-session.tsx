@@ -174,6 +174,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
               ["changes-release-owner", "Riley — drawing issue owner"],
               ["changes-service", "Jamie — Service coordinator"],
               ["changes-verifier", "Taylor — commissioning verifier"],
+              ["commissioning-equipment", "Morgan — Equipment records"],
               ["other-workspace", "Other workspace"],
               ["technician", "Technician — assignment unavailable"],
               ["second-technician", "Morgan — assigned technician"],

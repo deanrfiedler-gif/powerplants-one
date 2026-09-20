@@ -44,6 +44,7 @@ export async function createSession(profile: string, previous_token?: string) {
       "changes-release-owner",
       "changes-service",
       "changes-verifier",
+      "commissioning-equipment",
     ].includes(profile)
   )
     throw new AppError(

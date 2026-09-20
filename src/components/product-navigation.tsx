@@ -20,6 +20,8 @@ import {
   materialsModuleLabel,
   changesPath,
   changesModuleLabel,
+  commissioningPath,
+  commissioningModuleLabel,
   workspaces,
   type ShellDestination,
 } from "../shell/navigation";
@@ -389,8 +391,10 @@ export function ProductHeader() {
   const materials = page?.id === "engineering" ? materialsPath(path) : undefined;
   // EN-07 does the same: "Engineering / Engineering Change-Impact Review", then its destination while its menu is hidden.
   const changes = page?.id === "engineering" ? changesPath(path) : undefined;
-  const crumb = materials ?? changes;
-  const view = page?.id === "work" ? workViewForPath(path)?.label : materials ? materialsModuleLabel : changes ? changesModuleLabel : undefined;
+  // EN-08 likewise: "Engineering / Commissioning Basis & As-Built Release", then its destination while its menu is hidden.
+  const commissioning = page?.id === "engineering" ? commissioningPath(path) : undefined;
+  const crumb = materials ?? changes ?? commissioning;
+  const view = page?.id === "work" ? workViewForPath(path)?.label : materials ? materialsModuleLabel : changes ? changesModuleLabel : commissioning ? commissioningModuleLabel : undefined;
   const subview = crumb?.view?.label;
   const currentModule =
     page?.workspace === "estimate"
