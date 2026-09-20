@@ -68,16 +68,17 @@
  #ppo-my-work .mw-quiet-note .mw-link{min-height:0;font-size:13px;white-space:normal;text-decoration:underline}
  #ppo-my-work .mw-placeholder{min-height:56px;background:var(--surface-2)}
 
- /* Quick Actions: four icon tiles in a row at every phone width. Each keeps its name for assistive technology
-    and as a tooltip; one that this identity cannot open is dimmed and carries a small lock. */
- #ppo-my-work .mw-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+ /* Quick Actions: five icon tiles in a row at every phone width, which at 320px still leaves each one wider
+    than a 44px target. Each keeps its name for assistive technology and as a tooltip; one that this identity
+    cannot open is dimmed and carries a small lock. */
+ #ppo-my-work .mw-tiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
  #ppo-my-work .mw-tiles>li{display:flex}
  #ppo-my-work :is(a,button,span).mw-tile{position:relative;display:grid;place-items:center;width:100%;min-height:64px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface-white);color:var(--ink);text-decoration:none}
  #ppo-my-work :is(a,button).mw-tile:hover:not(:disabled){background:var(--surface-white);color:var(--ink)}
  #ppo-my-work :is(a,button).mw-tile:active:not(:disabled){background:var(--surface-hover)}
- #ppo-my-work .mw-tile>.mw-icon{width:28px;height:28px;stroke-width:1.5}
+ #ppo-my-work .mw-tile>.mw-icon{width:26px;height:26px;stroke-width:1.5}
  #ppo-my-work span.mw-tile{border-style:dashed;background:transparent;color:#98a1ae}
- #ppo-my-work .mw-tile-lock{position:absolute;top:6px;right:6px;display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--neutral-surface);color:var(--neutral)}
+ #ppo-my-work .mw-tile-lock{position:absolute;top:5px;right:5px;display:grid;place-items:center;width:17px;height:17px;border-radius:50%;background:var(--neutral-surface);color:var(--neutral)}
  #ppo-my-work .mw-tile-lock .mw-icon{width:11px;height:11px;stroke-width:2.2}
 
  /* Needs attention: a short list of different kinds of obligation. Counts are neutral unless truly overdue. */

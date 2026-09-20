@@ -119,7 +119,7 @@ function MyWorkMobileOverview() {
     work.reloadNavigation();
   };
   const dialogs = useWorkDialogs(now, changed);
-  const [sheet, setSheet] = useState<"create" | "scan" | "map" | "gaps" | "overdue" | null>(null);
+  const [sheet, setSheet] = useState<"create" | "scan" | "map" | "insights" | "gaps" | "overdue" | null>(null);
   const online = useSyncExternalStore(subscribeOnline, () => navigator.onLine, () => true);
 
   const denied = isDenied(read.error);
@@ -190,6 +190,7 @@ function MyWorkMobileOverview() {
           <Tile icon="mail" label="Emails" href={can("mail") ? "/email" : null} />
           <Tile icon="target" label="Leads" href={can("leads") ? `/sales/leads?${new URLSearchParams({ owner_id: me.actor_id })}` : null} />
           <Tile icon="pin" label="Map" onOpen={() => setSheet("map")} />
+          <Tile icon="insights" label="Insights" onOpen={() => setSheet("insights")} />
           <Tile icon="task" label="Tasks" href={queue({ activity_type: "Task" })} />
         </ul>
       </section>
@@ -369,6 +370,7 @@ function MyWorkMobileOverview() {
       )}
       {sheet === "scan" && <ScanSheet onClose={() => setSheet(null)} />}
       {sheet === "map" && <MapSheet can={can} onClose={() => setSheet(null)} />}
+      {sheet === "insights" && <InsightsSheet onClose={() => setSheet(null)} />}
       {sheet === "gaps" && (
         <GapsSheet
           query={scope.toString()}
@@ -1020,6 +1022,29 @@ function OverdueOpportunitiesSheet({ query, showOwner, fullHref, onClose }: { qu
           </Link>
         </p>
       )}
+    </WorkDialog>
+  );
+}
+
+// Reports and dashboards. The application has no reporting module: it keeps no saved report, chart,
+// dashboard, target or measured history of any kind, and nothing here computes one on the way past. The
+// Deals forecast is a different question and is not offered as a substitute for this one.
+function InsightsSheet({ onClose }: { onClose: () => void }) {
+  return (
+    <WorkDialog sheet title="Insights" onClose={onClose}>
+      <p className="mw-notice">
+        <strong>Insights are not available yet.</strong> Powerplants One has no reports or dashboards. It keeps no saved report, chart, target or history of how the numbers moved, so there is
+        nothing it could show you here truthfully.
+      </p>
+      <p className="mw-hint">
+        When they arrive, insights will report on the records you are already permitted to see: pipeline value and how it moved, won and lost outcomes, conversion from lead to opportunity,
+        activity volumes, and progress against a target. Each figure will say what it counts and when it was read.
+      </p>
+      <div className="mw-sheet-actions">
+        <button type="button" className="mw-button" onClick={onClose} data-autofocus>
+          Close
+        </button>
+      </div>
     </WorkDialog>
   );
 }

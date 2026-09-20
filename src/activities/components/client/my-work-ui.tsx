@@ -141,6 +141,15 @@ const paths = {
       <path d="M14.8 8.6h-3.9a1.7 1.7 0 0 0 0 3.4h2.2a1.7 1.7 0 0 1 0 3.4H9.2M12 6.8v10.4" />
     </>
   ),
+  // A rising line inside an axis. The shell's own `insights` mark is a bar chart and stays as it is: it
+  // belongs to the Deals view toggle, which this page does not draw.
+  insights: (
+    <>
+      <path d="M4 3.5v15a2 2 0 0 0 2 2h14.5" />
+      <path d="m7.5 16 3.5-3.5 3 2.5 5.5-7" />
+      <path d="M16.2 8h3.3v3.3" />
+    </>
+  ),
   lock: (
     <>
       <rect x="6" y="11" width="12" height="9" rx="2" />

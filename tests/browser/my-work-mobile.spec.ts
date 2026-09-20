@@ -79,7 +79,7 @@ test("the phone overview is one page: header, five-cell bar, Quick Actions, atte
   // Quick Actions: four icon tiles in order, each named for assistive technology and nothing to read on
   // screen. This identity holds no mail access, so that tile is a locked image, not a link; no unread
   // number is shown to anyone, because the mailbox records no read state.
-  expect(await page.locator(".mw-tile").evaluateAll((tiles) => tiles.map((t) => t.getAttribute("aria-label")))).toEqual(["Emails: outside your current access", "Leads", "Map", "Tasks"]);
+  expect(await page.locator(".mw-tile").evaluateAll((tiles) => tiles.map((t) => t.getAttribute("aria-label")))).toEqual(["Emails: outside your current access", "Leads", "Map", "Insights", "Tasks"]);
   expect((await page.locator(".mw-tiles").innerText()).trim()).toBe("");
   await expect(page.getByRole("img", { name: "Emails: outside your current access" })).toBeVisible();
   expect(new Set(await page.locator(".mw-tile").evaluateAll((tiles) => tiles.map((t) => Math.round(t.getBoundingClientRect().top)))).size).toBe(1);
@@ -223,6 +223,15 @@ test("Create is a six-choice menu in order; Activity carries the visible agenda 
   await page.keyboard.press("Escape");
   await expect(menu).toBeHidden();
   await expect(create).toBeFocused();
+
+  // Insights needs a reporting module that does not exist, so the tile says so and promises nothing.
+  await page.getByRole("button", { name: "Insights", exact: true }).click();
+  const insights = page.getByRole("dialog", { name: "Insights" });
+  await expect(insights.getByText("Insights are not available yet.")).toBeVisible();
+  await expect(insights.getByRole("link")).toHaveCount(0);
+  await page.keyboard.press("Escape");
+  await expect(insights).toBeHidden();
+  await expect(page.getByRole("button", { name: "Insights", exact: true })).toBeFocused();
 
   // Scanning needs an extraction service that does not exist: it says so and offers the real form.
   await create.click();
