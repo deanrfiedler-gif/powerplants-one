@@ -29,7 +29,7 @@ test("Projects navigation, existing-context creation and an uncertain task save 
     .getByRole("combobox", { name: "Project coordinator", exact: true })
     .fill("SYN");
   await page.locator(`[data-record-id="${CRM.owner}"]`).click();
-  await page.getByLabel("Target handover", { exact: true }).fill("2033-04-01");
+  await page.getByLabel("Target handover", { exact: true }).fill("2028-03-31");
   await page
     .getByRole("button", { name: "Create project", exact: true })
     .click();
@@ -58,7 +58,7 @@ test("Projects navigation, existing-context creation and an uncertain task save 
     .getByLabel("Task name", { exact: true })
     .fill("SYN Long-lead procurement");
   await dialog.getByLabel("Start date", { exact: true }).fill("2026-09-14");
-  await dialog.getByLabel("Finish date", { exact: true }).fill("2032-12-17");
+  await dialog.getByLabel("Finish date", { exact: true }).fill("2027-12-17");
   await dialog.getByRole("button", { name: "Save task", exact: true }).click();
   await expect(
     dialog.getByRole("button", { name: "Retry unchanged save" }),
@@ -72,7 +72,7 @@ test("Projects navigation, existing-context creation and an uncertain task save 
   const schedule: Schedule = await call(page, `projects/${id}`);
   expect(schedule.tasks).toHaveLength(1);
   expect(schedule.project.version).toBe(2);
-  expect(schedule.tasks[0].finish_date).toBe("2032-12-17");
+  expect(schedule.tasks[0].finish_date).toBe("2027-12-17");
   const receipt = await call(page, `operations/${operation}`);
   expect(receipt.record_id).toBe(id);
   expect(receipt.record_version).toBe(2);

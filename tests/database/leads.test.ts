@@ -84,7 +84,7 @@ test("LC-01/02/06 manual capture, note, completed history and independent-owner 
   );
   const next = {
     ...crmAction(other.actor_id),
-    due_at: "2031-11-13T03:00:00.000Z",
+    due_at: "2026-11-12T03:00:00.000Z",
     due_needed: false,
   };
   await planLeadAction(p, input.id, {

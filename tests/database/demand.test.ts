@@ -105,8 +105,8 @@ test("proposing a visit removes a work order from unassigned demand", async () =
     expected_version: w.version,
     scope_revision_id: r.id,
     scope_version: r.version,
-    start_at: "2031-09-26T00:00:00Z",
-    end_at: "2031-09-26T02:00:00Z",
+    start_at: "2026-09-25T00:00:00Z",
+    end_at: "2026-09-25T02:00:00Z",
     customer_commitment: "Proposed",
     preparation_status: "Preparing",
   });
@@ -136,8 +136,8 @@ test("a work order whose only appointment was cancelled is unassigned demand aga
     expected_version: w.version,
     scope_revision_id: r.id,
     scope_version: r.version,
-    start_at: "2031-09-26T00:00:00Z",
-    end_at: "2031-09-26T02:00:00Z",
+    start_at: "2026-09-25T00:00:00Z",
+    end_at: "2026-09-25T02:00:00Z",
     customer_commitment: "Proposed",
     preparation_status: "Preparing",
   });
@@ -171,8 +171,8 @@ test("a work order whose only appointment was cancelled is unassigned demand aga
     expected_version: again.w.version,
     scope_revision_id: again.r.id,
     scope_version: again.r.version,
-    start_at: "2031-09-27T00:00:00Z",
-    end_at: "2031-09-27T02:00:00Z",
+    start_at: "2026-09-26T00:00:00Z",
+    end_at: "2026-09-26T02:00:00Z",
     customer_commitment: "Proposed",
     preparation_status: "Preparing",
   });

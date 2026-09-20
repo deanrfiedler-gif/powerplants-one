@@ -44,7 +44,7 @@ test("P07 real HTTP visit executes start, exact photo transfer, typed evidence, 
     const r = await call(co, path, body);
     assert.ok(r.status < 300, JSON.stringify(r));
     return r.body;
-  }, "2031-12-02");
+  }, "2026-12-01");
   let job = (await call(p, `my-jobs/${setup.appointment_id}`)).body.items[0];
   const pack = setup.pack;
   for (const cookie of [p, m]) {
@@ -227,11 +227,11 @@ test("P07 HTTP independent work orders retain checked packs while another fixtur
       events.push("first pack checked");
       // Force the original failure ordering, without sleeps or retrying a
       // rejected issue: fully prepare another visit before the first issue.
-      interleaved.push(await prepareIsolatedFieldAppointment(ok, "2031-12-12"));
+      interleaved.push(await prepareIsolatedFieldAppointment(ok, "2026-12-11"));
       events.push("second fixture issued");
     }
     return result;
-  }, "2031-12-11");
+  }, "2026-12-10");
   assert.equal(interleaved.length, 1);
   const second = interleaved[0];
   assert.deepEqual(events, [

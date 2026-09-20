@@ -409,10 +409,10 @@ test("P04 saved scope, reviewed readiness, authorisation, proposed visit and suc
   await page.getByText("Propose a visit", { exact: true }).click();
   await page
     .getByLabel("Proposed start (device timezone)", { exact: true })
-    .fill("2031-09-21T09:00");
+    .fill("2026-09-20T09:00");
   await page
     .getByLabel("Proposed finish (device timezone)", { exact: true })
-    .fill("2031-09-21T11:00");
+    .fill("2026-09-20T11:00");
   await page
     .getByRole("button", { name: "Save proposed visit", exact: true })
     .click();

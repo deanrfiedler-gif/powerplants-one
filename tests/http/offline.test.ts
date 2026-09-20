@@ -45,7 +45,7 @@ test("P08 real HTTP bounded sync, original receipts, malformed siblings and acto
     const r = await call(co, path, body);
     assert.ok(r.status < 300, JSON.stringify(r));
     return r.body;
-  }, "2031-12-05");
+  }, "2026-12-04");
   for (const cookie of [p, m]) {
     const actor = (await call(cookie, "local-session")).body,
       recipient = setup.pack.readiness.recipients.find(

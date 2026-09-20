@@ -47,8 +47,8 @@ test("project and 18-month schedule persist with exact history, original-operati
   second.owner_id = null;
   second.external_owner_id = CRM.person;
   second.dependencies = [{ task_id: first.id, kind: "FS" }];
-  second.start_date = "2032-12-01";
-  second.finish_date = "2033-04-01";
+  second.start_date = "2027-12-01";
+  second.finish_date = "2028-03-31";
   const saved = await saveTask(p, input.id, second);
   assert.deepEqual(
     (await saveTask(p, input.id, second)).receipt,
@@ -59,7 +59,7 @@ test("project and 18-month schedule persist with exact history, original-operati
   assert.equal(schedule.project.version, 3);
   assert.equal(schedule.tasks.length, 2);
   assert.equal(schedule.tasks[1].external_owner_id, CRM.person);
-  assert.equal(schedule.tasks[1].finish_date, "2033-04-01");
+  assert.equal(schedule.tasks[1].finish_date, "2028-03-31");
   assert.equal((await projectHistory(p, input.id, {})).items.length, 3);
   assert.equal(
     (await shellSearch(p, { q: input.id })).items[0].href,

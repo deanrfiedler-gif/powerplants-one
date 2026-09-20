@@ -162,8 +162,8 @@ export async function twoTaskStarted() {
     expected_version: w.version,
     scope_revision_id: scope.id,
     scope_version: scope.version,
-    start_at: "2031-12-05T00:00:00Z",
-    end_at: "2031-12-05T02:00:00Z",
+    start_at: "2026-12-04T00:00:00Z",
+    end_at: "2026-12-04T02:00:00Z",
     customer_commitment: "Proposed",
     preparation_status: "Preparing",
   });

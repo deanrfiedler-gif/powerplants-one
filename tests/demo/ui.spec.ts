@@ -227,8 +227,8 @@ test("invited actor: mailbox to refined deal, follow-up, calendar and another br
 
 test("invited actor books and reschedules a prepared visit through the UI and reloads saved crew", async ({ page, context }, info) => {
   await signInFixture(context, objectId);
-  const day = info.project.name.startsWith("mobile") ? "2031-10-14" : "2031-10-09";
-  const next = info.project.name.startsWith("mobile") ? "2031-10-15" : "2031-10-10";
+  const day = info.project.name.startsWith("mobile") ? "2026-10-13" : "2026-10-08";
+  const next = info.project.name.startsWith("mobile") ? "2026-10-14" : "2026-10-09";
   const workId = "a9000000-0000-4000-8000-000000000001";
   await page.goto(`/service/work-orders/${workId}`);
   await page.getByText("Propose a visit", { exact: true }).click();

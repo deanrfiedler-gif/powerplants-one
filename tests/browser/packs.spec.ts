@@ -157,7 +157,7 @@ test("P06 complete workbench preparation, check, queued output, exact document a
   await identity(page);
   const aid = await appointment(
     page,
-    info.project.name.startsWith("mobile") ? "2031-11-19" : "2031-11-18",
+    info.project.name.startsWith("mobile") ? "2026-11-18" : "2026-11-17",
   );
   await page.goto(`/service/packs/new?appointment_id=${aid}`);
   await expect(
@@ -328,7 +328,7 @@ test("P06 long content remains readable in exact HTML and multi-page A4 output",
   await identity(page);
   const aid = await appointment(
       page,
-      info.project.name.startsWith("mobile") ? "2031-11-21" : "2031-11-20",
+      info.project.name.startsWith("mobile") ? "2026-11-20" : "2026-11-19",
     ),
     a = (await call(page, `appointments/${aid}`)).items[0],
     pid = crypto.randomUUID();

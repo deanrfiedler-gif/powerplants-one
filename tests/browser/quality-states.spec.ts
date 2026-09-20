@@ -68,7 +68,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
   const mobile = info.project.name.startsWith("mobile");
   const source = await financeHttpSource(
     (p, b) => call(page, p, b),
-    mobile ? "2031-11-06" : "2031-11-05",
+    mobile ? "2026-11-05" : "2026-11-04",
     mobile ? 42 : 41,
   );
   const cmd = await httpFinanceDraft((p, b) => call(page, p, b), source);
@@ -202,7 +202,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
         s.id === "SC-13"
           ? `?account_id=${cmd.account_id}`
           : s.id === "SC-07"
-            ? "?from=2031-09-21T14:00:00Z&to=2031-09-28T14:00:00Z&timezone=Australia%2FBrisbane"
+            ? "?from=2026-09-20T14:00:00Z&to=2026-09-27T14:00:00Z&timezone=Australia%2FBrisbane"
             : "";
       const original = await call(page, s.api + query);
       const loadedRead = page.waitForResponse((response) =>

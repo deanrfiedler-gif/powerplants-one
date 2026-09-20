@@ -87,8 +87,8 @@ async function cmd(n = 2, members = crew()) {
   };
 }
 const period = {
-  from: "2031-09-21T14:00:00Z",
-  to: "2031-09-28T14:00:00Z",
+  from: "2026-09-20T14:00:00Z",
+  to: "2026-09-27T14:00:00Z",
   timezone: "Australia/Brisbane",
 };
 const doc = () => ({
@@ -100,7 +100,7 @@ const doc = () => ({
 async function assess(
   n: number,
   outcome = "Pass",
-  valid_until = "2032-01-02T00:00:00Z",
+  valid_until = "2027-01-01T00:00:00Z",
 ) {
   const a = await appointment(n);
   return assessWorkReadiness(await p(), wo, {
@@ -328,8 +328,8 @@ test("simultaneous same-appointment changes reject stale input; failed move leav
   await assert.rejects(
     moveAppointment(actor, id("a8", 1), {
       ...input,
-      start_at: "2031-09-23T03:30:00Z",
-      end_at: "2031-09-23T04:30:00Z",
+      start_at: "2026-09-22T03:30:00Z",
+      end_at: "2026-09-22T04:30:00Z",
       crew: crew(5),
     }),
     code("ResourceConflict"),
@@ -338,14 +338,14 @@ test("simultaneous same-appointment changes reject stale input; failed move leav
   const result = await Promise.allSettled([
     moveAppointment(actor, id("a8", 1), {
       ...input,
-      start_at: "2031-09-23T00:00:00Z",
-      end_at: "2031-09-23T02:00:00Z",
+      start_at: "2026-09-22T00:00:00Z",
+      end_at: "2026-09-22T02:00:00Z",
     }),
     moveAppointment(actor, id("a8", 1), {
       ...input,
       ...base(),
-      start_at: "2031-09-24T00:00:00Z",
-      end_at: "2031-09-24T02:00:00Z",
+      start_at: "2026-09-23T00:00:00Z",
+      end_at: "2026-09-23T02:00:00Z",
     }),
   ]);
   assert.equal(result.filter((x) => x.status === "fulfilled").length, 1);
@@ -362,8 +362,8 @@ test("simultaneous same-appointment changes reject stale input; failed move leav
   assert.equal(a.followups.length, 2);
   await moveAppointment(actor, a.id, {
     ...(await cmd(1, crew(1, 5))),
-    start_at: "2031-09-25T04:00:00Z",
-    end_at: "2031-09-25T05:00:00Z",
+    start_at: "2026-09-24T04:00:00Z",
+    end_at: "2026-09-24T05:00:00Z",
   });
   const reassigned = await appointment(1);
   assert.deepEqual(
@@ -398,8 +398,8 @@ test("half-open adjacency permits exact buffered boundary and refuses overlappin
     expected_version: w.version,
     scope_revision_id: scope,
     scope_version: 1,
-    start_at: "2031-09-22T02:30:00Z",
-    end_at: "2031-09-22T03:30:00Z",
+    start_at: "2026-09-21T02:30:00Z",
+    end_at: "2026-09-21T03:30:00Z",
     customer_commitment: "Proposed",
     preparation_status: "Preparing",
   });
@@ -468,8 +468,8 @@ test("calendar, leave, closed exception, skill expiry, active eligibility and ex
     code("SkillOrTravelInvalid"),
   );
   for (const [start_at, end_at] of [
-    ["2031-09-27T00:00:00Z", "2031-09-27T02:00:00Z"],
-    ["2031-10-01T00:00:00Z", "2031-10-01T02:00:00Z"],
+    ["2026-09-26T00:00:00Z", "2026-09-26T02:00:00Z"],
+    ["2026-09-30T00:00:00Z", "2026-09-30T02:00:00Z"],
   ])
     await assert.rejects(
       moveAppointment(actor, id("a8", 1), {
@@ -634,8 +634,8 @@ test("current site source changes and immutable customer windows block booking w
   await assert.rejects(
     moveAppointment(actor, id("a8", 10), {
       ...(await cmd(10, crew(1, 2))),
-      start_at: "2031-09-26T00:00:00Z",
-      end_at: "2031-09-26T02:00:00Z",
+      start_at: "2026-09-25T00:00:00Z",
+      end_at: "2026-09-25T02:00:00Z",
     }),
     code("BookingBlocked"),
   );
@@ -663,8 +663,8 @@ test("project/manual requests reserve nothing; accept/reject/cancel are versione
     source_type: "ProjectReference",
     source_reference: "SYN-PPO-PROJECT-PLANNER",
     source_version: "1",
-    start_at: "2031-09-24T00:00:00Z",
-    end_at: "2031-09-24T02:00:00Z",
+    start_at: "2026-09-23T00:00:00Z",
+    end_at: "2026-09-23T02:00:00Z",
     crew: crew(1, 2),
   };
   const receipt = await createChangeRequest(actor, a.id, input);
@@ -740,8 +740,8 @@ test("technician source requires its active assignment and never confers booking
       source_type: "TechnicianRequest",
       source_reference: "SYN technician review",
       source_version: "1",
-      start_at: "2031-09-24T00:00:00Z",
-      end_at: "2031-09-24T02:00:00Z",
+      start_at: "2026-09-23T00:00:00Z",
+      end_at: "2026-09-23T02:00:00Z",
       crew: crew(1, 2),
     };
   assert.equal(
@@ -820,7 +820,7 @@ test("read/filter/selector/receipt traversal applies current capability and reco
     code("InvalidData"),
   );
   await assert.rejects(
-    readSchedule(await p(), { ...period, to: "2031-10-11T00:00:00Z" }),
+    readSchedule(await p(), { ...period, to: "2026-10-10T00:00:00Z" }),
     code("BookingBlocked"),
   );
   const actor = await p(),
@@ -893,13 +893,13 @@ test("published calendar/resource/skill/availability roots and child mutation pa
     "DELETE FROM ppo.resources WHERE id=$1",
     "UPDATE ppo.skill_evidence SET valid_to='2026-09-20' WHERE resource_id=$1",
     "DELETE FROM ppo.resource_sites WHERE resource_id=$1",
-    "INSERT INTO ppo.availability_blocks(id,workspace_id,resource_id,version,start_at,end_at,kind,active,source_as_at,evidence) VALUES(gen_random_uuid(),'10000000-0000-4000-8000-000000000001',$1,1,'2031-09-22','2031-09-23','Leave',true,'2026-09-05','SYN unsafe insertion')",
+    "INSERT INTO ppo.availability_blocks(id,workspace_id,resource_id,version,start_at,end_at,kind,active,source_as_at,evidence) VALUES(gen_random_uuid(),'10000000-0000-4000-8000-000000000001',$1,1,'2026-09-21','2026-09-22','Leave',true,'2026-09-05','SYN unsafe insertion')",
   ])
     await assert.rejects(database().query(sql, [id("a4", 1)]));
   for (const sql of [
     "UPDATE ppo.working_calendars SET timezone='UTC' WHERE id=$1",
     "DELETE FROM ppo.calendar_intervals WHERE calendar_id=$1",
-    "INSERT INTO ppo.calendar_exceptions VALUES(gen_random_uuid(),'10000000-0000-4000-8000-000000000001',$1,'2031-09-22','2031-09-23','Closed','SYN insertion')",
+    "INSERT INTO ppo.calendar_exceptions VALUES(gen_random_uuid(),'10000000-0000-4000-8000-000000000001',$1,'2026-09-21','2026-09-22','Closed','SYN insertion')",
   ])
     await assert.rejects(database().query(sql, [id("a1")]));
   await assert.rejects(
@@ -940,8 +940,8 @@ test("injected appointment/assignment/reservation/history/activity/audit/receipt
         move
           ? moveAppointment(actor, id("a8", n), {
               ...input,
-              start_at: "2031-09-24T00:00:00Z",
-              end_at: "2031-09-24T02:00:00Z",
+              start_at: "2026-09-23T00:00:00Z",
+              end_at: "2026-09-23T02:00:00Z",
             })
           : confirmAppointment(actor, id("a8", n), input),
       );
@@ -977,8 +977,8 @@ test("contact, request acceptance and cancellation roll back owned consequences 
     source_type: "Manual",
     source_reference: "SYN rollback",
     source_version: "1",
-    start_at: "2031-09-24T00:00:00Z",
-    end_at: "2031-09-24T02:00:00Z",
+    start_at: "2026-09-23T00:00:00Z",
+    end_at: "2026-09-23T02:00:00Z",
     crew: crew(1, 2),
   });
   const before = await snapshot(1),
@@ -1042,7 +1042,7 @@ test("PostgreSQL exclusion is authoritative across independent transactions, not
         [x, workspace, company, site, aid, id("a4", 5), owner],
       );
       await c.query(
-        "INSERT INTO ppo.resource_reservations VALUES($1,$2,$3,$4,'2031-09-23T00:00:00Z','2031-09-23T02:00:00Z',true)",
+        "INSERT INTO ppo.resource_reservations VALUES($1,$2,$3,$4,'2026-09-22T00:00:00Z','2026-09-22T02:00:00Z',true)",
         [randomUUID(), workspace, x, id("a4", 5)],
       );
       await c.query(

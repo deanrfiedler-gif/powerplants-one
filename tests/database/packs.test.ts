@@ -633,8 +633,8 @@ test("P06 P05 confirmed move invalidates real pack/assignment applicability and 
     policy_version_id: a.policy_version_id,
     scheduling_policy_id: id("a0"),
     scheduling_policy_version: 1,
-    start_at: "2031-09-24T03:00:00Z",
-    end_at: "2031-09-24T05:00:00Z",
+    start_at: "2026-09-23T03:00:00Z",
+    end_at: "2026-09-23T05:00:00Z",
     crew: [9].map((n, i) => ({
       resource_id: id("a4", n),
       resource_version: 1,

@@ -113,7 +113,7 @@ test("P07 actual online visit: independent crew start, all typed forms, durable 
   await identity(page, "coordinator");
   const setup = await prepareFieldAppointment(
     (path, body) => call(page, path, body),
-    info.project.name.startsWith("mobile") ? "2031-12-04" : "2031-12-03",
+    info.project.name.startsWith("mobile") ? "2026-12-03" : "2026-12-02",
   );
   await identity(page, "assigned-technician");
   await page.goto("/my-jobs");

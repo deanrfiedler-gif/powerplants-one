@@ -360,7 +360,7 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   await proof(page, info, "report-list");
   const job = await startedJob(
     page,
-    info.project.name.startsWith("mobile") ? "2031-12-11" : "2031-12-10",
+    info.project.name.startsWith("mobile") ? "2026-12-10" : "2026-12-09",
   );
   await page.goto(`/my-jobs/${job.id}`);
   await page
@@ -484,15 +484,15 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
     .getByLabel("Proposed start (device timezone)")
     .fill(
       info.project.name.startsWith("mobile")
-        ? "2031-12-15T00:00"
-        : "2031-12-12T00:00",
+        ? "2026-12-14T00:00"
+        : "2026-12-11T00:00",
     );
   await page
     .getByLabel("Proposed finish (device timezone)")
     .fill(
       info.project.name.startsWith("mobile")
-        ? "2031-12-15T02:00"
-        : "2031-12-12T02:00",
+        ? "2026-12-14T02:00"
+        : "2026-12-11T02:00",
     );
   const savedProposal = page.waitForResponse(
     (r) =>
@@ -731,7 +731,7 @@ test("P09 online submission refuses retained offline originals and recovers the 
   await identity(page, "coordinator");
   let job = await startedJob(
     page,
-    info.project.name.startsWith("mobile") ? "2031-11-25" : "2031-11-24",
+    info.project.name.startsWith("mobile") ? "2026-11-24" : "2026-11-23",
   );
   await call(page, `appointments/${job.id}/completion-draft`, draft(job));
   job = (await call(page, `my-jobs/${job.id}`)).items[0];
