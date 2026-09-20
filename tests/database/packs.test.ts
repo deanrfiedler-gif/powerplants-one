@@ -1,3 +1,5 @@
+import { fixtureShift } from "../helpers/fixture-time";
+import { shiftFixtureDate } from "../../scripts/fixture-dates";
 import assert from "node:assert/strict";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -49,7 +51,14 @@ if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Use the disposable test database.");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
 process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
-beforeEach(reset);
+// Seeding moves the scheduling fixtures into this database's own future; these
+// dates are still written as authored and read in that frame.
+let shift = 0;
+beforeEach(async () => {
+  await reset();
+  shift = await fixtureShift();
+});
+const t = (authored: string) => shiftFixtureDate(authored, shift);
 after(closeDatabase);
 const code = (code: string) => (e: unknown) =>
   (e as { code: string }).code === code;
@@ -633,8 +642,8 @@ test("P06 P05 confirmed move invalidates real pack/assignment applicability and 
     policy_version_id: a.policy_version_id,
     scheduling_policy_id: id("a0"),
     scheduling_policy_version: 1,
-    start_at: "2026-09-23T03:00:00Z",
-    end_at: "2026-09-23T05:00:00Z",
+    start_at: t("2026-09-23T03:00:00Z"),
+    end_at: t("2026-09-23T05:00:00Z"),
     crew: [9].map((n, i) => ({
       resource_id: id("a4", n),
       resource_version: 1,

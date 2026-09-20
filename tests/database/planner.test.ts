@@ -10,6 +10,8 @@ import {
 import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
 import { reset, migrate, seed } from "../../scripts/database";
+import { fixtureShift } from "../helpers/fixture-time";
+import { shiftFixtureDate } from "../../scripts/fixture-dates";
 import {
   readAppointment,
   readSchedule,
@@ -44,7 +46,15 @@ if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Use ppo_synthetic_test only.");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
 process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
-beforeEach(reset);
+// Seeding moves the P05 family into this database's own future. Every date below is
+// still written as the instant it was authored as, and `t` reads it in that frame, so
+// the fixtures keep their relationships to each other and to the seeded work.
+let shift = 0;
+beforeEach(async () => {
+  await reset();
+  shift = await fixtureShift();
+});
+const t = (authored: string) => shiftFixtureDate(authored, shift);
 after(closeDatabase);
 const p = async (name = "coordinator") => (await createSession(name)).principal;
 const base = () => ({
@@ -86,11 +96,11 @@ async function cmd(n = 2, members = crew()) {
     crew: members,
   };
 }
-const period = {
-  from: "2026-09-20T14:00:00Z",
-  to: "2026-09-27T14:00:00Z",
+const period = () => ({
+  from: t("2026-09-20T14:00:00Z"),
+  to: t("2026-09-27T14:00:00Z"),
   timezone: "Australia/Brisbane",
-};
+});
 const doc = () => ({
   title: "SYN planner control",
   content_text: "SYN exact reviewed preparation evidence.",
@@ -100,7 +110,7 @@ const doc = () => ({
 async function assess(
   n: number,
   outcome = "Pass",
-  valid_until = "2027-01-01T00:00:00Z",
+  valid_until = t("2027-01-01T00:00:00Z"),
 ) {
   const a = await appointment(n);
   return assessWorkReadiness(await p(), wo, {
@@ -114,7 +124,7 @@ async function assess(
       outcome,
       reason: "SYN current preparation assessment",
       evidence: doc(),
-      source_as_at: "2026-09-05T00:00:00Z",
+      source_as_at: t("2026-09-05T00:00:00Z"),
       valid_until,
     },
   });
@@ -163,8 +173,8 @@ test("P05 additive upgrade preserves exact P04 proposal bytes, receipts, source 
     expected_version: oldOrder.version,
     scope_revision_id: oldScope.id,
     scope_version: oldScope.version,
-    start_at: "2026-09-17T00:00:00Z",
-    end_at: "2026-09-17T02:00:00Z",
+    start_at: t("2026-09-17T00:00:00Z"),
+    end_at: t("2026-09-17T02:00:00Z"),
     customer_commitment: "Proposed",
     preparation_status: "Preparing",
   };
@@ -328,8 +338,8 @@ test("simultaneous same-appointment changes reject stale input; failed move leav
   await assert.rejects(
     moveAppointment(actor, id("a8", 1), {
       ...input,
-      start_at: "2026-09-22T03:30:00Z",
-      end_at: "2026-09-22T04:30:00Z",
+      start_at: t("2026-09-22T03:30:00Z"),
+      end_at: t("2026-09-22T04:30:00Z"),
       crew: crew(5),
     }),
     code("ResourceConflict"),
@@ -338,14 +348,14 @@ test("simultaneous same-appointment changes reject stale input; failed move leav
   const result = await Promise.allSettled([
     moveAppointment(actor, id("a8", 1), {
       ...input,
-      start_at: "2026-09-22T00:00:00Z",
-      end_at: "2026-09-22T02:00:00Z",
+      start_at: t("2026-09-22T00:00:00Z"),
+      end_at: t("2026-09-22T02:00:00Z"),
     }),
     moveAppointment(actor, id("a8", 1), {
       ...input,
       ...base(),
-      start_at: "2026-09-23T00:00:00Z",
-      end_at: "2026-09-23T02:00:00Z",
+      start_at: t("2026-09-23T00:00:00Z"),
+      end_at: t("2026-09-23T02:00:00Z"),
     }),
   ]);
   assert.equal(result.filter((x) => x.status === "fulfilled").length, 1);
@@ -362,8 +372,8 @@ test("simultaneous same-appointment changes reject stale input; failed move leav
   assert.equal(a.followups.length, 2);
   await moveAppointment(actor, a.id, {
     ...(await cmd(1, crew(1, 5))),
-    start_at: "2026-09-24T04:00:00Z",
-    end_at: "2026-09-24T05:00:00Z",
+    start_at: t("2026-09-24T04:00:00Z"),
+    end_at: t("2026-09-24T05:00:00Z"),
   });
   const reassigned = await appointment(1);
   assert.deepEqual(
@@ -398,8 +408,8 @@ test("half-open adjacency permits exact buffered boundary and refuses overlappin
     expected_version: w.version,
     scope_revision_id: scope,
     scope_version: 1,
-    start_at: "2026-09-21T02:30:00Z",
-    end_at: "2026-09-21T03:30:00Z",
+    start_at: t("2026-09-21T02:30:00Z"),
+    end_at: t("2026-09-21T03:30:00Z"),
     customer_commitment: "Proposed",
     preparation_status: "Preparing",
   });
@@ -415,7 +425,7 @@ test("half-open adjacency permits exact buffered boundary and refuses overlappin
       outcome: "Pass",
       reason: "SYN adjacent preparation",
       evidence: doc(),
-      source_as_at: "2026-09-05T00:00:00Z",
+      source_as_at: t("2026-09-05T00:00:00Z"),
     },
   });
   await recordContact(actor, aid, {
@@ -468,8 +478,8 @@ test("calendar, leave, closed exception, skill expiry, active eligibility and ex
     code("SkillOrTravelInvalid"),
   );
   for (const [start_at, end_at] of [
-    ["2026-09-26T00:00:00Z", "2026-09-26T02:00:00Z"],
-    ["2026-09-30T00:00:00Z", "2026-09-30T02:00:00Z"],
+    [t("2026-09-26T00:00:00Z"), t("2026-09-26T02:00:00Z")],
+    [t("2026-09-30T00:00:00Z"), t("2026-09-30T02:00:00Z")],
   ])
     await assert.rejects(
       moveAppointment(actor, id("a8", 1), {
@@ -563,7 +573,7 @@ test("wrong site/company, narrow fields, scope and policy versions, urgent prior
     "Confirmed",
   );
   // Every linked request is already Urgent; priority never cleared the missing preparation gate.
-  await assess(5, "Pass", "2026-09-20T00:00:00Z");
+  await assess(5, "Pass", t("2026-09-20T00:00:00Z"));
   await assert.rejects(
     confirmAppointment(actor, id("a8", 5), await cmd(5)),
     code("BookingBlocked"),
@@ -630,8 +640,8 @@ test("current site source changes and immutable customer windows block booking w
   await assert.rejects(
     moveAppointment(actor, id("a8", 10), {
       ...(await cmd(10, crew(1, 2))),
-      start_at: "2026-09-25T00:00:00Z",
-      end_at: "2026-09-25T02:00:00Z",
+      start_at: t("2026-09-25T00:00:00Z"),
+      end_at: t("2026-09-25T02:00:00Z"),
     }),
     code("BookingBlocked"),
   );
@@ -659,8 +669,8 @@ test("project/manual requests reserve nothing; accept/reject/cancel are versione
     source_type: "ProjectReference",
     source_reference: "SYN-PPO-PROJECT-PLANNER",
     source_version: "1",
-    start_at: "2026-09-23T00:00:00Z",
-    end_at: "2026-09-23T02:00:00Z",
+    start_at: t("2026-09-23T00:00:00Z"),
+    end_at: t("2026-09-23T02:00:00Z"),
     crew: crew(1, 2),
   };
   const receipt = await createChangeRequest(actor, a.id, input);
@@ -736,8 +746,8 @@ test("technician source requires its active assignment and never confers booking
       source_type: "TechnicianRequest",
       source_reference: "SYN technician review",
       source_version: "1",
-      start_at: "2026-09-23T00:00:00Z",
-      end_at: "2026-09-23T02:00:00Z",
+      start_at: t("2026-09-23T00:00:00Z"),
+      end_at: t("2026-09-23T02:00:00Z"),
       crew: crew(1, 2),
     };
   assert.equal(
@@ -768,7 +778,7 @@ test("technician source requires its active assignment and never confers booking
   );
   for (const name of ["technician", "systems"]) {
     await assert.rejects(
-      readSchedule(await p(name), period),
+      readSchedule(await p(name), period()),
       code("Forbidden"),
     );
     await assert.rejects(
@@ -792,15 +802,15 @@ test("technician source requires its active assignment and never confers booking
 });
 test("read/filter/selector/receipt traversal applies current capability and record scope with same 404 semantics", async () => {
   const other = await p("second-company");
-  assert.equal((await readSchedule(other, period)).items.length, 0);
+  assert.equal((await readSchedule(other, period())).items.length, 0);
   for (const path of [id("a8", 1), randomUUID()])
     await assert.rejects(
       readAppointment(other, path),
       code("RecordUnavailable"),
     );
   for (const query of [
-    { ...period, site_id: site },
-    { ...period, resource_id: id("a4", 1) },
+    { ...period(), site_id: site },
+    { ...period(), resource_id: id("a4", 1) },
   ])
     await assert.rejects(readSchedule(other, query), code("RecordUnavailable"));
   await assert.rejects(
@@ -812,11 +822,11 @@ test("read/filter/selector/receipt traversal applies current capability and reco
     code("RecordUnavailable"),
   );
   await assert.rejects(
-    readSchedule(await p(), { ...period, actor_id: owner }),
+    readSchedule(await p(), { ...period(), actor_id: owner }),
     code("InvalidData"),
   );
   await assert.rejects(
-    readSchedule(await p(), { ...period, to: "2026-10-10T00:00:00Z" }),
+    readSchedule(await p(), { ...period(), to: t("2026-10-10T00:00:00Z") }),
     code("BookingBlocked"),
   );
   const actor = await p(),
@@ -835,7 +845,7 @@ test("read/filter/selector/receipt traversal applies current capability and reco
     code("Forbidden"),
   );
   const dto = JSON.stringify(
-    await readSchedule(await p("site-observer"), period),
+    await readSchedule(await p("site-observer"), period()),
   );
   assert.ok(!dto.includes(id("a4", 6)));
   assert.ok(!dto.includes("erp_company_id"));
@@ -936,8 +946,8 @@ test("injected appointment/assignment/reservation/history/activity/audit/receipt
         move
           ? moveAppointment(actor, id("a8", n), {
               ...input,
-              start_at: "2026-09-23T00:00:00Z",
-              end_at: "2026-09-23T02:00:00Z",
+              start_at: t("2026-09-23T00:00:00Z"),
+              end_at: t("2026-09-23T02:00:00Z"),
             })
           : confirmAppointment(actor, id("a8", n), input),
       );
@@ -973,8 +983,8 @@ test("contact, request acceptance and cancellation roll back owned consequences 
     source_type: "Manual",
     source_reference: "SYN rollback",
     source_version: "1",
-    start_at: "2026-09-23T00:00:00Z",
-    end_at: "2026-09-23T02:00:00Z",
+    start_at: t("2026-09-23T00:00:00Z"),
+    end_at: t("2026-09-23T02:00:00Z"),
     crew: crew(1, 2),
   });
   const before = await snapshot(1),

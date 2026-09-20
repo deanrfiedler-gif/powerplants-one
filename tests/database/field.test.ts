@@ -1,3 +1,5 @@
+import { fixtureShift } from "../helpers/fixture-time";
+import { shiftFixtureDate } from "../../scripts/fixture-dates";
 import { execFileSync } from "node:child_process";
 import { twoTaskStarted } from "../helpers/field-two-tasks";
 import assert from "node:assert/strict";
@@ -54,7 +56,14 @@ if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Use the disposable test database.");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
 process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
-beforeEach(reset);
+// Seeding moves the scheduling fixtures into this database's own future; these
+// dates are still written as authored and read in that frame.
+let shift = 0;
+beforeEach(async () => {
+  await reset();
+  shift = await fixtureShift();
+});
+const t = (authored: string) => shiftFixtureDate(authored, shift);
 after(closeDatabase);
 const code =
   (...codes: string[]) =>
@@ -420,7 +429,7 @@ test("P07 future-effective crew can be booked and acknowledge but cannot confer 
       ])
     )[0],
     futureId = randomUUID(),
-    futureFrom = new Date("2026-09-22T00:00:00Z");
+    futureFrom = new Date(t("2026-09-22T00:00:00Z"));
   assert.ok(futureFrom.getTime() > Date.now());
   await insert(database(), "resources", {
     ...original,

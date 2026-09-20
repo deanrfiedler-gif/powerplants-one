@@ -11,6 +11,7 @@ import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
 import { database, transaction, closeDatabase } from "../src/platform/database";
 import { localConfig } from "../src/platform/config";
+import { seededFixtureVersions, withSeededFixtureDates } from "./fixture-dates";
 const read = (name: string) =>
   readFile(new URL(`../db/${name}`, import.meta.url), "utf8");
 export async function migrate(through = latestMigrationVersion) {
@@ -46,6 +47,7 @@ export async function migrate(through = latestMigrationVersion) {
 }
 export async function seed(through = latestMigrationVersion) {
   validateMigrationRegistry(migrationFiles, seedFiles);
+  const seededAt = new Date();
   await transaction(async (client) => {
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     for (const [version, file] of seedFiles) {
@@ -55,7 +57,15 @@ export async function seed(through = latestMigrationVersion) {
         [version],
       );
       if (prior.rowCount) continue;
-      await client.query(await read(file));
+      // The scheduling fixtures are written around a fixed day. Move them into this
+      // database's own future as they are seeded, so the planner and readiness rules
+      // meet a legal situation however long after authoring the database is created.
+      const sql = await read(file);
+      await client.query(
+        seededFixtureVersions.includes(version)
+          ? withSeededFixtureDates(sql, seededAt)
+          : sql,
+      );
       if (version === 6) await seedDocumentFiles();
       if (version === 9) {
         const { currentReportTemplate } =

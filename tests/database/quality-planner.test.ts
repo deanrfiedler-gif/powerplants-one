@@ -1,3 +1,5 @@
+import { fixtureShift } from "../helpers/fixture-time";
+import { shiftFixtureDate } from "../../scripts/fixture-dates";
 import assert from "node:assert/strict";
 import { after, beforeEach, test } from "node:test";
 import { reset } from "../../scripts/database";
@@ -10,11 +12,18 @@ if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
 process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
-beforeEach(reset);
+// Seeding moves the scheduling fixtures into this database's own future; these
+// dates are still written as authored and read in that frame.
+let shift = 0;
+beforeEach(async () => {
+  await reset();
+  shift = await fixtureShift();
+});
+const t = (authored: string) => shiftFixtureDate(authored, shift);
 after(closeDatabase);
 const period = {
-  from: "2026-09-20T14:00:00Z",
-  to: "2026-09-27T14:00:00Z",
+  from: t("2026-09-20T14:00:00Z"),
+  to: t("2026-09-27T14:00:00Z"),
   timezone: "Australia/Brisbane",
 };
 const principal = async (profile = "coordinator") =>
