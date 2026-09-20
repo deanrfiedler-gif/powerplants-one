@@ -1,0 +1,6 @@
+import { readView } from "../../../../../../../engineering/changes/reads";
+import { verificationCommand } from "../../../../../../../engineering/changes/commands";
+import { readRoute, commandRoute } from "../../../../../../../shared/http";
+export const dynamic = "force-dynamic";
+export const GET = readRoute((p, id, q) => readView(p, id, q, "verification"));
+export const POST = commandRoute((p, id, b) => verificationCommand(p, id, b));
