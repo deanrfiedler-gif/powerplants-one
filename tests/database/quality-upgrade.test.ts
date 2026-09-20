@@ -164,6 +164,22 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
     const companyAGrants=originalGrants.filter(g=>g.value.user_id==="30000000-0000-4000-8000-000000000001" && g.value.company_id==="20000000-0000-4000-8000-000000000001" && g.value.scope_type==="Company");
     expected.push(...companyAGrants.filter(g=>g.value.capability==="crm.opportunity.edit").map(g=>({...g.value,capability:"crm.opportunity.transfer.own"})),
       ...companyAGrants.filter(g=>["shared.read","shared.internal.read","crm.opportunity.read","crm.opportunity.edit","activity.read","activity.edit"].includes(String(g.value.capability))).map(g=>({...g.value,capability:String(g.value.capability),user_id:"30000000-0000-4000-8000-000000000015"})));
+    // Seed 29 (EN-06): six fictional profiles read Company A through copies of the coordinator's own scope; only the two
+    // authors edit; review, release and receiving are one capability each for one profile each; and the synthetic
+    // upstream adapter goes to the two coordinators wherever they already edit Engineering packages.
+    const materials = { author: "30000000-0000-4000-8000-000000000016", engineer: "30000000-0000-4000-8000-000000000017", reviewer: "30000000-0000-4000-8000-000000000018",
+      release: "30000000-0000-4000-8000-000000000019", supply: "30000000-0000-4000-8000-000000000020", viewer: "30000000-0000-4000-8000-000000000021" };
+    const duties: [string, string][] = [[materials.reviewer, "engineering.material.review"], [materials.release, "engineering.material.release"], [materials.supply, "engineering.material.receive"]];
+    expected.push(
+      ...companyAGrants.filter(g => ["shared.read", "shared.internal.read"].includes(String(g.value.capability)))
+        .flatMap(g => Object.values(materials).map(user_id => ({ ...g.value, capability: String(g.value.capability), user_id }))),
+      ...companyAGrants.filter(g => g.value.capability === "shared.edit").flatMap(g => [
+        ...Object.values(materials).flatMap(user_id => ["project.read", "engineering.read", ...([materials.author, materials.engineer].includes(user_id) ? ["engineering.edit"] : [])]
+          .map(capability => ({ ...g.value, capability, user_id }))),
+        ...duties.map(([user_id, capability]) => ({ ...g.value, capability, user_id })),
+      ]),
+      ...coordinatorGrants.filter(g => g.value.capability === "shared.edit").map(g => ({ ...g.value, capability: "engineering.material.source" })),
+    );
     const grantShape = (g: Record<string, unknown>) => Object.fromEntries(Object.entries(g).filter(([k]) => k !== "id"));
     const sorted = (gs: Record<string, unknown>[]) => gs.map(g => JSON.stringify(grantShape(g))).sort();
     assert.deepEqual(sorted(added.map(g => g.value)), sorted(expected));
