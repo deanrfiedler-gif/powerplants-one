@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { api, isDenied } from "../../../components/business-ui";
+import { usePendingWork } from "../../../components/pending-work";
 
 // One outline family, 24px grid, 1.7 stroke, matching the shell's icon weight.
 const paths = {
@@ -171,6 +172,7 @@ export function WorkDialog({
     heading = useRef<HTMLHeadingElement>(null),
     outside = useRef(false),
     id = useId();
+  usePendingWork(dirty || busy);
   useEffect(() => {
     const d = dialog.current,
       previous = document.activeElement as HTMLElement | null;

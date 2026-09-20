@@ -8,6 +8,7 @@ import { demoGateway } from "../../src/platform/demo-gateway";
 import { AppError } from "../../src/platform/errors";
 import { exchangeDemoAuthorization } from "../../src/platform/demo-auth";
 import { loginFailure, loginState, renderLoginPage } from "../../src/login/login-page";
+import { publicInstallationAssets } from "../../src/platform/installation";
 
 const origin = "https://ppo-login.example.invalid";
 async function fixture(run: (f: Awaited<ReturnType<typeof start>>) => Promise<void>) {
@@ -15,15 +16,15 @@ async function fixture(run: (f: Awaited<ReturnType<typeof start>>) => Promise<vo
   try { await run(f); } finally { f.server.closeAllConnections(); await new Promise<void>(resolve => f.server.close(() => resolve())); }
 }
 async function start() {
-  let beginError: unknown, finishError: unknown, beginCount = 0, appCount = 0;
+  let beginError: unknown, finishError: unknown, beginCount = 0, appCount = 0, identityCount = 0;
   let callbackTokens: unknown[] = [], ended: string | undefined;
   const gateway = demoGateway({
     origin, gatewayKey: "synthetic-gateway", sessionCookie: "__Host-ppo_session", loginCookie: "__Host-ppo_login",
     beginLogin: async () => { beginCount++; if (beginError) throw beginError; return { token: "a".repeat(64), url: "https://microsoft.example.invalid/authorize?state=synthetic" }; },
     finishLogin: async (_url, login, session) => { callbackTokens = [login, session]; if (finishError) throw finishError; return "b".repeat(64); },
     endSession: async token => { ended = token; },
-    resolveIdentity: async token => { if (token !== "valid") throw new AppError(401, "AuthenticationRequired", "Internal fixture diagnostic"); return {}; },
-    handleApplication: async (req, res) => { appCount++; assert.equal(req.headers["x-ppo-local-gateway"], "synthetic-gateway"); res.end("Synthetic authorised application"); },
+    resolveIdentity: async token => { identityCount++; if (token !== "valid") throw new AppError(401, "AuthenticationRequired", "Internal fixture diagnostic"); return {}; },
+    handleApplication: async (req, res) => { appCount++; assert.equal(req.headers["x-ppo-local-gateway"], "synthetic-gateway"); res.end(`Synthetic application served ${(req.url ?? "").split("?")[0]}`); },
   });
   const server = createServer((req, res) => { void gateway(req, res).catch(() => { res.writeHead(503); res.end("Test handler error"); }); });
   server.listen(0, "127.0.0.1"); await once(server, "listening");
@@ -35,7 +36,7 @@ async function start() {
     }); req.on("error", reject); req.end();
   });
   return { server, call, failBegin: (error: unknown) => { beginError = error; }, failFinish: (error: unknown) => { finishError = error; },
-    counts: () => ({ beginCount, appCount }), callback: () => callbackTokens, ended: () => ended };
+    counts: () => ({ beginCount, appCount, identityCount }), callback: () => callbackTokens, ended: () => ended };
 }
 
 test("public login and protected routes retain distinct HTTP and access boundaries", async () => fixture(async f => {
@@ -52,12 +53,49 @@ test("public login and protected routes retain distinct HTTP and access boundari
   assert.equal(expired.status, 401); assert.match(expired.body, /Your session has expired/);
   const api = await f.call("/api/v1/crm/opportunities"); assert.equal(api.status, 401); assert.equal(JSON.parse(api.body).code, "AuthenticationRequired");
   assert.equal(f.counts().appCount, 0);
-  assert.equal((await f.call("/sales/opportunities", "GET", { cookie: "__Host-ppo_session=valid" })).body, "Synthetic authorised application");
+  assert.equal((await f.call("/sales/opportunities", "GET", { cookie: "__Host-ppo_session=valid" })).body, "Synthetic application served /sales/opportunities");
   for (const [path, method] of [["/offline/index.html", "GET"], ["/sw.js", "GET"], ["/api/v1/local-session", "POST"]])
     assert.equal((await f.call(path, method, { cookie: "__Host-ppo_session=valid", origin })).status, 403);
   assert.equal(f.counts().appCount, 1);
   for (const headers of [{ host: "attacker.invalid" }, { "x-ppo-local-gateway": "forged" }, { "x-forwarded-proto": "http" }])
     assert.equal((await f.call("/login", "GET", headers)).status, 403);
+}));
+
+test("installation assets are readable without a session; nothing else becomes public", async () => fixture(async f => {
+  // A browser and an operating system read these before any session exists.
+  for (const path of publicInstallationAssets) {
+    for (const cookie of [undefined, "__Host-ppo_session=expired", "__Host-ppo_session=valid"]) {
+      const asset = await f.call(path, "GET", cookie ? { cookie } : {});
+      assert.equal(asset.status, 200, `${path} with ${cookie ?? "no cookie"}`);
+      // The bytes of the asset, never a sign-in page, a redirect or an authenticated error.
+      assert.equal(asset.body, `Synthetic application served ${path}`);
+      assert.doesNotMatch(asset.body, /Welcome back|Sign in with Microsoft/);
+      assert.equal(asset.headers.location, undefined);
+    }
+    const head = await f.call(path, "HEAD");
+    assert.equal(head.status, 200); assert.equal(head.body, "");
+  }
+  // Serving them never resolved a business identity.
+  assert.equal(f.counts().identityCount, 0);
+  assert.equal(f.counts().appCount, publicInstallationAssets.length * 4);
+
+  // Nothing near the allowlist is public: unknown assets, encoded variants, traversal,
+  // the directory itself and unsupported methods all keep the existing behaviour.
+  for (const path of ["/pwa/", "/pwa/ppo-app-icon-16.png", "/%70wa/ppo-app-icon-192.png",
+    "/pwa/../../package.json", "/pwa/ppo-app-icon-192.png.map", "/manifest.json",
+    "/brand/powerplants-logo-green-white.png", "/work", "/sales/opportunities"]) {
+    const denied = await f.call(path);
+    assert.equal(denied.status, 401, path); assert.match(denied.body, /Welcome back/);
+  }
+  assert.equal((await f.call("/manifest.webmanifest", "POST", { origin })).status, 401);
+  assert.equal((await f.call("/manifest.webmanifest", "DELETE")).status, 403);
+  // API authentication, hosted offline restrictions and the local-session refusal stand.
+  assert.equal((await f.call("/api/v1/work/overview")).status, 401);
+  for (const [path, method] of [["/offline/index.html", "GET"], ["/sw.js", "GET"], ["/api/v1/local-session", "POST"]])
+    assert.equal((await f.call(path, method, { cookie: "__Host-ppo_session=valid", origin })).status, 403, path);
+  // A forged host or internal header still fails before the allowlist is consulted.
+  for (const headers of [{ host: "attacker.invalid" }, { "x-ppo-local-gateway": "forged" }, { "x-forwarded-proto": "http" }])
+    assert.equal((await f.call("/manifest.webmanifest", "GET", headers)).status, 403);
 }));
 
 test("native Microsoft handoff, callback and logout preserve fixed destinations and secure cookies", async () => fixture(async f => {
@@ -66,7 +104,8 @@ test("native Microsoft handoff, callback and logout preserve fixed destinations 
   assert.match(begin.headers["set-cookie"]![0], /Path=\/; HttpOnly; Secure; SameSite=Lax; Max-Age=600/);
   const callback = await f.call("/auth/callback?code=synthetic", "GET", { cookie: "__Host-ppo_login=attempt; __Host-ppo_session=previous", "sec-fetch-site": "cross-site" });
   assert.deepEqual(f.callback(), ["attempt", "previous"]);
-  assert.equal(callback.status, 303); assert.equal(callback.headers.location, origin + "/sales/opportunities");
+  // Intentional: the default successful destination is My Work for browser and installed sign-ins alike.
+  assert.equal(callback.status, 303); assert.equal(callback.headers.location, origin + "/work");
   assert.match(callback.headers["set-cookie"]![0], /Max-Age=0/); assert.match(callback.headers["set-cookie"]![1], /Max-Age=3600/);
   assert.equal((await f.call("/auth/logout", "POST", { origin: "https://attacker.invalid" })).status, 403);
   const logout = await f.call("/auth/logout", "POST", { origin, cookie: "__Host-ppo_session=valid" });

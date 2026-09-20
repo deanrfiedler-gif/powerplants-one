@@ -2,6 +2,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { Field, useFieldError, type Option } from "./business-ui";
 import { localDateTime, utcFromLocal } from "../scheduling/time";
+import { usePendingWork } from "./pending-work";
 
 export function RecordTabs({ id, label, tabs, value, onChange }: {
   id: string; label: string; tabs: { id: string; label: string }[];
@@ -87,8 +88,10 @@ export function LocalDateTimeField({ name, label = "Due date and time", value, o
   </div>;
 }
 
-// Native unload warning and in-app links share the same dirty state. Tabs retain mounted drafts.
+// Native unload warning, in-app links and the installed app's Reload action share the
+// same dirty state. Tabs retain mounted drafts.
 export function useUnsavedChanges(dirty: boolean, pending = false) {
+  usePendingWork(dirty || pending);
   useEffect(() => {
     if (!dirty && !pending) return;
     const unload = (event: BeforeUnloadEvent) => { event.preventDefault(); event.returnValue = ""; };
