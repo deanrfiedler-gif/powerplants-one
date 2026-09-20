@@ -5,7 +5,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useRef,
   useState,
@@ -13,9 +12,9 @@ import {
 } from "react";
 import { useIdentity } from "../../../components/business-session";
 import { api } from "../../../components/business-ui";
-import { HeaderContent } from "../../../components/header-content";
 import { useShell } from "../../../components/shell-provider";
 import { workViews, workspaces, type WorkViewId } from "../../../shell/navigation";
+import { SecondaryMenuFrame, useSecondaryMenu } from "../../../shell/secondary-menu";
 import { criteriaSearch } from "../../work-criteria";
 import type { readWorkNavigation } from "../../work-overview";
 import type { WorkView } from "../../work-views";
@@ -112,18 +111,6 @@ export function useMyWork() {
   return value;
 }
 
-const wideQuery = "(min-width: 1200px)";
-const subscribeWide = (changed: () => void) => {
-  const media = window.matchMedia(wideQuery);
-  media.addEventListener("change", changed);
-  return () => media.removeEventListener("change", changed);
-};
-const phoneQuery = "(max-width: 780px)";
-const subscribePhone = (changed: () => void) => {
-  const media = window.matchMedia(phoneQuery);
-  media.addEventListener("change", changed);
-  return () => media.removeEventListener("change", changed);
-};
 const viewIcons: Record<WorkViewId, IconName> = {
   overview: "grid",
   actions: "list",
@@ -139,37 +126,14 @@ export function MyWorkShell({ children }: { children: React.ReactNode }) {
     path = usePathname(),
     router = useRouter();
   const [layout, saveLayout] = useLayout(`ppo.work.layout.v1:${identity.workspace_id}:${identity.actor_id}`);
-  // Wide screens dock the menu beside the rail and the content reflows; narrower screens
-  // overlay it so task titles are never squeezed. The remembered choice applies when docked.
-  const docked = useSyncExternalStore(subscribeWide, () => window.matchMedia(wideQuery).matches, () => true);
-  // Unknown until the browser answers, so a phone never paints the desktop overview first.
-  const phone = useSyncExternalStore<boolean | null>(subscribePhone, () => window.matchMedia(phoneQuery).matches, () => null);
-  const [overlayOpen, setOverlayOpen] = useState(false),
-    [customise, setCustomise] = useState(false);
-  const open = docked ? layout.menu === "open" : overlayOpen;
-  const overlay = useRef<HTMLDialogElement>(null),
-    opener = useRef<HTMLElement | null>(null);
+  // Dock, overlay, header trigger, edge handle and focus return live in the shell's shared secondary
+  // menu; this workspace owns only what the menu remembers and what it contains.
+  const menuState = useSecondaryMenu(layout.menu === "open", (open) => saveLayout({ ...layout, menu: open ? "open" : "closed" }));
+  const { phone, closeOverlay } = menuState;
+  const [customise, setCustomise] = useState(false);
   const navigation = useWorkResource<Navigation>("work/navigation", 120000),
     views = useWorkResource<Views>("work/views", 0);
   const [message, setMessage] = useState("");
-
-  const toggle = (source: HTMLElement | null) => {
-    if (docked) saveLayout({ ...layout, menu: open ? "closed" : "open" });
-    else {
-      opener.current = source;
-      setOverlayOpen(!open);
-    }
-  };
-  const closeOverlay = useCallback((restoreFocus = true) => {
-    setOverlayOpen(false);
-    if (restoreFocus && opener.current?.isConnected) opener.current.focus({ preventScroll: true });
-  }, []);
-  useEffect(() => {
-    const d = overlay.current;
-    if (!d) return;
-    if (!docked && overlayOpen && !d.open) d.showModal();
-    if ((docked || !overlayOpen) && d.open) d.close();
-  }, [docked, overlayOpen]);
 
   const saveViews = useCallback(
     async (next: WorkView[]) => {
@@ -265,71 +229,11 @@ export function MyWorkShell({ children }: { children: React.ReactNode }) {
       )}
     </>
   );
-  // A phone has three separate menus (this one, More and Create), so its trigger says which it is.
-  const label = phone ? "My Work menu" : open ? "Hide menu" : "Show menu";
   return (
     <Context.Provider value={value}>
-      <section
-        id="ppo-my-work"
-        data-module-layout="full-bleed"
-        data-menu={docked ? (open ? "docked" : "collapsed") : "overlay"}
-        data-view={current}
-        aria-label="My Work"
-      >
-        <HeaderContent slot="menu">
-          <button
-            type="button"
-            className="ppo-menu-toggle"
-            aria-expanded={open}
-            aria-controls="mw-menu"
-            onClick={(e) => toggle(e.currentTarget)}
-          >
-            <Icon name={phone ? "menu" : "panel"} />
-            <span>{label}</span>
-          </button>
-        </HeaderContent>
-        {docked ? (
-          <aside id="mw-menu" className="mw-menu" hidden={!open} aria-label="My Work menu">
-            {menu}
-          </aside>
-        ) : (
-          <dialog
-            id="mw-menu"
-            ref={overlay}
-            className="mw-menu mw-menu-overlay"
-            aria-label="My Work menu"
-            onCancel={(e) => {
-              e.preventDefault();
-              closeOverlay();
-            }}
-            onClick={(e) => {
-              if (e.target === e.currentTarget) closeOverlay();
-            }}
-          >
-            <button type="button" className="mw-icon-button mw-menu-close" onClick={() => closeOverlay()} aria-label="Close menu">
-              <Icon name="close" />
-            </button>
-            {menu}
-          </dialog>
-        )}
-        <button
-          type="button"
-          className="mw-edge"
-          aria-label={label}
-          aria-expanded={open}
-          aria-controls="mw-menu"
-          title={label}
-          onClick={(e) => toggle(e.currentTarget)}
-        >
-          <Icon name={open ? "chevron-left" : "chevron-right"} />
-        </button>
-        <div className="mw-content" id="mw-content">
-          <p className="mw-live" role="status" aria-live="polite">
-            {message}
-          </p>
-          {children}
-        </div>
-      </section>
+      <SecondaryMenuFrame state={menuState} id="ppo-my-work" name="My Work" menuId="mw-menu" contentId="mw-content" attributes={{ "data-view": current }} menu={menu} message={message}>
+        {children}
+      </SecondaryMenuFrame>
     </Context.Provider>
   );
 }

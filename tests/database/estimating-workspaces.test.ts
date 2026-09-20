@@ -42,6 +42,7 @@ import {
 import type { DiscoveryChange } from "../../src/estimating/discovery-workspace-validation";
 import { CRM, crmBase, crmCreate } from "../helpers/crm";
 import { estimateInput, quoteCommand } from "../helpers/estimating";
+import { assertOnlySeed29GrantsAdded } from "../helpers/engineering-materials-grants";
 import {
   discoveryInput,
   discoveryFacility,
@@ -699,7 +700,18 @@ test("E2 migration formalises exact E1 identities and preserves every accepted c
   await migrate();
   await seed();
   await seed();
-  assert.deepEqual(await capture(), originals);
+  const upgraded = await capture(),
+    grantsAt = tables.indexOf("permission_grants");
+  assert.deepEqual(
+    upgraded.filter((_, i) => i !== grantsAt),
+    originals.filter((_, i) => i !== grantsAt),
+  );
+  // Seed 29 (EN-06) adds the six fictional materials profiles' grants; every
+  // earlier grant is unchanged and nothing else is added.
+  assertOnlySeed29GrantsAdded(
+    originals[grantsAt].map((r) => r.v),
+    upgraded[grantsAt].map((r) => r.v),
+  );
   assert.deepEqual(
     await rows(
       "SELECT * FROM public.ppo_migrations WHERE version<=25 ORDER BY version",

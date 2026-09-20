@@ -20,6 +20,18 @@ export { existingDemoChecksumMatches } from "./migration-registry";
 // A deliberately bounded existing-demo upgrade, not a second bootstrap path.
 // Every database change shares one transaction, including grants and receipts.
 export async function upgradeExistingDemo(databaseName: string, tenant: string, apply: boolean) {
+  // Reviewed for 0029 (EN-06 released materials): eleven new ppo.material_* tables, two guard
+  // functions and one deferred allocation trigger. Four shared CHECK constraints are widened by
+  // the 0020 OR-append idiom and identity_has_typed_record() is extended in place, so no existing
+  // row is rewritten and no value accepted before is refused. The new tables take ordinary
+  // privileges from the generic table grant below. Seed 29 runs here because it is above 17: it
+  // inserts six PPO-LocalSynthetic users that the hosted sign-in can never select, copies Company A
+  // read grants to them from the synthetic coordinator where that identity exists, grants the
+  // synthetic source adapter to the two synthetic coordinators, and adds one fictional policy row.
+  // It rewrites nothing. No capability is added to `additions`: invited testers keep
+  // engineering.read/create/edit, so the materials workspace opens for them with no source adapter
+  // and no review, release or receiving authority. That is a deliberate hosted limit, not a gap to
+  // close here. tests/demo/upgrade.test.ts accounts for the six users and asserts that limit.
   // Reviewed for 0028: three activity columns arrive with catalogue defaults, so no
   // existing activity row is rewritten and the closed-activity guard is never fired;
   // both new checks hold for every existing row (no start, not date-only). The partial
@@ -49,7 +61,7 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // row locks on authority tables, without granting the runtime role write access. Existing-data compatibility stays under the retained
   // upgrade tests. The accepted five-stage demonstration uses a separately prepared
   // database/storage epoch; this function neither resets nor activates that epoch.
-  if (latestMigrationVersion !== 28) throw Error("Review the existing-demo upgrade for this release.");
+  if (latestMigrationVersion !== 29) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
