@@ -63,7 +63,7 @@ test("invited actor: schedule lanes, demand and appointment links load with book
   await expect(page.getByRole("heading", { name: "Unassigned demand", exact: true })).toBeVisible();
   await expect(page.getByText(/Unassigned demand is unknown/)).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Move or reassign", exact: true }).first()).toBeVisible();
-  const schedule = await call(page, "schedule?from=2026-09-20T14%3A00%3A00Z&to=2026-09-27T14%3A00%3A00Z&timezone=Australia%2FBrisbane");
+  const schedule = await call(page, "schedule?from=2031-09-21T14%3A00%3A00Z&to=2031-09-28T14%3A00%3A00Z&timezone=Australia%2FBrisbane");
   expect(schedule.items.length).toBeGreaterThan(0);
   expect(schedule.resources.length).toBeGreaterThan(0);
   await call(page, "schedule/demand");
@@ -227,8 +227,8 @@ test("invited actor: mailbox to refined deal, follow-up, calendar and another br
 
 test("invited actor books and reschedules a prepared visit through the UI and reloads saved crew", async ({ page, context }, info) => {
   await signInFixture(context, objectId);
-  const day = info.project.name.startsWith("mobile") ? "2026-10-13" : "2026-10-08";
-  const next = info.project.name.startsWith("mobile") ? "2026-10-14" : "2026-10-09";
+  const day = info.project.name.startsWith("mobile") ? "2031-10-14" : "2031-10-09";
+  const next = info.project.name.startsWith("mobile") ? "2031-10-15" : "2031-10-10";
   const workId = "a9000000-0000-4000-8000-000000000001";
   await page.goto(`/service/work-orders/${workId}`);
   await page.getByText("Propose a visit", { exact: true }).click();

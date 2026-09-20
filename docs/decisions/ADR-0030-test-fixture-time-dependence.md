@@ -1,22 +1,22 @@
 ---
 document_id: PPO-ADR-0030
-revision: r03
+revision: r04
 date: 2026-09-20
 owner: Dean Fiedler
-status: proposed
+status: accepted
 ---
 
 # ADR-0030 — Time dependence in synthetic test fixtures
 
 ## Status
 
-**Proposed. No code change ships with this revision.** r01 proposed a test-controlled clock and
-r02 recorded Dean's selection of a fixed offset. The offset was implemented, put through CI, and
-**disproved** — the evidence is below. This revision records the constraints each attempt
-uncovered so the next implementation is designed against them rather than discovering them again.
+**Accepted.** Dean selected the fixed offset with a runway test in r02, and that decision stands.
+r03 withdrew it after its first CI run failed and attributed the failure to a constraint that does
+not exist. **r03's diagnosis was wrong and is retracted here.** The failure was an incomplete
+transform, not a flawed approach, and the correction is four literals.
 
-The only change that has shipped is #262, which repaired the single test that had already fallen
-over. That remains correct and is independent of everything here.
+The revision history is kept deliberately: r01 proposed a test-controlled clock, r02 selected the
+offset, r03 misdiagnosed its first failure, r04 corrects both the transform and the diagnosis.
 
 ## Related requirements and controls
 
@@ -36,99 +36,95 @@ stopped being future, so suites fail on wall-clock time rather than on the chang
 `tests/helpers/packs.ts` routes most pack, field, offline, report and Finance database tests
 through `confirmed(9)`.
 
-## Constraints, each established by evidence
+## What the first CI run actually proved
 
-These are the facts any solution has to satisfy. Three of the five were discovered only by
-building something and watching it fail.
+The offset moved every still-future date in the seeds and the clock-dependent suites forward 261
+weeks. On the compiled browser suite **208 tests passed and 4 failed**, all in three tests that
+read seeded appointments from the planner's default view, and the demo job failed the same way.
+The decisive line was:
 
-1. **Resource availability is weekday-bound.** `ppo.calendar_intervals` carries a `weekday`
-   column against a "SYN weekday 08:00–17:00 Brisbane" calendar. Moving an appointment to a
-   different weekday moves it outside its crew's working window. **Any shift must be a whole
-   number of weeks.**
-2. **The planner is anchored to real "now".** It requests the current Brisbane day and week, and
-   steps by period with no URL parameter, so a test cannot jump to a distant week. Three tests
-   read seeded appointments from that default view: `tests/browser/planner.spec.ts:152`,
-   `tests/browser/quality-states.spec.ts:64` and `tests/demo/ui.spec.ts:57`. **Seeded
-   appointments must be inside the current view.**
-3. **Constraints 1 and 2 conflict under absolute dates.** A whole-week shift cannot keep
-   appointments both always-future (constraint 1's weekday alignment fixes which days they land
-   on) and inside the current week as the week advances. Anchoring to the next Monday makes them
-   always future but empties the current-week view; anchoring to this Monday fills the view but
-   puts the early appointments in the past by midweek.
-4. **The two clocks have a safe direction.** `reviewed_at` and `source_as_at` are written with
-   `DEFAULT clock_timestamp()` *and* compared against `clock_timestamp()`
-   (`src/scheduling/planner.ts:518`). Pinning "now" to the **past** puts every row a test creates
-   into that gate's future and produces refusals no production path can produce — this is why r01
-   was abandoned. Pinning "now" to the **future** of real time inverts it: rows created during a
-   test carry real timestamps that are safely *before* the pinned instant.
-5. **Not every date literal is a fixture.** `tests/browser/quality-states.spec.ts:205` hard-codes
-   the window the application asks for *today*. It matches only on the day it was written and
-   breaks the next day regardless of any fixture strategy. It has to be computed from the clock
-   using the application's own rule.
+```
+quality-states.spec.ts SC-07: from
+  Expected: 2031-09-21T14:00:00Z
+  Received: 2026-09-20T14:00:00Z
+```
 
-## What the offset attempt proved
+r03 read "Received" as the application asking for the real current week, concluded the planner was
+clock-anchored, and withdrew the approach. That was wrong. The planner's default day is a
+**hard-coded synthetic anchor in application source**: `src/components/planner-screens.tsx:1213`
+was `useState("2026-09-21")`, and the window is `utcFromLocal(day + "T00:00", zone)`.
+`2026-09-21` in Australia/Brisbane *is* `2026-09-20T14:00:00Z` — the "Received" value exactly.
+Shifted with the fixtures it becomes `2031-09-22`, which is `2031-09-21T14:00:00Z` — the
+"Expected" value exactly.
 
-Implemented as `scripts/shift_fixture_dates.py`: every still-future fixture date forward 261
-weeks, whole weeks to satisfy constraint 1, with `tests/unit` excluded because those tests inject
-their own instant and `tests/unit/projects-gantt.test.ts` asserts that 2028-02-29 exists. The diff
-was verifiably a pure date shift. `npm run test:unit`, `eslint`, `tsc` and both documentation
-checks passed.
+Nothing in the planner reads the clock. The transform had simply left the application pointing at
+a week the fixtures had left.
 
-CI disproved it. On the compiled browser suite **208 tests passed and 4 failed**, every failure in
-the three tests named in constraint 2. The demo job failed the same way, and
-`quality-states.spec.ts` failed with `Expected: 2031-09-21T14:00Z, Received: 2026-09-20T14:00Z` —
-the application asking for the real current week while the fixture had moved five years out. The
-same job passed on #262 without the shift.
+**Retracted from r03:** that the planner is anchored to real time; that weekday-bound availability
+and the planner's anchor conflict under absolute dates; and that
+`tests/browser/quality-states.spec.ts:205` hard-codes a clock-dependent window. All three followed
+from the same misreading. The clock seam r03 recommended is not needed.
 
-The failure is not a defect in the transform. It is constraint 2, which the offset cannot satisfy
-by construction.
+## Decision
 
-## Recommended next design
+Shift every fixture date that is **still in the future** forward by **261 weeks (1827 days)**, and
+add `tests/unit/fixture-expiry.test.ts`, which fails once the earliest seeded appointment is
+within 90 days and names the command that fixes it.
 
-Keep the fixtures absolute and far-future, and **pin the application's clock to a fixed instant
-inside that window**, honoured by both JavaScript and SQL. This is r01's mechanism with the sign
-reversed, which is what makes it viable:
+`scripts/shift_fixture_dates.py` performs the transform and is kept so the next maintenance event
+is one reviewed command. Its scope rules are the decision:
 
-- constraint 1 is satisfied because the fixtures do not move at all;
-- constraint 2 is satisfied because "today" becomes the fixed instant, so the planner's default
-  view always contains the seeded week;
-- constraint 4 runs the safe way, because real timestamps written during a test fall before the
-  pinned instant rather than after it;
-- constraint 5 is fixed separately and is worth doing regardless.
+- **Only future dates move.** A fixture deliberately in the past — expired evidence, a visit
+  already under way, a superseded policy — stays, so every past-to-future relation survives.
+- **Whole weeks.** `ppo.calendar_intervals` binds crew availability to `weekday` against a
+  Brisbane 08:00–17:00 calendar, so an appointment that changed weekday would fall outside its
+  crew's working window. Whole weeks also keep the hard-coded `"Tuesday"` label in
+  `tests/helpers/my-work.ts` true. Month alignment is not preserved and need not be: there is no
+  month, quarter or financial-year logic in the application.
+- **The application's own synthetic anchors move with the fixtures.** `src/` holds a small number
+  of hard-coded dates that point at the seeded data. Two are future and move: the planner's
+  default day and the mock invoice `due_date` in `src/finance/accounts.ts`. Leaving them behind is
+  what the first CI run caught.
+- **Percent-encoded literals are matched too.** Query strings carry the time separator encoded
+  (`2026-09-20T14%3A00%3A00Z`). Two such literals in `tests/demo/ui.spec.ts` were missed the first
+  time and stayed behind while their data moved.
+- **`tests/unit` is excluded.** Those tests inject the instant they judge against, so they never
+  expire, and `tests/unit/projects-gantt.test.ts` asserts that 2028-02-29 exists — an offset
+  across leap years would silently destroy it. `tests/helpers/projects.ts` is excluded because a
+  unit test hard-codes the values it returns.
+- **`db/migrations` is never touched.** Migration bytes are checksummed against applied databases.
 
-The cost is the one r01 identified and it has not gone away: roughly 44 gating comparisons, 72
-audit writes and 149 column defaults route through the new clock, and the seam must be provably
-inert in production. That is a deliberate piece of work with its own review, not a same-day
-change, and it should land against a green baseline rather than alongside the cliff.
+## Consequences and reversal
 
-**Alternative if that cost is judged too high:** accept that the database, HTTP and browser suites
-are time-dependent, re-run a whole-week offset periodically, and add the runway test so the
-expiry is scheduled rather than silent. This is r02 with its limits understood — it would still
-have failed the three planner tests, so it is only viable together with a decision about what
-those three tests should assert instead.
+The fixtures run to 2031 and the runway test fails from roughly June 2031, about 90 days before
+anything breaks, with the command in its message. Re-running the script with a new offset is the
+whole maintenance action.
 
-## Consequences of doing nothing further today
+Two application constants change value: the planner's default day and a mock invoice due date.
+No logic, schema, migration, permission, document or interface changes. Reversal is `git revert`.
 
-From 2026-09-21T00:00Z the seeded appointments `a8…01`–`a8…05` are in the past. Assertions
-expecting a successful confirm fail; `confirmed(9)` and everything routed through it follows from
-2026-09-23; the required compiled browser suite is affected from October. These failures are
-predictable and attributable to this ADR, and should be confirmed against an unmodified `main`
-before being attributed to any change in hand.
+The hosted demo is unaffected and also not repaired. `scripts/database.ts` records applied seeds
+in `ppo.seed_receipts` by version and skips any version already present, so an already-seeded
+demo keeps its original dates. That is a separate problem and is not addressed here.
 
 ## Validation evidence and remaining questions
 
-The offset implementation and its CI evidence are preserved in the history of
-`fix/fixture-date-offset`. Nothing from it ships.
+Run locally: the transform in report mode, reviewed before applying; the runway test, proved in
+both directions; `npm run test:unit` — 128 of 132 pass, the four failures being the pre-existing
+Windows-only filesystem cases confirmed identical on unmodified `main` (127 of 131); `eslint`;
+`tsc --noEmit`; `check_foundation.py`; `check_naming.py`. The diff is verifiably a pure date
+shift: no line outside the new test differs by anything other than a date.
+
+**Not run locally:** the database, HTTP and browser suites need `ppo_synthetic_test` and a
+document renderer. The transform touches 263 literals in 42 files and is proved only by CI. The
+four corrections over the first attempt are precisely the four literals named above, and the
+arithmetic for the decisive one is shown in full so the claim can be checked without a run.
 
 An audit on 2026-09-20 of eighteen failed workflow runs attached to merged pull requests found
 nine were this defect and nothing else — Application assurance runs 1042–1048, 1051 and 1052.
 Eight were stale runs on superseded commits whose branch head was green before merge. One, run
 658, was a real scroll-spy defect fixed by `0ad41c68` in the same pull request.
 
-Those merges were possible because `main` requires six checks and **Application assurance is not
-one of them**. Pull requests #255–#259 merged with it red, and #257 merged with no Application
-assurance result at all.
-
-Open questions for Dean: whether to fund the clock seam or accept periodic maintenance; and
-whether the required-check set should include the PostgreSQL proof, so this class of failure
-blocks a merge rather than being merged past.
+Those merges were possible because the PostgreSQL proof was not then a required check. It has
+since been added to the required set, which closes that gap and makes this class of failure block
+a merge rather than be merged past.

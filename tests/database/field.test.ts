@@ -420,7 +420,7 @@ test("P07 future-effective crew can be booked and acknowledge but cannot confer 
       ])
     )[0],
     futureId = randomUUID(),
-    futureFrom = new Date("2026-09-22T00:00:00Z");
+    futureFrom = new Date("2031-09-23T00:00:00Z");
   assert.ok(futureFrom.getTime() > Date.now());
   await insert(database(), "resources", {
     ...original,

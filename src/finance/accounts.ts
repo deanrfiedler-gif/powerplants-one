@@ -33,7 +33,7 @@ export function fixture(f: AccountFixture) {
       remaining_amount: f === "F-03" ? "1000.00" : "600.00",
       status: "Open",
       date: "2026-09-01",
-      due_date: "2026-09-30",
+      due_date: "2031-10-01",
       currency: "AUD",
     },
     payment = {
