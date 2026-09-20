@@ -79,16 +79,16 @@ function CoveragePanel({ d }: { d: Detail }) {
     <section className="cm-panel" id="cm-panel-coverage" tabIndex={-1} aria-labelledby="cm-coverage-title">
       <header><div><h3 id="cm-coverage-title">Coverage</h3><p>The latest submitted result of every required check of the current basis, as counts. A single figure could hide an omission, so none is shown.</p></div></header>
       <div className="cm-panel-body">
-        <div className="cm-grid cm-counts">{counts.map(([label, n, hint]) => <div className="cm-row" key={label}><span>{label}</span><span><strong>{n}</strong>{hint && <small>{hint}</small>}</span></div>)}</div>
+        <div className="cm-grid cm-test-counts">{counts.map(([label, n, hint]) => <div className="cm-row" key={label}><span>{label}</span><span><strong>{n}</strong>{hint && <small>{hint}</small>}</span></div>)}</div>
       </div>
-      <div className="em-table-scroll cm-after-body">
+      <div className="em-table-scroll cm-test-after-body">
         <table className="em-table cm-table">
           <caption className="mw-sr">Latest effective result of every check. Evaluation, evidence review and applicability are three separate facts.</caption>
           <thead><tr>{["Check", "Scope", "Criterion", "Latest result", "Evidence review", "Applicability", "Attempt"].map((h) => <th key={h} scope="col"><span>{h}</span></th>)}</tr></thead>
           <tbody>
             {d.definitions.map((k) => (
               <tr key={k.key}>
-                <td><span className="em-row-title">{k.name}</span><span className="em-cell-sub">{k.is_required ? "Required" : "Not required"}</span></td>
+                <td><span className="cm-test-title">{k.name}</span><span className="em-cell-sub">{k.is_required ? "Required" : "Not required"}</span></td>
                 <td data-label="Scope">{k.scope_title}</td>
                 <td data-label="Criterion">{k.has_criterion ? <>{k.criterion_text} <span className="cm-fictional">Fictional limit</span></> : <Tag view={tag("Criteria missing", "caution", "alert")} />}</td>
                 <td data-label="Latest result"><Tag view={k.evaluation_view} /></td>
@@ -180,12 +180,12 @@ function AttemptBlock({ d, a, zone, children }: { d: Detail; a: Attempt; zone: s
         </div>
         {a.prerequisites.length > 0 && (
           <>
-            <h5 className="cm-subhead">Prerequisites{a.state === "Draft" && unmet > 0 && ` — ${unmet} not met`}</h5>
-            <ul className="cm-history">{a.prerequisites.map((x) => <li key={x.key}><span>{x.label}<small>{x.kind === "Hold" || x.kind === "Witness" ? `${x.kind} point` : x.kind}{x.mandatory ? " · mandatory" : " · advisory"}</small></span><Tag view={x.met ? tag("Met", "positive", "tick") : tag("Not met", x.mandatory ? "caution" : "neutral", x.mandatory ? "alert" : "document")} /></li>)}</ul>
+            <h5 className="cm-test-subhead">Prerequisites{a.state === "Draft" && unmet > 0 && ` — ${unmet} not met`}</h5>
+            <ul className="cm-test-list">{a.prerequisites.map((x) => <li key={x.key}><span>{x.label}<small>{x.kind === "Hold" || x.kind === "Witness" ? `${x.kind} point` : x.kind}{x.mandatory ? " · mandatory" : " · advisory"}</small></span><Tag view={x.met ? tag("Met", "positive", "tick") : tag("Not met", x.mandatory ? "caution" : "neutral", x.mandatory ? "alert" : "document")} /></li>)}</ul>
           </>
         )}
       </div>
-      <h5 className="cm-subhead cm-subhead-flush">Instruments</h5>
+      <h5 className="cm-test-subhead cm-test-subhead-flush">Instruments</h5>
       <div className="em-table-scroll">
         <table className="em-table cm-table">
           <caption className="mw-sr">Instruments used in attempt {a.number}, assessed at the time of the test</caption>
@@ -193,7 +193,7 @@ function AttemptBlock({ d, a, zone, children }: { d: Detail; a: Attempt; zone: s
           <tbody>
             {a.instruments.map((i) => (
               <tr key={i.instrument_id}>
-                <td><span className="em-row-title">{i.reference}</span><span className="em-cell-sub">{i.description}</span></td>
+                <td><span className="cm-test-title">{i.reference}</span><span className="em-cell-sub">{i.description}</span></td>
                 <td data-label="Calibration">{i.calibration_reference}</td>
                 <td data-label="Valid from – to">{longDate(i.valid_from)} – {longDate(i.valid_to)}</td>
                 <td data-label="At the time of test"><Tag view={tag(i.assessment_label, ...(instrumentTone[i.assessment] ?? instrumentTone.Unknown))} />{i.reason && <span className="em-cell-sub">{i.reason}</span>}{i.expired_today && i.assessment === "ValidAtUse" && <span className="em-cell-sub">Expired today — the historic test stands</span>}</td>
@@ -201,9 +201,9 @@ function AttemptBlock({ d, a, zone, children }: { d: Detail; a: Attempt; zone: s
             ))}
           </tbody>
         </table>
-        {!a.instruments.length && <div className="em-empty cm-empty-short"><p>No instrument is named on this attempt.</p></div>}
+        {!a.instruments.length && <div className="em-empty cm-test-empty"><p>No instrument is named on this attempt.</p></div>}
       </div>
-      <h5 className="cm-subhead cm-subhead-flush">Results</h5>
+      <h5 className="cm-test-subhead cm-test-subhead-flush">Results</h5>
       <div className="em-table-scroll">
         <table className="em-table cm-table">
           <caption className="mw-sr">Results of attempt {a.number} as captured, with the server&apos;s evaluation</caption>
@@ -211,7 +211,7 @@ function AttemptBlock({ d, a, zone, children }: { d: Detail; a: Attempt; zone: s
           <tbody>
             {a.results.map((r) => (
               <tr key={r.check_key}>
-                <td><span className="em-row-title">{r.name}</span>{r.note && <span className="em-cell-sub">{r.note}</span>}</td>
+                <td><span className="cm-test-title">{r.name}</span>{r.note && <span className="em-cell-sub">{r.note}</span>}</td>
                 <td data-label="Entry as captured">{entry(r)}{r.reason && <span className="em-cell-sub">{r.reason}</span>}</td>
                 <td data-label="Evaluation">{r.evaluation_view ? <Tag view={r.evaluation_view} /> : "Not evaluated until submitted"}</td>
                 <td data-label="Reason">{r.evaluation_reason ?? "—"}</td>
@@ -221,9 +221,9 @@ function AttemptBlock({ d, a, zone, children }: { d: Detail; a: Attempt; zone: s
             ))}
           </tbody>
         </table>
-        {!a.results.length && <div className="em-empty cm-empty-short"><p>No entry is saved for this attempt yet. It covers {plural(a.check_keys.length, "check")}.</p></div>}
+        {!a.results.length && <div className="em-empty cm-test-empty"><p>No entry is saved for this attempt yet. It covers {plural(a.check_keys.length, "check")}.</p></div>}
       </div>
-      <h5 className="cm-subhead cm-subhead-flush">Evidence</h5>
+      <h5 className="cm-test-subhead cm-test-subhead-flush">Evidence</h5>
       <div className="em-table-scroll">
         <table className="em-table cm-table">
           <caption className="mw-sr">Evidence of attempt {a.number}</caption>
@@ -231,7 +231,7 @@ function AttemptBlock({ d, a, zone, children }: { d: Detail; a: Attempt; zone: s
           <tbody>
             {a.evidence.map((e) => (
               <tr key={e.id}>
-                <td><span className="em-row-title">{e.label}</span><span className="em-cell-sub">{e.purpose} · {e.check_key ? a.results.find((r) => r.check_key === e.check_key)?.name ?? d.definitions.find((k) => k.key === e.check_key)?.name ?? e.check_key : "whole attempt"}</span></td>
+                <td><span className="cm-test-title">{e.label}</span><span className="em-cell-sub">{e.purpose} · {e.check_key ? a.results.find((r) => r.check_key === e.check_key)?.name ?? d.definitions.find((k) => k.key === e.check_key)?.name ?? e.check_key : "whole attempt"}</span></td>
                 <td data-label="Kind">{evidenceKinds[e.kind] ?? e.kind}{e.media_type && <span className="em-cell-sub">{e.media_type} · {e.byte_count} bytes</span>}</td>
                 <td data-label="State"><Tag view={evidenceView[e.state] ?? tag(e.state, "neutral", "document")} /></td>
                 <td data-label="Content hash"><span className="cm-hash">{e.content_hash ?? "Unavailable"}</span></td>
@@ -241,9 +241,9 @@ function AttemptBlock({ d, a, zone, children }: { d: Detail; a: Attempt; zone: s
             ))}
           </tbody>
         </table>
-        {!a.evidence.length && <div className="em-empty cm-empty-short"><p>{a.evidence_count ? `${plural(a.evidence_count, "item")} of evidence, withheld for this identity.` : "No evidence is attached to this attempt."}</p></div>}
+        {!a.evidence.length && <div className="em-empty cm-test-empty"><p>{a.evidence_count ? `${plural(a.evidence_count, "item")} of evidence, withheld for this identity.` : "No evidence is attached to this attempt."}</p></div>}
       </div>
-      <h5 className="cm-subhead cm-subhead-flush">Review history</h5>
+      <h5 className="cm-test-subhead cm-test-subhead-flush">Review history</h5>
       <ol className="cm-timeline">
         {a.reviews.map((v) => (
           <li key={v.id}>
@@ -277,10 +277,10 @@ function OpenAttempt({ d, command, onClose, onOpened }: { d: Detail; command: Co
             <select data-autofocus value={predecessor} onChange={(e) => setPredecessor(e.target.value)}>{[...submitted].reverse().map((a) => <option key={a.id} value={a.id}>A retest of attempt {a.number}</option>)}<option value="">A first test of these checks</option></select>
           </Field>
         )}
-        <fieldset className="cm-checks"><legend>Checks this attempt covers</legend>
+        <fieldset className="cm-test-checks"><legend>Checks this attempt covers</legend>
           {d.definitions.map((k) => {
             const defect = defects.find((x) => x.check_key === k.key);
-            return <label className="cm-check" key={k.key}><input type="checkbox" checked={keys.includes(k.key)} onChange={(e) => setKeys(e.target.checked ? [...keys, k.key] : keys.filter((x) => x !== k.key))} /><span>{k.name}<small>{k.scope_title}{defect ? ` · ${defect.reference} open` : ""}{k.is_required ? "" : " · not required"}</small></span></label>;
+            return <label className="cm-test-check" key={k.key}><input type="checkbox" checked={keys.includes(k.key)} onChange={(e) => setKeys(e.target.checked ? [...keys, k.key] : keys.filter((x) => x !== k.key))} /><span>{k.name}<small>{k.scope_title}{defect ? ` · ${defect.reference} open` : ""}{k.is_required ? "" : " · not required"}</small></span></label>;
           })}
         </fieldset>
         <div className="em-actions"><button type="button" className="mw-button mw-button-quiet" onClick={() => setKeys(d.definitions.map((k) => k.key))}>Select all checks</button></div>
@@ -340,27 +340,27 @@ function Capture({ d, a, options, zone, loading, reload, onClose, onSubmitted }:
         <Field label="Clock concern (optional)" hint="Say so if the device clock or the recorded time is in doubt"><input value={form.clock_concern} maxLength={400} onChange={(e) => patch({ clock_concern: e.target.value })} /></Field>
 
         {a.prerequisites.length > 0 && (
-          <fieldset className="cm-checks"><legend>Prerequisites met</legend>
-            {a.prerequisites.map((x) => <label className="cm-check" key={x.key}><input type="checkbox" checked={!!form.met[x.key]} onChange={(e) => patch({ met: { ...form.met, [x.key]: e.target.checked } })} /><span>{x.label}<small>{x.kind === "Hold" || x.kind === "Witness" ? `${x.kind} point` : x.kind}{x.mandatory ? " · mandatory, with no general override" : " · advisory"}</small></span></label>)}
+          <fieldset className="cm-test-checks"><legend>Prerequisites met</legend>
+            {a.prerequisites.map((x) => <label className="cm-test-check" key={x.key}><input type="checkbox" checked={!!form.met[x.key]} onChange={(e) => patch({ met: { ...form.met, [x.key]: e.target.checked } })} /><span>{x.label}<small>{x.kind === "Hold" || x.kind === "Witness" ? `${x.kind} point` : x.kind}{x.mandatory ? " · mandatory, with no general override" : " · advisory"}</small></span></label>)}
           </fieldset>
         )}
-        <fieldset className="cm-checks"><legend>Instruments used</legend>
+        <fieldset className="cm-test-checks"><legend>Instruments used</legend>
           {options?.instruments.map((i) => (
-            <label className="cm-check" key={i.id}><input type="checkbox" checked={form.instruments.includes(i.id)} onChange={(e) => patch({ instruments: (e.target.checked ? [...form.instruments, i.id] : form.instruments.filter((x) => x !== i.id)).sort() })} />
+            <label className="cm-test-check" key={i.id}><input type="checkbox" checked={form.instruments.includes(i.id)} onChange={(e) => patch({ instruments: (e.target.checked ? [...form.instruments, i.id] : form.instruments.filter((x) => x !== i.id)).sort() })} />
               <span>{i.reference} · {i.description}<small>{i.calibration_reference} valid {longDate(i.valid_from)} – {longDate(i.valid_to)}{i.withdrawn_effective_from ? ` · withdrawn with effect from ${longDate(i.withdrawn_effective_from)}` : ""}</small></span></label>
           ))}
           {!options?.instruments.length && <p className="cm-note">No instrument record is available to this identity.</p>}
           <p className="cm-note">{options?.limits[1] ?? "Instruments and calibration records are fictional fixtures."} Validity is assessed for the date of the test, not for today.</p>
         </fieldset>
 
-        <h3 className="cm-subhead">Readings</h3>
+        <h3 className="cm-test-subhead">Readings</h3>
         {plan.map((k) => {
           const r = form.readings[k.key], before = earlier?.results.find((x) => x.check_key === k.key), units = k.numeric ? [k.numeric.unit, ...k.numeric.conversions.map((c) => c.from_unit)] : [];
           return (
-            <fieldset className="cm-edit-block" key={k.key}>
+            <fieldset className="cm-test-block" key={k.key}>
               <legend>{k.name}</legend>
               <p className="cm-note">{k.has_criterion ? <>Criterion: {k.criterion_text} <span className="cm-fictional">Fictional limit</span></> : "Criteria missing: the reading is kept as captured and cannot be assessed until a successor basis defines the criterion."}{k.evidence_min > 0 && ` · ${plural(k.evidence_min, "item")} of evidence required`}{k.instrument_required && " · named instrument required"}</p>
-              {before && <p className="cm-note cm-earlier">Earlier value — not carried forward: attempt {earlier!.number} recorded {before.state === "Recorded" ? (before.choice ?? `${before.value ?? "no value"}${before.unit ? ` ${before.unit}` : ""}`) : before.state === "NotTested" ? "not tested" : "not applicable"}{before.evaluation_view && ` (${before.evaluation_view.label.toLowerCase()})`}.</p>}
+              {before && <p className="cm-note cm-test-earlier">Earlier value — not carried forward: attempt {earlier!.number} recorded {before.state === "Recorded" ? (before.choice ?? `${before.value ?? "no value"}${before.unit ? ` ${before.unit}` : ""}`) : before.state === "NotTested" ? "not tested" : "not applicable"}{before.evaluation_view && ` (${before.evaluation_view.label.toLowerCase()})`}.</p>}
               <div className="cm-inline">
                 <Field label="Entry"><select value={r.state} onChange={(e) => reading(k.key, { state: e.target.value as ReadingForm["state"] })}><option value="Recorded">Recorded</option><option value="NotTested">Not tested</option><option value="NotApplicable">Not applicable</option></select></Field>
                 {r.state === "Recorded" && k.check_type === "Numeric" && (
@@ -379,10 +379,10 @@ function Capture({ d, a, options, zone, loading, reload, onClose, onSubmitted }:
         {plan.length < a.check_keys.length && <p className="cm-note" role="note">{plural(a.check_keys.length - plan.length, "check")} of this attempt cannot be shown because the basis it was opened against is not readable here.</p>}
         <Field label="Findings (optional)" error={fieldError(command.error, "findings")}><textarea value={form.findings} maxLength={4000} onChange={(e) => patch({ findings: e.target.value })} /></Field>
 
-        <h3 className="cm-subhead">Evidence</h3>
+        <h3 className="cm-test-subhead">Evidence</h3>
         <EvidenceEditor d={d} a={a} plan={plan} options={options} command={command} busy={busy} onSent={setSaved} />
 
-        <h3 className="cm-subhead">Submit</h3>
+        <h3 className="cm-test-subhead">Submit</h3>
         <p className="cm-note">Submitting freezes this attempt with its evidence and evaluates every entry. A failed required check raises one owned defect, or lands on the one already open for that check.</p>
         <div className="cm-inline">
           <Field label="Owner of any defect raised" hint="Leave empty for the package owner" error={fieldError(command.error, "owner_id")}><select value={submit.owner} onChange={(e) => setSubmit({ ...submit, owner: e.target.value })}><option value="">Package owner{d.record.owner_name ? ` (${d.record.owner_name})` : ""}</option>{options?.people.filter((p) => p.preparer).map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}</select></Field>
@@ -421,7 +421,7 @@ function EvidenceEditor({ d, a, plan, options, command, busy, onSent }: { d: Det
   const remove = (evidenceId: string) => { onSent("Evidence removed on the server. The attempt is still a draft — not submitted."); return command.send(`engineering/${packageId}/commissioning/results`, { action: "remove_evidence", record_id: d.record.id, attempt_id: a.id, expected_version: a.version, evidence_id: evidenceId, reason: `Evidence removed from draft attempt ${a.number}` }); };
   return (
     <>
-      <ul className="cm-history">
+      <ul className="cm-test-list">
         {a.evidence.map((x) => (
           <li key={x.id}>
             <span>{x.label}<small>{evidenceKinds[x.kind] ?? x.kind} · {x.check_key ? plan.find((k) => k.key === x.check_key)?.name ?? x.check_key : "whole attempt"} · <span className="cm-hash">{x.content_hash?.slice(0, 16) ?? "no hash"}</span></small></span>
@@ -431,7 +431,7 @@ function EvidenceEditor({ d, a, plan, options, command, busy, onSent }: { d: Det
         ))}
       </ul>
       {!a.evidence.length && <p className="cm-note">No evidence is attached yet.</p>}
-      <fieldset className="cm-edit-block">
+      <fieldset className="cm-test-block">
         <legend>Add evidence</legend>
         <div className="cm-inline">
           <Field label="Kind"><select value={e.kind} onChange={set("kind")}><option value="StoredFile">File upload (PNG or TXT, up to 4 MiB)</option><option value="RetainedSource">Retained source</option><option value="FieldEntry">Field entry</option></select></Field>
@@ -512,7 +512,7 @@ function DefectsPanel({ d, options, zone, reload }: Shared) {
     <section className="cm-panel" id="cm-panel-defects" tabIndex={-1} aria-labelledby="cm-defects-title">
       <header><div><h3 id="cm-defects-title">Defects</h3><p>One defect per failed check. Recording a correction closes nothing: a defect closes only on a fresh accepted retest of its own check, and the failure that raised it stays on the record.</p></div></header>
       <div className="em-table-scroll">
-        <table className="em-table cm-table cm-defects-table">
+        <table className="em-table cm-table cm-test-defects">
           <caption className="mw-sr">Defects of this commissioning package</caption>
           <thead><tr>{["Defect", "Check", "State", "Severity", "Owner / due", "Attempts", "Correction", "Change link", "My Work action", "Actions"].map((h) => <th key={h} scope="col"><span>{h}</span></th>)}</tr></thead>
           <tbody>
@@ -520,7 +520,7 @@ function DefectsPanel({ d, options, zone, reload }: Shared) {
               const change = x.change_id ? options?.changes.find((c) => c.id === x.change_id) : null;
               return (
                 <tr key={x.id}>
-                  <td><span className="em-row-title">{x.reference}</span><span className="em-cell-sub">{x.title}</span></td>
+                  <td><span className="cm-test-title">{x.reference}</span><span className="em-cell-sub">{x.title}</span></td>
                   <td data-label="Check">{x.check_name}</td>
                   <td data-label="State"><Tag view={x.state_view} />{x.closed_at && <span className="em-cell-sub">Closed {siteTime(x.closed_at, zone)} by an accepted retest</span>}</td>
                   <td data-label="Severity">{x.severity}</td>
@@ -537,7 +537,7 @@ function DefectsPanel({ d, options, zone, reload }: Shared) {
         </table>
         {!d.defects.length && <div className="em-empty"><p>No defect has been raised on this package.</p></div>}
       </div>
-      <div className="cm-panel-body cm-after-table">
+      <div className="cm-panel-body cm-test-after-table">
         <p className="cm-note">The My Work action is the same action My Work shows, read where it lives; it is not a copy. Completing it there does not close the defect here.</p>
         {d.defects.some((x) => x.state !== "Closed") && <><Refusal reason={d.refusals.edit && `Coordinate: ${d.refusals.edit}`} /><Refusal reason={correctRefusal && `Record correction: ${correctRefusal}`} /></>}
         {!dialog && act.notice}
@@ -565,8 +565,8 @@ function Coordinate({ d, x, options, command, onClose }: { d: Detail; x: Defect;
           <Field label="Severity"><select value={form.severity} onChange={(e) => set({ severity: e.target.value })}>{severities.map((s) => <option key={s}>{s}</option>)}</select></Field>
         </div>
         <Field label="Proposed correction" hint="A proposal. It records nothing as done" error={fieldError(command.error, "proposed_correction")}><input value={form.correction} maxLength={1000} onChange={(e) => set({ correction: e.target.value })} /></Field>
-        <label className="cm-check"><input type="checkbox" checked={form.retest} onChange={(e) => set({ retest: e.target.checked })} /><span>A retest is required after the correction</span></label>
-        <label className="cm-check"><input type="checkbox" checked={form.system} onChange={(e) => set({ system: e.target.checked })} /><span>The correction changes the actual system<small>It is linked to its engineering change (EN-07) first. The link is a referral, never a resolution.</small></span></label>
+        <label className="cm-test-check"><input type="checkbox" checked={form.retest} onChange={(e) => set({ retest: e.target.checked })} /><span>A retest is required after the correction</span></label>
+        <label className="cm-test-check"><input type="checkbox" checked={form.system} onChange={(e) => set({ system: e.target.checked })} /><span>The correction changes the actual system<small>It is linked to its engineering change (EN-07) first. The link is a referral, never a resolution.</small></span></label>
         <Field label="Engineering change (EN-07)" error={fieldError(command.error, "change_id")}><select value={form.change} onChange={(e) => set({ change: e.target.value })}><option value="">{options?.changes.length ? "None linked" : "No engineering change exists in this package"}</option>{options?.changes.map((c) => <option key={c.id} value={c.id}>{c.reference} · {c.title}</option>)}</select></Field>
         {options && !options.changes.length && <p className="cm-note">A referral names a real change. <Link href={options.changes_href}>Record it in Change impact first</Link>.</p>}
         <CommandNotice command={command} />

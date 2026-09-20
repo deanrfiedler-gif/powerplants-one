@@ -1,1 +1,57 @@
 /* EN-08 view-specific rules (cm- prefix, scoped to #ppo-commissioning). The shared building blocks live in engineering-commissioning.css. */
+/* Test basis & criteria, and Results & retests. Only what these two destinations add to the shared blocks: a panel that
+   stacks a body, a flush table and another body; the attempt sub-block; and the editors inside the drawers. Nothing here
+   condenses, scales or tracks text, and no table gains a side padding, margin, radius or shadow. */
+#ppo-commissioning .cm-test-title{display:block;font-weight:500;color:var(--ink);overflow-wrap:anywhere}
+#ppo-commissioning .cm-panel .cm-table tbody tr{cursor:default}
+#ppo-commissioning .cm-panel .cm-table tbody tr:hover td{background:#fff}
+#ppo-commissioning .cm-panel .cm-table td{height:auto}
+/* A table that follows a body keeps its own top rule; a body that follows a table is ruled off from the last row. */
+#ppo-commissioning .cm-panel>.em-table-scroll.cm-test-after-body{border-top:1px solid #e9ecf1}
+#ppo-commissioning .cm-test-after-table{border-top:1px solid #e9ecf1}
+#ppo-commissioning .cm-test-statement{margin:0;max-width:96ch;font-size:14px;line-height:20px}
+#ppo-commissioning .cm-test-line{display:block}
+#ppo-commissioning .cm-test-subhead{margin:4px 0 0;font-size:14px;line-height:20px;font-weight:700;color:var(--ink)}
+#ppo-commissioning .cm-test-subhead-flush{margin:0;padding:12px 20px;border-top:1px solid #e9ecf1}
+#ppo-commissioning .cm-test-counts .cm-row strong{font-weight:700}
+#ppo-commissioning .cm-test-empty{padding:16px 20px;text-align:left}
+#ppo-commissioning .cm-test-empty p{margin:0;font-size:13px;line-height:18px}
+
+/* A plain list of labelled rows: label and metadata, its one status tag, then at most one action. */
+#ppo-commissioning .cm-test-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column}
+#ppo-commissioning .cm-test-list>li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:8px 16px;padding:8px 0;border-bottom:1px solid #e9ecf1;font-size:14px;line-height:20px}
+#ppo-commissioning .cm-test-list>li:last-child{border-bottom:0}
+#ppo-commissioning .cm-test-list>li[aria-current]>span:first-child{font-weight:500}
+#ppo-commissioning .cm-test-list small{display:block;color:#667181;font-size:12px;line-height:16px}
+
+/* One attempt, exactly as captured. Its tables run to the panel's own edges; only its words are padded. */
+#ppo-commissioning .cm-attempt{border-top:1px solid #e1e5eb}
+#ppo-commissioning .cm-panel>header+.cm-attempt{border-top:0}
+#ppo-commissioning .cm-attempt-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:16px 20px 0}
+#ppo-commissioning .cm-attempt-head h4{margin:0;font-size:16px;line-height:24px;font-weight:500}
+#ppo-commissioning .cm-attempt .cm-timeline{border-top:1px solid #e9ecf1}
+#ppo-commissioning .cm-attempt-actions{border-top:1px solid #e9ecf1;background:#fafbfc}
+#ppo-commissioning .cm-test-defects{min-width:1180px}
+#ppo-commissioning .cm-test-defects .em-actions{flex-wrap:nowrap}
+
+/* Editors inside the drawers. A wide drawer keeps its full width on a phone. */
+#ppo-commissioning dialog.mw-drawer.em-dialog-wide{width:min(860px,100vw)}
+#ppo-commissioning .cm-test-block{min-width:0;margin:0;padding:12px 16px 16px;border:1px solid #e1e5eb;border-radius:6px;display:flex;flex-direction:column;gap:12px}
+#ppo-commissioning .cm-test-block>legend{padding:0 6px;font-size:14px;line-height:20px;font-weight:500}
+#ppo-commissioning .cm-test-block .em-actions{justify-content:space-between}
+#ppo-commissioning .cm-test-checks{min-width:0;margin:0;padding:0;border:0;display:flex;flex-direction:column;gap:8px}
+#ppo-commissioning .cm-test-checks>legend{padding:0;margin-bottom:6px;font-size:13px;line-height:18px;font-weight:500}
+#ppo-commissioning .cm-test-check{display:flex;align-items:flex-start;gap:8px;min-height:24px;font-size:14px;line-height:20px;cursor:pointer}
+#ppo-commissioning .cm-test-check input{flex:none;width:16px;height:16px;min-height:0;margin:2px 0 0;padding:0;accent-color:#242a37}
+#ppo-commissioning .cm-test-check small{display:block;color:#667181;font-size:12px;line-height:16px}
+#ppo-commissioning .cm-test-earlier{padding:6px 10px;border-left:2px solid #cfd6e0;background:#f6f7f9}
+
+@media (max-width:780px){
+ #ppo-commissioning .cm-test-defects{min-width:0}
+ #ppo-commissioning .cm-test-defects .em-actions{flex-wrap:wrap}
+ #ppo-commissioning .cm-test-list>li{grid-template-columns:minmax(0,1fr)}
+ #ppo-commissioning .cm-test-check{min-height:44px;align-items:center}
+ #ppo-commissioning .cm-test-check input{width:20px;height:20px;margin:0}
+ #ppo-commissioning .cm-test-subhead-flush{padding:12px 16px}
+ #ppo-commissioning .cm-attempt-head{padding:16px 16px 0}
+}

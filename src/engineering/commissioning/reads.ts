@@ -3,7 +3,7 @@ import type { Principal } from "../../platform/identity";
 import { AppError, unavailable } from "../../platform/errors";
 import { choice, invalid, object, optionalId, uuid } from "../../shared/validation";
 import { coverageComplete, criterionText, hasCriterion, inspectionLabel, isRequired } from "../../inspections/model";
-import { evidenceBytes, instrumentColumns, type InstrumentRow } from "../../inspections/service";
+import { evidenceBytes, instrumentColumns, localDate, type InstrumentRow } from "../../inspections/service";
 import { listEngineering } from "../service";
 import { candidateGates } from "./commands";
 import { commissioningAccess, configurationLabel, dutyRefusal, loadRecords, loadSources, stamp, type Access, type LiveSource, type Loaded } from "./context";
@@ -28,7 +28,8 @@ async function frame(p: Principal, packageId: string) {
       // Menu badges count this whole permitted Engineering package, never a filtered page, and never a remembered number.
       menu: { scope: "Package" as const, results: active.reduce((n, l) => n + l.facts.attempts_in_review, 0), releases: active.filter((l) => l.facts.release === "InReview" || l.facts.release === "ApprovedForIssue").length,
         handovers: active.reduce((n, l) => n + l.requests.filter((r) => ["Requested", "OutcomeUnknown", "Unavailable", "Returned", "ClarificationRequired"].includes(r.state)).length, 0) },
-      synthetic: true as const, observed_at: new Date().toISOString(),
+      // The calendar day at the site. A due date is late by the site's day, never by the server's or by UTC.
+      synthetic: true as const, observed_at: new Date().toISOString(), today: localDate(new Date(), access.site_timezone),
     },
   };
 }
@@ -96,7 +97,7 @@ export async function readRegister(p: Principal, packageId: string, query: unkno
   if (!Number.isInteger(page) || page < 1 || page > 10000 || !Number.isInteger(size) || size < 1 || size > 100) invalid("page", "Use a page from 1 and a page size from 1 to 100.");
   const stage = q.workflow ? choice(q.workflow, "workflow", workflows) : null, owner = optionalId(q.owner_id || undefined, "owner_id"), area = typeof q.area === "string" && q.area ? q.area.slice(0, 120) : null, blocker = typeof q.blocker === "string" && q.blocker ? q.blocker.slice(0, 60) : null,
     due = q.due ? choice(q.due, "due", ["overdue", "needed"] as const) : null, sort = choice(q.sort ?? "due", "sort", sorts), dir = choice(q.dir ?? "asc", "dir", ["asc", "desc"] as const), selectedId = optionalId(q.record || undefined, "record");
-  const f = await frame(p, packageId), needle = (text as string).trim().toLowerCase(), today = f.shell.observed_at.slice(0, 10);
+  const f = await frame(p, packageId), needle = (text as string).trim().toLowerCase(), today = f.shell.today;
   // Saved presentations are filters over the same permitted records. They hold no list of their own and decide nothing.
   const inView = (l: Loaded, v: (typeof registerViews)[number]) => (v === "archived" ? !!l.row.archived_at : !l.row.archived_at && (v === "all" || (v === "mine" ? l.row.owner_id === p.actor_id || l.attempts.some((a) => a.row.performer_id === p.actor_id && a.row.state === "Draft") || l.requests.some((r) => r.handover.recipient_id === p.actor_id && r.state === "Requested")
     : v === "retests" ? l.facts.defects_open > 0 || l.facts.attempts_returned > 0 : v === "ready" ? l.facts.candidate_ready || l.facts.release === "ApprovedForIssue" : l.facts.release === "Issued" && serviceState(l) !== "Accepted")));
@@ -128,7 +129,7 @@ const sourceView = (s: LiveSource) => (s.readable
   : { id: s.id, kind: s.kind, reference: "Restricted source", title: "Restricted for this identity", revision: "", file_version: "", content_hash: null, observed_at: s.observed_at, use: s.use, successor_id: null, restricted: true, readable: false as const, adapter: s.adapter, change_reason: null, changed_at: null });
 const withheld = "Withheld for this identity";
 function detail(f: Frame, p: Principal, l: Loaded) {
-  const { access } = f, inside = access.internal, mine = (id: string | null) => id === p.actor_id, today = f.shell.observed_at.slice(0, 10), policy = access.policy;
+  const { access } = f, inside = access.internal, mine = (id: string | null) => id === p.actor_id, today = f.shell.today, policy = access.policy;
   const role = (r: Parameters<typeof policyAllows>[2], scope = {}) => policyAllows(policy, p.actor_id, r, scope), release = l.release;
   const gates = release ? candidateGates(l, access, release.state === "ApprovedForIssue" || release.state === "Issued" ? release.approved_by ?? p.actor_id : p.actor_id, release) : [];
   const draft = l.attempts.find((a) => a.row.state === "Draft") ?? null, basisInReview = l.bases.find((b) => b.state === "InReview") ?? null, basisDraft = l.bases.find((b) => b.state === "Draft") ?? null;

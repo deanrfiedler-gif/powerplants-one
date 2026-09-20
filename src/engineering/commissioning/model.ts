@@ -155,8 +155,10 @@ export type PackageFacts = {
 export function workflow(f: PackageFacts): Workflow {
   if (f.archived) return "Archived";
   if (f.release === "Issued") return f.release_applicability === "Current" && !f.receiving.some((r) => r.state === "Returned") ? "TechnicallyReleased" : "FollowUpRequired";
-  if (f.defects_open || f.attempts_returned || f.source === "ReassessmentRequired" || f.basis === "Returned") return "FollowUpRequired";
-  if (f.release === "InReview" || f.release === "ApprovedForIssue" || f.attempts_in_review || f.basis_in_review) return "InReview";
+  // Once testing is complete, an as-built that still has owned work outstanding is follow-up, not "testing".
+  const asBuiltOutstanding = coverageComplete(f.coverage) && (f.redlines_to_incorporate > 0 || f.differences_open > 0 || f.referred_open > 0);
+  if (f.defects_open || f.attempts_returned || f.source === "ReassessmentRequired" || f.basis === "Returned" || asBuiltOutstanding) return "FollowUpRequired";
+  if (f.release === "InReview" || f.release === "ApprovedForIssue" || f.attempts_in_review || f.basis_in_review || f.reconciliation === "UnderReview" || f.redlines_review > 0) return "InReview";
   if (f.basis === "ApprovedForTest") return "Testing";
   return f.basis === "None" ? "Draft" : "Preparing";
 }

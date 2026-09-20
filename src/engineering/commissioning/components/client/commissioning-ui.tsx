@@ -48,6 +48,8 @@ export function siteTime(value: string | null, timezone: string | null) {
   if (!value) return "";
   const zone = timezone ?? "UTC", d = new Date(value), part = (o: Intl.DateTimeFormatOptions) => new Intl.DateTimeFormat("en-AU", { timeZone: zone, ...o });
   const zoneName = part({ timeZoneName: "short" }).formatToParts(d).find((x) => x.type === "timeZoneName")?.value ?? zone;
-  return `${part({ day: "numeric", month: "short", year: "numeric" }).format(d)}, ${part({ hour: "numeric", minute: "2-digit", hour12: true }).format(d).toLowerCase()} ${zoneName}`;
+  // The date is assembled from its parts so that it reads "20 Sep 2026" exactly as a date-only value does beside it.
+  const [year, month, day] = new Intl.DateTimeFormat("en-CA", { timeZone: zone, year: "numeric", month: "2-digit", day: "2-digit" }).format(d).split("-");
+  return `${Number(day)} ${months[Number(month) - 1]} ${year}, ${part({ hour: "numeric", minute: "2-digit", hour12: true }).format(d).toLowerCase()} ${zoneName}`;
 }
 export const newId = () => crypto.randomUUID();

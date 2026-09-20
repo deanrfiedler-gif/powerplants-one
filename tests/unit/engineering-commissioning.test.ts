@@ -24,7 +24,7 @@ const row = (f: PackageFacts) => { const n = nextRequirement(f); return [evidenc
 test("EN08-59 the eight review rows of mockup r02 are derived from retained facts, never stored as a status", () => {
   // 001: every check accepted, and one redline accepted for incorporation. Accepted test evidence is not an as-built.
   const one = facts({ reconciliation: "UnderReview", redlines_to_incorporate: 1, obligations: [obligation("Manual", "TechnicalIssue", "Complete"), obligation("Training", "ServiceAcceptance", "EvidenceRecorded")] });
-  assert.deepEqual(row(one), ["12 / 12 accepted", "In review", "1 redline open", "Resolve redlines", "condition", "Testing"]);
+  assert.deepEqual(row(one), ["12 / 12 accepted", "In review", "1 redline open", "Resolve redlines", "condition", "FollowUpRequired"]);
   assert.deepEqual([nextRequirement(one).view, nextRequirement(one).panel, nextRequirement(one).tone], ["configuration", "redlines", "caution"]);
   // 002: one required check has no criterion. Its reading is kept and the package cannot be assessed.
   const two = facts({ coverage: counts(3, { passed_unreviewed: 2, unassessable: 1, criteria_missing: 1 }), attempts: 1, attempts_in_review: 1, reconciliation: "Unassessed" });

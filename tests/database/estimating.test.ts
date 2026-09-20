@@ -185,7 +185,7 @@ test("DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent ad
   await migrate();await seed();await migrate();await seed();
   assert.deepEqual(await originals(),before.map((rs,i)=>tables[i]==="estimate_versions"?rs.map(r=>({...r,value:{...r.value,cost_schema_version:1}})):rs));
   assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version<=24 ORDER BY version"),ledger);
-  // Seeds 29 (EN-06) and 30 (EN-07) add their fictional profiles' grants; every earlier grant, the revoked one included, is unchanged.
+  // Seeds 29 (EN-06), 30 (EN-07) and 31 (EN-08) add their fictional profiles' grants; every earlier grant, the revoked one included, is unchanged.
   assertOnlyEngineeringSeedGrantsAdded(grants,await rows("SELECT * FROM ppo.permission_grants ORDER BY id"));
   assert.deepEqual((await readEstimate(s.p,s.e.id)).saved,s.e.saved);assert.deepEqual(await draftBytes(s.p,s.command.id),bytes);
   assert.deepEqual((await createEstimate(s.p,s.input)).receipt,s.result.receipt);

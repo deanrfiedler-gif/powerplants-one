@@ -87,7 +87,7 @@ export function RegisterView() {
     return `/api/v1/engineering/${packageId}/commissioning/files?${new URLSearchParams({ kind: "export", ...kept })}`;
   };
   const toggleColumn = (id: string) => setOptionalColumns(optionalColumns.includes(id) ? optionalColumns.filter((c) => c !== id) : [...optionalColumns, id]);
-  const today = data?.observed_at.slice(0, 10) ?? "", timezone = data?.package.site_timezone ?? null;
+  const today = data?.today ?? "", timezone = data?.package.site_timezone ?? null;
   // The inspector shows the record the address names and nothing else: while the next one loads it shows no earlier record.
   const selected = data?.selected?.id === inspected ? data.selected : null;
 
