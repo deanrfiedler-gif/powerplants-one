@@ -11,7 +11,7 @@ export function HeaderContent({
   slot,
   children,
 }: {
-  slot: "search" | "account";
+  slot: "search" | "account" | "menu";
   children: ReactNode;
 }) {
   const mount = useSyncExternalStore(

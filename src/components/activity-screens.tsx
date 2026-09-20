@@ -4,18 +4,17 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { LocalDateTimeField, useUnsavedChanges } from "./record-ui";
 import type { readActivity } from "../activities/activities";
+import { activityTypeLabels, whenText } from "../activities/work-view";
 import { useIdentity } from "./business-session";
 import {
   EnumField,
   ErrorNotice,
   isDenied,
   Field,
-  Observed,
   PageHeader,
   ReadState,
   RecordLink,
   SelectField,
-  Stamp,
   Status,
   SummaryPair,
   useCommand,
@@ -31,196 +30,6 @@ const kinds = [
   "FinanceQuery",
   "RelationshipReview",
 ];
-const states = ["Active", "Open", "InProgress", "Completed", "Cancelled"];
-export function WorkList() {
-  const p = useIdentity(),
-    [filters, setFilters] = useState({
-      owner_id: p.actor_id,
-      status: "Active",
-      kind: "",
-      due: "",
-      q: "",
-    }),
-    [cursor, setCursor] = useState("");
-  const query = new URLSearchParams(
-    Object.entries({ ...filters, cursor }).filter(([, v]) => !!v),
-  );
-  const r = useResource<Envelope<Activity>>(`work?${query}`);
-  const update = (k: string, v: string) => {
-    setFilters((f) => ({ ...f, [k]: v }));
-    setCursor("");
-  };
-  return (
-    <>
-      <PageHeader
-        eyebrow="SC-01 / My Work"
-        title="Owned follow-up"
-        description="Questions, customer contact and next actions with a clear owner."
-        action={
-          <Link className="button" href="/work/new">
-            New activity
-          </Link>
-        }
-      />
-      <div className="filters">
-        <Field
-          name="work-search"
-          label="Search activities"
-          value={filters.q}
-          onChange={(v) => update("q", v)}
-        />
-        <EnumField
-          name="work-status"
-          label="Status"
-          value={filters.status}
-          values={states}
-          onChange={(v) => update("status", v)}
-        />
-        <EnumField
-          name="work-kind"
-          label="Type"
-          value={filters.kind}
-          values={kinds}
-          onChange={(v) => update("kind", v)}
-        />
-        <EnumField
-          name="work-due"
-          label="Due date"
-          value={filters.due}
-          values={["Overdue", "Upcoming", "Needed"]}
-          onChange={(v) => update("due", v)}
-        />
-        <SelectField
-          name="work-owner"
-          label="Owner"
-          value={filters.owner_id}
-          empty="All permitted owners"
-          options={[{ id: p.actor_id, display_name: "My activities" }]}
-          onChange={(v) => update("owner_id", v)}
-        />
-      </div>
-      <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-      {r.data && !r.loading && !r.error && (
-        <>
-          <Observed envelope={r.data} />
-          <aside className="callout" aria-label="Activity counts on this page">
-            <h2>Current page summary</h2>
-            <p>
-              {
-                r.data.items.filter(
-                  (a) => !["Completed", "Cancelled"].includes(a.status),
-                ).length
-              }{" "}
-              open actions / {r.data.items.length} permitted activities on this
-              page.{" "}
-              {
-                r.data.items.filter(
-                  (a) =>
-                    !["Completed", "Cancelled"].includes(a.status) &&
-                    a.due_needed,
-                ).length
-              }{" "}
-              open actions need a due date.
-            </p>
-            <p>
-              Counts use the selected owner, status, type, due-date and search
-              filters. Later pages and records outside your current access are
-              excluded.
-            </p>
-          </aside>
-          {r.data.items.length === 0 ? (
-            <p className="empty-state">
-              No permitted activities match these filters.
-            </p>
-          ) : (
-            <div className="work-groups">
-              {[
-                "Overdue",
-                "Upcoming",
-                "Due date needed",
-                "Completed or cancelled",
-              ].map((group) => {
-                const rows = r.data!.items.filter((a) =>
-                  ["Completed", "Cancelled"].includes(a.status)
-                    ? group === "Completed or cancelled"
-                    : a.due_needed
-                      ? group === "Due date needed"
-                      : Date.parse(a.due_at!) < Date.parse(r.data!.observed_at)
-                        ? group === "Overdue"
-                        : group === "Upcoming",
-                );
-                return (
-                  rows.length > 0 && (
-                    <section key={group}>
-                      <h2>{group}</h2>
-                      <div className="record-grid">
-                        {rows.map((a) => (
-                          <article className="record-card" key={a.id}>
-                            <div className="card-top">
-                              <Status value={a.status} />
-                              <span>
-                                {a.kind.replace(/([a-z])([A-Z])/g, "$1 $2")}
-                              </span>
-                            </div>
-                            <h3>
-                              <Link href={`/work/${a.id}`}>{a.summary}</Link>
-                            </h3>
-                            <p>Owner: {a.owner_name}</p>
-                            <p>
-                              {a.due_needed ? (
-                                "Due date needed"
-                              ) : (
-                                <>
-                                  Due <Stamp value={a.due_at} />
-                                </>
-                              )}
-                            </p>
-                            {a.outcome && (
-                              <p className="narrative">Outcome: {a.outcome}</p>
-                            )}
-                            {a.cancellation_reason && (
-                              <p>Cancellation: {a.cancellation_reason}</p>
-                            )}
-                            <div className="related-links">
-                              {a.links.map((l) => (
-                                <RecordLink
-                                  key={`${l.object_type}:${l.object_id}`}
-                                  type={l.object_type}
-                                  id={l.object_id}
-                                >
-                                  {l.display_number ?? l.label}
-                                </RecordLink>
-                              ))}
-                            </div>
-                          </article>
-                        ))}
-                      </div>
-                    </section>
-                  )
-                );
-              })}
-            </div>
-          )}
-          <div className="actions">
-            {cursor && (
-              <button className="secondary" onClick={() => setCursor("")}>
-                First page
-              </button>
-            )}
-            {r.data.next_cursor && (
-              <button onClick={() => setCursor(r.data!.next_cursor!)}>
-                Next page
-              </button>
-            )}
-            <button className="secondary" onClick={r.reload}>
-              Refresh activities
-            </button>
-          </div>
-        </>
-      )}
-    </>
-  );
-}
 export function ActivityDetail({ id }: { id: string }) {
   const r = useResource<Envelope<Activity>>(`activities/${id}`);
   return (
@@ -295,14 +104,10 @@ function ActivityEditor({
         <SummaryPair label="Purpose">
           {a.kind.replace(/([a-z])([A-Z])/g, "$1 $2")}
         </SummaryPair>
-        <SummaryPair label="Due">
-          {a.due_needed ? (
-            "Due date needed"
-          ) : (
-            <>
-              <Stamp value={a.due_at} /> (Australia/Brisbane)
-            </>
-          )}
+        <SummaryPair label="Type">{activityTypeLabels[a.activity_type]}</SummaryPair>
+        {/* An appointment keeps its planned end in due_at, so it is described as a start and an end, never as a due time. */}
+        <SummaryPair label={a.starts_at ? "Appointment" : "Due"}>
+          {a.due_needed ? "Due date needed" : `${whenText(a)} (Australia/Brisbane)`}
         </SummaryPair>
         <SummaryPair label="Outcome">
           <span className="narrative">
@@ -369,6 +174,8 @@ function ActivityEditor({
               {!needed && (
                 <LocalDateTimeField
                   name="activity-due"
+                  // An appointment's start is rescheduled from My Work; here its planned end can move.
+                  label={a.starts_at ? "Planned end" : "Due date and time"}
                   value={due}
                   onChange={setDue}
                   required

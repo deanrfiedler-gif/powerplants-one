@@ -14,6 +14,7 @@ import "./projects-gantt.css";
 import "./engineering.css";
 import "./field-technicians.css";
 import "./styles/job-pack.css";
+import "./styles/my-work.css";
 import "./module-workspaces.css";
 export const metadata: Metadata = {
   title: "Powerplants One | Private prototype",

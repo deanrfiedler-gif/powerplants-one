@@ -13,6 +13,7 @@ import {
   destination,
   menuGroups,
   pageForPath,
+  workViewForPath,
   workspaces,
   type ShellDestination,
 } from "../shell/navigation";
@@ -330,6 +331,8 @@ export function ProductHeader() {
     page = pageForPath(path),
     shell = useShell();
   const label = path === "/" ? "" : (page?.label ?? "Page unavailable");
+  // My Work names its current view beside the module, as its secondary menu does.
+  const view = page?.id === "work" ? workViewForPath(path)?.label : undefined;
   const currentModule =
     page?.workspace === "estimate"
       ? "Estimating"
@@ -378,12 +381,17 @@ export function ProductHeader() {
             className="brand-logo"
           />
         </Link>
+        {/* A workspace with a secondary menu mounts its Show/Hide trigger here. Empty otherwise. */}
+        <div id="header-menu" className="ppo-header-menu-slot" />
         <div className="product-heading">
           <span className="ppo-product-name">Powerplants One</span>
           {label && (
             <>
               <span className="ppo-heading-divider" aria-hidden="true" />
-              <strong title={label}>{label}</strong>
+              <strong title={view ? `${label} / ${view}` : label}>
+                {label}
+                {view && <span className="ppo-heading-view"> / {view}</span>}
+              </strong>
             </>
           )}
         </div>
