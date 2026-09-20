@@ -3,13 +3,13 @@ document_id: PPO-EN06-INT
 revision: r01
 date: 2026-09-20
 owner: Dean Fiedler
-status: Implemented and open as draft PR #265 for owner review and CI; visual acceptance, business acceptance, technical authority (D-002/D-019) and the accepted UI baseline register remain separate
+status: Implemented and merged to main as PR #265 (5d54c4e) on 20 September 2026; visual acceptance, business acceptance, technical authority (D-002/D-019) and the accepted UI baseline register remain separate
 source_commit: 99c32aed5032393b7658713cca53aa4c1a2ab2dd
 ---
 
 # EN-06 Released Materials & Substitutions: application integration
 
-**Scope:** EN-06, parent **ENG-05**, related ENG-02/03/04/06/07, SCM-01/03/04/08, DOC-01/02; acceptance boundaries AT-15 and AT-37 are preserved and none is claimed. **Authority:** on 20 September 2026 Dean supplied build plan r02, the VS Code build prompt r01 and desktop mockup r04, and instructed that EN-06 be built in the existing local application, verified and handed over on the local server. The instruction covers implementation, an additive migration, the local synthetic seed path and local verification. It did not cover deployment, publication, a push or a pull request, and none was made under it. Later the same day Dean authorised the push: `main` at `1a69e93` was merged in, the branch was pushed and draft PR #265 was opened. Nothing was merged or deployed.
+**Scope:** EN-06, parent **ENG-05**, related ENG-02/03/04/06/07, SCM-01/03/04/08, DOC-01/02; acceptance boundaries AT-15 and AT-37 are preserved and none is claimed. **Authority:** on 20 September 2026 Dean supplied build plan r02, the VS Code build prompt r01 and desktop mockup r04, and instructed that EN-06 be built in the existing local application, verified and handed over on the local server. The instruction covers implementation, an additive migration, the local synthetic seed path and local verification. It did not cover deployment, publication, a push or a pull request, and none was made under it. Later the same day Dean authorised the push: `main` at `1a69e93` was merged in, the branch was pushed and draft PR #265 was opened. Dean merged it to `main` the same day as `5d54c4e`, after its CI passed. Nothing is deployed.
 
 This is a change to a synthetic prototype. Nothing here is a production claim, a business acceptance, a closure of D-002, D-008 or D-019, or evidence of a connected MYOB, SharePoint, CAD, supplier or Supply Chain system. A technical release recorded here is never permission to spend, order, reserve, receive, install or commission.
 
