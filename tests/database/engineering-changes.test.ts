@@ -125,7 +125,7 @@ test("EN07-A25 A29 A32 A33 A37 A40 A41 A43 A50: accepted is not implemented; the
   // Only the named commercial owner resolves it, and a second outcome is never recorded.
   const commercial = (await s.detail(id)).prerequisites.find((x) => x.kind === "Commercial")!;
   assert.equal((await s.engineer(`${s.base}/prerequisites`, command("SYN", { action: "resolve", change_id: id, prerequisite_id: commercial.id, expected_version: commercial.version, outcome: "Confirmed", note: "SYN not mine" }))).status, 403);
-  assert.equal((await s.coordinator(`${s.base}/prerequisites`, command("SYN", { action: "resolve", change_id: id, prerequisite_id: commercial.id, expected_version: commercial.version, outcome: "Confirmed", note: "SYN confirmed within the fictional contingency" }))).status, 200);
+  assert.equal((await s.coordinator(`${s.base}/prerequisites`, command("SYN", { action: "resolve", change_id: id, prerequisite_id: commercial.id, expected_version: commercial.version, outcome: "Confirmed", note: "SYN confirmed within the fictional contingency" }))).status, 200); // the route creates nothing, so it answers 200
   assert.equal(code(await s.coordinator(`${s.base}/prerequisites`, command("SYN", { action: "resolve", change_id: id, prerequisite_id: commercial.id, expected_version: commercial.version + 1, outcome: "Declined", note: "SYN second thoughts" }))), "AlreadyResolved");
   // Still not implementation: the revised release is a request until its owner issues it.
   assert.match((await s.preview(id, [s.request("Implementation", "Service", CHANGES.service.id)])).requests[0].blockers.join(" "), /not the release itself/);
