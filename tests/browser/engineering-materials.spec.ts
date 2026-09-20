@@ -50,25 +50,33 @@ test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the r04 contract, My 
   const root = page.locator("#ppo-materials");
   await expect(rows(page)).toHaveCount(8);
 
-  // A34: first use is collapsed, with no residual track; the header names module and destination while it is hidden.
+  // A34: first use is collapsed. The existing-modules refinement replaces the earlier zero-width collapse
+  // with the shared 24px strip, so the register begins at the strip's boundary rather than the scope's own
+  // left edge. The header still names module and destination while the menu is hidden, and the product name
+  // is no longer rendered in any module breadcrumb.
   await expect(root).toHaveAttribute("data-menu", "collapsed");
   await expect(page.locator("#em-menu")).toBeHidden();
-  await expect(page.locator(".product-heading")).toContainText("Engineering / Released Materials & Substitutions / Materials register");
-  await expect(page.locator(".product-heading .ppo-product-name")).toBeHidden();
+  await expect(page.locator(".ppo-crumbs")).toHaveAttribute("title", "Engineering / Released Materials & Substitutions / Materials register");
+  await expect(page.locator(".ppo-crumbs li[data-crumb=view] .ppo-crumb")).toHaveText("Materials register");
+  await expect(page.locator(".product-heading .ppo-product-name")).toHaveCount(0);
+  const strip = page.locator(".mw-menu-strip");
+  await expect(strip).toHaveJSProperty("offsetWidth", 24);
   const collapsedLeft = (await page.locator(".em-register").boundingBox())!.x;
-  expect(Math.round(collapsedLeft)).toBe(Math.round((await root.boundingBox())!.x));
+  expect(Math.round(collapsedLeft)).toBe(Math.round((await strip.boundingBox())!.x + 24));
   await page.getByRole("button", { name: "Show menu" }).first().click();
   await expect(root).toHaveAttribute("data-menu", "docked");
   await page.reload();
   await expect(root).toHaveAttribute("data-menu", "docked");
-  await expect(page.locator(".product-heading .ppo-heading-subview")).toBeHidden();
+  // Docked, the menu names the destination and marks it current, so the breadcrumb does not repeat it.
+  await expect(page.locator(".ppo-crumbs li[data-crumb=view]")).toBeHidden();
 
   // A33 A36: My Work's menu, six route links in order, no horizontal module tabs.
   const menu = page.locator("#em-menu");
   await expect(menu.locator(".mw-menu-title strong")).toHaveText("Materials & substitutions");
   await expect(menu.locator("nav a")).toHaveText([/^Materials register$/, /^Item & unit mapping$/, /^Substitution review\s*2$/, /^Review & release$/, /^Supply handover$/, /^Changes & history$/]);
   await expect(menu.locator("nav a[aria-current=page]")).toHaveText("Materials register");
-  expect(Math.round((await menu.boundingBox())!.width)).toBe(220);
+  // The shared expanded width is now 240px, measured from the right edge of the navy rail.
+  expect(Math.round((await menu.boundingBox())!.width)).toBe(240);
   await expect(page.locator(".module-navigation")).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Released Materials & Substitutions: Materials register/);
 
@@ -80,7 +88,7 @@ test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the r04 contract, My 
     expect(table.x + table.width).toBeGreaterThanOrEqual(pane.x + pane.width - 1);
   };
   await flush();
-  expect(Math.round((await menu.boundingBox())!.x + 220)).toBe(Math.round((await page.locator(".em-register").boundingBox())!.x));
+  expect(Math.round((await menu.boundingBox())!.x + 240)).toBe(Math.round((await page.locator(".em-register").boundingBox())!.x));
 
   // A38: the numbers come from the server for this set, and they agree with the rows.
   await expect(page.locator(".em-tabs button")).toHaveText([/All materials\s*8/, /Ready for review\s*5/, /Needs attention\s*3/]);

@@ -185,24 +185,9 @@
 #ppo-materials .em-timeline>li:last-child{border-color:transparent}
 #ppo-materials .em-timeline p{color:var(--text-secondary);font-size:13px}
 
-/* The breadcrumb is the page title on these routes, so the redundant product name yields the room. The destination
-   follows the module only while the secondary menu is hidden; open, the menu already names it. */
-.ppo-shell-header .product-heading[data-module-crumb] :is(.ppo-product-name,.ppo-heading-divider){display:none}
-.ppo-shell-header .product-heading[data-module-crumb] strong{font-size:16px;color:#596779}
-.ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-view{font-weight:700;color:#242a37}
-.ppo-shell-header .ppo-heading-subview{color:#596779}
-/* Accessible collapse: when room runs out it is the module name that gives way, with an ellipsis, and never the
-   destination. The full path stays in the title attribute and in the page's own heading. */
-.ppo-shell-header .product-heading[data-module-crumb] strong{display:flex;align-items:baseline;min-width:0;overflow:visible}
-.ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-root{flex:none;white-space:pre}
-.ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-view{flex:0 1 auto;min-width:3ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-subview{flex:none;white-space:pre}
-.workspace:has(#ppo-materials[data-menu=docked]) .ppo-shell-header .ppo-heading-subview{display:none}
-/* Narrower desktops: the module name outranks its parent, which the rail and the page heading still give. */
-@media (max-width:1560px){
- .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-root{display:none}
- .ppo-shell-header .product-heading[data-module-crumb] strong{font-size:15px}
-}
+/* EN-06's breadcrumb rules became the shell's own in the existing-module refinement: the product name is
+   removed from every module breadcrumb, ancestors give way before the current page, and a docked secondary
+   menu still takes the view crumb because it names that view itself. See desktop-shell.css. */
 
 @media (max-width:1100px){
  #ppo-materials .em-context{flex-wrap:wrap;gap:6px 0;padding:8px 12px}

@@ -118,7 +118,12 @@ test("the overview reconciles its four counts, the list, the schedule and the no
   await page.reload();
   await expect(page.getByRole("banner").getByRole("button", { name: "Show menu", exact: true })).toBeVisible();
   await expect(menu).toBeHidden();
-  await page.locator(".mw-edge").click();
+  // The 24px collapsed strip is the expand target; hover alone never opens it.
+  const strip = page.locator(".mw-menu-strip");
+  await expect(strip).toHaveJSProperty("offsetWidth", 24);
+  await strip.hover();
+  await expect(menu).toBeHidden();
+  await strip.click();
   await expect(menu.getByRole("link", { name: "Team queue" })).toBeVisible();
   await expect(page.getByRole("banner").getByRole("button", { name: "Hide menu", exact: true })).toBeVisible();
 });
