@@ -573,7 +573,12 @@ test("wrong site/company, narrow fields, scope and policy versions, urgent prior
     "Confirmed",
   );
   // Every linked request is already Urgent; priority never cleared the missing preparation gate.
-  await assess(5, "Pass", t("2026-09-20T00:00:00Z"));
+  // The evidence lapses a minute before the visit ends, which is what blocks the booking. Derive
+  // it from the appointment: a literal has to sit between "now" and the visit end, and the window
+  // between those two closes as the clock runs (ADR-0030). The visit itself is kept in the
+  // future by the seed shift in ADR-0031, which is what keeps this derivation legal.
+  const visitEnd = new Date((await appointment(5)).end_at);
+  await assess(5, "Pass", new Date(visitEnd.getTime() - 60_000).toISOString());
   await assert.rejects(
     confirmAppointment(actor, id("a8", 5), await cmd(5)),
     code("BookingBlocked"),

@@ -7,7 +7,12 @@
 **Owner:** Dean Fiedler
 **Source commit:** 99c32aed4e0e7f2e9ff8d4c1f25e9b0a4e22a3f1 (main, 20 September 2026)
 
-> ADR-0030 is reserved by the open installation pull request #261 and is not free.
+> **This record differs from ADR-0030 and does not supersede it.** ADR-0030 landed on `main`
+> through PR #262 while this work was in progress. It applied the same interim repair to
+> `planner.test.ts:566` and then *proposed* option 3, a clock the tests control. That proposal is
+> recorded there as **proposed, not accepted**, explicitly awaiting Dean because it binds test
+> architecture. What is implemented here is ADR-0030's **option 2**. Dean should choose between
+> them; see "Relationship to ADR-0030" below.
 
 ## Reason and decision
 
@@ -138,6 +143,40 @@ naming a date, so shifting the seed repaired the 23 September cliff on its own.
 A newly created hosted demo database seeds through the same path and therefore gets dates
 in its own future, which is an improvement. An existing demo is untouched, because its
 seed receipts mean the seeds never run again.
+
+## Relationship to ADR-0030
+
+ADR-0030 lists this approach as option 2 and prefers option 3. Its argument is fair and worth
+stating in its own words: the suites assert business refusals whose whole meaning is a comparison
+against "now", so moving the data rather than the clock changes what the tests are proving, while a
+controlled instant leaves each assertion exactly as written and reviewed.
+
+Three of its objections to option 2, measured against what was actually built:
+
+| ADR-0030's objection | What is true here |
+| --- | --- |
+| Seeded data becomes non-deterministic between runs | Correct. The offset is whole days from the seeding date, so it is fixed within a run and every interval between fixtures is invariant, but two databases seeded on different days hold different absolute instants. |
+| It diverges the hosted demo from freshly seeded databases | The demo's behaviour is not changed: its seed receipts mean the seeds never run again, so it keeps exactly the rows it has. A newly created demo gets dates in its own future, which is better than today. The divergence is real but is between *old* and *new* databases, not a regression to the running demo. |
+| Every absolute literal in the affected suites must move in the same change | Partly met. The database suites are done; the browser specs are not, and are scheduled separately before 1 October. |
+
+**The strongest argument for option 3, stated plainly:** it would also repair the October browser
+cliff without touching those specs at all, because it keeps every authored literal valid. Option 2
+cannot do that; it needs each suite brought to the anchor.
+
+**The strongest argument for option 2:** it exists, it is provable, it changes no production path,
+and it is reversible in one commit. Option 3 has not been started, and it must make `Date.now()`
+and `clock_timestamp()` agree inside a single transaction or it will produce refusals no production
+path can produce — by ADR-0030's own account.
+
+**A fact that bears on the choice and was not available when ADR-0030 was written.** It lists as an
+open question whether the required-check set includes the PostgreSQL proof, and reasons from the
+assumption that it does not. Read live from the protection API on 20 September 2026, `main` requires
+**seven** contexts and `P01–P11 and CRM I1–I2 local application and PostgreSQL proof` is one of
+them. The cliff therefore blocks merging now, which shortens the time available for the larger
+change.
+
+This record does not settle that choice. If Dean adopts option 3, this change is reverted in one
+commit and the interim repair in ADR-0030 stands until the clock lands.
 
 ## Alternatives and limits
 
