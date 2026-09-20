@@ -632,6 +632,9 @@ test("CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and 
       assert.deepEqual(current.map(x => x.version).sort(), [1, 2]);
     } else if (tables[n] === "report_template_policy") {
       assert.deepEqual(before[n].map(x => ({ ...x, version: x.version + 1, template_id: "e1000000-0000-4000-8000-000000000002" })), current);
+    } else if (tables[n] === "activities") {
+      // 0028 adds scheduling fields with catalogue defaults; every original value remains exact.
+      assert.deepEqual(current, before[n].map(x => ({ ...x, activity_type: "Task", starts_at: null, due_date_only: false })));
     } else assert.deepEqual(current, before[n]);
   }
   assert.deepEqual(

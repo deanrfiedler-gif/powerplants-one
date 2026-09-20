@@ -837,7 +837,18 @@ export function ownerTransferCases() {
       );
     await migrate();
     await seed();
-    assert.deepEqual(await oldState(), before);
+    // 0028 adds scheduling fields to activities with catalogue defaults. Rows sort by their
+    // identifier first, so the order is unchanged and every original value remains exact.
+    assert.deepEqual(
+      await oldState(),
+      before.map((tableRows, i) =>
+        oldTables[i] === "activities"
+          ? tableRows.map((r) => ({
+              row: { ...r.row, activity_type: "Task", starts_at: null, due_date_only: false },
+            }))
+          : tableRows,
+      ),
+    );
     assert.deepEqual(
       await rows(
         "SELECT * FROM public.ppo_migrations WHERE version<=23 ORDER BY version",

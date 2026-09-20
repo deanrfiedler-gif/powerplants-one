@@ -260,6 +260,19 @@ export const destinations: ShellDestination[] = [
     localOnly: true,
   },
 ];
+// The My Work secondary menu. Order and labels follow design report r03; the routes are the
+// only authority for what each view shows, and every read keeps its own permission checks.
+export const workViews = [
+  { id: "overview", label: "Overview", href: "/work", icon: "overview" },
+  { id: "actions", label: "My actions", href: "/work/actions", icon: "list" },
+  { id: "reviews", label: "Reviews & handovers", href: "/work/reviews", icon: "contacts" },
+  { id: "waiting", label: "Blocked & waiting", href: "/work/waiting", icon: "clock" },
+  { id: "team", label: "Team queue", href: "/work/team", icon: "customers" },
+  { id: "updates", label: "Updates & preferences", href: "/work/updates", icon: "settings" },
+] as const;
+export type WorkViewId = (typeof workViews)[number]["id"];
+export const workViewForPath = (path: string) =>
+  workViews.find((view) => view.href === path);
 export const destination = (id: string) =>
   destinations.find((item) => item.id === id)!;
 export const matchesPath = (path: string, href: string) =>

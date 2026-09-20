@@ -16,6 +16,15 @@
 .ppo-shell-header .ppo-product-name { display: block; font-size: 16px; line-height: 1.3; color: #242a37; font-weight: 700; letter-spacing: -.15px; }
 .ppo-shell-header .ppo-heading-divider { display: block; width: 1px; height: 24px; flex-shrink: 0; background: #e0e5eb; }
 .ppo-shell-header .product-heading strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 400; color: #627084; }
+.ppo-shell-header .ppo-heading-view { color: #242a37; }
+/* Header menu slot: a workspace with a secondary menu mounts its trigger here. The label changes between
+   "Show menu" and "Hide menu" inside a fixed-width button, so nothing to its right moves. */
+.ppo-header-menu-slot { display: flex; align-items: center; flex: none; }
+.ppo-header-menu-slot:empty { display: none; }
+.ppo-header-menu-slot .ppo-menu-toggle { display: inline-flex; align-items: center; justify-content: flex-start; gap: 10px; width: 136px; min-height: 40px; margin: 0 6px 0 -8px; padding: 0 12px; border: 1px solid #e1e5eb; border-radius: 6px; background: #fff; color: #242a37; font: 400 14px/20px PPOShellRoboto, Roboto, Verdana, sans-serif; white-space: nowrap; box-shadow: none; }
+.ppo-header-menu-slot .ppo-menu-toggle:hover:not(:disabled) { background: #f0f2f5; color: #242a37; }
+.ppo-header-menu-slot .ppo-menu-toggle:focus-visible { outline: 2px solid #365d8b; outline-offset: 2px; box-shadow: none; }
+.ppo-header-menu-slot .ppo-menu-toggle svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .ppo-header-utilities { display: flex; align-items: center; gap: 4px; margin-left: auto; }
 .ppo-shell-header .header-tools { display: flex; margin: 0; padding: 0; gap: 0; border: 0; flex-shrink: 0; }
 .ppo-shell-header #header-search { display: none; }
@@ -152,6 +161,7 @@
   .ppo-header-centre { position: absolute; left: calc(50vw - 76px); transform: translateX(-50%); width: clamp(232px, 28vw, 420px); }
   .ppo-header-centre .ppo-quick-add { position: absolute; left: calc(100% + 12px); top: -2px; }
   .ppo-shell-header .product-heading { max-width: calc(50vw - clamp(110px, 14vw, 210px) - 118px); }
+  .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading { max-width: calc(50vw - clamp(110px, 14vw, 210px) - 118px - 148px); }
   .ppo-shell-header .ppo-product-name { flex-shrink: 0; }
   .crm-toolbar .crm-header-search { width: 210px; flex: 0 1 210px; }
   .crm-toolbar .crm-pipeline-label { margin-left: auto; }
@@ -222,3 +232,11 @@
 /* Phone Sales already exposes Deals and Leads in the bottom navigation. An extra
    desktop tab row would leave too little room for a focused card after a save. */
 @media (max-width: 780px) { .module-navigation.ppo-sales-navigation { display: none; } }
+/* Header menu slot at narrower widths: the trigger keeps its accessible name but shows its icon only, so the
+   product name and current view stay readable; on phones the workspace shows its own trigger in the page. */
+@media (min-width: 781px) and (max-width: 1100px) {
+  .ppo-header-menu-slot .ppo-menu-toggle { width: 40px; padding: 0; justify-content: center; }
+  .ppo-header-menu-slot .ppo-menu-toggle span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading { max-width: calc(50vw - clamp(110px, 14vw, 210px) - 118px - 52px); }
+}
+@media (max-width: 780px) { .ppo-header-menu-slot { display: none; } }

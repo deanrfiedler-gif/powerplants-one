@@ -20,6 +20,13 @@ export { existingDemoChecksumMatches } from "./migration-registry";
 // A deliberately bounded existing-demo upgrade, not a second bootstrap path.
 // Every database change shares one transaction, including grants and receipts.
 export async function upgradeExistingDemo(databaseName: string, tenant: string, apply: boolean) {
+  // Reviewed for 0028: three activity columns arrive with catalogue defaults, so no
+  // existing activity row is rewritten and the closed-activity guard is never fired;
+  // both new checks hold for every existing row (no start, not date-only). The partial
+  // index and the personal ppo.work_view_preferences table take ordinary privileges from
+  // the generic table grant below; the table holds criteria only and no authority. No
+  // seed, capability, tester grant or hosted identity change is introduced, and My Work
+  // reads use capabilities invited testers already hold (activity.*, crm.*).
   // Reviewed for 0027: roots/bases use ordinary typed-table grants and deferred
   // graph checks, with no seed, capability or hosted identity change. Original
   // estimate/version/quote rows and checksums are not rewritten. One estimate
@@ -42,7 +49,7 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // row locks on authority tables, without granting the runtime role write access. Existing-data compatibility stays under the retained
   // upgrade tests. The accepted five-stage demonstration uses a separately prepared
   // database/storage epoch; this function neither resets nor activates that epoch.
-  if (latestMigrationVersion !== 27) throw Error("Review the existing-demo upgrade for this release.");
+  if (latestMigrationVersion !== 28) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

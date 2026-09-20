@@ -116,13 +116,14 @@ test("E1-DB10 current-main upgrade and repeated seed preserve accepted CRM origi
   await migrate(10);await seed(10);const p=await principal(),o=crmCreate(),accepted=await createOpportunity(p,o);
   const tables=["opportunities","opportunity_events","activities","activity_links","operation_receipts","outbox_jobs"],before=await Promise.all(tables.map(t=>rows(`SELECT * FROM ppo.${t} ORDER BY 1`)));
   const hashes=await rows("SELECT * FROM public.ppo_migrations ORDER BY version");await migrate();await seed();
-  // Migrations 0017/0018/0023 add fields without changing any accepted source value.
+  // Migrations 0017/0018/0023/0028 add fields without changing any accepted source value.
   // Compare full rows, including the exact defaults, rather than dropping columns.
   for(let i=0;i<tables.length;i++){
     const expected=before[i].map(row=>tables[i]==="opportunities"
       ?{...row,value_amount:null,expected_close_date:null,scope_details:{}}
       :tables[i]==="opportunity_events"?{...row,record_snapshot:null,close_outcome:null,lost_reason:null,acceptance_evidence:null}
-      :tables[i]==="activity_links"?{...row,lead_id:null}:row);
+      :tables[i]==="activity_links"?{...row,lead_id:null}
+      :tables[i]==="activities"?{...row,activity_type:"Task",starts_at:null,due_date_only:false}:row);
     assert.deepEqual(await rows(`SELECT * FROM ppo.${tables[i]} ORDER BY 1`),expected);
   }
   assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version<=10 ORDER BY version"),hashes);assert.deepEqual(await readOperation(p,o.operation_id),accepted.receipt);
