@@ -4,7 +4,7 @@ title: SC-06 — Job Pack r03 application integration — build plan
 revision: r01
 date: 2026-09-20
 owner: Dean Fiedler
-status: Authorised by Dean Fiedler on 20 September 2026 with the recommended answer to each of D1–D5 adopted; I1–I5 not yet delivered
+status: Authorised by Dean Fiedler on 20 September 2026 with the recommended answer to each of D1–D5 adopted; I1 merged (#256), I2 delivered for review, I3–I5 not yet delivered
 scope_id: SC-06
 source_commit: 540b2b7e463ad68d5f552d006ea7cae6d75fbff8
 ---
@@ -219,6 +219,9 @@ Pure presentation logic — input diff, timeline assembly, readiness summary, st
 | DP-9 | Review and Dispatch stages; "PP-01 synthetic policy r01" | Server stage names (Authorisation, Booking, Dispatch, Completion) and the real policy key and version | The registry supplies real references, as the acceptance anticipated |
 | DP-10 | `SYN-PPO-DOC-nnnnnn` document references | Title, `version_id` and hash from `pack_sources` | The open PPO-STD-001 type-code question is not forced by this build |
 | DP-11 | `window` scroll, embedded font, demonstration footer controls | Module-owned scroll, shared Roboto face, no demonstration controls | Host contract |
+| DP-12 | Sticky right rail | The right rail scrolls with the page; the contents rail stays sticky at the accepted 24 px | Found in I2: the live registry lists eight criteria with their recorded reasons, so the rail is taller than the viewport, and a sticky element taller than its scrollport hides its middle — including **Check this revision** — until the page ends |
+| DP-13 | Header action "Prepare pack" | "Prepare successor revision" | Found in I2: every save is a new immutable revision (DP-2), so the accepted label would understate what the action does; it is also the name the P11 journey helper already uses |
+| DP-14 | Class names `.layout`, `.notice`, `.field`, `.badge` … | The same rules under a `jp-` prefix | Found in I2: `globals.css` already defines `.notice`, `.field` and a 10 px `footer`, which would leak into the scope container. Tokens, values and geometry are unchanged and are asserted against the issued HTML |
 
 ## 7. Decisions
 

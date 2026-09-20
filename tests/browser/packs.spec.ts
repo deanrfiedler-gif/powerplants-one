@@ -58,6 +58,29 @@ async function capture(
     fullPage: true,
   });
 }
+// Each controlled pack decision opens its own dialog and records its own reason (Job Pack r03, audit M1).
+async function decide(
+  page: Page,
+  trigger: string,
+  confirm: string,
+  reason: string,
+) {
+  await page.getByRole("button", { name: trigger, exact: true }).click();
+  const dialog = page.getByRole("dialog");
+  await expect(
+    dialog.getByLabel("Decision / change reason", { exact: true }),
+  ).toBeFocused();
+  // A decision without a reason is refused in place, before any command is sent.
+  await dialog.getByRole("button", { name: confirm, exact: true }).click();
+  await expect(
+    dialog.getByText("Enter the reason for this decision.", { exact: true }),
+  ).toBeVisible();
+  await dialog
+    .getByLabel("Decision / change reason", { exact: true })
+    .fill(reason);
+  await dialog.getByRole("button", { name: confirm, exact: true }).click();
+  await expect(dialog).toHaveCount(0);
+}
 async function appointment(page: Page, day: string) {
   const order = (await call(page, `service/work-orders/${id("a9")}`)).items[0],
     aid = crypto.randomUUID();
@@ -160,17 +183,31 @@ test("P06 complete workbench preparation, check, queued output, exact document a
   ).toBeVisible();
   const pid = page.url().split("/").pop()!;
   await capture(page, info, "prepared");
-  await page
-    .getByLabel("Decision / change reason")
-    .fill("SYN exact scope, technical sources and crew checked");
-  await page.getByRole("button", { name: "Check this revision" }).click();
+  // SC-06 r03 page: the accepted scope container, its nine sections and readiness read from the policy registry.
+  await expect(page.locator("#ppo-job-pack")).toBeVisible();
+  await expect(
+    page.locator("#jp-panel-pack .jp-section-head h2"),
+  ).toHaveCount(9);
+  await expect(
+    page.getByRole("tab", { name: "Job pack, 9 sections", exact: true }),
+  ).toHaveAttribute("aria-selected", "true");
+  await expect(page.getByText(/^\d+ of \d+ criteria satisfied/)).toBeVisible();
+  await decide(
+    page,
+    "Check this revision",
+    "Record check",
+    "SYN exact scope, technical sources and crew checked",
+  );
   await expect(
     page.getByRole("button", { name: "Queue exact output for issue" }),
   ).toBeEnabled();
   await capture(page, info, "checked");
-  await page
-    .getByRole("button", { name: "Queue exact output for issue" })
-    .click();
+  await decide(
+    page,
+    "Queue exact output for issue",
+    "Queue output",
+    "SYN exact checked revision queued for controlled issue",
+  );
   await expect(
     page.getByRole("button", { name: "Process or recover original output" }),
   ).toBeEnabled();
@@ -269,10 +306,12 @@ test("P06 complete workbench preparation, check, queued output, exact document a
   ).toBeVisible();
   await capture(page, info, "two-responses-ready");
   await identity(page, "coordinator");
-  await page
-    .getByLabel("Decision / change reason")
-    .fill("SYN controlled withdrawal for document integrity demonstration");
-  await page.getByRole("button", { name: "Withdraw current issue" }).click();
+  await decide(
+    page,
+    "Withdraw current issue",
+    "Withdraw issue",
+    "SYN controlled withdrawal for document integrity demonstration",
+  );
   await expect(page.getByText("Dispatch held", { exact: true })).toBeVisible();
   await capture(page, info, "withdrawn-original-retained");
   const after = await page.request.get(`/api/v1/pack-issues/${issue.id}/pdf`);
