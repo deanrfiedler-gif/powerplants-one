@@ -12,6 +12,7 @@ import {
   type QueryClient,
 } from "../platform/permissions";
 import { ticketVisibility, visibleTicket } from "../service/tickets";
+import { activityTypes, endOfLocalDay, localDay, type ActivityType } from "./work-view";
 import { companyContext, scopedOwner } from "../shared/authority";
 import {
   envelope,
@@ -59,9 +60,15 @@ export type ActivityInput = {
   summary: string;
   due_at: string | null;
   due_needed: boolean;
+  // Scheduling fields (migration 0028). Absent means "leave the stored value": an insert then
+  // takes the column default, so callers written before 0028 behave exactly as they did.
+  activity_type?: ActivityType;
+  starts_at?: string | null;
+  due_date_only?: boolean;
   access_class: "Internal" | "RestrictedService" | "RestrictedFinance";
   links: ActivityLink[];
 };
+export const scheduleKeys = ["activity_type", "starts_at", "due_date_only"] as const;
 export function dueFields(r: Record<string, unknown>) {
   if (typeof r.due_needed !== "boolean")
     invalid(
@@ -75,6 +82,36 @@ export function dueFields(r: Record<string, unknown>) {
   if ((due_at === null) !== r.due_needed)
     invalid("due_at", "Use either a known due instant or due date needed.");
   return { due_at, due_needed: r.due_needed };
+}
+// due_at remains the instant after which the activity is overdue. An appointment adds its start
+// and keeps its planned end in due_at; a date-only task keeps the last instant of its local day.
+// Only fields the caller sent are returned, so an older payload changes nothing else.
+export function scheduleFields(r: Record<string, unknown>) {
+  const { due_at } = dueFields(r);
+  const fields: Pick<ActivityInput, (typeof scheduleKeys)[number]> = {};
+  if (r.activity_type !== undefined)
+    fields.activity_type = choice(r.activity_type, "activity_type", activityTypes);
+  if (r.starts_at !== undefined)
+    fields.starts_at = r.starts_at === null ? null : instant(r.starts_at, "starts_at");
+  if (r.due_date_only !== undefined) {
+    if (typeof r.due_date_only !== "boolean")
+      invalid("due_date_only", "Choose whether this task is due on a day without a time.");
+    fields.due_date_only = r.due_date_only;
+  }
+  if (fields.starts_at) {
+    const length = due_at === null ? NaN : Date.parse(due_at) - Date.parse(fields.starts_at);
+    if (!(length > 0 && length <= 86400000))
+      invalid("starts_at", "An appointment needs a start before its planned end, within 24 hours.");
+    if (fields.due_date_only)
+      invalid("due_date_only", "An appointment has a start time; a date-only task does not.");
+  }
+  if (fields.due_date_only) {
+    if (due_at === null || due_at !== endOfLocalDay(localDay(due_at)))
+      invalid("due_at", "A date-only task is due at the end of its local day.");
+    // Sending the flag without a start still clears any stored appointment start.
+    fields.starts_at = null;
+  }
+  return fields;
 }
 export function parseLinks(value: unknown): ActivityLink[] {
   if (!Array.isArray(value) || value.length < 1 || value.length > 10)
@@ -231,12 +268,14 @@ export async function insertActivity(
   input: ActivityInput,
 ) {
   const { links, ...fields } = input;
+  // An absent scheduling field is omitted, not inserted as NULL: the column default applies, and
+  // the statement still runs against a schema that predates 0028 (upgrade tests do exactly that).
   const entries = Object.entries({
     ...fields,
     workspace_id: p.workspace_id,
     created_by: p.actor_id,
     updated_by: p.actor_id,
-  });
+  }).filter(([, v]) => v !== undefined);
   const row = (
     await c.query(
       `INSERT INTO ppo.activities(${entries.map(([k]) => k).join(",")}) VALUES(${entries.map((_, i) => `$${i + 1}`).join(",")}) RETURNING *,status AS state`,
@@ -261,6 +300,7 @@ export async function createActivity(p: Principal, input: unknown) {
     "summary",
     "due_at",
     "due_needed",
+    ...scheduleKeys,
     "access_class",
     "links",
   ]);
@@ -273,6 +313,7 @@ export async function createActivity(p: Principal, input: unknown) {
     owner_id: uuid(r.owner_id, "owner_id"),
     summary: narrative(r.summary, "summary", 2000),
     ...dueFields(r),
+    ...scheduleFields(r),
     access_class: choice(r.access_class, "access_class", [
       "Internal",
       "RestrictedService",
@@ -309,6 +350,38 @@ export async function createActivity(p: Principal, input: unknown) {
     "ActivityCreated",
   );
 }
+// An update that says nothing about scheduling must still leave a coherent record. A payload
+// written before 0028 carries only a due instant: removing the date removes the appointment and
+// the date-only flag with it, and a specific instant on a date-only task makes it a timed deadline.
+// A stored appointment whose new planned end would not follow its start is refused, never guessed.
+function reconcileSchedule(
+  a: { starts_at?: Date | null; due_date_only?: boolean },
+  changes: Partial<ActivityInput>,
+) {
+  const extra: Pick<ActivityInput, "starts_at" | "due_date_only"> = {};
+  if (changes.due_needed) {
+    if (a.starts_at && changes.starts_at === undefined) extra.starts_at = null;
+    if (a.due_date_only && changes.due_date_only === undefined)
+      extra.due_date_only = false;
+    return extra;
+  }
+  const due = changes.due_at ?? null;
+  if (changes.starts_at === undefined && a.starts_at && due) {
+    const length = Date.parse(due) - a.starts_at.getTime();
+    if (!(length > 0 && length <= 86400000))
+      invalid(
+        "due_at",
+        "This appointment's planned end must follow its start within 24 hours. Reschedule the start as well.",
+      );
+  }
+  if (
+    changes.due_date_only === undefined &&
+    a.due_date_only &&
+    (changes.starts_at || (due && due !== endOfLocalDay(localDay(due))))
+  )
+    extra.due_date_only = false;
+  return extra;
+}
 export async function activityLinks(
   c: QueryClient,
   p: Principal,
@@ -329,7 +402,7 @@ export async function activityCommand(
 ) {
   const keys =
     action === "update"
-      ? ["owner_id", "summary", "due_at", "due_needed"]
+      ? ["owner_id", "summary", "due_at", "due_needed", ...scheduleKeys]
       : action === "complete"
         ? ["outcome"]
         : action === "cancel"
@@ -342,6 +415,7 @@ export async function activityCommand(
           owner_id: uuid(r.owner_id, "owner_id"),
           summary: narrative(r.summary, "summary", 2000),
           ...dueFields(r),
+          ...scheduleFields(r),
         }
       : action === "complete"
         ? { outcome: narrative(r.outcome, "outcome") }
@@ -422,7 +496,13 @@ export async function activityCommand(
         complete: "Completed",
         cancel: "Cancelled",
       }[action];
-      const entries = Object.entries({ ...changes, status: state });
+      const entries = Object.entries({
+        ...changes,
+        ...(action === "update"
+          ? reconcileSchedule(a, changes as Partial<ActivityInput>)
+          : {}),
+        status: state,
+      }).filter(([, v]) => v !== undefined);
       const row = (
         await c.query(
           `UPDATE ppo.activities SET ${entries.map(([k], i) => `${k}=$${i + 1}`).join(",")},version=version+1,updated_at=clock_timestamp(),updated_by=$${entries.length + 1} WHERE workspace_id=$${entries.length + 2} AND id=$${entries.length + 3} RETURNING *,status AS state`,
@@ -439,8 +519,11 @@ export async function activityCommand(
             summary: a.summary,
             due_at: a.due_at,
             due_needed: a.due_needed,
+            activity_type: a.activity_type,
+            starts_at: a.starts_at,
+            due_date_only: a.due_date_only,
           },
-          after: { ...changes, status: state },
+          after: { ...Object.fromEntries(entries), status: state },
         },
       };
     },
@@ -483,6 +566,10 @@ export async function readActivity(p: Principal, id: string) {
     status: a.status,
     due_at: a.due_at?.toISOString() ?? null,
     due_needed: a.due_needed,
+    // Defaults match the 0028 column defaults, so a record reads identically before and after it.
+    activity_type: (a.activity_type ?? "Task") as ActivityType,
+    starts_at: (a.starts_at as Date | null | undefined)?.toISOString() ?? null,
+    due_date_only: (a.due_date_only as boolean | undefined) ?? false,
     outcome: a.outcome,
     cancellation_reason: a.cancellation_reason,
     access_class: a.access_class,
@@ -508,6 +595,77 @@ export async function readActivity(p: Principal, id: string) {
         a.company_id,
         a.site_id ?? undefined,
       )),
+  };
+}
+// The change history of one activity the reader can currently see. Events are the immutable
+// audit rows every activity command already writes; this adds a read, not a second record.
+export type ActivityHistoryEvent = {
+  id: string;
+  occurred_at: string;
+  actor_name: string;
+  command: string;
+  reason: string;
+  record_version: number | null;
+  before: Record<string, unknown> | null;
+  after: Record<string, unknown> | null;
+};
+const historyKeys = ["status", "owner_id", "due_at", "due_needed", "starts_at", "due_date_only", "activity_type", "summary", "outcome", "cancellation_reason"];
+export async function activityHistory(p: Principal, id: string) {
+  const c = database(),
+    a = await visibleActivity(c, p, id);
+  const rows = (
+    await c.query<{
+      id: string;
+      occurred_at: Date;
+      actor_name: string;
+      reason: string;
+      details: Record<string, unknown> | null;
+    }>(
+      `SELECT e.id,e.occurred_at,u.display_name AS actor_name,e.reason,e.details FROM ppo.audit_events e
+       JOIN ppo.users u ON (u.workspace_id,u.id)=(e.workspace_id,e.actor_id)
+       WHERE e.workspace_id=$1 AND e.object_type='Activity' AND e.object_id=$2 AND e.outcome='Accepted'
+       ORDER BY e.occurred_at DESC,e.id LIMIT 101`,
+      [p.workspace_id, a.id],
+    )
+  ).rows;
+  const pick = (value: unknown) =>
+    value && typeof value === "object"
+      ? Object.fromEntries(
+          Object.entries(value as Record<string, unknown>).filter(([k]) =>
+            historyKeys.includes(k),
+          ),
+        )
+      : null;
+  const events: ActivityHistoryEvent[] = rows.slice(0, 100).map((e) => ({
+    id: e.id,
+    occurred_at: e.occurred_at.toISOString(),
+    actor_name: e.actor_name,
+    command: String(e.details?.command ?? "Activity"),
+    reason: e.reason,
+    record_version:
+      typeof e.details?.record_version === "number" ? e.details.record_version : null,
+    before: pick(e.details?.before),
+    after: pick(e.details?.after),
+  }));
+  const ownerIds = [
+    ...new Set(
+      events.flatMap((e) => [e.before?.owner_id, e.after?.owner_id]).filter(
+        (v): v is string => typeof v === "string",
+      ),
+    ),
+  ];
+  const owners = ownerIds.length
+    ? (
+        await c.query<{ id: string; display_name: string }>(
+          "SELECT id,display_name FROM ppo.users WHERE workspace_id=$1 AND id=ANY($2::uuid[])",
+          [p.workspace_id, ownerIds],
+        )
+      ).rows
+    : [];
+  return {
+    ...envelope(events, null),
+    completeness: rows.length > 100 ? "BoundedWindow" : "Complete",
+    owners: Object.fromEntries(owners.map((o) => [o.id, o.display_name])),
   };
 }
 export async function listActivities(p: Principal, input: unknown = {}) {

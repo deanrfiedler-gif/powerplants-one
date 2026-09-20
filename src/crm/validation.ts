@@ -1,5 +1,5 @@
 import { ACTIVE_PIPELINE_ID } from "./stages";
-import { dueFields } from "../activities/activities";
+import { dueFields, scheduleFields, scheduleKeys } from "../activities/activities";
 import {
   choice,
   common,
@@ -27,6 +27,8 @@ export function parseAction(value: unknown) {
     "summary",
     "due_at",
     "due_needed",
+    // Optional since 0028: the activity type, an appointment start, or a date-only deadline.
+    ...scheduleKeys,
   ]);
   return {
     id: uuid(r.id, "activity_id"),
@@ -34,6 +36,7 @@ export function parseAction(value: unknown) {
     kind: choice(r.kind, "kind", SALES_KINDS),
     summary: narrative(r.summary, "activity_summary", 2000),
     ...dueFields(r),
+    ...scheduleFields(r),
   };
 }
 export function parseCreate(value: unknown) {

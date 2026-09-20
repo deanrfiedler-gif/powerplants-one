@@ -164,8 +164,8 @@ test("a baseline executed from Windows CRLF SQL upgrades without rewriting histo
     demoLedger.find(r => r.row.version === 3)?.row.sha256,
     digest(await readFile(new URL("../../db/demo/0003-hosted-pack-reviewer.sql", import.meta.url), "utf8")),
   );
-  // 0018 Leads, 0019 Projects, 0020 Engineering, 0021 stages, 0022 Discovery conversion and 0023 owned outcomes and 0024 owner transfer, 0025 versioned estimating taxonomy and 0026 preserved discovery identities and 0027 exact cost bases.
-  assert.equal(final.length, baseline.length + 10);
+  // 0018 Leads, 0019 Projects, 0020 Engineering, 0021 stages, 0022 Discovery conversion and 0023 owned outcomes and 0024 owner transfer, 0025 versioned estimating taxonomy and 0026 preserved discovery identities and 0027 exact cost bases and 0028 My Work activity scheduling and personal saved views.
+  assert.equal(final.length, baseline.length + 11);
   assert.ok((await db.query("SELECT to_regclass('ppo.projects') AS relation")).rows[0].relation);
 });
 
