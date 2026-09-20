@@ -430,8 +430,8 @@ export function ProductHeader() {
             <>
               <span className="ppo-heading-divider" aria-hidden="true" />
               <strong title={[label, view, subview].filter(Boolean).join(" / ")}>
-                {label}
-                {view && <span className="ppo-heading-view"> / {view}</span>}
+                {materials ? <span className="ppo-heading-root">{label} / </span> : label}
+                {view && <span className="ppo-heading-view">{materials ? view : ` / ${view}`}</span>}
                 {subview && <span className="ppo-heading-subview"> / {subview}</span>}
               </strong>
             </>

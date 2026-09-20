@@ -48,7 +48,7 @@ export function SubstitutionsView() {
               ))}
             </ul>
           </section>
-          {selected && <Detail key={`${selected.id}:${selected.version}`} s={selected} data={data} changed={changed} edit={() => setProposing(selected)} registerHref={href("register", { line: selected.line_id })} />}
+          {selected && <Detail key={selected.id} s={selected} data={data} changed={changed} edit={() => setProposing(selected)} registerHref={href("register", { line: selected.line_id })} />}
         </div>
       )}
       {proposing && data && <ProposalForm existing={proposing === "new" ? null : proposing} data={data} onClose={() => setProposing(null)} onSaved={(id) => { changed(); open(id); }} />}

@@ -17,7 +17,7 @@
 #ppo-materials .em-context-cell small{color:var(--text-secondary);font-size:13px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #ppo-materials .em-context-project{flex-shrink:0}
 #ppo-materials .em-context-project select{max-width:270px;min-height:26px;padding:0 22px 0 0;border:0;background-color:transparent;font-size:17px;line-height:24px;font-weight:700;color:var(--ink);text-overflow:ellipsis;cursor:pointer}
-#ppo-materials .em-context-set{border-right:0}
+#ppo-materials .em-context-set{flex:none;border-right:0;margin-right:0}
 #ppo-materials .em-context-set>div{display:flex;align-items:center;gap:10px}
 #ppo-materials .em-context-set select{min-height:26px;padding:0 20px 0 0;border:0;background-color:transparent;font-size:15px;font-weight:500}
 #ppo-materials .em-chip{padding:3px 12px;border-radius:5px;background:var(--neutral-surface);color:var(--ink);font-size:14px;font-weight:500;line-height:20px;white-space:nowrap}
@@ -192,6 +192,11 @@
 .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-view{font-weight:700;color:#242a37}
 .ppo-shell-header .ppo-heading-subview{color:#596779}
 .workspace:has(#ppo-materials[data-menu=docked]) .ppo-shell-header .ppo-heading-subview{display:none}
+/* Narrower desktops: the module name outranks its parent, which the rail and the page heading still give. */
+@media (max-width:1560px){
+ .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-root{display:none}
+ .ppo-shell-header .product-heading[data-module-crumb] strong{font-size:15px}
+}
 
 @media (max-width:1100px){
  #ppo-materials .em-context{flex-wrap:wrap;gap:6px 0;padding:8px 12px}

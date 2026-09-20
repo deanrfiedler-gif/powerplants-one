@@ -43,7 +43,7 @@ export function HandoverView() {
               ))}
             </ul>
           </section>
-          {selected && <HandoverDetail key={`${selected.id}:${selected.version}`} h={selected} data={data} changed={changed} revise={() => go({ prepare: selected.release_id, predecessor: selected.id })} />}
+          {selected && <HandoverDetail key={selected.id} h={selected} data={data} changed={changed} revise={() => go({ prepare: selected.release_id, predecessor: selected.id })} />}
         </div>
       )}
       {preparing && data && <PrepareHandover data={data} releaseId={preparing === "new" ? null : preparing} predecessor={search.get("predecessor")} onClose={() => go({ prepare: null, predecessor: null })} onSaved={(id) => { changed(); go({ prepare: null, predecessor: null, handover: id }); }} />}

@@ -48,7 +48,7 @@ export function ReleasesView() {
               ))}
             </ul>
           </section>
-          {selected && <ReleaseDetail key={`${selected.id}:${selected.version}`} r={selected} data={data} changed={changed} handoverHref={href("handover", { prepare: selected.id })} successor={() => go({ prepare: "1", predecessor: selected.id })} />}
+          {selected && <ReleaseDetail key={selected.id} r={selected} data={data} changed={changed} handoverHref={href("handover", { prepare: selected.id })} successor={() => go({ prepare: "1", predecessor: selected.id })} />}
         </div>
       )}
       {preparing && data?.set && <PrepareDialog data={data} setId={data.set.id} base={base} initial={selection} predecessor={search.get("predecessor")} onClose={() => go({ prepare: null, predecessor: null })} onSaved={(id) => { setSelection({}); changed(); go({ prepare: null, predecessor: null, release: id }); }} />}

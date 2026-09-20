@@ -432,6 +432,9 @@ export async function releaseCommand(p: Principal, packageId: string, value: unk
     if (involved.has(p.actor_id)) throw new AppError(403, "IndependenceRequired", "You prepared this set or authored content in it. It cannot be released by you.");
     if (r.reviewed_by === p.actor_id && !access.policy?.allow_reviewer_release_overlap) throw new AppError(403, "IndependenceRequired", "The policy does not let the reviewer of a set also release it.");
     authority(policyAllows(access.policy, p.actor_id, "ReleaseAuthority", disciplines, r.purpose));
+    // A second equivalent issue is never created: the original operation is the only way back to an issued result. This is
+    // answered before anything else is assessed, because an issued release's own entitlement would otherwise read as a blocker.
+    if (r.issue_state === "Issued") throw refuse("AlreadyIssued", `This release was issued by operation ${r.issue_operation_id}. Recover that original result; nothing is issued twice.`, 409);
     if (r.review_state !== "TechnicallyReviewed") throw refuse("NotReviewed", "Only an independently reviewed set can be authorised or issued.", 409);
     if (r.policy_version !== access.policy!.policy_version) throw refuse("PolicyChanged", `This set was reviewed under policy version ${r.policy_version}; version ${access.policy!.policy_version} now applies. It needs a fresh review.`, 409);
     const stops = await found();
@@ -441,8 +444,6 @@ export async function releaseCommand(p: Principal, packageId: string, value: unk
       await set("issue_state='Authorised',authorised_by=$3,authorised_at=clock_timestamp(),authorised_hash=$4", [r.content_hash]);
       return finish(r.id, r.set_id, "ReleaseAuthorised");
     }
-    // A second equivalent issue is never created: the original operation is the only way back to an issued result.
-    if (r.issue_state === "Issued") throw refuse("AlreadyIssued", `This release was issued by operation ${r.issue_operation_id}. Recover that original result; nothing is issued twice.`, 409);
     if (r.issue_state !== "Authorised") throw refuse("NotAuthorised", "Authorise this exact set before issuing it.", 409);
     if (r.predecessor_id) await c.query("UPDATE ppo.material_releases SET version=version+1,updated_at=clock_timestamp(),updated_by=$3,superseded_by=$4 WHERE workspace_id=$1 AND id=$2 AND issue_state='Issued' AND withdrawn_at IS NULL AND superseded_by IS NULL", [p.workspace_id, r.predecessor_id, p.actor_id, r.id]);
     await set("issue_state='Issued',issued_by=$3,issued_at=clock_timestamp(),issue_operation_id=$4", [command.operation_id]);
