@@ -7,6 +7,7 @@ import { ShellIcon as ProductIcon } from "./shell-icon";
 import { ShellControls } from "./shell-controls";
 import { useShell } from "./shell-provider";
 import { openShellPanel, shellPanelEvent } from "./shell-events";
+import { InstallationActions, InstallationHelp } from "./app-installation";
 import { moduleWorkspaceForPath } from "../shell/module-workspaces";
 import {
   canOpen,
@@ -33,7 +34,11 @@ export function ProductNavigation() {
     () => true,
   );
   return (
-    <ProductNavigationView key={`${path}:${wide}`} path={path} wide={wide} />
+    <>
+      <ProductNavigationView key={`${path}:${wide}`} path={path} wide={wide} />
+      {/* Outside the keyed view so the panel survives route changes. */}
+      <InstallationHelp />
+    </>
   );
 }
 function ProductNavigationView({
@@ -234,6 +239,14 @@ function ProductNavigationView({
           <ProductIcon name="help" />
           <span>Help</span>
         </button>}
+        {!query.trim() && (
+          <InstallationActions
+            onNavigate={() => {
+              dialog.current?.close();
+              close();
+            }}
+          />
+        )}
         {!wide && (
           <div className="ppo-mobile-tools">
             {(["quick", "notifications"] as const).map((kind) => (

@@ -1,5 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
+import { readFileSync } from "node:fs";
 import { renderLoginPage, loginPolicy, loginState } from "../../src/login/login-page";
+import { manifestPath, publicInstallationAssets } from "../../src/platform/installation";
 
 const origin = "https://ppo-login.example.invalid";
 // The actual gateway renderer and CSP; provider navigation is synthetic here.
@@ -12,6 +14,13 @@ async function serve(page: Page, local = false) {
     if (url.pathname === "/auth/login") {
       await route.fulfill({ status: 200, contentType: "text/html", body: '<!doctype html><html lang="en"><title>Synthetic handoff boundary</title><p>Microsoft handoff endpoint reached (synthetic)</p></html>' }); return;
     }
+    // The document's installation links are same-origin public assets, not the page.
+    if (publicInstallationAssets.includes(url.pathname)) {
+      await route.fulfill(url.pathname === manifestPath
+        ? { status: 200, contentType: "application/manifest+json", body: JSON.stringify({ id: "/", start_url: "/work" }) }
+        : { status: 200, contentType: "image/png", body: readFileSync(new URL(`../../public${url.pathname}`, import.meta.url)) });
+      return;
+    }
     await route.fulfill({ status: 200, contentType: "text/html", headers: { "Content-Security-Policy": loginPolicy }, body: renderLoginPage(loginState(url.searchParams), local) });
   });
 }
@@ -21,6 +30,24 @@ async function loaded(page: Page) {
   expect(await page.locator(".logo").evaluate((el: HTMLImageElement) => el.naturalWidth)).toBe(1254);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 }
+
+test("the sign-in document offers the installation contract without widening its policy", async ({ page }) => {
+  const requested: string[] = [];
+  page.on("request", request => requested.push(new URL(request.url()).pathname));
+  await serve(page); await page.goto(origin + "/login"); await loaded(page);
+  await expect(page.locator('link[rel="manifest"]')).toHaveCount(1);
+  await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveAttribute("href", "/pwa/ppo-app-icon-180.png");
+  await expect(page.locator('meta[name="apple-mobile-web-app-title"]')).toHaveAttribute("content", "Powerplants One");
+  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute("content", "#242a37");
+  // The icon link resolves to real image bytes under the declared policy.
+  expect(await page.locator('link[rel="apple-touch-icon"]').evaluate(async (link: HTMLLinkElement) => {
+    const image = new Image(); image.src = link.href; await image.decode();
+    return `${image.naturalWidth}x${image.naturalHeight}`;
+  })).toBe("180x180");
+  expect(requested.some(path => path === "/pwa/ppo-app-icon-180.png")).toBe(true);
+  // Nothing outside the document and its declared installation assets is fetched.
+  expect(requested.filter(path => !["/login", ...publicInstallationAssets].includes(path))).toEqual([]);
+});
 
 test("approved login layout retains intact brand and readable narrow-desktop heading", async ({ page }, info) => {
   const errors: string[] = []; page.on("pageerror", error => errors.push(error.message));
