@@ -1,0 +1,31 @@
+import type { Action } from "./validation";
+import type { Duty } from "./model";
+// Dependency-free permission hints for UI discovery; server enforcement is in commands.ts.
+export const actionDuty: Record<Action, Duty> = {
+  create: "scope",
+  edit: "scope",
+  unit: "scope",
+  disposition: "reopen",
+  scope: "scope",
+  submit: "submit",
+  return: "submit",
+  successor: "scope",
+  check: "scope",
+  technical: "technical",
+  source: "source",
+  requirement: "scope",
+  obligation: "scope",
+  transfer: "receive",
+  completeObligation: "source",
+  prepare: "prepare",
+  issue: "issue",
+  request: "prepare",
+  response: "record",
+  validate: "validate",
+  receive: "receive",
+  commercial: "commercial",
+  closeStage: "closeStage",
+  closeProject: "closeProject",
+  reopen: "reopen",
+  amendment: "reopen",
+};

@@ -40,6 +40,7 @@ export function ProjectRegister() {
       <div className="business-heading">
         <div>
           <h1>Projects</h1>
+          <Link href="/projects/acceptance">Staged Acceptance &amp; Closeout</Link>
           <p>Plan delivery, assign responsibility and track the schedule.</p>
         </div>
         {context.data?.actions.some((a) => a.id === "project") && (
@@ -384,6 +385,7 @@ export function ProjectSchedulePage({ id }: { id: string }) {
     );
   return (
     <>
+      <Link href={`/projects/acceptance?project=${id}`}>Acceptance &amp; closeout</Link>
       <ProjectsGantt
         key={id}
         schedule={resource.data}

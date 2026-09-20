@@ -39,6 +39,7 @@ export default defineConfig([
   },
   globalIgnores([
     ".next/**",
+    "tmp/**",
     "public/offline/modules/**",
     "node_modules/**",
     "test-results/**",

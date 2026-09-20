@@ -18,6 +18,20 @@
 
   /* Plain-English labels are Proposed design copy; the key is authoritative. */
   const LABELS={
+    'acceptance.scope':'Maintain acceptance scope',
+    'acceptance.submit':'Submit and return acceptance revisions',
+    'acceptance.technical':'Accept exact technical applicability',
+    'acceptance.prepare':'Prepare stage handover packs',
+    'acceptance.issue':'Issue stage handover packs',
+    'acceptance.response.record':'Record incoming customer responses',
+    'acceptance.response.validate':'Validate customer authority and scope',
+    'acceptance.receive':'Independently receive stage handovers',
+    'acceptance.commercial':'Record commercial acceptance disposition',
+    'acceptance.close.stage':'Close acceptance stages',
+    'acceptance.close.project':'Close whole projects',
+    'acceptance.reopen':'Reopen or amend closed project scope',
+    'acceptance.source':'Operate labelled synthetic acceptance sources',
+
     'shared.read':'Read shared customer, site and equipment records','shared.create':'Create shared records','shared.edit':'Edit shared records','shared.internal.read':'Read internal-only notes','shared.finance.read':'Read restricted Finance context','shared.history.record':'Record equipment and site history',
     'service.ticket.read':'Read service requests','service.ticket.edit':'Edit service requests','service.work_order.read':'Read work orders','service.work_order.edit':'Edit work orders','service.scope.authorise':'Authorise work scope','service.readiness.assess':'Assess job readiness',
     'activity.read':'Read activities','activity.edit':'Create and complete activities',
@@ -34,7 +48,7 @@
     'engineering.material.review':'Review released materials and substitutions','engineering.material.release':'Authorise and issue material releases','engineering.material.receive':'Receive material handovers','engineering.material.source':'Operate the synthetic source adapter',
     'engineering.change.review':'Review engineering change proposals','engineering.change.decide':'Record technical decisions on engineering changes','engineering.change.receive':'Receive engineering change requests','engineering.change.verify':'Record retest results for engineering changes','engineering.change.close':'Close engineering changes',
     'engineering.commissioning.capture':'Capture commissioning test evidence','engineering.commissioning.review':'Review commissioning evidence and approve as-built records','engineering.commissioning.issue':'Issue and withdraw commissioning releases','engineering.commissioning.receive':'Receive commissioning and as-built releases'};
-  const FAMILY_NAMES={shared:'Shared records',service:'Service',activity:'Activities',schedule:'Scheduling',pack:'Job packs',field:'Field work (own)',report:'Service reports',crm:'CRM',finance:'Finance',estimating:'Estimating',email:'Email & calendar',project:'Projects',engineering:'Engineering'};
+  const FAMILY_NAMES={acceptance:'Acceptance & closeout',shared:'Shared records',service:'Service',activity:'Activities',schedule:'Scheduling',pack:'Job packs',field:'Field work (own)',report:'Service reports',crm:'CRM',finance:'Finance',estimating:'Estimating',email:'Email & calendar',project:'Projects',engineering:'Engineering'};
   const capability=key=>({key,label:LABELS[key],family:key.split('.')[0],familyName:FAMILY_NAMES[key.split('.')[0]],
     reads:/\.read(\.own)?$/.test(key),own:key.endsWith('.own'),
     restricted:key.startsWith('finance.')||key==='shared.finance.read'||key==='shared.internal.read',

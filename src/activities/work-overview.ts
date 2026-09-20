@@ -1,3 +1,4 @@
+import { projectsAvailable } from "../projects/visibility";
 // My Work read models. My Work projects obligations that other modules own; it stores none of
 // them. Every row is re-read under the reader's current grants, and every count covers the whole
 // permitted scope for the selected owner and filters, never just the rows shown.
@@ -48,7 +49,7 @@ export type WorkRow = {
   can_complete: boolean;
   // The record this activity serves. The type is the link, never a guess from the title.
   linked: {
-    type: "Lead" | "Opportunity" | "Ticket" | "Asset" | "Site" | "Organisation";
+    type: "Project" | "Lead" | "Opportunity" | "Ticket" | "Asset" | "Site" | "Organisation";
     id: string;
     reference: string | null;
     title: string | null;
@@ -109,10 +110,10 @@ function bounded(value: unknown, field: string, fallback: number, max: number) {
 // with a link the reader cannot see, so the linked names below are all permitted.
 async function rowSql(c: ReturnType<typeof database>) {
   const crm = await crmAvailable(c),
-    leads = await leadsAvailable(c);
+    leads = await leadsAvailable(c), projects = await projectsAvailable(c);
   return {
-    visibility: activityVisibility("a", crm, leads),
-    select: `a.id,a.version,a.kind,a.activity_type,a.summary,a.status,a.owner_id,u.display_name AS owner_name,a.company_id,a.site_id,a.access_class,
+    visibility: activityVisibility("a", crm, leads, await projectsAvailable(c)),
+    select: `${projects ? "prj.id AS project_id,prj.title AS project_title,prj.display_number AS project_reference,prjo.display_name AS project_organisation," : ""}a.id,a.version,a.kind,a.activity_type,a.summary,a.status,a.owner_id,u.display_name AS owner_name,a.company_id,a.site_id,a.access_class,
       a.due_at,a.due_needed,a.due_date_only,a.starts_at,a.outcome,a.updated_at,
       ${scopeSql("a.company_id", "a.site_id", "activity.edit")} AS may_edit,
       ${leads ? "ld.id" : "NULL::uuid"} AS lead_id,${leads ? "ld.display_number" : "NULL"} AS lead_reference,${leads ? "ld.title" : "NULL"} AS lead_title,${leads ? "ld.version" : "NULL::int"} AS lead_version,
@@ -125,7 +126,8 @@ async function rowSql(c: ReturnType<typeof database>) {
       ast.id AS asset_id,ast.display_number AS asset_reference,ast.description AS asset_title,
       st.id AS linked_site_id,st.display_number AS site_reference,st.display_name AS site_title,
       org.id AS organisation_id,org.display_number AS organisation_reference,org.display_name AS organisation_title`,
-    joins: `JOIN ppo.users u ON (u.workspace_id,u.id)=(a.workspace_id,a.owner_id)
+    joins: `${projects ? `LEFT JOIN LATERAL (SELECT l.object_id FROM ppo.activity_links l WHERE l.workspace_id=a.workspace_id AND l.activity_id=a.id AND l.object_type='Project' ORDER BY l.object_id LIMIT 1) pl ON true
+      LEFT JOIN ppo.projects prj ON prj.workspace_id=a.workspace_id AND prj.id=pl.object_id LEFT JOIN ppo.organisations prjo ON prjo.workspace_id=prj.workspace_id AND prjo.id=prj.organisation_id` : ""}JOIN ppo.users u ON (u.workspace_id,u.id)=(a.workspace_id,a.owner_id)
       ${leads ? `LEFT JOIN LATERAL (SELECT l.lead_id FROM ppo.activity_links l WHERE l.workspace_id=a.workspace_id AND l.activity_id=a.id AND l.object_type='Lead' ORDER BY l.object_id LIMIT 1) ll ON true
       LEFT JOIN ppo.lead_candidates ld ON (ld.workspace_id,ld.id)=(a.workspace_id,ll.lead_id)
       LEFT JOIN ppo.organisations ldo ON (ldo.workspace_id,ldo.id)=(ld.workspace_id,ld.organisation_id)
@@ -155,7 +157,7 @@ type Raw = Record<string, unknown> & {
 };
 function project(r: Raw, p: Principal, now: string): WorkRow {
   const text = (k: string) => (r[k] as string | null) ?? null;
-  const linked: WorkRow["linked"] = r.lead_id
+  const linked: WorkRow["linked"] = r.project_id ? {type:"Project",id:String(r.project_id),reference:text("project_reference"),title:text("project_title"),organisation_name:text("project_organisation"),contact_name:null,contact_email:null,contact_phone:null,version:null,can_plan:false} : r.lead_id
     ? { type: "Lead", id: r.lead_id as string, reference: text("lead_reference"), title: text("lead_title"), organisation_name: text("lead_organisation"), contact_name: text("lead_contact"), contact_email: text("lead_email"), contact_phone: text("lead_phone"), version: r.lead_version as number, can_plan: !!r.lead_can_plan }
     : r.opportunity_id
       ? { type: "Opportunity", id: r.opportunity_id as string, reference: text("opportunity_reference"), title: text("opportunity_title"), organisation_name: text("opportunity_organisation"), contact_name: text("opportunity_contact"), contact_email: text("opportunity_email"), contact_phone: text("opportunity_phone"), version: r.opportunity_version as number, can_plan: !!r.opportunity_can_plan }

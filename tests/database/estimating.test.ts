@@ -123,7 +123,7 @@ test("E1-DB10 current-main upgrade and repeated seed preserve accepted CRM origi
     const expected=before[i].map(row=>tables[i]==="opportunities"
       ?{...row,value_amount:null,expected_close_date:null,scope_details:{}}
       :tables[i]==="opportunity_events"?{...row,record_snapshot:null,close_outcome:null,lost_reason:null,acceptance_evidence:null}
-      :tables[i]==="activity_links"?{...row,lead_id:null}
+      :tables[i]==="activity_links"?{...row,lead_id:null,project_id:null}
       :tables[i]==="activities"?{...row,activity_type:"Task",starts_at:null,due_date_only:false}:row);
     assert.deepEqual(await rows(`SELECT * FROM ppo.${tables[i]} ORDER BY 1`),expected);
   }
