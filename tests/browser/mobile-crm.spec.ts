@@ -20,12 +20,12 @@ test("mobile CRM completion, Brisbane follow-up and record links persist through
   await expect(page.getByRole("heading",{name:"Next action needed",exact:true})).toBeVisible();
   await page.getByLabel("Action purpose",{exact:true}).fill("SYN Confirm tunnel controller settings");
   await page.getByLabel("Due date needed",{exact:true}).uncheck();
-  await page.getByLabel("Due date and time",{exact:true}).fill("2026-10-04T10:15");
+  await page.getByLabel("Due date and time",{exact:true}).fill("2031-10-05T10:15");
   await page.getByRole("button",{name:"Save next action",exact:true}).click();
   await expect(page.getByText("Saved to the server",{exact:true})).toBeVisible();
   await page.reload();
   const o=(await call(page,`crm/opportunities/${input.id}`)).items[0];
-  expect(o.next_activity.due_at).toBe("2026-10-04T00:15:00.000Z");
+  expect(o.next_activity.due_at).toBe("2031-10-05T00:15:00.000Z");
   expect(o.next_activity.id).not.toBe(input.initial_action.id);
   expect(o.actions.find((a:{id:string})=>a.id===input.initial_action.id).status).toBe("Completed");
   expect(o.actions).toHaveLength(2);

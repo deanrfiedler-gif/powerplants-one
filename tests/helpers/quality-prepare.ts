@@ -153,8 +153,8 @@ async function issuePack(page: Page, pid: string) {
 // below uses the actual UI. HTTP reads only inspect what those commands saved.
 export async function prepareJourney(page: Page, info: TestInfo) {
   const mobile = info.project.name.startsWith("mobile");
-  const day = mobile ? "2026-11-10" : "2026-11-09";
-  const movedDay = mobile ? "2026-11-12" : "2026-11-11";
+  const day = mobile ? "2031-11-11" : "2031-11-10";
+  const movedDay = mobile ? "2031-11-13" : "2031-11-12";
   const summary = `SYN P11 integrated inspection ${info.project.name}`;
   await page.goto(`/customers/${id("50")}`);
   await expect(

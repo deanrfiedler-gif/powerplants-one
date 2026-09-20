@@ -406,8 +406,8 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
     .click();
   await page.getByText("Propose a visit", { exact: true }).click();
   const returnDay = info.project.name.startsWith("mobile")
-    ? "2026-11-16"
-    : "2026-11-13";
+    ? "2031-11-17"
+    : "2031-11-14";
   await page
     .getByLabel("Proposed start (device timezone)")
     .fill(returnDay + "T00:00");

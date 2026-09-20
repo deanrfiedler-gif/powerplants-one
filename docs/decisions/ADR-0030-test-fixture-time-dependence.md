@@ -1,19 +1,19 @@
 ---
 document_id: PPO-ADR-0030
-revision: r01
+revision: r02
 date: 2026-09-20
 owner: Dean Fiedler
-status: proposed
+status: accepted
 ---
 
 # ADR-0030 — Time dependence in synthetic test fixtures
 
 ## Status
 
-**Proposed.** The interim change described under "What this revision changes" is applied. The
-structural direction in "Decision" is a proposed design and is not yet accepted, implemented or
-proved. It is recorded here because the choice between the options binds test architecture and
-touches business date gating.
+**Accepted.** Dean selected the fixed offset with a runway test on 20 September 2026, after
+r01 proposed a test-controlled clock and the investigation below showed that option would have
+to change business date gating to work. r01's recommendation is superseded; its context and
+evidence stand.
 
 ## Related requirements and controls
 
@@ -26,105 +26,105 @@ touches business date gating.
 
 ## Context and constraints
 
-The synthetic fixtures carry absolute dates. `db/seed-p05.sql` dates appointments
+The synthetic fixtures carry absolute dates. `db/seed-p05.sql` dated appointments
 `a8…01`–`a8…10` between 2026-09-21 and 2026-09-30 UTC, and test files add their own absolute
-literals. Those dates were future when written on 2026-09-05. They are no longer future, so
+literals. Those dates were future when written on 2026-09-05. They stopped being future, so
 suites began failing on wall-clock time rather than on any change under test.
 
-The first failure is `tests/database/planner.test.ts`, which asserts that readiness evidence
+The first failure was `tests/database/planner.test.ts`, which asserts that readiness evidence
 lapsing before a visit ends still blocks a booking. Two gates bound the value it passes:
 
 - `src/service/work-orders.ts:754` refuses a passing assessment whose `valid_until` is already
   past, so the value must be **after now**;
 - `src/scheduling/planner.ts:395` blocks the booking only while `valid_until` is before the visit
-  end, so the value must be **before 2026-09-21T02:00Z**, the end of appointment `a8…05`.
+  end, so the value must be **before the visit end**.
 
-Those two bounds close against each other as the clock runs. After 2026-09-21T02:00Z no literal
-satisfies both, so the assertion cannot be repaired by choosing a new date.
+Those two bounds close against each other as the clock runs, so no literal could repair it.
 
-This is not confined to one test. `src/scheduling/planner.ts:270` refuses to book or move
-attendance that has already started, so assertions that expect a successful confirm of
+This was never confined to one test. `src/scheduling/planner.ts:270` refuses to book or move
+attendance that has already started, so assertions expecting a successful confirm of
 `a8…01`–`a8…05` fail once those appointments are past. `tests/helpers/packs.ts` routes most pack,
 field, offline, report and Finance database tests through `confirmed(9)`. Browser specs that
-create visits with hard-coded dates run in the **required** compiled browser suite, so pull
-requests become unmergeable once those dates pass.
-
-Two constraints shape the options. Seed bytes are effectively immutable in effect rather than by
-checksum: `scripts/database.ts` records applied seeds in `ppo.seed_receipts` by version and skips
-any version already present, so editing a seed file changes freshly reset test databases but not
-the already-seeded hosted demo. And the clock is read from two places — JavaScript `Date.now()`
-in roughly 39 call sites, and SQL `clock_timestamp()` in business gating, not only in audit
-defaults. `src/scheduling/planner.ts:228` and `:518` and `src/service/work-orders.ts:170` and
-`:354` all gate policy effectivity, skill evidence and site party validity in SQL.
+create visits with hard-coded dates run in the **required** compiled browser suite.
 
 ## Options considered
 
-1. **Move the literals forward periodically. Rejected as the standing answer.** It is mechanical
-   and reviewable, but it reintroduces the same failure on a timer and gives no signal about when
-   the next cliff arrives. It remains available as a deliberate stopgap.
-2. **Rebase fixture dates relative to the seeding moment.** An additive post-seed step shifts the
-   P05 window by a whole number of days so appointments are always ahead of "now", with test
-   literals derived from the same anchor. This leaves business code untouched, which is its main
-   attraction. It makes seeded data non-deterministic between runs, diverges the hosted demo
-   (whose receipt already exists) from freshly seeded databases, and requires every absolute
-   literal in the affected suites to move to the anchor in the same change.
-3. **Inject a clock the tests control.** A single controlled instant, honoured by both
-   JavaScript and SQL, keeps every existing fixture literal valid exactly as authored and keeps
-   seeded data deterministic. It is the larger change: it must cover `Date.now()` and
-   `clock_timestamp()` together, because freezing only the JavaScript side would leave the two
-   clocks disagreeing inside a single transaction and could produce refusals that no production
-   path can produce.
-4. **Accept the failures and merge past them. Rejected.** This is the current de facto position
-   and it already cost the audit below. It also stops working in October, when the cliff reaches
-   a required check.
+1. **Move every future fixture date forward by one fixed offset, and add a test that fails while
+   there is still time to act. Selected.** A mechanical transform, fully deterministic, confined
+   to fixtures and tests. It expires again, which is the objection to it; the runway test answers
+   that objection by converting a silent outage into a scheduled job.
+2. **Rebase fixture dates relative to the seeding moment.** Appointments always a week out, with
+   test literals derived from the same anchor. Never expires and demo data always looks current.
+   Rejected for now: it makes seeded data differ between runs, and every test asserting a
+   displayed date has to derive it from the anchor too. Worth revisiting if the fixtures are ever
+   reused for a demo that is reseeded.
+3. **Inject a clock the tests control. Rejected on evidence.** Attractive in the abstract, and
+   r01 recommended it. It does not survive contact with this schema. `reviewed_at` and
+   `source_as_at` are written with `DEFAULT clock_timestamp()` *and* compared against
+   `clock_timestamp()` in gating (`src/scheduling/planner.ts:518`). Pinning "now" to the past
+   therefore puts every row a test creates into that gate's future and produces refusals no
+   production path can produce. Honouring one instant everywhere means routing roughly 44 gating
+   comparisons, 72 audit writes and 149 column defaults through a new clock — editing the
+   predicates that generate customer-visible refusals to fix a test-data problem.
+4. **Accept the failures and merge past them. Rejected.** The de facto position before this ADR,
+   and it already cost the audit recorded below.
 
 ## Decision
 
-Proposed: adopt option 3, a clock the tests control, honoured in both JavaScript and SQL, and
-keep the fixtures absolute. The suites assert business refusals whose whole meaning is a
-comparison against "now"; making the data move instead of the clock changes what the tests are
-proving, while a controlled instant leaves each assertion exactly as written and reviewed.
+Shift every fixture date that is **still in the future** forward by **261 weeks (1827 days)**, and
+add `tests/unit/fixture-expiry.test.ts`, which fails once the earliest seeded appointment is
+within 90 days and names the command that fixes it.
 
-This is recorded as proposed rather than accepted because it touches date gating that produces
-customer-visible refusals, and because it cannot be proved without running the database suites.
+`scripts/shift_fixture_dates.py` performs the transform and is kept so the next maintenance event
+is one reviewed command. Four properties of it matter:
 
-## What this revision changes
-
-Only `tests/database/planner.test.ts`. The assessment that must lapse before the visit ends now
-derives `valid_until` from the appointment it is about, instead of the literal `2026-09-20`. The
-literal was the only explicit near-future `valid_until` in the suite; every other call uses the
-far-future default. Deriving it states the intent the assertion depends on and removes a magic
-value, but it does **not** remove the time dependence: the derived value is still only valid while
-the appointment is in the future. It restores the suite now; it does not survive the cliff.
+- **Only future dates move.** A fixture deliberately in the past — expired evidence, a visit that
+  has already started, a superseded policy — stays, so every past-to-future relation the suites
+  rely on is preserved.
+- **Whole weeks.** Weekday is preserved. `tests/helpers/my-work.ts` pairs a hard-coded `"Tuesday"`
+  label with its date, and the My Work views render weekday names, so a whole-year offset would
+  have been wrong. Month alignment is not preserved and does not need to be: there is no month,
+  quarter or financial-year logic in the application.
+- **`tests/unit` is excluded.** Those tests inject the instant they judge against, so they never
+  expire. Some also assert calendar semantics — `tests/unit/projects-gantt.test.ts` checks that
+  2028-02-29 exists — which an offset across leap years would silently destroy.
+- **`db/migrations` is never touched,** and neither is `tests/helpers/projects.ts`, which a unit
+  test hard-codes values from. Migration bytes are checksummed against applied databases.
 
 ## Consequences and reversal
 
-Until the structural direction is decided and implemented, database and HTTP suites continue to
-fail progressively on wall-clock time: assertions expecting successful confirms of `a8…01`–`a8…05`
-from 2026-09-21, `confirmed(9)` and everything routed through it from 2026-09-23, and browser
-specs in the required compiled suite from October. Any such failure should be confirmed against an
-unmodified `main` before it is attributed to the change in hand.
+The fixtures now run to 2031. The runway test fails from roughly June 2031, about 90 days before
+anything breaks, with the command in its message. Re-running the script with a new offset is the
+whole maintenance action.
 
-The interim change is reversible in one edit. Neither option 2 nor option 3 has been started, so
-no migration or compatibility effect exists yet.
+Reversal is `git revert`. Nothing in the application changed: no business code, no schema, no
+migration, no permission, no document and no interface.
+
+The hosted demo is unaffected and also not repaired. `scripts/database.ts` records applied seeds
+in `ppo.seed_receipts` by version and skips any version already present, so an already-seeded
+demo keeps its original dates and will show appointments in the past. That is a separate problem
+from test stability and is not addressed here.
 
 ## Validation evidence and remaining questions
 
-Not validated locally: the database suites require `ppo_synthetic_test`, which this environment
-does not have. The interim change is offered to CI for proof and is not claimed to pass until a
-run reports it.
+Run locally: `scripts/shift_fixture_dates.py` in report mode and reviewed before applying; the
+runway test, proved in both directions; `npm run test:unit` — 128 of 132 pass, the four failures
+being the pre-existing Windows-only filesystem cases present on unmodified `main`; `eslint`;
+`tsc --noEmit`; `check_foundation.py`; `check_naming.py`.
+
+**Not run locally:** the database, HTTP and browser suites, which need `ppo_synthetic_test` and a
+document renderer. The transform touches 259 literals in 40 files across those suites and is
+proved only by CI.
 
 An audit on 2026-09-20 of eighteen failed workflow runs attached to merged pull requests found
-nine were this defect and nothing else — Application assurance runs 1042–1048, 1051 and 1052,
-each failing the single test above, every failure timestamped after 2026-09-20T00:00Z even where
-the run began on 09-19. Eight were stale runs on superseded commits whose branch head was green
-before merge. One, run 658, was a real scroll-spy defect fixed by `0ad41c68` in the same pull
-request.
+nine were this defect and nothing else — Application assurance runs 1042–1048, 1051 and 1052 —
+every failure timestamped after 2026-09-20T00:00Z even where the run began on 09-19. Eight were
+stale runs on superseded commits whose branch head was green before merge. One, run 658, was a
+real scroll-spy defect fixed by `0ad41c68` in the same pull request.
 
 Those merges were possible because `main` requires six checks and **Application assurance is not
 one of them**. Pull requests #255–#259 merged with it red. Separately, #257 merged with no
 Application assurance result at all: it never ran on head `0ad41c68` or on the merge commit.
 
-Open questions for Dean: whether the required-check set should include the PostgreSQL proof, so
-this class of failure blocks a merge rather than being merged past; and whether option 2 is
-preferred after all, on the grounds that it leaves business date gating untouched.
+Open question for Dean: whether the required-check set should include the PostgreSQL proof, so
+this class of failure blocks a merge rather than being merged past. Not changed here.

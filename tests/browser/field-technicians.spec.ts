@@ -22,7 +22,7 @@ async function identity(page: Page, profile = "coordinator") {
 async function open(page: Page) {
   await page.goto("/service/technicians");
   await identity(page);
-  await page.getByLabel("Visit date", { exact: true }).fill("2026-09-21");
+  await page.getByLabel("Visit date", { exact: true }).fill("2031-09-22");
   await expect(
     page.getByRole("table", { name: "Scheduled service visits", exact: true }),
   ).toBeVisible();
