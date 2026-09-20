@@ -7,7 +7,7 @@ test("responsive shell, keyboard focus, server save, read-only refusal and stora
   await page.goto("/");
   await expect(page).toHaveURL(/\/work$/);
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "Owned follow-up",
+    /Good (morning|afternoon|evening), Coordinator/,
   );
   await page.keyboard.press("Tab");
   await expect(
@@ -27,8 +27,14 @@ test("responsive shell, keyboard focus, server save, read-only refusal and stora
     path: info.outputPath("P01-overview.png"),
     fullPage: true,
   });
+  // The first stop after the skip target is My Work's own navigation: the docked menu's current
+  // view on a wide screen, or the trigger that opens that menu on a narrow one.
   await page.keyboard.press("Tab");
-  await expect(page.getByRole("link", { name: "New activity" })).toBeFocused();
+  await expect(
+    info.project.use.isMobile
+      ? page.locator("#mw-content").getByRole("button", { name: "Show menu", exact: true })
+      : page.getByRole("navigation", { name: "My Work views" }).getByRole("link", { name: "Overview", exact: true }),
+  ).toBeFocused();
   await page.getByRole("button", { name: "Change identity", exact: true }).click();
   await expect(page.getByText("Powerplants One · Synthetic data only", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Close account", exact: true }).click();

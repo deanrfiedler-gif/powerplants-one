@@ -86,8 +86,9 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
   const matrix = [
     {
       id: "SC-01",
-      url: "/work",
-      api: "work",
+      // My actions is SC-01's list read; the Overview's own states are proved in my-work.spec.ts.
+      url: "/work/actions",
+      api: "work/actions",
       profile: "coordinator",
       list: true,
       refresh: "Refresh activities",

@@ -110,7 +110,8 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
     ),
   ).toBeVisible();
   await capture(page, info, "P03-identity-uncertainty.png");
-  await page.goto("/work");
+  // My actions is the activity list behind My Work; its due windows are applied on the server.
+  await page.goto("/work/actions");
   // Other browser journeys may fill the first permitted page. Select each
   // server-side due window instead of assuming every bucket is on page one.
   await page.getByLabel("Due date", { exact: true }).selectOption("Overdue");
@@ -120,7 +121,7 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
   await capture(page, info, "P03-work-overdue.png");
   await page.getByLabel("Due date", { exact: true }).selectOption("Needed");
   await expect(
-    page.getByRole("heading", { name: "Due date needed", exact: true }),
+    page.getByRole("heading", { name: "Date needed", exact: true }),
   ).toBeVisible();
   await expect(
     page.getByText("Loading permitted records…", { exact: true }),
@@ -363,7 +364,8 @@ test("P03 unavailable and empty queues stay distinct; keyboard focus and network
   page,
 }, info) => {
   const retainedName = `SYN retained new customer ${info.project.name}`;
-  await page.goto("/work");
+  // My actions is the activity list behind My Work; the Overview is a bounded preview of it.
+  await page.goto("/work/actions");
   await identity(page);
   await page
     .getByLabel("Search activities", { exact: true })
@@ -378,7 +380,7 @@ test("P03 unavailable and empty queues stay distinct; keyboard focus and network
     path: info.outputPath("P03-empty.png"),
     fullPage: true,
   });
-  await page.route("**/api/v1/work?**", (route) => route.abort());
+  await page.route("**/api/v1/work/actions?**", (route) => route.abort());
   await page
     .getByRole("button", { name: "Refresh activities", exact: true })
     .click();
