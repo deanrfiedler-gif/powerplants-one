@@ -1,0 +1,261 @@
+/* Job Pack (SC-06). Accepted r03 geometry and tokens, adapted to the application shell.
+   Host adaptations: the module owns its scroll (the shell owns the viewport), the shared Roboto face replaces the
+   embedded one, and class names carry a jp- prefix so global .field, .notice and .badge rules cannot leak in.
+   Token values are r03's, verbatim, including the three divergences recorded in docs/standards/ui-baselines.json. */
+#ppo-job-pack{
+ /* brand */
+ --navy:#242a37;--green:#62bb46;
+ /* text */
+ --ink:var(--navy);--muted:#667181;--text-secondary:#596779;--link:#355b80;
+ /* surfaces */
+ --paper:#f5f6f8;--surface:#f6f7f9;--surface-2:#f7f8fa;--surface-3:#fcfcfd;--surface-hover:#eff2f5;--surface-white:#fff;
+ /* lines */
+ --line:#e1e5eb;--line-strong:#dce2e9;--line-soft:#eef0f3;--hairline:#cbd2dc;--control-border:#828e9f;
+ /* semantic status */
+ --success:#416d33;--success-surface:#edf5e9;--success-border:#d4e3cb;--success-icon:#527347;--success-tint:#ebefe9;
+ --warning:#80530e;--warning-surface:#fff2d9;--warning-border:#efdbb6;--warning-accent:#c69539;--warning-icon:#9b6d27;--warning-tint:#fff8ec;
+ --danger:#993b2a;--danger-surface:#fff1ed;--danger-border:#edc6bd;--danger-accent:#ad4635;
+ --info:#346580;--info-surface:#e9f2f8;--info-border:#cfe0ec;--info-accent:#5d8db0;
+ --neutral:#526078;--neutral-surface:#edf0f5;
+ --avatar-surface:#eaf1e5;--avatar-text:#45623b;
+ --focus:#365d8b;
+ box-sizing:border-box;flex:1;width:100%;min-width:0;min-height:0;overflow:auto;padding:24px;scroll-padding-top:24px;color:var(--ink);background:var(--paper);font:14px/1.5 Roboto,Verdana,sans-serif;color-scheme:light}
+#ppo-job-pack *,#ppo-job-pack *::before,#ppo-job-pack *::after{box-sizing:border-box}
+#ppo-job-pack [hidden]{display:none!important}
+/* Local reset for the shell's global element rules. */
+#ppo-job-pack :is(h1,h2,h3,h4,p,dl,dd,ul,ol){margin:0;letter-spacing:normal}
+#ppo-job-pack :is(h1,h2,h3,h4){line-height:inherit}
+#ppo-job-pack :is(button,input,select,textarea){font:inherit;color:inherit;margin:0}
+#ppo-job-pack label{font-weight:400}
+/* The shell's global footer rule (10px, padded, ruled) is for the application frame, not for a dialog or page foot here. */
+#ppo-job-pack footer{font-size:inherit;padding:0;margin:0;border:0;color:inherit;background:transparent;text-align:inherit}
+#ppo-job-pack fieldset:disabled{opacity:1}
+#ppo-job-pack :is(button,a,input,select,textarea,summary,[tabindex]):focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+#ppo-job-pack a{color:var(--ink)}
+#ppo-job-pack button,#ppo-job-pack a.jp-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:8px 13px;border:1px solid var(--hairline);border-radius:6px;background:var(--surface-white);color:var(--ink);cursor:pointer;line-height:1.35;font-weight:400;white-space:normal;text-decoration:none}
+#ppo-job-pack button:hover:not(:disabled),#ppo-job-pack a.jp-button:hover{background:var(--surface-hover)}
+#ppo-job-pack button:disabled{opacity:.55;cursor:default}
+#ppo-job-pack :is(button,a.jp-button).jp-primary{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:500}
+#ppo-job-pack :is(button,a.jp-button).jp-primary:hover:not(:disabled){background:#343c4c}
+#ppo-job-pack .jp-quiet{background:transparent;border-color:transparent;color:var(--muted)}
+#ppo-job-pack .jp-text-button{background:transparent;border:0;padding:0;min-height:28px;justify-content:flex-start;text-align:left;color:var(--link)}
+#ppo-job-pack .jp-text-button:hover{background:transparent;text-decoration:underline}
+#ppo-job-pack svg.jp-icon{height:18px;width:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
+#ppo-job-pack .jp-sr{position:absolute;height:1px;width:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+#ppo-job-pack .jp-muted{color:var(--muted)}
+#ppo-job-pack .jp-ink{color:var(--ink);font-weight:500}
+#ppo-job-pack .jp-small{font-size:12px;line-height:1.5}
+#ppo-job-pack .jp-gap-top{margin-top:12px}
+#ppo-job-pack .jp-gap-top-lg{margin-top:14px}
+#ppo-job-pack .jp-gap-top-xl{margin-top:18px}
+#ppo-job-pack .jp-breadcrumb{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:18px}
+#ppo-job-pack .jp-breadcrumb a{color:var(--muted);text-decoration:none}
+#ppo-job-pack .jp-breadcrumb a:hover{text-decoration:underline}
+#ppo-job-pack .jp-breadcrumb span:last-child{color:var(--ink)}
+#ppo-job-pack .jp-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:20px;border:0;background:transparent;padding:0}
+#ppo-job-pack .jp-heading h1{font-size:26px;line-height:1.25;letter-spacing:-.4px;font-weight:600;margin:6px 0 9px}
+#ppo-job-pack .jp-reference-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+#ppo-job-pack .jp-reference-line>span+span{border-left:1px solid var(--hairline);padding-left:10px}
+#ppo-job-pack .jp-subtitle{display:flex;gap:9px;align-items:center;flex-wrap:wrap;font-size:14px;color:var(--text-secondary)}
+#ppo-job-pack .jp-subtitle strong{font-weight:500}
+#ppo-job-pack .jp-heading-right{display:flex;flex-direction:column;align-items:flex-end;gap:13px;padding-top:3px;flex-shrink:0}
+#ppo-job-pack .jp-button-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+#ppo-job-pack .jp-avatar{display:inline-grid;place-items:center;width:27px;height:27px;border-radius:50%;background:var(--avatar-surface);color:var(--avatar-text);font-size:11px;font-weight:600;flex:none}
+#ppo-job-pack .jp-person{display:inline-flex;align-items:center;gap:8px}
+#ppo-job-pack .jp-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:5px;background:var(--neutral-surface);color:var(--neutral);font-size:12px;font-weight:500;line-height:1.5;max-width:100%;white-space:normal}
+#ppo-job-pack .jp-badge.warning{background:var(--warning-surface);color:var(--warning)}
+#ppo-job-pack .jp-badge.green{background:var(--success-surface);color:var(--success)}
+#ppo-job-pack .jp-badge.blue{background:var(--info-surface);color:var(--info)}
+#ppo-job-pack .jp-tabs{display:flex;gap:28px;align-items:stretch;border-bottom:1px solid var(--line-strong);min-height:43px;margin-bottom:18px}
+#ppo-job-pack .jp-tabs button{border:0;border-bottom:3px solid transparent;border-radius:0;background:transparent;color:var(--muted);padding:0 1px 12px;min-height:43px;white-space:nowrap}
+#ppo-job-pack .jp-tabs button:hover:not(:disabled){background:transparent;color:var(--ink)}
+#ppo-job-pack .jp-tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--green);font-weight:600}
+#ppo-job-pack .jp-count{padding:1px 5px;border-radius:4px;background:var(--neutral-surface);font-size:12px;line-height:1.5;color:var(--neutral);font-weight:400}
+#ppo-job-pack .jp-tabs [aria-selected=true] .jp-count{background:var(--success-surface);color:var(--success)}
+#ppo-job-pack .jp-tab-trailing{margin-left:auto;align-self:center;font-size:12px;color:var(--muted);padding-bottom:10px;display:flex;align-items:center;gap:6px}
+#ppo-job-pack .jp-layout{display:grid;grid-template-columns:220px minmax(0,1fr) 258px;gap:18px;align-items:start}
+#ppo-job-pack .jp-contents{position:sticky;top:24px;padding:2px 0}
+#ppo-job-pack .jp-rail-title{font-size:12px;color:var(--muted);font-weight:500;padding:0 10px 12px}
+#ppo-job-pack .jp-contents nav{display:grid;gap:3px}
+#ppo-job-pack .jp-contents nav a{display:flex;align-items:center;gap:9px;min-height:40px;padding:8px 9px;text-decoration:none;border-left:3px solid transparent;color:var(--text-secondary);font-size:13px;line-height:1.35;border-radius:0 5px 5px 0}
+#ppo-job-pack .jp-contents nav a:hover{background:var(--surface-hover);color:var(--ink)}
+#ppo-job-pack .jp-contents nav a[aria-current=true]{border-left-color:var(--green);background:var(--success-tint);color:var(--ink);font-weight:500}
+#ppo-job-pack .jp-nav-number{font-variant-numeric:tabular-nums;color:var(--muted);font-size:12px;min-width:16px;font-weight:400}
+#ppo-job-pack .jp-contents nav a[aria-current=true] .jp-nav-number{color:var(--ink)}
+#ppo-job-pack .jp-contents nav a svg.jp-icon{margin-left:auto;width:14px;height:14px;color:var(--warning-icon)}
+#ppo-job-pack .jp-rail-foot{border-top:1px solid var(--line);margin:17px 10px 0;padding-top:14px;font-size:12px;color:var(--muted);line-height:1.6}
+#ppo-job-pack .jp-mobile-jump{display:none}
+#ppo-job-pack .jp-main-column{min-width:0}
+#ppo-job-pack .jp-paper{background:var(--surface-white);border:1px solid var(--line-strong);border-radius:8px;overflow:hidden;min-width:0}
+#ppo-job-pack .jp-paper-heading{padding:17px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);background:var(--surface-3)}
+#ppo-job-pack .jp-paper-heading h2{font-size:16px;font-weight:600}
+#ppo-job-pack .jp-paper-heading p{font-size:12px;color:var(--muted);margin-top:3px}
+#ppo-job-pack .jp-paper-section{padding:22px;border-bottom:1px solid var(--line);scroll-margin-top:24px}
+#ppo-job-pack .jp-paper-section:last-child{border-bottom:0}
+#ppo-job-pack .jp-paper-section:focus{outline:none}
+#ppo-job-pack .jp-section-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;margin-bottom:17px}
+#ppo-job-pack .jp-section-head :is(h2,h3){font-size:16px;font-weight:600;display:flex;gap:10px;align-items:center;line-height:1.4}
+#ppo-job-pack .jp-section-number{color:var(--muted);font-size:12px;line-height:1.4;font-weight:400;min-width:19px;font-variant-numeric:tabular-nums}
+#ppo-job-pack .jp-source-tag{display:inline-flex;align-items:flex-start;gap:5px;color:var(--muted);font-size:12px;line-height:1.5;text-align:right;max-width:100%}
+#ppo-job-pack .jp-source-tag svg.jp-icon{width:13px;height:13px;margin-top:2px}
+#ppo-job-pack .jp-source-tag .jp-as-at{display:block;font-size:12px;line-height:1.5}
+#ppo-job-pack .jp-source-tag.changed{color:var(--warning)}
+#ppo-job-pack .jp-info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px 24px}
+#ppo-job-pack .jp-info-grid dt{color:var(--muted);font-size:12px;line-height:1.5;margin-bottom:4px}
+#ppo-job-pack .jp-info-grid dd{overflow-wrap:anywhere;font-size:14px;line-height:1.5}
+#ppo-job-pack .jp-info-grid .wide{grid-column:1/-1}
+#ppo-job-pack .jp-subheading{font-size:13px;font-weight:500;margin:18px 0 7px}
+#ppo-job-pack .jp-subheading.first{margin-top:0}
+#ppo-job-pack .jp-body-copy{font-size:14px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+#ppo-job-pack .jp-note{padding:12px 14px;border:1px solid var(--line);border-radius:6px;background:var(--surface-2);font-size:13px;color:var(--text-secondary);line-height:1.6;margin-top:16px;overflow-wrap:anywhere}
+#ppo-job-pack .jp-note.warning{background:var(--warning-tint);border-color:var(--warning-border);color:var(--warning)}
+#ppo-job-pack .jp-notice{display:flex;gap:11px;border:1px solid var(--warning-border);border-left:3px solid var(--warning-accent);border-radius:7px;background:var(--warning-tint);padding:13px 15px;font-size:13px;line-height:1.55;color:var(--warning);margin-bottom:16px}
+#ppo-job-pack .jp-notice>svg.jp-icon{margin-top:1px}
+#ppo-job-pack .jp-notice strong{font-weight:500;display:block;color:inherit;margin-bottom:3px}
+#ppo-job-pack .jp-notice ul{padding-left:18px;margin-top:4px}
+#ppo-job-pack .jp-notice .jp-text-button{font-size:12px;color:inherit;margin-top:5px}
+#ppo-job-pack .jp-notice.complete{border-color:var(--success-border);border-left-color:var(--success-icon);background:#f1f7ed;color:var(--success)}
+#ppo-job-pack .jp-notice.info{border-color:var(--info-border);border-left-color:var(--info-accent);background:var(--info-surface);color:var(--info)}
+#ppo-job-pack .jp-history-item{display:grid;grid-template-columns:88px minmax(0,1fr);gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+#ppo-job-pack .jp-history-item:last-child{border-bottom:0;padding-bottom:0}
+#ppo-job-pack .jp-history-item:first-of-type{padding-top:0}
+#ppo-job-pack .jp-history-item .jp-kind{font-size:12px;color:var(--muted)}
+#ppo-job-pack .jp-history-item p{font-size:13px;color:var(--text-secondary);line-height:1.6}
+#ppo-job-pack .jp-document-row{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+#ppo-job-pack .jp-document-row:first-of-type{padding-top:0}
+#ppo-job-pack .jp-document-row:last-of-type{padding-bottom:0;border-bottom:0}
+#ppo-job-pack .jp-doc-icon{display:grid;place-items:center;width:34px;height:39px;border:1px solid var(--line);border-radius:5px;background:var(--surface-2);color:var(--muted);flex:none}
+#ppo-job-pack .jp-doc-main{flex:1;min-width:0;font-size:14px;font-weight:500;line-height:1.45;overflow-wrap:anywhere}
+#ppo-job-pack .jp-doc-main small{font-size:12px;font-weight:400;color:var(--muted);display:block;margin-top:3px}
+#ppo-job-pack details.jp-exact{margin-top:16px;border:1px solid var(--line);border-radius:6px;background:var(--surface-2)}
+#ppo-job-pack details.jp-exact summary{cursor:pointer;padding:10px 14px;font-size:13px;color:var(--text-secondary)}
+#ppo-job-pack details.jp-exact .jp-body-copy{padding:0 14px 14px;font-size:13px}
+/* Host adaptation: the live readiness registry lists eight criteria with their recorded reasons, so this rail is taller than the
+   viewport. A sticky rail taller than its scrollport hides its middle, including the check action, until the page ends. */
+#ppo-job-pack .jp-right-rail{display:grid;gap:14px;align-items:start}
+#ppo-job-pack .jp-side-card{background:var(--surface-white);border:1px solid var(--line-strong);border-radius:8px;overflow:hidden}
+#ppo-job-pack .jp-side-heading{padding:15px 16px;border-bottom:1px solid var(--line)}
+#ppo-job-pack .jp-side-heading h2{font-size:14px;font-weight:600;margin:0 0 5px}
+#ppo-job-pack .jp-side-body{padding:15px 16px}
+#ppo-job-pack .jp-side-body p{font-size:12px;color:var(--muted);line-height:1.6}
+#ppo-job-pack .jp-side-body ul{padding-left:16px;font-size:12px;color:var(--warning);line-height:1.6;margin-top:6px}
+#ppo-job-pack .jp-side-foot{margin-top:10px}
+#ppo-job-pack .jp-readiness-context{display:grid;gap:6px;padding-bottom:10px;margin-bottom:6px;border-bottom:1px solid var(--line-soft);font-size:12px;color:var(--muted);line-height:1.5}
+#ppo-job-pack .jp-readiness-context strong{color:var(--ink);font-weight:500}
+#ppo-job-pack .jp-readiness-context .changed{color:var(--warning)}
+#ppo-job-pack .jp-readiness-row{display:flex;gap:8px;align-items:flex-start;font-size:13px;padding:9px 0;border-bottom:1px solid var(--line-soft);line-height:1.45}
+#ppo-job-pack .jp-readiness-row:last-child{border-bottom:0;padding-bottom:0}
+#ppo-job-pack .jp-readiness-row svg.jp-icon{width:15px;height:15px;margin-top:2px;color:var(--success-icon)}
+#ppo-job-pack .jp-readiness-row.blocked svg.jp-icon{color:var(--warning-icon)}
+#ppo-job-pack .jp-readiness-row:is(.exception,.na) svg.jp-icon{color:var(--info)}
+#ppo-job-pack .jp-readiness-row small{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+#ppo-job-pack .jp-outcome{display:inline-block;font-size:12px;font-weight:500;margin-left:6px;color:var(--muted)}
+#ppo-job-pack .jp-readiness-row.blocked .jp-outcome{color:var(--warning)}
+#ppo-job-pack .jp-readiness-row:is(.exception,.na) .jp-outcome{color:var(--info)}
+#ppo-job-pack .jp-dispatch{margin-top:12px;padding-top:12px;border-top:1px solid var(--line-soft);font-size:13px}
+#ppo-job-pack .jp-dispatch:first-child{margin-top:0;padding-top:0;border-top:0}
+#ppo-job-pack .jp-dispatch strong{font-weight:500;display:block}
+#ppo-job-pack .jp-dispatch.held strong{color:var(--warning)}
+#ppo-job-pack .jp-dispatch.ready strong{color:var(--success)}
+#ppo-job-pack .jp-side-body .jp-side-action{width:100%;margin-top:10px;font-size:13px}
+#ppo-job-pack .jp-side-body .jp-side-action:first-of-type{margin-top:15px}
+#ppo-job-pack .jp-crew-row{display:flex;gap:9px;align-items:center;padding:3px 0 12px}
+#ppo-job-pack .jp-crew-row strong{font-size:13px;font-weight:500;display:block}
+#ppo-job-pack .jp-crew-row small{display:block;font-size:12px;color:var(--muted)}
+#ppo-job-pack .jp-key-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:5px 0;font-size:12px}
+#ppo-job-pack .jp-key-row dt{color:var(--muted)}
+#ppo-job-pack .jp-key-row dd{text-align:right;font-weight:500;overflow-wrap:anywhere}
+#ppo-job-pack .jp-key-row dd.held{color:var(--warning)}
+#ppo-job-pack .jp-job{padding:10px 0;border-bottom:1px solid var(--line-soft);font-size:12px;line-height:1.55}
+#ppo-job-pack .jp-job:first-child{padding-top:0}
+#ppo-job-pack .jp-job:last-child{border-bottom:0}
+#ppo-job-pack .jp-job strong{font-size:13px;font-weight:500;display:block}
+#ppo-job-pack .jp-form-intro{padding:18px 22px;border-bottom:1px solid var(--line);background:var(--surface-3)}
+#ppo-job-pack .jp-form-intro h2{font-size:16px;font-weight:600;margin-bottom:5px}
+#ppo-job-pack .jp-form-intro p{font-size:13px;color:var(--muted);line-height:1.6}
+#ppo-job-pack .jp-field{display:block;margin:0 0 15px;font-size:13px;font-weight:500;min-width:0}
+#ppo-job-pack .jp-field:last-child{margin-bottom:0}
+#ppo-job-pack .jp-field>:is(span:first-child,label){display:block;margin-bottom:6px;font-weight:500}
+#ppo-job-pack .jp-field small{display:block;font-size:12px;color:var(--muted);font-weight:400;margin-top:5px;line-height:1.5}
+#ppo-job-pack :is(input,textarea,select){border:1px solid var(--control-border);border-radius:6px;background:var(--surface-white);padding:9px 11px;min-height:39px;width:100%;max-width:100%;font-weight:400;line-height:1.5}
+#ppo-job-pack .jp-field-error{display:block;color:var(--danger);font-size:12px;font-weight:400;line-height:1.5;margin-top:6px}
+#ppo-job-pack textarea{min-height:90px;resize:vertical}
+#ppo-job-pack input[type=checkbox]{width:16px;height:16px;min-height:16px;accent-color:var(--navy);flex:none;margin:3px 0 0;padding:0}
+#ppo-job-pack [aria-invalid=true]{border-color:var(--danger-accent)}
+/* Shared read and command failure notices keep their class for the screen-state suites and take the r03 error treatment here. */
+#ppo-job-pack .business-error{scroll-margin-top:24px;padding:13px 15px;color:var(--danger);background:var(--danger-surface);border:1px solid var(--danger-border);border-radius:6px;margin:0 0 14px;font-size:13px}
+#ppo-job-pack .business-error :is(ul,ol){padding-left:20px;margin-top:5px}
+#ppo-job-pack .business-error a{color:inherit}
+#ppo-job-pack .jp-read-state>p{font-size:13px;color:var(--muted);margin-bottom:14px}
+#ppo-job-pack .jp-revision-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:18px;max-width:1180px;margin:0 auto}
+#ppo-job-pack .jp-timeline{padding:22px}
+#ppo-job-pack .jp-event{position:relative;padding:0 0 24px 21px;border-left:1px solid var(--line-strong);margin-left:4px}
+#ppo-job-pack .jp-event:last-child{padding-bottom:0}
+#ppo-job-pack .jp-event::before{content:"";position:absolute;top:5px;left:-4px;width:7px;height:7px;background:var(--muted);border-radius:50%;border:1px solid #fff}
+#ppo-job-pack .jp-event.source::before{background:var(--info-accent)}
+#ppo-job-pack .jp-event:is(.review,.issue)::before{background:var(--success-icon)}
+#ppo-job-pack .jp-event h3{font-size:14px;font-weight:500;margin-bottom:4px}
+#ppo-job-pack .jp-event p{font-size:13px;color:var(--text-secondary);line-height:1.55;overflow-wrap:anywhere}
+#ppo-job-pack .jp-event small{font-size:12px;color:var(--muted);display:block;margin-top:5px}
+#ppo-job-pack .jp-event-changes{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:4px;font-size:12px;color:var(--muted);line-height:1.5}
+#ppo-job-pack .jp-event-changes li{padding-left:12px;position:relative;overflow-wrap:anywhere}
+#ppo-job-pack .jp-event-changes li::before{content:"–";position:absolute;left:0}
+#ppo-job-pack .jp-event-changes strong{font-weight:500;color:var(--text-secondary)}
+#ppo-job-pack .jp-page-foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:16px 0 0;color:var(--muted);font-size:12px;align-items:center}
+#ppo-job-pack dialog.jp-dialog{width:min(620px,calc(100vw - 32px));max-width:calc(100vw - 32px);max-height:calc(100dvh - 40px);border:1px solid var(--line-strong);border-radius:10px;padding:0;color:var(--ink);font:inherit;background:var(--surface-white);box-shadow:0 18px 60px #1e293b26;overflow:auto}
+#ppo-job-pack dialog.jp-dialog::backdrop{background:#242a374d}
+#ppo-job-pack .jp-dialog-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:20px 22px;border-bottom:1px solid var(--line)}
+#ppo-job-pack .jp-dialog-heading h2{font-size:19px;font-weight:600;line-height:1.4}
+#ppo-job-pack .jp-dialog-heading h2:focus-visible{outline-offset:6px}
+#ppo-job-pack .jp-dialog-heading p{color:var(--muted);font-size:12px;margin-top:5px}
+#ppo-job-pack .jp-dialog-heading button{width:34px;min-height:34px;padding:6px;flex:none}
+#ppo-job-pack .jp-dialog-body{padding:22px;font-size:14px;line-height:1.65}
+#ppo-job-pack .jp-dialog-body p+p{margin-top:12px}
+#ppo-job-pack .jp-dialog-body .jp-field{margin-top:18px}
+#ppo-job-pack .jp-dialog-body .business-error{margin:16px 0 0}
+#ppo-job-pack .jp-dialog-actions{padding:14px 22px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px;background:var(--surface-3)}
+@media(min-width:1700px){#ppo-job-pack .jp-layout{grid-template-columns:238px minmax(0,1fr) 290px;gap:24px}#ppo-job-pack .jp-paper-section{padding:26px 30px}#ppo-job-pack .jp-paper-heading{padding:18px 30px}}
+@media(max-width:1180px){#ppo-job-pack .jp-layout{grid-template-columns:194px minmax(0,1fr);gap:16px}#ppo-job-pack .jp-right-rail{grid-column:2;grid-template-columns:repeat(2,minmax(0,1fr))}#ppo-job-pack .jp-contents{grid-row:1/3}#ppo-job-pack .jp-heading{gap:16px}#ppo-job-pack .jp-heading h1{font-size:24px}#ppo-job-pack .jp-heading-right{max-width:300px}#ppo-job-pack .jp-paper-section{padding:20px}#ppo-job-pack .jp-right-rail .jp-pack-record{grid-column:1/-1}}
+@media(max-width:760px){
+ #ppo-job-pack{padding:16px;font-size:16px;scroll-padding-top:16px}
+ #ppo-job-pack .jp-breadcrumb{font-size:12px;margin-bottom:16px}
+ #ppo-job-pack .jp-heading{display:block;margin-bottom:18px}
+ #ppo-job-pack .jp-heading h1{font-size:24px;line-height:1.3}
+ #ppo-job-pack .jp-heading-right{max-width:none;align-items:flex-start;margin-top:16px;padding:0;gap:10px}
+ #ppo-job-pack .jp-heading-right .jp-button-row{width:100%}
+ #ppo-job-pack .jp-heading-right .jp-button-row :is(button,a.jp-button){flex:1}
+ #ppo-job-pack .jp-tabs{gap:22px;overflow:auto;margin-bottom:14px}
+ #ppo-job-pack .jp-tabs button{font-size:14px;min-height:44px;padding-bottom:10px}
+ #ppo-job-pack .jp-tab-trailing{display:none}
+ #ppo-job-pack .jp-layout{display:flex;flex-direction:column;gap:14px}
+ #ppo-job-pack .jp-contents{position:static;width:100%;padding:0}
+ #ppo-job-pack .jp-contents :is(nav,.jp-rail-title,.jp-rail-foot){display:none}
+ #ppo-job-pack .jp-mobile-jump{display:block;font-size:13px;color:var(--muted)}
+ #ppo-job-pack .jp-mobile-jump select{margin-top:5px;font-size:16px;color:var(--ink)}
+ #ppo-job-pack .jp-main-column{width:100%}
+ #ppo-job-pack :is(.jp-paper-heading,.jp-paper-section,.jp-form-intro){padding:17px 16px}
+ #ppo-job-pack .jp-section-head{align-items:flex-start;gap:6px;margin-bottom:16px}
+ #ppo-job-pack .jp-source-tag{margin-left:29px;font-size:12px;text-align:left}
+ #ppo-job-pack .jp-info-grid{grid-template-columns:1fr;gap:16px}
+ #ppo-job-pack .jp-info-grid .wide{grid-column:auto}
+ #ppo-job-pack :is(.jp-info-grid dd,.jp-body-copy){font-size:16px}
+ #ppo-job-pack .jp-notice{font-size:14px}
+ #ppo-job-pack :is(input,select,textarea){font-size:16px;min-height:44px}
+ #ppo-job-pack .jp-field{font-size:14px}
+ #ppo-job-pack input[type=checkbox]{min-height:18px;width:18px;height:18px}
+ #ppo-job-pack .jp-history-item{grid-template-columns:1fr;gap:5px}
+ #ppo-job-pack .jp-history-item p{font-size:14px}
+ #ppo-job-pack .jp-right-rail{display:grid;grid-template-columns:1fr;width:100%}
+ #ppo-job-pack :is(.jp-side-body p,.jp-readiness-row){font-size:14px}
+ #ppo-job-pack :is(.jp-readiness-row small,.jp-crew-row small){font-size:12px}
+ #ppo-job-pack :is(button,a.jp-button,.jp-text-button){min-height:44px}
+ #ppo-job-pack .jp-revision-layout{grid-template-columns:1fr}
+ #ppo-job-pack .jp-timeline{padding:20px 18px}
+ #ppo-job-pack .jp-page-foot{align-items:flex-start;gap:6px}
+ #ppo-job-pack :is(.jp-dialog-heading,.jp-dialog-body){padding:18px}
+ #ppo-job-pack .jp-dialog-heading button{width:44px;min-height:44px}
+ #ppo-job-pack .jp-dialog-actions{padding:12px 18px}
+}
+@media(max-height:850px){#ppo-job-pack .jp-contents{position:static}}
+@media(pointer:coarse){#ppo-job-pack :is(button,a.jp-button,.jp-text-button,.jp-contents nav a){min-height:44px}}
+@media(prefers-reduced-motion:reduce){#ppo-job-pack *{scroll-behavior:auto!important;transition:none!important}}

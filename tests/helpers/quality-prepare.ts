@@ -95,24 +95,38 @@ async function contact(page: Page, aid: string, outcome: string) {
       .click(),
   );
 }
-async function issuePack(page: Page, pid: string) {
-  await page
+// Each controlled pack decision opens its own dialog and records its own reason (Job Pack r03, audit M1).
+async function packDecision(
+  page: Page,
+  path: string,
+  trigger: string,
+  confirm: string,
+  reason: string,
+) {
+  await page.getByRole("button", { name: trigger, exact: true }).click();
+  const dialog = page.getByRole("dialog");
+  await dialog
     .getByLabel("Decision / change reason", { exact: true })
-    .fill(
-      "SYN current scope, all nine sections, exact sources and whole-crew dates checked.",
-    );
-  await committed(page, `packs/${pid}/check`, () =>
-    page
-      .getByRole("button", { name: "Check this revision", exact: true })
-      .click(),
+    .fill(reason);
+  await committed(page, path, () =>
+    dialog.getByRole("button", { name: confirm, exact: true }).click(),
   );
-  await committed(page, `packs/${pid}/issue`, () =>
-    page
-      .getByRole("button", {
-        name: "Queue exact output for issue",
-        exact: true,
-      })
-      .click(),
+  await expect(dialog).toHaveCount(0);
+}
+async function issuePack(page: Page, pid: string) {
+  await packDecision(
+    page,
+    `packs/${pid}/check`,
+    "Check this revision",
+    "Record check",
+    "SYN current scope, all nine sections, exact sources and whole-crew dates checked.",
+  );
+  await packDecision(
+    page,
+    `packs/${pid}/issue`,
+    "Queue exact output for issue",
+    "Queue output",
+    "SYN exact checked revision queued for controlled issue.",
   );
   const response = await observedResponse(page, "pack-render",
     (r) =>
