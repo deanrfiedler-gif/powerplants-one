@@ -316,7 +316,9 @@ export function JobPackScreen({ id }: { id: string }) {
       null,
     ),
     scroller = useRef<HTMLElement>(null),
-    jumpLock = useRef(0),
+    // performance.now() counts from page load. A lock that starts at 0 would swallow every scroll in the first
+    // 600 ms, which a compiled page reaches and a dev server never does.
+    jumpLock = useRef(Number.NEGATIVE_INFINITY),
     positions = useRef<Record<View, number>>({
       pack: 0,
       prepare: 0,

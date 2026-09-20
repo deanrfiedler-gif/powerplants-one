@@ -5,6 +5,8 @@ import { pathToFileURL } from "node:url";
 // Application proof for the Job Pack r03 integration (SC-06). The issued HTML is loaded independently and measured
 // beside the running route, so passing means the application matches the accepted source, not merely itself.
 // The pack read is a retained synthetic fixture: the proof stays deterministic and books no crew in the shared database.
+// It was captured with one drifted source (the work order moved on after the revision was saved), so the changed
+// treatment and its contents-rail flags are rendered too.
 const design = "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html";
 const viewports = [
   { width: 1440, height: 960 },
@@ -29,13 +31,15 @@ async function openPack(page: Page) {
   await expect(page.locator("#jp-panel-pack .jp-paper-section")).toHaveCount(9);
 }
 const tokensOf = (page: Page, names: string[]) =>
-  page.locator("#ppo-job-pack").evaluate(
-    (el, list) =>
-      Object.fromEntries(
-        list.map((n) => [n, getComputedStyle(el).getPropertyValue(n).trim()]),
-      ),
-    names,
-  );
+  page
+    .locator("#ppo-job-pack")
+    .evaluate(
+      (el, list) =>
+        Object.fromEntries(
+          list.map((n) => [n, getComputedStyle(el).getPropertyValue(n).trim()]),
+        ),
+      names,
+    );
 
 test("SC-06 the running Job Pack page carries the accepted r03 tokens and geometry", async ({
   page,
@@ -149,6 +153,8 @@ test("SC-06 negative control: the last section is reachable by scrolling (r02 au
   const current = page.locator('.jp-contents nav a[aria-current="true"]');
   await expect(current).toContainText("Job and visit");
   // In approved r02 the scroll-spy stopped at section 07 because 08 and 09 never crossed its threshold.
+  // This scroll lands within the first second of a compiled page's life, which is how the first build of this page
+  // was caught ignoring every scroll until 600 ms after load.
   await page
     .locator("#ppo-job-pack")
     .evaluate((el) => el.scrollTo({ top: el.scrollHeight }));
@@ -160,4 +166,30 @@ test("SC-06 negative control: the last section is reachable by scrolling (r02 au
     .click();
   await expect(current).toContainText("Site controls");
   await expect(page.locator("#s-8")).toBeFocused();
+});
+
+test("SC-06 negative control: scroll-spy answers from the first moment of the page's life", async ({
+  page,
+}, info) => {
+  test.skip(
+    info.project.name.startsWith("mobile"),
+    "The contents rail is a desktop control; a phone uses the jump select.",
+  );
+  // The first build of this page held its jump lock from time zero, so every scroll in the first 600 ms after load
+  // was ignored. Only a compiled page is fast enough to reach that window. Slowing the page clock a thousandfold
+  // keeps this whole test inside it, on a dev server as well.
+  await page.addInitScript(() => {
+    const real = performance.now.bind(performance),
+      started = real();
+    performance.now = () => (real() - started) / 1000;
+  });
+  await page.setViewportSize(viewports[0]);
+  await openPack(page);
+  expect(await page.evaluate(() => performance.now())).toBeLessThan(600);
+  await page
+    .locator("#ppo-job-pack")
+    .evaluate((el) => el.scrollTo({ top: el.scrollHeight }));
+  await expect(
+    page.locator('.jp-contents nav a[aria-current="true"]'),
+  ).toContainText("Completion requirements");
 });
