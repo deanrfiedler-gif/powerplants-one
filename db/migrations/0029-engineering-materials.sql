@@ -8,6 +8,13 @@
 -- authorised by an earlier decision. Every accepted command also appends an immutable event with a
 -- snapshot, and an issued release keeps its own frozen manifest. A technical release is never
 -- permission to spend, order, reserve, install or commission: nothing here records those facts.
+--
+-- The runner applies every pending migration in one transaction. 0026 backfills identities for existing
+-- estimates, which queues deferred identity_target events on ppo.business_identities, and PostgreSQL refuses to
+-- ALTER a table that has pending trigger events. This is the first migration since 0026 to alter that table, so
+-- it settles those checks first, exactly as a commit between the two migrations would, and restores deferral
+-- straight afterwards: every later insert still registers an identity before its typed row exists.
+SET CONSTRAINTS ppo.identity_target IMMEDIATE;
 DO $$
 DECLARE item record; definition text;
 BEGIN
@@ -25,6 +32,7 @@ BEGIN
  IF position('CASE NEW.object_type' in definition)=0 THEN RAISE EXCEPTION 'Inspect changed typed identity dispatch'; END IF;
  EXECUTE replace(definition,'CASE NEW.object_type','CASE NEW.object_type WHEN ''MaterialSet'' THEN ''material_sets'' WHEN ''MaterialSource'' THEN ''material_sources'' WHEN ''MaterialLine'' THEN ''material_lines'' WHEN ''MaterialSubstitution'' THEN ''material_substitutions'' WHEN ''MaterialRelease'' THEN ''material_releases'' WHEN ''MaterialHandover'' THEN ''material_handovers'' WHEN ''MaterialImpact'' THEN ''material_impacts''');
 END $$;
+SET CONSTRAINTS ppo.identity_target DEFERRED;
 
 -- One material set per Engineering package and code. The package already fixes company, customer,
 -- site and the immutable Project or Opportunity link; the set never restates them.
