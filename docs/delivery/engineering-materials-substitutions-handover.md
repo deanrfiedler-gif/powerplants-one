@@ -1,0 +1,77 @@
+---
+document_id: PPO-EN06-HO
+revision: r01
+date: 2026-09-20
+owner: Dean Fiedler
+status: Local synthetic increment on an unpushed branch; owner review, visual and business acceptance pending
+source_commit: 99c32aed5032393b7658713cca53aa4c1a2ab2dd
+---
+
+# EN-06 Released Materials & Substitutions: local handover
+
+Branch `feat/en06-released-materials`, from `main` at `99c32ae`. Local commits only: nothing was pushed, no pull request was opened and nothing was deployed. Decisions and departures are in the [integration record](../decisions/engineering-materials-substitutions-design.md); commands and results are in the [evidence record](../testing/evidence/engineering-materials-local-r01/README.md).
+
+## 1. Open it
+
+1. `npm run db:migrate` then `npm run db:seed` (already applied to the local `ppo_synthetic` database on 20 September: migration 0029 and seed 29).
+2. `npm run dev`, or reuse the server already on `http://127.0.0.1:3000`.
+3. `node --env-file=.env.local --import tsx scripts/engineering-materials-scenario.ts` builds the r04 review scenario through the API and prints its address. It is already built; a rerun replays the same operations and changes nothing.
+4. Open **`http://127.0.0.1:3000/engineering/materials`**, or from Engineering choose *Released materials & substitutions*. Pick "SYN Nursery irrigation upgrade". The demonstration package is `/engineering/6460fa8c-ba7f-4830-897b-29592943ebe4/materials`.
+
+Choose an identity from the account menu. Changing identity clears what is on screen.
+
+| Identity in the picker | Does |
+|---|---|
+| Alex Lee — materials author | Adds and corrects requirements, proposes bindings, prepares release sets and handovers |
+| Sam Jordan — materials engineer | Same duties; proposed the two alternates |
+| Casey — technical reviewer | Decides alternates; reviews release sets |
+| Drew — material release authority | Authorises, issues, withdraws current use |
+| Robin — Supply Chain coordinator | Accepts or returns a payload addressed to them |
+| Quinn — materials viewer | Reads only; restricted bytes and recipient details withheld |
+| Coordinator | Synthetic upstream adapter (sources), verifies item bindings, records commercial decisions |
+| Company B | Sees none of it: the package is indistinguishable from a missing one |
+
+## 2. The six destinations
+
+| Destination | What works |
+|---|---|
+| **Materials register** | Flush register of the set; All / Ready for review / Needs attention with server counts; search, discipline, Add condition (owner, mapping, readiness, alternate), sort, columns, paging; every criterion in the URL. Opening a line inspects it without ticking it; ticks are a separate selection with an indeterminate page checkbox. Inspector: specified and proposed product, comparison, next action and review due, *Material required by* with "Date needed" when unknown, exact source with purpose and currentness, technical acceptance and handover shown apart. Add, correct and remove a requirement; CSV export |
+| **Item & unit mapping** | One binding per line for the package's own entity; Verified, Proposed, Ambiguous, Missing, Unavailable, Restricted, Changed and Not required kept distinct; exact conversion with a live preview; whole-pack overage needs a recorded decision. Only the item owner (coordinator) can verify, and never for another company |
+| **Substitution review** | Proposal list with lineage; criterion-by-criterion comparison with no score; independent Accept, Return, Hold or Reject; acceptance blocked by any failed, unknown or set-aside mandatory criterion; corrected successor with the returned one retained; explicit adoption into the next content revision; commercial decision recorded only by the commercial coordinator |
+| **Review & release** | Choose lines and quantities with a live server preview of what stops the scope and what is left out; prepare and freeze; submit; independent review; authorise; issue; cancel; withdraw current use; successor. Review, release operation and current use are shown as three separate states. Issue distinguishes issued, failed with no effect, and outcome unknown |
+| **Supply handover** | Payload built on the server from the exact issued release; Forecast or separately evidenced Approved demand; named receiver; required-by date or "Date needed"; send; whole-payload accept or return by the receiver only; corrected revision with a readable difference |
+| **Changes & history** | Append-only events by record type or for one record; owned follow-ups with resolution; retained source snapshots with their bytes and SHA-256, and for the coordinator the synthetic upstream adapter (observe a source, observe a new revision, withdraw) |
+
+## 3. A ten-minute walk through the main journey
+
+1. **Alex**: register → tick 020, 050, 060, 070 → *Prepare release set*. Set valves to 4. Try ticking 010: the preview refuses the split pump-and-control pair. Untick it, prepare, then *Submit for review*.
+2. **Casey**: Review & release → *Review this set* → Accept.
+3. **Drew**: *Authorise this exact set*, then *Issue technical release*. Tick *Exercise recovery* to see Outcome unknown, then *Recover the original result*.
+4. **Alex**: *Prepare supply handover* → Procurement-ready, Approved, `SYN-DA-001`, receiver Robin → *Send to receiver*.
+5. **Robin**: Supply handover → *Record receiving decision* → Accept.
+6. **Coordinator**: Changes & history → Exact sources → H-102 → *Observe a new revision* (revision C). The release stays Issued and the acceptance stays Accepted; current use becomes *Reassessment needed*, line 020 shows it, and Follow-ups holds one owned item.
+
+Other journeys: Casey returns CI-120 on line 030, Sam creates the corrected successor and supplies the firmware evidence, Casey accepts, Sam adopts. Casey accepts FA-220 on line 080 and the line stays *Scope decision* until the Coordinator records the commercial decision. Material set B rests on a coordination-only issue: it can be prepared and inspected and cannot be submitted for procurement.
+
+## 4. Files
+
+| Area | Path |
+|---|---|
+| Rules, parsers, access, reads, commands | `src/engineering/materials/{model,validation,context,reads,commands}.ts` |
+| Screens | `src/engineering/materials/components/client/` |
+| Shared menu primitive | `src/shell/secondary-menu.tsx`; `src/activities/components/client/my-work-shell.tsx` refactored onto it |
+| Routes | `src/app/(business)/engineering/materials/`, `src/app/(business)/engineering/[id]/materials/`, `src/app/api/v1/engineering/**/materials/` |
+| Styles | `src/app/styles/engineering-materials.css`; shared selectors widened in `src/app/styles/my-work.css` |
+| Header, navigation, receipts, identities | `src/components/product-navigation.tsx`, `src/shell/navigation.ts`, `src/shared/receipts.ts`, `src/platform/{identity,permissions}.ts`, `src/components/business-session.tsx` |
+| Database | `db/migrations/0029-engineering-materials.sql`, `db/seed-engineering-materials.sql`, `scripts/migration-registry.ts`, `scripts/demo-upgrade.ts` |
+| Scenario | `scripts/engineering-materials-scenario.ts`, `tests/helpers/engineering-materials.ts` |
+| Tests | `tests/unit`, `tests/http`, `tests/browser`, `tests/database` `engineering-materials.*` |
+
+## 5. What remains open
+
+- **Not run:** the database suite, `npm run build` and the compiled-application browser suite. The first needs `ppo_synthetic_test`, which this machine cannot create; the build cannot run beside the dev server. CI is their first run, and the registry edits in eight existing suites are likewise unexecuted.
+- **Not built:** a kit parent chooser in the line form; impact entry in the alternate form; pointer drag column resize; a focused full-detail route for the inspector (it overlays instead).
+- **Not decided:** real technical competence and release authority (D-002, D-019), the operational issue-purpose contract, MYOB items and units, commercial routing and thresholds, source currentness policy, the live receiving contract, external distribution (DK-03).
+- **Not registered:** the mockup is not in the repository, so no UI baseline is registered.
+- **Coordination:** branch `feat/en07-change-impact-review` was started from this branch at `60004ed` and adds migration 0030 on top of 0029. `0029-engineering-materials.sql` is applied locally and depended on there; it must not be edited. Later commits on this branch need merging into that one.
+- **Restart:** `npm run dev` from the repository root. `npm start` is deliberately refused.
