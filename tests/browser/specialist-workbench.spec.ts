@@ -78,9 +78,27 @@ test("ES08 native six views, shared shell, dense parts and responsive evidence",
       await page
         .getByRole("region", { name: "Screen Systems schematics" })
         .scrollIntoViewIfNeeded();
-      await page.screenshot({
-        path: info.outputPath("es08-diagrams-1920.png"),
-      });
+      for (const drawing of [
+        "Plan",
+        "Screen cut",
+        "Cross section",
+        "Bay section",
+      ]) {
+        await page
+          .getByRole("combobox", { name: /^Drawing/ })
+          .selectOption(drawing);
+        await expect(
+          page.getByRole("img", { name: new RegExp("^" + drawing + ":") }),
+        ).toBeVisible();
+        await page.screenshot({
+          path: info.outputPath(
+            `es08-diagram-${drawing.toLowerCase().replaceAll(" ", "-")}-1920.png`,
+          ),
+        });
+      }
+      await page
+        .getByRole("combobox", { name: /^Drawing/ })
+        .selectOption("Plan");
     }
     if (slug === "parts") {
       await page
@@ -199,6 +217,9 @@ test("ES08 durable raw draft, manual re-review, native receiving, exact history 
   await expect(
     page.getByRole("button", { name: "Apply reviewed changes", exact: true }),
   ).toBeEnabled();
+  await page
+    .getByRole("button", { name: "Apply reviewed changes", exact: true })
+    .scrollIntoViewIfNeeded();
   await page.screenshot({
     path: info.outputPath("es08-receiving-comparison.png"),
   });
@@ -274,6 +295,12 @@ test("ES08 durable raw draft, manual re-review, native receiving, exact history 
   await page
     .getByRole("button", { name: "Review estimate changes", exact: true })
     .click();
+  await expect(
+    page.getByRole("button", { name: "Apply reviewed changes", exact: true }),
+  ).toBeEnabled();
+  await page
+    .getByRole("button", { name: "Apply reviewed changes", exact: true })
+    .scrollIntoViewIfNeeded();
   await page.screenshot({
     path: info.outputPath("es08-receiving-manual-deletion.png"),
   });
@@ -284,7 +311,7 @@ test("ES08 durable raw draft, manual re-review, native receiving, exact history 
   const after = await (await page.request.get(estimateApi)).json();
   expect(
     after.saved.lines.find((l: CostLine) => l.id === edited.line_id).quantity,
-  ).toBe("999");
+  ).toBe("999.000");
   expect(
     after.saved.lines.some((l: CostLine) => l.id === deleted.line_id),
   ).toBe(false);
@@ -439,6 +466,8 @@ test("ES08-T52 late preview cannot replace a newer calculation", async ({
         requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
       ),
   );
-  await expect(page.locator(".es08-summary")).toHaveText(current);
+  await expect(page.locator(".es08-summary")).toHaveText(current, {
+    useInnerText: true,
+  });
   await expect(page.locator("#es08-bays")).toHaveValue("14");
 });
