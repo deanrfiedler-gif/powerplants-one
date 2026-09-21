@@ -377,3 +377,11 @@ needed, so opposite-viewport exclusions do not start it. Its startup allowance
 matches the repository's existing 120 seconds; application assertion deadlines
 remain unchanged. Startup errors retain bounded diagnostic output, and the
 worker terminates its own server. Earlier logs remain unchanged.
+
+## Current main and retained CI reconciliation
+
+After Dean authorised repair and merge of all current PRs, ES-02 #272 merged as `460cf0b` with all 21 checks passing on `aa8a670`. ES-08 integrates that main without changing specialist application code, migration 0040 or its seed. The four primary required CI lanes, compiled module workflows, 35-minute quality/40-minute CRM headroom, midnight-safe MW-DB01 input and original My Work read/delay regression are preserved. The existing ES-08 isolated observation-clock harness and compiled focused quality phases remain; development diagnostics/performance and actual restart/HTTP proofs still run.
+
+Historical results above remain attributed to their original source heads. PR #273 records the new combined-source checks and final merge outcome; pending checks are not passes. Facilities #274 remains a separate 0041 contribution. Owner business/design acceptance and deployment remain separate from this authorised repository merge.
+
+Local reconciliation checks pass: TypeScript, full ESLint, actionlint on all five affected workflows, foundation, naming and all 27 focused specialist/My Work unit cases. Application source and SQL match the pre-reconciliation ES-08 head; full combined database, HTTP, browser and restart verification is delegated to the isolated CI services.

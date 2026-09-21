@@ -90,6 +90,6 @@ Test implemented behaviour: permissions, booking conflicts, stale revisions, off
 
 Separate decisions, evidence, proposals and open questions; distinguish delivery, tests, acceptance and production readiness. Cite sources and limits.
 
-Check STATUS and delivery handovers. Preserve ES-02 exact cost bases. ES-08 (ADR-0034) provides synthetic Screen Systems review, not engineering approval. PJ-09 lifecycle decisions and close/reopen remain scoped.
+Check STATUS and handovers. Preserve ES-02 r01/exact costs and PJ-09 scoped close/reopen. ES-08 review is not engineering approval (ADR-0034). Require all four CI lanes; see ci-retained-suite-isolation.md.
 
 See docs/delivery/demo-email-crm-integration.md. Keep synthetic mailboxes private; exclude email bodies from shared Activities. CI and Outlook acceptance are separate.
