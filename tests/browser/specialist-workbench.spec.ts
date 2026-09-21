@@ -208,12 +208,28 @@ test("ES08 durable raw draft, manual re-review, native receiving, exact history 
       exact: true,
     })
     .click();
+  // Hold the resource reload behind the accepted command read. The old
+  // resource must not restore the previous version while that reload waits.
+  let releaseRefresh!: () => void;
+  let refreshStarted!: () => void;
+  const refreshGate = new Promise<void>((resolve) => { releaseRefresh = resolve; });
+  const refreshPending = new Promise<void>((resolve) => { refreshStarted = resolve; });
+  let detailReads = 0;
+  const detailRoute = new RegExp(api + "$");
+  await page.route(detailRoute, async (route) => {
+    if (route.request().method() === "GET" && ++detailReads === 2) {
+      refreshStarted();
+      await refreshGate;
+    }
+    await route.continue();
+  });
   await page
     .getByRole("button", { name: "Save review run", exact: true })
     .click();
   await expect(
     page.getByRole("status").filter({ hasText: "Saved to the server" }),
   ).toBeVisible();
+  await refreshPending;
   await page
     .getByText("Review native AUD rates for 11 saved positions", {
       exact: true,
@@ -225,9 +241,18 @@ test("ES08 durable raw draft, manual re-review, native receiving, exact history 
       exact: true,
     })
     .click();
-  await page
-    .getByRole("button", { name: "Review estimate changes", exact: true })
-    .click();
+  try {
+    const reviewed = page.waitForResponse((response) =>
+      response.url().endsWith(`${api}/receiving-preview`),
+    );
+    await page
+      .getByRole("button", { name: "Review estimate changes", exact: true })
+      .click();
+    expect((await reviewed).status()).toBe(200);
+  } finally {
+    releaseRefresh();
+    await page.unroute(detailRoute);
+  }
   await expect(
     page.getByRole("button", { name: "Apply reviewed changes", exact: true }),
   ).toBeEnabled();

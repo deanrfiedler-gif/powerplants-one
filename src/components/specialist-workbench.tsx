@@ -492,6 +492,7 @@ function Editor({
     [working, setWorking] = useState<string | null>(null),
     [manualOpen, setManualOpen] = useState(false),
     [receiving, setReceiving] = useState<Receiving | null>(null),
+    [receivingError, setReceivingError] = useState<unknown>(null),
     [receivingDecisions, setReceivingDecisions] = useState<Decision[]>([]),
     [nativePrices, setNativePrices] = useState<NativePriceProposal[]>([]),
     [summaryViews, setSummaryViews] = useState<Record<string, boolean>>({}),
@@ -520,6 +521,7 @@ function Editor({
     setPreview(null);
     setPreviewKey("");
     setReceiving(null);
+    setReceivingError(null);
     setReceivingDecisions([]);
     reload();
   });
@@ -531,7 +533,9 @@ function Editor({
     );
   useEffect(() => {
     if (
-      initial.configuration.version !== data.configuration.version &&
+      // The command response can arrive before the background resource refresh.
+      // An older resource snapshot must never roll an accepted version back.
+      initial.configuration.version > data.configuration.version &&
       !dirty &&
       !command.pending &&
       !command.busy
@@ -540,6 +544,7 @@ function Editor({
         setData(initial);
         setProposal(initial.draft.proposal);
         setPreview(null);
+        setReceiving(null);
       });
   }, [
     initial,
@@ -654,13 +659,13 @@ function Editor({
     price_and_unit_proposals: nativePrices,
   });
   async function reviewReceiving() {
+    setReceivingError(null);
     try {
       setReceiving(
         await api<Receiving>(`${path}/receiving-preview`, receivingRequest()),
       );
-      setError(null);
     } catch (e) {
-      setError(e);
+      setReceivingError(e);
       setReceiving(null);
     }
   }
@@ -675,8 +680,8 @@ function Editor({
     element?.closest("details")?.setAttribute("open", "");
     element?.focus();
   };
-  if (denied(command.error) || denied(error))
-    return <ErrorNotice error={command.error ?? error} />;
+  if (denied(command.error) || denied(error) || denied(receivingError))
+    return <ErrorNotice error={command.error ?? error ?? receivingError} />;
   return (
     <div className="es08-layout">
       <div className="es08-main">
@@ -1215,6 +1220,7 @@ function Editor({
                   >
                     Review estimate changes
                   </button>
+                  <ErrorNotice error={receivingError} />
                   {receiving && (
                     <>
                       {receiving.blockers.length > 0 && (

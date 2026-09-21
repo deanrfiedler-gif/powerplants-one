@@ -56,6 +56,9 @@ export async function compareEs08Design(
     });
   }
   await reference.close();
+  // Inspect the desktop shell at its specified width, including when this
+  // responsive test starts in the real mobile browser project.
+  await page.setViewportSize({ width: 1920, height: 1200 });
   const actual = await page.locator("#ppo-specialist").evaluate((e) => {
     const s = getComputedStyle(e);
     return {
