@@ -38,7 +38,7 @@ test("hosted header, populated board, filtering and independent card targets", a
     const heading = document.querySelector<HTMLElement>(".product-heading")!;
     const headingBounds = heading.getBoundingClientRect();
     const title = document.createRange();
-    title.selectNodeContents(heading.querySelector("strong")!);
+    title.selectNodeContents(heading.querySelector(".ppo-crumb-current")!);
     const titleBounds = title.getBoundingClientRect();
     const rail = document.querySelector(".sidebar")!;
     const cards = [...document.querySelectorAll(".crm-card")].filter(

@@ -42,6 +42,7 @@ export function TicketList() {
   return (
     <>
       <PageHeader
+        variant="register"
         eyebrow="SC-04 / Service intake"
         title="Service requests"
         description="Capture the issue, clarify what is unknown and prepare it for a separate work-scope decision."

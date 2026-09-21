@@ -17,7 +17,7 @@ type Recovery = {
 export function ExceptionsScreen() {
   const recovery = useResource<{ items: Recovery[] }>("sync/recovery-review");
   return <>
-    <PageHeader eyebrow="Service coordination" title="Exceptions and recovery" description="Review retained evidence and continue each issue in its responsible workflow." />
+    <PageHeader variant="register" eyebrow="Service coordination" title="Exceptions and recovery" description="Review retained evidence and continue each issue in its responsible workflow." />
     <div className="record-grid">
       <section className="record-card"><h2>Document preparation</h2><p>Inspect the original attempt, current source and available recovery action.</p><div className="related-links"><Link href="/service/packs">Job packs</Link><Link href="/service/reports">Service reports</Link></div></section>
       <section className="record-card"><h2>Finance follow-up</h2><p>Review returns, uncertain processing and reconciliation with current Finance access.</p><Link href="/finance/handoffs">Finance handoffs</Link></section>

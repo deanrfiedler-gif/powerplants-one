@@ -49,12 +49,12 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
   const root = page.locator("#ppo-changes");
   await expect(rows(page)).toHaveCount(8);
 
-  // A05 A03: first use is collapsed with no residual track; the header names module and destination while it is hidden.
+  // A05 A03: first use is collapsed with the shared 24px disclosure strip; the header names module and destination while it is hidden.
   await expect(root).toHaveAttribute("data-menu", "collapsed");
   await expect(page.locator("#ec-menu")).toBeHidden();
-  await expect(page.locator(".product-heading")).toContainText("Engineering / Engineering Change-Impact Review / Change register");
+  await expect(page.getByRole("navigation", { name: "Breadcrumb" }).locator(".ppo-crumb")).toHaveText(["Engineering", "Engineering Change-Impact Review", "Change register"]);
   await expect(page.locator(".product-heading .ppo-product-name")).toBeHidden();
-  expect(Math.round((await page.locator(".em-register").boundingBox())!.x)).toBe(Math.round((await root.boundingBox())!.x));
+  expect(Math.round((await page.locator(".em-register").boundingBox())!.x)).toBe(Math.round((await root.boundingBox())!.x) + 24);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Engineering Change-Impact Review: Change register/);
   await expect(page.locator(".module-navigation")).toHaveCount(0);
 
@@ -74,10 +74,10 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
       current: [k.backgroundColor, k.fontWeight].join("|"), marker: [marker.width, marker.backgroundColor, marker.left].join("|"), title: [t.fontSize, t.lineHeight, t.fontWeight].join("|"), icon: [i.width, i.height, i.strokeWidth].join("|") };
   }, scope);
   const mine = await measure("#ppo-changes");
-  expect(mine.width).toBe(220);
+  expect(mine.width).toBe(240);
   await page.reload();
   await expect(root).toHaveAttribute("data-menu", "docked"); // the person's later choice persists
-  await expect(page.locator(".product-heading .ppo-heading-subview")).toBeHidden();
+  await expect(page.locator(".product-heading [data-crumb=view]")).toBeHidden();
 
   // A06: header fill, rows and rules meet the menu divider on the left and the pane edge on the right.
   const flush = async () => {
@@ -87,7 +87,7 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
     expect(table.x + table.width).toBeGreaterThanOrEqual(pane.x + pane.width - 1);
   };
   await flush();
-  expect(Math.round((await menu.boundingBox())!.x + 220)).toBe(Math.round((await page.locator(".em-register").boundingBox())!.x));
+  expect(Math.round((await menu.boundingBox())!.x + 240)).toBe(Math.round((await page.locator(".em-register").boundingBox())!.x));
 
   // A59: the audited fixture, row for row, from the server. The due dates are the mockup's 21 to 25 September 2026 moved forward by ADR-0030's
   // 261 whole weeks, as every still-future fixture is, so that this journey never starts failing on the calendar.
