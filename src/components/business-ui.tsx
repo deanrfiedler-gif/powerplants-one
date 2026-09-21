@@ -1,6 +1,7 @@
 "use client";
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePublishPageDescription } from "../shell/page-description";
 export type Envelope<T> = {
   items: T[];
   next_cursor: string | null;
@@ -240,20 +241,51 @@ export function PageHeader({
   title,
   description,
   action,
+  variant = "record",
 }: {
   eyebrow: string;
   title: string;
   description?: string;
   action?: React.ReactNode;
+  // "register": the shared breadcrumb already names this page, so the title band gives up its room.
+  // The heading stays for assistive technology, the action stays visible, and the generic description
+  // moves to the page-information panel. Record, form, wizard and review screens keep "record", where
+  // the heading carries identity the task needs.
+  variant?: "record" | "register";
 }) {
+  const register = variant === "register";
+  usePublishPageDescription(register ? title : null, description);
   return (
-    <div className="business-heading">
+    <div className={register ? "business-heading business-heading-register" : "business-heading"}>
       <div>
         <p className="eyebrow">{eyebrow}</p>
         <h1>{title}</h1>
         {description && <p className="lede">{description}</p>}
       </div>
       {action}
+    </div>
+  );
+}
+// A register whose identity the shared breadcrumb already carries. The heading stays in the
+// accessibility tree, the page's own action stays where it was, and the generic description moves to
+// the page-information panel rather than being discarded.
+export function RegisterHeading({
+  title,
+  description,
+  children,
+}: {
+  title: string;
+  description?: string;
+  children?: React.ReactNode;
+}) {
+  usePublishPageDescription(title, description);
+  return (
+    <div className="business-heading business-heading-register">
+      <div>
+        <h1>{title}</h1>
+        {description && <p className="lede">{description}</p>}
+      </div>
+      {children}
     </div>
   );
 }

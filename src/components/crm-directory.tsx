@@ -200,6 +200,7 @@ export function CrmDirectory({ kind }: { kind: DirectoryKind }) {
   return (
     <section className="crm-directory" aria-label={`${title} directory`}>
       <PageHeader
+        variant="register"
         eyebrow="CRM · Customer context"
         title={title}
         description={

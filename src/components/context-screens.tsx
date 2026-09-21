@@ -161,6 +161,7 @@ function LegacyContextList({
   return (
     <>
       <PageHeader
+        variant="register"
         eyebrow="SC-02 / Customer context"
         title={info.title}
         description="Find the right organisation, person, site or equipment before recording work."
