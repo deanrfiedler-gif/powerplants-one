@@ -221,6 +221,7 @@ export const destinations: ShellDestination[] = [
     href: "/sites",
     requires: ["shared.read"],
   },
+  { id: "facilities", label: "Facilities & areas", icon: "sites", href: "/facilities", requires: ["shared.read"] },
   {
     id: "equipment",
     label: "Equipment",
@@ -425,6 +426,7 @@ export function menuGroups(query: string) {
         "customers",
         "contacts",
         "sites",
+        "facilities",
         "equipment",
         "products",
         "documents",

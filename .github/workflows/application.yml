@@ -63,6 +63,9 @@ jobs:
           npm run db:migrate
           npm run db:seed
           npm run db:health
+      - name: CS-05 compiled facilities proof
+        # Run before development-mode browser jobs replace .next.
+        run: npx playwright test tests/browser/facilities.spec.ts --config=playwright.compiled.config.ts --no-deps --output verification-evidence/facilities --reporter=list
       - name: Mobile CRM projections, scoped links and complete phone journey
         run: |
           node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/mobile-crm.test.ts

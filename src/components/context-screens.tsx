@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
 import { CrmDirectory } from "./crm-directory";
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { FacilityRegister } from "./facility-register";
 import { RecordTabs, RecordPanel } from "./record-ui";
 import {
   Field,
@@ -60,6 +61,7 @@ type Shared = Option & {
     id: string;
     name: string;
     parent_facility_id?: string;
+    parent_relationship?: string;
   }>;
   configurations?: {
     id: string;
@@ -544,13 +546,14 @@ export function ContextDetail({
               </RecordPanel>
               <RecordPanel id="organisation" tab="sites" value={tab}>
                 <h2>Sites and growing areas</h2>
+                <p><Link href={`/facilities?organisation_id=${id}`}>Open facilities through current Site relationships</Link></p>
                 {o.sites?.length ? o.sites.map(s=><article className="site-card" key={s.id}>
                   <h3><RecordLink type="Site" id={s.id}>{s.display_name}</RecordLink></h3>
                   <p>{s.display_number} · {s.location_description ?? "Location details not supplied"}</p>
                   {s.address && <p>{Object.values(s.address).filter(Boolean).join(", ")}</p>}
                   <h4>Facilities / growing areas ({s.facilities?.items.length ?? 0})</h4>
-                  {s.facilities?.items.length ? <ul className="facility-list">{s.facilities.items.map(f=><li key={f.id}><strong>{f.name}</strong>
-                    {f.parent_facility_id && <small>Within {s.facilities?.items.find(parent=>parent.id===f.parent_facility_id)?.name ?? "a related facility"}</small>}
+                  {s.facilities?.items.length ? <ul className="facility-list">{s.facilities.items.map(f=><li key={f.id}><Link href={`/facilities/${f.id}`}>{f.name}</Link>
+                    {f.parent_facility_id && <small>{f.parent_relationship === "physically_within" ? "Within" : "Grouped under"} {s.facilities?.items.find(parent=>parent.id===f.parent_facility_id)?.name ?? "a related facility"}</small>}
                   </li>)}</ul> : <p>No facilities recorded in this view.</p>}
                   <p><Link className="button secondary" href={`/sites/${s.id}`}>Open site and equipment</Link></p>
                 </article>) : <p>No permitted site relationships are available.</p>}
@@ -594,6 +597,8 @@ export function ContextDetail({
           )}
           {kind === "Site" && (
             <>
+              <RecordTabs id="site-location" label="Site record" value={tab} onChange={setTab} tabs={[{id:"details",label:"Details"},{id:"facilities",label:"Facilities & areas"}]}/>
+              <RecordPanel id="site-location" tab="details" value={tab}>
               <div className="actions">
                 <Link
                   className="button"
@@ -691,11 +696,12 @@ export function ContextDetail({
               </section>
               <section className="detail-section">
                 <h2>Equipment and facilities</h2>
+                <p><Link href={`/facilities?site_id=${id}`}>Facilities & areas — list and hierarchy</Link></p>
                 {o.facilities?.items.map((f) => (
                   <p key={f.id}>
-                    Facility: {f.name}
+                    Facility: <Link href={`/facilities/${f.id}`}>{f.name}</Link>
                     {f.parent_facility_id
-                      ? ` · within ${o.facilities?.items.find((x) => x.id === f.parent_facility_id)?.name ?? "parent facility"}`
+                      ? ` · ${f.parent_relationship === "physically_within" ? "Within" : "Grouped under"} ${o.facilities?.items.find((x) => x.id === f.parent_facility_id)?.name ?? "parent facility"}`
                       : ""}
                   </p>
                 ))}
@@ -705,6 +711,8 @@ export function ContextDetail({
                 )}
               </section>
               <HistoryList path={`sites/${id}/history`} />
+              </RecordPanel>
+              <RecordPanel id="site-location" tab="facilities" value={tab}>{tab === "facilities" && <Suspense fallback={<p>Loading facilities…</p>}><FacilityRegister fixedSite={id}/></Suspense>}</RecordPanel>
             </>
           )}
           {kind === "Asset" && (
@@ -715,6 +723,7 @@ export function ContextDetail({
                     Open current site
                   </RecordLink>
                 )}
+                {kind === "Asset" && o.facility_id && <Link className="button secondary" href={`/facilities/${o.facility_id}`}>Open installed Facility</Link>}
                 <Link className="button secondary" href={follow}>
                   Create follow-up
                 </Link>

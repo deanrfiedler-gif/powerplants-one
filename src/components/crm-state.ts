@@ -137,5 +137,12 @@ export function useCrmCommand(
       if (pending.current) await execute(pending.current, true);
     },
     clearError: () => setError(null),
+    discard: () => {
+      if (busy || uncertain) return;
+      pending.current = null;
+      setChanged(false);
+      setError(null);
+      setStatus(initialStatus);
+    },
   };
 }
