@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { closureMeanings } from "../../model";
 import type { VerificationQueueRow, readPeople } from "../../reads";
 import { useChanges } from "./changes-shell";
-import { CommandNotice, Field, Reason, Tone, ToneMark, dateText, fieldError, newId, shortDate, stampText, text, useChangeCommand, useRead } from "./changes-ui";
+import { CommandNotice, Field, Reason, Tone, ToneMark, dateText, fieldError, newId, stampText, text, useChangeCommand, useRead } from "./changes-ui";
 import { DetailHead, Page, usePanelFocus, useSelect, useView, type Detail } from "./view-common";
 
 type People = Awaited<ReturnType<typeof readPeople>>;
@@ -24,7 +24,7 @@ export function VerificationView() {
               {rows.map((r) => (
                 <tr key={r.key} data-current={r.change_id === view.changeId || undefined} onClick={() => select(r.change_id, { record: r.key })}>
                   <td><button type="button" className="em-row-title" onClick={() => select(r.change_id, { record: r.key })}>{r.title}</button><span className="em-cell-sub">{r.reference}</span></td>
-                  <td>{r.asset_or_system}</td><td>{r.criterion}</td><td>{r.configuration}</td><td>{r.verifier_name ?? "Not assigned"}{r.mine && <span className="em-cell-sub">Yours to verify</span>}</td><td>{shortDate(r.due)}</td><td>{r.attempts}</td><td><Tone view={r.state_view} /></td>
+                  <td>{r.asset_or_system}</td><td>{r.criterion}</td><td>{r.configuration}</td><td>{r.verifier_name ?? "Not assigned"}{r.mine && <span className="em-cell-sub">Yours to verify</span>}</td><td>{dateText(r.due)}</td><td>{r.attempts}</td><td><Tone view={r.state_view} /></td>
                 </tr>
               ))}
             </tbody>

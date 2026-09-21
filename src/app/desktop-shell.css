@@ -8,23 +8,43 @@
 .ppo-top-action { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; min-height: 44px; flex-shrink: 0; margin: 0; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #667181; }
 .ppo-top-action .product-icon { width: 22px; height: 22px; stroke-width: 1.7; }
 .ppo-top-action:is(:hover,[aria-expanded=true]), .ppo-top-action:hover:not(:disabled) { background: #f0f2f6; color: #242a37; }
-.ppo-top-action.ppo-quick-add, .ppo-top-action.ppo-quick-add:hover:not(:disabled) { isolation: isolate; color: white; background: transparent; }
+/* The navy disc is drawn by the button's own ::before, so the button must be its containing block:
+   without this it resolves against whatever is positioned above it and stretches across the header. */
+.ppo-top-action.ppo-quick-add, .ppo-top-action.ppo-quick-add:hover:not(:disabled) { position: relative; isolation: isolate; color: white; background: transparent; }
 .ppo-quick-add::before { position: absolute; content: ''; inset: 2px; border-radius: 50%; background: #242a37; z-index: -1; }
 .ppo-quick-add:is(:hover,[aria-expanded=true])::before { background: #343c4c; }
 .topbar.ppo-shell-header, body:has(.crm-workspace) .topbar.ppo-shell-header { position: relative; display: flex; align-items: center; gap: 12px; height: 64px; min-height: 64px; padding: 0 20px 0 24px; background: white; border-bottom: 1px solid #e2e6ec; overflow: visible; z-index: 60; }
-.ppo-shell-header .product-heading { display: flex; align-items: center; align-self: center; gap: 18px; min-width: 0; margin: 0; font-size: 16px; line-height: 1.3; white-space: nowrap; }
+/* Shared layout coordinates. The rail width and the expanded secondary-menu width are the two numbers that
+   the centred header group, the More panel's right edge and every workspace menu are measured against, so
+   they are declared once here rather than repeated as literals in each module stylesheet. */
+:root { --ppo-rail-width: 76px; --ppo-secondary-menu-width: 240px; }
+.ppo-shell-header .product-heading { display: flex; align-items: center; align-self: center; min-width: 0; margin: 0; font-size: 16px; line-height: 1.3; white-space: nowrap; }
 .ppo-shell-header .ppo-product-name { display: block; font-size: 16px; line-height: 1.3; color: #242a37; font-weight: 700; letter-spacing: -.15px; }
-.ppo-shell-header .ppo-heading-divider { display: block; width: 1px; height: 24px; flex-shrink: 0; background: #e0e5eb; }
-.ppo-shell-header .product-heading strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 400; color: #627084; }
-.ppo-shell-header .ppo-heading-view { color: #242a37; }
-/* Header menu slot: a workspace with a secondary menu mounts its trigger here. The label changes between
-   "Show menu" and "Hide menu" inside a fixed-width button, so nothing to its right moves. */
+/* Breadcrumb: [Module] / [Current page]. The rail's logo is the product identity, so the product name is
+   no longer repeated here; the parent is quieter and the current page darker and semibold. Ancestors give
+   way first when room runs out, and every label stays whole in the accessibility tree and the title. */
+.ppo-shell-header .ppo-crumbs { display: flex; align-items: baseline; min-width: 0; margin: 0; padding: 0; list-style: none; }
+.ppo-shell-header .ppo-crumbs li { display: flex; align-items: baseline; min-width: 0; margin: 0; padding: 0; }
+.ppo-shell-header .ppo-crumbs li + li::before { content: "/"; flex: none; margin: 0 7px; color: #9aa4b2; font-weight: 400; }
+.ppo-shell-header .ppo-crumb { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 16px; font-weight: 400; line-height: 1.3; color: #596779; text-decoration: none; }
+.ppo-shell-header a.ppo-crumb:hover { color: #242a37; text-decoration: underline; text-underline-offset: 3px; }
+.ppo-shell-header .ppo-crumb-current { color: #242a37; font-weight: 600; }
+.ppo-shell-header .ppo-crumbs li:not(:last-child) .ppo-crumb { flex: 0 1 auto; min-width: 4ch; }
+.ppo-shell-header .ppo-crumbs li:last-child { flex: 0 1 auto; min-width: 6ch; }
+/* A docked secondary menu already names the current view and marks it as the current page, so the
+   breadcrumb does not repeat it; collapsed, overlaid or absent, the breadcrumb carries it again. */
+.workspace:has([data-menu=docked]) .ppo-shell-header .ppo-crumbs li[data-crumb=view] { display: none; }
+.workspace:has([data-menu=docked]) .ppo-shell-header .ppo-crumbs li:has(+ li[data-crumb=view]) .ppo-crumb { color: #242a37; font-weight: 600; }
+/* Header menu slot: a workspace with a secondary menu mounts its trigger here. The trigger is icon-only, so
+   its width never changes with its state and nothing to its right moves; the name stays for assistive
+   technology and as its tooltip. An empty slot reserves no width at all. */
 .ppo-header-menu-slot { display: flex; align-items: center; flex: none; }
 .ppo-header-menu-slot:empty { display: none; }
-.ppo-header-menu-slot .ppo-menu-toggle { display: inline-flex; align-items: center; justify-content: flex-start; gap: 10px; width: 136px; min-height: 40px; margin: 0 6px 0 -8px; padding: 0 12px; border: 1px solid #e1e5eb; border-radius: 6px; background: #fff; color: #242a37; font: 400 14px/20px PPOShellRoboto, Roboto, Verdana, sans-serif; white-space: nowrap; box-shadow: none; }
+.ppo-header-menu-slot .ppo-menu-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 0; width: 40px; height: 40px; min-height: 40px; margin: 0 12px 0 -8px; padding: 0; border: 0; border-radius: 8px; background: transparent; color: #242a37; font: 400 14px/20px PPOShellRoboto, Roboto, Verdana, sans-serif; white-space: nowrap; box-shadow: none; }
+.ppo-header-menu-slot .ppo-menu-toggle > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .ppo-header-menu-slot .ppo-menu-toggle:hover:not(:disabled) { background: #f0f2f5; color: #242a37; }
 .ppo-header-menu-slot .ppo-menu-toggle:focus-visible { outline: 2px solid #365d8b; outline-offset: 2px; box-shadow: none; }
-.ppo-header-menu-slot .ppo-menu-toggle svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.ppo-header-menu-slot .ppo-menu-toggle svg { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .ppo-header-utilities { display: flex; align-items: center; gap: 4px; margin-left: auto; }
 .ppo-shell-header .header-tools { display: flex; margin: 0; padding: 0; gap: 0; border: 0; flex-shrink: 0; }
 .ppo-shell-header #header-search { display: none; }
@@ -41,6 +61,12 @@
 .ppo-global-search kbd { padding: 2px 4px; border: 1px solid #dde3ea; background: #fff; border-radius: 4px; color: #758091; white-space: nowrap; font: 10px/1.4 PPOShellRoboto, Roboto, Verdana, sans-serif; }
 .ppo-more-panel, .ppo-header-panel, .header-account .identity-strip .ppo-account-panel { position: fixed; z-index: 80; display: flex; flex-direction: column; flex-wrap: nowrap; overflow: hidden; border: 1px solid #dce1e8; border-radius: 14px; background: white; color: #242a37; box-shadow: 0 8px 32px #242a3720, 0 2px 5px #242a370a; font-size: 14px; overflow-wrap: anywhere; }
 .ppo-more-panel { top: 12px; bottom: 12px; left: 86px; width: 344px; max-width: calc(100vw - 100px); }
+/* On a page that has secondary navigation, More's right edge is the right edge the secondary menu has when
+   expanded — rail right plus the expanded menu width — whether that menu is currently expanded or collapsed.
+   The two surfaces keep different left anchors, so the width is derived from that one right coordinate
+   rather than declared equal. Pages without a secondary menu keep More's established geometry and reserve
+   no phantom menu width. More overlays; it never expands the menu or moves the register beneath it. */
+.app-frame:has([data-menu]) .ppo-more-panel { width: calc(var(--ppo-rail-width) + var(--ppo-secondary-menu-width) - 86px); }
 .ppo-header-panel, .header-account .identity-strip .ppo-account-panel { top: 60px; width: 344px; max-height: calc(100dvh - 76px); }
 .ppo-header-panel.ppo-guide-panel { max-height: calc(100dvh - 92px); }
 .ppo-more-panel > header, .ppo-panel-titlebar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 12px 8px 20px; min-height: 0; border: 0; flex-shrink: 0; }
@@ -158,10 +184,23 @@
   .ppo-rail .ppo-rail-item:is(:hover,[aria-expanded=true]) { background: #343c4c; }
   .ppo-rail :is(a,button):focus-visible { outline: 3px solid #a8d8ff; outline-offset: 3px; }
   .ppo-rail-bottom { margin-top: auto; padding: 12px 0; width: 100%; display: flex; justify-content: center; }
-  .ppo-header-centre { position: absolute; left: calc(50vw - 76px); transform: translateX(-50%); width: clamp(232px, 28vw, 420px); }
-  .ppo-header-centre .ppo-quick-add { position: absolute; left: calc(100% + 12px); top: -2px; }
-  .ppo-shell-header .product-heading { max-width: calc(50vw - clamp(110px, 14vw, 210px) - 118px); }
-  .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading { max-width: calc(50vw - clamp(110px, 14vw, 210px) - 118px - 148px); }
+  /* Global search and the quick-add button immediately to its right are one group, and it is that group's
+     combined box which is centred on the whole application viewport, the navy rail included. The header's
+     own left origin excludes the rail, so half the rail width comes off the header's own midpoint. The
+     coordinate is the header's, not the viewport's, which keeps a scrollbar out of the measurement, and
+     nothing page-specific enters it, so menu, More, snapshot and route changes cannot move the centreline. */
+  .ppo-header-centre { position: absolute; left: calc(50% - var(--ppo-rail-width) / 2); transform: translateX(-50%); display: flex; align-items: center; gap: 12px; width: calc(clamp(232px, 28vw, 420px) + 56px); }
+  .ppo-header-centre .ppo-global-search { flex: 1 1 auto; min-width: 0; }
+  .ppo-header-centre .ppo-quick-add { flex: none; }
+  /* #268's rule, kept by the breadcrumb that replaced the heading it was written against: a name is
+     shown whole or not at all, never cut short to make room for another. No crumb shrinks or ellipsises;
+     one that does not fit wraps to a second line that this one-line box hides, and the current page is
+     last so it is the first to go. Ancestors are dropped whole earlier, at 1560px. */
+  .ppo-shell-header .ppo-crumbs { flex-wrap: wrap; max-height: 21px; overflow: hidden; }
+  .ppo-shell-header .ppo-crumbs li, .ppo-shell-header .ppo-crumbs li:last-child { flex: none; min-width: 0; }
+  .ppo-shell-header .ppo-crumbs .ppo-crumb { flex: none; min-width: 0; overflow: visible; text-overflow: clip; }
+  .ppo-shell-header .product-heading { max-width: calc(50vw - clamp(110px, 14vw, 210px) - 146px); }
+  .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading { max-width: calc(50vw - clamp(110px, 14vw, 210px) - 146px - 52px); }
   .ppo-shell-header .ppo-product-name { flex-shrink: 0; }
   .crm-toolbar .crm-header-search { width: 210px; flex: 0 1 210px; }
   .crm-toolbar .crm-pipeline-label { margin-left: auto; }
@@ -179,9 +218,8 @@
   .ppo-shell-header .mobile-brand .brand-logo { width: 34px; height: 34px; }
   .ppo-shell-header .ppo-product-name { font-size: 13px; }
   .ppo-shell-header .product-heading { display: block; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; font-size: 13px; white-space: nowrap; }
-  .ppo-shell-header .product-heading strong { font-size: 13px; color: #242a37; font-weight: 600; }
-  .ppo-shell-header .product-heading:has(> strong) :is(.ppo-product-name,.ppo-heading-divider) { display: none; }
-  .ppo-shell-header .ppo-heading-divider { display: inline-block; height: 16px; vertical-align: middle; margin: 0 8px; }
+  .ppo-shell-header .ppo-crumb { font-size: 13px; }
+  .ppo-shell-header .ppo-crumb-current { color: #242a37; font-weight: 600; }
   .ppo-header-centre, .ppo-desktop-utility { display: none; }
   .ppo-header-utilities { gap: 0; }
   .ppo-shell-header .header-tools { display: contents; }
@@ -232,12 +270,13 @@
 /* Phone Sales reaches Opportunities from the bottom bar, and Leads from My Work's Quick Actions and More.
    An extra desktop tab row would leave too little room for a focused card after a save. */
 @media (max-width: 780px) { .module-navigation.ppo-sales-navigation { display: none; } }
-/* Header menu slot at narrower widths: the trigger keeps its accessible name but shows its icon only, so the
-   product name and current view stay readable. */
-@media (min-width: 781px) and (max-width: 1100px) {
-  .ppo-header-menu-slot .ppo-menu-toggle { width: 40px; padding: 0; justify-content: center; }
-  .ppo-header-menu-slot .ppo-menu-toggle span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading { max-width: calc(50vw - clamp(110px, 14vw, 210px) - 118px - 52px); }
+/* Narrower desktops: with three or more crumbs the earliest ancestor gives way, never the current page.
+   The rail, the module tabs and the page's own heading still give the parent, and the full path stays in
+   the accessibility tree and in the breadcrumb's title. */
+@media (min-width: 781px) and (max-width: 1560px) {
+  .ppo-shell-header .ppo-crumbs li:nth-last-child(n+3) { display: none; }
+  .ppo-shell-header .ppo-crumbs li:nth-last-child(2)::before { content: none; }
+  .ppo-shell-header .ppo-crumbs li:nth-last-child(2) .ppo-crumb { font-size: 15px; }
 }
 /* Phone header of a workspace with its own menu (mobile r07: My Work). The hamburger takes the brand's place:
    menu, title, search, page guide, account, on one 64px row. The selector carries the header-menu id so it
@@ -251,10 +290,10 @@
   .ppo-header-menu-slot .ppo-menu-toggle svg { width: 24px; height: 24px; }
   .ppo-header-menu-slot .ppo-menu-toggle span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading { display: block; flex: 1; min-width: 0; margin: 0 0 0 6px; align-self: center; grid-column: auto; grid-row: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading strong { font-size: 20px; line-height: 28px; font-weight: 500; color: #242a37; }
-  .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .ppo-heading-view { font-size: 14px; font-weight: 400; color: #596779; }
+  .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .ppo-crumb { font-size: 20px; line-height: 28px; font-weight: 500; color: #242a37; }
+  .workspace .ppo-shell-header:has(#header-menu:not(:empty)) li[data-crumb=view] .ppo-crumb { font-size: 14px; font-weight: 400; color: #596779; }
   /* The overview is the workspace's front page, so its header reads "My Work" alone, as in r07. */
-  .workspace:has(#ppo-my-work[data-view=overview]) .ppo-shell-header .ppo-heading-view { display: none; }
+  .workspace:has(#ppo-my-work[data-view=overview]) .ppo-shell-header .ppo-crumbs li[data-crumb=view] { display: none; }
   .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .header-account { grid-column: auto; grid-row: auto; }
   /* The Sales phone bar, mobile r07: five equal cells, icons only. Each name stays in the link for assistive
      technology; the current cell keeps the lighter surface and green top stripe of the labelled bar. */

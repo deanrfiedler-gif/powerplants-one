@@ -1,12 +1,15 @@
 "use client";
 import { useState } from "react";
 import { shellGuide } from "../shell/guide";
+import { usePageDescription } from "../shell/page-description";
 import { leadsGuide, type PageGuide } from "./leads-guide";
 import { ShellIcon } from "./shell-icon";
 
 const pageGuides: Record<string, PageGuide> = { Leads: leadsGuide };
 export function ShellPageGuide({ page }: { page: string }) {
   const pageGuide = pageGuides[page];
+  // A register that gave up its visible description publishes it here, so the information icon keeps it.
+  const published = usePageDescription();
   const [showShell, setShowShell] = useState(page === "Application shell");
   const jump = (id: string) => {
     const section = document.getElementById(id);
@@ -14,7 +17,8 @@ export function ShellPageGuide({ page }: { page: string }) {
     section?.scrollIntoView({ block: "start", behavior: "instant" });
   };
   if (!showShell && !pageGuide) return <div className="ppo-page-guide">
-    <div className="ppo-guide-intro"><span className="ppo-guide-eyebrow">Page guide</span><h3>{page}</h3><p>The detailed {page} guide is being prepared.</p></div>
+    <div className="ppo-guide-intro"><span className="ppo-guide-eyebrow">Page guide</span><h3>{page}</h3><p>{published?.description ?? `The detailed ${page} guide is being prepared.`}</p></div>
+    {published && <p className="ppo-panel-hint">The detailed {page} guide is being prepared.</p>}
     <div className="ppo-guide-note">The page guide will explain its purpose, how to use it, the journey through its key tasks and where to go next.</div>
     <button className="ppo-guide-link" onClick={() => setShowShell(true)}><ShellIcon name="info" /><span>Read the application shell guide</span><ShellIcon name="chevron-right" /></button>
   </div>;

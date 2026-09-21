@@ -65,15 +65,15 @@ test("EN07-A01 A09 A27 A28 A36 A44 A45 A47 HTTP: private envelopes, strict crite
   const receipt = await engineer(`operations/${create.operation_id}`);
   assert.deepEqual([receipt.status, (receipt.body as { record_id: string }).record_id], [200, createId]);
   // A28: a command made against a version that has moved on is refused as a conflict; nothing is overwritten silently.
-  const author = (fields: Record<string, unknown>) => engineer(base, command("SYN coordination", { action: "coordinate", change_id: createId, next_owner_id: CHANGES.author.id, due: "2026-10-09", ...fields }));
+  const author = (fields: Record<string, unknown>) => engineer(base, command("SYN coordination", { action: "coordinate", change_id: createId, next_owner_id: CHANGES.author.id, due: "2031-10-10", ...fields }));
   assert.equal((await author({ expected_version: 1 })).status, 201);
-  const stale = await author({ expected_version: 1, due: "2026-10-10" });
+  const stale = await author({ expected_version: 1, due: "2031-10-11" });
   assert.deepEqual([stale.status, (stale.body as { code: string }).code], [409, "VersionConflict"]);
-  assert.equal(((await engineer(`${base}?change=${createId}`)).body as { selected: { due: string } }).selected.due, "2026-10-09");
+  assert.equal(((await engineer(`${base}?change=${createId}`)).body as { selected: { due: string } }).selected.due, "2031-10-10");
   // A27: moving the owner and date is coordination. It advanced the change and left the proposal's content hash alone.
   const hashes = async () => ((await engineer(`${base}/impact?change=${createId}`)).body as { selected: { revision: { content_hash: string; version: number } } }).selected.revision;
   const before = await hashes();
-  assert.equal((await author({ expected_version: 2, due: "2026-10-12" })).status, 201);
+  assert.equal((await author({ expected_version: 2, due: "2031-10-13" })).status, 201);
   assert.deepEqual(await hashes(), before);
 
   // A45: an operation ID is not a way around access. Another identity is told nothing about it.

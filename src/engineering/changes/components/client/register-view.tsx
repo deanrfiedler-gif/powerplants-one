@@ -3,10 +3,10 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { disciplines } from "../../../model";
-import { attentionPresentation, changeCategories, priorities, sourcePresentation, stagePresentation, stages, duePresentation, isOpen } from "../../model";
+import { attentionPresentation, changeCategories, decisionChip, priorities, sourcePresentation, stagePresentation, stages, duePresentation, isOpen } from "../../model";
 import type { readPeople, readRegister } from "../../reads";
 import { useChanges } from "./changes-shell";
-import { CommandNotice, Dialog, Field, Icon, Menu, Outline, ReadNotice, Tone, dateText, fieldError, newId, shortDate, stampText, text, useChangeCommand, useRead, type MenuItem } from "./changes-ui";
+import { CommandNotice, Dialog, Field, Icon, Menu, ReadNotice, Tone, dateText, fieldError, newId, stampText, text, useChangeCommand, useRead, type MenuItem } from "./changes-ui";
 
 type Register = Awaited<ReturnType<typeof readRegister>>;
 type Row = Register["items"][number];
@@ -119,7 +119,7 @@ export function RegisterView() {
               {(data?.options.disciplines ?? []).map((d) => <option key={d}>{d}</option>)}
             </select>
           </label>
-          <Menu name="Add condition" label={<><Icon name="plus" /> Add condition</>} quiet items={addCondition} />
+          <Menu name="Add condition" icon="plus" label="Add condition" items={addCondition} />
           {conditions.map(([key, label]) => (
             <span key={key} className="em-condition">{label}<button type="button" aria-label={`Remove condition ${label}`} onClick={() => go({ [key]: null })}><Icon name="close" /></button></span>
           ))}
@@ -127,7 +127,7 @@ export function RegisterView() {
           <span className="mw-spacer" />
           {/* The count says what it covers: this filtered view, of the whole permitted package. */}
           <span className="mw-muted">{data ? `${data.total} change${data.total === 1 ? "" : "s"}${data.counts.conditioned || view !== "open" ? ` of ${data.counts.package_total} in this package` : ""}` : "…"}</span>
-          <Menu name="Sort" label={`Sort: ${sortLabels[sort]}${dir === "desc" ? " (descending)" : ""}`} quiet align="end" items={[
+          <Menu name="Sort" label={`Sort: ${sortLabels[sort]}${dir === "desc" ? " (descending)" : ""}`} align="end" items={[
             ...Object.entries(sortLabels).map(([id, label]) => ({ id, label, checked: sort === id, onSelect: () => go({ sort: id === "due" ? null : id }) })),
             { id: "sep", separator: true as const },
             { id: "dir", label: dir === "asc" ? "Descending" : "Ascending", hint: "Unknown values stay last either way", onSelect: () => go({ dir: dir === "asc" ? "desc" : null }) },
@@ -189,7 +189,7 @@ export function RegisterView() {
           <button type="button" className="mw-icon-button" aria-label="Previous page" disabled={!data || data.page <= 1} onClick={() => go({ page: String((data?.page ?? 2) - 1) })}><Icon name="chevron-left" /></button>
           <button type="button" className="mw-icon-button" aria-label="Next page" disabled={!data || to >= data.total} onClick={() => go({ page: String((data?.page ?? 1) + 1) })}><Icon name="chevron-right" /></button>
         </footer>
-        <footer className="em-page-foot"><span>Synthetic preview · {dateText(data?.observed_at.slice(0, 10) ?? null, "")}</span><span>Technical decisions and implementation are separate.</span></footer>
+        <footer className="em-page-foot"><span>Synthetic preview · {dateText(data?.observed_at.slice(0, 10) ?? null, "")}</span></footer>
       </section>
       {inspected && data && <Inspector key={inspected} selected={data.selected} unavailable={data.selection === "Unavailable"} stale={register.stale} onClose={() => go({ change: null })} />}
       {creating && frame && <NewChange onClose={() => go({ new: null })} onCreated={(id) => { register.reload(); reloadFrame(); router.push(href("impact", { change: id })); }} />}
@@ -214,7 +214,7 @@ function Cell({ id, row: r, today, open }: { id: ColumnId; row: Row; today: stri
   if (id === "due") {
     const due = duePresentation(r.due, today, isOpen(r.stage));
     // A missing date is "Date needed" with nothing invented beside it; a future date is plain; overdue says so in words.
-    return <td data-label="Due" className="ec-col-due">{r.due ? shortDate(r.due) : "Date needed"}{due.label === "Overdue" && <span className="em-cell-sub"><Tone view={due} /></span>}</td>;
+    return <td data-label="Due" className="ec-col-due">{r.due ? dateText(r.due) : "Date needed"}{due.label === "Overdue" && <span className="em-cell-sub"><Tone view={due} /></span>}</td>;
   }
   return <td data-label="Attention">{r.attention === "None" ? <span className="mw-muted">—</span> : <Tone view={r.attention_view} />}</td>;
 }
@@ -222,7 +222,6 @@ function ExtraCell({ id, row: r }: { id: OptionalId; row: Row }) {
   return <td data-label={optional.find(([k]) => k === id)![1]}>{id === "discipline" ? r.discipline : id === "decision" ? (r.decision === "None" ? "Not decided" : r.decision) : id === "progress" ? text(r.progress) : id === "source" ? sourcePresentation[r.source].label : id === "retests" ? r.retests_required : stampText(r.updated_at)}</td>;
 }
 
-const followIcon = (kind: "release" | "request" | "retest") => (kind === "release" ? <Icon name="document" /> : kind === "request" ? <Outline name="people" /> : <Outline name="flask" />);
 function Inspector({ selected: s, unavailable, stale, onClose }: { selected: Selected | null; unavailable: boolean; stale: boolean; onClose: () => void }) {
   const heading = useRef<HTMLHeadingElement>(null), { href } = useChanges();
   // A docked inspector is modeless: it takes focus once when opened and never traps it.
@@ -240,6 +239,7 @@ function Inspector({ selected: s, unavailable, stale, onClose }: { selected: Sel
         {unavailable && <div className="em-inspector-body"><p className="mw-muted">This change does not exist in this package, or this identity cannot read it. Nothing is shown in its place.</p></div>}
       </aside>
     );
+  const chip = decisionChip(s.decision), [button, ...links] = s.actions.secondary;
   return (
     <aside className="em-inspector" aria-label={`Inspector: ${s.reference}`} data-stale={stale || undefined}>
       <div className="em-inspector-head">
@@ -251,23 +251,25 @@ function Inspector({ selected: s, unavailable, stale, onClose }: { selected: Sel
         <button type="button" className="mw-icon-button" onClick={onClose} aria-label="Close inspector"><Icon name="close" /></button>
       </div>
       <div className="em-inspector-body">
+        {/* Where the change stands, then the one technical fact. The decision is green only when it is an acceptance. */}
+        <div className="ec-chips" role="group" aria-label="Review state and technical decision"><Tone view={s.stage_view} />{chip && <Tone view={chip} />}
+          {/* The blocking strip below says why implementation is not authorised; any other implementation state is named here. */}
+          {s.decision === "Accepted" && !s.blocking && <Tone view={{ ...s.implementation.view, label: `Implementation: ${s.implementation.view.label.toLowerCase()}` }} />}</div>
         <div className="ec-section">
-          <div className="ec-row"><span>Technical decision</span><Tone view={s.technical_decision} /></div>
-          <div className="ec-row"><span>Implementation</span><Tone view={s.implementation.view} /></div>
+          <h3>Technical basis</h3>
           {s.applicability !== "Current" && s.decision !== "None" && <p className="ec-note">{text(s.applicability)}: the recorded decision is retained as history and cannot support a new handover until the change is reassessed.</p>}
           {s.baseline ? (
             <div className="ec-revisions">
-              <div><span>As released</span><strong>{s.baseline.reference} · Revision {s.baseline.revision}</strong><small>Purpose: {s.baseline.purpose_label}</small></div>
-              <Icon name="arrow-right" />
-              <div><span>Proposed</span><strong>{s.proposed.reference ?? s.baseline.reference} · Revision {s.proposed.revision ?? "?"}</strong><small>{s.proposed.issued ? `Issued · ${s.proposed.issued.purpose_label}` : "Not issued"}</small></div>
+              <div><span>As released</span><strong>{s.baseline.reference} · Rev {s.baseline.revision}</strong><small>Purpose: {s.baseline.purpose_label}</small></div>
+              <div><span>Proposed</span><strong>{s.proposed.reference ?? s.baseline.reference} · Rev {s.proposed.revision ?? "?"}</strong><small>{s.proposed.issued ? `Issued · ${s.proposed.issued.purpose_label}` : "Not issued"}</small></div>
             </div>
           ) : <p className="ec-note">No exact baseline is captured yet.</p>}
           <div className="ec-sources">
-            <Tone view={s.sources.view} />
-            <Link className="mw-link" href={href("impact", { change: s.id, panel: "sources" })}>View exact sources <Icon name="arrow-right" /></Link>
+            <Tone view={s.sources.view} plain />
             {/* The time is the last recorded check. It is never the moment this panel happened to open. */}
-            <small>{s.sources.checked_at ? `Checked ${stampText(s.sources.checked_at)}${s.sources.check_result && s.sources.check_result !== s.sources.condition ? ` · then ${sourcePresentation[s.sources.check_result as keyof typeof sourcePresentation]?.label.toLowerCase() ?? s.sources.check_result}` : ""}` : "No source check is recorded yet"}</small>
+            <small>{s.sources.checked_at ? `Checked ${stampText(s.sources.checked_at, " · ")}${s.sources.check_result && s.sources.check_result !== s.sources.condition ? ` · then ${sourcePresentation[s.sources.check_result as keyof typeof sourcePresentation]?.label.toLowerCase() ?? s.sources.check_result}` : ""}` : "No source check is recorded yet"}</small>
             {s.sources.reasons.length > 0 && <ul>{s.sources.reasons.map((r) => <li key={r}>{r}</li>)}</ul>}
+            <Link className="mw-link" href={href("impact", { change: s.id, panel: "sources" })}>View exact sources <Icon name="arrow-right" /></Link>
           </div>
         </div>
         <div className="ec-section">
@@ -275,19 +277,9 @@ function Inspector({ selected: s, unavailable, stale, onClose }: { selected: Sel
           <div className="ec-row"><span>Installed assets</span><strong>{s.summary.installed_assets} affected</strong></div>
           <div className="ec-row"><span>Material lines</span><strong>{s.summary.material_lines} affected</strong></div>
           <div className="ec-row"><span>Retest</span><strong>{s.summary.retest}</strong></div>
-          <div className="ec-row"><span>Cost decision</span><strong>{s.summary.cost_decision}</strong></div>
-        </div>
-        {s.blocking && (
-          <div className="ec-blocking" role="note">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2 2.2 20.2h19.6Z" fill="currentColor" /><path d="M12 9.6v5M12 17.4h.01" stroke="#fff" strokeWidth="2" strokeLinecap="round" fill="none" /></svg>
-            <div><strong>{s.blocking.title}</strong><p>{s.blocking.text}</p></div>
-          </div>
-        )}
-        {/* Someone who cannot resolve it is told whose it is; the review itself stays readable to them. */}
-        {s.blocking?.permitted && <p className="ec-note">{s.blocking.permitted}</p>}
-        <div className="ec-owner">
-          <div><span>Next action owner</span><strong>{s.next_owner_name ?? "Unassigned"}</strong></div>
-          <div><span>Due</span><strong>{dateText(s.due)}</strong></div>
+          <div className="ec-row"><span>Cost decision</span><strong className={`ec-tone-${s.summary.cost_tone}`} data-tone={s.summary.cost_tone}>{s.summary.cost_decision}</strong></div>
+          {/* Who acts next, and by when. A missing owner or date is said in words and nothing is invented beside it. */}
+          <p className="ec-owner"><span className="mw-sr">Next action owner: </span>{s.next_owner_name ?? "Unassigned"} · {s.due ? `Due ${dateText(s.due)}` : "Date needed"}</p>
         </div>
         {s.follow_through.length > 0 && (
           <div className="ec-section">
@@ -295,18 +287,27 @@ function Inspector({ selected: s, unavailable, stale, onClose }: { selected: Sel
             {/* One line per obligation, each projecting its own retained record. Opening one completes nothing. */}
             <ul className="ec-follow">
               {s.follow_through.map((f) => (
-                <li key={f.key}>{followIcon(f.kind)}<Link href={href(f.href_view, { change: s.id, record: f.record_id })}>{f.label}</Link><Tone view={f.state} /></li>
+                <li key={f.key}><Link href={href(f.href_view, { change: s.id, record: f.record_id })}><span>{f.label}</span><Tone view={f.state} bare /><Icon name="chevron-right" /></Link></li>
               ))}
             </ul>
           </div>
         )}
+        {s.blocking && (
+          <div className="ec-blocking" role="note">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 4.2 3.2 19.4h17.6Z" /><path d="M12 10v4.4M12 16.8h.01" /></svg>
+            <div><strong>{s.blocking.title}</strong><p>{s.blocking.text}</p></div>
+          </div>
+        )}
+        {/* Someone who cannot resolve it is told whose it is; the review itself stays readable to them. */}
+        {s.blocking?.permitted && <p className="ec-note">{s.blocking.permitted}</p>}
         {s.overlaps > 0 && <p className="ec-note">{s.overlaps} other open change{s.overlaps === 1 ? " shares" : "s share"} an object or baseline with this one. See the impact assessment.</p>}
         {s.closure && <p className="ec-note">Closed as {text(s.closure.meaning).toLowerCase()} by {s.closure.closed_by_name} on {stampText(s.closure.closed_at)}.</p>}
       </div>
       <div className="ec-inspector-foot">
         {/* Navigation only: opening a review approves, issues and completes nothing. */}
         <Link className="mw-button mw-button-primary" href={s.actions.primary.href}>{s.actions.primary.label}</Link>
-        <div className="ec-inspector-links">{s.actions.secondary.map((a) => <Link key={a.label} href={a.href}>{a.label}{a.label.startsWith("Open") && " →"}</Link>)}</div>
+        {button && <Link className="mw-button" href={button.href}>{button.label}</Link>}
+        {links.length > 0 && <div className="ec-inspector-links">{links.map((a) => <Link key={a.label} href={a.href}>{a.label} <Icon name="arrow-right" /></Link>)}</div>}
       </div>
     </aside>
   );

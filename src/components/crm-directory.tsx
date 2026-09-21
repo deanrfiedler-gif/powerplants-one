@@ -198,8 +198,11 @@ export function CrmDirectory({ kind }: { kind: DirectoryKind }) {
     }
   }
   return (
-    <section className="crm-directory" aria-label={`${title} directory`}>
+    // The register is the page: the shell allocates the viewport once and this register owns its own
+    // toolbar, spacing and scroll surface, so the table meets both edges of the region it sits in.
+    <section className="crm-directory" data-module-layout="full-bleed" aria-label={`${title} directory`}>
       <PageHeader
+        variant="register"
         eyebrow="CRM · Customer context"
         title={title}
         description={

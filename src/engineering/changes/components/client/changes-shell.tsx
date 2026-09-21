@@ -63,7 +63,7 @@ export function useChanges() {
 }
 
 const viewIcons: Record<ChangeViewId, { icon?: IconName; outline?: OutlineName }> = {
-  register: { icon: "register" }, impact: { icon: "mapping" }, reviews: { icon: "review" }, handovers: { outline: "people" }, verification: { outline: "retest" }, history: { icon: "history" },
+  register: { icon: "register" }, impact: { outline: "nodes" }, reviews: { icon: "review" }, handovers: { outline: "people" }, verification: { outline: "flask" }, history: { outline: "clock" },
 };
 
 export function ChangesShell({ packageId, children }: { packageId: string; children: React.ReactNode }) {
@@ -129,17 +129,17 @@ export function ChangesShell({ packageId, children }: { packageId: string; child
           <h1 className="mw-sr">Engineering Change-Impact Review: {changeViews.find((v) => v.id === current)?.label}</h1>
           <header className="em-context" aria-label="Package context">
             <label className="em-context-cell em-context-project">
-              <span>{data?.package.context_kind ?? "Project"}</span>
+              {/* One cell names both, as mockup r03 does: the package is what is chosen, the Project or Deal is where it sits. */}
+              <span>Package / {(data?.package.context_kind ?? "Project").toLowerCase()}</span>
               {/* The picker resolves the Engineering package. The Project title shown beside it is context, never the package's identity. */}
               <select aria-label="Engineering package" value={packageId} onChange={(e) => router.push(changesHref(e.target.value, current))}>
                 {!packages.data?.items.some((p) => p.id === packageId) && <option value={packageId}>{data?.package.context_title ?? "Loading…"}</option>}
-                {packages.data?.items.map((p) => <option key={p.id} value={p.id}>{p.context_title} · {p.reference}</option>)}
+                {packages.data?.items.map((p) => <option key={p.id} value={p.id}>{p.context_title} · {p.title} · {p.reference}</option>)}
               </select>
-              <small>{data ? `${data.package.context_reference} · ${data.package.reference}` : " "}</small>
+              <small title={data?.package.title}>{data ? `${data.package.context_reference} · ${data.package.reference}` : " "}</small>
             </label>
             <div className="em-context-cell"><span>Customer</span><strong>{data?.package.customer_name ?? "…"}</strong></div>
             <div className="em-context-cell"><span>Site</span><strong>{data ? (data.package.site_name ?? "No site recorded") : "…"}</strong></div>
-            <div className="em-context-cell em-context-set"><span>Engineering package</span><strong>{data?.package.title ?? "…"}</strong></div>
             <div className="em-context-actions">
               {data?.can.edit && <Link className="mw-button mw-button-primary" href={href("register", { new: "1" })}><Icon name="plus" /><span>New change</span></Link>}
             </div>

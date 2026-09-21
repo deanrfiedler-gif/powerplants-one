@@ -44,15 +44,22 @@ type Editor = {
 };
 function Heading({
   title,
+  description,
+  register,
   children,
 }: {
   title: string;
+  description?: string;
+  // A register's identity is in the shared breadcrumb; a workspace record keeps its visible heading.
+  register?: boolean;
   children?: React.ReactNode;
 }) {
   return (
     <PageHeader
+      variant={register ? "register" : "record"}
       eyebrow="Estimating · Synthetic"
       title={title}
+      description={description}
       action={children}
     />
   );

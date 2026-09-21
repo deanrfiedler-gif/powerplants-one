@@ -170,3 +170,13 @@ body:has(.crm-workspace) .business-content{display:flex;flex:1;min-height:0}
  .crm-workspace>.crm-actions{padding:5px 12px}
 }
 @media(pointer:coarse){button,.button,.primary-link{min-height:44px}.crm-view-controls button,.crm-stage-navigation button{min-height:44px}.crm-card .crm-opportunity-title{min-height:0}}
+
+/* Existing-modules UI refinement: a register's identity is in the shared breadcrumb, so its duplicated
+   title, eyebrow and generic description give up the room they took. The heading stays in the
+   accessibility tree, the page's own action stays where it was, and the description is published to the
+   page-information panel. Record, form, wizard and review screens keep their visible headings. */
+.business-heading-register{margin:0;gap:12px;align-items:center}
+.business-heading-register>div:first-child{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.business-heading-register:not(:has(>*+*)){display:none}
+/* A bespoke register layout keeps its own row and hides only the duplicated title. */
+.ppo-register-title{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}

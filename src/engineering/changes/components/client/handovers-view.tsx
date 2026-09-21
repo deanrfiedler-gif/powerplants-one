@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { destinations, receivingPresentation, requestPurposes } from "../../model";
 import type { HandoversQueueRow, readPeople, readPreview } from "../../reads";
 import { useChanges } from "./changes-shell";
-import { CommandNotice, Field, Icon, Reason, Tone, ToneMark, api, dateText, fieldError, newId, shortDate, stampText, text, useChangeCommand, useRead } from "./changes-ui";
+import { CommandNotice, Field, Icon, Reason, Tone, ToneMark, api, dateText, fieldError, newId, stampText, text, useChangeCommand, useRead } from "./changes-ui";
 import { DetailHead, Page, usePanelFocus, useSelect, useView, type Detail, type View } from "./view-common";
 
 type People = Awaited<ReturnType<typeof readPeople>>;
@@ -26,7 +26,7 @@ export function HandoversView() {
               {rows.map((r) => (
                 <tr key={r.key} data-current={r.change_id === view.changeId || undefined} onClick={() => select(r.change_id, { record: r.key })}>
                   <td><button type="button" className="em-row-title" onClick={() => select(r.change_id, { record: r.key })}>{r.title}</button><span className="em-cell-sub">{r.reference}</span></td>
-                  <td>{r.what}</td><td>{r.destination}</td><td>{r.owner_name ?? "Unassigned"}{r.mine && <span className="em-cell-sub">Yours to answer</span>}</td><td>{shortDate(r.due)}</td><td><Tone view={r.state_view} /></td>
+                  <td>{r.what}</td><td>{r.destination}</td><td>{r.owner_name ?? "Unassigned"}{r.mine && <span className="em-cell-sub">Yours to answer</span>}</td><td>{dateText(r.due)}</td><td><Tone view={r.state_view} /></td>
                 </tr>
               ))}
             </tbody>
@@ -157,6 +157,7 @@ function Builder({ d, reload }: { d: Detail; reload: () => void }) {
   const [rows, setRows] = useState<Proposed[]>([]), [preview, setPreview] = useState<Preview | null>(null), [failure, setFailure] = useState<string | null>(null), [fault, setFault] = useState(false);
   const command = useChangeCommand(() => { setRows([]); setPreview(null); reload(); });
   const receivers = (destination: string) => people.data?.items.filter((p) => p.receiver_for.includes(destination as never)) ?? [];
+  // A request names its receiving owner from the policy as it is added, so nothing can be added until that list has arrived.
   const add = (purpose: string, destination: string) => { setPreview(null); setRows([...rows, { id: newId(), purpose, destination, owner_id: receivers(destination)[0]?.id ?? "", requested_action: "", due: "", amends_id: null }]); };
   const patch = (i: number, p: Partial<Proposed>) => { setPreview(null); setRows(rows.map((r, n) => (n === i ? { ...r, ...p, ...(p.destination ? { owner_id: receivers(p.destination)[0]?.id ?? "" } : {}) } : r))); };
   const body = () => rows.map(({ amends_id, due, ...r }) => ({ ...r, due: due || null, ...(amends_id ? { amends_id } : {}) }));
@@ -169,9 +170,9 @@ function Builder({ d, reload }: { d: Detail; reload: () => void }) {
   return (
     <section className="em-panel" aria-label="Prepare requests">
       <div className="em-panel-head"><h3>Prepare requests</h3>
-        <button type="button" className="mw-button" onClick={() => add("ImpactReview", "SupplyChain")}><Icon name="plus" /><span>Review request</span></button>
-        <button type="button" className="mw-button" onClick={() => add("PrepareRevisedRelease", "TechnicalRelease")}><Icon name="plus" /><span>Revised release request</span></button>
-        <button type="button" className="mw-button" onClick={() => add("Implementation", "Service")}><Icon name="plus" /><span>Implementation handover</span></button></div>
+        <button type="button" className="mw-button" disabled={!people.data} onClick={() => add("ImpactReview", "SupplyChain")}><Icon name="plus" /><span>Review request</span></button>
+        <button type="button" className="mw-button" disabled={!people.data} onClick={() => add("PrepareRevisedRelease", "TechnicalRelease")}><Icon name="plus" /><span>Revised release request</span></button>
+        <button type="button" className="mw-button" disabled={!people.data} onClick={() => add("Implementation", "Service")}><Icon name="plus" /><span>Implementation handover</span></button></div>
       <div className="em-panel-body ec-stack">
         {!rows.length && <p className="ec-note">Add the requests this change needs. The server derives each exact payload; you review that preview before anything is created.</p>}
         {rows.map((r, i) => (

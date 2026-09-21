@@ -39,7 +39,7 @@ test("EN-08 retains its six-view layout and reachable inspector after the EN-06 
       const menu = await page.locator("#cm-menu").boundingBox();
       const panel = await inspector.boundingBox();
       const context = await page.locator("#ppo-commissioning .em-context").boundingBox();
-      expect(menu!.width).toBe(220);
+      expect(menu!.width).toBe(240);
       expect(panel!.width).toBe(480);
       expect(panel!.y).toBeGreaterThanOrEqual(context!.y + context!.height - 1);
       const register = await page.locator("#ppo-commissioning .em-register").boundingBox();
