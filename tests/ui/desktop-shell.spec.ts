@@ -200,7 +200,11 @@ test("runtime shell matches the retained r17 reference typography, panel geometr
     }
     if (kind === "more") {
       await expect(actualPanel.locator(".ppo-menu-group").first().locator(".ppo-more-link")).toHaveCount(7);
-      await expect(actualPanel.locator("footer")).toContainText("20 destinations");
+      // Footer count includes Help; installation actions are separate controls.
+      await expect(actualPanel.locator(".ppo-menu-group .ppo-more-link")).toHaveCount(20);
+      await expect(actualPanel.locator(".ppo-help-link")).toBeVisible();
+      await expect(actualPanel.locator("footer")).toContainText("21 destinations");
+      await expect(actualPanel.getByRole("link", { name: "Facilities & areas", exact: true })).toHaveAttribute("href", "/facilities");
     }
     await page.screenshot({ path: info.outputPath(`r17-runtime-${kind}.png`) });
     await reference.screenshot({ path: info.outputPath(`r17-reference-${kind}.png`) });

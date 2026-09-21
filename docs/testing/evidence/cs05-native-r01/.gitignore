@@ -1,0 +1,11 @@
+# Transient Playwright traces and duplicate captures stay local. Curated images,
+# manifests and complete text logs are the reviewable evidence in this folder.
+/browser/
+/browser-candidate/
+/browser-final/
+/browser-verified/
+/browser-release/
+/browser-equipment/
+/browser-navigation/
+/browser-regression/
+/browser-regression-final/

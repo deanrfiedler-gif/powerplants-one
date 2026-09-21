@@ -1,17 +1,18 @@
+import { test, myWorkOrigin as origin } from "../helpers/my-work-browser";
+import { MY_WORK_NOW } from "../helpers/my-work-clock";
 import { randomUUID } from "node:crypto";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, type Page } from "@playwright/test";
 import { MY_WORK, seedScenario, WEATHER_SAMPLE, type Call } from "../helpers/my-work";
 
 // My Work on a phone (mobile build report r02, mockup r07). The same synthetic identity and the same
 // scenario as the desktop journeys, built and changed through the real API and the real page, so the
 // counts reconcile exactly. The tests run in order and share the scenario the first one builds.
-// Dates are relative to the database's present, because the reads use the database clock; the fixed
-// Monday of the report (21 September 2026, 8:40 am) is proved against the pure rules in
-// tests/unit/work-view.test.ts. This is browser emulation of a phone, not a physical device.
+// The dedicated test server fixes the My Work observation clock to 08:40 on a future
+// Brisbane day, including runs across midnight. All records and
+// commands remain real. This is browser emulation of a phone, not a physical device.
 test.describe.configure({ mode: "serial" });
 test.skip(({ isMobile }) => !isMobile, "The desktop overview is proved in my-work.spec.ts");
 
-const origin = "http://127.0.0.1:3000";
 const caller = (page: Page): Call => async (path, body) => {
   const r = await page.request.fetch(`/api/v1/${path}`, { method: body ? "POST" : "GET", headers: { Origin: origin }, data: body });
   return { status: r.status(), body: await r.json() };
@@ -50,7 +51,10 @@ let tomorrow: string;
 test("the phone overview is one page: header, five-cell bar, Quick Actions, attention, one agenda and follow-ups", async ({ page }, info) => {
   test.setTimeout(240000);
   await signIn(page);
-  scenario = await seedScenario(caller(page));
+  const overview = await caller(page)("work/overview");
+  expect(overview.status).toBe(200);
+  expect(overview.body.observed_at).toBe(MY_WORK_NOW);
+  scenario = await seedScenario(caller(page), new Date(MY_WORK_NOW));
   tomorrow = local(scenario.slots.tomorrow).slice(0, 10);
   await open(page);
 

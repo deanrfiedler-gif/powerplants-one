@@ -1,0 +1,303 @@
+{
+  "recorded_at": "2026-09-22 Australia/Sydney",
+  "base": "af3f045",
+  "branch": "feat/cs05-facilities-growing-areas",
+  "code_commit": "5f6e683e7c809e1850e932ed684b9dd3725d13d0",
+  "code_tree": "6dde740a7d3a017fff68ce7644893e02081e92f5",
+  "build_id": "Ovd4nmmPammk8NJkUPH-F",
+  "build_note": "Compiled app files match this code commit. Final changes after the completed build were proof scripts/tests only; captures ran on an explicitly restarted compiled server. Prior checkpoints are identified in README. Documentation/evidence added separately.",
+  "files": [
+    {
+      "path": ".github/workflows/application.yml",
+      "sha256": "4e731d4ad46938cc38832c9737502f5e4705c518ce03fd319420ea86c3d99d9d",
+      "working_copy_sha256": "8bc995552004b5274c00bdaa14e7899e598b37291f775d65fb26966b1faa9ef3"
+    },
+    {
+      "path": "db/migrations/0041-facilities-growing-areas.sql",
+      "sha256": "87b29fefab54c8c1db0ceabb713821d2696c3089b4c7922989df59540162d222"
+    },
+    {
+      "path": "db/seed-facilities.sql",
+      "sha256": "9534a6ba218dc0f3ae51e70b68170417997663cea13f7773d3a6043c7cebec7a",
+      "working_copy_sha256": "3ca274266095482da89c643514df6cc590f02bf9c9a8f90589a876aff56e625c"
+    },
+    {
+      "path": "docs/decisions/ADR-0037-cs05-facilities-native.md",
+      "sha256": "43da859c58e0fe0c7c08ab96e10774065fe07fb5d10667dced4fd0df9003d3d5"
+    },
+    {
+      "path": "playwright.compiled.config.ts",
+      "sha256": "68e65383845fa340942d4d9bb4a23172e714035e3b2a8cc9fabee635761902d9"
+    },
+    {
+      "path": "scripts/demo-upgrade.ts",
+      "sha256": "f749aeb50e1709e23bad9ccc2e6464669dcb5c16a84d00f85c5d473b1a2e9500",
+      "working_copy_sha256": "4369676a94dbeedde8778e8aae2c10a351583b7abe97d462dc2bf71434476641"
+    },
+    {
+      "path": "scripts/facilities-before-after.ts",
+      "sha256": "3afd2c793bc24e93edced2494d82ae72032a95a9a8a0518d6a3c9b0ea02e0261"
+    },
+    {
+      "path": "scripts/facilities-commissioning-proof.ts",
+      "sha256": "08bc79ba9b045ed8e219ca1ed1cc79f7f1892b1ca3cb84cd4134aae08e3fcdad"
+    },
+    {
+      "path": "scripts/facilities-query-proof.ts",
+      "sha256": "8c00639f876f20f7abff9cd78327d5eada37a299a8fd4adcf002ab2ea8ba7cf3"
+    },
+    {
+      "path": "scripts/facilities-restart-proof.ts",
+      "sha256": "35c0d58571c91dba8712f48795ba442cf0bc68e1651a37105dbdaba704261b46"
+    },
+    {
+      "path": "scripts/migration-registry.ts",
+      "sha256": "b5706474c3ce30131a7ea1e08c23a5aceb606d471906692b4f23d809c25a49b6"
+    },
+    {
+      "path": "src/app/(business)/facilities/[id]/edit/page.tsx",
+      "sha256": "4c83a7a4702c40be9cf5dc2e6672352580255a6788464d21e301c4b80d560110",
+      "working_copy_sha256": "3e1cd70e9952982fd8ea487f8b68bfdf33bd8fb3a9f139c2796bca50b46924c8"
+    },
+    {
+      "path": "src/app/(business)/facilities/[id]/page.tsx",
+      "sha256": "38412c51a0330e2c840ae0618a817d985d689b89dc32a770eaaa93a8ba7f85e0",
+      "working_copy_sha256": "893506061d5537979b0e5778541b1bf6976cc40b784197b604cdb6d7847ff69f"
+    },
+    {
+      "path": "src/app/(business)/facilities/layout.tsx",
+      "sha256": "ed3f9868300ad07df81dc8edc5f14a5d9973bee11f02fd5bb32181d05c7ce3a6"
+    },
+    {
+      "path": "src/app/(business)/facilities/new/page.tsx",
+      "sha256": "a357004ff09e0d0fc87b688724c3281e523b053741aed270b99db3e4a74af516",
+      "working_copy_sha256": "106f8dbb39e57ed721b50ee15fc4a7e41b8051e7be4cef79b715c26cf56c0ab7"
+    },
+    {
+      "path": "src/app/(business)/facilities/page.tsx",
+      "sha256": "2c24097b76de7dbc333c511594a329366823820cda84aa695cbd1352e9085477",
+      "working_copy_sha256": "3a1f4f3b8725a1bb0d06cdca414953187407d46e7fc95bba6d2588feaed3f6ce"
+    },
+    {
+      "path": "src/app/api/v1/assets/[id]/served-facilities/[linkId]/end/route.ts",
+      "sha256": "cac0bf1e50a706eef9c394d0f5975ce19fe230cc5d8804fd94106c2d464a8c30"
+    },
+    {
+      "path": "src/app/api/v1/assets/[id]/served-facilities/add/route.ts",
+      "sha256": "e48a5b66e286c978539002ae21df0d08d406c277f95642ee7d0c441b49a106e0"
+    },
+    {
+      "path": "src/app/api/v1/facilities/[id]/equipment/route.ts",
+      "sha256": "ff34c11dff3e12b7181aa752c1bb11e1c50092bcfa57726d176ea1f480774af3"
+    },
+    {
+      "path": "src/app/api/v1/facilities/[id]/history/route.ts",
+      "sha256": "0d9c418f401ae1fc01b8a4e46e06cc3185b832c0bddf6496e3c17440f62faa62"
+    },
+    {
+      "path": "src/app/api/v1/facilities/[id]/pin/remove/route.ts",
+      "sha256": "89371abc2d7176f7cf52cda2e7a0da39430fabb268724b40d7b919524c6da8c5"
+    },
+    {
+      "path": "src/app/api/v1/facilities/[id]/pin/route.ts",
+      "sha256": "6b9e73a1727c2bdf206cede06938e076dd5f236067f81ac4427b8ccfd3ef1c2e"
+    },
+    {
+      "path": "src/app/api/v1/facilities/[id]/preview-change/route.ts",
+      "sha256": "0f8dcb2b44c48dba435d26771e2d12333d2ad34564131a86338c8b724ce0c5af"
+    },
+    {
+      "path": "src/app/api/v1/facilities/[id]/preview-pin/route.ts",
+      "sha256": "4fbca0842e4a0bb5d2be31a1c5a9dd58b5802642e6198665c0925bae8a598382"
+    },
+    {
+      "path": "src/app/api/v1/facilities/[id]/revise/route.ts",
+      "sha256": "32f9fe911cacf3db7bd04a2382e6f490cb02880c092572ca128642cc45b4fd27"
+    },
+    {
+      "path": "src/app/api/v1/facilities/[id]/sources/route.ts",
+      "sha256": "0f34d0ac39fe3319d1564e68ed13cdd3e063eeee813ef13a8fdfb1658369239e"
+    },
+    {
+      "path": "src/app/api/v1/facilities/[id]/workspace/route.ts",
+      "sha256": "fa483826d587d36145b0f4a6a9c50e0ef565a202da7f76bac078421417156f87"
+    },
+    {
+      "path": "src/app/api/v1/facilities/create-details/route.ts",
+      "sha256": "fa4b825beb54f1f589739fda0fd5901203c57be77785e15d271837a49be81b59"
+    },
+    {
+      "path": "src/app/api/v1/facilities/register/route.ts",
+      "sha256": "e36dcc75215d53be43df1e3fdcc228cdb882277fc1542c2033822c93a58caa98"
+    },
+    {
+      "path": "src/app/layout.tsx",
+      "sha256": "0b7f4acfdd31391a0f328f3aff8417f7edb2581b489e1e375eea1426cd715c27",
+      "working_copy_sha256": "3e4b35ea097be5bbd660597340c3c1440d7d11475cc587b075a7504a8ff62f59"
+    },
+    {
+      "path": "src/app/styles/facilities.css",
+      "sha256": "8e2cbf82ecfccfa48b035b1c9926b75b65d04e7f1a47c6e721b7bb11ae9138d9",
+      "working_copy_sha256": "c8884c398edbd686571f7b1361d898ed531dcd391f33c901fad97ad09b317bf9"
+    },
+    {
+      "path": "src/app/styles/my-work.css",
+      "sha256": "5d776c09f600259b491d9be783b92dc010096c5062aa5a73fe7008bd30bb3973",
+      "working_copy_sha256": "4e868acc4e3c3c719442a850598aea361ce5ca34c850cf64ebb9c99d14a7a126"
+    },
+    {
+      "path": "src/components/context-screens.tsx",
+      "sha256": "8a1256de67ba80891f1e39c1fbfc50f2e4992b49a4db6cad18cdb6b9f82f04cd",
+      "working_copy_sha256": "58532d2405208851880c8fc650f6934f23089cc1d03764cfc0b7d344ddeb7252"
+    },
+    {
+      "path": "src/components/crm-state.ts",
+      "sha256": "ffd86cfba030622747b519d3b2edcb2dbfa4d1fb1ea5b02c8f674015ee39cb0e"
+    },
+    {
+      "path": "src/components/facility-controls.tsx",
+      "sha256": "a6aaf80cbf1329b88b5368736768ae47b37d08ee023870fb1bef204b7085bed1"
+    },
+    {
+      "path": "src/components/facility-detail.tsx",
+      "sha256": "361f5d1ec6ca563c5db0bdf98bcd30b0ac5fbeb505a36e9d93031205d3922c74"
+    },
+    {
+      "path": "src/components/facility-form.tsx",
+      "sha256": "c048387a8b09e261d3612238bfd7424ef75bdf86917acc1b7229daee820024b7"
+    },
+    {
+      "path": "src/components/facility-register.tsx",
+      "sha256": "b4108b810b907d969c7c02f2bab15e69a39f134c6f9f646467e9a3e16e30d8fd"
+    },
+    {
+      "path": "src/components/facility-shell.tsx",
+      "sha256": "385237477155038b95d78cb857c240132b4b0946e09f45a9f3ba8dffaf828bfe"
+    },
+    {
+      "path": "src/components/product-navigation.tsx",
+      "sha256": "db0dca5e8de911e9d4bd7bcfb83754980b7da4e9251dad87a87399cdb1a87ee8",
+      "working_copy_sha256": "6d5492430d236b03fa5ad92aa122c2b3621e033f528b055bdab4b1831485b7aa"
+    },
+    {
+      "path": "src/shared/facilities/commands.ts",
+      "sha256": "754c449466f5714e573791e21915a06264c62ce1a1a9ec24799643a857da429d"
+    },
+    {
+      "path": "src/shared/facilities/definition.ts",
+      "sha256": "79b03b225ecb38445f5f2fc728872fddb768496da783766d3b1ded12db0e380c"
+    },
+    {
+      "path": "src/shared/facilities/http.ts",
+      "sha256": "cce7e336361eb341c9d364c98bc5f4b6c3f5c60985705c163948bdfeeed833c7"
+    },
+    {
+      "path": "src/shared/facilities/reads.ts",
+      "sha256": "7c8dcd765b78c88688ffd1936095af6ec6797968b1967185ddb4cdfd026425a8"
+    },
+    {
+      "path": "src/shared/facilities/validation.ts",
+      "sha256": "686e5a1f03cbccac268c09e3961446b02b4acb4ad9dc77ef1580e8215573db6e"
+    },
+    {
+      "path": "src/shared/reads.ts",
+      "sha256": "885970d79f8badd6d5fd66a14349fb0ecee77a4eeabe32bae4fed3f47fbc5a1b",
+      "working_copy_sha256": "f8a6f72586a3c22b289c7e8dfdde582116aaaff5ba1f585a78ec1898439e7718"
+    },
+    {
+      "path": "src/shared/receipts.ts",
+      "sha256": "48c6509db98ac9c19092d8498a1ad39196671c20aade4ff9055b31291c46b27e"
+    },
+    {
+      "path": "src/shell/module-workspaces.ts",
+      "sha256": "50315f3cac2ab1681904a65a5c9fe15021465a421fa08ba021b4766812e9ea45"
+    },
+    {
+      "path": "src/shell/navigation.ts",
+      "sha256": "7df19c9e033399cdc0c511d26b53035f9722e80878de2702fe47dc312737b8b5",
+      "working_copy_sha256": "598f959d3251c52e6a7ea09c687bcfc5899803962d899df1f36752227ae7143c"
+    },
+    {
+      "path": "tests/browser/crm.spec.ts",
+      "sha256": "56cd1b7250688d522422d5911b5e721e3d863b97b93c175724148e186fb326c4"
+    },
+    {
+      "path": "tests/browser/estimating-cost-basis.spec.ts",
+      "sha256": "9bf7965fd239567c3892cbf21f4f5f037ba1c6305c75e30c9878426f731acc37"
+    },
+    {
+      "path": "tests/browser/estimating-discovery.spec.ts",
+      "sha256": "4dcacd795fa99e36773266c299ab5160d2160d1a8d71e99a6ff7020572f81d06"
+    },
+    {
+      "path": "tests/browser/estimating.spec.ts",
+      "sha256": "3b6422dd30aaef4cb598e3d8b253777618de3ad3171340a9bbdf7f1ea4222baf"
+    },
+    {
+      "path": "tests/browser/facilities.spec.ts",
+      "sha256": "15c38146752693afdde5299375e5a9f881d5310db41ebbac2c32129aba323430"
+    },
+    {
+      "path": "tests/database/facilities.test.ts",
+      "sha256": "e56a3c30453ca9172c6786b5c3f207d3b9fe1831cff1e81a69fe492c1e836268"
+    },
+    {
+      "path": "tests/database/field.test.ts",
+      "sha256": "1cd30b4d2190398feac494ebdb464df5898c36d02867b9fd09dff20f30407419",
+      "working_copy_sha256": "46442cd61ecb87c6ed47acb2cf3665fdab9102bd02faea3dcef1353e641a6d32"
+    },
+    {
+      "path": "tests/database/finance-upgrade.test.ts",
+      "sha256": "b0b41c3b9f93a23b750f3f00d9aa6756f9a8b5bc7b32239ac440e1f88ee4dd43",
+      "working_copy_sha256": "b976824cc8f73a5ca3819070f1fb4cedc3068b75d24933e1966482a4ec059940"
+    },
+    {
+      "path": "tests/database/leads-projects-integration.test.ts",
+      "sha256": "1a0a763598ab36c7c78415d5264700cff994f17b72dc8261d0e1a4c8bba4fe70",
+      "working_copy_sha256": "834a7f821ae323ac0e2611e5244208c8ba469eb96ae2e183187c49b4b0ac069c"
+    },
+    {
+      "path": "tests/database/offline.test.ts",
+      "sha256": "3559d0f12a6a0cad56e3ba1f3cc4e1fed7f1572a01bfbcb9935175fa1f25c563",
+      "working_copy_sha256": "edc6e3cc3e88a2463aaf986a5208b3d7fe8bdb6c017fcc6121fc59a7400cf124"
+    },
+    {
+      "path": "tests/database/packs.test.ts",
+      "sha256": "1ea523b1f11daf89d215274b7ff02b9dba204cd00e928bb9581fb0d57c0f534c",
+      "working_copy_sha256": "78d35ab9e00a4184bf3a451e35d6916e4a5575e207938f425e188b26800b1718"
+    },
+    {
+      "path": "tests/database/planner.test.ts",
+      "sha256": "b93ca643ebed100916b411dcb48e90cbca28e293d2805ca5ac24586d1ae2d86f",
+      "working_copy_sha256": "024c9de912f9ac2f8360f60b674dda7c7de57d16c6d30ec89781bb88d3fe7639"
+    },
+    {
+      "path": "tests/database/reports.test.ts",
+      "sha256": "1676909bd32f8a8efc45b58d535ec05232ae5db65b66ee0ece09ed1a8d0f750f",
+      "working_copy_sha256": "a50130835547059c69eefbfc05420b1473b4f8f152ac91b448aa66843be9fd66"
+    },
+    {
+      "path": "tests/database/shared.test.ts",
+      "sha256": "2dfc97db3a5f777423e0623a3bb46cf05af10c5e887ddac24c3b02d82a94fe49"
+    },
+    {
+      "path": "tests/demo/upgrade.test.ts",
+      "sha256": "64a070202832d7d524b66fca904cf6cd25d683755c4f4d9340b1583b8bffcd3f",
+      "working_copy_sha256": "86ebf6130d84deb665b0110ebeb183758256f4493695220716ecc89bbd03b944"
+    },
+    {
+      "path": "tests/helpers/estimating-cost-basis-cases.ts",
+      "sha256": "df904572dccfe105b532e1a3627f49410775d36b4c933cf0e498f85a30898214",
+      "working_copy_sha256": "4a97889a82ba8702f553d3302875e07a85251a221db44a9adf5d49da89fbe9b8"
+    },
+    {
+      "path": "tests/http/facilities.test.ts",
+      "sha256": "627eaee261eb5857c7b8cba74c41a6afdc5a625b94f49306ff1c88a7fe5f26b8"
+    },
+    {
+      "path": "tests/unit/facilities.test.ts",
+      "sha256": "b39addfe9d3b604ff75d10f3a00b980db67dde9e240b4ad363a2ebe6ab19005f"
+    }
+  ],
+  "hash_basis": "sha256 is the committed Git blob; working_copy_sha256 records any Windows checkout byte difference used by the local build."
+}

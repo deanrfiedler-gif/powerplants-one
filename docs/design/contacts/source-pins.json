@@ -13,7 +13,7 @@
     "db/migrations/0018-crm-leads.sql": "2c36b8e173f805e0184e59284c0856d982ecc5a71ea60d61d64854f3ec186255",
     "db/migrations/0019-projects-gantt.sql": "9b58480eb0daebe8bbe4af4ac952d0d43bb2b6cd621b87f095547e426a4f1043",
     "src/shared/commands.ts": "8aa4564c50a98e7320c3e4f1c329209c62e5682aa16a4843ffed60c97a8e8f6b",
-    "src/shared/reads.ts": "27c9995fde64a25a82f60cad9290f304e72f3d97289f8cf7b403e02bea4bf8e5",
+    "src/shared/reads.ts": "885970d79f8badd6d5fd66a14349fb0ecee77a4eeabe32bae4fed3f47fbc5a1b",
     "src/crm/directory.ts": "5812d66b1edd4d791128e568d18226fedf21f9ce3f6059aa8c42ab5cef5336e5",
     "src/shared/context.ts": "1859ee53bb9a4f0831a5ea1ce1c7bfe93450f01cf1ba1f5605c8c1ec8583d2d8",
     "src/projects/service.ts": "f928687f1587a5f78108236d822cdd905b41aaa0c56ba99100b7c6209f6cb003",

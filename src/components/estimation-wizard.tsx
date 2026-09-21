@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { SpecialistEntry } from "./specialist-entry";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
@@ -1070,6 +1071,7 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                   Estimation Wizard
                 </Link>
               </li>
+              <li><SpecialistEntry workspaceId={id} optionId={current.option.id}/></li>
               <li>
                 <Link href="/estimating">Manual estimates</Link>
               </li>

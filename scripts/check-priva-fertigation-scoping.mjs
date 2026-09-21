@@ -1,10 +1,14 @@
 // Focused DOM/calculation verification. Native layout, print and file-picker APIs are not simulated as proof.
-const assert=require('node:assert/strict');
-const fs=require('node:fs');
-const path=require('node:path');
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+import {createRequire} from 'node:module';
+import {pathToFileURL} from 'node:url';
+const resolveModule=createRequire(import.meta.url).resolve;
 const jsdomPath=process.env.PPO_JSDOM_PATH||'jsdom';
-const {JSDOM,VirtualConsole}=require(jsdomPath);
-const file=process.argv[2]||path.resolve(__dirname,'../reference/ui/priva-fertigation-scoping-workbench-r01.html');
+const {JSDOM,VirtualConsole}=await import(pathToFileURL(resolveModule(jsdomPath)).href);
+const file=process.argv[2]||new URL('../reference/ui/priva-fertigation-scoping-workbench-r01.html',import.meta.url);
 const html=fs.readFileSync(file,'utf8');
 const results=[],errors=[];
 const clone=x=>JSON.parse(JSON.stringify(x));
@@ -68,7 +72,7 @@ check('A review becomes out of date and its reviewer and conditions are retained
 check('Storage failure retains edited scope in memory and gives no false saved status',()=>{w.eval("storageConflict=true");edit('project');fill('site','Saved only in memory');save();assert.equal(api.getState().project.site,'Saved only in memory');assert.match(doc.getElementById('save-state').textContent,/unavailable/);assert.ok(doc.querySelector('[data-action=save]'));});
 check('CSV formula content is escaped while legitimate negative numbers stay numeric',()=>{assert.equal(w.eval("csvCell('=2+2')"),'"\'=2+2"');assert.equal(w.eval("csvCell('-3.5')"),'"-3.5"');});
 check('No DOM execution errors occurred',()=>assert.deepEqual(errors,[]));
-const report={tool:'JSDOM '+require(jsdomPath+'/package.json').version,node:process.version,native_browser:'Not run — local sockets and cloud file navigation blocked by environment policy',checks:results.length,passed:results.filter(r=>r.status==='passed').length,failed:results.filter(r=>r.status==='failed').length,results};
+const report={html_sha256:createHash('sha256').update(html).digest('hex'),tool:'JSDOM '+JSON.parse(fs.readFileSync(resolveModule(jsdomPath+'/package.json'),'utf8')).version,node:process.version,native_browser:'Not exercised by this DOM-only harness',checks:results.length,passed:results.filter(r=>r.status==='passed').length,failed:results.filter(r=>r.status==='failed').length,results};
 fs.writeFileSync(path.resolve(process.env.PPO_FERTIGATION_RESULTS||'fertigation-verification-results.json'),JSON.stringify(report,null,2));
 console.log(JSON.stringify({checks:report.checks,passed:report.passed,failed:report.failed,errors},null,2));
 dom.window.close();process.exitCode=report.failed?1:0;

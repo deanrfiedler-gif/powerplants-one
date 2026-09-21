@@ -1,0 +1,18 @@
+✔ the real-clock My Work fixture retains four ordered future anchors through late evening (16.47ms)
+✔ an overnight appointment keeps its duration and today's start; near-midnight refusal stays explicit (3.2767ms)
+✔ browser scenario preserves the full day and includes real creation timestamps across midnight (6.6804ms)
+✔ two overdue plus four today make six; an undated activity belongs to neither (5.8659ms)
+✔ timing distinguishes overdue text, Due by and Starts at, and never invents a time (4.64ms)
+✔ crossing a due time: a meeting is not overdue because it started, only after its planned end (0.8787ms)
+✔ due-time order is stable for equal times and the next entry skips ended appointments (2.0409ms)
+✔ the week is Monday first, crosses months and years, and refuses a malformed day (1.4741ms)
+✔ an agenda slot says By for a deadline, a bare time for an appointment and never invents a time (1.5052ms)
+✔ durations, greeting and civil-day helpers use the documented time zone (5.1602ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 716.3958

@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import {createHash} from 'node:crypto';
+const files=['docs/design/specialist/r02/evidence.js','docs/design/specialist/r03/catalogue.js','docs/design/specialist/r03/model.js'];
+const context=vm.createContext({});
+for(const file of files)vm.runInContext(fs.readFileSync(file,'utf8'),context,{timeout:1000});
+const {SSEvidence:E,SSCatalogue:C,SS2:M}=context;
+const fields=M.fields.map(f=>({...f,note:f.key==='pipeDiameter'?'C102 affects Cable drum/protector quantities and 50 NB motor sprockets. Default 25 NB preserves r02 equivalence.':f.note,applicability:({diameter:'drive=Pinion',cableLocation:'drive=Cable',sheet:'wider=Yes',height:'Drawing only',roof:'Drawing only'})[f.key]??'Retained source field; all stored values validated'}));
+const out={native_version:'PPO-ES08-NATIVE-1',engine_version:'SS-NATIVE-EXACT-QTY-r01',quantity_version:E.version,part_version:C.version,sources:E.sources,source_files:files.map(path=>({path,sha256:createHash('sha256').update(fs.readFileSync(path,'utf8').replace(/\r\n/g,'\n')).digest('hex')})),fields,manual_rows:M.manualRows,gates:M.gates,lines:E.lines,issues:E.issues,helpers:E.helpers,catalogue:C};
+out.bundle_hash=createHash('sha256').update(JSON.stringify(out)).digest('hex');
+fs.writeFileSync('src/estimating/specialist/source-manifest.json',JSON.stringify(out,null,2)+'\n');
+console.log(JSON.stringify({fields:fields.length,positions:E.lines.length,parts:C.parts.length,parameters:C.parameters.length,findings:E.issues.length+C.quality.length}));

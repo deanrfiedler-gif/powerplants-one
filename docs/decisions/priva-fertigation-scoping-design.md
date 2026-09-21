@@ -60,13 +60,13 @@ Local review records are unauthenticated acknowledgements. Editing the scope inv
 
 ## Executed verification
 
-**51 of 51 focused calculation, integrity and DOM interaction checks pass**, with zero captured DOM execution errors. The [verification output](../testing/evidence/priva-fertigation-scoping-r01/results.json) records individual cases; the [test script](../../scripts/check-priva-fertigation-scoping.cjs) operates on the actual issued HTML.
+**51 of 51 focused calculation, integrity and DOM interaction checks pass**, with zero captured DOM execution errors. The [original verification output](../testing/evidence/priva-fertigation-scoping-r01/results.json) records individual cases; the [test script](../../scripts/check-priva-fertigation-scoping.mjs) operates on the actual issued HTML.
 
 The checks include independent expected values for the synthetic 3 ha / 11,000-plant / 44 m³/h connected / 28 m³/h peak case, splitter counting, unknown propagation, 56 L/h dosing against a hypothetical 50 L/h channel, typed I/O deficits, 24-minute cycles with 21-minute dry intervals, pipe displacement, tank balance, source EC feasibility, backwash paths, imported identities/references, CSV quoting/formula handling, all nine section renders, all capture inspectors, editing, revision changes, undo, referenced-delete protection, snapshots, report content, blocked reviews and storage failure.
 
-Executed runtime: **Node 24.19.0 and JSDOM 30.1.0**. This is a declared substitute for the repository's pinned native runtime. JSDOM dialog, scrolling, object-URL and print methods are stubs solely to allow DOM event verification. Their browser behaviour is **not** established by these tests.
+Original checkpoint runtime: **Node 24.19.0 and JSDOM 30.1.0**. This was a declared substitute for the repository's pinned native runtime. JSDOM dialog, scrolling, object-URL and print methods are stubs solely to allow DOM event verification. Their browser behaviour is **not** established by these tests.
 
-Native Chromium launch was blocked by the execution environment's socket policy. The available Browser skill separately rejected local `file:` navigation. No security-policy workaround was used. Consequently these remain **not run**: native screenshots, desktop/mobile overflow and 200% zoom, full keyboard/focus behaviour, actual file picker/download/reload behaviour across browsers, real localStorage quota behaviour, print/PDF pagination and the 100-block/1,000-valve responsiveness benchmark. Owner visual acceptance remains pending. Broad application/database suites were not relevant to this additive standalone design package and were not run.
+Native Chromium launch was blocked by the original authoring environment's socket policy. The available Browser skill separately rejected local `file:` navigation. No security-policy workaround was used. These module-specific checks remain **not run**: native screenshots, desktop/mobile overflow and 200% zoom, full keyboard/focus behaviour, actual file picker/download/reload behaviour across browsers, real localStorage quota behaviour, print/PDF pagination and the 100-block/1,000-valve responsiveness benchmark. Owner visual acceptance remains pending. Broad application/database suites were not run at that original checkpoint; required repository CI is recorded on the contribution PR.
 
 To repeat the focused verification without changing repository dependencies:
 
@@ -75,8 +75,14 @@ PPO_FERTIGATION_QA="$(mktemp -d)"
 npm install --prefix "$PPO_FERTIGATION_QA" --no-audit --no-fund jsdom@30.1.0
 PPO_JSDOM_PATH="$PPO_FERTIGATION_QA/node_modules/jsdom" \
 PPO_FERTIGATION_RESULTS=/tmp/ppo-fertigation-results.json \
-node scripts/check-priva-fertigation-scoping.cjs
+node scripts/check-priva-fertigation-scoping.mjs
 ```
+
+### PR #275 CI repair — 22 September 2026
+
+The [original primary job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35667439177/job/106556223218) and affected required module jobs stopped at the same five `@typescript-eslint/no-require-imports` violations in the new CommonJS verification script. The repair adopts the repository's existing `.mjs` convention and Node built-in imports, rather than changing lint policy. Node module resolution and file URLs retain support for an externally installed JSDOM directory, including Windows paths; JSDOM remains an optional verification dependency outside the application manifest and lockfile.
+
+All 51 existing case bodies remain unchanged. The [repair verification](../testing/evidence/priva-fertigation-scoping-r01/ci-repair-results.json) passes all 51 on the repository's pinned **Node 24.21.0**, with JSDOM 30.1.0 and zero DOM execution errors. It binds the result to the unchanged issued HTML SHA-256 and identifies the harness as DOM-only. The original result file remains intact. ES-02, ES-08 and Facilities are included through main `ab96e2b`; this repair introduces no application, migration or seed changes. Dean's current all-PR instruction authorises merge after successful required checks; design acceptance and the native review gaps above remain separate.
 
 ## Source and output identities
 

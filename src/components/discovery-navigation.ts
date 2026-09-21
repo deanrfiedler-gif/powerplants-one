@@ -15,11 +15,12 @@ type Navigation = EventTarget & {
 };
 // The native navigation event covers links, router/history mutations, Back and
 // Forward before the document/React tree changes. Presentation stays in memory.
-export function useDiscoveryNavigation(dirty: boolean, pending: boolean) {
+export function useDiscoveryNavigation(dirty: boolean, pending: boolean, internalPrefix?: string) {
   const [leave, setLeave] = useState<{ run: () => void } | null>(null),
     bypass = useRef(false);
   usePendingWork(dirty || pending);
   useEffect(() => {
+    const internal = (url: string | URL) => !pending && !!internalPrefix && new URL(url, location.href).pathname.startsWith(internalPrefix);
     const nav = (window as unknown as { navigation?: Navigation }).navigation;
     const review = (run: () => void) => {
       if (!bypass.current && (dirty || pending)) setLeave({ run });
@@ -30,7 +31,7 @@ export function useDiscoveryNavigation(dirty: boolean, pending: boolean) {
       replace = history.replaceState;
     const intercept = (original: History["pushState"]): History["pushState"] =>
       function (data, unused, url) {
-        if (!url || new URL(url, location.href).href === location.href)
+        if (!url || internal(url) || new URL(url, location.href).href === location.href)
           return original.call(history, data, unused, url);
         review(() => original.call(history, data, unused, url));
       };
@@ -50,6 +51,7 @@ export function useDiscoveryNavigation(dirty: boolean, pending: boolean) {
         bypass.current ||
         (!dirty && !pending) ||
         event.hashChange ||
+        internal(event.destination.url) ||
         !event.cancelable
       )
         return;
@@ -82,6 +84,7 @@ export function useDiscoveryNavigation(dirty: boolean, pending: boolean) {
       if (
         !(a instanceof HTMLAnchorElement) ||
         a.target === "_blank" ||
+        internal(a.href) ||
         a.download ||
         (a.hash && a.pathname === location.pathname)
       )
@@ -107,7 +110,7 @@ export function useDiscoveryNavigation(dirty: boolean, pending: boolean) {
       nav?.removeEventListener("navigate", navigate);
       document.removeEventListener("click", click, true);
     };
-  }, [dirty, pending]);
+  }, [dirty, pending, internalPrefix]);
   return {
     leave,
     stay: () => setLeave(null),

@@ -1,0 +1,12 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"153.0.8010.53"}
+
+Running 2 tests using 1 worker
+
+(node:36760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop-chromium] › tests\browser\facilities.spec.ts:53:1 › CS05 Equipment add and end keep one installation and show accepted versions (1.3s)
+(node:31812) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [mobile-chromium] › tests\browser\facilities.spec.ts:53:1 › CS05 Equipment add and end keep one installation and show accepted versions (1.2s)
+
+  2 passed (4.6s)

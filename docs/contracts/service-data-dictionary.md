@@ -1,6 +1,6 @@
 # PP-01 — Service data and choice dictionary
 
-**Edition:** r13 · **Status:** Logical and physical contract; P01–P10 and CRM I1–I2 implement the bounded subsets explicitly identified below. Actual verification/publication is recorded in each handover. This is not an exported CREMS/MYOB schema.
+**Edition:** r14 · **Status:** Logical and physical contract; P01–P10 and CRM I1–I2 implement the bounded subsets explicitly identified below. Actual verification/publication is recorded in each handover. This is not an exported CREMS/MYOB schema.
 
 BP-03 I1 adds only the explicitly identified opportunity amendment below; its actual verification/publication is in the [I1 handover](../delivery/crm-i1-handover.md).
 
@@ -439,3 +439,20 @@ SyntheticManual/SyntheticApi are the only physical modes. States are Draft, Read
 The [I2 decision](../decisions/crm-i2-worklist.md) adds no table, migration, fixture, identity kind or reference allocation. `WorklistItem` projects actual Opportunity identity/title/version/stage/Open outcome/stage-entry/source update, company/site/organisation context and accountable owner. Its designated Activity projection independently supplies ID, summary, due status and action owner only when every linked target remains visible. Activity completion still derives Needed without a stage command.
 
 Stage definitions come from the immutable I1 catalogue. Counts use only the returned permitted page; explicit read-window fields distinguish all results, intermediate pages and a final partial page. Ephemeral signed cursor state is process memory and client-held read metadata; it is not a business record, durable preference, offline original or permission grant. Restart invalidates the cursor while all accepted opportunity/action/event/receipt data remains durable. Actual execution belongs to the [I2 handover](../delivery/crm-i2-handover.md).
+
+## CS-05 canonical Facility amendment
+
+[ADR-0037](../decisions/ADR-0037-cs05-facilities-native.md) and the [handover](../delivery/facilities-growing-areas-handover.md) implement FAC-D01–03 in migration 0041. The canonical UUID, workspace/company/Site and existing receipt/reference meanings remain intact; Site membership is permanent. Unnumbered Facilities display their complete UUID. No FAC identity backfill is performed.
+
+| Physical contract | Meaning and limits |
+|---|---|
+| `ppo.facilities` nullable detail columns | Eight structure types; six independent uses; names/position/notes; explicit Other or Unknown explanation; type-specific cladding/frame/bays/roof/ventilation/shade/ground/netting/orientation/function fields. See `src/shared/facilities/definition.ts` for exact enumerations, labels, lengths and applicability. |
+| `parent_relationship` | Legacy null parent qualifier displays Grouped under; new parent commands require `grouping` or `physically_within`. Same-Site acyclic ancestry; no inherited area, service or authority. |
+| Measurement decimals | Positive independent values with bounded range and precision; direct SQL and commands reject overprecision. Omitted patch values remain unchanged; explicit null clears optional facts. Blank is unknown, never zero. |
+| Dated growing context | Use/crop/season and source are an observation with a Site-local date; old observations need explicit exact review. Server instants remain UTC. No fallback observation date is invented. |
+| `ppo.facility_sources` | Immutable Facility-scoped reported-note identity/version 1; title, multiline note, source date, recording actor/instant and optional predecessor. Existing source means one of these exact permitted retained records; provider file lookup is unsupported. |
+| Pin columns | Paired bounded coordinates including zero; Proposed/Confirmed state; exact source/date confirmation; removal is reviewed and audited. Google Maps URL is bounded and encoded from coordinates or labelled Site address. |
+| `ppo.asset_served_facilities` | Explicit same-Site service links distinct from `assets.facility_id` installation. One active pair; immutable start/source and retained end/reason. Add/end advances Asset version once and leaves Facility version intact. |
+| Facility history | Existing immutable `audit_events` with before/after, clearing, context/source and reviewed dependency facts; no invented `history_records` kind. |
+
+Rich APIs and scoped keyset pages are additive to legacy shared APIs. Type/use/parent changes that remove or reinterpret facts require a fresh exact comparison. E2 keeps its accepted Facility ID/name/version; no automatic accepted-snapshot, pricing, quote or project mutation occurs. Current read/create/edit use existing shared capabilities; no new grants are seeded. Synthetic examples are introduced once and reseeding retains later edits.

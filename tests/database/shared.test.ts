@@ -175,7 +175,7 @@ test("workspace/company/site scopes apply to detail, list, filter, pagination an
     obs = await principal("observer"),
     siteOnly = await principal("site-observer"),
     finance = await principal("finance");
-  assert.equal((await listShared(p, "Organisation")).items.length, 3);
+  assert.equal((await listShared(p, "Organisation")).items.length, 4); // Includes the explicit CS-05 synthetic organisation.
   assert.equal(
     (await listShared(p, "Organisation", { company_id: id(20, 2) })).items
       .length,
@@ -194,7 +194,7 @@ test("workspace/company/site scopes apply to detail, list, filter, pagination an
   assert.equal(
     (await listShared(await principal("workspace-observer"), "Organisation"))
       .items.length,
-    4,
+    5,
   );
   assert.equal(
     (await listShared(await principal("other-workspace"), "Organisation")).items

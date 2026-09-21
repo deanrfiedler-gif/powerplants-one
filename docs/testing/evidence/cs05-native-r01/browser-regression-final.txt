@@ -1,0 +1,42 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"153.0.8010.53"}
+
+Running 32 tests using 1 worker
+
+(node:35176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop-chromium] › tests\browser\crm.spec.ts:119:1 › CA-01/04/13 desktop and phone full sales journey via real UI, validation, completion and reload (15.8s)
+  ok  2 [desktop-chromium] › tests\browser\crm.spec.ts:249:1 › CA-02/03 real conflict retains proposed need; lost response reconciles original before a new intent (3.7s)
+  ok  3 [desktop-chromium] › tests\browser\crm.spec.ts:325:1 › CA-06/10/13 denied identity clears sensitive forms; real empty, unavailable, loading and 320px keyboard reflow (4.2s)
+  ok  4 [desktop-chromium] › tests\browser\crm.spec.ts:403:1 › CA-06/10 real CRM permission revocation clears linked Activity content after refused completion (4.2s)
+  ok  5 [desktop-chromium] › tests\browser\estimating-cost-basis.spec.ts:12:1 › E2 browser explicitly adopts exact discovery into manual costs, reconciles an uncertain create and retains old scope through a successor (16.3s)
+  ok  6 [desktop-chromium] › tests\browser\estimating-discovery.spec.ts:182:1 › E2 browser creates scoped discovery and retains the original unknown creation through candidate refresh (6.6s)
+  ok  7 [desktop-chromium] › tests\browser\estimating-discovery.spec.ts:295:1 › E2 browser retains unsaved answers and reason while changing a saved workspace's scope (3.2s)
+  ok  8 [desktop-chromium] › tests\browser\estimating-discovery.spec.ts:339:1 › E2 browser retains a stale proposal, explicitly compares the new predecessor and reconciles one original save (4.5s)
+  ok  9 [desktop-chromium] › tests\browser\estimating-discovery.spec.ts:450:1 › E2 browser hides and restores original answers, copies unconfirmed discovery and explicitly selects, archives and reopens (6.2s)
+  ok 10 [desktop-chromium] › tests\browser\estimating-discovery.spec.ts:589:1 › E2 browser clears unsaved answers on identity change and keeps keyboard controls within 320px (2.0s)
+  ok 11 [desktop-chromium] › tests\browser\estimating.spec.ts:22:1 › DR01 browser: deliberate legacy adoption, explicit flags and original uncertain save on desktop and phone (3.4s)
+  ok 12 [desktop-chromium] › tests\browser\estimating.spec.ts:53:1 › E1 browser: create through UI, save successor, prepare hidden allowance, generate and reopen exact draft (7.3s)
+  ok 13 [desktop-chromium] › tests\browser\estimating.spec.ts:70:1 › E1 browser: rejected decimal retains proposal and shows no saved claim (1.3s)
+  ok 14 [desktop-chromium] › tests\browser\estimating.spec.ts:73:1 › E1 browser: changed version preserves proposal until explicit comparison baseline (1.9s)
+  ok 15 [desktop-chromium] › tests\browser\estimating.spec.ts:77:1 › E1 browser: lost accepted response reconciles original operation before new intent (2.0s)
+  ok 16 [desktop-chromium] › tests\browser\estimating.spec.ts:82:1 › E1 browser: identity loss clears sensitive workbook; 320px controls and long draft reflow (5.6s)
+(node:32344) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 17 [mobile-chromium] › tests\browser\crm.spec.ts:119:1 › CA-01/04/13 desktop and phone full sales journey via real UI, validation, completion and reload (15.7s)
+  ok 18 [mobile-chromium] › tests\browser\crm.spec.ts:249:1 › CA-02/03 real conflict retains proposed need; lost response reconciles original before a new intent (2.9s)
+  ok 19 [mobile-chromium] › tests\browser\crm.spec.ts:325:1 › CA-06/10/13 denied identity clears sensitive forms; real empty, unavailable, loading and 320px keyboard reflow (4.4s)
+  ok 20 [mobile-chromium] › tests\browser\crm.spec.ts:403:1 › CA-06/10 real CRM permission revocation clears linked Activity content after refused completion (3.8s)
+  ok 21 [mobile-chromium] › tests\browser\estimating-cost-basis.spec.ts:12:1 › E2 browser explicitly adopts exact discovery into manual costs, reconciles an uncertain create and retains old scope through a successor (12.5s)
+  ok 22 [mobile-chromium] › tests\browser\estimating-discovery.spec.ts:182:1 › E2 browser creates scoped discovery and retains the original unknown creation through candidate refresh (3.8s)
+  ok 23 [mobile-chromium] › tests\browser\estimating-discovery.spec.ts:295:1 › E2 browser retains unsaved answers and reason while changing a saved workspace's scope (2.0s)
+  ok 24 [mobile-chromium] › tests\browser\estimating-discovery.spec.ts:339:1 › E2 browser retains a stale proposal, explicitly compares the new predecessor and reconciles one original save (3.7s)
+  ok 25 [mobile-chromium] › tests\browser\estimating-discovery.spec.ts:450:1 › E2 browser hides and restores original answers, copies unconfirmed discovery and explicitly selects, archives and reopens (6.3s)
+  ok 26 [mobile-chromium] › tests\browser\estimating-discovery.spec.ts:589:1 › E2 browser clears unsaved answers on identity change and keeps keyboard controls within 320px (2.2s)
+  ok 27 [mobile-chromium] › tests\browser\estimating.spec.ts:22:1 › DR01 browser: deliberate legacy adoption, explicit flags and original uncertain save on desktop and phone (3.7s)
+  ok 28 [mobile-chromium] › tests\browser\estimating.spec.ts:53:1 › E1 browser: create through UI, save successor, prepare hidden allowance, generate and reopen exact draft (7.9s)
+  ok 29 [mobile-chromium] › tests\browser\estimating.spec.ts:70:1 › E1 browser: rejected decimal retains proposal and shows no saved claim (1.2s)
+  ok 30 [mobile-chromium] › tests\browser\estimating.spec.ts:73:1 › E1 browser: changed version preserves proposal until explicit comparison baseline (2.1s)
+  ok 31 [mobile-chromium] › tests\browser\estimating.spec.ts:77:1 › E1 browser: lost accepted response reconciles original operation before new intent (2.1s)
+  ok 32 [mobile-chromium] › tests\browser\estimating.spec.ts:82:1 › E1 browser: identity loss clears sensitive workbook; 320px controls and long draft reflow (5.2s)
+
+  32 passed (2.9m)

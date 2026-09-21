@@ -26,6 +26,7 @@ import "./styles/engineering-commissioning-configuration.css";
 import "./styles/engineering-commissioning-release.css";
 import "./styles/project-acceptance.css";
 import "./module-workspaces.css";
+import "./styles/facilities.css";
 export const metadata: Metadata = {
   title: "Powerplants One | Private prototype",
   description: "Private synthetic application foundation for Powerplants One",

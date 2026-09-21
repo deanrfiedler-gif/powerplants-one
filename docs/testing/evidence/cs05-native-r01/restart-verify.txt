@@ -1,0 +1,1 @@
+{"phase":"verify","verified_at":"2026-09-21T13:57:34.553Z","records":3,"digest":"d62f4194d08786c76e2a70294f6a74725b7917a1dc4c292a9cb7004414cd7150","result":"exact records, audit, sources and receipts retained; old process cursor refused and fresh page available"}

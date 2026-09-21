@@ -5,7 +5,7 @@ import { writeFile } from "node:fs/promises";
 import { crmCreate, crmBase } from "../helpers/crm";
 import { estimateInput, manualLines, quoteCommand } from "../helpers/estimating";
 test.describe.configure({timeout:150000});test.use({actionTimeout:15000});
-async function call(page:Page,path:string,body?:unknown){const r=await page.request.fetch(`/api/v1/${path}`,{method:body===undefined?"GET":"POST",headers:body===undefined?{}:{Origin:"http://127.0.0.1:3000","Content-Type":"application/json"},data:body});expect(r.ok(),await r.text()).toBe(true);return r.json();}
+async function call(page:Page,path:string,body?:unknown){const r=await page.request.fetch(`/api/v1/${path}`,{method:body===undefined?"GET":"POST",headers:body===undefined?{}:{Origin:`http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`,"Content-Type":"application/json"},data:body});expect(r.ok(),await r.text()).toBe(true);return r.json();}
 async function identity(page:Page,profile="coordinator"){
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
   if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await page.getByRole("button", { name: "Change identity", exact: true }).click();

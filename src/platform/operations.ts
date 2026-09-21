@@ -142,13 +142,17 @@ export async function sharedOperation<T>(
   }>,
   object_type: string,
   kind: string,
+  additionalOperationIds: readonly string[] = [],
 ) {
   const hash = createHash("sha256")
     .update(canonical({ command: name, ...input }))
     .digest("hex");
   try {
     return await transaction(async (client) => {
-      await lockOperation(client, p, input.operation_id);
+      // Specialist terminal reconciliation needs both intent locks before the
+      // workspace lock. Existing commands retain their single lock and hash.
+      for (const id of [...new Set([input.operation_id, ...additionalOperationIds])].sort())
+        await lockOperation(client, p, id);
       // A small prototype serialises graph mutations within one workspace. No cross-workspace bottleneck.
       await client.query(
         "SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",

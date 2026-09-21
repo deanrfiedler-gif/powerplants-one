@@ -10,6 +10,7 @@ import { acceptedEstimateContext, estimateContext, versionContext, type Estimate
 import { costingInput, costingProposal } from "./cost-basis-validation";
 import { expected, insertVersion } from "./service";
 
+import { writeLineage } from "./specialist/lineage";
 async function selectedBasis(c:QueryClient,p:Principal,id:string,optionId:string,revisionId:string) {
   const g=await workspaceAuthority(c,p,id,true);
   await requireDraftGroup(c,p,g);
@@ -63,6 +64,7 @@ export async function adoptDiscoveryCosting(p:Principal,id:string,value:unknown)
     }
     await insertVersion(c,p,updated,{...input,schema_version:2},next,e?.current_version_id??null);
     await c.query(`INSERT INTO ppo.estimate_discovery_bases(workspace_id,company_id,estimate_id,estimate_version_id,revision_id) VALUES($1,$2,$3,$4,$5)`,[p.workspace_id,g.company_id,updated.id,next,r.id]);
+    await writeLineage(c,p,next,e?.current_version_id??null);
     return {...updated,audit_details:{saved_version_id:next,predecessor_id:e?.current_version_id??null,estimating_workspace_id:g.id,option_id:r.option_id,revision_id:r.id,
       scope_snapshot_id:r.scope_snapshot_id,answer_snapshot_id:r.answer_snapshot_id,scope_content_hash:r.content_hash,scope_context_hash:r.context_hash,reviewed_context_hash:targets.context_hash,arithmetic_policy:input.policy}};
   },"Estimate",input.expected_estimate_version===0?"EstimateCreated":"EstimateVersionSaved");
