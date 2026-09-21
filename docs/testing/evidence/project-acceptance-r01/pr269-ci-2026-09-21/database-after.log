@@ -1,0 +1,42 @@
+✔ CA-01/03 real atomic creation, competing identical retries, original hashes and one effect (5470.7998ms)
+✔ CA-01 failure at final outbox insert rolls back every domain/link/identity/reference/evidence write (6328.1114ms)
+✔ CA-02 competing PostgreSQL qualification/action transactions block and accept exactly one expected version (6477.6157ms)
+✔ CA-02 two qualification intents preserve the winning need and immutable stage entry (7641.0702ms)
+✔ CA-04/07 completing designated action retains outcome and requires deliberate successor, never stage progression (9393.0106ms)
+✔ CA-04/07 unknown contact needs owned active identification; terminal historical action remains valid history (16604.342ms)
+✔ CA-01/05/06 invalid wrong company leaves no partial effects (16082.8267ms)
+✔ CA-01/05/06 invalid unaffiliated contact leaves no partial effects (11211.7465ms)
+✔ CA-01/05/06 invalid other site leaves no partial effects (8797.5959ms)
+✔ CA-01/05/06 invalid unknown definition leaves no partial effects (8320.7434ms)
+✔ CA-01/05/06 invalid Systems owner leaves no partial effects (12484.7473ms)
+✔ CA-01/05/06 invalid actor injection leaves no partial effects (7959.4101ms)
+✔ CA-01/05/06 invalid state injection leaves no partial effects (7702.0931ms)
+✔ CA-01/05/06 invalid client reference leaves no partial effects (7572.973ms)
+✔ CA-01/05/06 invalid unknown site without reason leaves no partial effects (7092.129ms)
+✔ CA-01/05/06 invalid unknown contact without reason leaves no partial effects (7276.5841ms)
+✔ CA-01/05/06 invalid oversized title leaves no partial effects (7996.2044ms)
+✔ CA-01/05/06 invalid blank need leaves no partial effects (7109.8472ms)
+✔ CA-05 permitted shared person preserves one identity and same-name organisations never merge (6715.1736ms)
+✔ CA-06/10 current scope suppresses opportunity and all-target Activity through direct/list/filter/selector/receipt (8367.18ms)
+✔ CA-06 scoped site reader sees its site only; CRM owner label does not replace grants (8365.8281ms)
+✔ CA-08 reassignment versus completion keeps current owner/version and terminal outcome exact (8765.6815ms)
+✔ CA-01/05 real FK, deferred designation, immutable config/context/events and direct SQL failures (8020.8096ms)
+✔ CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and hashes; repeat seed never repairs revocations or edits (20771.8665ms)
+✔ CA-01/03 direct SQL cannot skip an intermediate version event or append unaccepted future history (7939.0556ms)
+✔ CA-06/10 each mixed Activity target controls visibility, designation content and current-permission receipts (9293.7717ms)
+✔ CA-01/08 eligible action owner needs Activity authority and CRM read, not Opportunity edit (8273.047ms)
+✔ CA-10 existing field and report follow-up projections obey every Opportunity target (12517.1644ms)
+✔ CA-05/06 scoped site creator selects only permitted context and completes its owned journey (9615.5064ms)
+✔ EN07-A48: migration 0030 and seed 30 are additive and a rerun changes nothing (13728.7093ms)
+✔ EN07-A59 A58 A16 A54 A55 A56: the audited fixture is derived by the server, and rebuilding it changes nothing (20920.8444ms)
+✔ EN07-A22 A23 A26 A30: authorship never decides, a policy must name the person, and a moved source makes a decision ineligible without rewriting it (19610.8498ms)
+✔ EN07-A25 A29 A32 A33 A37 A40 A41 A43 A50: accepted is not implemented; the whole path to closure keeps every outcome and attempt (21539.9963ms)
+✔ EN07-A14 A24 A42 A51 A44: honest completeness, correction by successor, no-implementation closure, overlap and cost projection (19932.3694ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 386235.3663

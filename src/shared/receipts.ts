@@ -1,5 +1,6 @@
 import { createResolutionAuthority } from "../estimating/specialist/recovery";
 import { acceptedAuthority as specialistAcceptedAuthority } from "../estimating/specialist/context";
+import { receiptAuthority as acceptanceReceiptAuthority } from "../projects/acceptance/commands";
 import { engineeringRow } from "../engineering/service";
 import { materialReceiptAuthority } from "../engineering/materials/commands";
 import { changeReceiptAuthority } from "../engineering/changes/commands";
@@ -42,7 +43,9 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.object_type === "EmailMessage") {
+  if (r.command?.startsWith("Acceptance:")) {
+    await acceptanceReceiptAuthority(client,p,r.record_id,r.command);
+  } else if (r.object_type === "EmailMessage") {
     const message = await emailContext(client,p,r.record_id,true);
     if (r.command === "CreateEmailFollowUp") {
       if (!message.followup_id) throw unavailable();

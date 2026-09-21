@@ -13,9 +13,8 @@ jobs:
   p01:
     name: P01–P11 and CRM I1–I2 local application and PostgreSQL proof
     runs-on: ubuntu-24.04
-    # Full retained suites include two ten-minute-bounded P11 journeys and
-    # actual database/application/browser restarts. ES-02's pre-merge run took
-    # 118 minutes; retain EN-07/EN-08 coverage too. Keep individual deadlines.
+    # Serial retained suites include bounded P11 journeys and real restarts.
+    # Allow job-level headroom for the complete proof; keep individual deadlines.
     timeout-minutes: 150
     services:
       postgres:
@@ -302,12 +301,15 @@ jobs:
           Path('verification-evidence/p11-focused-db/provenance.json').write_text(json.dumps({'source_head':os.environ['PPO_SOURCE_HEAD'],'executed_checkout':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'executed_tree':subprocess.check_output(['git','rev-parse','HEAD^{tree}'],text=True).strip(),'run_id':os.environ['GITHUB_RUN_ID'],'run_attempt':os.environ['GITHUB_RUN_ATTEMPT'],'environment':'Disposable GitHub CI; exact repository pins; fresh and current-main/P10 records'},indent=2))
           PY
           node --env-file=.env.local --import tsx --test --test-reporter=tap --test-concurrency=1 --test-timeout=120000 tests/database/quality-travel.test.ts tests/database/quality-upgrade.test.ts tests/database/quality-planner.test.ts tests/database/quality-templates.test.ts tests/database/quality-reports.test.ts 2>&1 | tee verification-evidence/p11-focused-db/results.tap
+      # Reuse the build verified above. Three cold dev warm-ups each took 4.9 minutes
+      # in run 35600720445, exhausting the 30-minute job during otherwise passing tests.
+      # Keep every test, warm-up dependency, assertion and timeout unchanged.
       - name: Focused P11 complete selected Service and Finance journey
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-journey-browser/results.json
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
-          npx playwright test tests/browser/quality-journey.spec.ts --output verification-evidence/p11-journey-browser --reporter=list,json
+          npx playwright test --config=playwright.compiled.config.ts tests/browser/quality-journey.spec.ts --output verification-evidence/p11-journey-browser --reporter=list,json
       - name: Prepare journey review diagnostics
         if: always()
         id: journey_review
@@ -333,7 +335,7 @@ jobs:
           # The preceding upgrade proof deliberately revokes grants and may fail
           # before its normal cleanup. Retained browser evidence owns fresh fixtures.
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
-          npx playwright test tests/browser/finance.spec.ts --grep 'P10 PT-17/PT-19|P10 stale browser proposal|P10 lost save response' --output verification-evidence/p11-retained-finance-browser --reporter=list,json
+          npx playwright test --config=playwright.compiled.config.ts tests/browser/finance.spec.ts --grep 'P10 PT-17/PT-19|P10 stale browser proposal|P10 lost save response' --output verification-evidence/p11-retained-finance-browser --reporter=list,json
       - name: Prepare retained Finance review diagnostics
         if: always()
         id: retained_finance_review
@@ -354,7 +356,7 @@ jobs:
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-focused-browser/results.json
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
-          npx playwright test tests/browser/quality.spec.ts tests/browser/quality-states.spec.ts --output verification-evidence/p11-focused-browser --reporter=list,json
+          npx playwright test --config=playwright.compiled.config.ts tests/browser/quality.spec.ts tests/browser/quality-states.spec.ts --output verification-evidence/p11-focused-browser --reporter=list,json
       - name: Prepare focused review diagnostics
         if: always()
         id: focused_review

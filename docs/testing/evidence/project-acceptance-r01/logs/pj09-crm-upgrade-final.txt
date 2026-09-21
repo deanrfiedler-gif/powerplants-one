@@ -1,0 +1,9 @@
+✔ HV-19/22: upgrade captures the pre-transfer owner at its exact old version when creation author differs (19130.7285ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 29125.6589

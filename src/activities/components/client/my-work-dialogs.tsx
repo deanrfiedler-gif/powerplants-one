@@ -46,7 +46,8 @@ export const typeIcons: Record<ActivityType, IconName> = {
   Meeting: "video",
   SiteVisit: "pin",
 };
-export function recordHref(linked: Pick<WorkRow["linked"], "type" | "id">) {
+export function recordHref(linked: { type: WorkRow["linked"]["type"] | "Project"; id: string | null }) {
+  if(linked.type === "Project") return `/projects/${linked.id}`;
   const root = {
     Lead: "/sales/leads",
     Opportunity: "/sales/opportunities",

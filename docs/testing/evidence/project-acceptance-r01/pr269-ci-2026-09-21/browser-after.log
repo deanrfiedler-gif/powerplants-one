@@ -1,0 +1,54 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"153.0.8010.53"}
+
+Running 4 tests using 1 worker
+
+(node:15420) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop-chromium] › tmp\pr269-tests\quality-states.spec.ts:9:1 › P11 PT-29 pack and report queues never turn failed reads into empty or issued claims (6.0s)
+  ok 2 [desktop-chromium] › tmp\pr269-tests\quality-states.spec.ts:64:1 › P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial (3.4m)
+(node:1364) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [mobile-chromium] › tmp\pr269-tests\quality-states.spec.ts:9:1 › P11 PT-29 pack and report queues never turn failed reads into empty or issued claims (5.5s)
+  x  4 [mobile-chromium] › tmp\pr269-tests\quality-states.spec.ts:64:1 › P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial (2.8s)
+
+
+  1) [mobile-chromium] › tmp\pr269-tests\quality-states.spec.ts:64:1 › P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial
+
+    Error: {"code":"ResourceConflict","message":"SYN Riley Technician: reserved 2031-11-06T00:00:00.000Z to 2031-11-06T02:00:00.000Z (UTC). Original booking retained.","field_errors":[{"field":"crew","message":"SYN Riley Technician: reserved 2031-11-06T00:00:00.000Z to 2031-11-06T02:00:00.000Z (UTC). Original booking retained."}],"correlation_id":"0f60e4cf-ba9e-40da-83af-1c5aab539ad9","retryable":false}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+       at quality-browser.ts:95
+
+      93 |   }
+      94 |   const d = await r.json();
+    > 95 |   expect(r.ok(), JSON.stringify(d)).toBe(true);
+         |                                     ^
+      96 |   expect(r.headers()["cache-control"]).toBe("private, no-store");
+      97 |   return d;
+      98 | }
+        at call (C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09-fix\tmp\pr269-tests\quality-browser.ts:95:37)
+        at prepareFieldAppointment (C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09-fix\tests\helpers\field-http.ts:59:3)
+        at financeHttpSource (C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09-fix\tests\helpers\finance-http.ts:13:17)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09-fix\tmp\pr269-tests\quality-states.spec.ts:69:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\pr269-positive-results\quality-states-P11-PT-29-a-4ff90-recovery-and-current-denial-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\pr269-positive-results\quality-states-P11-PT-29-a-4ff90-recovery-and-current-denial-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\pr269-positive-results\quality-states-P11-PT-29-a-4ff90-recovery-and-current-denial-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\pr269-positive-results\quality-states-P11-PT-29-a-4ff90-recovery-and-current-denial-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [mobile-chromium] › tmp\pr269-tests\quality-states.spec.ts:64:1 › P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial
+  3 passed (4.0m)

@@ -69,7 +69,7 @@ Strict DTOs reject unknown keys, actor/approval/eligibility spoofing and duplica
 
 ## Entities and authority
 
-Migration 0033 adds scoped configuration aggregates, immutable bindings/drafts,
+Migration 0040 adds scoped configuration aggregates, immutable bindings/drafts,
 runs, resolved sets, adoptions, lineage manifests, finding reviews and terminal
 operation closures. Composite foreign keys bind workspace/company/alternative
 relationships. Immutable snapshots use bounded versioned JSON; relationship,
@@ -183,3 +183,33 @@ Historical evidence continues to identify its original executable commits.
 Fresh integration verification is recorded in the
 [handover](../delivery/es08-specialist-workbench-handover.md#pr-273-conflict-repair).
 This branch integration does not merge the pull request or deploy the application.
+
+## PR #273 CI repair and PJ-09 integration
+
+The Email Calendar check on `ccdd192` failed its five-second identity-ready DOM
+assertion while the initial session GET was pending. ES-02 `ce1920c` already
+incorporates main's `c7101c1` / `8c96ebb` repair: await that actual response within
+the existing fifteen-second action budget, assert its 401/no-store boundary,
+then use the unchanged DOM check. Its regression deliberately delays the real
+response by 6.5 seconds. Integrate that published base rather than duplicate it.
+
+PJ-09 owns issued migrations 0032–0038; ES-02 now owns 0039 and ADR-0035. Move
+the unmerged specialist migration and seed to 0040/40, retaining identical SQL
+bytes. Keep ADR-0034 for ES-08. Preserve PJ-09's receipt authority, module route,
+explicit baseline menu geometry, lifecycle guards, grants and upgrade proofs.
+ES-08 continues to use the shared menu presentation; combining scope selectors
+does not adopt PJ-09's baseline geometry for it. Review the hosted-upgrade guard
+through 40 and every exact migration/seed consumer. No ledger is rewritten.
+
+Verification runs in an isolated checkout and a task-owned loopback PostgreSQL 16
+cluster containing only `ppo_synthetic_test`, avoiding concurrent local work.
+[Fresh results](../delivery/es08-specialist-workbench-handover.md#pr-273-ci-repair)
+remain separate from the earlier source commits and logs.
+
+During the same repair, P11 focused quality job `106335903139` exhausted its
+thirty-minute job limit. All completed assertions passed; its three separate
+development-server warm-ups each took 4.9 minutes (347 routes). Reuse the compiled
+application already produced by that job's `npm run check` for its three browser
+stages via the existing `playwright.compiled.config.ts`. Keep all tests, warm-up
+dependencies, assertions, deadlines, resets and evidence steps. This removes
+repeated compilation without extending or bypassing an acceptance check.

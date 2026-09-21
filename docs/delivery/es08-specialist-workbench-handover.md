@@ -12,7 +12,7 @@ Dean requested execution of the two issued r02 documents. Their normative bodies
 are identical. Scope is Screen Systems, EST-06/E5, CRE-13–CRE-17, EA-16/17,
 AT-04/28, G06 and D-009; no parent requirement is renamed or closed by this work.
 [Architecture and precision ledger](../decisions/ADR-0034-es08-specialist-workbench.md).
-Branch `feat/es08-specialist-workbench` integrates ES-02 prerequisite `c0ced54`;
+Branch `feat/es08-specialist-workbench` integrates ES-02 prerequisite `ce1920c`;
 the original implementation and historical evidence started on `ea57344`.
 The [field contract](es08-field-contract.csv) records types/technical limits; these
 are defensive computation bounds, not approved engineering ranges. The authored
@@ -21,7 +21,7 @@ are defensive computation bounds, not approved engineering ranges. The authored
 | Package | Delivered work |
 |---|---|
 | S01 | Source inventories, exact contracts, authority/writer reconciliation and ADR |
-| S02 | Migration/seed 0033, durable raw drafts, immutable runs and resolved sets, scoped APIs |
+| S02 | Migration/seed 0040, durable raw drafts, immutable runs and resolved sets, scoped APIs |
 | S03 | Exact rational engine, 64 fields, five extra screens, 143 positions, 101 catalogue entries, 14 manual allowances, six gates, 12 parameters |
 | S04 | Register/create and six native views, shared shell, four accessible schematic diagrams, independent pricing lanes |
 | S05 | Configuration and estimate B/C/N comparisons, contribution lineage in every estimate writer, atomic synthetic receiving, source rebase/copy/archive and reload recovery |
@@ -193,7 +193,7 @@ specialist HTTP; B = compiled specialist browser; R = code/source/visual review.
 | ES08-T51 | Snapshot export | H / B |
 | ES08-T52 | Freshness/races | B — Late calculation response and deliberately delayed post-save resource refresh |
 | ES08-T53 | Bounds | U / H |
-| ES08-T54 | Upgrade/replay | D — Migration 0033 (originally 0031); all exact registry consumers updated; cross-0026 estimate upgrade |
+| ES08-T54 | Upgrade/replay | D — Migration 0040 (earlier branch slots 0031/0033); all exact registry consumers updated; cross-0026 estimate upgrade |
 | ES08-T55 | Visual evidence | B |
 | ES08-T56 | Handover accuracy | R — This handover and pinned evidence manifest; owner acceptance remains separate |
 | ES08-T57 | Transport contract | H |
@@ -259,3 +259,62 @@ the original evidence manifest and logs remain unchanged. Database checks use
 only the disposable `ppo_synthetic_test` target. No development ledger rewrite,
 hosted migration or deployment is performed. Published-head CI remains a separate
 check; the earlier CI results above are not evidence for this merge.
+
+## PR #273 CI repair
+
+[Email Calendar run 35600720314](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35600720314)
+failed on `ccdd192`: its first desktop journey checked identity readiness for
+five seconds while the initial session GET remained pending. The mobile journey
+and the other desktop case passed. The Estimating, compiled-browser, hosted-demo
+and Engineering jobs passed on that same head.
+
+ES-02 advanced to `ce1920c`, incorporating the existing main repair (`c7101c1`,
+`8c96ebb`) and PJ-09. The test now waits for the actual session response within
+the existing fifteen-second action budget, checks 401 and private/no-store, and
+retains the original five-second DOM assertion. Its 6.5-second delayed-response
+regression is retained unchanged. No application identity behavior is changed.
+
+The integration preserves issued migrations 0032–0038, ES-02 0039/ADR-0035 and
+ES-08 ADR-0034. Specialist SQL moves unchanged to 0040; its seed uses version 40.
+All exact registry/seed assertions, the hosted upgrade gate, both module routes,
+receipt authority and the distinct shared/baseline menu presentations are kept.
+The original verification logs and source fingerprints remain historical.
+
+Fresh local verification passed in `tmp/es08-pr273-ci`, combining `ccdd192`
+and `ce1920c` with the resolutions above. The separate loopback PostgreSQL 16
+cluster contained only the disposable `ppo_synthetic_test` database.
+
+- TypeScript, full lint, production build, foundation and naming checks passed;
+  maintained instructions are 7,941 characters and all 78 parent IDs are retained.
+- [59 focused unit cases](../testing/evidence/es08-native-r01/ci-repair-unit.txt):
+  specialist, Estimating, migration registry and PJ-09 suites.
+- [30 migration/specialist cases](../testing/evidence/es08-native-r01/ci-repair-upgrades.txt):
+  all 15 ES-08 cases plus exact registry/seed and retained-original upgrade proofs.
+  Command uses `--test-name-pattern='upgrade|migration|repeat|ES08'` over
+  estimating, estimating-workspaces, estimating-configuration, specialist,
+  leads-projects-integration, field, finance-upgrade, offline, packs, planner and
+  reports database suites, with concurrency 1 and the existing 120-second deadline.
+- [Nine Email Calendar/hosted-demo database cases](../testing/evidence/es08-native-r01/ci-repair-email-demo.txt),
+  including current upgrade, grant preservation and late-failure rollback.
+- [Four Email Calendar browser cases](../testing/evidence/es08-native-r01/ci-repair-email-browser.txt)
+  passed desktop and phone, including the delayed-session regression. The ignored
+  local copy changes only its relative helper import and loopback origin from
+  port 3000 to 3019; this equivalence was checked. It uses the
+  compiled application without a dev warm-up. Published CI retains the repository
+  test and ordinary development-server workflow unchanged.
+- [All ten ES-08 compiled browser cases](../testing/evidence/es08-native-r01/ci-repair-specialist-browser.txt)
+  passed together in 2.8 minutes, through `playwright.es08.config.ts` on port 3018.
+  Shared layout, receiving, reload recovery, permissions and stale previews pass
+  on desktop and touch phone.
+
+The new logs retain actual output with LF/trailing-whitespace normalization.
+No earlier evidence is rewritten. No other checkout, development ledger or
+hosted database is changed. Published-head CI results are tracked on PR #273;
+these local results do not claim completion of those jobs.
+
+The P11 focused quality job in [run 35600720445](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35600720445)
+also reached its thirty-minute limit while assertions were still passing. Its
+three development warm-ups each took 4.9 minutes over 347 routes. The three
+focused browser stages now reuse the build already checked in that job via the
+existing compiled configuration. Tests, individual timeouts, the job deadline,
+fixture resets and evidence collection remain unchanged.

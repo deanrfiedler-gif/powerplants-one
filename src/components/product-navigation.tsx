@@ -393,8 +393,9 @@ export function ProductHeader() {
   const changes = page?.id === "engineering" ? changesPath(path) : undefined;
   // EN-08 likewise: "Engineering / Commissioning Basis & As-Built Release", then its destination while its menu is hidden.
   const commissioning = page?.id === "engineering" ? commissioningPath(path) : undefined;
-  const crumb = materials ?? changes ?? commissioning;
-  const view = page?.id === "work" ? workViewForPath(path)?.label : materials ? materialsModuleLabel : changes ? changesModuleLabel : commissioning ? commissioningModuleLabel : undefined;
+  const acceptance = path.startsWith("/projects/acceptance");
+  const crumb = materials ?? changes ?? commissioning ?? (acceptance ? { view: undefined } : undefined);
+  const view = page?.id === "work" ? workViewForPath(path)?.label : materials ? materialsModuleLabel : changes ? changesModuleLabel : commissioning ? commissioningModuleLabel : acceptance ? "Staged Acceptance & Closeout" : undefined;
   const subview = crumb?.view?.label;
   const workspaceRoot = page?.workspace ? workspaces.find((w) => w.id === page.workspace) : undefined;
   const currentModule =

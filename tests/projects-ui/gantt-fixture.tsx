@@ -54,6 +54,7 @@ const tasks: Task[] = Array.from({ length: 24 }, (_, i) => ({
 }));
 const schedule: Schedule = {
   project: {
+    lifecycle: "Active", acceptance_version: 1,
     id,
     version: 25,
     title: "SYN Block C · Irrigation & climate upgrade",

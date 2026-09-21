@@ -1,0 +1,23 @@
+{
+  "build": "cYYjWLUDFuRdMBeyeGr02",
+  "project": "ef19da32-462b-4e14-8560-59917bf2ff7f",
+  "stage": "0cdf14eb-77a1-42bf-80d3-d51dccf1a7d3",
+  "operation": "8fd6cab2-97a9-4c37-873a-34b11b92b05b",
+  "applicationPids": [
+    15800,
+    2796
+  ],
+  "postgresPids": [
+    "3520",
+    "2260"
+  ],
+  "pdfSha256": "b070fde64706e93c1bfa07423faf792df63e27c3ef706fc89e6555491f7987bb",
+  "counts": {
+    "closes": 1,
+    "requests": 3,
+    "responses": 1,
+    "followups": 5
+  },
+  "actualProcessRestarts": true,
+  "lostResponse": "Browser intercepted successful upstream commit and aborted the client response; recovery used the server-held original after both process restarts."
+}

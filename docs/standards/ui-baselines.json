@@ -3,7 +3,7 @@
   "title": "Powerplants One UI design baseline register",
   "revision": "r02",
   "owner": "Dean Fiedler",
-  "updated": "2026-09-18",
+  "updated": "2026-09-21",
   "authority": "docs/standards/ui-style-specification.md section 7",
   "scope": "Accepted UI design baselines, their scope containers and the application routes they govern. Design-side integrity and token facts only; this register establishes no application, permission or business acceptance.",
   "viewports": [
@@ -140,6 +140,21 @@
       "adaptations": "docs/decisions/crm-deals-design-correction.md"
     },
     {
+      "id": "pj09-r01",
+      "route": "/projects/acceptance",
+      "scope": "#ppo-acceptance",
+      "layout": "full-bleed",
+      "scroll_owner": ".ac-scroll",
+      "design": "docs/reference/project-acceptance/PPO-PJ-09-Staged-Acceptance-and-Closeout-Desktop-UI-Mockup-r01.png",
+      "sha256": "9d3cf7edb1d6184d14bc9d1a4c42c97a4d3ba2ddc2c2d2004ca6e54febe3b242",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/unit/project-acceptance.test.ts",
+      "application_proof": "scripts/check-project-acceptance-browser.ts",
+      "authority": "Dean requested the local server-backed PJ-09 increment; written r02 contract and actual r22 components take precedence over raster composition. Owner acceptance remains separate.",
+      "adaptations": "docs/decisions/ADR-0033-staged-acceptance.md"
+    },
+    {
       "id": "es02-r01",
       "route": "/estimating/discovery/[id]",
       "scope": "#ppo-estimate-wizard",
@@ -152,7 +167,7 @@
       "component_proof": "tests/helpers/es02-design.ts",
       "application_proof": "tests/browser/estimating-wizard.spec.ts",
       "authority": "Dean supplied implementation prompt r03 and plan r04 and requested execution; native visual and business acceptance remain pending. This integration contract does not promote a new accepted design baseline.",
-      "adaptations": "docs/decisions/ADR-0033-es02-structured-discovery.md"
+      "adaptations": "docs/decisions/ADR-0035-es02-structured-discovery.md"
     },
     {
       "id": "es08-native-r01",

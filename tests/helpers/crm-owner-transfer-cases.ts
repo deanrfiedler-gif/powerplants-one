@@ -846,7 +846,9 @@ export function ownerTransferCases() {
           ? tableRows.map((r) => ({
               row: { ...r.row, activity_type: "Task", starts_at: null, due_date_only: false },
             }))
-          : tableRows,
+          : oldTables[i] === "activity_links"
+            ? tableRows.map((r) => ({ row: { ...r.row, project_id: null } }))
+            : tableRows,
       ),
     );
     assert.deepEqual(

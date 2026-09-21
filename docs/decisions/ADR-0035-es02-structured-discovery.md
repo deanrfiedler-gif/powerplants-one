@@ -1,12 +1,12 @@
 ---
-document_id: PPO-ADR-0033
+document_id: PPO-ADR-0035
 revision: r01
 date: 2026-09-21
 owner: Dean Fiedler
 status: Implemented and verified in synthetic scope; owner acceptance pending
 ---
 
-# ADR-0033 — Structured ES-02 discovery and exact saved reads
+# ADR-0035 — Structured ES-02 discovery and exact saved reads
 
 Dean requested execution of the supplied ES-02 implementation prompt r03 and
 refinement plan r04. This decision implements that independent scope under
@@ -25,7 +25,7 @@ versions are rejected. The ten-question `SYN-E2-QUESTIONS/r01` definition,
 its hash and work tags are unchanged. No conversion occurs on historical reads.
 All paths through `compileDiscovery` dispatch the captured extension, including
 saved cost bases and quote-safe historical authority. No pricing or new grant
-is introduced. Migration 0032 protects new JSON memberships and permanent child ownership;
+is introduced. Migration 0039 protects new JSON memberships and permanent child ownership;
 the inspected pre-change registry ended at 0029.
 
 Snapshot JSON avoids duplicating the aggregate and its immutable transaction
@@ -177,3 +177,10 @@ Main integration, 21 September: EN-07/EN-08 merged at `f977bf8` while ES-02 assu
 ran and own migration versions 0030/0031. The unmerged, undeployed ES-02 migration
 is renumbered from 0030 to 0032 with identical SQL bytes. Their seeds, grants and
 issued migrations remain unchanged; there is no ES-02 seed or ledger rewrite.
+
+Subsequent main integration at `af3f045` preserves PJ-09 migrations 0032–0038 and
+its seed/grant and upgrade contracts. The still-unmerged ES-02 SQL moves unchanged
+to 0039. This same ES-02 decision was formerly the unmerged ADR-0033; it moves to
+ADR-0035 because main now owns ADR-0033 and the separate ES-08 branch already uses
+ADR-0034. Issued records, all parent requirements and historical evidence remain
+unchanged. Current links and the maintained register use the new identifier.

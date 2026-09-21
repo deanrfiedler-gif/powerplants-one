@@ -155,18 +155,18 @@ const describe = (b: Bundle, bytes: Buffer, recovered: boolean): Prepared => {
 // response or a crash finds the bytes it already made and never renders a second, different file. Bytes that
 // belong to other content are never overwritten. Nothing here touches the database: a failure leaves the release
 // exactly as it was, unissued, and the caller reports the real failure.
-export async function prepareBundle(p: Principal, input: { output_id: string; kind: OutputKind; audience: Audience; manifest_hash: string; html: (output: { id: string; prepared_at: string }) => string; head: string; foot: string }, render: Renderer = renderPdf): Promise<Prepared> {
+export async function prepareBundle(p: Principal, input: { output_id: string; kind: OutputKind; audience: Audience; manifest_hash: string; template_version?: string; html: (output: { id: string; prepared_at: string }) => string; head: string; foot: string }, render: Renderer = renderPdf): Promise<Prepared> {
   const context = { workspace_id: p.workspace_id, actor_id: p.actor_id, operation_id: input.output_id }, store = documentStore();
   try {
     const existing = "locate" in store ? await store.locate(context) : null;
     if (existing) {
       const b = JSON.parse(Buffer.from(existing.bytes).toString("utf8")) as Bundle;
-      if (b.output_id !== input.output_id || b.kind !== input.kind || b.manifest_hash !== input.manifest_hash || b.audience !== input.audience)
+      if (b.output_id !== input.output_id || b.kind !== input.kind || b.manifest_hash !== input.manifest_hash || b.audience !== input.audience || b.template_version !== (input.template_version ?? templateVersion(input.kind)))
         throw new AppError(409, "OutputIdentityInUse", "This output identity already holds bytes prepared from different content. Those bytes are retained; prepare the changed content under a new output identity.");
       return describe(b, Buffer.from(existing.bytes), true);
     }
     const prepared_at = new Date().toISOString(), html = input.html({ id: input.output_id, prepared_at }), rendered = await render(html, input.head, input.foot);
-    const bundle: Bundle = { schema_version: 1, output_id: input.output_id, kind: input.kind, audience: input.audience, manifest_hash: input.manifest_hash, template_version: templateVersion(input.kind), prepared_at, html, pdf_base64: rendered.pdf.toString("base64"), renderer_version: rendererVersion, browser_version: rendered.browser_version };
+    const bundle: Bundle = { schema_version: 1, output_id: input.output_id, kind: input.kind, audience: input.audience, manifest_hash: input.manifest_hash, template_version: input.template_version ?? templateVersion(input.kind), prepared_at, html, pdf_base64: rendered.pdf.toString("base64"), renderer_version: rendererVersion, browser_version: rendered.browser_version };
     const bytes = Buffer.from(canonical(bundle));
     await store.store(context, bytes, digest(bytes));
     return describe(bundle, bytes, false);

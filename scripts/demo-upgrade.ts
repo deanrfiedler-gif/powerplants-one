@@ -88,13 +88,20 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // row locks on authority tables, without granting the runtime role write access. Existing-data compatibility stays under the retained
   // upgrade tests. The accepted five-stage demonstration uses a separately prepared
   // database/storage epoch; this function neither resets nor activates that epoch.
-  // Reviewed for 0032: immutable configuration ownership ledger and a revision
-  // insert trigger; no backfill, identity-table ALTER, seed, grant or output rewrite.
-  // Existing generic runtime table grants cover this aggregate-owned ledger.
-  // Reviewed 0033: additive specialist evidence and immutable policy manifests.
+  // 0032 review: acceptance tables, Project lifecycle default Active and typed Project Activity
+  // links are additive. Seed 32 grants only existing local synthetic profiles; invited testers
+  // gain no acceptance authority. No source/receipt is rewritten and no hosted action is run here.
+  // 0033 preserves the exact Project event-chain gate with a named acceptance event; no new grants or seed.
+  // 0034–0037 add recipient FKs, immutable responses, actor-private recovery and scope disposition history.
+  // No further seeds/grants, no replacement of existing issues, identities or receipts.
+  // 0038 corrects the EN-08 change trigger variable only; no data or grants change.
+  // Reviewed for 0039: ES-02 immutable configuration ownership and revision checks;
+  // no backfill, identity-table ALTER, seed, grant or output rewrite. The existing
+  // aggregate runtime grants cover this ledger; retain all PJ-09 upgrade guards.
+  // Reviewed 0040: additive specialist evidence and immutable policy manifests.
   // No old content, grants or users change. Identity trigger events are flushed
   // before type widening; runtime policy writes are revoked after generic grants.
-  if (latestMigrationVersion !== 33) throw Error("Review the existing-demo upgrade for this release.");
+  if (latestMigrationVersion !== 40) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

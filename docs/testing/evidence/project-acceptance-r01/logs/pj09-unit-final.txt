@@ -1,0 +1,48 @@
+✔ hosted mode requires HTTPS, Entra and the matching remote database/storage epoch (1.208ms)
+✔ gateway rejects forged origin and internal headers, permits only bounded browser navigation (0.1895ms)
+✔ cookies are host-only secure/HTTP-only; ambiguous cookies are refused (0.2108ms)
+✔ only the validated selected tenant and stable object ID can map to a tester (0.1734ms)
+✔ tester grants are distinct, expiring and limited to Company A commercial journeys and controlled booking (0.9931ms)
+✔ legacy Windows migration bytes match the observed baseline without accepting changed SQL (8.7922ms)
+✔ operator diagnostics allow only fixed labels and never expose exception contents (0.237ms)
+✔ operator CLI upgrade loads and reaches the database without an import deadlock (714.0772ms)
+✔ operator CLI verify loads and reaches the database without an import deadlock (702.8262ms)
+✔ EN08-59 the eight review rows of mockup r02 are derived from retained facts, never stored as a status (3.3689ms)
+✔ EN08-06 one condition has one label, tone and icon; green is an established positive fact and “not requested” carries no tick (1.118ms)
+✔ EN08-33 EN08-34 EN08-36 every blocker is named in its own gate, and a fully satisfied candidate has none (1.6695ms)
+✔ EN08-34 an obligation blocks the stage it declares and no other; planned or delivered training is not evidenced training (1.1933ms)
+✔ EN08-48 EN08-41 a receiving state is read from its own request: unreachable is unknown, never “not requested” and never accepted (0.7744ms)
+✔ EN08-01 the workflow is a summary of retained facts in a fixed order of precedence (0.5447ms)
+✔ EN08-14 EN08-43 EN08-50 a role label grants nothing: an absent policy blocks, and the policy must name the person, the role and the destination (0.6201ms)
+✔ EN08-53 CSV cells are quoted and formula-leading text is neutralised; only known commissioning routes resolve a destination (1.2534ms)
+✔ EN08-45 every parser lists what it accepts: an approval flag, a status, a hash, an evaluation, an identity or a partial flag is refused before any rule runs (38.3693ms)
+✔ EN08-02 EN08-08 EN08-10 EN08-28 a date says what it is a date of, a limit fits its precision, and a concern or an exclusion names its grounds (5.3895ms)
+✔ every forward SQL migration is registered exactly once; recovery is not a forward migration (9.0866ms)
+✔ local checksum compatibility preserves exact encodings and refuses content changes or misplaced exceptions (4.0342ms)
+✔ duplicate migration or seed versions fail before SQL dispatch; reserved gaps remain valid (1.3789ms)
+✔ PJ09-15/16: source absence and mandatory applicability never pass (1.2513ms)
+✔ PJ09-22/24: training, tests and backups remain separate named evidence (0.3117ms)
+✔ PJ09-20/21: residual work needs independent accepted responsibility, conditions and evidence meaning (0.2991ms)
+✔ PJ09-13/36: a filtered or empty stage view cannot hide unallocated scope (0.4674ms)
+✔ PJ09-09/47: strict commands reject actor injection and duplicate response scope (1.3145ms)
+✔ PJ09-05: pending states have neutral icons; named accepted evidence has green (0.7175ms)
+✔ r10 widths are independent of pane clipping, and the edge clearance remains reachable (2.2147ms)
+✔ dates, milestones, progress and owner types are validated without the prototype's 2026–27 restriction (4.2798ms)
+✔ FS uses the next weekday, SS permits the same date, and warnings never mutate dates (22.6373ms)
+✔ cycles across phases and duplicate predecessors are rejected (1.9439ms)
+✔ multi-year ranges, leap days and Today use calendar dates and the project's timezone (1.5833ms)
+✔ two overdue plus four today make six; an undated activity belongs to neither (2.5101ms)
+✔ timing distinguishes overdue text, Due by and Starts at, and never invents a time (1.2197ms)
+✔ crossing a due time: a meeting is not overdue because it started, only after its planned end (0.6331ms)
+✔ due-time order is stable for equal times and the next entry skips ended appointments (1.3767ms)
+✔ the week is Monday first, crosses months and years, and refuses a malformed day (0.872ms)
+✔ an agenda slot says By for a deadline, a bare time for an appointment and never invents a time (0.6618ms)
+✔ durations, greeting and civil-day helpers use the documented time zone (2.1649ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2587.8784

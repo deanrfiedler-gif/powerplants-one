@@ -289,9 +289,27 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
       ).toHaveCount(0);
       await capture(page, info, `${s.id}-failed`);
       await page.unroute(match);
-      await page.reload({ waitUntil: "domcontentloaded" });
+      if (s.id === "SC-01") {
+        // Keep the real authorised response, but deliver it after the ordinary
+        // five-second assertion window. Recovery must await the read itself.
+        let delivery: Promise<void> | undefined;
+        await page.route(match, async (route) => {
+          const response = await route.fetch();
+          delivery ??= new Promise((resolve) => setTimeout(resolve, 6500));
+          await delivery;
+          await route.fulfill({ response });
+        });
+      }
+      const recoveredRead = page.waitForResponse((response) =>
+        match(new URL(response.url())) && response.request().method() === "GET" && response.status() === 200,
+      { timeout: 60000 });
+      await Promise.all([recoveredRead, page.reload({ waitUntil: "domcontentloaded" })]);
       await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
       await expect(screenLoading).toHaveCount(0);
+      if (s.id === "SC-01") {
+        await capture(page, info, `${s.id}-recovered`);
+        await page.unroute(match);
+      }
       if (s.id === "SC-14") {
         // Applicability is a separate authorised read from immutable metadata.
         // A failed current-status read must not retain a current-use claim.

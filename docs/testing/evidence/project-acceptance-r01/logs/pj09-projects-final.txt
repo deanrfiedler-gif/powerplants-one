@@ -1,0 +1,27 @@
+✔ fresh combined installation retains both registries and both domains through repeat migration and seed (11717.417ms)
+✔ main 0017 upgrades through Leads 0018 then Projects 0019 without replacing prior migration receipts (14204.6439ms)
+✔ an existing Leads 0018 record and receipt survive the Projects upgrade exactly (13413.1839ms)
+✔ a database carrying the original Gantt 0018 checksum is preserved and refused, never relabelled or replayed (11451.3603ms)
+✔ PJ09-09/10/15/47: exact submitted snapshots, technical duty, return/successor and no waiver (13426.675ms)
+✔ PJ09-44/47: original operations replay exactly and altered payload conflicts; grants checked before receipt (414.1734ms)
+✔ PJ09-26/29/30/33/35/37/38/39/40/41: exact issued files, independent Service, customer qualification and commercial separation (8949.8974ms)
+✔ PJ09-13/48/52: source versions, decisions, issued bytes and receipts persist across pool restart and repeat seed (258.5883ms)
+✔ PJ09-17/31/42/44/45/53: one connected blocked/return/successor journey, durable issue recovery and competing writes (12263.9101ms)
+✔ PJ09-34/44/46/47/48: server-held original, payload conflict, current authority and restricted Finance projection (2022.4991ms)
+✔ PJ09-11/13/36/38: authorised scope disposition retains the ledger and cannot hide a shared hold or stage (1529.3825ms)
+✔ PJ09-35/43: missing exact original blocks closeout, retains its reference and creates one owned recovery (3347.8533ms)
+✔ PJ09-11/12/48/49: shared mandatory source survives a location exclusion and mixed-target Activity needs every target (1452.5788ms)
+✔ PJ09-47: project.edit grants no acceptance operation; current membership is required for reads and originals (302.5008ms)
+✔ project and 18-month schedule persist with exact history, original-operation replay and safe seed reruns (12858.1042ms)
+✔ unknown outcomes replay once, changed payloads conflict, and stale concurrent edits retain one winner (11637.4633ms)
+✔ tenant, company, read-only and revoked permissions apply to schedule, selectors, history, search and replay (9450.6725ms)
+✔ cycle and cross-project predecessors roll back all changes; conflicts remain manual warnings (10753.1239ms)
+✔ creation selectors require the existing current customer/site context and never grant external access (15119.0132ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 159529.9748

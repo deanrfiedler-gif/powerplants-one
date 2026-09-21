@@ -42,6 +42,7 @@ export function ProjectRegister() {
         title="Projects"
         description="Plan delivery, assign responsibility and track the schedule."
       >
+        <Link href="/projects/acceptance">Staged Acceptance &amp; Closeout</Link>
         {context.data?.actions.some((a) => a.id === "project") && (
           <Link href="/projects/new" className="primary-link">
             + Project
@@ -384,6 +385,7 @@ export function ProjectSchedulePage({ id }: { id: string }) {
     );
   return (
     <>
+      <Link href={`/projects/acceptance?project=${id}`}>Acceptance &amp; closeout</Link>
       <ProjectsGantt
         key={id}
         schedule={resource.data}

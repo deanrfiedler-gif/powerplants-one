@@ -1,0 +1,2 @@
+# Preserve the exact executed harness bytes identified by source-hashes.json.
+browser-harness/*.txt text eol=lf
