@@ -363,7 +363,8 @@ export function EmailCalendar({ initialDay }: { initialDay: string }) {
       <Tabs calendar />
       <div className="ec-calendar">
         <div className="ec-heading">
-          <h1>Calendar</h1>
+          {/* The breadcrumb names this page; the heading stays for assistive technology. */}
+          <h1 className="ppo-register-title">Calendar</h1>
           <span className="ec-muted">Brisbane · AEST</span>
           <button className="secondary" onClick={() => r.reload()}>
             Refresh calendar

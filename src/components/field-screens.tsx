@@ -285,6 +285,7 @@ export function MyJobsScreen() {
   return (
     <>
       <PageHeader
+        variant="register"
         eyebrow="Technician workspace · SC-09"
         title="My Jobs"
         description="Your assigned visits, current work context and online field capture."

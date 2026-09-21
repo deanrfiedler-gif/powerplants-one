@@ -10,6 +10,7 @@ import {
   isDenied,
   type Envelope,
   Stamp,
+  RegisterHeading,
 } from "./business-ui";
 import {
   sectionKeys,
@@ -195,13 +196,15 @@ export function PackListScreen() {
   const r = useResource<Envelope<Pack>>("packs");
   return (
     <div className="business-page">
-      <Intro title="Job packs">
-        <p>
-          Prepare and check work instructions, issue exact documents, and follow
-          each crew member’s acknowledgement.
-        </p>
+      {/* The breadcrumb names this register, so the title band gives up its room. The environment
+          marker is not a title band and stays: this prototype must never read as operational. */}
+      <RegisterHeading
+        title="Job packs"
+        description="Prepare and check work instructions, issue exact documents, and follow each crew member’s acknowledgement."
+      >
         <Link href="/schedule">Open service planner</Link>
-      </Intro>
+      </RegisterHeading>
+      <p className="source-stamp">Synthetic prototype — not for operational use</p>
       <ErrorNotice error={r.error} />
       {r.loading ? (
         <p role="status">Loading job packs…</p>

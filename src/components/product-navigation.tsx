@@ -383,16 +383,39 @@ export function ProductHeader() {
     shell = useShell();
   const label = path === "/" ? "" : (page?.label ?? "Page unavailable");
   // My Work names its current view beside the module, as its secondary menu does. EN-06 names its module
-  // there, and its destination after it for as long as its own menu is hidden (engineering-materials.css).
+  // there, and its destination after it for as long as its own menu is hidden (desktop-shell.css).
   const materials = page?.id === "engineering" ? materialsPath(path) : undefined;
   const view = page?.id === "work" ? workViewForPath(path)?.label : materials ? materialsModuleLabel : undefined;
   const subview = materials?.view?.label;
+  const workspaceRoot = page?.workspace ? workspaces.find((w) => w.id === page.workspace) : undefined;
   const currentModule =
     page?.workspace === "estimate"
       ? "Estimating"
       : page?.workspace === "service"
         ? "Service"
         : (page?.label ?? "Home");
+  // The breadcrumb is built from route metadata, never from URL slugs: the workspace this destination
+  // belongs to, the destination itself, and the view that a workspace's own secondary menu names. The
+  // rail carries the product identity, so "Powerplants One" is no longer repeated beside every page.
+  const rootDestination = workspaceRoot ? destination(workspaceRoot.primary) : undefined;
+  // The workspace under the name its own people use for it; Estimating and Service are already
+  // shortened for the page guide, and the breadcrumb uses the same two names.
+  const rootLabel =
+    page?.workspace === "estimate" ? "Estimating" : page?.workspace === "service" ? "Service" : workspaceRoot?.label;
+  const crumbs: { key: string; label: string; href?: string; kind: "root" | "page" | "view" }[] = [];
+  if (label) {
+    if (rootLabel && rootLabel !== label)
+      crumbs.push({
+        key: "root",
+        label: rootLabel,
+        href: rootDestination && canOpen(rootDestination, shell.context?.navigation ?? [], shell.hosted) ? rootDestination.href : undefined,
+        kind: "root",
+      });
+    crumbs.push({ key: "page", label, kind: "page" });
+    // EN-06's module sits between its Engineering parent and the view its own menu names.
+    if (view) crumbs.push({ key: "view", label: view, kind: materials ? "page" : "view" });
+    if (subview) crumbs.push({ key: "subview", label: subview, kind: "view" });
+  }
   const tabIds =
     page?.workspace === "service"
       ? [
@@ -435,22 +458,35 @@ export function ProductHeader() {
             className="brand-logo"
           />
         </Link>
-        {/* A workspace with a secondary menu mounts its Show/Hide trigger here. Empty otherwise. */}
+        {/* A workspace with a secondary menu mounts its icon-only trigger here. Empty otherwise, and
+            the empty slot reserves no width (desktop-shell.css). */}
         <div id="header-menu" className="ppo-header-menu-slot" />
-        <div className="product-heading" data-module-crumb={materials ? "" : undefined}>
-          <span className="ppo-product-name">Powerplants One</span>
-          {label && (
-            <>
-              <span className="ppo-heading-divider" aria-hidden="true" />
-              <strong title={[label, view, subview].filter(Boolean).join(" / ")}>
-                {/* Module routes keep parent and module together as one unit that never wraps; see engineering-materials.css. */}
-                {materials ? <span className="ppo-heading-trail"><span className="ppo-heading-root">{label} / </span><span className="ppo-heading-view">{view}</span></span> : label}
-                {!materials && view && <span className="ppo-heading-view">{` / ${view}`}</span>}
-                {subview && <span className="ppo-heading-subview"> / {subview}</span>}
-              </strong>
-            </>
-          )}
-        </div>
+        {crumbs.length ? (
+          <nav className="product-heading" aria-label="Breadcrumb">
+            <ol className="ppo-crumbs" title={crumbs.map((c) => c.label).join(" / ")}>
+              {crumbs.map((crumb, index) => (
+                <li key={crumb.key} data-crumb={crumb.kind}>
+                  {crumb.href ? (
+                    <Link className="ppo-crumb" href={crumb.href}>
+                      {crumb.label}
+                    </Link>
+                  ) : (
+                    <span
+                      className={index === crumbs.length - 1 ? "ppo-crumb ppo-crumb-current" : "ppo-crumb"}
+                      aria-current={index === crumbs.length - 1 ? "page" : undefined}
+                    >
+                      {crumb.label}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </nav>
+        ) : (
+          <div className="product-heading">
+            <span className="ppo-product-name">Powerplants One</span>
+          </div>
+        )}
         <ShellControls
           key={path}
           module={currentModule}

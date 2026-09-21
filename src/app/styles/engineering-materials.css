@@ -133,8 +133,12 @@
 #ppo-materials .em-attention+.em-table-scroll{border-top-color:var(--warning-border)}
 #ppo-materials .em-page-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;margin-top:auto;padding:14px 20px;color:var(--text-secondary);font-size:13px}
 
-/* Inspector: a square, closable right dock. It overlays the register when the split is too narrow for both. */
-#ppo-materials .em-inspector{display:flex;flex-direction:column;flex:none;width:368px;min-height:0;border-left:1px solid var(--line);background:var(--surface-white);border-radius:0}
+/* Inspector: a square, closable right dock. It overlays the register when the split is too narrow for both.
+   Docked it carries a fine left divider and a soft left-only shadow that fades about 16px into the
+   register beside it: no outside margin, no rounded floating card and no four-sided shadow. A shadow
+   never intercepts pointer input, so the first column of the table underneath stays clickable. The 368px
+   width and the head padding are #268's. */
+#ppo-materials .em-inspector{display:flex;flex-direction:column;flex:none;width:368px;min-height:0;border-left:1px solid var(--line);background:var(--surface-white);border-radius:0;box-shadow:-16px 0 20px -16px rgba(36,42,55,.18)}
 #ppo-materials .em-inspector-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px 12px 8px 20px}
 #ppo-materials .em-eyebrow{color:var(--text-secondary);font-size:12px;letter-spacing:.5px;text-transform:uppercase}
 #ppo-materials .em-inspector h2{font-size:21px;line-height:28px;font-weight:700;overflow-wrap:anywhere}
@@ -196,7 +200,8 @@
 #ppo-materials .em-inspector-actions .mw-link{align-self:flex-start}
 /* An absolutely positioned grid child is contained by its grid area, so the overlay takes the whole grid as its area. */
 @container em-split (max-width:1140px){
- #ppo-materials .em-split>.em-inspector{position:absolute;z-index:6;grid-column:1 / -1;inset:0 0 0 auto;width:min(420px,100%);box-shadow:var(--shadow)}
+ /* Overlaid rather than docked, it keeps the same left-biased shadow, deepened so it reads as a layer. */
+ #ppo-materials .em-split>.em-inspector{position:absolute;z-index:6;grid-column:1 / -1;inset:0 0 0 auto;width:min(420px,100%);box-shadow:-20px 0 48px rgba(36,42,55,.20)}
  #ppo-materials .em-split[data-inspector=open]>.em-register,#ppo-materials .em-workspace:has(.em-split[data-inspector=open])>.em-context{grid-column:1 / -1}
 }
 
@@ -243,22 +248,9 @@
 #ppo-materials .em-timeline>li:last-child{border-color:transparent}
 #ppo-materials .em-timeline p{color:var(--text-secondary);font-size:13px}
 
-/* The breadcrumb is the page title on these routes, so the redundant product name yields the room. It reads
-   "Engineering / Released Materials & Substitutions" and is never cut short to make room for anything else. While the
-   secondary menu is hidden the destination follows it, but only where the whole of it fits: it sits on a wrapped
-   second line that the one-line heading clips, so it is either fully shown or absent, never an ellipsis. The full
-   path stays in the title attribute and in the page's own heading. */
-.ppo-shell-header .product-heading[data-module-crumb] :is(.ppo-product-name,.ppo-heading-divider){display:none}
-.ppo-shell-header .product-heading[data-module-crumb] strong{display:flex;flex-wrap:wrap;align-items:baseline;min-width:0;height:24px;line-height:24px;overflow:hidden;font-size:14px;font-weight:400;color:#4a5668}
-.ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-trail{display:flex;flex:0 1 auto;min-width:0;max-width:100%}
-.ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-root{flex:none;white-space:pre}
-.ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-view{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-subview{flex:none;white-space:pre}
-.workspace:has(#ppo-materials[data-menu=docked]) .ppo-shell-header .ppo-heading-subview{display:none}
-/* Narrower desktops: the module name outranks its parent, which the rail and the page heading still give. */
-@media (max-width:1560px){
- .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-root{display:none}
-}
+/* EN-06's breadcrumb rules became the shell's own in the existing-module refinement: the product name is
+   removed from every module breadcrumb, ancestors give way before the current page, and a docked secondary
+   menu still takes the view crumb because it names that view itself. See desktop-shell.css. */
 
 @media (max-width:1100px){
  #ppo-materials .em-context-row{flex-wrap:wrap;gap:6px 0;padding:8px 12px}
