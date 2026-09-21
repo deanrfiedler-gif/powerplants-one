@@ -2,7 +2,7 @@
 
 **Updated:** 21 September 2026 · **Owner:** Dean Fiedler · **Repository:** `deanrfiedler-gif/powerplants-one`, **public** visibility, default branch `main` · **Baseline commit:** `10625815187f26179f316b887fcdee33467ac81f` (#177 merged; E2 API/screens/costing and performance remedy included) · **Naming:** [PPO-STD-001](standards/naming-conventions.md) / [ADR-0005](decisions/ADR-0005-project-naming-adoption.md)
 
-**Latest repository-writing session:** ES-02 PR #272 integrates main `af3f045`, preserving PJ-09 migrations 0032–0038 and moving its unmerged SQL unchanged to 0039. Its decision moves to ADR-0035 because main owns ADR-0033 and the separate ES-08 branch uses ADR-0034. Exact source, retained failures and current CI results are in the handover and PR.
+**Latest repository-writing session:** ES-02 PR #272 integrates main `af3f045`, preserving PJ-09 migrations 0032–0038 and moving its unmerged SQL unchanged to 0039. Its decision is ADR-0035, preserving PJ-09/ES-08 numbering. Sixteen checks passed at `ce1920c`; the broad browser run exposed a missing same-day reschedule bound in the test fixture. Its regression fails before the correction and ten focused tests pass afterward. Exact source, retained failures and current CI results are in the handover and PR.
 
 This file is a snapshot of the current state, kept short enough to read in one sitting. It is not the evidence record: exact verification, run IDs, hashes and publication results remain in each package's handover, decision record and authoritative external record. The chronological entries that previously lived here are retained unchanged in [STATUS-log.md](STATUS-log.md). Update this file by replacing rows, not by appending narrative.
 

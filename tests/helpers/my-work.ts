@@ -26,7 +26,8 @@ const endOfDay = (day: string) => new Date(Date.parse(`${day}T00:00:00+10:00`) +
 const iso = (at: number) => new Date(Math.round(at / 300000) * 300000).toISOString();
 
 // Keep four distinct future anchors on today's Brisbane date, with twenty minutes
-// for the real API/browser journey. Appointments may end after midnight: My Work
+// for the real API/browser journey and its thirty-minute meeting reschedule still
+// in Today. Appointments may end after midnight: My Work
 // groups them by their start, and their 20/45/60-minute durations remain real.
 // A run too close to midnight still refuses an unprovable same-day scenario.
 export function todaySlots(now = new Date()) {
@@ -40,7 +41,7 @@ export function todaySlots(now = new Date()) {
     call = Math.max(deadline + tick, Math.round((now.getTime() + left * 0.1) / tick) * tick),
     meeting = Math.max(call + tick, Math.round((now.getTime() + left * 0.3) / tick) * tick),
     visit = Math.max(meeting + tick, Math.round((now.getTime() + left * 0.6) / tick) * tick);
-  if (visit > stop) throw Error("Too little of the Brisbane day is left for four distinct future anchors and the browser journey.");
+  if (visit > stop || meeting + 30 * minute > stop) throw Error("Too little of the Brisbane day is left for four distinct future anchors and the browser journey.");
   return {
     day,
     deadline: iso(deadline),

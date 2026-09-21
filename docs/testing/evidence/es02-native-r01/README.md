@@ -112,3 +112,11 @@ PJ-09 subsequently merged into main at `af3f045`. Current ES-02 migration/decisi
 identifiers are 0039 / ADR-0035; older manifests retain their exact historical
 paths and commits. The handover records reconciliation and the PR owns current
 combined-source results.
+
+[fixture-reschedule-review.json](fixture-reschedule-review.json) retains the two
+late-night broad-browser failures at `ce1920c`. One was the declared time guard;
+the other exposed a missing thirty-minute reschedule allowance in the branch's
+fixture extension. The before/after regression logs accompany the correction.
+Current fixtures reserve the reschedule within Today and refuse after 22:55
+Brisbane; production clocks and browser assertions are unchanged. The PR records
+fresh verification of the corrected source.
