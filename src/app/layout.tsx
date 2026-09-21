@@ -24,6 +24,7 @@ import "./styles/engineering-commissioning.css";
 import "./styles/engineering-commissioning-tests.css";
 import "./styles/engineering-commissioning-configuration.css";
 import "./styles/engineering-commissioning-release.css";
+import "./styles/project-acceptance.css";
 import "./module-workspaces.css";
 export const metadata: Metadata = {
   title: "Powerplants One | Private prototype",

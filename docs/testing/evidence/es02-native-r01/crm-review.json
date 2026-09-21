@@ -1,0 +1,28 @@
+{
+  "source_head": "c0ced5419503416341f8a38ccc479bb94a95e123",
+  "run": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35597234707",
+  "job_id": 106324766537,
+  "job_conclusion": "cancelled at the configured 25-minute job limit",
+  "retained_artifact": "CRM-refinements-evidence",
+  "failures": [
+    {
+      "case": "Owner transfer across desktop and phone",
+      "error": "Transfer opportunity owner button not visible within 5000ms"
+    },
+    {
+      "case": "Card hit area and stage changes on phone",
+      "error": "apiRequestContext.fetch: read ECONNRESET"
+    },
+    {
+      "case": "Retained I2 keyboard/long-text",
+      "error": "business-profile remained disabled within 5000ms"
+    }
+  ],
+  "not_completed": "CRM application/database restart phase cancelled by the job deadline",
+  "comparison": {
+    "unchanged_main": "af3f045b599d6f91939f0568903c1393aec8ff14",
+    "run": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35597947732",
+    "result": "success"
+  },
+  "disposition": "Not attributed to ES-02. New main includes related CRM/Email Calendar readiness repairs and PJ-09. Retain its changes and verify the combined source. No assertion or individual timeout is weakened."
+}

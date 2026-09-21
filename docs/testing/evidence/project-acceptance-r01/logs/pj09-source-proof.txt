@@ -1,0 +1,1 @@
+PASS: real EN-08 acceptance, source-owned training gate, scoped reassessment, retained decision and one owned Activity on replay.

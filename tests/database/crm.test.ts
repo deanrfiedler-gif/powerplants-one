@@ -653,16 +653,10 @@ test("CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and 
     assert.deepEqual(preserved[key], originalReport[key]);
   assert.deepEqual(await rows("SELECT * FROM ppo.business_identities WHERE id=ANY($1::uuid[]) ORDER BY id", [identities.map(x=>x.id)]), identities);
   assert.deepEqual(
-    (
-      await rows("SELECT * FROM ppo.activity_links ORDER BY activity_id,object_type,object_id")
-    ).map((row) =>
-      Object.fromEntries(
-        Object.entries(row).filter(
-          ([key]) => key !== "opportunity_id" && key !== "lead_id",
-        ),
-      ),
-    ),
-    links,
+    await rows("SELECT * FROM ppo.activity_links ORDER BY activity_id,object_type,object_id"),
+    // Later migrations add generated target columns, including Project in 0032.
+    // Every old target and value stays exact; none acquires a new CRM/Project link.
+    links.map((row) => ({ ...row, opportunity_id: null, lead_id: null, project_id: null })),
   );
   const i = crmCreate();
   await createOpportunity(p, i);

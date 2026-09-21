@@ -30,6 +30,8 @@ export type Task = {
   dependencies: Dependency[];
 };
 export type Project = {
+  lifecycle: "Active" | "Closed";
+  acceptance_version: number;
   id: string;
   version: number;
   display_number: string;

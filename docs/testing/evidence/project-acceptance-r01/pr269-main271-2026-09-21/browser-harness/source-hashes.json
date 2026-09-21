@@ -1,0 +1,58 @@
+[
+  {
+    "source": "tmp/pr269-merge-tests/engineering-changes.spec.ts",
+    "sha256": "c564da16995d9a88a15c932f076270fbaf985a2e5bbe6864940c7bf1a4820ed5"
+  },
+  {
+    "source": "tmp/pr269-merge-tests/engineering-materials.spec.ts",
+    "sha256": "7fb6de67f3700ae75f4fb6ddfc09e200967fd68ebd70f340e489353cd44beb51"
+  },
+  {
+    "source": "tmp/pr269-merge-tests/my-work.spec.ts",
+    "sha256": "a1344e3970b998c80d34174f0c7ecdaa6a9fa254bbca7acdc6fd9d9d7215c6d4"
+  },
+  {
+    "source": "tmp/pr269-merge-tests/quality-browser.ts",
+    "sha256": "625ef98d0b07786a0baca8ad055e1649833ade96b9e9bf6d34377d0857fc68c5"
+  },
+  {
+    "source": "tmp/pr269-merge-tests/quality-states.spec.ts",
+    "sha256": "c8bf403455d54b1db5fa567b3b5ffc9a1919591ad7d3aca1f15641bd05f63915"
+  },
+  {
+    "source": "tmp/pr269-merge.config.ts",
+    "sha256": "71fc6b9bd390e8646e412f0715945f12b0ebccb8b06e1c5fe3be5f7c76bedd2d"
+  },
+  {
+    "source": "tmp/pr269-main271-en08.ts",
+    "sha256": "e0a73f8e8d83dadc77277f9db9ee4671475dd37cfb14a30e75dc7a7a8320609f"
+  },
+  {
+    "source": "tests/browser/engineering-changes.spec.ts",
+    "sha256": "49c22bb29160317b6f83a5530077d01df35b45c701d33e4f2cf84d1fcef30543"
+  },
+  {
+    "source": "tests/browser/engineering-materials.spec.ts",
+    "sha256": "e95e458a2d8cb8ecf191a52d98db388b17650917c5f7cfeedee1c87b10b8938c"
+  },
+  {
+    "source": "tests/browser/my-work.spec.ts",
+    "sha256": "a0227e1f0b63965c7e5562d8015c061ef0d1786ddd664c748d79a3f61964c8af"
+  },
+  {
+    "source": "tests/browser/quality-states.spec.ts",
+    "sha256": "b959b79d35f5258b2b06a6219c64dc67b119632dd30db3c6b980fbf79720151b"
+  },
+  {
+    "source": "tests/helpers/quality-browser.ts",
+    "sha256": "ae1091d17339324c54b511d772ce7713d36e59c2672d5f41b43d0817f06e134c"
+  },
+  {
+    "source": "scripts/check-project-acceptance-browser.ts",
+    "sha256": "fc176bd7c8fdc13cb80f77f11621508d17dd94e79df606aec386c407a34c93ae"
+  },
+  {
+    "source": "scripts/check-project-acceptance-zoom.ts",
+    "sha256": "26d3035870868a7c0ca3de45c97a484c01a2a4c87fdda16f5f68b00d47ca6f48"
+  }
+]

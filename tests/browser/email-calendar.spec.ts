@@ -45,8 +45,30 @@ test("EC complete journey, reload, calendar navigation, details, narrow layout a
   const message = info.project.name.startsWith("desktop")
     ? "ec000000-0000-4000-8000-000000000001"
     : "ec000000-0000-4000-8000-000000000002";
-  await page.goto("/email");
+  // Reproduce the initial session read exceeding the default 5s DOM assertion.
+  // Keep the real response and share the delay across concurrent initial reads.
+  let initialSessionRead: Promise<void> | undefined;
+  await page.route("**/api/v1/local-session", async (route) => {
+    if (route.request().method() !== "GET") return route.continue();
+    const response = await route.fetch();
+    initialSessionRead ??= new Promise((resolve) => setTimeout(resolve, 6500));
+    await initialSessionRead;
+    await route.fulfill({ response });
+  });
+  // Settle the network boundary within the existing 15s action budget before
+  // checking identity controls. The existing DOM assertion stays at 5s.
+  const [initialSession] = await Promise.all([
+    page.waitForResponse(
+      (response) => new URL(response.url()).pathname === "/api/v1/local-session"
+        && response.request().method() === "GET",
+      { timeout: 15000 },
+    ),
+    page.goto("/email"),
+  ]);
+  expect(initialSession.status()).toBe(401);
+  expect(initialSession.headers()["cache-control"]).toBe("private, no-store");
   await identity(page);
+  await page.unroute("**/api/v1/local-session");
   const o = { ...crmCreate(), title: `SYN Calendar UI ${randomUUID()}` };
   await call(page, "crm/opportunities", o);
   await page.goto(`/email/${message}`);

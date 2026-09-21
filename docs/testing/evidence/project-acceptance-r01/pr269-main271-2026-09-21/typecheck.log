@@ -1,0 +1,6 @@
+
+> powerplants-one@0.1.0 typecheck
+> tsc --noEmit
+
+docs/testing/evidence/project-acceptance-r01/pr269-ci-2026-09-21/focused-warm-up.ts(2,45): error TS2307: Cannot find module '../scripts/warm-routes' or its corresponding type declarations.
+docs/testing/evidence/project-acceptance-r01/pr269-ci-2026-09-21/focused-warm-up.ts(5,43): error TS7006: Parameter 'r' implicitly has an 'any' type.

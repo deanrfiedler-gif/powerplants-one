@@ -20,7 +20,7 @@ const subscribeTo = (query: string) => (changed: () => void) => {
 const subscribeWide = subscribeTo(wideQuery),
   subscribePhone = subscribeTo(phoneQuery);
 
-// The three glyphs the frame itself draws, in My Work's outline family (24px grid, 1.7 stroke). The
+// The frame's glyphs, in My Work's outline family (24px grid, 1.7 stroke). The
 // collapsed strip draws a plain grip rather than a glyph, and the menu's own right border has no icon.
 const glyphs = {
   panel: (
@@ -31,6 +31,8 @@ const glyphs = {
   ),
   menu: <path d="M4 7h16M4 12h16M4 17h16" />,
   close: <path d="m6 6 12 12M18 6 6 18" />,
+  "chevron-left": <path d="m14 6-6 6 6 6" />,
+  "chevron-right": <path d="m10 6 6 6-6 6" />,
 } as const;
 const Glyph = ({ name }: { name: keyof typeof glyphs }) => (
   <svg className="mw-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -79,6 +81,7 @@ export function SecondaryMenuFrame({
   menu,
   message,
   children,
+  presentation = "shared",
 }: {
   state: SecondaryMenuState;
   id: string;
@@ -89,16 +92,18 @@ export function SecondaryMenuFrame({
   menu: ReactNode;
   message: string;
   children: ReactNode;
+  // Keep existing module baselines explicit; new/shared consumers use the refined menu.
+  presentation?: "shared" | "baseline";
 }) {
   const { docked, phone, open, toggle, closeOverlay, overlay } = state;
   // A phone has three separate menus (this one, More and Create), so its trigger says which it is.
   const label = phone ? `${name} menu` : open ? "Hide menu" : "Show menu";
   return (
-    <section id={id} data-module-layout="full-bleed" data-menu={docked ? (open ? "docked" : "collapsed") : "overlay"} {...attributes} aria-label={name}>
+    <section id={id} data-module-layout="full-bleed" data-menu={docked ? (open ? "docked" : "collapsed") : "overlay"} data-menu-presentation={presentation} {...attributes} aria-label={name}>
       <HeaderContent slot="menu">
         {/* Icon only to look at: the name stays for assistive technology and as the tooltip, and the
             button keeps one width in both states so nothing to its right moves. */}
-        <button type="button" className="ppo-menu-toggle" title={label} aria-expanded={open} aria-controls={menuId} onClick={(e) => toggle(e.currentTarget)}>
+        <button type="button" className="ppo-menu-toggle" data-menu-presentation={presentation} title={label} aria-expanded={open} aria-controls={menuId} onClick={(e) => toggle(e.currentTarget)}>
           <Glyph name={phone ? "menu" : "panel"} />
           <span>{label}</span>
         </button>
@@ -130,7 +135,11 @@ export function SecondaryMenuFrame({
       {/* Docked, the menu's own right border is the collapse target and a 24px strip is the expand target.
           Neither protrudes into the workspace, and neither opens on hover alone. Below the docked width the
           overlay and the header trigger are the only controls, so neither is rendered. */}
-      {docked &&
+      {presentation === "baseline" ? (
+        <button type="button" className="mw-edge" aria-label={label} aria-expanded={open} aria-controls={menuId} title={label} onClick={(e) => toggle(e.currentTarget)}>
+          <Glyph name={open ? "chevron-left" : "chevron-right"} />
+        </button>
+      ) : docked &&
         (open ? (
           <button
             type="button"

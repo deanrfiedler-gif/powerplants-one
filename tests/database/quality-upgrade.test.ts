@@ -1,3 +1,4 @@
+import { acceptanceSeedGrants } from "../helpers/engineering-materials-grants";
 import assert from "node:assert/strict";
 import { test, after } from "node:test";
 import { readFile } from "node:fs/promises";
@@ -211,6 +212,7 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
         ...followUpOwners.flatMap(user_id => ["activity.read", "activity.edit"].map(capability => ({ ...g.value, capability, user_id }))),
       ]),
     );
+    expected.push(...acceptanceSeedGrants(originalGrants.map(g=>g.value),expected) as {capability:string}[]);
     const grantShape = (g: Record<string, unknown>) => Object.fromEntries(Object.entries(g).filter(([k]) => k !== "id"));
     const sorted = (gs: Record<string, unknown>[]) => gs.map(g => JSON.stringify(grantShape(g))).sort();
     assert.deepEqual(sorted(added.map(g => g.value)), sorted(expected));

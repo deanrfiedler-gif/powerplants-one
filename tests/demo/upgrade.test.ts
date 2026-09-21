@@ -99,7 +99,7 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   for (const old of oldGrants) assert.ok(grants.some(g => JSON.stringify(g) === JSON.stringify(old)));
   const additions = (await database().query("SELECT * FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND (capability LIKE 'crm.lead.%' OR capability LIKE 'project.%' OR capability LIKE 'engineering.%' OR capability IN ('email.connect','schedule.read','service.work_order.read','service.ticket.read','service.work_order.edit','service.readiness.assess','schedule.contact','schedule.manage'))", [users])).rows;
   assert.equal(additions.length, 18);
-  assert.equal((await database().query("SELECT 1 FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND (capability LIKE 'engineering.material.%' OR capability LIKE 'engineering.change.%' OR capability LIKE 'engineering.commissioning.%')", [users])).rowCount, 0);
+  assert.equal((await database().query("SELECT 1 FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND (capability LIKE 'engineering.material.%' OR capability LIKE 'engineering.change.%' OR capability LIKE 'engineering.commissioning.%' OR capability LIKE 'acceptance.%')", [users])).rowCount, 0);
   assert.ok(additions.every(g => g.user_id === users[0] && g.company_id === demoCompany && g.scope_type === "Company" && g.scope_id === demoCompany));
   const limit = (await database().query("SELECT valid_to FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.edit'", [users[0]])).rows[0].valid_to;
   assert.ok(additions.every(g => g.valid_to.getTime() <= limit.getTime()));
@@ -176,8 +176,8 @@ test("a baseline executed from Windows CRLF SQL upgrades without rewriting histo
     digest(await readFile(new URL("../../db/demo/0003-hosted-pack-reviewer.sql", import.meta.url), "utf8")),
   );
   // 0018 Leads, 0019 Projects, 0020 Engineering, 0021 stages, 0022 Discovery conversion and 0023 owned outcomes and 0024 owner transfer, 0025 versioned estimating taxonomy and 0026 preserved discovery identities and 0027 exact cost bases and 0028 My Work activity scheduling and personal saved views and 0029 EN-06 released materials and substitutions and 0030 EN-07 engineering change-impact review and 0031 EN-08 commissioning basis and as-built release.
-  // 0032 adds ES-02 configuration identity integrity without a synthetic seed.
-  assert.equal(final.length, baseline.length + 15);
+  // 0039 adds ES-02 child identity integrity without a synthetic seed.
+  assert.equal(final.length, baseline.length + 22);
   assert.ok((await db.query("SELECT to_regclass('ppo.projects') AS relation")).rows[0].relation);
 });
 

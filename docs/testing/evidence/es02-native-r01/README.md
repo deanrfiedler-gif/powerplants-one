@@ -107,3 +107,8 @@ at `414cb7f`, its unchanged-main reproduction and the bounded test-only repair.
 The separate compiled suite passed 240 cases and required Estimating passed all
 structured/database/restart checks at that source. The remaining near-midnight
 fixture limit and final-head validation are explicit in the handover and PR.
+
+PJ-09 subsequently merged into main at `af3f045`. Current ES-02 migration/decision
+identifiers are 0039 / ADR-0035; older manifests retain their exact historical
+paths and commits. The handover records reconciliation and the PR owns current
+combined-source results.

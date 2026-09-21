@@ -1,0 +1,201 @@
+  1) [mobile-chromium] › tests/browser/quality-states.spec.ts:64:1 › P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial › SC-01: /work/actions
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('main').getByText(/^(?:.*\s)?Loading .*…$/)
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('main').getByText(/^(?:.*\s)?Loading .*…$/) with timeout 5000ms
+      - waiting for locator('main').getByText(/^(?:.*\s)?Loading .*…$/)
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      292 |       await page.reload({ waitUntil: "domcontentloaded" });
+      293 |       await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
+    > 294 |       await expect(screenLoading).toHaveCount(0);
+          |                                   ^
+      295 |       if (s.id === "SC-14") {
+      296 |         // Applicability is a separate authorised read from immutable metadata.
+      297 |         // A failed current-status read must not retain a current-use claim.
+        at /home/runner/work/powerplants-one/powerplants-one/tests/browser/quality-states.spec.ts:294:35
+        at /home/runner/work/powerplants-one/powerplants-one/tests/browser/quality-states.spec.ts:195:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/quality-states-P11-PT-29-a-4ff90-recovery-and-current-denial-mobile-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/quality-states-P11-PT-29-a-4ff90-recovery-and-current-denial-mobile-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/quality-states-P11-PT-29-a-4ff90-recovery-and-current-denial-mobile-chromium/trace.zip
+    Usage:
+✖ failing tests:
+
+test at tests/database/crm.test.ts:1:16461
+✖ CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and hashes; repeat seed never repairs revocations or edits (6503.74491ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+
+    [
+      {
+        activity_id: '29186699-5354-4a4e-bd4e-9d73562c1e65',
+        asset_id: null,
+        company_id: '20000000-0000-4000-8000-000000000001',
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: '50000000-0000-4000-8000-000000000001',
+  +     project_id: null,
+        site_id: null,
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: null,
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: null,
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: '50000000-0000-4000-8000-000000000005',
+  +     project_id: null,
+        site_id: null,
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: '50000000-0000-4000-8000-000000000001',
+  +     project_id: null,
+        site_id: null,
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      }
+    ]
+
+      at TestContext.<anonymous> (/home/runner/work/powerplants-one/powerplants-one/tests/database/crm.test.ts:655:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+  }
+
+test at tests/database/engineering-changes.test.ts:1:9749
+✖ EN07-A25 A29 A32 A33 A37 A40 A41 A43 A50: accepted is not implemented; the whole path to closure keeps every outcome and attempt (6675.848801ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  201 !== 200
+
+      at TestContext.<anonymous> (/home/runner/work/powerplants-one/powerplants-one/tests/database/engineering-changes.test.ts:128:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 201,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+##[error]Process completed with exit code 1.

@@ -12,7 +12,7 @@ Dean requested execution of the [prompt r03](../reference/ui/estimating/PPO-ES-0
 and [refinement plan r04](../reference/ui/estimating/PPO-ES-02-Estimation-Wizard-Discovery-Alternatives-and-Revisions-Refinement-Build-Plan-r04.md).
 Branch: `feat/es02-estimation-wizard`; clean starting source `0b3669c`, subsequently
 fast-forwarded to `origin/main` `8ed8b0c` (identical application tree after #271).
-[ADR-0033](../decisions/ADR-0033-es02-structured-discovery.md) records the selected
+[ADR-0035](../decisions/ADR-0035-es02-structured-discovery.md) records the selected
 contract, alternatives and limits. Scope stays ES-02 / PPO-010 / EST-01–EST-09;
 all 78 parent requirements and issued source bytes remain unchanged.
 Core data commit: `f65d4fb`; native UI commit: `071a864`. Assurance commit `8b8f336` adds tests, CI routing and the evidence manifest;
@@ -25,7 +25,7 @@ contains the complete package and subsequent harness/evidence refinement.
 |---|---|
 | W01 | Inspected live PostgreSQL 16.15; chose immutable optional configuration JSON, stable child ownership ledger, explicit schema dispatch, bounded exact reads and existing native command infrastructure. |
 | W02 | Native five-step workspace, Alternatives/Revisions, family overview, typed editors, evidence inspector, shared r22 menu/header/summary and one in-memory working proposal. |
-| W03 | Strict schema 1 configuration, readiness findings, source review fingerprints, actual native evidence/Activity links, eligible owned unknowns and additive migration 0032. |
+| W03 | Strict schema 1 configuration, readiness findings, source review fingerprints, actual native evidence/Activity links, eligible owned unknowns and additive migration 0039. |
 | W04 | Fresh/copy alternatives, deterministic allocated child IDs, exact lineage and remapping, immutable paged history, exact saved-source comparison and guarded historical starting points. |
 | W05 | Independent permitted saved-cost projection, per-option estimates, explicit comparison cost versions and unchanged manual basis adoption / Draft output paths. Discovery edits do not reprice. |
 | W06 | Unit, PostgreSQL, direct HTTP, compiled browser and documentation assurance; native captures, bounds and measured geometry retained. The existing required Estimating CI job now includes structured tests and actual app/database restart proof. CI execution and owner acceptance remain distinct from local checks. |
@@ -52,9 +52,9 @@ The ten r01 questions, work tags, absent-configuration DTO/hash behaviour and pr
 Complete cost bases remain unchanged. Optional `configuration` uses
 `PPO-ES02-CONFIG-r01` / schema 1; unknown versions and explicit null fail safely.
 Confirmation tokens are separate from question IDs and bind current exact context.
-Migration 0032 adds immutable child identity ownership and exact lineage checks;
+Migration 0039 adds immutable child identity ownership and exact lineage checks;
 there is no new grant, seed, dependency or identity-table ALTER. All migration
-registry assertions and the reviewed hosted-demo migration gate advance to 32;
+registry assertions and the reviewed hosted-demo migration gate advance to 39;
 seed/grant/user expectations stay unchanged.
 
 New workspace reads: `summary`, `history`, `cost-versions`, `evidence`; read-only POST
@@ -182,6 +182,27 @@ units pass, including late-evening and overnight cases. The explicit near-midnig
 refusal remains after 23:20 Brisbane; this real-clock fixture is not valid across
 an arbitrary day rollover. Application code is unchanged by this repair. Fresh PR
 checks provide the final combined-source result.
+
+Main subsequently advanced to `af3f045` through PJ-09 while final checks ran.
+Its issued migrations 0032–0038, seed 32, capability/grant snapshots, Project
+Activity links, shared menu changes and CRM/Email Calendar readiness repairs are
+retained. ES-02's unmerged SQL moves unchanged to 0039; applied-version assertions
+and the reviewed demo gate/count become 39/22, with no ES-02 seed or grant. The
+ES-02 decision becomes ADR-0035: PJ-09 owns main's ADR-0033 and the separate ES-08
+branch already uses ADR-0034. Original evidence filenames/IDs remain historical.
+
+At pre-PJ-09 `c0ced54`, required Estimating passed 197 units, 55 database tests,
+5 HTTP tests, 13 existing browser journeys and 29 shared/ES-02 cases with actual
+restarts. Compiled browser passed 240 / 41 configured skips, including the former
+My Work failure at 22:13 Brisbane. The CRM job then hit its 25-minute job ceiling
+after two browser failures (a five-second owner-button wait and ECONNRESET) and
+a retained I2 identity wait; [the checkpoint](../testing/evidence/es02-native-r01/crm-review.json)
+records run `35597234707`. Its browser artifact and full log were retained locally.
+Unchanged main `af3f045` passes CRM in run `35597947732`. New main brings related readiness
+repairs; new-source checks must establish the combined result, rather than
+attributing those failures to ES-02 or changing assertions without evidence.
+The obsolete Application run was cancelled when this new integration became
+necessary. The final PR identifies the current source and results.
 
 ## Acceptance disposition
 

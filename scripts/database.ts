@@ -3,6 +3,7 @@ import {
   seedFiles,
   latestMigrationVersion,
   validateMigrationRegistry,
+  existingLocalChecksumMatches,
 } from "./migration-registry";
 import { seedDocumentFiles } from "../src/documents/fixtures";
 import { createHash } from "node:crypto";
@@ -30,7 +31,7 @@ export async function migrate(through = latestMigrationVersion) {
         [version],
       );
       if (prior.rows[0]) {
-        if (prior.rows[0].sha256 !== hash)
+        if (!existingLocalChecksumMatches(version, sql, prior.rows[0].sha256))
           throw new Error(
             "Migration checksum mismatch. Preserve the database and investigate; do not edit an applied migration.",
           );

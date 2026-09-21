@@ -33,7 +33,14 @@ export const migrationFiles = [
   "0029-engineering-materials.sql",
   "0030-engineering-changes.sql",
   "0031-commissioning-as-built.sql",
-  "0032-estimating-configuration.sql",
+  "0032-staged-acceptance.sql",
+  "0033-acceptance-lifecycle-evidence.sql",
+  "0034-acceptance-recipient-context.sql",
+  "0035-acceptance-response-integrity.sql",
+  "0036-acceptance-command-recovery.sql",
+  "0037-acceptance-scope-disposition.sql",
+  "0038-acceptance-source-followup.sql",
+  "0039-estimating-configuration.sql",
 ] as const;
 export const seedFiles = [
   [2, "seed.sql"],
@@ -57,8 +64,9 @@ export const seedFiles = [
   [29, "seed-engineering-materials.sql"],
   [30, "seed-engineering-changes.sql"],
   [31, "seed-commissioning-as-built.sql"],
+  [32, "seed-staged-acceptance.sql"],
 ] as const;
-export const latestMigrationVersion = 32;
+export const latestMigrationVersion = 39;
 
 // Separate hosted-only track (ADR-0021): schema that only exists where real identity does.
 // Version 1 is the issued identity baseline and is never re-applied or rewritten.
@@ -81,7 +89,27 @@ export function existingDemoChecksumMatches(
   if (checksum === digest(sql)) return true;
   if (!legacyWindows) return false;
   const lf = sql.replace(/\r\n/g, "\n");
-  return checksum === digest(lf) || checksum === digest(lf.replace(/\n/g, "\r\n"));
+  return (
+    checksum === digest(lf) || checksum === digest(lf.replace(/\n/g, "\r\n"))
+  );
+}
+
+// Local Windows checkouts may use either exact LF or CRLF encoding. Migration
+// 0036 also has one recovered initial encoding: LF with a final CRLF. Limit
+// that exception to both verified content hashes and its exact version.
+export function existingLocalChecksumMatches(
+  version: number,
+  sql: string,
+  checksum: unknown,
+) {
+  if (existingDemoChecksumMatches(sql, checksum, true)) return true;
+  return (
+    version === 36 &&
+    createHash("sha256").update(sql.replace(/\r\n/g, "\n")).digest("hex") ===
+      "8e59bb81caef9f6e5d3f27d32a808e554009b33aaa7a902e6951f722a0de72de" &&
+    checksum ===
+      "46018e6ce64637a81ba16e66bf9b48bfed60f29d6b06f5192e18d3d6fa173693"
+  );
 }
 
 export function validateMigrationRegistry(

@@ -1,0 +1,176 @@
+
+Running 60 tests using 1 worker
+
+(node:26268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop] › tmp\pj09-regressions\intake.spec.ts:34:1 › P03 customer, shared contact, site/equipment attribution and My Work at desktop/mobile widths (4.5s)
+  ok  2 [desktop] › tmp\pj09-regressions\intake.spec.ts:154:1 › P03 persisted intake, validation retention, clarification completion, triage and conflict comparison (3.7s)
+  ok  3 [desktop] › tmp\pj09-regressions\intake.spec.ts:363:1 › P03 unavailable and empty queues stay distinct; keyboard focus and network-failed form entries survive (2.2s)
+  -   4 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:40:1 › the phone overview is one page: header, five-cell bar, Quick Actions, attention, one agenda and follow-ups
+  -   5 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:173:1 › choosing a day changes the agenda and nothing else; other weeks and Today are one press away
+  -   6 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:200:1 › Create is a six-choice menu in order; Activity carries the visible agenda day and cancelling creates nothing
+  -   7 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:263:1 › a row opens details; Complete saves through the source command and every affected count follows, after a reload too
+  -   8 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:293:1 › Reschedule moves the same appointment to another day: no duplicate, its history kept
+  -   9 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:316:1 › the undated activity stays reachable, and setting its date from the detail sheet updates the same record
+  -  10 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:339:1 › Follow up records the chase and clears nothing; Plan activity closes only that opportunity's gap, in both places
+  -  11 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:376:1 › an overdue opportunity is raised by the Deals worklist's own rule, and leaves when its next action is no longer overdue
+  -  12 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:408:1 › weather is honest: not connected by default, a provider's answer renders, hiding frees the space, and failure blocks nothing
+  -  13 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:451:1 › an unread source is never zero, the Create control never covers a focused control, and access decides what is offered
+  ok 14 [desktop] › tmp\pj09-regressions\my-work.spec.ts:35:1 › the overview reconciles its four counts, the list, the schedule and the notices in both menu states (3.3s)
+  ok 15 [desktop] › tmp\pj09-regressions\my-work.spec.ts:126:1 › the list and the schedule open the same activity, and closing returns to the control that opened it (1.0s)
+  ok 16 [desktop] › tmp\pj09-regressions\my-work.spec.ts:145:1 › completing a lead call records the outcome, plans the next activity and keeps the lead as it was (1.9s)
+  ok 17 [desktop] › tmp\pj09-regressions\my-work.spec.ts:172:1 › completing a quotation task issues and approves nothing: only the activity changes (1.3s)
+  ok 18 [desktop] › tmp\pj09-regressions\my-work.spec.ts:191:1 › rescheduling moves the same appointment in the list and the schedule and keeps the change in its history (1.6s)
+  ok 19 [desktop] › tmp\pj09-regressions\my-work.spec.ts:218:1 › planning a next activity removes only that opportunity's gap; cancelling the form changes nothing (1.5s)
+  ok 20 [desktop] › tmp\pj09-regressions\my-work.spec.ts:244:1 › setting a date updates the same undated activity and clears its notice (1.4s)
+  ok 21 [desktop] › tmp\pj09-regressions\my-work.spec.ts:261:1 › following up a waiting request records the chase, keeps its age and clears nothing (1.3s)
+  ok 22 [desktop] › tmp\pj09-regressions\my-work.spec.ts:281:1 › saved views store criteria only: save, modify, reset, pin and retire leave every record alone (2.1s)
+  ok 23 [desktop] › tmp\pj09-regressions\my-work.spec.ts:318:1 › an unread source is never shown as zero, and the team queue is closed to a read-only identity (1.6s)
+  ok 24 [desktop] › tmp\pj09-regressions\projects-gantt.spec.ts:15:1 › Projects navigation, existing-context creation and an uncertain task save survive reload (2.4s)
+  ok 25 [desktop] › tmp\pj09-regressions\projects-gantt.spec.ts:90:1 › another company cannot read a schedule, task owners or history, or mutate a known task (649ms)
+  x  26 [desktop] › tmp\pj09-regressions\quality-states.spec.ts:9:1 › P11 PT-29 pack and report queues never turn failed reads into empty or issued claims (252ms)
+(node:10732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  27 [desktop] › tmp\pj09-regressions\quality-states.spec.ts:64:1 › P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial (856ms)
+(node:1156) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"viewport":{"width":1440,"height":1000},"storage_evidence":"Synthetic marker committed. Previous marker recovered. Persistent storage: not granted. Reported quota: 3221299200 bytes. This does not prove offline or mobile readiness."}
+  ok 28 [desktop] › tmp\pj09-regressions\shell.spec.ts:2:1 › responsive shell, keyboard focus, server save, read-only refusal and storage feasibility (2.3s)
+  ok 29 [desktop] › tmp\pj09-regressions\shell.spec.ts:101:1 › unavailable dependency and missing page show useful recoverable states (762ms)
+  ok 30 [desktop] › tmp\pj09-regressions\shell.spec.ts:126:1 › r17 preview preserves permissions, contextual navigation and page guidance (1.3s)
+(node:29256) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 31 [phone] › tmp\pj09-regressions\intake.spec.ts:34:1 › P03 customer, shared contact, site/equipment attribution and My Work at desktop/mobile widths (3.5s)
+  ok 32 [phone] › tmp\pj09-regressions\intake.spec.ts:154:1 › P03 persisted intake, validation retention, clarification completion, triage and conflict comparison (3.2s)
+  ok 33 [phone] › tmp\pj09-regressions\intake.spec.ts:363:1 › P03 unavailable and empty queues stay distinct; keyboard focus and network-failed form entries survive (2.2s)
+  ok 34 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:40:1 › the phone overview is one page: header, five-cell bar, Quick Actions, attention, one agenda and follow-ups (4.8s)
+  ok 35 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:173:1 › choosing a day changes the agenda and nothing else; other weeks and Today are one press away (1.4s)
+  ok 36 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:200:1 › Create is a six-choice menu in order; Activity carries the visible agenda day and cancelling creates nothing (2.0s)
+  ok 37 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:263:1 › a row opens details; Complete saves through the source command and every affected count follows, after a reload too (2.2s)
+  ok 38 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:293:1 › Reschedule moves the same appointment to another day: no duplicate, its history kept (1.6s)
+  ok 39 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:316:1 › the undated activity stays reachable, and setting its date from the detail sheet updates the same record (1.9s)
+  ok 40 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:339:1 › Follow up records the chase and clears nothing; Plan activity closes only that opportunity's gap, in both places (2.1s)
+  ok 41 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:376:1 › an overdue opportunity is raised by the Deals worklist's own rule, and leaves when its next action is no longer overdue (1.9s)
+  ok 42 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:408:1 › weather is honest: not connected by default, a provider's answer renders, hiding frees the space, and failure blocks nothing (2.9s)
+  ok 43 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:451:1 › an unread source is never zero, the Create control never covers a focused control, and access decides what is offered (3.0s)
+  -  44 [phone] › tmp\pj09-regressions\my-work.spec.ts:35:1 › the overview reconciles its four counts, the list, the schedule and the notices in both menu states
+  -  45 [phone] › tmp\pj09-regressions\my-work.spec.ts:126:1 › the list and the schedule open the same activity, and closing returns to the control that opened it
+  -  46 [phone] › tmp\pj09-regressions\my-work.spec.ts:145:1 › completing a lead call records the outcome, plans the next activity and keeps the lead as it was
+  -  47 [phone] › tmp\pj09-regressions\my-work.spec.ts:172:1 › completing a quotation task issues and approves nothing: only the activity changes
+  -  48 [phone] › tmp\pj09-regressions\my-work.spec.ts:191:1 › rescheduling moves the same appointment in the list and the schedule and keeps the change in its history
+  -  49 [phone] › tmp\pj09-regressions\my-work.spec.ts:218:1 › planning a next activity removes only that opportunity's gap; cancelling the form changes nothing
+  -  50 [phone] › tmp\pj09-regressions\my-work.spec.ts:244:1 › setting a date updates the same undated activity and clears its notice
+  -  51 [phone] › tmp\pj09-regressions\my-work.spec.ts:261:1 › following up a waiting request records the chase, keeps its age and clears nothing
+  -  52 [phone] › tmp\pj09-regressions\my-work.spec.ts:281:1 › saved views store criteria only: save, modify, reset, pin and retire leave every record alone
+  -  53 [phone] › tmp\pj09-regressions\my-work.spec.ts:318:1 › an unread source is never shown as zero, and the team queue is closed to a read-only identity
+  ok 54 [phone] › tmp\pj09-regressions\projects-gantt.spec.ts:15:1 › Projects navigation, existing-context creation and an uncertain task save survive reload (2.2s)
+  ok 55 [phone] › tmp\pj09-regressions\projects-gantt.spec.ts:90:1 › another company cannot read a schedule, task owners or history, or mutate a known task (863ms)
+  x  56 [phone] › tmp\pj09-regressions\quality-states.spec.ts:9:1 › P11 PT-29 pack and report queues never turn failed reads into empty or issued claims (249ms)
+(node:28928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  57 [phone] › tmp\pj09-regressions\quality-states.spec.ts:64:1 › P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial (883ms)
+(node:2728) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"viewport":{"width":390,"height":844},"storage_evidence":"Synthetic marker committed. Previous marker recovered. Persistent storage: not granted. Reported quota: 3221299200 bytes. This does not prove offline or mobile readiness."}
+  ok 58 [phone] › tmp\pj09-regressions\shell.spec.ts:2:1 › responsive shell, keyboard focus, server save, read-only refusal and storage feasibility (2.9s)
+  ok 59 [phone] › tmp\pj09-regressions\shell.spec.ts:101:1 › unavailable dependency and missing page show useful recoverable states (947ms)
+  ok 60 [phone] › tmp\pj09-regressions\shell.spec.ts:126:1 › r17 preview preserves permissions, contextual navigation and page guidance (1.6s)
+
+
+  1) [desktop] › tmp\pj09-regressions\quality-states.spec.ts:9:1 › P11 PT-29 pack and report queues never turn failed reads into empty or issued claims 
+
+    SyntaxError: Unexpected token 'L', "Local synt"... is not valid JSON
+
+       at ..\..\tests\helpers\quality-browser.ts:94
+
+      92 |     r = await request();
+      93 |   }
+    > 94 |   const d = await r.json();
+         |             ^
+      95 |   expect(r.ok(), JSON.stringify(d)).toBe(true);
+      96 |   expect(r.headers()["cache-control"]).toBe("private, no-store");
+      97 |   return d;
+        at call (C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09\tests\helpers\quality-browser.ts:94:13)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09\tmp\pj09-regressions\quality-states.spec.ts:12:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\pj09-regression-results\quality-states-P11-PT-29-p-dd762-into-empty-or-issued-claims-desktop\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\pj09-regression-results\quality-states-P11-PT-29-p-dd762-into-empty-or-issued-claims-desktop\error-context.md
+
+  2) [desktop] › tmp\pj09-regressions\quality-states.spec.ts:64:1 › P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial 
+
+    SyntaxError: Unexpected token 'L', "Local synt"... is not valid JSON
+
+       at ..\..\tests\helpers\quality-browser.ts:94
+
+      92 |     r = await request();
+      93 |   }
+    > 94 |   const d = await r.json();
+         |             ^
+      95 |   expect(r.ok(), JSON.stringify(d)).toBe(true);
+      96 |   expect(r.headers()["cache-control"]).toBe("private, no-store");
+      97 |   return d;
+        at call (C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09\tests\helpers\quality-browser.ts:94:13)
+        at financeHttpSource (C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09\tests\helpers\finance-http.ts:12:3)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09\tmp\pj09-regressions\quality-states.spec.ts:69:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\pj09-regression-results\quality-states-P11-PT-29-a-4ff90-recovery-and-current-denial-desktop\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\pj09-regression-results\quality-states-P11-PT-29-a-4ff90-recovery-and-current-denial-desktop\error-context.md
+
+  3) [phone] › tmp\pj09-regressions\quality-states.spec.ts:9:1 › P11 PT-29 pack and report queues never turn failed reads into empty or issued claims 
+
+    SyntaxError: Unexpected token 'L', "Local synt"... is not valid JSON
+
+       at ..\..\tests\helpers\quality-browser.ts:94
+
+      92 |     r = await request();
+      93 |   }
+    > 94 |   const d = await r.json();
+         |             ^
+      95 |   expect(r.ok(), JSON.stringify(d)).toBe(true);
+      96 |   expect(r.headers()["cache-control"]).toBe("private, no-store");
+      97 |   return d;
+        at call (C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09\tests\helpers\quality-browser.ts:94:13)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09\tmp\pj09-regressions\quality-states.spec.ts:12:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\pj09-regression-results\quality-states-P11-PT-29-p-dd762-into-empty-or-issued-claims-phone\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\pj09-regression-results\quality-states-P11-PT-29-p-dd762-into-empty-or-issued-claims-phone\error-context.md
+
+  4) [phone] › tmp\pj09-regressions\quality-states.spec.ts:64:1 › P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial 
+
+    SyntaxError: Unexpected token 'L', "Local synt"... is not valid JSON
+
+       at ..\..\tests\helpers\quality-browser.ts:94
+
+      92 |     r = await request();
+      93 |   }
+    > 94 |   const d = await r.json();
+         |             ^
+      95 |   expect(r.ok(), JSON.stringify(d)).toBe(true);
+      96 |   expect(r.headers()["cache-control"]).toBe("private, no-store");
+      97 |   return d;
+        at call (C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09\tests\helpers\quality-browser.ts:94:13)
+        at financeHttpSource (C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09\tests\helpers\finance-http.ts:12:3)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09\tmp\pj09-regressions\quality-states.spec.ts:69:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\pj09-regression-results\quality-states-P11-PT-29-a-4ff90-recovery-and-current-denial-phone\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\pj09-regression-results\quality-states-P11-PT-29-a-4ff90-recovery-and-current-denial-phone\error-context.md
+
+  4 failed
+    [desktop] › tmp\pj09-regressions\quality-states.spec.ts:9:1 › P11 PT-29 pack and report queues never turn failed reads into empty or issued claims 
+    [desktop] › tmp\pj09-regressions\quality-states.spec.ts:64:1 › P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial 
+    [phone] › tmp\pj09-regressions\quality-states.spec.ts:9:1 › P11 PT-29 pack and report queues never turn failed reads into empty or issued claims 
+    [phone] › tmp\pj09-regressions\quality-states.spec.ts:64:1 › P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial 
+  20 skipped
+  36 passed (1.5m)

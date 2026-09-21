@@ -21,7 +21,7 @@ Read this with the [evidence and CREMS dispositions](estimating-evidence.md), [s
 
 **Implementation update, 21 September 2026:** Dean subsequently requested execution
 of the ES-02 prompt r03 and plan r04. The [ES-02 handover](../delivery/es02-estimation-wizard-handover.md)
-and [ADR-0033](../decisions/ADR-0033-es02-structured-discovery.md) record the native
+and [ADR-0035](../decisions/ADR-0035-es02-structured-discovery.md) record the native
 five-step refinement, structured discovery and exact saved-cost read contract.
 This bounded implementation does not adopt the remaining BP-04 commercial policy
 or change EST-01–EST-09, MYOB, SharePoint or native CAD ownership.

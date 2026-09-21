@@ -1,0 +1,45 @@
+
+Running 4 tests using 1 worker
+
+(node:26180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop] › tmp\pj09-regressions\quality-states.spec.ts:9:1 › P11 PT-29 pack and report queues never turn failed reads into empty or issued claims (3.2s)
+  ok 2 [desktop] › tmp\pj09-regressions\quality-states.spec.ts:64:1 › P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial (46.4s)
+(node:30600) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [phone] › tmp\pj09-regressions\quality-states.spec.ts:9:1 › P11 PT-29 pack and report queues never turn failed reads into empty or issued claims (2.5s)
+  x  4 [phone] › tmp\pj09-regressions\quality-states.spec.ts:64:1 › P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial (390ms)
+
+
+  1) [phone] › tmp\pj09-regressions\quality-states.spec.ts:64:1 › P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial 
+
+    Error: {"code":"ResourceConflict","message":"SYN Riley Technician: reserved 2031-11-05T00:00:00.000Z to 2031-11-05T02:00:00.000Z (UTC). Original booking retained.","field_errors":[{"field":"crew","message":"SYN Riley Technician: reserved 2031-11-05T00:00:00.000Z to 2031-11-05T02:00:00.000Z (UTC). Original booking retained."}],"correlation_id":"f4ba581b-ad9d-43f8-921b-928142a54451","retryable":false}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+       at ..\pj09-helpers\quality-browser.ts:95
+
+      93 |   }
+      94 |   const d = await r.json();
+    > 95 |   expect(r.ok(), JSON.stringify(d)).toBe(true);
+         |                                     ^
+      96 |   expect(r.headers()["cache-control"]).toBe("private, no-store");
+      97 |   return d;
+      98 | }
+        at call (C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09\tmp\pj09-helpers\quality-browser.ts:95:37)
+        at prepareFieldAppointment (C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09\tmp\pj09-helpers\field-http.ts:59:3)
+        at financeHttpSource (C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09\tmp\pj09-helpers\finance-http.ts:13:17)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09\tmp\pj09-regressions\quality-states.spec.ts:69:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\pj09-regression-results\quality-states-P11-PT-29-a-4ff90-recovery-and-current-denial-phone\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\pj09-regression-results\quality-states-P11-PT-29-a-4ff90-recovery-and-current-denial-phone\error-context.md
+
+  1 failed
+    [phone] › tmp\pj09-regressions\quality-states.spec.ts:64:1 › P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial 
+  3 passed (56.4s)
