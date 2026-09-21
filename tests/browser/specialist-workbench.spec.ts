@@ -212,12 +212,21 @@ test("ES08 durable raw draft, manual re-review, native receiving, exact history 
   // resource must not restore the previous version while that reload waits.
   let releaseRefresh!: () => void;
   let refreshStarted!: () => void;
-  const refreshGate = new Promise<void>((resolve) => { releaseRefresh = resolve; });
-  const refreshPending = new Promise<void>((resolve) => { refreshStarted = resolve; });
-  let detailReads = 0;
+  const refreshGate = new Promise<void>((resolve) => {
+    releaseRefresh = resolve;
+  });
+  const refreshPending = new Promise<void>((resolve) => {
+    refreshStarted = resolve;
+  });
   const detailRoute = new RegExp(api + "$");
   await page.route(detailRoute, async (route) => {
-    if (route.request().method() === "GET" && ++detailReads === 2) {
+    // The shared resource also polls periodically. Classify by accepted UI
+    // state so an intervening poll cannot make us hold the command's own read.
+    if (
+      route.request().method() === "GET" &&
+      await page.getByRole("status")
+        .filter({ hasText: "Saved to the server" }).isVisible()
+    ) {
       refreshStarted();
       await refreshGate;
     }
