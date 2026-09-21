@@ -188,8 +188,26 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   await expect(page).toHaveURL(new RegExp(`/sales/opportunities/${inputs[0].id}$`));
   await page.getByRole("tab",{name:"Details",exact:true}).click();
   await expect(page.getByLabel("Qualification outcome", { exact: true })).toBeVisible();
-  await page.reload();
+  // Reload remounts identity and then reads the permitted opportunity. Reproduce
+  // a real detail read exceeding 5s without replacing its status or record body.
+  const detailPath = `/api/v1/crm/opportunities/${inputs[0].id}`;
+  let reloadedDetail: Promise<void> | undefined;
+  await page.route(`**${detailPath}`, async route => {
+    if (route.request().method() !== "GET") return route.continue();
+    const response = await route.fetch();
+    reloadedDetail ??= new Promise(resolve => setTimeout(resolve, 6500));
+    await reloadedDetail;
+    await route.fulfill({ response });
+  });
+  const [detailResponse] = await Promise.all([
+    page.waitForResponse(response => new URL(response.url()).pathname === detailPath
+      && response.request().method() === "GET", { timeout: 15000 }),
+    page.reload(),
+  ]);
+  expect(detailResponse.status()).toBe(200);
+  expect(detailResponse.headers()["cache-control"]).toBe("private, no-store");
   await expect(page.getByRole("heading", { name: inputs[0].title, exact: true })).toBeVisible();
+  await page.unroute(`**${detailPath}`);
 });
 
 test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error completeness", async ({ page }, info) => {
