@@ -104,8 +104,11 @@
 #ppo-materials .em-states strong{font-weight:700}
 #ppo-materials .em-page-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;margin-top:auto;padding:14px 20px;color:var(--text-secondary);font-size:13px}
 
-/* Inspector: a square, closable right dock. It overlays the register when the split is too narrow for both. */
-#ppo-materials .em-inspector{display:flex;flex-direction:column;flex:none;width:388px;min-height:0;border-left:1px solid var(--line);background:var(--surface-white);border-radius:0}
+/* Inspector: a square, closable right dock. It overlays the register when the split is too narrow for both.
+   Docked it carries a fine left divider and a soft left-only shadow that fades about 16px into the
+   register beside it: no outside margin, no rounded floating card and no four-sided shadow. A shadow
+   never intercepts pointer input, so the first column of the table underneath stays clickable. */
+#ppo-materials .em-inspector{display:flex;flex-direction:column;flex:none;width:388px;min-height:0;border-left:1px solid var(--line);background:var(--surface-white);border-radius:0;box-shadow:-16px 0 20px -16px rgba(36,42,55,.18)}
 #ppo-materials .em-inspector-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:16px 12px 8px 20px}
 #ppo-materials .em-eyebrow{color:var(--text-secondary);font-size:12px;letter-spacing:.5px;text-transform:uppercase}
 #ppo-materials .em-inspector h2{font-size:21px;line-height:28px;font-weight:700;overflow-wrap:anywhere}
@@ -139,7 +142,8 @@
 #ppo-materials .em-inspector-actions .mw-button{width:100%;min-height:44px}
 #ppo-materials .em-inspector-actions .mw-link{align-self:center}
 @container em-split (max-width:1140px){
- #ppo-materials .em-inspector{position:absolute;z-index:6;inset:0 0 0 auto;width:min(420px,100%);box-shadow:var(--shadow)}
+ /* Overlaid rather than docked, it keeps the same left-biased shadow, deepened so it reads as a layer. */
+ #ppo-materials .em-inspector{position:absolute;z-index:6;inset:0 0 0 auto;width:min(420px,100%);box-shadow:-20px 0 48px rgba(36,42,55,.20)}
 }
 
 /* Working pages of the other five destinations: padded content over the same surface, tables flush inside their panel. */
