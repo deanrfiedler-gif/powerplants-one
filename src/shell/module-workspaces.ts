@@ -2,6 +2,7 @@
 // spacing and scroll surface. Other pages retain their established composition.
 export const moduleWorkspaces = [
   { route: "/estimating/configurations", scope: "ppo-specialist", layout: "full-bleed", navigation: "workspace", baseline: "es08-native-r01" },
+  { route: "/facilities", moduleId: "CS-05", scope: "ppo-facilities", layout: "full-bleed", navigation: "workspace", baseline: "cs05-native-r01" },
   { route: "/projects/acceptance", moduleId: "PJ-09", scope: "ppo-acceptance", layout: "full-bleed", navigation: "workspace", baseline: "pj09-r01" },
   { route: "/sales/opportunities", scope: "ppo-deals", layout: "full-bleed", navigation: "workspace", baseline: "deals-r38" },
   { route: "/estimating/discovery/[id]", scope: "ppo-estimate-wizard", layout: "full-bleed", navigation: "workspace", baseline: "es02-r01" },
@@ -9,7 +10,6 @@ export const moduleWorkspaces = [
 
 export function moduleWorkspaceForPath(path: string) {
   return moduleWorkspaces.find(workspace => workspace.route === path
-    || (workspace.scope === "ppo-specialist" && path.startsWith(workspace.route + "/"))
-    || (workspace.scope === "ppo-acceptance" && path.startsWith(workspace.route + "/"))
+    || (["ppo-specialist", "ppo-acceptance", "ppo-facilities"].includes(workspace.scope) && path.startsWith(workspace.route + "/"))
     || (workspace.scope === "ppo-estimate-wizard" && /^\/estimating\/discovery\/[0-9a-f-]{36}$/.test(path)));
 }

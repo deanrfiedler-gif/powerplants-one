@@ -1,0 +1,17 @@
+✔ CS05-T01–06,T14–16,T21,T44–46,T63–65,T71: atomic create/revision, legacy, read-only preview, exact clearing and original replay (4788.8015ms)
+✔ CS05-T07–12,T22,T74: every conditional type, strict primitive/applicability validation and direct SQL precision (4995.0462ms)
+✔ CS05-T17–20,T43,T66: complete ancestry, concurrent cycles and parent-label freshness under workspace lock (4656.3834ms)
+✔ CS05-T21–22,T25–27,T75–76: older context review, immutable source correction and exact pin confirmation/removal (4800.5994ms)
+✔ CS05-T29–33,T38,T42: one installed pump, three explicit served areas, no inheritance, retained ending and Asset version (4547.2272ms)
+{"case":"CS05-T59","dataset":550,"queryPairsMs":[83.9929000000011,191.0222999999969,188.16200000000026,187.5183999999972]}
+✔ CS05-T34–40,T52,T59,T78: server sorting/cursors, full UUID lookup beyond loaded pages, parent exclusion and scoped counts (5477.4201ms)
+✔ CS05-T39–41,T44–45,T79: edit-only originals, revoked access, create-only refusal and company/site isolation (4714.2867ms)
+✔ CS05-T46,T53–54: failed audit rolls back all effects; upgrade and reseed preserve identities, grants, old fields and originals (10682.9002ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 45911.5309

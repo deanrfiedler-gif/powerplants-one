@@ -443,8 +443,8 @@ export function ProductHeader() {
           ? ["estimates", "intake"]
           : page?.id === "mail" || page?.id === "calendar"
             ? ["mail", "calendar"]
-      : ["customers", "sites", "equipment"].includes(page?.id ?? "")
-        ? ["customers", "sites", "equipment"]
+      : ["customers", "sites", "facilities", "equipment"].includes(page?.id ?? "")
+        ? ["customers", "sites", "facilities", "equipment"]
         : [];
   const tabs = tabIds
     .map(destination)

@@ -1,0 +1,81 @@
+✔ E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts and exact stored quotations (28085.3345ms)
+✖ CS05-T66: equipment dependency review includes associations beyond its bounded display page (20612.2498ms)
+✔ CS05-T49–50: E2 checks current Facility context but retained discovery and estimate versions remain byte-equivalent (12825.1234ms)
+✔ CS05-T01–06,T14–16,T21,T44–46,T63–65,T71: atomic create/revision, legacy, read-only preview, exact clearing and original replay (24614.5274ms)
+✖ CS05-T07–12,T22,T74: every conditional type, strict primitive/applicability validation and direct SQL precision (28374.2556ms)
+✔ CS05-T17–20,T43,T66: complete ancestry, concurrent cycles and parent-label freshness under workspace lock (41634.6357ms)
+✔ CS05-T21–22,T25–27,T75–76: older context review, immutable source correction and exact pin confirmation/removal (28013.6414ms)
+✔ CS05-T29–33,T38,T42: one installed pump, three explicit served areas, no inheritance, retained ending and Asset version (21414.1094ms)
+{"case":"CS05-T59","dataset":5000,"queryPairsMs":[91.60129999998026,129.24680000002263,123.60130000000936,148.31560000000172]}
+✔ CS05-T34–40,T52,T59,T78: server sorting/cursors, full UUID lookup beyond loaded pages, parent exclusion and scoped counts (20186.9026ms)
+✔ CS05-T39–41,T44–45,T79: edit-only originals, revoked access, create-only refusal and company/site isolation (10582.3584ms)
+✔ CS05-T46,T53–54: failed audit rolls back all effects; upgrade and reseed preserve identities, grants, old fields and originals (39219.2927ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 9
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 289604.3277
+
+✖ failing tests:
+
+test at tests\database\facilities.test.ts:1:2847
+✖ CS05-T66: equipment dependency review includes associations beyond its bounded display page (20612.2498ms)
+  error: Current site needs matching location evidence
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\node_modules\pg-pool\index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\database\facilities.test.ts:97:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    length: 170,
+    severity: 'ERROR',
+    code: '23514',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: 'PL/pgSQL function ppo.check_location_chain() line 11 at RAISE',
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'pl_exec.c',
+    line: '3911',
+    routine: 'exec_stmt_raise'
+  }
+
+test at tests\database\facilities.test.ts:2:6453
+✖ CS05-T07–12,T22,T74: every conditional type, strict primitive/applicability validation and direct SQL precision (28374.2556ms)
+  error: canceling statement due to statement timeout
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:59:7)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\platform\database.ts:44:20)
+      at async seed (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:50:3)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:111:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 246,
+    severity: 'ERROR',
+    code: '57014',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: 'SQL expression "NOT EXISTS(SELECT 1 FROM pg_timezone_names WHERE name=NEW.timezone)"\nPL/pgSQL function ppo.site_timezone() line 2 at IF',
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'postgres.c',
+    line: '3396',
+    routine: 'ProcessInterrupts'
+  }

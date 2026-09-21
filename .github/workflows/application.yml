@@ -79,6 +79,10 @@ jobs:
           npm run db:migrate
           npm run db:seed
           npm run db:health
+      - name: CS-05 compiled facilities proof
+        if: matrix.suite == 'browser'
+        # Run the dedicated CS-05 proof once in the retained browser lane.
+        run: npx playwright test tests/browser/facilities.spec.ts --config=playwright.compiled.config.ts --no-deps --output verification-evidence/facilities --reporter=list
       - name: Mobile CRM projections, scoped links and complete phone journey
         if: matrix.suite == 'browser'
         run: |

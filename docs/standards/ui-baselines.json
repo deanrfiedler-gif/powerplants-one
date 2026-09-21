@@ -183,6 +183,21 @@
       "application_proof": "tests/browser/specialist-workbench.spec.ts",
       "authority": "User requested execution of ES-08 prompt/plan r02. Native visual and business acceptance remain pending; no new owner-approved screenshot baseline.",
       "adaptations": "docs/decisions/ADR-0034-es08-specialist-workbench.md"
+    },
+    {
+      "id": "cs05-native-r01",
+      "route": "/facilities",
+      "scope": "#ppo-facilities",
+      "layout": "full-bleed",
+      "scroll_owner": ".facility-host",
+      "design": "docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html",
+      "sha256": "139938cfabaa71ac0b7e7e5e326d31fd7c3789f116e67f79d348ba5e9ae7ae33",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/browser/facilities.spec.ts",
+      "application_proof": "tests/browser/facilities.spec.ts",
+      "authority": "Dean authorised execution of the supplied CS-05 r02 delivery contract. Native adaptations are proposed for visual review; this entry grants no owner baseline acceptance.",
+      "adaptations": "docs/delivery/facilities-growing-areas-handover.md"
     }
   ]
 }

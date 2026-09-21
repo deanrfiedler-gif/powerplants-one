@@ -148,6 +148,7 @@ async function project(
       site_id: row.site_id,
       name: row.name,
       parent_facility_id: row.parent_facility_id,
+      parent_relationship: row.parent_facility_id ? row.parent_relationship ?? "grouping" : null,
     };
   // A predecessor may belong to another site. Check it independently before exposing its ID.
   const predecessor = row.predecessor_asset_id
@@ -323,8 +324,8 @@ export async function customerContext(p: Principal, id: string) {
       [p.workspace_id, p.actor_id, id],
     )
   ).rows;
-  const facilities = (await client.query<{id:string;site_id:string;name:string;parent_facility_id:string|null}>(
-    `SELECT f.id,f.site_id,f.name,f.parent_facility_id FROM ppo.facilities f
+  const facilities = (await client.query<{id:string;site_id:string;name:string;parent_facility_id:string|null;parent_relationship:string|null}>(
+    `SELECT f.id,f.site_id,f.name,f.parent_facility_id,CASE WHEN f.parent_facility_id IS NOT NULL THEN coalesce(to_jsonb(f)->>'parent_relationship','grouping') END AS parent_relationship FROM ppo.facilities f
       WHERE f.workspace_id=$1 AND f.site_id=ANY($3::uuid[]) AND ${visibility("Facility","f")} ORDER BY f.name,f.id`,
     [p.workspace_id,p.actor_id,sites.map(s=>s.id)],
   )).rows;

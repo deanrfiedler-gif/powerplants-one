@@ -1,0 +1,178 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"153.0.8010.53"}
+
+Running 8 tests using 1 worker
+
+(node:10592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [desktop-chromium] › tests\browser\facilities.spec.ts:52:1 › CS05 register, exact hierarchy, create, controlled clearing, reload and history (11.8s)
+(node:25528) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [desktop-chromium] › tests\browser\facilities.spec.ts:148:1 › CS05 lost response freezes original, absent lookup replays exactly once, accepted refresh failure remains saved (3.6s)
+  x  3 [desktop-chromium] › tests\browser\facilities.spec.ts:221:1 › CS05 conflict retains proposal, pin review records zero, related pump and identity denial (2.0s)
+(node:2600) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [desktop-chromium] › tests\browser\facilities.spec.ts:288:1 › CS05 native source comparison, dense register and responsive geometry (23.0s)
+(node:33820) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  5 [mobile-chromium] › tests\browser\facilities.spec.ts:52:1 › CS05 register, exact hierarchy, create, controlled clearing, reload and history (11.4s)
+(node:24684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 6 [mobile-chromium] › tests\browser\facilities.spec.ts:148:1 › CS05 lost response freezes original, absent lookup replays exactly once, accepted refresh failure remains saved (3.4s)
+  x  7 [mobile-chromium] › tests\browser\facilities.spec.ts:221:1 › CS05 conflict retains proposal, pin review records zero, related pump and identity denial (2.2s)
+(node:34852) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 8 [mobile-chromium] › tests\browser\facilities.spec.ts:288:1 › CS05 native source comparison, dense register and responsive geometry (2.8s)
+
+
+  1) [desktop-chromium] › tests\browser\facilities.spec.ts:52:1 › CS05 register, exact hierarchy, create, controlled clearing, reload and history 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'SYN native outdoor 5140c0dc', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'SYN native outdoor 5140c0dc', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'SYN native outdoor 5140c0dc', exact: true })
+
+
+      93 |   const id = page.url().split("/").at(-1)!;
+      94 |   await page.reload();
+    > 95 |   await expect(page.getByRole("heading", { name, exact: true })).toBeVisible();
+         |                                                                  ^
+      96 |   await page.getByRole("link", { name: "Edit", exact: true }).click();
+      97 |   await page
+      98 |     .getByLabel("Structure type", { exact: true })
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\browser\facilities.spec.ts:95:66
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    docs\testing\evidence\cs05-native-r01\browser\facilities-CS05-register-e-7768e-clearing-reload-and-history-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs\testing\evidence\cs05-native-r01\browser\facilities-CS05-register-e-7768e-clearing-reload-and-history-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs\testing\evidence\cs05-native-r01\browser\facilities-CS05-register-e-7768e-clearing-reload-and-history-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace docs\testing\evidence\cs05-native-r01\browser\facilities-CS05-register-e-7768e-clearing-reload-and-history-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chromium] › tests\browser\facilities.spec.ts:221:1 › CS05 conflict retains proposal, pin review records zero, related pump and identity denial 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected substring: "saved record changed"
+    Error: strict mode violation: getByRole('alert') resolved to 2 elements:
+        1) <div role="alert" tabindex="-1" class="business-error">…</div> aka getByRole('alert').filter({ hasText: 'The saved record changed.' })
+        2) <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div> aka locator('[id="__next-route-announcer__"]')
+
+    Call log:
+      - Expect "toContainText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      249 |     .getByRole("button", { name: "Review changes", exact: true })
+      250 |     .click();
+    > 251 |   await expect(page.getByRole("alert")).toContainText("saved record changed");
+          |                                         ^
+      252 |   await expect(page.getByLabel("Detail notes", { exact: true })).toHaveValue(
+      253 |     "SYN proposal stays",
+      254 |   );
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\browser\facilities.spec.ts:251:41
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    docs\testing\evidence\cs05-native-r01\browser\facilities-CS05-conflict-r-bd2e1-ed-pump-and-identity-denial-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs\testing\evidence\cs05-native-r01\browser\facilities-CS05-conflict-r-bd2e1-ed-pump-and-identity-denial-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs\testing\evidence\cs05-native-r01\browser\facilities-CS05-conflict-r-bd2e1-ed-pump-and-identity-denial-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace docs\testing\evidence\cs05-native-r01\browser\facilities-CS05-conflict-r-bd2e1-ed-pump-and-identity-denial-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile-chromium] › tests\browser\facilities.spec.ts:52:1 › CS05 register, exact hierarchy, create, controlled clearing, reload and history 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'SYN native outdoor b13a72a3', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'SYN native outdoor b13a72a3', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'SYN native outdoor b13a72a3', exact: true })
+
+
+      93 |   await expect(page).toHaveURL(/\/facilities\/[0-9a-f-]{36}$/);
+      94 |   const id = page.url().split("/").at(-1)!;
+    > 95 |   await page.reload();
+         |                       ^
+      96 |   await expect(page.getByRole("heading", { name, exact: true })).toBeVisible();
+      97 |   await page.getByRole("link", { name: "Edit", exact: true }).click();
+      98 |   await page
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\browser\facilities.spec.ts:95:66
+
+    Error: browserContext._wrapApiCall: file data stream has unexpected number of bytes
+
+    Error: End of central directory record signature not found. Either not a zip file, or file is truncated.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    docs\testing\evidence\cs05-native-r01\browser\facilities-CS05-register-e-7768e-clearing-reload-and-history-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs\testing\evidence\cs05-native-r01\browser\facilities-CS05-register-e-7768e-clearing-reload-and-history-mobile-chromium\error-context.md
+
+  4) [mobile-chromium] › tests\browser\facilities.spec.ts:221:1 › CS05 conflict retains proposal, pin review records zero, related pump and identity denial 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected substring: "saved record changed"
+    Error: strict mode violation: getByRole('alert') resolved to 2 elements:
+        1) <div role="alert" tabindex="-1" class="business-error">…</div> aka getByRole('alert').filter({ hasText: 'The saved record changed.' })
+        2) <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div> aka locator('[id="__next-route-announcer__"]')
+
+    Call log:
+      - Expect "toContainText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      249 |   await page
+      250 |     .getByRole("button", { name: "Review changes", exact: true })
+    > 251 |     .click();
+          |              ^
+      252 |   await expect(page.locator(".business-error[role=alert]")).toContainText("saved record changed");
+      253 |   await expect(page.getByLabel("Detail notes", { exact: true })).toHaveValue(
+      254 |     "SYN proposal stays",
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\browser\facilities.spec.ts:251:41
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    docs\testing\evidence\cs05-native-r01\browser\facilities-CS05-conflict-r-bd2e1-ed-pump-and-identity-denial-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs\testing\evidence\cs05-native-r01\browser\facilities-CS05-conflict-r-bd2e1-ed-pump-and-identity-denial-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs\testing\evidence\cs05-native-r01\browser\facilities-CS05-conflict-r-bd2e1-ed-pump-and-identity-denial-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace docs\testing\evidence\cs05-native-r01\browser\facilities-CS05-conflict-r-bd2e1-ed-pump-and-identity-denial-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [desktop-chromium] › tests\browser\facilities.spec.ts:52:1 › CS05 register, exact hierarchy, create, controlled clearing, reload and history 
+    [desktop-chromium] › tests\browser\facilities.spec.ts:221:1 › CS05 conflict retains proposal, pin review records zero, related pump and identity denial 
+    [mobile-chromium] › tests\browser\facilities.spec.ts:52:1 › CS05 register, exact hierarchy, create, controlled clearing, reload and history 
+    [mobile-chromium] › tests\browser\facilities.spec.ts:221:1 › CS05 conflict retains proposal, pin review records zero, related pump and identity denial 
+  4 passed (1.3m)

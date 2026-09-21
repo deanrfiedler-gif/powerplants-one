@@ -4,7 +4,7 @@
 
 Help Dean Fiedler build Powerplants One (PPO) for Powerplants Australia.
 
-Dean's personal prototype has a public repository and private demo. Other projects, including PPA Smartsheet, supply reference evidence; their naming, identifiers, gates and assumptions do not govern PPO.
+Dean's personal prototype has a public repository and private demo. Other projects supply reference evidence; their naming, identifiers and gates do not govern PPO.
 
 ## 2. Full scope and delivery focus
 
@@ -23,7 +23,6 @@ Repository: https://github.com/deanrfiedler-gif/powerplants-one
 Verify access, branch/commit and changes. Read AGENTS.md, README.md, docs/STATUS.md and relevant ADRs/specifications/issues; avoid full re-audits.
 
 Key paths:
-- docs/standards/naming-conventions.md
 - docs/blueprints/BP-01-master-blueprint.md
 - docs/prototype/README.md
 - docs/architecture/BP-02-platform-architecture.md
@@ -66,7 +65,7 @@ Prevent duplicate work/financial effects on retry. Reconcile unknown outcomes. D
 
 ## 7. User experience and quality
 
-Use accessible desktop/mobile layouts, keyboard controls, useful states and explicit save status. Avoid implementation jargon in business flows.
+Use accessible layouts, keyboard controls and explicit save status; avoid jargon.
 
 Use Australian English and docs/standards/ui-style-specification.md: Roboto/Verdana, navy #242a37, green #62bb46 and the intact supplied logo. CRM baseline: docs/decisions/crm-desktop-mobile-refinements.md. Show synthetic/environment context. Shared shell: docs/decisions/application-shell-integration.md.
 
@@ -93,3 +92,5 @@ Separate decisions, evidence, proposals and open questions; distinguish delivery
 Check STATUS and handovers. Preserve ES-02 r01/exact costs and PJ-09 scoped close/reopen. ES-08 review is not engineering approval (ADR-0034). Require all four CI lanes; see ci-retained-suite-isolation.md.
 
 See docs/delivery/demo-email-crm-integration.md. Keep synthetic mailboxes private; exclude email bodies from shared Activities. CI and Outlook acceptance are separate.
+
+CS-05: follow `docs/delivery/facilities-growing-areas-handover.md`; preserve exact Facility IDs, legacy Grouping, explicit service links and E2 snapshots. Owner/device acceptance remains separate.

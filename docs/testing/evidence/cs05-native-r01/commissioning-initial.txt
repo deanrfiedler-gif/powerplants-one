@@ -1,0 +1,12 @@
+C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\helpers\engineering-commissioning.ts:34
+  if (![200, 201].includes(r.status)) throw Error(`${what} failed (${r.status}): ${JSON.stringify(r.body)}`);
+                                            ^
+
+Error: Output prepare failed (409): {"code":"OutputIdentityInUse","message":"This output identity already holds bytes prepared from different content. Those bytes are retained; prepare the changed content under a new output identity.","field_errors":[],"correlation_id":"99f162b3-4a65-40d2-8d59-f16ae1fea20b","retryable":false}
+    at must (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\helpers\engineering-commissioning.ts:34:45)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async release (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\helpers\engineering-commissioning.ts:172:9)
+    at async seedCommissioningScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\helpers\engineering-commissioning.ts:237:25)
+    at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\facilities-commissioning-proof.ts:39:17)
+
+Node.js v24.21.0

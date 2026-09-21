@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { facilitySeedCounters, facilitySeedIdentities } from "./facility-seed-identities";
 import { test } from "node:test";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
@@ -827,7 +828,7 @@ export function ownerTransferCases() {
       Promise.all(
         oldTables.map((t) =>
           rows(
-            `SELECT to_jsonb(x) AS row FROM ppo.${t} x ORDER BY to_jsonb(x)::text`,
+            `SELECT to_jsonb(x) AS row FROM ppo.${t} x ORDER BY ${t === "business_identities" ? "x.id" : t === "reference_counters" ? "x.workspace_id,x.record_type,x.namespace" : "to_jsonb(x)::text"}`,
           ),
         ),
       );
@@ -848,7 +849,11 @@ export function ownerTransferCases() {
             }))
           : oldTables[i] === "activity_links"
             ? tableRows.map((r) => ({ row: { ...r.row, project_id: null } }))
-            : tableRows,
+            : oldTables[i] === "reference_counters"
+              ? facilitySeedCounters(tableRows.map(r => r.row)).map(row => ({ row }))
+              : oldTables[i] === "business_identities"
+                ? [...tableRows, ...facilitySeedIdentities(before[oldTables.indexOf("reference_counters")].map(r => r.row)).map(row => ({ row }))].sort((a, b) => a.row.id.localeCompare(b.row.id))
+                : tableRows,
       ),
     );
     assert.deepEqual(

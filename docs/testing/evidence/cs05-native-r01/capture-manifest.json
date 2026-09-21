@@ -1,0 +1,176 @@
+[
+  {
+    "path": "captures/desktop-pin-review.png",
+    "sha256": "cb10e425492c97e0bca71aef5466135ec5894c0d0dcec0589ae18f4f7e0157ea",
+    "captured_from": "browser-release/facilities-CS05-conflict-r-bd2e1-ed-pump-and-identity-denial-desktop-chromium/pin-review.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/desktop-related-equipment.png",
+    "sha256": "7823925520c9c246c61633e376a39cc7b0ae235275045e58d998cc3895955f12",
+    "captured_from": "browser-release/facilities-CS05-conflict-r-bd2e1-ed-pump-and-identity-denial-desktop-chromium/related-equipment.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/desktop-version-conflict.png",
+    "sha256": "8f3d3407ec84dd67c299991219e2d80afce194c6a738628215dd386a903134a2",
+    "captured_from": "browser-release/facilities-CS05-conflict-r-bd2e1-ed-pump-and-identity-denial-desktop-chromium/version-conflict.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/phone-pin-review.png",
+    "sha256": "17977259df54fffdd072d709700b12805ecee3eb3297e7022606ee7a6acedf15",
+    "captured_from": "browser-release/facilities-CS05-conflict-r-bd2e1-ed-pump-and-identity-denial-mobile-chromium/pin-review.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/phone-related-equipment.png",
+    "sha256": "65afbf6cb7a4c290f0daa89e14644bdb266b6e0f734c5a8d33a2881561b12f58",
+    "captured_from": "browser-release/facilities-CS05-conflict-r-bd2e1-ed-pump-and-identity-denial-mobile-chromium/related-equipment.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/phone-version-conflict.png",
+    "sha256": "f2f10644687945c6a11e4f275add1aa6f6368422603dd66dd6b92826e5b7aa82",
+    "captured_from": "browser-release/facilities-CS05-conflict-r-bd2e1-ed-pump-and-identity-denial-mobile-chromium/version-conflict.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/desktop-reload-memory-boundary.png",
+    "sha256": "bdb136f9057de99cd61e0a59bd9f976234122661dc9d4564dc0c92322430acc6",
+    "captured_from": "browser-release/facilities-CS05-late-Site--2ceac-reserve-the-online-boundary-desktop-chromium/reload-memory-boundary.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/phone-reload-memory-boundary.png",
+    "sha256": "ab48459caa8fc3d094208ac51d4387c4e41e7124806eef3b67782fc5d8150d4e",
+    "captured_from": "browser-release/facilities-CS05-late-Site--2ceac-reserve-the-online-boundary-mobile-chromium/reload-memory-boundary.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/desktop-uncertain-original.png",
+    "sha256": "fc334d672888936d09b057601f4c5f639509b56f07a4fa6c60a5877160a53d3e",
+    "captured_from": "browser-release/facilities-CS05-lost-respo-67057-fresh-failure-remains-saved-desktop-chromium/uncertain-original.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/phone-uncertain-original.png",
+    "sha256": "5a7f84849c7af86e927e91b48a493f57524d68f96d723f3fcf4b0eee277954f1",
+    "captured_from": "browser-release/facilities-CS05-lost-respo-67057-fresh-failure-remains-saved-mobile-chromium/uncertain-original.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/desktop-inspector-1920.png",
+    "sha256": "d9a5307d66ba54786db73d9b40f873cc68d12ec852750aba95f8245da2f876f4",
+    "captured_from": "browser-release/facilities-CS05-native-sou-a0dc9-ter-and-responsive-geometry-desktop-chromium/inspector-1920.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/desktop-issued-r03-reference.png",
+    "sha256": "9dc6757a5296df8b48db7bb9e78e6fe7784a0b813964581f573ecec9a28ee136",
+    "captured_from": "browser-release/facilities-CS05-native-sou-a0dc9-ter-and-responsive-geometry-desktop-chromium/issued-r03-reference.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/desktop-issued-r22-theme.png",
+    "sha256": "bb4d1316282f2878376ccd487194ba7bed4a79447c2aa7878d04fe06c2ff4e5e",
+    "captured_from": "browser-release/facilities-CS05-native-sou-a0dc9-ter-and-responsive-geometry-desktop-chromium/issued-r22-theme.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/desktop-register-1280.png",
+    "sha256": "c52e332bd1847faca03a4540763786a130072b54336f6fde54be9972c6307180",
+    "captured_from": "browser-release/facilities-CS05-native-sou-a0dc9-ter-and-responsive-geometry-desktop-chromium/register-1280.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/desktop-register-1440.png",
+    "sha256": "c748b65af1d4b6b86347c913b1d50fb5c33e670fbe099a2f2e266e949a6fa313",
+    "captured_from": "browser-release/facilities-CS05-native-sou-a0dc9-ter-and-responsive-geometry-desktop-chromium/register-1440.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/desktop-register-1920.png",
+    "sha256": "d92c969924e495850800ee6bcea5fc1aec87590bf7abf5679ca315a8a3f225ac",
+    "captured_from": "browser-release/facilities-CS05-native-sou-a0dc9-ter-and-responsive-geometry-desktop-chromium/register-1920.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/desktop-zoom-short-height.png",
+    "sha256": "238d430fc4e70a44bb76c7b96569b5c90f0423afe63ecf755f2a4066210ca991",
+    "captured_from": "browser-release/facilities-CS05-native-sou-a0dc9-ter-and-responsive-geometry-desktop-chromium/zoom-short-height.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/phone-register-320.png",
+    "sha256": "718a20186f539525e6ae729bee0f7bcce6c162e390048209bbf3b65636374470",
+    "captured_from": "browser-release/facilities-CS05-native-sou-a0dc9-ter-and-responsive-geometry-mobile-chromium/register-320.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/phone-register-390.png",
+    "sha256": "45c700ee5d2dbcd6a52c8cb9467f667c1ba6e52a943421e0c3ae41082950f464",
+    "captured_from": "browser-release/facilities-CS05-native-sou-a0dc9-ter-and-responsive-geometry-mobile-chromium/register-390.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/phone-register-actions-320.png",
+    "sha256": "ebb922411ff8f909ba3b1796551e5c5bf278d2a0447e7e9ca572ae3bed2af0a9",
+    "captured_from": "browser-release/facilities-CS05-native-sou-a0dc9-ter-and-responsive-geometry-mobile-chromium/register-actions-320.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/phone-register-actions-390.png",
+    "sha256": "b9e3e5574b75e826fefe18c348fee93ab914578c223b10e7898e8dfa6c99ad6c",
+    "captured_from": "browser-release/facilities-CS05-native-sou-a0dc9-ter-and-responsive-geometry-mobile-chromium/register-actions-390.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/phone-register-table-320.png",
+    "sha256": "4a2d3b9c5ee582e3befde87d444ea15c8c07f956093f21fd74775270b0c086cb",
+    "captured_from": "browser-release/facilities-CS05-native-sou-a0dc9-ter-and-responsive-geometry-mobile-chromium/register-table-320.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/phone-register-table-390.png",
+    "sha256": "cb1b88afb7c778e459bbb25dfea104812debfe9908ce7a5adace9aa492c4826b",
+    "captured_from": "browser-release/facilities-CS05-native-sou-a0dc9-ter-and-responsive-geometry-mobile-chromium/register-table-390.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/desktop-canonical-detail.png",
+    "sha256": "937d65287adb0e9557b85010f3b4a856ea7143b2999f14578e612e7e06805993",
+    "captured_from": "browser-release/facilities-CS05-register-e-7768e-clearing-reload-and-history-desktop-chromium/canonical-detail.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/desktop-clearing-review.png",
+    "sha256": "b4c11434c1cae582b894217c59ac6b3a1c44638c5b297d55952529de91fa0a6e",
+    "captured_from": "browser-release/facilities-CS05-register-e-7768e-clearing-reload-and-history-desktop-chromium/clearing-review.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/phone-canonical-detail.png",
+    "sha256": "bdf97c470adba4f349b368920f46235c39d41bd326f851de1d2520563f4473e5",
+    "captured_from": "browser-release/facilities-CS05-register-e-7768e-clearing-reload-and-history-mobile-chromium/canonical-detail.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/phone-clearing-review.png",
+    "sha256": "d99862110e9a859f0f40eb36712d5319ff805cf952ff66f87e76da9b408e51d1",
+    "captured_from": "browser-release/facilities-CS05-register-e-7768e-clearing-reload-and-history-mobile-chromium/clearing-review.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/desktop-service-ended.png",
+    "sha256": "36c1653d895dc52ba66314accd238ff98b8dbd7220107c49876bcccc37a77dca",
+    "captured_from": "browser-equipment/facilities-CS05-Equipment--427f1--and-show-accepted-versions-desktop-chromium/service-ended.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  },
+  {
+    "path": "captures/phone-service-ended.png",
+    "sha256": "5987e05d50aa42c1b02931de2defb5a1a3b37589fdd81f40e50da4edae631085",
+    "captured_from": "browser-equipment/facilities-CS05-Equipment--427f1--and-show-accepted-versions-mobile-chromium/service-ended.png",
+    "inspection": "Browser assertions and capture; selected views visually inspected as listed in handover; owner acceptance pending"
+  }
+]

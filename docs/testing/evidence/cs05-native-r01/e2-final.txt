@@ -1,0 +1,42 @@
+✖ E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts and exact stored quotations (24299.7471ms)
+✔ CS05-T49–50: E2 checks current Facility context but retained discovery and estimate versions remain byte-equivalent (22358.0579ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 55612.425
+
+✖ failing tests:
+
+test at tests\helpers\estimating-cost-basis-cases.ts:1:18111
+✖ E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts and exact stored quotations (24299.7471ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    [
+      'c5050000-0000-4000-8000-000000000001',
+      'c5050001-0000-4000-8000-000000000001',
+      'c5050001-0000-4000-8000-000000000002',
+      'c5050002-0000-4000-8000-000000000001',
+  ...
+      'c5050003-0000-4000-8000-000000000001',
+  +   'c5050004-0000-4000-8000-000000000001',
+  +   'c5050004-0000-4000-8000-000000000002',
+  +   'c5050005-0000-4000-8000-000000000001'
+    ]
+  
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\helpers\estimating-cost-basis-cases.ts:215:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'c5050000-0000-4000-8000-000000000001', 'c5050001-0000-4000-8000-000000000001', 'c5050001-0000-4000-8000-000000000002', 'c5050002-0000-4000-8000-000000000001', 'c5050002-0000-4000-8000-000000000002', 'c5050002-0000-4000-8000-000000000003', 'c5050002-0000-4000-8000-000000000004', 'c5050002-0000-4000-8000-000000000005', 'c5050002-0000-4000-8000-000000000006', 'c5050002-0000-4000-8000-000000000007', 'c5050002-0000-4000-8000-000000000008', 'c5050002-0000-4000-8000-000000000009', 'c5050003-0000-4000-8000-000000000001', 'c5050004-0000-4000-8000-000000000001', 'c5050004-0000-4000-8000-000000000002', 'c5050005-0000-4000-8000-000000000001' ],
+    expected: [ 'c5050000-0000-4000-8000-000000000001', 'c5050001-0000-4000-8000-000000000001', 'c5050001-0000-4000-8000-000000000002', 'c5050002-0000-4000-8000-000000000001', 'c5050002-0000-4000-8000-000000000002', 'c5050002-0000-4000-8000-000000000003', 'c5050002-0000-4000-8000-000000000004', 'c5050002-0000-4000-8000-000000000005', 'c5050002-0000-4000-8000-000000000006', 'c5050002-0000-4000-8000-000000000007', 'c5050002-0000-4000-8000-000000000008', 'c5050002-0000-4000-8000-000000000009', 'c5050003-0000-4000-8000-000000000001' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

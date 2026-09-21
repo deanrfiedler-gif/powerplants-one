@@ -101,7 +101,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Reviewed 0040: additive specialist evidence and immutable policy manifests.
   // No old content, grants or users change. Identity trigger events are flushed
   // before type widening; runtime policy writes are revoked after generic grants.
-  if (latestMigrationVersion !== 40) throw Error("Review the existing-demo upgrade for this release.");
+  // 0041 review: nullable typed Facility columns, immutable reported sources and explicit Asset service links.
+  // Existing identity rows, grants and output bytes are untouched; no new seed users or hosted duty.
+  // Existing Asset site-move rejection remains. Generic grants cover the two added tables/functions.
+  if (latestMigrationVersion !== 41) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
