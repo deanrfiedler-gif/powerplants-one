@@ -22,6 +22,12 @@ export const handoverContext = (l: LoadedChange): HandoverContext => ({
   partial: false,
 });
 
+// A revision's sources have no order of their own. The exact payload, and the hash that binds a confirmation to the
+// preview that was reviewed, must never depend on the order a query happened to return them in: a preview and its
+// confirmation are two separate reads. They are therefore always taken in one order, role then identity.
+const inOrder = <T extends { role: string; source_id: string }>(links: readonly T[]) =>
+  [...links].sort((a, b) => (a.role < b.role ? -1 : a.role > b.role ? 1 : a.source_id < b.source_id ? -1 : a.source_id > b.source_id ? 1 : 0));
+
 export function requestPayload(l: LoadedChange, access: Access, r: ProposedRequest, correction: { note: string; previous_hash: string } | null = null) {
   const implementation = r.purpose === "Implementation" || r.purpose === "Amendment";
   return {
@@ -35,7 +41,7 @@ export function requestPayload(l: LoadedChange, access: Access, r: ProposedReque
     rationale: l.revision.rationale, selected_option: l.revision.options.find((o) => o.key === l.revision.selected_option) ?? null,
     scope: l.objects.filter((o) => o.disposition === "Included").map((o) => ({ object_type: o.object_type, object_key: o.object_key, reference: o.reference, title: o.title, proposed_effect: o.proposed_effect, location: o.location, served_areas: o.served_areas, supply_state: o.supply_state })),
     exclusions: l.objects.filter((o) => o.disposition === "Excluded").map((o) => ({ reference: o.reference, title: o.title, reason: o.exclusion_reason })),
-    sources: l.links.map((s) => ({ source_id: s.source_id, role: s.role, required: s.required, snapshot: s.snapshot })),
+    sources: inOrder(l.links).map((s) => ({ source_id: s.source_id, role: s.role, required: s.required, snapshot: s.snapshot })),
     // A receiver sees that a nontechnical prerequisite exists and how it stands. Amounts are never part of a payload.
     prerequisites: l.prerequisites.map((x) => ({ kind: x.kind, applicability: x.applicability, state: x.state })),
     retests: implementation ? l.verification.map((v) => ({ id: v.retest.id, criterion: v.retest.criterion, asset_or_system: v.retest.asset_or_system, configuration: v.retest.configuration, procedure_source_id: v.retest.procedure_source_id })) : [],
@@ -64,7 +70,7 @@ export function buildPreview(l: LoadedChange, access: Access, proposed: Proposed
     ],
     preview_hash: sha256({
       change_id: l.row.id, revision_hash: l.revision.submitted_hash ?? l.revision.content_hash, decision_id: l.decision?.id ?? null, policy_version: access.policy?.policy_version ?? null,
-      source_condition: l.condition.condition, sources: l.links.map((s) => ({ id: s.source_id, use: s.live?.use ?? "Missing", successor: s.live?.successor_id ?? null })),
+      source_condition: l.condition.condition, sources: inOrder(l.links).map((s) => ({ id: s.source_id, use: s.live?.use ?? "Missing", successor: s.live?.successor_id ?? null })),
       prerequisites: l.prerequisites.map((x) => [x.kind, x.applicability, x.state]), overlap_conflict: l.facts.overlap_conflict, payloads: requests.map((r) => r.payload_hash),
     }),
   };

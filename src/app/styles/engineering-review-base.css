@@ -1,0 +1,239 @@
+/* Retained EN-07/EN-08 flex composition. EN-06 owns its newer grid in engineering-materials.css.
+   My Work still owns shared menu, controls and tokens. */
+/* EN-06 Released Materials & Substitutions (parent ENG-05). Composition from desktop mockup r04, behaviour and data
+   rules from build plan r02, values from theme style board r22. The shell owns the rail, header and viewport. The
+   secondary menu, its tokens, the local reset, controls, menus, forms and dialogs are My Work's own rules, shared by
+   scope id in my-work.css: nothing here restyles them. This file adds only what is EN-06's: the compact context row,
+   the flush register, the inspector and the working pages. Class names carry an em- prefix.
+   Register treatment is r22 D23: white rows, pale grey header, #EDF6E9 row emphasis, #F8FAF7 hover.
+   EN-07 (#ppo-changes) mounts the same context row, flush register, inspector and working pages, so every selector names
+   both scope ids through :is(), which keeps the specificity of an id. What is EN-07's alone is in engineering-changes.css. */
+:is(#ppo-changes,#ppo-commissioning){background:var(--surface-white);--row-emphasis:#edf6e9;--row-hover:#f8faf7;--header-fill:#f4f5f7}
+/* One scroll owner per surface: the register scrolls its table, the inspector its own body, a working page itself. */
+:is(#ppo-changes,#ppo-commissioning) .mw-content{overflow:hidden;display:flex;flex-direction:column}
+:is(#ppo-changes,#ppo-commissioning) .em-workspace{display:flex;flex-direction:column;flex:1;min-height:0;min-width:0}
+
+/* Compact context row. No title block, eyebrow or introduction: the breadcrumb in the header is the title. */
+:is(#ppo-changes,#ppo-commissioning) .em-context{display:flex;align-items:stretch;flex:none;flex-wrap:nowrap;gap:0;padding:10px 16px 10px 18px;border-bottom:1px solid var(--line);background:var(--surface-white)}
+:is(#ppo-changes,#ppo-commissioning) .em-context-cell{display:flex;flex-direction:column;justify-content:center;flex:0 1 auto;min-width:0;padding:2px 18px 2px 0;margin-right:18px;border-right:1px solid var(--line-soft);font-weight:400}
+:is(#ppo-changes,#ppo-commissioning) .em-context-cell>span{color:var(--text-secondary);font-size:13px;line-height:18px}
+:is(#ppo-changes,#ppo-commissioning) .em-context-cell strong{font-size:15px;line-height:22px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+:is(#ppo-changes,#ppo-commissioning) .em-context-cell small{color:var(--text-secondary);font-size:13px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+:is(#ppo-changes,#ppo-commissioning) .em-context-project{flex-shrink:0}
+:is(#ppo-changes,#ppo-commissioning) .em-context-project select{max-width:270px;min-height:26px;padding:0 22px 0 0;border:0;background-color:transparent;font-size:17px;line-height:24px;font-weight:700;color:var(--ink);text-overflow:ellipsis;cursor:pointer}
+:is(#ppo-changes,#ppo-commissioning) .em-context-set{flex:none;border-right:0;margin-right:0}
+:is(#ppo-changes,#ppo-commissioning) .em-context-set>div{display:flex;align-items:center;gap:10px}
+:is(#ppo-changes,#ppo-commissioning) .em-context-set select{min-height:26px;padding:0 20px 0 0;border:0;background-color:transparent;font-size:15px;font-weight:500}
+:is(#ppo-changes,#ppo-commissioning) .em-chip{padding:3px 12px;border-radius:5px;background:var(--neutral-surface);color:var(--ink);font-size:14px;font-weight:500;line-height:20px;white-space:nowrap}
+:is(#ppo-changes,#ppo-commissioning) .em-context-actions{display:flex;align-items:center;flex:none;gap:10px;margin-left:auto;padding-left:8px}
+:is(#ppo-changes,#ppo-commissioning) .em-context-actions .mw-button{min-height:40px;font-weight:500}
+
+/* Register and inspector. The split is a container so the inspector docks only while the register keeps a usable width. */
+:is(#ppo-changes,#ppo-commissioning) .em-split{position:relative;display:flex;flex:1;min-height:0;min-width:0;container:em-split / inline-size}
+:is(#ppo-changes,#ppo-commissioning) .em-register{display:flex;flex-direction:column;flex:1;min-width:0;min-height:0;overflow-y:auto}
+/* Scrolling columns keep their children at full height; a shrinking flex child would overlap its neighbour. */
+:is(#ppo-changes,#ppo-commissioning) :is(.em-register,.em-inspector-body,.em-page)>*{flex-shrink:0}
+:is(#ppo-changes,#ppo-commissioning) .em-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:12px 16px 0}
+:is(#ppo-changes,#ppo-commissioning) .em-toolbar-second{padding:10px 16px 12px}
+:is(#ppo-changes,#ppo-commissioning) .em-toolbar .mw-button{min-height:38px}
+:is(#ppo-changes,#ppo-commissioning) .em-tabs{display:inline-flex;border:1px solid var(--hairline);border-radius:var(--radius-control);overflow:hidden;background:var(--surface-white)}
+:is(#ppo-changes,#ppo-commissioning) .em-tabs button{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:6px 12px;border-right:1px solid var(--hairline);white-space:nowrap}
+:is(#ppo-changes,#ppo-commissioning) .em-tabs button:last-child{border-right:0}
+:is(#ppo-changes,#ppo-commissioning) .em-tabs button:hover:not(:disabled){background:var(--surface-hover)}
+:is(#ppo-changes,#ppo-commissioning) .em-tabs button[aria-pressed=true],:is(#ppo-changes,#ppo-commissioning) .em-tabs button[aria-pressed=true]:hover:not(:disabled){background:var(--navy);color:#fff;font-weight:500}
+:is(#ppo-changes,#ppo-commissioning) .em-tab-count{display:inline-grid;place-items:center;min-width:24px;height:22px;padding:0 7px;border-radius:999px;background:var(--neutral-surface);color:var(--ink);font-size:12px;font-weight:500}
+:is(#ppo-changes,#ppo-commissioning) .em-tabs button[aria-pressed=true] .em-tab-count{background:rgba(255,255,255,.22);color:#fff}
+:is(#ppo-changes,#ppo-commissioning) .em-search{display:flex;align-items:center;gap:8px;flex:0 1 210px;min-width:150px;min-height:38px;padding:0 12px;border:1px solid var(--control-border);border-radius:var(--radius-control);background:var(--surface-white);color:var(--text-secondary)}
+:is(#ppo-changes,#ppo-commissioning) .em-search:focus-within{outline:2px solid var(--focus);outline-offset:2px}
+:is(#ppo-changes,#ppo-commissioning) .em-search input{flex:1;min-width:0;border:0;padding:0;background:transparent;outline:0}
+:is(#ppo-changes,#ppo-commissioning) .em-select select{min-height:38px;padding:7px 30px 7px 12px;border:1px solid var(--control-border);border-radius:var(--radius-control);background-color:var(--surface-white)}
+:is(#ppo-changes,#ppo-commissioning) .em-condition{display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:3px 4px 3px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:13px}
+:is(#ppo-changes,#ppo-commissioning) .em-condition button{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%}
+:is(#ppo-changes,#ppo-commissioning) .em-condition button:hover:not(:disabled){background:var(--surface-hover)}
+:is(#ppo-changes,#ppo-commissioning) .em-condition .mw-icon{width:14px;height:14px}
+:is(#ppo-changes,#ppo-commissioning) .em-bulk{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:8px 16px;border-top:1px solid var(--success-border);border-bottom:1px solid var(--success-border);background:var(--success-surface)}
+
+/* The table meets both edges of the register pane: no exterior padding, margin, frame, card or radius. Cells keep 14px. */
+:is(#ppo-changes,#ppo-commissioning) .em-table-scroll{flex:none;width:100%;overflow-x:auto;overflow-y:visible;margin:0;padding:0;border-top:1px solid var(--line)}
+:is(#ppo-changes,#ppo-commissioning) .em-table-scroll[data-stale]{opacity:.72;transition:opacity .15s ease}
+:is(#ppo-changes,#ppo-commissioning) .em-table{width:100%;min-width:960px;margin:0;border:0;border-collapse:separate;border-spacing:0;border-radius:0;table-layout:auto;font-variant-numeric:tabular-nums}
+:is(#ppo-changes,#ppo-commissioning) .em-table th{height:43px;padding:0;border-bottom:1px solid var(--line);border-right:1px solid var(--line-soft);background:var(--header-fill);color:var(--ink);font-size:14px;font-weight:500;text-align:left;white-space:nowrap}
+:is(#ppo-changes,#ppo-commissioning) .em-table th:last-child{border-right:0}
+:is(#ppo-changes,#ppo-commissioning) .em-table th button{display:flex;align-items:center;justify-content:flex-start;width:100%;height:42px;padding:0 14px;font-weight:500;white-space:nowrap}
+:is(#ppo-changes,#ppo-commissioning) .em-table th[aria-sort] button::after{content:"";margin-left:8px;border:4px solid transparent}
+:is(#ppo-changes,#ppo-commissioning) .em-table th[aria-sort=ascending] button::after{border-bottom-color:var(--text-secondary);transform:translateY(-2px)}
+:is(#ppo-changes,#ppo-commissioning) .em-table th[aria-sort=descending] button::after{border-top-color:var(--text-secondary);transform:translateY(2px)}
+:is(#ppo-changes,#ppo-commissioning) .em-table td{height:52px;padding:6px 14px;border-bottom:1px solid var(--line-soft);background:var(--surface-white);vertical-align:middle;line-height:20px}
+:is(#ppo-changes,#ppo-commissioning) .em-table tbody tr{cursor:pointer}
+:is(#ppo-changes,#ppo-commissioning) .em-table tbody tr:hover td{background:var(--row-hover)}
+:is(#ppo-changes,#ppo-commissioning) .em-table tbody tr:is([data-inspected],[data-selected]) td{background:var(--row-emphasis)}
+:is(#ppo-changes,#ppo-commissioning) .em-table tbody tr[data-inspected] td:first-child{box-shadow:inset 3px 0 0 var(--navy)}
+:is(#ppo-changes,#ppo-commissioning) .em-table tbody tr[data-removed] td{color:var(--muted)}
+:is(#ppo-changes,#ppo-commissioning) .em-table tbody tr:focus-within td{background:var(--row-hover)}
+:is(#ppo-changes,#ppo-commissioning) .em-table tbody tr[data-inspected]:focus-within td{background:var(--row-emphasis)}
+:is(#ppo-changes,#ppo-commissioning) .em-col-check{width:48px;padding:0 0 0 16px!important;text-align:left;position:sticky;left:0;z-index:2}
+:is(#ppo-changes,#ppo-commissioning) .em-table th.em-col-check{z-index:3}
+:is(#ppo-changes,#ppo-commissioning) .em-col-check input{display:block;width:18px;height:18px;min-height:0;margin:0;accent-color:var(--navy);cursor:pointer}
+:is(#ppo-changes,#ppo-commissioning) .em-col-line{width:70px;position:sticky;left:48px;z-index:2;border-right:1px solid var(--line-soft)}
+:is(#ppo-changes,#ppo-commissioning) .em-table th.em-col-line{position:sticky;left:48px;z-index:3}
+:is(#ppo-changes,#ppo-commissioning) .em-col-quantity{text-align:right;white-space:nowrap}
+:is(#ppo-changes,#ppo-commissioning) .em-table th.em-col-quantity button{justify-content:flex-end}
+:is(#ppo-changes,#ppo-commissioning) .em-table[data-wide] .em-col-requirement{min-width:360px}
+:is(#ppo-changes,#ppo-commissioning) :is(a,button).em-row-title{display:block;max-width:100%;color:var(--navy);font-weight:700;text-align:left;overflow-wrap:anywhere}
+:is(#ppo-changes,#ppo-commissioning) :is(a,button).em-row-title:hover{text-decoration:underline;text-underline-offset:3px}
+:is(#ppo-changes,#ppo-commissioning) .em-cell-sub{display:block;color:var(--text-secondary);font-size:13px;overflow-wrap:anywhere}
+:is(#ppo-changes,#ppo-commissioning) .em-cell-sub .mw-icon{display:inline-block;width:15px;height:15px;margin-left:2px;vertical-align:-3px}
+:is(#ppo-changes,#ppo-commissioning) .em-status{display:inline-flex;align-items:center;gap:10px;line-height:20px;white-space:nowrap}
+:is(#ppo-changes,#ppo-commissioning) .em-dot{flex:none;width:12px;height:12px;border-radius:50%;background:#8b95a5}
+:is(#ppo-changes,#ppo-commissioning) .em-status-attention{color:#b0520b}
+:is(#ppo-changes,#ppo-commissioning) .em-status-attention .em-dot{background:#f29a1f}
+:is(#ppo-changes,#ppo-commissioning) .em-status-positive{color:var(--success)}
+:is(#ppo-changes,#ppo-commissioning) .em-status-positive .em-dot{background:#4f9a3c}
+:is(#ppo-changes,#ppo-commissioning) .em-status-negative{color:var(--danger)}
+:is(#ppo-changes,#ppo-commissioning) .em-status-negative .em-dot{background:var(--danger)}
+:is(#ppo-changes,#ppo-commissioning) .em-empty{padding:40px 20px;color:var(--text-secondary);text-align:center}
+:is(#ppo-changes,#ppo-commissioning) .em-empty strong{display:block;margin-bottom:4px;color:var(--ink);font-size:16px}
+:is(#ppo-changes,#ppo-commissioning) .em-empty-page{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:520px;margin:0 auto;padding-top:64px}
+:is(#ppo-changes,#ppo-commissioning) .em-empty-page .mw-field{width:100%;text-align:left}
+:is(#ppo-changes,#ppo-commissioning) .em-table-foot{display:flex;align-items:center;gap:8px;padding:8px 8px 8px 18px;color:var(--text-secondary);font-size:14px}
+:is(#ppo-changes,#ppo-commissioning) .em-attention{display:flex;align-items:center;gap:16px;padding:12px 24px;border-top:1px solid var(--warning-border);border-bottom:1px solid var(--warning-border);background:var(--warning-surface)}
+:is(#ppo-changes,#ppo-commissioning) .em-attention>.mw-icon{width:30px;height:30px;color:#e08a12;flex:none}
+:is(#ppo-changes,#ppo-commissioning) .em-attention>div{flex:1;min-width:0}
+:is(#ppo-changes,#ppo-commissioning) .em-attention strong{font-size:15px;font-weight:700}
+:is(#ppo-changes,#ppo-commissioning) .em-attention p{color:var(--text-secondary)}
+:is(#ppo-changes,#ppo-commissioning) a.em-attention-link{display:inline-flex;align-items:center;gap:8px;color:var(--link);font-weight:700;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+:is(#ppo-changes,#ppo-commissioning) .em-states{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-bottom:1px solid var(--line)}
+:is(#ppo-changes,#ppo-commissioning) .em-states>div{display:flex;flex-direction:column;padding:14px 32px}
+:is(#ppo-changes,#ppo-commissioning) .em-states>div+div{border-left:1px solid var(--line)}
+:is(#ppo-changes,#ppo-commissioning) .em-states strong{font-weight:700}
+:is(#ppo-changes,#ppo-commissioning) .em-page-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;margin-top:auto;padding:14px 20px;color:var(--text-secondary);font-size:13px}
+
+/* Inspector: a square, closable right dock. It overlays the register when the split is too narrow for both. */
+:is(#ppo-changes,#ppo-commissioning) .em-inspector{display:flex;flex-direction:column;flex:none;width:388px;min-height:0;border-left:1px solid var(--line);background:var(--surface-white);border-radius:0}
+:is(#ppo-changes,#ppo-commissioning) .em-inspector-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:16px 12px 8px 20px}
+:is(#ppo-changes,#ppo-commissioning) .em-eyebrow{color:var(--text-secondary);font-size:12px;letter-spacing:.5px;text-transform:uppercase}
+:is(#ppo-changes,#ppo-commissioning) .em-inspector h2{font-size:21px;line-height:28px;font-weight:700;overflow-wrap:anywhere}
+:is(#ppo-changes,#ppo-commissioning) .em-inspector h2:focus{outline:none}
+:is(#ppo-changes,#ppo-commissioning) .em-inspector-body{display:flex;flex-direction:column;gap:10px;flex:1;min-height:0;overflow-y:auto;padding:4px 20px 20px}
+:is(#ppo-changes,#ppo-commissioning) .em-inspector h3,:is(#ppo-changes,#ppo-commissioning) .em-page h3{margin-top:6px;font-size:15px;font-weight:700}
+:is(#ppo-changes,#ppo-commissioning) .em-reasons{padding-left:18px;list-style:disc;color:var(--text-secondary);font-size:13px}
+:is(#ppo-changes,#ppo-commissioning) .em-compare{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px}
+:is(#ppo-changes,#ppo-commissioning) .em-compare>div{display:flex;flex-direction:column;padding:8px 12px;border:1px solid var(--line);border-radius:var(--radius-control);background:var(--surface)}
+:is(#ppo-changes,#ppo-commissioning) .em-compare span{color:var(--text-secondary);font-size:13px}
+:is(#ppo-changes,#ppo-commissioning) .em-compare strong{font-size:16px;font-weight:700}
+:is(#ppo-changes,#ppo-commissioning) .em-compare small{color:var(--text-secondary);font-size:12px;overflow-wrap:anywhere}
+:is(#ppo-changes,#ppo-commissioning) .em-criteria>div{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;min-height:30px;padding:4px 0;border-top:1px solid var(--line-soft)}
+:is(#ppo-changes,#ppo-commissioning) .em-criteria dd{display:flex;flex-direction:column;align-items:flex-start}
+:is(#ppo-changes,#ppo-commissioning) .em-criteria dd small{color:var(--text-secondary);font-size:12px}
+:is(#ppo-changes,#ppo-commissioning) .em-mandatory{color:var(--text-secondary);font-size:12px}
+:is(#ppo-changes,#ppo-commissioning) .em-action{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border:1px solid var(--warning-border);border-radius:var(--radius-control);background:var(--warning-surface)}
+:is(#ppo-changes,#ppo-commissioning) .em-action .mw-icon{width:26px;height:26px;color:#e08a12;flex:none}
+:is(#ppo-changes,#ppo-commissioning) .em-action strong{font-weight:700}
+:is(#ppo-changes,#ppo-commissioning) .em-action p{color:var(--text-secondary)}
+:is(#ppo-changes,#ppo-commissioning) .em-pair{display:grid;grid-template-columns:150px minmax(0,1fr);align-items:center;gap:12px;min-height:28px}
+:is(#ppo-changes,#ppo-commissioning) .em-pair>span{color:var(--text-secondary)}
+:is(#ppo-changes,#ppo-commissioning) .em-pair strong{display:inline-flex;align-items:center;gap:8px;font-weight:500;overflow-wrap:anywhere}
+:is(#ppo-changes,#ppo-commissioning) .em-pair-rule{padding-top:10px;border-top:1px solid var(--line)}
+:is(#ppo-changes,#ppo-commissioning) .em-needed{color:var(--ink)}
+:is(#ppo-changes,#ppo-commissioning) .em-needed .mw-icon{color:#d9792b}
+:is(#ppo-changes,#ppo-commissioning) .em-source{display:flex;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius-control)}
+:is(#ppo-changes,#ppo-commissioning) .em-source .mw-icon{width:26px;height:26px;flex:none;color:var(--ink)}
+:is(#ppo-changes,#ppo-commissioning) .em-source p{color:var(--text-secondary);font-size:13px}
+:is(#ppo-changes,#ppo-commissioning) .em-inspector-actions{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+:is(#ppo-changes,#ppo-commissioning) .em-inspector-actions .mw-button{width:100%;min-height:44px}
+:is(#ppo-changes,#ppo-commissioning) .em-inspector-actions .mw-link{align-self:center}
+@container em-split (max-width:1140px){
+ :is(#ppo-changes,#ppo-commissioning) .em-inspector{position:absolute;z-index:6;inset:0 0 0 auto;width:min(420px,100%);box-shadow:var(--shadow)}
+}
+
+/* Working pages of the other five destinations: padded content over the same surface, tables flush inside their panel. */
+:is(#ppo-changes,#ppo-commissioning) .em-page{display:flex;flex-direction:column;gap:14px;flex:1;min-height:0;overflow-y:auto;padding:16px 20px 24px}
+:is(#ppo-changes,#ppo-commissioning) .em-page-head{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
+:is(#ppo-changes,#ppo-commissioning) .em-page-head h2{font-size:18px;line-height:26px;font-weight:700}
+:is(#ppo-changes,#ppo-commissioning) .em-page-head p{flex-basis:100%;max-width:900px;color:var(--text-secondary)}
+:is(#ppo-changes,#ppo-commissioning) .em-panel{min-width:0;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface-white)}
+:is(#ppo-changes,#ppo-commissioning) .em-panel-head{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;padding:12px 16px;border-bottom:1px solid var(--line-soft)}
+:is(#ppo-changes,#ppo-commissioning) .em-panel-head h3{margin:0;font-size:16px}
+:is(#ppo-changes,#ppo-commissioning) .em-panel-body{padding:14px 16px}
+:is(#ppo-changes,#ppo-commissioning) .em-panel .em-table-scroll{border-top:0}
+:is(#ppo-changes,#ppo-commissioning) .em-panel .em-table{min-width:720px}
+:is(#ppo-changes,#ppo-commissioning) .em-panel .em-table tbody tr{cursor:default}
+:is(#ppo-changes,#ppo-commissioning) .em-panel .em-table td{height:48px}
+:is(#ppo-changes,#ppo-commissioning) .em-panel .em-table th{padding:0 14px}
+:is(#ppo-changes,#ppo-commissioning) .em-two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:14px;align-items:start}
+:is(#ppo-changes,#ppo-commissioning) .em-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 20px}
+:is(#ppo-changes,#ppo-commissioning) .em-facts>div{display:flex;flex-direction:column;min-width:0}
+:is(#ppo-changes,#ppo-commissioning) .em-facts dt{color:var(--text-secondary);font-size:13px}
+:is(#ppo-changes,#ppo-commissioning) .em-facts dd{font-weight:500;overflow-wrap:anywhere}
+:is(#ppo-changes,#ppo-commissioning) .em-list>li{display:flex;align-items:flex-start;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line-soft)}
+:is(#ppo-changes,#ppo-commissioning) .em-list>li:last-child{border-bottom:0}
+:is(#ppo-changes,#ppo-commissioning) .em-list>li>div:first-child{flex:1;min-width:0}
+:is(#ppo-changes,#ppo-commissioning) .em-list p{color:var(--text-secondary);font-size:13px;overflow-wrap:anywhere}
+:is(#ppo-changes,#ppo-commissioning) button.em-list-open{display:block;width:100%;text-align:left}
+:is(#ppo-changes,#ppo-commissioning) .em-list li[data-current]{background:var(--row-emphasis);box-shadow:inset 3px 0 0 var(--navy)}
+:is(#ppo-changes,#ppo-commissioning) .em-blockers{padding:10px 14px 10px 30px;border:1px solid var(--warning-border);border-radius:var(--radius-control);background:var(--warning-tint);list-style:disc;color:var(--warning);font-size:13px}
+:is(#ppo-changes,#ppo-commissioning) .em-reason{display:flex;align-items:flex-start;gap:8px;color:var(--text-secondary);font-size:13px}
+:is(#ppo-changes,#ppo-commissioning) .em-reason .mw-icon{width:16px;height:16px;margin-top:2px}
+:is(#ppo-changes,#ppo-commissioning) .em-saved{color:var(--success);font-weight:500}
+:is(#ppo-changes,#ppo-commissioning) .em-notice-error{border-color:var(--danger-border);background:var(--danger-surface);color:var(--danger)}
+:is(#ppo-changes,#ppo-commissioning) .em-errors{padding-left:18px;list-style:disc;font-size:13px}
+:is(#ppo-changes,#ppo-commissioning) .em-recover{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:8px}
+:is(#ppo-changes,#ppo-commissioning) .em-label{font-size:13px;line-height:18px;font-weight:500}
+:is(#ppo-changes,#ppo-commissioning) .em-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+:is(#ppo-changes,#ppo-commissioning) .em-hash{font:12px/1.5 ui-monospace,Consolas,monospace;color:var(--text-secondary);overflow-wrap:anywhere}
+:is(#ppo-changes,#ppo-commissioning) .em-source-bytes{max-height:240px;overflow:auto;padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius-control);background:var(--surface);font:13px/1.5 ui-monospace,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+:is(#ppo-changes,#ppo-commissioning) .em-quantity-input{width:110px;min-height:34px;padding:5px 8px;border:1px solid var(--control-border);border-radius:var(--radius-control);text-align:right}
+:is(#ppo-changes,#ppo-commissioning) dialog.em-dialog-wide{width:min(860px,calc(100vw - 32px))}
+:is(#ppo-changes,#ppo-commissioning) .em-timeline>li{position:relative;padding:0 0 14px 18px;margin-left:6px;border-left:1px solid var(--line-strong)}
+:is(#ppo-changes,#ppo-commissioning) .em-timeline>li::before{content:"";position:absolute;left:-4px;top:6px;width:7px;height:7px;border-radius:50%;background:var(--navy)}
+:is(#ppo-changes,#ppo-commissioning) .em-timeline>li:last-child{border-color:transparent}
+:is(#ppo-changes,#ppo-commissioning) .em-timeline p{color:var(--text-secondary);font-size:13px}
+
+/* The breadcrumb is the page title on these routes, so the redundant product name yields the room. The destination
+   follows the module only while the secondary menu is hidden; open, the menu already names it. */
+.workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .product-heading[data-module-crumb] :is(.ppo-product-name,.ppo-heading-divider){display:none}
+.workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .product-heading[data-module-crumb] strong{font-size:16px;color:#596779}
+.workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-view{font-weight:700;color:#242a37}
+.workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .ppo-heading-subview{color:#596779}
+/* Accessible collapse: when room runs out it is the module name that gives way, with an ellipsis, and never the
+   destination. The full path stays in the title attribute and in the page's own heading. */
+.workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .product-heading[data-module-crumb] strong{display:flex;align-items:baseline;min-width:0;overflow:visible}
+.workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-root{flex:none;white-space:pre}
+.workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-view{flex:0 1 auto;min-width:3ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-subview{flex:none;white-space:pre}
+.workspace:has(:is(#ppo-changes,#ppo-commissioning)[data-menu=docked]) .ppo-shell-header .ppo-heading-subview{display:none}
+/* Narrower desktops: the module name outranks its parent, which the rail and the page heading still give. */
+@media (max-width:1560px){
+ .workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-root{display:none}
+ .workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .product-heading[data-module-crumb] strong{font-size:15px}
+}
+
+@media (max-width:1100px){
+ :is(#ppo-changes,#ppo-commissioning) .em-context{flex-wrap:wrap;gap:6px 0;padding:8px 12px}
+ :is(#ppo-changes,#ppo-commissioning) .em-context-cell{padding-right:14px;margin-right:14px}
+ :is(#ppo-changes,#ppo-commissioning) .em-two{grid-template-columns:minmax(0,1fr)}
+ :is(#ppo-changes,#ppo-commissioning) .em-page{padding:12px 14px 20px}
+}
+/* Phone: one column. The context reflows, the inspector takes the width, and the table keeps readable text in its own scroll. */
+@media (max-width:780px){
+ :is(#ppo-changes,#ppo-commissioning) .em-context{gap:6px 0}
+ :is(#ppo-changes,#ppo-commissioning) .em-context-cell{border-right:0;margin-right:16px;padding-right:0}
+ :is(#ppo-changes,#ppo-commissioning) .em-context-project{flex-basis:100%}
+ :is(#ppo-changes,#ppo-commissioning) .em-context-project select{max-width:100%}
+ :is(#ppo-changes,#ppo-commissioning) .em-context-actions{flex-basis:100%;margin-left:0;padding-left:0}
+ :is(#ppo-changes,#ppo-commissioning) .em-context-actions .mw-button{flex:1 1 auto;min-height:44px}
+ :is(#ppo-changes,#ppo-commissioning) .em-toolbar{padding:10px 12px 0;gap:8px}
+ :is(#ppo-changes,#ppo-commissioning) .em-toolbar-second{padding:8px 12px 10px}
+ :is(#ppo-changes,#ppo-commissioning) .em-tabs{width:100%;overflow-x:auto}
+ :is(#ppo-changes,#ppo-commissioning) .em-tabs button{flex:1 0 auto;min-height:44px}
+ :is(#ppo-changes,#ppo-commissioning) .em-search{flex:1 1 100%}
+ :is(#ppo-changes,#ppo-commissioning) .em-toolbar>.mw-spacer{display:none}
+ :is(#ppo-changes,#ppo-commissioning) .em-inspector{position:fixed;z-index:40;inset:64px 0 0 0;width:auto;border-left:0}
+ :is(#ppo-changes,#ppo-commissioning) .em-states{grid-template-columns:minmax(0,1fr)}
+ :is(#ppo-changes,#ppo-commissioning) .em-states>div+div{border-left:0;border-top:1px solid var(--line)}
+ :is(#ppo-changes,#ppo-commissioning) .em-states>div{padding:12px 16px}
+ :is(#ppo-changes,#ppo-commissioning) .em-attention{padding:12px 16px;flex-wrap:wrap}
+ :is(#ppo-changes,#ppo-commissioning) .em-pair{grid-template-columns:120px minmax(0,1fr)}
+ :is(#ppo-changes,#ppo-commissioning) .em-col-line{position:static}
+ :is(#ppo-changes,#ppo-commissioning) .em-table th.em-col-line{position:static}
+}
