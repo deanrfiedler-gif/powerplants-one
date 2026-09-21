@@ -6,7 +6,7 @@ import { mappingConditions, quantityText, parseQuantity, formatQuantity } from "
 import type { readLine, readRegister } from "../../reads";
 import { LineForm } from "./line-form";
 import { useMaterials } from "./materials-shell";
-import { CommandNotice, Dialog, Field, Icon, Menu, ReadNotice, Reason, Status, dateText, stampText, text, toneFor, useMaterialsCommand, useRead, type MenuItem } from "./materials-ui";
+import { Chip, CommandNotice, Dialog, Field, Icon, Menu, ReadNotice, Reason, dateText, stampText, text, toneFor, useMaterialsCommand, useRead, type MenuItem } from "./materials-ui";
 
 type Register = Awaited<ReturnType<typeof readRegister>>;
 type Detail = Awaited<ReturnType<typeof readLine>>;
@@ -17,7 +17,9 @@ const columns = [
 ] as const;
 type ColumnId = (typeof columns)[number][0];
 const sortFor: Record<ColumnId, string> = { line: "line", requirement: "description", quantity: "quantity", drawing: "drawing", mapping: "mapping", readiness: "readiness", owner: "owner" };
-const sortLabels: Record<string, string> = { line: "Line order", description: "Material requirement", quantity: "Design quantity", drawing: "Drawing", mapping: "Item mapping", readiness: "Line readiness", owner: "Next action owner", required_by: "Required-by date" };
+const sortLabels: Record<string, string> = { line: "Line number", description: "Material requirement", quantity: "Design quantity", drawing: "Drawing", mapping: "Item mapping", readiness: "Line readiness", owner: "Next action owner", required_by: "Required-by date" };
+// What a row says about its alternate, in the words of the refined register: only a live proposal is mentioned.
+const substitutionWords: Record<string, string> = { Draft: "Substitution drafted", Submitted: "Substitution proposed", Returned: "Substitution returned", Held: "Substitution on hold", Accepted: "Substitution accepted" };
 const criteriaKeys = ["view", "q", "discipline", "owner_id", "mapping", "substitution", "readiness", "removed", "sort", "dir", "page"] as const;
 
 export function RegisterView() {
@@ -121,13 +123,13 @@ export function RegisterView() {
               {(data?.options.disciplines ?? []).map((d) => <option key={d}>{d}</option>)}
             </select>
           </label>
-          <Menu name="Add condition" label={<><Icon name="plus" /> Add condition</>} quiet items={addCondition} />
+          <Menu name="Add condition" label={<><Icon name="plus" /> Add condition</>} items={addCondition} />
           {(filters || conditions.length > 0) && conditions.map(([key, label]) => (
             <span key={key} className="em-condition">{label}<button type="button" aria-label={`Remove condition ${label}`} onClick={() => go({ [key]: null })}><Icon name="close" /></button></span>
           ))}
           {(conditions.length > 0 || criteria.discipline || criteria.q) && <button type="button" className="mw-link" onClick={() => { setDraft(""); go({ q: null, discipline: null, owner_id: null, mapping: null, readiness: null, substitution: null, removed: null }); }}>Clear all</button>}
           <span className="mw-spacer" />
-          <Menu name="Sort" label={`Sort: ${sortLabels[sort]}${dir === "desc" ? " (descending)" : ""}`} quiet align="end" items={[
+          <Menu name="Sort" label={`Sort: ${sortLabels[sort]}${dir === "desc" ? " (descending)" : ""}`} align="end" items={[
             ...Object.entries(sortLabels).map(([id, label]) => ({ id, label, checked: sort === id, onSelect: () => go({ sort: id === "line" ? null : id }) })),
             { id: "sep", separator: true as const },
             { id: "dir", label: dir === "asc" ? "Descending" : "Ascending", onSelect: () => go({ dir: dir === "asc" ? "desc" : null }) },
@@ -140,6 +142,13 @@ export function RegisterView() {
             <span className="mw-spacer" />
             <Link className="mw-button mw-button-primary" href={href("releases", { prepare: "1" })}>Prepare release set from {selectedCount} line{selectedCount === 1 ? "" : "s"}</Link>
             <button type="button" className="mw-button" onClick={() => setSelection({})}>Clear selection</button>
+          </div>
+        )}
+        {!!data?.counts.set_attention && (
+          <div className="em-attention" role="note">
+            <Icon name="info" />
+            <p><strong>{data.counts.set_attention} material line{data.counts.set_attention === 1 ? "" : "s"} need{data.counts.set_attention === 1 ? "s" : ""} attention</strong><span className="mw-sr"> Review evidence, mapping and scope before selecting a release set.</span></p>
+            <Link className="em-attention-link" href={href("register", { view: "attention" })}>Review issues <Icon name="arrow-right" /></Link>
           </div>
         )}
         <ReadNotice error={register.error} what="The materials register" />
@@ -181,18 +190,7 @@ export function RegisterView() {
           <button type="button" className="mw-icon-button" aria-label="Previous page" disabled={!data || data.page <= 1} onClick={() => go({ page: String((data?.page ?? 2) - 1) })}><Icon name="chevron-left" /></button>
           <button type="button" className="mw-icon-button" aria-label="Next page" disabled={!data || to >= data.total} onClick={() => go({ page: String((data?.page ?? 1) + 1) })}><Icon name="chevron-right" /></button>
         </footer>
-        {!!data?.counts.set_attention && (
-          <div className="em-attention" role="note">
-            <Icon name="warning" />
-            <div><strong>{data.counts.set_attention} material line{data.counts.set_attention === 1 ? "" : "s"} need{data.counts.set_attention === 1 ? "s" : ""} attention</strong><p>Review evidence, mapping and scope before selecting a release set.</p></div>
-            <Link className="em-attention-link" href={href("register", { view: "attention" })}>Review issues <Icon name="arrow-right" /></Link>
-          </div>
-        )}
-        <div className="em-states">
-          <div><strong>Technical release</strong><span>{data?.footer?.technical_release ?? "…"}</span></div>
-          <div><strong>Supply handover</strong><span>{data?.footer?.supply_handover ?? "…"}</span></div>
-        </div>
-        <footer className="em-page-foot"><span>Synthetic preview · {dateText(data?.observed_at ?? null, "")}</span><span>Technical release and purchase authorisation are separate.</span></footer>
+        <footer className="em-page-foot"><span>Synthetic preview · {dateText(data?.observed_at ?? null, "")}</span><span>Technical release does not authorise purchasing.</span></footer>
       </section>
       {inspected && <Inspector key={inspected} lineId={inspected} outside={outside} onClose={() => go({ line: null })} onEdit={setEditing} changed={() => { register.reload(); reloadFrame(); }} />}
       {(creating || editing) && data?.set && (
@@ -210,13 +208,13 @@ function Cell({ id, line: l, open }: { id: ColumnId; line: Line; open: () => voi
     return (
       <td className="em-col-requirement">
         <button type="button" className="em-row-title" onClick={open} aria-label={`Inspect line ${l.line_number}, ${l.description}`}>{l.description}</button>
-        <span className="em-cell-sub">{l.location}{l.substitution && <> · Alternate proposed <Icon name="swap" /></>}{l.removed && " · Removed"}</span>
+        {(l.substitution || l.removed) && <span className="em-cell-sub">{[l.substitution && (substitutionWords[l.substitution.state] ?? "Substitution proposed"), l.removed && "Removed"].filter(Boolean).join(" · ")}</span>}
       </td>
     );
   if (id === "quantity") return <td className="em-col-quantity">{quantityText(l.quantity, l.unit)}</td>;
-  if (id === "drawing") return <td>{l.drawing ? `${l.drawing.reference} · ${l.drawing.revision}` : <span className="mw-muted">No drawing</span>}</td>;
-  if (id === "mapping") return <td>{text(l.mapping)}</td>;
-  if (id === "readiness") return <td><Status tone={l.readiness.tone}>{l.readiness.label}</Status></td>;
+  if (id === "drawing") return <td>{l.drawing ? `${l.drawing.reference} · Rev ${l.drawing.revision}` : <span className="mw-muted">No drawing</span>}</td>;
+  if (id === "mapping") return <td><Chip tone={toneFor(l.mapping)}>{text(l.mapping)}</Chip></td>;
+  if (id === "readiness") return <td><Chip tone={l.readiness.tone}>{l.readiness.label}</Chip></td>;
   return <td>{l.next_owner_name}</td>;
 }
 
@@ -250,7 +248,7 @@ function Inspector({ lineId, outside, onClose, onEdit, changed }: { lineId: stri
     <aside className="em-inspector" aria-label="Line inspector" onKeyDown={(e) => { if (e.key === "Escape") onClose(); }}>
       <header className="em-inspector-head">
         <div>
-          <p className="em-eyebrow">{l ? `Line ${l.line_number}${s ? " / Substitution" : ""}` : "Line"}</p>
+          <p className="em-eyebrow">{l ? `Line ${l.line_number}` : "Line"}</p>
           <h2 ref={heading} tabIndex={-1}>{l?.description ?? (detail.error ? "Line unavailable" : "Loading…")}</h2>
           {l && <p className="mw-muted">{l.location} · {l.system_name}</p>}
         </div>
@@ -261,57 +259,72 @@ function Inspector({ lineId, outside, onClose, onEdit, changed }: { lineId: stri
         {outside && <p className="mw-notice mw-notice-attention">This line is outside the current results. <Link className="mw-link" href={href("register", { line: lineId })}>Show all materials</Link></p>}
         {l && d && (
           <>
-            <Status tone={l.readiness.tone}>{l.readiness.label}</Status>
-            {l.readiness.reasons.length > 0 && <ul className="em-reasons">{l.readiness.reasons.map((r) => <li key={r}>{r}</li>)}</ul>}
+            <div><Chip tone={s ? "neutral" : l.readiness.tone}>{s ? (substitutionWords[s.state] ?? "Substitution proposed") : l.readiness.label}</Chip></div>
             {s && (
               <>
-                <div className="em-compare">
-                  <div><span>Specified</span><strong>{s.original_code}</strong><small>{s.original_description}</small></div>
-                  <Icon name="arrow-right" />
-                  <div><span>Proposed alternate</span><strong>{s.candidate_code}</strong><small>{s.candidate_description} · {s.candidate_revision}</small></div>
-                </div>
-                <h3>Technical comparison</h3>
-                <dl className="em-criteria">
-                  {s.criteria.map((k) => (
-                    <div key={k.key}><dt>{k.label}{k.mandatory && <span className="em-mandatory"> · mandatory</span>}</dt><dd><Status tone={toneFor(k.result)}>{text(k.result)}</Status>{k.result === "NotApplicable" && k.note && <small>{k.note}</small>}</dd></div>
-                  ))}
-                </dl>
+                <section className="em-inspector-section">
+                  <h3>Specified <Icon name="arrow-right" /> proposed</h3>
+                  <div className="em-compare">
+                    <div><span>Specified</span><strong>{s.original_code}</strong></div>
+                    <div><span>Proposed</span><strong>{s.candidate_code}</strong></div>
+                  </div>
+                  <p className="em-note">{s.candidate_description} · {s.candidate_revision}</p>
+                </section>
+                <section className="em-inspector-section">
+                  <h3>Compatibility evidence</h3>
+                  <dl className="em-criteria">
+                    {s.criteria.map((k) => (
+                      <div key={k.key}><dt>{k.label}</dt><dd><Chip tone={toneFor(k.result)}>{text(k.result)}</Chip>{k.result === "NotApplicable" && k.note && <small>{k.note}</small>}</dd></div>
+                    ))}
+                  </dl>
+                </section>
               </>
             )}
-            <div className="em-action">
-              <Icon name="warning" />
-              <div><strong>{l.next_action}</strong><p>{l.next_owner_name} · {l.action_due ? `Due ${dateText(l.action_due)}` : "Action date needed"}</p></div>
-            </div>
-            {/* Two different dates. An unknown required-by date is said plainly; none is invented. */}
-            <div className="em-pair"><span>Material required by</span><strong className={l.required_by ? "" : "em-needed"}><Icon name="calendar" /> {dateText(l.required_by)}</strong></div>
-            <div className="em-pair"><span>Design quantity</span><strong>{quantityText(l.quantity, l.unit)}</strong></div>
-            {l.released_quantity !== "0" && <div className="em-pair"><span>In issued releases</span><strong>{quantityText(l.released_quantity, l.unit)}</strong></div>}
-            <div className="em-pair"><span>Areas served</span><strong>{l.served_areas.length ? l.served_areas.join(", ") : "Not recorded"}</strong></div>
-            {d.group.length > 0 && <div className="em-pair"><span>Released only with</span><strong>{d.group.map((g) => `line ${g.line_number}`).join(", ")} ({l.dependency_group})</strong></div>}
-            <h3>Source basis</h3>
-            {source ? (
-              <div className="em-source">
-                <Icon name="document" />
-                <div>
-                  <strong>{source.reference} · Revision {source.revision}</strong>
-                  <p>{l.basis ? `Design basis · ${l.basis.reference} ${l.basis.revision}` : "No design basis linked"}</p>
+            <section className="em-inspector-section">
+              <h3>Next action</h3>
+              <p className="em-next">{l.next_action}</p>
+              <p className="mw-muted">{l.next_owner_name} · {l.action_due ? `Review due ${dateText(l.action_due)}` : "Review date needed"}</p>
+              {/* Two different dates. An unknown required-by date is said plainly; none is invented. */}
+              <div className="em-pair"><span>Material required-by</span><strong className={l.required_by ? "" : "em-needed"}>{dateText(l.required_by)}</strong></div>
+            </section>
+            <section className="em-inspector-section">
+              <h3>Source basis</h3>
+              {source ? (
+                <div className="em-source">
+                  <strong>{source.reference} · Rev {source.revision}</strong>
                   <p>Purpose: {text(source.permitted_purpose)}</p>
                   {/* Currentness of the source only. It says nothing about technical acceptance, which is shown separately below. */}
-                  <Status tone={toneFor(source.use)}>{source.use === "Current" ? "Current source" : text(source.use)} · Checked {dateText(source.observed_at)}</Status>
+                  <p className={`em-source-use em-source-use-${toneFor(source.use)}`}><Icon name={source.use === "Current" ? "review" : "warning"} /><span>{source.use === "Current" ? "Selected sources current" : text(source.use)}</span></p>
+                  <p className="em-source-checked">Checked {stampText(source.observed_at)} AEST</p>
                 </div>
-              </div>
-            ) : <p className="mw-muted">No exact drawing source is linked.</p>}
-            <Link className="mw-link" href={href("history", { tab: "sources", source: source?.id ?? null })}>View exact sources <Icon name="arrow-right" /></Link>
-            <div className="em-pair em-pair-rule"><span>Technical acceptance</span><Status tone={toneFor(s?.state ?? (l.readiness.code === "TechnicallyReviewed" || l.readiness.code === "Released" ? "Accepted" : ""))}>{d.technical_acceptance}</Status></div>
-            <div className="em-pair"><span>Supply handover</span><Status tone={d.supply_handover.startsWith("Accepted") ? "positive" : "neutral"}>{d.supply_handover}</Status></div>
+              ) : <p className="mw-muted">No exact drawing source is linked.</p>}
+              <Link className="mw-link em-source-link" href={href("history", { tab: "sources", source: source?.id ?? null })}>View exact sources <Icon name="arrow-right" /></Link>
+            </section>
+            <section className="em-inspector-section">
+              <h3>Release &amp; handover</h3>
+              <div className="em-pair"><span>Technical acceptance</span><strong>{d.technical_acceptance}</strong></div>
+              <div className="em-pair"><span>Material release</span><strong>{l.released_quantity !== "0" ? `Issued · ${quantityText(l.released_quantity, l.unit)}` : "Not issued"}</strong></div>
+              <div className="em-pair"><span>Supply handover</span><strong>{d.supply_handover}</strong></div>
+            </section>
             <div className="em-inspector-actions">
               {s ? <Link className="mw-button mw-button-primary" href={href("substitutions", { substitution: s.id })}>Open substitution review</Link>
                 : <Link className="mw-button mw-button-primary" href={href("mapping", { line: l.id })}>Open item &amp; unit mapping</Link>}
-              {d.can.edit && !l.removed && <button type="button" className="mw-button" onClick={() => onEdit(l)} disabled={d.locked}>Correct requirement</button>}
-              {d.can.edit && !l.removed && <button type="button" className="mw-button mw-button-quiet" onClick={() => setRemoving(true)} disabled={d.locked}>Remove from draft</button>}
-              {d.locked && <Reason>This line is inside a release set under review or authorised, so its content cannot move underneath that decision.</Reason>}
-              <Link className="mw-link" href={href("history", { subject_id: l.id })}>View change history</Link>
-              <small className="mw-muted">Content revision {l.content_revision} · saved {stampText(l.updated_at)}</small>
+              {/* Everything else about the line is one step away, so the inspector's first view stays the refined summary. */}
+              <details className="em-details">
+                <summary className="mw-link">View material details <Icon name="arrow-right" /></summary>
+                <div className="em-pair"><span>Line readiness</span><strong>{l.readiness.label}</strong></div>
+                {l.readiness.reasons.length > 0 && <ul className="em-reasons">{l.readiness.reasons.map((r) => <li key={r}>{r}</li>)}</ul>}
+                <div className="em-pair"><span>Design quantity</span><strong>{quantityText(l.quantity, l.unit)}</strong></div>
+                <div className="em-pair"><span>Areas served</span><strong>{l.served_areas.length ? l.served_areas.join(", ") : "Not recorded"}</strong></div>
+                {d.group.length > 0 && <div className="em-pair"><span>Released only with</span><strong>{d.group.map((g) => `line ${g.line_number}`).join(", ")} ({l.dependency_group})</strong></div>}
+                <div className="em-pair"><span>Design basis</span><strong>{l.basis ? `${l.basis.reference} · ${l.basis.revision}` : "None linked"}</strong></div>
+                {s && s.criteria.some((k) => k.mandatory) && <div className="em-pair"><span>Mandatory criteria</span><strong>{s.criteria.filter((k) => k.mandatory).map((k) => k.label).join(", ")}</strong></div>}
+                {d.can.edit && !l.removed && <button type="button" className="mw-button" onClick={() => onEdit(l)} disabled={d.locked}>Correct requirement</button>}
+                {d.can.edit && !l.removed && <button type="button" className="mw-button mw-button-quiet" onClick={() => setRemoving(true)} disabled={d.locked}>Remove from draft</button>}
+                {d.locked && <Reason>This line is inside a release set under review or authorised, so its content cannot move underneath that decision.</Reason>}
+                <Link className="mw-link" href={href("history", { subject_id: l.id })}>View change history</Link>
+                <small className="mw-muted">Content revision {l.content_revision} · saved {stampText(l.updated_at)}</small>
+              </details>
             </div>
           </>
         )}

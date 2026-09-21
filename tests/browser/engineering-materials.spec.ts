@@ -42,7 +42,7 @@ type Item = { id: string; version: number; line_number: string; mapping: string;
 const lines = async (call: Call, base: string, set: string) => new Map(((await call(`${base}?set=${set}&page_size=100`)).body as { items: Item[] }).items.map((i) => [i.line_number, i]));
 const rows = (page: Page) => page.locator("#ppo-materials .em-register tbody tr");
 
-test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the r04 contract, My Work's menu and honest counts", async ({ page }, info) => {
+test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contract, My Work's menu and honest counts", async ({ page }, info) => {
   test.skip(info.project.name !== "desktop-chromium", "Desktop composition; the phone case is below.");
   const s = await build(`register ${Date.now()}`);
   await signIn(page, MATERIALS.author.profile);
@@ -59,6 +59,9 @@ test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the r04 contract, My 
   await expect(page.locator(".ppo-crumbs")).toHaveAttribute("title", "Engineering / Released Materials & Substitutions / Materials register");
   await expect(page.locator(".ppo-crumbs li[data-crumb=view] .ppo-crumb")).toHaveText("Materials register");
   await expect(page.locator(".product-heading .ppo-product-name")).toHaveCount(0);
+  // #268's guarantee, in the breadcrumb that replaced the heading it was written against: no name is cut
+  // short to make room for another. An ancestor is dropped whole at narrower widths; what is shown is whole.
+  expect(await page.locator(".ppo-crumbs li:visible .ppo-crumb").evaluateAll((els) => els.every((el) => el.scrollWidth <= el.clientWidth))).toBe(true);
   const strip = page.locator(".mw-menu-strip");
   await expect(strip).toHaveJSProperty("offsetWidth", 24);
   const collapsedLeft = (await page.locator(".em-register").boundingBox())!.x;
@@ -94,7 +97,13 @@ test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the r04 contract, My 
   await expect(page.locator(".em-tabs button")).toHaveText([/All materials\s*8/, /Ready for review\s*5/, /Needs attention\s*3/]);
   await expect(page.locator(".em-attention strong")).toHaveText("3 material lines need attention");
   await expect(page.locator(".em-table-foot")).toContainText("8 materials · 0 selected");
-  await expect(page.locator(".em-states")).toContainText("Not issued");
+  // The refined register: the notice sits above the table, states are chips, and no summary strip follows the table.
+  const notice = (await page.locator(".em-attention").boundingBox())!, tableTop = (await page.locator(".em-register .em-table").boundingBox())!.y;
+  expect(notice.y + notice.height).toBeLessThanOrEqual(tableTop + 1);
+  await expect(page.locator(".em-states")).toHaveCount(0);
+  await expect(rows(page).filter({ hasText: "Control interface module" }).locator(".em-chip")).toHaveText(["Verified", "Evidence needed"]);
+  await expect(rows(page).filter({ hasText: "Control interface module" })).toContainText("Substitution proposed");
+  await expect(rows(page).filter({ hasText: "Pump assembly" })).toContainText("H-101 · Rev C");
 
   // A37 A39: inspecting line 030 ticks nothing; required-by is "Date needed" and nothing is invented beside it.
   await rows(page).filter({ hasText: "Control interface module" }).getByRole("button", { name: /Inspect line 030/ }).click();
@@ -103,12 +112,24 @@ test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the r04 contract, My 
   await expect(page).toHaveURL(/line=/);
   await expect(page.locator(".em-register tbody input:checked")).toHaveCount(0);
   await expect(page.locator(".em-table-foot")).toContainText("0 selected");
-  await expect(inspector.locator(".em-pair", { hasText: "Material required by" }).locator("strong")).toHaveText("Date needed");
+  await expect(inspector.locator(".em-pair", { hasText: "Material required-by" }).locator("strong")).toHaveText("Date needed");
   await expect(inspector).toContainText("Obtain supplier firmware statement");
-  await expect(inspector).toContainText(/Due 22 Sept? 2026/);
+  await expect(inspector).toContainText(/Review due 22 Sept? 2026/);
   await expect(inspector).toContainText("CI-100");
   await expect(inspector).toContainText("Alternate control interface");
-  await expect(inspector.locator(".em-source")).toContainText("Current source");
+  await expect(inspector.locator(".em-source")).toContainText("Selected sources current");
+  await expect(inspector.locator(".em-pair", { hasText: "Material release" })).toContainText("Not issued");
+  // The inspector stands beside the context rows as well as the register, and the rest of the line is one step away.
+  expect(Math.round((await inspector.boundingBox())!.y)).toBe(Math.round((await page.locator(".em-context").boundingBox())!.y));
+  await expect(inspector.getByRole("button", { name: "Correct requirement" })).toBeHidden();
+  await inspector.getByText("View material details").click();
+  await expect(inspector.getByRole("button", { name: "Correct requirement" })).toBeVisible();
+  // Too narrow for both, the inspector overlays the register instead of docking, and it is really there.
+  const size = page.viewportSize()!;
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await expect(inspector.getByRole("heading", { level: 2 })).toBeVisible();
+  expect((await inspector.boundingBox())!.width).toBeGreaterThan(300);
+  await page.setViewportSize(size);
   await expect(inspector.locator(".em-pair", { hasText: "Technical acceptance" })).toContainText("Pending review");
   await flush();
   await expect(rows(page).filter({ hasText: "Control interface module" })).toHaveAttribute("data-inspected", "true");
@@ -135,8 +156,13 @@ test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the r04 contract, My 
   await expect(rows(page)).toHaveCount(1);
   await expect(page.locator(".em-table-foot")).toContainText("1 material of 8 in this set");
 
-  // My Work keeps its own key and its own default: open.
+  // The entry route opens the workspace itself, on the package last opened here; the list is there when asked for.
   await page.goto("/engineering/materials");
+  await expect(page).toHaveURL(new RegExp(`/engineering/${s.ids.package}/materials`));
+  await expect(rows(page)).toHaveCount(8);
+  await expect(page.getByRole("combobox", { name: "Engineering package" }).locator("option").last()).toHaveText("Choose another package…");
+  await page.goto("/engineering/materials?choose=1");
+  await expect(page.getByRole("heading", { name: "Choose an Engineering package" })).toBeVisible();
   await expect(page.getByRole("link", { name: /Nursery irrigation materials/ }).first()).toBeVisible();
   await s.dispose();
 });
@@ -309,6 +335,12 @@ test("EN06-A30 A44: a phone keeps the page inside the viewport and the table in 
   await page.goto(s.href);
   await expect(rows(page)).toHaveCount(8);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  // A contained page can still clip a control: both page actions sit wholly inside the screen.
+  for (const name of ["Add material requirement", "Review release set"]) {
+    const box = (await page.getByRole("link", { name }).boundingBox())!;
+    expect(box.x).toBeGreaterThanOrEqual(0);
+    expect(box.x + box.width).toBeLessThanOrEqual(await page.evaluate(() => window.innerWidth));
+  }
   await expect(page.locator("#ppo-materials")).toHaveAttribute("data-menu", "overlay");
   await page.getByRole("button", { name: "Materials menu" }).first().click();
   const menu = page.getByRole("dialog", { name: "Materials menu" });
