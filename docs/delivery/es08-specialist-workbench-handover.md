@@ -318,3 +318,45 @@ three development warm-ups each took 4.9 minutes over 347 routes. The three
 focused browser stages now reuse the build already checked in that job via the
 existing compiled configuration. Tests, individual timeouts, the job deadline,
 fixture resets and evidence collection remain unchanged.
+
+
+### My Work clock follow-up, 22 September 2026
+
+Published `9af25b5` passed [Email Calendar](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35605295868)
+and [P11 focused quality/access](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35605295637/job/106350783371),
+the latter in 9 minutes 41 seconds under the unchanged thirty-minute deadline.
+However, [Estimating](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35605295773)
+and the [full compiled suite](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35605295683)
+hit the My Work fixture's explicit near-midnight refusal at 23:30–23:39 Brisbane.
+Those failures happened before UI assertions; the rest of the full compiled
+suite passed. The manual fixture requires four future anchors on the same day
+with twenty minutes of journey headroom, which cannot be guaranteed at midnight.
+
+Both My Work browser suites now start their own compiled loopback server on
+port 3027 (`PPO_MY_WORK_TEST_PORT` can select another). The worker chooses 08:40
+Brisbane two calendar days ahead, passes that exact instant to its server and
+seeds against it. A test-only preload fixes the single My Work observation-clock
+SELECT and JavaScript Date after the first My Work read; browser Date agrees.
+The future snapshot includes real database creation timestamps in the Deals
+worklist. Data reads, commands, permissions, PostgreSQL write/audit timestamps,
+browser timers and assertion deadlines remain real. The preload refuses all
+databases except `ppo_synthetic_test`, and ordinary application startup never
+loads it. The manual scenario and its honest late-day refusal stay unchanged.
+Both suites assert the server's observation instant before creating records.
+
+- [20 desktop/phone cases passed](../testing/evidence/es08-native-r01/ci-repair-my-work-browser.txt)
+  in one 1.4-minute run around Brisbane midnight on 21–22 September. The twenty
+  existing opposite-viewport exclusions remain. Local configuration derives
+  both projects from `playwright.config.ts`, selects `my-work(-mobile)?`, removes
+  the unrelated warm-up dependency/server and uses the tests' own compiled server.
+  Command: `npx playwright test --config=tmp/my-work-ci.config.ts --reporter=list`.
+- [Ten date-rule/fixture unit cases passed](../testing/evidence/es08-native-r01/ci-repair-my-work-unit.txt),
+  including 23:21, the failed CI's 23:36:43, 23:59:59 and 00:00:01. They check
+  snapshot inclusion, four distinct future anchors on one Brisbane day and
+  unchanged 20/45/60-minute appointment durations.
+- TypeScript and focused lint pass. A direct startup check confirms that the
+  preload refuses `ppo_synthetic` before server startup. Foundation and naming
+  assurance pass; all 78 parent IDs remain present.
+
+These logs are new evidence. The application build and issued evidence are
+unchanged by this test-harness follow-up. Published-head CI is a separate check.

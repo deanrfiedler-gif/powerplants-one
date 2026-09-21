@@ -213,3 +213,18 @@ application already produced by that job's `npm run check` for its three browser
 stages via the existing `playwright.compiled.config.ts`. Keep all tests, warm-up
 dependencies, assertions, deadlines, resets and evidence steps. This removes
 repeated compilation without extending or bypassing an acceptance check.
+
+
+The next published run exposed the My Work browser fixture's explicit late-day
+refusal in both Estimating and the full compiled suite. Four future same-day
+anchors with journey headroom cannot be guaranteed at midnight. The desktop and
+phone proofs now own a separate compiled loopback server and share an 08:40 Brisbane observation instant two calendar days ahead of the run
+so the read snapshot includes the real database creation timestamps. A test-only Node preload
+replaces the single My Work clock SELECT with a PostgreSQL timestamp literal and
+fixes JavaScript Date when that first read occurs; Playwright fixes browser Date
+to match. PostgreSQL data queries, commands, permissions and write/audit clocks
+remain real. Timers and assertion deadlines continue normally. The preload
+refuses any database except `ppo_synthetic_test`; it is never loaded by ordinary
+application startup. The manual real-clock scenario and its explicit late-day
+refusal remain unchanged. No production clock switch, dependency or migration
+is introduced. Both browser suites assert the returned observation instant.
