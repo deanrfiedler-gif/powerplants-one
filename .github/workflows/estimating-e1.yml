@@ -52,7 +52,7 @@ jobs:
           p=Path('.env.local')
           p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
           PY
-          node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/estimating-configuration.test.ts
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/estimating-configuration.test.ts tests/database/specialist.test.ts
       - name: Compile the exact E1 E2 ES-02 application
         run: npm run build
       - name: E1 real direct HTTP proof
@@ -65,7 +65,7 @@ jobs:
             curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
             sleep 1
           done
-          node --env-file=.env.local --import tsx --test tests/http/estimating.test.ts tests/http/estimating-configuration.test.ts
+          node --env-file=.env.local --import tsx --test tests/http/estimating.test.ts tests/http/estimating-configuration.test.ts tests/http/specialist.test.ts
       - name: E1 journey through three application and browser processes and two PostgreSQL restarts
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
@@ -87,6 +87,10 @@ jobs:
           PPO_PORT: "3012"
           PPO_TEST_ORIGIN: http://127.0.0.1:3012
         run: npx playwright test --config=playwright.es02.config.ts --output verification-evidence/estimating-es02-browser --reporter=list
+      - name: Compiled ES-08 specialist workbench and recovery
+        env:
+          PPO_PORT: "3018"
+        run: npx playwright test --config=playwright.es08.config.ts --output verification-evidence/estimating-es08-browser --reporter=list
       - name: Retain exact synthetic evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -95,6 +99,7 @@ jobs:
           path: |
             verification-evidence/estimating-e1-*/
             verification-evidence/estimating-es02-browser/
+            verification-evidence/estimating-es08-browser/
             test-results/
             !**/trace.zip
           retention-days: 14

@@ -1,0 +1,472 @@
+/* ES-08 native interior. Shared r22 shell owns viewport, navigation and typography. */
+#ppo-specialist .mw-content {
+  display: flex;
+  overflow: hidden;
+  background: #fff;
+}
+#ppo-specialist .mw-content > .business-error {
+  align-self: flex-start;
+  margin: 18px 24px;
+  max-width: calc(100% - 48px);
+}
+#ppo-specialist .es08-layout {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  background: #fff;
+}
+#ppo-specialist .es08-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+#ppo-specialist .es08-scroll {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  padding: 22px 24px 32px;
+  scroll-padding: 18px;
+}
+#ppo-specialist .es08-context {
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+#ppo-specialist h1 {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.35;
+  margin: 0 0 7px;
+}
+#ppo-specialist h2 {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 18px 0 12px;
+}
+#ppo-specialist h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 18px 0 10px;
+}
+#ppo-specialist p {
+  margin: 7px 0 12px;
+  line-height: 1.5;
+}
+#ppo-specialist small {
+  display: block;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+#ppo-specialist label,
+.es08-dialog label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 13px;
+  min-width: 0;
+}
+#ppo-specialist input,
+#ppo-specialist select,
+.es08-dialog input,
+.es08-dialog select {
+  font: inherit;
+  min-height: 34px;
+  border: 1px solid #828e9f;
+  border-radius: 6px;
+  background: #fff;
+  color: #242a37;
+  padding: 7px 9px;
+  min-width: 0;
+  max-width: 100%;
+}
+#ppo-specialist input[type="checkbox"],
+.es08-dialog input[type="checkbox"] {
+  width: 18px;
+  min-height: 18px;
+  accent-color: #355b80;
+}
+#ppo-specialist button,
+.es08-dialog button {
+  font: inherit;
+  border: 1px solid #cbd2dc;
+  background: #fff;
+  color: #242a37;
+  border-radius: 6px;
+  padding: 7px 11px;
+  min-height: 34px;
+  cursor: pointer;
+}
+#ppo-specialist button:hover,
+.es08-dialog button:hover {
+  background: #f0f2f5;
+}
+#ppo-specialist button:disabled,
+.es08-dialog button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+#ppo-specialist :focus-visible,
+.es08-dialog :focus-visible {
+  outline: 2px solid #365d8b;
+  outline-offset: 3px;
+}
+#ppo-specialist .es08-primary,
+.es08-dialog .es08-primary {
+  background: #242a37;
+  color: #fff;
+  border-color: #242a37;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: inline-block;
+}
+#ppo-specialist .es08-link {
+  color: #355b80;
+  padding: 2px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  text-decoration: underline;
+}
+#ppo-specialist .es08-back {
+  display: block;
+  margin: 18px 18px 20px;
+  color: #596779;
+  text-decoration: none;
+}
+#ppo-specialist .es08-menu-title {
+  margin: 0 18px 12px;
+  font-size: 13px;
+  color: #667181;
+}
+#ppo-specialist .mw-menu nav {
+  display: flex;
+  flex-direction: column;
+}
+#ppo-specialist .mw-menu nav a {
+  padding: 10px 18px;
+  color: #242a37;
+  text-decoration: none;
+  border: 0;
+  border-radius: 0;
+  font-size: 14px;
+}
+#ppo-specialist .mw-menu nav a[aria-current="page"] {
+  background: #fff;
+  font-weight: 500;
+}
+#ppo-specialist .mw-menu nav a:not([aria-current="page"]):hover {
+  background: #f0f2f5;
+}
+#ppo-specialist .es08-menu-note {
+  font-size: 12px;
+  color: #667181;
+  margin: 24px 18px;
+}
+#ppo-specialist .es08-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 24px;
+  padding: 16px 0;
+}
+#ppo-specialist .es08-section {
+  border: 0;
+  border-bottom: 1px solid #e1e5eb;
+  padding: 12px 0;
+  margin: 0;
+  border-radius: 0;
+  background: #fff;
+}
+#ppo-specialist summary {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 0;
+  min-height: 38px;
+}
+#ppo-specialist fieldset,
+.es08-dialog fieldset {
+  border: 1px solid #e1e5eb;
+  padding: 15px;
+  margin: 15px 0;
+}
+#ppo-specialist .es08-toolbar {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+#ppo-specialist .es08-table-scroll {
+  overflow: auto;
+  max-width: 100%;
+  margin: 12px 0;
+}
+#ppo-specialist table,
+.es08-dialog table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.5;
+  background: #fff;
+  border: 0;
+}
+#ppo-specialist th,
+#ppo-specialist td,
+.es08-dialog th,
+.es08-dialog td {
+  text-align: left;
+  border: 0;
+  border-bottom: 1px solid #e9ecf1;
+  padding: 11px 12px;
+  vertical-align: top;
+  min-width: 90px;
+}
+#ppo-specialist th {
+  font-weight: 500;
+  background: #f5f6f8;
+  white-space: nowrap;
+}
+#ppo-specialist td:first-child {
+  padding-left: 0;
+}
+#ppo-specialist table input {
+  min-width: 90px;
+  max-width: 220px;
+  width: 100%;
+}
+#ppo-specialist table td:nth-child(2) {
+  min-width: 190px;
+}
+#ppo-specialist .es08-actions {
+  border-top: 1px solid #e1e5eb;
+  padding: 12px 24px;
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: #fff;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+#ppo-specialist .es08-actions label {
+  flex: 1;
+  min-width: 200px;
+}
+#ppo-specialist .es08-actions span {
+  width: 100%;
+  font-size: 12px;
+  color: #596779;
+}
+#ppo-specialist .es08-summary {
+  width: 380px;
+  flex: 0 0 380px;
+  min-height: 0;
+  overflow: auto;
+  padding: 20px 24px;
+  border-left: 1px solid #e1e5eb;
+  box-shadow: -14px 0 16px -18px rgba(36, 42, 55, 0.5);
+  background: #fff;
+  font-size: 13px;
+}
+#ppo-specialist .es08-summary > a {
+  display: block;
+  margin: 14px 0;
+}
+#ppo-specialist .es08-summary dl > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 9px 0;
+  border-bottom: 1px solid #e9ecf1;
+}
+#ppo-specialist .es08-summary dd {
+  margin: 0;
+  font-weight: 500;
+}
+#ppo-specialist .es08-summary li {
+  margin-bottom: 10px;
+}
+#ppo-specialist .es08-tag {
+  display: inline-block;
+  background: #edf0f5;
+  color: #526078;
+  padding: 2px 7px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+#ppo-specialist .es08-attention {
+  background: #fff2d9;
+  color: #80530e;
+  padding: 14px 20px;
+  margin: 12px 0;
+}
+#ppo-specialist .es08-diagrams {
+  max-width: 760px;
+  border-top: 1px solid #e1e5eb;
+  margin-top: 24px;
+}
+#ppo-specialist .es08-diagrams svg {
+  width: 100%;
+  max-height: 440px;
+  background: #fcfcfd;
+  border: 1px solid #e9ecf1;
+}
+#ppo-specialist .es08-diagrams text {
+  font:
+    11px Roboto,
+    sans-serif;
+  fill: #242a37;
+}
+#ppo-specialist code,
+#ppo-specialist pre,
+.es08-dialog pre {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+#ppo-specialist .es08-form {
+  max-width: 700px;
+  display: grid;
+  gap: 20px;
+}
+.es08-dialog {
+  color: #242a37;
+  background: #fff;
+  border: 1px solid #e1e5eb;
+  border-radius: 6px;
+  padding: 24px;
+  width: min(620px, calc(100vw - 24px));
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  font:
+    14px/1.5 Roboto,
+    Verdana,
+    sans-serif;
+}
+.es08-dialog::backdrop {
+  background: rgba(36, 42, 55, 0.25);
+}
+.es08-dialog header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 15px;
+  margin-bottom: 18px;
+}
+.es08-dialog h2 {
+  font-size: 18px;
+  margin: 0;
+}
+.es08-dialog label {
+  margin: 12px 0;
+}
+.es08-dialog button {
+  margin: 8px 8px 0 0;
+}
+.es08-dialog small {
+  display: block;
+  color: #596779;
+}
+.es08-inspector {
+  position: fixed;
+  inset: 0 0 0 auto;
+  margin: 0;
+  width: min(720px, 100vw);
+  max-height: 100dvh;
+  height: 100dvh;
+  border-radius: 0;
+  box-shadow: -12px 0 25px rgba(36, 42, 55, 0.1);
+}
+@media (max-width: 1400px) {
+  #ppo-specialist .es08-summary {
+    width: 330px;
+    flex-basis: 330px;
+  }
+}
+@media (max-width: 1100px) {
+  #ppo-specialist .es08-layout {
+    display: block;
+    overflow: auto;
+  }
+  #ppo-specialist .es08-main {
+    min-height: 100%;
+    display: block;
+  }
+  #ppo-specialist .es08-scroll {
+    overflow: visible;
+  }
+  #ppo-specialist .es08-summary {
+    width: auto;
+    border-left: 0;
+    border-top: 1px solid #e1e5eb;
+    box-shadow: none;
+    overflow: visible;
+  }
+  #ppo-specialist .es08-actions {
+    position: static;
+  }
+}
+@media (max-width: 600px) {
+  #ppo-specialist .es08-context,
+  #ppo-specialist .es08-scroll,
+  #ppo-specialist .es08-actions {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  #ppo-specialist .es08-fields {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  #ppo-specialist input,
+  #ppo-specialist select,
+  #ppo-specialist button,
+  .es08-dialog input,
+  .es08-dialog select,
+  .es08-dialog button {
+    min-height: 44px;
+  }
+  #ppo-specialist .es08-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  #ppo-specialist .es08-toolbar > * {
+    flex: 1 1 120px;
+  }
+  #ppo-specialist .es08-summary {
+    padding: 18px 14px;
+  }
+  .es08-dialog {
+    padding: 18px;
+  }
+}
+
+@media print {
+  body:has(.es08-inspector[open]) * {
+    visibility: hidden;
+  }
+  body:has(.es08-inspector[open]) .es08-inspector,
+  body:has(.es08-inspector[open]) .es08-inspector * {
+    visibility: visible;
+  }
+  .es08-inspector[open] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+    border: 0;
+  }
+  .es08-inspector[open] button {
+    display: none;
+  }
+  .es08-inspector pre {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}

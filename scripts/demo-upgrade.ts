@@ -64,7 +64,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Reviewed for 0030: immutable configuration ownership ledger and a revision
   // insert trigger; no backfill, identity-table ALTER, seed, grant or output rewrite.
   // Existing generic runtime table grants cover this aggregate-owned ledger.
-  if (latestMigrationVersion !== 30) throw Error("Review the existing-demo upgrade for this release.");
+  // Reviewed 0031: additive specialist evidence and immutable policy manifests.
+  // No old content, grants or users change. Identity trigger events are flushed
+  // before type widening; runtime policy writes are revoked after generic grants.
+  if (latestMigrationVersion !== 31) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

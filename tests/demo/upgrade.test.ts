@@ -171,7 +171,7 @@ test("a baseline executed from Windows CRLF SQL upgrades without rewriting histo
   );
   // 0018 Leads, 0019 Projects, 0020 Engineering, 0021 stages, 0022 Discovery conversion and 0023 owned outcomes and 0024 owner transfer, 0025 versioned estimating taxonomy and 0026 preserved discovery identities and 0027 exact cost bases and 0028 My Work activity scheduling and personal saved views and 0029 EN-06 released materials and substitutions.
   // 0030 adds configuration identity integrity without a synthetic seed.
-  assert.equal(final.length, baseline.length + 13);
+  assert.equal(final.length, baseline.length + 14);
   assert.ok((await db.query("SELECT to_regclass('ppo.projects') AS relation")).rows[0].relation);
 });
 

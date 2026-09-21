@@ -1,3 +1,5 @@
+import { readLineage } from "./specialist/lineage";
+import { configuration as specialistConfiguration, run as specialistRun } from "./specialist/context";
 import type { Principal } from "../platform/identity";
 import { database, transaction } from "../platform/database";
 import { AppError } from "../platform/errors";
@@ -44,7 +46,22 @@ export async function readEstimate(p:Principal,id:string,query:Record<string,str
   for(const row of quoteRows)try {if(e.discovery_basis)await quoteContext(c,p,row.id);quotes.push(row);}catch(error){if(!(error instanceof AppError)||error.status!==404)throw error;}
   let latest=null;
   if(e.discovery_basis)try{latest=await latestCostingScope(c,p,e);}catch(error){if(!(error instanceof AppError)||error.status!==404)throw error;}
-  return {...e,...(e.discovery_basis?{site_id:estimateSite(e),latest_discovery:latest}:{}),context,opportunity:{id:o.id,display_number:o.display_number,title:o.title},saved:v,current_saved:await versionContext(c,p,e,e.current_version_id),totals:calculate(v.lines),versions,quotes,can_edit,can_prepare};
+  const lineage=await readLineage(c,p,v), specialist_contributions=[];
+  const permittedRuns=new Map<string,string|null>();
+  for(const contribution of lineage?.snapshot.contributions??[]) {
+    const key=`${contribution.configuration_id}:${contribution.run_id}`;
+    if(!permittedRuns.has(key)) try {
+      const cfg=await specialistConfiguration(c,p,contribution.configuration_id);
+      await specialistRun(c,p,cfg,contribution.run_id);
+      permittedRuns.set(key,cfg.name);
+    } catch(error) {
+      if(!(error instanceof AppError)||![403,404].includes(error.status))throw error;
+      permittedRuns.set(key,null);
+    }
+    const name=permittedRuns.get(key);
+    if(name!==null)specialist_contributions.push({...contribution,configuration_name:name!});
+  }
+  return {...e,specialist_lineage_status:lineage?"Available":"Legacy; no specialist lineage",specialist_contributions,...(e.discovery_basis?{site_id:estimateSite(e),latest_discovery:latest}:{}),context,opportunity:{id:o.id,display_number:o.display_number,title:o.title},saved:v,current_saved:await versionContext(c,p,e,e.current_version_id),totals:calculate(v.lines),versions,quotes,can_edit,can_prepare};
 }
 export async function readQuote(p:Principal,id:string) {
   const c=database(),{q,e}=await quoteContext(c,p,id),{j}=await readQuoteJob(p,id);
