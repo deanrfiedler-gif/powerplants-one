@@ -49,7 +49,7 @@ Source order when references disagreed, as the plan sets it: Dean's explicit UI 
 
 | Destination | Route | API |
 |---|---|---|
-| Entry and resume | `/engineering/materials` | `GET engineering/materials` |
+| Entry | `/engineering/materials` opens the workspace itself: the package last opened in this browser when it is still permitted, otherwise the first permitted package with a material set. `?choose=1` shows the searchable list, which the context row's package control offers as "Choose another package…" | `GET engineering/materials` |
 | Materials register | `/engineering/[id]/materials` | `GET`, `POST` `…/materials`; `…/materials/lines`; `…/materials/people`; `…/materials/export` |
 | Item & unit mapping | `…/materials/mapping` | `GET …/mapping`; bindings saved through `…/lines` |
 | Substitution review | `…/materials/substitutions` | `GET`, `POST` |
@@ -83,14 +83,24 @@ These are fictional responsibility profiles. They allocate no employee and defin
 
 | # | Departure | Reason |
 |---|---|---|
-| D1 | The menu is 220px, not the mockup's approximate 240px, so "Substitution review" wraps beside its badge | Plan section 3 and 6.2: My Work's measured source geometry governs |
+| D1 | The menu is 220px, not the mockup's approximate 240px. "Substitution review" stays on one line beside its badge, by an 8px gap inside EN-06's own menu | Plan section 3 and 6.2: My Work's measured source geometry governs; the label was 2px short of fitting |
 | D2 | Names read "SYN Alex Lee", "SYN Willowbank Horticulture" | Every synthetic record in this repository carries the SYN marker |
 | D3 | The comparison shows "Evidence needed" where the mockup shows "Review needed" | The plan fixes four results; text resolves image ambiguity |
 | D4 | Dates read "22 Sept 2026" | The application's existing `en-AU` formatting, as in the Engineering workspace |
-| D5 | The inspector also shows readiness reasons, design quantity, areas served and the dependency group | Plan sections 6.5 and 7 require physical location and areas served to be kept apart, and a disabled or held state to carry its reason |
+| D5 | Readiness reasons, design quantity, areas served, the dependency group, the design basis and the correct and remove actions sit behind "View material details" in the inspector | Plan sections 6.5 and 7 require them; the refined image keeps the first view to its summary and names that link |
 | D6 | The material set shows a chooser | The demonstration package has two sets: A, and the coordination-only negative fixture B |
-| D7 | With the menu hidden, the header appends the destination and lets the module name truncate | Plan section 6.1: the destination must stay identifiable; the full path remains in the title attribute and the page heading |
+| D7 | With the menu hidden, the header appends the destination only where the whole of it fits (about 1,820px and wider); the module name is never cut short for it | Plan section 6.1 asks for the destination to stay identifiable, and the owner's review found the truncated module name wrong. The full path remains in the title attribute and the page heading |
 | D8 | Columns are shown, hidden or widened from the Columns menu; there is no drag resize | A keyboard-accessible sizing control was built; pointer drag resize was not |
+
+### 5.1 Owner review and the refined register, 20 September 2026
+
+Dean opened `/engineering/materials`, found a package list where the mockup shows the workspace, and supplied a refined desktop image of the register. Two things followed, on branch `fix/en06-refined-register`.
+
+**The entry route opens the workspace.** The package is changed from the context row, as the image shows; the list remains for an explicit choice, for an identity with nothing to open, and for a failed read.
+
+**The register follows the refined image where it differs from r04:** a two-row context (package, customer and site; then the material set with the two page actions, the first now "Add material requirement"); the attention notice as one line above the table; item mapping and line readiness as chips, a check only for a completed positive state and a warning only where someone must act; one text line per row with the alternate's state beneath it ("Substitution proposed"); "Rev" in the drawing column; left-aligned quantities; column rules through the body and a muted header; "Sort: Line number"; no technical-release and supply-handover strip under the table; the footer sentence "Technical release does not authorise purchasing."; an inspector that stands beside the context rows and is ordered Specified → proposed, Compatibility evidence, Next action with "Review due" and "Material required-by", Source basis with "Selected sources current" and the time it was checked, and Release & handover with technical acceptance, material release and supply handover kept apart; and a two-part breadcrumb at the shell's own 14px.
+
+**Not taken from the refined image:** its fictional line content ("Solenoid valve assembly", "PE distribution tubing", "Jordan Woods", a "Source changed" line 070 and an accepted alternate on line 060). The scenario is still the plan's fixture table, built through the API under stable operation ids; changing it means a new scenario and new expectations in four suites, and is left for the owner to ask for. D2, D3, D4, D6 and D8 stand. The menu still defaults to collapsed, as the build prompt requires, although both images show it open.
 
 ## 6. What this increment does not do
 

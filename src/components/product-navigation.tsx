@@ -443,8 +443,9 @@ export function ProductHeader() {
             <>
               <span className="ppo-heading-divider" aria-hidden="true" />
               <strong title={[label, view, subview].filter(Boolean).join(" / ")}>
-                {materials ? <span className="ppo-heading-root">{label} / </span> : label}
-                {view && <span className="ppo-heading-view">{materials ? view : ` / ${view}`}</span>}
+                {/* Module routes keep parent and module together as one unit that never wraps; see engineering-materials.css. */}
+                {materials ? <span className="ppo-heading-trail"><span className="ppo-heading-root">{label} / </span><span className="ppo-heading-view">{view}</span></span> : label}
+                {!materials && view && <span className="ppo-heading-view">{` / ${view}`}</span>}
                 {subview && <span className="ppo-heading-subview"> / {subview}</span>}
               </strong>
             </>
