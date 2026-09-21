@@ -15,7 +15,8 @@ async function call(page: Page, path: string, body?: unknown) {
   return r.json();
 }
 async function identity(page: Page, profile = "coordinator") {
-  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
+  // The initial session read is asynchronous; use the same bounded budget as identity controls.
+  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false", { timeout: 15000 });
   if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await page.getByRole("button", { name: "Change identity", exact: true }).click();
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   await page.getByRole("button", { name: "Use this identity", exact: true }).click();
