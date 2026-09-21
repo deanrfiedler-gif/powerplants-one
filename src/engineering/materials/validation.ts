@@ -55,7 +55,7 @@ export function parseSourceCommand(value: unknown) {
   if (!/^[A-Za-z0-9.]{1,12}$/.test(revision)) invalid("revision", "Use letters, digits and full stops only.");
   return {
     ...base(raw), action, id: uuid(raw.id, "id"),
-    kind: choice(raw.kind, "kind", ["DesignBasis", "DrawingIssue", "CompatibilityEvidence", "DemandAuthority", "CommercialDecision"] as const),
+    kind: choice(raw.kind, "kind", ["DesignBasis", "DrawingIssue", "CompatibilityEvidence", "DemandAuthority", "CommercialDecision", "TestProcedure", "TestEvidence", "InstalledConfiguration"] as const),
     reference: label(raw.reference, "reference", 80), title: label(raw.title, "title", 200), revision,
     file_version: label(raw.file_version, "file_version", 40),
     permitted_purpose: choice(raw.permitted_purpose, "permitted_purpose", sourcePurposes),

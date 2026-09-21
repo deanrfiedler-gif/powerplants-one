@@ -1,0 +1,49 @@
+Running 1 test using 1 worker
+
+(node:31192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [desktop-chromium] › tmp\en08-ci-tests\crm-before.spec.ts:119:1 › CA-01/04/13 desktop and phone full sales journey via real UI, validation, completion and reload (26.2s)
+
+
+  1) [desktop-chromium] › tmp\en08-ci-tests\crm-before.spec.ts:119:1 › CA-01/04/13 desktop and phone full sales journey via real UI, validation, completion and reload
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByRole('region', { name: 'Local demonstration identity', exact: true })
+    Expected: "false"
+    Received: "true"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByRole('region', { name: 'Local demonstration identity', exact: true }) with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Local demonstration identity', exact: true })
+        10 × locator resolved to <section aria-busy="true" class="identity-strip identity-compact" aria-label="Local demonstration identity">…</section>
+           - unexpected value "true"
+
+
+      14 | async function identity(page: Page, profile = "coordinator") {
+      15 |   // The initial session read is asynchronous; use the same bounded budget as identity controls.
+    > 16 |   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
+         |                                                                                                 ^
+      17 |   if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await page.getByRole("button", { name: "Change identity", exact: true }).click();
+      18 |   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
+      19 |   await page
+        at identity (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\crm-before.spec.ts:16:97)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\crm-before.spec.ts:134:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\en08-identity\before-results\crm-before-CA-01-04-13-des-fd93f-ation-completion-and-reload-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\en08-identity\before-results\crm-before-CA-01-04-13-des-fd93f-ation-completion-and-reload-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\en08-identity\before-results\crm-before-CA-01-04-13-des-fd93f-ation-completion-and-reload-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\en08-identity\before-results\crm-before-CA-01-04-13-des-fd93f-ation-completion-and-reload-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop-chromium] › tmp\en08-ci-tests\crm-before.spec.ts:119:1 › CA-01/04/13 desktop and phone full sales journey via real UI, validation, completion and reload

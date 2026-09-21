@@ -1,0 +1,13 @@
+✔ EN07-A48: migration 0030 and seed 30 are additive and a rerun changes nothing (33741.4386ms)
+✔ EN07-A59 A58 A16 A54 A55 A56: the audited fixture is derived by the server, and rebuilding it changes nothing (30876.538ms)
+✔ EN07-A22 A23 A26 A30: authorship never decides, a policy must name the person, and a moved source makes a decision ineligible without rewriting it (31307.4182ms)
+✔ EN07-A25 A29 A32 A33 A37 A40 A41 A43 A50: accepted is not implemented; the whole path to closure keeps every outcome and attempt (26603.9503ms)
+✔ EN07-A14 A24 A42 A51 A44: honest completeness, correction by successor, no-implementation closure, overlap and cost projection (23614.9661ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 148219.1846

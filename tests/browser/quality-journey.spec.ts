@@ -22,7 +22,18 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await call(page, "local-session", { profile: "coordinator" });
+  // Retain the real status/body while making the initial asynchronous customer
+  // read outlast the old 5s heading assertion. Concurrent reads share one delay.
+  const initialCustomerRead = "**/api/v1/customers/50000000-0000-4000-8000-000000000001";
+  let initialCustomerDelay: Promise<void> | undefined;
+  await page.route(initialCustomerRead, async route => {
+    const response = await route.fetch();
+    initialCustomerDelay ??= new Promise(resolve => setTimeout(resolve, 6500));
+    await initialCustomerDelay;
+    await route.fulfill({ response });
+  });
   const source = await prepareJourney(page, info);
+  await page.unroute(initialCustomerRead);
   const aid = source.appointment_id;
   const openPersonalJob = async () => {
     // Wait for this actor's actual job read, then exercise the rendered

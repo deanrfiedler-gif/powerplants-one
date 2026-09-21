@@ -1,0 +1,25 @@
+
+Running 16 tests using 1 worker
+
+(node:27896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop-chromium] › tmp\en07-ci-tests\crm-i2.spec.ts:35:1 › CRM URL restores filtered List, Board stage and sort through reload, a copied link and Back without business writes (33.1s)
+  ok  2 [desktop-chromium] › tmp\en07-ci-tests\crm-i2.spec.ts:89:1 › CRM URL clears sensitive criteria on identity lock and a copied link never grants another actor access (6.7s)
+  ok  3 [desktop-chromium] › tmp\en07-ci-tests\crm-i2.spec.ts:117:1 › CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone stage and business records (10.8s)
+  ok  4 [desktop-chromium] › tmp\en07-ci-tests\crm-i2.spec.ts:194:1 › CA-02/05/13 I2 pagination, long actions, 320px keyboard and error completeness (22.6s)
+  ok  5 [desktop-chromium] › tmp\en07-ci-tests\crm-i2.spec.ts:296:1 › CA-06/10/13 I2 revocation clears list, filter labels and late responses; identity switch clears search (7.5s)
+  ok  6 [desktop-chromium] › tmp\en07-ci-tests\crm-i2.spec.ts:340:1 › CA-06/13 initial identity must settle before an actor can switch (3.2s)
+  ok  7 [desktop-chromium] › tmp\en07-ci-tests\crm-i2.spec.ts:365:1 › CA-13 shared brand consumers retain navigation, readable actions and original identity controls (8.8s)
+  ok  8 [desktop-chromium] › tmp\en07-ci-tests\crm-i2.spec.ts:396:1 › Accepted r08 shell and board retain full-width stages, fixed headers and shared scrolling (11.2s)
+(node:30168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  9 [mobile-chromium] › tmp\en07-ci-tests\crm-i2.spec.ts:35:1 › CRM URL restores filtered List, Board stage and sort through reload, a copied link and Back without business writes (17.7s)
+  ok 10 [mobile-chromium] › tmp\en07-ci-tests\crm-i2.spec.ts:89:1 › CRM URL clears sensitive criteria on identity lock and a copied link never grants another actor access (5.9s)
+  ok 11 [mobile-chromium] › tmp\en07-ci-tests\crm-i2.spec.ts:117:1 › CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone stage and business records (13.1s)
+  ok 12 [mobile-chromium] › tmp\en07-ci-tests\crm-i2.spec.ts:194:1 › CA-02/05/13 I2 pagination, long actions, 320px keyboard and error completeness (18.6s)
+  ok 13 [mobile-chromium] › tmp\en07-ci-tests\crm-i2.spec.ts:296:1 › CA-06/10/13 I2 revocation clears list, filter labels and late responses; identity switch clears search (6.4s)
+  ok 14 [mobile-chromium] › tmp\en07-ci-tests\crm-i2.spec.ts:340:1 › CA-06/13 initial identity must settle before an actor can switch (3.0s)
+  ok 15 [mobile-chromium] › tmp\en07-ci-tests\crm-i2.spec.ts:365:1 › CA-13 shared brand consumers retain navigation, readable actions and original identity controls (10.8s)
+  ok 16 [mobile-chromium] › tmp\en07-ci-tests\crm-i2.spec.ts:396:1 › Accepted r08 shell and board retain full-width stages, fixed headers and shared scrolling (10.2s)
+
+  16 passed (3.3m)

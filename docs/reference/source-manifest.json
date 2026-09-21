@@ -105,6 +105,20 @@
       "bytes": 9520,
       "purpose": "Field Technicians r05 change record tracing each change to an audit finding; acceptance recorded in docs/decisions/field-technicians-design.md",
       "original_path": "powerplants-one-field-technicians-r05-change-record.md"
+    },
+    {
+      "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Build-Plan-r02.md",
+      "sha256": "388eb24496d14f36e9a84ecae36526f5f83a066fc2722798e7dba6a5523dea99",
+      "bytes": 91571,
+      "purpose": "EN-07 Engineering Change-Impact Review build plan r02 as issued by Dean Fiedler on 20 September 2026; the stable working copy is docs/delivery/engineering-change-impact-review-build-plan.md and the integration record is docs/decisions/engineering-change-impact-review-design.md",
+      "original_path": "PPO-EN-07-Engineering-Change-Impact-Review-Build-Plan-r02.md"
+    },
+    {
+      "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
+      "sha256": "b55cdf0e1340146e291ac5de9fa0e40990a1ba8b902e4c9c1bb8833448067ad5",
+      "bytes": 1208055,
+      "purpose": "EN-07 desktop UI mockup r03, the updated design Dean Fiedler supplied on 20 September 2026 superseding mockup r02; a raster composition reference, not a data authority and not a registered UI baseline",
+      "original_path": "PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png"
     }
   ]
 }
