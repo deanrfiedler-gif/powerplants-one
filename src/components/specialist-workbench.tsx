@@ -116,7 +116,10 @@ function Frame({
             ← Back to estimating
           </Link>
           <h2 className="es08-menu-title">Specialist configuration</h2>
-          <nav aria-label="Specialist configuration views">
+          <nav
+            aria-label="Specialist configuration views"
+            onClick={() => menu.closeOverlay(false)}
+          >
             <Link
               href="/estimating/configurations"
               aria-current={!id ? "page" : undefined}

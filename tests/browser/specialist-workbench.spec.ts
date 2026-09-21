@@ -38,7 +38,21 @@ async function view(page: Page, name: string) {
     exact: true,
   });
   if (await toggle.isVisible()) await toggle.click();
-  await page.getByRole("link", { name, exact: true }).click();
+  const link = page.getByRole("link", { name, exact: true });
+  if (!(await link.isVisible()))
+    await page
+      .getByRole("button", {
+        name: "Specialist configuration menu",
+        exact: true,
+      })
+      .click();
+  await link.click();
+  await expect(
+    page.getByRole("dialog", {
+      name: "Specialist configuration menu",
+      exact: true,
+    }),
+  ).not.toBeVisible();
 }
 test("ES08 native six views, shared shell, dense parts and responsive evidence", async ({
   page,
