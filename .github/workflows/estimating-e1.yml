@@ -81,7 +81,7 @@ jobs:
             node --env-file=.env.local --import tsx scripts/estimating-restart-proof.ts "$phase"
           done
       - name: E1 desktop, phone, 320px, uncertain response and long output
-        run: npx playwright test tests/browser/estimating.spec.ts --output verification-evidence/estimating-e1-browser --reporter=list
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/estimating.spec.ts --output verification-evidence/estimating-e1-browser --reporter=list
       - name: Compiled ES-02, My Work, Engineering materials and shell regression
         env:
           PPO_PORT: "3012"

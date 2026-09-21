@@ -95,10 +95,10 @@ jobs:
       - name: CRM refinement database and browser journeys
         run: |
           node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/crm-refinements.test.ts tests/database/desktop-shell.test.ts
-          npx playwright test tests/browser/crm-refinements.spec.ts --output verification-evidence/crm-refinements --reporter=list
+          npx playwright test --config=playwright.compiled.config.ts tests/browser/crm-refinements.spec.ts --output verification-evidence/crm-refinements --reporter=list
       - name: Retained I2 keyboard and long-text checks
         if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
-        run: npx playwright test tests/browser/crm-i2.spec.ts --output verification-evidence/crm-i2-integration --reporter=list
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/crm-i2.spec.ts --output verification-evidence/crm-i2-integration --reporter=list
       - name: Retained CRM journey across application and database restarts
         if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
