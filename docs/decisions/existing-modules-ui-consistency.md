@@ -79,6 +79,11 @@ secondary menu keep More's established geometry and reserve no phantom menu widt
   search and quick-add panels open 28px left of r17's anchor because their triggers moved into one
   centred group. The other five panels keep r17's absolute anchor exactly.
 - `tests/browser/engineering-materials.spec.ts` A34/A35 record the 24px strip and the 240px menu.
+- `main` moved to `b4806af` (PR #268) during this work and is merged in. #268's breadcrumb rule — a name
+  is shown whole or not at all, never cut short to make room for another — is carried into the
+  breadcrumb that replaced the heading it was written against: no crumb shrinks or ellipsises, one that
+  does not fit wraps out of a one-line box, and ancestors are dropped whole at 1560px. The handover
+  records each conflict and its resolution.
 
 ## Boundaries
 

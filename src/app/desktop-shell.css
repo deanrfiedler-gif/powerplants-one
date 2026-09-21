@@ -192,6 +192,13 @@
   .ppo-header-centre { position: absolute; left: calc(50% - var(--ppo-rail-width) / 2); transform: translateX(-50%); display: flex; align-items: center; gap: 12px; width: calc(clamp(232px, 28vw, 420px) + 56px); }
   .ppo-header-centre .ppo-global-search { flex: 1 1 auto; min-width: 0; }
   .ppo-header-centre .ppo-quick-add { flex: none; }
+  /* #268's rule, kept by the breadcrumb that replaced the heading it was written against: a name is
+     shown whole or not at all, never cut short to make room for another. No crumb shrinks or ellipsises;
+     one that does not fit wraps to a second line that this one-line box hides, and the current page is
+     last so it is the first to go. Ancestors are dropped whole earlier, at 1560px. */
+  .ppo-shell-header .ppo-crumbs { flex-wrap: wrap; max-height: 21px; overflow: hidden; }
+  .ppo-shell-header .ppo-crumbs li, .ppo-shell-header .ppo-crumbs li:last-child { flex: none; min-width: 0; }
+  .ppo-shell-header .ppo-crumbs .ppo-crumb { flex: none; min-width: 0; overflow: visible; text-overflow: clip; }
   .ppo-shell-header .product-heading { max-width: calc(50vw - clamp(110px, 14vw, 210px) - 146px); }
   .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading { max-width: calc(50vw - clamp(110px, 14vw, 210px) - 146px - 52px); }
   .ppo-shell-header .ppo-product-name { flex-shrink: 0; }

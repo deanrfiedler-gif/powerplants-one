@@ -82,6 +82,23 @@ header.
 All seventy-three implemented `page.tsx` routes under `src/app/(business)` are accounted for above.
 `/foundation` is a local-only diagnostic page outside the business layout and is unchanged.
 
+## Merge with `main`
+
+`origin/main` moved to `b4806af` while this branch was being built: PR #268, "Open the EN-06 workspace at
+its entry route and follow the refined register". It touched four of the files this change touches, and
+it is merged in rather than left to conflict at review. Three conflicts were resolved by hand:
+
+| Conflict | Resolution |
+|---|---|
+| `src/components/product-navigation.tsx`, the header heading | This change replaces the whole `ppo-heading-*` structure with the breadcrumb list, so the breadcrumb is kept, and #268's rule is carried into it rather than lost. The first merge attempt did not carry it: the translated assertion failed, because the breadcrumb was still ellipsising the module name at 1440px. The breadcrumb now behaves as #268's heading did — no crumb shrinks or ellipsises, and one that does not fit wraps to a second line the one-line box hides, so a name is shown whole or not at all. Measured on the materials route: at 1920 all three crumbs show; at 1600 "Materials register" wraps out whole; at 1440 and below "Engineering" is dropped whole as well and "Released Materials & Substitutions" is always shown entire. Two-crumb routes are unaffected at every width. |
+| `src/app/styles/engineering-materials.css`, the inspector | #268's newer 368px width and 18px head padding are taken, with this change's docked left-only shadow kept on top. 368px sits inside the 360–400px the rule gives for a concise snapshot. |
+| `src/app/styles/engineering-materials.css`, the narrow-split overlay | #268's grid placement (`.em-split>.em-inspector`, `grid-column: 1 / -1`, the `data-inspector=open` rules) is taken whole, with the four-sided `var(--shadow)` replaced by the same left-biased shadow the docked panel uses. |
+| `src/app/styles/engineering-materials.css`, the breadcrumb rules | #268 refined selectors written against `product-heading[data-module-crumb]` and `ppo-heading-*`. That markup no longer exists, so those rules cannot match and are dropped; the shell's own breadcrumb rules replace them. |
+| `tests/browser/engineering-materials.spec.ts`, A34 | This change's assertions are kept, and #268's guarantee is translated into the new structure: no visible crumb is cut short (`scrollWidth <= clientWidth` on every visible crumb), which is what its `ppo-heading-view` check asserted about the heading it was written against. |
+
+`docs/STATUS.md` merged without conflict; #268's own EN-06 source and documentation changes are taken
+unchanged.
+
 ## Validation record
 
 Node **24.21.0**, npm **11.19.0**, Playwright **1.63.0**, Chrome **153.0.8010.53**, PostgreSQL
