@@ -1,6 +1,6 @@
 # CS-05 Facilities & growing areas — native handover
 
-**State:** Native implementation and bounded local verification complete; ready for draft PR review. Owner acceptance and deployment remain separate. **Branch:** `feat/cs05-facilities-growing-areas`. **Code candidate:** `5f6e683e7c809e1850e932ed684b9dd3725d13d0`; code tree `6dde740a7d3a017fff68ce7644893e02081e92f5`. **Source:** main `af3f045`. Dean authorised execution of the supplied r02 documents. No merge, deployment or operational writes.
+**State:** Native implementation and bounded local verification complete; open as [draft PR #274](https://github.com/deanrfiedler-gif/powerplants-one/pull/274). Owner acceptance and deployment remain separate. **Branch:** `feat/cs05-facilities-growing-areas`. **Code candidate:** `5f6e683e7c809e1850e932ed684b9dd3725d13d0`; code tree `6dde740a7d3a017fff68ce7644893e02081e92f5`. **Source:** main `af3f045`. Dean authorised execution of the supplied r02 documents. No merge, deployment or operational writes.
 
 ## Delivery checkpoint — 22 September 2026
 
@@ -10,7 +10,7 @@ Three reviewable code commits separate canonical persistence (`7e981df`), native
 
 Local evidence includes ten Facility DB groups; legacy/rich HTTP; 14 Facility browser project cases across completed runs; 32 compiled CRM/E1/E2 browser cases; real process/database restart; 5,000-row query measurements; and non-empty issued commissioning hash preservation. Broad DB regression first returned 218/229; all 11 failures are resolved by corrected fixture expectations or focused passing reruns, with setup timeouts compared against unchanged main. Full unit run returned 189/193; the four Windows/path failures reproduce on unchanged main and are retained as environment limits. Lint, typecheck, build, foundation and naming checks pass. This is not a claim that an unchanged 229-case broad run was repeated green or that all 80 cases have every manual layer complete.
 
-Next action: review the draft PR, native adaptations, case limits and captures. Owner design/business acceptance, screen-reader and physical-device checks, external map handoff and provider integration remain outstanding. No technical or commercial release follows from a Facility observation or measured value.
+Next action: review [draft PR #274](https://github.com/deanrfiedler-gif/powerplants-one/pull/274), native adaptations, case limits and captures. Owner design/business acceptance, screen-reader and physical-device checks, external map handoff and provider integration remain outstanding. No technical or commercial release follows from a Facility observation or measured value.
 
 ## Source and reuse map
 
