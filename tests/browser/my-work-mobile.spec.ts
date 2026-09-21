@@ -19,7 +19,17 @@ const caller = (page: Page): Call => async (path, body) => {
 const signIn = async (page: Page, profile = MY_WORK.profile) =>
   expect((await page.request.post("/api/v1/local-session", { headers: { Origin: origin }, data: { profile } })).ok()).toBe(true);
 const open = async (page: Page) => {
-  await page.goto("/work");
+  // Navigation can finish while the coordinator's scoped overview is still
+  // being read. Observe that original response before checking its UI commit.
+  const [response] = await Promise.all([
+    page.waitForResponse((response) => {
+      const url = new URL(response.url());
+      return url.origin === origin && url.pathname === "/api/v1/work/overview" && response.request().method() === "GET";
+    }),
+    page.goto("/work"),
+  ]);
+  expect(response.status()).toBe(200);
+  expect(await response.finished()).toBeNull();
   await expect(page.locator(".mw-mobile")).toHaveAttribute("aria-busy", "false");
   await expect(agendaCount(page)).not.toContainText("loading");
 };
@@ -501,6 +511,13 @@ test("an unread source is never zero, the Create control never covers a focused 
   await page.keyboard.press("Escape");
   // The coordinator holds mail access: Emails opens the synthetic mailbox, still with no unread number.
   await signIn(page, "coordinator");
+  // Reproduce the retained CI race: the read can outlast a five-second render
+  // assertion. Keep the real response and require open() to await its completion.
+  await page.route("**/api/v1/work/overview?**", async (route) => {
+    const response = await route.fetch();
+    await new Promise((resolve) => setTimeout(resolve, 6000));
+    await route.fulfill({ response });
+  }, { times: 1 });
   await open(page);
   const emails = page.getByRole("link", { name: "Emails", exact: true });
   await expect(emails).toHaveAttribute("href", "/email");
