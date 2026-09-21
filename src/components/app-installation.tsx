@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { ShellIcon } from "./shell-icon";
 import { hasPendingWork } from "./pending-work";
+import { reviewNavigation } from "./navigation-intent";
 
 /**
  * Installation is a browser and operating-system decision. This controller only owns
@@ -306,6 +307,7 @@ export function InstallationActions({ onNavigate }: { onNavigate: () => void }) 
     );
   }, [install]);
   const reload = useCallback(() => {
+    if (reviewNavigation(() => { onNavigate(); window.location.reload(); })) return;
     if (hasPendingWork() && !window.confirm("Reload Powerplants One and discard unsaved entries?"))
       return;
     onNavigate();

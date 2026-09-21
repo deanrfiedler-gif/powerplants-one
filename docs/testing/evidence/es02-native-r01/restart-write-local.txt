@@ -1,0 +1,7 @@
+✓ Running next.config.ts took 30ms
+Powerplants One — local synthetic only — http://127.0.0.1:3019 · compiled build
+E2 write: exact three revisions, selected/archived options and five original receipts verified; no costing import.
+ES02 write: structured A r01/r02/r03, copied/fresh options, three original receipts, v04/r02 costs and original HTML/PDF bytes verified.
+E2 cost write: two exact version bases, 7 original receipts and original quote lease retained across actual processes.
+DR01 write: schema-2 original/successor, three exact receipts and immutable pending/ready output verified.
+E1 write: exact estimate predecessors, three original receipts, pending/ready draft and process identities verified.

@@ -1,0 +1,40 @@
+[WebServer] (node:15652) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"153.0.8010.53"}
+
+Running 28 tests using 1 worker
+
+(node:30060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop-chromium] › tests\browser\engineering-materials.spec.ts:45:1 › EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contract, My Work's menu and honest counts (5.0s)
+  ok  2 [desktop-chromium] › tests\browser\engineering-materials.spec.ts:170:1 › EN06-A04 A06 A07 A09 A10 A16 A27 A41: the server refuses what the screen would not offer (1.6s)
+  ok  3 [desktop-chromium] › tests\browser\engineering-materials.spec.ts:223:1 › EN06-A15 A16 A17 A18 A19 A20 A22 A23 A42: partial release, unknown outcome, receiving and a changed source (3.5s)
+  ok  4 [desktop-chromium] › tests\browser\engineering-materials.spec.ts:295:1 › EN06-A11 A12 A13: return and corrected successor, explicit adoption, and a commercial decision that Engineering cannot make (2.1s)
+  -   5 [desktop-chromium] › tests\browser\engineering-materials.spec.ts:331:1 › EN06-A30 A44: a phone keeps the page inside the viewport and the table in its own scroll
+  ok  6 [desktop-chromium] › tests\browser\estimating-cost-basis.spec.ts:12:1 › E2 browser explicitly adopts exact discovery into manual costs, reconciles an uncertain create and retains old scope through a successor (13.4s)
+  ok  7 [desktop-chromium] › tests\browser\estimating-discovery.spec.ts:190:1 › E2 browser creates scoped discovery and retains the original unknown creation through candidate refresh (4.0s)
+  ok  8 [desktop-chromium] › tests\browser\estimating-discovery.spec.ts:303:1 › ES02-T27/T28/T54/T58: stale discovery retains its proposal and reconciles one accepted save (3.8s)
+  ok  9 [desktop-chromium] › tests\browser\estimating-discovery.spec.ts:404:1 › ES02-T08/T12/T21/T22: hidden answers reactivate explicitly and copied alternatives require independent selection (7.4s)
+  ok 10 [desktop-chromium] › tests\browser\estimating-discovery.spec.ts:540:1 › ES02-T41/T42/T58: draft survives step changes and identity loss clears protected content at 320px (1.8s)
+  ok 11 [desktop-chromium] › tests\browser\estimating-discovery.spec.ts:574:1 › ES02-T70: an empty form becomes an explicit valid incomplete first revision without fabricated answers (1.8s)
+  ok 12 [desktop-chromium] › tests\browser\estimating-wizard.spec.ts:27:1 › ES02 native five steps, exact saved costs, family filters, evidence, dirty navigation and responsive capture (10.1s)
+  ok 13 [desktop-chromium] › tests\browser\estimating-wizard.spec.ts:191:1 › ES02-T65: Back, Forward, shell router, breadcrumb and installed reload review a dirty proposal once (3.0s)
+  ok 14 [desktop-chromium] › tests\browser\estimating-wizard.spec.ts:245:1 › ES02-T64: maximum area/system scope stays editable and scrolls locally (1.9s)
+  ok 15 [desktop-chromium] › tests\browser\estimating-wizard.spec.ts:265:1 › ES02-T57: archived unselected incomplete scope still reads its exact saved costs with editing disabled (2.7s)
+  ok 16 [desktop-chromium] › tests\browser\my-work.spec.ts:35:1 › the overview reconciles its four counts, the list, the schedule and the notices in both menu states (3.5s)
+  ok 17 [desktop-chromium] › tests\browser\my-work.spec.ts:131:1 › the list and the schedule open the same activity, and closing returns to the control that opened it (1.0s)
+  ok 18 [desktop-chromium] › tests\browser\my-work.spec.ts:150:1 › completing a lead call records the outcome, plans the next activity and keeps the lead as it was (1.7s)
+  ok 19 [desktop-chromium] › tests\browser\my-work.spec.ts:177:1 › completing a quotation task issues and approves nothing: only the activity changes (1.1s)
+  ok 20 [desktop-chromium] › tests\browser\my-work.spec.ts:196:1 › rescheduling moves the same appointment in the list and the schedule and keeps the change in its history (1.2s)
+  ok 21 [desktop-chromium] › tests\browser\my-work.spec.ts:223:1 › planning a next activity removes only that opportunity's gap; cancelling the form changes nothing (1.1s)
+  ok 22 [desktop-chromium] › tests\browser\my-work.spec.ts:249:1 › setting a date updates the same undated activity and clears its notice (1.2s)
+  ok 23 [desktop-chromium] › tests\browser\my-work.spec.ts:266:1 › following up a waiting request records the chase, keeps its age and clears nothing (1.1s)
+  ok 24 [desktop-chromium] › tests\browser\my-work.spec.ts:286:1 › saved views store criteria only: save, modify, reset, pin and retire leave every record alone (1.9s)
+  ok 25 [desktop-chromium] › tests\browser\my-work.spec.ts:323:1 › an unread source is never shown as zero, and the team queue is closed to a read-only identity (1.2s)
+{"viewport":{"width":1920,"height":1200},"storage_evidence":"Synthetic marker committed. Previous marker recovered. Persistent storage: not granted. Reported quota: 3221299200 bytes. This does not prove offline or mobile readiness."}
+  ok 26 [desktop-chromium] › tests\browser\shell.spec.ts:2:1 › responsive shell, keyboard focus, server save, read-only refusal and storage feasibility (2.4s)
+  ok 27 [desktop-chromium] › tests\browser\shell.spec.ts:101:1 › unavailable dependency and missing page show useful recoverable states (744ms)
+  ok 28 [desktop-chromium] › tests\browser\shell.spec.ts:126:1 › r17 preview preserves permissions, contextual navigation and page guidance (1.4s)
+
+  1 skipped
+  27 passed (1.6m)

@@ -1,0 +1,119 @@
+{
+  "sources": [
+    {
+      "file": "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
+      "scope": "#ppo-estimate-wizard",
+      "hash": "7ce47597beb1f16e161bac1381c7cfaaabaf4eff357dcbf65ef558f0c02252b2",
+      "geometry": {
+        "width": 1920,
+        "height": 1200,
+        "font": "PPOEstimateRoboto, Roboto, Verdana, sans-serif",
+        "fontSize": "14px",
+        "background": "rgb(242, 244, 247)",
+        "tokens": {
+          "navy": "",
+          "line": "#dde3ea",
+          "focus": "#2f5d8a"
+        }
+      }
+    },
+    {
+      "file": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "scope": "#ppo-theme-board",
+      "hash": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "geometry": {
+        "width": 1920,
+        "height": 58138.90625,
+        "font": "PPOBoardRoboto, Roboto, Verdana, sans-serif",
+        "fontSize": "14px",
+        "background": "rgba(0, 0, 0, 0)",
+        "tokens": {
+          "navy": "#242a37",
+          "line": "#e1e5eb",
+          "focus": "#365d8b"
+        }
+      }
+    }
+  ],
+  "actual": {
+    "font": "Roboto, Verdana, sans-serif",
+    "navy": "#242a37",
+    "line": "#e1e5eb",
+    "focus": "#365d8b"
+  },
+  "layouts": [
+    {
+      "width": 1920,
+      "menu": "docked",
+      "summary": true,
+      "searchCentre": 960
+    },
+    {
+      "width": 1920,
+      "menu": "docked",
+      "summary": false,
+      "searchCentre": 960
+    },
+    {
+      "width": 1920,
+      "menu": "collapsed",
+      "summary": true,
+      "searchCentre": 960
+    },
+    {
+      "width": 1920,
+      "menu": "collapsed",
+      "summary": false,
+      "searchCentre": 960
+    },
+    {
+      "width": 1440,
+      "menu": "docked",
+      "summary": true,
+      "searchCentre": 720
+    },
+    {
+      "width": 1440,
+      "menu": "docked",
+      "summary": false,
+      "searchCentre": 720
+    },
+    {
+      "width": 1440,
+      "menu": "collapsed",
+      "summary": true,
+      "searchCentre": 720
+    },
+    {
+      "width": 1440,
+      "menu": "collapsed",
+      "summary": false,
+      "searchCentre": 720
+    },
+    {
+      "width": 1280,
+      "menu": "docked",
+      "summary": true,
+      "searchCentre": 640
+    },
+    {
+      "width": 1280,
+      "menu": "docked",
+      "summary": false,
+      "searchCentre": 640
+    },
+    {
+      "width": 1280,
+      "menu": "collapsed",
+      "summary": true,
+      "searchCentre": 640
+    },
+    {
+      "width": 1280,
+      "menu": "collapsed",
+      "summary": false,
+      "searchCentre": 640
+    }
+  ],
+  "adaptations": "ADR-0033: r04 native five-step workspace, r22 shared shell, versioned persistence and exact saved costs; source preview storage/pricing rules excluded"
+}

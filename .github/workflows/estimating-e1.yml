@@ -52,21 +52,24 @@ jobs:
           p=Path('.env.local')
           p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
           PY
-          node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/estimating-configuration.test.ts
+      - name: Compile the exact E1 E2 ES-02 application
+        run: npm run build
       - name: E1 real direct HTTP proof
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
-          node --env-file=.env.local --import tsx scripts/local-server.ts > "$RUNNER_TEMP/ppo-e1-http.log" 2>&1 &
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-e1-http.log" 2>&1 &
           ppo_e1_server_pid=$!
           trap 'kill "$ppo_e1_server_pid" 2>/dev/null || true' EXIT
           for attempt in $(seq 1 60); do
             curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
             sleep 1
           done
-          node --env-file=.env.local --import tsx --test tests/http/estimating.test.ts
+          node --env-file=.env.local --import tsx --test tests/http/estimating.test.ts tests/http/estimating-configuration.test.ts
       - name: E1 journey through three application and browser processes and two PostgreSQL restarts
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+          PPO_PROOF_COMPILED: "1"
         run: |
           node --env-file=.env.local --import tsx scripts/estimating-restart-proof.ts write
           for phase in recover verify; do
@@ -78,7 +81,12 @@ jobs:
             node --env-file=.env.local --import tsx scripts/estimating-restart-proof.ts "$phase"
           done
       - name: E1 desktop, phone, 320px, uncertain response and long output
-        run: npx playwright test tests/browser/estimating.spec.ts --output verification-evidence/estimating-e1-browser --reporter=list
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/estimating.spec.ts --output verification-evidence/estimating-e1-browser --reporter=list
+      - name: Compiled ES-02, My Work, Engineering materials and shell regression
+        env:
+          PPO_PORT: "3012"
+          PPO_TEST_ORIGIN: http://127.0.0.1:3012
+        run: npx playwright test --config=playwright.es02.config.ts --output verification-evidence/estimating-es02-browser --reporter=list
       - name: Retain exact synthetic evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -86,6 +94,7 @@ jobs:
           name: Estimating-E1-evidence
           path: |
             verification-evidence/estimating-e1-*/
+            verification-evidence/estimating-es02-browser/
             test-results/
             !**/trace.zip
           retention-days: 14

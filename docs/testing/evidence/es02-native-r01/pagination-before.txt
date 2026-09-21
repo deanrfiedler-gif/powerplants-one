@@ -1,0 +1,25 @@
+✖ ES02-T29/T62: cost pagination cannot reveal a denied historical basis through its lookahead (6695.1984ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7835.5774
+
+✖ failing tests:
+
+test at tests\database\estimating-configuration.test.ts:1:17134
+✖ ES02-T29/T62: cost pagination cannot reveal a denied historical basis through its lookahead (6695.1984ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\database\estimating-configuration.test.ts:671:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }

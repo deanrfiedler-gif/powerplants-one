@@ -57,13 +57,14 @@ export function useCrmCommand(
   onAccepted: (r: OperationReceipt) => void,
   initialStatus = "Unsaved",
   onPendingChange?: (pending: boolean) => void,
+  nativeGuard = true,
 ) {
   const [changed, setChanged] = useState(false);
   const [busy, setBusy] = useState(false),
     [error, setError] = useState<unknown>(null),
     [status, setStatus] = useState(initialStatus),
     [uncertain, setUncertain] = useState(false);
-  useUnsavedChanges(changed, busy || uncertain);
+  useUnsavedChanges(nativeGuard && changed, nativeGuard && (busy || uncertain));
   const pending = useRef<{
     path: string;
     body: Record<string, unknown>;
@@ -137,5 +138,6 @@ export function useCrmCommand(
       if (pending.current) await execute(pending.current, true);
     },
     clearError: () => setError(null),
+    discard: () => { if (!busy && !uncertain) { setChanged(false); setError(null); setStatus(initialStatus); } },
   };
 }

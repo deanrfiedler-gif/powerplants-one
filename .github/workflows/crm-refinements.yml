@@ -41,7 +41,10 @@ jobs:
     runs-on: ubuntu-24.04
     # Full retained suites include two ten-minute-bounded P11 journeys and
     # actual database/application/browser restarts. Keep individual deadlines.
-    timeout-minutes: 25
+    # The growing migration/seed and cold-route work reached the former
+    # 25-minute budget before retained I2 and actual restart proof finished.
+    # Keep all phases and their own deadlines, with bounded job headroom.
+    timeout-minutes: 40
     services:
       postgres:
         image: postgres:16.15
@@ -92,10 +95,10 @@ jobs:
       - name: CRM refinement database and browser journeys
         run: |
           node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/crm-refinements.test.ts tests/database/desktop-shell.test.ts
-          npx playwright test tests/browser/crm-refinements.spec.ts --output verification-evidence/crm-refinements --reporter=list
+          npx playwright test --config=playwright.compiled.config.ts tests/browser/crm-refinements.spec.ts --output verification-evidence/crm-refinements --reporter=list
       - name: Retained I2 keyboard and long-text checks
         if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
-        run: npx playwright test tests/browser/crm-i2.spec.ts --output verification-evidence/crm-i2-integration --reporter=list
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/crm-i2.spec.ts --output verification-evidence/crm-i2-integration --reporter=list
       - name: Retained CRM journey across application and database restarts
         if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
         env:

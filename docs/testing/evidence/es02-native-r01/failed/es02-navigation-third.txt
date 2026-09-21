@@ -1,0 +1,57 @@
+[WebServer] (node:27728) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"153.0.8010.53"}
+
+Running 1 test using 1 worker
+
+(node:18004) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+SYN nav unload true
+SYN native dialog beforeunload
+  x  1 [desktop-chromium] › tests\browser\estimating-wizard.spec.ts:188:1 › ES02-T65: Back, Forward, shell router, breadcrumb and installed reload review a dirty proposal once (7.3s)
+
+
+  1) [desktop-chromium] › tests\browser\estimating-wizard.spec.ts:188:1 › ES02-T65: Back, Forward, shell router, breadcrumb and installed reload review a dirty proposal once
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('dialog', { name: 'Unsaved discovery', exact: true })
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('dialog', { name: 'Unsaved discovery', exact: true }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'Unsaved discovery', exact: true })
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      202 |   const retained = page.url();
+      203 |   const stay = async () => {
+    > 204 |     await expect(page.getByRole("dialog", { name: "Unsaved discovery", exact: true })).toHaveCount(1);
+          |                                                                                        ^
+      205 |     await page.getByRole("button", { name: "Stay", exact: true }).click();
+      206 |     await expect(page).toHaveURL(retained);
+      207 |     await expect(page.getByLabel("Proposed work", { exact: true })).toHaveValue("SYN navigation proposal retained");
+        at stay (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\browser\estimating-wizard.spec.ts:204:88)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\browser\estimating-wizard.spec.ts:218:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\es02-navigation-third\estimating-wizard-ES02-T65-114b6-eview-a-dirty-proposal-once-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\es02-navigation-third\estimating-wizard-ES02-T65-114b6-eview-a-dirty-proposal-once-desktop-chromium\error-context.md
+
+    Error Context: tmp\es02-navigation-third\estimating-wizard-ES02-T65-114b6-eview-a-dirty-proposal-once-desktop-chromium\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\es02-navigation-third\estimating-wizard-ES02-T65-114b6-eview-a-dirty-proposal-once-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\es02-navigation-third\estimating-wizard-ES02-T65-114b6-eview-a-dirty-proposal-once-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop-chromium] › tests\browser\estimating-wizard.spec.ts:188:1 › ES02-T65: Back, Forward, shell router, breadcrumb and installed reload review a dirty proposal once

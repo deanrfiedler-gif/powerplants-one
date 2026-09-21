@@ -66,10 +66,12 @@ jobs:
             sleep 1
           done
           node --env-file=.env.local --import tsx scripts/email-restart-proof.ts verify
+      - name: Compile the application for behavioral browser proof
+        run: npm run build
       - name: Desktop and mobile journey, lost response, reload and layout
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
-          npx playwright test tests/browser/email-calendar.spec.ts --output verification-evidence/email-calendar-browser --reporter=list
+          npx playwright test --config=playwright.compiled.config.ts tests/browser/email-calendar.spec.ts --output verification-evidence/email-calendar-browser --reporter=list
       - name: Retain synthetic journey evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

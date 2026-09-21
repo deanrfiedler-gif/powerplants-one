@@ -1,0 +1,19 @@
+{
+  "phase": "recover",
+  "application_pids": [
+    8382,
+    9461
+  ],
+  "database_starts": [
+    "2026-09-21T07:37:03.267Z",
+    "2026-09-21T07:43:29.081Z"
+  ],
+  "schema": "PPO-ES02-CONFIG-r01",
+  "quote": {
+    "id": "5e064b55-1b46-412b-89d2-29556b2ac6a2",
+    "html": "e745043371cd24dbaf94b99d4855363e67c8bf7603c0347c8a627ebefb436a0b",
+    "pdf": "960cbfcbec866c6d202a1df5862ecd159f5eedd1af41b3b544d47f0dd50b1775"
+  },
+  "screenshot_sha256": "c37be902a86f04d885fe57abc332ec9256a9126a25f9a109eb8cf842c318638a",
+  "source_head": "3252407fe8616f12127a8700e25c82e6c49c11d7"
+}

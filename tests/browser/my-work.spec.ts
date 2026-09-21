@@ -9,7 +9,7 @@ test.describe.configure({ mode: "serial" });
 // and commands (mobile r07), proved in my-work-mobile.spec.ts.
 test.skip(({ isMobile }) => !!isMobile, "The phone overview is proved in my-work-mobile.spec.ts");
 
-const origin = "http://127.0.0.1:3000";
+const origin = process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000";
 const caller = (page: Page): Call => async (path, body) => {
   const r = await page.request.fetch(`/api/v1/${path}`, {
     method: body ? "POST" : "GET",

@@ -291,7 +291,7 @@ export function DiscoveryList() {
       </Heading>
       <p>
         One selected option per opportunity. Saved discovery records scope and
-        questions; manual costing import is not yet available.
+        questions. Complete selected discovery can be reviewed for manual costing; Excel import remains separate.
       </p>
       <ResourceState {...data} />
       {data.data && (
@@ -402,7 +402,7 @@ function NewDiscoveryContext({
     </>
   );
 }
-function ProposalEditor({
+export function ProposalEditor({
   initialOptions,
   opportunityId,
   command,
@@ -451,6 +451,7 @@ function ProposalEditor({
       reason: "",
     }),
     [label, setLabel] = useState(""),
+    [copyAllocation] = useState(() => crypto.randomUUID()),
     [reason, setReason] = useState(""),
     [comparison, setComparison] = useState<{
       preview: Preview;
@@ -488,7 +489,7 @@ function ProposalEditor({
           expected_revision_id: base!.revisionId,
           ...(editor!.kind === "Save" ? {} : { branch_mode: editor!.kind }),
           ...(copied
-            ? { copy_follow_up: copy }
+            ? { copy_follow_up: copy, ...(base?.revision.input?.configuration ? { copy_allocation_id: copyAllocation } : {}) }
             : { discovery: activeInput(draft, initialOptions) }),
         }
       : {
@@ -563,6 +564,7 @@ function ProposalEditor({
         Entries remain in this page until saved. Leaving or changing identity
         discards unsaved entries.
       </p>
+      {!editor && <p>For a first incomplete save, choose at least one work tag, declare the Site scope and record an eligible owner and a reason for each unknown. Blank required details need attention; no answer or confirmation is filled for you.</p>}
       {stale && (
         <div className="est-note" role="alert">
           <p>
@@ -782,7 +784,7 @@ function SavedHistory({
     </>
   );
 }
-export function DiscoveryDetail({ id }: { id: string }) {
+export function LegacyDiscoveryDetail({ id }: { id: string }) {
   const data = useCrmResource<Detail>(`estimating/workspaces/${id}`),
     [view, setView] = useState<string | null>(null),
     [editor, setEditor] = useState<Editor | null>(null),
