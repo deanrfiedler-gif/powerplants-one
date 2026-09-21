@@ -448,8 +448,9 @@ export function ProductHeader() {
             <>
               <span className="ppo-heading-divider" aria-hidden="true" />
               <strong title={[label, view, subview].filter(Boolean).join(" / ")}>
-                {crumb ? <span className="ppo-heading-root">{label} / </span> : label}
-                {view && <span className="ppo-heading-view">{crumb ? view : ` / ${view}`}</span>}
+                {/* EN-06 keeps its parent/module trail together; other module breadcrumbs retain their own collapse rules. */}
+                {materials ? <span className="ppo-heading-trail"><span className="ppo-heading-root">{label} / </span><span className="ppo-heading-view">{view}</span></span> : crumb ? <span className="ppo-heading-root">{label} / </span> : label}
+                {!materials && view && <span className="ppo-heading-view">{crumb ? view : ` / ${view}`}</span>}
                 {subview && <span className="ppo-heading-subview"> / {subview}</span>}
               </strong>
             </>

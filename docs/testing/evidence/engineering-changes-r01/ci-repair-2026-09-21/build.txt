@@ -1,0 +1,357 @@
+
+> powerplants-one@0.1.0 build
+> node --import tsx scripts/build-offline.ts && next build
+
+▲ Next.js 16.3.4 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 120ms
+- Experiments (use with caution):
+  · turbopackMemoryEviction: "auto"
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 46s
+  Running TypeScript ...
+  Finished TypeScript in 57s ...
+  Collecting page data using 13 workers ...
+  Generating static pages using 13 workers (0/18) ...
+  Generating static pages using 13 workers (4/18)
+  Generating static pages using 13 workers (8/18)
+  Generating static pages using 13 workers (13/18)
+✓ Generating static pages using 13 workers (18/18) in 1004ms
+  Finalizing page optimization ...
+Turbopack build encountered 1 warning:
+./src/reports/template.ts:13:34
+Warning: Dynamic filesystem access causes tracing of the whole project
+  11 |   const sources = [];
+  12 |   for (const path of ["src/reports/render.ts", "src/documents/render.ts"]) {
+> 13 |     const bytes = await readFile(join(process.cwd(), path));
+     |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+  14 |     sources.push({ path, sha256: digest(bytes), byte_count: bytes.length });
+  15 |   }
+  16 |   return canonical({ definition: reportTemplateDefinition, sources });
+
+Static analysis determined that this filesystem access causes the whole project to be traced and included in the output.
+This is usually unintentional and leads to all source files (including the public folder) to be deployed as part of the server code.
+This can slow down deployments or lead to failures when size limits are exceeded.
+To resolve this, you can
+- make sure the path is statically scoped to some subfolder, for example path.join(process.cwd(), 'data', bar), or
+- only use them in development, or
+- opt out by adding an ignore comment to the highlighted call: path.join(/*turbopackIgnore: true*/ ...), or
+- remove them.
+
+Import trace:
+  App Route:
+    ./src/reports/template.ts
+    ./src/documents/p11-template.ts
+    ./src/finance/worker.ts
+    ./src/app/api/v1/finance/issues/[id]/bytes/route.ts
+
+
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /admin
+├ ƒ /admin/recovery/[id]
+├ ƒ /api/v1/activities
+├ ƒ /api/v1/activities/[id]
+├ ƒ /api/v1/activities/[id]/cancel
+├ ƒ /api/v1/activities/[id]/complete
+├ ƒ /api/v1/activities/[id]/history
+├ ƒ /api/v1/activities/[id]/start
+├ ƒ /api/v1/activities/[id]/update
+├ ƒ /api/v1/appointments/[id]
+├ ƒ /api/v1/appointments/[id]/cancel
+├ ƒ /api/v1/appointments/[id]/change-requests
+├ ƒ /api/v1/appointments/[id]/completion-draft
+├ ƒ /api/v1/appointments/[id]/confirm
+├ ƒ /api/v1/appointments/[id]/contacts
+├ ƒ /api/v1/appointments/[id]/move
+├ ƒ /api/v1/appointments/[id]/pack
+├ ƒ /api/v1/appointments/[id]/pack-options
+├ ƒ /api/v1/appointments/[id]/start
+├ ƒ /api/v1/appointments/[id]/submit-completion
+├ ƒ /api/v1/assets
+├ ƒ /api/v1/assets/[id]
+├ ƒ /api/v1/assets/[id]/history
+├ ƒ /api/v1/assets/[id]/revise-identity
+├ ƒ /api/v1/attachments/[id]
+├ ƒ /api/v1/attachments/[id]/bytes
+├ ƒ /api/v1/attachments/[id]/finalise
+├ ƒ /api/v1/attachments/[id]/upload
+├ ƒ /api/v1/attachments/initiate
+├ ƒ /api/v1/calendar
+├ ƒ /api/v1/crm/directory
+├ ƒ /api/v1/crm/directory/views
+├ ƒ /api/v1/crm/leads
+├ ƒ /api/v1/crm/leads/[id]
+├ ƒ /api/v1/crm/leads/[id]/convert
+├ ƒ /api/v1/crm/leads/[id]/next-action
+├ ƒ /api/v1/crm/leads/options
+├ ƒ /api/v1/crm/opportunities
+├ ƒ /api/v1/crm/opportunities/[id]
+├ ƒ /api/v1/crm/opportunities/[id]/commercial
+├ ƒ /api/v1/crm/opportunities/[id]/handover-options
+├ ƒ /api/v1/crm/opportunities/[id]/information
+├ ƒ /api/v1/crm/opportunities/[id]/next-action
+├ ƒ /api/v1/crm/opportunities/[id]/outcome
+├ ƒ /api/v1/crm/opportunities/[id]/qualify
+├ ƒ /api/v1/crm/opportunities/[id]/scope
+├ ƒ /api/v1/crm/opportunities/[id]/stage
+├ ƒ /api/v1/crm/opportunities/[id]/transfer-owner
+├ ƒ /api/v1/crm/options
+├ ƒ /api/v1/crm/worklist-options
+├ ƒ /api/v1/customer-responses/[id]/signature
+├ ƒ /api/v1/customers
+├ ƒ /api/v1/customers/[id]
+├ ƒ /api/v1/customers/[id]/account-observations
+├ ƒ /api/v1/customers/[id]/affiliations
+├ ƒ /api/v1/customers/[id]/mappings
+├ ƒ /api/v1/customers/[id]/revise-identity
+├ ƒ /api/v1/demo-role
+├ ƒ /api/v1/email
+├ ƒ /api/v1/email/[id]
+├ ƒ /api/v1/email/[id]/follow-up
+├ ƒ /api/v1/email/[id]/link
+├ ƒ /api/v1/email/[id]/options
+├ ƒ /api/v1/engineering
+├ ƒ /api/v1/engineering/[id]
+├ ƒ /api/v1/engineering/[id]/changes
+├ ƒ /api/v1/engineering/[id]/changes/candidates
+├ ƒ /api/v1/engineering/[id]/changes/export
+├ ƒ /api/v1/engineering/[id]/changes/handovers
+├ ƒ /api/v1/engineering/[id]/changes/handovers/preview
+├ ƒ /api/v1/engineering/[id]/changes/history
+├ ƒ /api/v1/engineering/[id]/changes/impact
+├ ƒ /api/v1/engineering/[id]/changes/people
+├ ƒ /api/v1/engineering/[id]/changes/prerequisites
+├ ƒ /api/v1/engineering/[id]/changes/reviews
+├ ƒ /api/v1/engineering/[id]/changes/verification
+├ ƒ /api/v1/engineering/[id]/coordination
+├ ƒ /api/v1/engineering/[id]/materials
+├ ƒ /api/v1/engineering/[id]/materials/export
+├ ƒ /api/v1/engineering/[id]/materials/handover
+├ ƒ /api/v1/engineering/[id]/materials/history
+├ ƒ /api/v1/engineering/[id]/materials/impacts
+├ ƒ /api/v1/engineering/[id]/materials/lines
+├ ƒ /api/v1/engineering/[id]/materials/mapping
+├ ƒ /api/v1/engineering/[id]/materials/people
+├ ƒ /api/v1/engineering/[id]/materials/releases
+├ ƒ /api/v1/engineering/[id]/materials/sources
+├ ƒ /api/v1/engineering/[id]/materials/substitutions
+├ ƒ /api/v1/engineering/[id]/notes
+├ ƒ /api/v1/engineering/changes
+├ ƒ /api/v1/engineering/materials
+├ ƒ /api/v1/engineering/options
+├ ƒ /api/v1/estimating/estimates
+├ ƒ /api/v1/estimating/estimates/[id]
+├ ƒ /api/v1/estimating/estimates/[id]/quotes
+├ ƒ /api/v1/estimating/options
+├ ƒ /api/v1/estimating/quotes/[id]
+├ ƒ /api/v1/estimating/quotes/[id]/file
+├ ƒ /api/v1/estimating/quotes/[id]/render
+├ ƒ /api/v1/estimating/workspaces
+├ ƒ /api/v1/estimating/workspaces/[id]
+├ ƒ /api/v1/estimating/workspaces/[id]/costing
+├ ƒ /api/v1/estimating/workspaces/[id]/costing/preview
+├ ƒ /api/v1/estimating/workspaces/[id]/options
+├ ƒ /api/v1/estimating/workspaces/[id]/preview
+├ ƒ /api/v1/estimating/workspaces/[id]/revisions
+├ ƒ /api/v1/estimating/workspaces/form-options
+├ ƒ /api/v1/estimating/workspaces/preview
+├ ƒ /api/v1/facilities
+├ ƒ /api/v1/facilities/[id]
+├ ƒ /api/v1/field-entries
+├ ƒ /api/v1/field-entries/[id]/correct
+├ ƒ /api/v1/finance/accounts/[id]/observe
+├ ƒ /api/v1/finance/handoffs
+├ ƒ /api/v1/finance/handoffs/[id]
+├ ƒ /api/v1/finance/handoffs/[id]/begin-processing
+├ ƒ /api/v1/finance/handoffs/[id]/cancel
+├ ƒ /api/v1/finance/handoffs/[id]/reconcile
+├ ƒ /api/v1/finance/handoffs/[id]/record-outcome
+├ ƒ /api/v1/finance/handoffs/[id]/request-correction
+├ ƒ /api/v1/finance/handoffs/[id]/request-evidence
+├ ƒ /api/v1/finance/handoffs/[id]/review
+├ ƒ /api/v1/finance/handoffs/[id]/revise
+├ ƒ /api/v1/finance/handoffs/[id]/submit
+├ ƒ /api/v1/finance/issues/[id]/bytes
+├ ƒ /api/v1/finance/jobs/[id]/retry
+├ ƒ /api/v1/finance/options
+├ ƒ /api/v1/finance/work-orders/[id]/sources
+├ ƒ /api/v1/health
+├ ƒ /api/v1/local-session
+├ ƒ /api/v1/local-session/sign-out
+├ ƒ /api/v1/my-jobs
+├ ƒ /api/v1/my-jobs/[id]
+├ ƒ /api/v1/operations/[id]
+├ ƒ /api/v1/pack-issues/[id]
+├ ƒ /api/v1/pack-issues/[id]/acknowledge
+├ ƒ /api/v1/pack-issues/[id]/distribution
+├ ƒ /api/v1/pack-issues/[id]/html
+├ ƒ /api/v1/pack-issues/[id]/manifest
+├ ƒ /api/v1/pack-issues/[id]/pdf
+├ ƒ /api/v1/packs
+├ ƒ /api/v1/packs/[id]
+├ ƒ /api/v1/packs/[id]/amend
+├ ƒ /api/v1/packs/[id]/check
+├ ƒ /api/v1/packs/[id]/issue
+├ ƒ /api/v1/packs/[id]/preview
+├ ƒ /api/v1/packs/[id]/withdraw
+├ ƒ /api/v1/people
+├ ƒ /api/v1/people/[id]
+├ ƒ /api/v1/projects
+├ ƒ /api/v1/projects/[id]
+├ ƒ /api/v1/projects/[id]/history
+├ ƒ /api/v1/projects/[id]/owners
+├ ƒ /api/v1/projects/[id]/tasks
+├ ƒ /api/v1/projects/options
+├ ƒ /api/v1/render-jobs/[id]
+├ ƒ /api/v1/render-jobs/[id]/html
+├ ƒ /api/v1/render-jobs/[id]/pdf
+├ ƒ /api/v1/render-jobs/[id]/retry
+├ ƒ /api/v1/report-render-jobs/[id]/output
+├ ƒ /api/v1/report-render-jobs/[id]/retry
+├ ƒ /api/v1/reports
+├ ƒ /api/v1/reports/[id]
+├ ƒ /api/v1/reports/[id]/amend
+├ ƒ /api/v1/reports/[id]/html
+├ ƒ /api/v1/reports/[id]/issue
+├ ƒ /api/v1/reports/[id]/manifest
+├ ƒ /api/v1/reports/[id]/pdf
+├ ƒ /api/v1/reports/[id]/respond
+├ ƒ /api/v1/reports/[id]/review
+├ ƒ /api/v1/schedule
+├ ƒ /api/v1/schedule-change-requests/[id]/accept
+├ ƒ /api/v1/schedule-change-requests/[id]/cancel
+├ ƒ /api/v1/schedule-change-requests/[id]/reject
+├ ƒ /api/v1/schedule/demand
+├ ƒ /api/v1/selectors/companies
+├ ƒ /api/v1/selectors/owners
+├ ƒ /api/v1/selectors/resources
+├ ƒ /api/v1/service/tickets
+├ ƒ /api/v1/service/tickets/[id]
+├ ƒ /api/v1/service/tickets/[id]/request-information
+├ ƒ /api/v1/service/tickets/[id]/save-draft
+├ ƒ /api/v1/service/tickets/[id]/save-intake
+├ ƒ /api/v1/service/tickets/[id]/triage
+├ ƒ /api/v1/service/work-orders
+├ ƒ /api/v1/service/work-orders/[id]
+├ ƒ /api/v1/service/work-orders/[id]/authorise
+├ ƒ /api/v1/service/work-orders/[id]/readiness
+├ ƒ /api/v1/service/work-orders/[id]/save-scope
+├ ƒ /api/v1/service/work-orders/[id]/successor
+├ ƒ /api/v1/service/work-orders/[id]/visits
+├ ƒ /api/v1/shell/context
+├ ƒ /api/v1/shell/search
+├ ƒ /api/v1/sites
+├ ƒ /api/v1/sites/[id]
+├ ƒ /api/v1/sites/[id]/history
+├ ƒ /api/v1/sites/[id]/parties
+├ ƒ /api/v1/sync/context/[id]
+├ ƒ /api/v1/sync/operations
+├ ƒ /api/v1/sync/recovery
+├ ƒ /api/v1/sync/recovery-review
+├ ƒ /api/v1/sync/recovery-review/[id]
+├ ƒ /api/v1/sync/recovery-review/[id]/bytes
+├ ƒ /api/v1/sync/recovery-review/[id]/disposition
+├ ƒ /api/v1/sync/recovery/[id]
+├ ƒ /api/v1/work
+├ ƒ /api/v1/work/actions
+├ ƒ /api/v1/work/agenda
+├ ƒ /api/v1/work/conflicts
+├ ƒ /api/v1/work/gaps
+├ ƒ /api/v1/work/navigation
+├ ƒ /api/v1/work/overdue-opportunities
+├ ƒ /api/v1/work/overview
+├ ƒ /api/v1/work/parents
+├ ƒ /api/v1/work/reviews
+├ ƒ /api/v1/work/team
+├ ƒ /api/v1/work/views
+├ ƒ /api/v1/work/waiting
+├ ƒ /api/v1/work/weather
+├ ƒ /calendar
+├ ƒ /crm/leads
+├ ƒ /crm/leads/[id]
+├ ƒ /crm/opportunities
+├ ƒ /crm/opportunities/[id]
+├ ƒ /crm/opportunities/new
+├ ƒ /customers
+├ ƒ /customers/[id]
+├ ƒ /customers/[id]/account
+├ ƒ /customers/new
+├ ƒ /documents/[id]
+├ ƒ /email
+├ ƒ /email/[id]
+├ ƒ /engineering
+├ ƒ /engineering/[id]
+├ ƒ /engineering/[id]/changes
+├ ƒ /engineering/[id]/changes/handovers
+├ ƒ /engineering/[id]/changes/history
+├ ƒ /engineering/[id]/changes/impact
+├ ƒ /engineering/[id]/changes/reviews
+├ ƒ /engineering/[id]/changes/verification
+├ ƒ /engineering/[id]/materials
+├ ƒ /engineering/[id]/materials/handover
+├ ƒ /engineering/[id]/materials/history
+├ ƒ /engineering/[id]/materials/mapping
+├ ƒ /engineering/[id]/materials/releases
+├ ƒ /engineering/[id]/materials/substitutions
+├ ƒ /engineering/changes
+├ ƒ /engineering/materials
+├ ƒ /equipment
+├ ƒ /equipment/[id]
+├ ƒ /estimating
+├ ƒ /estimating/discovery
+├ ƒ /estimating/discovery/[id]
+├ ƒ /estimating/discovery/[id]/costing
+├ ƒ /estimating/discovery/new
+├ ƒ /estimating/estimates/[id]
+├ ƒ /estimating/new
+├ ƒ /estimating/quotes/[id]
+├ ƒ /finance/handoffs
+├ ƒ /finance/handoffs/[id]
+├ ƒ /finance/handoffs/new
+├ ○ /foundation
+├ ○ /manifest.webmanifest
+├ ƒ /my-jobs
+├ ƒ /my-jobs/[id]
+├ ƒ /offline
+├ ƒ /people
+├ ƒ /people/[id]
+├ ƒ /projects
+├ ƒ /projects/[id]
+├ ƒ /projects/new
+├ ƒ /sales/leads
+├ ƒ /sales/leads/[id]
+├ ƒ /sales/opportunities
+├ ƒ /sales/opportunities/[id]
+├ ƒ /sales/opportunities/new
+├ ƒ /schedule
+├ ƒ /service/appointments/[id]
+├ ƒ /service/packs
+├ ƒ /service/packs/[id]
+├ ƒ /service/packs/new
+├ ƒ /service/reports
+├ ƒ /service/reports/[id]
+├ ƒ /service/technicians
+├ ƒ /service/tickets
+├ ƒ /service/tickets/[id]
+├ ƒ /service/tickets/new
+├ ƒ /service/work-orders
+├ ƒ /service/work-orders/[id]
+├ ƒ /service/work-orders/new
+├ ƒ /sites
+├ ƒ /sites/[id]
+├ ƒ /work
+├ ƒ /work/[id]
+├ ƒ /work/actions
+├ ƒ /work/new
+├ ƒ /work/reviews
+├ ƒ /work/team
+├ ƒ /work/updates
+└ ƒ /work/waiting
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand

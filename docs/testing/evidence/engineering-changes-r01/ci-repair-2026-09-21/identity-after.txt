@@ -1,0 +1,11 @@
+
+Running 2 tests using 1 worker
+
+(node:6620) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop-chromium] › tmp\en07-ci-tests\crm-i2-delayed.spec.ts:365:1 › CA-13 shared brand consumers retain navigation, readable actions and original identity controls (22.2s)
+(node:14108) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [mobile-chromium] › tmp\en07-ci-tests\crm-i2-delayed.spec.ts:365:1 › CA-13 shared brand consumers retain navigation, readable actions and original identity controls (18.4s)
+
+  2 passed (45.1s)

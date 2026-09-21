@@ -2,7 +2,7 @@
    20 September 2026 as the updated design and which supersedes the audited r02 this module was first built to; behaviour
    and data rules from build plan r02, values from theme style board r22. The secondary menu, tokens, reset, controls,
    menus, forms and dialogs are My Work's own rules, and the context row, flush register, inspector and working pages
-   are EN-06's: both are shared here by scope id and nothing in this file restyles them. This file adds only what is
+   use the retained composition in engineering-review-base.css, scoped to EN-07. This file adds only what is
    EN-07's: one semantic tone treatment, the wider inspector and its sections, and the assessment surfaces.
    Class names carry an ec- prefix.
 

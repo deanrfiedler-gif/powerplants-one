@@ -85,6 +85,14 @@ const paths = {
     </>
   ),
   download: <path d="M12 4v11m-4.5-4.5L12 15l4.5-4.5M5 19.5h14" />,
+  link: <path d="M10.5 13.5a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.2 1.2M13.5 10.5a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.2-1.2" />,
+  cycle: <path d="M19.5 9A8 8 0 0 0 5.2 7.5L4 9m0-4.5V9h4.5M4.5 15a8 8 0 0 0 14.3 1.5L20 15m0 4.5V15h-4.5" />,
+  info: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 11v5m0-8.2h.01" />
+    </>
+  ),
 } as const;
 export type IconName = keyof typeof paths;
 export function Icon({ name }: { name: IconName }) {
@@ -102,6 +110,20 @@ export function dateText(value: string | null, missing = "Date needed") {
 export const stampText = (value: string | null) =>
   value ? new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit", timeZone: "Australia/Brisbane" }).format(new Date(value)) : "";
 export const revisionText = (n: number) => `r${String(n).padStart(2, "0")}`;
+
+// The package last opened in this browser: a convenience for the entry route, never a record or a permission.
+export const lastPackageKey = "ppo.materials.last-package.v1";
+
+// A chip is a register cell's state at a glance: a check only for a completed positive state, a warning only where
+// someone must act, and plain words for everything that is merely in progress.
+export function Chip({ tone, children }: { tone: "neutral" | "attention" | "positive" | "negative"; children: React.ReactNode }) {
+  return (
+    <span className={`em-chip em-chip-${tone}`}>
+      {tone === "positive" ? <Icon name="check" /> : tone === "neutral" ? null : <Icon name="warning" />}
+      <span>{children}</span>
+    </span>
+  );
+}
 
 // A status is a dot and words. Pending review is neutral; only a completed positive check is green.
 export function Status({ tone, children }: { tone: "neutral" | "attention" | "positive" | "negative"; children: React.ReactNode }) {

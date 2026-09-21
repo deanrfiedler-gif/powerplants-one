@@ -1,0 +1,59 @@
+
+Running 1 test using 1 worker
+
+(node:31252) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [desktop-chromium] › tmp\en07-ci-tests\crm-i2-before.spec.ts:365:1 › CA-13 shared brand consumers retain navigation, readable actions and original identity controls (16.2s)
+
+
+  1) [desktop-chromium] › tmp\en07-ci-tests\crm-i2-before.spec.ts:365:1 › CA-13 shared brand consumers retain navigation, readable actions and original identity controls
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: locator('h1')
+    Timeout: 5000ms
+    - Expected  - 3
+    + Received  + 1
+
+    - Array [
+    -   /Good (morning|afternoon|evening), /,
+    - ]
+    + Array []
+
+    Call log:
+      - Expect "toHaveText" locator('h1') with timeout 5000ms
+      - waiting for locator('h1')
+        2 × locator resolved to 1 element
+        - locator resolved to 0 elements
+        - waiting for "http://127.0.0.1:3012/work" navigation to finish...
+        - navigated to "http://127.0.0.1:3012/work"
+        7 × locator resolved to 0 elements
+
+
+      371 |     // Streaming navigation briefly retains both the loading and page headings.
+      372 |     // Retry the complete one-heading/title condition before inspecting the shell.
+    > 373 |     await expect(page.locator("h1")).toHaveText([new RegExp(title)]);
+          |                                      ^
+      374 |     await expect(page.locator("h1")).toBeVisible();
+      375 |     // On a phone, My Work's header carries its own menu trigger where the brand sits elsewhere (mobile r07).
+      376 |     if (info.project.use.isMobile && ["/", "/work"].includes(path)) await expect(page.getByRole("banner").getByRole("button", { name: "My Work menu", exact: true })).toBeVisible();
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-en07-fix\tmp\en07-ci-tests\crm-i2-before.spec.ts:373:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\en07-ci-results\crm-i2-before-CA-13-shared-33bc7--original-identity-controls-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\en07-ci-results\crm-i2-before-CA-13-shared-33bc7--original-identity-controls-desktop-chromium\error-context.md
+
+    Error Context: tmp\en07-ci-results\crm-i2-before-CA-13-shared-33bc7--original-identity-controls-desktop-chromium\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\en07-ci-results\crm-i2-before-CA-13-shared-33bc7--original-identity-controls-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\en07-ci-results\crm-i2-before-CA-13-shared-33bc7--original-identity-controls-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop-chromium] › tmp\en07-ci-tests\crm-i2-before.spec.ts:365:1 › CA-13 shared brand consumers retain navigation, readable actions and original identity controls
