@@ -2,8 +2,9 @@
 // spacing and scroll surface. Other pages retain their established composition.
 export const moduleWorkspaces = [
   { route: "/sales/opportunities", scope: "ppo-deals", layout: "full-bleed", navigation: "workspace", baseline: "deals-r38" },
+  { route: "/estimating/discovery/[id]", scope: "ppo-estimate-wizard", layout: "full-bleed", navigation: "workspace", baseline: "es02-r01" },
 ] as const;
 
 export function moduleWorkspaceForPath(path: string) {
-  return moduleWorkspaces.find(workspace => workspace.route === path);
+  return moduleWorkspaces.find(workspace => workspace.route === path || workspace.scope === "ppo-estimate-wizard" && /^\/estimating\/discovery\/[0-9a-f-]{36}$/.test(path));
 }
