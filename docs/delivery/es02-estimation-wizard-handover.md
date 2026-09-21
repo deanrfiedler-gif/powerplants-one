@@ -163,6 +163,26 @@ selectors retain all five workspace scopes. Earlier manifests/captures remain
 historical at their exact recorded commits, including the old migration filename.
 Fresh combined-source verification and the final PR checks govern this integration.
 
+Combined source `414cb7f` passed 16 checks, including Estimating (195 units,
+55 database, 5 HTTP, 13 existing browser and 29 ES-02/shared cases with the restart
+proof), compiled browser (240 passed / 41 configured skips), and demo preparation.
+The broad Application run then hit the unchanged My Work fixture's 21:30 Brisbane
+cutoff: 230 cases passed, one fixture failed before UI work and nine serial successors
+were blocked, in addition to 41 configured skips. The failed checkpoint was retained
+before cancelling that already-failed run. The exact helper from main `f977bf8`
+reproduces the same failure; this is not an ES-02 product regression.
+
+The [bounded fixture repair](../testing/evidence/es02-native-r01/fixture-review.json)
+retains the real database clock and every existing UI assertion. Four distinct
+future anchors stay on today's date, while appointments can end after midnight
+with unchanged 20/45/60-minute durations. At least twenty minutes remain before
+the first deadline. The helper also preserves exactly two prior civil days before
+01:00, instead of accidentally producing three. Nine focused fixture/presentation
+units pass, including late-evening and overnight cases. The explicit near-midnight
+refusal remains after 23:20 Brisbane; this real-clock fixture is not valid across
+an arbitrary day rollover. Application code is unchanged by this repair. Fresh PR
+checks provide the final combined-source result.
+
 ## Acceptance disposition
 
 The following links are the executable evidence index, not business acceptance.

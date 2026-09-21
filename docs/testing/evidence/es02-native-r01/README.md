@@ -99,3 +99,11 @@ bytes are fingerprinted separately; no failed result is relabelled as passing.
 ## Integration after the fully green checkpoint
 
 Commit `ea57344` passed all 17 checks, including [full Application assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35578429880): 464 database, 32 HTTP and 234 browser cases, in addition to the retained domain/restart proofs. New main `f977bf8` then required a reviewed merge: EN-07/EN-08 own 0030/0031, so the unmerged ES-02 SQL moves unchanged to 0032. Original source/artifact manifests remain historical; the [handover](../../../delivery/es02-estimation-wizard-handover.md) records reconciliation and the PR identifies fresh combined-source results.
+
+## Real-clock fixture checkpoint
+
+[fixture-review.json](fixture-review.json) retains the single broad-browser failure
+at `414cb7f`, its unchanged-main reproduction and the bounded test-only repair.
+The separate compiled suite passed 240 cases and required Estimating passed all
+structured/database/restart checks at that source. The remaining near-midnight
+fixture limit and final-head validation are explicit in the handover and PR.

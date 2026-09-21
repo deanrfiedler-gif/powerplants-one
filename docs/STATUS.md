@@ -2,7 +2,7 @@
 
 **Updated:** 21 September 2026 · **Owner:** Dean Fiedler · **Repository:** `deanrfiedler-gif/powerplants-one`, **public** visibility, default branch `main` · **Baseline commit:** `10625815187f26179f316b887fcdee33467ac81f` (#177 merged; E2 API/screens/costing and performance remedy included) · **Naming:** [PPO-STD-001](standards/naming-conventions.md) / [ADR-0005](decisions/ADR-0005-project-naming-adoption.md)
 
-**Latest repository-writing session:** ES-02 PR #272 integrates merged EN-07/EN-08 from main `f977bf8`; their 0030/0031 migrations are retained and the unmerged ES-02 migration moves to 0032. Combined-source verification is pending.
+**Latest repository-writing session:** ES-02 PR #272 integrates main `f977bf8`, retains EN-07/EN-08 migrations 0030/0031 and moves its unmerged migration unchanged to 0032. A reproduced My Work fixture clock boundary is repaired without product changes; exact source, remaining time window and current CI results are recorded in the handover and PR.
 
 This file is a snapshot of the current state, kept short enough to read in one sitting. It is not the evidence record: exact verification, run IDs, hashes and publication results remain in each package's handover, decision record and authoritative external record. The chronological entries that previously lived here are retained unchanged in [STATUS-log.md](STATUS-log.md). Update this file by replacing rows, not by appending narrative.
 
