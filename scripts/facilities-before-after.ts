@@ -27,10 +27,14 @@ try {
         exact: true,
       }),
     ).toBeVisible({ timeout: 45000 });
-    if (label === "candidate")
+    if (label === "candidate") {
       await page
         .getByRole("tab", { name: "Facilities & areas", exact: true })
         .click();
+      await expect(
+        page.locator(".facility-table tbody tr").first(),
+      ).toBeVisible();
+    }
     await page.evaluate(() => document.fonts.ready);
     await page.screenshot({
       path: `${output}/${label}-site-1440.png`,

@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import type { OperationReceipt } from "../platform/operations";
 import { useState } from "react";
 import {
   api,
@@ -519,7 +520,11 @@ function FacilityRelated({ facility: f }: { facility: Facility }) {
     [addGuard, setAddGuard] = useState({ dirty: false, pending: false }),
     [end, setEnd] = useState<Equipment | null>(null),
     [reason, setReason] = useState("");
-  const command = useCrmCommand(() => {
+  const [acceptedAction, setAcceptedAction] = useState<OperationReceipt | null>(
+    null,
+  );
+  const command = useCrmCommand((receipt) => {
+    setAcceptedAction(receipt);
     setEnd(null);
     setReason("");
     r.reload();
@@ -531,6 +536,12 @@ function FacilityRelated({ facility: f }: { facility: Facility }) {
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
       {r.error && (
         <p>Equipment links are unavailable; any retained rows may be stale.</p>
+      )}
+      {acceptedAction && (
+        <p role="status">
+          Saved to the server. Equipment version {acceptedAction.record_version}
+          . Operation {acceptedAction.operation_id}.
+        </p>
       )}
       {!r.loading && !r.error && (
         <p>
@@ -606,7 +617,8 @@ function FacilityRelated({ facility: f }: { facility: Facility }) {
         <AddService
           facility={f}
           guard={setAddGuard}
-          accepted={() => {
+          accepted={(receipt) => {
+            setAcceptedAction(receipt);
             setAdding(false);
             setAddGuard({ dirty: false, pending: false });
             r.reload();
@@ -683,7 +695,7 @@ function AddService({
   guard,
 }: {
   facility: Facility;
-  accepted: () => void;
+  accepted: (receipt: OperationReceipt) => void;
   guard: (v: { dirty: boolean; pending: boolean }) => void;
 }) {
   const [search, setSearch] = useState(""),

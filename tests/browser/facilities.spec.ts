@@ -49,6 +49,75 @@ async function create(
 test.beforeEach(async ({ page, baseURL }) => {
   await login(page, baseURL!);
 });
+
+test("CS05 Equipment add and end keep one installation and show accepted versions", async ({
+  page,
+  baseURL,
+}, info) => {
+  const id = await create(page, baseURL!),
+    pump = "c5050003-0000-4000-8000-000000000001";
+  const before = (
+    await (await page.request.get(`${baseURL}/api/v1/assets/${pump}`)).json()
+  ).items[0];
+  await page.goto(`/facilities/${id}`);
+  await page.getByRole("tab", { name: "Related records", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Add serving equipment", exact: true })
+    .click();
+  await page
+    .getByRole("combobox", { name: "Equipment", exact: true })
+    .fill("SYN Willowbank irrigation pump");
+  await page
+    .getByRole("option", { name: /SYN Willowbank irrigation pump/ })
+    .click();
+  await page
+    .getByLabel("Relationship reason", { exact: true })
+    .fill("SYN explicit served area");
+  await page
+    .getByLabel("Source basis", { exact: true })
+    .selectOption("reported_note");
+  await page
+    .getByLabel("Source title", { exact: true })
+    .fill("SYN reported pump service observation");
+  await page
+    .getByRole("button", { name: "Add service relationship", exact: true })
+    .click();
+  await expect(
+    page.getByText(
+      `Saved to the server. Equipment version ${before.version + 1}.`,
+      { exact: false },
+    ),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "End service relationship", exact: true })
+    .click();
+  await page
+    .getByLabel("Reason for ending", { exact: true })
+    .fill("SYN service ended; installation retained");
+  await page.getByRole("button", { name: "Confirm end", exact: true }).click();
+  await expect(
+    page.getByText(
+      `Saved to the server. Equipment version ${before.version + 2}.`,
+      { exact: false },
+    ),
+  ).toBeVisible();
+  const after = (
+    await (await page.request.get(`${baseURL}/api/v1/assets/${pump}`)).json()
+  ).items[0];
+  expect(after.facility_id).toBe(before.facility_id);
+  expect(after.version).toBe(before.version + 2);
+  expect(
+    (
+      await (
+        await page.request.get(`${baseURL}/api/v1/facilities/${id}/workspace`)
+      ).json()
+    ).version,
+  ).toBe(1);
+  await page.screenshot({
+    path: info.outputPath("service-ended.png"),
+    fullPage: true,
+  });
+});
 test("CS05 register, exact hierarchy, create, controlled clearing, reload and history", async ({
   page,
   baseURL,
@@ -94,6 +163,15 @@ test("CS05 register, exact hierarchy, create, controlled clearing, reload and hi
   const id = page.url().split("/").at(-1)!;
   await page.reload();
   await expect(page.getByRole("heading", { name, exact: true })).toBeVisible();
+  await page.context().grantPermissions(["clipboard-read", "clipboard-write"]);
+  await page
+    .getByRole("button", { name: "Copy full record ID", exact: true })
+    .click();
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(id);
+  await page.screenshot({
+    path: info.outputPath("canonical-detail.png"),
+    fullPage: true,
+  });
   await page.getByRole("link", { name: "Edit", exact: true }).click();
   await page
     .getByLabel("Structure type", { exact: true })
@@ -120,6 +198,9 @@ test("CS05 register, exact hierarchy, create, controlled clearing, reload and hi
   await page
     .getByRole("button", { name: "Review changes", exact: true })
     .click();
+  await page
+    .getByRole("button", { name: "Confirm these changes", exact: true })
+    .scrollIntoViewIfNeeded();
   await page.screenshot({
     path: info.outputPath("clearing-review.png"),
     fullPage: true,
@@ -272,6 +353,13 @@ test("CS05 conflict retains proposal, pin review records zero, related pump and 
   await page.getByRole("button", { name: "Review pin", exact: true }).click();
   await page
     .getByRole("button", { name: "Confirm these changes", exact: true })
+    .scrollIntoViewIfNeeded();
+  await page.screenshot({
+    path: info.outputPath("pin-review.png"),
+    fullPage: true,
+  });
+  await page
+    .getByRole("button", { name: "Confirm these changes", exact: true })
     .click();
   await expect(
     page.getByText("0, 0 · Proposed", { exact: true }),
@@ -281,6 +369,10 @@ test("CS05 conflict retains proposal, pin review records zero, related pump and 
   await expect(
     page.getByRole("link", { name: /SYN Willowbank irrigation pump/ }),
   ).toBeVisible();
+  await page.screenshot({
+    path: info.outputPath("related-equipment.png"),
+    fullPage: true,
+  });
   await login(page, baseURL!, "site-observer");
   await page.reload();
   await expect(page.locator(".business-error[role=alert]")).toBeVisible();
@@ -322,6 +414,36 @@ test("CS05 native source comparison, dense register and responsive geometry", as
       path: info.outputPath(`register-${width}.png`),
       fullPage: true,
     });
+    if (width < 500) {
+      await page.locator(".facility-table thead").scrollIntoViewIfNeeded();
+      await page.screenshot({
+        path: info.outputPath(`register-table-${width}.png`),
+        fullPage: true,
+      });
+      await page.locator(".facility-table-scroll").evaluate((el) => {
+        el.scrollLeft = el.scrollWidth;
+      });
+      await page
+        .getByRole("button", { name: /Inspect SYN Greenhouse 01/ })
+        .scrollIntoViewIfNeeded();
+      await page.screenshot({
+        path: info.outputPath(`register-actions-${width}.png`),
+        fullPage: true,
+      });
+      const menu = page.getByRole("button", {
+        name: "Customer locations menu",
+        exact: true,
+      });
+      await menu.click();
+      await expect(
+        page.getByRole("dialog", {
+          name: "Customer locations menu",
+          exact: true,
+        }),
+      ).toBeVisible();
+      await page.keyboard.press("Escape");
+      await expect(menu).toBeFocused();
+    }
   }
   if (!info.project.name.startsWith("mobile")) {
     await page.setViewportSize({ width: 1920, height: 1200 });
@@ -520,4 +642,91 @@ test("CS05 late Site response, expired cursor, keyboard tabs and forced reload p
     path: info.outputPath("reload-memory-boundary.png"),
     fullPage: true,
   });
+});
+
+test("CS05 selection leaves no hidden dock actions and dirty navigation is deliberate", async ({
+  page,
+  baseURL,
+}, info) => {
+  if (!info.project.name.startsWith("mobile")) {
+    await page.goto(`/facilities?site_id=${site}&view=hierarchy`);
+    await page
+      .getByRole("button", {
+        name: "Expand SYN Propagation House 01",
+        exact: true,
+      })
+      .click();
+    const child = page
+      .locator(".facility-tree-row")
+      .filter({
+        has: page.getByRole("link", {
+          name: "SYN Propagation Bay A",
+          exact: true,
+        }),
+      });
+    await child.getByRole("button", { name: "Inspect", exact: true }).click();
+    await expect(
+      page.getByRole("complementary", {
+        name: "Facility inspection",
+        exact: true,
+      }),
+    ).toBeVisible();
+    await page
+      .getByRole("button", {
+        name: "Collapse SYN Propagation House 01",
+        exact: true,
+      })
+      .click();
+    await expect(
+      page.getByRole("complementary", {
+        name: "Facility inspection",
+        exact: true,
+      }),
+    ).toHaveCount(0);
+    await page.getByRole("tab", { name: "List", exact: true }).click();
+    await page
+      .getByRole("button", { name: /^Inspect SYN Greenhouse 01 / })
+      .click();
+    await expect(
+      page.getByRole("complementary", {
+        name: "Facility inspection",
+        exact: true,
+      }),
+    ).toBeVisible();
+    await page
+      .getByLabel("Search facilities", { exact: true })
+      .fill("No matching SYN area");
+    await expect(
+      page.getByRole("complementary", {
+        name: "Facility inspection",
+        exact: true,
+      }),
+    ).toHaveCount(0);
+  }
+  const id = await create(page, baseURL!);
+  await page.goto(`/facilities/${id}/edit`);
+  await page
+    .getByLabel("Detail notes", { exact: true })
+    .fill("SYN retained until deliberate discard");
+  let asked = false;
+  page.once("dialog", async (d) => {
+    asked = true;
+    await d.dismiss();
+  });
+  await page.getByRole("link", { name: "Cancel", exact: true }).click();
+  expect(asked).toBe(true);
+  await expect(page).toHaveURL(new RegExp(`/facilities/${id}/edit$`));
+  await expect(page.getByLabel("Detail notes", { exact: true })).toHaveValue(
+    "SYN retained until deliberate discard",
+  );
+  page.once("dialog", (d) => d.accept());
+  await page.getByRole("link", { name: "Cancel", exact: true }).click();
+  await expect(page).toHaveURL(new RegExp(`/facilities/${id}$`));
+  expect(
+    (
+      await (
+        await page.request.get(`${baseURL}/api/v1/facilities/${id}/workspace`)
+      ).json()
+    ).version,
+  ).toBe(1);
 });

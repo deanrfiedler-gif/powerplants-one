@@ -93,7 +93,7 @@ async function call(page: Page, path: string, body?: unknown) {
       body === undefined
         ? {}
         : {
-            Origin: "http://127.0.0.1:3000",
+            Origin: `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`,
             "Content-Type": "application/json",
           },
     data: body,
@@ -412,7 +412,7 @@ test("CA-06/10 real CRM permission revocation clears linked Activity content aft
   await database().query("INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1,$2,'PPO-LocalSynthetic',$3,'SYN Browser revocation fixture')",[user,CRM.workspace,randomUUID()]);
   await database().query("INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id) SELECT DISTINCT workspace_id,$1::uuid,$3::uuid,capability,'Site',$4::uuid,$4::uuid FROM ppo.permission_grants WHERE user_id=$2 AND capability IN ('shared.read','shared.internal.read','crm.opportunity.read','crm.opportunity.create','crm.opportunity.edit','activity.read','activity.edit')",[user,CRM.owner,CRM.company,CRM.site]);
   await database().query("INSERT INTO ppo.sessions(token_hash,workspace_id,actor_id,expires_at) VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')",[createHash("sha256").update(token).digest("hex"),CRM.workspace,user]);
-  await page.context().addCookies([{name:"ppo_local_session",value:token,url:"http://127.0.0.1:3000",httpOnly:true,sameSite:"Strict"}]);
+  await page.context().addCookies([{name:"ppo_local_session",value:token,url:`http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`,httpOnly:true,sameSite:"Strict"}]);
   await page.goto("/sales/opportunities/new");await expect(page.getByRole("heading",{name:"New opportunity",exact:true})).toBeVisible();
   await page.getByLabel("Visibility company",{exact:true}).selectOption(CRM.company);await pick(page, "Organisation", CRM.org);
   await expect(page.getByText("Choose a permitted site. Your creation authority is limited to that site.",{exact:true})).toBeVisible();await expect(page.getByRole("button",{name:"Create opportunity and action"})).toBeDisabled();
