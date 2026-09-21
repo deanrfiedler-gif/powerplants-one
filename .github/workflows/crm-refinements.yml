@@ -41,7 +41,10 @@ jobs:
     runs-on: ubuntu-24.04
     # Full retained suites include two ten-minute-bounded P11 journeys and
     # actual database/application/browser restarts. Keep individual deadlines.
-    timeout-minutes: 25
+    # The growing migration/seed and cold-route work reached the former
+    # 25-minute budget before retained I2 and actual restart proof finished.
+    # Keep all phases and their own deadlines, with bounded job headroom.
+    timeout-minutes: 40
     services:
       postgres:
         image: postgres:16.15
