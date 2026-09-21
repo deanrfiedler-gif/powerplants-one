@@ -1,0 +1,59 @@
+[
+  {
+    "path": "docs/reference/facilities/PPO-CS-05-Facilities-and-Growing-Areas-Native-Build-Plan-r02.md",
+    "sha256": "1ddb227e2a90f239c99a3af7d7f40acb291c252bc2089174ab51083a84dd18ae",
+    "role": "User-supplied r02 execution contract; read in full",
+    "inspection": "source"
+  },
+  {
+    "path": "docs/reference/facilities/PPO-CS-05-Facilities-and-Growing-Areas-VS-Code-Implementation-Prompt-r02.md",
+    "sha256": "5c15d911151208cdfdb9bda608e09a6234f0728b4753f841f791cfb6453cf971",
+    "role": "User-supplied r02 execution contract; read in full",
+    "inspection": "source"
+  },
+  {
+    "path": "docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html",
+    "sha256": "139938cfabaa71ac0b7e7e5e326d31fd7c3789f116e67f79d348ba5e9ae7ae33",
+    "role": "r03 interaction reference",
+    "inspection": "source; rendered evidence recorded separately"
+  },
+  {
+    "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+    "sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+    "role": "r22 native shared tokens",
+    "inspection": "source; rendered evidence recorded separately"
+  },
+  {
+    "path": "src/components/record-ui.tsx",
+    "sha256": "bdf4f791666625e2e6b54bc6fc73e9914bf76f0a7db0436b12ea0607a3122881",
+    "role": "native tabs, lookup and guard",
+    "inspection": "source; rendered evidence recorded separately"
+  },
+  {
+    "path": "src/components/business-ui.tsx",
+    "sha256": "e6a75d4f1d22ffad2fd72dfa90d9c445ab6d75ca3a53ea4ee03ef9f46aec77b3",
+    "role": "native field/error/heading controls",
+    "inspection": "source; rendered evidence recorded separately"
+  },
+  {
+    "path": "src/shell/secondary-menu.tsx",
+    "sha256": "a03688d4a5f995f815722e80f8c54f5cc5a0dcf08d60ab6dac126e3de9ed7d8a",
+    "role": "Existing native secondary menu and phone focus/overlay behaviour",
+    "inspection": "source and rendered candidate; owner acceptance pending",
+    "candidate": "5f6e683"
+  },
+  {
+    "path": "src/components/facility-shell.tsx",
+    "sha256": "385237477155038b95d78cb857c240132b4b0946e09f45a9f3ba8dffaf828bfe",
+    "role": "CS-05 reuse of the existing native menu frame",
+    "inspection": "source and rendered candidate; owner acceptance pending",
+    "candidate": "5f6e683"
+  },
+  {
+    "path": "src/app/styles/my-work.css",
+    "sha256": "4e868acc4e3c3c719442a850598aea361ce5ca34c850cf64ebb9c99d14a7a126",
+    "role": "Shared menu geometry extended with scoped CS-05 selector",
+    "inspection": "source and rendered candidate; owner acceptance pending",
+    "candidate": "5f6e683"
+  }
+]

@@ -1,0 +1,114 @@
+TAP version 13
+1..0
+# Subtest: tests\\database\\estimating-workspaces.test.ts
+ok 1 - tests\\database\\estimating-workspaces.test.ts
+  ---
+  duration_ms: 3293.7609
+  type: 'test'
+  ...
+# Subtest: CS05-T66: equipment dependency review includes associations beyond its bounded display page
+ok 2 - CS05-T66: equipment dependency review includes associations beyond its bounded display page
+  ---
+  duration_ms: 4708.4579
+  type: 'test'
+  ...
+# Subtest: CS05-T49–50: E2 checks current Facility context but retained discovery and estimate versions remain byte-equivalent
+ok 3 - CS05-T49–50: E2 checks current Facility context but retained discovery and estimate versions remain byte-equivalent
+  ---
+  duration_ms: 5434.9546
+  type: 'test'
+  ...
+# Subtest: CS05-T01–06,T14–16,T21,T44–46,T63–65,T71: atomic create/revision, legacy, read-only preview, exact clearing and original replay
+ok 4 - CS05-T01–06,T14–16,T21,T44–46,T63–65,T71: atomic create/revision, legacy, read-only preview, exact clearing and original replay
+  ---
+  duration_ms: 5181.7049
+  type: 'test'
+  ...
+# Subtest: CS05-T07–12,T22,T74: every conditional type, strict primitive/applicability validation and direct SQL precision
+ok 5 - CS05-T07–12,T22,T74: every conditional type, strict primitive/applicability validation and direct SQL precision
+  ---
+  duration_ms: 7060.4298
+  type: 'test'
+  ...
+# Subtest: CS05-T17–20,T43,T66: complete ancestry, concurrent cycles and parent-label freshness under workspace lock
+ok 6 - CS05-T17–20,T43,T66: complete ancestry, concurrent cycles and parent-label freshness under workspace lock
+  ---
+  duration_ms: 10598.5285
+  type: 'test'
+  ...
+# Subtest: CS05-T21–22,T25–27,T75–76: older context review, immutable source correction and exact pin confirmation/removal
+ok 7 - CS05-T21–22,T25–27,T75–76: older context review, immutable source correction and exact pin confirmation/removal
+  ---
+  duration_ms: 5420.6455
+  type: 'test'
+  ...
+# Subtest: CS05-T29–33,T38,T42: one installed pump, three explicit served areas, no inheritance, retained ending and Asset version
+ok 8 - CS05-T29–33,T38,T42: one installed pump, three explicit served areas, no inheritance, retained ending and Asset version
+  ---
+  duration_ms: 4914.7858
+  type: 'test'
+  ...
+# {"case":"CS05-T59","dataset":5000,"queryPairsMs":[65.50020000000222,87.83260000000155,87.1275999999998,97.85050000000047]}
+# Subtest: CS05-T34–40,T52,T59,T78: server sorting/cursors, full UUID lookup beyond loaded pages, parent exclusion and scoped counts
+ok 9 - CS05-T34–40,T52,T59,T78: server sorting/cursors, full UUID lookup beyond loaded pages, parent exclusion and scoped counts
+  ---
+  duration_ms: 9015.2588
+  type: 'test'
+  ...
+# Subtest: CS05-T39–41,T44–45,T79: edit-only originals, revoked access, create-only refusal and company/site isolation
+ok 10 - CS05-T39–41,T44–45,T79: edit-only originals, revoked access, create-only refusal and company/site isolation
+  ---
+  duration_ms: 6602.4721
+  type: 'test'
+  ...
+# Subtest: CS05-T46,T53–54: failed audit rolls back all effects; upgrade and reseed preserve identities, grants, old fields and originals
+ok 11 - CS05-T46,T53–54: failed audit rolls back all effects; upgrade and reseed preserve identities, grants, old fields and originals
+  ---
+  duration_ms: 29359.8343
+  type: 'test'
+  ...
+# Subtest: P09 exact render input, response nullable checks and accepted end are physically protected
+ok 12 - P09 exact render input, response nullable checks and accepted end are physically protected
+  ---
+  duration_ms: 18975.7445
+  type: 'test'
+  ...
+# Subtest: P09 source snapshot canonical hash uses persisted timestamps and every exact accepted original
+ok 13 - P09 source snapshot canonical hash uses persisted timestamps and every exact accepted original
+  ---
+  duration_ms: 13041.6133
+  type: 'test'
+  ...
+# Subtest: P09 competing personal submissions and identical customer responses produce one original effect
+ok 14 - P09 competing personal submissions and identical customer responses produce one original effect
+  ---
+  duration_ms: 17709.413
+  type: 'test'
+  ...
+# Subtest: P09 real source change during generation and corrupted original bundle cannot issue
+ok 15 - P09 real source change during generation and corrupted original bundle cannot issue
+  ---
+  duration_ms: 17080.7785
+  type: 'test'
+  ...
+# Subtest: P09 issued original byte removal or wrong hash is unavailable rather than regenerated
+ok 16 - P09 issued original byte removal or wrong hash is unavailable rather than regenerated
+  ---
+  duration_ms: 20836.8142
+  type: 'test'
+  ...
+# Subtest: workspace/company/site scopes apply to detail, list, filter, pagination and relationship projections
+ok 17 - workspace/company/site scopes apply to detail, list, filter, pagination and relationship projections
+  ---
+  duration_ms: 14789.6974
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 199500.9325

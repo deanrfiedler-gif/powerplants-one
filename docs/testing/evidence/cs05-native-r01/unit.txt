@@ -1,0 +1,281 @@
+
+> powerplants-one@0.1.0 test:unit
+> node --import tsx --test tests/unit/*.test.ts
+
+✔ hosted mode requires HTTPS, Entra and the matching remote database/storage epoch (5.5268ms)
+✔ gateway rejects forged origin and internal headers, permits only bounded browser navigation (0.9925ms)
+✔ cookies are host-only secure/HTTP-only; ambiguous cookies are refused (1.0152ms)
+✔ only the validated selected tenant and stable object ID can map to a tester (0.9282ms)
+✔ tester grants are distinct, expiring and limited to Company A commercial journeys and controlled booking (6.115ms)
+✔ legacy Windows migration bytes match the observed baseline without accepting changed SQL (47.4122ms)
+✔ operator diagnostics allow only fixed labels and never expose exception contents (1.2466ms)
+✔ operator CLI upgrade loads and reaches the database without an import deadlock (2722.4699ms)
+✔ operator CLI verify loads and reaches the database without an import deadlock (2513.1291ms)
+✔ rendering refuses the affected Chromium build and unreviewed browser majors (10.7259ms)
+✔ Forecast allocates every record once, with Brisbane date boundaries and explicit unknowns (76.6895ms)
+✔ Forecast and Archive URLs restore their proper record populations without page credentials (1.9988ms)
+✔ Triage excludes closed outcomes and distinguishes unavailable activity from missing follow-up (0.4376ms)
+✔ CSV preserves exact cents and blank unknowns and neutralises spreadsheet formula text (1.2574ms)
+✔ deal value preserves zero, cents and unknown; rejects malformed and out-of-range money (4.0329ms)
+✔ core deal editor enforces identity or explained unknown and a real date (4.9718ms)
+✔ scope is explicit; qualification still requires an outcome; arbitrary stage IDs are rejected (1.3663ms)
+✔ directory restricts query keys, sorts, paging and person owner ambiguity (0.9106ms)
+✔ five-stage moves cannot replace or invent their qualification evidence (0.6722ms)
+✔ Discovery requires qualification at entry without changing legacy receipt payloads (1.4608ms)
+✔ CRM totals retain cents and distinguish unknown from known zero (59.5614ms)
+✔ CRM shared URL preserves criteria and presentation but never an actor-bound page token (4.8116ms)
+✔ CRM location input ignores duplicate/unsupported controls and retains legacy links without deriving authority (0.7761ms)
+✔ database pool serves every declared concurrent load read without relaxing failure bounds (2.2684ms)
+✔ unassigned demand accepts only an optional site and a bounded limit (59.0113ms)
+✔ unassigned demand refuses a malformed site and an out-of-range limit (0.9355ms)
+✔ global search omits denied domains, strips unrelated fields and bounds each result type (5.2292ms)
+✔ a dependency failure or unavailable record does not become an empty successful search (1.8685ms)
+✔ search rejects unknown inputs, control characters and unbounded queries before reading data (1.573ms)
+✔ quick add requires both read and create permission and orders the current module first (1.671ms)
+✔ Lead quick add requires lead read and create grants (0.5096ms)
+✖ P06 private adapter is write-once by original operation and verifies exact retrieved hashes (70.652ms)
+✖ P06 source lookup never substitutes a latest version; symlink and in-repository stores are refused (74.5427ms)
+✔ EN07-A30 A36: an unchanged preview hashes the same whatever order the revision's sources are read in (79.0018ms)
+✔ EN07-A30: a preview still changes when what it binds changes (3.9197ms)
+✔ EN07-A53 one condition has one tone, icon and label; Decision recorded stays neutral and green is the positive fact only (3.6845ms)
+✔ EN07-A54 currentness is derived from the required source set and never claimed when it cannot be established (1.6498ms)
+✔ EN07-A14 an empty, unavailable or unassessed category is never a reasoned no impact (1.8573ms)
+✔ EN07-A20 known cost components sum only inside one currency, tax basis and kind; unknown is never zero (1.1633ms)
+✔ submission needs the exact basis, every category answered, decided objects, a retest where one is assessed and an independent reviewer (1.6384ms)
+✔ EN07-A25/A29/A13 technical acceptance is not implementation; investigation and release preparation never become an instruction (2.3734ms)
+✔ EN07-A56 attention and the next action are derived from outstanding work and change when it does (0.99ms)
+✔ EN07-A32 mixed receiving outcomes stay separate and drive implementation progress (0.5844ms)
+✔ EN07-A41/A42 closure checks the whole change; no-implementation closure accounts for issued and accepted work (1.1325ms)
+✔ EN07-A23 an absent or out-of-scope policy blocks; a role label grants nothing (0.784ms)
+✔ prerequisites follow the cost and dates findings; overlap blocks only against an accepted or restricted change (1.1703ms)
+✔ EN07-A47 CSV neutralises formula-leading text, and only package-scoped change routes resolve a destination (0.7051ms)
+✔ EN08-59 the eight review rows of mockup r02 are derived from retained facts, never stored as a status (17.678ms)
+✔ EN08-06 one condition has one label, tone and icon; green is an established positive fact and “not requested” carries no tick (2.6704ms)
+✔ EN08-33 EN08-34 EN08-36 every blocker is named in its own gate, and a fully satisfied candidate has none (4.5479ms)
+✔ EN08-34 an obligation blocks the stage it declares and no other; planned or delivered training is not evidenced training (2.1391ms)
+✔ EN08-48 EN08-41 a receiving state is read from its own request: unreachable is unknown, never “not requested” and never accepted (1.3057ms)
+✔ EN08-01 the workflow is a summary of retained facts in a fixed order of precedence (0.9691ms)
+✔ EN08-14 EN08-43 EN08-50 a role label grants nothing: an absent policy blocks, and the policy must name the person, the role and the destination (1.0896ms)
+✔ EN08-53 CSV cells are quoted and formula-leading text is neutralised; only known commissioning routes resolve a destination (2.1045ms)
+✔ EN08-45 every parser lists what it accepts: an approval flag, a status, a hash, an evaluation, an identity or a partial flag is refused before any rule runs (79.3825ms)
+✔ EN08-02 EN08-08 EN08-10 EN08-28 a date says what it is a date of, a limit fits its precision, and a concern or an exclusion names its grounds (32.5832ms)
+✔ quantities are exact decimal strings on integer arithmetic, never floats (12.0602ms)
+✔ EN06-A07: an evidenced exact conversion succeeds; missing, imprecise and part-pack cases block (2.6664ms)
+✔ EN06-A09: a failed, unknown or set-aside mandatory criterion blocks acceptance, and there is no score to hide it (1.1357ms)
+✔ EN06-A38 A39: line readiness is one indicator over separate families; a current source implies no acceptance (0.6779ms)
+✔ EN06-A08 A16: a partial release is an independent scope; groups, kits and entitlements are conserved (2.0858ms)
+✔ EN06-A02 A06 A14: procurement needs a permitting source, a verified binding and a resolved quantity; ready for review is not eligible for issue (0.693ms)
+✔ EN06-A10: an absent policy grants nothing, and a role label grants nothing (0.838ms)
+✔ EN06-A14 A19 A23: a historical issue stays issued; whether it may still be relied on is a separate answer (1.0344ms)
+✔ EN06-A21: a corrected payload is compared with the returned one in words (14.2479ms)
+✔ EN06-A28: a spreadsheet formula is neutralised, every field is quoted, and unlike units are never totalled (1.2902ms)
+✔ EN06-A27: commands list the keys they accept, so an approval, a hash or a purpose cannot ride along (10.4423ms)
+✔ EN06-A13 A22: Engineering cannot declare a commercial non-issue, and forecast demand is never procurement-ready (5.4045ms)
+✔ EN06-A36: six route destinations in menu order; the header resolves them and nothing else (2.0357ms)
+✔ engineering intake retains unknown package dates and separate action commitments (9.8584ms)
+✔ coordination cannot approve or issue a design and requires an owned missing-input description (1.2737ms)
+✔ attention includes actual overdue commitments without inventing overdue unknown dates (0.4227ms)
+✔ engineering quick add requires both read and create permissions (1.8966ms)
+✔ unexpected failure diagnostics distinguish bounded causes without copying sensitive error content (1.7523ms)
+✔ E2 cost receiving namespace requires exact expectations and explicit expanded manual lines (53.8297ms)
+✔ E2 adopted definition has ten immutable questions; Complete scope stays separate from effort, review unknown and unconfigured delivery routing (21.0222ms)
+✔ E2 product counts retain integer Each boundaries without blank, fraction, string, boolean or zero coercion (4.4883ms)
+✔ E2 answer edits preserve definition order while replacing the changed answer (0.4443ms)
+✔ E2 required known answers need confirmation and explicit source; Assumed and Deferred retain an owned unresolved item (4.4823ms)
+✔ E2 explicit NoneDeclared differs from missing or blank and forged state, owner, route and readiness input is refused (5.1272ms)
+✔ E2 scoped Facility/equipment membership is explicit, canonical and bounded; parent choices imply no children (3.3558ms)
+✔ E2 Site unknown is savable as incomplete; NoSiteRequired is explicit and cannot hide on-site labour or equipment (3.9171ms)
+✔ E2 conditional removals retain exact accepted history; restored questions need an explicit answer and comparison (6.4086ms)
+✔ E2 definition comparison refuses implicit Each-to-metres reuse and identifies removed/new-required/label-only meanings (4.5357ms)
+✔ E2 alternative inheritance never copies confirmation or prices and membership changes identify affected confirmations (4.706ms)
+✔ E2 rejects repeated or oversized fields without truncating accepted originals (1.681ms)
+✔ E2 command identity rejects unsupported envelopes and client-authored history while canonicalising confirmations (22.2794ms)
+✔ E2 branch choice cannot combine retained inheritance with caller values or accidentally repurpose a scope successor (8.1875ms)
+✔ E2 option transitions require the exact observed selection and do not accept state replacement (3.0794ms)
+✔ E1 arithmetic: exact manual totals and separately named margin and markup (6.6919ms)
+✔ E1 arithmetic: HALF_UP each extension then sum catches a different aggregate rounding order (0.737ms)
+✔ E1 arithmetic: hidden included allowance reconciles; excluded lines are removed; source is never projected (1.7374ms)
+✔ E1 arithmetic: scope-only is unknown, explicit zero is valid and zero denominator is N/A (2.1043ms)
+✔ E1 validation: unknown, exponential, nonfinite, negative, overprecision, bounds and below-cost rejected (1.328ms)
+✔ E1 validation: strict commands reject invented issue, tax, duplicate membership and loose booleans (0.718ms)
+✔ DR01 preserves the exact legacy canonical command and content-hash basis (1.581ms)
+✔ DR01 strict schema 2 records five categories and explicit flags independently of arithmetic and quote printing (4.4341ms)
+✔ CS05-T07–12,T63,T71: closed field grammar, applicability, independent use and exact decimal domains (18.672ms)
+✔ CS05-T22,T25,T28,T74: dates use exact calendar days and Site midnight; pin accepts zero and encodes fixed-origin URLs (101.1371ms)
+✔ retired crew never count as current assignments or match a technician search (5.3018ms)
+✔ pack acknowledgement does not override a scope review or dispatch hold (0.8777ms)
+✔ completed, submitted and cancelled visits retain their lifecycle instead of stale preparation flags (0.7721ms)
+✔ search and status combine, and chronological sorting keeps the input unchanged (36.0655ms)
+✔ day windows respect local midnight including daylight saving changes and reject invalid dates (49.866ms)
+✔ P07 strict media inspects exact PNG chunks, dimensions, CRC and decompressed content (11.7579ms)
+✔ P07 exact decimal and discriminated payload validators reject finance fields and ambiguous values (1.6645ms)
+✔ P10 quantities preserve exact six-place decimal conservation without floating point (5.4876ms)
+✔ P10 independently specified account fixtures do not sum visible pages or net unapplied cash (1.6911ms)
+✔ the seeded P05 appointments keep at least 90 days of runway (76.5913ms)
+✔ launcher exits before serving in production, remote or shared configurations (3632.9071ms)
+✔ synthetic configuration rejects production, missing, remote and shared settings (1.9964ms)
+✔ draft schema rejects forged authority, unlisted fields, unsafe versions and malformed input (3.0432ms)
+✔ adapter stubs retain source identity and never claim live or durable outcomes (6.7143ms)
+✔ EN08-13 a numeric limit is compared exactly: inclusive and exclusive differ only at the limit itself (4.6514ms)
+✔ EN08-13 decimals are exact: a binary-float sum or a display rounding never flips an evaluation (4.3403ms)
+✔ EN08-13 only an approved, exact conversion is applied; anything else is unable to assess and never a pass (1.1494ms)
+✔ EN08-13 a reading is captured at the precision the basis accepts, and a qualitative outcome is one of the approved choices (1.6287ms)
+✔ EN08-11 a missing criterion stays missing: the reading is kept as captured and nothing is assessed or borrowed (1.6276ms)
+✔ EN08-12 only a False condition removes a requirement; Unknown stays required and a typed-in “not applicable” is refused (6.0595ms)
+✔ EN08-19 coverage counts accepted evidence only: a pass in review, a returned pass and an unassessed check are all still open (2.1831ms)
+✔ EN08-25 an instrument is judged at the time of the test: later expiry does not spoil it, later renewal does not repair it (1.0466ms)
+✔ EN08-15 EN08-18 submission says precisely what stops it: prerequisites, entries, evidence and instruments, with no general override (2.4518ms)
+✔ EN08-21 EN08-24 one defect per check occurrence of one host, closed only by an accepted fresh pass of that same check (1.4665ms)
+✔ the manifest declares one stable, record-free identity that survives releases (6.1948ms)
+✔ every declared icon is a real same-origin PNG of the size it claims (109.3343ms)
+✔ only exact installation paths are public, and only for safe reads (1.5202ms)
+✔ the sign-in document carries the same installation contract under a narrow policy (6.4824ms)
+✔ Leads accept incomplete manual enquiries without invented shared records (5.7431ms)
+✔ conversion rejects owner reassignment, false qualification and ambiguous next actions (5.6095ms)
+✔ lead changes retain explicit lifecycle commands, reasons and strict versions (1.401ms)
+✔ public login and protected routes retain distinct HTTP and access boundaries (242.3077ms)
+✔ installation assets are readable without a session; nothing else becomes public (468.4595ms)
+✔ native Microsoft handoff, callback and logout preserve fixed destinations and secure cookies (23.4874ms)
+✔ callback failures become bounded recovery pages without reflecting provider details (143.2833ms)
+✔ login rate boundary still limits provider attempts and offers honest recovery (69.7093ms)
+✔ only state-validated provider cancellation receives cancelled presentation (11.0026ms)
+✔ local entry keeps Microsoft disabled; query states cannot inject markup or authority (4.6546ms)
+✔ every forward SQL migration is registered exactly once; recovery is not a forward migration (16.1237ms)
+✔ local checksum compatibility preserves exact encodings and refuses content changes or misplaced exceptions (20.1828ms)
+✔ duplicate migration or seed versions fail before SQL dispatch; reserved gaps remain valid (2.2835ms)
+✔ NetLog metadata keeps socket linkage and timings while excluding sensitive and unknown fields (4.7015ms)
+✔ streaming NetLog preserves early source lifecycles, strips footer secrets and refuses incomplete capture (155.0233ms)
+✔ NetLog event cap explicitly retains incomplete coverage as a limitation (5442.6294ms)
+✔ packet floods retain the earliest request lifecycle and exact aggregate bytes (3197.9573ms)
+✔ event stamps use one format and take the zone from the site record, never from a literal (46.6634ms)
+✔ a change record lists only what changed, with selections as added and removed records (2.517ms)
+✔ the first revision is compared with an empty preparation (0.5511ms)
+✔ readiness counts come from the rows; exceptions and not-applicable are satisfied and named (0.6093ms)
+✔ basis drift names the changed source and keeps an unreadable record apart from an unchanged one (1.1239ms)
+✔ the status shown is derived from the server state and never implies an issue that has not happened (1.4187ms)
+✔ the timeline is one newest-first record with a reason and field delta on every save (1.5225ms)
+✔ planner civil-time conversion uses site timezone and refuses DST gaps and ambiguous repeats (43.8353ms)
+✔ PJ09-15/16: source absence and mandatory applicability never pass (3.6939ms)
+✔ PJ09-22/24: training, tests and backups remain separate named evidence (0.4461ms)
+✔ PJ09-20/21: residual work needs independent accepted responsibility, conditions and evidence meaning (0.4148ms)
+✔ PJ09-13/36: a filtered or empty stage view cannot hide unallocated scope (0.7154ms)
+✔ PJ09-09/47: strict commands reject actor injection and duplicate response scope (4.5715ms)
+✔ PJ09-05: pending states have neutral icons; named accepted evidence has green (1.2443ms)
+✔ r10 widths are independent of pane clipping, and the edge clearance remains reachable (86.5335ms)
+✔ dates, milestones, progress and owner types are validated without the prototype's 2026–27 restriction (7.1971ms)
+✔ FS uses the next weekday, SS permits the same date, and warnings never mutate dates (49.9992ms)
+✔ cycles across phases and duplicate predecessors are rejected (2.854ms)
+✔ multi-year ranges, leap days and Today use calendar dates and the project's timezone (2.8051ms)
+✔ transport diagnostics retain asset paths but discard query, identity and arbitrary route data (3.5789ms)
+✔ diagnostic scopes preserve concurrent request identities, values and original rejections without retaining request data (755.2312ms)
+✔ diagnostics remain disabled outside the opt-in synthetic boundary (1305.8407ms)
+✔ unwritable diagnostics preserve the business result and original rejection (505.976ms)
+transient-fetch-retry: POST /api/v1/local-session — apiRequestContext.fetch: socket hang up
+transient-fetch-retry: POST /api/v1/local-session — apiRequestContext.fetch: socket hang up
+transient-fetch-retry: POST /api/v1/local-session — apiRequestContext.fetch: socket hang up
+transient-fetch-retry: GET /api/v1/work-orders — apiRequestContext.fetch: socket hang up
+✔ quality-browser call retries one transient socket reset before succeeding (30.3238ms)
+✔ quality-browser call retries the Playwright socket hang up shape without a code field (2.8574ms)
+✔ quality-browser call does not retry unrelated request errors (3.8328ms)
+✔ quality-browser call records each absorbed transport reset (2.4679ms)
+✔ quality-browser call records nothing when no reset is absorbed (1.7401ms)
+✔ quality-browser call records the GET method for body-less requests (3.9349ms)
+✔ P12 refuses live/remote/ambiguous recovery targets and missing stopped acknowledgement before database access (91.3029ms)
+✖ P12 separates checkpoint/source/destination and refuses Git paths, symlinks, hardlinks and non-private roots (110.9247ms)
+✔ P09 strict submission rejects malformed versions, unknown fields and unbound local placeholders (8.163ms)
+✔ P09 response choices retain exact context and refuse fabricated unavailable identities (4.9879ms)
+✔ P09 entry review refuses duplicate IDs and private override fields (29.6902ms)
+✔ read-only navigation does not imply creation or elevate an identity (4.7567ms)
+✔ nested pages resolve to their actual workspace instead of a remembered Sales selection (1.4298ms)
+✔ seven workspace preferences validate schema and retain r15 identifiers (0.853ms)
+✔ More finds workspace names and existing page names, including former rail destinations (1.8515ms)
+✔ route paths drop groups and slots and substitute a well-formed placeholder for dynamic segments (3.2227ms)
+✔ enumeration finds only route and page files, pages first, in a stable order (90.3083ms)
+✖ the real application tree yields the routes the browser suite depends on (238.6924ms)
+✔ two overdue plus four today make six; an undated activity belongs to neither (18.7206ms)
+✔ timing distinguishes overdue text, Due by and Starts at, and never invents a time (2.8895ms)
+✔ crossing a due time: a meeting is not overdue because it started, only after its planned end (1.4156ms)
+✔ due-time order is stable for equal times and the next entry skips ended appointments (3.8453ms)
+✔ the week is Monday first, crosses months and years, and refuses a malformed day (3.376ms)
+✔ an agenda slot says By for a deadline, a bare time for an appointment and never invents a time (1.6411ms)
+✔ durations, greeting and civil-day helpers use the documented time zone (4.0986ms)
+ℹ tests 193
+ℹ suites 0
+ℹ pass 189
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16205.9563
+
+✖ failing tests:
+
+test at tests\unit\document-store.test.ts:1:302
+✖ P06 private adapter is write-once by original operation and verifies exact retrieved hashes (70.652ms)
+  Error: The exact document version is unavailable. Its original reference is retained; ask the preparation owner to recover it.
+      at missing (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\documents\store.ts:19:3)
+      at LocalSyntheticDocumentStore.folder (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\documents\store.ts:49:13)
+      at async LocalSyntheticDocumentStore.store (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\documents\store.ts:117:20)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\unit\document-store.test.ts:18:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    status: 503,
+    code: 'ExactDocumentUnavailable',
+    field_errors: []
+  }
+
+test at tests\unit\document-store.test.ts:1:1128
+✖ P06 source lookup never substitutes a latest version; symlink and in-repository stores are refused (74.5427ms)
+  Error: The exact document version is unavailable. Its original reference is retained; ask the preparation owner to recover it.
+      at missing (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\documents\store.ts:19:3)
+      at LocalSyntheticDocumentStore.folder (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\documents\store.ts:49:13)
+      at async LocalSyntheticDocumentStore.store (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\documents\store.ts:117:20)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\unit\document-store.test.ts:45:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    status: 503,
+    code: 'ExactDocumentUnavailable',
+    field_errors: []
+  }
+
+test at tests\unit\recovery.test.ts:1:1298
+✖ P12 separates checkpoint/source/destination and refuses Git paths, symlinks, hardlinks and non-private roots (110.9247ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /outside Git/. Input:
+  
+  'Error: Unsafe recovery directory.'
+  
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\unit\recovery.test.ts:77:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Unsafe recovery directory.
+        at fail (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\recovery.ts:28:9)
+        at privatePath (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\recovery.ts:120:9)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\unit\recovery.test.ts:77:5)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: /outside Git/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\unit\warm-routes.test.ts:1:1425
+✖ the real application tree yields the routes the browser suite depends on (238.6924ms)
+  AssertionError [ERR_ASSERTION]: sources are recorded relative to the repository
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\unit\warm-routes.test.ts:42:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

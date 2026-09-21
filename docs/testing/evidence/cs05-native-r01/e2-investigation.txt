@@ -1,0 +1,282 @@
+✖ E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts and exact stored quotations (21742.4ms)
+✖ CS05-T49–50: E2 checks current Facility context but retained discovery and estimate versions remain byte-equivalent (9658.6688ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24269.8384
+
+✖ failing tests:
+
+test at tests\helpers\estimating-cost-basis-cases.ts:1:18111
+✖ E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts and exact stored quotations (21742.4ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    [
+      [
+        {
+          v: {
+            company_id: '20000000-0000-4000-8000-000000000001',
+  ...
+          v: {
+  +         display_number: 'SYN-PPO-ORG-000006',
+  +         id: 'c5050000-0000-4000-8000-000000000001',
+  +         object_type: 'Organisation',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: 'SYN-PPO-SITE-000004',
+  +         id: 'c5050001-0000-4000-8000-000000000001',
+  +         object_type: 'Site',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: 'SYN-PPO-SITE-000005',
+  +         id: 'c5050001-0000-4000-8000-000000000002',
+  +         object_type: 'Site',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+            display_number: null,
+  +         id: 'c5050002-0000-4000-8000-000000000001',
+  +         object_type: 'Facility',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050002-0000-4000-8000-000000000002',
+  +         object_type: 'Facility',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050002-0000-4000-8000-000000000003',
+  +         object_type: 'Facility',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050002-0000-4000-8000-000000000004',
+  +         object_type: 'Facility',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050002-0000-4000-8000-000000000005',
+  +         object_type: 'Facility',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050002-0000-4000-8000-000000000006',
+  +         object_type: 'Facility',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050002-0000-4000-8000-000000000007',
+  +         object_type: 'Facility',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050002-0000-4000-8000-000000000008',
+  +         object_type: 'Facility',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050002-0000-4000-8000-000000000009',
+  +         object_type: 'Facility',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: 'SYN-PPO-AST-000004',
+  +         id: 'c5050003-0000-4000-8000-000000000001',
+  +         object_type: 'Asset',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050004-0000-4000-8000-000000000001',
+  +         object_type: 'SiteParty',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050004-0000-4000-8000-000000000002',
+  +         object_type: 'SiteParty',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050005-0000-4000-8000-000000000001',
+  +         object_type: 'AssetLocationEvent',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+            id: 'ec000000-0000-4000-8000-000000000001',
+            object_type: 'EmailMessage',
+            synthetic: true,
+            workspace_id: '10000000-0000-4000-8000-000000000001'
+          }
+  
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\helpers\estimating-cost-basis-cases.ts:207:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        ... 13 more items
+      ],
+      [ [Object], [Object], [Object], [Object] ],
+      [ [Object], [Object], [Object] ],
+      [ [Object], [Object], [Object] ],
+      [ [Object] ]
+    ],
+    expected: [
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object]
+      ],
+      [ [Object], [Object], [Object], [Object] ],
+      [ [Object], [Object], [Object] ],
+      [ [Object], [Object], [Object] ],
+      [ [Object] ]
+    ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\database\facilities.test.ts:1:2847
+✖ CS05-T49–50: E2 checks current Facility context but retained discovery and estimate versions remain byte-equivalent (9658.6688ms)
+  error: relation "ppo.opportunities" does not exist
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async visibleOpportunity (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\crm\context.ts:68:5)
+      at async targets (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\estimating\discovery-context.ts:27:23)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\estimating\discovery-workspaces.ts:240:21)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\platform\database.ts:44:20)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\database\facilities.test.ts:100:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    length: 116,
+    severity: 'ERROR',
+    code: '42P01',
+    detail: undefined,
+    hint: undefined,
+    position: '76',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '1431',
+    routine: 'parserOpenTable'
+  }

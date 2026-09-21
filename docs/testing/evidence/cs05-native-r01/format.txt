@@ -1,0 +1,31 @@
+src/components/facility-controls.tsx 211ms
+src/components/facility-detail.tsx 130ms
+src/components/facility-form.tsx 63ms
+src/components/facility-register.tsx 58ms (unchanged)
+src/components/facility-shell.tsx 11ms
+src/shared/facilities/commands.ts 99ms
+src/shared/facilities/definition.ts 38ms (unchanged)
+src/shared/facilities/http.ts 5ms (unchanged)
+src/shared/facilities/reads.ts 49ms
+src/shared/facilities/validation.ts 27ms (unchanged)
+[error] No files matching the pattern were found: "src/app/(business)/facilities/**/*.tsx".
+src/app/api/v1/facilities/[id]/equipment/route.ts 3ms (unchanged)
+src/app/api/v1/facilities/[id]/history/route.ts 3ms (unchanged)
+src/app/api/v1/facilities/[id]/pin/remove/route.ts 2ms (unchanged)
+src/app/api/v1/facilities/[id]/pin/route.ts 3ms (unchanged)
+src/app/api/v1/facilities/[id]/preview-change/route.ts 4ms (unchanged)
+src/app/api/v1/facilities/[id]/preview-pin/route.ts 3ms (unchanged)
+src/app/api/v1/facilities/[id]/revise/route.ts 2ms (unchanged)
+src/app/api/v1/facilities/[id]/route.ts 3ms (unchanged)
+src/app/api/v1/facilities/[id]/sources/route.ts 2ms (unchanged)
+src/app/api/v1/facilities/[id]/workspace/route.ts 3ms (unchanged)
+src/app/api/v1/facilities/create-details/route.ts 2ms (unchanged)
+src/app/api/v1/facilities/register/route.ts 3ms (unchanged)
+src/app/api/v1/facilities/route.ts 3ms (unchanged)
+src/app/api/v1/assets/[id]/served-facilities/[linkId]/end/route.ts 3ms (unchanged)
+src/app/api/v1/assets/[id]/served-facilities/add/route.ts 3ms (unchanged)
+tests/browser/facilities.spec.ts 55ms
+tests/http/facilities.test.ts 22ms
+tests/unit/facilities.test.ts 12ms (unchanged)
+tests/database/facilities.test.ts 64ms
+scripts/facilities-restart-proof.ts 26ms

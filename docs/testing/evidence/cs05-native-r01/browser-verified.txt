@@ -1,0 +1,20 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"153.0.8010.53"}
+
+Running 10 tests using 1 worker
+
+(node:17780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop-chromium] › tests\browser\facilities.spec.ts:52:1 › CS05 register, exact hierarchy, create, controlled clearing, reload and history (5.4s)
+  ok  2 [desktop-chromium] › tests\browser\facilities.spec.ts:149:1 › CS05 lost response freezes original, absent lookup replays exactly once, accepted refresh failure remains saved (1.4s)
+  ok  3 [desktop-chromium] › tests\browser\facilities.spec.ts:222:1 › CS05 conflict retains proposal, pin review records zero, related pump and identity denial (3.6s)
+  ok  4 [desktop-chromium] › tests\browser\facilities.spec.ts:291:1 › CS05 native source comparison, dense register and responsive geometry (14.0s)
+  ok  5 [desktop-chromium] › tests\browser\facilities.spec.ts:430:1 › CS05 late Site response, expired cursor, keyboard tabs and forced reload preserve the online boundary (3.3s)
+(node:34312) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  6 [mobile-chromium] › tests\browser\facilities.spec.ts:52:1 › CS05 register, exact hierarchy, create, controlled clearing, reload and history (4.5s)
+  ok  7 [mobile-chromium] › tests\browser\facilities.spec.ts:149:1 › CS05 lost response freezes original, absent lookup replays exactly once, accepted refresh failure remains saved (1.8s)
+  ok  8 [mobile-chromium] › tests\browser\facilities.spec.ts:222:1 › CS05 conflict retains proposal, pin review records zero, related pump and identity denial (1.9s)
+  ok  9 [mobile-chromium] › tests\browser\facilities.spec.ts:291:1 › CS05 native source comparison, dense register and responsive geometry (1.5s)
+  ok 10 [mobile-chromium] › tests\browser\facilities.spec.ts:430:1 › CS05 late Site response, expired cursor, keyboard tabs and forced reload preserve the online boundary (3.1s)
+
+  10 passed (45.8s)

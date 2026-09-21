@@ -1,0 +1,4 @@
+scripts/facilities-query-proof.ts 62ms (unchanged)
+scripts/facilities-commissioning-proof.ts 21ms (unchanged)
+scripts/facilities-before-after.ts 13ms (unchanged)
+tests/browser/facilities.spec.ts 71ms

@@ -1,0 +1,26 @@
+{
+  "at": "2026-09-21T14:40:44.930Z",
+  "browser": "153.0.8010.53",
+  "baseline": "unmodified main af3f045; same authored synthetic database; development server",
+  "candidate": "compiled application; browser screenshots are observations, not owner acceptance",
+  "results": [
+    {
+      "label": "main-af3f045",
+      "route": "http://127.0.0.1:3106/sites/c5050001-0000-4000-8000-000000000001",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000,
+        "scrollWidth": 1440
+      }
+    },
+    {
+      "label": "candidate",
+      "route": "http://127.0.0.1:3105/sites/c5050001-0000-4000-8000-000000000001",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000,
+        "scrollWidth": 1440
+      }
+    }
+  ]
+}

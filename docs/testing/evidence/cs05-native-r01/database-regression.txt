@@ -1,0 +1,1027 @@
+✔ E2 persistence creates one selected option and exact immutable scope under identical operation races (6325.673ms)
+✔ E2 change comparisons reject stale writers and require explicit reconfirmation after membership changes (5777.1618ms)
+✔ E2 copies retained discovery as unconfirmed, fresh branches retain no inherited answers, and neither changes selection (5446.7925ms)
+✔ E2 hidden answers remain in their accepted predecessor and later activation requires deliberate confirmation (5818.2382ms)
+✔ E2 archived options keep exact original recovery; select/archive races use the whole workspace version (6725.0841ms)
+✔ E2 original receipts and captured labels are hidden after current relationship revocation, including inactive source options (5073.0861ms)
+✔ E2 identical operation UUIDs remain actor-scoped and recovery rechecks current edit access (5842.1181ms)
+✔ E2 shared-context changes reject the original proposal without altering its retained source or silently refreshing it (5435.7391ms)
+✔ E2 historical contact visibility is rechecked independently of current labels and versions (5298.4388ms)
+✔ E2 receipt, audit and outbox failures roll back the entire option graph (5691.3681ms)
+✔ E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original (13517.4077ms)
+✔ E2 constraints refuse forged selection, related membership, history mutation and an eleventh retained option (10286.5223ms)
+✔ E2 recovery rechecks edit access to the exact original selected Site even after another option is selected (5832.9514ms)
+✔ E2 permanent Facility placement rejects a move and preserves the retained discovery revision (5503.6827ms)
+✔ E2 application and SQL guards hold unsupported states anywhere in the group while ordinary render Pending remains editable (5570.3267ms)
+✔ E1-DB01 atomic creation, identical races and receipt recovery retain one original effect (5061.5762ms)
+✔ E1-DB02 reasoned successor, stale writers, exact predecessor and immutable original (5476.7604ms)
+✔ E1-DB03 server scope denial covers lists, selectors, commands, receipt replay and cross-workspace guesses (5351.4648ms)
+✔ E1-DB04 loss of linked person relationship hides aggregates, original receipts and exact quote files (6338.2931ms)
+✔ E1-DB05 safe-only reader cannot retrieve internal costs; owner grants are not inferred (5914.3538ms)
+✔ E1-DB06 quote revisions bind exact saved versions, choices, reason and captured template; originals never advance (6896.0101ms)
+✔ E1-DB07 complete decimal data and matching quote membership required; empty draft remains unknown (5079.463ms)
+✔ E1-DB08 crash after durable storage recovers byte-identical HTML/PDF without regeneration (6846.6416ms)
+✔ E1-DB09 failed rendering retains original revision and recovers same intent; Ready output cannot be overwritten (6814.0129ms)
+✔ E1-DB10 current-main upgrade and repeated seed preserve accepted CRM originals and revoked grants (10126.674ms)
+✔ E1-DB11 graph constraints reject forged aggregate totals and unrelated current versions atomically (5856.1293ms)
+✔ DR01-DB01 expanded creation races retain one effect; flags bind original recovery and current authority (7187.722ms)
+✔ DR01-DB02 direct SQL cannot mislabel line format, invent flags, change arithmetic or overwrite originals (7799.5957ms)
+✔ DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent adoption and exact quotation recovery (14751.29ms)
+✔ E2 cost basis creates one exact option estimate across identical races and retains one atomic original (7073.0826ms)
+✔ E2 alternatives cost separately; selection never switches the stable CRM primary or mutates old quotes (7480.7051ms)
+✔ E2 incomplete successors hold adoption while ordinary manual saves inherit the exact accepted scope (9533.9694ms)
+✔ E2 version Site controls saved context, exact quote output and historical receipt authority after current scope changes (8654.355ms)
+✔ E2 safe draft readers do not acquire internal cost access and source revocation refuses exact recovery (6341.4244ms)
+✔ E2 retained contact visibility protects history and exact recovery after the current CRM contact changes (10219.0283ms)
+✔ E2 graph guards refuse missing, cross-option and mutable bases without accepting partial cost versions (5820.252ms)
+✔ E2 adoption rolls back every root, cost, receipt and outbox row when recording the original fails (6401.3143ms)
+✖ E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts and exact stored quotations (17424.0082ms)
+✖ CS05-T49–50: E2 checks current Facility context but retained discovery and estimate versions remain byte-equivalent (8060.0883ms)
+✔ CS05-T01–06,T14–16,T21,T44–46,T63–65,T71: atomic create/revision, legacy, read-only preview, exact clearing and original replay (7781.8913ms)
+✔ CS05-T07–12,T22,T74: every conditional type, strict primitive/applicability validation and direct SQL precision (5909.2771ms)
+✔ CS05-T17–20,T43,T66: complete ancestry, concurrent cycles and parent-label freshness under workspace lock (6403.596ms)
+✔ CS05-T21–22,T25–27,T75–76: older context review, immutable source correction and exact pin confirmation/removal (5396.4625ms)
+✔ CS05-T29–33,T38,T42: one installed pump, three explicit served areas, no inheritance, retained ending and Asset version (8073.3858ms)
+{"case":"CS05-T59","dataset":5000,"queryPairsMs":[96.84369999999763,114.99960000000283,127.82469999999739,144.4010000000053]}
+✔ CS05-T34–40,T52,T59,T78: server sorting/cursors, full UUID lookup beyond loaded pages, parent exclusion and scoped counts (16743.7968ms)
+✔ CS05-T39–41,T44–45,T79: edit-only originals, revoked access, create-only refusal and company/site isolation (14778.4025ms)
+✔ CS05-T46,T53–54: failed audit rolls back all effects; upgrade and reseed preserve identities, grants, old fields and originals (12960.1003ms)
+✔ P07 upgrade from P06 and repeat seed retain exact original issue, source, receipts and revoked grants (16639.4416ms)
+✔ PT-06 complete procedure: queued renderer is not Issued, first crew response refuses actual start, second permits one real start (11253.9044ms)
+✔ P07 concurrent identical starts replay once; changed operation conflicts; another crew member records only their own start (18574.5025ms)
+✔ P07 distinct simultaneous personal starts admit one and reject the stale competitor (9318.3297ms)
+✔ P07 actual start races ordinary cancellation without losing either original evidence or the started-work boundary (12282.5904ms)
+✔ P07 start racing move preserves original source and returns a controlled outcome (12098.2414ms)
+✔ P07 start racing reassign preserves original source and returns a controlled outcome (13552.5903ms)
+✔ P07 start racing scope preserves original source and returns a controlled outcome (9239.8252ms)
+✔ P07 start racing withdraw preserves original source and returns a controlled outcome (9710.7804ms)
+✔ P07 future-effective crew can be booked and acknowledge but cannot confer current actual-start authority (8831.5757ms)
+✔ P07 stale or forged expected_version cannot start attendance (9617.7815ms)
+✔ P07 stale or forged schedule_version cannot start attendance (8921.7821ms)
+✔ P07 stale or forged assignment_version cannot start attendance (9256.5791ms)
+✔ P07 stale or forged scope_version cannot start attendance (9703.4528ms)
+✔ P07 stale or forged issue_hash cannot start attendance (11908.544ms)
+✔ P07 stale or forged issue_id cannot start attendance (11617.975ms)
+✔ P07 stale or forged assignment_id cannot start attendance (10680.8532ms)
+✔ P07 stale or forged scope_revision_id cannot start attendance (10285.5708ms)
+✔ P07 current capability, assignment, same-404 and receipt/file boundaries survive revoked permission (15143.0061ms)
+✔ P07 typed evidence preserves attribution, failed fixes and exact decimals; duplicate capture and changed reuse are controlled (14667.9414ms)
+✔ P07 actor-wide time conflict prevents concurrent overlapping labour but allows adjacent intervals (12650.3428ms)
+✔ P07 correction creates an immutable successor, requires own current source version and retains all original authority (13876.4457ms)
+✔ P07 exact correction moves the active time projection and retains the original interval (14074.1802ms)
+✔ P07 rejects unknown fields, forged actor, wrong task/asset, invalid time/material/reading/checklist and missing traceability (12546.9335ms)
+✔ P07 withdrawal after start holds further work, permits original-context evidence requiring review and preserves P05 move/cancel refusal (29788.3325ms)
+✔ P07 durable photo initiation is not availability; unchanged upload/finalise retry retain original identity, bytes and hash (20740.2459ms)
+✔ P07 storage success/database failure recovers the original upload without duplicate bytes or a false Available reference (29890.8375ms)
+✔ P07 wrong hash/interrupted bytes remain Pending; unsupported exact bytes are Rejected; missing uploaded bytes become Quarantined (30169.8213ms)
+✔ P07 Partial draft saves exact evidence and owned remaining work without order/report/Finance closure (49310.8204ms)
+✔ P07 UnableToProceed draft saves exact evidence and owned remaining work without order/report/Finance closure (29405.5378ms)
+✔ P07 Complete draft requires every task/check and Available attachment; saved draft is not attendance/report approval (36717.1864ms)
+✔ P07 completion references are exact; corrections mark prior draft stale and required unavailable attachments block Complete (25928.0302ms)
+✔ P07 start late audit_events failure rolls back every database effect (24543.3956ms)
+✔ P07 start late operation_receipts failure rolls back every database effect (77961.3925ms)
+✖ P07 start late outbox_jobs failure rolls back every database effect (30928.0004ms)
+✔ P07 capture late audit_events failure rolls back every database effect (32279.3637ms)
+✔ P07 capture late operation_receipts failure rolls back every database effect (21908.4991ms)
+✔ P07 capture late outbox_jobs failure rolls back every database effect (16506.3471ms)
+✔ P07 draft late audit_events failure rolls back every database effect (13254.1043ms)
+✔ P07 draft late operation_receipts failure rolls back every database effect (10423.4044ms)
+✔ P07 draft late outbox_jobs failure rolls back every database effect (10169.2475ms)
+✔ P07 PT-14 component preserves two task/asset outcomes and uncertain identity with owned remaining work (14062.0729ms)
+✔ P10 additive upgrade from real P09 issued originals retains exact rows, bytes, migration checksums and repeat seeds (16047.111ms)
+✔ P10 arrival after already-applied E1 0012 retains exact estimating originals, output, receipts and revoked grants (16259.8367ms)
+✔ fresh combined installation retains both registries and both domains through repeat migration and seed (36152.721ms)
+✔ main 0017 upgrades through Leads 0018 then Projects 0019 without replacing prior migration receipts (32934.7189ms)
+✔ an existing Leads 0018 record and receipt survive the Projects upgrade exactly (12994.4104ms)
+✔ a database carrying the original Gantt 0018 checksum is preserved and refused, never relabelled or replayed (11102.6906ms)
+✔ mobile projections preserve contact identity, exact commercial links and separate estimating permission (8834.063ms)
+✔ live organisation search covers records beyond its first page and binds cursors to the search (24050.7439ms)
+✔ organisation counts equal distinct permitted sites and facilities nested under their actual site (21716.8975ms)
+✔ P08 additive P07 upgrade preserves attendance, receipt, bytes and revoked grants (17532.29ms)
+✔ P08 provisional start resolves an immutable causal reference and isolates a failed sibling (9989.8804ms)
+✔ P08 100 original captures replay exact receipts once and changed reuse conflicts (32040.7216ms)
+✔ P08 exact PNG causal chain and interrupted finalisation recover one immutable file and completion draft (20472.3965ms)
+✔ P08 unknown fields, wrong actor/workspace/site/appointment and unsupported payload isolate failures (22214.0888ms)
+✔ P08 missing and cyclic dependencies preserve siblings without accepting children (17487.865ms)
+✔ P08 normal acceptance and restricted recovery are exclusive under competing original-operation locks (9124.518ms)
+✔ P08 revoked permission blocks accepted normal receipt recovery and preserves local-only identity (9679.6853ms)
+✔ P08 revoked ordinary access requires the exact prior recovery capability and an owned immutable disposition (9418.7115ms)
+✔ P08 recovery retains exact private PNG and denies inactive identity or other owner byte access (13085.5777ms)
+✔ P08 cancelled-before-start intent never creates attendance; stale factual evidence has restricted recovery (8900.5336ms)
+✔ P08 withdrawn pack preserves started factual capture as review-required authority, without reopening work (10079.033ms)
+✔ P08 actor-wide time overlap and immutable successor evidence remain enforced through sync (10161.2472ms)
+✔ P08 late audit_events failure rolls back capture and all accepted facts (16338.0545ms)
+✔ P08 late operation_receipts failure rolls back capture and all accepted facts (32920.7374ms)
+✔ P08 late outbox_jobs failure rolls back capture and all accepted facts (28273.1727ms)
+✔ P08 late sync_acceptances failure rolls back capture and all accepted facts (10368.0955ms)
+✔ P08 queued reassign refuses stale start and preserves exact original evidence in owned recovery (17042.3263ms)
+✔ P08 queued amend refuses stale start and preserves exact original evidence in owned recovery (11672.7836ms)
+✔ P08 queued scope refuses stale start and preserves exact original evidence in owned recovery (15574.1361ms)
+✔ P08 restricted PNG storage-success/database-failure keeps original hash and recovers one case and Activity (23662.3179ms)
+✖ P08 expired prior recovery capability cannot preserve or disclose original evidence (17193.243ms)
+✔ P06 upgrade and repeat seed preserve exact P05 SQL evidence, revoked grants and accepted receipts (28489.3868ms)
+✔ P06 prepare/check while dispatch held; queued is not Issued; same operation returns exact queued receipt (31274.308ms)
+✔ SC-06 pack read adds registry readiness, actors and an advisory basis for staff only, and leaves the checked snapshot alone (51051.3116ms)
+✔ SC-06 issue and acknowledgement advance the appointment record without reporting a source change (34829.4892ms)
+✔ P06 exact immutable output and two independent acknowledgements control component readiness (32015.6111ms)
+✔ P06 competing workers and competing issue requests cannot duplicate file/issue/tasks (16677.6764ms)
+✔ P06 same recipient concurrency is one response and cannot acknowledge for another crew member (18925.4455ms)
+✔ P06 return retains comments; amendment freezes predecessor; old issue cannot satisfy successor (33523.1875ms)
+✔ P06 withdrawal preserves exact original issue and individual response history (18188.5596ms)
+✔ P06 source changed during render prevents issue and retains prior generated bytes (19175.5384ms)
+✔ P06 template changed during render prevents issue and retains prior generated bytes (17937.9095ms)
+✔ P06 assignment changed during render prevents issue and retains prior generated bytes (11121.558ms)
+✔ P06 permission changed during render prevents issue and retains prior generated bytes (8859.9358ms)
+✔ P06 afterStore failure recovers exact original output without rendering or duplicate effects (11306.8643ms)
+✔ P06 beforeFinalise failure recovers exact original output without rendering or duplicate effects (10866.5402ms)
+✔ P06 render failure remains owned and recoverable with no file or issued claim (12188.1262ms)
+✔ P06 missing historical source is never replaced by latest; existing issue remains retrievable (11662.3623ms)
+✔ P06 source and metadata audience filtering rejects Finance, internal and cross-record traversal (9830.3362ms)
+✔ P06 actual checked source is immutable and stale preparation/check is refused (11327.482ms)
+✔ P06 narrow commands reject forged identity and invented acknowledgement/delivery (7126.0962ms)
+✔ P06 P05 cancellation atomically withdraws real issue and keeps original output/history (9835.3071ms)
+✔ P06 P05 confirmed move invalidates real pack/assignment applicability and preserves issued bytes (15894.3807ms)
+✔ P06 database dispatch guard replaces the old unconditional hold without allowing a forged clearance (8154.3369ms)
+✔ P06 late pack_issues database failure rolls back issue and recovers original stored bytes (9072.5027ms)
+✔ P06 late pack_recipients database failure rolls back issue and recovers original stored bytes (13575.7489ms)
+✔ P06 late pack_distribution_events database failure rolls back issue and recovers original stored bytes (14836.0539ms)
+✔ P06 late audit_events database failure rolls back issue and recovers original stored bytes (11959.1138ms)
+✔ P06 late operation_receipts database failure rolls back issue and recovers original stored bytes (13342.9172ms)
+✔ P06 late outbox_jobs database failure rolls back issue and recovers original stored bytes (16033.059ms)
+✔ P06 acknowledgement audit failure rolls back response/hold and unchanged retry succeeds (25812.6245ms)
+✔ P06 current recipient access is non-waivable and published competency remains immutable (46845.341ms)
+✔ P06 amendment contact activity failure rolls back withdrawal and exact retry creates one owned task (14126.6772ms)
+✖ P06 successor scope Draft atomically invalidates real pack without altering authorised scope or original files (35517.6939ms)
+✔ P05 additive upgrade preserves exact P04 proposal bytes, receipts, source hashes and revoked grants; repeat seed preserves edits (29438.8459ms)
+✔ confirmation reserves full crew with exact evidence and immutable original receipt; changed operation and stale retry refused (6731.0321ms)
+✔ different appointments competing for full crews: exactly one wins and no losing partial reservations (6657.6285ms)
+✔ simultaneous same-appointment changes reject stale input; failed move leaves old complete reservations intact (7089.9796ms)
+✔ half-open adjacency permits exact buffered boundary and refuses overlapping travel (6384.5568ms)
+✔ calendar, leave, closed exception, skill expiry, active eligibility and explicit travel are mandatory (9392.6098ms)
+✔ missing contact and failed/no-response attempts never imply commitment; manual exact agreement permits booking (10265.6753ms)
+✔ wrong site/company, narrow fields, scope and policy versions, urgent priority, mandatory versus permitted preparation (12845.89ms)
+✔ successor scope does not transfer authority and existing booking exposes review hold (9313.3332ms)
+✔ current site source changes and immutable customer windows block booking without reservation loss (8320.6641ms)
+✔ project/manual requests reserve nothing; accept/reject/cancel are versioned and accepted moves keep contact/pack hold (8707.3992ms)
+✔ technician source requires its active assignment and never confers booking/Systems authority (5573.0861ms)
+✔ read/filter/selector/receipt traversal applies current capability and record scope with same 404 semantics (6002.6158ms)
+✔ cancellation releases once, preserves original evidence and receipt, records typed contact consequences and refuses actual work (5718.2142ms)
+✔ published calendar/resource/skill/availability roots and child mutation paths cannot silently invalidate existing bookings (6766.4767ms)
+✔ injected appointment/assignment/reservation/history/activity/audit/receipt/outbox failures roll back confirmation and full replacement (6039.0417ms)
+✔ contact, request acceptance and cancellation roll back owned consequences and original booking on late outbox failure (6526.2054ms)
+✔ PostgreSQL exclusion is authoritative across independent transactions, not only same-record versions (5770.254ms)
+✔ unchanged accepted operation recovers after connection restart and repeat seed retains booking history (5566.9855ms)
+✔ P09 fresh and P08 upgrade preserve originals and repeat seed does not revive revoked report grants (15416.2928ms)
+✔ P09 exact submission freezes entries; duplicate original recovers same receipt; changed reuse conflicts (10164.7737ms)
+✔ P09 return comments, linked correction, successor submission and narrow attendance acceptance (13379.9131ms)
+✔ P09 competing approve and return decide exactly one set and late retry recovers original (15416.2673ms)
+✔ P09 strict review fields, exact set/version and server owner permissions (8143.8834ms)
+✔ P09 required bytes missing after submission block review without changing original (8655.5223ms)
+✔ P09 all five exact responses, mandatory remarks, immutable synthetic marks and original receipt recovery (13707.9365ms)
+✔ P09 issued bytes and every customer projection exclude private fields and filenames (11486.5412ms)
+✔ P09 storage success then database failure reconciles original bundle and one issue (14086.1699ms)
+✔ P09 template change during real generation retains stale owned output and no issue (14461.1083ms)
+✔ P09 revoked review and response receipt capability returns no original receipt (12402.0137ms)
+✔ P09 accepted attendance correction preserves old output and refuses prior response reassociation (27758.5686ms)
+✔ P09 submit late audit_events rollback preserves business facts and original recovery (20024.2541ms)
+✔ P09 submit late operation_receipts rollback preserves business facts and original recovery (25062.7257ms)
+✔ P09 submit late outbox_jobs rollback preserves business facts and original recovery (20865.2812ms)
+✔ P09 review late audit_events rollback preserves business facts and original recovery (11634.2864ms)
+✔ P09 review late operation_receipts rollback preserves business facts and original recovery (15393.323ms)
+✔ P09 review late outbox_jobs rollback preserves business facts and original recovery (20150.045ms)
+✔ P09 return late audit_events rollback preserves business facts and original recovery (21538.47ms)
+✔ P09 return late operation_receipts rollback preserves business facts and original recovery (12973.1086ms)
+✔ P09 return late outbox_jobs rollback preserves business facts and original recovery (16518.2441ms)
+✔ P09 amend late audit_events rollback preserves business facts and original recovery (20503.3296ms)
+✔ P09 amend late operation_receipts rollback preserves business facts and original recovery (23545.4386ms)
+✔ P09 amend late outbox_jobs rollback preserves business facts and original recovery (24902.9518ms)
+✔ P09 issue late audit_events rollback preserves business facts and original recovery (19738.034ms)
+✔ P09 issue late operation_receipts rollback preserves business facts and original recovery (20928.0506ms)
+✔ P09 issue late outbox_jobs rollback preserves business facts and original recovery (20858.2268ms)
+✔ P09 response late audit_events rollback preserves business facts and original recovery (22017.0421ms)
+✔ P09 response late operation_receipts rollback preserves business facts and original recovery (22623.677ms)
+✔ P09 response late outbox_jobs rollback preserves business facts and original recovery (23354.1572ms)
+✖ P09 exact render input, response nullable checks and accepted end are physically protected (17381.5241ms)
+✖ P09 source snapshot canonical hash uses persisted timestamps and every exact accepted original (15051.0176ms)
+✖ P09 competing personal submissions and identical customer responses produce one original effect (18539.738ms)
+✖ P09 real source change during generation and corrupted original bundle cannot issue (14989.5686ms)
+✖ P09 issued original byte removal or wrong hash is unavailable rather than regenerated (14840.9365ms)
+✔ P09 unsupported signature bytes are rejected without response or follow-up (60261.5172ms)
+✔ P09 returned Complete and accepted report-only correction retain passed controls and original attendance (24481.3983ms)
+✔ P09 all actually started crew must be accepted independently, with no invented attendance or declarations (23417.4439ms)
+✔ P09 competing report correction and issue request respect one exact report version (27808.344ms)
+✔ P09 issue authority revoked after durable storage refuses release and original issue receipt recovery (10364.5392ms)
+✔ P09 partial attendance review retains incomplete declarations without inventing missing quantities or Finance readiness (8645.4501ms)
+✔ P09 actual template source changes after rendering retain the original attempt without release (10814.93ms)
+P02 upgrade: P01 tickets/audit/receipt/outbox/migration bytes and exact source keys preserved
+✔ P01 schema, fixtures and accepted evidence upgrade without changing identifiers, source keys or checksums (7189.8174ms)
+✖ workspace/company/site scopes apply to detail, list, filter, pagination and relationship projections (4795.7154ms)
+✔ same names stay distinct; external identifiers preserve case/punctuation/zeros and wrong company is refused (5094.0354ms)
+✔ shared person identity supports several authorised company affiliations without identity duplication (6346.6749ms)
+P02 references: 12 parallel distinct creations; 1 effect for identical concurrent operation; no seed rewind
+✔ atomic references survive concurrent creates, duplicate/conflicting operations, reseeding and attempted rewinds (6150.6583ms)
+✔ stale edits and current-permission replay preserve original accepted result (4787.2762ms)
+✔ overlapping periods, invalid dates, cross-scope links and hierarchy cycles fail; adjacent operators succeed (5252.2791ms)
+✔ concurrent opposite hierarchy changes cannot commit a cycle (4956.741ms)
+✔ history keeps previous site/operator, author, uncertainty and exact source attribution after current changes (5063.181ms)
+✔ final outbox failure rolls back created record, relationships, reference, audit and receipt together (5383.2411ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo migration mismatch: version=18 expected=2c36b8e173f805e0184e59284c0856d982ecc5a71ea60d61d64854f3ec186255 stored=missing
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: apply-migration-18
+Demo upgrade stage: apply-migration-19
+Demo upgrade stage: apply-migration-20
+Demo upgrade stage: apply-migration-21
+Demo upgrade stage: apply-migration-22
+Demo upgrade stage: apply-migration-23
+Demo upgrade stage: apply-migration-24
+Demo upgrade stage: apply-migration-25
+Demo upgrade stage: apply-migration-26
+Demo upgrade stage: apply-migration-27
+Demo upgrade stage: apply-migration-28
+Demo upgrade stage: apply-migration-29
+Demo upgrade stage: apply-migration-30
+Demo upgrade stage: apply-migration-31
+Demo upgrade stage: apply-migration-32
+Demo upgrade stage: apply-migration-33
+Demo upgrade stage: apply-migration-34
+Demo upgrade stage: apply-migration-35
+Demo upgrade stage: apply-migration-36
+Demo upgrade stage: apply-migration-37
+Demo upgrade stage: apply-migration-38
+Demo upgrade stage: apply-migration-41
+Demo upgrade stage: apply-seed-18
+Demo upgrade stage: apply-seed-19
+Demo upgrade stage: apply-seed-20
+Demo upgrade stage: apply-seed-21
+Demo upgrade stage: apply-seed-24
+Demo upgrade stage: apply-seed-29
+Demo upgrade stage: apply-seed-30
+Demo upgrade stage: apply-seed-31
+Demo upgrade stage: apply-seed-32
+Demo upgrade stage: apply-seed-41
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+✔ upgrade preserves saved CRM, mailbox, sessions, old grants and invitation limits; retry is idempotent (6886.3597ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: apply-migration-18
+Demo upgrade stage: apply-migration-19
+Demo upgrade stage: apply-migration-20
+Demo upgrade stage: apply-migration-21
+Demo upgrade stage: apply-migration-22
+Demo upgrade stage: apply-migration-23
+Demo upgrade stage: apply-migration-24
+Demo upgrade stage: apply-migration-25
+Demo upgrade stage: apply-migration-26
+Demo upgrade stage: apply-migration-27
+Demo upgrade stage: apply-migration-28
+Demo upgrade stage: apply-migration-29
+Demo upgrade stage: apply-migration-30
+Demo upgrade stage: apply-migration-31
+Demo upgrade stage: apply-migration-32
+Demo upgrade stage: apply-migration-33
+Demo upgrade stage: apply-migration-34
+Demo upgrade stage: apply-migration-35
+Demo upgrade stage: apply-migration-36
+Demo upgrade stage: apply-migration-37
+Demo upgrade stage: apply-migration-38
+Demo upgrade stage: apply-migration-41
+Demo upgrade stage: apply-seed-18
+Demo upgrade stage: apply-seed-19
+Demo upgrade stage: apply-seed-20
+Demo upgrade stage: apply-seed-21
+Demo upgrade stage: apply-seed-24
+Demo upgrade stage: apply-seed-29
+Demo upgrade stage: apply-seed-30
+Demo upgrade stage: apply-seed-31
+Demo upgrade stage: apply-seed-32
+Demo upgrade stage: apply-seed-41
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+✔ an already-current demo requires explicit upgrade for missing booking grants (5147.5586ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: apply-migration-18
+Demo upgrade stage: apply-migration-19
+Demo upgrade stage: apply-migration-20
+Demo upgrade stage: apply-migration-21
+Demo upgrade stage: apply-migration-22
+Demo upgrade stage: apply-migration-23
+Demo upgrade stage: apply-migration-24
+Demo upgrade stage: apply-migration-25
+Demo upgrade stage: apply-migration-26
+Demo upgrade stage: apply-migration-27
+Demo upgrade stage: apply-migration-28
+Demo upgrade stage: apply-migration-29
+Demo upgrade stage: apply-migration-30
+Demo upgrade stage: apply-migration-31
+Demo upgrade stage: apply-migration-32
+Demo upgrade stage: apply-migration-33
+Demo upgrade stage: apply-migration-34
+Demo upgrade stage: apply-migration-35
+Demo upgrade stage: apply-migration-36
+Demo upgrade stage: apply-migration-37
+Demo upgrade stage: apply-migration-38
+Demo upgrade stage: apply-migration-41
+Demo upgrade stage: apply-seed-18
+Demo upgrade stage: apply-seed-19
+Demo upgrade stage: apply-seed-20
+Demo upgrade stage: apply-seed-21
+Demo upgrade stage: apply-seed-24
+Demo upgrade stage: apply-seed-29
+Demo upgrade stage: apply-seed-30
+Demo upgrade stage: apply-seed-31
+Demo upgrade stage: apply-seed-32
+Demo upgrade stage: apply-seed-41
+Demo upgrade stage: apply-hosted-migration-2
+Demo upgrade stage: apply-hosted-migration-3
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+✔ a baseline executed from Windows CRLF SQL upgrades without rewriting historical checksums (8771.7882ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo migration mismatch: version=18 expected=2c36b8e173f805e0184e59284c0856d982ecc5a71ea60d61d64854f3ec186255 stored=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+✔ an old conflicting Gantt-18 ledger is refused before any migrations, seeds or grants change (4114.0199ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: apply-migration-18
+Demo upgrade stage: apply-migration-19
+Demo upgrade stage: apply-migration-20
+Demo upgrade stage: apply-migration-21
+Demo upgrade stage: apply-migration-22
+Demo upgrade stage: apply-migration-23
+Demo upgrade stage: apply-migration-24
+Demo upgrade stage: apply-migration-25
+Demo upgrade stage: apply-migration-26
+Demo upgrade stage: apply-migration-27
+Demo upgrade stage: apply-migration-28
+Demo upgrade stage: apply-migration-29
+Demo upgrade stage: apply-migration-30
+Demo upgrade stage: apply-migration-31
+Demo upgrade stage: apply-migration-32
+Demo upgrade stage: apply-migration-33
+Demo upgrade stage: apply-migration-34
+Demo upgrade stage: apply-migration-35
+Demo upgrade stage: apply-migration-36
+Demo upgrade stage: apply-migration-37
+Demo upgrade stage: apply-migration-38
+Demo upgrade stage: apply-migration-41
+Demo upgrade stage: apply-seed-18
+Demo upgrade stage: apply-seed-19
+Demo upgrade stage: apply-seed-20
+Demo upgrade stage: apply-seed-21
+Demo upgrade stage: apply-seed-24
+Demo upgrade stage: apply-seed-29
+Demo upgrade stage: apply-seed-30
+Demo upgrade stage: apply-seed-31
+Demo upgrade stage: apply-seed-32
+Demo upgrade stage: apply-seed-41
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+✔ a late privilege failure rolls back schema, seed receipts and grant additions together (5247.5625ms)
+ℹ tests 229
+ℹ suites 0
+ℹ pass 218
+ℹ fail 11
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3400631.4428
+
+✖ failing tests:
+
+test at tests\helpers\estimating-cost-basis-cases.ts:1:18111
+✖ E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts and exact stored quotations (17424.0082ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    [
+      [
+        {
+          v: {
+            company_id: '20000000-0000-4000-8000-000000000001',
+  ...
+          v: {
+  +         display_number: 'SYN-PPO-ORG-000006',
+  +         id: 'c5050000-0000-4000-8000-000000000001',
+  +         object_type: 'Organisation',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: 'SYN-PPO-SITE-000004',
+  +         id: 'c5050001-0000-4000-8000-000000000001',
+  +         object_type: 'Site',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: 'SYN-PPO-SITE-000005',
+  +         id: 'c5050001-0000-4000-8000-000000000002',
+  +         object_type: 'Site',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050002-0000-4000-8000-000000000001',
+  +         object_type: 'Facility',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050002-0000-4000-8000-000000000002',
+  +         object_type: 'Facility',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050002-0000-4000-8000-000000000003',
+  +         object_type: 'Facility',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050002-0000-4000-8000-000000000004',
+  +         object_type: 'Facility',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050002-0000-4000-8000-000000000005',
+  +         object_type: 'Facility',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050002-0000-4000-8000-000000000006',
+  +         object_type: 'Facility',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050002-0000-4000-8000-000000000007',
+  +         object_type: 'Facility',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050002-0000-4000-8000-000000000008',
+  +         object_type: 'Facility',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050002-0000-4000-8000-000000000009',
+  +         object_type: 'Facility',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: 'SYN-PPO-AST-000004',
+  +         id: 'c5050003-0000-4000-8000-000000000001',
+  +         object_type: 'Asset',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050004-0000-4000-8000-000000000001',
+  +         object_type: 'SiteParty',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050004-0000-4000-8000-000000000002',
+  +         object_type: 'SiteParty',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+  +         display_number: null,
+  +         id: 'c5050005-0000-4000-8000-000000000001',
+  +         object_type: 'AssetLocationEvent',
+  +         synthetic: true,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       v: {
+            display_number: 'SYN-PPO-OPP-000001',
+            id: 'e34643b5-26ab-42a8-8c10-0b74f126a592',
+            object_type: 'Opportunity',
+            synthetic: true,
+            workspace_id: '10000000-0000-4000-8000-000000000001'
+  
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\helpers\estimating-cost-basis-cases.ts:207:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        ... 13 more items
+      ],
+      [ [Object], [Object], [Object], [Object] ],
+      [ [Object], [Object], [Object] ],
+      [ [Object], [Object], [Object] ],
+      [ [Object] ]
+    ],
+    expected: [
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object]
+      ],
+      [ [Object], [Object], [Object], [Object] ],
+      [ [Object], [Object], [Object] ],
+      [ [Object], [Object], [Object] ],
+      [ [Object] ]
+    ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\database\facilities.test.ts:1:2847
+✖ CS05-T49–50: E2 checks current Facility context but retained discovery and estimate versions remain byte-equivalent (8060.0883ms)
+  Error: Review the current comparison and confirm its exact changes.
+      at confirm (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\shared\facilities\commands.ts:212:11)
+      at <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\shared\facilities\commands.ts:434:7)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\platform\operations.ts:182:22)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\platform\database.ts:44:20)
+      at async sharedOperation (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\platform\operations.ts:150:12)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\database\facilities.test.ts:128:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    status: 409,
+    code: 'FacilityReviewChanged',
+    field_errors: []
+  }
+
+test at tests\database\field.test.ts:1:28941
+✖ P07 start late outbox_jobs failure rolls back every database effect (30928.0004ms)
+  error: canceling statement due to statement timeout
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:59:7)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\platform\database.ts:44:20)
+      at async seed (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:50:3)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:111:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 246,
+    severity: 'ERROR',
+    code: '57014',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: 'SQL expression "NOT EXISTS(SELECT 1 FROM pg_timezone_names WHERE name=NEW.timezone)"\nPL/pgSQL function ppo.site_timezone() line 2 at IF',
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'postgres.c',
+    line: '3396',
+    routine: 'ProcessInterrupts'
+  }
+
+test at tests\database\offline.test.ts:1:22803
+✖ P08 expired prior recovery capability cannot preserve or disclose original evidence (17193.243ms)
+  error: canceling statement due to statement timeout
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:107:5)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\platform\database.ts:44:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:105:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 109,
+    severity: 'ERROR',
+    code: '57014',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'postgres.c',
+    line: '3396',
+    routine: 'ProcessInterrupts'
+  }
+
+test at tests\database\packs.test.ts:1:25725
+✖ P06 successor scope Draft atomically invalidates real pack without altering authorised scope or original files (35517.6939ms)
+  error: canceling statement due to statement timeout
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:59:7)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\platform\database.ts:44:20)
+      at async seed (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:50:3)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:111:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 755,
+    severity: 'ERROR',
+    code: '57014',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: `SQL expression "NOT EXISTS(SELECT 1 FROM pg_timezone_names WHERE name=NEW.timezone)"\nPL/pgSQL function ppo.site_timezone() line 2 at IF\nSQL statement "INSERT INTO ppo.sites(id,workspace_id,company_id,display_number,display_name,location_description,timezone,owner_id,created_by,updated_by)\r\n VALUES(nursery,w,c,NULL,'SYN Nursery & propagation','Authored fictional Site; no real address or coordinates.','Australia/Sydney',a,a,a),\r\n (fieldsite,w,c,NULL,'SYN Field production','Authored fictional Site; no real address or coordinates.','Australia/Sydney',a,a,a) ON CONFLICT DO NOTHING"\nPL/pgSQL function inline_code_block line 10 at SQL statement`,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'postgres.c',
+    line: '3396',
+    routine: 'ProcessInterrupts'
+  }
+
+test at tests\database\reports.test.ts:8:18229
+✖ P09 exact render input, response nullable checks and accepted end are physically protected (17381.5241ms)
+  error: canceling statement due to statement timeout
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:107:5)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\platform\database.ts:44:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:105:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 109,
+    severity: 'ERROR',
+    code: '57014',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'postgres.c',
+    line: '3396',
+    routine: 'ProcessInterrupts'
+  }
+
+test at tests\database\reports.test.ts:8:18900
+✖ P09 source snapshot canonical hash uses persisted timestamps and every exact accepted original (15051.0176ms)
+  error: canceling statement due to statement timeout
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:107:5)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\platform\database.ts:44:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:105:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 109,
+    severity: 'ERROR',
+    code: '57014',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'postgres.c',
+    line: '3396',
+    routine: 'ProcessInterrupts'
+  }
+
+test at tests\database\reports.test.ts:8:19194
+✖ P09 competing personal submissions and identical customer responses produce one original effect (18539.738ms)
+  error: canceling statement due to statement timeout
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:107:5)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\platform\database.ts:44:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:105:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 109,
+    severity: 'ERROR',
+    code: '57014',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'postgres.c',
+    line: '3396',
+    routine: 'ProcessInterrupts'
+  }
+
+test at tests\database\reports.test.ts:8:20501
+✖ P09 real source change during generation and corrupted original bundle cannot issue (14989.5686ms)
+  error: canceling statement due to statement timeout
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:107:5)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\platform\database.ts:44:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:105:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 109,
+    severity: 'ERROR',
+    code: '57014',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'postgres.c',
+    line: '3396',
+    routine: 'ProcessInterrupts'
+  }
+
+test at tests\database\reports.test.ts:8:21283
+✖ P09 issued original byte removal or wrong hash is unavailable rather than regenerated (14840.9365ms)
+  error: canceling statement due to statement timeout
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:107:5)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\platform\database.ts:44:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:105:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 109,
+    severity: 'ERROR',
+    code: '57014',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'postgres.c',
+    line: '3396',
+    routine: 'ProcessInterrupts'
+  }
+
+test at tests\database\shared.test.ts:1:4927
+✖ workspace/company/site scopes apply to detail, list, filter, pagination and relationship projections (4795.7154ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  4 !== 3
+  
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\database\shared.test.ts:178:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 4,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

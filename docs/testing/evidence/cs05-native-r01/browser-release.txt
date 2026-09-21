@@ -1,0 +1,104 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"153.0.8010.53"}
+
+Running 12 tests using 1 worker
+
+(node:23568) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 [desktop-chromium] › tests\browser\facilities.spec.ts:53:1 › CS05 Equipment add and end keep one installation and show accepted versions (7.9s)
+(node:35828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 [desktop-chromium] › tests\browser\facilities.spec.ts:115:1 › CS05 register, exact hierarchy, create, controlled clearing, reload and history (2.8s)
+  ok  3 [desktop-chromium] › tests\browser\facilities.spec.ts:224:1 › CS05 lost response freezes original, absent lookup replays exactly once, accepted refresh failure remains saved (992ms)
+  ok  4 [desktop-chromium] › tests\browser\facilities.spec.ts:297:1 › CS05 conflict retains proposal, pin review records zero, related pump and identity denial (2.1s)
+  ok  5 [desktop-chromium] › tests\browser\facilities.spec.ts:377:1 › CS05 native source comparison, dense register and responsive geometry (9.1s)
+  ok  6 [desktop-chromium] › tests\browser\facilities.spec.ts:546:1 › CS05 late Site response, expired cursor, keyboard tabs and forced reload preserve the online boundary (2.3s)
+(node:12932) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   7 [mobile-chromium] › tests\browser\facilities.spec.ts:53:1 › CS05 Equipment add and end keep one installation and show accepted versions (6.5s)
+(node:23936) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  8 [mobile-chromium] › tests\browser\facilities.spec.ts:115:1 › CS05 register, exact hierarchy, create, controlled clearing, reload and history (3.4s)
+  ok  9 [mobile-chromium] › tests\browser\facilities.spec.ts:224:1 › CS05 lost response freezes original, absent lookup replays exactly once, accepted refresh failure remains saved (1.2s)
+  ok 10 [mobile-chromium] › tests\browser\facilities.spec.ts:297:1 › CS05 conflict retains proposal, pin review records zero, related pump and identity denial (2.2s)
+  ok 11 [mobile-chromium] › tests\browser\facilities.spec.ts:377:1 › CS05 native source comparison, dense register and responsive geometry (1.8s)
+  ok 12 [mobile-chromium] › tests\browser\facilities.spec.ts:546:1 › CS05 late Site response, expired cursor, keyboard tabs and forced reload preserve the online boundary (2.4s)
+
+
+  1) [desktop-chromium] › tests\browser\facilities.spec.ts:53:1 › CS05 Equipment add and end keep one installation and show accepted versions 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Saved to the server. Equipment version 2.')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Saved to the server. Equipment version 2.') with timeout 5000ms
+      - waiting for getByText('Saved to the server. Equipment version 2.')
+
+
+      82 |       { exact: false },
+      83 |     ),
+    > 84 |   ).toBeVisible();
+         |     ^
+      85 |   await page
+      86 |     .getByRole("button", { name: "End service relationship", exact: true })
+      87 |     .click();
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\browser\facilities.spec.ts:84:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    docs\testing\evidence\cs05-native-r01\browser-release\facilities-CS05-Equipment--427f1--and-show-accepted-versions-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs\testing\evidence\cs05-native-r01\browser-release\facilities-CS05-Equipment--427f1--and-show-accepted-versions-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs\testing\evidence\cs05-native-r01\browser-release\facilities-CS05-Equipment--427f1--and-show-accepted-versions-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace docs\testing\evidence\cs05-native-r01\browser-release\facilities-CS05-Equipment--427f1--and-show-accepted-versions-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chromium] › tests\browser\facilities.spec.ts:53:1 › CS05 Equipment add and end keep one installation and show accepted versions 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Saved to the server. Equipment version 2.')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Saved to the server. Equipment version 2.') with timeout 5000ms
+      - waiting for getByText('Saved to the server. Equipment version 2.')
+
+
+      82 |       { exact: false },
+      83 |     ),
+    > 84 |   ).toBeVisible();
+         |     ^
+      85 |   await page
+      86 |     .getByRole("button", { name: "End service relationship", exact: true })
+      87 |     .click();
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\browser\facilities.spec.ts:84:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    docs\testing\evidence\cs05-native-r01\browser-release\facilities-CS05-Equipment--427f1--and-show-accepted-versions-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs\testing\evidence\cs05-native-r01\browser-release\facilities-CS05-Equipment--427f1--and-show-accepted-versions-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs\testing\evidence\cs05-native-r01\browser-release\facilities-CS05-Equipment--427f1--and-show-accepted-versions-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace docs\testing\evidence\cs05-native-r01\browser-release\facilities-CS05-Equipment--427f1--and-show-accepted-versions-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chromium] › tests\browser\facilities.spec.ts:53:1 › CS05 Equipment add and end keep one installation and show accepted versions 
+    [mobile-chromium] › tests\browser\facilities.spec.ts:53:1 › CS05 Equipment add and end keep one installation and show accepted versions 
+  10 passed (48.6s)

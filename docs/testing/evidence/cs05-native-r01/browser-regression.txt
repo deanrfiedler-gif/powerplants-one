@@ -1,0 +1,68 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"153.0.8010.53"}
+
+Running 32 tests using 1 worker
+
+(node:21320) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop-chromium] › tests\browser\crm.spec.ts:119:1 › CA-01/04/13 desktop and phone full sales journey via real UI, validation, completion and reload (14.5s)
+  x   2 [desktop-chromium] › tests\browser\crm.spec.ts:249:1 › CA-02/03 real conflict retains proposed need; lost response reconciles original before a new intent (1.1s)
+(node:33196) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   3 [desktop-chromium] › tests\browser\crm.spec.ts:325:1 › CA-06/10/13 denied identity clears sensitive forms; real empty, unavailable, loading and 320px keyboard reflow (1.8s)
+(node:36052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   4 [desktop-chromium] › tests\browser\crm.spec.ts:403:1 › CA-06/10 real CRM permission revocation clears linked Activity content after refused completion (634ms)
+(node:6068) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   5 [desktop-chromium] › tests\browser\estimating-cost-basis.spec.ts:12:1 › E2 browser explicitly adopts exact discovery into manual costs, reconciles an uncertain create and retains old scope through a successor (1.5s)
+(node:26736) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   6 [desktop-chromium] › tests\browser\estimating-discovery.spec.ts:182:1 › E2 browser creates scoped discovery and retains the original unknown creation through candidate refresh (1.6s)
+(node:27928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   7 [desktop-chromium] › tests\browser\estimating-discovery.spec.ts:295:1 › E2 browser retains unsaved answers and reason while changing a saved workspace's scope (1.1s)
+(node:24060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   8 [desktop-chromium] › tests\browser\estimating-discovery.spec.ts:339:1 › E2 browser retains a stale proposal, explicitly compares the new predecessor and reconciles one original save (1.4s)
+(node:25964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   9 [desktop-chromium] › tests\browser\estimating-discovery.spec.ts:450:1 › E2 browser hides and restores original answers, copies unconfirmed discovery and explicitly selects, archives and reopens (1.7s)
+(node:8160) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  10 [desktop-chromium] › tests\browser\estimating-discovery.spec.ts:589:1 › E2 browser clears unsaved answers on identity change and keeps keyboard controls within 320px (964ms)
+(node:35512) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  11 [desktop-chromium] › tests\browser\estimating.spec.ts:22:1 › DR01 browser: deliberate legacy adoption, explicit flags and original uncertain save on desktop and phone (1.6s)
+(node:32432) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  12 [desktop-chromium] › tests\browser\estimating.spec.ts:53:1 › E1 browser: create through UI, save successor, prepare hidden allowance, generate and reopen exact draft (1.1s)
+(node:29904) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  13 [desktop-chromium] › tests\browser\estimating.spec.ts:70:1 › E1 browser: rejected decimal retains proposal and shows no saved claim (1.2s)
+(node:35804) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  14 [desktop-chromium] › tests\browser\estimating.spec.ts:73:1 › E1 browser: changed version preserves proposal until explicit comparison baseline (1.0s)
+(node:35932) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  15 [desktop-chromium] › tests\browser\estimating.spec.ts:77:1 › E1 browser: lost accepted response reconciles original operation before new intent (1.1s)
+(node:15916) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  16 [desktop-chromium] › tests\browser\estimating.spec.ts:82:1 › E1 browser: identity loss clears sensitive workbook; 320px controls and long draft reflow (1.3s)
+(node:31460) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 17 [mobile-chromium] › tests\browser\crm.spec.ts:119:1 › CA-01/04/13 desktop and phone full sales journey via real UI, validation, completion and reload (13.8s)
+  x  18 [mobile-chromium] › tests\browser\crm.spec.ts:249:1 › CA-02/03 real conflict retains proposed need; lost response reconciles original before a new intent (1.3s)
+(node:36216) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  19 [mobile-chromium] › tests\browser\crm.spec.ts:325:1 › CA-06/10/13 denied identity clears sensitive forms; real empty, unavailable, loading and 320px keyboard reflow (1.2s)
+(node:14456) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  20 [mobile-chromium] › tests\browser\crm.spec.ts:403:1 › CA-06/10 real CRM permission revocation clears linked Activity content after refused completion (708ms)
+(node:31140) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  21 [mobile-chromium] › tests\browser\estimating-cost-basis.spec.ts:12:1 › E2 browser explicitly adopts exact discovery into manual costs, reconciles an uncertain create and retains old scope through a successor (1.2s)
+(node:15708) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  22 [mobile-chromium] › tests\browser\estimating-discovery.spec.ts:182:1 › E2 browser creates scoped discovery and retains the original unknown creation through candidate refresh (1.8s)
+(node:33312) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)

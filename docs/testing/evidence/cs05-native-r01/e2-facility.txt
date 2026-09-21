@@ -1,0 +1,25 @@
+✖ CS05-T49–50: E2 checks current Facility context but retained discovery and estimate versions remain byte-equivalent (8066.8435ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9841.8672
+
+✖ failing tests:
+
+test at tests\database\facilities.test.ts:1:2847
+✖ CS05-T49–50: E2 checks current Facility context but retained discovery and estimate versions remain byte-equivalent (8066.8435ms)
+  Error: Open the existing estimating workspace for this opportunity.
+      at <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\estimating\discovery-workspaces.ts:254:13)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\platform\database.ts:44:20)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\database\facilities.test.ts:139:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    status: 409,
+    code: 'RelationshipConflict',
+    field_errors: []
+  }

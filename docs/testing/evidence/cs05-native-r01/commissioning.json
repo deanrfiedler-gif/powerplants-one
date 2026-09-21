@@ -1,0 +1,10 @@
+{
+  "case": "CS05-T50",
+  "at": "2026-09-21T14:39:48.560Z",
+  "package_id": "8f11fdfb-3be3-41e0-b3ec-0006f177f4ad",
+  "issued_releases": 2,
+  "before_sha256": "113d8e2f302e0613110c3feaa2c4773907003f9767b8f97366888f3411f31e21",
+  "after_sha256": "113d8e2f302e0613110c3feaa2c4773907003f9767b8f97366888f3411f31e21",
+  "result": "Exact issued release rows, manifests, approval source state and hashes unchanged after canonical Facility edit and explicit service-link addition",
+  "boundary": "Existing EN-08 free-text served areas remain independent; no inferred canonical relationship or technical acceptance"
+}
