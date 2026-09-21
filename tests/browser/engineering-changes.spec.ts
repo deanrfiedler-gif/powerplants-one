@@ -154,11 +154,15 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
   // Hidden selection is disclosed when a filter hides the ticked row.
   await page.locator(".ec-view select").selectOption("closed");
   await expect(page.getByRole("region", { name: "Selected changes" })).toContainText("not shown by the current filters");
-  await page.getByRole("button", { name: "Clear selection" }).click();
-  await page.locator(".ec-view select").selectOption("open");
+  // At this width the inspected record is an overlay over the selection actions.
+  // Dismiss it through its real close control, retaining the hidden selection.
   await page.getByRole("button", { name: "Close inspector" }).click();
   await expect(inspector).toHaveCount(0);
+  await expect(page.getByRole("region", { name: "Selected changes" })).toContainText("1 selected change is not shown by the current filters");
   await flush(); // closing releases the space at once
+  await page.getByRole("button", { name: "Clear selection" }).click();
+  await expect(page.getByRole("region", { name: "Selected changes" })).toHaveCount(0);
+  await page.locator(".ec-view select").selectOption("open");
 
   // A57: My Work itself is unchanged, and EN-07's menu is that menu: the same computed geometry, measured on /work.
   await page.goto("/work");
