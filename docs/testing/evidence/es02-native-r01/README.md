@@ -3,7 +3,7 @@ document_id: PPO-ES02-EVD
 revision: r01
 date: 2026-09-21
 owner: Dean Fiedler
-status: Local synthetic implementation evidence; CI restart and owner acceptance separate
+status: Local and CI synthetic verification passed; owner acceptance separate
 ---
 
 # ES-02 native verification record
@@ -13,6 +13,20 @@ The source manifest records byte fingerprints for executable changes and immutab
 input references; the draft PR's required Estimating job identifies the exact tested
 commit. Local working tree started at `0b3669c`, then advanced to `8ed8b0c` after
 #271 merged with an identical application tree. All data here is synthetic.
+
+## Required CI result
+
+[Estimating assurance run 35573783287](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35573783287)
+passed at `3252407fe8616f12127a8700e25c82e6c49c11d7`: 161 units, 54 database
+cases, 5 direct HTTP cases, 13 existing E1 browser cases and all 29 compiled ES-02 /
+shared browser cases. Three application processes and three distinct PostgreSQL
+start times prove two actual database restarts. [Retained run metadata](ci/run-35573783287.json)
+and [final restart proof](ci/es02-verify.json) preserve the source, process identities
+and unchanged HTML/PDF hashes. The later harness-only correction obtains the active
+browser origin instead of assuming port 3012; an independent port-3014 native check
+passed. The detailed conformance spec runs in the desktop project, includes seven
+viewport widths and complements the existing mobile discovery and Engineering cases.
+Current PR checks are on [draft PR #272](https://github.com/deanrfiedler-gif/powerplants-one/pull/272).
 
 ## Executed local checks
 
@@ -27,7 +41,7 @@ commit. Local working tree started at `0b3669c`, then advanced to `8ed8b0c` afte
 | Additional desktop/mobile proof | 9 pass, including actual Engineering phone containment and column preferences. |
 | Final wizard proof | 5 pass, including delayed preview, maximum scope and archived read-only costs. |
 | Static/documentation | Build, typecheck, lint, foundation and naming checks pass as recorded. Foundation is documentation assurance, not business acceptance. |
-| Real app/PostgreSQL restarts | Authored in the existing required CI harness; local execution was blocked before instance creation. CI result must be read separately, not inferred. |
+| Real app/PostgreSQL restarts | Required CI run passed all three phases. Local write-only phase also passed on owned port 3019; the local database was not restarted. |
 
 The four main-baseline failures are `document-store.test.ts` (2),
 `recovery.test.ts` (1), and `warm-routes.test.ts` (1); baseline logs remain retained.

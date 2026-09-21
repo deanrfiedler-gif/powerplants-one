@@ -3,7 +3,7 @@ document_id: PPO-ES02-HANDOVER
 revision: r01
 date: 2026-09-21
 owner: Dean Fiedler
-status: Implemented for synthetic review; final CI and owner acceptance tracked separately
+status: Implemented and verified for synthetic owner review
 ---
 
 # ES-02 Estimation Wizard — implementation handover
@@ -15,8 +15,9 @@ fast-forwarded to `origin/main` `8ed8b0c` (identical application tree after #271
 [ADR-0033](../decisions/ADR-0033-es02-structured-discovery.md) records the selected
 contract, alternatives and limits. Scope stays ES-02 / PPO-010 / EST-01–EST-09;
 all 78 parent requirements and issued source bytes remain unchanged.
-Core data commit: `f65d4fb`; native UI commit: `071a864`. The final assurance
-commit adds tests, CI routing and the retained evidence manifest.
+Core data commit: `f65d4fb`; native UI commit: `071a864`. Assurance commit `8b8f336` adds tests, CI routing and the evidence manifest;
+`3252407` pins retained text bytes. [Draft PR #272](https://github.com/deanrfiedler-gif/powerplants-one/pull/272)
+contains the complete package and subsequent harness/evidence refinement.
 
 ## Delivered packages
 
@@ -118,6 +119,16 @@ command with “blocked by policy” and no further reason. No shared PostgreSQL
 was restarted. Actual database restart execution is assigned to the existing CI
 job's disposable container; do not treat authored restart code as a local pass.
 
+[Required CI run 35573783287](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35573783287)
+passed at `3252407`: all 161 units, 54 database cases, 5 HTTP cases, 13 existing E1
+browser cases and 29 compiled ES-02/shared browser cases. The two PostgreSQL
+restarts and three application processes passed with unchanged original output
+bytes. [Retained CI metadata](../testing/evidence/es02-native-r01/ci/run-35573783287.json)
+and [restart identities/hashes](../testing/evidence/es02-native-r01/ci/es02-verify.json)
+remain in the repository. Later changes bind the fixture to the active test origin
+(proved on port 3014) and record this evidence; application source remains `071a864`.
+The PR reports checks for the exact latest head.
+
 ## Acceptance disposition
 
 The following links are the executable evidence index, not business acceptance.
@@ -130,7 +141,7 @@ H = [direct HTTP tests](../../tests/http/estimating-configuration.test.ts);
 B = [native wizard browser proof](../../tests/browser/estimating-wizard.spec.ts);
 J = [discovery journeys](../../tests/browser/estimating-discovery.spec.ts);
 K = [cost-basis journey](../../tests/browser/estimating-cost-basis.spec.ts);
-R = [real restart harness](../../scripts/estimating-restart-proof.ts), CI execution required.
+R = [real restart harness](../../scripts/estimating-restart-proof.ts), passed in the CI run above.
 
 | Acceptance | Evidence and disposition |
 |---|---|
@@ -173,7 +184,7 @@ R = [real restart harness](../../scripts/estimating-restart-proof.ts), CI execut
 | ES02-T37 | L — concurrent saves/selection/archive/first costing under aggregate locks. |
 | ES02-T38 | D, L — direct invalid IDs/history mutation refused and atomic rollback. |
 | ES02-T39 | D, L — forward upgrade/reseed preserves old hashes, DTOs, receipts and exact output. |
-| ES02-T40 | B — reload; R — separate app/database restart execution tracked in required CI. |
+| ES02-T40 | B — reload; R — actual separate app/database restarts passed in required CI. |
 | ES02-T41 | B, J — desktop/tablet/phone/320 captures, reachable controls and local scroll. |
 | ES02-T42 | B, J — labels, keyboard menu/columns, focus return, modal Escape and textual statuses; owner accessibility acceptance pending. |
 | ES02-T43 | B, J — bound resource paths/preview signatures and uncertain outcomes; no false acknowledged revision. |

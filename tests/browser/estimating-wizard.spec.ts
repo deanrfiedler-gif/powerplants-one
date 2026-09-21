@@ -16,8 +16,14 @@ const fixtureCommand = (args: string[] = []) =>
     ],
     { stdio: "pipe" },
   );
-test.beforeAll(() => {
+let fixtureCreated = false;
+test.beforeAll(({ browserName }, info) => {
+  test.skip(
+    browserName !== "chromium" || info.project.name === "mobile-chromium",
+    "Desktop conformance captures all seven widths; existing discovery journeys exercise the mobile project.",
+  );
   fixtureCommand();
+  fixtureCreated = true;
   execFileSync(
     process.execPath,
     [
@@ -26,11 +32,18 @@ test.beforeAll(() => {
       "tsx",
       "scripts/es02-boundary-proof.ts",
     ],
-    { stdio: "pipe" },
+    {
+      stdio: "pipe",
+      env: {
+        ...process.env,
+        PPO_TEST_ORIGIN: info.project.use.baseURL,
+        PPO_PROOF_CONFIGURATION: info.config.configFile?.split(/[\\/]/).pop(),
+      },
+    },
   );
 });
 test.afterAll(() => {
-  fixtureCommand(["restore-owner"]);
+  if (fixtureCreated) fixtureCommand(["restore-owner"]);
 });
 test.use({ actionTimeout: 15000 });
 test("ES02 native five steps, exact saved costs, family filters, evidence, dirty navigation and responsive capture", async ({
@@ -173,7 +186,9 @@ test("ES02 native five steps, exact saved costs, family filters, evidence, dirty
     JSON.stringify(captures, null, 2),
   );
   await page.setViewportSize({ width: 1440, height: 900 });
-  const columns = page.getByRole("region", { name: "Systems & configuration", exact: true }).locator(".es02-columns");
+  const columns = page
+    .getByRole("region", { name: "Systems & configuration", exact: true })
+    .locator(".es02-columns");
   await columns.locator("summary").click();
   await columns.getByRole("checkbox", { name: "Family", exact: true }).check();
   await columns

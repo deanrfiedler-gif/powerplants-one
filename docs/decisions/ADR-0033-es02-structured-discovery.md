@@ -3,7 +3,7 @@ document_id: PPO-ADR-0033
 revision: r01
 date: 2026-09-21
 owner: Dean Fiedler
-status: Selected implementation contract; verification and owner acceptance pending
+status: Implemented and verified in synthetic scope; owner acceptance pending
 ---
 
 # ADR-0033 — Structured ES-02 discovery and exact saved reads

@@ -12,7 +12,7 @@ import type {
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable synthetic proof only");
-const origin = process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3012";
+const origin = process.env.PPO_TEST_ORIGIN ?? localConfig().origin;
 assert.equal(new URL(origin).hostname, "127.0.0.1");
 const login = await fetch(`${origin}/api/v1/local-session`, {
   method: "POST",
@@ -136,7 +136,7 @@ const result = {
   environment: {
     node: process.version,
     platform: process.platform,
-    compiled: true,
+    server_configuration: process.env.PPO_PROOF_CONFIGURATION ?? "Not recorded",
     loopback: true,
   },
   qualification:
