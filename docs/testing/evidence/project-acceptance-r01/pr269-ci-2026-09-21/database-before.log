@@ -1,0 +1,182 @@
+✖ CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and hashes; repeat seed never repairs revocations or edits (20070.4141ms)
+✖ EN07-A25 A29 A32 A33 A37 A40 A41 A43 A50: accepted is not implemented; the whole path to closure keeps every outcome and attempt (20916.0178ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 59023.6545
+
+✖ failing tests:
+
+test at tests\database\crm.test.ts:1:16461
+✖ CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and hashes; repeat seed never repairs revocations or edits (20070.4141ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+
+    [
+      {
+        activity_id: '163d5d6b-3407-40d3-ba7d-72401acc0880',
+        asset_id: null,
+        company_id: '20000000-0000-4000-8000-000000000001',
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: null,
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: null,
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: '50000000-0000-4000-8000-000000000005',
+  +     project_id: null,
+        site_id: null,
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: '50000000-0000-4000-8000-000000000001',
+  +     project_id: null,
+        site_id: null,
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: '50000000-0000-4000-8000-000000000001',
+  +     project_id: null,
+        site_id: null,
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      },
+      {
+  ...
+        organisation_id: null,
+  +     project_id: null,
+        site_id: '70000000-0000-4000-8000-000000000001',
+        ticket_id: null,
+        workspace_id: '10000000-0000-4000-8000-000000000001'
+      }
+    ]
+
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09-fix\tests\database\crm.test.ts:655:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '163d5d6b-3407-40d3-ba7d-72401acc0880', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null, project_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '35d2f681-671b-4b9a-a53a-3e6b3a7fff54', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null, project_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '479c6d28-8de9-461b-b894-7193d8cb60b0', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null, project_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '829bef2e-921f-444f-bd39-421f9d570d45', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null, project_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '85000000-0000-4000-8000-000000000001', object_type: 'Asset', object_id: '80000000-0000-4000-8000-000000000001', organisation_id: null, site_id: null, asset_id: '80000000-0000-4000-8000-000000000001', ticket_id: null, project_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '85000000-0000-4000-8000-000000000001', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null, project_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '85000000-0000-4000-8000-000000000002', object_type: 'Asset', object_id: '80000000-0000-4000-8000-000000000002', organisation_id: null, site_id: null, asset_id: '80000000-0000-4000-8000-000000000002', ticket_id: null, project_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '85000000-0000-4000-8000-000000000003', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null, project_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '85000000-0000-4000-8000-000000000004', object_type: 'Organisation', object_id: '50000000-0000-4000-8000-000000000005', organisation_id: '50000000-0000-4000-8000-000000000005', site_id: null, asset_id: null, ticket_id: null, project_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '85000000-0000-4000-8000-000000000005', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null, project_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '85000000-0000-4000-8000-000000000006', object_type: 'Organisation', object_id: '50000000-0000-4000-8000-000000000001', organisation_id: '50000000-0000-4000-8000-000000000001', site_id: null, asset_id: null, ticket_id: null, project_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '8b254157-e006-405c-8002-43d8b4e0be51', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null, project_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '965ecaa6-4deb-41bb-9b26-7d96746d4ded', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null, project_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: 'b2000000-0000-4000-8000-000000000001', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null, project_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: 'c205eda1-4f9e-4e9b-89a7-e89f531b3cbe', object_type: 'Organisation', object_id: '50000000-0000-4000-8000-000000000001', organisation_id: '50000000-0000-4000-8000-000000000001', site_id: null, asset_id: null, ticket_id: null, project_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: 'ce7377b2-8186-41e4-9929-573431fcc7a6', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null, project_id: null } ],
+    expected: [ { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '163d5d6b-3407-40d3-ba7d-72401acc0880', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '35d2f681-671b-4b9a-a53a-3e6b3a7fff54', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '479c6d28-8de9-461b-b894-7193d8cb60b0', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '829bef2e-921f-444f-bd39-421f9d570d45', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '85000000-0000-4000-8000-000000000001', object_type: 'Asset', object_id: '80000000-0000-4000-8000-000000000001', organisation_id: null, site_id: null, asset_id: '80000000-0000-4000-8000-000000000001', ticket_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '85000000-0000-4000-8000-000000000001', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '85000000-0000-4000-8000-000000000002', object_type: 'Asset', object_id: '80000000-0000-4000-8000-000000000002', organisation_id: null, site_id: null, asset_id: '80000000-0000-4000-8000-000000000002', ticket_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '85000000-0000-4000-8000-000000000003', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '85000000-0000-4000-8000-000000000004', object_type: 'Organisation', object_id: '50000000-0000-4000-8000-000000000005', organisation_id: '50000000-0000-4000-8000-000000000005', site_id: null, asset_id: null, ticket_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '85000000-0000-4000-8000-000000000005', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '85000000-0000-4000-8000-000000000006', object_type: 'Organisation', object_id: '50000000-0000-4000-8000-000000000001', organisation_id: '50000000-0000-4000-8000-000000000001', site_id: null, asset_id: null, ticket_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '8b254157-e006-405c-8002-43d8b4e0be51', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: '965ecaa6-4deb-41bb-9b26-7d96746d4ded', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: 'b2000000-0000-4000-8000-000000000001', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: 'c205eda1-4f9e-4e9b-89a7-e89f531b3cbe', object_type: 'Organisation', object_id: '50000000-0000-4000-8000-000000000001', organisation_id: '50000000-0000-4000-8000-000000000001', site_id: null, asset_id: null, ticket_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', company_id: '20000000-0000-4000-8000-000000000001', activity_id: 'ce7377b2-8186-41e4-9929-573431fcc7a6', object_type: 'Site', object_id: '70000000-0000-4000-8000-000000000001', organisation_id: null, site_id: '70000000-0000-4000-8000-000000000001', asset_id: null, ticket_id: null } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\database\engineering-changes.test.ts:1:9749
+✖ EN07-A25 A29 A32 A33 A37 A40 A41 A43 A50: accepted is not implemented; the whole path to closure keeps every outcome and attempt (20916.0178ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  201 !== 200
+
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09-fix\tests\database\engineering-changes.test.ts:128:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 201,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

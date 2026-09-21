@@ -20,8 +20,10 @@ const reads: Record<string, (p: Principal, id: string, query: unknown) => Promis
 async function route(p: Principal, target: string, body?: unknown): Promise<{ status: number; body: unknown } | null> {
   const [path, search = ""] = target.split("?"), query = Object.fromEntries(new URLSearchParams(search));
   const change = /^engineering\/([^/]+)\/changes(?:\/([a-z]+(?:\/preview)?))?$/.exec(path), asset = /^assets(?:\/([^/]+))?$/.exec(path);
-  const accepted = (r: Result) => ({ status: r.replayed ? 200 : 201, body: r.receipt });
-  if (change && body !== undefined) return accepted(await commands[change[2] ?? ""](p, change[1], body));
+  // The status is the one the route itself would send: a replay is 200, and so is the one route declared as creating
+  // nothing (commandRoute(..., false)): resolving a prerequisite that already exists.
+  const accepted = (r: Result, creates = true) => ({ status: r.replayed || !creates ? 200 : 201, body: r.receipt });
+  if (change && body !== undefined) return accepted(await commands[change[2] ?? ""](p, change[1], body), change[2] !== "prerequisites");
   if (change) return { status: 200, body: await reads[change[2] ?? ""](p, change[1], query) };
   if (path === "engineering/changes") return { status: 200, body: await readEntry(p, query) };
   if (asset && body !== undefined) return accepted(await createAsset(p, body));

@@ -1,0 +1,272 @@
+[
+  {
+    "screen": "SC-01",
+    "route": "/work/actions",
+    "read": "work/actions",
+    "profile": "coordinator",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "loaded",
+      "loading",
+      "failed",
+      "recovered",
+      "empty permitted result",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": null,
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-02",
+    "route": "/customers",
+    "read": "crm/directory",
+    "profile": "coordinator",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "loaded",
+      "loading",
+      "failed",
+      "recovered",
+      "empty permitted result",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": null,
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-03",
+    "route": "/sites/70000000-0000-4000-8000-000000000001",
+    "read": "sites/70000000-0000-4000-8000-000000000001",
+    "profile": "coordinator",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "loaded",
+      "loading",
+      "failed",
+      "recovered",
+      "unavailable detail record",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-04",
+    "route": "/service/tickets/40000000-0000-4000-8000-000000000001",
+    "read": "service/tickets/40000000-0000-4000-8000-000000000001",
+    "profile": "coordinator",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "loaded",
+      "loading",
+      "failed",
+      "recovered",
+      "unavailable detail record",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-05",
+    "route": "/service/work-orders/a9000000-0000-4000-8000-000000000001",
+    "read": "service/work-orders/a9000000-0000-4000-8000-000000000001",
+    "profile": "coordinator",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "loaded",
+      "loading",
+      "failed",
+      "recovered",
+      "unavailable detail record",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-06",
+    "route": "/service/packs/41df4a14-087d-4d06-b463-62d8b1b1d054",
+    "read": "packs/41df4a14-087d-4d06-b463-62d8b1b1d054",
+    "profile": "coordinator",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "loaded",
+      "loading",
+      "failed",
+      "recovered",
+      "unavailable detail record",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-07",
+    "route": "/schedule",
+    "read": "schedule",
+    "profile": "coordinator",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "loaded",
+      "loading",
+      "failed",
+      "recovered",
+      "unavailable detail record",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-08",
+    "route": "/service/appointments/194b0036-53ce-418d-85f9-5c45ac739044",
+    "read": "appointments/194b0036-53ce-418d-85f9-5c45ac739044",
+    "profile": "coordinator",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "loaded",
+      "loading",
+      "failed",
+      "recovered",
+      "unavailable detail record",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-09",
+    "route": "/my-jobs",
+    "read": "my-jobs",
+    "profile": "assigned-technician",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "loaded",
+      "loading",
+      "failed",
+      "recovered",
+      "empty permitted result",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": null,
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-10",
+    "route": "/my-jobs/194b0036-53ce-418d-85f9-5c45ac739044",
+    "read": "my-jobs/194b0036-53ce-418d-85f9-5c45ac739044",
+    "profile": "assigned-technician",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "loaded",
+      "loading",
+      "failed",
+      "recovered",
+      "unavailable detail record",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-11",
+    "route": "/service/reports/0140778d-a381-400e-9b10-a7a60c509dc3",
+    "read": "reports/0140778d-a381-400e-9b10-a7a60c509dc3",
+    "profile": "coordinator",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "loaded",
+      "loading",
+      "failed",
+      "recovered",
+      "unavailable detail record",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-12",
+    "route": "/finance/handoffs",
+    "read": "finance/handoffs",
+    "profile": "finance",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "loaded",
+      "loading",
+      "failed",
+      "recovered",
+      "empty permitted result",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": null,
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-13",
+    "route": "/customers/50000000-0000-4000-8000-000000000001/account?account_id=f2000000-0000-4000-8000-000000000001",
+    "read": "customers/50000000-0000-4000-8000-000000000001/account-observations",
+    "profile": "finance",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "loaded",
+      "loading",
+      "failed",
+      "recovered",
+      "unavailable detail record",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-14",
+    "route": "/documents/9eda8996-7cdb-4542-ab23-13e2e6a90079",
+    "read": "pack-issues/9eda8996-7cdb-4542-ab23-13e2e6a90079/manifest",
+    "profile": "coordinator",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "loaded",
+      "loading",
+      "failed",
+      "recovered",
+      "unavailable detail record",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-15",
+    "route": "/admin",
+    "read": "sync/recovery-review",
+    "profile": "coordinator",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "loaded",
+      "loading",
+      "failed",
+      "recovered",
+      "empty permitted result",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": null,
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  }
+]
