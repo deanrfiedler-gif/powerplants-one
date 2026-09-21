@@ -61,7 +61,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // row locks on authority tables, without granting the runtime role write access. Existing-data compatibility stays under the retained
   // upgrade tests. The accepted five-stage demonstration uses a separately prepared
   // database/storage epoch; this function neither resets nor activates that epoch.
-  if (latestMigrationVersion !== 29) throw Error("Review the existing-demo upgrade for this release.");
+  // Reviewed for 0030: immutable configuration ownership ledger and a revision
+  // insert trigger; no backfill, identity-table ALTER, seed, grant or output rewrite.
+  // Existing generic runtime table grants cover this aggregate-owned ledger.
+  if (latestMigrationVersion !== 30) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

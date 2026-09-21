@@ -11,6 +11,7 @@ import {
 import { visible } from "../shared/reads";
 import { compileDiscovery } from "./discovery";
 import type { EstimateCap } from "./context";
+import { visibleActivity } from "../activities/activities";
 
 // Internal receiving boundary for the E2 service. These reads neither acquire
 // estimating ownership nor save a revision. The future command must supply its
@@ -22,10 +23,24 @@ async function targets(
   value: unknown,
   edit: boolean,
   readCapability: EstimateCap = "estimating.read",
+  lineageSeen = new Set<string>(),
 ) {
   const compiled = compileDiscovery(value);
   const opportunity = await visibleOpportunity(c, p, opportunityId);
   await relationshipContext(c, p, opportunity, readCapability);
+  // Exact copy provenance remains protected after destination edits remove a
+  // source reference. The ten-option contract bounds the source graph; carry
+  // the caller's capability so permitted quotation reads need no edit grant.
+  for (const sourceId of new Set(Object.values(compiled.input.configuration ?? {}).flatMap(value => Array.isArray(value) ? value.flatMap(entity => entity.lineage ? [entity.lineage.revision_id as string] : []) : []))) {
+    if (lineageSeen.has(sourceId)) continue;
+    if (lineageSeen.size >= 10) throw unavailable();
+    lineageSeen.add(sourceId);
+    const source = (await c.query<{ input: unknown; content_hash: string; context_hash: string; observed_context: { contact?: {id: string} } }>(`SELECT r.input,r.content_hash,r.context_hash,r.observed_context FROM ppo.estimation_revisions r JOIN ppo.estimating_workspaces g ON (g.workspace_id,g.id)=(r.workspace_id,r.estimating_workspace_id) WHERE r.workspace_id=$1 AND r.id=$2 AND r.company_id=$3 AND g.opportunity_id=$4 AND r.kind='Discovery'`, [p.workspace_id, sourceId, opportunity.company_id, opportunityId])).rows[0];
+    if (!source) throw unavailable();
+    const observed = await targets(c, p, opportunityId, source.input, false, readCapability, lineageSeen);
+    if (observed.compiled.content_hash !== source.content_hash || createHash("sha256").update(canonical({ input_hash: source.content_hash, references: source.observed_context })).digest("hex") !== source.context_hash) throw new AppError(409, "DiscoveryEvidenceMismatch", "The exact copied source requires review before use.");
+    if (source.observed_context.contact?.id) await visible(c, p, "Person", source.observed_context.contact.id);
+  }
   const scopeContext = {
     ...opportunity,
     site_id: compiled.input.scope.site_id,
@@ -90,6 +105,23 @@ async function targets(
       await eligibleActionOwner(c, p, scopeContext, owner);
     }
   }
+  const evidence: { id: string; source_id: string; version: number; hash: string; label: string }[] = [];
+  const activities: { id: string; version: number; due_at: string | null; state: string }[] = [];
+  if (compiled.input.configuration) {
+    for (const e of compiled.input.configuration.evidence) {
+      if (e.source_type === "Manual") continue;
+      const row = await visible(c, p, e.source_type, e.source_id!);
+      if (row.company_id !== opportunity.company_id || (e.source_type === "Site" ? row.id : row.site_id) !== site?.id) throw unavailable();
+      if (edit && row.version !== e.source_version) throw new AppError(409, "ConfigurationSourceChanged", "A recorded configuration source changed. Review its current version explicitly before saving.");
+      const observation = { id: row.id as string, version: row.version as number, label: String(row.display_name ?? row.name ?? `${row.display_number} · ${row.description}`) };
+      evidence.push({ id: e.id, source_id: row.id, version: row.version, label: observation.label, hash: createHash("sha256").update(canonical(observation)).digest("hex") });
+    }
+    for (const id of new Set(compiled.input.configuration.follow_ups.flatMap(f => f.activity_id ? [f.activity_id] : []))) {
+      const a = await visibleActivity(c, p, id);
+      if (a.company_id !== opportunity.company_id || a.site_id !== compiled.input.scope.site_id) throw unavailable();
+      activities.push({ id, version: a.version, due_at: a.due_at?.toISOString() ?? null, state: a.state });
+    }
+  }
   const references = Object.freeze({
     opportunity: Object.freeze({
       id: opportunity.id,
@@ -118,6 +150,7 @@ async function targets(
       : null,
     facilities: Object.freeze(facilities),
     equipment: Object.freeze(equipment),
+    ...(compiled.input.configuration ? { configuration_evidence: evidence, linked_activities: activities } : {}),
   });
   const context_hash = createHash("sha256")
     .update(

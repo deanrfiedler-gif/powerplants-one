@@ -308,7 +308,7 @@ export async function discoveryReceiptAuthority(
   const g = await workspaceAuthority(c, p, groupId, true);
   const event = (
     await c.query<{
-      details: { revision_id?: string; source_revision_id?: string };
+      details: { revision_id?: string; source_revision_id?: string; historical_source_id?: string };
     }>(
       "SELECT details FROM ppo.audit_events WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3 AND object_type='EstimatingWorkspace' AND object_id=$4",
       [p.workspace_id, p.actor_id, operationId, g.id],
@@ -316,7 +316,7 @@ export async function discoveryReceiptAuthority(
   ).rows[0];
   if (!event) throw unavailable();
   for (const id of new Set(
-    [event.details.revision_id, event.details.source_revision_id].filter(
+    [event.details.revision_id, event.details.source_revision_id, event.details.historical_source_id].filter(
       (id): id is string => Boolean(id),
     ),
   ))

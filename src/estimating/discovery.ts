@@ -2,6 +2,8 @@ import { createHash } from "node:crypto";
 import { applicableQuestions } from "./discovery-questions";
 import { canonical } from "../platform/operations";
 import { choice, invalid, narrative, object, uuid } from "../shared/validation";
+import { parseConfiguration, configurationFindings, configurationOwners } from "./configuration";
+import { configurationCounts, type Configuration } from "./configuration-definition";
 
 import {
   discoveryDefinition,
@@ -36,6 +38,7 @@ export type DiscoveryScope = {
   unsupported_scope: FollowUp | null;
 };
 export type DiscoveryInput = {
+  configuration?: Configuration;
   definition_id: string;
   definition_revision: string;
   definition_hash: string;
@@ -184,6 +187,7 @@ export function parseDiscovery(value: unknown): DiscoveryInput {
     "effort",
     "scope",
     "answers",
+    "configuration",
   ]);
   if (
     r.definition_id !== discoveryDefinition.id ||
@@ -305,6 +309,7 @@ export function parseDiscovery(value: unknown): DiscoveryInput {
     effort,
     scope,
     answers,
+    ...(Object.hasOwn(r, "configuration") ? { configuration: parseConfiguration(r.configuration, scope) } : {}),
   };
 }
 
@@ -343,13 +348,17 @@ export function compileDiscovery(value: unknown) {
       follow_up: input.effort.follow_up,
       blocks_scope: false,
     });
-  const scope_readiness = open_items.some((i) => i.blocks_scope)
+  const findings = input.configuration ? configurationFindings(input.configuration) : [];
+  if (input.configuration) for (const [index, follow_up] of configurationOwners(input.configuration).entries())
+    open_items.push({ key: `ConfigurationFollowUp:${index}`, follow_up, blocks_scope: false });
+  const scope_readiness = open_items.some((i) => i.blocks_scope) || findings.some(f => f.category === "Readiness")
     ? "Incomplete"
     : "Complete";
   return freeze({
     input,
     scope_readiness,
     open_items,
+    ...(input.configuration ? { findings, counts: configurationCounts(input.configuration, findings) } : {}),
     delivery_routing: {
       status: "NotConfigured",
       reason: "No delivery routing rule set has been adopted.",
