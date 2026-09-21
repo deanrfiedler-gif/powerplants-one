@@ -25,7 +25,7 @@ versions are rejected. The ten-question `SYN-E2-QUESTIONS/r01` definition,
 its hash and work tags are unchanged. No conversion occurs on historical reads.
 All paths through `compileDiscovery` dispatch the captured extension, including
 saved cost bases and quote-safe historical authority. No pricing or new grant
-is introduced. Migration 0030 protects new JSON memberships and permanent child ownership;
+is introduced. Migration 0032 protects new JSON memberships and permanent child ownership;
 the inspected pre-change registry ended at 0029.
 
 Snapshot JSON avoids duplicating the aggregate and its immutable transaction
@@ -172,3 +172,8 @@ boundary, browser Reload and tab close use the native unsaved-work warning; the
 installed-app Reload entry uses the explicit in-app review before reloading.
 Navigation API behaviour was verified in Chrome 153. Other browser families have
 not been accepted by this proof. No persistent browser draft/recovery is added.
+
+Main integration, 21 September: EN-07/EN-08 merged at `f977bf8` while ES-02 assurance
+ran and own migration versions 0030/0031. The unmerged, undeployed ES-02 migration
+is renumbered from 0030 to 0032 with identical SQL bytes. Their seeds, grants and
+issued migrations remain unchanged; there is no ES-02 seed or ledger rewrite.

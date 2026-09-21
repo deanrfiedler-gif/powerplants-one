@@ -95,3 +95,7 @@ No trace archives, cookies, credentials or raw operational exports are committed
 
 Text logs normalise line endings and trailing whitespace. Source and screenshot
 bytes are fingerprinted separately; no failed result is relabelled as passing.
+
+## Integration after the fully green checkpoint
+
+Commit `ea57344` passed all 17 checks, including [full Application assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35578429880): 464 database, 32 HTTP and 234 browser cases, in addition to the retained domain/restart proofs. New main `f977bf8` then required a reviewed merge: EN-07/EN-08 own 0030/0031, so the unmerged ES-02 SQL moves unchanged to 0032. Original source/artifact manifests remain historical; the [handover](../../../delivery/es02-estimation-wizard-handover.md) records reconciliation and the PR identifies fresh combined-source results.

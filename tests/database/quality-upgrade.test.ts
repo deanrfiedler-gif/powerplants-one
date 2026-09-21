@@ -180,6 +180,37 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
       ]),
       ...coordinatorGrants.filter(g => g.value.capability === "shared.edit").map(g => ({ ...g.value, capability: "engineering.material.source" })),
     );
+    // Seed 30 (EN-07): three more fictional profiles read Company A, nobody gains engineering.edit, and review, technical
+    // decision, closure, receiving and verification are one capability each, held only where the seed names the person.
+    const changes = { releaseOwner: "30000000-0000-4000-8000-000000000022", service: "30000000-0000-4000-8000-000000000023", verifier: "30000000-0000-4000-8000-000000000024" };
+    const changeDuties: [string, string][] = [[materials.reviewer, "engineering.change.review"], [materials.release, "engineering.change.decide"], [materials.release, "engineering.change.close"],
+      [materials.supply, "engineering.change.receive"], [changes.releaseOwner, "engineering.change.receive"], [changes.service, "engineering.change.receive"],
+      [changes.verifier, "engineering.change.receive"], [changes.verifier, "engineering.change.verify"], ["30000000-0000-4000-8000-000000000001", "engineering.change.receive"]];
+    expected.push(
+      ...companyAGrants.filter(g => ["shared.read", "shared.internal.read"].includes(String(g.value.capability)))
+        .flatMap(g => Object.values(changes).map(user_id => ({ ...g.value, capability: String(g.value.capability), user_id }))),
+      ...companyAGrants.filter(g => g.value.capability === "shared.edit").flatMap(g => [
+        ...Object.values(changes).flatMap(user_id => ["project.read", "engineering.read"].map(capability => ({ ...g.value, capability, user_id }))),
+        ...changeDuties.map(([user_id, capability]) => ({ ...g.value, capability, user_id })),
+      ]),
+    );
+    // Seed 31 (EN-08): one more fictional profile, the Equipment receiver, reads Company A; nobody gains engineering.edit;
+    // capture, evidence review, issue and receiving are one capability each, held only where the seed names the person;
+    // and the two preparers, the reviewer and the performer gain the My Work action pair an owned follow-up needs.
+    const commissioning = { equipment: "30000000-0000-4000-8000-000000000025" };
+    const commissioningDuties: [string, string][] = [[changes.verifier, "engineering.commissioning.capture"], [materials.reviewer, "engineering.commissioning.review"],
+      [materials.release, "engineering.commissioning.issue"], [changes.service, "engineering.commissioning.receive"],
+      [commissioning.equipment, "engineering.commissioning.receive"], ["30000000-0000-4000-8000-000000000001", "engineering.commissioning.receive"]];
+    const followUpOwners = [materials.author, materials.engineer, materials.reviewer, changes.verifier];
+    expected.push(
+      ...companyAGrants.filter(g => ["shared.read", "shared.internal.read"].includes(String(g.value.capability)))
+        .flatMap(g => Object.values(commissioning).map(user_id => ({ ...g.value, capability: String(g.value.capability), user_id }))),
+      ...companyAGrants.filter(g => g.value.capability === "shared.edit").flatMap(g => [
+        ...Object.values(commissioning).flatMap(user_id => ["project.read", "engineering.read"].map(capability => ({ ...g.value, capability, user_id }))),
+        ...commissioningDuties.map(([user_id, capability]) => ({ ...g.value, capability, user_id })),
+        ...followUpOwners.flatMap(user_id => ["activity.read", "activity.edit"].map(capability => ({ ...g.value, capability, user_id }))),
+      ]),
+    );
     const grantShape = (g: Record<string, unknown>) => Object.fromEntries(Object.entries(g).filter(([k]) => k !== "id"));
     const sorted = (gs: Record<string, unknown>[]) => gs.map(g => JSON.stringify(grantShape(g))).sort();
     assert.deepEqual(sorted(added.map(g => g.value)), sorted(expected));

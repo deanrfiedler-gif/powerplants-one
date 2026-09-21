@@ -18,6 +18,10 @@ import {
   workViewForPath,
   materialsPath,
   materialsModuleLabel,
+  changesPath,
+  changesModuleLabel,
+  commissioningPath,
+  commissioningModuleLabel,
   workspaces,
   type ShellDestination,
 } from "../shell/navigation";
@@ -385,8 +389,13 @@ export function ProductHeader() {
   // My Work names its current view beside the module, as its secondary menu does. EN-06 names its module
   // there, and its destination after it for as long as its own menu is hidden (desktop-shell.css).
   const materials = page?.id === "engineering" ? materialsPath(path) : undefined;
-  const view = page?.id === "work" ? workViewForPath(path)?.label : materials ? materialsModuleLabel : undefined;
-  const subview = materials?.view?.label;
+  // EN-07 does the same: "Engineering / Engineering Change-Impact Review", then its destination while its menu is hidden.
+  const changes = page?.id === "engineering" ? changesPath(path) : undefined;
+  // EN-08 likewise: "Engineering / Commissioning Basis & As-Built Release", then its destination while its menu is hidden.
+  const commissioning = page?.id === "engineering" ? commissioningPath(path) : undefined;
+  const crumb = materials ?? changes ?? commissioning;
+  const view = page?.id === "work" ? workViewForPath(path)?.label : materials ? materialsModuleLabel : changes ? changesModuleLabel : commissioning ? commissioningModuleLabel : undefined;
+  const subview = crumb?.view?.label;
   const workspaceRoot = page?.workspace ? workspaces.find((w) => w.id === page.workspace) : undefined;
   const currentModule =
     page?.workspace === "estimate"
@@ -404,16 +413,16 @@ export function ProductHeader() {
     page?.workspace === "estimate" ? "Estimating" : page?.workspace === "service" ? "Service" : workspaceRoot?.label;
   const crumbs: { key: string; label: string; href?: string; kind: "root" | "page" | "view" }[] = [];
   if (label) {
-    if (rootLabel && rootLabel !== label)
+    if (rootLabel && rootLabel !== label && !crumb)
       crumbs.push({
         key: "root",
         label: rootLabel,
         href: rootDestination && canOpen(rootDestination, shell.context?.navigation ?? [], shell.hosted) ? rootDestination.href : undefined,
         kind: "root",
       });
-    crumbs.push({ key: "page", label, kind: "page" });
-    // EN-06's module sits between its Engineering parent and the view its own menu names.
-    if (view) crumbs.push({ key: "view", label: view, kind: materials ? "page" : "view" });
+    crumbs.push({ key: "page", label, kind: crumb ? "root" : "page", href: crumb && page && canOpen(page, shell.context?.navigation ?? [], shell.hosted) ? page.href : undefined });
+    // Each bounded module keeps its identity between the domain and the destination its menu names.
+    if (view) crumbs.push({ key: "view", label: view, kind: crumb ? "page" : "view" });
     if (subview) crumbs.push({ key: "subview", label: subview, kind: "view" });
   }
   const tabIds =

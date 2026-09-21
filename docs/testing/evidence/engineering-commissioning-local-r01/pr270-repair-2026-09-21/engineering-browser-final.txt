@@ -1,0 +1,499 @@
+Running 20 tests using 1 worker
+
+(node:30048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 [desktop-chromium] › tmp\en08-ci-tests\engineering-changes.spec.ts:44:1 › EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audited contract, My Work's menu and honest counts (1.2s)
+(node:33528) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   2 [desktop-chromium] › tmp\en08-ci-tests\engineering-changes.spec.ts:165:1 › EN07-A54 A55 A56 A60 A25 A44: the inspector projects retained records, and the next action follows the outstanding work (1.1s)
+(node:30040) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   3 [desktop-chromium] › tmp\en08-ci-tests\engineering-changes.spec.ts:233:1 › EN07-A02 A30 A36 A37: a wrong selection leaves nothing on screen, and a lost reply recovers the original requests without a second set (912ms)
+(node:19604) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -   4 [desktop-chromium] › tmp\en08-ci-tests\engineering-changes.spec.ts:278:1 › EN07-A46: a phone reads flush stacked summaries with a full-width inspector, an overlay menu and no page overflow
+  x   5 [desktop-chromium] › tmp\en08-ci-tests\engineering-commissioning.spec.ts:7:1 › EN-08 retains its six-view layout and reachable inspector after the EN-06 grid change (404ms)
+(node:15472) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   6 [desktop-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:45:1 › EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contract, My Work's menu and honest counts (695ms)
+(node:32508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   7 [desktop-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:161:1 › EN06-A04 A06 A07 A09 A10 A16 A27 A41: the server refuses what the screen would not offer (36ms)
+(node:26964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   8 [desktop-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:214:1 › EN06-A15 A16 A17 A18 A19 A20 A22 A23 A42: partial release, unknown outcome, receiving and a changed source (815ms)
+(node:30060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   9 [desktop-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:286:1 › EN06-A11 A12 A13: return and corrected successor, explicit adoption, and a commercial decision that Engineering cannot make (21ms)
+(node:31964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -  10 [desktop-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:322:1 › EN06-A30 A44: a phone keeps the page inside the viewport and the table in its own scroll
+(node:32336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -  11 [mobile-chromium] › tmp\en08-ci-tests\engineering-changes.spec.ts:44:1 › EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audited contract, My Work's menu and honest counts
+  -  12 [mobile-chromium] › tmp\en08-ci-tests\engineering-changes.spec.ts:165:1 › EN07-A54 A55 A56 A60 A25 A44: the inspector projects retained records, and the next action follows the outstanding work
+  -  13 [mobile-chromium] › tmp\en08-ci-tests\engineering-changes.spec.ts:233:1 › EN07-A02 A30 A36 A37: a wrong selection leaves nothing on screen, and a lost reply recovers the original requests without a second set
+  x  14 [mobile-chromium] › tmp\en08-ci-tests\engineering-changes.spec.ts:278:1 › EN07-A46: a phone reads flush stacked summaries with a full-width inspector, an overlay menu and no page overflow (362ms)
+(node:32164) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  15 [mobile-chromium] › tmp\en08-ci-tests\engineering-commissioning.spec.ts:7:1 › EN-08 retains its six-view layout and reachable inspector after the EN-06 grid change (774ms)
+(node:31508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -  16 [mobile-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:45:1 › EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contract, My Work's menu and honest counts
+  -  17 [mobile-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:161:1 › EN06-A04 A06 A07 A09 A10 A16 A27 A41: the server refuses what the screen would not offer
+  -  18 [mobile-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:214:1 › EN06-A15 A16 A17 A18 A19 A20 A22 A23 A42: partial release, unknown outcome, receiving and a changed source
+  -  19 [mobile-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:286:1 › EN06-A11 A12 A13: return and corrected successor, explicit adoption, and a commercial decision that Engineering cannot make
+  x  20 [mobile-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:322:1 › EN06-A30 A44: a phone keeps the page inside the viewport and the table in its own scroll (440ms)
+
+
+  1) [desktop-chromium] › tmp\en08-ci-tests\engineering-changes.spec.ts:44:1 › EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audited contract, My Work's menu and honest counts
+
+    Error: apiRequestContext.post: connect ECONNREFUSED 127.0.0.1:3013
+    Call log:
+      - → POST http://127.0.0.1:3013/api/v1/local-session
+        - user-agent: Playwright/1.63.0 (x64; windows 10.0) node/24.21
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3013
+        - content-type: application/json
+        - content-length: 25
+
+
+      15 |     if (!context) {
+      16 |       context = await playwrightRequest.newContext({ baseURL: origin, extraHTTPHeaders: { Origin: origin } });
+    > 17 |       const session = await context.post("/api/v1/local-session", { data: { profile } });
+         |                                     ^
+      18 |       expect(session.ok(), `session for ${profile}`).toBe(true);
+      19 |       contexts.set(profile, context);
+      20 |     }
+        at as (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-changes.spec.ts:17:37)
+        at seedMaterialsContext (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:72:23)
+        at seedMaterialsScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:81:23)
+        at seedChangesScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-changes.ts:66:17)
+        at build (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-changes.spec.ts:37:34)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-changes.spec.ts:46:13
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-changes-EN07-A-3c02c-rk-s-menu-and-honest-counts-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\en08-ci-results-final\engineering-changes-EN07-A-3c02c-rk-s-menu-and-honest-counts-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-changes-EN07-A-3c02c-rk-s-menu-and-honest-counts-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\en08-ci-results-final\engineering-changes-EN07-A-3c02c-rk-s-menu-and-honest-counts-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chromium] › tmp\en08-ci-tests\engineering-changes.spec.ts:165:1 › EN07-A54 A55 A56 A60 A25 A44: the inspector projects retained records, and the next action follows the outstanding work
+
+    Error: apiRequestContext.post: connect ECONNREFUSED 127.0.0.1:3013
+    Call log:
+      - → POST http://127.0.0.1:3013/api/v1/local-session
+        - user-agent: Playwright/1.63.0 (x64; windows 10.0) node/24.21
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3013
+        - content-type: application/json
+        - content-length: 25
+
+
+      15 |     if (!context) {
+      16 |       context = await playwrightRequest.newContext({ baseURL: origin, extraHTTPHeaders: { Origin: origin } });
+    > 17 |       const session = await context.post("/api/v1/local-session", { data: { profile } });
+         |                                     ^
+      18 |       expect(session.ok(), `session for ${profile}`).toBe(true);
+      19 |       contexts.set(profile, context);
+      20 |     }
+        at as (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-changes.spec.ts:17:37)
+        at seedMaterialsContext (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:72:23)
+        at seedMaterialsScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:81:23)
+        at seedChangesScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-changes.ts:66:17)
+        at build (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-changes.spec.ts:37:34)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-changes.spec.ts:167:13
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-changes-EN07-A-e018a-ollows-the-outstanding-work-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\en08-ci-results-final\engineering-changes-EN07-A-e018a-ollows-the-outstanding-work-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-changes-EN07-A-e018a-ollows-the-outstanding-work-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\en08-ci-results-final\engineering-changes-EN07-A-e018a-ollows-the-outstanding-work-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [desktop-chromium] › tmp\en08-ci-tests\engineering-changes.spec.ts:233:1 › EN07-A02 A30 A36 A37: a wrong selection leaves nothing on screen, and a lost reply recovers the original requests without a second set
+
+    Error: apiRequestContext.post: connect ECONNREFUSED 127.0.0.1:3013
+    Call log:
+      - → POST http://127.0.0.1:3013/api/v1/local-session
+        - user-agent: Playwright/1.63.0 (x64; windows 10.0) node/24.21
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3013
+        - content-type: application/json
+        - content-length: 25
+
+
+      15 |     if (!context) {
+      16 |       context = await playwrightRequest.newContext({ baseURL: origin, extraHTTPHeaders: { Origin: origin } });
+    > 17 |       const session = await context.post("/api/v1/local-session", { data: { profile } });
+         |                                     ^
+      18 |       expect(session.ok(), `session for ${profile}`).toBe(true);
+      19 |       contexts.set(profile, context);
+      20 |     }
+        at as (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-changes.spec.ts:17:37)
+        at seedMaterialsContext (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:72:23)
+        at seedMaterialsScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:81:23)
+        at seedChangesScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-changes.ts:66:17)
+        at build (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-changes.spec.ts:37:34)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-changes.spec.ts:235:13
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-changes-EN07-A-b235f-quests-without-a-second-set-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\en08-ci-results-final\engineering-changes-EN07-A-b235f-quests-without-a-second-set-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-changes-EN07-A-b235f-quests-without-a-second-set-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\en08-ci-results-final\engineering-changes-EN07-A-b235f-quests-without-a-second-set-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [desktop-chromium] › tmp\en08-ci-tests\engineering-commissioning.spec.ts:7:1 › EN-08 retains its six-view layout and reachable inspector after the EN-06 grid change
+
+    Error: apiRequestContext.post: connect ECONNREFUSED 127.0.0.1:3013
+    Call log:
+      - → POST http://127.0.0.1:3013/api/v1/local-session
+        - user-agent: Playwright/1.63.0 (x64; windows 10.0) node/24.21
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3013
+        - content-type: application/json
+        - content-length: 25
+
+
+      13 |     if (!context) {
+      14 |       context = await request.newContext({ baseURL: origin, extraHTTPHeaders: { Origin: origin } });
+    > 15 |       expect((await context.post("/api/v1/local-session", { data: { profile } })).ok()).toBe(true);
+         |                             ^
+      16 |       contexts.set(profile, context);
+      17 |     }
+      18 |     const call: Call = async (path, body) => {
+        at as (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-commissioning.spec.ts:15:29)
+        at seedMaterialsContext (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:72:23)
+        at seedMaterialsScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:81:23)
+        at seedChangesScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-changes.ts:66:17)
+        at seedCommissioningScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-commissioning.ts:63:20)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-commissioning.spec.ts:27:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-commissioning--29161-after-the-EN-06-grid-change-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\en08-ci-results-final\engineering-commissioning--29161-after-the-EN-06-grid-change-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-commissioning--29161-after-the-EN-06-grid-change-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\en08-ci-results-final\engineering-commissioning--29161-after-the-EN-06-grid-change-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [desktop-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:45:1 › EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contract, My Work's menu and honest counts
+
+    Error: apiRequestContext.post: connect ECONNREFUSED 127.0.0.1:3013
+    Call log:
+      - → POST http://127.0.0.1:3013/api/v1/local-session
+        - user-agent: Playwright/1.63.0 (x64; windows 10.0) node/24.21
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3013
+        - content-type: application/json
+        - content-length: 25
+
+
+      15 |     if (!context) {
+      16 |       context = await playwrightRequest.newContext({ baseURL: origin, extraHTTPHeaders: { Origin: origin } });
+    > 17 |       const session = await context.post("/api/v1/local-session", { data: { profile } });
+         |                                     ^
+      18 |       expect(session.ok(), `session for ${profile}`).toBe(true);
+      19 |       contexts.set(profile, context);
+      20 |     }
+        at as (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-materials.spec.ts:17:37)
+        at seedMaterialsContext (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:72:23)
+        at seedMaterialsScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:81:23)
+        at build (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-materials.spec.ts:38:60)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-materials.spec.ts:47:13
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-materials-EN06-a517a-rk-s-menu-and-honest-counts-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\en08-ci-results-final\engineering-materials-EN06-a517a-rk-s-menu-and-honest-counts-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-materials-EN06-a517a-rk-s-menu-and-honest-counts-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\en08-ci-results-final\engineering-materials-EN06-a517a-rk-s-menu-and-honest-counts-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [desktop-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:161:1 › EN06-A04 A06 A07 A09 A10 A16 A27 A41: the server refuses what the screen would not offer
+
+    Error: apiRequestContext.post: connect ECONNREFUSED 127.0.0.1:3013
+    Call log:
+      - → POST http://127.0.0.1:3013/api/v1/local-session
+        - user-agent: Playwright/1.63.0 (x64; windows 10.0) node/24.21
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3013
+        - content-type: application/json
+        - content-length: 25
+
+
+      15 |     if (!context) {
+      16 |       context = await playwrightRequest.newContext({ baseURL: origin, extraHTTPHeaders: { Origin: origin } });
+    > 17 |       const session = await context.post("/api/v1/local-session", { data: { profile } });
+         |                                     ^
+      18 |       expect(session.ok(), `session for ${profile}`).toBe(true);
+      19 |       contexts.set(profile, context);
+      20 |     }
+        at as (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-materials.spec.ts:17:37)
+        at seedMaterialsContext (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:72:23)
+        at seedMaterialsScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:81:23)
+        at build (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-materials.spec.ts:38:60)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-materials.spec.ts:163:13
+
+    Error Context: tmp\en08-ci-results-final\engineering-materials-EN06-5b787--the-screen-would-not-offer-desktop-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-materials-EN06-5b787--the-screen-would-not-offer-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\en08-ci-results-final\engineering-materials-EN06-5b787--the-screen-would-not-offer-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [desktop-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:214:1 › EN06-A15 A16 A17 A18 A19 A20 A22 A23 A42: partial release, unknown outcome, receiving and a changed source
+
+    Error: apiRequestContext.post: connect ECONNREFUSED 127.0.0.1:3013
+    Call log:
+      - → POST http://127.0.0.1:3013/api/v1/local-session
+        - user-agent: Playwright/1.63.0 (x64; windows 10.0) node/24.21
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3013
+        - content-type: application/json
+        - content-length: 25
+
+
+      15 |     if (!context) {
+      16 |       context = await playwrightRequest.newContext({ baseURL: origin, extraHTTPHeaders: { Origin: origin } });
+    > 17 |       const session = await context.post("/api/v1/local-session", { data: { profile } });
+         |                                     ^
+      18 |       expect(session.ok(), `session for ${profile}`).toBe(true);
+      19 |       contexts.set(profile, context);
+      20 |     }
+        at as (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-materials.spec.ts:17:37)
+        at seedMaterialsContext (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:72:23)
+        at seedMaterialsScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:81:23)
+        at build (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-materials.spec.ts:38:60)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-materials.spec.ts:216:13
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-materials-EN06-8e391-eiving-and-a-changed-source-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\en08-ci-results-final\engineering-materials-EN06-8e391-eiving-and-a-changed-source-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-materials-EN06-8e391-eiving-and-a-changed-source-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\en08-ci-results-final\engineering-materials-EN06-8e391-eiving-and-a-changed-source-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [desktop-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:286:1 › EN06-A11 A12 A13: return and corrected successor, explicit adoption, and a commercial decision that Engineering cannot make
+
+    Error: apiRequestContext.post: connect ECONNREFUSED 127.0.0.1:3013
+    Call log:
+      - → POST http://127.0.0.1:3013/api/v1/local-session
+        - user-agent: Playwright/1.63.0 (x64; windows 10.0) node/24.21
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3013
+        - content-type: application/json
+        - content-length: 25
+
+
+      15 |     if (!context) {
+      16 |       context = await playwrightRequest.newContext({ baseURL: origin, extraHTTPHeaders: { Origin: origin } });
+    > 17 |       const session = await context.post("/api/v1/local-session", { data: { profile } });
+         |                                     ^
+      18 |       expect(session.ok(), `session for ${profile}`).toBe(true);
+      19 |       contexts.set(profile, context);
+      20 |     }
+        at as (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-materials.spec.ts:17:37)
+        at seedMaterialsContext (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:72:23)
+        at seedMaterialsScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:81:23)
+        at build (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-materials.spec.ts:38:60)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-materials.spec.ts:288:13
+
+    Error Context: tmp\en08-ci-results-final\engineering-materials-EN06-adddd-hat-Engineering-cannot-make-desktop-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-materials-EN06-adddd-hat-Engineering-cannot-make-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\en08-ci-results-final\engineering-materials-EN06-adddd-hat-Engineering-cannot-make-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [mobile-chromium] › tmp\en08-ci-tests\engineering-changes.spec.ts:278:1 › EN07-A46: a phone reads flush stacked summaries with a full-width inspector, an overlay menu and no page overflow
+
+    Error: apiRequestContext.post: connect ECONNREFUSED 127.0.0.1:3013
+    Call log:
+      - → POST http://127.0.0.1:3013/api/v1/local-session
+        - user-agent: Playwright/1.63.0 (x64; windows 10.0) node/24.21
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3013
+        - content-type: application/json
+        - content-length: 25
+
+
+      15 |     if (!context) {
+      16 |       context = await playwrightRequest.newContext({ baseURL: origin, extraHTTPHeaders: { Origin: origin } });
+    > 17 |       const session = await context.post("/api/v1/local-session", { data: { profile } });
+         |                                     ^
+      18 |       expect(session.ok(), `session for ${profile}`).toBe(true);
+      19 |       contexts.set(profile, context);
+      20 |     }
+        at as (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-changes.spec.ts:17:37)
+        at seedMaterialsContext (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:72:23)
+        at seedMaterialsScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:81:23)
+        at seedChangesScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-changes.ts:66:17)
+        at build (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-changes.spec.ts:37:34)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-changes.spec.ts:280:13
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-changes-EN07-A-8caf6-y-menu-and-no-page-overflow-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\en08-ci-results-final\engineering-changes-EN07-A-8caf6-y-menu-and-no-page-overflow-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-changes-EN07-A-8caf6-y-menu-and-no-page-overflow-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\en08-ci-results-final\engineering-changes-EN07-A-8caf6-y-menu-and-no-page-overflow-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  10) [mobile-chromium] › tmp\en08-ci-tests\engineering-commissioning.spec.ts:7:1 › EN-08 retains its six-view layout and reachable inspector after the EN-06 grid change
+
+    Error: apiRequestContext.post: connect ECONNREFUSED 127.0.0.1:3013
+    Call log:
+      - → POST http://127.0.0.1:3013/api/v1/local-session
+        - user-agent: Playwright/1.63.0 (x64; windows 10.0) node/24.21
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3013
+        - content-type: application/json
+        - content-length: 25
+
+
+      13 |     if (!context) {
+      14 |       context = await request.newContext({ baseURL: origin, extraHTTPHeaders: { Origin: origin } });
+    > 15 |       expect((await context.post("/api/v1/local-session", { data: { profile } })).ok()).toBe(true);
+         |                             ^
+      16 |       contexts.set(profile, context);
+      17 |     }
+      18 |     const call: Call = async (path, body) => {
+        at as (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-commissioning.spec.ts:15:29)
+        at seedMaterialsContext (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:72:23)
+        at seedMaterialsScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:81:23)
+        at seedChangesScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-changes.ts:66:17)
+        at seedCommissioningScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-commissioning.ts:63:20)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-commissioning.spec.ts:27:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-commissioning--29161-after-the-EN-06-grid-change-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\en08-ci-results-final\engineering-commissioning--29161-after-the-EN-06-grid-change-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-commissioning--29161-after-the-EN-06-grid-change-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\en08-ci-results-final\engineering-commissioning--29161-after-the-EN-06-grid-change-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  11) [mobile-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:322:1 › EN06-A30 A44: a phone keeps the page inside the viewport and the table in its own scroll
+
+    Error: apiRequestContext.post: connect ECONNREFUSED 127.0.0.1:3013
+    Call log:
+      - → POST http://127.0.0.1:3013/api/v1/local-session
+        - user-agent: Playwright/1.63.0 (x64; windows 10.0) node/24.21
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3013
+        - content-type: application/json
+        - content-length: 25
+
+
+      15 |     if (!context) {
+      16 |       context = await playwrightRequest.newContext({ baseURL: origin, extraHTTPHeaders: { Origin: origin } });
+    > 17 |       const session = await context.post("/api/v1/local-session", { data: { profile } });
+         |                                     ^
+      18 |       expect(session.ok(), `session for ${profile}`).toBe(true);
+      19 |       contexts.set(profile, context);
+      20 |     }
+        at as (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-materials.spec.ts:17:37)
+        at seedMaterialsContext (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:72:23)
+        at seedMaterialsScenario (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\helpers\engineering-materials.ts:81:23)
+        at build (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-materials.spec.ts:38:60)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tmp\en08-ci-tests\engineering-materials.spec.ts:324:13
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-materials-EN06-4d0c3-the-table-in-its-own-scroll-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\en08-ci-results-final\engineering-materials-EN06-4d0c3-the-table-in-its-own-scroll-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\en08-ci-results-final\engineering-materials-EN06-4d0c3-the-table-in-its-own-scroll-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\en08-ci-results-final\engineering-materials-EN06-4d0c3-the-table-in-its-own-scroll-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  11 failed
+    [desktop-chromium] › tmp\en08-ci-tests\engineering-changes.spec.ts:44:1 › EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audited contract, My Work's menu and honest counts
+    [desktop-chromium] › tmp\en08-ci-tests\engineering-changes.spec.ts:165:1 › EN07-A54 A55 A56 A60 A25 A44: the inspector projects retained records, and the next action follows the outstanding work
+    [desktop-chromium] › tmp\en08-ci-tests\engineering-changes.spec.ts:233:1 › EN07-A02 A30 A36 A37: a wrong selection leaves nothing on screen, and a lost reply recovers the original requests without a second set
+    [desktop-chromium] › tmp\en08-ci-tests\engineering-commissioning.spec.ts:7:1 › EN-08 retains its six-view layout and reachable inspector after the EN-06 grid change
+    [desktop-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:45:1 › EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contract, My Work's menu and honest counts
+    [desktop-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:161:1 › EN06-A04 A06 A07 A09 A10 A16 A27 A41: the server refuses what the screen would not offer
+    [desktop-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:214:1 › EN06-A15 A16 A17 A18 A19 A20 A22 A23 A42: partial release, unknown outcome, receiving and a changed source
+    [desktop-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:286:1 › EN06-A11 A12 A13: return and corrected successor, explicit adoption, and a commercial decision that Engineering cannot make
+    [mobile-chromium] › tmp\en08-ci-tests\engineering-changes.spec.ts:278:1 › EN07-A46: a phone reads flush stacked summaries with a full-width inspector, an overlay menu and no page overflow
+    [mobile-chromium] › tmp\en08-ci-tests\engineering-commissioning.spec.ts:7:1 › EN-08 retains its six-view layout and reachable inspector after the EN-06 grid change
+    [mobile-chromium] › tmp\en08-ci-tests\engineering-materials.spec.ts:322:1 › EN06-A30 A44: a phone keeps the page inside the viewport and the table in its own scroll
+  9 skipped

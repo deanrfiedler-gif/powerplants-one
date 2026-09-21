@@ -25,7 +25,7 @@ contains the complete package and subsequent harness/evidence refinement.
 |---|---|
 | W01 | Inspected live PostgreSQL 16.15; chose immutable optional configuration JSON, stable child ownership ledger, explicit schema dispatch, bounded exact reads and existing native command infrastructure. |
 | W02 | Native five-step workspace, Alternatives/Revisions, family overview, typed editors, evidence inspector, shared r22 menu/header/summary and one in-memory working proposal. |
-| W03 | Strict schema 1 configuration, readiness findings, source review fingerprints, actual native evidence/Activity links, eligible owned unknowns and additive migration 0030. |
+| W03 | Strict schema 1 configuration, readiness findings, source review fingerprints, actual native evidence/Activity links, eligible owned unknowns and additive migration 0032. |
 | W04 | Fresh/copy alternatives, deterministic allocated child IDs, exact lineage and remapping, immutable paged history, exact saved-source comparison and guarded historical starting points. |
 | W05 | Independent permitted saved-cost projection, per-option estimates, explicit comparison cost versions and unchanged manual basis adoption / Draft output paths. Discovery edits do not reprice. |
 | W06 | Unit, PostgreSQL, direct HTTP, compiled browser and documentation assurance; native captures, bounds and measured geometry retained. The existing required Estimating CI job now includes structured tests and actual app/database restart proof. CI execution and owner acceptance remain distinct from local checks. |
@@ -52,9 +52,9 @@ The ten r01 questions, work tags, absent-configuration DTO/hash behaviour and pr
 Complete cost bases remain unchanged. Optional `configuration` uses
 `PPO-ES02-CONFIG-r01` / schema 1; unknown versions and explicit null fail safely.
 Confirmation tokens are separate from question IDs and bind current exact context.
-Migration 0030 adds immutable child identity ownership and exact lineage checks;
+Migration 0032 adds immutable child identity ownership and exact lineage checks;
 there is no new grant, seed, dependency or identity-table ALTER. All migration
-registry assertions and the reviewed hosted-demo migration gate advance to 30;
+registry assertions and the reviewed hosted-demo migration gate advance to 32;
 seed/grant/user expectations stay unchanged.
 
 New workspace reads: `summary`, `history`, `cost-versions`, `evidence`; read-only POST
@@ -143,6 +143,25 @@ records the exact patch. UI source remains `071a864`; the later server read is
 identified separately. The PR reports checks for the exact latest head.
 ES-02 follow-up work is isolated in `tmp/es02-final` after the original shared
 checkout was taken by separate ES-08 work; that branch's edits are preserved.
+
+Before integration with newer main, `ea57344` passed all 17 checks (seven required).
+[Full Application run 35578429880](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35578429880)
+passed 161 units, 464 database cases, 32 HTTP cases and 234 full browser cases
+(37 configured skips), plus the retained domain/restart phases. Its 118-minute
+duration is evidence for raising only the full job budget from 120 to 150 minutes
+when preserving the additional merged EN-07/EN-08 suites; individual test deadlines
+and assertions are unchanged. The demo's initial unreadable-response checkpoint
+also passed on an unchanged-commit rerun after an unchanged-main comparison.
+
+Main advanced to `f977bf8` while those checks ran, merging EN-07/EN-08 and assigning
+their migrations 0030/0031. The ES-02 migration had never merged or deployed and is
+therefore renumbered to 0032 with identical SQL bytes; no issued main migration or
+ledger is rewritten. The merged seed/grant allowlists and shared navigation repairs
+are retained. Applied-version lists, the reviewed demo gate and added-migration
+count advance to 32/15; there is no ES-02 seed or user-count change. Shared style
+selectors retain all five workspace scopes. Earlier manifests/captures remain
+historical at their exact recorded commits, including the old migration filename.
+Fresh combined-source verification and the final PR checks govern this integration.
 
 ## Acceptance disposition
 

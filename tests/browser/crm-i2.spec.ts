@@ -15,7 +15,8 @@ async function call(page: Page, path: string, body?: unknown) {
   return r.json();
 }
 async function identity(page: Page, profile = "coordinator") {
-  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
+  // The initial session read is asynchronous; use the same bounded budget as identity controls.
+  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false", { timeout: 15000 });
   if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await page.getByRole("button", { name: "Change identity", exact: true }).click();
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   await page.getByRole("button", { name: "Use this identity", exact: true }).click();
@@ -367,7 +368,13 @@ test("CA-13 shared brand consumers retain navigation, readable actions and origi
   await call(page, "local-session", { profile: "coordinator" });
   for (const [path, title] of [["/", "Good (morning|afternoon|evening), "], ["/customers", "Organisations"], ["/work", "Good (morning|afternoon|evening), "], ["/service/reports", "Service review"]]) {
     await page.goto(path);
-    if (path !== "/") await identity(page);
+    if (path === "/") {
+      // Home redirects through a streamed page; its initial identity read can still be
+      // pending after navigation. Settle that boundary before the unchanged title check.
+      await page.waitForURL(url => url.pathname === "/work");
+      await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true }))
+        .toHaveAttribute("aria-busy", "false", { timeout: 15000 });
+    } else await identity(page);
     // Streaming navigation briefly retains both the loading and page headings.
     // Retry the complete one-heading/title condition before inspecting the shell.
     await expect(page.locator("h1")).toHaveText([new RegExp(title)]);
