@@ -5,13 +5,13 @@ date: 2026-09-20
 owner: Dean Fiedler
 scope_id: EN-08
 principal_requirement: ENG-07
-status: Implemented on a local branch for owner review; not pushed; visual acceptance, business acceptance, technical authority and the accepted UI baseline register remain separate
+status: Implemented branch in PR #270; 21 September conflict and assurance repair; visual acceptance, business acceptance, technical authority and the accepted UI baseline register remain separate
 source_commit: 7a47b2f (EN-07 branch tip this work is stacked on, draft PR #266) with main 5d54c4e merged in; main was 1a69e93 at the planning checkpoint
 ---
 
 # EN-08 Commissioning Basis & As-Built Release: application integration
 
-**Scope:** page/module EN-08 under principal requirement ENG-07. The two identifiers belong to different registers and are not conflated. **Authority:** on 20 September 2026 Dean supplied Build Plan r02, the accepted desktop mockup r02 and the VS Code build prompt r01, and instructed that the working module be built in the local application, verified and handed over. That instruction covered local implementation, migrations against a synthetic database and verification. It excluded pushing, merging, deploying, contacting anyone, live ERP or SharePoint writes, equipment control and production data. Nothing here was pushed.
+**Scope:** page/module EN-08 under principal requirement ENG-07. The two identifiers belong to different registers and are not conflated. **Authority:** on 20 September 2026 Dean supplied Build Plan r02, the accepted desktop mockup r02 and the VS Code build prompt r01, and instructed that the working module be built in the local application, verified and handed over. That instruction covered local implementation, migrations against a synthetic database and verification. It excluded pushing, merging, deploying, contacting anyone, live ERP or SharePoint writes, equipment control and production data. Nothing was pushed under that original instruction. Dean subsequently opened PR #270; the 21 September request to fix that PR authorises the repository repair recorded in section 8.
 
 This is a change to a synthetic prototype. Nothing here is a production claim, a business acceptance, a technical or statutory authority, an operational procedure, an acceptance limit, or evidence that an ERP, SharePoint, CAD, controller, Equipment, Service, Projects or document-distribution integration exists. Every limit, instrument, calibration, person and record in the module is fictional.
 
@@ -108,3 +108,19 @@ See `docs/testing/evidence/engineering-commissioning-local-r01/README.md` (PPO-E
 ## 7. Open items for Dean
 
 See `docs/delivery/engineering-commissioning-as-built-handover.md` (PPO-EN08-HO), section 6.
+
+## 8. PR #270 conflict and assurance repair, 21 September 2026
+
+At inspection, GitHub reported head `f8d2b3dc28d33a69d8b02a367e2e7b01eab9f730` as `CONFLICTING` with `main`; it had no check runs. This was a merge block, not an observed failed EN-08 CI assertion. Main `b4806af` includes the owner-requested EN-06 refined register from PR #268.
+
+The repair merges that main without changing its EN-06 grid composition. EN-07 and EN-08 retain the flex composition their markup uses in `engineering-review-base.css`; header rules are scoped to the owning workspace, and the EN-06 grouped breadcrumb remains intact. EN-08's phone inspector starts below the shared 64 px header, keeping the close control reachable. The new browser regression exercises all six EN-08 destinations with real synthetic server commands and independent fixture identities, plus flush register edges and actual phone close/menu/focus interactions.
+
+Three bounded repairs already present on the newer EN-07 branch are carried forward: `00cd6f4` orders source links consistently before preview/payload hashing, with its permutation regression; `b3c7908` makes the in-process prerequisite helper return the actual route's non-creation status; and `78a8acb` waits for the streamed home redirect's identity boundary before the unchanged CRM heading assertions. Existing stored receipts, command namespaces, migrations, seed definitions, capabilities, output templates and issued files are unchanged by this repair.
+
+[Repair evidence](../testing/evidence/engineering-commissioning-local-r01/pr270-repair-2026-09-21/README.md) records actual commands, successes, failures and the unchanged-main comparison. The original whole-module EN08-01–EN08-60 acceptance matrix, full HTTP/restart procedures, physical devices, owner visual/business acceptance and hosted deployment are not asserted by this repair.
+
+## 9. Initial CRM identity readiness follow-up, 21 September 2026
+
+After `9dcf224`, the owner supplied the first desktop CRM journey's actual CI failure in run `35558631792` / job `106207066774`: the identity region stayed busy beyond a default 5-second assertion. The surrounding database group passed all three tests; 14 browser cases passed, including warm-up. Both CRM identity helpers now use their existing 15-second UI-action budget for that initial asynchronous readiness check. The full CA-01/04/13 journey delays the real initial session response by 6.5 seconds to retain a deterministic regression on desktop and phone. Identity selection and all subsequent domain assertions remain unchanged.
+
+The [follow-up evidence](../testing/evidence/engineering-commissioning-local-r01/pr270-identity-2026-09-21/README.md) distinguishes the reproduced original failure, all 30 CRM browser checks passing locally, static/documentation checks and pending new-head CI. This is a test-only repair and changes no EN-08 runtime, authority, migration, receipt or issued file.

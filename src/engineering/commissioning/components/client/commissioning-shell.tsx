@@ -128,7 +128,7 @@ export function CommissioningShell({ children, packageOverride = null, recordOve
   );
   const heading = onRecord ? "Commissioning package" : commissioningViews.find((v) => v.id === current)?.heading;
   return (
-    <SecondaryMenuFrame presentation="baseline" state={menuState} id="ppo-commissioning" name="Commissioning" menuId="cm-menu" contentId="cm-content" attributes={{ "data-view": onRecord ? "record" : current }} menu={menu} message={message}>
+    <SecondaryMenuFrame state={menuState} id="ppo-commissioning" name="Commissioning" menuId="cm-menu" contentId="cm-content" attributes={{ "data-view": onRecord ? "record" : current }} menu={menu} message={message}>
       <div className="em-workspace">
         {/* The visible title lives in the header breadcrumb; the page keeps one real heading for assistive technology. */}
         <h1 className="mw-sr">Commissioning Basis &amp; As-Built Release: {heading}</h1>

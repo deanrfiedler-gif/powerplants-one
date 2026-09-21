@@ -12,7 +12,8 @@ async function pick(page: Page, label: string, id: string) {
 test.describe.configure({ timeout: 120000 });
 test.use({ actionTimeout: 15000 });
 async function identity(page: Page, profile = "coordinator") {
-  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
+  // The initial session read is asynchronous; use the same bounded budget as identity controls.
+  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false", { timeout: 15000 });
   if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await page.getByRole("button", { name: "Change identity", exact: true }).click();
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   await page
@@ -118,8 +119,20 @@ async function seeded(page: Page) {
 test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, completion and reload", async ({
   page,
 }, info) => {
+  // CI caught the initial identity read outlasting the default 5s assertion. Hold
+  // the real GET response for 6.5s, preserving its status/body and the real UI sign-in.
+  // Concurrent initial reads share one delay; subsequent identity changes remain live.
+  let initialSessionRead: Promise<void> | undefined;
+  await page.route("**/api/v1/local-session", async route => {
+    if (route.request().method() !== "GET") return route.continue();
+    const response = await route.fetch();
+    initialSessionRead ??= new Promise(resolve => setTimeout(resolve, 6500));
+    await initialSessionRead;
+    await route.fulfill({ response });
+  });
   await page.goto("/sales/opportunities/new");
   await identity(page);
+  await page.unroute("**/api/v1/local-session");
   await expect(
     page.getByRole("heading", { name: "New opportunity", exact: true }),
   ).toBeVisible();

@@ -1,16 +1,25 @@
-/* EN-07 Engineering Change-Impact Review (parent ENG-06). Composition from the audited desktop mockup r02, behaviour
+/* EN-07 Engineering Change-Impact Review (parent ENG-06). Composition from desktop mockup r03, which Dean supplied on
+   20 September 2026 as the updated design and which supersedes the audited r02 this module was first built to; behaviour
    and data rules from build plan r02, values from theme style board r22. The secondary menu, tokens, reset, controls,
    menus, forms and dialogs are My Work's own rules, and the context row, flush register, inspector and working pages
-   use the retained composition in engineering-review-base.css, scoped to EN-07/EN-08. This file adds only what is
+   use the retained composition in engineering-review-base.css, scoped to EN-07. This file adds only what is
    EN-07's: one semantic tone treatment, the wider inspector and its sections, and the assessment surfaces.
    Class names carry an ec- prefix.
 
    Semantic formatting (plan 5.3.1). Success, warning, danger and neutral are the shared r22 tokens verbatim. The
    information pair is verified in r22 and has no My Work variable, so it is a scoped alias here and nowhere else.
-   One condition has one tone, one icon and one label; colour never carries a rule that words do not. */
+   One condition has one tone, one icon and one label; colour never carries a rule that words do not. r03 sets a
+   condition as a pill: the tone's text colour on the tone's own surface from the plan's "Optional surface" column,
+   with an outline glyph. The tone classes carry colour only; the surface belongs to .ec-tone, so toned running text
+   never gains a background. Still no full-row fills, and the amber strip stays the inspector's alone. */
 #ppo-changes{--information:#346580;--information-surface:#e9f2f8;--information-border:#c9dde9}
-#ppo-changes .ec-tone{display:inline-flex;align-items:center;gap:8px;line-height:20px;white-space:nowrap;color:var(--neutral)}
-#ppo-changes .ec-tone svg{flex:none;width:18px;height:18px}
+#ppo-changes .ec-tone{display:inline-flex;align-items:center;gap:5px;min-height:28px;padding:4px 9px 4px 7px;border-radius:var(--radius-control);background:var(--neutral-surface);color:var(--neutral);font-size:13px;line-height:20px;white-space:nowrap;vertical-align:middle}
+#ppo-changes .ec-tone svg{flex:none;width:16px;height:16px}
+#ppo-changes .ec-tone.ec-tone-information{background:var(--information-surface)}
+#ppo-changes .ec-tone.ec-tone-caution{background:var(--warning-surface)}
+#ppo-changes .ec-tone.ec-tone-failure{background:var(--danger-surface)}
+#ppo-changes .ec-tone.ec-tone-positive{background:var(--success-surface)}
+#ppo-changes .ec-tone.ec-tone-plain{min-height:0;padding:0;border-radius:0;background:transparent;font-size:inherit}
 #ppo-changes .ec-tone-neutral{color:var(--neutral)}
 #ppo-changes .ec-tone-information{color:var(--information)}
 #ppo-changes .ec-tone-caution{color:var(--warning)}
@@ -19,18 +28,25 @@
 #ppo-changes .ec-tone-wrap{white-space:normal}
 
 /* Register columns. The reference sits under the title, as the audited row does. */
-#ppo-changes .ec-register-table{min-width:880px}
-#ppo-changes .ec-register-table :is(td){padding:6px 10px}
-#ppo-changes .ec-register-table th button,#ppo-changes .ec-register-table th>span{padding:0 10px!important}
-#ppo-changes .ec-col-change{min-width:170px}
+#ppo-changes .ec-register-table{min-width:900px}
+#ppo-changes .ec-register-table :is(td){padding:6px 8px}
+#ppo-changes .ec-register-table th button,#ppo-changes .ec-register-table th>span{padding:0 8px!important}
+#ppo-changes .ec-col-change{min-width:150px}
 #ppo-changes .ec-scope .ec-count{white-space:nowrap}
-#ppo-changes .ec-col-due{min-width:64px}
+#ppo-changes .ec-col-due{min-width:104px;white-space:nowrap}
+/* A heading may take two lines, as r03 draws "Next action owner", so the pills keep their width beside a docked
+   inspector. A name may take two lines; neither ever takes three. */
+#ppo-changes .ec-register-table th :is(button,span){white-space:normal;text-align:left;line-height:16px}
+#ppo-changes .ec-register-table th>span{display:block}
+#ppo-changes .ec-register-table :is(th.ec-col-owner,td[data-label='Next action owner']){min-width:104px}
+#ppo-changes .ec-register-table :is(th.ec-col-scope,td.ec-scope){min-width:96px}
+#ppo-changes .em-table-foot .mw-icon-button{border:1px solid var(--hairline);background:var(--surface-white)}
 #ppo-changes .ec-basis{white-space:nowrap;font-variant-numeric:tabular-nums}
 #ppo-changes .ec-count{display:inline-grid;place-items:center;min-width:20px;height:18px;margin-left:6px;padding:0 5px;border-radius:999px;background:var(--neutral-surface);color:var(--neutral);font-size:12px}
 #ppo-changes .em-context-actions .mw-button-primary{min-width:150px}
-#ppo-changes .ec-view{min-width:200px}
+#ppo-changes .ec-view{min-width:176px}
 #ppo-changes .ec-view select{min-height:38px;width:100%;padding:7px 30px 7px 12px;border:1px solid var(--control-border);border-radius:var(--radius-control);background-color:var(--surface-white);font-weight:500}
-#ppo-changes .em-search{flex:1 1 320px;max-width:520px}
+#ppo-changes .em-search{flex:1 1 180px;max-width:520px}
 #ppo-changes .ec-hidden-selection{color:var(--warning)}
 
 /* Inspector: the plan's composition target of about 448px where space permits. Between the two it narrows so the
@@ -39,45 +55,59 @@
 @container em-split (max-width:1420px){
  #ppo-changes .em-inspector{width:400px}
 }
+@container em-split (max-width:1320px){
+ #ppo-changes .em-inspector{width:368px}
+}
 @container em-split (max-width:1160px){
  #ppo-changes .em-inspector{position:absolute;z-index:6;inset:0 0 0 auto;width:min(448px,100%);box-shadow:var(--shadow)}
 }
 #ppo-changes .ec-inspector-ref{color:var(--text-secondary);font-size:13px;letter-spacing:.2px}
 #ppo-changes .ec-inspector-sub{color:var(--text-secondary);font-size:15px}
-#ppo-changes .ec-section{display:flex;flex-direction:column;gap:2px;padding-top:10px;border-top:1px solid var(--line)}
+#ppo-changes .em-inspector-head{padding-top:12px;padding-bottom:6px}
+#ppo-changes .em-inspector-body{gap:8px}
+#ppo-changes .ec-chips{display:flex;flex-wrap:wrap;gap:8px;padding-bottom:4px}
+#ppo-changes .ec-section{display:flex;flex-direction:column;gap:0;padding-top:10px;border-top:1px solid var(--line)}
 #ppo-changes .ec-section h3{margin:0 0 4px}
-#ppo-changes .ec-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:12px;min-height:28px;border-bottom:1px solid var(--line-soft)}
-#ppo-changes .ec-row:last-child{border-bottom:0}
-#ppo-changes .ec-row>span:first-child{color:var(--ink)}
-#ppo-changes .ec-row strong{font-weight:500}
-#ppo-changes .ec-revisions{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px;margin-top:6px}
-#ppo-changes .ec-revisions>div{display:flex;flex-direction:column;min-width:0;padding:8px 12px;border:1px solid var(--line);border-radius:var(--radius-control);background:var(--surface)}
+/* r03 sets the summary as open label and value pairs, with no rule between them. */
+#ppo-changes .ec-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:12px;min-height:22px}
+#ppo-changes .ec-row>span:first-child{color:var(--text-secondary)}
+#ppo-changes .ec-row strong{font-weight:400;color:var(--ink)}
+#ppo-changes .ec-row strong[data-tone=caution]{color:var(--warning)}
+/* The exact basis: as released beside proposed, unboxed, with one rule between them. */
+#ppo-changes .ec-revisions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+#ppo-changes .ec-revisions>div{display:flex;flex-direction:column;min-width:0}
+#ppo-changes .ec-revisions>div+div{padding-left:16px;border-left:1px solid var(--line)}
 #ppo-changes .ec-revisions span{color:var(--text-secondary);font-size:13px}
 #ppo-changes .ec-revisions strong{font-size:15px;font-weight:700;color:var(--navy);overflow-wrap:anywhere}
-#ppo-changes .ec-revisions small{color:var(--text-secondary);font-size:13px}
-#ppo-changes .ec-revisions>.mw-icon{color:var(--text-secondary)}
-#ppo-changes .ec-sources{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:4px 12px;margin-top:4px}
-#ppo-changes .ec-sources small{grid-column:1/-1;display:block;padding-left:26px;color:var(--text-secondary);font-size:13px}
-#ppo-changes .ec-sources ul{grid-column:1/-1;padding-left:26px;color:var(--text-secondary);font-size:13px;list-style:disc inside}
+#ppo-changes .ec-revisions small{color:var(--text-secondary);font-size:14px}
+#ppo-changes .ec-sources{display:flex;flex-direction:column;align-items:flex-start;gap:0;margin-top:8px}
+#ppo-changes .ec-sources .ec-tone{gap:8px;font-weight:600}
+#ppo-changes .ec-sources .ec-tone svg{width:20px;height:20px}
+#ppo-changes .ec-sources :is(small,ul,a){margin-left:28px}
+#ppo-changes .ec-sources small{display:block;color:var(--text-secondary);font-size:13px}
+#ppo-changes .ec-sources ul{color:var(--text-secondary);font-size:13px;list-style:disc inside}
+#ppo-changes .ec-sources a{display:inline-flex;align-items:center;gap:6px}
+#ppo-changes .ec-sources a .mw-icon{width:16px;height:16px}
 /* The one restrained caution strip: the concrete prerequisite that blocks implementation. No full-row fills anywhere. */
-#ppo-changes .ec-blocking{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border:1px solid var(--warning-border);border-radius:var(--radius-control);background:var(--warning-surface);color:var(--warning)}
-#ppo-changes .ec-blocking svg{flex:none;width:26px;height:26px}
+#ppo-changes .ec-blocking{display:flex;align-items:flex-start;gap:12px;padding:8px 12px;border:1px solid var(--warning-border);border-radius:var(--radius-control);background:var(--warning-surface);color:var(--warning)}
+#ppo-changes .ec-blocking svg{flex:none;width:24px;height:24px}
 #ppo-changes .ec-blocking strong{display:block;font-weight:700;color:var(--warning)}
 #ppo-changes .ec-blocking p{color:var(--warning);font-size:13px}
-#ppo-changes .ec-owner{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
-#ppo-changes .ec-owner>div{display:flex;flex-direction:column}
-#ppo-changes .ec-owner>div+div{padding-left:12px;border-left:1px solid var(--line)}
-#ppo-changes .ec-owner span{color:var(--text-secondary);font-size:13px}
-#ppo-changes .ec-owner strong{font-weight:500}
-#ppo-changes .ec-follow>li{display:grid;grid-template-columns:24px minmax(0,1fr) minmax(0,.8fr);align-items:center;gap:10px;min-height:32px;border-bottom:1px solid var(--line-soft)}
+#ppo-changes .ec-owner{margin-top:2px;color:var(--text-secondary)}
+/* Each obligation is one whole-row link: what it is, the state its own record gives it, and a chevron. */
+#ppo-changes .ec-follow>li{border-bottom:1px solid var(--line-soft)}
 #ppo-changes .ec-follow>li:last-child{border-bottom:0}
-#ppo-changes .ec-follow .mw-icon{width:20px;height:20px;color:var(--text-secondary)}
-#ppo-changes .ec-follow a{color:var(--navy);overflow-wrap:anywhere}
-#ppo-changes .ec-follow a:hover{text-decoration:underline;text-underline-offset:3px}
-#ppo-changes .ec-inspector-foot{display:flex;flex-direction:column;gap:10px;flex:none;padding:12px 20px 16px;border-top:1px solid var(--line);background:var(--surface-white)}
-#ppo-changes .ec-inspector-foot .mw-button-primary{width:100%;min-height:44px}
-#ppo-changes .ec-inspector-links{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 16px}
-#ppo-changes .ec-inspector-links a{color:var(--link);text-decoration:underline;text-underline-offset:3px}
+#ppo-changes .ec-follow a{display:grid;grid-template-columns:minmax(0,1fr) auto 18px;align-items:center;gap:10px;min-height:32px;color:var(--ink);text-decoration:none;overflow-wrap:anywhere}
+#ppo-changes .ec-follow a:hover>span:first-child{text-decoration:underline;text-underline-offset:3px}
+#ppo-changes .ec-follow .ec-tone{font-size:13px}
+#ppo-changes .ec-follow .ec-tone-neutral{color:var(--text-secondary)}
+#ppo-changes .ec-follow .mw-icon{width:18px;height:18px;color:var(--text-secondary)}
+#ppo-changes .ec-inspector-foot{display:flex;flex-direction:column;gap:8px;flex:none;padding:10px 20px 12px;border-top:1px solid var(--line);background:var(--surface-white)}
+#ppo-changes .ec-inspector-foot .mw-button{width:100%;min-height:42px;font-weight:600}
+#ppo-changes .ec-inspector-foot .mw-button:not(.mw-button-primary){border-color:var(--control-border)}
+#ppo-changes .ec-inspector-links{display:flex;flex-wrap:wrap;gap:6px 16px;padding-top:4px}
+#ppo-changes .ec-inspector-links a{display:inline-flex;align-items:center;gap:6px;color:var(--link);text-decoration:underline;text-underline-offset:3px}
+#ppo-changes .ec-inspector-links .mw-icon{width:16px;height:16px}
 
 /* Assessment: aligned current and proposed columns, with a changed value marked in words as well as weight. */
 #ppo-changes .ec-compare-table td:nth-child(2),#ppo-changes .ec-compare-table td:nth-child(3){width:30%}
@@ -118,7 +148,7 @@
 @media (max-width:780px){
  #ppo-changes .em-inspector{position:fixed;z-index:40;inset:64px 0 0 0;width:auto;border-left:0}
  #ppo-changes .ec-detail{padding:12px 14px 20px}
- #ppo-changes .ec-inspector-foot .mw-button-primary{min-height:48px}
+ #ppo-changes .ec-inspector-foot .mw-button{min-height:48px}
  #ppo-changes :is(input,select,textarea){font-size:16px}
  /* A narrow screen reads each change as a flush stacked summary; the eight-column grid is never shrunk to fit. */
  #ppo-changes .ec-register-table{min-width:0}
@@ -135,4 +165,8 @@
 /* A panel named in the address is scrolled to and focused by script. That is a landing point, not a control, so it
    takes no ring; every real control keeps the shared focus treatment. */
 #ppo-changes [id^=ec-panel-]:focus{outline:none}
-/* Module identity and destination use the shared semantic breadcrumb. */
+/* While the menu is hidden the header must still say where you are. On a narrow header the module name gives way
+   first, so the destination is never the part that is cut off. */
+.workspace:has(#ppo-changes) .ppo-shell-header .product-heading[data-module-crumb] strong{display:flex;min-width:0;white-space:nowrap}
+.workspace:has(#ppo-changes) .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-view{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.workspace:has(#ppo-changes) .ppo-shell-header .product-heading[data-module-crumb] :is(.ppo-heading-root,.ppo-heading-subview){flex:none;white-space:pre}

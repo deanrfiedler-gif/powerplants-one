@@ -1,0 +1,17 @@
+# PR #270: initial CRM identity readiness
+
+21 September 2026. Follow-up to `9dcf224`; retained CRM CA-01/04/13 and CA-13 checks. This is test-harness verification, not EN-08 business acceptance.
+
+The user supplied the failed step from [Application assurance run 35558631792, job 106207066774](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35558631792/job/106207066774). Its mobile CRM database tests all passed; the browser group passed 14 of 15 cases including warm-up, with the first desktop sales journey failing in `crm.spec.ts` before identity selection. The local identity region remained `aria-busy=true` beyond the default 5-second assertion timeout. At inspection, this was the broad job's only failed completed step; the job was still running, and the other 16 PR checks, including the compiled browser suite, had passed. No final result for that still-running job is inferred.
+
+Both CRM suites already assign UI actions a 15-second limit. Their initial identity-readiness assertions now explicitly use that same limit. Subsequent business assertions retain their existing limits, identity selection still uses the real controls, and no application authentication, source, schema, permission, retry or receipt code changed. The earlier home-redirect readiness fix addressed a separate assertion and did not cover these helpers.
+
+The existing CA-01/04/13 full sales journey now holds the actual initial GET `/api/v1/local-session` response for 6.5 seconds. Concurrent initial GETs share one delay; the actual status/body are returned unchanged. POST sign-in is live, and the route handler is removed after selection. This retains real validation, creation, completion and reload checks while reliably exercising slow initial identity loading on both desktop and phone.
+
+## Local reproduction and verification
+
+Windows, Node 24.21.0, npm 11.19.0, Playwright 1.63.0, Chrome channel, development server on task-owned loopback port 3013, existing disposable `ppo_synthetic_test` on port 55440. No database reset/reseed or development-data mutation was performed. The maintained browser sources were copied to ignored `tmp/en08-ci-tests` only to use that origin and correct relative helper imports.
+
+A negative control uses the same injected delay while restoring the prior 5-second readiness assertion. It fails with the exact reported expected-false/received-true error: [original local log](before.txt) and [loading capture](identity-loading.png). This is a local controlled reproduction; the original CI screenshot/trace was not retrieved while its containing job was still running.
+
+Whole-project typecheck, ESLint on both modified specs, foundation and naming checks pass. [Tested source hashes](tested-sources.json) identify the modified specs precisely; verification ran before committing them on checkout `9dcf224`. The delayed desktop sales journey passed and reached the [saved opportunity](saved-opportunity-desktop.png). `npx playwright test --config tmp/en08-ci.config.ts crm.spec.ts crm-i2.spec.ts mobile-crm.spec.ts` passed **30 of 30 tests in 6.8 minutes**, with no skips or retries ([complete log](after.txt)). The delayed CA-01/04/13 journey passed on desktop (38.2 seconds) and phone (25.7 seconds). The application build, database suites and unrelated Engineering views were not repeated because this follow-up changes only the two CRM browser specs and documentation. The prior repair's evidence and original CI failure remain retained.
