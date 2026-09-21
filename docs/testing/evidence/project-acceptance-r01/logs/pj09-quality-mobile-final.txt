@@ -1,0 +1,9 @@
+
+Running 2 tests using 1 worker
+
+(node:5848) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [mobile-chromium] › tmp\pj09-regressions\quality-states.spec.ts:9:1 › P11 PT-29 pack and report queues never turn failed reads into empty or issued claims (1.7s)
+  ok 2 [mobile-chromium] › tmp\pj09-regressions\quality-states.spec.ts:64:1 › P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial (43.0s)
+
+  2 passed (46.2s)

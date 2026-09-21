@@ -1,0 +1,10 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"153.0.8010.53"}
+
+Running 1 test using 1 worker
+
+(node:29888) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  ok 1 [desktop] › tests\ui\deals-design-conformance.spec.ts:33:1 › each adopted module retains sources, a host contract and compiled-app verification (977ms)
+
+  1 passed (3.7s)
