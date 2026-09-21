@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "provenance": "Independently authored from supplied r02 Appendix E; no engine-derived expected values",
+  "synthetic": true,
+  "geometry": {
+    "width": "38.4",
+    "length": "48",
+    "area": "1843",
+    "groupWidth": "19.2",
+    "count": "24",
+    "cut": "20",
+    "clothWidth": "4.3",
+    "cloth": "2064",
+    "available": "18.4",
+    "spaces": "5",
+    "spacing": "3.68",
+    "drives": "12",
+    "motorArea": "1032"
+  },
+  "torque": "100",
+  "receiving_examples": [
+    {
+      "choice": "keep",
+      "baseline": 10,
+      "current": 12,
+      "proposal": 11,
+      "unrelated_cost": "5.00",
+      "unrelated_sell": "8.00",
+      "cost": "17.00",
+      "sell": "32.00"
+    },
+    {
+      "choice": "generated",
+      "cost": "16.00",
+      "sell": "30.00"
+    },
+    {
+      "choice": "omit",
+      "cost": "5.00",
+      "sell": "8.00"
+    },
+    {
+      "choice": "restore",
+      "cost": "16.00",
+      "sell": "30.00"
+    }
+  ],
+  "fixture_catalogue": [
+    "valid receive",
+    "changed bays",
+    "manual conflict",
+    "deliberate deletion",
+    "new source basis",
+    "copy without ownership",
+    "accepted response lost",
+    "unaccepted response lost",
+    "permission withdrawal"
+  ],
+  "date_policy": "2026-09-21 is historical rate provenance; future-required quote dates use existing relative-date fixture helper"
+}

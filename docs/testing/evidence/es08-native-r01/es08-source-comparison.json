@@ -1,0 +1,74 @@
+{
+  "sources": [
+    {
+      "file": "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
+      "scope": "#ppo-specialist",
+      "hash": "3cc832c3368f5b7ac9eb3352eee0fc3525e5220984214eb6c459c6ae2fb79881",
+      "geometry": {
+        "width": 1920,
+        "height": 1865.46875,
+        "font": "PPOBoardRoboto, Roboto, Verdana, sans-serif",
+        "tokens": {
+          "navy": "#242a37",
+          "line": "#e1e5eb",
+          "focus": ""
+        }
+      }
+    },
+    {
+      "file": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "scope": "#ppo-theme-board",
+      "hash": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "geometry": {
+        "width": 1920,
+        "height": 58138.90625,
+        "font": "PPOBoardRoboto, Roboto, Verdana, sans-serif",
+        "tokens": {
+          "navy": "#242a37",
+          "line": "#e1e5eb",
+          "focus": "#365d8b"
+        }
+      }
+    }
+  ],
+  "actual": {
+    "font": "Roboto, Verdana, sans-serif",
+    "navy": "#242a37",
+    "line": "#e1e5eb",
+    "focus": "#365d8b"
+  },
+  "layouts": [
+    {
+      "width": 1920,
+      "collapsed": false,
+      "centre": 960
+    },
+    {
+      "width": 1920,
+      "collapsed": true,
+      "centre": 960
+    },
+    {
+      "width": 1440,
+      "collapsed": false,
+      "centre": 720
+    },
+    {
+      "width": 1440,
+      "collapsed": true,
+      "centre": 720
+    },
+    {
+      "width": 1280,
+      "collapsed": false,
+      "centre": 640
+    },
+    {
+      "width": 1280,
+      "collapsed": true,
+      "centre": 640
+    }
+  ],
+  "adaptations": "ADR-0034 native shared shell; source visual vocabulary retained; source browser storage and pricing authority excluded",
+  "owner_acceptance": "Pending"
+}

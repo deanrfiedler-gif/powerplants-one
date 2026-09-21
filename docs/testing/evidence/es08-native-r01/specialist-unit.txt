@@ -1,0 +1,24 @@
+✔ ES08-T07/T16/T18/T21 source inventories retain exact identities (0.9605ms)
+✔ ES08-T76 independent rational geometry and cloth literals (4.1297ms)
+✔ ES08-T10/T77 additional cut rounds before overhang; exact torque boundaries (4.0024ms)
+✔ ES08-T09/T15/T61 raw incomplete drafts persist structurally but invalid calculation has no numeric outputs (26.5095ms)
+✔ ES08-T19/T21 all noncommercial parameter changes invalidate manual review; dormant parameters gain no consumer (8.6735ms)
+✔ ES08-T23/T24 blank required rates withhold total and exact native amount rounds half-up (2.6315ms)
+✔ ES08-T29/T63/T68 independent comparison preserves deletion and incompatible identities (0.9957ms)
+✔ ES08-T53/T79 strict draft/depth/key/byte limits (2.0633ms)
+✔ ES08-T22 28 recovered scenarios with three declared exact-decimal corrections (154.7035ms)
+✔ ES08-T09/T11/T12/T13/T14/T17 six exact lookups, wall geometry and separate drive identities retain unresolved parts (27.7892ms)
+✔ ES08-T20/T23/T24 explicit zero/no-purchase/exclusion and recovered freight/FX policy stay separate (16.1643ms)
+✔ ES08-T21 eight bound consumers and four recorded-only parameters follow named rules (27.6696ms)
+✔ ES08-T62 normalised calculation hash separates formatting and raw/evidence provenance (15.7715ms)
+✔ ES08-T78 Appendix E independent receiving choices produce 17/32,16/30,5/8 without changing unrelated ID (1.2549ms)
+✔ ES08-T29 inactive-to-active is Added; deliberate removal of an active baseline is Deleted (14.8039ms)
+✔ ES08-T08 source attribution refuses climate Zones as matching screen spans (6.7902ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1701.9423

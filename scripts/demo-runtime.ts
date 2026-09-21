@@ -15,5 +15,7 @@ export async function grantRuntimePrivileges(db: pg.PoolClient, databaseName: st
   const roleProfiles = await db.query("SELECT to_regclass('ppo.demo_tester_roles') AS relation");
   if (roleProfiles.rows[0]?.relation)
     await db.query(`REVOKE INSERT,UPDATE,DELETE ON ppo.demo_tester_roles FROM ${name}`);
+  const specialist = await db.query("SELECT to_regclass('ppo.specialist_policies') AS relation");
+  if (specialist.rows[0]?.relation) await db.query(`REVOKE INSERT,UPDATE,DELETE ON ppo.specialist_definitions,ppo.specialist_policies FROM ${name}`);
   await db.query(`REVOKE CREATE ON SCHEMA public FROM PUBLIC`);
 }

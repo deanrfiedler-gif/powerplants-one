@@ -98,7 +98,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Reviewed for 0039: ES-02 immutable configuration ownership and revision checks;
   // no backfill, identity-table ALTER, seed, grant or output rewrite. The existing
   // aggregate runtime grants cover this ledger; retain all PJ-09 upgrade guards.
-  if (latestMigrationVersion !== 39) throw Error("Review the existing-demo upgrade for this release.");
+  // Reviewed 0040: additive specialist evidence and immutable policy manifests.
+  // No old content, grants or users change. Identity trigger events are flushed
+  // before type widening; runtime policy writes are revoked after generic grants.
+  if (latestMigrationVersion !== 40) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
