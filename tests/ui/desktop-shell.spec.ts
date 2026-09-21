@@ -22,12 +22,16 @@ test("approved shell fits laptop, desktop and compact viewports with a centred s
         // centred on the whole viewport, the navy rail included, not the text field on its own.
         groupCentre: (document.querySelector(".ppo-global-search")!.getBoundingClientRect().left + document.querySelector(".ppo-quick-add")!.getBoundingClientRect().right) / 2,
         plusGap: document.querySelector(".ppo-quick-add")!.getBoundingClientRect().left - document.querySelector(".ppo-global-search")!.getBoundingClientRect().right,
+        // The navy disc is the quick-add button's own ::before. It stays inside the 44px button; if that
+        // button ever stops being its own containing block the disc resolves against the centred group
+        // instead and paints straight across the search field.
+        discWidth: parseFloat(getComputedStyle(document.querySelector(".ppo-quick-add")!, "::before").width),
         icons: [...document.querySelectorAll(".ppo-primary-nav .product-icon")].map(element => element.getBoundingClientRect().width),
         controlsFit: controls.every(rect => rect.top >= top.top && rect.bottom <= top.bottom && rect.right <= innerWidth),
         noOverlap: controls.every((rect, index) => index === 0 || controls[index - 1].right <= rect.left), zoom: getComputedStyle(document.documentElement).zoom };
     });
     expect(geometry.railWidth).toBe(76); expect(geometry.headerHeight).toBe(64); expect(geometry.logoCentre).toBe(38);
-    expect(geometry.logoWidth).toBe(54); expect(geometry.logoY).toBe(32); expect(Math.abs(geometry.groupCentre - width / 2)).toBeLessThanOrEqual(2); expect(geometry.plusGap).toBeCloseTo(12, 0);
+    expect(geometry.logoWidth).toBe(54); expect(geometry.logoY).toBe(32); expect(Math.abs(geometry.groupCentre - width / 2)).toBeLessThanOrEqual(2); expect(geometry.plusGap).toBeCloseTo(12, 0); expect(geometry.discWidth, "quick-add disc stays inside its button").toBeCloseTo(40, 0);
     expect(geometry.railFits && geometry.pageFits && geometry.controlsFit && geometry.noOverlap).toBe(true);
     expect(geometry.moreBottom).toBeLessThanOrEqual(height); expect(geometry.icons).toEqual([]);
     expect(["1", "normal"]).toContain(geometry.zoom);

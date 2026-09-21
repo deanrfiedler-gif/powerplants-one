@@ -8,7 +8,9 @@
 .ppo-top-action { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; min-height: 44px; flex-shrink: 0; margin: 0; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #667181; }
 .ppo-top-action .product-icon { width: 22px; height: 22px; stroke-width: 1.7; }
 .ppo-top-action:is(:hover,[aria-expanded=true]), .ppo-top-action:hover:not(:disabled) { background: #f0f2f6; color: #242a37; }
-.ppo-top-action.ppo-quick-add, .ppo-top-action.ppo-quick-add:hover:not(:disabled) { isolation: isolate; color: white; background: transparent; }
+/* The navy disc is drawn by the button's own ::before, so the button must be its containing block:
+   without this it resolves against whatever is positioned above it and stretches across the header. */
+.ppo-top-action.ppo-quick-add, .ppo-top-action.ppo-quick-add:hover:not(:disabled) { position: relative; isolation: isolate; color: white; background: transparent; }
 .ppo-quick-add::before { position: absolute; content: ''; inset: 2px; border-radius: 50%; background: #242a37; z-index: -1; }
 .ppo-quick-add:is(:hover,[aria-expanded=true])::before { background: #343c4c; }
 .topbar.ppo-shell-header, body:has(.crm-workspace) .topbar.ppo-shell-header { position: relative; display: flex; align-items: center; gap: 12px; height: 64px; min-height: 64px; padding: 0 20px 0 24px; background: white; border-bottom: 1px solid #e2e6ec; overflow: visible; z-index: 60; }
@@ -189,7 +191,7 @@
      nothing page-specific enters it, so menu, More, snapshot and route changes cannot move the centreline. */
   .ppo-header-centre { position: absolute; left: calc(50% - var(--ppo-rail-width) / 2); transform: translateX(-50%); display: flex; align-items: center; gap: 12px; width: calc(clamp(232px, 28vw, 420px) + 56px); }
   .ppo-header-centre .ppo-global-search { flex: 1 1 auto; min-width: 0; }
-  .ppo-header-centre .ppo-quick-add { position: static; flex: none; }
+  .ppo-header-centre .ppo-quick-add { flex: none; }
   .ppo-shell-header .product-heading { max-width: calc(50vw - clamp(110px, 14vw, 210px) - 146px); }
   .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading { max-width: calc(50vw - clamp(110px, 14vw, 210px) - 146px - 52px); }
   .ppo-shell-header .ppo-product-name { flex-shrink: 0; }

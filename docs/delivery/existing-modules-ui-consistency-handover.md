@@ -126,6 +126,7 @@ Service reports, Field technicians, Service planner, Finance, My Jobs, Exception
 |---|---|---|
 | Search-and-quick-add group centre against the full application viewport centre | 2px | **0px** on every route and width, in every menu and More state |
 | Gap between search and quick add | 12px | 12px |
+| Quick-add disc inside its 44px button | 40px | 40px. Dean found the disc painted across the search field when the button stopped being its own containing block; `tests/ui/desktop-shell.spec.ts` now measures it, and the perturbation that reintroduces the defect makes it read 434px and fail |
 | Expanded secondary menu, right edge | rail right plus 240px | 316px from a rail right of 76px |
 | Register table against the expanded menu divider | 1px | **0px**: EN-06 at 316px, the directory at 76px against a host left of 76px |
 | Register table against the collapsed strip | 1px | **0px**: 100px against a strip right of 100px |
