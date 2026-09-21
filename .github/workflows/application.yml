@@ -12,10 +12,26 @@ defaults:
 jobs:
   p01:
     name: P01–P11 and CRM I1–I2 local application and PostgreSQL proof
+    needs: p01_suites
+    if: always()
     runs-on: ubuntu-24.04
-    # Serial retained suites include bounded P11 journeys and real restarts.
-    # Allow job-level headroom for the complete proof; keep individual deadlines.
-    timeout-minutes: 150
+    timeout-minutes: 5
+    steps:
+      - name: Require every retained suite to complete successfully
+        env:
+          PPO_SUITE_RESULT: ${{ needs.p01_suites.result }}
+        run: test "$PPO_SUITE_RESULT" = success
+
+  p01_suites:
+    name: P01–P11 ${{ matrix.suite }} proof
+    runs-on: ubuntu-24.04
+    # Each lane owns its disposable database; all original phases remain serial
+    # within their lane. The stable p01 gate below requires every lane to pass.
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [browser, finance, reports, database]
     services:
       postgres:
         image: postgres:16.15
@@ -64,14 +80,15 @@ jobs:
           npm run db:seed
           npm run db:health
       - name: Mobile CRM projections, scoped links and complete phone journey
+        if: matrix.suite == 'browser'
         run: |
           node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/mobile-crm.test.ts
-          npx playwright test tests/browser/mobile-crm.spec.ts tests/browser/crm.spec.ts --output verification-evidence/mobile-crm --reporter=list
+          npx playwright test --config=playwright.compiled.config.ts tests/browser/mobile-crm.spec.ts tests/browser/crm.spec.ts --output verification-evidence/mobile-crm --reporter=list
       - name: Focused I2 identity, query equivalence and responsive presentation proof
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
-        run: npx playwright test tests/browser/crm-i2.spec.ts --output verification-evidence/i2-focused-browser --reporter=list
+        if: ${{ matrix.suite == 'browser' && !cancelled() && steps.database_setup.outcome == 'success' }}
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/crm-i2.spec.ts --output verification-evidence/i2-focused-browser --reporter=list
       - name: CRM I1 accepted journey across application and PostgreSQL restarts
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'browser' && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: |
@@ -83,18 +100,18 @@ jobs:
           done
           node --env-file=.env.local --import tsx scripts/crm-restart-proof.ts verify
       - name: Desktop and mobile browser checks
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'browser' && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-full-browser/results.json
         run: |
           npm run browser:install
-          npm run test:browser -- --reporter=list,json
+          npm run test:browser -- --config=playwright.compiled.config.ts --reporter=list,json
       - name: Prepare retained browser review diagnostics immediately
-        if: ${{ always() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'browser' && always() && steps.database_setup.outcome == 'success' }}
         id: browser_review
         run: python3 scripts/prepare-review-evidence.py
       - name: Preserve original retained browser evidence immediately
-        if: ${{ always() && steps.browser_review.outcome == 'success' }}
+        if: ${{ matrix.suite == 'browser' && always() && steps.browser_review.outcome == 'success' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: P11-retained-browser-evidence
@@ -104,12 +121,12 @@ jobs:
             !**/trace.zip
           retention-days: 14
       - name: Focused P10 desktop and phone review, allocation and reconciliation
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'finance' && !cancelled() && steps.database_setup.outcome == 'success' }}
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
-          npx playwright test tests/browser/finance.spec.ts --output verification-evidence/p10-focused-browser --reporter=list
+          npx playwright test --config=playwright.compiled.config.ts tests/browser/finance.spec.ts --output verification-evidence/p10-focused-browser --reporter=list
       - name: P10 original claim, unknown acceptance and exact output through three database and four application/browser restarts
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'finance' && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: |
@@ -124,17 +141,17 @@ jobs:
             node --env-file=.env.local --import tsx scripts/finance-restart-proof.ts "$phase"
           done
       - name: Focused P10 Finance source, processing and account proof
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'finance' && !cancelled() && steps.database_setup.outcome == 'success' }}
         run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/finance*.test.ts
       - name: Verify documented synthetic reset command
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'reports' && !cancelled() && steps.database_setup.outcome == 'success' }}
         run: |
           if npm run db:reset; then exit 1; fi
           if PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic npm run db:reset; then exit 1; fi
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
           npm run db:health
       - name: P09 exact submission and response across three database and four application/browser restarts
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'reports' && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: |
@@ -148,16 +165,16 @@ jobs:
             node --env-file=.env.local --import tsx scripts/report-restart-proof.ts "$phase"
           done
       - name: Focused P09 exact return proposal and customer presentation proof
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
-        run: npx playwright test tests/browser/reports.spec.ts --output verification-evidence/p09-focused-browser --reporter=list
+        if: ${{ matrix.suite == 'reports' && !cancelled() && steps.database_setup.outcome == 'success' }}
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/reports.spec.ts --output verification-evidence/p09-focused-browser --reporter=list
       - name: Real PostgreSQL behaviour and competing transactions
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'database' && !cancelled() && steps.database_setup.outcome == 'success' }}
         run: npm run test:db
       - name: Restore deterministic fixtures for HTTP and browser suites
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'database' && !cancelled() && steps.database_setup.outcome == 'success' }}
         run: PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
       - name: Prove persistence across PostgreSQL process restart
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'database' && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: |
@@ -169,7 +186,7 @@ jobs:
           done
           node --env-file=.env.local --import tsx scripts/persistence-proof.ts verify
       - name: Actual HTTP routes and startup boundary
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'database' && !cancelled() && steps.database_setup.outcome == 'success' }}
         run: |
           if npm start; then exit 1; fi
           node --env-file=.env.local --import tsx scripts/local-server.ts > "$RUNNER_TEMP/ppo-http.log" 2>&1 &
@@ -194,11 +211,11 @@ jobs:
           mkdir -p verification-evidence/p11-http
           node --env-file=.env.local --import tsx --test --test-reporter=tap tests/integration/quality-http.test.ts 2>&1 | tee verification-evidence/p11-http/results.tap
       - name: Prepare HTTP review diagnostics
-        if: always()
+        if: ${{ matrix.suite == 'database' && always() }}
         id: http_review
         run: python3 scripts/prepare-review-evidence.py
       - name: Preserve original HTTP component evidence immediately
-        if: ${{ always() && steps.http_review.outcome == 'success' }}
+        if: ${{ matrix.suite == 'database' && always() && steps.http_review.outcome == 'success' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: P11-HTTP-evidence
@@ -208,7 +225,7 @@ jobs:
             verification-evidence/http/
           retention-days: 14
       - name: Offline originals across application, PostgreSQL and browser process restarts
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'database' && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: |
@@ -233,7 +250,7 @@ jobs:
         if: ${{ always() && steps.full_review.outcome == 'success' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: P11-quality-and-retained-foundation-evidence
+          name: P11-${{ matrix.suite }}-foundation-evidence
           path: |
             verification-evidence/review-diagnostic-redactions.json
             test-results/

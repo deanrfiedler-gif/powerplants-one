@@ -73,7 +73,9 @@ test("MW-DB01 an activity keeps one overdue instant: a deadline, the end of a lo
   await assert.rejects(createActivity(p, activity({ due_needed: false, starts_at: at(0), due_at: at(25 * 60) })), field("starts_at"));
   await assert.rejects(createActivity(p, activity({ due_needed: true, due_at: null, starts_at: at(60) })), field("starts_at"));
   await assert.rejects(createActivity(p, activity({ due_needed: false, due_at: at(45), due_date_only: true })), field("due_at"));
-  await assert.rejects(createActivity(p, activity({ due_needed: false, starts_at: at(60), due_at: endOfLocalDay(day), due_date_only: true })), field("due_date_only"));
+  // Keep the interval valid even after 23:00 so this isolates the date-only
+  // contradiction, rather than failing the earlier start/end validation.
+  await assert.rejects(createActivity(p, activity({ due_needed: false, starts_at: new Date(Date.parse(endOfLocalDay(day)) - 3600000).toISOString(), due_at: endOfLocalDay(day), due_date_only: true })), field("due_date_only"));
   await assert.rejects(createActivity(p, activity({ activity_type: "Lunch" })), field("activity_type"));
   // The database refuses what the service refuses, so no other writer can store an incoherent schedule.
   await assert.rejects(rows("UPDATE ppo.activities SET starts_at=due_at WHERE id=$1", [appointment.id]), code("23514"));

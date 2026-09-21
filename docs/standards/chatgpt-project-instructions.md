@@ -90,6 +90,6 @@ Test implemented behaviour: permissions, booking conflicts, stale revisions, off
 
 Separate decisions, evidence, proposals and open questions; distinguish delivery, tests, acceptance and production readiness. Cite sources and limits.
 
-Check STATUS and delivery handovers. ES-02 preserves r01 and exact cost bases. PJ-09 Project lifecycle uses independent decisions and scoped close/reopen.
+Check STATUS and handovers. ES-02 preserves r01 and exact costs. PJ-09 keeps scoped close/reopen. Require all four retained CI lanes; see ci-retained-suite-isolation.md.
 
 See docs/delivery/demo-email-crm-integration.md. Keep synthetic mailboxes private; exclude email bodies from shared Activities. CI and Outlook acceptance are separate.
