@@ -218,6 +218,7 @@ export function WorkOrderList() {
   return (
     <>
       <PageHeader
+        variant="register"
         eyebrow="Service / Work preparation"
         title="Work orders"
         description="Review the exact scope, authority and controls before work moves to planning."

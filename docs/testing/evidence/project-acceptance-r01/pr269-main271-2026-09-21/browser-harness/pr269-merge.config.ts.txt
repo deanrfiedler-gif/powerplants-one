@@ -1,0 +1,9 @@
+import { defineConfig } from '@playwright/test';
+export default defineConfig({
+  globalSetup: '../scripts/check-browser.ts', testDir: './pr269-merge-tests', workers: 1, timeout: 45000,
+  use: { channel: 'chrome', baseURL: 'http://127.0.0.1:3014', locale: 'en-AU', screenshot: 'only-on-failure', trace: 'retain-on-failure' },
+  projects: [
+    { name: 'desktop-chromium', use: { viewport: { width: 1440, height: 1000 } } },
+    { name: 'mobile-chromium', use: { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true } }
+  ], reporter: [['list']], outputDir: './pr269-merge-results'
+});

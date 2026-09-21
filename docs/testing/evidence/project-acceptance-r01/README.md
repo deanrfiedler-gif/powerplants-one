@@ -136,3 +136,5 @@ The EN-06/EN-07 suites preceded only that EN-08-scoped phone inset change; the f
 ## PR #269 retained assurance repair, 21 September 2026
 
 The subsequent broad Application CI failure and its test-only corrections are recorded separately in [the PR #269 repair evidence](pr269-ci-2026-09-21/README.md). It covers CRM's nullable Project-link upgrade expectation, EN-07's prerequisite helper status and P11's actual recovery read, with failing controls and corrected results. Earlier implementation, merge, restart and visual results above remain attributed to their executed versions.
+
+Main subsequently advanced to `8ed8b0c` (PR #271). The [second reconciliation evidence](pr269-main271-2026-09-21/README.md) records the four conflict resolutions, retained module menu presentations, 23 passing compiled browser cases (19 existing viewport exclusions), fresh PJ-09/r22/native-zoom and EN-08 checks. It preserves main's My Work/EN-06 refinement and PJ-09's written geometry without changing domain code. Remote CI remains separately attributable to the pushed head.

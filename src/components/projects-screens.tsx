@@ -13,6 +13,7 @@ import {
   type Envelope,
   type Failure,
   type Option,
+  RegisterHeading,
 } from "./business-ui";
 import { useIdentity } from "./business-session";
 import { LookupField, useUnsavedChanges } from "./record-ui";
@@ -37,18 +38,17 @@ export function ProjectRegister() {
     context = useResource<ShellContext>("shell/context");
   return (
     <section className="project-register">
-      <div className="business-heading">
-        <div>
-          <h1>Projects</h1>
-          <Link href="/projects/acceptance">Staged Acceptance &amp; Closeout</Link>
-          <p>Plan delivery, assign responsibility and track the schedule.</p>
-        </div>
+      <RegisterHeading
+        title="Projects"
+        description="Plan delivery, assign responsibility and track the schedule."
+      >
+        <Link href="/projects/acceptance">Staged Acceptance &amp; Closeout</Link>
         {context.data?.actions.some((a) => a.id === "project") && (
           <Link href="/projects/new" className="primary-link">
             + Project
           </Link>
         )}
-      </div>
+      </RegisterHeading>
       <Field
         name="project-search"
         label="Search projects"

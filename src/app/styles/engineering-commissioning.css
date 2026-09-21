@@ -147,11 +147,4 @@
 }
 @media (prefers-reduced-motion:reduce){#ppo-commissioning *{transition:none!important;animation:none!important}}
 
-/* Header breadcrumb: "Engineering / Commissioning Basis & As-Built Release", and the destination after it while the
-   secondary menu is hidden. The shared header centres the global search, so the crumb has a bounded width: the module
-   name keeps its room by dropping the root while the destination is shown, and its full text is always in the title. */
-.workspace:has(#ppo-commissioning) .ppo-shell-header .product-heading[data-module-crumb] strong{display:flex;min-width:0;white-space:nowrap}
-.workspace:has(#ppo-commissioning) .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-view{min-width:0;overflow:hidden;text-overflow:ellipsis}
-.workspace:has(#ppo-commissioning) .ppo-shell-header .product-heading[data-module-crumb] :is(.ppo-heading-root,.ppo-heading-subview){flex:none;white-space:pre}
-.workspace:has(#ppo-commissioning[data-menu="docked"]) .ppo-shell-header .ppo-heading-subview{display:none}
-.workspace:has(#ppo-commissioning:not([data-menu="docked"])) .ppo-shell-header .ppo-heading-root{display:none}
+/* Module identity and destination use the shared semantic breadcrumb. */

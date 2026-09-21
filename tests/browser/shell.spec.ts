@@ -130,7 +130,8 @@ test("r17 preview preserves permissions, contextual navigation and page guidance
   await page.getByRole("button", { name: "Change identity", exact: true }).click();
   await page.getByLabel("Preview workspace", { exact: true }).selectOption("engineering");
   await expect(page).toHaveURL(/\/engineering$/);
-  await expect(page.locator(".product-heading")).toHaveText("Powerplants OneEngineering");
+  // The rail carries the product identity; the breadcrumb names only the module and the current page.
+  await expect(page.locator(".product-heading")).toHaveText("Engineering");
   if (info.project.use.isMobile) {
     const navigation = page.getByRole("navigation", { name: "Mobile navigation", exact: true });
     await expect(navigation.getByRole("link", { name: "Engineering", exact: true })).toBeVisible();
@@ -158,5 +159,5 @@ test("r17 preview preserves permissions, contextual navigation and page guidance
   await page.getByRole("searchbox", { name: "Find a menu item" }).fill("Customer");
   await page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "More navigation", exact: true }).getByRole("link", { name: "Customers", exact: true }).click();
   await expect(page).toHaveURL(/\/customers$/);
-  await expect(page.locator(".product-heading")).toHaveText("Powerplants OneCustomers");
+  await expect(page.locator(".product-heading")).toHaveText("Customers");
 });

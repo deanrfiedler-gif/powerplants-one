@@ -135,8 +135,4 @@
 /* A panel named in the address is scrolled to and focused by script. That is a landing point, not a control, so it
    takes no ring; every real control keeps the shared focus treatment. */
 #ppo-changes [id^=ec-panel-]:focus{outline:none}
-/* While the menu is hidden the header must still say where you are. On a narrow header the module name gives way
-   first, so the destination is never the part that is cut off. */
-.workspace:has(#ppo-changes) .ppo-shell-header .product-heading[data-module-crumb] strong{display:flex;min-width:0;white-space:nowrap}
-.workspace:has(#ppo-changes) .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-view{min-width:0;overflow:hidden;text-overflow:ellipsis}
-.workspace:has(#ppo-changes) .ppo-shell-header .product-heading[data-module-crumb] :is(.ppo-heading-root,.ppo-heading-subview){flex:none;white-space:pre}
+/* Module identity and destination use the shared semantic breadcrumb. */

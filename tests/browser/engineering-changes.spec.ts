@@ -41,7 +41,7 @@ const rows = (page: Page) => page.locator("#ppo-changes .em-register tbody tr");
 const colour = (page: Page, selector: string) => page.locator(selector).first().evaluate((e) => getComputedStyle(e).color);
 const rgb = (hex: string) => `rgb(${parseInt(hex.slice(1, 3), 16)}, ${parseInt(hex.slice(3, 5), 16)}, ${parseInt(hex.slice(5, 7), 16)})`;
 
-test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audited contract, My Work's menu and honest counts", async ({ page }, info) => {
+test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audited contract, shared menu controls and honest counts", async ({ page }, info) => {
   test.skip(info.project.name !== "desktop-chromium", "Desktop composition; the phone case is below.");
   const s = await build(`register ${Date.now()}`);
   await signIn(page, CHANGES.engineer.profile);
@@ -52,13 +52,16 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
   // A05 A03: first use is collapsed with no residual track; the header names module and destination while it is hidden.
   await expect(root).toHaveAttribute("data-menu", "collapsed");
   await expect(page.locator("#ec-menu")).toBeHidden();
-  await expect(page.locator(".product-heading")).toContainText("Engineering / Engineering Change-Impact Review / Change register");
+  await expect(page.getByRole("navigation", { name: "Breadcrumb", exact: true }).locator(".ppo-crumbs"))
+    .toHaveAttribute("title", "Engineering / Engineering Change-Impact Review / Change register");
+  await expect(page.locator(".ppo-crumbs .ppo-crumb")).toHaveText(["Engineering", "Engineering Change-Impact Review", "Change register"]);
   await expect(page.locator(".product-heading .ppo-product-name")).toBeHidden();
   expect(Math.round((await page.locator(".em-register").boundingBox())!.x)).toBe(Math.round((await root.boundingBox())!.x));
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Engineering Change-Impact Review: Change register/);
   await expect(page.locator(".module-navigation")).toHaveCount(0);
 
-  // A04 A57: the actual My Work menu. Its geometry is measured here and compared with /work itself further down.
+  // A04 A57: the shared frame retains EN-07's 220px geometry. My Work's newer
+  // #271 presentation is checked separately below without redefining this module's baseline.
   await page.getByRole("button", { name: "Show menu" }).first().click();
   await expect(root).toHaveAttribute("data-menu", "docked");
   const menu = page.locator("#ec-menu");
@@ -75,9 +78,12 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
   }, scope);
   const mine = await measure("#ppo-changes");
   expect(mine.width).toBe(220);
+  expect(mine.background).toBe(rgb("#ffffff"));
+  expect(mine.current).toBe(`${rgb("#edf0f5")}|500`);
+  expect(mine.marker).toBe(`3px|${rgb("#242a37")}|-10px`);
   await page.reload();
   await expect(root).toHaveAttribute("data-menu", "docked"); // the person's later choice persists
-  await expect(page.locator(".product-heading .ppo-heading-subview")).toBeHidden();
+  await expect(page.locator(".ppo-crumbs [data-crumb=view]")).toBeHidden();
 
   // A06: header fill, rows and rules meet the menu divider on the left and the pane edge on the right.
   const flush = async () => {
@@ -152,11 +158,17 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
   await expect(inspector).toHaveCount(0);
   await flush(); // closing releases the space at once
 
-  // A57: My Work itself is unchanged, and EN-07's menu is that menu: the same computed geometry, measured on /work.
+  // A57: #271 changes My Work's width/surfaces and removes its marker. Both
+  // presentations still share the actual frame's link, title, border and icon geometry.
   await page.goto("/work");
   if (await page.locator("#ppo-my-work[data-menu=collapsed]").count()) await page.getByRole("button", { name: "Show menu" }).first().click();
   await expect(page.locator("#ppo-my-work .mw-menu nav a[aria-current=page]")).toBeVisible();
-  expect(mine).toEqual(await measure("#ppo-my-work"));
+  const shared = await measure("#ppo-my-work");
+  expect(shared.width).toBe(240);
+  expect(shared.background).toBe(rgb("#f5f6f8"));
+  expect(shared.current).toBe(`${rgb("#ffffff")}|500`);
+  for (const key of ["padding", "border", "link", "title", "icon"] as const)
+    expect(mine[key], key).toEqual(shared[key]);
   // EN-07's preference never touched My Work's key.
   expect(await page.evaluate(() => Object.keys(localStorage).filter((k) => k.startsWith("ppo.changes.")).length)).toBe(1);
   await s.dispose();

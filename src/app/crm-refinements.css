@@ -877,3 +877,46 @@
   white-space: normal;
   overflow-wrap: anywhere;
 }
+
+/* Existing-modules UI refinement — Customers and Contacts directory.
+   The register is the page. The shell allocates the viewport once, the toolbar and pagination keep
+   their own internal padding, and the table meets both edges of the register region: no padded or
+   rounded frame, no outer gap and one vertical scroll owner for the list. Values are theme style
+   board r22's, and the register treatment is the same one EN-06 adopted: white rows, pale grey
+   header, restrained dividers. */
+.crm-directory[data-module-layout] { display: flex; flex-direction: column; min-width: 0; min-height: 0; overflow: hidden; background: #fff; }
+.crm-directory[data-module-layout] > :not(.crm-directory-table-scroll) { flex: none; }
+.crm-directory[data-module-layout] .record-tabs { margin: 0; padding: 8px 16px 0; }
+.crm-directory[data-module-layout] .business-heading-register { padding: 8px 16px 0; }
+.crm-directory[data-module-layout] .crm-directory-toolbar { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; margin: 0; padding: 10px 16px; }
+.crm-directory[data-module-layout] .crm-directory-toolbar .field { flex: 1 1 260px; min-width: 200px; margin: 0; }
+.crm-directory[data-module-layout] .crm-directory-toolbar .crm-directory-select { flex: 0 1 190px; min-width: 150px; }
+.crm-directory[data-module-layout] .crm-directory-toolbar :is(input, select) { min-height: 36px; }
+.crm-directory[data-module-layout] .crm-directory-options { margin: 0 16px 10px; }
+.crm-directory[data-module-layout] > p[role=status] { margin: 0; padding: 0 16px; }
+.crm-directory[data-module-layout] .crm-directory-summary { margin: 0; padding: 0 16px 8px; }
+.crm-directory[data-module-layout] .empty-state { margin: 0 16px 16px; }
+/* The table's own scroll region: it begins at the register's usable edge and ends at its right edge,
+   it is the one vertical scroll owner for this list, and the horizontal scrollbar stays reachable
+   beside the footer. Cells keep their internal padding; full bleed is not text against a separator. */
+.crm-directory[data-module-layout] .crm-directory-table-scroll { flex: 1; min-height: 0; max-height: none; width: 100%; margin: 0; padding: 0; border: 0; border-top: 1px solid #e1e5eb; border-radius: 0; }
+.crm-directory[data-module-layout] .crm-directory-pagination { margin: 0; padding: 8px 16px; border-top: 1px solid #e1e5eb; }
+/* r22 values: pale grey header fill, restrained dividers, 13px body text and a 44–48px row. */
+.crm-directory-table { font-size: 13px; }
+.crm-directory-table :is(th, td) { padding: 12px 14px; border-right-color: #e9ecf1; border-bottom-color: #e1e5eb; }
+.crm-directory-table thead th { background: #f4f5f7; color: #242a37; font-weight: 500; }
+.crm-directory-table thead button { color: #242a37; font-weight: 500; }
+.crm-directory-table tbody tr:hover > * { background: #f8faf7; }
+.crm-directory-table tr > :first-child { box-shadow: 1px 0 #e1e5eb; }
+/* One small status tag family: a distinct label on a restrained surface, never colour alone. */
+.crm-directory-status { border: 0; border-radius: 5px; padding: 2px 8px; font-size: 12px; line-height: 18px; background: #edf0f5; color: #526078; }
+.crm-directory-status.status-active { background: #edf5e9; color: #416d33; border: 0; }
+/* A phone shows the existing directory list rather than the table, and it is the register itself that
+   scrolls: the shell's full-bleed host contract gives the register the viewport, so without this the
+   pagination below the list would sit under the fold with nothing able to scroll to it. */
+@media (max-width: 780px) {
+  .crm-directory[data-module-layout] { overflow: auto; overscroll-behavior: contain; }
+  .crm-directory[data-module-layout] > * { flex: none; }
+  .crm-directory[data-module-layout] .crm-directory-table-scroll { flex: none; border-top: 0; }
+  .crm-directory[data-module-layout] .crm-directory-pagination { border-top: 0; }
+}

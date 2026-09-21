@@ -123,7 +123,7 @@ export function ChangesShell({ packageId, children }: { packageId: string; child
   );
   return (
     <Context.Provider value={value}>
-      <SecondaryMenuFrame state={menuState} id="ppo-changes" name="Engineering changes" menuId="ec-menu" contentId="ec-content" attributes={{ "data-view": current }} menu={menu} message={message}>
+      <SecondaryMenuFrame presentation="baseline" state={menuState} id="ppo-changes" name="Engineering changes" menuId="ec-menu" contentId="ec-content" attributes={{ "data-view": current }} menu={menu} message={message}>
         <div className="em-workspace">
           {/* The visible title lives in the header breadcrumb; the page keeps one real heading for assistive technology. */}
           <h1 className="mw-sr">Engineering Change-Impact Review: {changeViews.find((v) => v.id === current)?.label}</h1>

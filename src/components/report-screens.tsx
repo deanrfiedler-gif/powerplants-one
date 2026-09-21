@@ -11,6 +11,7 @@ import {
   Stamp,
   friendly,
   type Envelope,
+  RegisterHeading,
 } from "./business-ui";
 import type { Job } from "./field-screens";
 import type { readReport } from "../reports/service";
@@ -211,16 +212,17 @@ export function ReportListScreen() {
       appointment_reference: string;
     }>
   >("reports");
+  // One main landmark belongs to the shell; these screens are sections within it.
   return (
-    <main className="business-shell report-screen">
-      <h1>Service review and reports</h1>
+    <div className="business-shell report-screen">
+      <RegisterHeading
+        title="Service review and reports"
+        description="Recent permitted reports from a bounded 200-record window. Older reports remain linked to their original attendance."
+      >
+        <button onClick={r.reload}>Refresh reports</button>
+      </RegisterHeading>
       <Synthetic />
       <ErrorNotice error={r.error} />
-      <p>
-        Recent permitted reports from a bounded 200-record window. Older reports
-        remain linked to their original attendance.
-      </p>
-      <button onClick={r.reload}>Refresh reports</button>
       {r.loading && <p role="status">Loading reports…</p>}
       {!r.loading && !r.error && r.data?.items.length === 0 && (
         <p>
@@ -241,7 +243,7 @@ export function ReportListScreen() {
             </p>
           </article>
         ))}
-    </main>
+    </div>
   );
 }
 function ReviewForm({ r, reload }: { r: Report; reload: () => void }) {
@@ -595,7 +597,7 @@ export function ReportScreen({ id }: { id: string }) {
     return <ErrorNotice error={isDenied(error) ? error : c.error} />;
   if (r && shown)
     return (
-      <main className="business-shell report-screen">
+      <div className="business-shell report-screen">
         <h1>Customer report presentation</h1>
         <Synthetic />
         <button className="secondary" onClick={() => setShown(null)}>
@@ -623,10 +625,10 @@ export function ReportScreen({ id }: { id: string }) {
             cannot be transferred to a successor.
           </p>
         )}
-      </main>
+      </div>
     );
   return (
-    <main className="business-shell report-screen">
+    <div className="business-shell report-screen">
       <Link href="/service/reports">All service reports</Link>
       <h1>{r?.reference ?? "Service report"}</h1>
       <Synthetic />
@@ -957,6 +959,6 @@ export function ReportScreen({ id }: { id: string }) {
           </section>
         </>
       )}
-    </main>
+    </div>
   );
 }

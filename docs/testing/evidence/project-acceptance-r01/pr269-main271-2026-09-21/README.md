@@ -1,0 +1,36 @@
+# PR #269 reconciliation with main #271, 21 September 2026
+
+While the [retained CI repair](../pr269-ci-2026-09-21/README.md) was being verified, main advanced to `8ed8b0c5dadad9a48d972a9bff39b6953ad4e55b` (PR #271, existing-module UI consistency). A read-only merge check found four real conflicts. The CI repair was first committed as `4ae6e48`; this separate reconciliation retains it and incorporates the newer main without changing database/domain code.
+
+## Resolutions
+
+- `engineering-materials.css` uses main's shared semantic breadcrumb and retains its refined EN-06 register/inspector. The superseded heading selectors in the other Engineering styles were removed as their DOM no longer exists.
+- `product-navigation.tsx` keeps main's accessible breadcrumb list, shared search/quick-add grouping and route-derived ancestors. EN-07, EN-08 and PJ-09 keep their exact module identities and destinations. PJ-09 remains **Projects / Staged Acceptance & Closeout**; a docked menu cannot hide the module identity as though it were merely a view name.
+- `projects-screens.tsx` adopts `RegisterHeading` and retains the visible acceptance entry. Project detail acceptance access, lifecycle display and schedule guards remain intact.
+- `my-work.css` and the existing shared `SecondaryMenuFrame` distinguish the refined default from an explicit retained presentation. My Work/EN-06 keep main's 240px grey menu, white current item, border collapse target and 24px expansion strip. EN-07/EN-08/PJ-09 keep their existing 220px white menu, neutral current item, navy marker, captioned desktop trigger and chevron. They use the same state/focus/overlay implementation, the same 1200px/780px breakpoints and their existing independent preference keys. The shell's menu-width variable also keeps More aligned with the actual presentation.
+
+PJ-09's written 220px/white/marker contract and registered full-bleed geometry are preserved; main's newer default is not rolled back for other modules. This is an explicit reconciliation of the two presentations, not a newly claimed owner approval. EN-07's browser check now asserts its retained colours/width/marker, main's new My Work colours/width and the common link/title/icon geometry separately. It also verifies actual semantic breadcrumb items and destination visibility instead of selectors for the removed heading DOM.
+
+No framework, dependency, migration, grant, command namespace, receipt, document template or domain policy changes belong to this merge. The earlier 34-case database proof remains applicable to unchanged server code; it is not described as a fresh whole-database run against this merge.
+
+## Execution and limits
+
+The isolated checkout is `powerplants-one-pj09-fix`, branch `fix/pj09-pr269-assurance`. Node 24.21.0, npm 11.19.0, Playwright 1.63.0, Chrome 153.0.8010.53, PostgreSQL 16.15, Windows. Compiled application build **`XHbFVS0D8oqyjF_KwMcJx`**, test origin 3014, database `ppo_synthetic_test` on 55440. The original My Work checkout and PJ-09 review app at 3001 remain untouched.
+
+The database was freshly seeded with the application stopped. The first PJ-09 scenario attempt encountered `OutputIdentityInUse` because stable fixture output IDs already existed in the previous test output directory with different bytes. The guard was preserved, previous files retained, and this run received a fresh private directory through the existing document-store adapter. After another test-only reset, the complete A–L scenario succeeded, including exact EN-08 sources and the closed project fixture. No development database was reset.
+
+An initial typecheck also caught the copied warm-up evidence saved as a `.ts` module with a relative import intended for `tmp/`. Its bytes are now retained as `focused-warm-up.ts.txt`; the TypeScript inclusion rules were not relaxed. TypeScript, full ESLint and the compiled build then passed. The evidence-only extension correction is included here before publication.
+
+Automatic approval review rejected a combined background server-start/check command with the generic reason “blocked by policy.” The supported foreground `npm run serve:compiled` succeeded and kept ownership explicit. A readiness probe preceded listener startup; the native check reached the application after startup and passed. No approval escalation or production launcher was used.
+
+PJ-09's existing compiled proof passed its independent r22 comparison, full stylesheet flush-edge test and failing gutter control, loaded normal Roboto, 220px menu/464px inspector, six routes, selection/Back, 1440px/390px layouts and focused dialog. The separate native Chrome Page zoom 200% check passed at a real 960×600 CSS viewport. Eleven-stage reads in this run were 525, 502, 513, 448 and 426 ms; these are local observations, not a performance threshold.
+
+The compiled affected suite completed in one run: **23 passed, 19 existing viewport-specific skips, 0 failed**, 3.3 minutes. It includes all ten My Work cases, EN-06 and EN-07 desktop/phone journeys, and both P11 queue/state cases on desktop and phone. P11's full fifteen-family matrix passed with the real SC-01 response delayed by 6.5 seconds on both viewports. This is a clean combined run after the earlier separately recorded fixture-collision replay. Command: `npx playwright test --config tmp/pr269-merge.config.ts`; [complete log](compiled-browser.log).
+
+The read-only EN-08 check also passed on this build. It follows Greenhouse 01's actual permitted commissioning source, visits all six destinations, and checks the retained 220px menu, 480px inspector, flex context, flush table and no page overflow. At 390px the inspector begins beneath the 64px header, its close control works, and the overlay menu closes with Escape. It makes no domain mutations. [Measurements](en08-results.json), [desktop](en08-desktop.png), [phone](en08-phone.png).
+
+The copied Playwright files change only the helper import depth and task-owned origin, retaining the tracked assertions, viewport exclusions and timeouts. Their exact bytes and source hashes are in `browser-harness/` with `.txt` extensions so archived evidence is not compiled as application code. TypeScript and full ESLint passed again after the EN-07 assertion adaptation. Build, fixture, native browser, zoom and suite logs are retained alongside [PJ-09 measurements](browser-results.json) and [native zoom results](zoom-results.json). [Open menu and inspector](1920-open.png), [collapsed menu](1920-collapsed.png), [closed inspector](1920-inspector-closed.png), [decision dialog](decision-dialog.png), [phone](390-phone.png) and [native 200% zoom](200-percent-native.png) show the actual compiled application.
+
+This evidence does not rerun all PJ09-01–56 cases, parent AT procedures, physical-device or owner acceptance, and does not claim deployment or merging to main. Current-head GitHub CI remains a separate result on [PR #269](https://github.com/deanrfiedler-gif/powerplants-one/pull/269).
+
+Final foundation and naming checks passed. Retained text logs remove trailing whitespace only; their output and failures are otherwise preserved. Harness sources use pinned LF bytes so the archived hashes remain reproducible. The EN-08 check passed again after its harness was normalised to LF. `git diff --check` is applied before committing.

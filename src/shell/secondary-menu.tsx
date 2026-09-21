@@ -5,10 +5,11 @@ import { HeaderContent } from "../components/header-content";
 // The secondary menu of a workspace: beside the rail and under the header. It was built for My Work
 // (design report r03, mockups r06) and is shared from here so another workspace gets the same menu,
 // not a likeness of it: docked from 1200px with the choice remembered by its owner, a modal overlay
-// below that whose opening never overwrites the remembered choice, a header trigger in the shell's
-// menu slot, a slim edge handle, Escape/backdrop/Close returning focus to whatever opened it, and no
-// hidden links left in the keyboard order. The owner supplies the contents, the remembered state
-// and the scope id that the shared menu rules in my-work.css are written against.
+// below that whose opening never overwrites the remembered choice, an icon-only header trigger in the
+// shell's menu slot, the menu's own right border as the collapse target, a 24px strip with a grip as
+// the expand target, Escape/backdrop/Close returning focus to whatever opened it, and no hidden links
+// left in the keyboard order. The owner supplies the contents, the remembered state and the scope id
+// that the shared menu rules in my-work.css are written against.
 const wideQuery = "(min-width: 1200px)";
 const phoneQuery = "(max-width: 780px)";
 const subscribeTo = (query: string) => (changed: () => void) => {
@@ -19,7 +20,8 @@ const subscribeTo = (query: string) => (changed: () => void) => {
 const subscribeWide = subscribeTo(wideQuery),
   subscribePhone = subscribeTo(phoneQuery);
 
-// The five glyphs the frame itself draws, in My Work's outline family (24px grid, 1.7 stroke).
+// The frame's glyphs, in My Work's outline family (24px grid, 1.7 stroke). The
+// collapsed strip draws a plain grip rather than a glyph, and the menu's own right border has no icon.
 const glyphs = {
   panel: (
     <>
@@ -29,8 +31,8 @@ const glyphs = {
   ),
   menu: <path d="M4 7h16M4 12h16M4 17h16" />,
   close: <path d="m6 6 12 12M18 6 6 18" />,
-  "chevron-left": <path d="m14.5 6-6 6 6 6" />,
-  "chevron-right": <path d="m9.5 6 6 6-6 6" />,
+  "chevron-left": <path d="m14 6-6 6 6 6" />,
+  "chevron-right": <path d="m10 6 6 6-6 6" />,
 } as const;
 const Glyph = ({ name }: { name: keyof typeof glyphs }) => (
   <svg className="mw-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -79,6 +81,7 @@ export function SecondaryMenuFrame({
   menu,
   message,
   children,
+  presentation = "shared",
 }: {
   state: SecondaryMenuState;
   id: string;
@@ -89,14 +92,18 @@ export function SecondaryMenuFrame({
   menu: ReactNode;
   message: string;
   children: ReactNode;
+  // Keep existing module baselines explicit; new/shared consumers use the refined menu.
+  presentation?: "shared" | "baseline";
 }) {
   const { docked, phone, open, toggle, closeOverlay, overlay } = state;
   // A phone has three separate menus (this one, More and Create), so its trigger says which it is.
   const label = phone ? `${name} menu` : open ? "Hide menu" : "Show menu";
   return (
-    <section id={id} data-module-layout="full-bleed" data-menu={docked ? (open ? "docked" : "collapsed") : "overlay"} {...attributes} aria-label={name}>
+    <section id={id} data-module-layout="full-bleed" data-menu={docked ? (open ? "docked" : "collapsed") : "overlay"} data-menu-presentation={presentation} {...attributes} aria-label={name}>
       <HeaderContent slot="menu">
-        <button type="button" className="ppo-menu-toggle" aria-expanded={open} aria-controls={menuId} onClick={(e) => toggle(e.currentTarget)}>
+        {/* Icon only to look at: the name stays for assistive technology and as the tooltip, and the
+            button keeps one width in both states so nothing to its right moves. */}
+        <button type="button" className="ppo-menu-toggle" data-menu-presentation={presentation} title={label} aria-expanded={open} aria-controls={menuId} onClick={(e) => toggle(e.currentTarget)}>
           <Glyph name={phone ? "menu" : "panel"} />
           <span>{label}</span>
         </button>
@@ -125,9 +132,37 @@ export function SecondaryMenuFrame({
           {menu}
         </dialog>
       )}
-      <button type="button" className="mw-edge" aria-label={label} aria-expanded={open} aria-controls={menuId} title={label} onClick={(e) => toggle(e.currentTarget)}>
-        <Glyph name={open ? "chevron-left" : "chevron-right"} />
-      </button>
+      {/* Docked, the menu's own right border is the collapse target and a 24px strip is the expand target.
+          Neither protrudes into the workspace, and neither opens on hover alone. Below the docked width the
+          overlay and the header trigger are the only controls, so neither is rendered. */}
+      {presentation === "baseline" ? (
+        <button type="button" className="mw-edge" aria-label={label} aria-expanded={open} aria-controls={menuId} title={label} onClick={(e) => toggle(e.currentTarget)}>
+          <Glyph name={open ? "chevron-left" : "chevron-right"} />
+        </button>
+      ) : docked &&
+        (open ? (
+          <button
+            type="button"
+            className="mw-menu-edge"
+            aria-label={`Collapse ${name} menu`}
+            title={`Collapse ${name} menu`}
+            aria-expanded={true}
+            aria-controls={menuId}
+            onClick={(e) => toggle(e.currentTarget)}
+          />
+        ) : (
+          <button
+            type="button"
+            className="mw-menu-strip"
+            aria-label={`Expand ${name} menu`}
+            title={`Expand ${name} menu`}
+            aria-expanded={false}
+            aria-controls={menuId}
+            onClick={(e) => toggle(e.currentTarget)}
+          >
+            <span className="mw-menu-grip" aria-hidden="true" />
+          </button>
+        ))}
       <div className="mw-content" id={contentId}>
         <p className="mw-live" role="status" aria-live="polite">
           {message}

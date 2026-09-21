@@ -248,7 +248,7 @@ export function AcceptanceWorkspace({ recordId }: { recordId?: string }) {
     />
   );
   return (
-    <SecondaryMenuFrame
+    <SecondaryMenuFrame presentation="baseline"
       id="ppo-acceptance"
       name="Acceptance & closeout"
       menuId="acceptance-menu"
