@@ -68,6 +68,24 @@ function seed31Grants(original: Grant[], at: Date): Grant[] {
   ];
 }
 
+// Seed 32: only named acceptance duties and the necessary existing Project/Activity reads.
+export function acceptanceSeedGrants(original: Grant[], alreadyAdded: Grant[]): Grant[] {
+ const id=(n:number)=>`30000000-0000-4000-8000-${String(n).padStart(12,'0')}`;
+ const assignments:[number,string[]][]=[
+ [1,['scope','submit','prepare','issue','response.record','close.stage','close.project','reopen','source']],
+ [16,['scope','submit','prepare','response.record']],[17,['scope','submit','prepare','response.record']],
+ [18,['technical','response.validate','close.stage','close.project','reopen']],[19,['issue']],[23,['receive']],[12,['commercial','source']]];
+ const own=original.filter(g=>g.user_id===coordinator&&g.company_id===companyA&&g.scope_type==='Company');
+ const project=own.find(g=>g.capability==='project.read')??alreadyAdded.find(g=>g.user_id===coordinator&&g.company_id===companyA&&g.capability==='project.read');
+ assert(project,'The earlier Project seed provides the source scope');
+ const proposals=[...assignments.flatMap(([n,caps])=>caps.map(capability=>({...project,user_id:id(n),capability:'acceptance.'+capability}))),
+ ...[16,17,18,19,23,12].flatMap(n=>['project.read','shared.read','shared.internal.read','activity.read','activity.edit','engineering.read'].map(capability=>{
+  const g=own.find(g=>g.capability===capability)??alreadyAdded.find(g=>g.user_id===coordinator&&g.company_id===companyA&&g.capability===capability);assert(g);return {...g,user_id:id(n),capability};}))];
+ const key=(g:Grant)=>[g.workspace_id,g.user_id,g.capability,g.scope_type,g.scope_id].join(':');
+ const seen=new Set([...original,...alreadyAdded].map(key));
+ return proposals.filter(g=>{if(seen.has(key(g)))return false;seen.add(key(g));return true;});
+}
+
 /** Every earlier grant survives byte for byte, revoked ones included, and the only additions are those of seeds 29, 30 and 31. */
 export function assertOnlyEngineeringSeedGrantsAdded(original: Grant[], upgraded: Grant[], at = new Date()) {
   const ids = new Set(original.map(g => g.id));
@@ -75,7 +93,8 @@ export function assertOnlyEngineeringSeedGrantsAdded(original: Grant[], upgraded
   // An exact allowlist: an unrelated new grant must fail, even if its scope matches an old grant.
   const sorted = (gs: Grant[]) => gs.map(g => JSON.stringify(Object.fromEntries(Object.entries(g).filter(([k]) => k !== "id")))).sort();
   const materials = seed29Grants(original, at), changes = seed30Grants(original, at), commissioning = seed31Grants(original, at);
-  const expected = [...materials, ...changes, ...commissioning];
+  const earlier = [...materials, ...changes, ...commissioning];
+  const expected=[...earlier,...acceptanceSeedGrants(original,earlier)];
   assert.equal(materials.length, 31);
   assert.equal(changes.length, 21); // twelve reads for three profiles and nine duty grants
   assert.equal(commissioning.length, 18); // four reads for one profile, six duty grants and eight My Work action grants

@@ -1,0 +1,43 @@
+import assert from 'node:assert/strict';
+import { writeFile } from 'node:fs/promises';
+import { launchDocumentBrowser } from '../src/platform/browser';
+const origin='http://127.0.0.1:3014', browser=await launchDocumentBrowser(), errors:string[]=[];
+try {
+ const page=await browser.newPage({baseURL:origin,viewport:{width:1920,height:1200}});
+ page.on('pageerror',e=>errors.push(e.message));
+ assert.equal((await page.request.post('/api/v1/local-session',{headers:{Origin:origin},data:{profile:'coordinator'}})).status(),200);
+ const data=await (await page.request.get('/api/v1/projects/acceptance')).json();
+ const stage=data.items.find((d:any)=>d.stage.title==='Greenhouse 01 acceptance').stage.id;
+ await page.goto(`/projects/acceptance?project=${data.project.id}&stage=${stage}`);
+ const source=page.getByRole('link',{name:'Open commissioning record'});await source.waitFor();
+ const sourceURL=new URL((await source.getAttribute('href'))!,origin);
+ sourceURL.pathname='/engineering/commissioning';
+ await page.goto(sourceURL.href);
+ await page.locator('#ppo-commissioning .em-register tbody tr').first().waitFor();
+ await page.getByRole('button',{name:'Show menu',exact:true}).first().click();
+ await page.locator('#ppo-commissioning[data-menu=docked]').waitFor();
+ await page.locator('.em-inspector-head h2').waitFor();
+ const dimensions:any={pageOverflow:await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)};
+ for(const [key,selector] of Object.entries({workspace:'#ppo-commissioning .em-workspace',context:'#ppo-commissioning .em-context',register:'#ppo-commissioning .em-register',table:'#ppo-commissioning .em-register .em-table',inspector:'#ppo-commissioning .em-inspector',menu:'#cm-menu'})) {
+  dimensions[key]={...await page.locator(selector).boundingBox(),display:await page.locator(selector).evaluate(el=>getComputedStyle(el).display)};
+ }
+ assert.equal(dimensions.workspace.display,'flex'); assert.equal(dimensions.context.display,'flex');
+ assert.equal(dimensions.menu.width,220);assert.equal(dimensions.inspector.width,480);
+ assert(dimensions.inspector.y>=dimensions.context.y+dimensions.context.height-1);
+ assert(Math.abs(dimensions.register.x-dimensions.table.x)<1);
+ assert(Math.abs(dimensions.register.x+dimensions.register.width-dimensions.table.x-dimensions.table.width)<1);
+ assert.equal(dimensions.pageOverflow,false);
+ await page.screenshot({path:'tmp/pj09-merge-en08-desktop.png'});
+ const views=['basis','results','configuration','releases','handovers'];
+ for(const view of views){const url=new URL(sourceURL);url.pathname='/engineering/commissioning/'+view;assert.equal((await page.goto(url.href))!.status(),200);await page.locator('#ppo-commissioning .cm-page').waitFor();}
+ await page.setViewportSize({width:390,height:844});await page.goto(sourceURL.href);await page.locator('.em-inspector-head h2').waitFor();
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+ const phone=await page.locator('.em-inspector').boundingBox();assert(phone);assert.equal(phone.width,390);assert.equal(phone.y,64);
+ await page.screenshot({path:'tmp/pj09-merge-en08-phone.png'});
+ await page.getByRole('button',{name:'Close inspector',exact:true}).click();await page.locator('.em-inspector').waitFor({state:'detached'});
+ await page.getByRole('button',{name:'Commissioning menu',exact:true}).first().click();await page.locator('#cm-menu').waitFor();
+ await page.keyboard.press('Escape');await page.locator('#cm-menu').waitFor({state:'hidden'});
+ assert.deepEqual(errors,[]);
+ const result={check:'EN-08 retained composition and six routes on merged compiled application',origin,sourceURL:sourceURL.href,dimensions,phone,views,errors,passed:true};
+ await writeFile('tmp/pj09-merge-en08-results.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result));
+}finally{await browser.close()}

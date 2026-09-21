@@ -1,0 +1,235 @@
+✔ E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original (18435.0495ms)
+✔ E1-DB10 current-main upgrade and repeated seed preserve accepted CRM originals and revoked grants (11248.658ms)
+✔ DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent adoption and exact quotation recovery (17084.5135ms)
+✔ P07 upgrade from P06 and repeat seed retain exact original issue, source, receipts and revoked grants (13846.2577ms)
+✔ P10 additive upgrade from real P09 issued originals retains exact rows, bytes, migration checksums and repeat seeds (10767.1988ms)
+✔ fresh combined installation retains both registries and both domains through repeat migration and seed (14030.8628ms)
+✔ main 0017 upgrades through Leads 0018 then Projects 0019 without replacing prior migration receipts (13426.8207ms)
+✔ an existing Leads 0018 record and receipt survive the Projects upgrade exactly (11736.5784ms)
+✔ P08 additive P07 upgrade preserves attendance, receipt, bytes and revoked grants (19009.4502ms)
+✔ P06 upgrade and repeat seed preserve exact P05 SQL evidence, revoked grants and accepted receipts (15377.2037ms)
+✔ P05 additive upgrade preserves exact P04 proposal bytes, receipts, source hashes and revoked grants; repeat seed preserves edits (10433.4547ms)
+✔ P11 additive upgrade preserves actual current-main/P10 Approved records, original outputs and revoked receipt grants (11555.4317ms)
+✔ P11 additive upgrade preserves actual current-main/P10 OutcomeUnknown records, original outputs and revoked receipt grants (17029.8567ms)
+✔ P11 additive upgrade preserves actual current-main/P10 Reconciled records, original outputs and revoked receipt grants (15385.9943ms)
+✔ P09 fresh and P08 upgrade preserve originals and repeat seed does not revive revoked report grants (14860.5213ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo migration mismatch: version=18 expected=2c36b8e173f805e0184e59284c0856d982ecc5a71ea60d61d64854f3ec186255 stored=missing
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: apply-migration-18
+Demo upgrade stage: apply-migration-19
+Demo upgrade stage: apply-migration-20
+Demo upgrade stage: apply-migration-21
+Demo upgrade stage: apply-migration-22
+Demo upgrade stage: apply-migration-23
+Demo upgrade stage: apply-migration-24
+Demo upgrade stage: apply-migration-25
+Demo upgrade stage: apply-migration-26
+Demo upgrade stage: apply-migration-27
+Demo upgrade stage: apply-migration-28
+Demo upgrade stage: apply-migration-29
+Demo upgrade stage: apply-migration-30
+Demo upgrade stage: apply-migration-31
+Demo upgrade stage: apply-migration-32
+Demo upgrade stage: apply-migration-33
+Demo upgrade stage: apply-migration-34
+Demo upgrade stage: apply-migration-35
+Demo upgrade stage: apply-migration-36
+Demo upgrade stage: apply-migration-37
+Demo upgrade stage: apply-migration-38
+Demo upgrade stage: apply-seed-18
+Demo upgrade stage: apply-seed-19
+Demo upgrade stage: apply-seed-20
+Demo upgrade stage: apply-seed-21
+Demo upgrade stage: apply-seed-24
+Demo upgrade stage: apply-seed-29
+Demo upgrade stage: apply-seed-30
+Demo upgrade stage: apply-seed-31
+Demo upgrade stage: apply-seed-32
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+✔ upgrade preserves saved CRM, mailbox, sessions, old grants and invitation limits; retry is idempotent (6769.4531ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: apply-migration-18
+Demo upgrade stage: apply-migration-19
+Demo upgrade stage: apply-migration-20
+Demo upgrade stage: apply-migration-21
+Demo upgrade stage: apply-migration-22
+Demo upgrade stage: apply-migration-23
+Demo upgrade stage: apply-migration-24
+Demo upgrade stage: apply-migration-25
+Demo upgrade stage: apply-migration-26
+Demo upgrade stage: apply-migration-27
+Demo upgrade stage: apply-migration-28
+Demo upgrade stage: apply-migration-29
+Demo upgrade stage: apply-migration-30
+Demo upgrade stage: apply-migration-31
+Demo upgrade stage: apply-migration-32
+Demo upgrade stage: apply-migration-33
+Demo upgrade stage: apply-migration-34
+Demo upgrade stage: apply-migration-35
+Demo upgrade stage: apply-migration-36
+Demo upgrade stage: apply-migration-37
+Demo upgrade stage: apply-migration-38
+Demo upgrade stage: apply-seed-18
+Demo upgrade stage: apply-seed-19
+Demo upgrade stage: apply-seed-20
+Demo upgrade stage: apply-seed-21
+Demo upgrade stage: apply-seed-24
+Demo upgrade stage: apply-seed-29
+Demo upgrade stage: apply-seed-30
+Demo upgrade stage: apply-seed-31
+Demo upgrade stage: apply-seed-32
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+✔ an already-current demo requires explicit upgrade for missing booking grants (6389.732ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: apply-migration-18
+Demo upgrade stage: apply-migration-19
+Demo upgrade stage: apply-migration-20
+Demo upgrade stage: apply-migration-21
+Demo upgrade stage: apply-migration-22
+Demo upgrade stage: apply-migration-23
+Demo upgrade stage: apply-migration-24
+Demo upgrade stage: apply-migration-25
+Demo upgrade stage: apply-migration-26
+Demo upgrade stage: apply-migration-27
+Demo upgrade stage: apply-migration-28
+Demo upgrade stage: apply-migration-29
+Demo upgrade stage: apply-migration-30
+Demo upgrade stage: apply-migration-31
+Demo upgrade stage: apply-migration-32
+Demo upgrade stage: apply-migration-33
+Demo upgrade stage: apply-migration-34
+Demo upgrade stage: apply-migration-35
+Demo upgrade stage: apply-migration-36
+Demo upgrade stage: apply-migration-37
+Demo upgrade stage: apply-migration-38
+Demo upgrade stage: apply-seed-18
+Demo upgrade stage: apply-seed-19
+Demo upgrade stage: apply-seed-20
+Demo upgrade stage: apply-seed-21
+Demo upgrade stage: apply-seed-24
+Demo upgrade stage: apply-seed-29
+Demo upgrade stage: apply-seed-30
+Demo upgrade stage: apply-seed-31
+Demo upgrade stage: apply-seed-32
+Demo upgrade stage: apply-hosted-migration-2
+Demo upgrade stage: apply-hosted-migration-3
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+✔ a baseline executed from Windows CRLF SQL upgrades without rewriting historical checksums (14709.1662ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 261866.7105

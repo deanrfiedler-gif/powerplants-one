@@ -1,0 +1,647 @@
+{
+  "previously_warmed": 201,
+  "base_url": "http://127.0.0.1:3014",
+  "started_at": "2026-09-21T05:03:32.484Z",
+  "total_ms": 192956,
+  "routes": 91,
+  "unreachable": 0,
+  "results": [
+    {
+      "path": "/",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 734,
+      "error": null
+    },
+    {
+      "path": "/api/v1/field-entries",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2103,
+      "error": null
+    },
+    {
+      "path": "/api/v1/field-entries/00000000-0000-4000-8000-000000000000/correct",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 4559,
+      "error": null
+    },
+    {
+      "path": "/api/v1/finance/accounts/00000000-0000-4000-8000-000000000000/observe",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 4648,
+      "error": null
+    },
+    {
+      "path": "/api/v1/finance/handoffs",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 608,
+      "error": null
+    },
+    {
+      "path": "/api/v1/finance/handoffs/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 3460,
+      "error": null
+    },
+    {
+      "path": "/api/v1/finance/handoffs/00000000-0000-4000-8000-000000000000/begin-processing",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2772,
+      "error": null
+    },
+    {
+      "path": "/api/v1/finance/handoffs/00000000-0000-4000-8000-000000000000/cancel",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 5285,
+      "error": null
+    },
+    {
+      "path": "/api/v1/finance/handoffs/00000000-0000-4000-8000-000000000000/reconcile",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 3306,
+      "error": null
+    },
+    {
+      "path": "/api/v1/finance/handoffs/00000000-0000-4000-8000-000000000000/record-outcome",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 3376,
+      "error": null
+    },
+    {
+      "path": "/api/v1/finance/handoffs/00000000-0000-4000-8000-000000000000/request-correction",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2644,
+      "error": null
+    },
+    {
+      "path": "/api/v1/finance/handoffs/00000000-0000-4000-8000-000000000000/request-evidence",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 4810,
+      "error": null
+    },
+    {
+      "path": "/api/v1/finance/handoffs/00000000-0000-4000-8000-000000000000/review",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 4317,
+      "error": null
+    },
+    {
+      "path": "/api/v1/finance/handoffs/00000000-0000-4000-8000-000000000000/revise",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 6861,
+      "error": null
+    },
+    {
+      "path": "/api/v1/finance/handoffs/00000000-0000-4000-8000-000000000000/submit",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 3025,
+      "error": null
+    },
+    {
+      "path": "/api/v1/finance/issues/00000000-0000-4000-8000-000000000000/bytes",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 3312,
+      "error": null
+    },
+    {
+      "path": "/api/v1/finance/jobs/00000000-0000-4000-8000-000000000000/retry",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 5796,
+      "error": null
+    },
+    {
+      "path": "/api/v1/finance/options",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 1831,
+      "error": null
+    },
+    {
+      "path": "/api/v1/finance/work-orders/00000000-0000-4000-8000-000000000000/sources",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 5386,
+      "error": null
+    },
+    {
+      "path": "/api/v1/local-session",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 953,
+      "error": null
+    },
+    {
+      "path": "/api/v1/local-session/sign-out",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 661,
+      "error": null
+    },
+    {
+      "path": "/api/v1/my-jobs",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 877,
+      "error": null
+    },
+    {
+      "path": "/api/v1/my-jobs/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 3061,
+      "error": null
+    },
+    {
+      "path": "/api/v1/pack-issues/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 3046,
+      "error": null
+    },
+    {
+      "path": "/api/v1/pack-issues/00000000-0000-4000-8000-000000000000/acknowledge",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 3614,
+      "error": null
+    },
+    {
+      "path": "/api/v1/pack-issues/00000000-0000-4000-8000-000000000000/distribution",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 3512,
+      "error": null
+    },
+    {
+      "path": "/api/v1/pack-issues/00000000-0000-4000-8000-000000000000/html",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2708,
+      "error": null
+    },
+    {
+      "path": "/api/v1/pack-issues/00000000-0000-4000-8000-000000000000/manifest",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2031,
+      "error": null
+    },
+    {
+      "path": "/api/v1/pack-issues/00000000-0000-4000-8000-000000000000/pdf",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2223,
+      "error": null
+    },
+    {
+      "path": "/api/v1/packs",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 389,
+      "error": null
+    },
+    {
+      "path": "/api/v1/packs/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 1743,
+      "error": null
+    },
+    {
+      "path": "/api/v1/packs/00000000-0000-4000-8000-000000000000/amend",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 1748,
+      "error": null
+    },
+    {
+      "path": "/api/v1/packs/00000000-0000-4000-8000-000000000000/check",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2477,
+      "error": null
+    },
+    {
+      "path": "/api/v1/packs/00000000-0000-4000-8000-000000000000/issue",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 1816,
+      "error": null
+    },
+    {
+      "path": "/api/v1/packs/00000000-0000-4000-8000-000000000000/preview",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2018,
+      "error": null
+    },
+    {
+      "path": "/api/v1/packs/00000000-0000-4000-8000-000000000000/withdraw",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2320,
+      "error": null
+    },
+    {
+      "path": "/api/v1/render-jobs/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2100,
+      "error": null
+    },
+    {
+      "path": "/api/v1/render-jobs/00000000-0000-4000-8000-000000000000/html",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 1921,
+      "error": null
+    },
+    {
+      "path": "/api/v1/render-jobs/00000000-0000-4000-8000-000000000000/pdf",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2938,
+      "error": null
+    },
+    {
+      "path": "/api/v1/render-jobs/00000000-0000-4000-8000-000000000000/retry",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 4069,
+      "error": null
+    },
+    {
+      "path": "/api/v1/report-render-jobs/00000000-0000-4000-8000-000000000000/output",
+      "kind": "api",
+      "status": 404,
+      "elapsed_ms": 3041,
+      "error": null
+    },
+    {
+      "path": "/api/v1/report-render-jobs/00000000-0000-4000-8000-000000000000/retry",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2549,
+      "error": null
+    },
+    {
+      "path": "/api/v1/reports",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 507,
+      "error": null
+    },
+    {
+      "path": "/api/v1/reports/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2289,
+      "error": null
+    },
+    {
+      "path": "/api/v1/reports/00000000-0000-4000-8000-000000000000/amend",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2136,
+      "error": null
+    },
+    {
+      "path": "/api/v1/reports/00000000-0000-4000-8000-000000000000/html",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2405,
+      "error": null
+    },
+    {
+      "path": "/api/v1/reports/00000000-0000-4000-8000-000000000000/issue",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 1712,
+      "error": null
+    },
+    {
+      "path": "/api/v1/reports/00000000-0000-4000-8000-000000000000/manifest",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2316,
+      "error": null
+    },
+    {
+      "path": "/api/v1/reports/00000000-0000-4000-8000-000000000000/pdf",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2886,
+      "error": null
+    },
+    {
+      "path": "/api/v1/reports/00000000-0000-4000-8000-000000000000/respond",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 4372,
+      "error": null
+    },
+    {
+      "path": "/api/v1/reports/00000000-0000-4000-8000-000000000000/review",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 4583,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 393,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule-change-requests/00000000-0000-4000-8000-000000000000/accept",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 1402,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule-change-requests/00000000-0000-4000-8000-000000000000/cancel",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 1479,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule-change-requests/00000000-0000-4000-8000-000000000000/reject",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 3055,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule/demand",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 1710,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/tickets",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 1068,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/tickets/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2605,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/tickets/00000000-0000-4000-8000-000000000000/request-information",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 1500,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/tickets/00000000-0000-4000-8000-000000000000/save-draft",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 1508,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/tickets/00000000-0000-4000-8000-000000000000/save-intake",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 1860,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/tickets/00000000-0000-4000-8000-000000000000/triage",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2717,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 503,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2397,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders/00000000-0000-4000-8000-000000000000/authorise",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2331,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders/00000000-0000-4000-8000-000000000000/readiness",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 1366,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders/00000000-0000-4000-8000-000000000000/save-scope",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 1235,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders/00000000-0000-4000-8000-000000000000/successor",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 1220,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders/00000000-0000-4000-8000-000000000000/visits",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 1656,
+      "error": null
+    },
+    {
+      "path": "/api/v1/sites",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 320,
+      "error": null
+    },
+    {
+      "path": "/api/v1/sites/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 1557,
+      "error": null
+    },
+    {
+      "path": "/api/v1/sites/00000000-0000-4000-8000-000000000000/history",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 1728,
+      "error": null
+    },
+    {
+      "path": "/api/v1/sites/00000000-0000-4000-8000-000000000000/parties",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 1339,
+      "error": null
+    },
+    {
+      "path": "/api/v1/sync/recovery-review",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 745,
+      "error": null
+    },
+    {
+      "path": "/api/v1/sync/recovery-review/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2386,
+      "error": null
+    },
+    {
+      "path": "/api/v1/sync/recovery-review/00000000-0000-4000-8000-000000000000/bytes",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 1792,
+      "error": null
+    },
+    {
+      "path": "/api/v1/sync/recovery-review/00000000-0000-4000-8000-000000000000/disposition",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 1820,
+      "error": null
+    },
+    {
+      "path": "/api/v1/work",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 322,
+      "error": null
+    },
+    {
+      "path": "/api/v1/work/actions",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 561,
+      "error": null
+    },
+    {
+      "path": "/api/v1/work/agenda",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 529,
+      "error": null
+    },
+    {
+      "path": "/api/v1/work/conflicts",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 508,
+      "error": null
+    },
+    {
+      "path": "/api/v1/work/gaps",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 443,
+      "error": null
+    },
+    {
+      "path": "/api/v1/work/navigation",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 472,
+      "error": null
+    },
+    {
+      "path": "/api/v1/work/overdue-opportunities",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 540,
+      "error": null
+    },
+    {
+      "path": "/api/v1/work/overview",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 797,
+      "error": null
+    },
+    {
+      "path": "/api/v1/work/parents",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 448,
+      "error": null
+    },
+    {
+      "path": "/api/v1/work/reviews",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 589,
+      "error": null
+    },
+    {
+      "path": "/api/v1/work/team",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 628,
+      "error": null
+    },
+    {
+      "path": "/api/v1/work/views",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 491,
+      "error": null
+    },
+    {
+      "path": "/api/v1/work/waiting",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 617,
+      "error": null
+    },
+    {
+      "path": "/api/v1/work/weather",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 452,
+      "error": null
+    }
+  ]
+}

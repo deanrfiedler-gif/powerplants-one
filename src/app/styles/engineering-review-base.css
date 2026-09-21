@@ -1,13 +1,7 @@
-/* Retained EN-07/EN-08 flex composition. EN-06 owns its newer grid in engineering-materials.css.
-   My Work still owns shared menu, controls and tokens. */
-/* EN-06 Released Materials & Substitutions (parent ENG-05). Composition from desktop mockup r04, behaviour and data
-   rules from build plan r02, values from theme style board r22. The shell owns the rail, header and viewport. The
-   secondary menu, its tokens, the local reset, controls, menus, forms and dialogs are My Work's own rules, shared by
-   scope id in my-work.css: nothing here restyles them. This file adds only what is EN-06's: the compact context row,
-   the flush register, the inspector and the working pages. Class names carry an em- prefix.
-   Register treatment is r22 D23: white rows, pale grey header, #EDF6E9 row emphasis, #F8FAF7 hover.
-   EN-07 (#ppo-changes) mounts the same context row, flush register, inspector and working pages, so every selector names
-   both scope ids through :is(), which keeps the specificity of an id. What is EN-07's alone is in engineering-changes.css. */
+/* EN-07/EN-08 retain the shared EN-06 r04 flex composition they implement. EN-06 now uses a two-row
+   context/grid composition (PR #268), defined separately in engineering-materials.css. Keep these selectors
+   scoped to their matching markup. My Work still owns controls, tokens, reset, menu and dialogs.
+   The common module breadcrumb rules below also serve PJ-09; EN-06 scopes its refined trail treatment. */
 :is(#ppo-changes,#ppo-commissioning){background:var(--surface-white);--row-emphasis:#edf6e9;--row-hover:#f8faf7;--header-fill:#f4f5f7}
 /* One scroll owner per surface: the register scrolls its table, the inspector its own body, a working page itself. */
 :is(#ppo-changes,#ppo-commissioning) .mw-content{overflow:hidden;display:flex;flex-direction:column}
@@ -189,25 +183,7 @@
 :is(#ppo-changes,#ppo-commissioning) .em-timeline>li:last-child{border-color:transparent}
 :is(#ppo-changes,#ppo-commissioning) .em-timeline p{color:var(--text-secondary);font-size:13px}
 
-/* The breadcrumb is the page title on these routes, so the redundant product name yields the room. The destination
-   follows the module only while the secondary menu is hidden; open, the menu already names it. */
-.workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .product-heading[data-module-crumb] :is(.ppo-product-name,.ppo-heading-divider){display:none}
-.workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .product-heading[data-module-crumb] strong{font-size:16px;color:#596779}
-.workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-view{font-weight:700;color:#242a37}
-.workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .ppo-heading-subview{color:#596779}
-/* Accessible collapse: when room runs out it is the module name that gives way, with an ellipsis, and never the
-   destination. The full path stays in the title attribute and in the page's own heading. */
-.workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .product-heading[data-module-crumb] strong{display:flex;align-items:baseline;min-width:0;overflow:visible}
-.workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-root{flex:none;white-space:pre}
-.workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-view{flex:0 1 auto;min-width:3ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-subview{flex:none;white-space:pre}
-.workspace:has(:is(#ppo-changes,#ppo-commissioning)[data-menu=docked]) .ppo-shell-header .ppo-heading-subview{display:none}
-/* Narrower desktops: the module name outranks its parent, which the rail and the page heading still give. */
-@media (max-width:1560px){
- .workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .product-heading[data-module-crumb] .ppo-heading-root{display:none}
- .workspace:has(:is(#ppo-changes,#ppo-commissioning)) .ppo-shell-header .product-heading[data-module-crumb] strong{font-size:15px}
-}
-
+/* Module identities use the shared semantic breadcrumb in desktop-shell.css. */
 @media (max-width:1100px){
  :is(#ppo-changes,#ppo-commissioning) .em-context{flex-wrap:wrap;gap:6px 0;padding:8px 12px}
  :is(#ppo-changes,#ppo-commissioning) .em-context-cell{padding-right:14px;margin-right:14px}

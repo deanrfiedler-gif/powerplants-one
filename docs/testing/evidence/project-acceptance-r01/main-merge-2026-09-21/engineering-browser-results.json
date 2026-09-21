@@ -1,0 +1,231 @@
+{
+  "origin": "http://127.0.0.1:3011",
+  "database": "ppo_synthetic_test",
+  "build": "mpkMDIGGCGBz1Wqj4klTg",
+  "stats": {
+    "startTime": "2026-09-21T02:16:04.900Z",
+    "duration": 77812.72899999999,
+    "expected": 9,
+    "skipped": 9,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audited contract, My Work's menu and honest counts",
+      "file": "engineering-changes.spec.ts",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 17434
+        }
+      ]
+    },
+    {
+      "title": "EN07-A54 A55 A56 A60 A25 A44: the inspector projects retained records, and the next action follows the outstanding work",
+      "file": "engineering-changes.spec.ts",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 12676
+        }
+      ]
+    },
+    {
+      "title": "EN07-A02 A30 A36 A37: a wrong selection leaves nothing on screen, and a lost reply recovers the original requests without a second set",
+      "file": "engineering-changes.spec.ts",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 10618
+        }
+      ]
+    },
+    {
+      "title": "EN07-A46: a phone reads flush stacked summaries with a full-width inspector, an overlay menu and no page overflow",
+      "file": "engineering-changes.spec.ts",
+      "project": "desktop-chromium",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration_ms": 262
+        }
+      ]
+    },
+    {
+      "title": "EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audited contract, My Work's menu and honest counts",
+      "file": "engineering-changes.spec.ts",
+      "project": "mobile-chromium",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration_ms": 788
+        }
+      ]
+    },
+    {
+      "title": "EN07-A54 A55 A56 A60 A25 A44: the inspector projects retained records, and the next action follows the outstanding work",
+      "file": "engineering-changes.spec.ts",
+      "project": "mobile-chromium",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration_ms": 308
+        }
+      ]
+    },
+    {
+      "title": "EN07-A02 A30 A36 A37: a wrong selection leaves nothing on screen, and a lost reply recovers the original requests without a second set",
+      "file": "engineering-changes.spec.ts",
+      "project": "mobile-chromium",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration_ms": 300
+        }
+      ]
+    },
+    {
+      "title": "EN07-A46: a phone reads flush stacked summaries with a full-width inspector, an overlay menu and no page overflow",
+      "file": "engineering-changes.spec.ts",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 9211
+        }
+      ]
+    },
+    {
+      "title": "EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contract, My Work's menu and honest counts",
+      "file": "engineering-materials.spec.ts",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 6598
+        }
+      ]
+    },
+    {
+      "title": "EN06-A04 A06 A07 A09 A10 A16 A27 A41: the server refuses what the screen would not offer",
+      "file": "engineering-materials.spec.ts",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 3227
+        }
+      ]
+    },
+    {
+      "title": "EN06-A15 A16 A17 A18 A19 A20 A22 A23 A42: partial release, unknown outcome, receiving and a changed source",
+      "file": "engineering-materials.spec.ts",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 4768
+        }
+      ]
+    },
+    {
+      "title": "EN06-A11 A12 A13: return and corrected successor, explicit adoption, and a commercial decision that Engineering cannot make",
+      "file": "engineering-materials.spec.ts",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 3112
+        }
+      ]
+    },
+    {
+      "title": "EN06-A30 A44: a phone keeps the page inside the viewport and the table in its own scroll",
+      "file": "engineering-materials.spec.ts",
+      "project": "desktop-chromium",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration_ms": 274
+        }
+      ]
+    },
+    {
+      "title": "EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contract, My Work's menu and honest counts",
+      "file": "engineering-materials.spec.ts",
+      "project": "mobile-chromium",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration_ms": 249
+        }
+      ]
+    },
+    {
+      "title": "EN06-A04 A06 A07 A09 A10 A16 A27 A41: the server refuses what the screen would not offer",
+      "file": "engineering-materials.spec.ts",
+      "project": "mobile-chromium",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration_ms": 1
+        }
+      ]
+    },
+    {
+      "title": "EN06-A15 A16 A17 A18 A19 A20 A22 A23 A42: partial release, unknown outcome, receiving and a changed source",
+      "file": "engineering-materials.spec.ts",
+      "project": "mobile-chromium",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration_ms": 256
+        }
+      ]
+    },
+    {
+      "title": "EN06-A11 A12 A13: return and corrected successor, explicit adoption, and a commercial decision that Engineering cannot make",
+      "file": "engineering-materials.spec.ts",
+      "project": "mobile-chromium",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration_ms": 1
+        }
+      ]
+    },
+    {
+      "title": "EN06-A30 A44: a phone keeps the page inside the viewport and the table in its own scroll",
+      "file": "engineering-materials.spec.ts",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 3098
+        }
+      ]
+    }
+  ]
+}

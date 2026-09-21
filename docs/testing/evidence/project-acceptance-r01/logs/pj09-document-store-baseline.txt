@@ -1,0 +1,40 @@
+✖ P06 private adapter is write-once by original operation and verifies exact retrieved hashes (9.8015ms)
+✖ P06 source lookup never substitutes a latest version; symlink and in-repository stores are refused (5.8837ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5088.6047
+
+✖ failing tests:
+
+test at tests\unit\document-store.test.ts:1:302
+✖ P06 private adapter is write-once by original operation and verifies exact retrieved hashes (9.8015ms)
+  Error: The exact document version is unavailable. Its original reference is retained; ask the preparation owner to recover it.
+      at missing (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\pj09-main-baseline\src\documents\store.ts:19:3)
+      at LocalSyntheticDocumentStore.folder (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\pj09-main-baseline\src\documents\store.ts:49:13)
+      at async LocalSyntheticDocumentStore.store (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\pj09-main-baseline\src\documents\store.ts:117:20)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\pj09-main-baseline\tests\unit\document-store.test.ts:18:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    status: 503,
+    code: 'ExactDocumentUnavailable',
+    field_errors: []
+  }
+
+test at tests\unit\document-store.test.ts:1:1128
+✖ P06 source lookup never substitutes a latest version; symlink and in-repository stores are refused (5.8837ms)
+  Error: The exact document version is unavailable. Its original reference is retained; ask the preparation owner to recover it.
+      at missing (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\pj09-main-baseline\src\documents\store.ts:19:3)
+      at LocalSyntheticDocumentStore.folder (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\pj09-main-baseline\src\documents\store.ts:49:13)
+      at async LocalSyntheticDocumentStore.store (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\pj09-main-baseline\src\documents\store.ts:117:20)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\pj09-main-baseline\tests\unit\document-store.test.ts:45:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    status: 503,
+    code: 'ExactDocumentUnavailable',
+    field_errors: []
+  }

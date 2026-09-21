@@ -90,6 +90,6 @@ Test implemented behaviour: permissions, booking conflicts, stale revisions, off
 
 Separate decisions, evidence, proposals and open questions; distinguish delivery, tests, acceptance and production readiness. Cite sources and limits.
 
-Check main and handovers: E1 docs/delivery/estimating-e1-handover.md; E2 design docs/delivery/estimating-e2-design-handover.md. Portal docs/delivery/customer-portal-handover.md.
+Check STATUS and delivery handovers. PJ-09: docs/delivery/pj09-staged-acceptance-handover.md; independent decisions and scoped close/reopen apply to Project lifecycle.
 
 See docs/delivery/demo-email-crm-integration.md. Keep synthetic mailboxes private; exclude email bodies from shared Activities. CI and Outlook acceptance are separate.

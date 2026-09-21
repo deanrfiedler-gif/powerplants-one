@@ -1,3 +1,4 @@
+import { projectsAvailable } from "../projects/visibility";
 // "Waiting on others" projects dependencies that a source module already records. My Work owns
 // none of them: following up changes the follow-up, never the dependency, and only the source
 // workflow clears it. A source the reader cannot open is left out; a source that has no such
@@ -62,7 +63,7 @@ export async function listWorkWaiting(
          LEFT JOIN ppo.sites s ON (s.workspace_id,s.id)=(t.workspace_id,t.site_id)
          LEFT JOIN ppo.people rp ON (rp.workspace_id,rp.id)=(t.workspace_id,t.requester_id)
          WHERE t.workspace_id=$1 AND t.status='NeedsInformation' AND ${ticketVisibility("t")}
-          AND ${activityVisibility("a", await crmAvailable(c), await leadsAvailable(c))} AND a.status IN ('Open','InProgress')
+          AND ${activityVisibility("a", await crmAvailable(c), await leadsAvailable(c), await projectsAvailable(c))} AND a.status IN ('Open','InProgress')
           AND ($3::uuid IS NULL OR a.owner_id=$3) AND ($4::uuid IS NULL OR t.company_id=$4)
          ORDER BY a.due_at NULLS LAST,t.id LIMIT 200`,
         [p.workspace_id, p.actor_id, filters.owner_id, filters.company_id],

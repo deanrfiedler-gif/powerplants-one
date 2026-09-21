@@ -1,0 +1,26 @@
+✔ P06 private adapter is write-once by original operation and verifies exact retrieved hashes (23.8981ms)
+✖ P06 source lookup never substitutes a latest version; symlink and in-repository stores are refused (9.5903ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 554.1077
+
+✖ failing tests:
+
+test at tests\unit\document-store.test.ts:1:1128
+✖ P06 source lookup never substitutes a latest version; symlink and in-repository stores are refused (9.5903ms)
+  Error: EPERM: operation not permitted, symlink 'C:\Users\Dean.Fiedler\AppData\Local\Temp\ppo-store-qzlRCN' -> 'C:\Users\Dean.Fiedler\AppData\Local\Temp\ppo-store-qzlRCN\alias'
+      at async symlink (node:internal/fs/promises:1707:10)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one-pj09\tests\unit\document-store.test.ts:48:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -4048,
+    code: 'EPERM',
+    syscall: 'symlink',
+    path: 'C:\\Users\\Dean.Fiedler\\AppData\\Local\\Temp\\ppo-store-qzlRCN',
+    dest: 'C:\\Users\\Dean.Fiedler\\AppData\\Local\\Temp\\ppo-store-qzlRCN\\alias'
+  }

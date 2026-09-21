@@ -52,6 +52,8 @@ export async function projectRow(
 function projection(row: ProjectRow, can_edit: boolean): Project {
   const {
     id,
+    lifecycle = "Active",
+    acceptance_version = 1,
     version,
     display_number,
     title,
@@ -68,6 +70,8 @@ function projection(row: ProjectRow, can_edit: boolean): Project {
   } = row;
   return {
     id,
+    lifecycle,
+    acceptance_version,
     version,
     display_number,
     title,
@@ -81,7 +85,7 @@ function projection(row: ProjectRow, can_edit: boolean): Project {
     timezone,
     target_date,
     updated_at: updated_at.toISOString(),
-    can_edit,
+    can_edit: can_edit && lifecycle !== "Closed",
   };
 }
 function pageInput(value: unknown) {
@@ -245,7 +249,7 @@ export async function createProject(p: Principal, value: unknown) {
     async (c) => {
       const row = (
         await c.query(
-          `INSERT INTO ppo.projects(id,workspace_id,company_id,created_by,updated_by,title,organisation_id,site_id,coordinator_id,target_date) VALUES($1,$2,$3,$4,$4,$5,$6,$7,$8,$9) RETURNING id,version,updated_at,'Active'::text AS state`,
+          `INSERT INTO ppo.projects(id,workspace_id,company_id,created_by,updated_by,title,organisation_id,site_id,coordinator_id,target_date) VALUES($1,$2,$3,$4,$4,$5,$6,$7,$8,$9) RETURNING id,version,updated_at,COALESCE(to_jsonb(projects)->>'lifecycle','Active') AS state`,
           [
             command.id,
             p.workspace_id,
@@ -292,6 +296,7 @@ export async function saveTask(p: Principal, id: string, value: unknown) {
     "SaveProjectTask",
     (c) => projectRow(c, p, id, true),
     async (c, project) => {
+      if (project.lifecycle === "Closed") throw new AppError(409,"ClosedProject","Reopen the project through Acceptance & closeout before changing its schedule.");
       if (project.version !== command.expected_version)
         throw new AppError(
           409,
@@ -353,7 +358,7 @@ export async function saveTask(p: Principal, id: string, value: unknown) {
         );
       const result = (
         await c.query(
-          "UPDATE ppo.projects SET version=version+1,updated_at=clock_timestamp(),updated_by=$3 WHERE workspace_id=$1 AND id=$2 RETURNING id,version,updated_at,'Active'::text AS state",
+          "UPDATE ppo.projects SET version=version+1,updated_at=clock_timestamp(),updated_by=$3 WHERE workspace_id=$1 AND id=$2 RETURNING id,version,updated_at,COALESCE(to_jsonb(projects)->>'lifecycle','Active') AS state",
           [p.workspace_id, id, p.actor_id],
         )
       ).rows[0];

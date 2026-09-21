@@ -1,0 +1,62 @@
+
+Running 50 tests using 1 worker
+
+(node:15588) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -   1 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:40:1 › the phone overview is one page: header, five-cell bar, Quick Actions, attention, one agenda and follow-ups
+  -   2 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:173:1 › choosing a day changes the agenda and nothing else; other weeks and Today are one press away
+  -   3 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:200:1 › Create is a six-choice menu in order; Activity carries the visible agenda day and cancelling creates nothing
+  -   4 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:263:1 › a row opens details; Complete saves through the source command and every affected count follows, after a reload too
+  -   5 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:293:1 › Reschedule moves the same appointment to another day: no duplicate, its history kept
+  -   6 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:316:1 › the undated activity stays reachable, and setting its date from the detail sheet updates the same record
+  -   7 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:339:1 › Follow up records the chase and clears nothing; Plan activity closes only that opportunity's gap, in both places
+  -   8 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:376:1 › an overdue opportunity is raised by the Deals worklist's own rule, and leaves when its next action is no longer overdue
+  -   9 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:408:1 › weather is honest: not connected by default, a provider's answer renders, hiding frees the space, and failure blocks nothing
+  -  10 [desktop] › tmp\pj09-regressions\my-work-mobile.spec.ts:451:1 › an unread source is never zero, the Create control never covers a focused control, and access decides what is offered
+  ok 11 [desktop] › tmp\pj09-regressions\my-work.spec.ts:35:1 › the overview reconciles its four counts, the list, the schedule and the notices in both menu states (4.9s)
+  ok 12 [desktop] › tmp\pj09-regressions\my-work.spec.ts:126:1 › the list and the schedule open the same activity, and closing returns to the control that opened it (977ms)
+  ok 13 [desktop] › tmp\pj09-regressions\my-work.spec.ts:145:1 › completing a lead call records the outcome, plans the next activity and keeps the lead as it was (2.2s)
+  ok 14 [desktop] › tmp\pj09-regressions\my-work.spec.ts:172:1 › completing a quotation task issues and approves nothing: only the activity changes (1.5s)
+  ok 15 [desktop] › tmp\pj09-regressions\my-work.spec.ts:191:1 › rescheduling moves the same appointment in the list and the schedule and keeps the change in its history (1.5s)
+  ok 16 [desktop] › tmp\pj09-regressions\my-work.spec.ts:218:1 › planning a next activity removes only that opportunity's gap; cancelling the form changes nothing (1.7s)
+  ok 17 [desktop] › tmp\pj09-regressions\my-work.spec.ts:244:1 › setting a date updates the same undated activity and clears its notice (1.5s)
+  ok 18 [desktop] › tmp\pj09-regressions\my-work.spec.ts:261:1 › following up a waiting request records the chase, keeps its age and clears nothing (1.3s)
+  ok 19 [desktop] › tmp\pj09-regressions\my-work.spec.ts:281:1 › saved views store criteria only: save, modify, reset, pin and retire leave every record alone (2.5s)
+  ok 20 [desktop] › tmp\pj09-regressions\my-work.spec.ts:318:1 › an unread source is never shown as zero, and the team queue is closed to a read-only identity (2.4s)
+  ok 21 [desktop] › tmp\pj09-regressions\projects-gantt.spec.ts:15:1 › Projects navigation, existing-context creation and an uncertain task save survive reload (2.4s)
+  ok 22 [desktop] › tmp\pj09-regressions\projects-gantt.spec.ts:90:1 › another company cannot read a schedule, task owners or history, or mutate a known task (727ms)
+{"viewport":{"width":1440,"height":1000},"storage_evidence":"Synthetic marker committed. Previous marker recovered. Persistent storage: not granted. Reported quota: 3221299200 bytes. This does not prove offline or mobile readiness."}
+  ok 23 [desktop] › tmp\pj09-regressions\shell.spec.ts:2:1 › responsive shell, keyboard focus, server save, read-only refusal and storage feasibility (2.1s)
+  ok 24 [desktop] › tmp\pj09-regressions\shell.spec.ts:101:1 › unavailable dependency and missing page show useful recoverable states (766ms)
+  ok 25 [desktop] › tmp\pj09-regressions\shell.spec.ts:126:1 › r17 preview preserves permissions, contextual navigation and page guidance (1.3s)
+(node:12932) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 26 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:40:1 › the phone overview is one page: header, five-cell bar, Quick Actions, attention, one agenda and follow-ups (3.6s)
+  ok 27 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:173:1 › choosing a day changes the agenda and nothing else; other weeks and Today are one press away (1.0s)
+  ok 28 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:200:1 › Create is a six-choice menu in order; Activity carries the visible agenda day and cancelling creates nothing (1.7s)
+  ok 29 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:263:1 › a row opens details; Complete saves through the source command and every affected count follows, after a reload too (2.3s)
+  ok 30 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:293:1 › Reschedule moves the same appointment to another day: no duplicate, its history kept (1.8s)
+  ok 31 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:316:1 › the undated activity stays reachable, and setting its date from the detail sheet updates the same record (1.9s)
+  ok 32 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:339:1 › Follow up records the chase and clears nothing; Plan activity closes only that opportunity's gap, in both places (2.0s)
+  ok 33 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:376:1 › an overdue opportunity is raised by the Deals worklist's own rule, and leaves when its next action is no longer overdue (1.6s)
+  ok 34 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:408:1 › weather is honest: not connected by default, a provider's answer renders, hiding frees the space, and failure blocks nothing (2.6s)
+  ok 35 [phone] › tmp\pj09-regressions\my-work-mobile.spec.ts:451:1 › an unread source is never zero, the Create control never covers a focused control, and access decides what is offered (2.8s)
+  -  36 [phone] › tmp\pj09-regressions\my-work.spec.ts:35:1 › the overview reconciles its four counts, the list, the schedule and the notices in both menu states
+  -  37 [phone] › tmp\pj09-regressions\my-work.spec.ts:126:1 › the list and the schedule open the same activity, and closing returns to the control that opened it
+  -  38 [phone] › tmp\pj09-regressions\my-work.spec.ts:145:1 › completing a lead call records the outcome, plans the next activity and keeps the lead as it was
+  -  39 [phone] › tmp\pj09-regressions\my-work.spec.ts:172:1 › completing a quotation task issues and approves nothing: only the activity changes
+  -  40 [phone] › tmp\pj09-regressions\my-work.spec.ts:191:1 › rescheduling moves the same appointment in the list and the schedule and keeps the change in its history
+  -  41 [phone] › tmp\pj09-regressions\my-work.spec.ts:218:1 › planning a next activity removes only that opportunity's gap; cancelling the form changes nothing
+  -  42 [phone] › tmp\pj09-regressions\my-work.spec.ts:244:1 › setting a date updates the same undated activity and clears its notice
+  -  43 [phone] › tmp\pj09-regressions\my-work.spec.ts:261:1 › following up a waiting request records the chase, keeps its age and clears nothing
+  -  44 [phone] › tmp\pj09-regressions\my-work.spec.ts:281:1 › saved views store criteria only: save, modify, reset, pin and retire leave every record alone
+  -  45 [phone] › tmp\pj09-regressions\my-work.spec.ts:318:1 › an unread source is never shown as zero, and the team queue is closed to a read-only identity
+  ok 46 [phone] › tmp\pj09-regressions\projects-gantt.spec.ts:15:1 › Projects navigation, existing-context creation and an uncertain task save survive reload (2.0s)
+  ok 47 [phone] › tmp\pj09-regressions\projects-gantt.spec.ts:90:1 › another company cannot read a schedule, task owners or history, or mutate a known task (760ms)
+{"viewport":{"width":390,"height":844},"storage_evidence":"Synthetic marker committed. Previous marker recovered. Persistent storage: not granted. Reported quota: 3221299200 bytes. This does not prove offline or mobile readiness."}
+  ok 48 [phone] › tmp\pj09-regressions\shell.spec.ts:2:1 › responsive shell, keyboard focus, server save, read-only refusal and storage feasibility (2.0s)
+  ok 49 [phone] › tmp\pj09-regressions\shell.spec.ts:101:1 › unavailable dependency and missing page show useful recoverable states (690ms)
+  ok 50 [phone] › tmp\pj09-regressions\shell.spec.ts:126:1 › r17 preview preserves permissions, contextual navigation and page guidance (1.4s)
+
+  20 skipped
+  30 passed (59.8s)

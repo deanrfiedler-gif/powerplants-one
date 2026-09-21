@@ -1,0 +1,10 @@
+import { readFileSync, writeFileSync } from "node:fs";
+import { enumerateRoutes, warmRoutes } from "../scripts/warm-routes";
+const completed = new Set([...readFileSync("tmp/pr269-repair/warm-up.log", "utf8").matchAll(/\d+ ms\s+\d+\s+(\/\S+)/g)].map(m => m[1]));
+const relevant = /^\/api\/v1\/(local-session|work(?:\/|$)|crm\/directory|sites|service|appointments|packs|reports|report-render-jobs|finance|customers|my-jobs|field-entries|pack-issues|render-jobs|schedule|sync\/recovery-review)/;
+const selected = enumerateRoutes().filter(r => !completed.has(r.path) && (r.kind === "page" || relevant.test(r.path)));
+console.log(`Previously warmed ${completed.size} routes; ${selected.length} remaining P11 prerequisite/read routes.`);
+const result = await warmRoutes("http://127.0.0.1:3014", selected, { log: console.log });
+writeFileSync("tmp/pr269-repair/focused-warm-up.json", JSON.stringify({ previously_warmed: completed.size, ...result }, null, 2));
+console.log(`${result.routes} routes in ${result.total_ms} ms; ${result.unreachable} unreachable.`);
+if (result.unreachable) process.exitCode = 1;
