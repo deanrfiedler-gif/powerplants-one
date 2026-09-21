@@ -260,7 +260,7 @@ test("ES08 durable raw draft, manual re-review, native receiving, exact history 
     expect((await reviewed).status()).toBe(200);
   } finally {
     releaseRefresh();
-    await page.unroute(detailRoute);
+    await page.unrouteAll({ behavior: "wait" });
   }
   await expect(
     page.getByRole("button", { name: "Apply reviewed changes", exact: true }),
