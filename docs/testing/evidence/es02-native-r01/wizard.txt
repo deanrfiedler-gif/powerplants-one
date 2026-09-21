@@ -1,0 +1,15 @@
+[WebServer] (node:13304) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"153.0.8010.53"}
+
+Running 5 tests using 1 worker
+
+(node:30892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop-chromium] › tests\browser\estimating-wizard.spec.ts:36:1 › ES02 native five steps, exact saved costs, family filters, evidence, dirty navigation and responsive capture (10.4s)
+  ok 2 [desktop-chromium] › tests\browser\estimating-wizard.spec.ts:226:1 › ES02-T65: Back, Forward, shell router, breadcrumb and installed reload review a dirty proposal once (3.4s)
+  ok 3 [desktop-chromium] › tests\browser\estimating-wizard.spec.ts:324:1 › ES02-T64: maximum area/system scope stays editable and scrolls locally (1.8s)
+  ok 4 [desktop-chromium] › tests\browser\estimating-wizard.spec.ts:378:1 › ES02-T59: a delayed old preview cannot restore Complete after the current draft becomes invalid (3.0s)
+  ok 5 [desktop-chromium] › tests\browser\estimating-wizard.spec.ts:439:1 › ES02-T57: archived unselected incomplete scope still reads its exact saved costs with editing disabled (2.8s)
+
+  5 passed (32.3s)

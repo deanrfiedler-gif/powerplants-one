@@ -1,0 +1,65 @@
+[
+  {
+    "viewport": {
+      "width": 1920,
+      "height": 1200
+    },
+    "route": "/estimating/discovery/f2c763ad-ffa8-4775-8ef4-a23a185a2d7b?step=Configuration",
+    "schema": "PPO-ES02-CONFIG-r01",
+    "sha256": "ca81b518930440becc8e385d3f0475ec9d044d254f77fb14641f17cf42e4a56b"
+  },
+  {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "route": "/estimating/discovery/f2c763ad-ffa8-4775-8ef4-a23a185a2d7b?step=Configuration",
+    "schema": "PPO-ES02-CONFIG-r01",
+    "sha256": "15491f1bf880688451a7b15c3e341bfd271c8797499140afc909244d142ddcb2"
+  },
+  {
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "route": "/estimating/discovery/f2c763ad-ffa8-4775-8ef4-a23a185a2d7b?step=Configuration",
+    "schema": "PPO-ES02-CONFIG-r01",
+    "sha256": "b2d3ff2fb4d4d57a20472196282ee9fb5a00cbaa217845223b9115c2160ad522"
+  },
+  {
+    "viewport": {
+      "width": 1024,
+      "height": 900
+    },
+    "route": "/estimating/discovery/f2c763ad-ffa8-4775-8ef4-a23a185a2d7b?step=Configuration",
+    "schema": "PPO-ES02-CONFIG-r01",
+    "sha256": "b01fe4d54925f626cfb8e31c52468d80d2d7f574c61442379ead4f88c4bb2b48"
+  },
+  {
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "route": "/estimating/discovery/f2c763ad-ffa8-4775-8ef4-a23a185a2d7b?step=Configuration",
+    "schema": "PPO-ES02-CONFIG-r01",
+    "sha256": "3b669e3fd2946c93e3fd8f02455c5c8b525a4c0add0297ea17b4478e25e95b64"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "route": "/estimating/discovery/f2c763ad-ffa8-4775-8ef4-a23a185a2d7b?step=Configuration",
+    "schema": "PPO-ES02-CONFIG-r01",
+    "sha256": "24101a5a00659352cc50180436c5e6c89d83994a79db9789969f9b30f69a18d6"
+  },
+  {
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "route": "/estimating/discovery/f2c763ad-ffa8-4775-8ef4-a23a185a2d7b?step=Configuration",
+    "schema": "PPO-ES02-CONFIG-r01",
+    "sha256": "e75d9719db405ceea00a2b96e5a5d1944ebf0fdfbff9771bee5719a6a332efe4"
+  }
+]

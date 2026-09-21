@@ -1,0 +1,145 @@
+{
+  "application_source_commit": "071a864b428d50702bba29ace4a1e9dd810eff10",
+  "files": [
+    {
+      "file": "1024.png",
+      "sha256": "b01fe4d54925f626cfb8e31c52468d80d2d7f574c61442379ead4f88c4bb2b48",
+      "bytes": 86668
+    },
+    {
+      "file": "1280.png",
+      "sha256": "b2d3ff2fb4d4d57a20472196282ee9fb5a00cbaa217845223b9115c2160ad522",
+      "bytes": 152772
+    },
+    {
+      "file": "1440.png",
+      "sha256": "15491f1bf880688451a7b15c3e341bfd271c8797499140afc909244d142ddcb2",
+      "bytes": 158661
+    },
+    {
+      "file": "1920.png",
+      "sha256": "ca81b518930440becc8e385d3f0475ec9d044d254f77fb14641f17cf42e4a56b",
+      "bytes": 195934
+    },
+    {
+      "file": "320.png",
+      "sha256": "e75d9719db405ceea00a2b96e5a5d1944ebf0fdfbff9771bee5719a6a332efe4",
+      "bytes": 47820
+    },
+    {
+      "file": "390.png",
+      "sha256": "24101a5a00659352cc50180436c5e6c89d83994a79db9789969f9b30f69a18d6",
+      "bytes": 56914
+    },
+    {
+      "file": "768.png",
+      "sha256": "3b669e3fd2946c93e3fd8f02455c5c8b525a4c0add0297ea17b4478e25e95b64",
+      "bytes": 88136
+    },
+    {
+      "file": "browser-shared.txt",
+      "sha256": "592bd81d0c5e2f7124488f045c8fd688f083aec30da51fcffd00360b106d401b",
+      "bytes": 5807
+    },
+    {
+      "file": "browser-targeted.txt",
+      "sha256": "5bff22b22ed2840457b697b0db88c57b8dcf0ffb70acc86b7c78563d4729f938",
+      "bytes": 2360
+    },
+    {
+      "file": "build.txt",
+      "sha256": "dac4680847a5aafdc53d9a0ec392b67327738d5d83f31ce2ba6655b50cfaec96",
+      "bytes": 12233
+    },
+    {
+      "file": "capture-final.txt",
+      "sha256": "89d52ac580f21700a8d07e0256efe41c1ddafbd0fb14b686e7bcedd64bd22a15",
+      "bytes": 686
+    },
+    {
+      "file": "captures.json",
+      "sha256": "3fa4d6ac937d6ca92a9bcc0bc968eb622f6c95f794ef709c6cc1fd627bd77eac",
+      "bytes": 2010
+    },
+    {
+      "file": "configuration-unit.txt",
+      "sha256": "94a7631d8382ca1233cad84800eb5b478126df1dbf30e94070994636044975ce",
+      "bytes": 1381
+    },
+    {
+      "file": "database.txt",
+      "sha256": "7894e844f96e4036a39cde3d459041a3df755f83dc5343315944ac56e905662b",
+      "bytes": 6775
+    },
+    {
+      "file": "foundation.txt",
+      "sha256": "65157cd2e563628e7c8c798841c042fdabb3f42a25d6c51178d625684a6605c0",
+      "bytes": 330
+    },
+    {
+      "file": "history-counts.txt",
+      "sha256": "c40836905696a6163beab1696747e940c09f42345216b6687d83ccf0febe99ec",
+      "bytes": 364
+    },
+    {
+      "file": "http.txt",
+      "sha256": "3bef0057fb5b581c6b7630c1f4036b1702bf0b62c2407c17120beb3d6cb733c4",
+      "bytes": 749
+    },
+    {
+      "file": "lint.txt",
+      "sha256": "8f0118f13844c97d75efd81d7b64eea1d158ee3bdca218bf56f7625ccce6edc6",
+      "bytes": 41
+    },
+    {
+      "file": "lookup-boundary.txt",
+      "sha256": "d7f9a6a85b3fa6b7a81e0d01203db87080c4a5fe631de4d53dc743ba924b3779",
+      "bytes": 249
+    },
+    {
+      "file": "maximum.json",
+      "sha256": "1d12346db72dd08a0facc150d3b2ec5deedaac17ddd7ba820befd00ce39a2992",
+      "bytes": 2052
+    },
+    {
+      "file": "maximum.png",
+      "sha256": "2be6ae25844b68402a4cd105f4c5730c0f3c9eee36f946fa7439a87c831b4e4e",
+      "bytes": 172766
+    },
+    {
+      "file": "naming.txt",
+      "sha256": "02115aeca8a51e156490babf3cb824f191a55d22a7fea64354a0cf5a2939ae89",
+      "bytes": 278
+    },
+    {
+      "file": "read-only-summary.png",
+      "sha256": "06ad2f56d54971f4ec3f03e53141692fbf3626a3efa51a2ec709c545e493eb7d",
+      "bytes": 199460
+    },
+    {
+      "file": "source-comparison.json",
+      "sha256": "9332c7d7a079ec5bbe6ef3a0d788c31f4cca5c6a2e27a78bed765cad864ba77e",
+      "bytes": 2752
+    },
+    {
+      "file": "typecheck.txt",
+      "sha256": "ba33a711c461001825075a9a3872deaa3e393e4cc3c15731565002c473e7ee5d",
+      "bytes": 50
+    },
+    {
+      "file": "unit-main-windows.txt",
+      "sha256": "894300055a1cc7863ab0e1991c2eb882c6586152c828a0c361698654f497acc4",
+      "bytes": 5381
+    },
+    {
+      "file": "unit-windows.txt",
+      "sha256": "bf9627c5444a88b7e3e5527313558e30ed073c447bf11b8a0a9bca470eb3f5d3",
+      "bytes": 21763
+    },
+    {
+      "file": "wizard.txt",
+      "sha256": "dbee6556fe23ec934f41caf2caee39948098b81f1c7f74becd8ceec85d3ee6b6",
+      "bytes": 1406
+    }
+  ]
+}

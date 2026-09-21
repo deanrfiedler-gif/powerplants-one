@@ -1,0 +1,9 @@
+✔ ES02-T15/T16: a permitted selected Facility beyond the candidate page is retained, searchable and bounded separately (4150.0944ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5276.4233

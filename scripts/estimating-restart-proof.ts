@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { es02Restart } from "./es02-restart";
 import { discoveryRestart } from "./estimating-discovery-restart";
 import { costBasisRestart } from "./estimating-cost-basis-restart";
 import { spawn, execFileSync } from "node:child_process";
@@ -14,9 +15,9 @@ import { crmCreate, crmBase } from "../tests/helpers/crm";
 import { estimateInput, quoteCommand } from "../tests/helpers/estimating";
 if(localConfig().database_name!=="ppo_synthetic_test")throw Error("Disposable ppo_synthetic_test only");
 const phase=process.argv[2];if(!["write","recover","verify"].includes(phase))throw Error("Use write, recover or verify");
-const root=join(process.env.RUNNER_TEMP??"/tmp","ppo-estimating-e1-restart"),evidence="verification-evidence/estimating-e1-restart",origin="http://127.0.0.1:3000";
+const root=join(process.env.RUNNER_TEMP??"/tmp","ppo-estimating-e1-restart"),evidence="verification-evidence/estimating-e1-restart",origin=process.env.PPO_TEST_ORIGIN??"http://127.0.0.1:3000";
 await mkdir(root,{recursive:true});await mkdir(evidence,{recursive:true});
-const server=spawn(process.execPath,["--env-file=.env.local","--import","tsx","scripts/local-server.ts"],{stdio:["ignore","inherit","inherit"]});
+const server=spawn(process.execPath,["--env-file=.env.local","--import","tsx","scripts/local-server.ts", ...(process.env.PPO_PROOF_COMPILED === "1" ? ["--compiled"] : [])],{stdio:["ignore","inherit","inherit"]});
 let browser:Awaited<ReturnType<typeof chromium.launch>>|undefined;
 try {
   let ready=false;for(let n=0;n<120;n++){try{if((await fetch(origin)).ok){ready=true;break;}}catch{}await new Promise(r=>setTimeout(r,500));}
@@ -82,6 +83,7 @@ try {
     assert.equal((await database().query("SELECT count(*)::int n FROM ppo.estimate_quote_jobs WHERE revision_id=$1",[taxonomy.quote.id])).rows[0].n,1);
   }
   await discoveryRestart({phase,root,evidence,call,page,pid:server.pid!,databaseStart:await started()});
+  await es02Restart({phase,root,evidence,call,page,pid:server.pid!,databaseStart:await started()});
   await costBasisRestart({phase,root,evidence,call,page,pid:server.pid!,databaseStart:await started()});
   await page.goto(`${origin}/estimating/estimates/${taxonomy.input.id}`);await expect(page.getByLabel("Category 1",{exact:true})).toHaveValue("Engineering");await expect(page.getByLabel("Allowance 2",{exact:true})).toHaveValue("No");
   await page.locator(".est-line").first().evaluate(e=>e.scrollIntoView({block:"start"}));

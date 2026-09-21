@@ -1,0 +1,10 @@
+✔ ES02-T25/T39: bounded immutable history, exact comparisons and repeated migration/seed preserve saved snapshots (4731.3558ms)
+✔ ES02-T25/T62: history beyond twenty revisions uses stable disjoint pages and exact permitted sources (7408.3437ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13365.4601

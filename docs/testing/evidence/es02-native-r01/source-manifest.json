@@ -1,0 +1,257 @@
+{
+  "application_source_commit": "071a864b428d50702bba29ace4a1e9dd810eff10",
+  "baseline_commit": "8ed8b0c5dadad9a48d972a9bff39b6953ad4e55b",
+  "build_id": "W87UJ9nn67NZPimmbYTRV",
+  "files": [
+    {
+      "path": "db/migrations/0030-estimating-configuration.sql",
+      "bytes": 8423,
+      "sha256": "782765ecb2ac3398e216133c5c999cc0817bdca0f812cfd66d4bf7a47cd81470"
+    },
+    {
+      "path": "docs/decisions/ADR-0033-es02-structured-discovery.md",
+      "bytes": 12027,
+      "sha256": "fc36866cd44259e7e3978b5e61a108fae4b67bd119359d1e295d2a366ab8560c"
+    },
+    {
+      "path": "docs/reference/ui/estimating/PPO-ES-02-Estimation-Wizard-Discovery-Alternatives-and-Revisions-Refinement-Build-Plan-r04.md",
+      "bytes": 123761,
+      "sha256": "0aaec06374a4b70d1f56c89373fecb08c468338ddd0f1210c7ab9073513a5605"
+    },
+    {
+      "path": "docs/reference/ui/estimating/PPO-ES-02-Estimation-Wizard-VS-Code-Implementation-Prompt-r03.md",
+      "bytes": 64097,
+      "sha256": "cc0255102802c64d67723f6d615aaa743c9bdb5595e026670c9329355b479436"
+    },
+    {
+      "path": "scripts/demo-upgrade.ts",
+      "bytes": 15227,
+      "sha256": "2eff48cfe44eaf2c8298f913aa3a502aaf59f3b5c4e005b9e5fa4881844820c7"
+    },
+    {
+      "path": "scripts/migration-registry.ts",
+      "bytes": 3498,
+      "sha256": "953e9677fb05548434dbd19c7e5ccddd16dff319299bdf12d0443dd15258d6ef"
+    },
+    {
+      "path": "src/app/(business)/estimating/discovery/[id]/page.tsx",
+      "bytes": 214,
+      "sha256": "a459eea964f84be5b28dc8173f94dacf2bea977ffffb576118790d812f3606a5"
+    },
+    {
+      "path": "src/app/api/v1/estimating/workspaces/[id]/compare/route.ts",
+      "bytes": 287,
+      "sha256": "f568424fc7d9018eaab918185c2acbdd440fb94eefe9aa5453808e8e1c1417d6"
+    },
+    {
+      "path": "src/app/api/v1/estimating/workspaces/[id]/cost-versions/route.ts",
+      "bytes": 252,
+      "sha256": "1a4725d55f2dad9651e83e19f1b53de45fa7793b29af01f4870dfcc612f67cc7"
+    },
+    {
+      "path": "src/app/api/v1/estimating/workspaces/[id]/evidence/route.ts",
+      "bytes": 252,
+      "sha256": "b8179fe4aa4c46ec02744f9c18324fd29d60478869c632e637a03633f0878fc3"
+    },
+    {
+      "path": "src/app/api/v1/estimating/workspaces/[id]/history/route.ts",
+      "bytes": 242,
+      "sha256": "12e171fa7256615e8c8e0c1c2c3d0c9ebf0a9b54c1802213acd9846cbc1667e3"
+    },
+    {
+      "path": "src/app/api/v1/estimating/workspaces/[id]/summary/route.ts",
+      "bytes": 242,
+      "sha256": "1008b8143288df6d4e9367974dfa7eedd910f1213bb86d2415195aa8b387f00b"
+    },
+    {
+      "path": "src/app/styles/my-work.css",
+      "bytes": 38663,
+      "sha256": "3b0fb8d0e037af52676c29ef85f59c3e78002b9dd8a243d0b68700e3635830b5"
+    },
+    {
+      "path": "src/components/app-installation.tsx",
+      "bytes": 13171,
+      "sha256": "043b7de823e90e6f8a99df2d1d16958a75f80cda165bba6c9d6fdacf42c119cd"
+    },
+    {
+      "path": "src/components/business-ui.tsx",
+      "bytes": 15176,
+      "sha256": "c06ec37317844d0267a0a9ef8078ee6b758c6ae0cbf8ed18479694a5fd86bea5"
+    },
+    {
+      "path": "src/components/configuration-editor.tsx",
+      "bytes": 43297,
+      "sha256": "906a60600d1b2d518c2e513e904ef1153e2c9fb345e4f1181d464fe4af445ad4"
+    },
+    {
+      "path": "src/components/crm-state.ts",
+      "bytes": 4649,
+      "sha256": "f400acda00ac6bc62fb989bcab4639c44170917c6c755f27a25f138e5bbe8c1a"
+    },
+    {
+      "path": "src/components/discovery-fields.tsx",
+      "bytes": 17565,
+      "sha256": "a2b11a166af2e0af3815d8758e3987a29493569103ab3767867df72262d67a28"
+    },
+    {
+      "path": "src/components/discovery-navigation.ts",
+      "bytes": 4260,
+      "sha256": "413267e8301cd5f8a89c3b9ff0adf3180d48fe195dde8bd040d2c2b398029f71"
+    },
+    {
+      "path": "src/components/discovery-screens.tsx",
+      "bytes": 35226,
+      "sha256": "540bb84434e490a3496435ce926f20b602a19331df6072ba35f61f1b6d270029"
+    },
+    {
+      "path": "src/components/estimation-wizard.css",
+      "bytes": 13122,
+      "sha256": "9ae15f185bb5d38f8e169d3a3cf25534195796dfc4a708a8b829d8709c5357eb"
+    },
+    {
+      "path": "src/components/estimation-wizard.tsx",
+      "bytes": 74625,
+      "sha256": "3f119bc57281e63f55bcabac6a4e0bef5a67d187423008e8409b2d4951fac622"
+    },
+    {
+      "path": "src/components/navigation-intent.ts",
+      "bytes": 605,
+      "sha256": "5efcff72567e199e6e3fadec0316522106dd5236ae85cc6715aeb47887d8846b"
+    },
+    {
+      "path": "src/components/product-navigation.tsx",
+      "bytes": 17621,
+      "sha256": "4aea885d274869e5e033835752b27924d5f95d6bc6367915e4e688d17cc0d74e"
+    },
+    {
+      "path": "src/components/scope-preferences.ts",
+      "bytes": 2160,
+      "sha256": "c65a29e3d6013529130b709961d8f5b14ae952dcfa80d87c19b3f729f778e1f1"
+    },
+    {
+      "path": "src/components/shell-controls.tsx",
+      "bytes": 22698,
+      "sha256": "977d48ac54e47713bbb26113dedb3f011674d3add1a3f46d2239fe366944be8d"
+    },
+    {
+      "path": "src/estimating/configuration-definition.ts",
+      "bytes": 6347,
+      "sha256": "82544a6c646a5a7b5aaa5d0a7fc86e59e59dced94a804737d9bbfc8f16f4740b"
+    },
+    {
+      "path": "src/estimating/configuration.ts",
+      "bytes": 18123,
+      "sha256": "f2403eb3752c57b706d8cfe188065c103500f590b5667fdef6a428fa729f08c2"
+    },
+    {
+      "path": "src/estimating/discovery-comparison.ts",
+      "bytes": 4821,
+      "sha256": "71c9f55b5bfd80bfc820de0a56eaa2f0c77eb4bb853038608341d907811632b6"
+    },
+    {
+      "path": "src/estimating/discovery-context.ts",
+      "bytes": 9392,
+      "sha256": "793706c269bd7ec875cabd0fa3318ac9b8576487f29a44999dced9beb038ae9c"
+    },
+    {
+      "path": "src/estimating/discovery-form-options.ts",
+      "bytes": 7487,
+      "sha256": "fc9e8321f799b659cf3e22e1847bcb1059376499c76e3b8961330baf015ebfc5"
+    },
+    {
+      "path": "src/estimating/discovery-reads.ts",
+      "bytes": 12020,
+      "sha256": "dbe52fcbf58dc9293450d45e8527456527cb42868316cf2ace283965f058c1ed"
+    },
+    {
+      "path": "src/estimating/discovery-workspace-context.ts",
+      "bytes": 9937,
+      "sha256": "8b3105f01e364eef689d1591cf9bd8055614936fe89690c93139fa421b654915"
+    },
+    {
+      "path": "src/estimating/discovery-workspace-validation.ts",
+      "bytes": 8000,
+      "sha256": "bf7bb44cfc0fcf0319aacfa8a777d287a3856a5030709aca2f42af836b495797"
+    },
+    {
+      "path": "src/estimating/discovery-workspaces.ts",
+      "bytes": 26568,
+      "sha256": "29ba0462d2f07f63d4a5ac32c1d302a3f354b04f4e33058f2a04162fdcf726b0"
+    },
+    {
+      "path": "src/estimating/discovery.ts",
+      "bytes": 16747,
+      "sha256": "4f45e3b7256770a1568a8d8f9cccb3888368ec875150a441817cb455d346d6f0"
+    },
+    {
+      "path": "src/shell/module-workspaces.ts",
+      "bytes": 707,
+      "sha256": "8abc7d31cd11efe2944e9aac2f32966be85df1fd4e0aeb42279b4c9cbe14c6d1"
+    },
+    {
+      "path": "tests/database/estimating-configuration.test.ts",
+      "bytes": 20515,
+      "sha256": "ba12b2311af50f3ab043844eda0003d0cc8d9211e92cc363e3abada4e555fd7b"
+    },
+    {
+      "path": "tests/database/field.test.ts",
+      "bytes": 40091,
+      "sha256": "0a2366865f23e195d8ef560cb650e43f6502178e767fbb7d37a44afe185483b6"
+    },
+    {
+      "path": "tests/database/finance-upgrade.test.ts",
+      "bytes": 7396,
+      "sha256": "704118513c25ae6330d689bb4b32bba1bb4bdde2cdcf3027809f4c51da552a8d"
+    },
+    {
+      "path": "tests/database/leads-projects-integration.test.ts",
+      "bytes": 7596,
+      "sha256": "e2aba921f8b59041f4e2a74c9999bcfc5347b1573ba0825da0b9e1d7aa0b102d"
+    },
+    {
+      "path": "tests/database/offline.test.ts",
+      "bytes": 29747,
+      "sha256": "9c9d208660fbb3a0ea3ca4096493d91aeb83fc6ea2b4ee4fceb76960c31b8c4a"
+    },
+    {
+      "path": "tests/database/packs.test.ts",
+      "bytes": 34493,
+      "sha256": "5c9ad5898cb1c175943918e7859367b572a574e593ebe3ef73585177bccf586a"
+    },
+    {
+      "path": "tests/database/planner.test.ts",
+      "bytes": 36580,
+      "sha256": "da883ae46888a05daa87ac16f33386d5b5563641ad25306046f2bb194c540e92"
+    },
+    {
+      "path": "tests/database/reports.test.ts",
+      "bytes": 39865,
+      "sha256": "c42fae8de8c60652417bf471d5f80c73ac6982fd2607dfade611b71b9747d64c"
+    },
+    {
+      "path": "tests/demo/upgrade.test.ts",
+      "bytes": 14592,
+      "sha256": "ac9cead7069746f7cb9dbbc11320eaefcdbeae76e7905c9ef9323c10af7b1837"
+    },
+    {
+      "path": "tests/helpers/estimating-configuration.ts",
+      "bytes": 6255,
+      "sha256": "32881017224ee4f6478e1cf297150a6cee816cdb062806f725c4ef709af66c08"
+    },
+    {
+      "path": "tests/unit/estimating-configuration.test.ts",
+      "bytes": 11749,
+      "sha256": "71283fbe15740e714d045653678eb2e548e903b0a3a63c759ca47647273a6ef9"
+    },
+    {
+      "path": "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
+      "bytes": 604551,
+      "sha256": "7ce47597beb1f16e161bac1381c7cfaaabaf4eff357dcbf65ef558f0c02252b2"
+    },
+    {
+      "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "bytes": 16677780,
+      "sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0"
+    }
+  ]
+}

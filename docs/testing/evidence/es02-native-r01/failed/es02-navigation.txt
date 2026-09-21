@@ -1,0 +1,104 @@
+[WebServer] (node:30192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"153.0.8010.53"}
+
+Running 2 tests using 1 worker
+
+(node:30604) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [desktop-chromium] › tests\browser\estimating-wizard.spec.ts:25:1 › ES02 native five steps, exact saved costs, family filters, evidence, dirty navigation and responsive capture (16.3s)
+(node:16792) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [desktop-chromium] › tests\browser\estimating-wizard.spec.ts:188:1 › ES02-T65: Back, Forward, shell router, breadcrumb and installed reload review a dirty proposal once (6.6s)
+
+
+  1) [desktop-chromium] › tests\browser\estimating-wizard.spec.ts:25:1 › ES02 native five steps, exact saved costs, family filters, evidence, dirty navigation and responsive capture
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('complementary', { name: 'Estimate summary' })
+    Expected substring: "No saved estimate"
+    Received string:    "Estimate summaryAlternative B — Fresh scopeViewed alternative · not selectedViewing: saved discovery r01Discovery readiness: Incomplete0 growing areas · 0 systems · 0 to confirmNot yet costedProduct description: Establish this new alternative independentlyProduct count: Establish this new alternative independentlyEstimating effort: UnknownDelivery routing: Not configuredCompare alternativesView revision historySynthetic preview"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByRole('complementary', { name: 'Estimate summary' }) with timeout 5000ms
+      - waiting for getByRole('complementary', { name: 'Estimate summary' })
+        3 × locator resolved to <aside class="es02-summary" aria-label="Estimate summary">…</aside>
+          - unexpected value "Estimate summaryAlternative B — Fresh scopeViewed alternative · not selectedViewing: saved discovery r01Discovery readiness: Incomplete0 growing areas · 0 systems · 0 to confirmLoading saved estimate…Product description: Establish this new alternative independentlyProduct count: Establish this new alternative independentlyEstimating effort: UnknownDelivery routing: Not configuredCompare alternativesView revision historySynthetic preview"
+        11 × locator resolved to <aside class="es02-summary" aria-label="Estimate summary">…</aside>
+           - unexpected value "Estimate summaryAlternative B — Fresh scopeViewed alternative · not selectedViewing: saved discovery r01Discovery readiness: Incomplete0 growing areas · 0 systems · 0 to confirmNot yet costedProduct description: Establish this new alternative independentlyProduct count: Establish this new alternative independentlyEstimating effort: UnknownDelivery routing: Not configuredCompare alternativesView revision historySynthetic preview"
+
+
+      176 |     .click();
+      177 |   await expect(summary).toContainText("Alternative B — Fresh scope");
+    > 178 |   await expect(summary).toContainText("No saved estimate");
+          |                         ^
+      179 |   await page.getByLabel("Viewed alternative", { exact: true }).selectOption(fixture.option_id);
+      180 |   await expect(page.getByRole("tab", { name: "Revisions 4" })).toBeVisible();
+      181 |   await expect(summary).toContainText("AUD 58,400.00");
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\browser\estimating-wizard.spec.ts:178:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\es02-navigation-results\estimating-wizard-ES02-nat-06022-tion-and-responsive-capture-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\es02-navigation-results\estimating-wizard-ES02-nat-06022-tion-and-responsive-capture-desktop-chromium\error-context.md
+
+    Error Context: tmp\es02-navigation-results\estimating-wizard-ES02-nat-06022-tion-and-responsive-capture-desktop-chromium\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\es02-navigation-results\estimating-wizard-ES02-nat-06022-tion-and-responsive-capture-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\es02-navigation-results\estimating-wizard-ES02-nat-06022-tion-and-responsive-capture-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chromium] › tests\browser\estimating-wizard.spec.ts:188:1 › ES02-T65: Back, Forward, shell router, breadcrumb and installed reload review a dirty proposal once
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('dialog', { name: 'Unsaved discovery', exact: true })
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('dialog', { name: 'Unsaved discovery', exact: true }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'Unsaved discovery', exact: true })
+        - waiting for "http://127.0.0.1:3012/my-work" navigation to finish...
+        - navigated to "http://127.0.0.1:3012/my-work"
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      202 |   const retained = page.url();
+      203 |   const stay = async () => {
+    > 204 |     await expect(page.getByRole("dialog", { name: "Unsaved discovery", exact: true })).toHaveCount(1);
+          |                                                                                        ^
+      205 |     await page.getByRole("button", { name: "Stay", exact: true }).click();
+      206 |     await expect(page).toHaveURL(retained);
+      207 |     await expect(page.getByLabel("Proposed work", { exact: true })).toHaveValue("SYN navigation proposal retained");
+        at stay (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\browser\estimating-wizard.spec.ts:204:88)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\browser\estimating-wizard.spec.ts:212:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\es02-navigation-results\estimating-wizard-ES02-T65-114b6-eview-a-dirty-proposal-once-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\es02-navigation-results\estimating-wizard-ES02-T65-114b6-eview-a-dirty-proposal-once-desktop-chromium\error-context.md
+
+    Error Context: tmp\es02-navigation-results\estimating-wizard-ES02-T65-114b6-eview-a-dirty-proposal-once-desktop-chromium\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\es02-navigation-results\estimating-wizard-ES02-T65-114b6-eview-a-dirty-proposal-once-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\es02-navigation-results\estimating-wizard-ES02-T65-114b6-eview-a-dirty-proposal-once-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chromium] › tests\browser\estimating-wizard.spec.ts:25:1 › ES02 native five steps, exact saved costs, family filters, evidence, dirty navigation and responsive capture
+    [desktop-chromium] › tests\browser\estimating-wizard.spec.ts:188:1 › ES02-T65: Back, Forward, shell router, breadcrumb and installed reload review a dirty proposal once

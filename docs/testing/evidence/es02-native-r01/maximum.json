@@ -1,0 +1,84 @@
+{
+  "schema": "PPO-ES02-CONFIG-r01",
+  "areas": 20,
+  "systems": 40,
+  "facts": 40,
+  "shared_request_limit": 65536,
+  "request_count": 8,
+  "measurements": [
+    {
+      "name": "create opportunity",
+      "request_bytes": 975,
+      "response_bytes": 302,
+      "elapsed_ms": 132.39,
+      "status": 201
+    },
+    {
+      "name": "maximum create preview",
+      "request_bytes": 35674,
+      "response_bytes": 45076,
+      "elapsed_ms": 67.7,
+      "status": 200
+    },
+    {
+      "name": "maximum create",
+      "request_bytes": 44066,
+      "response_bytes": 300,
+      "elapsed_ms": 100.32,
+      "status": 201
+    },
+    {
+      "name": "maximum main read",
+      "request_bytes": 0,
+      "response_bytes": 76203,
+      "elapsed_ms": 92.91,
+      "status": 200
+    },
+    {
+      "name": "maximum working preview",
+      "request_bytes": 35778,
+      "response_bytes": 40986,
+      "elapsed_ms": 134.45,
+      "status": 200
+    },
+    {
+      "name": "maximum save",
+      "request_bytes": 36304,
+      "response_bytes": 300,
+      "elapsed_ms": 137.02,
+      "status": 200
+    },
+    {
+      "name": "maximum exact comparison",
+      "request_bytes": 105,
+      "response_bytes": 788,
+      "elapsed_ms": 68.87,
+      "status": 200
+    },
+    {
+      "name": "over-limit whole multibyte command",
+      "request_bytes": 68093,
+      "response_bytes": 173,
+      "elapsed_ms": 5.69,
+      "status": 422
+    }
+  ],
+  "route": "/estimating/discovery/80c68834-66f0-4a73-b0a8-6f636e4345d9?step=Configuration",
+  "workspace_id": "80c68834-66f0-4a73-b0a8-6f636e4345d9",
+  "option_id": "c0a215b2-f9e7-48d3-a4d2-8d03fffed44e",
+  "environment": {
+    "node": "v24.21.0",
+    "platform": "win32",
+    "compiled": true,
+    "loopback": true
+  },
+  "qualification": "One synthetic local sample per operation; not a production SLA. All independent collection maxima cannot be combined beyond the shared byte ceiling.",
+  "native_browser": {
+    "requests": 4,
+    "observed_ms": 1517,
+    "viewport": {
+      "width": 1920,
+      "height": 1200
+    }
+  }
+}

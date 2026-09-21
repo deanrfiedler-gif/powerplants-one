@@ -6,7 +6,7 @@ import { createCostingWorkspace, costingScopeSuccessor } from "../helpers/estima
 test.describe.configure({timeout:240000});
 test.use({actionTimeout:15000});
 async function call(page:Page,path:string,body?:unknown) {
-  const r=await page.request.fetch(`/api/v1/${path}`,{method:body===undefined?"GET":"POST",headers:body===undefined?{}:{Origin:"http://127.0.0.1:3000","Content-Type":"application/json"},data:body});
+  const r=await page.request.fetch(`/api/v1/${path}`,{method:body===undefined?"GET":"POST",headers:body===undefined?{}:{Origin:new URL(page.url()).origin,"Content-Type":"application/json"},data:body});
   expect(r.ok(),await r.text()).toBe(true);return r.json();
 }
 test("E2 browser explicitly adopts exact discovery into manual costs, reconciles an uncertain create and retains old scope through a successor",async({page},info)=>{

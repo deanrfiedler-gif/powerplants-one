@@ -1,0 +1,13 @@
+✔ ES02 HTTP: exact structured create/receipt/history/summary/evidence/compare routes preserve authority and refuse future schema (1819.5365ms)
+✔ E1-HTTP01 complete saved journey, discarded response, successor conflict and exact draft bytes (3263.3684ms)
+✔ E1-HTTP02 real direct routes enforce identity, scope, original target, strict inputs and local origin (578.1998ms)
+✔ DR01-HTTP01 explicit adoption preserves old DTO and receipts, rejects false flags and binds recovery (1232.462ms)
+✔ E2 costing HTTP binds exact revisions, preserves original responses and refuses wrong identity, source, origin and schema (3901.8074ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9366.3166

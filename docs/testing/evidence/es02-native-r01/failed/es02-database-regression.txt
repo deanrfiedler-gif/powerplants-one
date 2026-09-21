@@ -1,0 +1,88 @@
+✔ ES02-T13/T20/T28/T38: complete configuration saves atomically, reloads and replays one original operation (3523.3156ms)
+✔ ES02-T21/T61/T67: exact structured copy remaps owned children consistently through preview and original replay (3781.1932ms)
+✔ ES02-T56/T68: stale configuration acknowledgments and removal of the extension cannot bypass readiness (8850.8608ms)
+✔ ES02-T31/T52/T57: saved total survives an incomplete successor, ordinary prices inherit the exact complete basis (6434.0353ms)
+✔ ES02-T25/T39: bounded immutable history, exact comparisons and repeated migration/seed preserve saved snapshots (5433.0057ms)
+✔ ES02-T26/T27/T29/T50/T68: source versions remain recorded, changed sources require fresh exact review and every new projection rechecks access (5435.689ms)
+✖ ES02-T38/T61/T67: configuration child IDs cannot be borrowed by a fresh option and failed graph insertion rolls back atomically (5118.3317ms)
+✔ ES02-T25/T62: history beyond twenty revisions uses stable disjoint pages and exact permitted sources (11067.6853ms)
+✔ E2 context captures exact existing identities without implied membership, technical verification or business writes (6398.3541ms)
+✔ E2 context refuses unrelated identities and cannot gain estimating access from quote-only or other roles (5757.3476ms)
+✔ E2 context rejects same-company equipment and Facilities belonging to another selected Site (4187.8321ms)
+✔ E2 context checks customer relationships for both Opportunity and selected Site before returning captured names (4450.0923ms)
+✔ E2 context rechecks current estimating and shared access rather than trusting a former successful snapshot (6366.9255ms)
+✔ E2 unresolved items require a currently eligible follow-up owner without creating or completing an Activity (5850.9156ms)
+✔ E2 context detects a changed shared version while preserving the independently captured original (4814.7249ms)
+✔ E2 persistence creates one selected option and exact immutable scope under identical operation races (4380.8472ms)
+✔ E2 change comparisons reject stale writers and require explicit reconfirmation after membership changes (5144.7836ms)
+✔ E2 copies retained discovery as unconfirmed, fresh branches retain no inherited answers, and neither changes selection (5247.0263ms)
+✔ E2 hidden answers remain in their accepted predecessor and later activation requires deliberate confirmation (6255.3496ms)
+✔ E2 archived options keep exact original recovery; select/archive races use the whole workspace version (6493.8626ms)
+✔ E2 original receipts and captured labels are hidden after current relationship revocation, including inactive source options (4299.5785ms)
+✔ E2 identical operation UUIDs remain actor-scoped and recovery rechecks current edit access (4926.7719ms)
+✔ E2 shared-context changes reject the original proposal without altering its retained source or silently refreshing it (5125.3613ms)
+✔ E2 historical contact visibility is rechecked independently of current labels and versions (4571.0172ms)
+✔ E2 receipt, audit and outbox failures roll back the entire option graph (4983.788ms)
+✔ E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original (12659.9302ms)
+✔ E2 constraints refuse forged selection, related membership, history mutation and an eleventh retained option (11407.0675ms)
+✔ E2 recovery rechecks edit access to the exact original selected Site even after another option is selected (5660.1917ms)
+✔ E2 permanent Facility placement rejects a move and preserves the retained discovery revision (4698.5214ms)
+✔ E2 application and SQL guards hold unsupported states anywhere in the group while ordinary render Pending remains editable (4641.992ms)
+✔ E1-DB01 atomic creation, identical races and receipt recovery retain one original effect (4482.6125ms)
+✔ E1-DB02 reasoned successor, stale writers, exact predecessor and immutable original (4424.1455ms)
+✔ E1-DB03 server scope denial covers lists, selectors, commands, receipt replay and cross-workspace guesses (4428.4361ms)
+✔ E1-DB04 loss of linked person relationship hides aggregates, original receipts and exact quote files (6950.8477ms)
+✔ E1-DB05 safe-only reader cannot retrieve internal costs; owner grants are not inferred (4640.901ms)
+✔ E1-DB06 quote revisions bind exact saved versions, choices, reason and captured template; originals never advance (6403.8596ms)
+✔ E1-DB07 complete decimal data and matching quote membership required; empty draft remains unknown (6216.6067ms)
+✔ E1-DB08 crash after durable storage recovers byte-identical HTML/PDF without regeneration (9211.4895ms)
+✔ E1-DB09 failed rendering retains original revision and recovers same intent; Ready output cannot be overwritten (6393.4487ms)
+✔ E1-DB10 current-main upgrade and repeated seed preserve accepted CRM originals and revoked grants (9021.1454ms)
+✔ E1-DB11 graph constraints reject forged aggregate totals and unrelated current versions atomically (4239.2478ms)
+✔ DR01-DB01 expanded creation races retain one effect; flags bind original recovery and current authority (4368.8602ms)
+✔ DR01-DB02 direct SQL cannot mislabel line format, invent flags, change arithmetic or overwrite originals (4434.7402ms)
+✔ DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent adoption and exact quotation recovery (13510.5224ms)
+✔ E2 cost basis creates one exact option estimate across identical races and retains one atomic original (5740.1527ms)
+✔ E2 alternatives cost separately; selection never switches the stable CRM primary or mutates old quotes (6938.8843ms)
+✔ E2 incomplete successors hold adoption while ordinary manual saves inherit the exact accepted scope (9662.2372ms)
+✔ E2 version Site controls saved context, exact quote output and historical receipt authority after current scope changes (8991.0194ms)
+✔ E2 safe draft readers do not acquire internal cost access and source revocation refuses exact recovery (4515.4686ms)
+✔ E2 retained contact visibility protects history and exact recovery after the current CRM contact changes (10652.223ms)
+✔ E2 graph guards refuse missing, cross-option and mutable bases without accepting partial cost versions (5101.6978ms)
+✔ E2 adoption rolls back every root, cost, receipt and outbox row when recording the original fails (5423.2506ms)
+✔ E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts and exact stored quotations (11470.1224ms)
+ℹ tests 53
+ℹ suites 0
+ℹ pass 52
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 340753.8235
+
+✖ failing tests:
+
+test at tests\database\estimating-configuration.test.ts:1:11863
+✖ ES02-T38/T61/T67: configuration child IDs cannot be borrowed by a fresh option and failed graph insertion rolls back atomically (5118.3317ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Check the record relationships, effective dates and permitted hierarchy.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\database\estimating-configuration.test.ts:105:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Check the record relationships, effective dates and permitted hierarchy.
+        at sharedOperation (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\platform\operations.ts:215:13)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\database\estimating-configuration.test.ts:105:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
