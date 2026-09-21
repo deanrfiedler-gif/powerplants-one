@@ -156,7 +156,15 @@ export async function prepareJourney(page: Page, info: TestInfo) {
   const day = mobile ? "2031-11-11" : "2031-11-10";
   const movedDay = mobile ? "2031-11-13" : "2031-11-12";
   const summary = `SYN P11 integrated inspection ${info.project.name}`;
-  await page.goto(`/customers/${id("50")}`);
+  // The document load event precedes the actor-scoped customer read. Observe
+  // that real response within the existing action budget before asserting its UI.
+  const customer = await observedResponse(page, "initial-customer-read",
+    (response) => new URL(response.url()).pathname === `/api/v1/customers/${id("50")}` &&
+      response.request().method() === "GET",
+    () => page.goto(`/customers/${id("50")}`),
+  );
+  expect(customer.status(), await customer.text()).toBe(200);
+  expect(customer.headers()["cache-control"]).toBe("private, no-store");
   await expect(
     page.getByRole("heading", {
       name: "SYN Greenhouse Demonstration",
