@@ -1,12 +1,12 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { createContext, useCallback, useContext, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { useIdentity } from "../../../../components/business-session";
 import { materialViews, materialsHref, materialsPath, type MaterialViewId } from "../../../../shell/navigation";
 import { SecondaryMenuFrame, useSecondaryMenu } from "../../../../shell/secondary-menu";
 import type { readEntry, readRegister } from "../../reads";
-import { Icon, ReadNotice, revisionText, useRead, type IconName } from "./materials-ui";
+import { Icon, ReadNotice, lastPackageKey, revisionText, useRead, type IconName } from "./materials-ui";
 
 type Frame = Awaited<ReturnType<typeof readRegister>>;
 type Entry = Awaited<ReturnType<typeof readEntry>>;
@@ -62,13 +62,16 @@ export function useMaterials() {
   return value;
 }
 
-const viewIcons: Record<MaterialViewId, IconName> = { register: "register", mapping: "mapping", substitutions: "swap", releases: "review", handover: "truck", history: "history" };
+const viewIcons: Record<MaterialViewId, IconName> = { register: "register", mapping: "link", substitutions: "cycle", releases: "review", handover: "truck", history: "history" };
+const chooseAnother = "~choose";
 
 export function MaterialsShell({ packageId, children }: { packageId: string; children: React.ReactNode }) {
   const identity = useIdentity(), path = usePathname(), router = useRouter(), search = useSearchParams();
   const [preference, savePreference] = usePreference(`ppo.materials.layout.v1:${identity.workspace_id}:${identity.actor_id}`);
   const menuState = useSecondaryMenu(preference.menu === "open", (open) => savePreference({ ...preference, menu: open ? "open" : "closed" }));
   const setId = search.get("set");
+  // The entry route reopens whichever package was opened last in this browser. A convenience, nothing more.
+  useEffect(() => { try { localStorage.setItem(lastPackageKey, packageId); } catch { /* storage unavailable */ } }, [packageId]);
   // One light read for what every destination shares: context, sets, duties and the menu's own count.
   const frame = useRead<Frame>(`engineering/${packageId}/materials?page_size=1${setId ? `&set=${setId}` : ""}`);
   const packages = useRead<Entry>("engineering/materials");
@@ -122,30 +125,37 @@ export function MaterialsShell({ packageId, children }: { packageId: string; chi
           {/* The visible title lives in the header breadcrumb; the page keeps a real heading for assistive technology. */}
           <h1 className="mw-sr">Released Materials &amp; Substitutions: {materialViews.find((v) => v.id === current)?.label}</h1>
           <header className="em-context" aria-label="Package context">
-            <label className="em-context-cell em-context-project">
-              <span>{data?.package.context_kind ?? "Project"}</span>
-              <select aria-label="Engineering package" value={packageId} onChange={(e) => router.push(materialsHref(e.target.value, current))}>
-                {!packages.data?.items.some((p) => p.id === packageId) && <option value={packageId}>{data?.package.context_title ?? "Loading…"}</option>}
-                {packages.data?.items.map((p) => <option key={p.id} value={p.id}>{p.context_title} · {p.reference}</option>)}
-              </select>
-              <small>{data ? `${data.package.context_reference} · ${data.package.reference}` : " "}</small>
-            </label>
-            <div className="em-context-cell"><span>Customer</span><strong>{data?.package.customer_name ?? "…"}</strong></div>
-            <div className="em-context-cell"><span>Site</span><strong>{data ? (data.package.site_name ?? "No site recorded") : "…"}</strong></div>
-            <div className="em-context-cell em-context-set">
-              <span>Material set</span>
-              <div>
+            <div className="em-context-row">
+              <label className="em-context-cell em-context-project">
+                <span>Package / {(data?.package.context_kind ?? "Project").toLowerCase()}</span>
+                {/* The closed control shows the package's own title in full; the native list underneath it carries the references that tell packages apart. */}
+                <span className="em-picker">
+                  <strong>{data?.package.context_title ?? "Loading…"}</strong><Icon name="chevron-down" />
+                  <select aria-label="Engineering package" value={packageId} onChange={(e) => router.push(e.target.value === chooseAnother ? "/engineering/materials?choose=1" : materialsHref(e.target.value, current))}>
+                    {!packages.data?.items.some((p) => p.id === packageId) && <option value={packageId}>{data?.package.context_title ?? "Loading…"}</option>}
+                    {packages.data?.items.map((p) => <option key={p.id} value={p.id}>{p.context_title} · {p.reference}</option>)}
+                    <option value={chooseAnother}>Choose another package…</option>
+                  </select>
+                </span>
+                <small>{data ? `${data.package.context_reference} · ${data.package.reference}` : " "}</small>
+              </label>
+              <div className="em-context-cell"><span>Customer</span><strong>{data?.package.customer_name ?? "…"}</strong></div>
+              <div className="em-context-cell"><span>Site</span><strong>{data ? (data.package.site_name ?? "No site recorded") : "…"}</strong></div>
+            </div>
+            <div className="em-context-row em-context-setrow">
+              <div className="em-context-set">
+                <span>Material set</span>
                 {data && data.sets.length > 1 ? (
                   <select aria-label="Material set" value={set?.id ?? ""} onChange={(e) => router.push(`${materialsHref(packageId, current)}?set=${e.target.value}`)}>
                     {data.sets.map((s) => <option key={s.id} value={s.id}>{s.code} · {revisionText(s.revision)}</option>)}
                   </select>
                 ) : <strong>{set ? `${set.code} · ${revisionText(set.revision)}` : data ? "None yet" : "…"}</strong>}
-                {set && <span className="em-chip">{set.status}</span>}
+                {set && <span className="em-chip em-chip-neutral">{set.status}</span>}
               </div>
-            </div>
-            <div className="em-context-actions">
-              {data?.can.edit && set && <Link className="mw-button" href={href("register", { new: "1" })}><Icon name="plus" /><span>Material requirement</span></Link>}
-              {set && <Link className="mw-button mw-button-primary" href={href("releases", Object.keys(selection).length ? { prepare: "1" } : {})}>Review release set</Link>}
+              <div className="em-context-actions">
+                {data?.can.edit && set && <Link className="mw-button" href={href("register", { new: "1" })}><Icon name="plus" /><span>Add material requirement</span></Link>}
+                {set && <Link className="mw-button mw-button-primary" href={href("releases", Object.keys(selection).length ? { prepare: "1" } : {})}>Review release set</Link>}
+              </div>
             </div>
           </header>
           <ReadNotice error={frame.error} what="Materials" />

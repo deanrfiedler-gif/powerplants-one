@@ -2,7 +2,7 @@
    mockup r02; behaviour and data rules from build plan r02; values from theme style board r22 (repository blob
    d830d455, SHA-256 a305361c…df0, byte-identical to the supplied upload). The secondary menu, tokens, reset, controls,
    menus, forms and dialogs are My Work's own rules, and the context row, flush register, inspector shell and working
-   pages are EN-06's: both are shared here by scope id and nothing in this file restyles them. This file adds only
+   pages use the retained composition in engineering-review-base.css, scoped to EN-07/EN-08. This file adds only
    what is EN-08's: the r22 status tag, the readable 14px register profile, the spacious inspector and the detail
    building blocks. Class names carry a cm- prefix.
 
@@ -137,7 +137,8 @@
  #ppo-commissioning :is(.cm-register-table,.cm-queue-table,.cm-table) tbody td[data-label]::before{content:attr(data-label);display:block;color:#667181;font-size:12px;line-height:16px}
  #ppo-commissioning :is(.cm-register-table,.cm-queue-table) tbody tr[data-inspected]{background:#edf6e9;box-shadow:inset 3px 0 0 #242a37}
  #ppo-commissioning :is(.cm-register-table,.cm-queue-table) tbody tr[data-inspected] td{background:transparent;box-shadow:none}
- #ppo-commissioning .em-inspector{position:fixed;inset:0;width:100%;z-index:40}
+ /* Keep the close control below the shared 64px header (which has the higher stacking level). */
+ #ppo-commissioning .em-inspector{position:fixed;inset:64px 0 0;width:100%;z-index:40}
  #ppo-commissioning :is(.mw-button,select,input,textarea){min-height:44px}
  #ppo-commissioning :is(select,input,textarea){font-size:16px}
  #ppo-commissioning .cm-row{grid-template-columns:minmax(0,1fr)}

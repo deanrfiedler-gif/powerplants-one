@@ -1,7 +1,7 @@
 /* EN-07 Engineering Change-Impact Review (parent ENG-06). Composition from the audited desktop mockup r02, behaviour
    and data rules from build plan r02, values from theme style board r22. The secondary menu, tokens, reset, controls,
    menus, forms and dialogs are My Work's own rules, and the context row, flush register, inspector and working pages
-   are EN-06's: both are shared here by scope id and nothing in this file restyles them. This file adds only what is
+   use the retained composition in engineering-review-base.css, scoped to EN-07/EN-08. This file adds only what is
    EN-07's: one semantic tone treatment, the wider inspector and its sections, and the assessment surfaces.
    Class names carry an ec- prefix.
 

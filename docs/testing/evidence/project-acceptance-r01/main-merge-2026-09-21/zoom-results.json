@@ -1,0 +1,19 @@
+{
+  "origin": "http://127.0.0.1:3001",
+  "browser": "153.0.8010.53",
+  "chromePageZoom": "200%",
+  "physicalViewport": {
+    "width": 1920,
+    "height": 1200
+  },
+  "geometry": {
+    "innerWidth": 960,
+    "innerHeight": 600,
+    "devicePixelRatio": 2,
+    "scrollWidth": 960
+  },
+  "overflow": false,
+  "inspectorFocusAndEscape": true,
+  "decisionDialog": true,
+  "profile": "Disposable proof profile outside the repository"
+}
