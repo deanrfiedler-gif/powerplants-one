@@ -1214,13 +1214,15 @@ function Editor({
                   </button>
                   {receiving && (
                     <>
-                      <ul className="es08-attention">
-                        {receiving.blockers.map((b, i) => (
-                          <li key={i}>
-                            {b.key}: {b.message}
-                          </li>
-                        ))}
-                      </ul>
+                      {receiving.blockers.length > 0 && (
+                        <ul className="es08-attention">
+                          {receiving.blockers.map((b, i) => (
+                            <li key={i}>
+                              {b.key}: {b.message}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                       <ComparisonTable
                         rows={receiving.comparison}
                         choose={(k, c) => decision(k, c, true)}

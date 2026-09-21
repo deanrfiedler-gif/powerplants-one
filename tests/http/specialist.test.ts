@@ -28,6 +28,7 @@ async function call(path: string, value?: unknown, raw?: string) {
   const r = await fetch(origin + "/api/v1/" + path, {
     method: value === undefined && raw === undefined ? "GET" : "POST",
     headers: {
+      Connection: "close",
       Cookie: cookie,
       Origin: origin,
       "Content-Type": "application/json",
@@ -99,26 +100,18 @@ test("ES08-T05/T27/T35/T53/T57/T61/T70/T79 scoped full-envelope HTTP contract", 
       ).status,
       422,
     );
-  assert.equal(
-    (await call(`${route}/preview`, undefined, " ".repeat(262145) + "{}"))
-      .status,
-    413,
-  );
-  assert.equal(
-    (
-      await call(`${route}/preview`, {
-        expected_version: 1,
-        proposal: p,
-        extra: "é".repeat(140000),
-      })
-    ).status,
-    413,
-  );
-  assert.equal(
-    (await call("estimating/estimates", undefined, " ".repeat(65537) + "{}"))
-      .status,
-    413,
-  );
+  for (const rejected of [
+    await call(`${route}/preview`, undefined, " ".repeat(262145) + "{}"),
+    await call(`${route}/preview`, {
+      expected_version: 1,
+      proposal: p,
+      extra: "é".repeat(140000),
+    }),
+    await call("estimating/estimates", undefined, " ".repeat(65537) + "{}"),
+  ]) {
+    assert.equal(rejected.status, 422); // established platform transport contract
+    assert.equal(rejected.body.code, "PayloadTooLarge");
+  }
   assert.equal((await call(`${route}?forged=1`)).status, 422);
   assert.equal(
     (
