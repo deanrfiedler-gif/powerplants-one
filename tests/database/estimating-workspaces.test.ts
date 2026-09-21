@@ -42,7 +42,7 @@ import {
 import type { DiscoveryChange } from "../../src/estimating/discovery-workspace-validation";
 import { CRM, crmBase, crmCreate } from "../helpers/crm";
 import { estimateInput, quoteCommand } from "../helpers/estimating";
-import { assertOnlySeed29GrantsAdded } from "../helpers/engineering-materials-grants";
+import { assertOnlyEngineeringSeedGrantsAdded } from "../helpers/engineering-materials-grants";
 import {
   discoveryInput,
   discoveryFacility,
@@ -706,9 +706,9 @@ test("E2 migration formalises exact E1 identities and preserves every accepted c
     upgraded.filter((_, i) => i !== grantsAt),
     originals.filter((_, i) => i !== grantsAt),
   );
-  // Seed 29 (EN-06) adds the six fictional materials profiles' grants; every
+  // Seeds 29 (EN-06), 30 (EN-07) and 31 (EN-08) add their fictional profiles' grants; every
   // earlier grant is unchanged and nothing else is added.
-  assertOnlySeed29GrantsAdded(
+  assertOnlyEngineeringSeedGrantsAdded(
     originals[grantsAt].map((r) => r.v),
     upgraded[grantsAt].map((r) => r.v),
   );

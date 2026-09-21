@@ -1,0 +1,43 @@
+{
+  "source_head": "414cb7f2ae93c2c208fddbb01c9814b6b285bf54",
+  "main": "f977bf8626d6eeca26cae2031eae92dffbe43cfb",
+  "run": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35590667605",
+  "artifact": "P11-retained-browser-evidence",
+  "stats": {
+    "startTime": "2026-09-21T11:05:21.870Z",
+    "duration": 2575671.7550000004,
+    "expected": 230,
+    "skipped": 50,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "failures": [
+    {
+      "file": "my-work-mobile.spec.ts",
+      "title": "the phone overview is one page: header, five-cell bar, Quick Actions, attention, one agenda and follow-ups",
+      "project": "mobile-chromium",
+      "results": [
+        {
+          "status": "failed",
+          "duration_ms": 270,
+          "errors": [
+            {
+              "location": {
+                "file": "/home/runner/work/powerplants-one/powerplants-one/tests/helpers/my-work.ts",
+                "column": 33,
+                "line": 33
+              },
+              "message": "Error: Too little of the Brisbane day is left to build today's scenario.\n\n   at ../helpers/my-work.ts:33\n\n  31 |   const day = brisbaneDay(now);\n  32 |   const left = Date.parse(`${day}T23:30:00+10:00`) - now.getTime();\n> 33 |   if (left < 2 * 3600000) throw Error(\"Too little of the Brisbane day is left to build today's scenario.\");\n     |                                 ^\n  34 |   const at = (fraction: number) => now.getTime() + Math.max(10 * 60000, left * fraction);\n  35 |   return {\n  36 |     day,\n    at todaySlots (/home/runner/work/powerplants-one/powerplants-one/tests/helpers/my-work.ts:33:33)\n    at seedScenario (/home/runner/work/powerplants-one/powerplants-one/tests/helpers/my-work.ts:120:13)\n    at /home/runner/work/powerplants-one/powerplants-one/tests/browser/my-work-mobile.spec.ts:43:20"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "baseline_helper_sha256": "45d5430fedc98bd21f08c7f6e626a919f62067afd6817474a310c8e4cd3437ba",
+  "disposition": "Inherited real-clock fixture refused after 21:30 Brisbane; reproduced from unchanged main. Failed run cancelled after immediate browser evidence was retained. Test-only repair preserves the real server/database clock, all existing UI assertions and 20/45/60-minute durations; permits overnight ends and keeps four distinct same-day future anchors. It also fixes two-days-ago civil date before 01:00. Near-midnight guard remains after 23:20; this is not a clock-independent harness. Latest PR checks govern the repaired source.",
+  "repair_files": {
+    "tests/helpers/my-work.ts": "4a828be560bec261c19e800e8b90b2309666b85a52374d6add4ddba1bda3523f",
+    "tests/unit/my-work-fixture.test.ts": "34a0027980d953cfd430a8b23fc1e54c2dcf3942f5f179ccf1018dd7713d4429"
+  }
+}

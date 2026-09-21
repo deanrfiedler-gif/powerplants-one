@@ -1,0 +1,33 @@
+✔ EN07-A48: migration 0030 and seed 30 are additive and a rerun changes nothing (28931.73ms)
+✔ EN07-A59 A58 A16 A54 A55 A56: the audited fixture is derived by the server, and rebuilding it changes nothing (20736.9507ms)
+✔ EN07-A22 A23 A26 A30: authorship never decides, a policy must name the person, and a moved source makes a decision ineligible without rewriting it (21797.5002ms)
+✖ EN07-A25 A29 A32 A33 A37 A40 A41 A43 A50: accepted is not implemented; the whole path to closure keeps every outcome and attempt (14840.2173ms)
+✔ EN07-A14 A24 A42 A51 A44: honest completeness, correction by successor, no-implementation closure, overlap and cost projection (19676.7623ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 110376.7877
+
+✖ failing tests:
+
+test at tests\database\engineering-changes.test.ts:1:9749
+✖ EN07-A25 A29 A32 A33 A37 A40 A41 A43 A50: accepted is not implemented; the whole path to closure keeps every outcome and attempt (14840.2173ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  201 !== 200
+
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one-en08-fix\tests\database\engineering-changes.test.ts:128:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 201,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -25,20 +25,29 @@ const brisbaneDay = (at: Date) => new Intl.DateTimeFormat("en-CA", { timeZone: "
 const endOfDay = (day: string) => new Date(Date.parse(`${day}T00:00:00+10:00`) + 86400000 - 1).toISOString();
 const iso = (at: number) => new Date(Math.round(at / 300000) * 300000).toISOString();
 
-// Times for today's four activities, spread over what is left of the local day. The scenario
-// needs about two hours of the day remaining; it refuses rather than building a misleading one.
+// Keep four distinct future anchors on today's Brisbane date, with twenty minutes
+// for the real API/browser journey. Appointments may end after midnight: My Work
+// groups them by their start, and their 20/45/60-minute durations remain real.
+// A run too close to midnight still refuses an unprovable same-day scenario.
 export function todaySlots(now = new Date()) {
-  const day = brisbaneDay(now);
-  const left = Date.parse(`${day}T23:30:00+10:00`) - now.getTime();
-  if (left < 2 * 3600000) throw Error("Too little of the Brisbane day is left to build today's scenario.");
-  const at = (fraction: number) => now.getTime() + Math.max(10 * 60000, left * fraction);
+  const day = brisbaneDay(now),
+    stop = Date.parse(`${day}T23:55:00+10:00`),
+    minute = 60000,
+    tick = 5 * minute,
+    left = stop - now.getTime(),
+    earliest = Math.ceil((now.getTime() + 20 * minute) / tick) * tick;
+  const deadline = Math.max(earliest, Math.round((now.getTime() + left * 0.04) / tick) * tick),
+    call = Math.max(deadline + tick, Math.round((now.getTime() + left * 0.1) / tick) * tick),
+    meeting = Math.max(call + tick, Math.round((now.getTime() + left * 0.3) / tick) * tick),
+    visit = Math.max(meeting + tick, Math.round((now.getTime() + left * 0.6) / tick) * tick);
+  if (visit > stop) throw Error("Too little of the Brisbane day is left for four distinct future anchors and the browser journey.");
   return {
     day,
-    deadline: iso(at(0.04)),
-    call: { starts_at: iso(at(0.1)), due_at: iso(at(0.1) + 20 * 60000) },
-    meeting: { starts_at: iso(at(0.3)), due_at: iso(at(0.3) + 45 * 60000) },
-    visit: { starts_at: iso(at(0.6)), due_at: iso(at(0.6) + 60 * 60000) },
-    twoDaysAgo: new Date(now.getTime() - 2 * 86400000 - 3600000).toISOString().replace(/\.\d+Z$/, ".000Z"),
+    deadline: iso(deadline),
+    call: { starts_at: iso(call), due_at: iso(call + 20 * minute) },
+    meeting: { starts_at: iso(meeting), due_at: iso(meeting + 45 * minute) },
+    visit: { starts_at: iso(visit), due_at: iso(visit + 60 * minute) },
+    twoDaysAgo: endOfDay(brisbaneDay(new Date(now.getTime() - 2 * 86400000))),
     yesterday: endOfDay(brisbaneDay(new Date(now.getTime() - 86400000))),
     tomorrow: endOfDay(brisbaneDay(new Date(now.getTime() + 86400000))),
     dayAfter: endOfDay(brisbaneDay(new Date(now.getTime() + 2 * 86400000))),

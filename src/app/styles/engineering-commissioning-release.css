@@ -1,0 +1,76 @@
+/* EN-08 view-specific rules (cm- prefix, scoped to #ppo-commissioning). The shared building blocks live in engineering-commissioning.css.
+   This file serves two destinations only: Review & as-built release and Handover & history. It adds what those two
+   need on top of cm-panel, cm-gates, cm-timeline, cm-table, cm-row, cm-grid, cm-note and cm-hash, and restyles none of them. */
+
+/* Read-only tables inside a panel. Their rows open nothing, so they carry no pointer and no hover emphasis. The first
+   cell names the row. Each table is flush to its panel: it sits directly under a panel header or an in-panel subhead. */
+#ppo-commissioning .cm-table.cm-rel-table tbody tr{cursor:default}
+#ppo-commissioning .cm-table.cm-rel-table tbody tr:is(:hover,:focus-within) td{background:#fff}
+#ppo-commissioning .cm-table.cm-rel-table tbody td{vertical-align:top;height:auto}
+#ppo-commissioning .cm-table.cm-rel-table .cm-rowhead{min-width:180px;font-weight:500}
+#ppo-commissioning .cm-table.cm-rel-table .cm-rowhead .em-cell-sub{font-weight:400}
+#ppo-commissioning .cm-table.cm-rel-table .cm-hash{display:block;max-width:22ch}
+#ppo-commissioning .cm-panel .cm-table.cm-table-wide{min-width:1180px}
+#ppo-commissioning .cm-cell-actions{display:flex;flex-wrap:wrap;gap:4px 8px}
+/* A panel that holds more than one table names each with a subhead; the table follows it with no padded body between. */
+#ppo-commissioning .cm-subhead{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;padding:12px 20px;border-top:1px solid #e9ecf1}
+#ppo-commissioning .cm-subhead h4{margin:0;flex:none;font-size:14px;line-height:20px;font-weight:500}
+#ppo-commissioning .cm-subhead p{margin:0;flex:1 1 320px;color:#596779;font-size:13px;line-height:18px}
+#ppo-commissioning .cm-panel>.cm-panel-foot{border-top:1px solid #e9ecf1}
+#ppo-commissioning .cm-panel>.em-table-scroll+.cm-panel-foot{border-top:1px solid #e9ecf1}
+#ppo-commissioning .cm-panel>header>div:first-child{flex:1 1 360px;min-width:0}
+#ppo-commissioning .cm-panel-body>p{margin:0}
+
+/* A positive action and, beside it, the reason it cannot be taken. */
+#ppo-commissioning .cm-act{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+#ppo-commissioning .cm-act>.cm-note{flex:1 1 280px;min-width:0}
+#ppo-commissioning .cm-panel>header>.cm-act{flex:0 1 auto;justify-content:flex-end}
+#ppo-commissioning .cm-panel>header>.cm-act>.cm-note{flex:0 1 360px;text-align:right}
+#ppo-commissioning .cm-downloads{display:inline-flex;flex-wrap:wrap;align-items:center;gap:4px 14px}
+#ppo-commissioning .cm-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+#ppo-commissioning .cm-dialog-heading{margin:12px 0 6px;font-size:14px;line-height:20px;font-weight:500}
+#ppo-commissioning .mw-dialog .cm-row{margin-top:8px}
+#ppo-commissioning .mw-dialog .cm-note{margin-bottom:12px}
+
+/* Edit scope & recipients: every scope item is its own labelled choice; a recipient is one row of three fields. */
+#ppo-commissioning .cm-choice-set{min-width:0;margin:0 0 16px;padding:0 0 4px;border:0;border-bottom:1px solid #e9ecf1}
+#ppo-commissioning .cm-choice-set legend{padding:0;margin-bottom:8px;font-size:14px;line-height:20px;font-weight:500}
+#ppo-commissioning .cm-choice-set legend small{display:block;color:#667181;font-size:12px;line-height:16px;font-weight:400}
+#ppo-commissioning .cm-choice-set>.mw-button{margin-bottom:12px}
+#ppo-commissioning .cm-recipient{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));align-items:end;gap:0 12px;margin-bottom:12px;border-bottom:1px solid #e9ecf1}
+#ppo-commissioning .cm-recipient>.mw-button{justify-self:start;margin-bottom:14px}
+
+/* Receiving: one block per recipient. Its head, facts and actions keep the panel's 20px; its manifests run edge to edge. */
+#ppo-commissioning .cm-request{display:flex;flex-direction:column;gap:12px;padding:16px 0;border-bottom:1px solid #e9ecf1}
+#ppo-commissioning .cm-request:last-of-type{border-bottom:0}
+#ppo-commissioning .cm-request>:not(.cm-timeline){margin:0 20px}
+#ppo-commissioning .cm-request-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+#ppo-commissioning .cm-request-head strong{font-size:14px;line-height:20px;font-weight:500}
+#ppo-commissioning .cm-request-actions{display:flex;flex-direction:column;gap:10px}
+#ppo-commissioning .cm-submissions{border-top:1px solid #e9ecf1;border-bottom:1px solid #e9ecf1}
+#ppo-commissioning .cm-submissions>li>div:first-child{display:flex;flex-direction:column;gap:2px}
+#ppo-commissioning .cm-submission{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;overflow-wrap:anywhere}
+#ppo-commissioning .cm-manifest{align-self:stretch}
+#ppo-commissioning .cm-manifest summary{display:inline-flex;align-items:center;min-height:24px;color:#355b80;font-size:13px;line-height:18px;cursor:pointer}
+#ppo-commissioning .cm-manifest[open] summary{margin-bottom:8px}
+#ppo-commissioning .cm-manifest .cm-tag{vertical-align:middle}
+
+/* Handover & history scrolls as one surface, so the package-wide history can follow the queue when nothing is selected. */
+#ppo-commissioning .cm-handover-surface{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;overflow:auto}
+#ppo-commissioning .cm-handover-surface>.cm-page{flex:none;overflow:visible}
+#ppo-commissioning .cm-history[data-stale]{opacity:.72}
+#ppo-commissioning .cm-history-filter{display:flex;align-items:center;gap:8px;color:#596779;font-size:13px;line-height:18px}
+#ppo-commissioning .cm-history-filter select{min-height:38px;padding:7px 30px 7px 10px;border:1px solid var(--control-border);border-radius:var(--radius-control);background-color:var(--surface-white);color:var(--ink);font-size:14px}
+
+/* Phone: every table of these two destinations reflows to labelled blocks at full width, and links keep 44px targets. */
+@media (max-width:780px){
+ #ppo-commissioning .cm-panel .cm-table:is(.cm-rel-table,.cm-table-wide){min-width:0}
+ #ppo-commissioning .cm-table.cm-rel-table .cm-rowhead{min-width:0}
+ #ppo-commissioning .cm-table.cm-rel-table .cm-hash{max-width:none}
+ #ppo-commissioning .cm-panel>header>.cm-act{justify-content:flex-start}
+ #ppo-commissioning .cm-panel>header>.cm-act>.cm-note{flex:1 1 100%;text-align:left}
+ #ppo-commissioning .cm-downloads .mw-link,#ppo-commissioning .cm-manifest summary{min-height:44px}
+ #ppo-commissioning .cm-request>:not(.cm-timeline){margin:0 16px}
+ #ppo-commissioning .cm-subhead{padding:12px 16px}
+ #ppo-commissioning .cm-history-filter select{min-height:44px;font-size:16px}
+}

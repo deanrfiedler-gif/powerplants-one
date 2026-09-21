@@ -69,7 +69,7 @@ Strict DTOs reject unknown keys, actor/approval/eligibility spoofing and duplica
 
 ## Entities and authority
 
-Migration 0031 adds scoped configuration aggregates, immutable bindings/drafts,
+Migration 0033 adds scoped configuration aggregates, immutable bindings/drafts,
 runs, resolved sets, adoptions, lineage manifests, finding reviews and terminal
 operation closures. Composite foreign keys bind workspace/company/alternative
 relationships. Immutable snapshots use bounded versioned JSON; relationship,
@@ -164,3 +164,22 @@ Unborn-create recovery uses the already authorized EstimatingWorkspace identity;
 its immutable closure can precede configuration insertion and prevents late create.
 Resolved receipt authorization follows original accepted draft/run/estimate IDs,
 including copy and resolution receipts, rather than current pointers.
+
+## PR #273 base integration, 21 September 2026
+
+Dean requested resolution of PR #273's conflicts. Its ES-02 prerequisite advanced
+to `c0ced54`, incorporating EN-07/EN-08 and their issued migrations 0030/0031;
+ES-02 now owns 0032. Merge that published base into the ES-08 branch. Move the
+unmerged, undeployed specialist migration from 0031 to 0033 with identical SQL
+bytes and register its immutable definition/policy seed at 33. Preserve all
+Engineering migrations, seeds, users and grants; update every exact registry
+assertion and retain the reviewed hosted-upgrade guard through 33. No database
+ledger is rewritten and no development or hosted database is reset.
+
+The shared secondary-menu CSS changes differ only in their module scope selectors;
+the combined selectors include My Work, EN-06, EN-07, EN-08, ES-02 and ES-08.
+Both Engineering receipt dispatches and navigation survive alongside ES-08.
+Historical evidence continues to identify its original executable commits.
+Fresh integration verification is recorded in the
+[handover](../delivery/es08-specialist-workbench-handover.md#pr-273-conflict-repair).
+This branch integration does not merge the pull request or deploy the application.

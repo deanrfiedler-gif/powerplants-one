@@ -12,7 +12,8 @@ Dean requested execution of the two issued r02 documents. Their normative bodies
 are identical. Scope is Screen Systems, EST-06/E5, CRE-13–CRE-17, EA-16/17,
 AT-04/28, G06 and D-009; no parent requirement is renamed or closed by this work.
 [Architecture and precision ledger](../decisions/ADR-0034-es08-specialist-workbench.md).
-Branch `feat/es08-specialist-workbench` retains ES-02 prerequisite `ea57344`.
+Branch `feat/es08-specialist-workbench` integrates ES-02 prerequisite `c0ced54`;
+the original implementation and historical evidence started on `ea57344`.
 The [field contract](es08-field-contract.csv) records types/technical limits; these
 are defensive computation bounds, not approved engineering ranges. The authored
 [golden fixture manifest](../../tests/fixtures/es08-golden-r01.json) pins Appendix E.
@@ -20,7 +21,7 @@ are defensive computation bounds, not approved engineering ranges. The authored
 | Package | Delivered work |
 |---|---|
 | S01 | Source inventories, exact contracts, authority/writer reconciliation and ADR |
-| S02 | Migration/seed 0031, durable raw drafts, immutable runs and resolved sets, scoped APIs |
+| S02 | Migration/seed 0033, durable raw drafts, immutable runs and resolved sets, scoped APIs |
 | S03 | Exact rational engine, 64 fields, five extra screens, 143 positions, 101 catalogue entries, 14 manual allowances, six gates, 12 parameters |
 | S04 | Register/create and six native views, shared shell, four accessible schematic diagrams, independent pricing lanes |
 | S05 | Configuration and estimate B/C/N comparisons, contribution lineage in every estimate writer, atomic synthetic receiving, source rebase/copy/archive and reload recovery |
@@ -192,7 +193,7 @@ specialist HTTP; B = compiled specialist browser; R = code/source/visual review.
 | ES08-T51 | Snapshot export | H / B |
 | ES08-T52 | Freshness/races | B — Late calculation response and deliberately delayed post-save resource refresh |
 | ES08-T53 | Bounds | U / H |
-| ES08-T54 | Upgrade/replay | D — Migration 0031; all exact registry consumers updated; cross-0026 estimate upgrade |
+| ES08-T54 | Upgrade/replay | D — Migration 0033 (originally 0031); all exact registry consumers updated; cross-0026 estimate upgrade |
 | ES08-T55 | Visual evidence | B |
 | ES08-T56 | Handover accuracy | R — This handover and pinned evidence manifest; owner acceptance remains separate |
 | ES08-T57 | Transport contract | H |
@@ -221,3 +222,40 @@ specialist HTTP; B = compiled specialist browser; R = code/source/visual review.
 | ES08-T80 | Date-stable complete fixtures | D / B — Fixtures cover valid/changed/conflict/deletion/rebase/recovery/revocation; historical rate date and relative quote dates |
 
 Evidence files: [unit](../../tests/unit/specialist.test.ts), [database](../../tests/database/specialist.test.ts), [HTTP](../../tests/http/specialist.test.ts), [browser](../../tests/browser/specialist-workbench.spec.ts), [independent design comparator](../../tests/helpers/es08-design.ts).
+
+## PR #273 conflict repair
+
+On 21 September, the published ES-02 base advanced to `c0ced54`. This branch
+integrates that head, including EN-07/EN-08 migrations 0030/0031 and ES-02 0032.
+The unmerged ES-08 migration is renamed to 0033 with identical normalized SQL
+bytes; its immutable policy/definition seed is registered at 33. All exact
+migration/seed lists and the reviewed hosted-demo upgrade gate follow that order.
+The Engineering seeds and their grant/user assertions are retained.
+
+Shared secondary-menu selectors now cover every contributing module. The
+automerged header/navigation and shared operation receipt dispatch were reviewed
+against both parents. No issued reference, prior evidence log or executable
+fingerprint is relabelled as evidence of this integration.
+
+Fresh local verification used the combined `cf00c22` + `c0ced54` application
+and the conflict resolutions above, with the same pinned Windows runtime as the
+original proof. All checks passed:
+
+- TypeScript, lint and the compiled application build.
+- [54 focused unit tests](../testing/evidence/es08-native-r01/pr273-unit.txt):
+  `node --import tsx --test tests/unit/specialist*.test.ts tests/unit/estimating*.test.ts tests/unit/migration*.test.ts tests/unit/my-work-fixture.test.ts`.
+- [79 database/upgrade tests](../testing/evidence/es08-native-r01/pr273-database.txt):
+  `node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/estimating-configuration.test.ts tests/database/specialist.test.ts tests/database/leads-projects-integration.test.ts tests/demo/upgrade.test.ts`.
+  This includes all 15 specialist cases, estimates present across migration 0026,
+  exact registry/seed replay, retained grants and the hosted-upgrade rollback proof.
+- [10 compiled desktop/touch-phone browser tests](../testing/evidence/es08-native-r01/pr273-browser.txt):
+  `npx playwright test --config=playwright.es08.config.ts --output verification-evidence/pr273-es08 --reporter=list`.
+  All five scenarios passed on both projects in one run (3.6 minutes).
+- Foundation and naming assurance; all 78 parent requirements and the
+  7,969-character maintained instructions remain intact.
+
+The new logs retain actual output with LF and trailing-whitespace normalization;
+the original evidence manifest and logs remain unchanged. Database checks use
+only the disposable `ppo_synthetic_test` target. No development ledger rewrite,
+hosted migration or deployment is performed. Published-head CI remains a separate
+check; the earlier CI results above are not evidence for this merge.

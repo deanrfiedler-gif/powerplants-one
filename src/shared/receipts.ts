@@ -2,6 +2,8 @@ import { createResolutionAuthority } from "../estimating/specialist/recovery";
 import { acceptedAuthority as specialistAcceptedAuthority } from "../estimating/specialist/context";
 import { engineeringRow } from "../engineering/service";
 import { materialReceiptAuthority } from "../engineering/materials/commands";
+import { changeReceiptAuthority } from "../engineering/changes/commands";
+import { commissioningReceiptAuthority } from "../engineering/commissioning/commands";
 import { emailContext } from "../email/service";
 import { leadReceiptAuthority } from "../crm/leads/receipt-authority";
 import { acceptedOpportunityOriginal } from "../crm/receipt-authority";
@@ -70,6 +72,12 @@ export async function readOperation(
     await quoteContext(client,p,r.record_id);
   } else if (r.object_type === "EngineeringPackage") {
     await engineeringRow(client, p, r.record_id, r.command === "CreateEngineeringRequest" ? "engineering.create" : "engineering.edit");
+  } else if (r.object_type === "EngineeringChange") {
+    // EN-07 originals: present scope and the same duty the command needed, before the receipt is disclosed.
+    await changeReceiptAuthority(client, p, r.record_id, r.command);
+  } else if (r.object_type === "CommissioningPackage") {
+    // EN-08 originals: present scope and the same duty the command needed, before the receipt is disclosed.
+    await commissioningReceiptAuthority(client, p, r.record_id, r.command);
   } else if (r.object_type.startsWith("Material")) {
     // EN-06 originals: present scope and the same duty the command needed, before the receipt is disclosed.
     await materialReceiptAuthority(client, p, r.object_type, r.record_id, r.command);

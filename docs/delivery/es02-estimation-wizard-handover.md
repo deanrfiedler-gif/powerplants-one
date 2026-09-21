@@ -25,7 +25,7 @@ contains the complete package and subsequent harness/evidence refinement.
 |---|---|
 | W01 | Inspected live PostgreSQL 16.15; chose immutable optional configuration JSON, stable child ownership ledger, explicit schema dispatch, bounded exact reads and existing native command infrastructure. |
 | W02 | Native five-step workspace, Alternatives/Revisions, family overview, typed editors, evidence inspector, shared r22 menu/header/summary and one in-memory working proposal. |
-| W03 | Strict schema 1 configuration, readiness findings, source review fingerprints, actual native evidence/Activity links, eligible owned unknowns and additive migration 0030. |
+| W03 | Strict schema 1 configuration, readiness findings, source review fingerprints, actual native evidence/Activity links, eligible owned unknowns and additive migration 0032. |
 | W04 | Fresh/copy alternatives, deterministic allocated child IDs, exact lineage and remapping, immutable paged history, exact saved-source comparison and guarded historical starting points. |
 | W05 | Independent permitted saved-cost projection, per-option estimates, explicit comparison cost versions and unchanged manual basis adoption / Draft output paths. Discovery edits do not reprice. |
 | W06 | Unit, PostgreSQL, direct HTTP, compiled browser and documentation assurance; native captures, bounds and measured geometry retained. The existing required Estimating CI job now includes structured tests and actual app/database restart proof. CI execution and owner acceptance remain distinct from local checks. |
@@ -52,9 +52,9 @@ The ten r01 questions, work tags, absent-configuration DTO/hash behaviour and pr
 Complete cost bases remain unchanged. Optional `configuration` uses
 `PPO-ES02-CONFIG-r01` / schema 1; unknown versions and explicit null fail safely.
 Confirmation tokens are separate from question IDs and bind current exact context.
-Migration 0030 adds immutable child identity ownership and exact lineage checks;
+Migration 0032 adds immutable child identity ownership and exact lineage checks;
 there is no new grant, seed, dependency or identity-table ALTER. All migration
-registry assertions and the reviewed hosted-demo migration gate advance to 30;
+registry assertions and the reviewed hosted-demo migration gate advance to 32;
 seed/grant/user expectations stay unchanged.
 
 New workspace reads: `summary`, `history`, `cost-versions`, `evidence`; read-only POST
@@ -143,6 +143,45 @@ records the exact patch. UI source remains `071a864`; the later server read is
 identified separately. The PR reports checks for the exact latest head.
 ES-02 follow-up work is isolated in `tmp/es02-final` after the original shared
 checkout was taken by separate ES-08 work; that branch's edits are preserved.
+
+Before integration with newer main, `ea57344` passed all 17 checks (seven required).
+[Full Application run 35578429880](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35578429880)
+passed 161 units, 464 database cases, 32 HTTP cases and 234 full browser cases
+(37 configured skips), plus the retained domain/restart phases. Its 118-minute
+duration is evidence for raising only the full job budget from 120 to 150 minutes
+when preserving the additional merged EN-07/EN-08 suites; individual test deadlines
+and assertions are unchanged. The demo's initial unreadable-response checkpoint
+also passed on an unchanged-commit rerun after an unchanged-main comparison.
+
+Main advanced to `f977bf8` while those checks ran, merging EN-07/EN-08 and assigning
+their migrations 0030/0031. The ES-02 migration had never merged or deployed and is
+therefore renumbered to 0032 with identical SQL bytes; no issued main migration or
+ledger is rewritten. The merged seed/grant allowlists and shared navigation repairs
+are retained. Applied-version lists, the reviewed demo gate and added-migration
+count advance to 32/15; there is no ES-02 seed or user-count change. Shared style
+selectors retain all five workspace scopes. Earlier manifests/captures remain
+historical at their exact recorded commits, including the old migration filename.
+Fresh combined-source verification and the final PR checks govern this integration.
+
+Combined source `414cb7f` passed 16 checks, including Estimating (195 units,
+55 database, 5 HTTP, 13 existing browser and 29 ES-02/shared cases with the restart
+proof), compiled browser (240 passed / 41 configured skips), and demo preparation.
+The broad Application run then hit the unchanged My Work fixture's 21:30 Brisbane
+cutoff: 230 cases passed, one fixture failed before UI work and nine serial successors
+were blocked, in addition to 41 configured skips. The failed checkpoint was retained
+before cancelling that already-failed run. The exact helper from main `f977bf8`
+reproduces the same failure; this is not an ES-02 product regression.
+
+The [bounded fixture repair](../testing/evidence/es02-native-r01/fixture-review.json)
+retains the real database clock and every existing UI assertion. Four distinct
+future anchors stay on today's date, while appointments can end after midnight
+with unchanged 20/45/60-minute durations. At least twenty minutes remain before
+the first deadline. The helper also preserves exactly two prior civil days before
+01:00, instead of accidentally producing three. Nine focused fixture/presentation
+units pass, including late-evening and overnight cases. The explicit near-midnight
+refusal remains after 23:20 Brisbane; this real-clock fixture is not valid across
+an arbitrary day rollover. Application code is unchanged by this repair. Fresh PR
+checks provide the final combined-source result.
 
 ## Acceptance disposition
 

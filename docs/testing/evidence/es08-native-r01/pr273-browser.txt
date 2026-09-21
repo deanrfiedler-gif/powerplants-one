@@ -1,0 +1,22 @@
+[WebServer] (node:33948) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"153.0.8010.53"}
+
+Running 10 tests using 1 worker
+
+(node:34000) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop-chromium] › tests\browser\specialist-workbench.spec.ts:57:1 › ES08 native six views, shared shell, dense parts and responsive evidence (18.0s)
+  ok  2 [desktop-chromium] › tests\browser\specialist-workbench.spec.ts:185:1 › ES08 durable raw draft, manual re-review, native receiving, exact history and contribution link (28.6s)
+  ok  3 [desktop-chromium] › tests\browser\specialist-workbench.spec.ts:371:1 › ES08 reload recovery after accepted and unaccepted saves retains only a minimal pointer (23.4s)
+  ok  4 [desktop-chromium] › tests\browser\specialist-workbench.spec.ts:426:1 › ES08 create recovery through reload, read-only review and permission withdrawal (12.9s)
+  ok  5 [desktop-chromium] › tests\browser\specialist-workbench.spec.ts:470:1 › ES08-T52 late preview cannot replace a newer calculation (9.4s)
+(node:20524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  6 [mobile-chromium] › tests\browser\specialist-workbench.spec.ts:57:1 › ES08 native six views, shared shell, dense parts and responsive evidence (18.6s)
+  ok  7 [mobile-chromium] › tests\browser\specialist-workbench.spec.ts:185:1 › ES08 durable raw draft, manual re-review, native receiving, exact history and contribution link (26.2s)
+  ok  8 [mobile-chromium] › tests\browser\specialist-workbench.spec.ts:371:1 › ES08 reload recovery after accepted and unaccepted saves retains only a minimal pointer (17.7s)
+  ok  9 [mobile-chromium] › tests\browser\specialist-workbench.spec.ts:426:1 › ES08 create recovery through reload, read-only review and permission withdrawal (14.3s)
+  ok 10 [mobile-chromium] › tests\browser\specialist-workbench.spec.ts:470:1 › ES08-T52 late preview cannot replace a newer calculation (9.7s)
+
+  10 passed (3.6m)

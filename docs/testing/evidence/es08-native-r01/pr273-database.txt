@@ -1,0 +1,321 @@
+✔ ES02-T15/T16: a permitted selected Facility beyond the candidate page is retained, searchable and bounded separately (7406.437ms)
+✔ ES02-T13/T20/T28/T38: complete configuration saves atomically, reloads and replays one original operation (7638.2614ms)
+✔ ES02-T21/T61/T67: exact structured copy remaps owned children consistently through preview and original replay (5690.9796ms)
+✔ ES02-T56/T68: stale configuration acknowledgments and removal of the extension cannot bypass readiness (7411.8102ms)
+✔ ES02-T31/T52/T57: saved total survives an incomplete successor, ordinary prices inherit the exact complete basis (10917.3546ms)
+✔ ES02-T25/T39: bounded immutable history, exact comparisons and repeated migration/seed preserve saved snapshots (9319.9943ms)
+✔ ES02-T26/T27/T29/T50/T68: source versions remain recorded, changed sources require fresh exact review and every new projection rechecks access (10043.2404ms)
+✔ ES02-T38/T61/T67: configuration child IDs cannot be borrowed by a fresh option and failed graph insertion rolls back atomically (10449.4869ms)
+✔ ES02-T25/T62: history beyond twenty revisions uses stable disjoint pages and exact permitted sources (9082.6772ms)
+✔ ES02-T29/T62: cost pagination cannot reveal a denied historical basis through its lookahead (14124.868ms)
+✔ E2 context captures exact existing identities without implied membership, technical verification or business writes (4579.248ms)
+✔ E2 context refuses unrelated identities and cannot gain estimating access from quote-only or other roles (5122.7677ms)
+✔ E2 context rejects same-company equipment and Facilities belonging to another selected Site (7104.4629ms)
+✔ E2 context checks customer relationships for both Opportunity and selected Site before returning captured names (7979.6373ms)
+✔ E2 context rechecks current estimating and shared access rather than trusting a former successful snapshot (10593.9006ms)
+✔ E2 unresolved items require a currently eligible follow-up owner without creating or completing an Activity (29980.5462ms)
+✔ E2 context detects a changed shared version while preserving the independently captured original (13722.0855ms)
+✔ E2 persistence creates one selected option and exact immutable scope under identical operation races (5632.6321ms)
+✔ E2 change comparisons reject stale writers and require explicit reconfirmation after membership changes (6460.0618ms)
+✔ E2 copies retained discovery as unconfirmed, fresh branches retain no inherited answers, and neither changes selection (6550.5107ms)
+✔ E2 hidden answers remain in their accepted predecessor and later activation requires deliberate confirmation (14957.3462ms)
+✔ E2 archived options keep exact original recovery; select/archive races use the whole workspace version (10049.4205ms)
+✔ E2 original receipts and captured labels are hidden after current relationship revocation, including inactive source options (4862.5384ms)
+✔ E2 identical operation UUIDs remain actor-scoped and recovery rechecks current edit access (7783.9747ms)
+✔ E2 shared-context changes reject the original proposal without altering its retained source or silently refreshing it (5066.6715ms)
+✔ E2 historical contact visibility is rechecked independently of current labels and versions (7135.3166ms)
+✔ E2 receipt, audit and outbox failures roll back the entire option graph (8813.9604ms)
+✔ E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original (17571.5849ms)
+✔ E2 constraints refuse forged selection, related membership, history mutation and an eleventh retained option (15498.8079ms)
+✔ E2 recovery rechecks edit access to the exact original selected Site even after another option is selected (7109.1945ms)
+✔ E2 permanent Facility placement rejects a move and preserves the retained discovery revision (8123.8856ms)
+✔ E2 application and SQL guards hold unsupported states anywhere in the group while ordinary render Pending remains editable (5659.611ms)
+✔ E1-DB01 atomic creation, identical races and receipt recovery retain one original effect (5510.9658ms)
+✔ E1-DB02 reasoned successor, stale writers, exact predecessor and immutable original (6219.405ms)
+✔ E1-DB03 server scope denial covers lists, selectors, commands, receipt replay and cross-workspace guesses (5074.7684ms)
+✔ E1-DB04 loss of linked person relationship hides aggregates, original receipts and exact quote files (8411.3176ms)
+✔ E1-DB05 safe-only reader cannot retrieve internal costs; owner grants are not inferred (8975.5732ms)
+✔ E1-DB06 quote revisions bind exact saved versions, choices, reason and captured template; originals never advance (9976.7125ms)
+✔ E1-DB07 complete decimal data and matching quote membership required; empty draft remains unknown (5164.9945ms)
+✔ E1-DB08 crash after durable storage recovers byte-identical HTML/PDF without regeneration (9146.4946ms)
+✔ E1-DB09 failed rendering retains original revision and recovers same intent; Ready output cannot be overwritten (7866.6861ms)
+✔ E1-DB10 current-main upgrade and repeated seed preserve accepted CRM originals and revoked grants (11546.4455ms)
+✔ E1-DB11 graph constraints reject forged aggregate totals and unrelated current versions atomically (5862.7628ms)
+✔ DR01-DB01 expanded creation races retain one effect; flags bind original recovery and current authority (9202.4308ms)
+✔ DR01-DB02 direct SQL cannot mislabel line format, invent flags, change arithmetic or overwrite originals (7199.2801ms)
+✔ DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent adoption and exact quotation recovery (24438.5744ms)
+✔ E2 cost basis creates one exact option estimate across identical races and retains one atomic original (9818.533ms)
+✔ E2 alternatives cost separately; selection never switches the stable CRM primary or mutates old quotes (12906.2409ms)
+✔ E2 incomplete successors hold adoption while ordinary manual saves inherit the exact accepted scope (10268.8281ms)
+✔ E2 version Site controls saved context, exact quote output and historical receipt authority after current scope changes (9915.0318ms)
+✔ E2 safe draft readers do not acquire internal cost access and source revocation refuses exact recovery (5605.2573ms)
+✔ E2 retained contact visibility protects history and exact recovery after the current CRM contact changes (10829.3639ms)
+✔ E2 graph guards refuse missing, cross-option and mutable bases without accepting partial cost versions (6034.8863ms)
+✔ E2 adoption rolls back every root, cost, receipt and outbox row when recording the original fails (6343.964ms)
+✔ E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts and exact stored quotations (15381.0117ms)
+✔ fresh combined installation retains both registries and both domains through repeat migration and seed (17922.2796ms)
+✔ main 0017 upgrades through Leads 0018 then Projects 0019 without replacing prior migration receipts (10515.8537ms)
+✔ an existing Leads 0018 record and receipt survive the Projects upgrade exactly (10583.167ms)
+✔ a database carrying the original Gantt 0018 checksum is preserved and refused, never relabelled or replayed (8821.8449ms)
+✔ ES08-T26/T58/T61 durable incomplete drafts retain raw input and exact original recovery (6059.8401ms)
+✔ ES08-T28/T34/T35/T41/T44 synthetic receiving creates exact native lines, keeps manual line and atomically recovers (10692.1046ms)
+✔ ES08-T43/T63/T64 manual changes/deletion survive lineage and newer run updates evidence even with unchanged money (10311.2862ms)
+✔ ES08-T46/T59/T60 accepted original survives archive, payload mutation fails (9109.9875ms)
+✔ ES08-T73 terminal resolution excludes a late original and preserves accepted outcomes (10368.9678ms)
+✔ ES08-T46/T64 unchanged reapply is no-change, new run with equal money advances evidence and earlier quote stays pinned (15401.4164ms)
+✔ ES08-T37 100 exact lines succeed; 101 fail without changing costs or evidence (18495.6661ms)
+✔ ES08-T27/T28/T45 two receiving writers cannot overwrite and stale signature leaves no run (12280.1699ms)
+✔ ES08-T38/T65 persisted precision mismatch blocks receiving and exact old resolved set cannot substitute (9912.9469ms)
+✔ ES08-T05/T48/T59 current permission revocation refuses reads, preview, export and accepted originals (10090.8334ms)
+✔ ES08-T66 corrupt lineage cannot be reused; database mutation test rolls back (12274.7366ms)
+✔ ES08-T72/T73 create closure before aggregate existence survives dispatcher lookup and blocks late create (18437.4506ms)
+✔ ES08-T73 accepted-versus-close race has one terminal original outcome (19722.3671ms)
+✔ ES08-T33/T36/T67/T69 rebase changes only source/draft; new cost basis carries lineage; cross-alternative copy owns nothing (8650.3831ms)
+✔ ES08-T40/T42 kept manual overrides and retained removals require reconciliation on later receiving (11110.1011ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo migration mismatch: version=18 expected=2c36b8e173f805e0184e59284c0856d982ecc5a71ea60d61d64854f3ec186255 stored=missing
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: apply-migration-18
+Demo upgrade stage: apply-migration-19
+Demo upgrade stage: apply-migration-20
+Demo upgrade stage: apply-migration-21
+Demo upgrade stage: apply-migration-22
+Demo upgrade stage: apply-migration-23
+Demo upgrade stage: apply-migration-24
+Demo upgrade stage: apply-migration-25
+Demo upgrade stage: apply-migration-26
+Demo upgrade stage: apply-migration-27
+Demo upgrade stage: apply-migration-28
+Demo upgrade stage: apply-migration-29
+Demo upgrade stage: apply-migration-30
+Demo upgrade stage: apply-migration-31
+Demo upgrade stage: apply-migration-32
+Demo upgrade stage: apply-migration-33
+Demo upgrade stage: apply-seed-18
+Demo upgrade stage: apply-seed-19
+Demo upgrade stage: apply-seed-20
+Demo upgrade stage: apply-seed-21
+Demo upgrade stage: apply-seed-24
+Demo upgrade stage: apply-seed-29
+Demo upgrade stage: apply-seed-30
+Demo upgrade stage: apply-seed-31
+Demo upgrade stage: apply-seed-33
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+✔ upgrade preserves saved CRM, mailbox, sessions, old grants and invitation limits; retry is idempotent (6873.4256ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: apply-migration-18
+Demo upgrade stage: apply-migration-19
+Demo upgrade stage: apply-migration-20
+Demo upgrade stage: apply-migration-21
+Demo upgrade stage: apply-migration-22
+Demo upgrade stage: apply-migration-23
+Demo upgrade stage: apply-migration-24
+Demo upgrade stage: apply-migration-25
+Demo upgrade stage: apply-migration-26
+Demo upgrade stage: apply-migration-27
+Demo upgrade stage: apply-migration-28
+Demo upgrade stage: apply-migration-29
+Demo upgrade stage: apply-migration-30
+Demo upgrade stage: apply-migration-31
+Demo upgrade stage: apply-migration-32
+Demo upgrade stage: apply-migration-33
+Demo upgrade stage: apply-seed-18
+Demo upgrade stage: apply-seed-19
+Demo upgrade stage: apply-seed-20
+Demo upgrade stage: apply-seed-21
+Demo upgrade stage: apply-seed-24
+Demo upgrade stage: apply-seed-29
+Demo upgrade stage: apply-seed-30
+Demo upgrade stage: apply-seed-31
+Demo upgrade stage: apply-seed-33
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+✔ an already-current demo requires explicit upgrade for missing booking grants (7931.2913ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: apply-migration-18
+Demo upgrade stage: apply-migration-19
+Demo upgrade stage: apply-migration-20
+Demo upgrade stage: apply-migration-21
+Demo upgrade stage: apply-migration-22
+Demo upgrade stage: apply-migration-23
+Demo upgrade stage: apply-migration-24
+Demo upgrade stage: apply-migration-25
+Demo upgrade stage: apply-migration-26
+Demo upgrade stage: apply-migration-27
+Demo upgrade stage: apply-migration-28
+Demo upgrade stage: apply-migration-29
+Demo upgrade stage: apply-migration-30
+Demo upgrade stage: apply-migration-31
+Demo upgrade stage: apply-migration-32
+Demo upgrade stage: apply-migration-33
+Demo upgrade stage: apply-seed-18
+Demo upgrade stage: apply-seed-19
+Demo upgrade stage: apply-seed-20
+Demo upgrade stage: apply-seed-21
+Demo upgrade stage: apply-seed-24
+Demo upgrade stage: apply-seed-29
+Demo upgrade stage: apply-seed-30
+Demo upgrade stage: apply-seed-31
+Demo upgrade stage: apply-seed-33
+Demo upgrade stage: apply-hosted-migration-2
+Demo upgrade stage: apply-hosted-migration-3
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+✔ a baseline executed from Windows CRLF SQL upgrades without rewriting historical checksums (9506.2137ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo migration mismatch: version=18 expected=2c36b8e173f805e0184e59284c0856d982ecc5a71ea60d61d64854f3ec186255 stored=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+✔ an old conflicting Gantt-18 ledger is refused before any migrations, seeds or grants change (4437.1634ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: apply-migration-18
+Demo upgrade stage: apply-migration-19
+Demo upgrade stage: apply-migration-20
+Demo upgrade stage: apply-migration-21
+Demo upgrade stage: apply-migration-22
+Demo upgrade stage: apply-migration-23
+Demo upgrade stage: apply-migration-24
+Demo upgrade stage: apply-migration-25
+Demo upgrade stage: apply-migration-26
+Demo upgrade stage: apply-migration-27
+Demo upgrade stage: apply-migration-28
+Demo upgrade stage: apply-migration-29
+Demo upgrade stage: apply-migration-30
+Demo upgrade stage: apply-migration-31
+Demo upgrade stage: apply-migration-32
+Demo upgrade stage: apply-migration-33
+Demo upgrade stage: apply-seed-18
+Demo upgrade stage: apply-seed-19
+Demo upgrade stage: apply-seed-20
+Demo upgrade stage: apply-seed-21
+Demo upgrade stage: apply-seed-24
+Demo upgrade stage: apply-seed-29
+Demo upgrade stage: apply-seed-30
+Demo upgrade stage: apply-seed-31
+Demo upgrade stage: apply-seed-33
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+✔ a late privilege failure rolls back schema, seed receipts and grant additions together (5014.7717ms)
+ℹ tests 79
+ℹ suites 0
+ℹ pass 79
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 800982.747
