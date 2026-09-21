@@ -606,7 +606,11 @@ export function AcceptanceWorkspace({ recordId }: { recordId?: string }) {
                                 {d.stage.reference} · r
                                 {String(d.stage.revision).padStart(2, "0")}
                                 {d.stage.closeout === "Closed"
-                                  ? " · Closed"
+                                  ? d.obligations.some(
+                                      (o) => o.state !== "Completed",
+                                    )
+                                    ? " · Closed · remaining obligations"
+                                    : " · Closed"
                                   : ""}
                               </small>
                             </td>

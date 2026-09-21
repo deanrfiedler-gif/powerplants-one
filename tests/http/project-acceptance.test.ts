@@ -4,14 +4,19 @@ import { randomUUID } from "node:crypto";
 import { httpAcceptance } from "../helpers/acceptance-http";
 import { localConfig } from "../../src/platform/config";
 import { closeDatabase } from "../../src/platform/database";
+import {readFile,writeFile} from 'node:fs/promises';
+import {PJ} from '../helpers/acceptance';
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("PJ-09 HTTP proof requires ppo_synthetic_test");
 after(closeDatabase);
 const origin = localConfig().origin,
   h = httpAcceptance(origin);
 test("PJ09-26/27/29/30/31/35/36/38/40/44/47/48/53: connected HTTP journey, strict envelopes and independent closeout", async () => {
-  const j = await h.readyJourney(),
-    closed = await h.act("coordinator", j.project, j.stage, "closeStage");
+  const j = await h.readyJourney();
+  const candidate=await h.act('coordinator',j.project,j.stage,'prepare',{id:randomUUID(),audience:'Customer',recipient_id:PJ.person,purpose:'SYN template currentness proof'});
+  const templatePath='src/projects/acceptance/outputs.ts',original=await readFile(templatePath),current=await h.read(j.project,j.stage);
+  try{await writeFile(templatePath,Buffer.concat([original,Buffer.from('\n// SYN controlled template change during review\n')]));const refused=await h.call('materials-release','projects/acceptance',{operation_id:randomUUID(),schema_version:1,reason:'SYN changed template must not issue',action:'issue',project_id:j.project,stage_id:j.stage,expected_version:current.selected!.stage.version,facts_hash:current.selected!.facts_hash,fields:{id:candidate.body.fields.id}});assert.equal(refused.status,409);assert.equal(refused.body.code,'PreparedSourceChanged');}finally{await writeFile(templatePath,original);}
+  const closed = await h.act("coordinator", j.project, j.stage, "closeStage");
   const replay = await h.call(
     "coordinator",
     "projects/acceptance",

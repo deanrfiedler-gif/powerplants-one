@@ -155,9 +155,9 @@ try {
       "-t",
       "30",
     ],
-    { windowsHide: true, encoding: "utf8" },
+    { windowsHide: true, stdio: "ignore" },
   );
-  assert.equal(restarted.status, 0, restarted.stderr);
+  assert.equal(restarted.status, 0, "Owned PostgreSQL restart failed");
   console.log("Owned PostgreSQL stopped and restarted.");
   await start();
   assert.notEqual(app!.pid, firstPid);

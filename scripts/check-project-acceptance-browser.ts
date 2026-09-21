@@ -71,6 +71,16 @@ try {
     .getByRole("button", { name: "Greenhouse 01 acceptance", exact: true })
     .waitFor();
   await page.evaluate(() => document.fonts.ready);
+  const residualRow = page
+    .locator("tr")
+    .filter({
+      has: page.getByRole("button", {
+        name: "Irrigation block A",
+        exact: true,
+      }),
+    });
+  assert.match(await residualRow.innerText(), /Closed · remaining obligations/);
+  assert.match(await residualRow.innerText(), /Review remaining work/);
   const flush = () =>
     page.evaluate(() => {
       const a = document.querySelector(".ac-scroll")!.getBoundingClientRect(),

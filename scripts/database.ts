@@ -3,6 +3,7 @@ import {
   seedFiles,
   latestMigrationVersion,
   validateMigrationRegistry,
+  existingLocalChecksumMatches,
 } from "./migration-registry";
 import { seedDocumentFiles } from "../src/documents/fixtures";
 import { createHash } from "node:crypto";
@@ -30,10 +31,7 @@ export async function migrate(through = latestMigrationVersion) {
         [version],
       );
       if (prior.rows[0]) {
-        // The isolated Windows cluster was created from LF checkout bytes. Accept exactly
-        // that alternate line ending, as the hosted baseline already does; content changes
-        // still fail. Never rewrite an issued migration or the stored ledger.
-        if (prior.rows[0].sha256 !== hash && prior.rows[0].sha256 !== createHash("sha256").update(sql.replace(/\r\n/g,"\n")).digest("hex"))
+        if (!existingLocalChecksumMatches(version, sql, prior.rows[0].sha256))
           throw new Error(
             "Migration checksum mismatch. Preserve the database and investigate; do not edit an applied migration.",
           );

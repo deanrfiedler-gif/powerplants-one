@@ -52,8 +52,8 @@ export async function projectRow(
 function projection(row: ProjectRow, can_edit: boolean): Project {
   const {
     id,
-    lifecycle,
-    acceptance_version,
+    lifecycle = "Active",
+    acceptance_version = 1,
     version,
     display_number,
     title,
@@ -249,7 +249,7 @@ export async function createProject(p: Principal, value: unknown) {
     async (c) => {
       const row = (
         await c.query(
-          `INSERT INTO ppo.projects(id,workspace_id,company_id,created_by,updated_by,title,organisation_id,site_id,coordinator_id,target_date) VALUES($1,$2,$3,$4,$4,$5,$6,$7,$8,$9) RETURNING id,version,updated_at,lifecycle AS state`,
+          `INSERT INTO ppo.projects(id,workspace_id,company_id,created_by,updated_by,title,organisation_id,site_id,coordinator_id,target_date) VALUES($1,$2,$3,$4,$4,$5,$6,$7,$8,$9) RETURNING id,version,updated_at,COALESCE(to_jsonb(projects)->>'lifecycle','Active') AS state`,
           [
             command.id,
             p.workspace_id,
@@ -358,7 +358,7 @@ export async function saveTask(p: Principal, id: string, value: unknown) {
         );
       const result = (
         await c.query(
-          "UPDATE ppo.projects SET version=version+1,updated_at=clock_timestamp(),updated_by=$3 WHERE workspace_id=$1 AND id=$2 RETURNING id,version,updated_at,lifecycle AS state",
+          "UPDATE ppo.projects SET version=version+1,updated_at=clock_timestamp(),updated_by=$3 WHERE workspace_id=$1 AND id=$2 RETURNING id,version,updated_at,COALESCE(to_jsonb(projects)->>'lifecycle','Active') AS state",
           [p.workspace_id, id, p.actor_id],
         )
       ).rows[0];

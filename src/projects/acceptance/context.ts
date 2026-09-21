@@ -598,6 +598,7 @@ export async function loadDetail(
   const nextRequirement = requirements.find(
     (r) => !["Satisfied", "Not required"].includes(r.outcome),
   );
+  const remainingObligation = obligations.find((o) => o.state !== "Completed");
   const next = nextRequirement
     ? {
         label: "Resolve requirement",
@@ -608,22 +609,39 @@ export async function loadDetail(
         owner: nextRequirement.owner_name,
         due: nextRequirement.due,
       }
-    : {
-        label:
-          outcomes.customer === "Awaiting response"
-            ? "Record response"
-            : handover_gates.length
-              ? "Review readiness"
-              : manifests.length
-                ? "Review closeout"
-                : "Prepare handover",
-        explanation:
-          handover_gates[0] ??
-          "Review the exact stage and independent decisions.",
-        href: null,
-        owner: stage.owner_name,
-        due: stage.due,
-      };
+    : remainingObligation
+      ? {
+          label: "Review remaining work",
+          explanation: `${remainingObligation.title}: ${remainingObligation.conditions}`,
+          href: `/projects/acceptance/outstanding?project=${stage.project_id}&stage=${stage.id}`,
+          owner: remainingObligation.owner_name,
+          due: remainingObligation.due,
+        }
+      : stage.closeout === "Closed"
+        ? {
+            label: "View closeout history",
+            explanation:
+              "The original closeout decision and its exact accepted scope are retained.",
+            href: `/projects/acceptance/history?project=${stage.project_id}&stage=${stage.id}`,
+            owner: stage.owner_name,
+            due: null,
+          }
+        : {
+            label:
+              outcomes.customer === "Awaiting response"
+                ? "Record response"
+                : handover_gates.length
+                  ? "Review readiness"
+                  : manifests.length
+                    ? "Review closeout"
+                    : "Prepare handover",
+            explanation:
+              handover_gates[0] ??
+              "Review the exact stage and independent decisions.",
+            href: null,
+            owner: stage.owner_name,
+            due: stage.due,
+          };
   const detail: Detail = {
     stage: {
       ...stage,

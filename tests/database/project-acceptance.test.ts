@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
+import { mkdtemp } from "node:fs/promises";
+import { homedir } from "node:os";
+import { join } from "node:path";
 import { before, after, test } from "node:test";
 import { reset, migrate, seed } from "../../scripts/database";
 import { localConfig } from "../../src/platform/config";
@@ -7,6 +10,9 @@ import { database, closeDatabase } from "../../src/platform/database";
 import { command } from "../../src/projects/acceptance/commands";
 import { readWorkspace, file } from "../../src/projects/acceptance/reads";
 import { readOperation } from "../../src/shared/receipts";
+import { saveTask, readSchedule } from "../../src/projects/service";
+import { taskInput } from "../helpers/projects";
+import { hasPermission } from "../../src/platform/permissions";
 import { principalOf } from "../helpers/engineering-materials-direct";
 import {
   contextFixture,
@@ -21,6 +27,11 @@ if (localConfig().database_name !== "ppo_synthetic_test")
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
 process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
 before(async () => {
+  // Resetting this disposable database must not reuse stable fixture output IDs
+  // from another run's write-once store. Keep every run's originals isolated.
+  process.env.PPO_DOCUMENT_DIRECTORY = await mkdtemp(
+    join(homedir(), ".ppo-pj09-db-"),
+  );
   await reset();
   await contextFixture();
 });
@@ -98,6 +109,11 @@ test("PJ09-26/29/30/33/35/37/38/39/40/41: exact issued files, independent Servic
   const project = stable("db:complete");
   await contextFixture(project, "SYN-PPO-PRJ-000702");
   const s = await seedStage(project, "L", "SYN complete delivery");
+  const scheduleActor = await p(),
+    task = taskInput(
+      (await readSchedule(scheduleActor, project)).project.version,
+    ),
+    originalScheduleSave = await saveTask(scheduleActor, project, task);
   const closed = await finishStage(project, s.stage);
   assert.equal(closed.stage.closeout, "Closed");
   assert.deepEqual(closed.closeout_gates, []);
@@ -121,6 +137,22 @@ test("PJ09-26/29/30/33/35/37/38/39/40/41: exact issued files, independent Servic
   assert.equal(
     (await readWorkspace(await p(), { project })).project.lifecycle,
     "Closed",
+  );
+  const closedSchedule = await readSchedule(scheduleActor, project);
+  assert.equal(closedSchedule.project.lifecycle, "Closed");
+  assert.equal(closedSchedule.project.can_edit, false);
+  assert.deepEqual(
+    (await saveTask(scheduleActor, project, task)).receipt,
+    originalScheduleSave.receipt,
+  );
+  await assert.rejects(
+    saveTask(scheduleActor, project, {
+      ...task,
+      operation_id: randomUUID(),
+      expected_version: closedSchedule.project.version,
+      title: "SYN stale tab mutation after closure",
+    }),
+    (e) => (e as { code: string }).code === "ClosedProject",
   );
   await assert.rejects(
     act("coordinator", project, null, "unit", {
@@ -161,6 +193,21 @@ test("PJ09-26/29/30/33/35/37/38/39/40/41: exact issued files, independent Servic
     (await readWorkspace(await p(), { project })).project.lifecycle,
     "Active",
   );
+  await assert.rejects(
+    saveTask(scheduleActor, project, {
+      ...task,
+      operation_id: randomUUID(),
+      expected_version: closedSchedule.project.version,
+    }),
+    (e) => (e as { code: string }).code === "VersionConflict",
+  );
+  await saveTask(scheduleActor, project, {
+    ...task,
+    operation_id: randomUUID(),
+    expected_version: (await readSchedule(scheduleActor, project)).project
+      .version,
+    title: "SYN authorised schedule amendment after renewed review",
+  });
   assert.deepEqual(
     (
       await rows(
@@ -335,8 +382,6 @@ import {
 import { parseCommand } from "../../src/projects/acceptance/validation";
 import { actionDuty } from "../../src/projects/acceptance/ui-actions";
 import { readFile, rename } from "node:fs/promises";
-import { join } from "node:path";
-import { homedir } from "node:os";
 test("PJ09-34/44/46/47/48: server-held original, payload conflict, current authority and restricted Finance projection", async () => {
   const actor = await p(),
     d = await detail(PJ.project, ready.stage),
@@ -582,4 +627,155 @@ test("PJ09-35/43: missing exact original blocks closeout, retains its reference 
   await act("coordinator", project, stage, "check");
   assert.equal((await detail(project, stage)).source_state, "Current");
   await act("coordinator", project, stage, "closeStage");
+});
+
+import {
+  createActivity,
+  readActivity,
+  listActivities,
+} from "../../src/activities/activities";
+test("PJ09-11/12/48/49: shared mandatory source survives a location exclusion and mixed-target Activity needs every target", async () => {
+  await act("coordinator", PJ.project, ready.stage, "return", {
+    owner_id: PJ.sam,
+  });
+  await act("coordinator", PJ.project, ready.stage, "successor");
+  const blockedStage = stable(PJ.project + ":blocked:stage"),
+    blocked = (await detail(PJ.project, blockedStage)).requirements.find(
+      (r) => r.gate === "Technical",
+    )!;
+  await act("coordinator", PJ.project, ready.stage, "requirement", {
+    id: randomUUID(),
+    unit_id: ready.unit,
+    source_id: blocked.source.id,
+    title: "SYN shared alarm serves both locations",
+    gate: "Technical",
+    mandatory: true,
+    owner_id: PJ.sam,
+  });
+  await act("coordinator", PJ.project, ready.stage, "scope", {
+    units: [
+      {
+        unit_id: ready.unit,
+        disposition: "Included",
+        reason: "SYN served area remains",
+        relationship: null,
+      },
+      {
+        unit_id: blocked.unit_id,
+        disposition: "Excluded",
+        reason: "SYN exclude installed location only",
+        relationship: null,
+      },
+    ],
+  });
+  await act("coordinator", PJ.project, ready.stage, "submit");
+  assert.equal(
+    (await detail(PJ.project, ready.stage)).outcomes.technical,
+    "Blocked",
+  );
+  await assert.rejects(
+    act("materials-reviewer", PJ.project, ready.stage, "technical"),
+    /Blocked/,
+  );
+  const actor = await p(),
+    id = randomUUID();
+  await createActivity(actor, {
+    operation_id: randomUUID(),
+    schema_version: 1,
+    reason: "SYN mixed-target visibility proof",
+    id,
+    company_id: "20000000-0000-4000-8000-000000000001",
+    site_id: PJ.site,
+    kind: "TechnicalFollowUp",
+    owner_id: actor.actor_id,
+    summary: "SYN mixed target acceptance follow-up",
+    due_at: null,
+    due_needed: true,
+    access_class: "Internal",
+    links: [
+      { object_type: "Project", object_id: PJ.project },
+      { object_type: "Organisation", object_id: PJ.organisation },
+    ],
+  });
+  assert(await readActivity(actor, id));
+  const grants = await rows(
+    "SELECT id FROM ppo.permission_grants WHERE user_id=$1 AND capability='project.read' AND valid_to IS NULL",
+    [actor.actor_id],
+  );
+  await database().query(
+    "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE id=ANY($1::uuid[])",
+    [grants.map((g) => g.id)],
+  );
+  try {
+    await assert.rejects(readActivity(actor, id));
+    assert(
+      !JSON.stringify(
+        await listActivities(actor, {
+          q: "SYN mixed target acceptance follow-up",
+        }),
+      ).includes(id),
+    );
+  } finally {
+    await database().query(
+      "UPDATE ppo.permission_grants SET valid_to=NULL WHERE id=ANY($1::uuid[])",
+      [grants.map((g) => g.id)],
+    );
+  }
+});
+
+test("PJ09-47: project.edit grants no acceptance operation; current membership is required for reads and originals", async () => {
+  const actor = await p(),
+    d = await detail(PJ.project, ready.stage);
+  const grants = await rows(
+    "SELECT id FROM ppo.permission_grants WHERE user_id=$1 AND capability LIKE 'acceptance.%' AND valid_to IS NULL",
+    [actor.actor_id],
+  );
+  await database().query(
+    "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE id=ANY($1::uuid[])",
+    [grants.map((g) => g.id)],
+  );
+  try {
+    assert(
+      await hasPermission(
+        database(),
+        actor,
+        "project.edit",
+        "20000000-0000-4000-8000-000000000001",
+        PJ.site,
+      ),
+    );
+    assert(await readWorkspace(actor, { project: PJ.project }));
+    for (const action of Object.keys(actionDuty)) {
+      await assert.rejects(
+        command(actor, {
+          operation_id: randomUUID(),
+          schema_version: 1,
+          reason: "SYN project edit is not independent decision authority",
+          action,
+          project_id: PJ.project,
+          stage_id: ready.stage,
+          expected_version: d.stage.version,
+          facts_hash: d.facts_hash,
+          fields: {},
+        }),
+        (e) => (e as { status: number }).status === 404,
+        action,
+      );
+    }
+  } finally {
+    await database().query(
+      "UPDATE ppo.permission_grants SET valid_to=NULL WHERE id=ANY($1::uuid[])",
+      [grants.map((g) => g.id)],
+    );
+  }
+  await database().query("UPDATE ppo.users SET active=false WHERE id=$1", [
+    actor.actor_id,
+  ]);
+  try {
+    await assert.rejects(readWorkspace(actor, { project: PJ.project }));
+  } finally {
+    await database().query("UPDATE ppo.users SET active=true WHERE id=$1", [
+      actor.actor_id,
+    ]);
+  }
 });

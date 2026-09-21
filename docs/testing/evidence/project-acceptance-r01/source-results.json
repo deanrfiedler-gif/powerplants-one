@@ -1,0 +1,13 @@
+{
+  "source": "a52ecafd-6d06-47ee-8668-f3e5b243e325",
+  "stage": "7d9c8ee2-ead3-4adc-857b-90a8a6e03ed2",
+  "technicalBefore": "Accepted",
+  "handoverBlockers": [
+    "Operator training: Planned in EN-08 (SYN Alex Lee)"
+  ],
+  "technicalAfter": "Reassessment needed",
+  "reassessment": true,
+  "originalTechnicalDecisions": 1,
+  "followups": 1,
+  "originalSourceReplayPreserved": true
+}

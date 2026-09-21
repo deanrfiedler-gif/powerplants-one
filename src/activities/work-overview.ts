@@ -127,7 +127,7 @@ async function rowSql(c: ReturnType<typeof database>) {
       st.id AS linked_site_id,st.display_number AS site_reference,st.display_name AS site_title,
       org.id AS organisation_id,org.display_number AS organisation_reference,org.display_name AS organisation_title`,
     joins: `${projects ? `LEFT JOIN LATERAL (SELECT l.object_id FROM ppo.activity_links l WHERE l.workspace_id=a.workspace_id AND l.activity_id=a.id AND l.object_type='Project' ORDER BY l.object_id LIMIT 1) pl ON true
-      LEFT JOIN ppo.projects prj ON prj.workspace_id=a.workspace_id AND prj.id=pl.object_id LEFT JOIN ppo.organisations prjo ON prjo.workspace_id=prj.workspace_id AND prjo.id=prj.organisation_id` : ""}JOIN ppo.users u ON (u.workspace_id,u.id)=(a.workspace_id,a.owner_id)
+      LEFT JOIN ppo.projects prj ON prj.workspace_id=a.workspace_id AND prj.id=pl.object_id LEFT JOIN ppo.organisations prjo ON prjo.workspace_id=prj.workspace_id AND prjo.id=prj.organisation_id` : ""} JOIN ppo.users u ON (u.workspace_id,u.id)=(a.workspace_id,a.owner_id)
       ${leads ? `LEFT JOIN LATERAL (SELECT l.lead_id FROM ppo.activity_links l WHERE l.workspace_id=a.workspace_id AND l.activity_id=a.id AND l.object_type='Lead' ORDER BY l.object_id LIMIT 1) ll ON true
       LEFT JOIN ppo.lead_candidates ld ON (ld.workspace_id,ld.id)=(a.workspace_id,ll.lead_id)
       LEFT JOIN ppo.organisations ldo ON (ldo.workspace_id,ldo.id)=(ld.workspace_id,ld.organisation_id)

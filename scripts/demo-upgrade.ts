@@ -94,7 +94,8 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0033 preserves the exact Project event-chain gate with a named acceptance event; no new grants or seed.
   // 0034–0037 add recipient FKs, immutable responses, actor-private recovery and scope disposition history.
   // No further seeds/grants, no replacement of existing issues, identities or receipts.
-  if (latestMigrationVersion !== 37) throw Error("Review the existing-demo upgrade for this release.");
+  // 0038 corrects the EN-08 change trigger variable only; no data or grants change.
+  if (latestMigrationVersion !== 38) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
