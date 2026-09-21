@@ -86,7 +86,11 @@ All seventy-three implemented `page.tsx` routes under `src/app/(business)` are a
 
 Node **24.21.0**, npm **11.19.0**, Playwright **1.63.0**, Chrome **153.0.8010.53**, PostgreSQL
 **16.15**, database `ppo_synthetic_test` at migration 30. The browser suites ran against the
-**compiled** build of this branch, served on loopback.
+**compiled** build of this branch, served on loopback. Each suite run starts from a freshly reset,
+migrated and seeded `ppo_synthetic_test`: the suites create their own synthetic records, so a database
+carried over from an earlier run fails count assertions in `crm-refinements.spec.ts` and
+`leads.spec.ts` for accumulated fixtures rather than for anything in the code. The figures below are
+from clean runs.
 
 | Check | Result |
 |---|---|
