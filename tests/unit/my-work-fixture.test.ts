@@ -5,7 +5,7 @@ import { browserScenarioNow } from "../helpers/my-work-clock";
 import { attentionGroup, localDay, durationMinutes } from "../../src/activities/work-view";
 
 test("the real-clock My Work fixture retains four ordered future anchors through late evening", () => {
-  for (const time of ["00:01", "08:40", "21:31", "22:30", "23:15"]) {
+  for (const time of ["00:01", "08:40", "21:31", "22:30", "22:55"]) {
     const now = new Date(`2026-09-21T${time}:00+10:00`),
       slots = todaySlots(now),
       anchors = [slots.deadline, slots.call.starts_at, slots.meeting.starts_at, slots.visit.starts_at];
@@ -27,12 +27,28 @@ test("the real-clock My Work fixture retains four ordered future anchors through
 });
 
 test("an overnight appointment keeps its duration and today's start; near-midnight refusal stays explicit", () => {
-  const slots = todaySlots(new Date("2026-09-21T23:15:00+10:00"));
+  const slots = todaySlots(new Date("2026-09-21T22:55:00+10:00"));
   assert.equal(localDay(slots.visit.starts_at), "2026-09-21");
   assert.equal(localDay(slots.visit.due_at), "2026-09-22");
   assert.equal(durationMinutes(slots.visit), 60);
-  assert.throws(() => todaySlots(new Date("2026-09-21T23:21:00+10:00")), /Too little of the Brisbane day/);
+  assert.throws(() => todaySlots(new Date("2026-09-21T22:56:00+10:00")), /Too little of the Brisbane day/);
   assert.doesNotThrow(() => todaySlots(new Date("2026-09-22T00:00:01+10:00")));
+});
+
+test("every admitted late-evening scenario keeps the journey's thirty-minute reschedule in Today", () => {
+  for (let minute = 0; minute < 120; minute++) {
+    const now = new Date(Date.parse("2026-09-21T22:00:00+10:00") + minute * 60000);
+    let slots: ReturnType<typeof todaySlots>;
+    try {
+      slots = todaySlots(now);
+    } catch (error) {
+      assert.match(String(error), /Too little of the Brisbane day/);
+      continue;
+    }
+    const moved = new Date(Date.parse(slots.meeting.starts_at) + 30 * 60000).toISOString();
+    assert.equal(localDay(moved), slots.day, `reschedule leaves Today for fixture at ${now.toISOString()}`);
+    assert.equal(attentionGroup({ id: "moved", status: "Open", due_needed: false, due_date_only: false, starts_at: moved, due_at: new Date(Date.parse(moved) + 45 * 60000).toISOString() }, now.toISOString()), "Today");
+  }
 });
 
 test("browser scenario preserves the full day and includes real creation timestamps across midnight", () => {

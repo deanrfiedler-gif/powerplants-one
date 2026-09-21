@@ -1,0 +1,51 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"153.0.8010.53"}
+
+Running 40 tests using 1 worker
+
+(node:22588) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -   1 [desktop-chromium] › tests\browser\my-work-mobile.spec.ts:41:1 › the phone overview is one page: header, five-cell bar, Quick Actions, attention, one agenda and follow-ups
+  -   2 [desktop-chromium] › tests\browser\my-work-mobile.spec.ts:177:1 › choosing a day changes the agenda and nothing else; other weeks and Today are one press away
+  -   3 [desktop-chromium] › tests\browser\my-work-mobile.spec.ts:204:1 › Create is a six-choice menu in order; Activity carries the visible agenda day and cancelling creates nothing
+  -   4 [desktop-chromium] › tests\browser\my-work-mobile.spec.ts:267:1 › a row opens details; Complete saves through the source command and every affected count follows, after a reload too
+  -   5 [desktop-chromium] › tests\browser\my-work-mobile.spec.ts:297:1 › Reschedule moves the same appointment to another day: no duplicate, its history kept
+  -   6 [desktop-chromium] › tests\browser\my-work-mobile.spec.ts:320:1 › the undated activity stays reachable, and setting its date from the detail sheet updates the same record
+  -   7 [desktop-chromium] › tests\browser\my-work-mobile.spec.ts:343:1 › Follow up records the chase and clears nothing; Plan activity closes only that opportunity's gap, in both places
+  -   8 [desktop-chromium] › tests\browser\my-work-mobile.spec.ts:380:1 › an overdue opportunity is raised by the Deals worklist's own rule, and leaves when its next action is no longer overdue
+  -   9 [desktop-chromium] › tests\browser\my-work-mobile.spec.ts:412:1 › weather is honest: not connected by default, a provider's answer renders, hiding frees the space, and failure blocks nothing
+  -  10 [desktop-chromium] › tests\browser\my-work-mobile.spec.ts:455:1 › an unread source is never zero, the Create control never covers a focused control, and access decides what is offered
+  ok 11 [desktop-chromium] › tests\browser\my-work.spec.ts:36:1 › the overview reconciles its four counts, the list, the schedule and the notices in both menu states (10.1s)
+  ok 12 [desktop-chromium] › tests\browser\my-work.spec.ts:135:1 › the list and the schedule open the same activity, and closing returns to the control that opened it (2.3s)
+  ok 13 [desktop-chromium] › tests\browser\my-work.spec.ts:154:1 › completing a lead call records the outcome, plans the next activity and keeps the lead as it was (4.7s)
+  ok 14 [desktop-chromium] › tests\browser\my-work.spec.ts:181:1 › completing a quotation task issues and approves nothing: only the activity changes (3.2s)
+  ok 15 [desktop-chromium] › tests\browser\my-work.spec.ts:200:1 › rescheduling moves the same appointment in the list and the schedule and keeps the change in its history (2.8s)
+  ok 16 [desktop-chromium] › tests\browser\my-work.spec.ts:227:1 › planning a next activity removes only that opportunity's gap; cancelling the form changes nothing (2.8s)
+  ok 17 [desktop-chromium] › tests\browser\my-work.spec.ts:253:1 › setting a date updates the same undated activity and clears its notice (2.8s)
+  ok 18 [desktop-chromium] › tests\browser\my-work.spec.ts:270:1 › following up a waiting request records the chase, keeps its age and clears nothing (2.7s)
+  ok 19 [desktop-chromium] › tests\browser\my-work.spec.ts:290:1 › saved views store criteria only: save, modify, reset, pin and retire leave every record alone (4.1s)
+  ok 20 [desktop-chromium] › tests\browser\my-work.spec.ts:327:1 › an unread source is never shown as zero, and the team queue is closed to a read-only identity (1.7s)
+(node:35576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 21 [mobile-chromium] › tests\browser\my-work-mobile.spec.ts:41:1 › the phone overview is one page: header, five-cell bar, Quick Actions, attention, one agenda and follow-ups (7.4s)
+  ok 22 [mobile-chromium] › tests\browser\my-work-mobile.spec.ts:177:1 › choosing a day changes the agenda and nothing else; other weeks and Today are one press away (1.7s)
+  ok 23 [mobile-chromium] › tests\browser\my-work-mobile.spec.ts:204:1 › Create is a six-choice menu in order; Activity carries the visible agenda day and cancelling creates nothing (3.1s)
+  ok 24 [mobile-chromium] › tests\browser\my-work-mobile.spec.ts:267:1 › a row opens details; Complete saves through the source command and every affected count follows, after a reload too (3.5s)
+  ok 25 [mobile-chromium] › tests\browser\my-work-mobile.spec.ts:297:1 › Reschedule moves the same appointment to another day: no duplicate, its history kept (2.2s)
+  ok 26 [mobile-chromium] › tests\browser\my-work-mobile.spec.ts:320:1 › the undated activity stays reachable, and setting its date from the detail sheet updates the same record (3.3s)
+  ok 27 [mobile-chromium] › tests\browser\my-work-mobile.spec.ts:343:1 › Follow up records the chase and clears nothing; Plan activity closes only that opportunity's gap, in both places (3.4s)
+  ok 28 [mobile-chromium] › tests\browser\my-work-mobile.spec.ts:380:1 › an overdue opportunity is raised by the Deals worklist's own rule, and leaves when its next action is no longer overdue (2.3s)
+  ok 29 [mobile-chromium] › tests\browser\my-work-mobile.spec.ts:412:1 › weather is honest: not connected by default, a provider's answer renders, hiding frees the space, and failure blocks nothing (4.8s)
+  ok 30 [mobile-chromium] › tests\browser\my-work-mobile.spec.ts:455:1 › an unread source is never zero, the Create control never covers a focused control, and access decides what is offered (3.6s)
+  -  31 [mobile-chromium] › tests\browser\my-work.spec.ts:36:1 › the overview reconciles its four counts, the list, the schedule and the notices in both menu states
+  -  32 [mobile-chromium] › tests\browser\my-work.spec.ts:135:1 › the list and the schedule open the same activity, and closing returns to the control that opened it
+  -  33 [mobile-chromium] › tests\browser\my-work.spec.ts:154:1 › completing a lead call records the outcome, plans the next activity and keeps the lead as it was
+  -  34 [mobile-chromium] › tests\browser\my-work.spec.ts:181:1 › completing a quotation task issues and approves nothing: only the activity changes
+  -  35 [mobile-chromium] › tests\browser\my-work.spec.ts:200:1 › rescheduling moves the same appointment in the list and the schedule and keeps the change in its history
+  -  36 [mobile-chromium] › tests\browser\my-work.spec.ts:227:1 › planning a next activity removes only that opportunity's gap; cancelling the form changes nothing
+  -  37 [mobile-chromium] › tests\browser\my-work.spec.ts:253:1 › setting a date updates the same undated activity and clears its notice
+  -  38 [mobile-chromium] › tests\browser\my-work.spec.ts:270:1 › following up a waiting request records the chase, keeps its age and clears nothing
+  -  39 [mobile-chromium] › tests\browser\my-work.spec.ts:290:1 › saved views store criteria only: save, modify, reset, pin and retire leave every record alone
+  -  40 [mobile-chromium] › tests\browser\my-work.spec.ts:327:1 › an unread source is never shown as zero, and the team queue is closed to a read-only identity
+
+  20 skipped
+  20 passed (1.6m)

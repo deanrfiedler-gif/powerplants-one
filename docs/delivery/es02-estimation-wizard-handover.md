@@ -178,8 +178,8 @@ future anchors stay on today's date, while appointments can end after midnight
 with unchanged 20/45/60-minute durations. At least twenty minutes remain before
 the first deadline. The helper also preserves exactly two prior civil days before
 01:00, instead of accidentally producing three. Nine focused fixture/presentation
-units pass, including late-evening and overnight cases. The explicit near-midnight
-refusal remains after 23:20 Brisbane; this real-clock fixture is not valid across
+units pass, including late-evening and overnight cases. At that checkpoint the explicit
+near-midnight refusal was after 23:20 Brisbane; this real-clock fixture is not valid across
 an arbitrary day rollover. Application code is unchanged by this repair. Fresh PR
 checks provide the final combined-source result.
 
@@ -203,6 +203,21 @@ repairs; new-source checks must establish the combined result, rather than
 attributing those failures to ES-02 or changing assertions without evidence.
 The obsolete Application run was cancelled when this new integration became
 necessary. The final PR identifies the current source and results.
+
+Combined `ce1920c` passed sixteen checks, including required Estimating (204 units,
+55 database, 5 HTTP, 13 existing browser and 29 ES-02/shared cases with actual
+restarts), compiled browser (240 / 41 configured skips), CRM and demo preparation.
+The broad browser phase of run `35601011830` passed 224 cases, failed two and skipped
+55 (41 configured plus 14 serial successors). Its phone fixture hit the documented
+near-midnight guard. Its desktop reschedule correctly moved a meeting out of Today
+at 00:20; the branch's fixture extension had not reserved that thirty-minute move.
+The [retained checkpoint](../testing/evidence/es02-native-r01/fixture-reschedule-review.json)
+distinguishes both failures. The test-only correction keeps the complete reschedule
+inside Today and refuses after 22:55 Brisbane. A regression across every late-evening
+minute fails before the fix; all ten focused fixture/work-view tests pass afterward.
+Real clocks, appointment durations and browser assertions remain unchanged. The
+already-failed run was stopped after its browser artifact upload succeeded. Fresh
+CI on the corrected source is recorded by the PR; earlier results remain historical.
 
 ## Acceptance disposition
 

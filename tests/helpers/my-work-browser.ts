@@ -19,11 +19,12 @@ export const test = base.extend<object, { myWorkServer: void }>({
     server.stderr.on("data", (chunk: Buffer) => { diagnostics = (diagnostics + chunk.toString()).slice(-4000); });
     try {
       await new Promise<void>((resolve, reject) => {
-        const timeout = setTimeout(() => reject(Error(`My Work test server did not start: ${diagnostics}`)), 60000);
+        const timeout = setTimeout(() => reject(Error(`My Work test server did not start: ${diagnostics}`)), 120000);
         server.once("error", (error) => { clearTimeout(timeout); reject(error); });
         server.once("exit", (code) => { clearTimeout(timeout); reject(Error(`My Work test server exited (${code}): ${diagnostics}`)); });
         server.stdout.on("data", (chunk: Buffer) => {
-          if (chunk.toString().includes(`local synthetic only — ${myWorkOrigin}`)) { clearTimeout(timeout); resolve(); }
+          diagnostics = (diagnostics + chunk.toString()).slice(-4000);
+          if (diagnostics.includes(`local synthetic only — ${myWorkOrigin}`)) { clearTimeout(timeout); resolve(); }
         });
       });
       await run();
@@ -35,12 +36,10 @@ export const test = base.extend<object, { myWorkServer: void }>({
           server.once("exit", () => { clearTimeout(timeout); resolve(); });
         });
     }
-  }, { scope: "worker", timeout: 90000 }],
-  baseURL: async ({ myWorkServer }, run) => {
+  }, { scope: "worker", timeout: 150000 }],
+  baseURL: myWorkOrigin,
+  page: async ({ page, myWorkServer }, run) => {
     void myWorkServer;
-    await run(myWorkOrigin);
-  },
-  page: async ({ page }, run) => {
     await page.clock.setFixedTime(new Date(MY_WORK_NOW));
     await run(page);
   },

@@ -1,0 +1,40 @@
+{
+  "source_head": "ce1920c56b7a5d8b1c8f34df50d23a4ca5ff3445",
+  "main": "af3f045b599d6f919f0568903c1393aec8ff14",
+  "run": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35601011830",
+  "attempt": 1,
+  "artifact": "P11-retained-browser-evidence",
+  "artifact_id": 10642912587,
+  "stats": {
+    "startTime": "2026-09-21T12:59:58.138Z",
+    "duration": 2770504.371,
+    "expected": 224,
+    "skipped": 55,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "failures": [
+    {
+      "file": "my-work-mobile.spec.ts",
+      "title": "the phone overview is one page: header, five-cell bar, Quick Actions, attention, one agenda and follow-ups",
+      "project": "mobile-chromium",
+      "started_at": "2026-09-21T13:36:26.038Z",
+      "status": "failed",
+      "error_headline": "Error: Too little of the Brisbane day is left for four distinct future anchors and the browser journey."
+    },
+    {
+      "file": "my-work.spec.ts",
+      "title": "rescheduling moves the same appointment in the list and the schedule and keeps the change in its history",
+      "project": "desktop-chromium",
+      "started_at": "2026-09-21T13:17:31.446Z",
+      "status": "failed",
+      "error_headline": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed"
+    }
+  ],
+  "baseline_helper_sha256": "45d5430fedc98bd21f08c7f6e626a919f62067afd6817474a310c8e4cd3437ba",
+  "disposition": "The phone fixture refused after its documented 23:20 limit. The desktop fixture was admitted at 23:16 but its 30-minute meeting reschedule crossed midnight: My Work correctly removed the meeting from Today. The branch fixture extension had not reserved this reschedule. Unchanged main retains the previously reproduced earlier 21:30 refusal. This test-only correction reserves the full reschedule inside Today and therefore refuses after 22:55 Brisbane; it preserves real product/database clocks, every browser assertion and appointment duration. The exact regression fails before the correction and all 10 focused fixture/work-view tests pass afterward. The failed run was cancelled only after the browser artifact upload succeeded. Final-head CI remains the PR check record.",
+  "repair_files": {
+    "tests/helpers/my-work.ts": "b6550f50a0ae19436a98e2c57add97c6a2843b2a19f77053336d1a9fb54431ba",
+    "tests/unit/my-work-fixture.test.ts": "5d24287ee53b6b92839c079784683d7fb115139f4e9483cd1fde06d78a859a22"
+  }
+}

@@ -360,3 +360,20 @@ Both suites assert the server's observation instant before creating records.
 
 These logs are new evidence. The application build and issued evidence are
 unchanged by this test-harness follow-up. Published-head CI is a separate check.
+
+
+ES-02 advanced to `39d6528` while this follow-up was published. Its additional
+manual-fixture guard reserves the thirty-minute same-day meeting reschedule and
+refuses scenarios after 22:55. The merge preserves that guard, its exhaustive
+late-evening regression and its issued evidence alongside the controlled browser
+clock. The two repairs are complementary: the manual fixture stays honest and
+the browser proofs have a complete scenario at every wall-clock time.
+
+
+The final combined tree passes [all twenty desktop/phone cases](../testing/evidence/es08-native-r01/base39d-my-work-browser.txt)
+in one run and [eleven date-rule cases](../testing/evidence/es08-native-r01/base39d-my-work-unit.txt),
+plus TypeScript and focused lint. The test server starts only when a page is
+needed, so opposite-viewport exclusions do not start it. Its startup allowance
+matches the repository's existing 120 seconds; application assertion deadlines
+remain unchanged. Startup errors retain bounded diagnostic output, and the
+worker terminates its own server. Earlier logs remain unchanged.
