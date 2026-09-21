@@ -40,6 +40,8 @@ export const migrationFiles = [
   "0036-acceptance-command-recovery.sql",
   "0037-acceptance-scope-disposition.sql",
   "0038-acceptance-source-followup.sql",
+  // 0039 ES-02 and 0040 ES-08 are left to the open Estimating workstreams.
+  "0041-facilities-growing-areas.sql",
 ] as const;
 export const seedFiles = [
   [2, "seed.sql"],
@@ -64,8 +66,9 @@ export const seedFiles = [
   [30, "seed-engineering-changes.sql"],
   [31, "seed-commissioning-as-built.sql"],
   [32, "seed-staged-acceptance.sql"],
+  [41, "seed-facilities.sql"],
 ] as const;
-export const latestMigrationVersion = 38;
+export const latestMigrationVersion = 41;
 
 // Separate hosted-only track (ADR-0021): schema that only exists where real identity does.
 // Version 1 is the issued identity baseline and is never re-applied or rewritten.

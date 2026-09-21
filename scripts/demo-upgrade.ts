@@ -95,7 +95,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0034–0037 add recipient FKs, immutable responses, actor-private recovery and scope disposition history.
   // No further seeds/grants, no replacement of existing issues, identities or receipts.
   // 0038 corrects the EN-08 change trigger variable only; no data or grants change.
-  if (latestMigrationVersion !== 38) throw Error("Review the existing-demo upgrade for this release.");
+  // 0041 review: nullable typed Facility columns, immutable reported sources and explicit Asset service links.
+  // Existing identity rows, grants and output bytes are untouched; no new seed users or hosted duty.
+  // Existing Asset site-move rejection remains. Generic grants cover the two added tables/functions.
+  if (latestMigrationVersion !== 41) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

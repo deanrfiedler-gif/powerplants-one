@@ -240,6 +240,12 @@ export async function readOperation(
     )
       throw unavailable();
   } else {
+    // Unknown shared commands never inherit create authority. CS-05 edits and
+    // Equipment service membership originals need the same current edit duty.
+    if (!["RecordSharedHistory", "ReviseOrganisationIdentity", "ReviseAssetIdentity",
+      "AddAffiliation", "AddSiteParty", "ProposeMapping", "CreateOrganisation", "CreatePerson",
+      "CreateSite", "CreateFacility", "CreateAsset", "CreateFacilityDetails", "ReviseFacilityDetails",
+      "SetFacilityPin", "RemoveFacilityPin", "AddAssetServedFacility", "EndAssetServedFacility"].includes(r.command)) throw unavailable();
     const cap: Capability =
       r.command === "RecordSharedHistory"
         ? "shared.history.record"
@@ -249,6 +255,8 @@ export async function readOperation(
               "AddAffiliation",
               "AddSiteParty",
               "ProposeMapping",
+              "ReviseFacilityDetails", "SetFacilityPin", "RemoveFacilityPin",
+              "AddAssetServedFacility", "EndAssetServedFacility",
             ].includes(r.command)
           ? "shared.edit"
           : "shared.create";
