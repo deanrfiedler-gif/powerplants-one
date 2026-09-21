@@ -3,7 +3,7 @@ document_id: PPO-ES08-HANDOVER
 revision: r01
 date: 2026-09-21
 owner: Dean Fiedler
-status: Implemented; final verification in progress
+status: Implemented and verified in synthetic scope; owner acceptance pending
 ---
 
 # ES-08 native Specialist Configuration Workbench
@@ -42,11 +42,19 @@ open `/estimating/configurations/e5080000-0000-4000-8000-000000000005/configure`
 3. In Compare & save expand native AUD rates, explicitly choose the authored
    synthetic proposal, review estimate changes and apply. The new estimate version
    retains the unrelated manual line and links each contribution to the exact run.
-4. Edit or delete a contributed line through ordinary estimate save, return to
-   receiving and choose Keep current / Keep omitted / Restore explicitly. Cancel
-   changes nothing. A stale target version requires a renewed comparison.
+4. Edit or delete a contributed line through ordinary estimate save, then return
+   to the configuration and save a further reviewed run. Review receiving and
+   choose Keep current / Keep omitted / Restore explicitly. Cancel changes
+   nothing. A stale target version requires a renewed comparison.
 5. Inspect historical runs and export exact synthetic review evidence. Saving a
    draft/run does not select discovery, change costs or update existing quotations.
+6. For the deterministic lost-response demonstration, run the compiled browser
+   scenario with `npx playwright test --config=playwright.es08.config.ts --grep "reload recovery"`.
+   It drops the response after acceptance and also before
+   acceptance, reloads with only the minimal operation pointer, then checks the
+   original receipt or explicitly resolves the original. The first preserves the
+   accepted version; the second permanently closes the unaccepted original before
+   another save. It uses and resets only the disposable synthetic database.
 
 Internal UUID and `SYN-PPO-CFG-<UUID>` display references are distinct. Creation
 binds a saved alternative/discovery and explicit FacilityScope or defined system
@@ -58,25 +66,60 @@ identity and no cost ownership. Archived history remains available when permitte
 
 Environment: Windows, Node 24.21.0, npm 11.19.0, Python 3.14.7, PostgreSQL 16.15,
 Chrome 153.0.8010.53 and Playwright 1.63.0. No new dependency or external service.
-The current source tree is uncommitted during final verification; the evidence
-record will pin the implementation commit before publication.
+Implementation starts at `9ecab79`; final application commit `df93ff4` also fixes
+phone-menu closure, stale background refresh after an accepted save and receiving
+error visibility. The browser regression deliberately holds the resource refresh
+until receiving review has used the accepted version. Final verification commit
+`b421c7c` only changes browser synchronization after that application build.
+[Draft PR #273](https://github.com/deanrfiedler-gif/powerplants-one/pull/273)
+is stacked on [ES-02 #272](https://github.com/deanrfiedler-gif/powerplants-one/pull/272).
+The [evidence record](../testing/evidence/es08-native-r01/README.md) pins commands,
+file fingerprints, curated screenshots and exact CI provenance.
 
-| Check | Actual checkpoint |
+| Check | Executed result / limit |
 |---|---|
-| Build / TypeScript / lint | Build and TypeScript passed; final lint rerun pending |
-| Specialist unit | 16 passed, including independent Appendix E geometry, 28 historical scenarios and three documented exact-decimal differences |
-| Specialist database | Expanded suite 13 passed; one invalid test-profile failure corrected and the case passed; final full rerun pending |
-| Cross-0026 upgrade | Passed with existing estimates through migration 0031; prior estimates, quotations, hashes and receipts preserved |
-| HTTP | Authored full-envelope and exact receiving tests; execution pending |
-| Compiled native browser | Initial run passed six-view/design/responsive and permission tests; locator corrections and added conflict/race cases under rerun |
-| Retained r03 source | 41 model groups and 35 native browser groups passed |
-| Foundation / naming | Passed before final handover edits; final rerun pending |
-| Full repository unit | 171/175 passed; four failures reproduced on unmodified main `8ed8b0c` in this Windows environment |
+| `npm run build`, TypeScript, lint | Passed; final application built at `df93ff4`; browser synchronization verified at `b421c7c` |
+| Specialist unit | 16 passed: authored Appendix E, exact rounding boundaries, 28 historical scenarios, three explicit decimal differences and incompatible inheritance refusal |
+| Specialist database | All 15 cases passed. Initial local full run: 13/14; a seed timezone timeout passed in targeted rerun. Later CI: all 15 in the complete 70-case Estimating suite passed |
+| Cross-0026 upgrade | Passed locally and in the 70-case CI suite; exact earlier estimates, quotations, hashes, receipts and grants preserved |
+| Direct HTTP | 2/2 specialist cases passed locally against the compiled server; valid >64 KiB bodies, raw/multibyte oversize, existing 64 KiB boundary, scope, tampering, exact receiver and shared receipts |
+| Compiled browser | At `b421c7c`, all 10 desktop/touch-phone scenarios passed across runs: 9/10 in the full run, then 1/1 phone receiving rerun after a timezone-seed timeout before assertions. Covers six views/design/responsive/diagrams, manual receiving/deletion, accepted/unaccepted reload, unborn-create/read-only/revocation, delayed refresh and out-of-order preview |
+| Full compiled browser CI | 244 passed, 37 skipped at `b421c7c`, including all ten specialist cases in one run and both desktop journeys that timed out in separate development-server jobs |
+| Final integrated Estimating CI | Run 35592341601 passed at `74ecac4`: 177 unit, 70 database, seven HTTP, restart proof, 13 E1 browser project checks (including warm-up), 29 ES-02 and ten ES-08 browser cases |
+| Retained r03 source | 41 model groups and 35 native browser groups passed; issued files unchanged |
+| Foundation / naming | Passed; 78 parent requirements retained; maintained instructions 7,969 characters |
+| Full unit | Linux CI 177/177 passed. Earlier Windows run 171/175; four path failures reproduced on unmodified main `8ed8b0c` |
+| Hosted-demo upgrade preparation | CI run 35590275615 passed at `b421c7c`; no hosted deployment performed |
 
-The four baseline failures are two document-store `ExactDocumentUnavailable` cases,
-one recovery `UnsafeRecoveryDirectory` path case and one warm-route path assertion.
-They are not counted as ES-08 passes. Broad report-renderer and hosted-only identity
-suites have not been claimed from this local environment.
+[Initial Estimating CI run 35586327777](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35586327777)
+passed lint/typecheck/build, all 177 unit and all 70 database cases at `9ecab79`.
+It then stopped at a test expecting HTTP 413 instead of the existing platform's
+422 PayloadTooLarge contract. That expectation is corrected in `37c6c7d`; the
+local two-case HTTP rerun passed. Oversize requests use separate connections in
+the proof because the server cancels an oversized request stream. This does not
+change runtime transport semantics. Current PR checks identify later complete runs.
+
+[Compiled application CI run 35590275717](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35590275717)
+passed 244 cases (37 intentional skips), including all ten ES-08 desktop/phone cases.
+[Estimating CI run 35590275776](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35590275776)
+passed 177 unit, 70 database, seven direct HTTP cases and the three-process/two-database-
+restart proof at `b421c7c`. Its later development-server browser stage passed 12/13;
+the remaining case timed out after five seconds while still showing Loading. The
+same case passed in the compiled suite in 2.1 seconds. Workflow-only `74ecac4` makes
+that stage use the already-built application through the existing compiled config;
+assertions and timeouts are unchanged. No application or browser source changed. The
+[final Estimating run 35592341601](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35592341601)
+passed every stage at `74ecac4`. The Engineering development-server job also passed
+on its unchanged retry; the broad P01–P11 application/database job was still running
+when this handover was prepared and is not represented as a completed pass.
+
+The four Windows baseline failures are two document-store ExactDocumentUnavailable
+cases, one recovery UnsafeRecoveryDirectory case and one warm-route path assertion.
+They are not ES-08 passes. Browser locator/formatting failures were corrected against
+actual control labels, native three-decimal quantities and rendered text. Verification
+also fixed route placement, repeat manual-retention comparison, phone navigation,
+accepted-version refresh races and compact error/empty-warning presentation; these
+were implementation findings, not source approval.
 
 ## Remaining decisions
 
@@ -147,7 +190,7 @@ specialist HTTP; B = compiled specialist browser; R = code/source/visual review.
 | ES08-T49 | Locked contexts | D — Shared current owner/whole-group Draft checks; existing E2 regression exercises locked-state guard |
 | ES08-T50 | Redaction | H — Only sanitized source metadata and authored synthetic AUD 1/2 rates; no raw private source copied |
 | ES08-T51 | Snapshot export | H / B |
-| ES08-T52 | Freshness/races | B |
+| ES08-T52 | Freshness/races | B — Late calculation response and deliberately delayed post-save resource refresh |
 | ES08-T53 | Bounds | U / H |
 | ES08-T54 | Upgrade/replay | D — Migration 0031; all exact registry consumers updated; cross-0026 estimate upgrade |
 | ES08-T55 | Visual evidence | B |

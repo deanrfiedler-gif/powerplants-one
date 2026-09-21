@@ -1,0 +1,56 @@
+✔ ES08-T26/T58/T61 durable incomplete drafts retain raw input and exact original recovery (9841.4581ms)
+✖ ES08-T28/T34/T35/T41/T44 synthetic receiving creates exact native lines, keeps manual line and atomically recovers (30890.2257ms)
+✔ ES08-T43/T63/T64 manual changes/deletion survive lineage and newer run updates evidence even with unchanged money (23321.7741ms)
+✔ ES08-T46/T59/T60 accepted original survives archive, payload mutation fails (24052.6839ms)
+✔ ES08-T73 terminal resolution excludes a late original and preserves accepted outcomes (6919.0389ms)
+✔ ES08-T46/T64 unchanged reapply is no-change, new run with equal money advances evidence and earlier quote stays pinned (19482.1324ms)
+✔ ES08-T37 100 exact lines succeed; 101 fail without changing costs or evidence (14723.274ms)
+✔ ES08-T27/T28/T45 two receiving writers cannot overwrite and stale signature leaves no run (12195.9588ms)
+✔ ES08-T38/T65 persisted precision mismatch blocks receiving and exact old resolved set cannot substitute (9687.2254ms)
+✔ ES08-T05/T48/T59 current permission revocation refuses reads, preview, export and accepted originals (9190.0517ms)
+✔ ES08-T66 corrupt lineage cannot be reused; database mutation test rolls back (10880.7579ms)
+✔ ES08-T72/T73 create closure before aggregate existence survives dispatcher lookup and blocks late create (13261.9591ms)
+✔ ES08-T73 accepted-versus-close race has one terminal original outcome (11234.4165ms)
+✔ ES08-T33/T36/T67/T69 rebase changes only source/draft; new cost basis carries lineage; cross-alternative copy owns nothing (12759.6864ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 13
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 210924.4105
+
+✖ failing tests:
+
+test at tests\database\specialist.test.ts:1:2752
+✖ ES08-T28/T34/T35/T41/T44 synthetic receiving creates exact native lines, keeps manual line and atomically recovers (30890.2257ms)
+  error: canceling statement due to statement timeout
+      at <checkout>\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (<checkout>\scripts\database.ts:58:7)
+      at async transaction (<checkout>\src\platform\database.ts:44:20)
+      at async seed (<checkout>\scripts\database.ts:49:3)
+      at async TestContext.reset (<checkout>\scripts\database.ts:110:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 246,
+    severity: 'ERROR',
+    code: '57014',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: 'SQL expression "NOT EXISTS(SELECT 1 FROM pg_timezone_names WHERE name=NEW.timezone)"\nPL/pgSQL function ppo.site_timezone() line 2 at IF',
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'postgres.c',
+    line: '3396',
+    routine: 'ProcessInterrupts'
+  }

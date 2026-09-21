@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "issued_sources": 15,
+  "requirements": 78,
+  "decisions": 29,
+  "planned_acceptance": 38,
+  "backlog_items": 16,
+  "linked_issues": 16,
+  "local_links_checked": 3619,
+  "files_scanned_for_markers": 2197,
+  "errors": [],
+  "scope": "Documentation assurance only; no business acceptance tests executed"
+}
