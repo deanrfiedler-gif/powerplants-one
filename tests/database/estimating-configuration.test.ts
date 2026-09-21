@@ -6,6 +6,7 @@ import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
 import { reset, migrate, seed } from "../../scripts/database";
 import { createOpportunity } from "../../src/crm/opportunities";
+import { editDealInformation } from "../../src/crm/refinements";
 import {
   createDiscoveryWorkspace,
   previewDiscoveryCreate,
@@ -594,4 +595,78 @@ test("ES02-T25/T62: history beyond twenty revisions uses stable disjoint pages a
     23,
   );
   assert.equal(older.items.at(-1)!.id, s.input.revision_id);
+});
+
+test("ES02-T29/T62: cost pagination cannot reveal a denied historical basis through its lookahead", async () => {
+  const s = await setup(true), estimateId = randomUUID(), manual = estimateInput(s.o.id);
+  const adopt = async (revisionId: string, workspaceVersion: number, estimateVersion: number) => {
+    const basis = await previewDiscoveryCosting(s.p, s.input.id, {
+      option_id: s.input.option_id, revision_id: revisionId,
+    });
+    await adoptDiscoveryCosting(s.p, s.input.id, {
+      ...crmBase(), estimate_id: estimateId, option_id: s.input.option_id,
+      revision_id: revisionId, expected_workspace_version: workspaceVersion,
+      expected_estimate_version: estimateVersion, context_hash: basis.context_hash,
+      title: manual.title, scope: manual.scope,
+      lines: manual.lines.map((line) => ({ ...line, allowance: false })), policy: manual.policy,
+    });
+  };
+  await adopt(s.input.revision_id, 1, 0);
+  const original = (await readEstimate(s.p, estimateId)).saved;
+  const nextContact = randomUUID();
+  await database().query(
+    "INSERT INTO ppo.people(id,workspace_id,created_by,updated_by,display_name) VALUES($1,$2,$3,$3,'SYN New cost basis contact')",
+    [nextContact, CRM.workspace, s.p.actor_id],
+  );
+  await database().query(
+    "INSERT INTO ppo.person_company_contexts(workspace_id,company_id,person_id) VALUES($1,$2,$3)",
+    [CRM.workspace, CRM.company, nextContact],
+  );
+  await database().query(
+    "INSERT INTO ppo.relationships(id,workspace_id,created_by,updated_by,company_id,organisation_id,person_id,role_label,valid_from) VALUES($1,$2,$3,$3,$4,$5,$6,'SYN replacement contact','2026-01-01')",
+    [randomUUID(), CRM.workspace, s.p.actor_id, CRM.company, CRM.org, nextContact],
+  );
+  await editDealInformation(s.p, s.o.id, {
+    ...crmBase(), expected_version: 1, title: s.o.title, primary_person_id: nextContact,
+    contact_unknown_reason: null, value_amount: null, expected_close_date: null,
+  });
+  await database().query(
+    "UPDATE ppo.sites SET primary_contact_id=$2,version=version+1 WHERE id=$1",
+    [CRM.site, nextContact],
+  );
+  const proposal = {
+    kind: "Save", option_id: s.input.option_id, expected_version: 1,
+    expected_revision_id: s.input.revision_id, discovery: s.input.discovery,
+  };
+  const preview = await previewDiscoveryChange(s.p, s.input.id, proposal), revisionId = randomUUID();
+  await changeDiscoveryWorkspace(s.p, s.input.id, {
+    ...crmBase(), ...proposal, revision_id: revisionId,
+    context_hash: preview.context_hash, comparison_hash: preview.comparison_hash,
+    confirmed_question_ids: preview.required_confirmation_ids,
+    configuration_confirmations: preview.configuration_confirmations,
+  });
+  await adopt(revisionId, 2, 1);
+  const saved = (await readEstimate(s.p, estimateId)).saved;
+  for (let version = 2; version < 21; version++) {
+    await saveEstimate(s.p, estimateId, {
+      ...crmBase(), schema_version: 2, expected_version: version,
+      title: saved.title, scope: saved.scope, lines: saved.lines, policy: saved.policy,
+    });
+  }
+  const query = { option_id: s.input.option_id };
+  const firstPage = await listDiscoveryCostVersions(s.p, s.input.id, query);
+  assert.equal(firstPage.items.length, 20);
+  assert.equal(firstPage.next, 2);
+  assert.equal((await listDiscoveryCostVersions(s.p, s.input.id, { ...query, before: "2" })).items[0].id, original.id);
+  await database().query(
+    "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='shared.read'",
+    [s.p.actor_id],
+  );
+  await database().query(
+    "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id,valid_from) VALUES($1,$2,$3,'shared.read','Site',$4,$4,'2026-01-01')",
+    [CRM.workspace, s.p.actor_id, CRM.company, CRM.site],
+  );
+  assert.equal((await readDiscoverySummary(s.p, s.input.id, query)).status, "Available");
+  await assert.rejects(readEstimate(s.p, estimateId, { version_id: original.id }), code("RecordUnavailable"));
+  await assert.rejects(listDiscoveryCostVersions(s.p, s.input.id, query), code("RecordUnavailable"));
 });

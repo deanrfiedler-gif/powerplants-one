@@ -150,8 +150,11 @@ export async function listDiscoveryCostVersions(
       )
     ).rows;
     const items = [];
-    for (const row of rows.slice(0, 20)) {
+    // The lookahead controls the pagination cursor, so its historical basis
+    // needs the same authority check as every displayed version.
+    for (const row of rows) {
       const v = await versionContext(c, p, e, row.id);
+      if (items.length === 20) continue;
       items.push({
         estimate_id: e.id,
         id: v.id,

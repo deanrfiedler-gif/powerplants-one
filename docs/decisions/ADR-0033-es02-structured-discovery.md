@@ -99,7 +99,7 @@ source reads are reauthorised and changed confirmations are reviewed anew.
 | Existing workspace create/change/preview | Add configuration dispatch/confirmation; preserve old canonical requests and CopyDiscovery rules |
 | GET workspace summary?option_id | Read-only saved estimate/version/exact basis, NoEstimate/Available/Unavailable, current read authority; independent of owner/selected/Complete adoption checks |
 | GET workspace history?option_id&before | Descending immutable version cursor, 20 rows plus one authorised look-ahead; aggregate history-count query checks historical scopes/contacts/Activities without returning all payloads. Denied history withholds counts rather than exposing ordinals as totals |
-| GET workspace cost-versions?option_id&before | Twenty independently permitted exact versions per page; no automatic money baseline |
+| GET workspace cost-versions?option_id&before | Twenty independently permitted exact versions per page plus one authority-checked lookahead; a denied historical basis cannot disclose a next-page cursor. No automatic money baseline |
 | POST workspace compare | Exactly two revision IDs, optional two exact compatible cost versions, current authority on both; deterministic field differences, no selection or writes |
 | Existing form options | Scoped bounded candidates, explicit truncation and selected-reference hydration; current authority on save |
 | Evidence | Captured/current native observations rechecked through existing shared reads; no CS-08, ES-03 or ES-08 service is fabricated |

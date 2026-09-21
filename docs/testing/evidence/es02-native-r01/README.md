@@ -28,6 +28,15 @@ passed. The detailed conformance spec runs in the desktop project, includes seve
 viewport widths and complements the existing mobile discovery and Engineering cases.
 Current PR checks are on [draft PR #272](https://github.com/deanrfiedler-gif/powerplants-one/pull/272).
 
+The same Estimating checks passed at `06dde4a` in
+[run 35575246743](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35575246743).
+[Full compiled browser CI](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35575246777)
+passed 234 cases with 37 skips. The later cost-pagination authority fix is separate
+from those results: [pagination-review.json](pagination-review.json) records its
+exact source fingerprints, a failing-before / passing-after denial regression and
+ten passing configuration database cases. Original manifests/captures remain tied
+to their recorded source; latest PR checks verify the later server read.
+
 ## Executed local checks
 
 | Proof | Result / limit |

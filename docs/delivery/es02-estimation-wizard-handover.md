@@ -126,8 +126,23 @@ restarts and three application processes passed with unchanged original output
 bytes. [Retained CI metadata](../testing/evidence/es02-native-r01/ci/run-35573783287.json)
 and [restart identities/hashes](../testing/evidence/es02-native-r01/ci/es02-verify.json)
 remain in the repository. Later changes bind the fixture to the active test origin
-(proved on port 3014) and record this evidence; application source remains `071a864`.
-The PR reports checks for the exact latest head.
+(proved on port 3014) and record this evidence. The same required Estimating proof
+passed again at `06dde4a` in [run 35575246743](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35575246743);
+the [full compiled browser suite](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35575246777)
+passed 234 cases (37 skips). Six required checks passed there. The longer Application
+job's first attempt had a five-second initial identity-loading timeout in unchanged
+CRM code; the failed attempt was retained and the same CRM entry step passed on
+the unchanged-commit rerun. Final-head CI remains recorded by the PR checks.
+
+Final authority review then reproduced a cost-pagination defect: twenty permitted
+versions could expose a next-page cursor whose extra historical basis was denied.
+The follow-up checks all 21 sources before returning that cursor. Its meaningful
+denied-contact regression fails before the fix and all ten configuration database
+cases pass after it; [source and test evidence](../testing/evidence/es02-native-r01/pagination-review.json)
+records the exact patch. UI source remains `071a864`; the later server read is
+identified separately. The PR reports checks for the exact latest head.
+ES-02 follow-up work is isolated in `tmp/es02-final` after the original shared
+checkout was taken by separate ES-08 work; that branch's edits are preserved.
 
 ## Acceptance disposition
 
@@ -206,7 +221,7 @@ R = [real restart harness](../../scripts/estimating-restart-proof.ts), passed in
 | ES02-T59 | B — held old preview cannot override a newer invalid numeric draft; saved costs unchanged. |
 | ES02-T60 | U, D — separate families/work tags and versioned evidence/follow-up fields. |
 | ES02-T61 | U, D — independent copied IDs, exact lineage and no false copied membership differences. |
-| ES02-T62 | D, H — real counts and bounded permitted history/comparison; no revision allocation. |
+| ES02-T62 | D, H — real counts and bounded permitted history/comparison; cost-version lookahead rejects a denied historical contact before exposing a cursor. No revision allocation. |
 | ES02-T63 | U, B, J — save-blocking versus readiness findings and explicit costing holds. |
 | ES02-T64 | B plus boundary script — payload/request/timing manifest and native maximum/read-only/dirty captures. |
 | ES02-T65 | B — same-document Back/Forward, native cross-document warning, shell router, breadcrumb, selectors and installed Reload. |

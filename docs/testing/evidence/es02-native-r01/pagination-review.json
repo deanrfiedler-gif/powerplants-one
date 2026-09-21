@@ -1,0 +1,29 @@
+{
+  "baseline_commit": "06dde4a737865e13165ee97dab5c915270f63e2e",
+  "scope": "ES02-T29/T62 saved-cost pagination lookahead authority",
+  "files": [
+    {
+      "path": "src/estimating/discovery-reads.ts",
+      "bytes": 12191,
+      "sha256": "995d30ba1cf4b3c79e2ef58528ba05888d43c6e28938d4fb104968d5f6e9f024"
+    },
+    {
+      "path": "tests/database/estimating-configuration.test.ts",
+      "bytes": 24694,
+      "sha256": "f1cc432d47013f087cc2b83e5a02f39b880e9589c7d76180c9b9b5c80185b34c"
+    },
+    {
+      "path": "docs/decisions/ADR-0033-es02-structured-discovery.md",
+      "bytes": 12120,
+      "sha256": "cb1bc127baffd49d36135ae9da4eb00df39d6881b5adae33ba4c5e47052b6a36"
+    }
+  ],
+  "before": "One meaningful regression fails: missing expected RecordUnavailable rejection when only the twenty-first cost version has a denied historical contact. Current saved summary remains Available.",
+  "after": "All ten configuration database cases pass; typecheck and targeted ESLint pass.",
+  "database": "ppo_synthetic_test",
+  "environment": "Windows / Node 24.21.0 / PostgreSQL 16.15",
+  "logs": [
+    "pagination-before.txt",
+    "pagination-after.txt"
+  ]
+}

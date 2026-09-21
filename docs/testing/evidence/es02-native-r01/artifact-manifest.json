@@ -225,6 +225,24 @@
       "file": "wizard.txt",
       "bytes": 1406,
       "sha256": "dbee6556fe23ec934f41caf2caee39948098b81f1c7f74becd8ceec85d3ee6b6"
+    },
+    {
+      "file": "pagination-before.txt",
+      "bytes": 1008,
+      "sha256": "7dfe4bcccff7ee90ca8c9b11b58240ea17647e0c1b1d533cd165478c4676aadf",
+      "provenance": "pagination-review.json: follow-up to 06dde4a; original captures unchanged"
+    },
+    {
+      "file": "pagination-after.txt",
+      "bytes": 1423,
+      "sha256": "39174b0bbb91874abb251ad5ae87d99a7cf0f2fb35e5c6c30c2a38b7892c1cb9",
+      "provenance": "pagination-review.json: follow-up to 06dde4a; original captures unchanged"
+    },
+    {
+      "file": "pagination-review.json",
+      "bytes": 1165,
+      "sha256": "196ba8433e7e4f4e8dafc6b67a1815780756454d47c2792b90186be13c043751",
+      "provenance": "pagination-review.json: follow-up to 06dde4a; original captures unchanged"
     }
   ],
   "ci_source_commit": "3252407fe8616f12127a8700e25c82e6c49c11d7"
