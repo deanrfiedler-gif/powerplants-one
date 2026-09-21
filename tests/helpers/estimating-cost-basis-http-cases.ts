@@ -3,7 +3,7 @@ import { test } from "node:test";
 import { randomUUID } from "node:crypto";
 import { createCostingWorkspace, costingApiCommand, costingScopeSuccessor } from "./estimating-costing-api";
 import { crmBase } from "./crm";
-const origin="http://127.0.0.1:3000";
+const origin=process.env.PPO_TEST_ORIGIN??"http://127.0.0.1:3000";
 async function session(profile="coordinator") {
   const r=await fetch(origin+"/api/v1/local-session",{method:"POST",headers:{Origin:origin,"Content-Type":"application/json"},body:JSON.stringify({profile})});assert.equal(r.status,200);return r.headers.get("set-cookie")!.split(";")[0];
 }

@@ -95,6 +95,12 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0034–0037 add recipient FKs, immutable responses, actor-private recovery and scope disposition history.
   // No further seeds/grants, no replacement of existing issues, identities or receipts.
   // 0038 corrects the EN-08 change trigger variable only; no data or grants change.
+  // Reviewed for 0039: ES-02 immutable configuration ownership and revision checks;
+  // no backfill, identity-table ALTER, seed, grant or output rewrite. The existing
+  // aggregate runtime grants cover this ledger; retain all PJ-09 upgrade guards.
+  // Reviewed 0040: additive specialist evidence and immutable policy manifests.
+  // No old content, grants or users change. Identity trigger events are flushed
+  // before type widening; runtime policy writes are revoked after generic grants.
   // 0041 review: nullable typed Facility columns, immutable reported sources and explicit Asset service links.
   // Existing identity rows, grants and output bytes are untouched; no new seed users or hosted duty.
   // Existing Asset site-move rejection remains. Generic grants cover the two added tables/functions.

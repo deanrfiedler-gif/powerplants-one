@@ -4,7 +4,7 @@ import { randomUUID } from "node:crypto";
 import { registerEstimatingCostBasisHttpCases } from "../helpers/estimating-cost-basis-http-cases";
 import { crmCreate, crmBase } from "../helpers/crm";
 import { estimateInput, quoteCommand } from "../helpers/estimating";
-const origin="http://127.0.0.1:3000";
+const origin=process.env.PPO_TEST_ORIGIN??"http://127.0.0.1:3000";
 async function session(profile="coordinator") {const r=await fetch(`${origin}/api/v1/local-session`,{method:"POST",headers:{Origin:origin,"Content-Type":"application/json"},body:JSON.stringify({profile})});assert.equal(r.status,200);return r.headers.get("set-cookie")!.split(";")[0];}
 async function call(cookie:string,path:string,body?:unknown) {const r=await fetch(`${origin}/api/v1/${path}`,{method:body===undefined?"GET":"POST",headers:{Cookie:cookie,...(body===undefined?{}:{Origin:origin,"Content-Type":"application/json"})},body:body===undefined?undefined:JSON.stringify(body)});return {status:r.status,headers:r.headers,body:await r.json()};}
 test("E1-HTTP01 complete saved journey, discarded response, successor conflict and exact draft bytes",async()=>{

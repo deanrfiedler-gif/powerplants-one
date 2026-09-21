@@ -1,0 +1,11 @@
+✔ E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original (11929.8229ms)
+✔ ES08-T28/T34/T35/T41/T44 synthetic receiving creates exact native lines, keeps manual line and atomically recovers (8280.9929ms)
+✔ ES08-T40/T42 kept manual overrides and retained removals require reconciliation on later receiving (12284.9975ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35977.9827

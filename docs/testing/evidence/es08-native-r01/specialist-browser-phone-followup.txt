@@ -1,0 +1,11 @@
+[WebServer] (node:29860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"153.0.8010.53"}
+
+Running 1 test using 1 worker
+
+(node:35808) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [mobile-chromium] › tests\browser\specialist-workbench.spec.ts:185:1 › ES08 durable raw draft, manual re-review, native receiving, exact history and contribution link (32.2s)
+
+  1 passed (1.3m)

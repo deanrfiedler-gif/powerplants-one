@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { navigateWithReview } from "./navigation-intent";
 import {
   useEffect,
   useRef,
@@ -261,7 +262,7 @@ export function ShellControls({
     ) {
       event.preventDefault();
       setPanel(null);
-      router.push(searchItems[selected].href);
+      navigateWithReview(() => router.push(searchItems[selected].href));
     }
   };
   const searchField = (

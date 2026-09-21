@@ -8,8 +8,11 @@ import { object, optionalId } from "../shared/validation";
 import { requireCapability } from "../platform/permissions";
 import { visibleOpportunity } from "../crm/context";
 import { digest } from "../documents/store";
+import { configurationConfirmations, copyConfiguration } from "./configuration";
+import { savedOptionCost, discoveryHistoryCounts } from "./discovery-reads";
 import {
   compareDiscovery,
+  compileDiscovery,
   inheritDiscovery,
   type DiscoveryInput,
 } from "./discovery";
@@ -41,6 +44,9 @@ import {
 } from "./discovery-workspace-validation";
 
 type Targets = Awaited<ReturnType<typeof readDiscoveryTargets>>;
+function confirmConfiguration(required: { fact_id: string; fingerprint: string }[], supplied: { fact_id: string; fingerprint: string }[]) {
+  if (canonical(required) !== canonical(supplied)) throw new AppError(422, "ConfigurationConfirmationRequired", "Review and acknowledge the exact changed configuration facts and their current sources.");
+}
 function expected(actual: number, wanted: number | string) {
   if (actual !== wanted)
     throw new AppError(
@@ -152,12 +158,16 @@ function proposedInput(change: DiscoveryChange, source: DiscoveryRevision) {
         "DiscoverySourceNotRecorded",
         "This legacy revision has no questionnaire to copy. Start fresh discovery explicitly.",
       );
-    return inheritDiscovery(
+    const inherited = inheritDiscovery(
       source.input,
       source.answer_snapshot_id,
       change.copy_follow_up!,
     ).input;
+    if (!source.input.configuration) return inherited;
+    if (!change.copy_allocation_id) throw new AppError(422, "CopyAllocationRequired", "Allocate the destination graph before reviewing a structured copy.");
+    return { ...inherited, configuration: copyConfiguration(source.input.configuration, source.id, change.copy_allocation_id, change.copy_follow_up!) };
   }
+  if (change.kind === "Save" && source.input?.configuration && !change.discovery?.configuration) throw new AppError(422, "ConfigurationRequired", "Retain the captured configuration schema in a successor; it cannot be discarded by using the legacy parser.");
   return change.discovery!;
 }
 function comparisonFor(
@@ -192,6 +202,8 @@ function comparisonFor(
     change.kind === "Save" ? source : null,
     change.branch_mode === "CopyDiscovery",
   );
+  const source_context_changed = canonical(source.observed_context) !== canonical(targets.references);
+  const configuration_confirmations = configurationConfirmations(targets.compiled.input.configuration, change.kind === "Save" && !source_context_changed ? source.input?.configuration : undefined, targets.context_hash);
   const evidence = {
     workspace_id: g.id,
     workspace_version: g.version,
@@ -203,12 +215,14 @@ function comparisonFor(
     context_hash: targets.context_hash,
     comparison,
     required_confirmation_ids: required,
+    ...(targets.compiled.input.configuration ? { configuration_confirmations, source_context_changed, copy_allocation_id: change.copy_allocation_id ?? null, historical_source_id: change.historical_source_id ?? null } : {}),
   };
   return {
     comparison: evidence,
     comparison_hash: digest(canonical(evidence)),
     retained_hidden_answers: retain,
     required_confirmation_ids: required,
+    configuration_confirmations,
   };
 }
 async function readChange(
@@ -226,6 +240,10 @@ async function readChange(
       true,
     );
   if (source.option_id !== option.id) throw unavailable();
+  if (change.historical_source_id) {
+    const historical = await revisionAuthority(c, p, g, change.historical_source_id, true);
+    if (historical.option_id !== option.id || !historical.input) throw unavailable();
+  }
   const targets = await readDiscoveryTargets(
     c,
     p,
@@ -265,6 +283,7 @@ export async function previewDiscoveryCreate(p: Principal, value: unknown) {
         null,
         false,
       ),
+      configuration_confirmations: configurationConfirmations(targets.compiled.input.configuration, undefined, targets.context_hash),
     };
   });
 }
@@ -391,6 +410,7 @@ export async function createDiscoveryWorkspace(p: Principal, value: unknown) {
         requiredConfirmations(targets.compiled.input, null, false),
         input.confirmed_question_ids,
       );
+      confirmConfiguration(configurationConfirmations(targets.compiled.input.configuration, undefined, targets.context_hash), input.configuration_confirmations ?? []);
       const g = (
         await c.query<DiscoveryWorkspace>(
           `INSERT INTO ppo.estimating_workspaces(id,workspace_id,company_id,opportunity_id,owner_id,selected_option_id,created_by,updated_by)
@@ -407,7 +427,7 @@ export async function createDiscoveryWorkspace(p: Principal, value: unknown) {
       ).rows[0];
       await c.query(
         `INSERT INTO ppo.estimating_options(id,workspace_id,company_id,estimating_workspace_id,ordinal,label,current_revision_id,workspace_version,created_by,updated_by)
-      VALUES($1,$2,$3,$4,1,'A',$5,1,$6,$6)`,
+      VALUES($1,$2,$3,$4,1,$7,$5,1,$6,$6)`,
         [
           input.option_id,
           p.workspace_id,
@@ -415,6 +435,7 @@ export async function createDiscoveryWorkspace(p: Principal, value: unknown) {
           g.id,
           input.revision_id,
           p.actor_id,
+          input.option_label ?? "A",
         ],
       );
       await insertRevision(
@@ -493,6 +514,7 @@ export async function changeDiscoveryWorkspace(
         comparison.required_confirmation_ids,
         input.confirmed_question_ids,
       );
+      confirmConfiguration(comparison.configuration_confirmations, input.configuration_confirmations ?? []);
       const updated = await advance(c, p, g),
         optionId = input.kind === "Branch" ? input.new_option_id! : option.id;
       if (input.kind === "Branch")
@@ -545,6 +567,7 @@ export async function changeDiscoveryWorkspace(
           option_id: optionId,
           revision_id: input.revision_id,
           source_revision_id: source.id,
+          ...(input.historical_source_id ? { historical_source_id: input.historical_source_id } : {}),
           selected_option_id: updated.selected_option_id,
           branch_mode: input.branch_mode,
           comparison_hash: comparison.comparison_hash,
@@ -660,10 +683,20 @@ export async function readDiscoveryWorkspace(p: Principal, id: string) {
       )
         throw error;
     }
+    const presented = [], counts = await discoveryHistoryCounts(c, p, workspace);
+    for (const item of options) {
+      const cost = await savedOptionCost(c, p, item.option.id);
+      presented.push({ ...item, history_count: counts.get(item.option.id) ?? null, evaluation: item.revision.input ? compileDiscovery(item.revision.input) : null, cost: cost.status === "Available" ? { status: cost.status, version: cost.version, amount: cost.sell_total, basis: cost.basis } : { status: cost.status } });
+    }
     return {
       workspace,
-      options,
+      options: presented,
       can_edit,
+      context: {
+        title: (await visibleOpportunity(c, p, workspace.opportunity_id)).title,
+        owner: (await c.query<{display_name: string}>("SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2", [p.workspace_id, workspace.owner_id])).rows[0]?.display_name ?? "Estimating owner",
+      },
+      manual_costing: { status: "Implemented", action: "Review scope for manual costing" },
       delivery_routing: { status: "NotConfigured" },
       costing_import: { status: "NotImplemented" },
     };

@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "document_records": 320,
+  "standing_exceptions": 9,
+  "front_matter_revisions_compared": 166,
+  "project_instruction_characters": 7990,
+  "errors": [],
+  "scope": "Naming and documentation consistency only; runtime behaviour is verified separately"
+}

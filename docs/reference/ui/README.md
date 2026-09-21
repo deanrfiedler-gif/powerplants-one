@@ -292,3 +292,14 @@ git diff --check
 ```
 
 The maintenance pull request records the actual check results and publication source. Reconcile the inventory and the two pending contribution records against current main before a later update; this dated audit is not an automatic synchronisation service.
+
+
+## ES-02 native implementation source packet — 21 September 2026
+
+The [execution prompt r03](estimating/PPO-ES-02-Estimation-Wizard-VS-Code-Implementation-Prompt-r03.md)
+and [refinement plan r04](estimating/PPO-ES-02-Estimation-Wizard-Discovery-Alternatives-and-Revisions-Refinement-Build-Plan-r04.md)
+are retained byte-for-byte beside the existing wizard r03 HTML. They authorise the
+native refinement recorded in [ADR-0035](../../decisions/ADR-0035-es02-structured-discovery.md)
+and its [implementation handover](../../delivery/es02-estimation-wizard-handover.md).
+This addition does not revise the dated HTML inventory or adopt a new accepted UI
+baseline. The generated mockup image was not supplied and is not claimed inspected.

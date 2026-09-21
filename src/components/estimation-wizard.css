@@ -1,0 +1,610 @@
+/* ES-02: native interior of the existing shell. Shared r22 tokens/menu rules. */
+#ppo-estimate-wizard .mw-content {
+  display: flex;
+  overflow: hidden;
+}
+#ppo-estimate-wizard .es02-layout {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  background: var(--white);
+}
+#ppo-estimate-wizard .es02-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+#ppo-estimate-wizard .es02-context {
+  padding: 14px 24px 10px;
+  border-bottom: 1px solid var(--line-soft);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3px 18px;
+}
+#ppo-estimate-wizard .es02-context h1 {
+  font-size: 20px;
+  line-height: 1.3;
+  grid-column: 1/-1;
+}
+#ppo-estimate-wizard .es02-context p {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .es02-context .field {
+  grid-column: 2;
+  grid-row: 2/4;
+  margin: 0;
+  max-width: 270px;
+}
+#ppo-estimate-wizard .es02-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 0 24px 24px;
+  scroll-padding-top: 16px;
+}
+#ppo-estimate-wizard .es02-summary {
+  width: 380px;
+  flex: 0 0 380px;
+  padding: 22px 24px;
+  overflow: auto;
+  border-left: 1px solid var(--line);
+  box-shadow: -14px 0 16px -18px rgba(36, 42, 55, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+}
+#ppo-estimate-wizard .es02-summary h2 {
+  font-size: 18px;
+}
+#ppo-estimate-wizard .es02-summary h3 {
+  font-size: 15px;
+}
+#ppo-estimate-wizard .es02-summary p {
+  font-size: 13px;
+}
+#ppo-estimate-wizard .es02-summary hr {
+  border: 0;
+  border-top: 1px solid var(--line-soft);
+  width: 100%;
+  margin: 4px 0;
+}
+#ppo-estimate-wizard .es02-summary small {
+  color: var(--muted);
+  margin-top: auto;
+  padding-top: 18px;
+}
+#ppo-estimate-wizard .es02-summary .es02-money {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+#ppo-estimate-wizard h2 {
+  font-size: 18px;
+  margin: 16px 0 8px;
+}
+#ppo-estimate-wizard h3 {
+  font-size: 16px;
+  margin: 10px 0 8px;
+}
+#ppo-estimate-wizard p {
+  margin: 8px 0;
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard :is(button, .button) {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: var(--white);
+  color: var(--navy);
+  font: inherit;
+  line-height: 1.35;
+  text-decoration: none;
+}
+#ppo-estimate-wizard button:hover:not(:disabled) {
+  background: var(--surface-hover);
+}
+#ppo-estimate-wizard button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+#ppo-estimate-wizard
+  :is(button, a, input, select, summary, textarea):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+#ppo-estimate-wizard button.es02-primary,
+#ppo-estimate-wizard a.button {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+}
+#ppo-estimate-wizard a {
+  color: var(--link);
+}
+#ppo-estimate-wizard .record-tablist {
+  display: flex;
+  gap: 0;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--line);
+  flex: none;
+}
+#ppo-estimate-wizard .record-tablist button {
+  border: 0;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  padding: 12px 16px;
+  background: none;
+}
+#ppo-estimate-wizard .record-tablist button[aria-selected="true"] {
+  border-bottom-color: var(--navy);
+  font-weight: 600;
+}
+#ppo-estimate-wizard .es02-steps {
+  display: flex;
+  gap: 5px;
+  padding: 14px 0;
+  flex-wrap: wrap;
+}
+#ppo-estimate-wizard .es02-steps button {
+  background: var(--paper);
+  border: 0;
+}
+#ppo-estimate-wizard .es02-steps button[aria-current="step"] {
+  color: var(--white);
+  background: var(--navy);
+}
+#ppo-estimate-wizard .es02-section-title {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+#ppo-estimate-wizard .es02-section-title h2,
+#ppo-estimate-wizard .es02-section-title h3 {
+  margin: 0;
+}
+#ppo-estimate-wizard .es02-family-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+#ppo-estimate-wizard .es02-family-grid > div {
+  border: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  align-content: start;
+}
+#ppo-estimate-wizard .es02-family-grid button {
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  text-align: left;
+  border-radius: 0;
+  flex: 1;
+}
+#ppo-estimate-wizard .es02-family-grid button[aria-pressed="true"] {
+  background: var(--neutral-surface);
+}
+#ppo-estimate-wizard .es02-family-grid button + button {
+  flex: 0 0 auto;
+  font-size: 12px;
+  align-self: end;
+}
+#ppo-estimate-wizard .es02-toolbar {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0;
+}
+#ppo-estimate-wizard .es02-toolbar .field {
+  margin: 0;
+  flex: 1;
+  min-width: 130px;
+}
+#ppo-estimate-wizard .es02-toolbar details {
+  position: relative;
+}
+#ppo-estimate-wizard details > label {
+  display: block;
+  min-height: 36px;
+  padding: 4px;
+}
+#ppo-estimate-wizard .es02-guidance {
+  border-block: 1px solid var(--line-soft);
+  padding: 12px 0;
+  margin: 14px 0;
+  font-size: 13px;
+}
+#ppo-estimate-wizard .es02-guidance p {
+  margin: 4px 0;
+}
+#ppo-estimate-wizard .es02-attention {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: var(--warning-surface);
+  padding: 8px 12px;
+  margin: 8px 0;
+  color: var(--ink);
+  flex-wrap: wrap;
+}
+#ppo-estimate-wizard .es02-attention > span {
+  color: var(--warning);
+}
+#ppo-estimate-wizard .es02-attention button {
+  margin-left: auto;
+  background: none;
+  border: 0;
+}
+#ppo-estimate-wizard .es02-table-scroll {
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  margin: 8px 0;
+  border-block: 1px solid var(--line);
+}
+#ppo-estimate-wizard table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+#ppo-estimate-wizard :is(th, td) {
+  padding: 12px 10px;
+  min-height: 44px;
+  border-bottom: 1px solid var(--line-soft);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+#ppo-estimate-wizard th {
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--paper);
+}
+#ppo-estimate-wizard td button {
+  padding: 0;
+  min-height: 24px;
+  border: 0;
+  background: none;
+  justify-content: start;
+  font-weight: 500;
+}
+#ppo-estimate-wizard tr[data-selected="true"] {
+  background: var(--neutral-surface);
+}
+#ppo-estimate-wizard .es02-table-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 12px;
+}
+#ppo-estimate-wizard .es02-editor {
+  padding: 14px 0;
+  border-top: 1px solid var(--line-soft);
+  margin-top: 14px;
+}
+#ppo-estimate-wizard .e2-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+#ppo-estimate-wizard .field {
+  margin: 8px 0;
+  min-width: 0;
+}
+#ppo-estimate-wizard .field label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+#ppo-estimate-wizard .field :is(input, select, textarea) {
+  width: 100%;
+  min-height: 38px;
+  padding: 7px 10px;
+  border: 1px solid var(--control-border);
+  border-radius: 6px;
+  background: var(--white);
+  font: inherit;
+}
+#ppo-estimate-wizard .field textarea {
+  min-height: 76px;
+  resize: vertical;
+}
+#ppo-estimate-wizard .field small {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+}
+#ppo-estimate-wizard input[type="checkbox"] {
+  accent-color: var(--navy);
+  width: 17px;
+  height: 17px;
+  margin: 0 6px 0 0;
+  vertical-align: middle;
+}
+#ppo-estimate-wizard .es02-checks {
+  display: flex;
+  gap: 8px 18px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+#ppo-estimate-wizard .es02-checks label {
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+#ppo-estimate-wizard .es02-fields {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  min-width: 0;
+}
+#ppo-estimate-wizard .es02-fact,
+#ppo-estimate-wizard .e2-question,
+#ppo-estimate-wizard .est-line {
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  padding: 14px 0;
+  margin: 14px 0;
+  min-width: 0;
+}
+#ppo-estimate-wizard legend {
+  padding: 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+#ppo-estimate-wizard details summary {
+  cursor: pointer;
+  min-height: 36px;
+  padding: 6px 0;
+  font-weight: 500;
+}
+#ppo-estimate-wizard .es02-bottom {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 24px;
+  border-top: 1px solid var(--line);
+  background: var(--white);
+  flex: none;
+}
+#ppo-estimate-wizard .es02-bottom span {
+  margin-right: auto;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .es02-finding {
+  display: block;
+  text-align: left;
+  margin: 6px 0;
+  color: var(--warning);
+  border: 0;
+  padding: 4px 0;
+}
+.es02-dialog {
+  width: min(900px, calc(100vw - 24px));
+  max-height: calc(100dvh - 40px);
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: white;
+  color: var(--ink);
+  padding: 24px;
+}
+.es02-dialog::backdrop {
+  background: rgba(36, 42, 55, 0.3);
+}
+.es02-dialog .es02-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.es02-dialog fieldset > label {
+  display: block;
+  margin: 8px 0;
+}
+.es02-dialog button {
+  background: var(--navy);
+  color: #fff;
+  min-height: 38px;
+  padding: 8px 14px;
+  margin: 8px 6px 8px 0;
+  border-radius: 6px;
+}
+.es02-dialog pre,
+#ppo-estimate-wizard pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font:
+    13px/1.5 Roboto,
+    Verdana,
+    sans-serif;
+  max-width: 100%;
+}
+#ppo-estimate-wizard .es02-diff {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+#ppo-estimate-wizard button.mw-menu-edge,
+#ppo-estimate-wizard button.mw-menu-strip {
+  border-radius: 0;
+  min-height: 0;
+  padding: 0;
+}
+@media (max-width: 1500px) {
+  #ppo-estimate-wizard .es02-summary {
+    width: 320px;
+    flex-basis: 320px;
+  }
+  #ppo-estimate-wizard .es02-scroll {
+    padding-inline: 16px;
+  }
+  #ppo-estimate-wizard .es02-context {
+    padding-inline: 16px;
+  }
+  #ppo-estimate-wizard .es02-family-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 1199px) {
+  #ppo-estimate-wizard .es02-layout {
+    overflow: auto;
+    display: block;
+  }
+  #ppo-estimate-wizard .es02-main {
+    min-height: 100%;
+  }
+  #ppo-estimate-wizard .es02-scroll {
+    overflow: visible;
+  }
+  #ppo-estimate-wizard .es02-summary {
+    width: 100%;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    box-shadow: none;
+    overflow: visible;
+  }
+  #ppo-estimate-wizard .es02-bottom {
+    position: static;
+  }
+  #ppo-estimate-wizard .es02-context {
+    grid-template-columns: 1fr;
+  }
+  #ppo-estimate-wizard .es02-context .field {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+@media (max-width: 600px) {
+  #ppo-estimate-wizard .e2-grid,
+  #ppo-estimate-wizard .es02-diff {
+    grid-template-columns: 1fr;
+  }
+  #ppo-estimate-wizard .es02-context,
+  #ppo-estimate-wizard .es02-scroll {
+    padding-inline: 12px;
+  }
+  #ppo-estimate-wizard .record-tablist {
+    padding: 0;
+  }
+  #ppo-estimate-wizard .record-tablist button {
+    padding: 10px 8px;
+  }
+  #ppo-estimate-wizard .es02-steps {
+    gap: 4px;
+  }
+  #ppo-estimate-wizard .es02-steps button {
+    font-size: 12px;
+    min-height: 40px;
+  }
+  #ppo-estimate-wizard .es02-bottom {
+    padding: 10px 12px;
+  }
+  #ppo-estimate-wizard .es02-bottom span {
+    flex-basis: 100%;
+  }
+  #ppo-estimate-wizard .es02-family-grid {
+    gap: 6px;
+  }
+  #ppo-estimate-wizard .es02-summary {
+    padding: 20px 12px;
+  }
+}
+
+#ppo-estimate-wizard .es02-summary {
+  gap: 10px;
+}
+#ppo-estimate-wizard .es02-summary p {
+  margin: 2px 0;
+}
+#ppo-estimate-wizard .es02-summary h3 {
+  margin: 8px 0;
+}
+#ppo-estimate-wizard .es02-columns[open] {
+  flex-basis: 100%;
+}
+#ppo-estimate-wizard .es02-columns > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 6px;
+  border-bottom: 1px solid var(--line-soft);
+}
+#ppo-estimate-wizard .es02-columns label {
+  min-width: 130px;
+}
+#ppo-estimate-wizard .es02-columns input[type="range"] {
+  display: block;
+  max-width: 180px;
+}
+#ppo-estimate-wizard .es02-systems-table :is(th, td):first-child {
+  position: sticky;
+  left: 0;
+  background: var(--white);
+  z-index: 1;
+}
+#ppo-estimate-wizard .es02-systems-table th:first-child {
+  background: var(--paper);
+}
+#ppo-estimate-wizard
+  .es02-systems-table
+  tr[data-selected="true"]
+  td:first-child {
+  background: var(--neutral-surface);
+}
+
+.es02-dialog.es02-inspector {
+  position: fixed;
+  inset: 64px 0 0 auto;
+  margin: 0;
+  border-radius: 0;
+  width: min(640px, 100vw);
+  height: calc(100dvh - 64px);
+  max-height: calc(100dvh - 64px);
+  border-right: 0;
+  border-bottom: 0;
+}
+
+#ppo-estimate-wizard .es02-steps button {
+  flex-direction: column;
+  align-items: start;
+  gap: 2px;
+}
+#ppo-estimate-wizard .es02-steps small {
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+#ppo-estimate-wizard .es02-context {
+  position: relative;
+}
+#ppo-estimate-wizard .es02-context h1 {
+  padding-right: 100px;
+}
+#ppo-estimate-wizard .es02-summary-toggle {
+  position: absolute;
+  right: 24px;
+  top: 12px;
+  font-size: 12px;
+  min-height: 30px;
+}

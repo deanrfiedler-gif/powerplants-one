@@ -18,3 +18,8 @@
 *.svg text eol=lf
 docs/blueprints/projects-starter-visuals/*.pdf binary
 docs/blueprints/projects-starter-visuals/r02/*.pdf binary
+# ES-02 retained text evidence is fingerprinted in its artifact manifest.
+docs/testing/evidence/es02-native-r01/*.txt text eol=lf
+docs/testing/evidence/es02-native-r01/failed/*.txt text eol=lf
+# ES-08 retained text evidence is fingerprinted in its artifact manifest.
+docs/testing/evidence/es08-native-r01/*.txt text eol=lf

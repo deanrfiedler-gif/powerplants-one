@@ -41,6 +41,13 @@ function confirmations(value: unknown) {
     );
   return [...(value as string[])].sort();
 }
+export type ConfigurationConfirmation = { fact_id: string; fingerprint: string };
+function extendedConfirmations(value: unknown): ConfigurationConfirmation[] {
+  if (!Array.isArray(value) || value.length > 260) invalid("configuration_confirmations", "Use a bounded list of exact configuration acknowledgments.");
+  const result = value.map(v => { const r = object(v, ["fact_id", "fingerprint"]); return { fact_id: uuid(r.fact_id, "fact_id"), fingerprint: hash(r.fingerprint, "fingerprint") }; }).sort((a, b) => a.fact_id.localeCompare(b.fact_id));
+  if (new Set(result.map(r => r.fact_id)).size !== result.length) invalid("configuration_confirmations", "Confirm each entity once.");
+  return result;
+}
 const createKeys = ["opportunity_id", "discovery"];
 export function discoveryCreateProposal(value: unknown) {
   bounded(value);
@@ -61,6 +68,8 @@ export function createWorkspaceInput(value: unknown) {
     "expected_opportunity_version",
     "context_hash",
     "confirmed_question_ids",
+    "configuration_confirmations",
+    "option_label",
   ]);
   return {
     ...common(r),
@@ -70,10 +79,12 @@ export function createWorkspaceInput(value: unknown) {
     }),
     id: uuid(r.id, "id"),
     option_id: uuid(r.option_id, "option_id"),
+    ...(Object.hasOwn(r, "option_label") ? { option_label: label(r.option_label, "option_label", 100) } : {}),
     revision_id: uuid(r.revision_id, "revision_id"),
     expected_opportunity_version: version(r.expected_opportunity_version),
     context_hash: hash(r.context_hash, "context_hash"),
     confirmed_question_ids: confirmations(r.confirmed_question_ids),
+    ...(Object.hasOwn(r, "configuration_confirmations") ? { configuration_confirmations: extendedConfirmations(r.configuration_confirmations) } : {}),
   };
 }
 const changeKeys = [
@@ -84,6 +95,8 @@ const changeKeys = [
   "discovery",
   "branch_mode",
   "copy_follow_up",
+  "copy_allocation_id",
+  "historical_source_id",
 ];
 export type DiscoveryChange = {
   kind: "Save" | "Branch";
@@ -93,6 +106,8 @@ export type DiscoveryChange = {
   discovery: DiscoveryInput | null;
   branch_mode: "Fresh" | "CopyDiscovery" | null;
   copy_follow_up: FollowUp | null;
+  copy_allocation_id?: string;
+  historical_source_id?: string;
 };
 export function discoveryChangeProposal(value: unknown): DiscoveryChange {
   bounded(value);
@@ -105,6 +120,8 @@ export function discoveryChangeProposal(value: unknown): DiscoveryChange {
           "CopyDiscovery",
         ] as const)
       : null;
+  if (r.copy_allocation_id !== undefined && branch_mode !== "CopyDiscovery") invalid("copy_allocation_id", "Allocation applies only to exact-source copying.");
+  if (r.historical_source_id !== undefined && kind !== "Save") invalid("historical_source_id", "A historical starting point creates a successor of the current alternative.");
   if (
     kind === "Save" &&
     ((r.branch_mode !== undefined && r.branch_mode !== null) ||
@@ -137,6 +154,8 @@ export function discoveryChangeProposal(value: unknown): DiscoveryChange {
     discovery,
     branch_mode,
     copy_follow_up,
+    ...(r.copy_allocation_id === undefined ? {} : { copy_allocation_id: uuid(r.copy_allocation_id, "copy_allocation_id") }),
+    ...(r.historical_source_id === undefined ? {} : { historical_source_id: uuid(r.historical_source_id, "historical_source_id") }),
   };
 }
 export function changeWorkspaceInput(id: string, value: unknown) {
@@ -150,6 +169,7 @@ export function changeWorkspaceInput(id: string, value: unknown) {
     "context_hash",
     "comparison_hash",
     "confirmed_question_ids",
+    "configuration_confirmations",
   ]);
   const proposal = discoveryChangeProposal(
     Object.fromEntries(changeKeys.map((k) => [k, r[k]])),
@@ -173,6 +193,7 @@ export function changeWorkspaceInput(id: string, value: unknown) {
     context_hash: hash(r.context_hash, "context_hash"),
     comparison_hash: hash(r.comparison_hash, "comparison_hash"),
     confirmed_question_ids: confirmations(r.confirmed_question_ids),
+    ...(Object.hasOwn(r, "configuration_confirmations") ? { configuration_confirmations: extendedConfirmations(r.configuration_confirmations) } : {}),
   };
 }
 export function optionActionInput(id: string, value: unknown) {

@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { facilitySeedCounters, facilitySeedIdentities } from "../helpers/facility-seed-identities";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID, createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
@@ -614,7 +615,7 @@ test("CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and 
     "report_follow_ups",
   ];
   const before = await Promise.all(
-    tables.map((t) => rows(`SELECT * FROM ppo.${t} ORDER BY 1`)),
+    tables.map((t) => rows(`SELECT * FROM ppo.${t} ORDER BY ${t === "reference_counters" ? "workspace_id,record_type,namespace" : "1"}`)),
   );
   const hashes = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -624,7 +625,7 @@ test("CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and 
   await migrate();
   await seed();
   for (let n = 0; n < tables.length; n++) {
-    const current = await rows(`SELECT * FROM ppo.${tables[n]} ORDER BY 1`);
+    const current = await rows(`SELECT * FROM ppo.${tables[n]} ORDER BY ${tables[n] === "reference_counters" ? "workspace_id,record_type,namespace" : "1"}`);
     if (tables[n] === "report_templates") {
       // P11 adds a separately identified immutable template; every original
       // definition remains exact. Existing issued/response bytes below remain.
@@ -635,6 +636,8 @@ test("CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and 
     } else if (tables[n] === "activities") {
       // 0028 adds scheduling fields with catalogue defaults; every original value remains exact.
       assert.deepEqual(current, before[n].map(x => ({ ...x, activity_type: "Task", starts_at: null, due_date_only: false })));
+    } else if (tables[n] === "reference_counters") {
+      assert.deepEqual(current, facilitySeedCounters(before[n]));
     } else assert.deepEqual(current, before[n]);
   }
   assert.deepEqual(
@@ -651,7 +654,18 @@ test("CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and 
   const preserved = (await readReport(report.reviewer, report.report.id)).items[0];
   for (const key of ["revisions", "reviews", "issues", "presentations", "responses"] as const)
     assert.deepEqual(preserved[key], originalReport[key]);
-  assert.deepEqual(await rows("SELECT * FROM ppo.business_identities WHERE id=ANY($1::uuid[]) ORDER BY id", [identities.map(x=>x.id)]), identities);
+  // Seeds 10/11/15/21 already added these six unnumbered identities after
+  // the version-9 baseline. Seed 41 adds the separately authored Facility set.
+  const earlierSeedIdentities = [
+    ["c1000000-0000-4000-8000-000000000001", "CrmPipelineDefinition"],
+    ["c1000000-0000-4000-8000-000000000002", "CrmPipelineDefinition"],
+    ["ec000000-0000-4000-8000-000000000001", "EmailMessage"],
+    ["ec000000-0000-4000-8000-000000000002", "EmailMessage"],
+    ["f2000000-0000-4000-8000-000000000001", "FinanceAccount"],
+    ["f2000000-0000-4000-8000-000000000002", "FinanceAccount"],
+  ].map(([id, object_type]) => ({ workspace_id: p.workspace_id, id, object_type, display_number: null, synthetic: true }));
+  assert.deepEqual(await rows("SELECT * FROM ppo.business_identities ORDER BY id"),
+    [...identities, ...earlierSeedIdentities, ...facilitySeedIdentities(before[tables.indexOf("reference_counters")])].sort((a, b) => a.id.localeCompare(b.id)));
   assert.deepEqual(
     await rows("SELECT * FROM ppo.activity_links ORDER BY activity_id,object_type,object_id"),
     // Later migrations add generated target columns, including Project in 0032.

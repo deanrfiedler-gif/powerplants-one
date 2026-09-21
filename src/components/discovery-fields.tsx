@@ -10,6 +10,7 @@ import type {
 } from "../estimating/discovery";
 import type { discoveryFormOptions } from "../estimating/discovery-form-options";
 import { applicableQuestions } from "../estimating/discovery-questions";
+import { emptyConfiguration } from "../estimating/configuration-definition";
 import { Field, SelectField } from "./business-ui";
 export type FormOptions = Awaited<ReturnType<typeof discoveryFormOptions>>;
 export const labels = (values: readonly string[]) =>
@@ -30,6 +31,7 @@ export function blankDiscovery(
     definition_id: options.definition.id,
     definition_revision: options.definition.revision,
     definition_hash: options.definition_hash,
+    configuration: emptyConfiguration(),
     effort: {
       value: "Unknown",
       source: null,
@@ -332,10 +334,12 @@ export function DiscoveryFields({
   value,
   options,
   onChange,
+  step,
 }: {
   value: DiscoveryInput;
   options: FormOptions;
   onChange: (v: DiscoveryInput) => void;
+  step?: "Requirements" | "Configuration" | "Scope & delivery";
 }) {
   const s = value.scope,
     owner = { owner_id: options.owner.id, reason: "" };
@@ -344,6 +348,7 @@ export function DiscoveryFields({
   const questions = applicableQuestions(s, value.answers, options.definition);
   return (
     <>
+      {(!step || step === "Requirements") && <>
       <h3>Scope membership</h3>
       <SelectField
         label="Site declaration"
@@ -534,13 +539,14 @@ export function DiscoveryFields({
           maxLength={500}
         />
       )}
+      </>}
       <h3>Applicable questions</h3>
       <p>
         {options.definition.id} · {options.definition.revision}. Unconfirmed
         required answers need an owned follow-up. Confirmed answers require an
         explicit acknowledgement in the comparison before saving.
       </p>
-      {questions.map((q) => (
+      {questions.filter(q => !step || (step === "Requirements" ? ["Q01", "Q02", "Q03"] : step === "Configuration" ? ["Q05", "Q06"] : ["Q04", "Q07", "Q08", "Q09", "Q10"]).includes(q.id)).map((q) => (
         <AnswerFields
           key={q.id}
           question={q}

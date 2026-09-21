@@ -40,7 +40,8 @@ export const migrationFiles = [
   "0036-acceptance-command-recovery.sql",
   "0037-acceptance-scope-disposition.sql",
   "0038-acceptance-source-followup.sql",
-  // 0039 ES-02 and 0040 ES-08 are left to the open Estimating workstreams.
+  "0039-estimating-configuration.sql",
+  "0040-specialist-configurations.sql",
   "0041-facilities-growing-areas.sql",
 ] as const;
 export const seedFiles = [
@@ -66,6 +67,7 @@ export const seedFiles = [
   [30, "seed-engineering-changes.sql"],
   [31, "seed-commissioning-as-built.sql"],
   [32, "seed-staged-acceptance.sql"],
+  [40, "seed-specialist.sql"],
   [41, "seed-facilities.sql"],
 ] as const;
 export const latestMigrationVersion = 41;

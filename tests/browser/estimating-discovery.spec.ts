@@ -14,7 +14,7 @@ async function call(page: Page, path: string, body?: unknown) {
       body === undefined
         ? {}
         : {
-            Origin: `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`,
+            Origin: new URL(page.url()).origin,
             "Content-Type": "application/json",
           },
     data: body,
@@ -75,8 +75,8 @@ async function saved(page: Page) {
   await call(page, "estimating/workspaces", input);
   await page.goto(`/estimating/discovery/${input.id}`);
   await expect(
-    page.getByRole("heading", {
-      name: "Saved revision 1 · Complete",
+    page.getByRole("tab", {
+      name: "Revisions 1",
       exact: true,
     }),
   ).toBeVisible();
@@ -128,7 +128,7 @@ async function acknowledge(page: Page) {
   // Locator.all() does not wait for the asynchronous comparison to render.
   // Read the actual comparison before enumerating its required confirmations.
   await expect(
-    page.getByRole("region", { name: "Discovery comparison", exact: true }),
+    page.getByRole("region", { name: "Discovery comparison", exact: true }).or(page.getByRole("dialog", { name: "Review discovery revision", exact: true })),
   ).toBeVisible();
   for (const checkbox of await page
     .getByRole("checkbox", { name: /^I confirm Q/ })
@@ -137,20 +137,20 @@ async function acknowledge(page: Page) {
 }
 async function compareSave(page: Page, reason: string) {
   await page
-    .getByLabel("Discovery change reason", { exact: true })
-    .fill(reason);
-  await page
-    .getByRole("button", { name: "Compare discovery proposal", exact: true })
-    .click();
-  await expect(
-    page.getByRole("region", { name: "Discovery comparison", exact: true }),
-  ).toBeVisible();
-  await acknowledge(page);
-  await page
     .getByRole("button", { name: "Save discovery revision", exact: true })
     .click();
+  await page
+    .getByLabel("Discovery change reason", { exact: true })
+    .fill(reason);
+  await acknowledge(page);
+  await page
+    .getByRole("button", {
+      name: "Confirm save discovery revision",
+      exact: true,
+    })
+    .click();
   await expect(
-    page.getByRole("region", { name: "Discovery proposal", exact: true }),
+    page.getByRole("dialog", { name: "Review discovery revision" }),
   ).toHaveCount(0);
 }
 async function fillQuestion(
@@ -158,6 +158,14 @@ async function fillQuestion(
   id: string,
   value: string | number | { choice: string },
 ) {
+  if (await page.locator("#ppo-estimate-wizard").count()) {
+    const label = ["Q01", "Q02", "Q03"].includes(id)
+      ? "1. Requirements"
+      : ["Q05", "Q06"].includes(id)
+        ? "2. Configuration"
+        : "3. Scope & delivery";
+    await page.getByRole("button", { name: label, exact: true }).click();
+  }
   const q = discoveryDefinition.questions.find((q) => q.id === id)!;
   await page
     .getByLabel(`${id} answer state`, { exact: true })
@@ -276,7 +284,7 @@ test("E2 browser creates scoped discovery and retains the original unknown creat
   await page.unroute("**/api/v1/estimating/workspaces");
   await recovery.click();
   await expect(
-    page.getByRole("heading", { name: "Estimating workspace", exact: true }),
+    page.getByRole("tab", { name: "Revisions 1", exact: true }),
   ).toBeVisible();
   const d = await call(page, `estimating/workspaces/${original!.id}`);
   expect(d.workspace.version).toBe(1);
@@ -284,65 +292,18 @@ test("E2 browser creates scoped discovery and retains the original unknown creat
   expect(d.options[0].revision.input.scope).toEqual(input.scope);
   await page.reload();
   await expect(
-    page.getByRole("heading", {
-      name: "Saved revision 1 · Complete",
+    page.getByRole("tab", {
+      name: "Revisions 1",
       exact: true,
     }),
   ).toBeVisible();
-  await capture(page, info, "saved-reload", ".e2-snapshot");
+  await capture(page, info, "saved-reload", ".es02-context");
 });
 
-test("E2 browser retains unsaved answers and reason while changing a saved workspace's scope", async ({
-  page,
-}) => {
-  const s = await saved(page);
-  await page
-    .getByRole("button", { name: "Edit discovery", exact: true })
-    .click();
-  const answer = page.getByLabel("Q01 Included work", { exact: true }),
-    reason = page.getByLabel("Discovery change reason", { exact: true }),
-    scope = page.getByLabel("Site declaration", { exact: true });
-  await answer.fill("SYN retain this unsaved scope proposal");
-  await reason.fill("SYN review the Site before saving");
-  for (const mode of ["NoSiteRequired", "Site"]) {
-    const refreshed = page.waitForResponse((response) => {
-      const url = new URL(response.url());
-      return (
-        url.pathname.endsWith("/estimating/workspaces/form-options") &&
-        url.searchParams.get("scope_mode") === mode
-      );
-    });
-    await scope.selectOption(mode);
-    expect((await refreshed).ok()).toBe(true);
-    await expect(scope).toHaveValue(mode);
-    await expect(answer).toHaveValue("SYN retain this unsaved scope proposal");
-    await expect(reason).toHaveValue("SYN review the Site before saving");
-  }
-  const siteRefreshed = page.waitForResponse((response) => {
-    const url = new URL(response.url());
-    return (
-      url.pathname.endsWith("/estimating/workspaces/form-options") &&
-      url.searchParams.get("site_id") === CRM.site
-    );
-  });
-  await page
-    .getByLabel("Existing Site", { exact: true })
-    .selectOption(CRM.site);
-  expect((await siteRefreshed).ok()).toBe(true);
-  await expect(answer).toHaveValue("SYN retain this unsaved scope proposal");
-  await expect(reason).toHaveValue("SYN review the Site before saving");
-  const persisted = await call(page, s.path);
-  expect(persisted.workspace.version).toBe(1);
-  expect(persisted.options[0].revision.id).toBe(s.input.revision_id);
-});
-
-test("E2 browser retains a stale proposal, explicitly compares the new predecessor and reconciles one original save", async ({
+test("ES02-T27/T28/T54/T58: stale discovery retains its proposal and reconciles one accepted save", async ({
   page,
 }, info) => {
   const s = await saved(page);
-  await page
-    .getByRole("button", { name: "Edit discovery", exact: true })
-    .click();
   await page
     .getByLabel("Q01 Included work", { exact: true })
     .fill("SYN retained local proposal");
@@ -369,31 +330,27 @@ test("E2 browser retains a stale proposal, explicitly compares the new predecess
     comparison_hash: preview.comparison_hash,
     confirmed_question_ids: preview.required_confirmation_ids,
   });
-  await page
-    .getByLabel("Discovery change reason", { exact: true })
-    .fill("SYN compare current revision before saving");
-  await page
-    .getByRole("button", { name: "Compare discovery proposal", exact: true })
-    .click();
-  await expect(page.getByRole("alert").first()).toBeVisible();
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  await expect(
+    page.getByText("The workspace changed. Your proposal is retained.", {
+      exact: true,
+    }),
+  ).toBeVisible();
   await expect(
     page.getByLabel("Q01 Included work", { exact: true }),
   ).toHaveValue("SYN retained local proposal");
   await page
-    .getByText("Compare current saved revision before continuing", {
-      exact: true,
-    })
-    .click();
-  await page
     .getByRole("button", {
-      name: "Keep my proposal and compare against the current revision",
+      name: "Keep proposal and review against current revision",
       exact: true,
     })
     .click();
   await page
-    .getByRole("button", { name: "Compare discovery proposal", exact: true })
+    .getByRole("button", { name: "Save discovery revision", exact: true })
     .click();
+  await page
+    .getByLabel("Discovery change reason", { exact: true })
+    .fill("SYN reviewed current predecessor");
   await expect(
     page.getByRole("checkbox", {
       name: "I confirm Q01 in this exact proposal",
@@ -410,7 +367,10 @@ test("E2 browser retains a stale proposal, explicitly compares the new predecess
     await route.abort("failed");
   });
   await page
-    .getByRole("button", { name: "Save discovery revision", exact: true })
+    .getByRole("button", {
+      name: "Confirm save discovery revision",
+      exact: true,
+    })
     .click();
   await expect(
     page.getByRole("button", {
@@ -419,41 +379,32 @@ test("E2 browser retains a stale proposal, explicitly compares the new predecess
     }),
   ).toBeVisible();
   await expect(
-    page.getByLabel("Q01 Included work", { exact: true }),
+    page.getByRole("button", {
+      name: "Confirm save discovery revision",
+      exact: true,
+    }),
   ).toBeDisabled();
-  await expect(page.getByRole("button", { name: /^Option A/ })).toBeDisabled();
-  await capture(
-    page,
-    info,
-    "successor-uncertain",
-    '.business-error[role="alert"]',
-  );
+  await capture(page, info, "successor-uncertain", ".es02-dialog");
   await page.unroute(`**/api/v1/${s.path}`);
   await page
     .getByRole("button", { name: "Confirm original save outcome", exact: true })
     .click();
   await expect(
-    page.getByRole("heading", {
-      name: "Saved revision 3 · Complete",
-      exact: true,
-    }),
+    page.getByRole("tab", { name: "Revisions 3", exact: true }),
   ).toBeVisible();
   const d = await call(page, s.path);
   expect(d.workspace.version).toBe(3);
   expect(d.options[0].revision.id).toBe(original!.revision_id);
   expect(
-    (await call(page, s.path + `/revisions?revision_id=${s.input.revision_id}`))
+    (await call(page, `${s.path}/revisions?revision_id=${s.input.revision_id}`))
       .input,
   ).toEqual(s.input.discovery);
 });
 
-test("E2 browser hides and restores original answers, copies unconfirmed discovery and explicitly selects, archives and reopens", async ({
+test("ES02-T08/T12/T21/T22: hidden answers reactivate explicitly and copied alternatives require independent selection", async ({
   page,
 }, info) => {
   const s = await saved(page);
-  await page
-    .getByRole("button", { name: "Edit discovery", exact: true })
-    .click();
   await page
     .getByRole("checkbox", { name: "Product supply", exact: true })
     .uncheck();
@@ -461,10 +412,7 @@ test("E2 browser hides and restores original answers, copies unconfirmed discove
     .getByRole("checkbox", { name: "Defined labour", exact: true })
     .check();
   await fillQuestion(page, "Q07", "No");
-  await compareSave(
-    page,
-    "SYN changed system with original product answers retained",
-  );
+  await compareSave(page, "SYN change work tags and retain hidden answers");
   let d = await call(page, s.path);
   expect(
     d.options[0].revision.retained_hidden_answers.map(
@@ -472,7 +420,7 @@ test("E2 browser hides and restores original answers, copies unconfirmed discove
     ),
   ).toEqual(["Q05", "Q06"]);
   await page
-    .getByRole("button", { name: "Edit discovery", exact: true })
+    .getByRole("button", { name: "1. Requirements", exact: true })
     .click();
   await page
     .getByRole("checkbox", { name: "Defined labour", exact: true })
@@ -480,15 +428,18 @@ test("E2 browser hides and restores original answers, copies unconfirmed discove
   await page
     .getByRole("checkbox", { name: "Product supply", exact: true })
     .check();
+  await page
+    .getByRole("button", { name: "2. Configuration", exact: true })
+    .click();
   await expect(
     page.getByLabel("Q05 Product description", { exact: true }),
   ).toHaveValue("SYN sensor reference");
   await page
+    .getByRole("button", { name: "Save discovery revision", exact: true })
+    .click();
+  await page
     .getByLabel("Discovery change reason", { exact: true })
     .fill("SYN reconfirm reactivated product scope");
-  await page
-    .getByRole("button", { name: "Compare discovery proposal", exact: true })
-    .click();
   await expect(
     page.getByRole("checkbox", {
       name: "I confirm Q05 in this exact proposal",
@@ -496,15 +447,22 @@ test("E2 browser hides and restores original answers, copies unconfirmed discove
     }),
   ).toBeVisible();
   await expect(
-    page.getByRole("button", { name: "Save discovery revision", exact: true }),
+    page.getByRole("button", {
+      name: "Confirm save discovery revision",
+      exact: true,
+    }),
   ).toBeDisabled();
   await acknowledge(page);
   await page
-    .getByRole("button", { name: "Save discovery revision", exact: true })
+    .getByRole("button", {
+      name: "Confirm save discovery revision",
+      exact: true,
+    })
     .click();
   await expect(
-    page.getByRole("region", { name: "Discovery proposal", exact: true }),
-  ).toHaveCount(0);
+    page.getByRole("tab", { name: "Revisions 3", exact: true }),
+  ).toBeVisible();
+  await page.getByRole("tab", { name: "Alternatives 1", exact: true }).click();
   await page
     .getByRole("button", { name: "Copy discovery to alternative", exact: true })
     .click();
@@ -514,7 +472,7 @@ test("E2 browser hides and restores original answers, copies unconfirmed discove
     .selectOption(CRM.owner);
   await page
     .getByLabel("Copied answers follow-up reason", { exact: true })
-    .fill("SYN confirm alternative scope independently");
+    .fill("SYN confirm alternative independently");
   await page
     .getByLabel("Discovery change reason", { exact: true })
     .fill("SYN explicit alternative");
@@ -524,25 +482,25 @@ test("E2 browser hides and restores original answers, copies unconfirmed discove
   await expect(
     page.getByRole("region", { name: "Discovery comparison", exact: true }),
   ).toContainText("Incomplete");
-  await expect(page.getByRole("checkbox", { name: /^I confirm/ })).toHaveCount(
-    0,
-  );
   await page
     .getByRole("button", { name: "Create alternative", exact: true })
     .click();
   await expect(
-    page.getByRole("region", { name: "Discovery proposal", exact: true }),
+    page.getByRole("dialog", { name: "New alternative", exact: true }),
   ).toHaveCount(0);
+  d = await call(page, s.path);
+  const b = d.options.find(
+    (o: { option: { label: string } }) => o.option.label === "B",
+  );
   await page
-    .getByRole("button", { name: /^Option B · Alternative · Active/ })
-    .click();
+    .getByLabel("Viewed alternative", { exact: true })
+    .selectOption(b.option.id);
   await expect(
-    page.getByRole("heading", {
-      name: "Saved revision 1 · Incomplete",
-      exact: true,
-    }),
-  ).toBeVisible();
-  await capture(page, info, "copied-unconfirmed", ".e2-snapshot");
+    page.getByRole("complementary", { name: "Estimate summary" }),
+  ).toContainText("Viewed alternative · not selected");
+  await expect(
+    page.getByRole("complementary", { name: "Estimate summary" }),
+  ).toContainText("Incomplete");
   await page
     .getByRole("button", { name: "Select this option", exact: true })
     .click();
@@ -553,50 +511,51 @@ test("E2 browser hides and restores original answers, copies unconfirmed discove
     .getByRole("button", { name: "Confirm select", exact: true })
     .click();
   await expect(
-    page.getByRole("button", { name: /^Option B · Selected basis/ }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: /^Option A · Alternative/ }).click();
+    page.getByRole("complementary", { name: "Estimate summary" }),
+  ).toContainText("Selected alternative");
   await page
-    .getByRole("button", { name: "Archive this option", exact: true })
-    .click();
-  await page
-    .getByLabel("Option action reason", { exact: true })
-    .fill("SYN archive unused A");
-  await page
-    .getByRole("button", { name: "Confirm archive", exact: true })
-    .click();
-  await expect(
-    page.getByRole("button", { name: /^Option A · Alternative · Archived/ }),
-  ).toBeVisible();
-  await page
-    .getByRole("button", { name: "Reopen this option", exact: true })
-    .click();
-  await page
-    .getByLabel("Option action reason", { exact: true })
-    .fill("SYN reopen A for later comparison");
-  await page
-    .getByRole("button", { name: "Confirm reopen", exact: true })
-    .click();
-  await expect(
-    page.getByRole("button", { name: /^Option A · Alternative · Active/ }),
-  ).toBeVisible();
+    .getByLabel("Viewed alternative", { exact: true })
+    .selectOption(s.input.option_id);
+  for (const action of ["Archive", "Reopen"]) {
+    await page
+      .getByRole("button", { name: `${action} this option`, exact: true })
+      .click();
+    await page
+      .getByLabel("Option action reason", { exact: true })
+      .fill(`SYN ${action} A`);
+    await page
+      .getByRole("button", {
+        name: `Confirm ${action.toLowerCase()}`,
+        exact: true,
+      })
+      .click();
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+  }
   d = await call(page, s.path);
   expect(d.workspace.version).toBe(7);
-  expect(d.workspace.selected_option_id).not.toBe(s.input.option_id);
-  await capture(page, info, "reopened-unselected", ".e2-options");
+  expect(d.workspace.selected_option_id).toBe(b.option.id);
+  await capture(page, info, "reopened-unselected", ".es02-context");
 });
 
-test("E2 browser clears unsaved answers on identity change and keeps keyboard controls within 320px", async ({
+test("ES02-T41/T42/T58: draft survives step changes and identity loss clears protected content at 320px", async ({
   page,
 }, info) => {
   await saved(page);
   await page.setViewportSize({ width: 320, height: 844 });
   await page
-    .getByRole("button", { name: "Edit discovery", exact: true })
-    .click();
-  await page
     .getByLabel("Q01 Included work", { exact: true })
     .fill("SYN private unsaved E2 proposal");
+  for (const step of [
+    "2. Configuration",
+    "3. Scope & delivery",
+    "4. Pricing",
+    "5. Review",
+    "1. Requirements",
+  ])
+    await page.getByRole("button", { name: step, exact: true }).click();
+  await expect(
+    page.getByLabel("Q01 Included work", { exact: true }),
+  ).toHaveValue("SYN private unsaved E2 proposal");
   await page.getByLabel("Q01 Included work", { exact: true }).focus();
   await expect(
     page.getByLabel("Q01 Included work", { exact: true }),
@@ -610,10 +569,42 @@ test("E2 browser clears unsaved answers on identity change and keeps keyboard co
     page.getByText("SYN private unsaved E2 proposal", { exact: true }),
   ).toHaveCount(0);
   await expect(page.getByRole("alert").first()).toBeVisible();
-  await capture(
-    page,
-    info,
-    "identity-cleared",
-    '.business-error[role="alert"]',
+});
+
+test("ES02-T70: an empty form becomes an explicit valid incomplete first revision without fabricated answers", async ({
+  page,
+}) => {
+  const o = await opportunity(page);
+  await page.goto(`/estimating/discovery/new?opportunity=${o.id}`);
+  await page
+    .getByRole("checkbox", { name: "Product supply", exact: true })
+    .check();
+  await page
+    .getByLabel("Site declaration", { exact: true })
+    .selectOption("Unknown");
+  await page.getByLabel("Site declaration reason", { exact: true }).fill("SYN site to be established by discovery owner");
+  const reasons = page.getByLabel(/follow-up reason$/, { exact: false });
+  for (const reason of await reasons.all())
+    await reason.fill("SYN owner to gather missing discovery information");
+  await page
+    .getByLabel("Discovery change reason", { exact: true })
+    .fill("SYN first owned incomplete discovery");
+  await page
+    .getByRole("button", { name: "Compare discovery proposal", exact: true })
+    .click();
+  await expect(
+    page.getByRole("region", { name: "Discovery comparison", exact: true }),
+  ).toContainText("Incomplete");
+  await expect(page.getByRole("checkbox", { name: /^I confirm/ })).toHaveCount(
+    0,
   );
+  await page
+    .getByRole("button", { name: "Create discovery workspace", exact: true })
+    .click();
+  await expect(
+    page.getByRole("tab", { name: "Revisions 1", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("complementary", { name: "Estimate summary" }),
+  ).toContainText("Incomplete");
 });

@@ -1,0 +1,15 @@
+Selected log lines from https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35592341601
+Source 74ecac4a34d7e79e390510cf082c74ccc09a5db4; overall conclusion success.
+
+E1 manual estimate, draft output and restart proof	Pinned runtime and static checks	2026-09-21T11:08:33.0810158Z ℹ tests 177
+E1 manual estimate, draft output and restart proof	Pinned runtime and static checks	2026-09-21T11:08:33.0810566Z ℹ pass 177
+E1 manual estimate, draft output and restart proof	Pinned runtime and static checks	2026-09-21T11:08:33.0810744Z ℹ fail 0
+E1 manual estimate, draft output and restart proof	Disposable current schema and E1 PostgreSQL proof	2026-09-21T11:15:16.1219957Z ℹ tests 70
+E1 manual estimate, draft output and restart proof	Disposable current schema and E1 PostgreSQL proof	2026-09-21T11:15:16.1220321Z ℹ pass 70
+E1 manual estimate, draft output and restart proof	Disposable current schema and E1 PostgreSQL proof	2026-09-21T11:15:16.1220484Z ℹ fail 0
+E1 manual estimate, draft output and restart proof	E1 real direct HTTP proof	2026-09-21T11:15:50.0085042Z ℹ tests 7
+E1 manual estimate, draft output and restart proof	E1 real direct HTTP proof	2026-09-21T11:15:50.0104218Z ℹ pass 7
+E1 manual estimate, draft output and restart proof	E1 real direct HTTP proof	2026-09-21T11:15:50.0104393Z ℹ fail 0
+E1 manual estimate, draft output and restart proof	Compiled E1 desktop, phone, 320px, uncertain response and long output	2026-09-21T11:17:00.5302247Z   13 passed (32.4s)
+E1 manual estimate, draft output and restart proof	Compiled ES-02, My Work, Engineering materials and shell regression	2026-09-21T11:18:16.2001446Z   29 passed (1.3m)
+E1 manual estimate, draft output and restart proof	Compiled ES-08 specialist workbench and recovery	2026-09-21T11:19:55.5723754Z   10 passed (1.6m)

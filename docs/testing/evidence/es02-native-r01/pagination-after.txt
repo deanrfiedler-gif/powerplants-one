@@ -1,0 +1,18 @@
+✔ ES02-T15/T16: a permitted selected Facility beyond the candidate page is retained, searchable and bounded separately (5489.4623ms)
+✔ ES02-T13/T20/T28/T38: complete configuration saves atomically, reloads and replays one original operation (4116.2946ms)
+✔ ES02-T21/T61/T67: exact structured copy remaps owned children consistently through preview and original replay (4139.8213ms)
+✔ ES02-T56/T68: stale configuration acknowledgments and removal of the extension cannot bypass readiness (4015.1895ms)
+✔ ES02-T31/T52/T57: saved total survives an incomplete successor, ordinary prices inherit the exact complete basis (9174.5046ms)
+✔ ES02-T25/T39: bounded immutable history, exact comparisons and repeated migration/seed preserve saved snapshots (7729.5533ms)
+✔ ES02-T26/T27/T29/T50/T68: source versions remain recorded, changed sources require fresh exact review and every new projection rechecks access (8675.8191ms)
+✔ ES02-T38/T61/T67: configuration child IDs cannot be borrowed by a fresh option and failed graph insertion rolls back atomically (8249.1069ms)
+✔ ES02-T25/T62: history beyond twenty revisions uses stable disjoint pages and exact permitted sources (7922.6731ms)
+✔ ES02-T29/T62: cost pagination cannot reveal a denied historical basis through its lookahead (8161.2377ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 69024.4008

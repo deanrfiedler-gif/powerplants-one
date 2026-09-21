@@ -1,0 +1,38 @@
+✔ ES02-T25/T39: bounded immutable history, exact comparisons and repeated migration/seed preserve saved snapshots (6146.2194ms)
+✔ E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original (12614.4755ms)
+✔ E1-DB10 current-main upgrade and repeated seed preserve accepted CRM originals and revoked grants (10411.5178ms)
+✔ DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent adoption and exact quotation recovery (16122.1466ms)
+✔ E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts and exact stored quotations (17354.4192ms)
+✔ P07 upgrade from P06 and repeat seed retain exact original issue, source, receipts and revoked grants (14748.0189ms)
+✔ P10 additive upgrade from real P09 issued originals retains exact rows, bytes, migration checksums and repeat seeds (21195.4675ms)
+✔ fresh combined installation retains both registries and both domains through repeat migration and seed (16599.2775ms)
+✔ main 0017 upgrades through Leads 0018 then Projects 0019 without replacing prior migration receipts (17092.9949ms)
+✔ an existing Leads 0018 record and receipt survive the Projects upgrade exactly (12572.7347ms)
+✔ P08 additive P07 upgrade preserves attendance, receipt, bytes and revoked grants (13914.1998ms)
+✔ P06 upgrade and repeat seed preserve exact P05 SQL evidence, revoked grants and accepted receipts (10281.1038ms)
+✔ P05 additive upgrade preserves exact P04 proposal bytes, receipts, source hashes and revoked grants; repeat seed preserves edits (9820.2911ms)
+✔ unchanged accepted operation recovers after connection restart and repeat seed retains booking history (5186.4269ms)
+✔ P09 fresh and P08 upgrade preserve originals and repeat seed does not revive revoked report grants (12824.668ms)
+✔ ES08-T26/T58/T61 durable incomplete drafts retain raw input and exact original recovery (5342.7448ms)
+✔ ES08-T28/T34/T35/T41/T44 synthetic receiving creates exact native lines, keeps manual line and atomically recovers (6962.4413ms)
+✔ ES08-T43/T63/T64 manual changes/deletion survive lineage and newer run updates evidence even with unchanged money (7145.2586ms)
+✔ ES08-T46/T59/T60 accepted original survives archive, payload mutation fails (7910.8153ms)
+✔ ES08-T73 terminal resolution excludes a late original and preserves accepted outcomes (7508.3527ms)
+✔ ES08-T46/T64 unchanged reapply is no-change, new run with equal money advances evidence and earlier quote stays pinned (12091.3189ms)
+✔ ES08-T37 100 exact lines succeed; 101 fail without changing costs or evidence (10260.8405ms)
+✔ ES08-T27/T28/T45 two receiving writers cannot overwrite and stale signature leaves no run (9688.7398ms)
+✔ ES08-T38/T65 persisted precision mismatch blocks receiving and exact old resolved set cannot substitute (9589.7541ms)
+✔ ES08-T05/T48/T59 current permission revocation refuses reads, preview, export and accepted originals (9863.1862ms)
+✔ ES08-T66 corrupt lineage cannot be reused; database mutation test rolls back (11252.0306ms)
+✔ ES08-T72/T73 create closure before aggregate existence survives dispatcher lookup and blocks late create (11849.4988ms)
+✔ ES08-T73 accepted-versus-close race has one terminal original outcome (12005.4375ms)
+✔ ES08-T33/T36/T67/T69 rebase changes only source/draft; new cost basis carries lineage; cross-alternative copy owns nothing (9538.9319ms)
+✔ ES08-T40/T42 kept manual overrides and retained removals require reconciliation on later receiving (9818.6682ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 364972.8783

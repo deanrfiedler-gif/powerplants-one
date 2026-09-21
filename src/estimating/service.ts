@@ -12,6 +12,7 @@ import { costBasisAvailable, estimateSite } from "./cost-basis-context";
 import { calculate, quoteAmounts } from "./math";
 import { quoteTemplate, type SafeQuote } from "./template";
 import { guardLegacyEstimateCreate, guardExistingEstimateMutation } from "./discovery-workspace-context";
+import { writeLineage } from "./specialist/lineage";
 export function versionHash(v:Pick<EstimateVersion,"title"|"scope"|"lines"|"policy"|"cost_schema_version">) {
   return digest(canonical({title:v.title,scope:v.scope,lines:v.lines,policy:v.policy,...(v.cost_schema_version === 2 ? {cost_schema_version:2} : {})}));
 }
@@ -40,6 +41,7 @@ export async function createEstimate(p:Principal,value:unknown) {
     const e=(await c.query<Estimate>(`INSERT INTO ppo.estimates(id,workspace_id,company_id,created_by,updated_by,opportunity_id,site_id,owner_id,option_id,estimation_revision_id,current_version_id)
       VALUES($1,$2,$3,$4,$4,$5,$6,$4,$7,$8,$9) RETURNING *`,[input.id,p.workspace_id,o.company_id,p.actor_id,o.id,o.site_id,randomUUID(),randomUUID(),id])).rows[0];
     await insertVersion(c,p,e,input,id,null);
+    await writeLineage(c,p,id,null);
     return {...e,audit_details:{saved_version_id:id,scope_revision:"r01",arithmetic_policy:input.policy}};
   },"Estimate","EstimateCreated");
 }
@@ -53,6 +55,7 @@ export async function saveEstimate(p:Principal,id:string,value:unknown) {
     await insertVersion(c,p,updated,input,next,old);
     if(await costBasisAvailable(c)) await c.query(`INSERT INTO ppo.estimate_discovery_bases(workspace_id,company_id,estimate_id,estimate_version_id,revision_id)
       SELECT workspace_id,company_id,estimate_id,$3,revision_id FROM ppo.estimate_discovery_bases WHERE workspace_id=$1 AND estimate_version_id=$2`,[p.workspace_id,old,next]);
+    await writeLineage(c,p,next,old);
     return {...updated,audit_details:{saved_version_id:next,predecessor_id:old,arithmetic_policy:input.policy}};
   },"Estimate","EstimateVersionSaved");
 }

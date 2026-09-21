@@ -1,0 +1,18 @@
+[WebServer] (node:34304) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"153.0.8010.53"}
+
+Running 4 tests using 1 worker
+
+(node:29788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop-chromium] › tmp\email-ci.spec.ts:41:1 › EC complete journey, reload, calendar navigation, details, narrow layout and denied identity (13.5s)
+
+  ok 2 [desktop-chromium] › tmp\email-ci.spec.ts:188:1 › EC accepted r02 demo: date navigation, timeline, details and phone sheet (1.8s)
+(node:35148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [mobile-chromium] › tmp\email-ci.spec.ts:41:1 › EC complete journey, reload, calendar navigation, details, narrow layout and denied identity (10.3s)
+
+  ok 4 [mobile-chromium] › tmp\email-ci.spec.ts:188:1 › EC accepted r02 demo: date navigation, timeline, details and phone sheet (1.5s)
+
+  4 passed (42.0s)

@@ -1,4 +1,6 @@
-import { expect, test, type Page } from "@playwright/test";
+import { test, myWorkOrigin as origin } from "../helpers/my-work-browser";
+import { MY_WORK_NOW } from "../helpers/my-work-clock";
+import { expect, type Page } from "@playwright/test";
 import { MY_WORK, seedScenario, type Call } from "../helpers/my-work";
 
 // My Work Sales Overview (design report r03, mockups r06). One synthetic identity owns the whole
@@ -9,7 +11,6 @@ test.describe.configure({ mode: "serial" });
 // and commands (mobile r07), proved in my-work-mobile.spec.ts.
 test.skip(({ isMobile }) => !!isMobile, "The phone overview is proved in my-work-mobile.spec.ts");
 
-const origin = "http://127.0.0.1:3000";
 const caller = (page: Page): Call => async (path, body) => {
   const r = await page.request.fetch(`/api/v1/${path}`, {
     method: body ? "POST" : "GET",
@@ -35,7 +36,10 @@ let scenario: Awaited<ReturnType<typeof seedScenario>>;
 test("the overview reconciles its four counts, the list, the schedule and the notices in both menu states", async ({ page }, info) => {
   test.setTimeout(240000);
   await signIn(page);
-  scenario = await seedScenario(caller(page));
+  const overview = await caller(page)("work/overview");
+  expect(overview.status).toBe(200);
+  expect(overview.body.observed_at).toBe(MY_WORK_NOW);
+  scenario = await seedScenario(caller(page), new Date(MY_WORK_NOW));
   await open(page);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(/^Good (morning|afternoon|evening), /);
 

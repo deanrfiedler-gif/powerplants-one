@@ -51,7 +51,7 @@ export async function costBasisRestart({phase,root,evidence,call,page,pid,databa
   const q1=(proof.original_quote as {row:{id:string}}[])[0].row.id;
   assert.deepEqual((await database().query("SELECT to_jsonb(q) AS row FROM ppo.draft_quote_revisions q WHERE id=$1",[q1])).rows,proof.original_quote);
   for(const original of proof.accepted){assert.deepEqual(await call(`operations/${original.body.operation_id}`),original.receipt);assert.deepEqual(await call(original.path,original.body),original.receipt);}
-  await page.goto(`http://127.0.0.1:3000/estimating/estimates/${proof.estimate_id}`);
+  await page.goto(`${process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000"}/estimating/estimates/${proof.estimate_id}`);
   await expect(page.getByRole("region",{name:"Saved discovery basis",exact:true})).toContainText("discovery revision 2");
   await page.getByRole("region",{name:"Saved discovery basis",exact:true}).evaluate(e=>e.scrollIntoView({block:"start"}));
   const screenshot=await page.screenshot({path:join(evidence,`cost-basis-${phase}.png`)}),checkout=execFileSync("git",["rev-parse","HEAD"],{encoding:"utf8"}).trim();

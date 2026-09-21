@@ -155,6 +155,36 @@
       "adaptations": "docs/decisions/ADR-0033-staged-acceptance.md"
     },
     {
+      "id": "es02-r01",
+      "route": "/estimating/discovery/[id]",
+      "scope": "#ppo-estimate-wizard",
+      "layout": "full-bleed",
+      "scroll_owner": ".es02-scroll (desktop); .es02-layout (compact)",
+      "design": "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
+      "sha256": "7ce47597beb1f16e161bac1381c7cfaaabaf4eff357dcbf65ef558f0c02252b2",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/helpers/es02-design.ts",
+      "application_proof": "tests/browser/estimating-wizard.spec.ts",
+      "authority": "Dean supplied implementation prompt r03 and plan r04 and requested execution; native visual and business acceptance remain pending. This integration contract does not promote a new accepted design baseline.",
+      "adaptations": "docs/decisions/ADR-0035-es02-structured-discovery.md"
+    },
+    {
+      "id": "es08-native-r01",
+      "route": "/estimating/configurations",
+      "scope": "#ppo-specialist",
+      "layout": "full-bleed",
+      "scroll_owner": ".es08-scroll (desktop); .es08-layout (compact)",
+      "design": "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
+      "sha256": "3cc832c3368f5b7ac9eb3352eee0fc3525e5220984214eb6c459c6ae2fb79881",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/helpers/es08-design.ts",
+      "application_proof": "tests/browser/specialist-workbench.spec.ts",
+      "authority": "User requested execution of ES-08 prompt/plan r02. Native visual and business acceptance remain pending; no new owner-approved screenshot baseline.",
+      "adaptations": "docs/decisions/ADR-0034-es08-specialist-workbench.md"
+    },
+    {
       "id": "cs05-native-r01",
       "route": "/facilities",
       "scope": "#ppo-facilities",

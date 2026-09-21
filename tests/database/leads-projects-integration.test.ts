@@ -132,7 +132,7 @@ async function exerciseBoth() {
   const hashes = await ledger();
   assert.deepEqual(
     hashes.filter((r) => r.version >= 18).map((r) => r.version),
-    [18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 41],
+    [18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41],
   );
   assert.deepEqual(
     (
@@ -141,7 +141,7 @@ async function exerciseBoth() {
         "SELECT version FROM ppo.seed_receipts WHERE version>=18 ORDER BY version",
       )
     ).map((r) => r.version),
-    [18, 19, 20, 21, 24, 29, 30, 31, 32, 41],
+    [18, 19, 20, 21, 24, 29, 30, 31, 32, 40, 41],
   );
   await migrate();
   await seed();

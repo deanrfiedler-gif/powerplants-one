@@ -1,0 +1,19 @@
+✔ ES02-T46/T47/T51: four unique systems, three locations, two growing areas and two independent configuration findings (7.5172ms)
+✔ ES02-T56/T60/T68: legacy hash and tags stay unchanged; extended configuration cannot claim Complete through Q01–Q10 alone (2.6348ms)
+✔ ES02-T16/T17/T66: coverage membership, duplicate IDs and incompatible units are refused without inventing references (2.1696ms)
+✔ ES02-T48: combined filters do not mutate selected entities or global counts (0.4131ms)
+✔ ES02-T61/T67: copying remaps the whole child graph deterministically and keeps exact source lineage (4.7533ms)
+✔ ES02-T24: self comparison is empty, renames are changes and unrelated same-label systems never pair (2.4209ms)
+✔ ES02-T68: review tokens bind value/unit/source/evidence and current context separately from question IDs (2.8ms)
+✔ ES02-T69: canonical whole request budget counts multibyte notes and envelope overhead (2.6828ms)
+✔ ES02-T69: exactly 65,536 canonical UTF-8 bytes pass and one extra envelope byte fails (45.2775ms)
+✔ ES02-T24/T61: a copied graph matches by exact lineage without false membership changes (0.7458ms)
+✔ ES02-T69: the costing envelope shares the exact UTF-8 boundary, including reason and basis expectations (83.2723ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 474.9845

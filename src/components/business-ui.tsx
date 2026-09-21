@@ -383,6 +383,7 @@ export function SelectField({
   options,
   empty = "Choose…",
   required = false,
+  disabled = false,
 }: {
   name: string;
   validationField?: string;
@@ -392,6 +393,7 @@ export function SelectField({
   options: Option[];
   empty?: string;
   required?: boolean;
+  disabled?: boolean;
 }) {
   const error = useFieldError(validationField ?? name);
   return (
@@ -401,6 +403,7 @@ export function SelectField({
         {required && <span aria-hidden="true"> *</span>}
       </label>
       <select
+        disabled={disabled}
         id={name}
         data-validation-field={validationField ?? name}
         aria-label={label}

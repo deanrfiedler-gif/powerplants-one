@@ -1,0 +1,88 @@
+[WebServer] (node:35780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"153.0.8010.53"}
+
+Running 10 tests using 1 worker
+
+(node:30724) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop-chromium] › tests\browser\specialist-workbench.spec.ts:57:1 › ES08 native six views, shared shell, dense parts and responsive evidence (29.9s)
+  ok  2 [desktop-chromium] › tests\browser\specialist-workbench.spec.ts:185:1 › ES08 durable raw draft, manual re-review, native receiving, exact history and contribution link (49.3s)
+[WebServer] {"correlation_id":"35606cd0-c74b-4b47-9748-64c0f3955951","code":"DependencyUnavailable","category":"ConnectionFailure"}
+  ok  3 [desktop-chromium] › tests\browser\specialist-workbench.spec.ts:371:1 › ES08 reload recovery after accepted and unaccepted saves retains only a minimal pointer (44.6s)
+  ok  4 [desktop-chromium] › tests\browser\specialist-workbench.spec.ts:426:1 › ES08 create recovery through reload, read-only review and permission withdrawal (27.5s)
+  ok  5 [desktop-chromium] › tests\browser\specialist-workbench.spec.ts:470:1 › ES08-T52 late preview cannot replace a newer calculation (23.7s)
+(node:6544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  6 [mobile-chromium] › tests\browser\specialist-workbench.spec.ts:57:1 › ES08 native six views, shared shell, dense parts and responsive evidence (1.3m)
+  x   7 [mobile-chromium] › tests\browser\specialist-workbench.spec.ts:185:1 › ES08 durable raw draft, manual re-review, native receiving, exact history and contribution link (47.1s)
+(node:32636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  8 [mobile-chromium] › tests\browser\specialist-workbench.spec.ts:371:1 › ES08 reload recovery after accepted and unaccepted saves retains only a minimal pointer (39.2s)
+  ok  9 [mobile-chromium] › tests\browser\specialist-workbench.spec.ts:426:1 › ES08 create recovery through reload, read-only review and permission withdrawal (34.7s)
+  ok 10 [mobile-chromium] › tests\browser\specialist-workbench.spec.ts:470:1 › ES08-T52 late preview cannot replace a newer calculation (19.1s)
+
+
+  1) [mobile-chromium] › tests\browser\specialist-workbench.spec.ts:185:1 › ES08 durable raw draft, manual re-review, native receiving, exact history and contribution link
+
+    Error: Command failed: C:\Program Files\nodejs\node.exe --env-file=.env.local --import tsx scripts/es08-fixture.ts reset
+    (node:27588) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+    (Use `node --trace-warnings ...` to show where the warning was created)
+    C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\node_modules\pg\lib\client.js:694
+              Error.captureStackTrace(err)
+                    ^
+
+    error: canceling statement due to statement timeout
+
+       6 | import { compareEs08Design } from "../helpers/es08-design";
+       7 | const fixture = (...args: string[]) =>
+    >  8 |   execFileSync(
+         |   ^
+       9 |     process.execPath,
+      10 |     [
+      11 |       "--env-file=.env.local",
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\node_modules\pg\lib\client.js:694:17
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:58:7)
+        at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\src\platform\database.ts:44:20)
+        at async seed (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:49:3)
+        at async reset (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\database.ts:110:3)
+        at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\scripts\es08-fixture.ts:14:5) {
+      length: 246,
+      severity: 'ERROR',
+      code: '57014',
+      detail: undefined,
+      hint: undefined,
+      position: undefined,
+      internalPosition: undefined,
+      internalQuery: undefined,
+      where: 'SQL expression "NOT EXISTS(SELECT 1 FROM pg_timezone_names WHERE name=NEW.timezone)"\n' +
+        'PL/pgSQL function ppo.site_timezone() line 2 at IF',
+      schema: undefined,
+      table: undefined,
+      column: undefined,
+      dataType: undefined,
+      constraint: undefined,
+      file: 'postgres.c',
+      line: '3396',
+      routine: 'ProcessInterrupts'
+    }
+
+    Node.js v24.21.0
+
+        at fixture (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\browser\specialist-workbench.spec.ts:8:3)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\en07-change-impact\tests\browser\specialist-workbench.spec.ts:23:3
+
+    Error Context: verification-evidence\estimating-es08-complete\specialist-workbench-ES08--600a5-story-and-contribution-link-mobile-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    verification-evidence\estimating-es08-complete\specialist-workbench-ES08--600a5-story-and-contribution-link-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace verification-evidence\estimating-es08-complete\specialist-workbench-ES08--600a5-story-and-contribution-link-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [mobile-chromium] › tests\browser\specialist-workbench.spec.ts:185:1 › ES08 durable raw draft, manual re-review, native receiving, exact history and contribution link
+  9 passed (7.5m)

@@ -1,3 +1,5 @@
+import { createResolutionAuthority } from "../estimating/specialist/recovery";
+import { acceptedAuthority as specialistAcceptedAuthority } from "../estimating/specialist/context";
 import { receiptAuthority as acceptanceReceiptAuthority } from "../projects/acceptance/commands";
 import { engineeringRow } from "../engineering/service";
 import { materialReceiptAuthority } from "../engineering/materials/commands";
@@ -34,7 +36,7 @@ export async function readOperation(
 ): Promise<OperationReceipt> {
   const client = database();
   const result = await client.query(
-    `SELECT r.result,r.record_id,i.object_type,a.details->>'command' AS command FROM ppo.operation_receipts r JOIN ppo.business_identities i ON (i.workspace_id,i.id)=(r.workspace_id,r.record_id)
+    `SELECT r.result,r.record_id,i.object_type,a.details->>'command' AS command,a.details->>'configuration_id' AS specialist_id FROM ppo.operation_receipts r JOIN ppo.business_identities i ON (i.workspace_id,i.id)=(r.workspace_id,r.record_id)
     JOIN ppo.audit_events a ON (a.workspace_id,a.actor_id,a.operation_id)=(r.workspace_id,r.actor_id,r.operation_id)
     WHERE r.workspace_id=$1 AND r.actor_id=$2 AND r.operation_id=$3`,
     [p.workspace_id, p.actor_id, uuid(operation_id, "operation_id")],
@@ -59,10 +61,14 @@ export async function readOperation(
   } else if (r.object_type === "EstimatingWorkspace") {
     return transaction(async c=>{
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",[p.workspace_id]);
-      await discoveryReceiptAuthority(c,p,r.record_id,operation_id);
+      if (r.command === "ResolveSpecialistCreate") await createResolutionAuthority(c,p,r.record_id,operation_id);
+      else await discoveryReceiptAuthority(c,p,r.record_id,operation_id);
       return r.result as OperationReceipt;
     });
+  } else if (r.object_type === "SpecialistConfiguration") {
+    if (!await specialistAcceptedAuthority(client,p,r.record_id,operation_id)) throw unavailable();
   } else if (r.object_type === "Estimate") {
+    if (r.command === "ApplySpecialistConfiguration" && (!r.specialist_id || !await specialistAcceptedAuthority(client,p,r.specialist_id,operation_id))) throw unavailable();
     if(!(await acceptedEstimateContext(client,p,r.record_id,operation_id)))throw unavailable();
   } else if (r.object_type === "DraftQuoteRevision") {
     await quoteContext(client,p,r.record_id,"estimating.quote.prepare");

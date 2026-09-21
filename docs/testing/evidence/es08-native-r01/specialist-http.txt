@@ -1,0 +1,10 @@
+✔ ES08-T05/T27/T35/T53/T57/T61/T70/T79 scoped full-envelope HTTP contract (1172.1485ms)
+✔ ES08-T35/T39/T46/T59/T65/T70 native HTTP receiver rechecks signed exact server policy (2818.4974ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5770.3784
