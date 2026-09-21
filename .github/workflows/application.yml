@@ -261,7 +261,10 @@ jobs:
   p11_quality:
     name: P11 focused integrated quality and access proof
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    # All retained tests and uploads finished at 30 minutes on c01dc5e,
+    # but cleanup crossed the job limit by two seconds. Keep test deadlines
+    # and cold development coverage; give the complete job bounded headroom.
+    timeout-minutes: 35
     services:
       postgres:
         image: postgres:16.15
