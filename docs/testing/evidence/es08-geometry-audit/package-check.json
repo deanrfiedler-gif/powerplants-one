@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "audited_commit": "0c95c5af776c97374997623bd1070d9de480cf82",
+  "publication_base": "d6251b42f5c969f537a6397c1823f8c871e4d4d1",
+  "checks": [
+    {
+      "register": "docs/delivery/es08-geometry-field-mapping.csv",
+      "rows": 49,
+      "columns": 14,
+      "unique_sequential_ids": true,
+      "all_cells_populated": true
+    },
+    {
+      "register": "docs/delivery/es08-geometry-calculation-mapping.csv",
+      "rows": 38,
+      "columns": 14,
+      "unique_sequential_ids": true,
+      "all_cells_populated": true
+    },
+    {
+      "reference": "PPO-Greenhouse-Blueprint-and-Screen-Calculator-r10.html",
+      "sha256": "9578be7aca13bbfc81a8f6c2c1b7359228079c88f6bb76a9f801681c8a4cf5c2",
+      "source_bytes_unchanged": true
+    },
+    {
+      "reference": "PPO-Specialist-Configuration-Workbench-r02.html",
+      "sha256": "bc06fa41f1362145eb585431427ee5aebe94d1e3c8a40cc53b68ccc4d6a72e5c",
+      "source_bytes_unchanged": true
+    },
+    {
+      "reference": "PPO-Specialist-Configuration-Workbench-r03.html",
+      "sha256": "3cc832c3368f5b7ac9eb3352eee0fc3525e5220984214eb6c459c6ae2fb79881",
+      "source_bytes_unchanged": true
+    }
+  ],
+  "changed_paths": [
+    "docs/README.md",
+    "docs/STATUS.md",
+    "docs/decisions/README.md",
+    "docs/decisions/es08-screen-geometry-study.md",
+    "docs/delivery/es08-geometry-audit.md",
+    "docs/delivery/es08-geometry-build-plan.md",
+    "docs/delivery/es08-geometry-calculation-mapping.csv",
+    "docs/delivery/es08-geometry-field-mapping.csv",
+    "docs/delivery/es08-geometry-implementation-prompt.md",
+    "docs/delivery/es08-geometry-mapping.md",
+    "docs/reference/ui/README.md",
+    "docs/reference/ui/specialist/PPO-Greenhouse-Blueprint-and-Screen-Calculator-r10.html",
+    "docs/standards/chatgpt-project-instructions.md",
+    "docs/standards/document-register.csv",
+    "docs/testing/evidence/es08-geometry-audit/README.md",
+    "docs/testing/evidence/es08-geometry-audit/browser-observations.json",
+    "docs/testing/evidence/es08-geometry-audit/foundation.json",
+    "docs/testing/evidence/es08-geometry-audit/naming.json",
+    "docs/testing/evidence/es08-geometry-audit/package-check.json",
+    "docs/testing/evidence/es08-geometry-audit/probe-browser.mjs",
+    "docs/testing/evidence/es08-geometry-audit/probe-r10.mjs",
+    "docs/testing/evidence/es08-geometry-audit/r02-desktop.png",
+    "docs/testing/evidence/es08-geometry-audit/r10-calculation-observations.json",
+    "docs/testing/evidence/es08-geometry-audit/r10-desktop.png",
+    "docs/testing/evidence/es08-geometry-audit/r10-phone.png"
+  ],
+  "only_documentation_paths": true,
+  "project_instruction_characters": 7987,
+  "reference_probe_cases": 13,
+  "scope": "Register integrity and documentation-only publication; no native implementation verification",
+  "probe_lint": {
+    "command": "node ../../node_modules/eslint/bin/eslint.js docs/testing/evidence/es08-geometry-audit/probe-r10.mjs docs/testing/evidence/es08-geometry-audit/probe-browser.mjs",
+    "exit_code": 0,
+    "scope": "Audit-only JavaScript probes; repository ESLint configuration"
+  }
+}

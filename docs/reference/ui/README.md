@@ -1,7 +1,7 @@
 ---
 document_id: PPO-UI-DESIGN-INDEX
 title: HTML design index and maintenance guide
-revision: r09
+revision: r10
 updated: 2026-09-22
 owner: Dean Fiedler
 status: Repository inventory; individual design approvals remain in linked decisions
@@ -143,6 +143,7 @@ These are the latest uploaded shared visual references. Their presence does not 
 | Service Agreements & Maintenance | [r01](maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html) | Proposed MA-01–MA-05 design; native checks and capture review complete; owner acceptance and application integration separate | Sourced coverage, recurring obligations, owned requests and renewal preparation. [Design and receiving handover](../../decisions/service-agreements-maintenance-design.md). |
 | Warranty & Customer Resolution | [r01](warranty/PPO-Warranty-and-Customer-Resolution-Workspace-r01.html) | Proposed MA-06/MA-07 design; 25 model and 17 native browser groups passed; captures reviewed; owner acceptance separate | Evidence, independent decisions, retained replacement history and outstanding supplier recovery. [Detailed companion report](warranty/PPO-Warranty-and-Customer-Resolution-Workspace-Report-r01.md) · [Handover](../../decisions/warranty-customer-resolution-design.md). |
 | Specialist configuration / Screen Systems | [r02](specialist/PPO-Specialist-Configuration-Workbench-r02.html), [detailed report](specialist/PPO-Specialist-Configuration-Workbench-Report-r02.md) | Proposed source-informed successor; r01 preserved | [Design and source audit](../../decisions/specialist-screen-systems-design.md). Recovered calculations and review workflow; current mappings, ranges and engineering acceptance remain open. |
+| Screen Systems advanced geometry study reference | [Supplied r10](specialist/PPO-Greenhouse-Blueprint-and-Screen-Calculator-r10.html) | Exact uploaded technical-study reference; not adopted native baseline | Four-family geometry/drawings and preliminary panel schedule. [Integration audit](../../delivery/es08-geometry-audit.md) records source differences, defects and the separate quantity-engine boundary. |
 
 ## Preserved earlier revisions
 

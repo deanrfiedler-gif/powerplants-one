@@ -1,5 +1,7 @@
 # Decision control
 
+[ES-08 Screen Geometry Study architecture proposal](es08-screen-geometry-study.md) retains the quantity engine and proposes an owned versioned study with explicit mapping, source adoption and immutable drawings. Audit only at `0c95c5a`; no migration slot or native implementation is authorised by that session.
+
 [decision-register.csv](decision-register.csv) retains the 29 original questions and closure evidence. D-003 is resolved for the personal prototype under ADR-0005. D-004/D-022/D-029 remain partially resolved; 25 other decisions remain open. Proposed roles are not assigned staff.
 
 | ADR | Decision |

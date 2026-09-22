@@ -1,0 +1,8 @@
+{
+  "command": "python scripts/check_naming.py",
+  "exit_code": 0,
+  "stdout": "{\n  \"status\": \"passed\",\n  \"document_records\": 354,\n  \"standing_exceptions\": 9,\n  \"front_matter_revisions_compared\": 184,\n  \"project_instruction_characters\": 7987,\n  \"errors\": [],\n  \"scope\": \"Naming and documentation consistency only; runtime behaviour is verified separately\"\n}\n",
+  "stderr": "",
+  "publication_base": "d6251b42f5c969f537a6397c1823f8c871e4d4d1",
+  "scope": "Documentation assurance at publication checkpoint; not native acceptance"
+}

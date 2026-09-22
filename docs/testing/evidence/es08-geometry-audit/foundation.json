@@ -1,0 +1,8 @@
+{
+  "command": "python scripts/check_foundation.py",
+  "exit_code": 0,
+  "stdout": "{\n  \"status\": \"passed\",\n  \"issued_sources\": 17,\n  \"requirements\": 78,\n  \"decisions\": 29,\n  \"planned_acceptance\": 38,\n  \"backlog_items\": 16,\n  \"linked_issues\": 16,\n  \"local_links_checked\": 3932,\n  \"files_scanned_for_markers\": 2686,\n  \"errors\": [],\n  \"scope\": \"Documentation assurance only; no business acceptance tests executed\"\n}\n",
+  "stderr": "",
+  "publication_base": "d6251b42f5c969f537a6397c1823f8c871e4d4d1",
+  "scope": "Documentation assurance at publication checkpoint; not native acceptance"
+}
