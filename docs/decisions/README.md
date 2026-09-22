@@ -4,6 +4,7 @@
 
 | ADR | Decision |
 |---|---|
+| [ADR-0038](ADR-0038-priva-fertigation-native.md) | Native ES-02 fertigation scope, neutral context, immutable lineage and bounded calculations; supplier/owner acceptance separate |
 | [ADR-0001](ADR-0001-personal-private-prototype.md) | Personal private prototype ownership |
 | [ADR-0002](ADR-0002-stable-specification-filenames.md) | Stable working specification names and frozen issued baselines |
 | [ADR-0003](ADR-0003-prototype-architecture.md) | Recommended prototype application architecture and proof requirements |

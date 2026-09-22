@@ -1,0 +1,55 @@
+{
+  "synthetic": true,
+  "scope": "Single sequential service calls on the isolated test database. SQL counts include authority, transaction and receipt statements; fixture setup and HTTP identity resolution are excluded. New pool is not a cold operating-system/PostgreSQL cache. Timings are individual samples, not percentiles.",
+  "node": "v24.21.0",
+  "platform": "win32",
+  "fixture": {
+    "areas": 100,
+    "valves": 1000,
+    "groups": 100,
+    "proposal_bytes": 1077332,
+    "read_bytes": 3627908
+  },
+  "measurements": [
+    {
+      "name": "large validation",
+      "sql_calls": 0,
+      "duration_ms": 25.7
+    },
+    {
+      "name": "large deterministic calculation",
+      "sql_calls": 0,
+      "duration_ms": 18.46
+    },
+    {
+      "name": "large create; warm database pool",
+      "sql_calls": 338,
+      "duration_ms": 1410.35
+    },
+    {
+      "name": "large read; warm database pool",
+      "sql_calls": 350,
+      "duration_ms": 354.29
+    },
+    {
+      "name": "large successor save; warm database pool",
+      "sql_calls": 429,
+      "duration_ms": 1529.34
+    },
+    {
+      "name": "large read; newly opened database pool",
+      "sql_calls": 350,
+      "duration_ms": 520.12
+    },
+    {
+      "name": "typical one-valve read; warm database pool",
+      "sql_calls": 350,
+      "duration_ms": 138.61
+    },
+    {
+      "name": "rejected oversized graph; before database work",
+      "sql_calls": 0,
+      "duration_ms": 6.05
+    }
+  ]
+}

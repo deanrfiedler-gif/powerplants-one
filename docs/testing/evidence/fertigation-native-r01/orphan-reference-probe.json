@@ -1,0 +1,10 @@
+{
+  "synthetic": true,
+  "method": "Read-only live schema inventory and hasStoredReference queries; no cleanup or object writes",
+  "migration": 42,
+  "relevant_reference_columns": 378,
+  "inventory_limit": 512,
+  "retained_output_protected": true,
+  "absent_uuid_has_reference": false,
+  "maintenance_source_sha256": "1a1bae6e43b3f4c29d288fea32de3af000738bd89641d3dddf40f838312368e1"
+}

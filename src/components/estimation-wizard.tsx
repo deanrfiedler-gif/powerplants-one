@@ -29,6 +29,7 @@ import {
   SystemsEditor,
 } from "./configuration-editor";
 import { ProposalEditor, ScopeView } from "./discovery-screens";
+import { FertigationReceivedNotes, FertigationReceivedNotesResource } from "./fertigation-received-notes";
 import {
   configurationCounts,
   emptyConfiguration,
@@ -707,6 +708,7 @@ function History({
           {inspect.input?.configuration && (
             <pre>{JSON.stringify(inspect.input.configuration, null, 2)}</pre>
           )}
+          <FertigationReceivedNotesResource key={inspect.id} workspaceId={id} revisionId={inspect.id}/>
           {detail.can_edit &&
             inspect.input &&
             inspect.option_id === optionId && (
@@ -1072,6 +1074,7 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                 </Link>
               </li>
               <li><SpecialistEntry workspaceId={id} optionId={current.option.id}/></li>
+              <li><Link href={`/estimating/fertigation?estimating_workspace_id=${id}&option_id=${current.option.id}`}>Priva Fertigation Configurator</Link></li>
               <li>
                 <Link href="/estimating">Manual estimates</Link>
               </li>
@@ -1166,6 +1169,7 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                 )}
                 {
                   <div key={current.option.id} hidden={tab !== "Discovery"}>
+                    <FertigationReceivedNotes items={current.fertigation_handovers}/>
                     <nav className="es02-steps" aria-label="Discovery steps">
                       {steps.map((s, i) => (
                         <button

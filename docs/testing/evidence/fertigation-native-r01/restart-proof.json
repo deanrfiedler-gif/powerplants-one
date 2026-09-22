@@ -1,0 +1,42 @@
+{
+  "synthetic": true,
+  "database_started_at": "2026-09-22T06:11:15.541Z",
+  "scope_id": "6b781de4-0513-4e7d-8ffa-be155c7ee7fe",
+  "revision_id": "4e3fb5ca-1c38-49cf-823c-062cfba25e8c",
+  "content_hash": "219245938814fbdc28c5d5d2461052b182fb8bbb78fb9ee6e033e9fe4dda6293",
+  "source_revision_id": "b56db689-5b48-4a98-b3d3-970def38aa65",
+  "valve_id": "15e2d79f-b99d-45bf-9754-793b244202a8",
+  "master_id": "3425ac16-0806-4232-bcae-6bc491f7722b",
+  "operation_id": "7e03e95f-ef5e-4628-a3a8-9012f61aed23",
+  "receipt": {
+    "operation_id": "7e03e95f-ef5e-4628-a3a8-9012f61aed23",
+    "record_id": "6b781de4-0513-4e7d-8ffa-be155c7ee7fe",
+    "record_version": 2,
+    "state": "Active",
+    "accepted_at": "2026-09-22T07:13:27.237Z",
+    "receipt_id": "d474b74d-efd3-4c76-bcc3-1e88952abb64",
+    "warnings": [],
+    "task_ids": [
+      "38d2e734-907b-42a2-ad92-03ee9f07d3bd"
+    ]
+  },
+  "evidence_id": "fe528665-e0af-49b6-8053-5e06b1f6a5b6",
+  "evidence_hash": "8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e",
+  "output_id": "6ddc4d8b-d160-4f15-8a87-a4dedd62338d",
+  "output_hash": "48b740df6fe8dcd43b59437748e6c33467d682e878a96d027539ce9233c8fcfe",
+  "verification": {
+    "app_process_before": 30248,
+    "app_process_after": 28248,
+    "postgres_port": 55442,
+    "build_id": "lvKYfTdLUzPlRDJHoINjr",
+    "synthetic": true,
+    "revision_id": "4e3fb5ca-1c38-49cf-823c-062cfba25e8c",
+    "content_hash": "219245938814fbdc28c5d5d2461052b182fb8bbb78fb9ee6e033e9fe4dda6293",
+    "database_started_before": "2026-09-22T06:11:15.541Z",
+    "database_started_after": "2026-09-22T07:13:35.324Z",
+    "database_restart_required": true,
+    "new_authenticated_http_session": true,
+    "exact_revision_master_valve_receipt_png_html_hashes": "passed",
+    "postgres_process_after": 32692
+  }
+}

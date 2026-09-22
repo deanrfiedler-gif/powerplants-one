@@ -10,6 +10,7 @@ import { visibleOpportunity } from "../crm/context";
 import { digest } from "../documents/store";
 import { configurationConfirmations, copyConfiguration } from "./configuration";
 import { savedOptionCost, discoveryHistoryCounts } from "./discovery-reads";
+import { receivedFertigation } from "./fertigation/receiving-reads";
 import {
   compareDiscovery,
   compileDiscovery,
@@ -686,7 +687,7 @@ export async function readDiscoveryWorkspace(p: Principal, id: string) {
     const presented = [], counts = await discoveryHistoryCounts(c, p, workspace);
     for (const item of options) {
       const cost = await savedOptionCost(c, p, item.option.id);
-      presented.push({ ...item, history_count: counts.get(item.option.id) ?? null, evaluation: item.revision.input ? compileDiscovery(item.revision.input) : null, cost: cost.status === "Available" ? { status: cost.status, version: cost.version, amount: cost.sell_total, basis: cost.basis } : { status: cost.status } });
+      presented.push({ ...item, fertigation_handovers: await receivedFertigation(c,p,workspace.id,item.revision.id), history_count: counts.get(item.option.id) ?? null, evaluation: item.revision.input ? compileDiscovery(item.revision.input) : null, cost: cost.status === "Available" ? { status: cost.status, version: cost.version, amount: cost.sell_total, basis: cost.basis } : { status: cost.status } });
     }
     return {
       workspace,

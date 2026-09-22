@@ -1,0 +1,34 @@
+[
+  {
+    "fixture": "100 areas; 1000 valves; 100 groups; 300 delivery events",
+    "proposal_utf8_bytes": 1077332,
+    "viewport": "1440x1000",
+    "validation_ms": 31.19890000000123,
+    "engine_ms": 32.143200000000434,
+    "api_create_ms": 1784.000899999999,
+    "api_read_ms": 389.97789999999986,
+    "read_response_utf8_bytes": 3627900,
+    "api_save_ms": 1699.150099999999,
+    "ui_navigation_ms": 1001.7986999999994,
+    "ui_next_page_ms": 57.599999999998545,
+    "ui_search_open_ms": 99.95179999999891,
+    "proof_project": "desktop",
+    "proof_run": "Compiled twelve-case final browser proof; no other repository build/database/unit suite scheduled concurrently"
+  },
+  {
+    "fixture": "100 areas; 1000 valves; 100 groups; 300 delivery events",
+    "proposal_utf8_bytes": 1077332,
+    "viewport": "390x844",
+    "validation_ms": 29.990700000000288,
+    "engine_ms": 32.005199999999604,
+    "api_create_ms": 1795.6767999999993,
+    "api_read_ms": 362.6675000000014,
+    "read_response_utf8_bytes": 3627900,
+    "api_save_ms": 1665.6954999999998,
+    "ui_navigation_ms": 1018.0357999999997,
+    "ui_next_page_ms": 60.62280000000101,
+    "ui_search_open_ms": 106.61359999999877,
+    "proof_project": "phone",
+    "proof_run": "Compiled twelve-case final browser proof; no other repository build/database/unit suite scheduled concurrently"
+  }
+]

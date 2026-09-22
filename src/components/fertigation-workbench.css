@@ -1,0 +1,470 @@
+/* ES-02 Fertigation native interior. The shared shell owns the viewport. */
+#ppo-fertigation .mw-content {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fff;
+}
+#ppo-fertigation .fn-scroll {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: auto;
+  padding: 20px 24px 32px;
+  scroll-padding: 16px;
+}
+#ppo-fertigation .fn-context {
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--line);
+  flex: none;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+#ppo-fertigation h1 {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.35;
+  margin: 0 0 5px;
+}
+#ppo-fertigation h2 {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0 0 12px;
+}
+#ppo-fertigation h3 {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 15px 0 8px;
+}
+#ppo-fertigation p {
+  line-height: 1.5;
+  margin: 8px 0 12px;
+}
+#ppo-fertigation small {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+#ppo-fertigation .fn-subtle {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+#ppo-fertigation .fn-context p {
+  margin: 2px 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+#ppo-fertigation .fn-menu-note {
+  margin: 24px 18px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+#ppo-fertigation .mw-menu nav button {
+  display: block;
+  width: 100%;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 0;
+  text-align: left;
+  font-size: 14px;
+  background: transparent;
+}
+#ppo-fertigation .mw-menu nav button[aria-current="page"] {
+  background: #fff;
+  border-left: 3px solid #62bb46;
+  font-weight: 500;
+  padding-left: 15px;
+}
+#ppo-fertigation .fn-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 0 16px;
+}
+#ppo-fertigation .fn-heading h2 {
+  margin: 0;
+}
+#ppo-fertigation .fn-actions,
+.fn-dialog .fn-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+#ppo-fertigation button,
+.fn-dialog button,
+#ppo-fertigation .fn-button {
+  font: inherit;
+  border: 1px solid #cbd2dc;
+  border-radius: 6px;
+  min-height: 36px;
+  padding: 7px 11px;
+  background: #fff;
+  color: #242a37;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+#ppo-fertigation button:hover:not(:disabled),
+.fn-dialog button:hover:not(:disabled) {
+  background: #f0f2f5;
+}
+#ppo-fertigation button:disabled,
+.fn-dialog button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+#ppo-fertigation .fn-primary,
+.fn-dialog .fn-primary {
+  background: #242a37;
+  color: #fff;
+  border-color: #242a37;
+}
+#ppo-fertigation .fn-primary:hover:not(:disabled),
+.fn-dialog .fn-primary:hover:not(:disabled) {
+  background: #343c4c;
+  color: #fff;
+}
+#ppo-fertigation label,
+.fn-dialog label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 500;
+  min-width: 0;
+}
+#ppo-fertigation input,
+#ppo-fertigation select,
+#ppo-fertigation textarea,
+.fn-dialog input,
+.fn-dialog select,
+.fn-dialog textarea {
+  font: inherit;
+  min-height: 36px;
+  border: 1px solid #828e9f;
+  border-radius: 6px;
+  background: #fff;
+  color: #242a37;
+  padding: 7px 9px;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+}
+#ppo-fertigation textarea,
+.fn-dialog textarea {
+  resize: vertical;
+  min-height: 75px;
+}
+#ppo-fertigation input[type="checkbox"],
+.fn-dialog input[type="checkbox"] {
+  width: 18px;
+  min-height: 18px;
+  accent-color: #355b80;
+}
+#ppo-fertigation .fn-check,
+.fn-dialog .fn-check {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+}
+#ppo-fertigation .fn-fields,
+.fn-dialog .fn-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 20px;
+  margin: 15px 0;
+}
+#ppo-fertigation .fn-wide,
+.fn-dialog .fn-wide {
+  grid-column: 1/-1;
+}
+#ppo-fertigation .fn-section {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-fertigation .fn-section:first-child {
+  padding-top: 0;
+}
+#ppo-fertigation .fn-note,
+.fn-dialog .fn-note {
+  border-left: 3px solid #cbd2dc;
+  background: #f6f7f9;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 12px 0;
+}
+#ppo-fertigation .fn-warning,
+.fn-dialog .fn-warning {
+  border-left-color: #ba832b;
+  background: #fffaf1;
+}
+#ppo-fertigation .fn-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 15px 0;
+}
+#ppo-fertigation .fn-metric {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+#ppo-fertigation .fn-metric strong {
+  display: block;
+  font-size: 22px;
+  font-weight: 500;
+  margin: 6px 0;
+}
+#ppo-fertigation .fn-toolbar {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 14px 0;
+}
+#ppo-fertigation .fn-toolbar label {
+  min-width: 160px;
+  flex: 1;
+}
+#ppo-fertigation .fn-table-scroll {
+  max-width: 100%;
+  overflow: auto;
+  margin: 12px 0;
+}
+#ppo-fertigation table,
+.fn-dialog table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: #fff;
+}
+#ppo-fertigation th,
+#ppo-fertigation td,
+.fn-dialog th,
+.fn-dialog td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e1e5eb;
+  text-align: left;
+  vertical-align: top;
+  white-space: normal;
+  min-width: 95px;
+}
+#ppo-fertigation th {
+  font-size: 12px;
+  background: #f6f7f9;
+  font-weight: 500;
+}
+#ppo-fertigation .fn-number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+#ppo-fertigation .fn-empty {
+  border: 1px dashed #cbd2dc;
+  padding: 24px;
+  border-radius: 6px;
+  margin: 15px 0;
+}
+#ppo-fertigation .record-tablist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 18px;
+  padding-bottom: 8px;
+}
+#ppo-fertigation .record-tablist button[aria-selected="true"] {
+  border-color: #242a37;
+  background: #edf5e9;
+}
+#ppo-fertigation .fn-status {
+  font-size: 12px;
+  padding: 4px 9px;
+  border-radius: 4px;
+  background: #edf0f5;
+  display: inline-block;
+}
+#ppo-fertigation .fn-findings {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0;
+  list-style: none;
+}
+#ppo-fertigation .fn-findings li {
+  border: 1px solid var(--line);
+  padding: 12px;
+  border-radius: 6px;
+}
+#ppo-fertigation .fn-findings strong {
+  display: block;
+}
+#ppo-fertigation .fn-graph {
+  width: 100%;
+  min-width: 540px;
+  height: auto;
+  max-height: 440px;
+}
+.fn-dialog {
+  position: fixed;
+  inset: 0 0 0 auto;
+  margin: 0;
+  width: min(640px, 100vw);
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  border: 0;
+  border-left: 1px solid #cbd2dc;
+  padding: 0;
+  background: #fff;
+  color: #242a37;
+  font:
+    14px/1.45 Roboto,
+    Verdana,
+    sans-serif;
+  box-shadow: 0 16px 52px #242a372b;
+  overflow: auto;
+}
+.fn-dialog::backdrop {
+  background: #242a3766;
+}
+.fn-dialog > header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #fff;
+  border-bottom: 1px solid #e1e5eb;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.fn-dialog h2 {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+}
+.fn-dialog h3 {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 16px 0 8px;
+}
+.fn-dialog .fn-dialog-body {
+  padding: 18px 20px;
+}
+#ppo-fertigation .fn-dialog footer {
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+  border-top: 1px solid #e1e5eb;
+  padding: 14px 20px;
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+#ppo-fertigation .fn-dialog fieldset {
+  border: 0;
+  border-bottom: 1px solid #e1e5eb;
+  padding: 10px 0 15px;
+  margin: 0 0 10px;
+  min-width: 0;
+}
+.fn-dialog legend {
+  font-size: 15px;
+  font-weight: 500;
+  padding: 0;
+}
+.fn-dialog.fn-decision {
+  inset: 0;
+  margin: auto;
+  width: min(500px, calc(100vw - 24px));
+  height: fit-content;
+  max-height: 90dvh;
+  border: 1px solid #cbd2dc;
+  border-radius: 10px;
+}
+#ppo-fertigation :focus-visible,
+.fn-dialog :focus-visible {
+  outline: 2px solid #365d8b;
+  outline-offset: 3px;
+}
+#ppo-fertigation .fn-result-reason {
+  display: block;
+  font-size: 12px;
+  color: #596575;
+}
+#ppo-fertigation .fn-scenario-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+#ppo-fertigation .fn-scenario-cards article {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  border: 1px solid #d5dbe0;
+  border-radius: 8px;
+  padding: 16px;
+}
+#ppo-fertigation .fn-scenario-cards dt {
+  font-weight: 500;
+}
+#ppo-fertigation .fn-scenario-cards dd {
+  margin: 0 0 10px;
+}
+#ppo-fertigation .fn-scenario-cards details {
+  margin-top: 12px;
+}
+@media (max-width: 780px) {
+  #ppo-fertigation .fn-scenario-cards {
+    grid-template-columns: 1fr;
+  }
+  #ppo-fertigation .fn-scroll {
+    padding: 16px 12px 24px;
+  }
+  #ppo-fertigation .fn-context {
+    padding: 10px 12px;
+  }
+  #ppo-fertigation .fn-fields,
+  .fn-dialog .fn-fields {
+    grid-template-columns: 1fr;
+  }
+  #ppo-fertigation .fn-metrics {
+    grid-template-columns: 1fr;
+  }
+  #ppo-fertigation button,
+  .fn-dialog button,
+  #ppo-fertigation .fn-button {
+    min-height: 42px;
+  }
+  #ppo-fertigation h1 {
+    font-size: 18px;
+  }
+  #ppo-fertigation .fn-heading {
+    align-items: start;
+  }
+  #ppo-fertigation .fn-heading .fn-primary {
+    width: 100%;
+    text-align: center;
+  }
+  #ppo-fertigation .fn-context .fn-actions {
+    width: 100%;
+  }
+  #ppo-fertigation .fn-context .fn-actions .fn-primary {
+    margin-left: auto;
+  }
+  .fn-dialog > header,
+  .fn-dialog .fn-dialog-body {
+    padding: 14px 16px;
+  }
+}

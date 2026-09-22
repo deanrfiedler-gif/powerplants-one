@@ -179,7 +179,7 @@ test("a baseline executed from Windows CRLF SQL upgrades without rewriting histo
   // 0039 adds ES-02 child identity integrity without a synthetic seed.
   // 0040 adds ES-08 specialist evidence and immutable policy manifests; seed 40 adds no users or grants.
   // 0041 adds typed Facility details and additive synthetic identities, with no users/grants.
-  assert.equal(final.length, baseline.length + 24);
+  assert.equal(final.length, baseline.length + 25);
   assert.ok((await db.query("SELECT to_regclass('ppo.projects') AS relation")).rows[0].relation);
 });
 
