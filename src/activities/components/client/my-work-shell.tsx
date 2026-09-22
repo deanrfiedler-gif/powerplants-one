@@ -181,8 +181,8 @@ export function MyWorkShell({ children }: { children: React.ReactNode }) {
                   {v.id === "reviews" ? <ShellIcon name="nav-approval"/> : v.id === "actions" ? <ShellIcon name="nav-tasks"/> : <Icon name={viewIcons[v.id]} />}
                   <span>{v.label}</span>
                   {v.id === "reviews" && reviewCount > 0 && (
-                    <span className="mw-badge" aria-label={`${reviewCount} awaiting your decision`}>
-                      {reviewCount}
+                    <span className="mw-badge" aria-label={`${navigation.data?.reviews.status === "ok" && navigation.data.reviews.bounded ? "At least " : ""}${reviewCount} awaiting your decision`}>
+                      {reviewCount}{navigation.data?.reviews.status === "ok" && navigation.data.reviews.bounded ? "+" : ""}
                     </span>
                   )}
                 </Link>

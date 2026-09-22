@@ -225,6 +225,7 @@ export const destination = (id: string) =>
 export const matchesPath = (path: string, href: string) =>
   path === href || (href !== "/" && path.startsWith(href + "/"));
 export function pageForPath(path: string) {
+  if (path === "/search") return { ...destination("work"), id: "search", label: "Search", href: "/search" };
   if (materialsPath(path) || changesPath(path) || commissioningPath(path)) return destination("engineering");
   // Specific routes precede their parent; a future page must not inherit a wrong guide.
   const item = destinations

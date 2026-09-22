@@ -76,7 +76,7 @@ test("global search is independent of page filtering, keyboard selection and qui
   await expect(page.getByRole("heading", { name: "Quick Help" })).toBeVisible();
   await page.locator(".crm-workbar").click({position:{x:2,y:2}}); await expect(page.getByRole("heading", { name: "Quick Help" })).toBeHidden();
   await page.getByRole("button", { name: "Notifications", exact: true }).click();
-  await expect(page.getByText("Notifications are not connected", { exact: false })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Open Notifications", exact: true })).toHaveAttribute("href", "/work/updates");
 });
 test("identity lock clears results and rejects a late response even if transport ignores abort", async ({ page }) => {
   const search = page.getByRole("combobox", { name: "Search Powerplants One" });

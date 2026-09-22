@@ -1,0 +1,250 @@
+#ppo-my-work .sh-workspace {
+  padding: 24px 28px;
+  max-width: 1800px;
+  margin: 0 auto;
+  color: var(--ink, #242a37);
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: Roboto, Verdana, sans-serif;
+}
+#ppo-my-work .sh-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+#ppo-my-work .sh-heading h1 {
+  font-size: 26px;
+  margin: 4px 0 8px;
+}
+#ppo-my-work .sh-heading p {
+  margin: 0;
+}
+#ppo-my-work .sh-eyebrow {
+  font-size: 12px;
+  color: #657185;
+}
+#ppo-my-work .sh-muted {
+  font-size: 12px;
+  color: #596679;
+  line-height: 1.6;
+}
+#ppo-my-work .sh-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+  margin: 16px 0;
+}
+#ppo-my-work .sh-toolbar label,
+#ppo-my-work .sh-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  min-width: 0;
+}
+#ppo-my-work .sh-toolbar input,
+#ppo-my-work .sh-toolbar select,
+#ppo-my-work .sh-form input,
+#ppo-my-work .sh-form select {
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 9px 10px;
+  border: 1px solid #cdd3dd;
+  border-radius: 6px;
+  font: inherit;
+  background: #fff;
+  color: #242a37;
+}
+#ppo-my-work .sh-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  border-bottom: 1px solid #dce1e8;
+  margin: 16px 0;
+}
+#ppo-my-work .sh-tabs button {
+  background: transparent;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  padding: 12px;
+  font: inherit;
+  color: #4d5b70;
+  cursor: pointer;
+}
+#ppo-my-work .sh-tabs button[aria-pressed="true"] {
+  border-color: #62bb46;
+  color: #242a37;
+  font-weight: 700;
+}
+#ppo-my-work .sh-register {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #dce1e8;
+  background: white;
+}
+#ppo-my-work .sh-register > li {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 12px;
+  border-bottom: 1px solid #e1e5eb;
+  min-width: 0;
+}
+#ppo-my-work .sh-register > li > div {
+  min-width: 0;
+}
+#ppo-my-work .sh-register p {
+  font-size: 12px;
+  color: #596679;
+  margin: 6px 0;
+  overflow-wrap: anywhere;
+}
+#ppo-my-work .sh-title {
+  border: 0;
+  background: none;
+  text-align: left;
+  font: inherit;
+  color: #215d87;
+  padding: 3px 0;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+#ppo-my-work .sh-title:hover {
+  text-decoration: underline;
+}
+#ppo-my-work .sh-notice {
+  padding: 12px;
+  border-left: 3px solid #bb8529;
+  background: #fff8e9;
+}
+#ppo-my-work .sh-empty {
+  padding: 30px 12px;
+  color: #596679;
+}
+#ppo-my-work .sh-facts {
+  display: grid;
+  grid-template-columns: minmax(110px, 1fr) 2fr;
+  gap: 10px;
+  margin: 20px 0;
+  font-size: 13px;
+}
+#ppo-my-work .sh-facts dt {
+  color: #596679;
+}
+#ppo-my-work .sh-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+#ppo-my-work .sh-form {
+  display: grid;
+  gap: 16px;
+  max-width: 700px;
+}
+#ppo-my-work .sh-form fieldset {
+  border: 1px solid #dce1e8;
+  border-radius: 7px;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+#ppo-my-work .sh-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+#ppo-my-work .sh-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 12px 0;
+  font-size: 14px;
+}
+#ppo-my-work .sh-stats strong {
+  font-size: 20px;
+  margin-right: 6px;
+}
+#ppo-my-work .sh-group {
+  margin: 24px 0;
+}
+#ppo-my-work .sh-group h2 {
+  font-size: 17px;
+}
+#ppo-my-work .sh-workspace button:focus-visible,
+#ppo-my-work .sh-workspace a:focus-visible,
+#ppo-my-work .sh-workspace input:focus-visible,
+#ppo-my-work .sh-workspace select:focus-visible {
+  outline: 3px solid #306da7;
+  outline-offset: 2px;
+}
+.sh-bell-list {
+  list-style: none;
+  padding: 0;
+}
+.sh-bell-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #e1e5eb;
+}
+.sh-bell-list a {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.sh-bell-list small {
+  display: block;
+  color: #596679;
+  margin: 5px 0;
+}
+#ppo-my-work .sh-workspace .mw-button {
+  white-space: normal;
+}
+#ppo-my-work .sh-workspace .sh-unread {
+  font-weight: 700;
+}
+#ppo-my-work .sh-selected {
+  background: #f0f7ed;
+}
+#ppo-my-work .sh-form .sh-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+@media (max-width: 780px) {
+  #ppo-my-work .sh-workspace {
+    padding: 18px 14px;
+  }
+  #ppo-my-work .sh-heading {
+    align-items: start;
+    flex-wrap: wrap;
+  }
+  #ppo-my-work .sh-heading h1 {
+    font-size: 23px;
+  }
+  #ppo-my-work .sh-register > li {
+    align-items: start;
+    flex-wrap: wrap;
+  }
+  #ppo-my-work .sh-toolbar > label {
+    flex: 1 1 160px;
+  }
+  #ppo-my-work .sh-tabs button {
+    min-height: 44px;
+    font-size: 13px;
+  }
+  #ppo-my-work .sh-facts {
+    grid-template-columns: 1fr 1.5fr;
+  }
+  #ppo-my-work .sh-actions button {
+    min-height: 40px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #ppo-my-work .sh-workspace * {
+    scroll-behavior: auto;
+    transition: none;
+  }
+}

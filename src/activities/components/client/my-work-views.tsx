@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { api, ErrorNotice, isDenied, type Failure } from "../../../components/business-ui";
 import { actionsQuery, criteriaSearch, defaultCriteria } from "../../work-criteria";
-import type { listWork, readWorkReviews, readWorkWaiting, WorkRow } from "../../work-overview";
+import type { listWork, readWorkWaiting, WorkRow } from "../../work-overview";
 import { activityTypeLabels, activityTypes, clockTime, shortDate, WORK_TIMEZONE } from "../../work-view";
 import type { WorkViewCriteria } from "../../work-views";
 import { ActivityRow, PanelState, useWorkDialogs } from "./my-work-list";
@@ -15,7 +15,6 @@ import { Icon, Menu, Tag, useWorkResource } from "./my-work-ui";
 
 type Work = Awaited<ReturnType<typeof listWork>>;
 type Waiting = Awaited<ReturnType<typeof readWorkWaiting>>;
-type Reviews = Awaited<ReturnType<typeof readWorkReviews>>;
 
 function PageHead({ title, lede, children }: { title: string; lede: string; children?: React.ReactNode }) {
   return (
@@ -273,80 +272,6 @@ function ActionList({ team }: { team: boolean }) {
 export const MyWorkActions = () => <ActionList team={false} />;
 export const MyWorkTeam = () => <ActionList team />;
 
-// ───────────────────────── Reviews & handovers ─────────────────────────
-export function MyWorkReviews() {
-  const read = useWorkResource<Reviews>("work/reviews");
-  const panel = read.data?.reviews;
-  return (
-    <div className="mw-page" aria-busy={read.loading}>
-      <PageHead title="Reviews & handovers" lede="Submissions waiting for a decision you are allowed to make. Opening one decides nothing; the decision is made in its own module." />
-      {isDenied(read.error) ? (
-        <ErrorNotice error={read.error} />
-      ) : !panel ? (
-        read.error ? (
-          <PanelState status="unavailable" what="Reviews" retry={read.reload} />
-        ) : (
-          <div className="mw-skeleton" role="status">
-            Loading reviews…
-          </div>
-        )
-      ) : panel.status !== "ok" ? (
-        <section className="mw-panel">
-          {panel.status === "not_permitted" ? (
-            <p className="mw-panel-note">You hold no review permission in a module that records reviews (Service reports, Finance handoffs), so nothing can await your decision here.</p>
-          ) : (
-            <PanelState status="unavailable" what="Reviews" retry={read.reload} />
-          )}
-        </section>
-      ) : (
-        <section className="mw-panel" aria-label="Awaiting your decision">
-          <header className="mw-panel-head">
-            <div>
-              <h2>
-                Awaiting your decision <span className="mw-count">{panel.total}</span>
-              </h2>
-              <p>Longest waiting first</p>
-            </div>
-          </header>
-          {panel.items.length ? (
-            <ul className="mw-cards mw-cards-wide">
-              {panel.items.map((r) => (
-                <li key={r.id}>
-                  <div>
-                    <Link className="mw-row-title" href={r.href}>
-                      <span>
-                        {r.reference} · {r.revision}
-                        <Icon name="chevron-right" />
-                      </span>
-                    </Link>
-                    <p>{[r.title, r.context].filter(Boolean).join(" · ")}</p>
-                  </div>
-                  <Tag>{r.source === "ServiceReport" ? "Service report" : "Finance handoff"}</Tag>
-                  <div className="mw-card-side">
-                    <Link className="mw-button" href={r.href}>
-                      Open review
-                    </Link>
-                    {r.submitted_at && <small>Submitted {shortDate(r.submitted_at, WORK_TIMEZONE)}</small>}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="mw-panel-note">Nothing is waiting for your decision.</p>
-          )}
-        </section>
-      )}
-      <section className="mw-panel mw-panel-quiet" aria-label="Sources">
-        <p className="mw-panel-note">
-          Reviews come from Service reports and Finance handoffs, the modules that record a review today. Estimate reviews, engineering submissions and handover acceptance are not
-          recorded by the application yet, so none can appear here. Opportunity owner transfers are made from the opportunity itself.
-        </p>
-      </section>
-      <Foot observed={read.data?.observed_at} stale={read.stale || !!read.error} note="Source-owned decisions" />
-    </div>
-  );
-}
-
 // ───────────────────────── Blocked & waiting ─────────────────────────
 export function MyWorkWaiting() {
   const work = useMyWork();
@@ -453,28 +378,12 @@ export function MyWorkWaiting() {
 }
 
 // ───────────────────────── Updates & preferences ─────────────────────────
-export function MyWorkUpdates() {
+export function MyWorkLayoutPreferences() {
   const work = useMyWork(),
     router = useRouter();
   const [customise, setCustomise] = useState(false);
   return (
     <div className="mw-page">
-      <PageHead title="Updates & preferences" lede="Notifications and how My Work is laid out for you." />
-      <section className="mw-panel" aria-labelledby="mw-updates-title">
-        <header className="mw-panel-head">
-          <span className="mw-panel-icon">
-            <Icon name="bell" />
-          </span>
-          <div>
-            <h2 id="mw-updates-title">Updates</h2>
-            <p>Not connected</p>
-          </div>
-        </header>
-        <p className="mw-panel-note">
-          The application does not record notifications yet, so there is nothing to read or mark as read, and no digest or quiet-hours setting exists. This is not an empty inbox. Work
-          that needs you is always listed under Overview, My actions, Reviews &amp; handovers and Blocked &amp; waiting, none of which depends on a notification.
-        </p>
-      </section>
       <section className="mw-panel" aria-labelledby="mw-prefs-title">
         <header className="mw-panel-head">
           <span className="mw-panel-icon">

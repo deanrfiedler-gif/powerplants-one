@@ -1,4 +1,3 @@
-import { MyWorkUpdates } from "../../../../../activities/components/client/my-work-views";
-export default function Page() {
-  return <MyWorkUpdates />;
-}
+import { NotificationWorkspace } from "../../../../../components/notification-workspace";
+import "../../../../styles/sh-platform.css";
+export default function Page() { return <NotificationWorkspace />; }
