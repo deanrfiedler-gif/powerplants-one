@@ -1,4 +1,4 @@
-import type { ScheduleAppointment } from "../components/planner-screens";
+import type { ScheduleAppointment } from "./index";
 import { addDays, utcFromLocal } from "./time";
 
 export const visitStatuses = [

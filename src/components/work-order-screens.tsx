@@ -1,5 +1,7 @@
 "use client";
 import Link from "next/link";
+import { ScopeView } from "../service";
+import { BookingRecovery, useBookingCommand, safeBookingTarget } from "../scheduling";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useIdentity } from "./business-session";
@@ -14,7 +16,6 @@ import {
   SelectField,
   Stamp,
   Status,
-  SummaryPair,
   useCommand,
   useResource,
   type Envelope,
@@ -1084,16 +1085,17 @@ function AssessmentForm({
     [asAt, setAsAt] = useState(""),
     [expiry, setExpiry] = useState(""),
     [expected, setExpected] = useState(w.version);
-  const cmd = useCommand(),
-    pc = rows.find((x) => x.criterion_code === criterion);
+  const returnTarget = safeBookingTarget(useSearchParams().get("returnTo"));
+  const recoverable = !!visit && returnTarget?.split("?")[0] === `/service/appointments/${visit.id}`;
+  const memoryCommand = useCommand(), durableCommand = useBookingCommand(recoverable);
+  const cmd = recoverable ? durableCommand : memoryCommand;
+  const pc = rows.find((x) => x.criterion_code === criterion);
   return (
     <ValidationFields error={cmd.error}>
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          const result = await cmd.send<{ record_version: number }>(
-            `service/work-orders/${w.id}/readiness`,
-            {
+          const fields = {
               expected_version: expected,
               assessment: {
                 scope_revision_id: r.id,
@@ -1113,19 +1115,22 @@ function AssessmentForm({
                 valid_until: expiry ? new Date(expiry).toISOString() : null,
               },
               reason: "Review synthetic readiness evidence",
-            },
-          );
+            };
+          const result = recoverable
+            ? await durableCommand.send(`service/work-orders/${w.id}/readiness`, fields, returnTarget!, "Readiness assessment", w.id)
+            : await memoryCommand.send<{ record_version: number }>(`service/work-orders/${w.id}/readiness`, fields);
           if (result) {
             setExpected(result.record_version);
             onSaved();
           }
         }}
       >
-        <ErrorNotice error={cmd.error} />
+        {recoverable ? <BookingRecovery command={durableCommand} /> : <ErrorNotice error={cmd.error} />}
         <ConflictReview
           version={expected}
           latest={w.version}
           onAdopt={() => {
+            if (recoverable && durableCommand.pending) return;
             cmd.clear();
             setExpected(w.version);
           }}
@@ -1186,7 +1191,7 @@ function AssessmentForm({
             onChange={setEvidence}
           />
         )}
-        <button disabled={cmd.busy}>Record readiness review</button>
+        <button disabled={cmd.busy || (recoverable && (!durableCommand.ready || !!durableCommand.pending))}>Record readiness review</button>
         <p role="status">{cmd.saved}</p>
       </form>
     </ValidationFields>
@@ -1301,145 +1306,6 @@ function VisitForm({
     </ValidationFields>
   );
 }
-function ScopeView({ r }: { r: Scope }) {
-  return (
-    <>
-      <p className="preserve-lines lede">
-        {r.summary ?? "Scope summary needed"}
-      </p>
-      {r.change_reason && (
-        <p className="callout">
-          <strong>Change reason:</strong> {r.change_reason}
-        </p>
-      )}
-      <dl className="summary-grid">
-        <SummaryPair label="Exclusions">
-          <span className="preserve-lines">
-            {r.exclusions ?? "Not recorded"}
-          </span>
-        </SummaryPair>
-        <SummaryPair label="Limited diagnostic authority">
-          <span className="preserve-lines">
-            {r.diagnostic_limit ?? "Not recorded"}
-          </span>
-        </SummaryPair>
-        <SummaryPair label="Account and charging review">
-          <span className="preserve-lines">
-            {r.pending_account_plan ?? "Not recorded"}
-          </span>
-        </SummaryPair>
-      </dl>
-      {r.items.map((i) => (
-        <article key={i.id} className="wo-task">
-          <h3>
-            {i.sequence}. {i.task_description}
-          </h3>
-          <Status value={i.task_kind} />
-          <p>
-            <strong>Expected outcome:</strong> {i.expected_outcome}
-          </p>
-          <ul>
-            {i.completion_requirements.map((x, j) => (
-              <li key={j}>{x}</li>
-            ))}
-          </ul>
-          {i.required_skill_codes.length > 0 && (
-            <p>Competencies: {i.required_skill_codes.join(", ")}</p>
-          )}
-          {i.shutdown_condition && (
-            <p>Shutdown / isolation: {i.shutdown_condition}</p>
-          )}
-          {i.access_condition && <p>Access: {i.access_condition}</p>}
-          {i.assets.map((a) => (
-            <div key={a.asset_id} className="wo-asset">
-              <Link href={`/equipment/${a.asset_id}`}>
-                {a.description} · {a.display_number}
-              </Link>{" "}
-              <Status value={a.identity_status} />
-              {a.identity_status !== "Verified" && (
-                <p>
-                  Identity remains unresolved or disputed. Only a reviewed
-                  identification plan can permit the defined limited task.
-                </p>
-              )}
-              {a.configuration_status && (
-                <p>Configuration: {a.configuration_status}</p>
-              )}
-              {a.method && (
-                <>
-                  <p>
-                    <strong>Identification method:</strong> {a.method}
-                  </p>
-                  <p>
-                    <strong>Limits:</strong> {a.limits}
-                  </p>
-                  <p>
-                    {r.approved_at
-                      ? "Plan approved with this exact scope."
-                      : "Plan awaits scope authorisation."}
-                  </p>
-                </>
-              )}
-            </div>
-          ))}
-        </article>
-      ))}
-      <div className="wo-two-column">
-        <section>
-          <h3>Coverage</h3>
-          <Status value={r.coverage?.status ?? "Unknown"} />
-          <p>{r.coverage?.assessment ?? "Assessment not recorded."}</p>
-          <p>{r.coverage?.reason}</p>
-          {r.coverage?.agreement_reference && (
-            <p>
-              {r.coverage.agreement_reference} · version{" "}
-              {r.coverage.source_version ?? "Unknown"}
-            </p>
-          )}
-          <p>
-            Charging route:{" "}
-            {r.coverage?.charging_route === "ContractReference"
-              ? "Contract reference for separate review"
-              : "Finance review pending"}
-          </p>
-          <p className="read-meta">
-            No automatic free work, invoice or supplier recovery.
-          </p>
-        </section>
-        <section>
-          <h3>Authority evidence</h3>
-          {r.authority ? (
-            <>
-              <strong>{r.authority.title}</strong>
-              <p>
-                {r.authority.source_reference} · version{" "}
-                {r.authority.source_version}
-              </p>
-              <p className="preserve-lines">{r.authority.content_text}</p>
-              <small>Synthetic manual evidence</small>
-            </>
-          ) : (
-            <p>Authority evidence is missing.</p>
-          )}
-        </section>
-      </div>
-      {r.approved_at && (
-        <aside className="callout">
-          <strong>Authorised scope — read-only</strong>
-          <p>
-            Authorised <Stamp value={r.approved_at} />. Changes require a
-            successor revision and fresh review.
-          </p>
-          <details>
-            <summary>Exact approval identity</summary>
-            <p>Reviewer: {r.approved_by}</p>
-            <p className="hash">Scope hash: {r.content_hash}</p>
-          </details>
-        </aside>
-      )}
-    </>
-  );
-}
 // Opening a saved work order does not need the asset picker for its closed
 // scope editor. After first opening, keep it mounted so closing the disclosure
 // cannot discard an unsaved proposal or an uncertain original command.
@@ -1453,6 +1319,7 @@ function ScopeEditor({ w, r, onSaved }: { w: Order; r: Scope | null; onSaved: ()
   );
 }
 export function WorkOrderDetail({ id }: { id: string }) {
+  const returnTarget = safeBookingTarget(useSearchParams().get("returnTo"));
   const resource = useResource<Envelope<Order>>(`service/work-orders/${id}`),
     cmd = useCommand();
   const w = resource.data?.items[0],
@@ -1477,6 +1344,7 @@ export function WorkOrderDetail({ id }: { id: string }) {
               </button>
             }
           />
+          {returnTarget && <p><Link className="button secondary" href={returnTarget}>Continue saved appointment</Link> · Readiness saves separately from contact and confirmation.</p>}
           <div className="wo-state">
             <Status value={w.status} />
             <Status value={r?.coverage?.status ?? "Unknown"} />
@@ -1594,7 +1462,7 @@ export function WorkOrderDetail({ id }: { id: string }) {
             </p>
             {!w.visits.length && <p>No visits proposed yet.</p>}
             {w.visits.map((v) => (
-              <article className="wo-task" key={v.id}>
+              <article className="wo-task" id={`visit-${v.id}`} key={v.id}>
                 <h3>
                   <Link href={`/service/appointments/${v.id}`}>
                     {v.display_number}

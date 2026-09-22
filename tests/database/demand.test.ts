@@ -6,6 +6,7 @@ import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
 import { reset } from "../../scripts/database";
 import { readUnassignedDemand } from "../../src/scheduling/demand";
+import { readOperation } from "../../src/shared/receipts";
 import {
   cancelAppointment,
   readAppointment,
@@ -15,6 +16,7 @@ import {
   proposeVisit,
   readWorkOrder,
 } from "../../src/service/work-orders";
+import { submitted } from "../helpers/reports";
 const id = (t: number, n = 1) =>
   `${t}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const site = id(70),
@@ -230,4 +232,56 @@ test("unassigned demand bounds its own result and refuses an unusable query", as
   assert.equal(truncated.completeness, "Partial");
   for (const bad of [{ limit: 0 }, { limit: 201 }, { site_id: "nope" }, { from: "x" }])
     await assert.rejects(readUnassignedDemand(p, bad), code("InvalidData"));
+});
+
+test("PL01 two planners from one reviewed basis produce one proposal, no reservation and the original receipt", async () => {
+  await authorise();
+  const p = await principal(), second = await principal();
+  const { w, r } = await current();
+  const input = () => ({ ...base(), id: randomUUID(), expected_version: w.version,
+    scope_revision_id: r.id, scope_version: r.version, start_at: "2031-09-26T00:00:00Z", end_at: "2031-09-26T02:00:00Z",
+    customer_commitment: "Proposed", preparation_status: "Preparing" });
+  const first = input(), other = input();
+  const results = await Promise.allSettled([proposeVisit(p, w.id, first), proposeVisit(second, w.id, other)]);
+  assert.equal(results.filter(x => x.status === "fulfilled").length, 1);
+  const loser = results.find(x => x.status === "rejected") as PromiseRejectedResult;
+  assert.equal(loser.reason.code, "VersionConflict");
+  const winner = results[0].status === "fulfilled" ? first : other;
+  const original = await readOperation(p, winner.operation_id);
+  assert.equal(original.record_id, winner.id);
+  assert.equal((await proposeVisit(p, w.id, winner)).receipt.receipt_id, original.receipt_id);
+  await assert.rejects(proposeVisit(p, w.id, { ...winner, preparation_status: "Unknown" }), code("OperationConflict"));
+  const latest = (await readWorkOrder(p, w.id)).items[0];
+  assert.equal(latest.version, w.version + 1);
+  assert.equal(latest.visits.length, 1);
+  assert.equal((await rows("SELECT count(*)::int n FROM ppo.resource_reservations r JOIN ppo.assignments a ON a.id=r.assignment_id WHERE a.appointment_id=$1", [winner.id]))[0].n, 0);
+  assert.equal((await readUnassignedDemand(p)).items.length, 0);
+  // General service explicitly supports another intentional visit after review.
+  await proposeVisit(p, w.id, { ...input(), expected_version: latest.version });
+  assert.equal((await readWorkOrder(p, w.id)).items[0].visits.length, 2);
+  await rows("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='service.work_order.edit'", [p.actor_id]);
+  await assert.rejects(readOperation(p, winner.operation_id), code("Forbidden"));
+  await assert.rejects(proposeVisit(p, w.id, winner), code("Forbidden"));
+});
+
+test("PL01 demand visibility does not grant proposal authority", async () => {
+  await authorise();
+  const observer = await principal("site-observer"), { w, r } = await current();
+  assert.equal((await readUnassignedDemand(observer)).items.some(x => x.id === w.id), true);
+  assert.equal((await readWorkOrder(observer, w.id)).items[0].actions.can_edit, false);
+  await assert.rejects(proposeVisit(observer, w.id, { ...base(), id: randomUUID(), expected_version: w.version,
+    scope_revision_id: r.id, scope_version: r.version, start_at: "2031-09-26T00:00:00Z", end_at: "2031-09-26T02:00:00Z", customer_commitment: "Proposed", preparation_status: "Preparing" }), code("Forbidden"));
+  // Demand and detail share orderVisibility, so a demand row whose detail is
+  // unreadable is not constructible: since migration 0041 an asset's site is
+  // NOT NULL and permanent, which removed the fixture that once produced one.
+});
+
+test("PL01 a completed attendance keeps its work order out of unassigned demand", async () => {
+  // The seed holds no completed attendance; produce one through the real field workflow.
+  const q = await submitted();
+  assert.equal(q.report.appointment.status, "CompletedPendingReview");
+  const completed = await rows("SELECT DISTINCT work_order_id FROM ppo.appointments WHERE status IN ('Completed','CompletedPendingReview')");
+  assert.ok(completed.length > 0);
+  const demand = await readUnassignedDemand(await principal());
+  for (const row of completed) assert.equal(demand.items.some(x => x.id === row.work_order_id), false);
 });

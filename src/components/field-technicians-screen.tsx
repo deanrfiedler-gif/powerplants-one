@@ -8,7 +8,7 @@ import {
   type Option,
 } from "./business-ui";
 import { ProductIcon } from "./product-icons";
-import type { Appointment, Resource, Schedule } from "./planner-screens";
+import type { Appointment, Resource, Schedule } from "../scheduling";
 import type { Order } from "./work-order-screens";
 import {
   currentCrew,
