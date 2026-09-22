@@ -989,3 +989,20 @@ export async function presentationBytes(
   const b = await readReportBundle(p, i.manifest);
   return { ...b, manifest: i.manifest, issued_at: i.issued_at as Date };
 }
+
+// SH-06 projection uses the same report context as the source workflow; no command authority moves.
+export async function reportReviewTask(p: Principal, id: string): Promise<import("../reviews/model").ReviewTask> {
+  return transaction(async c => {
+    const { report: r, a, w } = await reportContext(c,p,id);
+    const revision = (await c.query("SELECT submitted_at FROM ppo.report_revisions WHERE workspace_id=$1 AND id=$2",[p.workspace_id,r.current_revision_id])).rows[0];
+    const review = (await c.query("SELECT decision,remarks FROM ppo.report_reviews WHERE workspace_id=$1 AND revision_id=$2 ORDER BY reviewed_at DESC LIMIT 1",[p.workspace_id,r.current_revision_id])).rows[0];
+    const returned = r.status === "Returned", owner = returned ? r.actor_id : w.service_owner_id;
+    const user = (await c.query("SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",[p.workspace_id,owner])).rows[0];
+    const narrative = r.actor_id === p.actor_id || await hasPermission(c,p,"service.work_order.edit",r.company_id,r.site_id);
+    return { id:`ServiceReport:${r.id}`,source:"ServiceReport",module:"Service",record_id:r.id,company_id:r.company_id,reference:r.display_number,
+      revision:`r${String(r.revision).padStart(2,"0")}`,version:r.version,kind:"Review",title:"Service report review",context:a.display_number,
+      submitted_at:revision?.submitted_at?.toISOString() ?? null,due:null,owner_id:owner,owner_name:user?.display_name ?? null,author_id:r.actor_id,
+      status:r.status,returned,return_reason:returned && narrative ? review?.remarks ?? null : null,current:["Submitted","Returned"].includes(r.status),
+      actionable:returned ? r.actor_id===p.actor_id : w.service_owner_id===p.actor_id && await hasPermission(c,p,"report.review",r.company_id,r.site_id),href:`/service/reports/${r.id}` };
+  });
+}

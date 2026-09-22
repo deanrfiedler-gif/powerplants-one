@@ -218,6 +218,25 @@ export type ReviewsQueueRow = ReturnType<typeof reviewsQueue>[number];
 export type HandoversQueueRow = ReturnType<typeof handoversQueue>[number];
 export type VerificationQueueRow = ReturnType<typeof verificationQueue>[number];
 
+// SH-06 reads the same retained package state and access as the source workspace.
+export async function changeReviewTasks(p: Principal, packageId: string): Promise<import("../../reviews/model").ReviewTask[]> {
+  const f = await frame(p, packageId), items: import("../../reviews/model").ReviewTask[] = [];
+  for (const l of f.changes) {
+    const base = { source: "EngineeringChange" as const, module: "Engineering", record_id: l.row.id, company_id: f.access.pkg.company_id, package_id: packageId, reference: l.row.reference,
+      revision: `r${l.revision.revision_number}`, version: l.row.version, title: l.row.title, context: [f.access.pkg.customer_name, f.access.site_name, l.row.location].filter(Boolean).join(" · "),
+      submitted_at: stamp(l.revision.submitted_at), due: l.row.due, author_id: l.revision.submitted_by ?? l.row.author_id,
+      status: l.row.stage, returned: l.row.stage === "Returned", return_reason: l.revision.return_reason, current: isOpen(l.row.stage), href: changesHref(packageId, "reviews", l.row.id) };
+    for (const r of l.reviews) items.push({ ...base, id: `EngineeringChange:${r.id}`, kind: "Review", owner_id: r.reviewer_id, owner_name: r.reviewer_name,
+      status: r.result ?? l.row.stage, current: !r.result && isOpen(l.row.stage), actionable: r.reviewer_id === p.actor_id && f.access.can.review && !policyAllows(f.access.policy, p.actor_id, "DisciplineReviewer", { discipline: r.discipline }) });
+    if (l.row.stage === "Returned") items.push({ ...base, id: `EngineeringChange:${l.revision.id}`, kind: "Review", owner_id: l.revision.return_owner_id ?? l.row.author_id, owner_name: l.revision.return_owner_name ?? l.row.author_name, actionable: f.access.can.edit });
+    for (const r of l.requests) items.push({ ...base, id: `EngineeringChange:${r.handover.id}`, kind: "Handover", title: `${label(r.handover.purpose)} · ${l.row.title}`,
+      revision: `r${l.revision.revision_number} · handover v${r.handover.version}`, submitted_at: stamp(r.handover.created_at), due: r.handover.due,
+      owner_id: r.handover.owner_id, owner_name: r.handover.owner_name, author_id: r.handover.created_by, status: r.handover.state, returned: r.handover.state === "Returned", return_reason: null,
+      current: ["Pending", "Returned"].includes(r.handover.state), actionable: f.access.can.receive && !r.stale && !policyAllows(f.access.policy, p.actor_id, "Receiver", { destination: r.handover.destination }), href: changesHref(packageId, "handovers", l.row.id) });
+  }
+  return items;
+}
+
 // The five focused destinations share one read: the package queue for that destination, and the selected
 // change in full when the address names one the reader may see.
 export async function readView(p: Principal, packageId: string, query: unknown, view: "impact" | "reviews" | "handovers" | "verification") {

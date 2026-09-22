@@ -1,15 +1,8 @@
-import { listEngineering } from "../engineering/service";
-import { listLeads } from "../crm/leads/reads";
+import { applicationSearch } from "./search-service";
 import type { Principal } from "../platform/identity";
 import { database } from "../platform/database";
 import { object } from "../shared/validation";
-import { listShared } from "../shared/reads";
-import { listOpportunities } from "../crm/worklist";
-import { listActivities } from "../activities/activities";
-import { listTickets } from "../service/intake";
 import { actionsForCapabilities, type ShellContext } from "./model";
-import { collectSearch, searchQuery } from "./search";
-import { listProjects } from "../projects/service";
 import { navigationForCapabilities } from "./navigation";
 
 export async function shellContext(p: Principal, input: unknown): Promise<ShellContext> {
@@ -29,16 +22,5 @@ export async function shellContext(p: Principal, input: unknown): Promise<ShellC
     can_preview: ["local-synthetic", "azure-demo"].includes(process.env.PPO_ENV ?? "") };
 }
 export async function shellSearch(p: Principal, input: unknown) {
-  return collectSearch(searchQuery(input), [
-    { kind: "Engineering package", path: "/engineering", label: "title", read: q => listEngineering(p, q) },
-    { kind: "Lead", path: "/sales/leads", label: "title", read: q => listLeads(p, q) },
-    { kind: "Project", path: "/projects", label: "title", read: q => listProjects(p, q) },
-    { kind: "Deal", path: "/sales/opportunities", label: "title", read: q => listOpportunities(p, q) },
-    { kind: "Customer", path: "/customers", label: "display_name", read: q => listShared(p, "Organisation", q) },
-    { kind: "Contact", path: "/people", label: "display_name", read: q => listShared(p, "Person", q) },
-    { kind: "Site", path: "/sites", label: "display_name", read: q => listShared(p, "Site", q) },
-    { kind: "Equipment", path: "/equipment", label: "description", read: q => listShared(p, "Asset", q) },
-    { kind: "Activity", path: "/work", label: "summary", read: q => listActivities(p, q) },
-    { kind: "Service request", path: "/service/tickets", label: "summary", read: q => listTickets(p, q) },
-  ]);
+  return applicationSearch(p, input, true);
 }
