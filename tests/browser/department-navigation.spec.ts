@@ -3,6 +3,10 @@ import { mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
 import { crmDiscovery } from "../helpers/crm";
 import { projectInput } from "../helpers/projects";
+// This suite owns its desktop, short-height and phone/reflow viewport changes.
+// The repository's separate mobile project continues to run its existing phone suites.
+test.skip(({ isMobile }) => !!isMobile, "Department rail suite uses explicit viewport scenarios.");
+test.beforeEach(async ({ page }) => { await page.setViewportSize({ width: 1440, height: 900 }); });
 const evidence = resolve("verification-evidence/department-navigation");
 const origin = () => new URL(test.info().project.use.baseURL!).origin;
 async function login(page: Page, profile = "coordinator") {
