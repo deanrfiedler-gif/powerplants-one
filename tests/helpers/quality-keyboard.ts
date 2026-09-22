@@ -71,7 +71,17 @@ export async function keyAdvanceDays(
     await expect(target).toHaveValue(before);
     await page.keyboard.press("ArrowRight");
   }
-  throw Error(
-    "The native date control did not expose its day segment to the tested keyboard sequence.",
-  );
+  // Chrome 154 under mobile emulation stops editing the segments by arrow key:
+  // every segment keeps its value, so the walk above finds no day. Type the day
+  // instead, which the same control still accepts. This stays keyboard only —
+  // no fill(), click() or DOM focus() — and the assertion below is exact, so a
+  // control whose first segment is not the day fails here rather than silently
+  // writing a different field.
+  await keyFocus(page, target);
+  await page.keyboard.type(desired.slice(8, 10));
+  await page.keyboard.press("Tab");
+  await expect(
+    target,
+    "the native date control accepted neither arrow-key segment editing nor a typed day",
+  ).toHaveValue(desired);
 }

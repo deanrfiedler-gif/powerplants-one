@@ -22,9 +22,11 @@ Chrome stable rolled to 154 on 22 September 2026. `scripts/install-browser.sh` i
 
 Accept each reviewed major with its own earliest patch: **153 from `153.0.8010.36`** and **154 from `154.0.8037.57`**, the first stable 154 that CI installed. Major 153 stays accepted because installed workstations still carry it, so no one is forced to upgrade Chrome to run the suites. Major 155, and anything below a reviewed major's minimum, stay refused; nothing is adopted silently.
 
+**One behaviour change found by accepting 154.** With the guard lifted, the suites ran against Chrome 154 and two jobs failed in the same place: the P11 keyboard journey's `keyAdvanceDays`. Under mobile emulation the native `datetime-local` control no longer edits its segments by arrow key — every segment keeps its value, so the helper's segment walk found no day and threw. Desktop was unaffected, and the other browser jobs passed on 154. `tests/helpers/quality-keyboard.ts` now falls back to typing the day into the same control, which it still accepts. That stays keyboard only: no `fill()`, `click()` or DOM `focus()`, and the assertion is exact, so a control whose first segment is not the day fails rather than writing a different field. This is the harness adapting to the browser; no application code changes.
+
 No fallback to bundled Chromium is introduced. No launch flag, sandbox setting or installed package metadata changes, and no issued output is regenerated. Each rendered output continues to record its actual browser version, so evidence produced under 153 and 154 remains distinguishable.
 
-**Limits.** Chrome 154 is accepted on the evidence of CI's own installation and the browser suites that run against it. It has had no separate security review here, and this records no claim about its vulnerabilities. Local verification for r02 ran on Chrome 153.0.8010.53, which is what this workstation carries; the 154 evidence is CI's.
+**Limits.** Chrome 154 is accepted on the evidence of CI's own installation and the browser suites that run against it. It has had no separate security review here, and this records no claim about its vulnerabilities. Local verification for r02 ran on Chrome 153.0.8010.53, which is what this workstation carries; the 154 evidence is CI's. The keyboard fallback was proved locally on 153 in both directions — the arrow walk still succeeds, and with the walk disabled the typed day produces the same result on desktop and mobile — but the 154 mobile behaviour it exists for can only be observed in CI.
 
 ## Alternatives and limits
 
