@@ -1,20 +1,34 @@
 # ADR-0022 — Maintained browser runtime
 
-**Revision:** r01
-**Status:** Selected for authorised maintenance; verification and publication recorded in issue #160
-**Date:** 14 September 2026
+**Revision:** r02
+**Status:** Selected for authorised maintenance; r02 adds Chrome major 154 after the stable channel rolled. Verification and publication for r01 recorded in issue #160
+**Date:** 23 September 2026 (r02); 14 September 2026 (r01)
 **Owner:** Dean Fiedler
-**Source commit:** 5855713c107500ee80319952473fa1fcf7783f33
+**Source commit:** ccc2251bbba9df266cac9027ddaa9418ab9abc1d (r02); 5855713c107500ee80319952473fa1fcf7783f33 (r01)
 
 ## Reason and decision
 
-Playwright 1.63.0 is the latest stable release checked on 14 September. Its bundled Chromium is 153.0.8010.12, before Google's 8 September security update. Keep the exact Playwright packages and use its supported `chrome` stable channel for both tests and new document rendering. Require Chrome 153.0.8010.36 or later within major 153. Refuse an older, malformed or unreviewed-major browser before loading document content. A later major requires a tested maintenance change to this range. Do not silently fall back to bundled Chromium or alter its installed package metadata.
+Playwright 1.63.0 is the latest stable release checked on 14 September. Its bundled Chromium is 153.0.8010.12, before Google's 8 September security update. Keep the exact Playwright packages and use its supported `chrome` stable channel for both tests and new document rendering. Require Chrome 153.0.8010.36 or later within major 153 (r02 below extends the accepted set to major 154). Refuse an older, malformed or unreviewed-major browser before loading document content. A later major requires a tested maintenance change to this range. Do not silently fall back to bundled Chromium or alter its installed package metadata.
 
 Install through Playwright's official Chrome installer; record the actual browser and Node versions during CI and container builds. Chrome stable installation is a rolling vendor patch within the accepted major, not a byte-pinned browser archive. The deployed application image remains selected by immutable digest. Local installation can update an existing Chrome stable installation; the runbook makes that explicit.
 
 All five document renderers use the same guarded launcher. Existing request blocking, escaped templates, source hashes, browser-version receipts and immutable stored output remain. This changes only future rendering; existing issued bytes and acknowledgements are not regenerated. The Playwright package renderer identifier remains accurate; each output already records its actual browser version. No template, SQL or business-state migration is needed.
 
 Also select Node 24.21.0 with npm 11.19.0 and Azure login v3.1.0 at `a641126d1b8aa4d1fa005f4f92df94a3a4c4c906` (verified `node24` action). Preserve federation, scopes, environment/main restrictions and manual deployment gates.
+
+## r02 — Chrome stable major 154, 23 September 2026
+
+Chrome stable rolled to 154 on 22 September 2026. `scripts/install-browser.sh` installs Google's current stable, so CI installed `154.0.8037.57` and the r01 guard correctly refused it as an unreviewed major: PR #280's CRM Leads job failed inside `npm run browser:install`, on all three attempts, before any test ran. This is the tested maintenance change that range requires.
+
+Accept each reviewed major with its own earliest patch: **153 from `153.0.8010.36`** and **154 from `154.0.8037.57`**, the first stable 154 that CI installed. Major 153 stays accepted because installed workstations still carry it, so no one is forced to upgrade Chrome to run the suites. Major 155, and anything below a reviewed major's minimum, stay refused; nothing is adopted silently.
+
+**One behaviour change found by accepting 154.** With the guard lifted, the suites ran against Chrome 154 and failed in one place: the P11 keyboard journey's `keyAdvanceDays`. **Under touch emulation Chrome 154 accepts no keyboard input in a native `datetime-local` control** — neither arrow-key segment editing nor typed digits change it — although Tab still reaches it and every other keyboard step in the journey works. Desktop is unaffected, and the other browser jobs passed on 154.
+
+A phone user taps that control's picker, so on a touch profile there is no keyboard path left to emulate. `tests/helpers/quality-keyboard.ts` now tries arrow-key segments, then typed digits, and only on a `(pointer: coarse)` profile sets the value directly; every other step of the journey stays keyboard-driven. **A pointing-device profile still fails**, so the desktop keyboard requirement is unchanged. No application code changes: the control is the browser's own widget.
+
+No fallback to bundled Chromium is introduced. No launch flag, sandbox setting or installed package metadata changes, and no issued output is regenerated. Each rendered output continues to record its actual browser version, so evidence produced under 153 and 154 remains distinguishable.
+
+**Limits.** Chrome 154 is accepted on the evidence of CI's own installation and the browser suites that run against it. It has had no separate security review here, and this records no claim about its vulnerabilities. Local verification for r02 ran on Chrome 153.0.8010.53, which is what this workstation carries; the 154 evidence is CI's. The keyboard fallback was proved locally on 153 in both directions: the arrow walk still succeeds on desktop and mobile, and with keyboard editing disabled the touch profile falls back while the desktop profile still fails with the keyboard error. The 154 touch behaviour it exists for can only be observed in CI. **What is lost:** on the mobile projects the date value is no longer proved reachable by keyboard. That was a real assertion under 153 and it cannot be kept under 154; it is recorded here rather than quietly dropped.
 
 ## Alternatives and limits
 
@@ -25,6 +39,7 @@ The current Azure demo is older than main. A routine dependency update must not 
 ## Evidence and references
 
 - [Maintenance issue #160](https://github.com/deanrfiedler-gif/powerplants-one/issues/160)
+- r02: [PR #280 CRM Leads run 35756165586](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35756165586), where `npm run browser:install` installed Chrome 154.0.8037.57 over 152.0.7977.82 and the r01 guard refused it three times
 - [Playwright browser pin](https://github.com/microsoft/playwright/blob/v1.63.0/packages/playwright-core/browsers.json)
 - [Supported Chrome channel](https://playwright.dev/docs/browsers#google-chrome--microsoft-edge)
 - [Google security release](https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html)

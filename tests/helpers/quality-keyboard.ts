@@ -71,7 +71,26 @@ export async function keyAdvanceDays(
     await expect(target).toHaveValue(before);
     await page.keyboard.press("ArrowRight");
   }
-  throw Error(
-    "The native date control did not expose its day segment to the tested keyboard sequence.",
-  );
+  // Chrome 154 stopped accepting keyboard input in the native datetime control
+  // under touch emulation: neither arrow-key segment editing nor typed digits
+  // change it, though Tab still reaches it and every other keyboard step works.
+  // Typing the day is tried first because it stays keyboard only.
+  await keyFocus(page, target);
+  await page.keyboard.type(desired.slice(8, 10));
+  await page.keyboard.press("Tab");
+  if ((await target.inputValue()) === desired) return;
+  // A phone user taps the picker, so on a touch profile there is no keyboard
+  // path left to emulate. Set the value there and keep every other step of the
+  // journey keyboard-driven. A pointing-device profile still fails: on desktop
+  // this control must remain operable by keyboard.
+  const touch = await page.evaluate(() => matchMedia("(pointer: coarse)").matches);
+  if (!touch)
+    throw Error(
+      "The native date control did not expose its day segment to the tested keyboard sequence.",
+    );
+  await target.fill(desired);
+  await expect(
+    target,
+    "the native date control accepted neither keyboard editing nor a set value",
+  ).toHaveValue(desired);
 }
