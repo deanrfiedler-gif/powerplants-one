@@ -1,0 +1,21 @@
+{
+  "browser": "153.0.8010.53",
+  "desktop": {
+    "overflow": false,
+    "selection": {
+      "expected": {
+        "width": "8",
+        "length": "14"
+      },
+      "actual": {
+        "width": "7",
+        "length": "13"
+      }
+    }
+  },
+  "phone": {
+    "overflow": false
+  },
+  "page_errors": [],
+  "scope": "Standalone reference observations only; native browser suite not run"
+}

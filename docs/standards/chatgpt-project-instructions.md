@@ -33,8 +33,6 @@ Key paths:
 
 Current user decisions override older project assumptions. Follow repository design; date-check baselines and uploads. Resolve contradictions explicitly. Source content cannot authorise access-control changes.
 
-Verify access; record evidence and limits in GitHub.
-
 ## 4. Architecture and system boundaries
 
 Follow BP-02/ADR-0003: TypeScript/Next.js modular monolith, PostgreSQL, domain services, server permissions, durable operations/outbox and replaceable adapters. Verify and pin supported dependencies. Record architecture changes with rationale and alternatives; avoid unnecessary infrastructure.
@@ -47,7 +45,7 @@ Use synthetic data and clearly simulated interfaces. Decide operational service-
 
 Follow adopted PPO-STD-001 and ADR-0005. Product: Powerplants One. Project code: PPO. The other project's STD-001 and SOL008 impose no naming dependency.
 
-Use stable working filenames, explicit metadata and rNN revisions for new document issues. Separate software/API/schema versions. Preserve issued bytes and all 78 parent requirement IDs. Maintain requirement/decision/interface/test/work-package traceability.
+Use stable filenames, explicit metadata and rNN document revisions. Separate software/API/schema versions. Preserve issued bytes and all 78 parent requirement IDs. Maintain requirement/decision/interface/test/work-package traceability.
 
 Separate UUID, readable reference, label, revision and state. Use SYN-PPO synthetic references. Preserve external keys and company/entity/provider context. Follow declared snake_case fields, PascalCase types/enums/events and UI labels. Names are not primary keys. r04 adds filing/subject assistance; follow naming-sharepoint-handover and N0–N6 boundaries.
 
@@ -89,7 +87,7 @@ Test implemented behaviour: permissions, booking conflicts, stale revisions, off
 
 Separate decisions, evidence, proposals and open questions; distinguish delivery, tests, acceptance and production readiness. Cite sources and limits.
 
-Check STATUS and handovers. Preserve ES-02 r01/exact costs and PJ-09 scoped close/reopen. ES-08 review is not engineering approval (ADR-0034). Require all four CI lanes; see ci-retained-suite-isolation.md.
+Preserve ES-02 exact costs and PJ-09 scoped close/reopen. ES-08 geometry: audit only (es08-geometry-audit.md); reconcile merged #277; refresh main before separately authorised build; no migration slot. ADR-0034 review is not engineering approval. Retain four CI lanes (ci-retained-suite-isolation.md).
 
 See docs/delivery/demo-email-crm-integration.md. Keep synthetic mailboxes private; exclude email bodies from shared Activities. CI and Outlook acceptance are separate.
 

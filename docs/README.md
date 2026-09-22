@@ -4,6 +4,7 @@ Start with [current status](STATUS.md) and the [First Prototype Definition & Arc
 
 | Area | Entry point |
 |---|---|
+| ES-08 advanced geometry | [Audit](delivery/es08-geometry-audit.md), [mapping register](delivery/es08-geometry-mapping.md), [build plan](delivery/es08-geometry-build-plan.md), [future prompt](delivery/es08-geometry-implementation-prompt.md); audit proposals only, isolated from Priva #277 |
 | HTML design index | [Module visuals and maintenance template](reference/ui/README.md): repository files, recorded approvals, implementation references and preserved earlier revisions |
 | Standards | [Naming](standards/naming-conventions.md), [adoption](standards/naming-adoption.md), [ChatGPT instructions](standards/chatgpt-project-instructions.md), [shared UI](standards/ui-style-specification.md) |
 | Prototype package | [Scope, specifications, contracts, tests and ordered plan](prototype/README.md) |
