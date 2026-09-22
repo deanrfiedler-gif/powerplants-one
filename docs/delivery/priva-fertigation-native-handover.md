@@ -2,6 +2,8 @@
 
 22 September 2026. Branch `feat/priva-fertigation-native`, based on main `0c95c5af776c97374997623bd1070d9de480cf82`. This is an authorised native implementation for review. Merge, hosted database changes, deployment and business/manufacturer acceptance require separate authorisation.
 
+Published as [draft PR #277](https://github.com/deanrfiedler-gif/powerplants-one/pull/277). Implementation commit: `d653f84e5383acb1665f567c497ff48ff5061092`. The PR checks provide the current CI result for its exact head; the local evidence below is a separate checkpoint.
+
 ## Scope and sources
 
 The native workbench uses PPO's application shell, identity, estimating authority, PostgreSQL revisions, command receipts and private document adapter. It is not an iframe or a standalone HTML runtime. The exact supplied r02 HTML remains an unchanged visual/behavioural reference under `reference/ui/`; technical ZIPs and private manuals remain outside the public repository.

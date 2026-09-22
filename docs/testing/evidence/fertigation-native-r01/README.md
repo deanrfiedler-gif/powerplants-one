@@ -2,6 +2,8 @@
 
 22 September 2026. Local synthetic proof, separate from CI, owner acceptance, manufacturer evidence and hosted deployment. Candidate source is on `feat/priva-fertigation-native`, based on main `0c95c5af776c97374997623bd1070d9de480cf82`. The source manifest records exact code and reference hashes; the PR records the commit identity.
 
+[Draft PR #277](https://github.com/deanrfiedler-gif/powerplants-one/pull/277) publishes implementation commit `d653f84e5383acb1665f567c497ff48ff5061092`. Refer to its checks for current CI results and the workflow's retained actual-checkout/build manifest. Local screenshots and measurements are not CI results.
+
 ## Environment and source controls
 
 Windows 11 build 26100 host; Intel Core Ultra 5 225U, 14 logical CPUs, approximately 15 GiB memory reported by Node; Node 24.21.0, npm 11.19.0, PostgreSQL 16.15, existing Playwright 1.63.0 and approved Chrome 153.0.8010.53. A separate PostgreSQL cluster listens on loopback port 55442 and contains only disposable `ppo_synthetic_test`. Local credentials and document storage remain outside Git. The compiled application proof uses loopback port 3042. No hosted migration, reset, deployment, identity change or supplier/customer communication was performed.
