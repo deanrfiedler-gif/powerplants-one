@@ -40,7 +40,7 @@ test("r38 collapse, snapshot, filter focus, shared forecast and archive populati
   await page.screenshot({ path: info.outputPath("r38-snapshot.png") });
   await page.keyboard.press("Escape");
   await page.getByRole("button", { name: "Filters and sort", exact: true }).click();
-  const filter = page.getByRole("dialog", { name: "Filter opportunities", exact: true });
+  const filter = page.getByRole("dialog", { name: "Filter deals", exact: true });
   await expect(filter).toBeVisible();
   expect((await filter.boundingBox())!.y).toBe(0);
   expect(await filter.locator(".crm-secondary-filters").evaluate(node => node.scrollHeight <= node.clientHeight + 1)).toBe(true);
@@ -73,8 +73,8 @@ test("r38 named views, list resize, triage, totals and unavailable data commands
   await page.keyboard.press("Escape");
   await expect(page.getByRole("button", { name: "Views", exact: true })).toContainText("Weekly review");
   await page.getByRole("button", { name: "List", exact: true }).click();
-  const first = page.getByRole("columnheader", { name: "Opportunity", exact: true }), before = (await first.boundingBox())!.width;
-  await page.getByRole("button", { name: "Resize Opportunity column", exact: true }).focus();
+  const first = page.getByRole("columnheader", { name: "Deal", exact: true }), before = (await first.boundingBox())!.width;
+  await page.getByRole("button", { name: "Resize Deal column", exact: true }).focus();
   await page.keyboard.press("ArrowRight");
   expect((await first.boundingBox())!.width).toBeCloseTo(before + 20, 0);
   await page.screenshot({ path: info.outputPath("r38-list.png") });
@@ -84,7 +84,7 @@ test("r38 named views, list resize, triage, totals and unavailable data commands
   await page.getByRole("button", { name: "Pipeline totals", exact: true }).click();
   await expect(page.getByRole("dialog", { name: "Pipeline totals", exact: true })).toContainText("Current filters apply");
   await page.keyboard.press("Escape");
-  await page.getByRole("button", { name: "Opportunity data options", exact: true }).click();
+  await page.getByRole("button", { name: "Deal data options", exact: true }).click();
   await expect(page.getByRole("button", { name: "Import data · unavailable", exact: true })).toBeDisabled();
   await page.keyboard.press("Escape");
   await page.getByRole("button", { name: "Help", exact: true }).click();

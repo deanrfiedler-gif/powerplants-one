@@ -223,8 +223,8 @@ export function NewOpportunity() {
     <>
       <PageHeader
         eyebrow="CRM · Synthetic · Online"
-        title="New opportunity"
-        description="Select existing customer context. Creating saves one Open opportunity and its initial owned Activity together."
+        title="Add deal"
+        description="Select existing customer context. Creating saves one Open deal and its initial owned Activity together."
       />
       <Link href="/sales/opportunities">Back to sales worklist</Link>
       <ResourceState {...available} />
@@ -268,9 +268,9 @@ export function NewOpportunity() {
               }}
             >
               <fieldset disabled={command.busy || command.uncertain}>
-                <legend>Opportunity and customer context</legend>
+                <legend>Deal and customer context</legend>
                 <Field name="qualification_note" label="Qualification outcome" value={qualification} onChange={setQualification} multiline required maxLength={2000}/>
-                <p>Discovery starts with a qualified customer need. If the contact is unknown, the initial Activity must identify that contact and belong to the opportunity owner.</p>
+                <p>Discovery starts with a qualified customer need. If the contact is unknown, the initial Activity must identify that contact and belong to the deal owner.</p>
                 <SelectField
                   name="company_id"
                   label="Visibility company"
@@ -341,7 +341,7 @@ export function NewOpportunity() {
                     )}
                     <CrmPicker
                       name="owner_id"
-                      label="Opportunity owner"
+                      label="Deal owner"
                       kind="Owner"
                       enabled={!siteRequired || !!site}
                       value={owner}
@@ -352,7 +352,7 @@ export function NewOpportunity() {
                 )}
                 <Field
                   name="title"
-                  label="Opportunity title"
+                  label="Deal title"
                   value={title}
                   onChange={setTitle}
                   required
@@ -394,7 +394,7 @@ export function NewOpportunity() {
                   context={context}
                   enabled={!siteRequired || !!site}
                 />
-                <button type="submit" disabled={siteRequired && !site}>Create opportunity and action</button>
+                <button type="submit" disabled={siteRequired && !site}>Add deal and action</button>
               </fieldset>
             </form>
           </ValidationFields>
@@ -470,10 +470,10 @@ function OpportunityContent({
           {o.stages.map(({ stage_id: stage }) => <button key={stage} className={o.stage_id === stage ? "current" : ""} aria-current={o.stage_id === stage ? "step" : undefined} disabled={!o.can_edit || o.close_outcome !== "Open" || command.busy || command.uncertain} onClick={() => {setTargetStage(stage);setDialog("stage");}}>{stage}{o.stage_id === stage && <span>Current stage</span>}</button>)}
         </div>
       </div>
-      {o.original_owner && <p className="source-stamp">Original opportunity owner: {o.original_owner.owner_name} · Current owner: {o.owner_name}</p>}
-      {o.can_transfer && <p><button className="secondary" disabled={command.busy||command.uncertain} onClick={()=>setDialog("transfer")}>Transfer opportunity owner</button></p>}
+      {o.original_owner && <p className="source-stamp">Original deal owner: {o.original_owner.owner_name} · Current owner: {o.owner_name}</p>}
+      {o.can_transfer && <p><button className="secondary" disabled={command.busy||command.uncertain} onClick={()=>setDialog("transfer")}>Transfer deal owner</button></p>}
       {o.can_record_outcome && <p><button className="secondary" disabled={command.busy || command.uncertain} onClick={()=>setDialog("outcome")}>Record sales outcome</button></p>}
-      {o.handover_due && <section className="crm-panel" aria-label="Handover due"><h2>Handover due</h2><p>Accountable owner: {o.handover_due.owner_name}. Receiving route and owner still need confirmation.</p><p>Won at opportunity version {o.handover_due.opportunity_version}. Existing activities retain their owners.</p></section>}
+      {o.handover_due && <section className="crm-panel" aria-label="Handover due"><h2>Handover due</h2><p>Accountable owner: {o.handover_due.owner_name}. Receiving route and owner still need confirmation.</p><p>Won at deal version {o.handover_due.opportunity_version}. Existing activities retain their owners.</p></section>}
       {dialog && <DealDialog id={o.id} mode={dialog} targetStage={targetStage} onClose={() => {setDialog(null);setTargetStage(undefined);}} onSaved={(receipt, _old, stage) => {
         setDialog(null);setTargetStage(undefined);
         // Our accepted stage command can advance a clean sibling form. Existing
@@ -510,7 +510,7 @@ function OpportunityContent({
           Load current saved version for comparison
         </button>
       )}
-      <RecordTabs id="opportunity" label="Opportunity sections" value={tab} onChange={setTab}
+      <RecordTabs id="opportunity" label="Deal sections" value={tab} onChange={setTab}
         tabs={[{id:"timeline",label:"Timeline"},{id:"details",label:"Details"},{id:"commercial",label:"Commercial"},{id:"files",label:"Files"}]} />
       <RecordPanel id="opportunity" tab="details" value={tab}>
 
@@ -706,20 +706,20 @@ function OpportunityContent({
         )}
       </section>
       <section className="crm-panel">
-        <h2>Opportunity history</h2>
+        <h2>Deal history</h2>
         <ol className="crm-history">
           {o.events.map((e) => (
             <li key={e.id}>
               <strong>
                 {e.event_type === "OpportunityCreated"
-                  ? "Opportunity created"
+                  ? "Deal created"
                   : e.event_type === "OpportunityQualified"
                     ? "Qualification recorded"
                     : e.event_type === "OpportunityInformationEdited" ? "Deal information updated"
                     : e.event_type === "OpportunityScopeEdited" ? "Requirements and scope updated"
                     : e.event_type === "OpportunityStageChanged" ? "Deal stage changed"
                     : e.event_type === "OpportunityOutcomeRecorded" ? `Sales outcome recorded: ${e.close_outcome}`
-                    : e.event_type === "OpportunityOwnerTransferred" ? "Opportunity owner transferred"
+                    : e.event_type === "OpportunityOwnerTransferred" ? "Deal owner transferred"
                     : "Next action planned"}{" "}
                 · Version {e.opportunity_version}
               </strong>

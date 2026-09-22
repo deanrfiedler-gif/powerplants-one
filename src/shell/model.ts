@@ -5,7 +5,7 @@ const actions: (QuickAction & { requires: Capability[] })[] = [
   { id: "engineering", label: "Engineering request", href: "/engineering?create=1", module: "Engineering", requires: ["engineering.read", "engineering.create"] },
   { id: "lead", label: "Lead", href: "/sales/leads?create=1", module: "Leads", requires: ["crm.lead.read", "crm.lead.create"] },
   { id: "project", label: "Project", href: "/projects/new", module: "Projects", requires: ["project.read", "project.create"] },
-  { id: "opportunity", label: "Opportunity", href: "/sales/opportunities/new", module: "Deals", requires: ["crm.opportunity.read", "crm.opportunity.create"] },
+  { id: "opportunity", label: "Deal", href: "/sales/opportunities/new", module: "Deals", requires: ["crm.opportunity.read", "crm.opportunity.create"] },
   { id: "estimate", label: "Estimate", href: "/estimating/new", module: "Estimating", requires: ["estimating.read", "estimating.edit"] },
   { id: "ticket", label: "Service request", href: "/service/tickets/new", module: "Service", requires: ["service.ticket.read", "service.ticket.edit"] },
   { id: "work-order", label: "Work order", href: "/service/work-orders/new", module: "Service", requires: ["service.work_order.read", "service.work_order.edit"] },
@@ -23,6 +23,6 @@ export function actionsForCapabilities(grants: ReadonlySet<string>): QuickAction
 export function contextualActions(actions: QuickAction[], module: string) {
   return actions.toSorted((a, b) => Number(b.module === module) - Number(a.module === module));
 }
-export type ShellContext = { display_name: string; actions: QuickAction[]; navigation: string[]; can_preview: boolean };
+export type ShellContext = { display_name: string; preference_scope?: string; actions: QuickAction[]; navigation: string[]; can_preview: boolean };
 export type SearchItem = { id: string; label: string; reference: string; kind: string; href: string };
 export type SearchResults = { items: SearchItem[]; has_more: boolean; limit_per_type: number };

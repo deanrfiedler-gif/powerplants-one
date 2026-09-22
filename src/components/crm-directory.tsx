@@ -1,5 +1,7 @@
 "use client";
 import Link from "next/link";
+import { useShell } from "./shell-provider";
+import { departmentHref } from "../shell/navigation";
 import { useEffect, useId, useState } from "react";
 import { api, ErrorNotice, Field, PageHeader, Stamp } from "./business-ui";
 import { denied, useCrmResource } from "./crm-state";
@@ -52,8 +54,8 @@ const defaults = {
   direction: "asc",
   limit: "25",
 };
-export function CrmDirectory({ kind }: { kind: DirectoryKind }) {
-  const controlId = useId();
+export function CrmDirectory({ kind, contactsHub = false }: { kind: DirectoryKind; contactsHub?: boolean }) {
+  const controlId = useId(), shell = useShell();
   const [filters, setFilters] = useState(defaults),
     [settled, setSettled] = useState(""),
     [page, setPage] = useState(1),
@@ -142,7 +144,7 @@ export function CrmDirectory({ kind }: { kind: DirectoryKind }) {
       case "name":
         return (
           <Link
-            href={`/${kind === "people" ? "people" : "customers"}/${row.id}`}
+            href={departmentHref(`/${kind === "people" ? "people" : "customers"}/${row.id}`, shell.preview)}
           >
             {row.display_name}
           </Link>
@@ -219,7 +221,7 @@ export function CrmDirectory({ kind }: { kind: DirectoryKind }) {
           </Link>
         }
       />
-      <nav className="record-tabs" aria-label="Customer context sections">
+      {!contactsHub && <nav className="record-tabs" aria-label="Customer context sections">
         {[
           ["customers", "Organisations"],
           ["people", "People"],
@@ -238,7 +240,7 @@ export function CrmDirectory({ kind }: { kind: DirectoryKind }) {
             {label}
           </Link>
         ))}
-      </nav>
+      </nav>}
       {locked ? (
         <ErrorNotice error={[result.error, views.error, saveError].find(denied)} />
       ) : (
@@ -478,7 +480,7 @@ export function CrmDirectory({ kind }: { kind: DirectoryKind }) {
                         <Link
                           className="crm-directory-mobile-main"
                           aria-label={row.display_name}
-                          href={`/${kind === "people" ? "people" : "customers"}/${row.id}`}
+                          href={departmentHref(`/${kind === "people" ? "people" : "customers"}/${row.id}`, shell.preview)}
                         >
                           <strong>{row.display_name}</strong>
                           <span>

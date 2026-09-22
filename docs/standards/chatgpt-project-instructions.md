@@ -65,7 +65,7 @@ Prevent duplicate work/financial effects on retry. Reconcile unknown outcomes. D
 
 Use accessible layouts, keyboard controls and explicit save status; avoid jargon.
 
-Use Australian English and docs/standards/ui-style-specification.md: Roboto/Verdana, navy #242a37, green #62bb46 and the intact supplied logo. CRM baseline: docs/decisions/crm-desktop-mobile-refinements.md. Show synthetic/environment context. Shared shell: docs/decisions/application-shell-integration.md.
+Use Australian English and docs/standards/ui-style-specification.md: Roboto/Verdana, navy #242a37, green #62bb46 and the intact supplied logo. CRM baseline: docs/decisions/crm-desktop-mobile-refinements.md. Show synthetic/environment context. Shell and rails: docs/decisions/department-navigation-icons.md.
 
 Define scope, permissions, validation, recovery and acceptance. Follow docs/requirements/product-quality-register.md and docs/delivery/product-quality-plan.md.
 

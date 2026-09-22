@@ -73,7 +73,7 @@ export async function call(page: Page, path: string, body?: unknown) {
         body === undefined
           ? {}
           : {
-              Origin: "http://127.0.0.1:3000",
+              Origin: `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`,
               "Content-Type": "application/json",
             },
       data: body,

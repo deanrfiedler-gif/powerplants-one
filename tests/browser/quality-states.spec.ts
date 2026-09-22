@@ -220,9 +220,9 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
       await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
       await expect(screenLoading).toHaveCount(0);
       if (s.id === "SC-08") {
-        await expect(page.getByRole("banner").getByText("Service planner", { exact: true })).toBeVisible();
+        await expect(page.getByRole("banner").getByText("Schedule", { exact: true })).toBeVisible();
         await expect(page.getByRole("navigation", { name: "Service navigation", exact: true })
-          .getByRole("link", { name: "Service planner", exact: true })).toHaveAttribute("aria-current", "page");
+          .getByRole("link", { name: "Schedule", exact: true })).toHaveAttribute("aria-current", "page");
       }
       if (s.id === "SC-14") {
         await expect(page.getByRole("banner").getByText("Documents", { exact: true })).toBeVisible();

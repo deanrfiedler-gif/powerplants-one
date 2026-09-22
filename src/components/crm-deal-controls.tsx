@@ -146,7 +146,7 @@ export function DealDialog({
     >
       <header className="crm-dialog-head">
         <h2 id="crm-dialog-title">
-          {currentMode === "transfer" ? "Transfer opportunity owner" : currentMode === "outcome" ? "Record sales outcome" : currentMode === "snapshot"
+          {currentMode === "transfer" ? "Transfer deal owner" : currentMode === "outcome" ? "Record sales outcome" : currentMode === "snapshot"
             ? (o?.title ?? "Deal snapshot")
             : currentMode === "information"
               ? "Edit deal"
@@ -449,12 +449,12 @@ function DealEditor({
           </legend>
           {mode === "transfer" && <>
             <Field name="owner-search" label="Find eligible owner" value={ownerSearch} onChange={setOwnerSearch} maxLength={200}/>
-            <SelectField name="new_owner_id" label="New opportunity owner" value={newOwner} onChange={setNewOwner} options={handover.data?.items??[]} required/>
+            <SelectField name="new_owner_id" label="New deal owner" value={newOwner} onChange={setNewOwner} options={handover.data?.items??[]} required/>
             <ErrorNotice error={handover.error}/>
             {handover.loading && <p role="status">Loading eligible owners…</p>}
             {handover.data?.next_cursor && <p>More eligible owners exist. Refine the search.</p>}
             {handover.data?.items.length === 0 && <p>No eligible receiving owners match this search.</p>}
-            <p>Current opportunity owner: {o.owner_name}. Transfer is immediate when this save is accepted.</p>
+            <p>Current deal owner: {o.owner_name}. Transfer is immediate when this save is accepted.</p>
             {handover.data && <section aria-label="Activity comparison"><h3>Activities keep their owners</h3>{[handover.data.next_activity,...(handover.data.identification_activity && handover.data.identification_activity.id!==handover.data.next_activity.id ? [handover.data.identification_activity] : [])].map(a=><p className="crm-narrative" key={a.id}>{a.summary} · {a.status} · Owner: {a.owner_name} · Version {a.version}</p>)}<p>The receiving owner must review any outstanding activity separately. Estimates, quotes and delivery obligations keep their ownership.</p></section>}
             <Field name="reason" label="Transfer reason" value={transferReason} onChange={setTransferReason} multiline required maxLength={1000}/>
           </>}

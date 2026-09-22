@@ -41,7 +41,15 @@ One shared provider owns context loading/retry and lock invalidation. Global sea
 
 The account popup's Development → Preview workspace offers seven workspaces. The validated r15 preference key stores only schema version and workspace ID. Available roots open with current access; a planned or denied selection leaves the current page open and explains why. On a business page, the real route wins over a stored preference so Projects or Engineering never shows Sales mobile tabs. Shared pages use the selected preference. Foundation checks remain local-only; the Documents index and Supply chain remain planned.
 
-## Help boundary
+## Department navigation amendment — 22 September 2026
+
+The [department navigation decision](department-navigation-icons.md) supersedes r17's desktop no-shortcuts choice under Dean's explicit implementation instruction. Seven ordered rails share one semantic outline/active icon catalogue, with logo and More fixed around scrolling shortcuts. Live links require readiness and current server-derived permissions; unavailable destinations are omitted from the rail and More. The [coverage register](../delivery/department-navigation-coverage.md) names every withheld capability.
+
+Shared pages retain a user/workspace-scoped department preference, with URL context for reload, history and new tabs. The selector retains compatible shared pages and otherwise opens a permitted department landing or My Work. Contacts groups the existing People and general Organisations directory. Pulse, Tasks, Sales Activities, Quotations, Programme and Customer accounts reuse existing services through bounded adapters. Sales URLs and technical CRM identifiers remain unchanged. All other r17 frame decisions and dedicated mobile/offline exceptions remain.
+
+Executed verification and concurrent-main reconciliation are in the [navigation handover](../delivery/department-navigation-icons.md). This amendment does not approve missing business modules or deployment.
+
+## Help boundary (retained r17)
 
 The information icon opens a separate Page guide with the current page name, shared shell instructions and a journey map. The concise Quick Help stays available. Only the shell guide is authored in the r17 source; other routes explicitly say their detailed guide is being prepared. This PR does not present navigation guidance as a completed business workflow guide.
 

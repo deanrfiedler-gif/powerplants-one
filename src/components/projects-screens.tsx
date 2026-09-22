@@ -28,7 +28,7 @@ import {
 } from "../projects/model";
 import type { ShellContext } from "../shell/model";
 
-export function ProjectRegister() {
+export function ProjectRegister({ programme = false }: { programme?: boolean }) {
   const [search, setSearch] = useState(""),
     [cursors, setCursors] = useState<(string | null)[]>([null]);
   const cursor = cursors.at(-1),
@@ -39,11 +39,11 @@ export function ProjectRegister() {
   return (
     <section className="project-register">
       <RegisterHeading
-        title="Projects"
-        description="Plan delivery, assign responsibility and track the schedule."
+        title={programme ? "Programme" : "Projects"}
+        description={programme ? "Choose a project to open its saved tasks, dependencies and Gantt schedule." : "Plan delivery, assign responsibility and track the schedule."}
       >
         <Link href="/projects/acceptance">Staged Acceptance &amp; Closeout</Link>
-        {context.data?.actions.some((a) => a.id === "project") && (
+        {!programme && context.data?.actions.some((a) => a.id === "project") && (
           <Link href="/projects/new" className="primary-link">
             + Project
           </Link>
@@ -68,7 +68,7 @@ export function ProjectRegister() {
           <div className="project-register-list">
             {resource.data.items.map((p) => (
               <Link
-                href={`/projects/${p.id}`}
+                href={`/projects/${p.id}${programme ? "?view=programme" : ""}`}
                 className="project-register-card"
                 key={p.id}
               >
@@ -354,7 +354,7 @@ function History({ id, onClose }: { id: string; onClose: () => void }) {
     </dialog>
   );
 }
-export function ProjectSchedulePage({ id }: { id: string }) {
+export function ProjectSchedulePage({ id, programme = false }: { id: string; programme?: boolean }) {
   const identity = useIdentity(),
     resource = useResource<Schedule>(`projects/${id}`),
     [panel, setPanel] = useState<{ task: Task | null } | null>(null),
@@ -372,7 +372,7 @@ export function ProjectSchedulePage({ id }: { id: string }) {
             }
           }
         />
-        <Link href="/projects">Back to projects</Link>
+        <Link href={programme ? "/projects/programme" : "/projects"}>{programme ? "Back to programme" : "Back to projects"}</Link>
       </section>
     );
   if (!resource.data)
@@ -385,10 +385,10 @@ export function ProjectSchedulePage({ id }: { id: string }) {
     );
   return (
     <>
-      <Link href={`/projects/acceptance?project=${id}`}>Acceptance &amp; closeout</Link>
       <ProjectsGantt
         key={id}
         schedule={resource.data}
+        programme={programme}
         preferenceKey={`ppo:project-layout:r10:${identity.workspace_id}:${identity.actor_id}:${id}`}
         loading={resource.loading}
         saved={saved}

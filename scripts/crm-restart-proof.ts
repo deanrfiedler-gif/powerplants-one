@@ -20,7 +20,7 @@ const phase = process.argv[2];
 if (!["write", "verify"].includes(phase)) throw Error("Use write or verify");
 const root = join(process.env.RUNNER_TEMP ?? "/tmp", "ppo-crm-i1-restart"),
   evidence = "verification-evidence/crm-i1-restart",
-  origin = "http://127.0.0.1:3000";
+  origin = localConfig().origin;
 await mkdir(root, { recursive: true });
 await mkdir(evidence, { recursive: true });
 const server = spawn(
@@ -291,7 +291,7 @@ try {
     await writeFile(`${file}.json`,JSON.stringify({...metadata,scenario:`Owned ${outcome.body.close_outcome} outcome and exact receipt across actual application and PostgreSQL restart`,opportunity_id:outcome.deal.id,operations:[outcome.body.operation_id],sha256:createHash("sha256").update(image).digest("hex"),bytes:image.length},null,2));
   }
   await page.goto(origin+`/crm/opportunities/${proof.transfer.input.id}`);
-  await expect(page.getByText("Original opportunity owner: SYN Coordinator · Current owner: SYN Sales receiver",{exact:true})).toBeVisible();
+  await expect(page.getByText("Original deal owner: SYN Coordinator · Current owner: SYN Sales receiver",{exact:true})).toBeVisible();
   const transferImage=await page.screenshot({path:`${evidence}/transfer-${phase}.png`,fullPage:false});
   const transferMetadata=JSON.parse(await readFile(`${evidence}/${phase}.json`,"utf8"));
   await writeFile(`${evidence}/transfer-${phase}.json`,JSON.stringify({...transferMetadata,scenario:"Owner transfer, original owner, unchanged Activities and exact original actor receipt through real process restart",opportunity_id:proof.transfer.input.id,operations:[proof.transfer.body.operation_id],sha256:createHash("sha256").update(transferImage).digest("hex"),bytes:transferImage.length},null,2));

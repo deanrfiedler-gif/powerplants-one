@@ -106,10 +106,10 @@ test("invited actor: mailbox to refined deal, follow-up, calendar and another br
       name: info.project.use.isMobile ? "All modules" : "More navigation",
       exact: true,
     })
-    .getByRole("link", { name: "Email & Calendar", exact: true })
+    .getByRole("link", { name: "Sales Inbox", exact: true })
     .click();
   await expect(
-    page.getByRole("heading", { name: "Email", exact: true }),
+    page.getByRole("heading", { name: "Sales Inbox", exact: true }),
   ).toBeVisible();
   const inbox = await call(page, "email");
   expect(inbox.items).toHaveLength(2);

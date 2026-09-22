@@ -30,7 +30,7 @@ test("nested pages resolve to their actual workspace instead of a remembered Sal
     "projects",
   );
   assert.equal(pageForPath("/engineering/example")?.workspace, "engineering");
-  assert.equal(pageForPath("/estimating/discovery/example")?.id, "intake");
+  assert.equal(pageForPath("/estimating/discovery/example")?.id, "wizard");
   assert.equal(pageForPath("/service/appointments/example")?.id, "planner");
   assert.equal(pageForPath("/sales/opportunities-other"), undefined);
   assert.equal(pageForPath("/people")?.workspace, undefined);
@@ -57,7 +57,7 @@ test("seven workspace preferences validate schema and retain r15 identifiers", (
 test("More finds workspace names and existing page names, including former rail destinations", () => {
   assert.deepEqual(
     menuGroups("sales").flatMap((g) => g.items.map((d) => d.id)),
-    ["deals", "leads"],
+    ["deals", "pulse", "leads", "tasks", "mail", "insights"],
   );
   assert.deepEqual(
     menuGroups("Contact").flatMap((g) => g.items.map((d) => d.id)),

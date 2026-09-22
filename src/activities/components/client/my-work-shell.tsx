@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { ShellIcon } from "../../../components/shell-icon";
 import { usePathname, useRouter } from "next/navigation";
 import {
   createContext,
@@ -13,7 +14,7 @@ import {
 import { useIdentity } from "../../../components/business-session";
 import { api } from "../../../components/business-ui";
 import { useShell } from "../../../components/shell-provider";
-import { workViews, workspaces, type WorkViewId } from "../../../shell/navigation";
+import { workViews, workspaces, departmentHref, type WorkViewId } from "../../../shell/navigation";
 import { SecondaryMenuFrame, useSecondaryMenu } from "../../../shell/secondary-menu";
 import { criteriaSearch } from "../../work-criteria";
 import type { readWorkNavigation } from "../../work-overview";
@@ -176,8 +177,8 @@ export function MyWorkShell({ children }: { children: React.ReactNode }) {
             .filter((v) => v.id !== "team" || teamOpen)
             .map((v) => (
               <li key={v.id}>
-                <Link href={v.href} aria-current={current === v.id ? "page" : undefined} onClick={() => closeOverlay(false)}>
-                  <Icon name={viewIcons[v.id]} />
+                <Link href={departmentHref(v.href, shell.preview)} aria-current={current === v.id ? "page" : undefined} onClick={() => closeOverlay(false)}>
+                  {v.id === "reviews" ? <ShellIcon name="nav-approval"/> : v.id === "actions" ? <ShellIcon name="nav-tasks"/> : <Icon name={viewIcons[v.id]} />}
                   <span>{v.label}</span>
                   {v.id === "reviews" && reviewCount > 0 && (
                     <span className="mw-badge" aria-label={`${reviewCount} awaiting your decision`}>
@@ -196,7 +197,7 @@ export function MyWorkShell({ children }: { children: React.ReactNode }) {
             {pinned.map((v) => (
               <li key={v.id}>
                 <Link
-                  href={`${v.target === "overview" ? "/work" : `/work/${v.target}`}${criteriaSearch(v.criteria, v.id)}`}
+                  href={departmentHref(`${v.target === "overview" ? "/work" : `/work/${v.target}`}${criteriaSearch(v.criteria, v.id)}`, shell.preview)}
                   onClick={() => closeOverlay(false)}
                 >
                   <Icon name="bookmark" />

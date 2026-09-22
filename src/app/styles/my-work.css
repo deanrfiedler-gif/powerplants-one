@@ -27,6 +27,16 @@
 :is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-estimate-wizard,#ppo-specialist,#ppo-fertigation) *,:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-estimate-wizard,#ppo-specialist,#ppo-fertigation) *::before,:is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-estimate-wizard,#ppo-specialist,#ppo-fertigation) *::after{box-sizing:border-box}
 :is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-estimate-wizard,#ppo-specialist,#ppo-fertigation) [hidden]{display:none!important}
 
+/* Bounded Sales projections reuse the original activity rows and dialogs. */
+#ppo-my-work.ppo-sales-work{display:flex;flex-direction:column;gap:20px;padding:24px;overflow:auto}
+#ppo-my-work.ppo-sales-work>.page-header{display:block;flex:none;margin:0;padding:0}
+#ppo-my-work.ppo-sales-work h1{font-size:26px;line-height:34px;font-weight:500}
+#ppo-my-work.ppo-sales-work h2{font-size:18px;line-height:26px;font-weight:500}
+#ppo-my-work.ppo-sales-work>.business-card{flex:none;margin:0;padding:18px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface-white)}
+#ppo-my-work.ppo-sales-work .business-card>p{margin:8px 0;color:var(--text-secondary)}
+#ppo-my-work.ppo-sales-work .project-pagination{display:flex;gap:10px;justify-content:flex-end;margin-top:10px}
+@media(max-width:780px){#ppo-my-work.ppo-sales-work{padding:16px 12px 88px;gap:14px}#ppo-my-work.ppo-sales-work>.business-card{padding:12px}}
+
 /* Local reset for the shell's global element rules. */
 :is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-estimate-wizard,#ppo-specialist,#ppo-fertigation) :is(h1,h2,h3,h4,p,dl,dd,ul,ol,figure,hr){margin:0;padding:0;letter-spacing:normal}
 :is(#ppo-my-work,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-estimate-wizard,#ppo-specialist,#ppo-fertigation) :is(ul,ol){list-style:none}

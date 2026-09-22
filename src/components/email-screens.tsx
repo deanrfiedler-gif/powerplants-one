@@ -40,7 +40,7 @@ function Tabs({ calendar = false }: { calendar?: boolean }) {
   return (
     <nav className="ec-tabs" aria-label="Email and Calendar">
       <Link href="/email" aria-current={!calendar ? "page" : undefined}>
-        Email
+        Sales Inbox
       </Link>
       <Link href="/calendar" aria-current={calendar ? "page" : undefined}>
         Calendar
@@ -58,7 +58,7 @@ export function EmailInbox() {
       <Tabs />
       <div className="ec-heading">
         <div>
-          <h1>Email</h1>
+          <h1>Sales Inbox</h1>
           <p>Private synthetic mailbox</p>
         </div>
         <Link href="/calendar">Open calendar</Link>
@@ -297,7 +297,7 @@ type CalendarActivity = {
   status: string;
   source: string;
 };
-export function EmailCalendar({ initialDay }: { initialDay: string }) {
+export function EmailCalendar({ initialDay, sales = false }: { initialDay: string; sales?: boolean }) {
   const [day, updateDay] = useState(initialDay),
     [view, setView] = useState<"day" | "agenda">("day"),
     [source, setSource] = useState("all"),
@@ -308,17 +308,20 @@ export function EmailCalendar({ initialDay }: { initialDay: string }) {
     meetings: CalendarEvent[];
     activities: CalendarActivity[];
     truncated: boolean;
-  }>(`calendar?day=${day}`);
+  }>(`calendar?day=${day}${sales ? "&scope=sales" : ""}`);
   const selected = [
     ...(r.data?.meetings ?? []),
     ...(r.data?.activities ?? []),
   ].find((item) => item.id === selectedId);
   const setDay = (value: string) => {
     updateDay(value);
+    const query = new URLSearchParams(window.location.search);
+    query.set("day", value);
+    if (sales) query.set("scope", "sales");
     window.history.replaceState(
       window.history.state,
       "",
-      `/calendar?day=${value}`,
+      `/calendar?${query}`,
     );
   };
   const date = new Date(day + "T12:00:00Z"),
@@ -364,7 +367,7 @@ export function EmailCalendar({ initialDay }: { initialDay: string }) {
       <div className="ec-calendar">
         <div className="ec-heading">
           {/* The breadcrumb names this page; the heading stays for assistive technology. */}
-          <h1 className="ppo-register-title">Calendar</h1>
+          <h1 className="ppo-register-title">{sales ? "Activities" : "Calendar"}</h1>
           <span className="ec-muted">Brisbane · AEST</span>
           <button className="secondary" onClick={() => r.reload()}>
             Refresh calendar

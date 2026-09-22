@@ -22,7 +22,7 @@ export async function shellContext(p: Principal, input: unknown): Promise<ShellC
     [p.workspace_id, p.actor_id],
   );
   const capabilities = new Set(grants.rows.map(g => g.capability));
-  return { display_name: p.display_name, actions: actionsForCapabilities(capabilities),
+  return { display_name: p.display_name, preference_scope: `${p.workspace_id}:${p.actor_id}`, actions: actionsForCapabilities(capabilities),
     navigation: navigationForCapabilities(capabilities, process.env.PPO_ENV === "azure-demo"),
     // This is a presentation preference for authenticated synthetic/demo users,
     // never an impersonation or permission switch. No production mode is enabled.
@@ -33,7 +33,7 @@ export async function shellSearch(p: Principal, input: unknown) {
     { kind: "Engineering package", path: "/engineering", label: "title", read: q => listEngineering(p, q) },
     { kind: "Lead", path: "/sales/leads", label: "title", read: q => listLeads(p, q) },
     { kind: "Project", path: "/projects", label: "title", read: q => listProjects(p, q) },
-    { kind: "Opportunity", path: "/sales/opportunities", label: "title", read: q => listOpportunities(p, q) },
+    { kind: "Deal", path: "/sales/opportunities", label: "title", read: q => listOpportunities(p, q) },
     { kind: "Customer", path: "/customers", label: "display_name", read: q => listShared(p, "Organisation", q) },
     { kind: "Contact", path: "/people", label: "display_name", read: q => listShared(p, "Person", q) },
     { kind: "Site", path: "/sites", label: "display_name", read: q => listShared(p, "Site", q) },

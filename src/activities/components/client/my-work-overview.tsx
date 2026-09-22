@@ -43,7 +43,10 @@ export function useCriteria(views: WorkView[] | null) {
   const [criteria, setCriteria] = useState<WorkViewCriteria>(() => readCriteria(new URLSearchParams(params.toString())));
   const [viewId, setViewId] = useState<string | null>(() => params.get("view"));
   useEffect(() => {
-    const search = criteriaSearch(criteria, viewId);
+    const query = new URLSearchParams(criteriaSearch(criteria, viewId));
+    const department = new URLSearchParams(window.location.search).get("department");
+    if (department) query.set("department", department);
+    const search = query.size ? "?" + query.toString() : "";
     if (search !== window.location.search) window.history.replaceState(null, "", `${window.location.pathname}${search}`);
   }, [criteria, viewId]);
   const view = views?.find((v) => v.id === viewId) ?? null;

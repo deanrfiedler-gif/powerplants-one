@@ -78,7 +78,7 @@ test("the phone overview is one page: header, five-cell bar, Quick Actions, atte
 
   // The bar: five cells in order, names for assistive technology, nothing to read on screen.
   const bar = page.getByRole("navigation", { name: "Mobile navigation", exact: true });
-  expect(await bar.locator(":scope > *").evaluateAll((cells) => cells.map((c) => `${c.tagName}:${c.getAttribute("aria-label")}`))).toEqual(["A:My Work", "A:Opportunities", "A:Activities", "A:Contacts", "BUTTON:More"]);
+  expect(await bar.locator(":scope > *").evaluateAll((cells) => cells.map((c) => `${c.tagName}:${c.getAttribute("aria-label")}`))).toEqual(["A:My Work", "A:Deals", "A:Activities", "A:Contacts", "BUTTON:More"]);
   expect(await bar.locator(":scope > * > span").evaluateAll((labels) => labels.every((l) => l.getBoundingClientRect().width <= 1))).toBe(true);
   const cells = await bar.locator(":scope > *").evaluateAll((all) => all.map((c) => Math.round(c.getBoundingClientRect().width)));
   expect(Math.max(...cells) - Math.min(...cells)).toBeLessThanOrEqual(1);
@@ -86,9 +86,9 @@ test("the phone overview is one page: header, five-cell bar, Quick Actions, atte
   await expect(current).toHaveAttribute("aria-current", "page");
   expect(await current.evaluate((n) => getComputedStyle(n).backgroundColor)).toBe("rgb(52, 60, 76)");
   expect(await current.evaluate((n) => getComputedStyle(n).boxShadow)).toContain("rgb(98, 187, 70)");
-  await expect(bar.getByRole("link", { name: "Opportunities", exact: true })).toHaveAttribute("href", "/sales/opportunities");
+  await expect(bar.getByRole("link", { name: "Deals", exact: true })).toHaveAttribute("href", "/sales/opportunities");
   await expect(bar.getByRole("link", { name: "Activities", exact: true })).toHaveAttribute("href", `/calendar?day=${scenario.slots.day}`);
-  await expect(bar.getByRole("link", { name: "Contacts", exact: true })).toHaveAttribute("href", "/people");
+  await expect(bar.getByRole("link", { name: "Contacts", exact: true })).toHaveAttribute("href", "/contacts");
 
   // Quick Actions: four icon tiles in order, each named for assistive technology and nothing to read on
   // screen. This identity holds no mail access, so that tile is a locked image, not a link; no unread
