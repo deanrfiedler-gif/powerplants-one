@@ -68,5 +68,10 @@
     "command": "node ../../node_modules/eslint/bin/eslint.js docs/testing/evidence/es08-geometry-audit/probe-r10.mjs docs/testing/evidence/es08-geometry-audit/probe-browser.mjs",
     "exit_code": 0,
     "scope": "Audit-only JavaScript probes; repository ESLint configuration"
+  },
+  "whitespace_check": {
+    "authored_document_diff_exit_code": 0,
+    "full_diff_exit_code": 1,
+    "retained_source_exception": "Four original trailing-whitespace lines in r10 HTML: 306, 537, 565, 998; exact supplied bytes preserved."
   }
 }
