@@ -1,92 +1,94 @@
-# Priva fertigation scoping r02 — candidate audit and publication handover
+# Priva fertigation scoping r02 — audit candidate and publication handover
 
-**22 September 2026 · Proposed design · Draft contribution**
+**22 September 2026 · Proposed candidate · Draft contribution**
 
-## Repository delivery status
+## Publication status
 
-This commit records the audit and verification handover. **It does not yet publish the r02 HTML, authoring fragments or new test runners into the repository.** The complete candidate, readable source, deterministic builder, tests, detailed audit and generated examples are delivered to Dean in the accompanying conversation review package. This draft is not merge-ready. Do not infer that a repository path mentioned below exists on this branch until the package is transferred and verified.
+This branch records the audit and handover only. The complete r02 HTML, readable correction source, deterministic builder, tests, detailed audit and generated examples are delivered to Dean in the conversation review package. A connector attempt to publish the readable source was blocked before execution. No alternate encoding or route was used to bypass that block. The complete implementation is therefore **not yet published in this repository**. This draft is not merge-ready.
 
-No merge, deployment, live controller connection, external-system write, application dependency change or database migration is included. Original issued r01 and its historical evidence remain unchanged.
+This replacement corrects the earlier provisional candidate identity, test totals and browser version. The figures below come from actual files and executed runs. Do not reuse the superseded 315255-byte/140-check/Chromium-131 figures.
 
-## Exact basis and candidate
+No merge, deployment, external-system change, application dependency, database migration or live controller connection is included. The issued r01 artifact and original evidence remain unchanged.
 
-Repository baseline: `89c6c10d14c6096d9e894102fc1d790ea75a035e`, merged PR #275. The supplied r01 matches repository blob `c2f37b86e472ab0e23f5d5a4122e0afe21651f12`.
+## Exact baseline and delivered candidate
 
-| Artifact | SHA-256 |
+Repository baseline: `89c6c10d14c6096d9e894102fc1d790ea75a035e`, merged PR #275; main was rechecked at the same head. Supplied r01 matches repository blob `c2f37b86e472ab0e23f5d5a4122e0afe21651f12`.
+
+| Artifact | Bytes / SHA-256 |
 |---|---|
-| Original r01 HTML, 267142 bytes | `f3b18fa6bdc59e64224075d9a8b3517b28485813207a6ca4e4bd77a5efa4807f` |
-| Revised r02 HTML, 315255 bytes | `1990e56149a08c65e68680981334b8781be8b545c0b530e2729c02e3b8b12edc` |
-| Supplied build plan r01 | `7eb6a7174ca4a4cc222dea73bb0c54bf4853dbab68b9abbe94b5d64ef1391a41` |
-| Supplied/repository theme r22 | `a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0` |
+| Original r01 HTML | 265640; `f3b18fa6bdc59e64224075d9a8b3517b28485813207a6ca4e4bd77a5efa4807f` |
+| Delivered r02 HTML | 309903; `ae122ac8dd075530aa56ade8bad201e7c41155d10a5c2feb0dae42af95d16ec7` |
+| Build plan r01 | `7eb6a7174ca4a4cc222dea73bb0c54bf4853dbab68b9abbe94b5d64ef1391a41` |
+| Theme r22 | `a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0` |
 
-Candidate download: `powerplants-one-priva-fertigation-scoping-workbench-r02.html`. App 1.1.0; standalone schema 2; calculation edition `PPO-FERT-CALC-r02`; recovery key `ppo-priva-fertigation-r02`.
+Candidate: `powerplants-one-priva-fertigation-scoping-workbench-r02.html`. App 1.1.0; standalone schema 2; calculation edition `PPO-FERT-CALC-r02`; recovery key `ppo-priva-fertigation-r02`.
 
-Scope remains the existing **Fertigation** family under ES-02. ES-08 remains Screen Systems. The actual inspected `PPO-ES02-CONFIG-r01` native contract has limited Text/Zones fact fields; do not invent native fertigation numeric fields or map m³/h into Zones. This local schema 2 is not a native contract/database migration.
+Scope remains Fertigation under ES-02, not ES-08 Screen Systems. The inspected native `PPO-ES02-CONFIG-r01` has Text/Zones fact fields, not a complete typed fertigation-flow contract. Do not map m³/h into Zones, invent endpoints or call local schema 2 a native migration.
 
-## Consequential findings and implemented candidate changes
+## Findings and delivered corrections
 
-The most serious reproduced defect is crop coverage. In the original synthetic farm, selecting G1 only with 25 cycles and 20-minute spacing produces 35 m³ planned versus 33 m³ total crop demand, while A2's 4000 containers receive no irrigation. The original total-volume check does not identify this omission. The candidate checks cohort and individual service-allocation coverage and delivered volume, so surplus in another crop cannot cancel missing irrigation.
+The full audit contains 28 stable findings (PF-01–PF-28), coverage of F01–F20, CALC-01–CALC-11, UI-01–UI-33 and AT-01–AT-56, and a prioritised integration/acceptance roadmap.
 
-Additional implemented corrections in the delivered candidate:
+Most consequential reproduction: original demo, only G1 selected, 25 cycles and 20-minute spacing. Planned application is 35 m³ versus 33 m³ total entered crop demand, but A2's 4000 containers receive no irrigation. The candidate checks individual valve-served crop allocations; surplus elsewhere cannot cancel omitted or under-served areas. It does not assert agronomic sufficiency.
 
-- Excluded/unknown phase propagates through block, cohort, valve, master and source flow instead of leaving misleading known operating figures.
-- Mixed-cohort density requires an explicit cohort area or actual count rather than reusing the whole block area.
-- Curve parsing preserves empty optional cells (`10,20,,3` means power 3, not efficiency 3), validates optional imported point fields and caps curve size. Measured duties expand the axes; no operating-point prediction is asserted.
-- Selected groups use register order; actual physical-valve intervals include repeated membership and crop-directed flush. Conflicts feed timing panels/badges as well as findings.
-- Scenario source/storage links and declared filter paths expose unbound or contradictory supply assumptions. This is not an arbitrary hydraulic graph.
-- Known injector/flow/pressure failures remain failures even when entered limits lack supplier confirmation. Exact controller, source revision and shared stock-limit binding are explicit.
-- CSV duplicate IDs and malformed quote endings reject atomically; synthetic provenance is retained. Attachment limits use decoded bytes, not trusted size metadata.
-- Whole-candidate transactions, rollback, review invalidation/history, undo/snapshot recovery and simulated cross-tab/storage failure handling are strengthened.
-- Explicit GroScales wired/wireless and intended-controller requirements, supporting wireless equipment/evidence fields, typed I/O reconciliation and strategy sensor/reset capture are added. The Compass restriction is labelled a Powerplants scoping requirement, not a universal version/licence claim from Priva.
-- Discovery/technical disclosure, searchable/paged registers, grouped labels/help, unsaved feedback, full-width concept drawings and customer/internal report audiences improve capture and handover.
+Other implemented corrections in the delivered package:
 
-The full downloadable audit covers F01–F20, CALC-01–11, UI-01–33 and AT-01–56, with 24 prioritised findings, source and integration boundaries, deferred planned functionality and acceptance checks. Missing planned features include bulk/split/duplicate record workflows, fully isolated physical scenarios, global unit-entry helpers, measured drainage ratio, phase-specific arbitrary routing, overnight/parallel scheduling and asynchronous cancellation. These are not represented as implemented.
+- Phase/unknown propagation through crop block, valve, master and source; explicit scenario supply/storage reconciliation.
+- Mixed-cohort density requires represented area; actual counts remain authoritative.
+- Position-preserving optional pump-curve cells, finite/range validation and bounded interpolation; measured points included in chart extent.
+- Physical-valve intervals, repeated group membership, crop-directed flush and register-order scheduling.
+- Known channel/flow/pressure failures remain failures even where exact supplier evidence is unconfirmed.
+- GroScales wired/wireless, intended controller, gateway/equipment scope and exact confirmation; Compass exclusion labelled a Powerplants scoping rule.
+- Typed physical I/O allocation and manual-versus-derived demand reconciliation; strategy sensor/reset requirements.
+- Strict CSV duplicate/quote handling, synthetic provenance, atomic mutation/import, decoded attachment limits, stale preview/upload protection and preserved review history.
+- Discovery/Technical disclosure, register search/50-row paging, unsaved feedback, grouped labels and full-width drawing layout.
+- Customer/internal report audiences, fresh report downloads, phase-aware concept SVGs and working/synthetic/non-construction labels.
+
+Missing or partial planned functionality is not represented as implemented: remapped block clone/split/bulk creation, full inline spreadsheet editing, isolated physical scenario graphs, global unit-entry helpers, measured drain/applied ratio, arbitrary phase hydraulic topology, parallel/overnight scheduling and cancellation.
 
 ## Verification actually executed
 
-**140 checks passed on the exact candidate:**
+**120 focused checks passed; zero final failures:**
 
-- 132 calculation, integrity, transaction and generated-output checks.
-- 8 actual form-reader/event-handler/export checks over modelled controls.
+- 110 calculation, integrity, transaction and generated-output assertions.
+- 10 actual form-reader/save/event/export-handler checks over modelled controls.
 
-Runtime: **Node v22.16.0**. The actual inline HTML script executes in a VM with minimal DOM, dialog and storage stubs. These are **not native-browser or JSDOM tests**. Independent expected outcomes cover the required base arithmetic and adverse cases. A separate clean VM restores the exported JSON with identical embedded synthetic PNG bytes; it is not a cross-browser test.
+Runtime: **Node v22.16.0** on Linux. Actual inline HTML executes in a VM with minimal DOM/dialog/storage stubs. These are **not native-browser or JSDOM tests**. An actual JSON export restores identical embedded synthetic PNG bytes in a separate clean VM; this is not a cross-browser test.
 
-Additional structural parsing found zero duplicate IDs or missing label targets across 34 generated fragments. Eight declared contrast pairs were calculated. A 100-block/1000-valve, 100-group, 300-event fixture was measured over five in-process model/HTML-string-generation runs. DOM insertion, layout, paint, input latency and device behaviour are excluded.
+Additional evidence: 36 actual generated fragments structurally parsed with zero duplicate IDs or missing label/help targets; eight declared text contrast pairs above 4.5:1; actual CSV and customer/internal report HTML downloads; three generated SVGs independently rasterised and visually inspected. Rasterised SVGs are not HTML screenshots. No PDF was generated.
 
-The portable builder uses Node built-ins only, checks the exact r01 source hash, refuses an incompatible existing output and reproduces the exact 315255-byte candidate hash. No framework/npm application dependency is needed. Actual export functions produced synthetic project JSON, populated CSVs, system/block SVG and customer/internal report HTML. SVGs were independently rasterised and inspected; the images are not HTML browser screenshots.
+100-block/1000-valve fixture: 100 cohorts, 100 groups, three cycles, 300 events; five in-process runs. Median **1184.533 ms**, maximum **1247.899 ms**, for separate derive + validate + actual Farm HTML-string generation. This excludes DOM insertion/layout/paint/input latency. Synchronous responsiveness remains a risk, not an acceptance pass.
 
-Historical r01 verification remains separate: 51 cases, Node 24.21.0/JSDOM 30.1.0. Its ESM harness was inspected and preserved, not rerun in this environment. No repository-wide or pinned-runtime r02 CI pass is claimed.
+The Node-built-ins-only deterministic builder reproduces the exact 309903-byte candidate and rejects the wrong original source hash. Readable source and tests are in the package, not yet on this branch.
 
-### Native browser block
+Historical r01 evidence remains separate: 51 cases, Node 24.21.0/JSDOM 30.1.0. Its ESM harness was inspected and preserved, not rerun. Its six-group timing fixture reused physical valves; the new suite tests distinct valves (24-minute cycle/21-minute dry interval) separately from repeated same-valve membership (1-minute gap). Do not weaken original assertions without documenting that fixture/semantics correction.
 
-Chromium 131.0.6778.204 launched via Playwright, but navigating to the supplied file returned `Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR`. No supported cloud-browser connector/skill was available. No policy bypass or public deployment was used.
+### Native/browser and CI limitations
 
-Native desktop/mobile layout at 1440/1280/1024/768/390 px, 200% zoom, keyboard/focus/assistive technology, native file handling, actual quota/private-mode/multi-tab recovery, cross-browser portability and print/PDF pagination remain unverified. No PDF or native UI screenshots are claimed.
+Chromium **144.0.7559.96** launched through Playwright, but navigation to the supplied local file returned `Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR`. No supported cloud-browser connector/skill was available. No policy bypass or public deployment was attempted.
 
-## One-way migration
+Native 1440/1280/1024/768/390 px, 200% zoom, keyboard/focus/assistive technology, real file pickers/downloads, actual quota/private-mode/multi-tab recovery, cross-browser portability and print pagination remain unverified. Repository-wide/pinned-runtime checks were not executed here; Git clone failed DNS resolution although connector reads worked. Documentation CI on this handover is not module implementation CI.
 
-Keep the original r01 HTML and exported JSON. Open the JSON in r02, inspect the import preview and explicitly confirm replacement. Valid schema-1 data upgrades to schema 2 while retaining IDs, inputs, references and evidence; the working revision advances and current review moves to superseded history. Omitted new fields mean unknown. Nested historical snapshots remain unchanged; restoring one creates a new current-schema working revision.
+## Migration and reproduction
 
-Save a new r02 JSON file. The r01 HTML refuses schema 2, preventing silent legacy recalculation. There is no automatic downgrade. r02 has a separate browser recovery key and does not silently overwrite r01 recovery.
+Preserve the original r01 HTML and project JSON. Open a valid schema-1 JSON in r02, inspect its preview and explicitly confirm replacement. IDs, input quantities, relationships and evidence are retained; new optional facts remain unknown. The working revision advances, current local acknowledgement becomes superseded history, and nested historical snapshots stay unchanged. Save a new r02 JSON. r01 rejects schema 2; no automatic downgrade exists. Separate browser recovery keys avoid silent overwrite.
 
-## Publication and acceptance gates
-
-1. Transfer the delivered package's r02 HTML, readable source fragments, builder, model runtime, new focused test runners, full audit and exact evidence into their corresponding repository paths. Preserve the issued r01 artifact and old evidence.
-2. Reproduce the build hash and run the new model/export checks from the repository root. Update the existing module decision, latest-family/document indexes and current status proportionately. Do not promote owner acceptance.
-3. Run pinned-runtime and repository-required CI against the complete candidate. This handover-only branch is not evidence of implementation CI.
-4. Execute authorised native browser/device/keyboard/print verification. Compare the actual theme and standalone candidate; generated SVG images are not a substitute.
-5. Obtain named irrigation-design and Priva review of actual source/phase paths, pump curve, injector conditions, controller/version/licences and GroScales hardware. Resolve unsupported arrangements before final sizing reliance.
-
-Expected package commands, after source transfer:
+From the extracted conversation package root:
 
 ```sh
-node scripts/build-priva-fertigation-scoping-r02.mjs
-node scripts/check-priva-fertigation-scoping-r02.mjs
-node scripts/check-priva-fertigation-scoping-r02-exports.mjs
+node source/build-r02.mjs powerplants-one-priva-fertigation-scoping-workbench-r01.html powerplants-one-priva-fertigation-scoping-workbench-r02.html
+node tests/check-r02.mjs powerplants-one-priva-fertigation-scoping-workbench-r02.html evidence powerplants-one-priva-fertigation-scoping-workbench-r01.html
+node tests/check-interactions.mjs powerplants-one-priva-fertigation-scoping-workbench-r02.html evidence
+node tests/benchmark.mjs powerplants-one-priva-fertigation-scoping-workbench-r02.html evidence
 ```
 
-## Readiness
+These package paths do not assert matching repository files exist.
 
-The delivered candidate is materially improved for demonstration and controlled draft capture/specialist review. It is not a sole authority for agronomic sufficiency, final equipment sizing or commissioning. The planner is one shared sequential circuit with simplified phase water and continuous refill. Exact supplier capabilities are unconfirmed unless entered with applicable evidence. Local review is an editable acknowledgement, not an authenticated approval.
+## Next bounded gates
 
-Native integration remains proposed. Begin with canonical Customers/Sites/Facilities, Site Survey/Installed Base and a typed ES-02 Fertigation handover, with source revisions, access checks, explicit receipts and conflict handling. No local export is described as a working live integration.
+1. Transfer the complete candidate/source/tests/audit/evidence from the delivered package, reproduce the exact hash, and update the module decision/index/status proportionately without promoting acceptance.
+2. Run pinned runtime and applicable foundation/prototype/naming/required CI; keep original r01 evidence separate.
+3. Optimise the measured synchronous calculation/render work and complete authorised native browser/device/print verification with actual screenshots and exported files.
+4. Obtain named Priva and irrigation-design confirmation of exact hardware/software/licences, GroScales wireless equipment, source/phase paths, pump data and injector conditions.
+
+The candidate is materially improved for synthetic demonstration and supervised draft capture. It is not sole authority for final agronomic sufficiency, equipment sizing or commissioning. Local review is an editable acknowledgement, not an authenticated approval. Native CRM/ES-02/SharePoint/ERP handovers are proposed only; no working integration is implied.
