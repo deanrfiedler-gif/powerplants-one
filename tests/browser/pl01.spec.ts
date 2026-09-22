@@ -67,6 +67,29 @@ test("PL01 demand to readiness, contact, full crew confirmation and retained pla
   expect(new URL(page.url()).searchParams.get("resource_id")).toBe(fixtureId("a4"));
 });
 
+test("PL01 each saved booking step leaves the next one usable", async ({ page }) => {
+  // The form remounts after each save and checks the retained receipt. Under React
+  // Strict Mode that check is voided and restarted; the form must still settle.
+  await pl01Identity(page); const w = await createDemand(page);
+  await openDemand(page, w.id); const panel = await fillProposal(page);
+  await panel.getByRole("button", { name: "Save proposal", exact: true }).click();
+  const next = panel.getByRole("link", { name: "Continue booking / View appointment" });
+  await expect(next).toBeVisible();
+  const aid = (await next.getAttribute("href"))!.split("?")[0].split("/").pop()!;
+  await page.goto(`/service/appointments/${aid}`);
+  for (const outcome of ["Failed", "Confirmed"]) {
+    await page.getByRole("button", { name: "Record contact", exact: true }).click();
+    await page.getByLabel("Contact outcome", { exact: true }).selectOption(outcome);
+    await page.getByLabel("Contact notes", { exact: true }).fill(`SYN ${outcome} contact; no message sent`);
+    const saved = page.waitForResponse(r => new URL(r.url()).pathname === `/api/v1/appointments/${aid}/contacts` && r.request().method() === "POST");
+    await page.getByRole("button", { name: "Save contact outcome", exact: true }).click();
+    expect((await saved).ok()).toBe(true);
+  }
+  await expect(page.getByLabel("Contact outcome", { exact: true })).toBeEnabled();
+  const contacts = (await pl01Call(page, `appointments/${aid}`)).items[0].contacts;
+  expect(contacts.map((c: { outcome: string }) => c.outcome).sort()).toEqual(["Confirmed", "Failed"]);
+});
+
 test("PL01 lost proposal response survives same-tab reload without repeating the effect", async ({ page }) => {
   await pl01Identity(page); const w = await createDemand(page);
   await openDemand(page, w.id); const panel = await fillProposal(page);

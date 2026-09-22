@@ -66,6 +66,20 @@ Authority: Dean's PL-01 instruction of 19 September 2026, recorded in [ADR-0039]
    - The crew submit label is corrected to **Confirm booking**, which is unchanged since before the WIP.
 6. **Lint.** The recovery hook's cleanup now captures its refs locally. There is no behaviour change.
 
+## Defect found by PR CI and fixed
+
+On the first CI run of #280, 15 of 16 checks passed. "P11 three original browser failures diagnostic replay" failed: the P11 mobile journey's second customer contact timed out because the form stayed on **Saving contact…**.
+
+- **Why only that job:** it is the only job that runs the browser suite without `--config`. It therefore uses the development server, where React Strict Mode cleans up and re-runs every effect on mount. The same journey passed four times in the compiled-build jobs of that run.
+- **Cause:** `useRecoverableCommand`. After each save the form remounts and checks the retained receipt. When React voided that check by cleaning up and re-running the effect on the same instance, the re-run found the single-flight flag still set and skipped its own check. The voided check then finished as stale and never cleared `busy`, so the form stayed disabled. Under Strict Mode this happened every time; in a production build only when React happens to re-run the effect.
+- **Fix:** an in-flight request is tied to the generation it started in.
+  - A re-run starts a fresh check.
+  - A voided request leaves `busy` to the current request.
+  - A session lock also clears `busy`.
+  - There is still at most one request per generation, so double submission stays impossible.
+- **Proof:** a local development-server reproduction failed every time before the fix and passed 6 of 6 after it, on desktop and mobile. The whole PL-01 suite passes under Strict Mode.
+- **New test:** "PL01 each saved booking step leaves the next one usable" records two contacts in a row. It fails without the fix under Strict Mode and passes with it. CI's replay job continues to exercise the P11 journey under the development server.
+
 ## Executed validation
 
 Local run on Windows 11, Node 24.21.0, PostgreSQL 16.15 and the Chrome channel. The disposable `ppo_synthetic_test` database was migrated through 0042; 0016 is hosted-only.
@@ -77,7 +91,8 @@ Local run on Windows 11, Node 24.21.0, PostgreSQL 16.15 and the Chrome channel. 
 | `npm run test:unit` | 328 of 332 pass. The 4 failures (P06 ×2, P12, and warm-routes path separators) reproduce identically on unmodified main `2189d0f`; they are Windows-only. All 5 PL-01 unit tests pass |
 | `npm run build` | Pass |
 | `tests/database/demand.test.ts` | 8 of 8 pass, including one proposal from two planners on one basis, cancelled visits returning to demand, and completed attendance staying excluded |
-| `tests/browser/pl01.spec.ts`, compiled, desktop and mobile | 8 of 8: the full journey from demand to confirmed two-person crew with the retained planner context; lost response survives reload without repeating; unknown original offers only unchanged retry; corrupt storage and identity isolation |
+| `tests/browser/pl01.spec.ts`, compiled, desktop and mobile | 10 of 10: the full journey from demand to confirmed two-person crew with the retained planner context; consecutive saved steps stay usable; lost response survives reload without repeating; unknown original offers only unchanged retry; corrupt storage and identity isolation |
+| `tests/browser/pl01.spec.ts` under the development server (React Strict Mode) | 10 of 10 after the hook fix. The consecutive-steps test fails without the fix |
 | `tests/browser/field-technicians.spec.ts` | 4 of 4 |
 | `tests/browser/planner.spec.ts` and `work-orders.spec.ts` | 16 of 16. These specs hard-code `Origin: http://127.0.0.1:3000`, which CI uses, so locally they were run with that literal pointed at the local port and then restored byte-for-byte. The run was not committed |
 | Live schema at 0042 | Six appointment states, `guard_dispatch`, deferrable `booking_consistency`, `capture_appointment_revision` with `no_delete`, and the active `ppo.resource_reservations` exclusion |

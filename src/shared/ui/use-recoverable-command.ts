@@ -17,7 +17,12 @@ export function useRecoverableCommand({ key, scope, accepts, transport, enabled 
   const [accepted, setAccepted] = useState<{ entry: JournalEntry; receipt: Receipt } | null>(null);
   const [error, setError] = useState<unknown>(null);
   const [busy, setBusy] = useState(false), [ready, setReady] = useState(false);
-  const live = useRef(false), running = useRef(false), generation = useRef(0);
+  const live = useRef(false), generation = useRef(0);
+  // The generation a request started in. React may clean up and re-run the
+  // effect without unmounting (Strict Mode always does), which voids that
+  // request; a fresh one must be able to start rather than wait on it forever.
+  const inflight = useRef<number | null>(null);
+  const flying = () => inflight.current !== null && inflight.current === generation.current;
   const scopeKey = `${scope.workspace_id}:${scope.actor_id}`;
   const options = useRef({ scope, accepts, transport });
   useEffect(() => { options.current = { scope, accepts, transport }; }, [scope, accepts, transport]);
@@ -25,9 +30,9 @@ export function useRecoverableCommand({ key, scope, accepts, transport, enabled 
   const publish = () => window.dispatchEvent(new Event(changed));
 
   async function execute(entry: JournalEntry, recover = false, firstSend = false): Promise<Receipt | null> {
-    if (running.current || !live.current || !enabled || (!recover && entry.phase !== "pending")) return null;
-    running.current = true; setBusy(true); setError(null);
+    if (flying() || !live.current || !enabled || (!recover && entry.phase !== "pending")) return null;
     const token = generation.current;
+    inflight.current = token; setBusy(true); setError(null);
     try {
       const result = await options.current.transport<Receipt>(recover ? `operations/${entry.body.operation_id}` : entry.path, recover ? undefined : entry.body);
       if (!live.current || token !== generation.current) return null;
@@ -59,8 +64,9 @@ export function useRecoverableCommand({ key, scope, accepts, transport, enabled 
         e instanceof Error ? { message: e.message } : e);
       return null;
     } finally {
-      running.current = false;
-      if (live.current && token === generation.current) setBusy(false);
+      // A voided request leaves busy to the request of the current generation.
+      if (inflight.current === token) inflight.current = null;
+      if (token === generation.current) setBusy(false);
     }
   }
   const executeRef = useRef(execute);
@@ -77,7 +83,7 @@ export function useRecoverableCommand({ key, scope, accepts, transport, enabled 
         const entry = original ?? saved;
         if (original) setAccepted(null);
         const lookup = entry ? `${entry.phase}:${entry.body.operation_id}` : "";
-        if (entry && !(event && original) && lookup !== lastLookup.current && !running.current) {
+        if (entry && !(event && original) && lookup !== lastLookup.current && !flying()) {
           lastLookup.current = lookup;
           void executeRef.current(entry, true);
         }
@@ -89,14 +95,14 @@ export function useRecoverableCommand({ key, scope, accepts, transport, enabled 
     if (enabled) load();
     // A counter, not a rendered node: bumping it on lock/unmount voids any in-flight response.
     const liveRef = live, generationRef = generation;
-    const lock = () => { liveRef.current = false; generationRef.current++; setPending(null); setAccepted(null); setReady(false); };
+    const lock = () => { liveRef.current = false; generationRef.current++; setBusy(false); setPending(null); setAccepted(null); setReady(false); };
     window.addEventListener(changed, load);
     window.addEventListener("ppo-session-lock", lock);
     return () => { liveRef.current = false; generationRef.current++; window.removeEventListener(changed, load); window.removeEventListener("ppo-session-lock", lock); };
   }, [key, scopeKey, enabled]);
 
   async function send(path: string, fields: Record<string, unknown>, target: string, label: string, recordId: string): Promise<Receipt | null> {
-    if (!enabled || !ready || running.current || !live.current) return null;
+    if (!enabled || !ready || flying() || !live.current) return null;
     try {
       if (readJournal(sessionStorage, key, scope, accepts)) throw Error("Resolve the original pending operation before starting another saved action.");
       const entry = writeJournal(sessionStorage, key, {
@@ -117,6 +123,6 @@ export function useRecoverableCommand({ key, scope, accepts, transport, enabled 
   return { send, pending, accepted, error, busy, ready, saved: accepted ? `${accepted.entry.label} saved.` : "",
     retry: () => pending ? execute(pending) : Promise.resolve(null),
     recover: () => pending ? execute(pending, true) : Promise.resolve(null),
-    clear: () => { if (!pending && !running.current) setError(null); },
+    clear: () => { if (!pending && !flying()) setError(null); },
   };
 }
