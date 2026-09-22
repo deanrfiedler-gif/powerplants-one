@@ -52,9 +52,20 @@ jobs:
           p=Path('.env.local')
           p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
           PY
-          node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/estimating-configuration.test.ts tests/database/specialist.test.ts
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/estimating-configuration.test.ts tests/database/specialist.test.ts tests/database/fertigation.test.ts tests/database/fertigation-artifacts.test.ts tests/database/fertigation-import.test.ts
       - name: Compile the exact E1 E2 ES-02 application
         run: npm run build
+      - name: Record the actual compiled checkout and fertigation source hashes
+        run: |
+          python3 - <<'PY'
+          import hashlib,json,os,subprocess
+          from pathlib import Path
+          files=subprocess.check_output(['git','ls-files','-z'],text=True).split('\0')
+          paths=[p for p in files if p and ('fertigation' in p or p in ['src/app/styles/my-work.css','src/components/estimation-wizard.tsx','src/components/discovery-costing.tsx','src/estimating/discovery-workspaces.ts','src/estimating/cost-basis-service.ts','src/shared/receipts.ts','src/shell/navigation.ts','src/shell/module-workspaces.ts','.github/workflows/estimating-e1.yml']) and not p.startswith('docs/testing/evidence/')]
+          root=Path('verification-evidence/fertigation-build');root.mkdir(parents=True,exist_ok=True)
+          data={'source_head':os.environ['PPO_SOURCE_HEAD'],'executed_checkout':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'executed_tree':subprocess.check_output(['git','rev-parse','HEAD^{tree}'],text=True).strip(),'run_id':os.environ['GITHUB_RUN_ID'],'run_attempt':os.environ['GITHUB_RUN_ATTEMPT'],'build_id':Path('.next/BUILD_ID').read_text().strip(),'sha256':{p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in sorted(paths)}}
+          (root/'source-manifest.json').write_text(json.dumps(data,indent=2)+'\n')
+          PY
       - name: E1 real direct HTTP proof
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
@@ -65,7 +76,9 @@ jobs:
             curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
             sleep 1
           done
-          node --env-file=.env.local --import tsx --test tests/http/estimating.test.ts tests/http/estimating-configuration.test.ts tests/http/specialist.test.ts
+          node --env-file=.env.local --import tsx --test tests/http/estimating.test.ts tests/http/estimating-configuration.test.ts tests/http/specialist.test.ts tests/http/fertigation.test.ts
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/fertigation-restart-proof.ts write
+          node --env-file=.env.local --import tsx scripts/fertigation-capacity-proof.mjs
       - name: E1 journey through three application and browser processes and two PostgreSQL restarts
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
@@ -80,6 +93,16 @@ jobs:
             done
             node --env-file=.env.local --import tsx scripts/estimating-restart-proof.ts "$phase"
           done
+      - name: Native fertigation exact bytes after the application and PostgreSQL restarts
+        run: |
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-fertigation-reopen.log" 2>&1 &
+          ppo_fertigation_server_pid=$!
+          trap 'kill "$ppo_fertigation_server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          PPO_REQUIRE_RESTART=1 PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/fertigation-restart-proof.ts verify
       - name: Compiled E1 desktop, phone, 320px, uncertain response and long output
         # Reuse the build verified by HTTP/restart checks. The same assertions
         # also pass in the full compiled suite; a second dev compilation can
@@ -94,6 +117,10 @@ jobs:
         env:
           PPO_PORT: "3018"
         run: npx playwright test --config=playwright.es08.config.ts --output verification-evidence/estimating-es08-browser --reporter=list
+      - name: Compiled native fertigation save, clean context, conflict and large registers
+        env:
+          PPO_PORT: "3042"
+        run: npx playwright test --config=playwright.fertigation.config.ts --output verification-evidence/fertigation-browser --reporter=list
       - name: Retain exact synthetic evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -103,6 +130,11 @@ jobs:
             verification-evidence/estimating-e1-*/
             verification-evidence/estimating-es02-browser/
             verification-evidence/estimating-es08-browser/
+            verification-evidence/fertigation-browser/
+            verification-evidence/fertigation-restart/
+            verification-evidence/fertigation-build/
+            verification-evidence/fertigation-capacity/
+            verification-evidence/fertigation-reports/
             test-results/
             !**/trace.zip
           retention-days: 14

@@ -1,14 +1,16 @@
 ---
 document_id: PPO-UI-DESIGN-INDEX
 title: HTML design index and maintenance guide
-revision: r08
-updated: 2026-09-18
+revision: r09
+updated: 2026-09-22
 owner: Dean Fiedler
 status: Repository inventory; individual design approvals remain in linked decisions
 source_commit: 108b1600152ee12443c75ffaf7feb7cc857316f5
 ---
 
 # Powerplants One HTML design index
+
+**Scoped addition, 22 September 2026:** The exact supplied [Priva fertigation r02 reference](../../../reference/ui/priva-fertigation-scoping-workbench-r02.html) is retained for native conformance. [Native implementation handover](../../delivery/priva-fertigation-native-handover.md) records adaptations and tests. This file is not served as an iframe or standalone native runtime, and retention does not establish owner design acceptance. The earlier dated inventory below is unchanged.
 
 Use this page to find the **latest available HTML for each design family**, its recorded approval and its implementation handover. The tables distinguish files already on `main` from contributions still in open pull requests. Keep this index at one stable path and update it in the same pull request as a new design or approval decision.
 

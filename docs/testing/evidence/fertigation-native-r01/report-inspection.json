@@ -1,0 +1,29 @@
+[
+  {
+    "audience": "customer",
+    "pages": 1,
+    "sha256": "633adbc200318d8785e158fc26b401ab49787040b14c9329917da42685eec655",
+    "images": [
+      "customer-verified-1.png"
+    ],
+    "source": "Final actual database-retained output and exact-byte replay; all pages require visual inspection",
+    "visual_inspection": "Every page inspected; repeated headers, readable units, complete last valve, page numbering, no clipping or orphan boundary bullet.",
+    "output_source_sha256": "2544b3f7a1b84e066350f663cb9ab1806be64f8928fd10c97ce43e713da6593b"
+  },
+  {
+    "audience": "internal",
+    "pages": 6,
+    "sha256": "d08c9328f1465093b4cce432062f6333e97fe88161804915802347ede8fd5beb",
+    "images": [
+      "internal-verified-1.png",
+      "internal-verified-2.png",
+      "internal-verified-3.png",
+      "internal-verified-4.png",
+      "internal-verified-5.png",
+      "internal-verified-6.png"
+    ],
+    "source": "Final actual database-retained output and exact-byte replay; all pages require visual inspection",
+    "visual_inspection": "Every page inspected; repeated headers, readable units, complete last valve, page numbering, no clipping or orphan boundary bullet.",
+    "output_source_sha256": "2544b3f7a1b84e066350f663cb9ab1806be64f8928fd10c97ce43e713da6593b"
+  }
+]

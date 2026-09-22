@@ -104,7 +104,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0041 review: nullable typed Facility columns, immutable reported sources and explicit Asset service links.
   // Existing identity rows, grants and output bytes are untouched; no new seed users or hosted duty.
   // Existing Asset site-move rejection remains. Generic grants cover the two added tables/functions.
-  if (latestMigrationVersion !== 41) throw Error("Review the existing-demo upgrade for this release.");
+  // 0042 review: additive immutable Fertigation source-bound scopes, outputs and evidence.
+  // No backfill, seed, users, grants or issued document changes. Pending identity events
+  // are flushed before widening the identity registry. Existing generic table grants apply.
+  // Schema downgrade is unsupported; old application images ignore these additive tables.
+  if (latestMigrationVersion !== 42) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

@@ -50,7 +50,13 @@ if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Use disposable test database");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
 process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
-beforeEach(reset);
+beforeEach(async () => {
+  // Each case replaces the whole schema. Give each destructive fixture a fresh
+  // pool; repeated resets on one backend show increasing reset cost.
+  // Closing waits for checked-out clients and preserves the application SQL limit.
+  await closeDatabase();
+  await reset();
+});
 after(closeDatabase);
 const code =
   (...v: string[]) =>
@@ -111,7 +117,7 @@ test("P09 fresh and P08 upgrade preserve originals and repeat seed does not revi
   );
   assert.deepEqual(
     (await rows("SELECT version FROM public.ppo_migrations ORDER BY version")).map(row=>row.version),
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42],
   );
 });
 test("P09 exact submission freezes entries; duplicate original recovers same receipt; changed reuse conflicts", async () => {

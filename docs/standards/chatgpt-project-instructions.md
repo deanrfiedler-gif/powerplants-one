@@ -75,7 +75,7 @@ HTML packages: follow docs/standards/html-module-conformance.md. State existing 
 
 ## 8. Execution and authority
 
-Complete authorised work; make reversible choices and state material assumptions. Ask only when a consequential decision or missing fact blocks progress, after useful preparation.
+Complete authorised work; state assumptions. Ask only when a consequential missing fact blocks progress.
 
 Preserve unrelated work. Use a dedicated branch and reviewable PR; merge within granted scope after required checks/review. Never bypass permissions. Update affected specifications/registers.
 
@@ -83,7 +83,7 @@ Repository work does not authorise paid services, public deployment, access chan
 
 ## 9. Verification and communication
 
-Run applicable checks: python3 scripts/check_foundation.py, check_prototype.py and check_naming.py.
+Run applicable foundation, prototype and naming checks.
 
 Test implemented behaviour: permissions, booking conflicts, stale revisions, offline replay, deduplication, document integrity and Finance reconciliation. Visually inspect relevant screens/documents. Record actual commit/environment evidence.
 
@@ -93,4 +93,6 @@ Check STATUS and handovers. Preserve ES-02 r01/exact costs and PJ-09 scoped clos
 
 See docs/delivery/demo-email-crm-integration.md. Keep synthetic mailboxes private; exclude email bodies from shared Activities. CI and Outlook acceptance are separate.
 
-CS-05: follow `docs/delivery/facilities-growing-areas-handover.md`; preserve exact Facility IDs, legacy Grouping, explicit service links and E2 snapshots. Owner/device acceptance remains separate.
+CS-05: preserve Facility IDs, legacy Grouping, service links and E2 snapshots; see its handover.
+
+Fertigation: follow `docs/delivery/priva-fertigation-native-handover.md`. Preserve exact scopes, neutral context and unverified supplier conclusions. Merge/deployment need separate authorisation.

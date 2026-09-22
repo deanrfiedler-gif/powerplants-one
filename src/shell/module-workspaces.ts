@@ -1,6 +1,7 @@
 // The shell allocates the viewport once; full-bleed modules own their toolbar,
 // spacing and scroll surface. Other pages retain their established composition.
 export const moduleWorkspaces = [
+  { route: "/estimating/fertigation", scope: "ppo-fertigation", layout: "full-bleed", navigation: "workspace", baseline: "fertigation-native-r01" },
   { route: "/estimating/configurations", scope: "ppo-specialist", layout: "full-bleed", navigation: "workspace", baseline: "es08-native-r01" },
   { route: "/facilities", moduleId: "CS-05", scope: "ppo-facilities", layout: "full-bleed", navigation: "workspace", baseline: "cs05-native-r01" },
   { route: "/projects/acceptance", moduleId: "PJ-09", scope: "ppo-acceptance", layout: "full-bleed", navigation: "workspace", baseline: "pj09-r01" },
@@ -10,6 +11,6 @@ export const moduleWorkspaces = [
 
 export function moduleWorkspaceForPath(path: string) {
   return moduleWorkspaces.find(workspace => workspace.route === path
-    || (["ppo-specialist", "ppo-acceptance", "ppo-facilities"].includes(workspace.scope) && path.startsWith(workspace.route + "/"))
+    || (["ppo-fertigation", "ppo-specialist", "ppo-acceptance", "ppo-facilities"].includes(workspace.scope) && path.startsWith(workspace.route + "/"))
     || (workspace.scope === "ppo-estimate-wizard" && /^\/estimating\/discovery\/[0-9a-f-]{36}$/.test(path)));
 }

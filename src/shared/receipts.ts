@@ -1,4 +1,6 @@
 import { createResolutionAuthority } from "../estimating/specialist/recovery";
+import { acceptedAuthority as fertigationAcceptedAuthority } from "../estimating/fertigation/context";
+import { createResolutionAuthority as fertigationCreateResolutionAuthority } from "../estimating/fertigation/recovery";
 import { acceptedAuthority as specialistAcceptedAuthority } from "../estimating/specialist/context";
 import { receiptAuthority as acceptanceReceiptAuthority } from "../projects/acceptance/commands";
 import { engineeringRow } from "../engineering/service";
@@ -61,10 +63,13 @@ export async function readOperation(
   } else if (r.object_type === "EstimatingWorkspace") {
     return transaction(async c=>{
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",[p.workspace_id]);
-      if (r.command === "ResolveSpecialistCreate") await createResolutionAuthority(c,p,r.record_id,operation_id);
+      if (r.command === "ResolveFertigationCreate") await fertigationCreateResolutionAuthority(c,p,r.record_id,operation_id);
+      else if (r.command === "ResolveSpecialistCreate") await createResolutionAuthority(c,p,r.record_id,operation_id);
       else await discoveryReceiptAuthority(c,p,r.record_id,operation_id);
       return r.result as OperationReceipt;
     });
+  } else if (r.object_type === "FertigationScope") {
+    if (!await fertigationAcceptedAuthority(client,p,r.record_id,operation_id)) throw unavailable();
   } else if (r.object_type === "SpecialistConfiguration") {
     if (!await specialistAcceptedAuthority(client,p,r.record_id,operation_id)) throw unavailable();
   } else if (r.object_type === "Estimate") {

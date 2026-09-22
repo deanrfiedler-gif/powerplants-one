@@ -411,6 +411,7 @@ The synthetic format is the only enabled proposal for the current prototype. The
 | Opportunity | OPP | `SYN-PPO-OPP-000001` | Future CRM record; preserve actual legacy opportunity reference separately |
 | Estimate | EST | `SYN-PPO-EST-000001` | Future local estimate identity |
 | Quotation | QUO | `SYN-PPO-QUO-000001` | Future local quote identity; exact issue revision separate |
+| Fertigation scope | FRT | `SYN-PPO-FRT-000001` | Native ES-02 design aggregate under [ADR-0038](../decisions/ADR-0038-priva-fertigation-native.md); immutable revision UUID and ordinal remain separate |
 | Project | PRJ | `SYN-PPO-PRJ-000001` | Synthetic project only; actual ERP project code remains authoritative |
 | Service request / Ticket | TKT | `SYN-PPO-TKT-000001` | Existing Ticket logical entity |
 | Work order | WO | `SYN-PPO-WO-000001` | Authority mode explicitly recorded |

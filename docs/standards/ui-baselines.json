@@ -125,6 +125,21 @@
   ],
   "module_integrations": [
     {
+      "id": "fertigation-native-r01",
+      "route": "/estimating/fertigation",
+      "scope": "#ppo-fertigation",
+      "layout": "full-bleed",
+      "scroll_owner": ".fn-scroll",
+      "design": "reference/ui/priva-fertigation-scoping-workbench-r02.html",
+      "sha256": "b51bf2cab7cb1af54e33a0ec739921c4ca1a08da918165d615ead347d6463ab9",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/helpers/fertigation-design.ts",
+      "application_proof": "tests/browser/fertigation.spec.ts",
+      "authority": "Dean explicitly requested native implementation prompt r02. Source-conformance candidate only; owner visual, business and manufacturer acceptance remain separate.",
+      "adaptations": "docs/delivery/priva-fertigation-native-implementation-plan.md"
+    },
+    {
       "id": "deals-r38",
       "route": "/sales/opportunities",
       "scope": "#ppo-deals",

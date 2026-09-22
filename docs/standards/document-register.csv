@@ -1,5 +1,5 @@
 document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes
-PPO-UI-DESIGN-INDEX,HTML design index and maintenance guide,docs/reference/ui/README.md,r08,Repository inventory; AD-03 scoped addition; individual approvals separate,Dean Fiedler,108b1600152ee12443c75ffaf7feb7cc857316f5,,
+PPO-UI-DESIGN-INDEX,HTML design index and maintenance guide,docs/reference/ui/README.md,r09,Repository inventory; native fertigation scoped addition; individual approvals separate,Dean Fiedler,108b1600152ee12443c75ffaf7feb7cc857316f5,,
 PPO-011-ENG-DEC,Accepted Engineering r02 integration,docs/decisions/engineering-r02-integration.md,r01,Authorised first implementation,Dean Fiedler,e1ffbf28696f30be29d230351ab3be7f366862a2,,
 PPO-011-ENG-HO,Engineering intake implementation handover,docs/delivery/engineering-intake-handover.md,r01,Public branch publication authorised; native integration assurance pending,Dean Fiedler,e1ffbf28696f30be29d230351ab3be7f366862a2,,
 PPO-012-GANTT-DEC,Approved Projects Gantt integration,docs/decisions/projects-gantt-integration.md,r02,Authorised bounded integration,Dean Fiedler - prototype owner,6e2951e49f41e2b980da6885357230ef310f8198,,
@@ -337,3 +337,10 @@ PPO-CS05-PROMPT,CS-05 implementation prompt,docs/reference/facilities/PPO-CS-05-
 PPO-CS05-ADR,CS-05 native architecture decisions,docs/decisions/ADR-0037-cs05-facilities-native.md,r01,Authorised native increment; owner acceptance separate,Dean Fiedler,af3f045,,
 PPO-CS05-HO,CS-05 native handover,docs/delivery/facilities-growing-areas-handover.md,r01,Implementation and exact evidence checkpoint,Dean Fiedler,af3f045,,
 PPO-CS05-EVD,CS-05 native candidate evidence,docs/testing/evidence/cs05-native-r01/README.md,r01,Local synthetic proof; owner and device acceptance separate,Dean Fiedler,af3f045,,
+PPO-ADR-0038,Native fertigation architecture,docs/decisions/ADR-0038-priva-fertigation-native.md,r01,Authorised native increment; acceptance separate,Dean Fiedler,0c95c5af776c97374997623bd1070d9de480cf82,,
+PPO-FERT-NATIVE-PLAN,Native fertigation implementation plan,docs/delivery/priva-fertigation-native-implementation-plan.md,r01,Source availability and delivery plan,Dean Fiedler,0c95c5af776c97374997623bd1070d9de480cf82,,
+PPO-FERT-NATIVE-HO,Native fertigation delivery handover,docs/delivery/priva-fertigation-native-handover.md,r01,Implementation and verification checkpoint; no deployment,Dean Fiedler,0c95c5af776c97374997623bd1070d9de480cf82,,
+PPO-FERT-NATIVE-MATRIX,Native fertigation acceptance matrix,docs/testing/priva-fertigation-native-matrix.csv,r01,236 conditions; executed evidence and limits,Dean Fiedler,0c95c5af776c97374997623bd1070d9de480cf82,,
+PPO-FERT-R02-REF,Exact Priva fertigation r02 visual reference,reference/ui/priva-fertigation-scoping-workbench-r02.html,r02,Exact user supplied reference; not native runtime,Dean Fiedler,0c95c5af776c97374997623bd1070d9de480cf82,,
+PPO-FERT-NATIVE-EVD,Native fertigation candidate evidence,docs/testing/evidence/fertigation-native-r01/README.md,r01,Local synthetic proof; exact limits and acceptance separate,Dean Fiedler,0c95c5af776c97374997623bd1070d9de480cf82,,
+PPO-FERT-ORPHAN-OPS,Native fertigation abandoned local upload maintenance,docs/delivery/priva-fertigation-orphan-cleanup.md,r01,Bounded local operator procedure; no hosted cleanup,Dean Fiedler,0c95c5af776c97374997623bd1070d9de480cf82,,

@@ -9,6 +9,7 @@ import { api, ErrorNotice, Field, PageHeader, ValidationFields } from "./busines
 import { useCrmResource, useCrmCommand, denied } from "./crm-state";
 import { DraftFields, ProposalTotals, CommandState, type Draft } from "./estimating-screens";
 import { ScopeView } from "./discovery-screens";
+import { FertigationReceivedNotes } from "./fertigation-received-notes";
 type Review=Awaited<ReturnType<typeof previewDiscoveryCosting>>;
 type Detail=Awaited<ReturnType<typeof readDiscoveryWorkspace>>;
 export function DiscoveryCosting({id}:{id:string}) {
@@ -46,6 +47,7 @@ function CostingEditor({detail,optionId}:{detail:Detail;optionId:string}) {
     {review&&draft&&<section className="est-panel" aria-label="Reviewed discovery cost basis">
       <h2>Option {review.option_label} · Discovery revision {review.revision}</h2>
       <ScopeView input={review.selected_scope.input} context={review.recorded_context!}/>
+      <FertigationReceivedNotes items={review.fertigation_handovers}/>
       <details className="est-panel"><summary>Exact saved source</summary><dl className="est-hashes"><dt>Scope snapshot</dt><dd>{review.scope_snapshot_id}</dd><dt>Answer snapshot</dt><dd>{review.answer_snapshot_id}</dd><dt>Scope content hash</dt><dd>{review.content_hash}</dd></dl></details>
       {review.current_saved&&<p>Saved cost version {review.current_saved.version} currently uses discovery revision {review.current_saved.discovery_basis?.revision}. Saving below creates a new cost version; previous versions and drafts retain their originals.</p>}
       <form onSubmit={e=>{e.preventDefault();if(!confirmed||stale)return;void command.send(`estimating/workspaces/${detail.workspace.id}/costing`,{

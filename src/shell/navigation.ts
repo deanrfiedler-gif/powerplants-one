@@ -109,6 +109,14 @@ export const destinations: ShellDestination[] = [
     requires: ["estimating.read"],
   },
   {
+    id: "fertigation",
+    label: "Priva Fertigation Configurator",
+    icon: "estimate",
+    href: "/estimating/fertigation",
+    workspace: "estimate",
+    requires: ["estimating.read"],
+  },
+  {
     id: "engineering",
     label: "Engineering",
     icon: "engineering",
@@ -437,7 +445,7 @@ export function menuGroups(query: string) {
   ];
   // The resting menu matches r17's seven domain entries. Search also discovers
   // retained child routes; desktop module tabs keep them reachable without search.
-  if (q) groups.push({ title: "Workspace pages", ids: ["leads", "intake", "planner", "technicians", "orders", "packs", "jobs", "calendar", "foundation"] });
+  if (q) groups.push({ title: "Workspace pages", ids: ["leads", "intake", "fertigation", "planner", "technicians", "orders", "packs", "jobs", "calendar", "foundation"] });
   return groups
     .map((g) => ({
       title: g.title,

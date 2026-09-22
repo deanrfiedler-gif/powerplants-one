@@ -9,6 +9,7 @@ import { prepareDiscoveryTargets, expectDiscoveryContext } from "./discovery-con
 import { acceptedEstimateContext, estimateContext, versionContext, type Estimate } from "./context";
 import { costingInput, costingProposal } from "./cost-basis-validation";
 import { expected, insertVersion } from "./service";
+import { receivedFertigation } from "./fertigation/receiving-reads";
 
 import { writeLineage } from "./specialist/lineage";
 async function selectedBasis(c:QueryClient,p:Principal,id:string,optionId:string,revisionId:string) {
@@ -37,7 +38,7 @@ export async function previewDiscoveryCosting(p:Principal,id:string,value:unknow
     return {workspace_id:g.id,option_id:option.id,option_label:option.label,revision_id:r.id,revision:r.version,
       scope_snapshot_id:r.scope_snapshot_id,answer_snapshot_id:r.answer_snapshot_id,content_hash:r.content_hash,saved_context_hash:r.context_hash,context_hash:targets.context_hash,
       expected_workspace_version:g.version,expected_estimate_version:e?.version??0,estimate_id:e?.id??null,
-      selected_scope:targets.compiled,recorded_context:r.observed_context,current_saved:saved,synthetic:true};
+      selected_scope:targets.compiled,recorded_context:r.observed_context,current_saved:saved,fertigation_handovers:await receivedFertigation(c,p,g.id,r.id),synthetic:true};
   });
 }
 export async function adoptDiscoveryCosting(p:Principal,id:string,value:unknown) {

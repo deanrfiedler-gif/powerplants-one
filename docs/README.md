@@ -65,3 +65,5 @@ The [audit continuation handover](delivery/audit-continuation-handover.md) recor
 ## Service Review & Reports HTML
 
 [Standalone r01 workspace and receiving handover](decisions/service-review-reports-workspace-design.md): SV-06/SV-07 exact evidence, report response and owned follow-up; design only.
+
+[Native Priva Fertigation Configurator](delivery/priva-fertigation-native-handover.md) — native ES-02 scope, prominent irrigation/master valve workflows, neutral production context and exact revision evidence. [Traceability matrix](testing/priva-fertigation-native-matrix.csv); merge and deployment require separate authorisation.
