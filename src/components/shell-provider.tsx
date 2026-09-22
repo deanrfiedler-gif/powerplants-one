@@ -21,7 +21,7 @@ import {
 } from "./session-signal";
 
 const preferenceEvent = "ppo-shell-workspace";
-let visitPreference: WorkspaceId | null = null;
+const visitPreferences = new Map<string, WorkspaceId>();
 const subscribe = (notify: () => void) => {
   window.addEventListener(preferenceEvent, notify);
   window.addEventListener("storage", notify);
@@ -30,10 +30,11 @@ const subscribe = (notify: () => void) => {
     window.removeEventListener("storage", notify);
   };
 };
-function snapshot(): WorkspaceId {
-  if (visitPreference) return visitPreference;
+function snapshot(key: string | null): WorkspaceId {
+  if (!key) return "sales";
+  if (visitPreferences.has(key)) return visitPreferences.get(key)!;
   try {
-    return workspacePreference(localStorage.getItem(preferenceKey));
+    return workspacePreference(localStorage.getItem(key));
   } catch {
     return "sales";
   }
@@ -64,9 +65,10 @@ export function ShellProvider({
     [error, setError] = useState(""),
     [retry, setRetry] = useState(0);
   const generation = useRef(0);
+  const userKey = context?.preference_scope ? `${preferenceKey}:${context.preference_scope}` : null;
   const preview = useSyncExternalStore(
     subscribe,
-    snapshot,
+    () => snapshot(userKey),
     () => "sales" as const,
   );
   useEffect(() => {
@@ -119,16 +121,16 @@ export function ShellProvider({
     };
   }, [retry]);
   function selectPreview(id: WorkspaceId) {
-    if (!context?.can_preview) return false;
+    if (!context?.can_preview || !userKey) return false;
     let saved = true;
     try {
       localStorage.setItem(
-        preferenceKey,
+        userKey,
         JSON.stringify({ schema_version: 1, workspace: id }),
       );
-      visitPreference = null;
+      visitPreferences.delete(userKey);
     } catch {
-      visitPreference = id;
+      visitPreferences.set(userKey, id);
       saved = false;
     }
     window.dispatchEvent(new Event(preferenceEvent));
@@ -144,10 +146,10 @@ export function ShellProvider({
         preview,
         selectPreview,
         resetPreview: () => {
-          if (!context?.can_preview) return false;
+          if (!context?.can_preview || !userKey) return false;
           let saved = true;
-          try { localStorage.removeItem(preferenceKey); visitPreference = null; }
-          catch { visitPreference = "sales"; saved = false; }
+          try { localStorage.removeItem(userKey); visitPreferences.delete(userKey); }
+          catch { visitPreferences.set(userKey, "sales"); saved = false; }
           window.dispatchEvent(new Event(preferenceEvent));
           return saved;
         },

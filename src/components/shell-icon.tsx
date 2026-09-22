@@ -1,4 +1,5 @@
 import { ProductIcon, type ProductIconName } from "./product-icons";
+import { NavigationIcon, isNavigationIcon } from "./navigation-icons";
 
 // Exact SVG geometry from the retained Application Shell r17 reference.
 const shapes = {
@@ -42,7 +43,8 @@ const shapes = {
   "chevron-right": <><path d="m9 5 7 7-7 7"/></>,
 };
 export type ShellIconName = ProductIconName | keyof typeof shapes;
-export function ShellIcon({ name }: { name: ShellIconName }) {
+export function ShellIcon({ name, active = false }: { name: ShellIconName; active?: boolean }) {
+  if (isNavigationIcon(name)) return <NavigationIcon name={name} active={active} />;
   const mapped = ({ home: "overview", person: "contacts", warning: "recovery" } as Record<string, string>)[name] ?? name;
   if (!(mapped in shapes)) return <ProductIcon name={name as ProductIconName} />;
   return <svg className="product-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{shapes[mapped as keyof typeof shapes]}</svg>;

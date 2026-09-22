@@ -17,7 +17,7 @@
 /* Shared layout coordinates. The rail width and the expanded secondary-menu width are the two numbers that
    the centred header group, the More panel's right edge and every workspace menu are measured against, so
    they are declared once here rather than repeated as literals in each module stylesheet. */
-:root { --ppo-rail-width: 76px; --ppo-secondary-menu-width: 240px; }
+:root { --ppo-rail-width: 76px; --ppo-secondary-menu-width: 240px; --ppo-rail-navy: #242a37; --ppo-rail-hover: #343c4c; --ppo-rail-selected: #f0f6ed; --ppo-rail-ink: #315e43; --ppo-icon-cutout: #f0f6ed; }
 .ppo-shell-header .product-heading { display: flex; align-items: center; align-self: center; min-width: 0; margin: 0; font-size: 16px; line-height: 1.3; white-space: nowrap; }
 .ppo-shell-header .ppo-product-name { display: block; font-size: 16px; line-height: 1.3; color: #242a37; font-weight: 700; letter-spacing: -.15px; }
 /* Breadcrumb: [Module] / [Current page]. The rail's logo is the product identity, so the product name is
@@ -184,6 +184,12 @@
   .ppo-rail .ppo-rail-item:is(:hover,[aria-expanded=true]) { background: #343c4c; }
   .ppo-rail :is(a,button):focus-visible { outline: 3px solid #a8d8ff; outline-offset: 3px; }
   .ppo-rail-bottom { margin-top: auto; padding: 12px 0; width: 100%; display: flex; justify-content: center; }
+  .ppo-primary-nav { flex: 1 1 auto; min-height: 0; width: 76px; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; scrollbar-color: #8995a8 transparent; }
+  .ppo-primary-nav .ppo-rail-item { flex: 0 0 48px; text-decoration: none; }
+  .ppo-rail-bottom { flex: 0 0 auto; }
+  .ppo-rail .ppo-rail-item[aria-current=page], .ppo-rail .ppo-rail-item[aria-current=page]:hover { background: var(--ppo-rail-selected); color: var(--ppo-rail-ink); box-shadow: inset 3px 0 var(--ppo-rail-ink); }
+  .ppo-rail .ppo-rail-item[aria-expanded=true] { box-shadow: inset 0 -3px #a8d8ff; }
+  .ppo-rail-tooltip { position: fixed; z-index: 110; left: 84px; max-width: min(300px, calc(100vw - 96px)); padding: 6px 10px; color: white; background: var(--ppo-rail-navy); border: 1px solid #8995a8; border-radius: 5px; font: 13px/1.5 PPOShellRoboto, Roboto, Verdana, sans-serif; pointer-events: none; }
   /* Global search and the quick-add button immediately to its right are one group, and it is that group's
      combined box which is centred on the whole application viewport, the navy rail included. The header's
      own left origin excludes the rail, so half the rail width comes off the header's own midpoint. The

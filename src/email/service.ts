@@ -244,15 +244,16 @@ export async function readCalendar(
   const c = database();
   await requireCapability(c, p, "activity.read");
   const day = dateOnly(query.day, "day");
+  const sales = query.scope === "sales";
   const start = new Date(day + "T00:00:00+10:00").toISOString(),
     end = new Date(Date.parse(start) + 86400000).toISOString();
   const meetings = await c.query(
-    `SELECT e.id,e.title,e.starts_at,e.ends_at,e.private,'Synthetic Outlook' AS source FROM ppo.email_calendar_events e WHERE e.workspace_id=$1 AND e.owner_id=$2 AND ${scopeSql("e.company_id", "NULL::uuid", "email.read")} AND ${scopeSql("e.company_id", "NULL::uuid", "shared.internal.read")} AND e.starts_at<$4 AND e.ends_at>$3 ORDER BY e.starts_at,e.id LIMIT 101`,
-    [p.workspace_id, p.actor_id, start, end],
+    `SELECT e.id,e.title,e.starts_at,e.ends_at,e.private,'Synthetic Outlook' AS source FROM ppo.email_calendar_events e WHERE e.workspace_id=$1 AND e.owner_id=$2 AND ${scopeSql("e.company_id", "NULL::uuid", "email.read")} AND ${scopeSql("e.company_id", "NULL::uuid", "shared.internal.read")} AND NOT $5::boolean AND e.starts_at<$4 AND e.ends_at>$3 ORDER BY e.starts_at,e.id LIMIT 101`,
+    [p.workspace_id, p.actor_id, start, end, sales],
   );
   const activities = await c.query(
-    `SELECT a.id,a.summary AS title,a.due_at,a.status,'PPO Activity' AS source FROM ppo.activities a WHERE a.workspace_id=$1 AND a.owner_id=$2 AND ${activityVisibility("a", true)} AND a.due_at>=$3 AND a.due_at<$4 ORDER BY a.due_at,a.id LIMIT 101`,
-    [p.workspace_id, p.actor_id, start, end],
+    `SELECT a.id,a.summary AS title,a.due_at,a.status,'PPO Activity' AS source FROM ppo.activities a WHERE a.workspace_id=$1 AND a.owner_id=$2 AND ${activityVisibility("a", true)} AND (NOT $5::boolean OR (a.activity_type IN ('Call','Email','Meeting','SiteVisit') AND EXISTS (SELECT 1 FROM ppo.activity_links l WHERE l.workspace_id=a.workspace_id AND l.activity_id=a.id AND l.object_type IN ('Lead','Opportunity')))) AND a.due_at>=$3 AND a.due_at<$4 ORDER BY a.due_at,a.id LIMIT 101`,
+    [p.workspace_id, p.actor_id, start, end, sales],
   );
   return {
     day,

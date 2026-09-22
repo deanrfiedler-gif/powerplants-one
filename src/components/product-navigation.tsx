@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { ShellIcon as ProductIcon } from "./shell-icon";
 import { ShellControls } from "./shell-controls";
 import { useShell } from "./shell-provider";
@@ -11,6 +11,11 @@ import { InstallationActions, InstallationHelp } from "./app-installation";
 import { moduleWorkspaceForPath } from "../shell/module-workspaces";
 import {
   canOpen,
+  departmentHref,
+  railDestinations,
+  railDestinationForLocation,
+  workspaceForLocation,
+  workspaceIcons,
   destination,
   menuGroups,
   pageForPath,
@@ -33,7 +38,10 @@ const subscribe = (changed: () => void) => {
   return () => media.removeEventListener("change", changed);
 };
 export function ProductNavigation() {
-  const path = usePathname();
+  return <Suspense><NavigationWithLocation /></Suspense>;
+}
+function NavigationWithLocation() {
+  const path = usePathname(), query = useSearchParams().toString();
   const wide = useSyncExternalStore(
     subscribe,
     () => window.matchMedia("(min-width: 781px)").matches,
@@ -41,7 +49,7 @@ export function ProductNavigation() {
   );
   return (
     <>
-      <ProductNavigationView key={`${path}:${wide}`} path={path} wide={wide} />
+      <ProductNavigationView key={`${path}:${wide}`} path={path} wide={wide} locationQuery={query} />
       {/* Outside the keyed view so the panel survives route changes. */}
       <InstallationHelp />
     </>
@@ -50,21 +58,44 @@ export function ProductNavigation() {
 function ProductNavigationView({
   path,
   wide,
+  locationQuery,
 }: {
   path: string;
   wide: boolean;
+  locationQuery: string;
 }) {
   const shell = useShell(),
     current = pageForPath(path);
-  const workspace = workspaces.find(
-    (w) => w.id === (current?.workspace ?? shell.preview),
-  )!;
+  const permitted = shell.context?.navigation ?? [];
+  const workspaceId = workspaceForLocation(path, new URLSearchParams(locationQuery), shell.preview, permitted);
+  const workspace = workspaces.find(w => w.id === workspaceId)!;
+  const rail = railDestinations(workspaceId, permitted, shell.hosted);
+  const activeId = railDestinationForLocation(path, new URLSearchParams(locationQuery), workspaceId);
+  const scroller = useRef<HTMLElement>(null);
+  const [tooltip, setTooltip] = useState<{label: string; top: number} | null>(null);
+  function reveal(element: HTMLElement) {
+    const parent = scroller.current;
+    if (!parent) return;
+    const item = element.getBoundingClientRect(), bounds = parent.getBoundingClientRect();
+    if (item.top < bounds.top + 6) parent.scrollTop -= bounds.top + 6 - item.top;
+    else if (item.bottom > bounds.bottom - 6) parent.scrollTop += item.bottom - bounds.bottom + 6;
+  }
+  function tip(element: HTMLElement, label: string) {
+    setTooltip({ label, top: Math.max(8, Math.min(innerHeight - 40, element.getBoundingClientRect().top + 8)) });
+  }
+  const permittedKey = permitted.join(",");
+  useEffect(() => {
+    const active = scroller.current?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (active) reveal(active);
+  }, [activeId, workspaceId, permittedKey]);
+  useEffect(() => {
+    if (shell.context && workspaceId !== shell.preview) shell.selectPreview(workspaceId);
+  }, [workspaceId, shell]);
   const [more, setMore] = useState(false),
     [query, setQuery] = useState("");
   const dialog = useRef<HTMLDialogElement>(null),
     search = useRef<HTMLInputElement>(null),
     toggle = useRef<HTMLButtonElement>(null);
-  const permitted = shell.context?.navigation ?? [];
   const allowed = (item: ShellDestination) =>
     canOpen(item, permitted, shell.hosted);
   const close = () => {
@@ -104,16 +135,16 @@ function ProductNavigationView({
       document.removeEventListener("keydown", key);
     };
   }, [more, wide]);
-  const groups = menuGroups(query)
+  const groups = menuGroups(query, workspaceId)
     .map((g) => ({
       ...g,
-      items: g.items.filter((item) => !item.localOnly || !shell.hosted),
+      items: g.items.filter(allowed),
     }))
     .filter((g) => g.items.length);
   const showHelp = !query.trim() || "help quick help administration support".includes(query.trim().toLowerCase());
   const count = groups.reduce((sum, group) => sum + group.items.length, 0) + Number(showHelp);
-  const link = (item: ShellDestination, mobile = false) => {
-    const root = workspaces.find((w) => w.primary === item.id);
+  const link = (item: ShellDestination, mobile = false, workspaceEntry = false) => {
+    const root = workspaceEntry ? workspaces.find((w) => w.primary === item.id) : undefined;
     const label = mobile
       ? item.id === "tickets"
         ? "Service"
@@ -121,7 +152,7 @@ function ProductNavigationView({
       : (root?.label ?? item.menuLabel ?? item.label);
     const contents = (
       <>
-        <ProductIcon name={root ? (root.id === "estimate" ? "estimate" : root.id) : item.id === "equipment" ? "equipment" : item.id === "reports" ? "reports" : item.icon} />
+        <ProductIcon name={root ? workspaceIcons[root.id] : item.icon} />
         <span>{label}</span>
       </>
     );
@@ -129,10 +160,10 @@ function ProductNavigationView({
       <Link
         key={item.id}
         className={mobile ? undefined : "ppo-more-link"}
-        href={item.href!}
+        href={departmentHref(item.href!, root?.id ?? workspaceId)}
         aria-label={label}
         aria-current={current?.id === item.id || (!mobile && !!root && current?.workspace === root.id) ? "page" : undefined}
-        onClick={() => setMore(false)}
+        onClick={() => { if (root) shell.selectPreview(root.id); setMore(false); }}
       >
         {contents}
       </Link>
@@ -215,7 +246,7 @@ function ProductNavigationView({
             groups.map((group) => (
               <section className="ppo-menu-group" key={group.title}>
                 <h3>{group.title}</h3>
-                {group.items.map((item) => link(item))}
+                {group.items.map((item) => link(item, false, group.title === "Workspaces"))}
               </section>
             ))
           ) : showHelp ? null : (
@@ -304,6 +335,15 @@ function ProductNavigationView({
             className="brand-logo"
           />
         </Link>
+        {wide && <nav className="ppo-primary-nav" aria-label={`${workspace.label} shortcuts`} ref={scroller} onScroll={() => setTooltip(null)}>
+          {rail.map(item => <Link key={item.id} href={departmentHref(item.href!, workspaceId)}
+            className="ppo-rail-item" aria-label={item.label} aria-current={activeId === item.id ? "page" : undefined}
+            onMouseEnter={e => tip(e.currentTarget, item.label)} onMouseLeave={() => setTooltip(null)}
+            onFocus={e => { reveal(e.currentTarget); tip(e.currentTarget, item.label); }} onBlur={() => setTooltip(null)}>
+            <ProductIcon name={item.icon} active={activeId === item.id} />
+          </Link>)}
+        </nav>}
+        {wide && tooltip && <span className="ppo-rail-tooltip" role="tooltip" style={{top: tooltip.top}}>{tooltip.label}</span>}
         <div className="ppo-rail-bottom">
           {wide && (
             <button
@@ -311,7 +351,10 @@ function ProductNavigationView({
               id="desktop-more-toggle"
               className="ppo-rail-item"
               aria-label="More"
-              title="More"
+              onMouseEnter={e => tip(e.currentTarget, "More")}
+              onMouseLeave={() => setTooltip(null)}
+              onFocus={e => tip(e.currentTarget, "More")}
+              onBlur={() => setTooltip(null)}
               aria-expanded={more}
               aria-controls="desktop-more-panel"
               onClick={() => {
@@ -385,14 +428,14 @@ export function ProductHeader() {
   const path = usePathname(),
     page = pageForPath(path),
     shell = useShell();
-  const label = path === "/" ? "" : path.startsWith("/estimating/configurations") ? "Specialist configurations" : /^\/estimating\/discovery\/[^/]+$/.test(path) && !path.endsWith("/new") ? "Estimation Wizard" : (page?.label ?? "Page unavailable");
+  const label = path === "/" ? "" : path.startsWith("/estimating/configurations") ? "Specialist configurations" : /^\/estimating\/discovery\/[^/]+$/.test(path) && !path.endsWith("/new") ? "Estimation Wizard" : (page?.id === "engineering" ? "Engineering" : page?.label ?? "Page unavailable");
   // My Work names its current view beside the module, as its secondary menu does. EN-06 names its module
   // there, and its destination after it for as long as its own menu is hidden (desktop-shell.css).
-  const materials = page?.id === "engineering" ? materialsPath(path) : undefined;
+  const materials = page?.workspace === "engineering" ? materialsPath(path) : undefined;
   // EN-07 does the same: "Engineering / Engineering Change-Impact Review", then its destination while its menu is hidden.
-  const changes = page?.id === "engineering" ? changesPath(path) : undefined;
+  const changes = page?.workspace === "engineering" ? changesPath(path) : undefined;
   // EN-08 likewise: "Engineering / Commissioning Basis & As-Built Release", then its destination while its menu is hidden.
-  const commissioning = page?.id === "engineering" ? commissioningPath(path) : undefined;
+  const commissioning = page?.workspace === "engineering" ? commissioningPath(path) : undefined;
   const acceptance = path.startsWith("/projects/acceptance");
   const crumb = materials ?? changes ?? commissioning ?? (acceptance ? { view: undefined } : undefined);
   const view = page?.id === "work" ? workViewForPath(path)?.label : materials ? materialsModuleLabel : changes ? changesModuleLabel : commissioning ? commissioningModuleLabel : acceptance ? "Staged Acceptance & Closeout" : undefined;
@@ -403,7 +446,7 @@ export function ProductHeader() {
       ? "Estimating"
       : page?.workspace === "service"
         ? "Service"
-        : (page?.label ?? "Home");
+        : (page?.id === "engineering" ? "Engineering" : page?.label ?? "Home");
   // The breadcrumb is built from route metadata, never from URL slugs: the workspace this destination
   // belongs to, the destination itself, and the view that a workspace's own secondary menu names. The
   // rail carries the product identity, so "Powerplants One" is no longer repeated beside every page.
@@ -440,7 +483,7 @@ export function ProductHeader() {
       : page?.workspace === "sales"
         ? ["deals", "leads"]
         : page?.workspace === "estimate"
-          ? ["estimates", "intake"]
+          ? ["estimates", "wizard"]
           : page?.id === "mail" || page?.id === "calendar"
             ? ["mail", "calendar"]
       : ["customers", "sites", "facilities", "equipment"].includes(page?.id ?? "")

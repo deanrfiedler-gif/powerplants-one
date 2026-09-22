@@ -25,7 +25,7 @@ function FilterPicker({ kind, value, company, set, enabled }: { kind: "Company" 
   const data = useCrmResource<Awaited<ReturnType<typeof worklistOptions>>>(enabled ? `crm/worklist-options?${query({ kind, company_id: kind === "Company" ? "" : company, q, limit: "50" })}` : null, true);
   return <div className="crm-filter-picker">
     <Field name={`filter-${kind}-search`} label={`Find ${kind.toLowerCase()} filter`} value={q} onChange={setQ} />
-    <SelectField name={`filter-${kind}`} label={kind === "Owner" ? "Opportunity owner" : kind} value={value} onChange={set} options={data.data?.items ?? []} empty={data.loading ? "Loading permitted options…" : `All permitted ${kind === "Company" ? "companies" : kind === "Site" ? "sites" : "owners"}`} />
+    <SelectField name={`filter-${kind}`} label={kind === "Owner" ? "Deal owner" : kind} value={value} onChange={set} options={data.data?.items ?? []} empty={data.loading ? "Loading permitted options…" : `All permitted ${kind === "Company" ? "companies" : kind === "Site" ? "sites" : "owners"}`} />
     <ErrorNotice error={data.error} />
     {data.data?.next_cursor && <small>More options exist. Refine this filter search.</small>}
   </div>;
@@ -187,7 +187,7 @@ export function SalesWorklist() {
       <div className="crm-toolbar-views"><div className="crm-view-controls" role="group" aria-label="Opportunity presentation">
         {(["Board", "Grid", "Forecast"] as const).map(value => <button key={value} className="secondary" aria-pressed={view === value} onClick={() => setView(value)}><ProductIcon name={value === "Board" ? "board" : value === "Grid" ? "list" : "insights"}/><span>{value === "Grid" ? "List" : value}</span></button>)}
       </div><button className="secondary crm-archive-button" aria-pressed={view === "Archive"} onClick={() => setView("Archive")}><ProductIcon name="archive"/><span>Archive</span></button>
-      {ready && data.data?.can_create && <Link className="primary-link crm-new-opportunity" href="/sales/opportunities/new" aria-label="New opportunity"><ProductIcon name="plus"/>Opportunity</Link>}</div>
+      {ready && data.data?.can_create && <Link className="primary-link crm-new-opportunity" href="/sales/opportunities/new" aria-label="Add deal"><ProductIcon name="plus"/>Deal</Link>}</div>
       {!isDenied && <div className="crm-toolbar-context">
         <WorklistMenu label="Pipeline totals" text={<><span>{ready ? data.data!.items.length : "—"} <span className="crm-count-label">{data.data?.items.length === 1 ? "deal" : "deals"}</span></span><ProductIcon name="info"/></>} disabled={!ready}>
           <p>{data.data?.completeness === "Complete" ? "All matching results" : "Current result page only"} · {filters.outcome} · Current filters apply</p>

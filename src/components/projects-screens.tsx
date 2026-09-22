@@ -28,7 +28,7 @@ import {
 } from "../projects/model";
 import type { ShellContext } from "../shell/model";
 
-export function ProjectRegister() {
+export function ProjectRegister({ programme = false }: { programme?: boolean }) {
   const [search, setSearch] = useState(""),
     [cursors, setCursors] = useState<(string | null)[]>([null]);
   const cursor = cursors.at(-1),
@@ -39,8 +39,8 @@ export function ProjectRegister() {
   return (
     <section className="project-register">
       <RegisterHeading
-        title="Projects"
-        description="Plan delivery, assign responsibility and track the schedule."
+        title={programme ? "Programme" : "Projects"}
+        description={programme ? "Choose a project to open its saved tasks, dependencies and Gantt schedule." : "Plan delivery, assign responsibility and track the schedule."}
       >
         <Link href="/projects/acceptance">Staged Acceptance &amp; Closeout</Link>
         {context.data?.actions.some((a) => a.id === "project") && (
@@ -68,7 +68,7 @@ export function ProjectRegister() {
           <div className="project-register-list">
             {resource.data.items.map((p) => (
               <Link
-                href={`/projects/${p.id}`}
+                href={`/projects/${p.id}${programme ? "?view=programme" : ""}`}
                 className="project-register-card"
                 key={p.id}
               >

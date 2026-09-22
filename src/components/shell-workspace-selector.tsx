@@ -1,8 +1,9 @@
 "use client";
 import { useId, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   canOpen,
+  pageForPath, departmentHref, railDestinations, workspaceIcons,
   destination,
   workspaces,
   type WorkspaceId,
@@ -13,7 +14,7 @@ import { ShellIcon } from "./shell-icon";
 
 export function ShellWorkspaceSelector() {
   const shell = useShell(),
-    router = useRouter();
+    router = useRouter(), path = usePathname();
   const [notice, setNotice] = useState("");
   const selectId = useId();
   if (!shell.context?.can_preview) return null;
@@ -24,7 +25,7 @@ export function ShellWorkspaceSelector() {
         <span>Shell preview</span>
       </div>
       <label htmlFor={selectId}>Preview workspace</label>
-      <div className="ppo-workspace-choice"><ShellIcon name={shell.preview} /><select
+      <div className="ppo-workspace-choice"><ShellIcon name={workspaceIcons[shell.preview]} /><select
         id={selectId}
         value={shell.preview}
         onChange={(event) => {
@@ -32,10 +33,13 @@ export function ShellWorkspaceSelector() {
             workspace = workspaces.find((w) => w.id === id);
           if (!workspace) return;
           const saved = shell.selectPreview(id),
-            item = destination(workspace.primary);
+            item = (id === "sales" ? railDestinations(id, shell.context?.navigation ?? [], shell.hosted)[0] : undefined) ?? destination(workspace.primary);
           if (canOpen(item, shell.context?.navigation ?? [], shell.hosted)) {
             openShellPanel("navigation");
-            router.push(item.href!);
+            router.push(!pageForPath(path)?.workspace ? departmentHref(path + window.location.search, id) : item.href!);
+          }
+          else if (railDestinations(id, shell.context?.navigation ?? [], shell.hosted).length) {
+            router.push(departmentHref("/work", id));
           }
           setNotice(
             `${workspace.label} selected${saved ? "." : " for this visit; browser storage is unavailable."}${!item.href ? " This workspace is planned; your current page stays open." : !canOpen(item, shell.context?.navigation ?? [], shell.hosted) ? " This identity cannot open that workspace." : ""}`,
