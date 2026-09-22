@@ -3,7 +3,7 @@ document_id: PPO-DEPARTMENT-NAV-DEC
 title: Department navigation icons
 revision: r01
 date: 2026-09-22
-status: Authorised implementation; verification in progress
+status: Implemented on isolated branch; owner visual acceptance separate
 owner: Dean Fiedler
 ---
 
@@ -23,4 +23,6 @@ Keep business destination IDs distinct from glyph keys. Canonical department com
 
 Logo/More remain outside the scrolling shortcuts. Existing 76px rail, 54px logo, 48px targets, 25px glyphs and 1.7-unit strokes remain. Active glyphs use deliberate body fills with contrasting details and an inset edge; focus and More-open states remain distinct. Mobile/field layouts retain their established structure.
 
-The implementation coverage and executed evidence will be recorded in the [handover](../delivery/department-navigation-icons.md). PR #277 must be rechecked before finalisation; if merged, reconcile against resulting current main and rerun navigation, shell and compiled-browser checks. If still open, preserve this branch and do not merge it into main.
+The [handover](../delivery/department-navigation-icons.md) and [coverage register](../delivery/department-navigation-coverage.md) distinguish wired destinations, missing capabilities and executed checks. PR #277 merged on 22 September at final head `876e92ab288b682e85f58773c7b02e340a7ab63e`, merge `d6251b42f5c969f537a6397c1823f8c871e4d4d1`. Current main `c01106a884f50c2060da36333c218f93228563bf` was merged without conflict into this branch as `fb461236615167d36b49dee25662e488ff6b6e6e`; affected checks were rerun after reconciliation. Further main changes require a fresh shared-file review before merge. Navigation has not been merged or deployed.
+
+This amends the [r17 shell integration](application-shell-integration.md) only as explicitly documented there.

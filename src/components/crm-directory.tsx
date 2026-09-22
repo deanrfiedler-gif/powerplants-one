@@ -54,7 +54,7 @@ const defaults = {
   direction: "asc",
   limit: "25",
 };
-export function CrmDirectory({ kind }: { kind: DirectoryKind }) {
+export function CrmDirectory({ kind, contactsHub = false }: { kind: DirectoryKind; contactsHub?: boolean }) {
   const controlId = useId(), shell = useShell();
   const [filters, setFilters] = useState(defaults),
     [settled, setSettled] = useState(""),
@@ -221,7 +221,7 @@ export function CrmDirectory({ kind }: { kind: DirectoryKind }) {
           </Link>
         }
       />
-      <nav className="record-tabs" aria-label="Customer context sections">
+      {!contactsHub && <nav className="record-tabs" aria-label="Customer context sections">
         {[
           ["customers", "Organisations"],
           ["people", "People"],
@@ -240,7 +240,7 @@ export function CrmDirectory({ kind }: { kind: DirectoryKind }) {
             {label}
           </Link>
         ))}
-      </nav>
+      </nav>}
       {locked ? (
         <ErrorNotice error={[result.error, views.error, saveError].find(denied)} />
       ) : (

@@ -61,7 +61,7 @@ export function ActivityRow({
 }) {
   const t = timing(row, now);
   const context = contextLine(row);
-  const tag = row.linked.type === "Organisation" ? "Customer" : row.linked.type === "Ticket" ? "Service request" : row.linked.type;
+  const tag = row.linked.type === "Organisation" ? "Customer" : row.linked.type === "Ticket" ? "Service request" : row.linked.type === "Opportunity" ? "Deal" : row.linked.type;
   return (
     <li className="mw-row" data-group={row.group} data-activity={row.id}>
       <span className="mw-row-icon" title={activityTypeLabels[row.activity_type]}>

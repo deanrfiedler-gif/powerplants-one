@@ -259,6 +259,7 @@ export function ProjectsGantt({
   onRefresh,
   loading = false,
   saved = "",
+  programme = false,
 }: {
   schedule: Schedule;
   preferenceKey: string;
@@ -267,6 +268,7 @@ export function ProjectsGantt({
   onRefresh: () => void;
   loading?: boolean;
   saved?: string;
+  programme?: boolean;
 }) {
   const { project, tasks } = schedule;
   // This component mounts after the current session's schedule fetch, on the client.
@@ -635,7 +637,7 @@ export function ProjectsGantt({
           <nav className="breadcrumbs" aria-label="Breadcrumb">
             <ol>
               <li>
-                <Link href="/projects">Projects</Link>
+                <Link href={programme ? "/projects/programme" : "/projects"} aria-label={programme ? "Programme — choose another project" : undefined}>{programme ? "Programme" : "Projects"}</Link>
               </li>
               <li>
                 <GanttIcon name="chev" />
@@ -645,6 +647,7 @@ export function ProjectsGantt({
                 <GanttIcon name="chev" />
                 <span aria-current="page">Schedule</span>
               </li>
+              <li><Link href={`/projects/acceptance?project=${project.id}`}>Acceptance &amp; closeout</Link></li>
             </ol>
           </nav>
           <section className="project-header" aria-label="Project overview">

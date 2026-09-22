@@ -198,7 +198,7 @@ test("r22 menus and r38 inspection/forms retain their different behaviours", asy
     .getByRole("button", { name: "Filters and sort", exact: true })
     .click();
   const filter = page.getByRole("dialog", {
-      name: "Filter opportunities",
+      name: "Filter deals",
       exact: true,
     }),
     box = (await filter.boundingBox())!;

@@ -315,10 +315,13 @@ export function EmailCalendar({ initialDay, sales = false }: { initialDay: strin
   ].find((item) => item.id === selectedId);
   const setDay = (value: string) => {
     updateDay(value);
+    const query = new URLSearchParams(window.location.search);
+    query.set("day", value);
+    if (sales) query.set("scope", "sales");
     window.history.replaceState(
       window.history.state,
       "",
-      `/calendar?day=${value}${sales ? "&scope=sales&department=sales" : ""}`,
+      `/calendar?${query}`,
     );
   };
   const date = new Date(day + "T12:00:00Z"),

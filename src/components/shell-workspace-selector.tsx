@@ -39,10 +39,11 @@ export function ShellWorkspaceSelector() {
             router.push(!pageForPath(path)?.workspace ? departmentHref(path + window.location.search, id) : item.href!);
           }
           else if (railDestinations(id, shell.context?.navigation ?? [], shell.hosted).length) {
+            openShellPanel("navigation");
             router.push(departmentHref("/work", id));
           }
           setNotice(
-            `${workspace.label} selected${saved ? "." : " for this visit; browser storage is unavailable."}${!item.href ? " This workspace is planned; your current page stays open." : !canOpen(item, shell.context?.navigation ?? [], shell.hosted) ? " This identity cannot open that workspace." : ""}`,
+            `${workspace.label} selected${saved ? "." : " for this visit; browser storage is unavailable."}${!railDestinations(id, shell.context?.navigation ?? [], shell.hosted).length ? " No department pages are available for this identity." : ""}`,
           );
         }}
       >

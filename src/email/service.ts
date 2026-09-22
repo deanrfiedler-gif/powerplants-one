@@ -252,7 +252,7 @@ export async function readCalendar(
     [p.workspace_id, p.actor_id, start, end, sales],
   );
   const activities = await c.query(
-    `SELECT a.id,a.summary AS title,a.due_at,a.status,'PPO Activity' AS source FROM ppo.activities a WHERE a.workspace_id=$1 AND a.owner_id=$2 AND ${activityVisibility("a", true)} AND (NOT $5::boolean OR (a.activity_type IN ('Call','Email','Meeting','SiteVisit') AND EXISTS (SELECT 1 FROM ppo.activity_links l WHERE l.workspace_id=a.workspace_id AND l.activity_id=a.id AND l.object_type IN ('Lead','Opportunity')))) AND a.due_at>=$3 AND a.due_at<$4 ORDER BY a.due_at,a.id LIMIT 101`,
+    `SELECT a.id,a.summary AS title,a.due_at,a.status,'PPO Activity' AS source FROM ppo.activities a WHERE a.workspace_id=$1 AND a.owner_id=$2 AND ${activityVisibility("a", true, sales)} AND (NOT $5::boolean OR (a.activity_type IN ('Call','Email','Meeting','SiteVisit') AND EXISTS (SELECT 1 FROM ppo.activity_links l WHERE l.workspace_id=a.workspace_id AND l.activity_id=a.id AND l.object_type IN ('Lead','Opportunity')))) AND a.due_at>=$3 AND a.due_at<$4 ORDER BY a.due_at,a.id LIMIT 101`,
     [p.workspace_id, p.actor_id, start, end, sales],
   );
   return {

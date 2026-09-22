@@ -40,7 +40,7 @@ test("r38 collapse, snapshot, filter focus, shared forecast and archive populati
   await page.screenshot({ path: info.outputPath("r38-snapshot.png") });
   await page.keyboard.press("Escape");
   await page.getByRole("button", { name: "Filters and sort", exact: true }).click();
-  const filter = page.getByRole("dialog", { name: "Filter opportunities", exact: true });
+  const filter = page.getByRole("dialog", { name: "Filter deals", exact: true });
   await expect(filter).toBeVisible();
   expect((await filter.boundingBox())!.y).toBe(0);
   expect(await filter.locator(".crm-secondary-filters").evaluate(node => node.scrollHeight <= node.clientHeight + 1)).toBe(true);

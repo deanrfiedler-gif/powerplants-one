@@ -42,7 +42,7 @@ test("CRM URL restores filtered List, Board stage and sort through reload, a cop
   const before = await snapshot();
   const commands: string[] = [];
   page.on("request", r => { if (r.url().includes("/api/v1/") && r.method() !== "GET") commands.push(r.method()); });
-  const search = page.getByLabel("Search opportunities", { exact: true });
+  const search = page.getByLabel("Search deals", { exact: true });
   if (await searchNeedsDrawer(page)) await toggleWorklistFilters(page);
   await expect(search).toBeVisible();
   const historyLength = await page.evaluate(() => history.length);
@@ -51,10 +51,10 @@ test("CRM URL restores filtered List, Board stage and sort through reload, a cop
   expect(await page.evaluate(() => history.length)).toBe(historyLength);
   await expect(search).toBeFocused();
   await chooseWorklistSort(page, "Title");
-  if (!(await page.getByRole("dialog", { name:"Filter opportunities",exact:true }).isVisible())) await toggleWorklistFilters(page);
+  if (!(await page.getByRole("dialog", { name:"Filter deals",exact:true }).isVisible())) await toggleWorklistFilters(page);
   await page.getByLabel("Company", { exact: true }).selectOption(CRM.company);
   await page.getByLabel("Site", { exact: true }).selectOption(CRM.site);
-  await page.getByLabel("Opportunity owner", { exact: true }).selectOption(CRM.owner);
+  await page.getByLabel("Deal owner", { exact: true }).selectOption(CRM.owner);
   await page.getByLabel("Page size", { exact: true }).selectOption("10");
   await toggleWorklistFilters(page);
   await expect.poll(() => ids(page)).toHaveLength(3);
@@ -143,7 +143,7 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   await toggleWorklistFilters(page);
   await page.getByLabel("Company", { exact: true }).selectOption(CRM.company);
   await page.getByLabel("Site", { exact: true }).selectOption(CRM.site);
-  await page.getByLabel("Opportunity owner", { exact: true }).selectOption(CRM.owner);
+  await page.getByLabel("Deal owner", { exact: true }).selectOption(CRM.owner);
   await page.getByLabel("Next action", { exact: true }).selectOption("DueNeeded");
   await chooseWorklistSort(page, "Title");
   await expect.poll(() => ids(page)).toHaveLength(3);
@@ -163,7 +163,7 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   await expect(page.getByRole("columnheader", { name: "Next activity", exact: true })).toHaveAttribute("scope", "col");
   await expect(page.getByText("Action owner: SYN Action colleague", { exact: true })).toBeVisible();
   await capture(page, info, "loaded-grid");
-  const scroll = page.getByRole("region", { name: "Opportunity List — scroll for all columns", exact: true });
+  const scroll = page.getByRole("region", { name: "Deals List — scroll for all columns", exact: true });
   await scroll.evaluate((e) => { e.scrollLeft = 350; e.scrollTop = 100; });
   const sticky = await page.locator(".crm-grid tbody th").first().evaluate((e) => ({ left: e.getBoundingClientRect().left, container: e.closest(".crm-grid-scroll")!.getBoundingClientRect().left, position: getComputedStyle(e).position }));
   expect(sticky.position).toBe("sticky"); expect(Math.abs(sticky.left - sticky.container)).toBeLessThan(3);
@@ -231,7 +231,7 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   await expect(page.locator(".crm-action-text").first()).toContainText("END OF ACTION");
   await page.setViewportSize({ width: 320, height: 844 });
   await waitForCompactSearch(page);
-  await page.getByLabel("Search opportunities", { exact: true }).focus();
+  await page.getByLabel("Search deals", { exact: true }).focus();
   await page.keyboard.press("Tab");
   // r11 moves search into the shared header and Stage into the Filters panel.
   await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeFocused();
@@ -337,7 +337,7 @@ test("CA-06/10/13 I2 revocation clears list, filter labels and late responses; i
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
   expect((await deniedList).status()).toBe(403);
   await expect(page.locator('.crm-workspace > .business-error[role="alert"]')).toBeVisible();
-  await expect(page.getByLabel("Search opportunities", { exact: true })).toHaveCount(0);
+  await expect(page.getByLabel("Search deals", { exact: true })).toHaveCount(0);
   const late = page.waitForResponse((r) => r.url().includes("/api/v1/crm/opportunities?") && r.status() === 200);
   release(); await (await late).finished();
   await page.evaluate(() => new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));

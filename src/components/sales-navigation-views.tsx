@@ -19,7 +19,7 @@ function SalesActions({ linked, tasks }: { linked: "Lead" | "Opportunity"; tasks
       <p>{r.data.total} active {tasks ? "tasks" : "actions"} · {r.data.counts.overdue} overdue · {r.data.timezone}</p>
       <ul className="mw-rows">{r.data.items.map(row => <ActivityRow key={row.id} row={row} now={r.data!.observed_at} open={dialogs.open} />)}</ul>
       {!r.data.items.length && <p>No active {tasks ? "tasks" : "actions"} in this permitted scope.</p>}
-      <div className="project-pagination"><button disabled={!cursor} onClick={() => setCursor(null)}>First page</button><button disabled={!r.data.next_cursor} onClick={() => setCursor(r.data!.next_cursor)}>Next page</button></div>
+      <div className="project-pagination"><button className="mw-button" disabled={!cursor} onClick={() => setCursor(null)}>First page</button><button className="mw-button" disabled={!r.data.next_cursor} onClick={() => setCursor(r.data!.next_cursor)}>Next page</button></div>
     </>}
     {dialogs.element}
   </section>;

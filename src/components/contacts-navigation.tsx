@@ -23,14 +23,14 @@ export function ContactsNavigation({ view }: { view?: string }) {
       router.replace(departmentHref(`/contacts?view=${saved}`, shell.preview));
     }
   }, [key, permitted, selected, router, shell.preview]);
-  if (!shell.context) return <p role="status">Loading Contacts access…</p>;
+  if (!shell.context) return <p role="status">{shell.error || "Loading Contacts access…"}{shell.error && <button onClick={shell.reload}>Try again</button>}</p>;
   if (!permitted) return <p role="alert">Contacts is outside your access.</p>;
-  return <section>
-    <nav className="module-navigation" aria-label="Contacts views">
+  return <section className="ppo-contacts-hub" data-module-layout="full-bleed">
+    <nav className="ppo-contacts-views" aria-label="Contacts views">
       {(["people", "organisations"] as const).map(kind => <Link key={kind} href={departmentHref(`/contacts?view=${kind}`, shell.preview)} aria-current={selected === kind ? "page" : undefined}>
         <ShellIcon name={kind === "people" ? "nav-people" : "nav-organisations"}/>{kind === "people" ? "People" : "Organisations"}
       </Link>)}
     </nav>
-    {selected ? <CrmDirectory key={selected} kind={selected}/> : <p role="status">Opening your Contacts view…</p>}
+    {selected ? <CrmDirectory key={selected} kind={selected} contactsHub/> : <p role="status">Opening your Contacts view…</p>}
   </section>;
 }

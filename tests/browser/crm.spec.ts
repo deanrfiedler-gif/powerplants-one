@@ -134,10 +134,10 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await identity(page);
   await page.unroute("**/api/v1/local-session");
   await expect(
-    page.getByRole("heading", { name: "New opportunity", exact: true }),
+    page.getByRole("heading", { name: "Add deal", exact: true }),
   ).toBeVisible();
   await page
-    .getByRole("button", { name: "Create opportunity and action" })
+    .getByRole("button", { name: "Add deal and action" })
     .click();
   await expect(page.locator('.business-error[role="alert"]')).toBeFocused();
   await expect(page.locator('.business-error[role="alert"]')).toContainText("Choose an existing permitted company.");
@@ -148,9 +148,9 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await pick(page, "Organisation", CRM.org);
   await pick(page, "Site", CRM.site);
   await pick(page, "Contact", CRM.person);
-  await pick(page, "Opportunity owner", CRM.owner);
+  await pick(page, "Deal owner", CRM.owner);
   const title = `SYN ${info.project.name} controls upgrade for a very long growing-area description and staged qualification ${randomUUID()}`;
-  await page.getByLabel("Opportunity title", { exact: true }).fill(title);
+  await page.getByLabel("Deal title", { exact: true }).fill(title);
   await page
     .getByLabel("Customer need", { exact: true })
     .fill(
@@ -167,7 +167,7 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
     .getByLabel("Action purpose", { exact: true })
     .fill("SYN Call to clarify the irrigation controls need");
   await page
-    .getByRole("button", { name: "Create opportunity and action" })
+    .getByRole("button", { name: "Add deal and action" })
     .click();
   await expect(page).toHaveURL(/sales\/opportunities\/[a-f0-9-]+$/);
   const detailUrl = page.url();
@@ -350,7 +350,7 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   await page.setViewportSize({ width: 320, height: 844 });
   await waitForCompactSearch(page);
   await noOverflow(page);
-  await page.getByLabel("Search opportunities", { exact: true }).focus();
+  await page.getByLabel("Search deals", { exact: true }).focus();
   await page.keyboard.press("Tab");
   await expect(
     page.getByRole("button", { name: "Change identity", exact: true }),
@@ -413,10 +413,10 @@ test("CA-06/10 real CRM permission revocation clears linked Activity content aft
   await database().query("INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id) SELECT DISTINCT workspace_id,$1::uuid,$3::uuid,capability,'Site',$4::uuid,$4::uuid FROM ppo.permission_grants WHERE user_id=$2 AND capability IN ('shared.read','shared.internal.read','crm.opportunity.read','crm.opportunity.create','crm.opportunity.edit','activity.read','activity.edit')",[user,CRM.owner,CRM.company,CRM.site]);
   await database().query("INSERT INTO ppo.sessions(token_hash,workspace_id,actor_id,expires_at) VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')",[createHash("sha256").update(token).digest("hex"),CRM.workspace,user]);
   await page.context().addCookies([{name:"ppo_local_session",value:token,url:`http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`,httpOnly:true,sameSite:"Strict"}]);
-  await page.goto("/sales/opportunities/new");await expect(page.getByRole("heading",{name:"New opportunity",exact:true})).toBeVisible();
+  await page.goto("/sales/opportunities/new");await expect(page.getByRole("heading",{name:"Add deal",exact:true})).toBeVisible();
   await page.getByLabel("Visibility company",{exact:true}).selectOption(CRM.company);await pick(page, "Organisation", CRM.org);
-  await expect(page.getByText("Choose a permitted site. Your creation authority is limited to that site.",{exact:true})).toBeVisible();await expect(page.getByRole("button",{name:"Create opportunity and action"})).toBeDisabled();
-  await pick(page, "Site", CRM.site);await pick(page, "Contact", CRM.person);await pick(page, "Opportunity owner", user);await pick(page, "Activity owner", user);await expect(page.getByRole("button",{name:"Create opportunity and action"})).toBeEnabled();await capture(page,info,"site-scoped-selectors");
+  await expect(page.getByText("Choose a permitted site. Your creation authority is limited to that site.",{exact:true})).toBeVisible();await expect(page.getByRole("button",{name:"Add deal and action"})).toBeDisabled();
+  await pick(page, "Site", CRM.site);await pick(page, "Contact", CRM.person);await pick(page, "Deal owner", user);await pick(page, "Activity owner", user);await expect(page.getByRole("button",{name:"Add deal and action"})).toBeEnabled();await capture(page,info,"site-scoped-selectors");
   const i={...crmCreate(),title:"SYN Revoked opportunity private title",owner_id:user,initial_action:{...crmAction(user),summary:"SYN Revoked Activity private content"}};
   await call(page,"crm/opportunities",i);
   const detail = await page.context().newPage();

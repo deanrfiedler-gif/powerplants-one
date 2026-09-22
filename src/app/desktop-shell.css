@@ -184,7 +184,7 @@
   .ppo-rail .ppo-rail-item:is(:hover,[aria-expanded=true]) { background: #343c4c; }
   .ppo-rail :is(a,button):focus-visible { outline: 3px solid #a8d8ff; outline-offset: 3px; }
   .ppo-rail-bottom { margin-top: auto; padding: 12px 0; width: 100%; display: flex; justify-content: center; }
-  .ppo-primary-nav { flex: 1 1 auto; min-height: 0; width: 76px; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; scrollbar-color: #8995a8 transparent; }
+  .ppo-rail .ppo-primary-nav { flex: 1 1 auto; min-height: 0; width: 76px; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 0; margin: 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; scrollbar-color: #8995a8 transparent; }
   .ppo-primary-nav .ppo-rail-item { flex: 0 0 48px; text-decoration: none; }
   .ppo-rail-bottom { flex: 0 0 auto; }
   .ppo-rail .ppo-rail-item[aria-current=page], .ppo-rail .ppo-rail-item[aria-current=page]:hover { background: var(--ppo-rail-selected); color: var(--ppo-rail-ink); box-shadow: inset 3px 0 var(--ppo-rail-ink); }
@@ -331,6 +331,14 @@
 .ppo-install-platforms button[aria-pressed=true] { background: #242a37; border-color: #242a37; color: white; }
 .ppo-install-help ol { margin: 0; padding-left: 20px; font-size: 12px; line-height: 1.7; color: #374152; }
 .ppo-install-help ol li { margin-bottom: 8px; }
+.ppo-contacts-hub { display: flex; flex-direction: column; min-width: 0; min-height: 0; width: 100%; }
+.ppo-contacts-views { display: flex; flex: none; gap: 8px; padding: 4px 16px; border-bottom: 1px solid #e1e5eb; background: white; }
+.ppo-contacts-views a { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 12px; color: #242a37; text-decoration: none; border-bottom: 3px solid transparent; }
+.ppo-contacts-views a[aria-current=page] { border-color: #315e43; }
+.ppo-contacts-views a:focus-visible { outline: 2px solid #365d8b; outline-offset: 2px; }
+/* The legacy directory header grid has no cell for r17 utilities. The new hub
+   keeps the existing compact shell controls in one row at mobile/reflow widths. */
+@media(max-width:780px){.workspace:has(.ppo-contacts-hub) .topbar.ppo-shell-header{display:flex}}
 .ppo-install-note { margin: 10px 0 0; font-size: 11px; line-height: 1.6; color: #7b8491; }
 .ppo-install-help footer { display: flex; justify-content: flex-end; padding-top: 14px; }
 .ppo-install-done { min-height: 40px; padding: 8px 18px; border: 0; border-radius: 7px; background: #242a37; color: white; font-size: 13px; }

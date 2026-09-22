@@ -449,7 +449,7 @@ function DealEditor({
           </legend>
           {mode === "transfer" && <>
             <Field name="owner-search" label="Find eligible owner" value={ownerSearch} onChange={setOwnerSearch} maxLength={200}/>
-            <SelectField name="new_owner_id" label="Add deal owner" value={newOwner} onChange={setNewOwner} options={handover.data?.items??[]} required/>
+            <SelectField name="new_owner_id" label="New deal owner" value={newOwner} onChange={setNewOwner} options={handover.data?.items??[]} required/>
             <ErrorNotice error={handover.error}/>
             {handover.loading && <p role="status">Loading eligible owners…</p>}
             {handover.data?.next_cursor && <p>More eligible owners exist. Refine the search.</p>}

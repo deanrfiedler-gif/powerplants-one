@@ -5,7 +5,7 @@ import { keyActivate, keyType } from "./quality-keyboard";
 // exercising the worklist; the background correctly remains inert.
 export async function toggleWorklistFilters(page: Page) {
   const close = page.getByRole("button", {
-    name: "Close Filter opportunities",
+    name: "Close Filter deals",
     exact: true,
   });
   if (await close.isVisible()) await close.click();
@@ -16,7 +16,7 @@ export async function toggleWorklistFilters(page: Page) {
 }
 
 const filterDrawer = (page: Page) =>
-  page.getByRole("dialog", { name: "Filter opportunities", exact: true });
+  page.getByRole("dialog", { name: "Filter deals", exact: true });
 
 // Desktop search belongs inside Filters; compact search stays in the shell.
 //
@@ -34,7 +34,7 @@ export async function searchNeedsDrawer(page: Page) {
 }
 
 export async function fillOpportunitySearch(page: Page, value: string) {
-  const search = page.getByLabel("Search opportunities", { exact: true });
+  const search = page.getByLabel("Search deals", { exact: true });
   const opened = await searchNeedsDrawer(page);
   if (opened) await toggleWorklistFilters(page);
   await expect(search).toBeVisible();
@@ -60,21 +60,21 @@ export async function keyOpportunitySearch(page: Page, value: string) {
     );
   await keyType(
     page,
-    page.getByLabel("Search opportunities", { exact: true }),
+    page.getByLabel("Search deals", { exact: true }),
     value,
   );
   if (opened)
     await keyActivate(
       page,
       page.getByRole("button", {
-        name: "Close Filter opportunities",
+        name: "Close Filter deals",
         exact: true,
       }),
     );
 }
 export async function chooseWorklistSort(page: Page, value: string) {
   const form = page.getByRole("dialog", {
-    name: "Filter opportunities",
+    name: "Filter deals",
     exact: true,
   });
   if (await form.isVisible())

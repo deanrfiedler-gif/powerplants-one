@@ -1,12 +1,15 @@
 import { test, expect, type Page } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
+import { crmDiscovery } from "../helpers/crm";
+import { projectInput } from "../helpers/projects";
 const evidence = resolve("verification-evidence/department-navigation");
 const origin = () => new URL(test.info().project.use.baseURL!).origin;
 async function login(page: Page, profile = "coordinator") {
   expect((await page.request.post("/api/v1/local-session", { headers: { Origin: origin() }, data: { profile } })).ok()).toBe(true);
 }
 async function capture(page: Page, name: string) {
+  await expect(page.locator("main").getByText(/^Loading[ .…]/)).toHaveCount(0);
   await mkdir(evidence, { recursive: true });
   await page.screenshot({ path: `${evidence}/${name}.png` });
 }
@@ -19,21 +22,67 @@ const rails = {
   supply: ["My Work"],
   finance: ["My Work", "Finance handoffs", "Customer accounts"],
 };
+test("Sales Tasks uses the same saved action as My Work and completes that action once", async ({ page }) => {
+  await login(page);
+  const input = crmDiscovery();
+  const created = await page.request.post("/api/v1/crm/opportunities", {
+    headers: { Origin: origin() }, data: { ...input, title: "SYN Navigation task evidence",
+      initial_action: { ...input.initial_action, activity_type: "Task", summary: "SYN Navigation shared task" } },
+  });
+  expect(created.ok(), await created.text()).toBe(true);
+  await page.goto("/sales/opportunities/new");
+  await expect(page.getByRole("heading", { name: "Add deal", exact: true })).toBeVisible();
+  await expect(page.getByLabel("Deal title", { exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Add deal and action", exact: true })).toBeVisible();
+  await page.goto(`/sales/opportunities/${input.id}`);
+  await page.getByRole("button", { name: "Transfer deal owner", exact: true }).click();
+  await expect(page.getByRole("dialog").getByLabel("New deal owner", { exact: true })).toBeVisible();
+  await page.goto("/sales/tasks");
+  const row = page.locator(`[data-activity="${input.initial_action.id}"]`);
+  await expect(row).toBeVisible();
+  await capture(page, "sales-tasks-populated");
+  await page.goto("/work/actions");
+  await expect(row).toBeVisible();
+  await page.goto("/sales/pulse");
+  await expect(row).toBeVisible();
+  await capture(page, "sales-pulse-populated");
+  await page.goto("/sales/tasks");
+  await row.getByRole("button", { name: "Complete: SYN Navigation shared task", exact: true }).click();
+  await page.getByLabel("Notes", { exact: true }).fill("SYN Original action completed through Sales Tasks.");
+  await page.getByLabel("No further action now", { exact: true }).check();
+  await page.getByRole("button", { name: "Save outcome", exact: true }).click();
+  await expect(row).toHaveCount(0);
+  const detail = await page.request.get(`/api/v1/activities/${input.initial_action.id}`);
+  const saved = await detail.json();
+  expect(saved.items[0].id).toBe(input.initial_action.id);
+  expect(saved.items[0].status).toBe("Completed");
+  await page.goto("/sales/opportunities");
+  await expect(page.locator(`[data-opportunity-id="${input.id}"]`)).toBeVisible();
+  await capture(page, "sales-deals-populated");
+  await page.getByRole("button", { name: "List", exact: true }).click();
+  await expect(page.getByRole("region", { name: "Deals List — scroll for all columns", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Forecast", exact: true }).click();
+  await expect(page.getByRole("region", { name: "Deal forecast", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Board", exact: true }).click();
+  await expect(page.locator(".ppo-primary-nav [aria-current=page]")).toHaveAttribute("aria-label", "Deals");
+});
 test("all seven actual department rails retain canonical order and dimensions", async ({ page }) => {
   await login(page);
   const errors: string[] = []; page.on("pageerror", e => errors.push(e.message));
   for (const [department, labels] of Object.entries(rails)) {
-    await page.goto(`/work?department=${department}`);
+    if (department === "finance") await login(page, "finance");
+    await page.goto(department === "finance" ? "/finance/handoffs" : `/work?department=${department}`);
     const nav = page.locator(".ppo-primary-nav");
     await expect(nav.getByRole("link").first()).toBeVisible();
-    const actual = await nav.getByRole("link").evaluateAll(items => items.map(i => i.getAttribute("aria-label")));
-    // Coordinator's existing grants may withhold Finance rows. No synthetic grant is added.
-    expect(actual).toEqual(labels.filter(label => actual.includes(label)));
-    expect(actual.length).toBeGreaterThan(0);
+    const expected = labels;
+    await expect(nav.getByRole("link")).toHaveCount(expected.length);
+    await expect.poll(() => nav.getByRole("link").evaluateAll(items => items.map(i => i.getAttribute("aria-label")))).toEqual(expected);
     expect(await page.locator(".ppo-rail").count()).toBe(1);
     expect(await nav.locator("svg").first().evaluate(e => e.getBoundingClientRect().width)).toBe(25);
     expect(await page.locator(".ppo-rail").evaluate(e => e.getBoundingClientRect().width)).toBe(76);
     expect(await nav.getByRole("link").first().evaluate(e => e.getBoundingClientRect().height)).toBe(48);
+    const bounds = await nav.getByRole("link").first().boundingBox();
+    expect(Math.abs(bounds!.x + bounds!.width / 2 - 38)).toBeLessThanOrEqual(4); // scrollbar allowance
     await capture(page, `department-${department}-1440x900`);
   }
   expect(errors).toEqual([]);
@@ -65,10 +114,11 @@ test("Engineering and Service retain shared Contacts view through records, reloa
   await page.goto("/contacts?view=organisations&department=engineering");
   await expect(page.getByRole("navigation", { name: "Engineering shortcuts" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Organisations", exact: true })).toBeVisible();
-  const record = page.locator("main a[href^='/customers/']").filter({ hasNotText: "New" }).first();
+  await expect(page.getByRole("navigation", { name: "Customer context sections" })).toHaveCount(0);
+  const record = page.locator("main a[href^='/customers/']:not([href^='/customers/new'])").first();
   await expect(record).toBeVisible();
   const href = await record.getAttribute("href"); expect(href).toContain("department=engineering");
-  await record.click(); await page.reload();
+  await record.click(); await expect(page).toHaveURL(origin() + href!); await page.reload();
   await expect(page.getByRole("navigation", { name: "Engineering shortcuts" })).toBeVisible();
   const other = await context.newPage(); await other.goto(origin() + href!);
   await expect(other.getByRole("navigation", { name: "Engineering shortcuts" })).toBeVisible(); await other.close();
@@ -80,6 +130,46 @@ test("Engineering and Service retain shared Contacts view through records, reloa
   await page.getByLabel("Preview workspace", { exact: true }).selectOption("service");
   await expect(page).toHaveURL(/department=service/);
   await expect(page.getByRole("navigation", { name: "Service operations shortcuts" })).toBeVisible();
+});
+test("Finance chooser preserves the exact permitted account and its rail after reload", async ({ page }) => {
+  await login(page, "finance");
+  await page.goto("/finance/accounts");
+  const account = page.locator("main a[href*='/account?account_id=']").first();
+  await expect(account).toBeVisible();
+  const href = await account.getAttribute("href");
+  await account.click(); await expect(page).toHaveURL(origin() + href!);
+  await page.reload();
+  await expect(page.locator(".ppo-primary-nav [aria-current=page]")).toHaveAttribute("aria-label", "Customer accounts");
+  await capture(page, "finance-exact-account");
+});
+test("Programme chooser opens a supported schedule context and returns to the chooser", async ({ page }) => {
+  await login(page);
+  const input = projectInput();
+  const created = await page.request.post("/api/v1/projects", { headers: { Origin: origin() }, data: input });
+  expect(created.ok(), await created.text()).toBe(true);
+  await page.goto("/projects/programme");
+  const link = page.locator(`main a[href="/projects/${input.id}?view=programme"]`);
+  await expect(link).toBeVisible();
+  await link.click(); await expect(page).toHaveURL(new RegExp(input.id + "\\?view=programme$"));
+  await page.reload();
+  await expect(page.locator(".ppo-primary-nav [aria-current=page]")).toHaveAttribute("aria-label", "Programme");
+  await expect(page.getByRole("link", { name: "Programme — choose another project", exact: true })).toBeVisible();
+  const schedule = page.getByRole("region", { name: "Project schedule workspace", exact: true });
+  expect((await schedule.boundingBox())!.x).toBeLessThan(100);
+  await capture(page, "programme-existing-schedule");
+  await page.getByRole("link", { name: "Programme — choose another project", exact: true }).click();
+  await expect(page).toHaveURL(/\/projects\/programme$/);
+});
+test("shared URL context survives unavailable browser storage", async ({ page }) => {
+  await page.addInitScript(() => {
+    Storage.prototype.getItem = () => { throw new Error("Synthetic storage unavailable"); };
+    Storage.prototype.setItem = () => { throw new Error("Synthetic storage unavailable"); };
+  });
+  await login(page); await page.goto("/contacts?view=people&department=engineering");
+  await expect(page.getByRole("navigation", { name: "Engineering shortcuts" })).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole("navigation", { name: "Engineering shortcuts" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "People", exact: true })).toBeVisible();
 });
 test("specific Engineering, Projects and Fertigation destinations preserve their active parent", async ({ page }) => {
   await login(page);
@@ -119,6 +209,11 @@ test("phone and 200 percent equivalent reflow keep the established navigation", 
   await page.setViewportSize({ width: 720, height: 450 }); await page.goto("/contacts?view=people&department=sales");
   await expect(page.getByRole("heading", { name: "People", exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  const headerBounds = await page.locator(".ppo-shell-header").boundingBox();
+  for (const name of ["Open global search", "Page guide"]) {
+    const bounds = await page.getByRole("button", { name, exact: true }).boundingBox();
+    expect(bounds!.y + bounds!.height).toBeLessThanOrEqual(headerBounds!.y + headerBounds!.height);
+  }
   await capture(page, "reflow-200-percent-equivalent");
 });
 test("restricted and empty access omit links; server guards still refuse account access", async ({ page }) => {

@@ -136,7 +136,7 @@ test("hosted header, populated board, filtering and independent card targets", a
   await fillOpportunitySearch(page, "denied");
   await expect(page.locator(".crm-workspace > .business-error")).toBeVisible();
   await expect(
-    page.getByLabel("Search opportunities", { exact: true }),
+    page.getByLabel("Search deals", { exact: true }),
   ).toHaveCount(0);
   await expect(page.locator(".crm-card")).toHaveCount(0);
 });

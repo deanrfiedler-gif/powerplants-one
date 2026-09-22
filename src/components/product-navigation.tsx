@@ -148,6 +148,7 @@ function ProductNavigationView({
     const label = mobile
       ? item.id === "tickets"
         ? "Service"
+        : item.id === "engineering" ? "Engineering"
         : item.label
       : (root?.label ?? item.menuLabel ?? item.label);
     const contents = (
@@ -335,7 +336,11 @@ function ProductNavigationView({
             className="brand-logo"
           />
         </Link>
-        {wide && <nav className="ppo-primary-nav" aria-label={`${workspace.label} shortcuts`} ref={scroller} onScroll={() => setTooltip(null)}>
+        {wide && <nav className="ppo-primary-nav" aria-label={`${workspace.label} shortcuts`} ref={scroller} onScroll={() => {
+          const focused = document.activeElement;
+          if (focused instanceof HTMLElement && scroller.current?.contains(focused)) tip(focused, focused.getAttribute("aria-label") ?? "");
+          else setTooltip(null);
+        }}>
           {rail.map(item => <Link key={item.id} href={departmentHref(item.href!, workspaceId)}
             className="ppo-rail-item" aria-label={item.label} aria-current={activeId === item.id ? "page" : undefined}
             onMouseEnter={e => tip(e.currentTarget, item.label)} onMouseLeave={() => setTooltip(null)}
