@@ -25,6 +25,8 @@ Changes cover the SVG catalogue and compatibility delegates; navigation configur
 
 Raw local logs are retained in the isolated worktree's tmp/nav-proof: build.log, lint.log, typecheck.log, unit-tests.log, main-baseline-tests.log, focused-unit.log, database-tests.log, browser-tests.log, foundation.log and naming.log. Generated fixture HTML and the complete screenshot set remain in verification-evidence/department-navigation. These raw paths are not committed and contain no production fixtures.
 
+The [handover's PR #279 follow-up](../../../delivery/department-navigation-icons.md#evidence-and-next-step) records repaired component-router mocks, exact navigation assertion updates and the pagination-safe same-action proof, with additional local component, CRM, quality and actual-restart results. The issued r17 reference and original reviewed screenshot set are unchanged.
+
 Re-run after starting the compiled isolated app and waiting for readiness:
 
     npx playwright test --config playwright.navigation.config.ts

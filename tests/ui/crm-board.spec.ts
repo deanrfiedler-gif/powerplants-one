@@ -117,7 +117,7 @@ test("hosted header, populated board, filtering and independent card targets", a
   } else await expect(card).toHaveAttribute("draggable", "false");
   await fillOpportunitySearch(page, "Glasshouse");
   await expect(page.locator(".crm-worklist-stamp")).toContainText(
-    "1 opportunity",
+    "1 deal",
   );
   await page.getByRole("button", { name: "List", exact: true }).click();
   await expect(page.locator("tbody tr")).toHaveCount(1);
@@ -128,7 +128,7 @@ test("hosted header, populated board, filtering and independent card targets", a
   await toggleWorklistFilters(page);
   await fillOpportunitySearch(page, "no matching records");
   await expect(page.locator(".crm-worklist-stamp")).toContainText(
-    "0 opportunities",
+    "0 deals",
   );
   await expect(page.locator(".crm-board-scroll")).toBeVisible();
   await expect(page.locator(".crm-workspace > .empty-state")).toHaveCount(0);

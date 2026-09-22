@@ -9,8 +9,9 @@ test.describe.configure({ timeout: 120000 });
 test.use({ actionTimeout: 15000 });
 test.beforeAll(() => { process.loadEnvFile(".env.local"); });
 test.afterAll(closeDatabase);
+const origin = () => new URL(test.info().project.use.baseURL!).origin;
 async function call(page: Page, path: string, body?: unknown) {
-  const r = await page.request.fetch(`/api/v1/${path}`, { method: body === undefined ? "GET" : "POST", headers: body === undefined ? {} : { Origin: "http://127.0.0.1:3000", "Content-Type": "application/json" }, data: body });
+  const r = await page.request.fetch(`/api/v1/${path}`, { method: body === undefined ? "GET" : "POST", headers: body === undefined ? {} : { Origin: origin(), "Content-Type": "application/json" }, data: body });
   expect(r.ok(), await r.text()).toBe(true);
   return r.json();
 }
@@ -97,12 +98,12 @@ test("CRM URL clears sensitive criteria on identity lock and a copied link never
   const linked = page.url();
   const other = await context.browser()!.newContext();
   try {
-    const response = await other.request.post("http://127.0.0.1:3000/api/v1/local-session", { headers: { Origin: "http://127.0.0.1:3000" }, data: { profile: "second-company" } });
+    const response = await other.request.post(origin() + "/api/v1/local-session", { headers: { Origin: origin() }, data: { profile: "second-company" } });
     expect(response.ok()).toBe(true);
     const restricted = await other.newPage(); await restricted.goto(linked);
-    await expect(restricted.locator(".crm-worklist-stamp strong")).toHaveText("0 opportunities");
+    await expect(restricted.locator(".crm-worklist-stamp strong")).toHaveText("0 deals");
     await expect(restricted.locator(`[data-opportunity-id="${input.id}"]`)).toHaveCount(0);
-    const detail = await other.request.get(`http://127.0.0.1:3000/api/v1/crm/opportunities/${input.id}`);
+    const detail = await other.request.get(`${origin()}/api/v1/crm/opportunities/${input.id}`);
     expect(detail.status()).toBe(404);
   } finally { await other.close(); }
   await identity(page, "second-company");

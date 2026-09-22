@@ -17,6 +17,24 @@ async function capture(page: Page, name: string) {
   await mkdir(evidence, { recursive: true });
   await page.screenshot({ path: `${evidence}/${name}.png` });
 }
+async function revealSalesAction(page: Page, id: string, tasks: boolean) {
+  const section = page.getByRole("region", { name: tasks ? "Deal tasks" : "Deal priorities", exact: true });
+  const row = section.locator(`[data-activity="${id}"]`);
+  await expect(section.locator(".mw-rows")).toBeVisible();
+  // Other retained suites may already have filled several pages. Follow the
+  // real cursor controls instead of assuming this new undated action sorts first.
+  while (!(await row.count())) {
+    const first = await section.locator("[data-activity]").first().getAttribute("data-activity");
+    const next = section.getByRole("button", { name: "Next page", exact: true });
+    await expect(next).toBeEnabled();
+    await next.click();
+    await expect.poll(async () => {
+      const ids = await section.locator("[data-activity]").evaluateAll(rows => rows.map(row => row.getAttribute("data-activity")));
+      return ids[0] ?? first;
+    }).not.toBe(first);
+  }
+  await expect(row).toBeVisible();
+}
 const rails = {
   sales: ["Pulse", "Leads", "Deals", "Activities", "Tasks", "Sales Inbox", "Contacts"],
   estimate: ["My Work", "Estimation wizard", "Estimates", "Specialist configurations", "Quotations"],
@@ -29,9 +47,11 @@ const rails = {
 test("Sales Tasks uses the same saved action as My Work and completes that action once", async ({ page }) => {
   await login(page);
   const input = crmDiscovery();
+  const summary = `SYN Navigation shared task ${input.initial_action.id}`;
+  const title = `SYN Navigation task evidence ${input.id}`;
   const created = await page.request.post("/api/v1/crm/opportunities", {
-    headers: { Origin: origin() }, data: { ...input, title: "SYN Navigation task evidence",
-      initial_action: { ...input.initial_action, activity_type: "Task", summary: "SYN Navigation shared task" } },
+    headers: { Origin: origin() }, data: { ...input, title,
+      initial_action: { ...input.initial_action, activity_type: "Task", summary } },
   });
   expect(created.ok(), await created.text()).toBe(true);
   await page.goto("/sales/opportunities/new");
@@ -43,15 +63,16 @@ test("Sales Tasks uses the same saved action as My Work and completes that actio
   await expect(page.getByRole("dialog").getByLabel("New deal owner", { exact: true })).toBeVisible();
   await page.goto("/sales/tasks");
   const row = page.locator(`[data-activity="${input.initial_action.id}"]`);
-  await expect(row).toBeVisible();
+  await revealSalesAction(page, input.initial_action.id, true);
   await capture(page, "sales-tasks-populated");
-  await page.goto("/work/actions");
+  await page.goto(`/work/actions?q=${encodeURIComponent(summary)}`);
   await expect(row).toBeVisible();
   await page.goto("/sales/pulse");
-  await expect(row).toBeVisible();
+  await revealSalesAction(page, input.initial_action.id, false);
   await capture(page, "sales-pulse-populated");
   await page.goto("/sales/tasks");
-  await row.getByRole("button", { name: "Complete: SYN Navigation shared task", exact: true }).click();
+  await revealSalesAction(page, input.initial_action.id, true);
+  await row.getByRole("button", { name: `Complete: ${summary}`, exact: true }).click();
   await page.getByLabel("Notes", { exact: true }).fill("SYN Original action completed through Sales Tasks.");
   await page.getByLabel("No further action now", { exact: true }).check();
   await page.getByRole("button", { name: "Save outcome", exact: true }).click();
@@ -60,7 +81,7 @@ test("Sales Tasks uses the same saved action as My Work and completes that actio
   const saved = await detail.json();
   expect(saved.items[0].id).toBe(input.initial_action.id);
   expect(saved.items[0].status).toBe("Completed");
-  await page.goto("/sales/opportunities");
+  await page.goto(`/sales/opportunities?q=${encodeURIComponent(title)}`);
   await expect(page.locator(`[data-opportunity-id="${input.id}"]`)).toBeVisible();
   await capture(page, "sales-deals-populated");
   await page.getByRole("button", { name: "List", exact: true }).click();

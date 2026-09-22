@@ -89,6 +89,7 @@ window.fetch = async (input) => {
   else if (url.pathname.endsWith("/demo-role"))
     data = { current: "tester", available: ["tester", "pack-reviewer"] };
   else if (url.pathname.endsWith("/shell/context")) data = {
+    preference_scope: `${CRM.workspace}:${CRM.owner}`,
     navigation: destinations.filter(item => item.href).map(item => item.id),
       can_preview: true,
       display_name: "SYN Demo tester with a long display name",

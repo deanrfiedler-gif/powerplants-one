@@ -24,7 +24,7 @@ await build({
           resolveDir: process.cwd(),
           contents:
             args.path === "next/navigation"
-              ? 'export const usePathname=()=>"/projects/f1000000-0000-4000-8000-000000000001"; export const useRouter=()=>({push:()=>{},refresh:()=>{}});'
+              ? 'export const usePathname=()=>"/projects/f1000000-0000-4000-8000-000000000001"; export const useSearchParams=()=>new URLSearchParams(window.location.search); export const useRouter=()=>({push:()=>{},refresh:()=>{}});'
               : args.path === "next/link"
                 ? 'import React from "react"; export default function Link({href,children,...props}){return <a href={href} {...props}>{children}</a>}'
                 : 'import React from "react"; export default function Image({unoptimized,src,...props}){return <img src={src.replace("/brand/","brand/")} {...props}/>}',

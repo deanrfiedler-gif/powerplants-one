@@ -343,7 +343,7 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   await identity(page);
   await fillOpportunitySearch(page, `absent-${randomUUID()}`);
   await expect(page.locator(".crm-worklist-stamp strong")).toHaveText(
-    "0 opportunities",
+    "0 deals",
   );
   await expect(page.locator(".crm-stage-empty").first()).toBeVisible();
   await capture(page, info, "empty");

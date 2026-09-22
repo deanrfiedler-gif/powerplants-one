@@ -89,6 +89,7 @@ window.fetch = async (input, init) => {
     };
   else if (url.pathname.endsWith("/shell/context"))
     data = {
+      preference_scope: `10000000-0000-4000-8000-000000000001:${owner}`,
       navigation: destinations.filter(item => item.href).map(item => item.id),
       can_preview: true,
       display_name: "SYN Alex Morgan",

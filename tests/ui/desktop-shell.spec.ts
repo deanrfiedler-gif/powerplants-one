@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }, info) => {
   await page.goto(fixture + "?mode=local");
   await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeVisible();
 });
-test("approved shell fits laptop, desktop and compact viewports with a centred search-and-quick-add group, and no rail scroll", async ({ page }, info) => {
+test("department shell fits laptop, desktop and compact viewports with centred search and fixed rail endpoints", async ({ page }, info) => {
   for (const [width, height] of [[1366, 768], [1920, 1080], [800, 500], [960, 540]]) {
     await page.setViewportSize({ width, height });
     const geometry = await page.evaluate(() => {
@@ -33,7 +33,8 @@ test("approved shell fits laptop, desktop and compact viewports with a centred s
     expect(geometry.railWidth).toBe(76); expect(geometry.headerHeight).toBe(64); expect(geometry.logoCentre).toBe(38);
     expect(geometry.logoWidth).toBe(54); expect(geometry.logoY).toBe(32); expect(Math.abs(geometry.groupCentre - width / 2)).toBeLessThanOrEqual(2); expect(geometry.plusGap).toBeCloseTo(12, 0); expect(geometry.discWidth, "quick-add disc stays inside its button").toBeCloseTo(40, 0);
     expect(geometry.railFits && geometry.pageFits && geometry.controlsFit && geometry.noOverlap).toBe(true);
-    expect(geometry.moreBottom).toBeLessThanOrEqual(height); expect(geometry.icons).toEqual([]);
+    expect(geometry.moreBottom).toBeLessThanOrEqual(height); expect(geometry.icons).toEqual([25, 25, 25, 25, 25, 25, 25]);
+    expect(await page.locator(".ppo-primary-nav a").evaluateAll(links => links.map(link => link.getAttribute("aria-label")))).toEqual(["Pulse", "Leads", "Deals", "Activities", "Tasks", "Sales Inbox", "Contacts"]);
     expect(["1", "normal"]).toContain(geometry.zoom);
     await page.screenshot({ path: info.outputPath(`shell-${width}x${height}.png`) });
     await page.getByRole("button", { name: "More", exact: true }).click();
@@ -47,7 +48,7 @@ test("approved shell fits laptop, desktop and compact viewports with a centred s
     });
     expect(frames.after).toEqual(frames.before); expect(frames.bodyTop).toBeCloseTo(frames.before.head); expect(frames.bodyBottom).toBeCloseTo(frames.before.foot); expect(frames.scrolled).toBe(true);
     await page.getByRole("searchbox", { name: "Find a menu item" }).fill("Sales");
-    await expect(page.getByRole("navigation", { name: "More navigation" }).getByRole("link")).toHaveCount(2);
+    await expect(page.getByRole("navigation", { name: "More navigation" }).getByRole("link")).toHaveText(["Sales", "Pulse", "Leads", "Tasks", "Sales Inbox"]);
     await page.screenshot({ path: info.outputPath(`more-filter-${width}x${height}.png`) });
     await page.keyboard.press("Escape");
     await expect(page.getByRole("button", { name: "More", exact: true })).toBeFocused();
@@ -97,20 +98,26 @@ test("identity lock clears results and rejects a late response even if transport
   await expect(page.locator("#shell-search-list").getByRole("option")).toHaveCount(0);
 });
 
-test("page guide is contextual and planned preview preserves the working page", async ({ page }) => {
+test("page guide is contextual and Supply selection requests its available My Work landing", async ({ page }) => {
   await page.getByRole("button", { name: "Page guide", exact: true }).click();
   const guide = page.getByRole("dialog", { name: "Page guide", exact: true });
   await expect(guide.getByRole("heading", { name: "Deals", exact: true })).toBeVisible();
   await expect(guide.getByText("The detailed Deals guide is being prepared.", { exact: false })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("button", { name: "Page guide", exact: true })).toBeFocused();
+  // This component harness records router requests; the compiled browser suite
+  // separately follows this URL and proves the Supply rail and reload behaviour.
+  await page.evaluate(() => window.addEventListener("fixture-router-push", event => {
+    document.documentElement.dataset.requestedRoute = (event as CustomEvent<string>).detail;
+  }));
   await page.getByRole("button", { name: "Change identity", exact: true }).click();
   await page.getByLabel("Preview workspace", { exact: true }).selectOption("supply");
-  await expect(page.getByText("This workspace is planned; your current page stays open.", { exact: false })).toBeVisible();
+  await expect(page.locator("html")).toHaveAttribute("data-requested-route", "/work?department=supply");
   await expect(page.locator(".crm-card:visible")).toHaveCount(8);
   await page.reload();
   await page.getByRole("button", { name: "Change identity", exact: true }).click();
-  await expect(page.getByLabel("Preview workspace", { exact: true })).toHaveValue("supply");
+  // The harness remains on its owned Sales route, which overrides a remembered department.
+  await expect(page.getByLabel("Preview workspace", { exact: true })).toHaveValue("sales");
 });
 
 test("runtime shell matches the retained r17 reference typography, panel geometry and guide layout", async ({ page, context }, info) => {
@@ -199,12 +206,14 @@ test("runtime shell matches the retained r17 reference typography, panel geometr
       await actualPanel.locator(".ppo-panel-body").evaluate(element => { element.scrollTop = 0; });
     }
     if (kind === "more") {
-      await expect(actualPanel.locator(".ppo-menu-group").first().locator(".ppo-more-link")).toHaveCount(7);
+      // r17 geometry is retained; the navigation decision replaces planned links
+      // with ready, permitted destinations. Supply has no business landing yet.
+      await expect(actualPanel.locator(".ppo-menu-group").first().locator(".ppo-more-link")).toHaveText(["Sales", "Estimating & quotation", "Engineering", "Projects", "Service operations", "Finance"]);
       // Footer count includes Help; installation actions are separate controls.
-      await expect(actualPanel.locator(".ppo-menu-group .ppo-more-link")).toHaveCount(20);
+      await expect(actualPanel.locator(".ppo-menu-group .ppo-more-link")).toHaveCount(22);
       await expect(actualPanel.locator(".ppo-help-link")).toBeVisible();
-      await expect(actualPanel.locator("footer")).toContainText("21 destinations");
-      await expect(actualPanel.getByRole("link", { name: "Facilities & areas", exact: true })).toHaveAttribute("href", "/facilities");
+      await expect(actualPanel.locator("footer")).toContainText("23 destinations");
+      await expect(actualPanel.getByRole("link", { name: "Facilities & growing areas", exact: true })).toHaveAttribute("href", "/facilities?department=sales");
     }
     await page.screenshot({ path: info.outputPath(`r17-runtime-${kind}.png`) });
     await reference.screenshot({ path: info.outputPath(`r17-reference-${kind}.png`) });
