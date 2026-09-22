@@ -1,4 +1,4 @@
-import { AppointmentScreen } from "../../../../../components/planner-screens";
+import { AppointmentScreen } from "../../../../../scheduling";
 export default async function Page({
   params,
 }: {

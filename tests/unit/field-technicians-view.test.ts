@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import type { ScheduleAppointment } from "../../src/components/planner-screens";
+import type { ScheduleAppointment } from "../../src/scheduling";
 import {
   currentCrew,
   dayWindow,

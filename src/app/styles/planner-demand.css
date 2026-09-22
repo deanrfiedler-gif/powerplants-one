@@ -1,0 +1,37 @@
+/* PL-01 extends the existing planner and shared shell. Proposed panel composition. */
+.pl01-primary { background: var(--navy); color: var(--white); margin-top: 12px; }
+.pl01-panel {
+  position: fixed; inset: 0 0 0 auto; margin: 0; padding: 0;
+  width: min(680px, 100%); max-width: 100%; height: 100dvh; max-height: 100dvh;
+  border: 0; border-left: 1px solid #dce0e5; border-radius: 0;
+  background: #fff; color: #242a37; box-shadow: -16px 0 60px #242a3733;
+  overflow: hidden;
+}
+.pl01-panel[open] { display: flex; flex-direction: column; }
+.pl01-panel::backdrop { background: #242a3770; }
+.pl01-panel > header, .pl01-panel > footer { flex: none; padding: 16px 24px; background: #f5f6f8; }
+.pl01-panel > header { display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid #dce0e5; }
+.pl01-panel > header h2, .pl01-panel > header p, .pl01-panel > footer p { margin: 0; }
+.pl01-panel > footer { border-top: 1px solid #dce0e5; font-size: 13px; }
+.pl01-panel-body { min-height: 0; min-width: 0; overflow: auto; padding: 20px 24px; scroll-padding: 20px; overflow-wrap: anywhere; }
+.pl01-panel .pl01-scope { margin: 16px 0; }
+.pl01-panel .pl01-scope > summary { font-weight: 700; cursor: pointer; padding: 12px 0; }
+.pl01-panel .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pl01-panel fieldset { min-width: 0; border: 1px solid #dce0e5; border-radius: 8px; padding: 16px; }
+.pl01-panel .field { min-width: 0; }
+.pl01-panel input, .pl01-panel select, .pl01-panel textarea { width: 100%; min-width: 0; max-width: 100%; }
+.pl01-panel button:not(.secondary), .pl01-panel .button:not(.secondary), .pl01-continuation .button:not(.secondary) { background: #242a37; border-color: #242a37; color: white; }
+.pl01-panel .button-row, .pl01-continuation .button-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.pl01-panel .save-notice, .pl01-continuation .save-notice { padding: 16px; margin: 16px 0; border: 1px solid #dce0e5; border-radius: 8px; }
+.pl01-panel .wo-two-column, .pl01-panel .summary-grid { grid-template-columns: 1fr; }
+.pl01-panel button, .pl01-panel .button { white-space: normal; overflow-wrap: anywhere; }
+.pl01-continuation:empty { display: none; }
+@media (max-width: 700px) {
+  .pl01-panel { width: 100%; }
+  .pl01-panel > header, .pl01-panel > footer, .pl01-panel-body { padding: 12px; }
+  .pl01-panel > header { align-items: flex-start; }
+  .pl01-panel > header button { max-width: 45%; }
+  .pl01-panel .form-grid { grid-template-columns: minmax(0, 1fr); }
+  .pl01-panel fieldset { padding: 10px; }
+  .pl01-panel input, .pl01-panel select { font-size: 16px; }
+}

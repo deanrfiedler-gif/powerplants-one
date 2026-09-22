@@ -1,7 +1,12 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useIdentity } from "./business-session";
+import { useSearchParams } from "next/navigation";
+import { DemandPanel } from "./demand-panel.client";
+import { BookingContinuation, showAppointmentDates } from "./booking-continuation.client";
+import { BookingRecovery, useBookingCommand } from "./booking-recovery.client";
+import { appointmentHref, plannerContext, plannerHref, safePlannerReturn } from "../../navigation";
+import { useIdentity } from "../../../components/business-session";
 import {
   ErrorNotice,
   Field,
@@ -15,9 +20,9 @@ import {
   useResource,
   ValidationFields,
   type Envelope,
-} from "./business-ui";
-import { addDays, localDateTime, utcFromLocal } from "../scheduling/time";
-import type { CrewInput } from "../scheduling/validation";
+} from "../../../components/business-ui";
+import { addDays, localDateTime, utcFromLocal } from "../../time";
+import type { CrewInput } from "../../validation";
 export type Resource = {
   id: string;
   name: string;
@@ -267,10 +272,13 @@ function BookingForm({
   const resources = useResource<Envelope<Resource>>(
       `selectors/resources?site_id=${appointment.site_id}`,
     ),
-    command = useCommand(),
+    memoryCommand = useCommand(),
+    durableCommand = useBookingCommand(mode === "confirm"),
     savedRecord = useResource<Envelope<Appointment>>(
       `appointments/${appointment.id}`,
     );
+  const command = mode === "confirm" ? durableCommand : memoryCommand;
+  const target = appointmentHref(appointment.id, safePlannerReturn(useSearchParams().get("returnTo")));
   const reviewed = savedRecord.data?.items[0];
   const latest =
     reviewed && reviewed.version >= appointment.version
@@ -333,10 +341,9 @@ function BookingForm({
             };
       // The stable request UUID is held below for uncertain retries, like the original operation ID.
       if (mode === "request") fields.id = requestId.current;
-      const receipt = await command.send(
-        `appointments/${basis.id}/${mode === "request" ? "change-requests" : mode}`,
-        fields,
-      );
+      const receipt = mode === "confirm"
+        ? await durableCommand.send(`appointments/${basis.id}/confirm`, fields, target, "Confirmation", basis.id)
+        : await memoryCommand.send(`appointments/${basis.id}/${mode === "request" ? "change-requests" : mode}`, fields);
       if (receipt) onSaved();
     } catch (e) {
       setLocalError({
@@ -359,8 +366,9 @@ function BookingForm({
       </p>
       <VersionLine a={basis} />
       <ReadState {...resources} retry={resources.reload} />
-      <ErrorNotice error={localError ?? command.error} />
-      {command.saved && (
+      {mode === "confirm" && <BookingRecovery command={durableCommand} />}
+      <ErrorNotice error={localError ?? (mode === "confirm" ? null : command.error)} />
+      {command.saved && (mode !== "confirm" || durableCommand.accepted?.entry.label === "Confirmation") && (
         <p role="status" className="save-notice">
           {mode === "request"
             ? "Change request saved. Existing booking retained."
@@ -376,7 +384,7 @@ function BookingForm({
         Review saved appointment
       </button>
       <ReadState {...savedRecord} retry={savedRecord.reload} />
-      {latest.version !== basis.version && (
+      {(latest.version !== basis.version || latest.work_order_version !== basis.work_order_version) && (
         <div className="planner-warning">
           <p>
             The saved appointment is now v{latest.version}. Your proposal still
@@ -404,6 +412,7 @@ function BookingForm({
             type="button"
             disabled={
               retryPending ||
+              (mode === "confirm" && !!durableCommand.pending) ||
               command.busy ||
               savedRecord.loading ||
               !!savedRecord.error
@@ -420,7 +429,7 @@ function BookingForm({
       <ValidationFields error={localError ?? command.error}>
         <form onSubmit={save}>
           <fieldset
-            disabled={command.busy || resources.loading || !!resources.error}
+            disabled={command.busy || resources.loading || !!resources.error || (mode === "confirm" && (!!durableCommand.pending || !durableCommand.ready))}
           >
             <legend>Visit · {basis.site_timezone}</legend>
             {mode === "confirm" ? (
@@ -623,9 +632,10 @@ function ContactForm({ a, onSaved }: { a: Appointment; onSaved: () => void }) {
   const [outcome, setOutcome] = useState("Attempted"),
     [channel, setChannel] = useState("Simulated"),
     [notes, setNotes] = useState(""),
-    command = useCommand(),
+    command = useBookingCommand(),
     id = useRef(crypto.randomUUID()),
     occurred = useRef<string | null>(null);
+  const target = appointmentHref(a.id, safePlannerReturn(useSearchParams().get("returnTo")));
   async function save(e: React.FormEvent) {
     e.preventDefault();
     occurred.current ??= new Date().toISOString();
@@ -641,7 +651,7 @@ function ContactForm({ a, onSaved }: { a: Appointment; onSaved: () => void }) {
         a.status === "Cancelled"
           ? "Record manual cancellation contact"
           : "Record manual scheduling contact",
-    });
+    }, target, "Customer contact", id.current);
     if (result) {
       id.current = crypto.randomUUID();
       occurred.current = null;
@@ -658,14 +668,14 @@ function ContactForm({ a, onSaved }: { a: Appointment; onSaved: () => void }) {
           : "these exact visit dates"}
         ; it is separate from sending, delivery and pack acknowledgement.
       </p>
-      <ErrorNotice error={command.error} />
-      {command.saved && (
+      <BookingRecovery command={command} />
+      {command.saved && command.accepted?.entry.label === "Customer contact" && (
         <p role="status" className="save-notice">
           Contact outcome saved.
         </p>
       )}
       <form onSubmit={save}>
-        <fieldset disabled={command.busy || !a.primary_contact_id}>
+        <fieldset disabled={command.busy || !!command.pending || !command.ready || !a.primary_contact_id}>
           <legend>Current site contact</legend>
           <p>
             Contact ID:{" "}
@@ -850,11 +860,19 @@ function RequestDecision({
 }
 export function AppointmentScreen({ id }: { id: string }) {
   useIdentity();
+  const search = useSearchParams();
+  const returnTo = safePlannerReturn(search.get("returnTo"));
+  const target = appointmentHref(id, returnTo);
+  const recovery = useBookingCommand();
   const resource = useResource<Envelope<Appointment>>(`appointments/${id}`),
     a = resource.data?.items[0],
     [mode, setMode] = useState<
       "confirm" | "move" | "request" | "contact" | "cancel" | null
     >(null);
+  const reload = useRef(resource.reload);
+  useEffect(() => { reload.current = resource.reload; }, [resource.reload]);
+  const acceptedOperation = recovery.accepted?.receipt.operation_id;
+  useEffect(() => { if (acceptedOperation) reload.current(); }, [acceptedOperation]);
   return (
     <>
       <PageHeader
@@ -862,11 +880,12 @@ export function AppointmentScreen({ id }: { id: string }) {
         title="Appointment"
         description="Attendance, work authority and customer commitment remain distinct."
         action={
-          <Link className="button secondary" href="/schedule">
+          <Link className="button secondary" href={returnTo}>
             Back to planner
           </Link>
         }
       />
+      <BookingRecovery command={recovery} />
       <ReadState {...resource} retry={resource.reload} />
       {a && (
         <>
@@ -901,6 +920,7 @@ export function AppointmentScreen({ id }: { id: string }) {
               Showing the last successful read. Current availability is unknown.
             </p>
           )}
+          <p><Link href={showAppointmentDates(a, returnTo)}>Show its dates / View in planner</Link></p>
           <div className="planner-holds">
             <strong>
               {a.dispatch_hold
@@ -989,7 +1009,7 @@ export function AppointmentScreen({ id }: { id: string }) {
             />
           )}
           {mode === "contact" && (
-            <ContactForm a={a} onSaved={resource.reload} />
+            <ContactForm key={`${a.id}:${a.version}`} a={a} onSaved={resource.reload} />
           )}
           {mode === "cancel" && a.status !== "Cancelled" && (
             <CancelForm a={a} onSaved={resource.reload} />
@@ -1019,9 +1039,9 @@ export function AppointmentScreen({ id }: { id: string }) {
             </section>
             <section className="panel">
               <h2>Readiness and preparation</h2>
-              <p>
-                Preparation: <Status value={a.preparation_status} />
-              </p>
+              <p>Preparation: <Status value={a.preparation_status} /></p>
+              <p><Link href={`/service/work-orders/${a.work_order_id}?returnTo=${encodeURIComponent(target)}#visit-${a.id}`}>Review readiness on the work order</Link></p>
+              {["Unknown", "Blocked"].includes(a.preparation_status) && <p className="planner-warning">Readiness assessment does not change this preparation state. Review with the service owner; use controlled cancellation and a new proposal where permitted. Preparation cannot be corrected in place by this screen.</p>}
               {a.authorisation_blockers.map((b, i) => (
                 <p className="planner-warning" key={i}>
                   {b.message}
@@ -1210,13 +1230,17 @@ function AppointmentCard({
 }
 export function PlannerScreen() {
   useIdentity();
-  const [day, setDay] = useState("2031-09-22"),
-    [mode, setMode] = useState<"day" | "week">("week"),
-    [zone, setZone] = useState("Australia/Brisbane"),
-    [site, setSite] = useState(""),
-    [resourceFilter, setResourceFilter] = useState(""),
-    [status, setStatus] = useState(""),
-    [move, setMove] = useState<{
+  const search = useSearchParams();
+  const context = plannerContext(new URLSearchParams(search.toString()));
+  const { day, mode, zone, site, resource: resourceFilter, status } = context;
+  const returnTo = plannerHref(context);
+  const update = (patch: Partial<typeof context>) => window.history.replaceState(null, "", plannerHref({ ...context, ...patch }) + (search.get("returnTo") ? "&returnTo=" + encodeURIComponent(safePlannerReturn(search.get("returnTo"))) : ""));
+  const setDay = (day: string) => update({ day }), setMode = (mode: "day" | "week") => update({ mode });
+  const setZone = (zone: string) => update({ zone }), setSite = (site: string) => update({ site, resource: "" });
+  const setResourceFilter = (resource: string) => update({ resource }), setStatus = (status: string) => update({ status });
+  const [planId, setPlanId] = useState<string | null>(null);
+  const [demandLimit, setDemandLimit] = useState(50);
+  const [move, setMove] = useState<{
       a: ScheduleAppointment;
       start?: string;
       crew?: CrewInput;
@@ -1243,8 +1267,8 @@ export function PlannerScreen() {
   // Demand is authorised work with no appointment, so it is not bounded by the
   // displayed period. It reads separately from the schedule: a failed schedule
   // read must never render as "no unassigned demand".
-  const demand = useResource<Envelope<Demand>>(
-    "schedule/demand" + (site ? "?site_id=" + site : ""),
+  const demand = useResource<Envelope<Demand> & { limit: number }>(
+    `schedule/demand?limit=${demandLimit}` + (site ? "&site_id=" + site : ""),
   );
   const data = result.data,
     usable = !!data && !result.error && !result.loading;
@@ -1316,6 +1340,8 @@ export function PlannerScreen() {
           page, so the heading block is redundant on screen. It stays in the
           document for assistive technology and heading order. */}
       <h1 className="sr-only">Service planner</h1>
+      <BookingContinuation />
+      {search.get("returnTo") && <p><Link href={safePlannerReturn(search.get("returnTo"))}>Return to previous planner context</Link></p>}
       <section className="planner-toolbar" aria-label="Planner controls">
         <div className="planner-date">
           <button
@@ -1380,7 +1406,6 @@ export function PlannerScreen() {
           value={site}
           onChange={(v) => {
             setSite(v);
-            setResourceFilter("");
           }}
           empty="All permitted sites"
           options={sites.data?.items ?? []}
@@ -1686,11 +1711,12 @@ export function PlannerScreen() {
         </>
       )}
       <section className="panel proposal-section">
-        <h2>Unassigned demand</h2>
+        <h2 id="unassigned-demand-heading" tabIndex={-1}>Unassigned demand</h2>
         <p>
-          Authorised work orders with no appointment. Draft work is not shown:
-          it carries no authorised scope. This list is read-only — open a work
-          order to propose a visit.
+          Authorised work without a non-cancelled appointment. Work whose only
+          visits were cancelled can appear again. Draft work is excluded.
+          Demand is independent of calendar dates, resource and status filters;
+          the selected site and your permitted scope apply.
         </p>
         {demand.loading && <p role="status">Loading permitted records…</p>}
         {/* Demand is a secondary read on this page, so it reports its own
@@ -1728,31 +1754,33 @@ export function PlannerScreen() {
                     {w.customer_name} · Authorised scope r
                     {String(w.authorised_scope_revision).padStart(2, "0")}
                   </small>
-                  <p className="card-hold">No appointment · not scheduled</p>
+                  <p className="card-hold">Needs a visit proposal</p>
                   <small>
                     Work order v{w.version} · {w.site_timezone}
                   </small>
+                  <button className="pl01-primary" disabled={demand.loading} onClick={() => setPlanId(w.id)}>Plan visit</button>
                 </article>
               ))}
             </div>
             {!demand.data.items.length && (
               <p className="empty-state">
-                No unassigned demand
-                {site ? " for the selected site" : ""}. Every permitted
-                authorised work order already has an appointment.
+                No eligible unassigned work in the permitted result.
               </p>
             )}
             <p className="read-meta">
               {demand.data.items.length} shown ·{" "}
               {demand.data.completeness === "Complete"
                 ? "Complete permitted result"
-                : "Partial result · raise the limit to read the remainder"}{" "}
+                : `Partial result · bounded to ${demand.data.limit}; more eligible work may exist`}{" "}
               · Observed{" "}
               <Stamp value={demand.data.observed_at} timezone={zone} />
+              {" "}({zone})
             </p>
+            {demand.data.completeness === "Partial" && (demandLimit < 200 ? <button className="secondary" onClick={() => setDemandLimit(200)}>Show up to 200 permitted orders</button> : <p>Narrow by site to inspect this bounded result. There is no next page.</p>)}
           </>
         )}
       </section>
+      {planId && <DemandPanel key={planId} id={planId} returnTo={returnTo} onClose={() => setPlanId(null)} onSaved={() => { demand.reload(); result.reload(); }} />}
       {dragNotice && (
         <p role="status" className="planner-warning">
           {dragNotice}
