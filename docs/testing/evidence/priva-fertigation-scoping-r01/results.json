@@ -1,0 +1,214 @@
+{
+  "tool": "JSDOM 30.1.0",
+  "node": "v24.19.0",
+  "native_browser": "Not run — local sockets and cloud file navigation blocked by environment policy",
+  "checks": 51,
+  "passed": 51,
+  "failed": 0,
+  "results": [
+    {
+      "name": "Initial module renders nine linked sections without a global rail or search",
+      "status": "passed"
+    },
+    {
+      "name": "Standalone output contains no network scripts, styles or font requests",
+      "status": "passed"
+    },
+    {
+      "name": "Synthetic fixture validates and preserves explicit unknown crop targets",
+      "status": "passed"
+    },
+    {
+      "name": "3 ha, 11000 plants, 44 connected and 28 peak remain distinct",
+      "status": "passed"
+    },
+    {
+      "name": "Density fallback yields 8000 containers and actual count remains authoritative",
+      "status": "passed"
+    },
+    {
+      "name": "Four hub outlets do not multiply 4 L/h hub flow",
+      "status": "passed"
+    },
+    {
+      "name": "Shared emitter and explicit per-container method do not double-count",
+      "status": "passed"
+    },
+    {
+      "name": "Duplicate selected valve counted once and surfaced as blocker",
+      "status": "passed"
+    },
+    {
+      "name": "Unknown demand propagates to peak and cannot pass as zero",
+      "status": "passed"
+    },
+    {
+      "name": "Alternate 32 m3/h group exceeds a hypothetical 30 maximum",
+      "status": "passed"
+    },
+    {
+      "name": "Future minimum group demand is 2 m3/h and flags an entered 5 minimum",
+      "status": "passed"
+    },
+    {
+      "name": "A1 180-second event equals 800 L and 0.2 L per container",
+      "status": "passed"
+    },
+    {
+      "name": "Net-to-gross conversion requires confirmed drainage definition",
+      "status": "passed"
+    },
+    {
+      "name": "100 m of 50 mm ID holds 196.35 L with 70.69 s transit at 10 m3/h",
+      "status": "passed"
+    },
+    {
+      "name": "Injection demand 56 L/h exceeds hypothetical 50 L/h channel",
+      "status": "passed"
+    },
+    {
+      "name": "Spare I/O is calculated separately for typed banks and deficit retained",
+      "status": "passed"
+    },
+    {
+      "name": "Duplicate universal bank identifiers expose double counting",
+      "status": "passed"
+    },
+    {
+      "name": "Pump curve interpolation is bounded and unknown outside points",
+      "status": "passed"
+    },
+    {
+      "name": "Curve parse supports flow and head conversions without inference",
+      "status": "passed"
+    },
+    {
+      "name": "6 groups of 1 min preparation + 3 min delivery expose 21 min dry interval",
+      "status": "passed"
+    },
+    {
+      "name": "Storage mass balance: 10 + 3x2 - 5x2 = 6 m3",
+      "status": "passed"
+    },
+    {
+      "name": "Unknown crop flush destination withholds total crop volume",
+      "status": "passed"
+    },
+    {
+      "name": "No catalogue family can pass with all capacity evidence missing",
+      "status": "passed"
+    },
+    {
+      "name": "JSON rejects schema changes, broken references, duplicates and non-finite numbers",
+      "status": "passed"
+    },
+    {
+      "name": "All nine sections render from the same demo data",
+      "status": "passed"
+    },
+    {
+      "name": "Each capture schema opens a labelled inspector without runtime errors",
+      "status": "passed"
+    },
+    {
+      "name": "Editing a cohort updates linked flow and revision while preserving zero versus blank",
+      "status": "passed"
+    },
+    {
+      "name": "Unsaved changes require discard and cancelling keeps the inspector values",
+      "status": "passed"
+    },
+    {
+      "name": "Referenced block deletion is prevented",
+      "status": "passed"
+    },
+    {
+      "name": "CSV import validates the full candidate and leaves current project untouched until confirmed",
+      "status": "passed"
+    },
+    {
+      "name": "CSV quoted cells and embedded line breaks parse correctly",
+      "status": "passed"
+    },
+    {
+      "name": "Unsafe captured markup is escaped in the visible module",
+      "status": "passed"
+    },
+    {
+      "name": "Selecting and editing a unit profile retains an explicit provisional status",
+      "status": "passed"
+    },
+    {
+      "name": "Snapshot retains exact values and can compare / restore with invalidated review",
+      "status": "passed"
+    },
+    {
+      "name": "Scope report retains synthetic label, open findings, complete register and pump data",
+      "status": "passed"
+    },
+    {
+      "name": "Review acknowledgement cannot pass outstanding sizing blockers",
+      "status": "passed"
+    },
+    {
+      "name": "Blank project opens with unknown quantities and no invented agronomic defaults",
+      "status": "passed"
+    },
+    {
+      "name": "Browser recovery copy preserves schema, current revision and explicit null values",
+      "status": "passed"
+    },
+    {
+      "name": "Hostile imported identities, missing fields and malformed review metadata are rejected",
+      "status": "passed"
+    },
+    {
+      "name": "Invalid source EC cannot be represented as automatic EC reduction",
+      "status": "passed"
+    },
+    {
+      "name": "Pump-only backwash changes pump demand without increasing injection throughput",
+      "status": "passed"
+    },
+    {
+      "name": "An unknown other-consumer route prevents an unqualified sizing conclusion",
+      "status": "passed"
+    },
+    {
+      "name": "Excess service allocation is flagged while physical crop population stays distinct",
+      "status": "passed"
+    },
+    {
+      "name": "Future phase selection adds only the recorded future area and population",
+      "status": "passed"
+    },
+    {
+      "name": "Damaged snapshots cannot be restored through an unchecked nested project",
+      "status": "passed"
+    },
+    {
+      "name": "Resource budget prevents an oversized schedule from freezing the UI",
+      "status": "passed"
+    },
+    {
+      "name": "Storage shortage exposes negative inventory and protected-reserve failure",
+      "status": "passed"
+    },
+    {
+      "name": "A review becomes out of date and its reviewer and conditions are retained",
+      "status": "passed"
+    },
+    {
+      "name": "Storage failure retains edited scope in memory and gives no false saved status",
+      "status": "passed"
+    },
+    {
+      "name": "CSV formula content is escaped while legitimate negative numbers stay numeric",
+      "status": "passed"
+    },
+    {
+      "name": "No DOM execution errors occurred",
+      "status": "passed"
+    }
+  ]
+}
