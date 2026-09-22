@@ -50,7 +50,13 @@ if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Use disposable test database");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
 process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
-beforeEach(reset);
+beforeEach(async () => {
+  // Each case replaces the whole schema. Give each destructive fixture a fresh
+  // pool; repeated resets on one backend show increasing reset cost.
+  // Closing waits for checked-out clients and preserves the application SQL limit.
+  await closeDatabase();
+  await reset();
+});
 after(closeDatabase);
 const code =
   (...v: string[]) =>
