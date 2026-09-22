@@ -10,7 +10,7 @@ source_commit: 2189d0f7992448b11da8e0b99e1c0fd6402ba79d
 
 # PL-01 booking from unassigned demand — implementation handover
 
-**State:** implemented and locally verified on an isolated branch, offered as a draft PR. The Plan visit panel design review and owner acceptance remain separate. No deployment, migration, seed, permission capability or grant is added.
+**State:** implemented and locally verified on an isolated branch, offered as [draft PR #280](https://github.com/deanrfiedler-gif/powerplants-one/pull/280). The Plan visit panel design review and owner acceptance remain separate. No deployment, migration, seed, permission capability or grant is added.
 
 Authority: Dean's PL-01 instruction of 19 September 2026, recorded in [ADR-0039](../decisions/ADR-0039-pl01-booking-continuation.md). On 22 September Dean delegated the decision on this parked work and it was resumed as the next single repository write after #279 merged. Predecessor: [PPO-PL01-DEC r02](../decisions/pl01-unassigned-demand.md), whose "scheduling from demand" exclusion this lifts.
 
