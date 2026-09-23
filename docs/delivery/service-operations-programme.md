@@ -10,6 +10,8 @@ Dean instructed execution of the Service Operations page programme on 24 Septemb
 
 Refreshed `origin/main`: `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc`, identical to the audit checkpoint. Open PRs at restart: #299 (estimating import) and draft #300 (Projects reconciliation). Neither is a Service prerequisite. The main checkout contains unrelated Field Quality planning edits. The existing `tmp/service-operations` worktree on `feat/sv05-i4-source-print` contains the correct I4 continuation; its local implementation and tests were inspected before editing. Other worktrees remain untouched.
 
+A second fetch before I6 found main at `6c5e7c4fcbaf05d712a46989faf2cf7cabb8ba72`: #299 and #300 had merged. The inspected delta is estimating/Projects and shared documentation/register work, with no Service implementation. I6 is explicitly stacked on I4 (`899dd6e`); later integration must retain those unrelated records.
+
 ## Reconciled programme
 
 | Scope | Starting source state | Next bounded work |
@@ -29,7 +31,7 @@ ADR-0043 remains **Proposed, not accepted**. SV-01/SV-02 must retain New, NeedsI
 
 | Increment | Branch / dependency | Implementation | Verification / remaining |
 |---|---|---|---|
-| SV-05 I4 | `feat/sv05-i4-source-print`, based on starting main | Source-change review; reasoned successor refresh; exact saved preparation print choices; real API receipt shape; original-operation replay retained | [I4 handover](job-pack-i4-handover.md). Final verification in progress; I6/I7/I5 remain |
+| SV-05 I4 | `feat/sv05-i4-source-print`, based on starting main | Source-change review; reasoned successor refresh; exact saved preparation print choices; real API receipt shape; original-operation replay retained | [I4 handover](job-pack-i4-handover.md). Compiled conformance 17 passed / five deliberate skips; real main journeys passed on desktop/phone; remaining local test limits recorded. [PR #304](https://github.com/deanrfiedler-gif/powerplants-one/pull/304); I6/I7/I5 remain |
 
 I6 on `feat/sv05-i6-structured-sections` is a stack after I4. It adds the adopted pure formatter, permission-scoped projection, exact-text proof/fallback and structured saved sections. Six unit cases, three focused database cases, a pre-I6-created revision Check and 22 compiled browser cases pass; six browser skips avoid duplicate width coverage. [I6 handover](job-pack-i6-handover.md) records the environment and acceptance limits. I7 and I5 remain.
 

@@ -12931,7 +12931,8 @@
           "paragraphs": [
             "Use Readiness and change-impact review to work towards this outcome: Readiness is supported by current source evidence.",
             "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "One ready component does not make the entire project ready."
+            "One ready component does not make the entire project ready.",
+            "Source audit on 24 September: the r02 change record identifies a revised deliverable, but the checked-in r02 HTML contains r01 bytes. No verified r02 implementation reference is selected; native controls are unavailable."
           ],
           "steps": [],
           "rows": [],
@@ -13160,9 +13161,10 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/projects/PPO-Project-Delivery-Readiness-and-Change-Control-r01.html",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/delivery/projects-completion-programme.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Record the unavailable verified r02 source without substituting r01 or granting review.",
       "document_id": "PPO-GUIDE-PJ-07",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -13446,22 +13448,22 @@
       "title": "Staged acceptance and closeout",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Native workflow; guide walkthrough and family acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Prior executed component evidence: docs/testing/evidence/project-acceptance-r01/README.md. A0 source inspection only; no new native walkthrough.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Staged acceptance and closeout to work towards this outcome: Each stage has a reviewed disposition and owned residual work.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Open defects must not disappear when a stage is accepted."
+            "The native acceptance workspace records exact staged scope, readiness, outstanding work, training/manual handover and independent closeout decisions. Use the selected project and stage to review the applicable revision.",
+            "Source was inspected at ca006fb1. The linked PJ-09 record contains prior database, HTTP, browser and restart evidence. This article remains a draft; no new walkthrough, owner acceptance or deployment is implied.",
+            "Technical review, customer response, independent Service receiving and commercial disposition remain separate. Gantt progress and completed Activities do not accept a stage or close a Project."
           ],
           "steps": [],
           "rows": [],
@@ -13541,7 +13543,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
+            "Use the permitted controls for this view and exact selected stage. Source availability, current access and expected versions are checked by the server; general Project edit permission does not grant acceptance duties."
           ],
           "steps": [
             "Review stage-specific completion and exceptions",
@@ -13555,9 +13557,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Each stage has a reviewed disposition and owned residual work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Open defects must not disappear when a stage is accepted."
+            "Retain the exact stage/output revision and receiving decision. The whole-project closeout gate also considers unallocated scope, all stages, current source evidence and commercial disposition.",
+            "Remaining obligations keep their owner, evidence and independent responsibility acceptance. Closed history is preserved; later source change can require reassessment and an owned follow-up.",
+            "Local synthetic preparation, issue and receiving do not transmit a customer message, post to MYOB or upload to SharePoint."
           ],
           "steps": [],
           "rows": [],
@@ -13639,6 +13641,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Acceptance result uncertain",
+              "Use the existing original-operation recovery dialog and server-held intent. Do not make a second decision or recreate an issue. Access is rechecked before the original outcome is disclosed."
             ]
           ],
           "headers": [
@@ -13662,7 +13668,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "See ADR-0033, docs/delivery/pj09-staged-acceptance-handover.md and docs/testing/evidence/project-acceptance-r01/README.md for exact source, workflow, geometry exceptions and executed evidence."
           ],
           "steps": [],
           "rows": [],
@@ -13696,9 +13703,12 @@
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md",
+        "docs/testing/evidence/project-acceptance-r01/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile native PJ-09 presence and source-owned acceptance boundaries; retain Draft and separate historical evidence from current review.",
       "document_id": "PPO-GUIDE-PJ-09",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -13707,7 +13717,9 @@
       "section_aliases": {},
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -63114,6 +63126,14 @@
             [
               "Guide and design",
               "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+            ],
+            [
+              "Import a portable scope",
+              "Previews a native JSON, standalone r02 JSON or native valve CSV file against the selected saved Discovery source and shows the identity mapping before anything is created. Confirm creates a separate native draft; the original file is never changed."
+            ],
+            [
+              "Place held legacy fields",
+              "Appears when a standalone r02 file holds fields that have no native field. Each family of held fields is placed as a source note, or, for the project reference, customer and site only, left to the Discovery binding. Kept values are labelled unverified r02 source values; none becomes a native technical value."
             ]
           ],
           "headers": [
@@ -63143,7 +63163,8 @@
             "Search the related register for an existing record before creating another.",
             "Complete the information requested by the creation form; keep unknown values explicit.",
             "Review the entered context, save through the page action and inspect the resulting record/confirmation.",
-            "Then continue the wider workflow: Inspect calculated results and review evidence before preparing a controlled report"
+            "Then continue the wider workflow: Inspect calculated results and review evidence before preparing a controlled report",
+            "To import an r02 project, preview the file, place every held field family, tick that you have reviewed the placements, then confirm. Resolve the imported draft's findings from its Next actions list."
           ],
           "rows": [],
           "headers": []
@@ -63189,6 +63210,10 @@
             [
               "Planned / not available",
               "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+            ],
+            [
+              "Import held",
+              "The file contains fields with no native mapping. For a standalone r02 file, place each held field to continue; changing any placement clears the review tick. A held native export references attachments whose bytes a portable file does not carry; it cannot be placed here, and each listed reason names what is missing."
             ]
           ],
           "headers": [
@@ -63236,6 +63261,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Confirm import stays disabled",
+              "Every held field needs a placement and the review tick must be set after the last change. If the preview is stale, preview the file again; placements are not carried to a new preview."
             ]
           ],
           "headers": [
@@ -64905,22 +64934,22 @@
       "title": "Project acceptance & closeout",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native workflow; guide walkthrough and family acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Prior executed component evidence: docs/testing/evidence/project-acceptance-r01/README.md. A0 source inspection only; no new native walkthrough.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Project acceptance & closeout to work towards this outcome: Each stage has a reviewed disposition and owned residual work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "Open defects must not disappear when a stage is accepted."
+            "The native acceptance workspace records exact staged scope, readiness, outstanding work, training/manual handover and independent closeout decisions. Use the selected project and stage to review the applicable revision.",
+            "Source was inspected at ca006fb1. The linked PJ-09 record contains prior database, HTTP, browser and restart evidence. This article remains a draft; no new walkthrough, owner acceptance or deployment is implied.",
+            "Technical review, customer response, independent Service receiving and commercial disposition remain separate. Gantt progress and completed Activities do not accept a stage or close a Project."
           ],
           "steps": [],
           "rows": [],
@@ -65000,7 +65029,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Use the permitted controls for this view and exact selected stage. Source availability, current access and expected versions are checked by the server; general Project edit permission does not grant acceptance duties."
           ],
           "steps": [
             "Review stage-specific completion and exceptions",
@@ -65014,9 +65043,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Each stage has a reviewed disposition and owned residual work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Open defects must not disappear when a stage is accepted."
+            "Retain the exact stage/output revision and receiving decision. The whole-project closeout gate also considers unallocated scope, all stages, current source evidence and commercial disposition.",
+            "Remaining obligations keep their owner, evidence and independent responsibility acceptance. Closed history is preserved; later source change can require reassessment and an owned follow-up.",
+            "Local synthetic preparation, issue and receiving do not transmit a customer message, post to MYOB or upload to SharePoint."
           ],
           "steps": [],
           "rows": [],
@@ -65098,6 +65127,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Acceptance result uncertain",
+              "Use the existing original-operation recovery dialog and server-held intent. Do not make a second decision or recreate an issue. Access is rechecked before the original outcome is disclosed."
             ]
           ],
           "headers": [
@@ -65121,7 +65154,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "See ADR-0033, docs/delivery/pj09-staged-acceptance-handover.md and docs/testing/evidence/project-acceptance-r01/README.md for exact source, workflow, geometry exceptions and executed evidence."
           ],
           "steps": [],
           "rows": [],
@@ -65145,9 +65179,12 @@
       ],
       "source_paths": [
         "src/app/(business)/projects/acceptance/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md",
+        "docs/testing/evidence/project-acceptance-r01/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile native PJ-09 presence and source-owned acceptance boundaries; retain Draft and separate historical evidence from current review.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS-ACCEPTANCE",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -65156,7 +65193,9 @@
       "section_aliases": {},
       "workflow_basis": [
         "src/app/(business)/projects/acceptance/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -65167,23 +65206,22 @@
       "title": "Project acceptance & closeout · closeout",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native workflow; guide walkthrough and family acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Prior executed component evidence: docs/testing/evidence/project-acceptance-r01/README.md. A0 source inspection only; no new native walkthrough.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "This page focuses on project closeout within the registered workflow.",
-            "Use Project acceptance & closeout · closeout to work towards this outcome: Each stage has a reviewed disposition and owned residual work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "Open defects must not disappear when a stage is accepted."
+            "The native acceptance workspace records exact staged scope, readiness, outstanding work, training/manual handover and independent closeout decisions. Use the selected project and stage to review the applicable revision.",
+            "Source was inspected at ca006fb1. The linked PJ-09 record contains prior database, HTTP, browser and restart evidence. This article remains a draft; no new walkthrough, owner acceptance or deployment is implied.",
+            "Technical review, customer response, independent Service receiving and commercial disposition remain separate. Gantt progress and completed Activities do not accept a stage or close a Project."
           ],
           "steps": [],
           "rows": [],
@@ -65267,7 +65305,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Use the permitted controls for this view and exact selected stage. Source availability, current access and expected versions are checked by the server; general Project edit permission does not grant acceptance duties."
           ],
           "steps": [
             "Confirm the project/stage and the acceptance basis being closed.",
@@ -65282,9 +65320,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Each stage has a reviewed disposition and owned residual work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Open defects must not disappear when a stage is accepted."
+            "Retain the exact stage/output revision and receiving decision. The whole-project closeout gate also considers unallocated scope, all stages, current source evidence and commercial disposition.",
+            "Remaining obligations keep their owner, evidence and independent responsibility acceptance. Closed history is preserved; later source change can require reassessment and an owned follow-up.",
+            "Local synthetic preparation, issue and receiving do not transmit a customer message, post to MYOB or upload to SharePoint."
           ],
           "steps": [],
           "rows": [],
@@ -65366,6 +65404,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Acceptance result uncertain",
+              "Use the existing original-operation recovery dialog and server-held intent. Do not make a second decision or recreate an issue. Access is rechecked before the original outcome is disclosed."
             ]
           ],
           "headers": [
@@ -65389,7 +65431,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "See ADR-0033, docs/delivery/pj09-staged-acceptance-handover.md and docs/testing/evidence/project-acceptance-r01/README.md for exact source, workflow, geometry exceptions and executed evidence."
           ],
           "steps": [],
           "rows": [],
@@ -65413,9 +65456,12 @@
       ],
       "source_paths": [
         "src/app/(business)/projects/acceptance/closeout/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md",
+        "docs/testing/evidence/project-acceptance-r01/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile native PJ-09 presence and source-owned acceptance boundaries; retain Draft and separate historical evidence from current review.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS-ACCEPTANCE-CLOSEOUT",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -65424,7 +65470,9 @@
       "section_aliases": {},
       "workflow_basis": [
         "src/app/(business)/projects/acceptance/closeout/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -65435,23 +65483,22 @@
       "title": "Project acceptance & closeout · handover",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native workflow; guide walkthrough and family acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Prior executed component evidence: docs/testing/evidence/project-acceptance-r01/README.md. A0 source inspection only; no new native walkthrough.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "This page focuses on receiving a handover within the registered workflow.",
-            "Use Project acceptance & closeout · handover to work towards this outcome: Each stage has a reviewed disposition and owned residual work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "Open defects must not disappear when a stage is accepted."
+            "The native acceptance workspace records exact staged scope, readiness, outstanding work, training/manual handover and independent closeout decisions. Use the selected project and stage to review the applicable revision.",
+            "Source was inspected at ca006fb1. The linked PJ-09 record contains prior database, HTTP, browser and restart evidence. This article remains a draft; no new walkthrough, owner acceptance or deployment is implied.",
+            "Technical review, customer response, independent Service receiving and commercial disposition remain separate. Gantt progress and completed Activities do not accept a stage or close a Project."
           ],
           "steps": [],
           "rows": [],
@@ -65535,7 +65582,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Use the permitted controls for this view and exact selected stage. Source availability, current access and expected versions are checked by the server; general Project edit permission does not grant acceptance duties."
           ],
           "steps": [
             "Identify the exact package/revision and intended receiving workflow.",
@@ -65550,9 +65597,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Each stage has a reviewed disposition and owned residual work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Open defects must not disappear when a stage is accepted."
+            "Retain the exact stage/output revision and receiving decision. The whole-project closeout gate also considers unallocated scope, all stages, current source evidence and commercial disposition.",
+            "Remaining obligations keep their owner, evidence and independent responsibility acceptance. Closed history is preserved; later source change can require reassessment and an owned follow-up.",
+            "Local synthetic preparation, issue and receiving do not transmit a customer message, post to MYOB or upload to SharePoint."
           ],
           "steps": [],
           "rows": [],
@@ -65634,6 +65681,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Acceptance result uncertain",
+              "Use the existing original-operation recovery dialog and server-held intent. Do not make a second decision or recreate an issue. Access is rechecked before the original outcome is disclosed."
             ]
           ],
           "headers": [
@@ -65657,7 +65708,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "See ADR-0033, docs/delivery/pj09-staged-acceptance-handover.md and docs/testing/evidence/project-acceptance-r01/README.md for exact source, workflow, geometry exceptions and executed evidence."
           ],
           "steps": [],
           "rows": [],
@@ -65681,9 +65733,12 @@
       ],
       "source_paths": [
         "src/app/(business)/projects/acceptance/handover/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md",
+        "docs/testing/evidence/project-acceptance-r01/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile native PJ-09 presence and source-owned acceptance boundaries; retain Draft and separate historical evidence from current review.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS-ACCEPTANCE-HANDOVER",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -65692,7 +65747,9 @@
       "section_aliases": {},
       "workflow_basis": [
         "src/app/(business)/projects/acceptance/handover/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -65703,23 +65760,22 @@
       "title": "Project acceptance & closeout · history",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native workflow; guide walkthrough and family acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Prior executed component evidence: docs/testing/evidence/project-acceptance-r01/README.md. A0 source inspection only; no new native walkthrough.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "This page focuses on historical evidence within the registered workflow.",
-            "Use Project acceptance & closeout · history to work towards this outcome: Each stage has a reviewed disposition and owned residual work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "Open defects must not disappear when a stage is accepted."
+            "The native acceptance workspace records exact staged scope, readiness, outstanding work, training/manual handover and independent closeout decisions. Use the selected project and stage to review the applicable revision.",
+            "Source was inspected at ca006fb1. The linked PJ-09 record contains prior database, HTTP, browser and restart evidence. This article remains a draft; no new walkthrough, owner acceptance or deployment is implied.",
+            "Technical review, customer response, independent Service receiving and commercial disposition remain separate. Gantt progress and completed Activities do not accept a stage or close a Project."
           ],
           "steps": [],
           "rows": [],
@@ -65803,7 +65859,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Use the permitted controls for this view and exact selected stage. Source availability, current access and expected versions are checked by the server; general Project edit permission does not grant acceptance duties."
           ],
           "steps": [
             "Identify the event or saved revision relevant to your question.",
@@ -65818,9 +65874,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Each stage has a reviewed disposition and owned residual work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Open defects must not disappear when a stage is accepted."
+            "Retain the exact stage/output revision and receiving decision. The whole-project closeout gate also considers unallocated scope, all stages, current source evidence and commercial disposition.",
+            "Remaining obligations keep their owner, evidence and independent responsibility acceptance. Closed history is preserved; later source change can require reassessment and an owned follow-up.",
+            "Local synthetic preparation, issue and receiving do not transmit a customer message, post to MYOB or upload to SharePoint."
           ],
           "steps": [],
           "rows": [],
@@ -65902,6 +65958,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Acceptance result uncertain",
+              "Use the existing original-operation recovery dialog and server-held intent. Do not make a second decision or recreate an issue. Access is rechecked before the original outcome is disclosed."
             ]
           ],
           "headers": [
@@ -65925,7 +65985,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "See ADR-0033, docs/delivery/pj09-staged-acceptance-handover.md and docs/testing/evidence/project-acceptance-r01/README.md for exact source, workflow, geometry exceptions and executed evidence."
           ],
           "steps": [],
           "rows": [],
@@ -65949,9 +66010,12 @@
       ],
       "source_paths": [
         "src/app/(business)/projects/acceptance/history/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md",
+        "docs/testing/evidence/project-acceptance-r01/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile native PJ-09 presence and source-owned acceptance boundaries; retain Draft and separate historical evidence from current review.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS-ACCEPTANCE-HISTORY",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -65960,7 +66024,9 @@
       "section_aliases": {},
       "workflow_basis": [
         "src/app/(business)/projects/acceptance/history/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -65971,23 +66037,22 @@
       "title": "Project acceptance & closeout · outstanding",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native workflow; guide walkthrough and family acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Prior executed component evidence: docs/testing/evidence/project-acceptance-r01/README.md. A0 source inspection only; no new native walkthrough.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "This page focuses on outstanding work within the registered workflow.",
-            "Use Project acceptance & closeout · outstanding to work towards this outcome: Each stage has a reviewed disposition and owned residual work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "Open defects must not disappear when a stage is accepted."
+            "The native acceptance workspace records exact staged scope, readiness, outstanding work, training/manual handover and independent closeout decisions. Use the selected project and stage to review the applicable revision.",
+            "Source was inspected at ca006fb1. The linked PJ-09 record contains prior database, HTTP, browser and restart evidence. This article remains a draft; no new walkthrough, owner acceptance or deployment is implied.",
+            "Technical review, customer response, independent Service receiving and commercial disposition remain separate. Gantt progress and completed Activities do not accept a stage or close a Project."
           ],
           "steps": [],
           "rows": [],
@@ -66071,7 +66136,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Use the permitted controls for this view and exact selected stage. Source availability, current access and expected versions are checked by the server; general Project edit permission does not grant acceptance duties."
           ],
           "steps": [
             "Review open items for the selected project/stage.",
@@ -66086,9 +66151,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Each stage has a reviewed disposition and owned residual work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Open defects must not disappear when a stage is accepted."
+            "Retain the exact stage/output revision and receiving decision. The whole-project closeout gate also considers unallocated scope, all stages, current source evidence and commercial disposition.",
+            "Remaining obligations keep their owner, evidence and independent responsibility acceptance. Closed history is preserved; later source change can require reassessment and an owned follow-up.",
+            "Local synthetic preparation, issue and receiving do not transmit a customer message, post to MYOB or upload to SharePoint."
           ],
           "steps": [],
           "rows": [],
@@ -66170,6 +66235,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Acceptance result uncertain",
+              "Use the existing original-operation recovery dialog and server-held intent. Do not make a second decision or recreate an issue. Access is rechecked before the original outcome is disclosed."
             ]
           ],
           "headers": [
@@ -66193,7 +66262,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "See ADR-0033, docs/delivery/pj09-staged-acceptance-handover.md and docs/testing/evidence/project-acceptance-r01/README.md for exact source, workflow, geometry exceptions and executed evidence."
           ],
           "steps": [],
           "rows": [],
@@ -66217,9 +66287,12 @@
       ],
       "source_paths": [
         "src/app/(business)/projects/acceptance/outstanding/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md",
+        "docs/testing/evidence/project-acceptance-r01/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile native PJ-09 presence and source-owned acceptance boundaries; retain Draft and separate historical evidence from current review.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS-ACCEPTANCE-OUTSTANDING",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -66228,7 +66301,9 @@
       "section_aliases": {},
       "workflow_basis": [
         "src/app/(business)/projects/acceptance/outstanding/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -66239,23 +66314,22 @@
       "title": "Project acceptance & closeout · readiness",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native workflow; guide walkthrough and family acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Prior executed component evidence: docs/testing/evidence/project-acceptance-r01/README.md. A0 source inspection only; no new native walkthrough.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "This page focuses on acceptance readiness within the registered workflow.",
-            "Use Project acceptance & closeout · readiness to work towards this outcome: Each stage has a reviewed disposition and owned residual work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "Open defects must not disappear when a stage is accepted."
+            "The native acceptance workspace records exact staged scope, readiness, outstanding work, training/manual handover and independent closeout decisions. Use the selected project and stage to review the applicable revision.",
+            "Source was inspected at ca006fb1. The linked PJ-09 record contains prior database, HTTP, browser and restart evidence. This article remains a draft; no new walkthrough, owner acceptance or deployment is implied.",
+            "Technical review, customer response, independent Service receiving and commercial disposition remain separate. Gantt progress and completed Activities do not accept a stage or close a Project."
           ],
           "steps": [],
           "rows": [],
@@ -66339,7 +66413,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Use the permitted controls for this view and exact selected stage. Source availability, current access and expected versions are checked by the server; general Project edit permission does not grant acceptance duties."
           ],
           "steps": [
             "Identify the stage, required acceptance evidence and current source versions.",
@@ -66354,9 +66428,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Each stage has a reviewed disposition and owned residual work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Open defects must not disappear when a stage is accepted."
+            "Retain the exact stage/output revision and receiving decision. The whole-project closeout gate also considers unallocated scope, all stages, current source evidence and commercial disposition.",
+            "Remaining obligations keep their owner, evidence and independent responsibility acceptance. Closed history is preserved; later source change can require reassessment and an owned follow-up.",
+            "Local synthetic preparation, issue and receiving do not transmit a customer message, post to MYOB or upload to SharePoint."
           ],
           "steps": [],
           "rows": [],
@@ -66438,6 +66512,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Acceptance result uncertain",
+              "Use the existing original-operation recovery dialog and server-held intent. Do not make a second decision or recreate an issue. Access is rechecked before the original outcome is disclosed."
             ]
           ],
           "headers": [
@@ -66461,7 +66539,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "See ADR-0033, docs/delivery/pj09-staged-acceptance-handover.md and docs/testing/evidence/project-acceptance-r01/README.md for exact source, workflow, geometry exceptions and executed evidence."
           ],
           "steps": [],
           "rows": [],
@@ -66485,9 +66564,12 @@
       ],
       "source_paths": [
         "src/app/(business)/projects/acceptance/readiness/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md",
+        "docs/testing/evidence/project-acceptance-r01/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile native PJ-09 presence and source-owned acceptance boundaries; retain Draft and separate historical evidence from current review.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS-ACCEPTANCE-READINESS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -66496,7 +66578,9 @@
       "section_aliases": {},
       "workflow_basis": [
         "src/app/(business)/projects/acceptance/readiness/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -66507,22 +66591,22 @@
       "title": "Project acceptance & closeout · stages / [id]",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native workflow; guide walkthrough and family acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Prior executed component evidence: docs/testing/evidence/project-acceptance-r01/README.md. A0 source inspection only; no new native walkthrough.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Project acceptance & closeout · stages / [id] to work towards this outcome: Each stage has a reviewed disposition and owned residual work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "Open defects must not disappear when a stage is accepted."
+            "The native acceptance workspace records exact staged scope, readiness, outstanding work, training/manual handover and independent closeout decisions. Use the selected project and stage to review the applicable revision.",
+            "Source was inspected at ca006fb1. The linked PJ-09 record contains prior database, HTTP, browser and restart evidence. This article remains a draft; no new walkthrough, owner acceptance or deployment is implied.",
+            "Technical review, customer response, independent Service receiving and commercial disposition remain separate. Gantt progress and completed Activities do not accept a stage or close a Project."
           ],
           "steps": [],
           "rows": [],
@@ -66602,7 +66686,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Use the permitted controls for this view and exact selected stage. Source availability, current access and expected versions are checked by the server; general Project edit permission does not grant acceptance duties."
           ],
           "steps": [
             "Confirm the record reference and customer/site context in this record workspace.",
@@ -66617,9 +66701,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Each stage has a reviewed disposition and owned residual work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Open defects must not disappear when a stage is accepted."
+            "Retain the exact stage/output revision and receiving decision. The whole-project closeout gate also considers unallocated scope, all stages, current source evidence and commercial disposition.",
+            "Remaining obligations keep their owner, evidence and independent responsibility acceptance. Closed history is preserved; later source change can require reassessment and an owned follow-up.",
+            "Local synthetic preparation, issue and receiving do not transmit a customer message, post to MYOB or upload to SharePoint."
           ],
           "steps": [],
           "rows": [],
@@ -66701,6 +66785,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Acceptance result uncertain",
+              "Use the existing original-operation recovery dialog and server-held intent. Do not make a second decision or recreate an issue. Access is rechecked before the original outcome is disclosed."
             ]
           ],
           "headers": [
@@ -66724,7 +66812,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "See ADR-0033, docs/delivery/pj09-staged-acceptance-handover.md and docs/testing/evidence/project-acceptance-r01/README.md for exact source, workflow, geometry exceptions and executed evidence."
           ],
           "steps": [],
           "rows": [],
@@ -66748,9 +66837,12 @@
       ],
       "source_paths": [
         "src/app/(business)/projects/acceptance/stages/[id]/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md",
+        "docs/testing/evidence/project-acceptance-r01/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile native PJ-09 presence and source-owned acceptance boundaries; retain Draft and separate historical evidence from current review.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS-ACCEPTANCE-STAGES-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -66759,7 +66851,9 @@
       "section_aliases": {},
       "workflow_basis": [
         "src/app/(business)/projects/acceptance/stages/[id]/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null

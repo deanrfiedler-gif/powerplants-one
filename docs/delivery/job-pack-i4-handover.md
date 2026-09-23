@@ -19,7 +19,12 @@ No server command, migration, snapshot, digest, template, OUT-09 renderer or iss
 - Starting-code baseline: development register, lint, typecheck and pack-view unit tests passed. The full unit run had pre-existing failures involving Windows private-path/launcher assumptions; it is not reported as a pass.
 - An initial full pack database attempt on unchanged main used a shortened Windows temporary path and failed fixture storage/setup. The run was stopped after reproduction. The canonical path is used for subsequent verification; no store guard is relaxed.
 - A separate PostgreSQL instance holds only this task's `ppo_synthetic` and `ppo_synthetic_test`. The first fixture seeds exceeded the normal 10-second query timeout. A one-off setup command uses 60 seconds; the application timeout stays unchanged.
-- Final source checks and compiled browser/evidence results: **in progress**. Auth-dependent browser attempts against the failed initial seed are setup failures, not application proof.
+- Changed-file lint, typecheck, production build, studio register (273 entries, 119 routes, zero errors), foundation, naming and prototype checks passed.
+- Compiled I4 and existing r03 conformance: **17 passed, five deliberate duplicate mobile-project skips**. Retained [captures and inspection](../testing/evidence/job-pack-i4/README.md) identify the actual source and limits.
+- Real P06 browser suite: **five passed, one desktop long-output timeout**. Both desktop and phone main journeys include save-and-print and passed. An isolated retry without resetting encountered the booking left by the timeout, so it is not a clean regression result; clean-fixture rerun remains open.
+- HTTP negative access case passed. The full traversal requires `/tmp/ppo-p06-restart.json` from the database pipeline, absent locally; this second case is not a pass.
+- Focused unchanged-main database verification with the canonical store path still failed four cases on the normal 10-second statement timeout. No application timeout or store guard was weakened.
+- Auth-dependent browser attempts against the failed initial seed are setup failures, not application proof.
 - Desktop/phone owner review, physical devices, production readiness and deployment: **not claimed**.
 
 ## Remaining Job Pack work
