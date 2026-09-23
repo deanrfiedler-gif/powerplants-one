@@ -1,15 +1,13 @@
 "use client";
-import { useState } from "react";
 import {
-  api,
-  ErrorNotice,
-  Field,
-  ReadState,
-  ValidationFields,
-} from "./business-ui";
+  EqField as Field,
+  EqDateTimeField as LocalDateTimeField,
+} from "./equipment-controls";
+import { useState } from "react";
+import { api, ErrorNotice, ReadState, ValidationFields } from "./business-ui";
 import { Button } from "./ui/button";
 import { useCrmCommand, useCrmResource } from "./crm-state";
-import { LocalDateTimeField } from "./record-ui";
+
 import type { equipmentOptions } from "../equipment/options";
 import type {
   equipmentChanges,

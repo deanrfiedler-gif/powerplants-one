@@ -1,8 +1,9 @@
 "use client";
+import { EqField as Field } from "./equipment-controls";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { Field, PageHeader, ReadState, Status } from "./business-ui";
+import { PageHeader, ReadState, Status } from "./business-ui";
 import { Button, ButtonLink } from "./ui/button";
 import { useCrmResource } from "./crm-state";
 import { useContactView } from "./contact-workspace";
@@ -307,6 +308,8 @@ export function EquipmentWorkspace({ id }: { id: string }) {
     true,
   );
   const [view, setView] = useContactView([...equipmentViews], "overview");
+  const [visited, setVisited] = useState(() => new Set([view]));
+  const opened = (tab: string) => view === tab || visited.has(tab);
   return (
     <main id="ppo-equipment" className="eq-workspace">
       <EquipmentNav />
@@ -323,7 +326,10 @@ export function EquipmentWorkspace({ id }: { id: string }) {
             label="Equipment record"
             tabs={equipmentViews.map((id) => ({ id, label: tabLabels[id] }))}
             value={view}
-            onChange={setView}
+            onChange={(tab) => {
+              setVisited((previous) => new Set([...previous, view, tab]));
+              setView(tab);
+            }}
           />
           <RecordPanel id="eq" tab="overview" value={view}>
             <EquipmentContext row={r.data.context} />
@@ -375,7 +381,7 @@ export function EquipmentWorkspace({ id }: { id: string }) {
                 Warranty dates are retained facts and are never transferred
                 automatically by replacement.
               </p>
-              {r.data.can_edit && (
+              {r.data.can_edit && opened("overview") && (
                 <EquipmentIdentityForm data={r.data} saved={r.reload} />
               )}
             </section>
@@ -412,10 +418,12 @@ export function EquipmentWorkspace({ id }: { id: string }) {
             ) : (
               <p>No configuration is recorded.</p>
             )}
-            <EquipmentChangePanel id={id} configuration onSaved={r.reload} />
+            {opened("configuration") && (
+              <EquipmentChangePanel id={id} configuration onSaved={r.reload} />
+            )}
           </RecordPanel>
           <RecordPanel id="eq" tab="history" value={view}>
-            <EquipmentTimeline id={id} />
+            {opened("history") && <EquipmentTimeline id={id} />}
           </RecordPanel>
           <RecordPanel id="eq" tab="lifecycle" value={view}>
             <h2>Physical lifecycle</h2>
@@ -429,14 +437,16 @@ export function EquipmentWorkspace({ id }: { id: string }) {
                 </Link>
               </article>
             ))}
-            <EquipmentChangePanel
-              id={id}
-              configuration={false}
-              onSaved={r.reload}
-            />
+            {opened("lifecycle") && (
+              <EquipmentChangePanel
+                id={id}
+                configuration={false}
+                onSaved={r.reload}
+              />
+            )}
           </RecordPanel>
           <RecordPanel id="eq" tab="inspections" value={view}>
-            <EquipmentTimeline id={id} inspections />
+            {opened("inspections") && <EquipmentTimeline id={id} inspections />}
             <h2>Inspection context</h2>
             <p>
               Confirm the physical label and review Site readiness before

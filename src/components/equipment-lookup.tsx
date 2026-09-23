@@ -1,7 +1,8 @@
 "use client";
+import { EqField as Field } from "./equipment-controls";
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Field, PageHeader, ReadState } from "./business-ui";
+import { PageHeader, ReadState } from "./business-ui";
 import { Button, ButtonLink } from "./ui/button";
 import { EquipmentContext, EquipmentNav } from "./equipment-workspace";
 import { useCrmResource } from "./crm-state";

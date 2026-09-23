@@ -182,6 +182,35 @@ test("EQ-03 immutable successor, exact original receipt, changed-payload refusal
     code("RecordUnavailable"),
   );
 });
+test("EQ-03 a gap after expired configuration history preserves revision ordering", async () => {
+  const { actor, id } = await asset({ configuration: null });
+  const historical = randomUUID();
+  await database().query(
+    "INSERT INTO ppo.asset_configurations(id,workspace_id,company_id,asset_id,revision,description,valid_from,valid_to,created_by,updated_by) VALUES($1,$2,$3,$4,7,'SYN expired retained configuration','2025-01-01','2025-12-31',$5,$5)",
+    [historical, CRM.workspace, CRM.company, id, actor.actor_id],
+  );
+  const original = await rows(
+    "SELECT * FROM ppo.asset_configurations WHERE id=$1",
+    [historical],
+  );
+  assert.equal(await currentConfiguration(database(), CRM.workspace, id), null);
+  const next = await proposal(id);
+  await reviewEquipmentChange(actor, next.change, {
+    ...base(),
+    expected_version: 1,
+    decision: "Apply",
+  });
+  assert.equal(
+    (await currentConfiguration(database(), CRM.workspace, id))?.revision,
+    8,
+  );
+  assert.deepEqual(
+    await rows("SELECT * FROM ppo.asset_configurations WHERE id=$1", [
+      historical,
+    ]),
+    original,
+  );
+});
 test("EQ-04 exact relocation guard, old location retained and moved lookup", async () => {
   const { actor, id } = await asset();
   const destination = "70000000-0000-4000-8000-000000000002";
@@ -475,6 +504,16 @@ test("EQ-09 canonical calibration renewal and retrospective withdrawal retain or
     certificate_revision: "r02",
   };
   await recordCalibration(actor, renewal);
+  await assert.rejects(
+    recordCalibration(actor, {
+      ...renewal,
+      ...base(),
+      id: randomUUID(),
+      instrument_id: randomUUID(),
+      calibration_version: "r03",
+    }),
+    code("VersionConflict"),
+  );
   assert.deepEqual(
     await rows("SELECT * FROM ppo.inspection_instruments WHERE id=$1", [id]),
     before,

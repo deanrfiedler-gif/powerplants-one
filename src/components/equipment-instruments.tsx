@@ -1,7 +1,8 @@
 "use client";
+import { EqField as Field } from "./equipment-controls";
 import Link from "next/link";
 import { useState } from "react";
-import { Field, PageHeader, ReadState, ValidationFields } from "./business-ui";
+import { PageHeader, ReadState, ValidationFields } from "./business-ui";
 import { Button } from "./ui/button";
 import { useCrmCommand, useCrmResource } from "./crm-state";
 import { EquipmentNav } from "./equipment-workspace";

@@ -1,11 +1,15 @@
 "use client";
+import {
+  EqField as Field,
+  EqDateTimeField as LocalDateTimeField,
+} from "./equipment-controls";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import { Field, PageHeader, ReadState, ValidationFields } from "./business-ui";
+import { PageHeader, ReadState, ValidationFields } from "./business-ui";
 import { useCrmCommand, useCrmResource } from "./crm-state";
 import { Button } from "./ui/button";
-import { LocalDateTimeField } from "./record-ui";
+
 import { EquipmentNav } from "./equipment-workspace";
 import { EqCommandState, EqSelect, type EqOptions } from "./equipment-forms";
 import type {

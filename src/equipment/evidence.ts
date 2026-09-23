@@ -889,6 +889,18 @@ export async function recordCalibration(p: Principal, input: unknown) {
           if (cmd.expected_version == null)
             invalid("expected_version", "Retain the predecessor version.");
           checkVersion(old.version, cmd.expected_version!);
+          const successor = (
+            await c.query(
+              "SELECT id FROM ppo.inspection_instruments WHERE workspace_id=$1 AND predecessor_id=$2",
+              [p.workspace_id, cmd.predecessor_id],
+            )
+          ).rows[0];
+          if (successor)
+            throw new AppError(
+              409,
+              "VersionConflict",
+              "This calibration already has retained successor evidence. Refresh and review that successor before renewing it.",
+            );
         }
         const entries = Object.entries({
           id: cmd.instrument_id,

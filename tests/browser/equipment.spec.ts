@@ -130,20 +130,38 @@ test("EQ03 native proposal, uncertain response recovery and exact successor surv
 }) => {
   const id = await fixture(page, baseURL!);
   await page.goto(`/equipment/${id}?view=configuration`);
-  await page
+  const form = page.getByRole("tabpanel", {
+    name: "Configuration",
+    exact: true,
+  });
+  await form
     .getByLabel("Configuration description", { exact: true })
     .fill("SYN H1 / F2\nSYN logical programme Z2; Facility unchanged");
-  await page
+  await form
     .getByLabel("Actual effective date and time")
     .fill("2026-09-20T10:00");
-  await page
+  await form
     .getByLabel("Source / evidence reference")
     .fill("SYN supplier change notice");
-  await page.getByLabel("Exact source revision").fill("r02");
+  await form.getByLabel("Exact source revision").fill("r02");
   await page
+    .getByRole("tab", { name: "Movement & retirement", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Propose a physical lifecycle change" }),
+  ).toBeVisible();
+  await page.getByRole("tab", { name: "Configuration", exact: true }).click();
+  await expect(form.getByLabel("Exact source revision")).toHaveValue("r02");
+  const fieldIds = await page
+    .locator(
+      ".eq-workspace input[id], .eq-workspace textarea[id], .eq-workspace select[id]",
+    )
+    .evaluateAll((elements) => elements.map((el) => el.id));
+  expect(new Set(fieldIds).size).toBe(fieldIds.length);
+  await form
     .getByLabel("Reason for change", { exact: true })
     .fill("SYN source-backed successor");
-  await page
+  await form
     .getByLabel("Reviewed consequences")
     .fill(
       "SYN prior Service and Inspection bases retained; warranty and installed location unchanged",
@@ -172,7 +190,7 @@ test("EQ03 native proposal, uncertain response recovery and exact successor surv
   await expect(
     page.getByRole("heading", { name: "Configuration successor · Proposed" }),
   ).toHaveCount(1);
-  await page
+  await form
     .getByLabel("Review reason", { exact: true })
     .fill("SYN compared exact original and successor");
   await page.getByRole("button", { name: "Apply reviewed change" }).click();
@@ -357,7 +375,7 @@ test("EQ retained reference and shared controls are independently inspected; key
     )
     .toBe(true);
   const style = await page
-    .locator(".ppo-button")
+    .locator(".eq-workspace .ppo-button:visible")
     .first()
     .evaluate((el) => ({
       font: getComputedStyle(el).fontFamily,

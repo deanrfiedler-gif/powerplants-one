@@ -82,7 +82,7 @@ export async function equipmentTimeline(p: Principal, id: string) {
     for (const h of history.items)
       items.push({
         ...base("Technical history", h.id),
-        reference: h.source_id ?? h.id,
+        reference: `${h.source_system ?? "Native"} · ${h.source_id ?? h.id}`,
         revision: `v${h.version}`,
         title: h.kind,
         summary: h.summary,

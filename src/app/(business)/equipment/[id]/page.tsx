@@ -5,5 +5,10 @@ export default async function Page({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  return <Suspense fallback={<p>Loading equipment…</p>}><EquipmentWorkspace id={(await params).id} /></Suspense>;
+  const { id } = await params;
+  return (
+    <Suspense fallback={<p>Loading equipment…</p>}>
+      <EquipmentWorkspace key={id} id={id} />
+    </Suspense>
+  );
 }

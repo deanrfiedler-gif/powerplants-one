@@ -217,6 +217,7 @@ export async function prepareJourney(page: Page, info: TestInfo) {
   await expect(oem).toBeVisible();
   await capture(page, info, "journey-existing-site-and-owned-OEM-follow-up");
   await page.goto(`/equipment/${id("80")}`);
+  await page.getByRole("tab", { name: "Documents & service", exact: true }).click();
   await expect(
     page.getByText(
       "SYN cable replacement did not resolve intermittent reading; cause suspected.",
@@ -227,7 +228,7 @@ export async function prepareJourney(page: Page, info: TestInfo) {
     page.getByText("SYN Former Technician", { exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByText("SyntheticLegacy · 000Hist-Ab.01", { exact: true }),
+    page.getByText(/SyntheticLegacy · 000Hist-Ab\.01/),
   ).toBeVisible();
   await capture(page, info, "journey-original-attributed-failed-fix");
   await page.goto("/service/tickets/new");

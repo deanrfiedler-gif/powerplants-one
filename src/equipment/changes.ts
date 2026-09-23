@@ -453,6 +453,12 @@ async function applyChange(c: PoolClient, p: Principal, row: EquipmentChange) {
   if (row.kind === "Configuration") {
     const predecessor = await currentConfiguration(c, p.workspace_id, a.id),
       next = randomUUID();
+    const revision = (
+      await c.query<{ next_revision: number }>(
+        "SELECT coalesce(max(revision),0)+1 AS next_revision FROM ppo.asset_configurations WHERE workspace_id=$1 AND asset_id=$2",
+        [p.workspace_id, a.id],
+      )
+    ).rows[0].next_revision;
     if (predecessor && row.effective_at <= predecessor.valid_from)
       invalid(
         "effective_at",
@@ -470,7 +476,7 @@ async function applyChange(c: PoolClient, p: Principal, row: EquipmentChange) {
         p.workspace_id,
         a.company_id,
         a.id,
-        (predecessor?.revision ?? 0) + 1,
+        revision,
         proposal.configuration,
         row.effective_at,
         p.actor_id,

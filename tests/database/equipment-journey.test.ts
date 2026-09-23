@@ -124,7 +124,20 @@ test("F01 -> F08 -> F02 exact Equipment context, owned defect/retest and retaine
           source: "SYN signed induction",
         },
       ],
-      windows: [],
+      windows: [
+        {
+          id: randomUUID(),
+          facility_id: facility,
+          activity: "Inspection",
+          from_date: "2026-01-01",
+          to_date: "2026-12-31",
+          season_from: "01-01",
+          season_to: "12-31",
+          start_time: "08:00",
+          end_time: "17:00",
+          source: "SYN exact pump shed access window",
+        },
+      ],
     },
   });
   const readyAction = async (
@@ -262,9 +275,9 @@ test("F01 -> F08 -> F02 exact Equipment context, owned defect/retest and retaine
       id: randomUUID(),
       company_id: CRM.company,
       instrument_id: instrument,
-      reference: "SYN-JOURNEY-GAUGE",
+      reference: `SYN-JOURNEY-${asset}`,
       description: "SYN pressure gauge",
-      calibration_reference: "SYN-JOURNEY-CERT",
+      calibration_reference: `SYN-CERT-${asset}`,
       calibration_version: "r01",
       valid_from: "2026-01-01",
       valid_to: "2026-09-10",
@@ -337,6 +350,9 @@ test("F01 -> F08 -> F02 exact Equipment context, owned defect/retest and retaine
     "2026-09-08T00:30:00Z",
     [instrument],
   );
+  const submittedVersion = (await detail(performer)).attempts.find(
+    (a) => a.id === first,
+  )!.version;
   const original = await submit(first);
   assert.deepEqual(
     (
@@ -346,7 +362,7 @@ test("F01 -> F08 -> F02 exact Equipment context, owned defect/retest and retaine
         action: "submit",
         record_id: record,
         attempt_id: first,
-        expected_version: 2,
+        expected_version: submittedVersion,
         owner_id: engineer.actor_id,
         due: "2026-10-01",
         severity: "Major",
@@ -438,7 +454,9 @@ test("F01 -> F08 -> F02 exact Equipment context, owned defect/retest and retaine
     action: "save",
     record_id: record,
     attempt_id: invalid,
-    expected_version: 2,
+    expected_version: (await detail(performer)).attempts.find(
+      (a) => a.id === invalid,
+    )!.version,
     configuration_reference: "SYN H1 / F1",
     occurred_at: "2026-09-12T00:30:00Z",
     timezone: "Australia/Brisbane",
@@ -453,7 +471,17 @@ test("F01 -> F08 -> F02 exact Equipment context, owned defect/retest and retaine
     ],
     instrument_ids: [renewed],
   });
-  await assert.rejects(submit(invalid));
+  await submit(invalid);
+  const unsupportedUnit = await rows(
+    "SELECT evaluation,evaluation_reason FROM ppo.inspection_results WHERE attempt_id=$1 AND check_key='pressure'",
+    [invalid],
+  );
+  assert.equal(unsupportedUnit[0].evaluation, "UnableToAssess");
+  assert.match(unsupportedUnit[0].evaluation_reason, /no approved conversion/);
+  assert.equal(
+    (await detail()).defects.find((d) => d.check_key === "guard")!.state,
+    "Open",
+  );
   await recordCalibration(p, {
     ...base(),
     id: randomUUID(),
