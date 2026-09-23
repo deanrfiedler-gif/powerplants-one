@@ -1198,7 +1198,7 @@ The compiled browser suite (required context "Desktop and mobile browser suite a
 
 ### 12.2 Known local limits (owner's Windows machine; plan §10)
 
-- ~~`ppo_synthetic_test` is absent and the local role cannot create it, so CI is the first run of the database suites.~~ **Superseded 23 September 2026:** a durable cluster outside every worktree now holds `ppo_synthetic` and `ppo_synthetic_test`, and `npm run test:db` runs locally. Compare any local database failure with CI’s `P01–P11 database proof` on the same commit before attributing it: the disposable cluster used during I3 produced five failures CI did not reproduce.
+- ~~`ppo_synthetic_test` is absent and the local role cannot create it, so CI is the first run of the database suites.~~ **Superseded 23 September 2026:** a durable cluster outside every worktree now holds `ppo_synthetic` and `ppo_synthetic_test`, so `npm run test:db` starts and executes locally, which it could not before. A clean full-suite local baseline is not yet established, and single-file reruns against an already-exercised database are not a valid way to run these suites. Compare any local database failure with CI’s `P01–P11 database proof` on the same commit before attributing it: the disposable cluster used during I3 produced five failures CI did not reproduce.
 - Four unit tests fail identically on unmodified `main`: `document-store` (2), `recovery` (1) and `warm-routes` (1).
 - Exclude the git-ignored `tmp/` from type checking.
 - The dev database retains crew bookings; use free dates.
