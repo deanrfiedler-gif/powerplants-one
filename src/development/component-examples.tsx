@@ -27,6 +27,7 @@ import { type ExampleId } from "./component-model";
 import {
   appointmentFixture,
   areaFixture,
+  customerRecordTabsFixture,
   fixtureDate,
   fixtureId,
   fixtureTime,
@@ -473,9 +474,9 @@ function AreasExample({ state }: { state: string }) {
     </section>
   );
 }
-function NavigationExample({ menu = false }: { menu?: boolean }) {
+function NavigationExample({ menu = false, state = "default" }: { menu?: boolean; state?: string }) {
   const [value, setValue] = useState("overview");
-  const options = [
+  const options = state === "cs-customer" ? customerRecordTabsFixture : [
     { id: "overview", label: "Overview" },
     { id: "details", label: "Details" },
     { id: "history", label: "History" },
@@ -664,7 +665,7 @@ export function ComponentExample({
     case "lookup":
       return <LookupExample state={state} />;
     case "tabs":
-      return <NavigationExample />;
+      return <NavigationExample state={state} />;
     case "menu":
       return <NavigationExample menu />;
     case "dialog":

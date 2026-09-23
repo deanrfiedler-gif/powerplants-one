@@ -340,7 +340,7 @@ export function ShellControls({
         </button>
       </div>
       <div className="ppo-header-utilities" data-shell-header-control>
-        {development && <button className="ppo-top-action ppo-studio-link" aria-label="Design and build workspace" title="Design & build · local development" onClick={()=>navigateWithReview(()=>router.push('/development/page-register'))}><ProductIcon name="engineering" /></button>}
+        {development && <button className="ppo-top-action ppo-studio-link" aria-label="Design and build workspace" title="Design & Development workspace" onClick={()=>navigateWithReview(()=>router.push('/development/page-register'))}><ProductIcon name="engineering" /></button>}
         {!wide && (
           <button
             id="shell-mobile-search"

@@ -152,6 +152,13 @@ test("CS08 draft integrity, source permissions, exact retries and stale versions
   const { p, id } = await create("Survey"),
     r = await readCs(p, "Survey", id),
     content = survey();
+  await assert.rejects(
+    action(p, "Survey", id, "submit"),
+    (error: unknown) =>
+      (error as { field_errors?: { field: string }[] }).field_errors?.some(
+        (e) => e.field === "purpose",
+      ) === true,
+  );
   const command = {
     ...base(),
     expected_version: r.record.version,

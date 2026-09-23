@@ -10,14 +10,17 @@ export const repositoryLink = (path: string, ref: string, history = false) =>
 
 export async function fileHistories(root: string, paths: string[]) {
   const unique = [...new Set(paths)];
+  // Docker intentionally excludes .git. The image build supplies its exact source SHA;
+  // file-level commit dates stay unknown, rather than being invented from build time.
+  const release = /^[0-9a-f]{40}$/.test(process.env.PPO_BUILD_COMMIT ?? "") ? process.env.PPO_BUILD_COMMIT! : null;
   const fallback = (path: string): FileHistory => ({
     path,
-    checkout_commit: null,
+    checkout_commit: release,
     last_changed_at: null,
     last_commit: null,
     state: "History unavailable",
-    history_url: null,
-    source_url: null,
+    history_url: release ? repositoryLink(path, release, true) : null,
+    source_url: release ? repositoryLink(path, release) : null,
   });
   const result = new Map(unique.map((path) => [path, fallback(path)]));
   const git = async (args: string[]) =>

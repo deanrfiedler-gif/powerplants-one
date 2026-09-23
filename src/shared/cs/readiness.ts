@@ -92,8 +92,12 @@ export function assessPreparation(
       (!r.facility_id || basis.facility_ids.includes(r.facility_id)) &&
       (r.activity === "*" || r.activity === basis.activity),
   );
-  if (!requirements.length)
-    blockers.push("No applicable requirements recorded; readiness is unknown.");
+  const targets = basis.facility_ids.length ? basis.facility_ids : [null];
+  for (const facility of targets)
+    if (!requirements.some((r) => r.facility_id === null || r.facility_id === facility))
+      blockers.push(
+        `${facility ? `Facility ${facility}` : "Site"}: no applicable requirements recorded; readiness is unknown.`,
+      );
   for (const requirement of requirements) {
     const people = requirement.kind === "Induction" ? basis.person_ids : [null];
     if (!people.length)
@@ -123,7 +127,6 @@ export function assessPreparation(
         );
     }
   }
-  const targets = basis.facility_ids.length ? basis.facility_ids : [null];
   for (const facility of targets)
     if (
       !content.windows.some(

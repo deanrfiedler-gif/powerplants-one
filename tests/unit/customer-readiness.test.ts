@@ -139,6 +139,29 @@ test("CS06 evidence remains individual, reviewed, exact-revision and exact-Facil
       x.includes("unknown"),
     ),
   );
+  // An exact requirement at one selected Facility cannot make an uncovered
+  // second Facility ready, even when both have an explicit work window.
+  assert.ok(
+    assess(
+      { ...content, windows: [window, { ...window, id: randomUUID(), facility_id: child }] },
+      { ...basis, facility_ids: [f, child] },
+    ).blockers.some((x) => x.includes(child) && x.includes("unknown")),
+  );
+  // Explicit Site-wide source requirements do apply across the selected scope.
+  const siteEvidence = { ...evidence, facility_id: null };
+  assert.equal(
+    assess(
+      {
+        ...content,
+        requirements: [{ ...req, facility_id: null }],
+        evidence: [siteEvidence],
+        windows: [{ ...window, facility_id: null }],
+      },
+      { ...basis, facility_ids: [f, child] },
+      [hash(siteEvidence)],
+    ).blockers.length,
+    0,
+  );
   assert.ok(
     assess(content, {
       ...basis,

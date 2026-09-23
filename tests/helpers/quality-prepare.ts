@@ -173,12 +173,13 @@ export async function prepareJourney(page: Page, info: TestInfo) {
   // The document load event precedes the actor-scoped customer read. Observe
   // that real response within the existing action budget before asserting its UI.
   const customer = await observedResponse(page, "initial-customer-read",
-    (response) => new URL(response.url()).pathname === `/api/v1/customers/${id("50")}` &&
+    (response) => new URL(response.url()).pathname === `/api/v1/customers/${id("50")}/workspace` &&
       response.request().method() === "GET",
     () => page.goto(`/customers/${id("50")}`),
   );
   expect(customer.status(), await customer.text()).toBe(200);
   expect(customer.headers()["cache-control"]).toBe("private, no-store");
+  expect((await customer.json()).context.id).toBe(id("50"));
   await expect(
     page.getByRole("heading", {
       name: "SYN Greenhouse Demonstration",

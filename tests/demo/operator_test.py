@@ -64,6 +64,7 @@ class BootstrapImageTests(unittest.TestCase):
             image = operator.bootstrap_image(self.out, self.head, False)
         self.assertEqual(azure.call_args_list, [
             call("acr", "build", "--registry", "demo", "--image", "ppo-demo:" + self.head,
+                 "--build-arg", "PPO_BUILD_COMMIT=" + self.head,
                  "--file", "infra/azure-demo/Dockerfile", "--no-logs", "."),
             call("acr", "repository", "show", "--name", "demo", "--image", "ppo-demo:" + self.head, "--query", "digest"),
         ])
