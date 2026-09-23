@@ -1,5 +1,7 @@
-import { writeFile, mkdir, rm, stat, readdir } from "node:fs/promises";
-import { createReadStream } from "node:fs";
+import { mkdir, rm, stat, readdir } from "node:fs/promises";
+import { createReadStream, createWriteStream } from "node:fs";
+import { Readable } from "node:stream";
+import { pipeline } from "node:stream/promises";
 import { createInterface } from "node:readline";
 import { createHash } from "node:crypto";
 import { isAbsolute, relative, resolve } from "node:path";
@@ -173,6 +175,39 @@ async function prepareCapture(path: string) {
   return result;
 }
 
+// Ten individually bounded captures can exceed V8's single-string limit once
+// combined. Serialize one allowlisted event/source summary at a time, retaining
+// every capture and the existing coverage/truncation metadata.
+export async function writeNetlogMetadata(output: string, result: RecordValue) {
+  function* pieces(): Generator<string> {
+    const { captures, ...metadata } = result;
+    yield JSON.stringify(metadata).slice(0, -1) + ',"captures":[';
+    for (const [index, capture] of (captures as RecordValue[]).entries()) {
+      const { events, source_summaries, ...fields } = capture;
+      if (index) yield ",";
+      yield "\n" + JSON.stringify(fields).slice(0, -1);
+      for (const [key, values] of Object.entries({ events, source_summaries })) {
+        if (!Array.isArray(values)) continue;
+        yield `,"${key}":[`;
+        for (const [i, value] of values.entries())
+          yield (i ? ",\n" : "\n") + JSON.stringify(value);
+        yield "]";
+      }
+      yield "}";
+    }
+    yield "]}\n";
+  }
+  function* chunks() {
+    let chunk = "";
+    for (const piece of pieces()) {
+      chunk += piece;
+      if (chunk.length >= 64 * 1024) { yield chunk; chunk = ""; }
+    }
+    if (chunk) yield chunk;
+  }
+  await pipeline(Readable.from(chunks()), createWriteStream(output));
+}
+
 export async function prepareNetlog(compiled = false) {
   const base = netlogDirectory();
   if (!base) throw new Error("NetLog diagnostic directory is required");
@@ -190,9 +225,12 @@ export async function prepareNetlog(compiled = false) {
     result = { status: completeSet && captures.every(c => c.status === "prepared") ? "prepared" : captures.length ? "partial" : "unavailable", complete_capture_set: completeSet, captures };
     if (result.status !== "prepared") throw new Error("NetLog capture incomplete");
   } finally {
-    await mkdir(root, { recursive: true });
-    await writeFile(output, JSON.stringify(result, null, 2) + "\n");
-    await rm(directory, { recursive: true, force: true });
+    try {
+      await mkdir(root, { recursive: true });
+      await writeNetlogMetadata(output, result);
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
   }
 }
 

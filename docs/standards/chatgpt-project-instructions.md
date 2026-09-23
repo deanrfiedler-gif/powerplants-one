@@ -69,7 +69,7 @@ Use Australian English and docs/standards/ui-style-specification.md: Roboto/Verd
 
 Define scope, permissions, validation, recovery and acceptance. Follow docs/requirements/product-quality-register.md and docs/delivery/product-quality-plan.md.
 
-HTML packages: follow docs/standards/html-module-conformance.md. State existing scope ID, r20 page type, reused components, handovers and proposed departures before baseline adoption.
+HTML packages: follow docs/standards/html-module-conformance.md. State scope ID, r20 page type, reused components, handovers and proposed departures before baseline adoption.
 
 ## 8. Execution and authority
 

@@ -76,10 +76,16 @@ Initial browser verification found and corrected a saved-preference JSON key-ord
 - Owned escalations show current required Activities; no escalation threshold or new business policy is inferred.
 - Browser emulation is not physical-device acceptance. Owner visual/business acceptance, production readiness, hosted migration and deployment remain separate.
 
-## Git and concurrent work
+## Initial publication and concurrent work
 
 Branch: `feature/sh-my-work-platform-completion`. Initial main: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. The later refresh found #281 merged as `c5280be7ed4b20e970d244af79d08567784a8046`, and the branch was rebased before final verification. Both STATUS contributions and the browser-runtime register revision were retained; the newer PL-01 merge record was also preserved. #282 remains open and independent. The final local browser checks use the merged guard with Chrome 153, and CI runtime evidence remains separate.
 
 Implementation commits after rebase: `571138f` (services/persistence) and `65852d1` (application integration), followed by `e71cbe5` (source-state refinements and real review journeys). Follow-up verification and publication evidence is maintained in the evidence index. Nothing is merged or deployed by this task. The next bounded step is source/owner review of this increment and explicit disposition of its documented dependencies.
 
 The final concurrent-work inspection also found draft PR #283 (local design register/page guides). It overlaps `src/app/layout.tsx`, `src/components/shell-controls.tsx`, STATUS and the document register. Its already-published ADR-0040 led this branch to renumber its new SH decision to **ADR-0041** before publication; no parent requirement ID changed. The draft is not copied or merged here. Future integration must retain both shell contributions and update its local page inventory for `/search` and the changed SH interiors.
+
+## Current CI repair and integration
+
+PR #284 remains the delivery branch. After the reported CI failures, #282 and #283 were found merged and the SH commits were rebased onto `743d58f`. Their line-ending correction, local guide/workspace controls, STATUS contributions and new document-register schema are preserved. The SH decision remains ADR-0041. `/search` and the changed SH interiors now have page-specific working guides/design contracts and explicit source/evidence dependencies. Their review states remain pending; implementation evidence does not grant visual or guide approval.
+
+The repair updates the original HTTP isolation contract for the now-implemented Search/Notifications routes, streams the oversized performance metadata output, and uses the existing compiled browser configuration for Leads/Projects. [The verification record](../testing/evidence/sh-platform/README.md#pr-284-ci-repair-23-september-2026) links the original failures, distinguishes runner/warm-up failures from application assertions, and records fresh results. No merge, deployment or guard bypass is part of this work.

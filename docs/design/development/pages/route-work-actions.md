@@ -39,3 +39,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.page.work.actions` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## SH continuation
+
+Retain the existing desktop/phone My Work structure. Review and notification counts now follow shared source projections and qualify unavailable or bounded data. Personal view editing retains existing IDs and supports explicit criteria updates; team sharing remains Not configured. See [SH handover](../../../delivery/sh-platform-handover.md) and [verification](../../../testing/evidence/sh-platform/README.md). Merged shell controls require fresh integration review; no fingerprint or approval is added.

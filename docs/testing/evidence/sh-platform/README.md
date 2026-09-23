@@ -77,8 +77,21 @@ The implementation agent opened and inspected these actual PNGs. They retain the
 | Real source roles | [Reviewer queue](captures/reviewer-mine.png), [correction queue](captures/reviewer-returned.png), [receiver desktop](captures/receiver-desktop.png), [receiver phone](captures/receiver-mobile.png), [return reason on phone](captures/returned-detail-phone.png) |
 | Synthetic presentation failures | [Partial search](captures/search-partial.png), [empty search](captures/search-empty.png), [failed search](captures/search-failed.png), [failed notifications](captures/notifications-failed.png), [unavailable reviews](captures/reviews-unavailable.png) |
 
-## Publication boundary
+## Initial publication boundary (before CI repair)
 
 PR #281 merged as `c5280be`; this branch rebased before final verification. The merged guard accepts the reviewed Chrome 153/154 versions. Local Chrome 153 evidence remains distinct from CI runtime evidence. PR #282 is an independent Facilities LF correction. Neither change is copied here. Source/visual review, business acceptance and deployment remain outstanding.
 
 The final concurrent-work inspection also found draft PR #283 (local design register/page guides). It overlaps `src/app/layout.tsx`, `src/components/shell-controls.tsx`, STATUS and the document register. Its already-published ADR-0040 led this branch to renumber its new SH decision to **ADR-0041** before publication; no parent requirement ID changed. The draft is not copied or merged here. Future integration must retain both shell contributions and update its local page inventory for `/search` and the changed SH interiors.
+
+## PR #284 CI repair, 23 September 2026
+
+Initial head `0bb5ede` passed the compiled application browser suite and application browser proof on Chrome **154.0.8037.57**, with the merged #281 guard. The failing application run [35804152594](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35804152594) exposed two separate causes:
+
+- The original HTTP isolation test still required Search and Notifications to return 404. SH implements both. The repaired test requires their scoped JSON response and private no-store policy while retaining all private Finance canary checks and 404 requirements for unimplemented export/target routes.
+- The performance capture prepared ten bounded NetLog captures, then tried to stringify the combined result. V8 refused the oversized string. Metadata now streams bounded event/source entries, preserving the original coverage counters and all retained captures; raw temporary captures are cleaned up even if the output write fails. The regression test refuses aggregate-array serialization and checks exact output for ten captures, plus unavailable capture metadata.
+
+[Leads run 35804152458](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35804152458) received a runner shutdown signal during development-server route warming; [Projects run 35804152523](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35804152523) exceeded the 15-minute warm-up timeout. Neither reached its application assertions. Both workflows now use the existing compiled configuration after their existing build. The same suites, warm-up, viewport projects, deadlines and Chrome guard remain; the full application workflow retains development-browser coverage. Merged #283 CI passed its Leads, HTTP, database and performance jobs; these infrastructure failures are not represented as a proven baseline regression.
+
+Concurrent refresh found #282 and #283 merged. The branch rebased onto `743d58f`, preserving both shell contributions, STATUS entries and all document-register records under its new schema. No #281/#282 change was copied or weakened. The working design register now includes `/search`, SH guides/contracts and shared-shell dependencies. Guides and visual review stay Draft/Needs review; earlier captures predate #283 integration and no review fingerprint was manufactured.
+
+Focused NetLog/SH/shell units pass **14/14**. Foundation and prototype assurance pass. Post-rebase browser, HTTP, naming and fresh remote CI results are pending at this repair checkpoint and will be recorded below.

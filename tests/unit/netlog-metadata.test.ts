@@ -1,9 +1,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, writeFile, rm } from "node:fs/promises";
+import { mkdtemp, readFile, writeFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { netlogMetadata, streamNetlog } from "../../scripts/netlog-metadata";
+import { netlogMetadata, streamNetlog, writeNetlogMetadata } from "../../scripts/netlog-metadata";
 
 test("NetLog metadata keeps socket linkage and timings while excluding sensitive and unknown fields", () => {
   const secret = "PRIVATE_CANARY";
@@ -59,6 +59,28 @@ test("NetLog event cap explicitly retains incomplete coverage as a limitation", 
   assert.equal(result.original_event_count, 100001);
   assert.equal(result.retained_event_count, 100000);
   assert.equal(result.truncated, true);
+});
+
+test("ten NetLog captures serialize without a combined capture, event or source-array string", async () => {
+  const dir = await mkdtemp(join(tmpdir(), "ppo-netlog-output-")), path = join(dir, "metadata.json");
+  const capture = netlogMetadata({
+    constants: { logEventTypes: { URL_REQUEST_START_JOB: 1 }, logSourceType: { URL_REQUEST: 1 } },
+    events: Array.from({ length: 2000 }, (_, i) => ({ type: 1, time: i, source: { id: i, type: 1 }, params: { headers: ["PRIVATE_CANARY"] } })),
+  });
+  const captures = Array.from({ length: 10 }, (_, i) => ({ capture: `network-user-${i}.json`, status: "prepared", ...capture }));
+  const result = { status: "prepared", complete_capture_set: true, captures };
+  const expected = JSON.parse(JSON.stringify(result));
+  // Refuse precisely the large aggregate strings that caused the CI failure.
+  for (const array of [captures, capture.events, capture.source_summaries])
+    Object.defineProperty(array, "toJSON", { value: () => { throw new Error("Aggregate must be streamed"); } });
+  try {
+    await writeNetlogMetadata(path, result);
+    const written = await readFile(path, "utf8");
+    assert.ok(!written.includes("PRIVATE_CANARY"));
+    assert.deepEqual(JSON.parse(written), expected);
+    await writeNetlogMetadata(path, { status: "partial", captures: [{ status: "unavailable", failure: "Capture unavailable" }] });
+    assert.deepEqual(JSON.parse(await readFile(path, "utf8")), { status: "partial", captures: [{ status: "unavailable", failure: "Capture unavailable" }] });
+  } finally { await rm(dir, { recursive: true, force: true }); }
 });
 
 test("packet floods retain the earliest request lifecycle and exact aggregate bytes", () => {

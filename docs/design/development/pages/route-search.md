@@ -1,6 +1,6 @@
 # Search — design reference
 
-Stable entry: `scope:SH-04`. Owner: Dean Fiedler. Status: **Draft for visual review**.
+Stable entry: `route:/search`. Owner: Dean Fiedler. Status: **Draft for visual review**.
 Source baseline and existing issued references remain recorded in the register. SH implementation is synthetic and bounded; guide, visual and owner acceptance remain separate.
 
 ## Purpose and task
@@ -39,4 +39,4 @@ Open record hands off to the owning domain. Browser Back retains URL criteria. S
 
 Use text and optional record type. Pagination requires one type and a cursor tied to the query. Facility context identifies site, physical parent and grouping; identical names alone do not establish identity.
 
-[SH verification](../../../testing/evidence/sh-platform/README.md) records actual checks, inspected captures and CI repairs; [handover](../../../delivery/sh-platform-handover.md) records scope and dependencies. Images above predate the merged development-workspace shell controls and require a fresh paired review for that integration. No review fingerprint or owner acceptance is claimed. The article `guide.sh.04` remains Draft.
+[SH verification](../../../testing/evidence/sh-platform/README.md) records actual checks, inspected captures and CI repairs; [handover](../../../delivery/sh-platform-handover.md) records scope and dependencies. Images above predate the merged development-workspace shell controls and require a fresh paired review for that integration. No review fingerprint or owner acceptance is claimed. The article `guide.route-search` remains Draft.
