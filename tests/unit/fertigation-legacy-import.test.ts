@@ -339,3 +339,26 @@ test("FN-T40 strict legacy declaration is pinned to the untouched issued r02 sou
     493,
   );
 });
+test("FN-T40 genuine r02 project downloads carry export metadata that is accepted as provenance only", () => {
+  const r02 = readFileSync(
+    "reference/ui/priva-fertigation-scoping-workbench-r02.html",
+    "utf8",
+  );
+  assert.ok(
+    r02.includes("portable.exported_at=now();portable.export_scope="),
+    "r02 exportProject writes both keys into every download",
+  );
+  const exported = graph(2);
+  exported.exported_at = "2026-09-23T10:08:43.000Z";
+  exported.export_scope =
+    "Full portable project, including embedded evidence and local snapshots";
+  const p = previewImport(JSON.stringify(exported), id(900));
+  assert.equal(p.held, false, JSON.stringify(p.losses));
+  assert.ok(p.warnings.some((w) => w.includes("2026-09-23T10:08:43.000Z")));
+  const unknown = graph(2);
+  unknown.exported_by = "not an issued key";
+  assert.throws(() => previewImport(JSON.stringify(unknown), id(900)));
+  const malformed = graph(2);
+  malformed.exported_at = 7;
+  assert.throws(() => previewImport(JSON.stringify(malformed), id(900)));
+});

@@ -1300,10 +1300,17 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
                 </button>
                 <a
                   className="fn-button"
-                  href={`/api/v1/${base}/${scopeId}/export?revision_id=${data.revision.id}`}
+                  href={`/api/v1/${base}/${scopeId}/export?revision_id=${data.revision.id}&format=json`}
                   download
                 >
                   Export exact saved scope
+                </a>
+                <a
+                  className="fn-button"
+                  href={`/api/v1/${base}/${scopeId}/export?revision_id=${data.revision.id}&format=valves`}
+                  download
+                >
+                  Export valve CSV
                 </a>
                 <a
                   className="fn-button"
