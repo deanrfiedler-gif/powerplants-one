@@ -92,3 +92,19 @@ Dean authorised the [integration build plan](../delivery/job-pack-integration-bu
 | D5 | r03 section titles appear on screen. OUT-09 keeps its current headings until its next template version, so two of nine headings differ between workbench and issued document meanwhile. |
 
 This authorises application work under the plan's constraints: no change to the pack snapshot, the OUT-09 template, the command contracts or server permission filtering, and no migration. It is not delivery, browser acceptance or operational acceptance; each increment records its own evidence.
+
+## Completing the page — decided 23 September 2026
+
+Dean read the [build report](../delivery/job-pack-build-report.md), which reviews the accepted r03 against the live module after I1 and I2, and adopted its five further decisions: "I adopt D6 (option A), D7, D8 (option A), D9 and D10 (all four items) as recommended in §9 of the report."
+
+| # | Adopted |
+|---|---|
+| D6 | Structured section content is a **proved re-presentation of the frozen text**. The v1 section-text formatter moves byte-identically out of `snapshot()` into a pure module; a structure is shown only when re-serialising it reproduces the frozen section text exactly, and otherwise that text is shown verbatim. The exact text stays one activation away on every section. No snapshot, OUT-09 or migration change. |
+| D7 | The page title is the **verified approved-scope summary**, with the distinct scope task kinds shown as the work kind. The two references remain the fallback when no verified scope is available. |
+| D8 | The **r03 in-module breadcrumb is kept**, with root "Service" to match the shell and "Job packs" linking to the register. The resulting double breadcrumb is recorded as an accepted exception in the UI-consistency handover. |
+| D9 | Readiness criteria are **grouped by blocking stage**, unsatisfied first, with satisfied rows collapsed behind a disclosure. Nothing that needs action is hidden. |
+| D10 | Four **read-model additions, no migration**: recovery and follow-up owner display names; the history fields the selection lists and section 05 need; a staff-only record of acknowledgements across all issues; and the permission-scoped `section_view` that D6 depends on. |
+
+Open questions Q-01 to Q-07 keep the report's stated defaults, except Q-07: the five r03 reference captures are stored in the repository in I5 as report Appendix E describes. The three shared-core token divergences from Field Technicians r05 stay as recorded; I5 supplies a side-by-side swatch for a separate decision.
+
+This adoption changes the integration build only. It does not amend ADR-0011, the document contract, the API contract, the pack snapshot or the accepted r03 presentation, and it authorises no migration, seed, grant, capability or new command. It is not delivery or acceptance; each increment records its own evidence.
