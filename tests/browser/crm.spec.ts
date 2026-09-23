@@ -160,9 +160,9 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await page
     .getByLabel("Source context (synthetic)", { exact: true })
     .fill("SYN Manually recorded fictional conversation");
-  if (await page.getByRole("tab",{name:"Timeline",exact:true}).count()) await page.getByRole("tab",{name:"Timeline",exact:true}).click();
+  if (await page.getByRole("tab",{name:"Activities",exact:true}).count()) await page.getByRole("tab",{name:"Activities",exact:true}).click();
   await pick(page, "Activity owner", CRM.owner);
-  if (await page.getByRole("tab",{name:"Timeline",exact:true}).count()) await page.getByRole("tab",{name:"Timeline",exact:true}).click();
+  if (await page.getByRole("tab",{name:"Activities",exact:true}).count()) await page.getByRole("tab",{name:"Activities",exact:true}).click();
   await page
     .getByLabel("Action purpose", { exact: true })
     .fill("SYN Call to clarify the irrigation controls need");
@@ -215,9 +215,9 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await expect(page.getByRole("dialog")).not.toBeVisible();
   await expect(page.locator('.crm-stage-track [aria-current="step"]')).toContainText("Scoping");
   await expect(page.getByRole("button", { name: "Save next action", exact: true })).toBeEnabled();
-  if (await page.getByRole("tab",{name:"Timeline",exact:true}).count()) await page.getByRole("tab",{name:"Timeline",exact:true}).click();
+  if (await page.getByRole("tab",{name:"Activities",exact:true}).count()) await page.getByRole("tab",{name:"Activities",exact:true}).click();
   await pick(page, "Activity owner", CRM.owner);
-  if (await page.getByRole("tab",{name:"Timeline",exact:true}).count()) await page.getByRole("tab",{name:"Timeline",exact:true}).click();
+  if (await page.getByRole("tab",{name:"Activities",exact:true}).count()) await page.getByRole("tab",{name:"Activities",exact:true}).click();
   await page
     .getByLabel("Action purpose", { exact: true })
     .fill("SYN Arrange a technical discovery conversation");
@@ -252,11 +252,11 @@ test("CA-02/03 real conflict retains proposed need; lost response reconciles ori
   const i = await seeded(page);
   await expect(page.getByRole("heading",{name:"Overdue",exact:true})).toBeVisible();
   await capture(page,info,"overdue");
-  await page.getByRole("tab", {name:"Details",exact:true}).click();
+  await page.getByRole("tab", {name:"Scope & sites",exact:true}).click();
   await page
     .getByLabel("Qualified customer need", { exact: true })
     .fill("SYN Safe proposed need retained after conflict");
-  await page.getByRole("tab", {name:"Details",exact:true}).click();
+  await page.getByRole("tab", {name:"Scope & sites",exact:true}).click();
   await page
     .getByLabel("Qualification outcome", { exact: true })
     .fill("SYN Proposed qualification note");
@@ -326,7 +326,7 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   page,
 }, info) => {
   const i = await seeded(page);
-  await page.getByRole("tab", {name:"Details",exact:true}).click();
+  await page.getByRole("tab", {name:"Scope & sites",exact:true}).click();
   await page
     .getByLabel("Qualification outcome", { exact: true })
     .fill("SYN Sensitive unsaved proposal");
@@ -422,7 +422,7 @@ test("CA-06/10 real CRM permission revocation clears linked Activity content aft
   const detail = await page.context().newPage();
   await detail.goto(`/sales/opportunities/${i.id}`);
   await expect(detail.getByRole("heading", {name:i.title,exact:true})).toBeVisible();
-  await detail.getByRole("tab", {name:"Details",exact:true}).click();
+  await detail.getByRole("tab", {name:"Scope & sites",exact:true}).click();
   await detail.getByLabel("Qualification outcome", {exact:true}).fill("SYN Private proposal before revocation");
   // Hold a real authorised server response, then let a newer request observe revocation.
   let releaseOriginal!: () => void;

@@ -90,7 +90,14 @@
       "specification": "docs/design/development/components/buttons.md",
       "used_on": [
         "system:theme",
-        "route:/development/page-register"
+        "route:/development/page-register",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -149,7 +156,8 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/components/deal-workspace-link.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -285,7 +293,8 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/components/deal-workspace-link.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -348,7 +357,8 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/components/deal-workspace-link.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -642,7 +652,14 @@
         "route:/sites/[id]/readiness",
         "route:/customers/[id]/development",
         "route:/surveys",
-        "route:/surveys/[id]"
+        "route:/surveys/[id]",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -783,7 +800,14 @@
         "route:/sites/[id]/readiness",
         "route:/customers/[id]/development",
         "route:/surveys",
-        "route:/surveys/[id]"
+        "route:/surveys/[id]",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -857,7 +881,14 @@
         "route:/sites/[id]/readiness",
         "route:/customers/[id]/development",
         "route:/surveys/[id]",
-        "route:/sites/[id]"
+        "route:/sites/[id]",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won"
       ],
       "desktop": "Arrow keys, Home and End select/focus tabs. Each tab labels its corresponding panel.",
       "mobile": "Confirm wrapped or scrolling tabs keep the selected label and focus visible.",
@@ -1117,7 +1148,14 @@
         "route:/customers/[id]/development",
         "route:/surveys/[id]",
         "route:/sites/[id]",
-        "route:/surveys"
+        "route:/surveys",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -1183,7 +1221,14 @@
         "route:/customers",
         "route:/customers/[id]",
         "route:/people/[id]",
-        "route:/sites/[id]"
+        "route:/sites/[id]",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won"
       ],
       "desktop": "Keep a readable label with each tone; business state and tone are not equivalent.",
       "mobile": "Chips wrap without truncating operational meaning.",
@@ -1261,7 +1306,14 @@
         "route:/sites/[id]/readiness",
         "route:/customers/[id]/development",
         "route:/surveys",
-        "route:/surveys/[id]"
+        "route:/surveys/[id]",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won"
       ],
       "desktop": "Use the phone presets and a separate browser window. This is the same form component family at a real responsive viewport.",
       "mobile": "Check 390/320 px, 200% zoom, touch targets, keyboard occlusion and error focus. No scaled screenshot is used.",

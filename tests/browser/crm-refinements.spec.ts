@@ -236,7 +236,7 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
     page.getByRole("heading", { name: input.title + " updated", exact: true }),
   ).toBeVisible();
   await expect(page.locator(".crm-deal-key-facts")).toContainText("$12,345.67");
-  await page.getByRole("tab", { name: "Details", exact: true }).click();
+  await page.getByRole("tab", { name: "Scope & sites", exact: true }).click();
   await page
     .getByRole("button", { name: "Edit requirements and scope", exact: true })
     .click();
@@ -252,7 +252,7 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
     .click();
   await expect(dialog).not.toBeVisible();
   await page.reload();
-  await page.getByRole("tab", { name: "Details", exact: true }).click();
+  await page.getByRole("tab", { name: "Scope & sites", exact: true }).click();
   await expect(page.locator(".crm-scope-section")).toContainText(
     "SYN Sensors and commissioning",
   );
@@ -290,7 +290,7 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
     expect(record.stage_id).toBe("Enquiry");
   }
   await page.goto(`/sales/opportunities/${input.id}`);
-  await page.getByRole("tab", { name: "Files", exact: true }).click();
+  await page.getByRole("tab", { name: "Documents", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Deal documents", exact: true }),
   ).toBeVisible();

@@ -70,20 +70,22 @@ Complete authorised work; state assumptions. Ask only when a consequential missi
 
 Preserve unrelated work. Use a dedicated branch and reviewable PR; merge within granted scope after required checks/review. Never bypass permissions. Update affected specifications/registers.
 
-Repository work does not authorise paid services, public deployment, access changes, live transactions, migration or messages to others. Prepare work before seeking approval. Keep secrets/raw operational exports/restricted records outside Git; use synthetic or approved redacted fixtures.
+Repository work grants no paid-service, deployment, access, live-transaction, migration or messaging authority. Keep secrets/operational data outside Git; use synthetic or approved redacted fixtures.
 
 ## 9. Verification and communication
 
-Run foundation/prototype/naming checks.
+Run foundation, prototype and naming checks.
 
-Test behaviour: permissions, booking conflicts, stale revisions, offline replay, deduplication, document integrity and Finance reconciliation. Visually check relevant screens/documents. Record commit/environment.
+Test permissions, conflicts, stale revisions, replay, deduplication, document integrity and Finance reconciliation. Inspect relevant screens; record commit/environment.
 
-Separate decisions, evidence, proposals and open questions; distinguish delivery, tests, acceptance and production readiness. Cite sources and limits.
+Separate decisions, evidence, proposals, tests, acceptance and deployment.
 
 Preserve ES-02 exact costs and PJ-09 scoped close/reopen. ES-08: accepted design board (es08-design-board.md: D1–D15, DEC-R1/R2) guides the geometry build, which needs separate authority, WP-G00 first, no migration slot. ADR-0034 review is not engineering approval. Retain four CI lanes (ci-retained-suite-isolation.md).
 
-Keep synthetic mailboxes private and bodies outside shared Activities; see demo-email-crm-integration.md. CI and Outlook acceptance are separate. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
+Mail: preserve private mailboxes and body separation (demo-email-crm-integration.md); CI is not Outlook acceptance. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
 
 CS: follow ADR-0042 and cs-native-completion-handover.md. Preserve CS-05 identities, Grouping, service links and E2 snapshots. Readiness grants no work authority; survey handovers bind exact reviewed snapshots. Account plans create no bookings/forecasts. Reuse SH and Activity; Finance /account stays Finance.
 
 Fertigation: follow `docs/delivery/priva-fertigation-native-handover.md`. Preserve exact scopes, neutral context and unverified supplier conclusions. Merge/deployment need separate authorisation.
+
+Sales CR-01–05: follow ADR-0046 and sales-native-completion-handover.md. Preserve frozen submissions, immutable Won due, source-scoped receipts and aftercare unknown policies. Receiving creates no downstream work.

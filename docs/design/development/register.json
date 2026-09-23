@@ -802,8 +802,8 @@
       "title": "Opportunity detail and internal work",
       "kind": "scope",
       "module": "CR",
-      "summary": "Extend the existing opportunity-detail route into the full Deal Workspace: scope, estimating, tasks, conversations, documents and contacts.",
-      "path": "/sales/opportunities",
+      "summary": "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers.",
+      "path": "/sales/opportunities/[id]",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
       ],
@@ -811,10 +811,14 @@
       "design_path": "docs/design/development/pages/scope-cr-01.md",
       "html_path": "docs/reference/ui/crm/PPO-Deal-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "refine",
+      "dependencies": [
+        "src/components/crm-screens.tsx",
+        "src/components/opportunity-workflows.tsx",
+        "src/components/opportunity-correspondence.tsx"
+      ],
+      "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "See sales-native-completion-handover for executed assurance",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -833,7 +837,7 @@
       "title": "Sales-to-estimating handover",
       "kind": "scope",
       "module": "CR",
-      "summary": "Implement versioned Sales-to-Estimating submission, clarification, accept/return and receiving ownership.",
+      "summary": "Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision.",
       "path": "/sales/handoffs/estimating",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -842,10 +846,14 @@
       "design_path": "docs/design/development/pages/scope-cr-02.md",
       "html_path": "docs/reference/ui/estimating/sales-estimating-intake-preview-r02.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/components/sales-handover.tsx",
+        "src/sales/handover-service.ts",
+        "src/sales/handover-model.ts"
+      ],
+      "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "See sales-native-completion-handover for executed assurance",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -862,7 +870,7 @@
       "title": "Won-deal receiving handover",
       "kind": "scope",
       "module": "CR",
-      "summary": "Implement controlled Won-deal receiving for Projects, Service and parts orders over the existing handover-due obligation.",
+      "summary": "Prepare and receive a precise delivery handover while preserving the immutable Won handover-due obligation.",
       "path": "/sales/handoffs/won",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -871,10 +879,14 @@
       "design_path": "docs/design/development/pages/scope-cr-03.md",
       "html_path": "docs/reference/ui/crm/PPO-Sales-to-Delivery-Handover-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/components/sales-handover.tsx",
+        "src/sales/handover-service.ts",
+        "src/sales/handover-model.ts"
+      ],
+      "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "See sales-native-completion-handover for executed assurance",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -891,7 +903,7 @@
       "title": "Pipeline insights and forecast review",
       "kind": "scope",
       "module": "CR",
-      "summary": "Retain Board/List/Forecast/Archive. Extend analytical review with stage history, ageing, slipped dates, next-action coverage and agreed forecast definitions.",
+      "summary": "Review stage history, next-action coverage and close-date movement over the same permitted result page as Deals.",
       "path": "/sales/opportunities",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -902,10 +914,14 @@
       "image_paths": [
         "docs/testing/evidence/department-navigation/sales-deals-populated.png"
       ],
-      "dependencies": [],
-      "scope_status": "refine",
+      "dependencies": [
+        "src/components/crm-insights.tsx",
+        "src/crm/insights.ts",
+        "src/crm/worklist.ts"
+      ],
+      "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "See sales-native-completion-handover for executed assurance",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -923,7 +939,7 @@
       "title": "Sales aftercare and renewal worklist",
       "kind": "scope",
       "module": "CR",
-      "summary": "Implement sales aftercare, post-installation reviews, training follow-up, renewal opportunities and owned tasks.",
+      "summary": "Plan a customer review from an issued Service report and track commitments, Service concerns, training and commercial follow-up.",
       "path": "/sales/aftercare",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -932,10 +948,14 @@
       "design_path": "docs/design/development/pages/scope-cr-05.md",
       "html_path": "docs/reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/components/sales-aftercare.tsx",
+        "src/sales/aftercare-service.ts",
+        "src/sales/aftercare-model.ts"
+      ],
+      "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "See sales-native-completion-handover for executed assurance",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -5615,7 +5635,7 @@
       "title": "Opportunity detail",
       "kind": "route",
       "module": "CR",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers.",
       "path": "/sales/opportunities/[id]",
       "source_paths": [
         "src/app/(business)/sales/opportunities/[id]/page.tsx"
@@ -5624,10 +5644,14 @@
       "design_path": "docs/design/development/pages/route-sales-opportunities-id.md",
       "html_path": "docs/reference/ui/crm/PPO-Deal-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "refine",
+      "dependencies": [
+        "src/components/crm-screens.tsx",
+        "src/components/opportunity-workflows.tsx",
+        "src/components/opportunity-correspondence.tsx"
+      ],
+      "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "See sales-native-completion-handover for executed assurance",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -5669,7 +5693,7 @@
       "title": "Opportunities · Board / List / Forecast / Archive",
       "kind": "route",
       "module": "CR",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Review stage history, next-action coverage and close-date movement over the same permitted result page as Deals.",
       "path": "/sales/opportunities",
       "source_paths": [
         "src/app/(business)/sales/opportunities/page.tsx"
@@ -5680,10 +5704,14 @@
       "image_paths": [
         "docs/testing/evidence/department-navigation/sales-deals-populated.png"
       ],
-      "dependencies": [],
-      "scope_status": "refine",
+      "dependencies": [
+        "src/components/crm-insights.tsx",
+        "src/crm/insights.ts",
+        "src/crm/worklist.ts"
+      ],
+      "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "See sales-native-completion-handover for executed assurance",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8262,6 +8290,230 @@
       "related_keys": [
         "scope:CS-08",
         "route:/surveys/[id]"
+      ]
+    },
+    {
+      "key": "route:/estimating/intake",
+      "title": "Estimating Intake",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision.",
+      "path": "/estimating/intake",
+      "source_paths": [
+        "src/app/(business)/estimating/intake/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-intake",
+      "design_path": "docs/design/development/pages/route-estimating-intake.md",
+      "html_path": "docs/reference/ui/estimating/sales-estimating-intake-preview-r02.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/sales-handover.tsx",
+        "src/sales/handover-service.ts",
+        "src/sales/handover-model.ts"
+      ],
+      "scope_status": "Native implementation; acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See sales-native-completion-handover for executed assurance",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:CR-02"
+      ]
+    },
+    {
+      "key": "route:/sales/aftercare/[id]",
+      "title": "Sales aftercare and renewal worklist record",
+      "kind": "route",
+      "module": "CR",
+      "summary": "Plan a customer review from an issued Service report and track commitments, Service concerns, training and commercial follow-up.",
+      "path": "/sales/aftercare/[id]",
+      "source_paths": [
+        "src/app/(business)/sales/aftercare/[id]/page.tsx"
+      ],
+      "guide_key": "guide.route-sales-aftercare-id",
+      "design_path": "docs/design/development/pages/route-sales-aftercare-id.md",
+      "html_path": "docs/reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/sales-aftercare.tsx",
+        "src/sales/aftercare-service.ts",
+        "src/sales/aftercare-model.ts"
+      ],
+      "scope_status": "Native implementation; acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See sales-native-completion-handover for executed assurance",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:CR-05"
+      ]
+    },
+    {
+      "key": "route:/sales/aftercare",
+      "title": "Sales aftercare and renewal worklist worklist",
+      "kind": "route",
+      "module": "CR",
+      "summary": "Plan a customer review from an issued Service report and track commitments, Service concerns, training and commercial follow-up.",
+      "path": "/sales/aftercare",
+      "source_paths": [
+        "src/app/(business)/sales/aftercare/page.tsx"
+      ],
+      "guide_key": "guide.route-sales-aftercare",
+      "design_path": "docs/design/development/pages/route-sales-aftercare.md",
+      "html_path": "docs/reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/sales-aftercare.tsx",
+        "src/sales/aftercare-service.ts",
+        "src/sales/aftercare-model.ts"
+      ],
+      "scope_status": "Native implementation; acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See sales-native-completion-handover for executed assurance",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:CR-05"
+      ]
+    },
+    {
+      "key": "route:/sales/handoffs/estimating/[id]",
+      "title": "Sales-to-estimating handover record",
+      "kind": "route",
+      "module": "CR",
+      "summary": "Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision.",
+      "path": "/sales/handoffs/estimating/[id]",
+      "source_paths": [
+        "src/app/(business)/sales/handoffs/estimating/[id]/page.tsx"
+      ],
+      "guide_key": "guide.route-sales-handoffs-estimating-id",
+      "design_path": "docs/design/development/pages/route-sales-handoffs-estimating-id.md",
+      "html_path": "docs/reference/ui/estimating/sales-estimating-intake-preview-r02.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/sales-handover.tsx",
+        "src/sales/handover-service.ts",
+        "src/sales/handover-model.ts"
+      ],
+      "scope_status": "Native implementation; acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See sales-native-completion-handover for executed assurance",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:CR-02"
+      ]
+    },
+    {
+      "key": "route:/sales/handoffs/estimating",
+      "title": "Sales-to-estimating handover worklist",
+      "kind": "route",
+      "module": "CR",
+      "summary": "Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision.",
+      "path": "/sales/handoffs/estimating",
+      "source_paths": [
+        "src/app/(business)/sales/handoffs/estimating/page.tsx"
+      ],
+      "guide_key": "guide.route-sales-handoffs-estimating",
+      "design_path": "docs/design/development/pages/route-sales-handoffs-estimating.md",
+      "html_path": "docs/reference/ui/estimating/sales-estimating-intake-preview-r02.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/sales-handover.tsx",
+        "src/sales/handover-service.ts",
+        "src/sales/handover-model.ts"
+      ],
+      "scope_status": "Native implementation; acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See sales-native-completion-handover for executed assurance",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:CR-02"
+      ]
+    },
+    {
+      "key": "route:/sales/handoffs/won/[id]",
+      "title": "Won-deal receiving handover record",
+      "kind": "route",
+      "module": "CR",
+      "summary": "Prepare and receive a precise delivery handover while preserving the immutable Won handover-due obligation.",
+      "path": "/sales/handoffs/won/[id]",
+      "source_paths": [
+        "src/app/(business)/sales/handoffs/won/[id]/page.tsx"
+      ],
+      "guide_key": "guide.route-sales-handoffs-won-id",
+      "design_path": "docs/design/development/pages/route-sales-handoffs-won-id.md",
+      "html_path": "docs/reference/ui/crm/PPO-Sales-to-Delivery-Handover-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/sales-handover.tsx",
+        "src/sales/handover-service.ts",
+        "src/sales/handover-model.ts"
+      ],
+      "scope_status": "Native implementation; acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See sales-native-completion-handover for executed assurance",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:CR-03"
+      ]
+    },
+    {
+      "key": "route:/sales/handoffs/won",
+      "title": "Won-deal receiving handover worklist",
+      "kind": "route",
+      "module": "CR",
+      "summary": "Prepare and receive a precise delivery handover while preserving the immutable Won handover-due obligation.",
+      "path": "/sales/handoffs/won",
+      "source_paths": [
+        "src/app/(business)/sales/handoffs/won/page.tsx"
+      ],
+      "guide_key": "guide.route-sales-handoffs-won",
+      "design_path": "docs/design/development/pages/route-sales-handoffs-won.md",
+      "html_path": "docs/reference/ui/crm/PPO-Sales-to-Delivery-Handover-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/sales-handover.tsx",
+        "src/sales/handover-service.ts",
+        "src/sales/handover-model.ts"
+      ],
+      "scope_status": "Native implementation; acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See sales-native-completion-handover for executed assurance",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:CR-03"
       ]
     }
   ]

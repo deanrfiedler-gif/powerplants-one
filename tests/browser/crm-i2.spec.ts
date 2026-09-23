@@ -187,7 +187,7 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   await page.getByRole("button", { name: "List", exact: true }).click();
   await page.getByRole("link", { name: inputs[0].title, exact: true }).click();
   await expect(page).toHaveURL(new RegExp(`/sales/opportunities/${inputs[0].id}$`));
-  await page.getByRole("tab",{name:"Details",exact:true}).click();
+  await page.getByRole("tab",{name:"Scope & sites",exact:true}).click();
   await expect(page.getByLabel("Qualification outcome", { exact: true })).toBeVisible();
   // Reload remounts identity and then reads the permitted opportunity. Reproduce
   // a real detail read exceeding 5s without replacing its status or record body.

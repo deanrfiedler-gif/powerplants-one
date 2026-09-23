@@ -5208,22 +5208,20 @@
       "title": "Opportunity detail and internal work",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Native synthetic application; business acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Opportunity detail and internal work to work towards this outcome: A current opportunity with accountable follow-up.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Deal stage and Won/Lost outcome are separate. A proposed value is not invoiced revenue."
+            "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers."
           ],
           "steps": [],
           "rows": [],
@@ -5233,9 +5231,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Customer, scope, deal owner, stage, next activity and commercial basis.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Open a permitted opportunity from Deals. Current ownership and opportunity edit permission govern edits. Activities, email, estimates and documents keep their own visibility rules."
           ],
           "steps": [],
           "rows": [],
@@ -5246,11 +5242,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Open the deal and confirm customer/site scope",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open a deal from filtered Board, List or Forecast.",
+            "Confirm customer/site and scope, then inspect the next Activity and Tasks.",
+            "Review correspondence, commercial evidence, exact documents and History."
           ],
           "rows": [],
           "headers": []
@@ -5258,42 +5252,21 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Opportunity detail and internal work · Page + tabs"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Overview: deal information, next action and linked Sales workflows.",
+            "Scope & sites: customer, location, contact, qualification and scope.",
+            "Activities and Tasks: existing shared work, with its independent owners.",
+            "Estimates & quotations, Correspondence, Documents and History: source records and evidence."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Customer, scope, deal owner, stage, next activity and commercial basis.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Unknown values remain unknown. Deal value is unweighted AUD excluding GST. Stage and Won/Lost are separate. Correspondence is a filtered, mailbox-owned source projection."
           ],
           "steps": [],
           "rows": [],
@@ -5302,13 +5275,13 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Open the deal and confirm customer/site scope",
-            "Review activities, estimating and documents together",
-            "Maintain the next action and record stage changes through available controls"
+            "Open a deal from filtered Board, List or Forecast.",
+            "Confirm customer/site and scope, then inspect the next Activity and Tasks.",
+            "Review correspondence, commercial evidence, exact documents and History.",
+            "Follow the current handover or aftercare link for that workflow.",
+            "Use Back to deals to retain the originating worklist filters."
           ],
           "rows": [],
           "headers": []
@@ -5317,9 +5290,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A current opportunity with accountable follow-up.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Deal stage and Won/Lost outcome are separate. A proposed value is not invoiced revenue."
+            "Deal Workspace links to handover records without duplicating their write controls. Won does not imply conversion, delivery or revenue."
           ],
           "steps": [],
           "rows": [],
@@ -5328,45 +5299,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading is a pending read; a failed read is not an empty result. Complete/partial source projections retain their own observation times. Draft, Submitted, Clarification requested/answered, Returned and Accepted have distinct meanings. Aftercare Open, Review completed and Closed are separate. Unknown receiving results block resubmission and closure."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare customer, scope, deal owner, stage, next activity and commercial basis. Follow the task sequence and check that a current opportunity with accountable follow-up. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Opportunity detail and internal work has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Deal stage and Won/Lost outcome are separate. A proposed value is not invoiced revenue."
+            "Synthetic normal case: a nursery controls review identifies a concern. Retain attributed feedback and an owned Activity, then submit a separate Service referral. A receiving case reference confirms acceptance, not resolution.",
+            "Synthetic exception: source evidence changes during receiver review. Preserve the earlier revision, return with a reason, prepare a successor and review its current source basis."
           ],
           "steps": [],
           "rows": [],
@@ -5375,45 +5320,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace."
           ],
           "steps": [],
           "rows": [],
@@ -5423,8 +5341,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "The retained HTML supplies task/visual intent. ADR-0046 and the implementation handover explain native source reconciliation. Use Customer, Activity, Service and Estimating source pages for their own commands."
           ],
           "steps": [],
           "rows": [],
@@ -5434,9 +5351,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
           ],
           "steps": [],
           "rows": [],
@@ -5452,9 +5367,13 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/crm/PPO-Deal-Workspace-r01.html",
-        "docs/blueprints/BP-03-crm.md"
+        "docs/blueprints/BP-03-crm.md",
+        "src/components/crm-screens.tsx",
+        "src/components/opportunity-workflows.tsx",
+        "src/components/opportunity-correspondence.tsx",
+        "docs/decisions/ADR-0046-sales-native-workflows.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Native Sales workflow, authority, source ownership, recovery and boundaries.",
       "document_id": "PPO-GUIDE-CR-01",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -5475,22 +5394,20 @@
       "title": "Sales-to-estimating handover",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native synthetic application; business acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Sales-to-estimating handover to work towards this outcome: The receiving owner accepts a defined estimating basis.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Saving a brief does not submit it, and submission does not establish acceptance."
+            "Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision."
           ],
           "steps": [],
           "rows": [],
@@ -5500,9 +5417,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Exact brief revision, customer/site, scope, exclusions and receiving estimator.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "The current deal owner needs opportunity edit access. The chosen receiver needs estimating.edit and source visibility. Prepare an open, owned and dated Activity linked to the Opportunity."
           ],
           "steps": [],
           "rows": [],
@@ -5513,11 +5428,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Prepare the submission with owned unknowns",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Choose the Opportunity and create a handover draft.",
+            "Complete the brief, date basis, next Activity and receiving owner; Save.",
+            "Read readiness and Submit the exact revision."
           ],
           "rows": [],
           "headers": []
@@ -5525,42 +5438,21 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Sales-to-estimating handover · Form + review page"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Sales preparation worklist: select a permitted deal and create its draft.",
+            "Brief: problem/outcome, included scope, exclusions, assumptions, unknowns, date, locations/equipment and exact evidence.",
+            "Review: Submit, Clarify, Answer, Resolve, Return and Accept remain separate.",
+            "History and comparison: source basis and immutable revisions. Estimating Intake shows submitted briefs."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Exact brief revision, customer/site, scope, exclusions and receiving estimator.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Save is not Submit. Submission freezes content. Accepted for estimating is not estimate or quotation approval. A later draft never replaces the previous submitted basis. Evidence identifies its native source and exact revision."
           ],
           "steps": [],
           "rows": [],
@@ -5569,13 +5461,14 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Prepare the submission with owned unknowns",
-            "Ask the receiving estimator to accept or return that exact brief",
-            "Resolve clarification and preserve superseded submissions"
+            "Choose the Opportunity and create a handover draft.",
+            "Complete the brief, date basis, next Activity and receiving owner; Save.",
+            "Read readiness and Submit the exact revision.",
+            "The receiver opens Estimating Intake and asks for clarification when needed.",
+            "Sales answers; the reviewer resolves before Accept, or returns with a reason and owned follow-up.",
+            "After return or acceptance, deliberately create and submit a successor; earlier evidence remains."
           ],
           "rows": [],
           "headers": []
@@ -5584,9 +5477,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The receiving owner accepts a defined estimating basis.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Saving a brief does not submit it, and submission does not establish acceptance."
+            "Acceptance records receiving evidence only. It does not create or approve an Estimate. The latest submitted revision remains the Intake basis while a successor is a draft."
           ],
           "steps": [],
           "rows": [],
@@ -5595,45 +5486,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading is a pending read; a failed read is not an empty result. Complete/partial source projections retain their own observation times. Draft, Submitted, Clarification requested/answered, Returned and Accepted have distinct meanings. Aftercare Open, Review completed and Closed are separate. Unknown receiving results block resubmission and closure."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare exact brief revision, customer/site, scope, exclusions and receiving estimator. Follow the task sequence and check that the receiving owner accepts a defined estimating basis. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Sales-to-estimating handover has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Saving a brief does not submit it, and submission does not establish acceptance."
+            "Synthetic normal case: a nursery controls review identifies a concern. Retain attributed feedback and an owned Activity, then submit a separate Service referral. A receiving case reference confirms acceptance, not resolution.",
+            "Synthetic exception: source evidence changes during receiver review. Preserve the earlier revision, return with a reason, prepare a successor and review its current source basis."
           ],
           "steps": [],
           "rows": [],
@@ -5642,45 +5507,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace."
           ],
           "steps": [],
           "rows": [],
@@ -5690,8 +5528,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "The retained HTML supplies task/visual intent. ADR-0046 and the implementation handover explain native source reconciliation. Use Customer, Activity, Service and Estimating source pages for their own commands."
           ],
           "steps": [],
           "rows": [],
@@ -5701,9 +5538,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
           ],
           "steps": [],
           "rows": [],
@@ -5717,9 +5552,13 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/estimating/sales-estimating-intake-preview-r02.html",
-        "docs/blueprints/BP-03-crm.md"
+        "docs/blueprints/BP-03-crm.md",
+        "src/components/sales-handover.tsx",
+        "src/sales/handover-service.ts",
+        "src/sales/handover-model.ts",
+        "docs/decisions/ADR-0046-sales-native-workflows.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Native Sales workflow, authority, source ownership, recovery and boundaries.",
       "document_id": "PPO-GUIDE-CR-02",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -5740,22 +5579,20 @@
       "title": "Won-deal receiving handover",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native synthetic application; business acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Won-deal receiving handover to work towards this outcome: Each committed item has a receiving owner.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Marking a deal Won does not automatically create an authorised project, work order or sales order."
+            "Prepare and receive a precise delivery handover while preserving the immutable Won handover-due obligation."
           ],
           "steps": [],
           "rows": [],
@@ -5765,9 +5602,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Accepted commercial revision, target domain and handover-due obligations.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Start with a Won opportunity. Preparation requires current deal ownership and edit access. A designated Projects or Service receiver needs its existing command capability and source visibility. Parts receiving has no implemented contract."
           ],
           "steps": [],
           "rows": [],
@@ -5778,11 +5613,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Identify what was accepted and which items need delivery",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open a Won deal and prepare the handover.",
+            "Record destination and exact routing basis, or retain Routing decision required.",
+            "Record delivery items, documents/revisions, open release prerequisites and owned next Activity; Save."
           ],
           "rows": [],
           "headers": []
@@ -5790,42 +5623,21 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Won-deal receiving handover · Page"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Won worklist: source deal and current receiving state.",
+            "Brief: selected delivery items, exact evidence, destination basis and release prerequisites.",
+            "Review: source fingerprint and independent return/accept decision.",
+            "History: immutable Won obligation, submitted revisions and successor evidence."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Accepted commercial revision, target domain and handover-due obligations.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Customer acceptance, CRM Won, conversion, receiving, work release, scheduling, delivery and Finance are separate. ES-05/06/07 outcomes remain unavailable on the audited main. No routing thresholds are inferred."
           ],
           "steps": [],
           "rows": [],
@@ -5834,13 +5646,14 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Identify what was accepted and which items need delivery",
-            "Review gaps with the receiving domain",
-            "Record item-level acceptance or an owned return reason"
+            "Open a Won deal and prepare the handover.",
+            "Record destination and exact routing basis, or retain Routing decision required.",
+            "Record delivery items, documents/revisions, open release prerequisites and owned next Activity; Save.",
+            "Submit for receiver review.",
+            "Return with a reason for a corrected successor where necessary.",
+            "Accept only the current reviewed source fingerprint; retain downstream release prerequisites."
           ],
           "rows": [],
           "headers": []
@@ -5849,9 +5662,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Each committed item has a receiving owner.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Marking a deal Won does not automatically create an authorised project, work order or sales order."
+            "Receiving creates no Project, Service work order, sales order, stock movement, booking or ERP/Finance transaction."
           ],
           "steps": [],
           "rows": [],
@@ -5860,45 +5671,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading is a pending read; a failed read is not an empty result. Complete/partial source projections retain their own observation times. Draft, Submitted, Clarification requested/answered, Returned and Accepted have distinct meanings. Aftercare Open, Review completed and Closed are separate. Unknown receiving results block resubmission and closure."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare accepted commercial revision, target domain and handover-due obligations. Follow the task sequence and check that each committed item has a receiving owner. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Won-deal receiving handover has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Marking a deal Won does not automatically create an authorised project, work order or sales order."
+            "Synthetic normal case: a nursery controls review identifies a concern. Retain attributed feedback and an owned Activity, then submit a separate Service referral. A receiving case reference confirms acceptance, not resolution.",
+            "Synthetic exception: source evidence changes during receiver review. Preserve the earlier revision, return with a reason, prepare a successor and review its current source basis."
           ],
           "steps": [],
           "rows": [],
@@ -5907,45 +5692,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace."
           ],
           "steps": [],
           "rows": [],
@@ -5955,8 +5713,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "The retained HTML supplies task/visual intent. ADR-0046 and the implementation handover explain native source reconciliation. Use Customer, Activity, Service and Estimating source pages for their own commands."
           ],
           "steps": [],
           "rows": [],
@@ -5966,9 +5723,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
           ],
           "steps": [],
           "rows": [],
@@ -5982,9 +5737,13 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/crm/PPO-Sales-to-Delivery-Handover-Workspace-r01.html",
-        "docs/blueprints/BP-03-crm.md"
+        "docs/blueprints/BP-03-crm.md",
+        "src/components/sales-handover.tsx",
+        "src/sales/handover-service.ts",
+        "src/sales/handover-model.ts",
+        "docs/decisions/ADR-0046-sales-native-workflows.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Native Sales workflow, authority, source ownership, recovery and boundaries.",
       "document_id": "PPO-GUIDE-CR-03",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -6005,22 +5764,20 @@
       "title": "Pipeline insights and forecast review",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Native synthetic application; business acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Pipeline insights and forecast review to work towards this outcome: The pipeline assessment states its population, unknowns and next actions.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Forecast values are not revenue. Missing values must not be treated as zero."
+            "Review stage history, next-action coverage and close-date movement over the same permitted result page as Deals."
           ],
           "steps": [],
           "rows": [],
@@ -6030,9 +5787,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Pipeline, view, filters, value basis, close dates and next actions.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Choose pipeline, company/site, owner, outcome and search filters. Read the observation time, count basis and complete/partial state before interpreting totals."
           ],
           "steps": [],
           "rows": [],
@@ -6043,11 +5798,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Use Board or List to inspect the same permitted worklist",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Apply the intended Deals filters.",
+            "Expand Pipeline insights and check the as-at, denominator and completeness.",
+            "Review stage ageing, next-action coverage and close-date movements."
           ],
           "rows": [],
           "headers": []
@@ -6055,42 +5808,21 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Pipeline insights and forecast review · Page or expanded panel"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Board, List, Forecast and Archive preserve their existing controls.",
+            "Pipeline insights expands above the existing worklist.",
+            "Coverage distinguishes known/unknown values and next-action states.",
+            "Deal drill-through links retain the selected worklist URL."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Pipeline, view, filters, value basis, close dates and next actions.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "The denominator is the returned page, not a whole-company forecast. Amounts are unweighted AUD excluding GST; null is not zero. Stage ageing uses recorded entry time. Date movements compare recorded snapshots; positive moves accumulate as slipped days. Missing history stays unknown."
           ],
           "steps": [],
           "rows": [],
@@ -6099,13 +5831,13 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Use Board or List to inspect the same permitted worklist",
-            "Use Forecast to review timing and known values",
-            "Review Archive separately from active opportunities"
+            "Apply the intended Deals filters.",
+            "Expand Pipeline insights and check the as-at, denominator and completeness.",
+            "Review stage ageing, next-action coverage and close-date movements.",
+            "Open Forecast to inspect expected-close buckets.",
+            "Drill into a deal for source evidence, then return to the filtered worklist."
           ],
           "rows": [],
           "headers": []
@@ -6114,9 +5846,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The pipeline assessment states its population, unknowns and next actions.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Forecast values are not revenue. Missing values must not be treated as zero."
+            "Insights are read-only arithmetic over authorised facts. No probabilities, forecast categories or financial policy are adopted."
           ],
           "steps": [],
           "rows": [],
@@ -6125,45 +5855,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading is a pending read; a failed read is not an empty result. Complete/partial source projections retain their own observation times. Draft, Submitted, Clarification requested/answered, Returned and Accepted have distinct meanings. Aftercare Open, Review completed and Closed are separate. Unknown receiving results block resubmission and closure."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare pipeline, view, filters, value basis, close dates and next actions. Follow the task sequence and check that the pipeline assessment states its population, unknowns and next actions. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Pipeline insights and forecast review has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Forecast values are not revenue. Missing values must not be treated as zero."
+            "Synthetic normal case: a nursery controls review identifies a concern. Retain attributed feedback and an owned Activity, then submit a separate Service referral. A receiving case reference confirms acceptance, not resolution.",
+            "Synthetic exception: source evidence changes during receiver review. Preserve the earlier revision, return with a reason, prepare a successor and review its current source basis."
           ],
           "steps": [],
           "rows": [],
@@ -6172,45 +5876,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace."
           ],
           "steps": [],
           "rows": [],
@@ -6220,8 +5897,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "The retained HTML supplies task/visual intent. ADR-0046 and the implementation handover explain native source reconciliation. Use Customer, Activity, Service and Estimating source pages for their own commands."
           ],
           "steps": [],
           "rows": [],
@@ -6231,9 +5907,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
           ],
           "steps": [],
           "rows": [],
@@ -6248,9 +5922,13 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/crm/ppo-deal-pipeline_r38.html",
-        "docs/blueprints/BP-03-crm.md"
+        "docs/blueprints/BP-03-crm.md",
+        "src/components/crm-insights.tsx",
+        "src/crm/insights.ts",
+        "src/crm/worklist.ts",
+        "docs/decisions/ADR-0046-sales-native-workflows.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Native Sales workflow, authority, source ownership, recovery and boundaries.",
       "document_id": "PPO-GUIDE-CR-04",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -6271,22 +5949,20 @@
       "title": "Sales aftercare and renewal worklist",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native synthetic application; business acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Sales aftercare and renewal worklist to work towards this outcome: Post-sale obligations and opportunities remain visible.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "A proposed renewal does not extend an agreement or resolve outstanding service obligations."
+            "Plan a customer review from an issued Service report and track commitments, Service concerns, training and commercial follow-up."
           ],
           "steps": [],
           "rows": [],
@@ -6296,9 +5972,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Installed outcome, review date, customer contact and renewal context.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Choose a visible issued Service report. This bounded native implementation supports that source; it does not manufacture delivered Project or Service Agreement facts. Internal history authority, source report visibility and account/review ownership govern editing."
           ],
           "steps": [],
           "rows": [],
@@ -6309,11 +5983,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Review what was delivered and any open issues",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Create aftercare from an issued report and choose responsible owners.",
+            "Record the date choice or exact commitment/rule, and refresh source preparation.",
+            "Record review date/method, participants, attributed statements and commitment dispositions."
           ],
           "rows": [],
           "headers": []
@@ -6321,42 +5993,23 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Sales aftercare and renewal worklist · Page"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Worklist: permitted reviews and eligible issued reports.",
+            "Review: date basis, preparation, participants/roles, attributed feedback and commitments.",
+            "Service: source cases and separate prepared/submitted/receiving outcomes.",
+            "Training: asset/configuration/material basis, arrangement, attendance, delivery and bounded assessment.",
+            "Commercial: existing-opportunity check, discussion and separate CRM handover.",
+            "History: immutable commands and deliberate corrections."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Installed outcome, review date, customer contact and renewal context.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "No default review interval or satisfaction score is adopted. Sourced dates require an exact rule reference/revision. A contact title does not confer purchasing authority. Training defaults to Not assessed with method/limits. Account-owner conflicts require explicit reconciliation. Each source projection retains its own freshness/completeness."
           ],
           "steps": [],
           "rows": [],
@@ -6365,13 +6018,15 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Review what was delivered and any open issues",
-            "Plan the aftercare contact or training follow-up",
-            "Record feedback and an owned renewal or support action"
+            "Create aftercare from an issued report and choose responsible owners.",
+            "Record the date choice or exact commitment/rule, and refresh source preparation.",
+            "Record review date/method, participants, attributed statements and commitment dispositions.",
+            "Carry obligations in owned dated shared Activities and complete the review.",
+            "Prepare Service or CRM referral, then submit separately; the authorised receiver records Accepted, Returned or Unknown and links the result.",
+            "Record each training step independently; inspect existing Opportunities before commercial follow-up.",
+            "Close only after source, receiving and owned-work guards pass. Use Correct review for later changes."
           ],
           "rows": [],
           "headers": []
@@ -6380,9 +6035,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Post-sale obligations and opportunities remain visible.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A proposed renewal does not extend an agreement or resolve outstanding service obligations."
+            "Service acceptance is not resolution. CRM acceptance links a separately created qualified source record and does not perform qualification. Proposed renewal changes no agreement; training arrangement makes no booking; this workflow sends no message or invitation."
           ],
           "steps": [],
           "rows": [],
@@ -6391,45 +6044,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading is a pending read; a failed read is not an empty result. Complete/partial source projections retain their own observation times. Draft, Submitted, Clarification requested/answered, Returned and Accepted have distinct meanings. Aftercare Open, Review completed and Closed are separate. Unknown receiving results block resubmission and closure."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare installed outcome, review date, customer contact and renewal context. Follow the task sequence and check that post-sale obligations and opportunities remain visible. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Sales aftercare and renewal worklist has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A proposed renewal does not extend an agreement or resolve outstanding service obligations."
+            "Synthetic normal case: a nursery controls review identifies a concern. Retain attributed feedback and an owned Activity, then submit a separate Service referral. A receiving case reference confirms acceptance, not resolution.",
+            "Synthetic exception: source evidence changes during receiver review. Preserve the earlier revision, return with a reason, prepare a successor and review its current source basis."
           ],
           "steps": [],
           "rows": [],
@@ -6438,45 +6065,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace."
           ],
           "steps": [],
           "rows": [],
@@ -6486,8 +6086,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "The retained HTML supplies task/visual intent. ADR-0046 and the implementation handover explain native source reconciliation. Use Customer, Activity, Service and Estimating source pages for their own commands."
           ],
           "steps": [],
           "rows": [],
@@ -6497,9 +6096,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
           ],
           "steps": [],
           "rows": [],
@@ -6513,9 +6110,13 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist-r01.html",
-        "docs/blueprints/BP-03-crm.md"
+        "docs/blueprints/BP-03-crm.md",
+        "src/components/sales-aftercare.tsx",
+        "src/sales/aftercare-service.ts",
+        "src/sales/aftercare-model.ts",
+        "docs/decisions/ADR-0046-sales-native-workflows.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Native Sales workflow, authority, source ownership, recovery and boundaries.",
       "document_id": "PPO-GUIDE-CR-05",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -47613,22 +47214,20 @@
       "title": "Opportunity detail",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native synthetic application; business acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Opportunity detail to work towards this outcome: A current opportunity with accountable follow-up.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Deal stage and Won/Lost outcome are separate. A proposed value is not invoiced revenue."
+            "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers."
           ],
           "steps": [],
           "rows": [],
@@ -47638,9 +47237,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Customer, scope, deal owner, stage, next activity and commercial basis.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Open a permitted opportunity from Deals. Current ownership and opportunity edit permission govern edits. Activities, email, estimates and documents keep their own visibility rules."
           ],
           "steps": [],
           "rows": [],
@@ -47651,11 +47248,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Confirm the record reference and customer/site context in this record workspace.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open a deal from filtered Board, List or Forecast.",
+            "Confirm customer/site and scope, then inspect the next Activity and Tasks.",
+            "Review correspondence, commercial evidence, exact documents and History."
           ],
           "rows": [],
           "headers": []
@@ -47663,42 +47258,21 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Opportunity detail · Record workspace"
-            ],
-            [
-              "Application links",
-              "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Overview: deal information, next action and linked Sales workflows.",
+            "Scope & sites: customer, location, contact, qualification and scope.",
+            "Activities and Tasks: existing shared work, with its independent owners.",
+            "Estimates & quotations, Correspondence, Documents and History: source records and evidence."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Customer, scope, deal owner, stage, next activity and commercial basis.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Unknown values remain unknown. Deal value is unweighted AUD excluding GST. Stage and Won/Lost are separate. Correspondence is a filtered, mailbox-owned source projection."
           ],
           "steps": [],
           "rows": [],
@@ -47707,14 +47281,13 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Confirm the record reference and customer/site context in this record workspace.",
-            "Open the deal and confirm customer/site scope",
-            "Review activities, estimating and documents together",
-            "Maintain the next action and record stage changes through available controls"
+            "Open a deal from filtered Board, List or Forecast.",
+            "Confirm customer/site and scope, then inspect the next Activity and Tasks.",
+            "Review correspondence, commercial evidence, exact documents and History.",
+            "Follow the current handover or aftercare link for that workflow.",
+            "Use Back to deals to retain the originating worklist filters."
           ],
           "rows": [],
           "headers": []
@@ -47723,9 +47296,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A current opportunity with accountable follow-up.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Deal stage and Won/Lost outcome are separate. A proposed value is not invoiced revenue."
+            "Deal Workspace links to handover records without duplicating their write controls. Won does not imply conversion, delivery or revenue."
           ],
           "steps": [],
           "rows": [],
@@ -47734,45 +47305,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading is a pending read; a failed read is not an empty result. Complete/partial source projections retain their own observation times. Draft, Submitted, Clarification requested/answered, Returned and Accepted have distinct meanings. Aftercare Open, Review completed and Closed are separate. Unknown receiving results block resubmission and closure."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare customer, scope, deal owner, stage, next activity and commercial basis. Follow the task sequence and check that a current opportunity with accountable follow-up. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Opportunity detail has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Deal stage and Won/Lost outcome are separate. A proposed value is not invoiced revenue."
+            "Synthetic normal case: a nursery controls review identifies a concern. Retain attributed feedback and an owned Activity, then submit a separate Service referral. A receiving case reference confirms acceptance, not resolution.",
+            "Synthetic exception: source evidence changes during receiver review. Preserve the earlier revision, return with a reason, prepare a successor and review its current source basis."
           ],
           "steps": [],
           "rows": [],
@@ -47781,45 +47326,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace."
           ],
           "steps": [],
           "rows": [],
@@ -47829,8 +47347,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "The retained HTML supplies task/visual intent. ADR-0046 and the implementation handover explain native source reconciliation. Use Customer, Activity, Service and Estimating source pages for their own commands."
           ],
           "steps": [],
           "rows": [],
@@ -47840,9 +47357,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
           ],
           "steps": [],
           "rows": [],
@@ -47855,9 +47370,13 @@
       "source_paths": [
         "src/app/(business)/sales/opportunities/[id]/page.tsx",
         "docs/reference/ui/crm/PPO-Deal-Workspace-r01.html",
-        "docs/blueprints/BP-03-crm.md"
+        "docs/blueprints/BP-03-crm.md",
+        "src/components/crm-screens.tsx",
+        "src/components/opportunity-workflows.tsx",
+        "src/components/opportunity-correspondence.tsx",
+        "docs/decisions/ADR-0046-sales-native-workflows.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Native Sales workflow, authority, source ownership, recovery and boundaries.",
       "document_id": "PPO-GUIDE-PAGE-SALES-OPPORTUNITIES-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -48139,22 +47658,20 @@
       "title": "Opportunities · Board / List / Forecast / Archive",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native synthetic application; business acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Opportunities · Board / List / Forecast / Archive to work towards this outcome: The pipeline assessment states its population, unknowns and next actions.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Forecast values are not revenue. Missing values must not be treated as zero."
+            "Review stage history, next-action coverage and close-date movement over the same permitted result page as Deals."
           ],
           "steps": [],
           "rows": [],
@@ -48164,9 +47681,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Pipeline, view, filters, value basis, close dates and next actions.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Choose pipeline, company/site, owner, outcome and search filters. Read the observation time, count basis and complete/partial state before interpreting totals."
           ],
           "steps": [],
           "rows": [],
@@ -48177,11 +47692,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Use Board or List to inspect the same permitted worklist",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Apply the intended Deals filters.",
+            "Expand Pipeline insights and check the as-at, denominator and completeness.",
+            "Review stage ageing, next-action coverage and close-date movements."
           ],
           "rows": [],
           "headers": []
@@ -48189,42 +47702,21 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Opportunities · Board / List / Forecast / Archive · Register / workspace"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Board, List, Forecast and Archive preserve their existing controls.",
+            "Pipeline insights expands above the existing worklist.",
+            "Coverage distinguishes known/unknown values and next-action states.",
+            "Deal drill-through links retain the selected worklist URL."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Pipeline, view, filters, value basis, close dates and next actions.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "The denominator is the returned page, not a whole-company forecast. Amounts are unweighted AUD excluding GST; null is not zero. Stage ageing uses recorded entry time. Date movements compare recorded snapshots; positive moves accumulate as slipped days. Missing history stays unknown."
           ],
           "steps": [],
           "rows": [],
@@ -48233,13 +47725,13 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Use Board or List to inspect the same permitted worklist",
-            "Use Forecast to review timing and known values",
-            "Review Archive separately from active opportunities"
+            "Apply the intended Deals filters.",
+            "Expand Pipeline insights and check the as-at, denominator and completeness.",
+            "Review stage ageing, next-action coverage and close-date movements.",
+            "Open Forecast to inspect expected-close buckets.",
+            "Drill into a deal for source evidence, then return to the filtered worklist."
           ],
           "rows": [],
           "headers": []
@@ -48248,9 +47740,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The pipeline assessment states its population, unknowns and next actions.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Forecast values are not revenue. Missing values must not be treated as zero."
+            "Insights are read-only arithmetic over authorised facts. No probabilities, forecast categories or financial policy are adopted."
           ],
           "steps": [],
           "rows": [],
@@ -48259,45 +47749,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading is a pending read; a failed read is not an empty result. Complete/partial source projections retain their own observation times. Draft, Submitted, Clarification requested/answered, Returned and Accepted have distinct meanings. Aftercare Open, Review completed and Closed are separate. Unknown receiving results block resubmission and closure."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare pipeline, view, filters, value basis, close dates and next actions. Follow the task sequence and check that the pipeline assessment states its population, unknowns and next actions. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Opportunities · Board / List / Forecast / Archive has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Forecast values are not revenue. Missing values must not be treated as zero."
+            "Synthetic normal case: a nursery controls review identifies a concern. Retain attributed feedback and an owned Activity, then submit a separate Service referral. A receiving case reference confirms acceptance, not resolution.",
+            "Synthetic exception: source evidence changes during receiver review. Preserve the earlier revision, return with a reason, prepare a successor and review its current source basis."
           ],
           "steps": [],
           "rows": [],
@@ -48306,45 +47770,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace."
           ],
           "steps": [],
           "rows": [],
@@ -48354,8 +47791,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "The retained HTML supplies task/visual intent. ADR-0046 and the implementation handover explain native source reconciliation. Use Customer, Activity, Service and Estimating source pages for their own commands."
           ],
           "steps": [],
           "rows": [],
@@ -48365,9 +47801,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
           ],
           "steps": [],
           "rows": [],
@@ -48380,9 +47814,13 @@
       "source_paths": [
         "src/app/(business)/sales/opportunities/page.tsx",
         "docs/reference/ui/crm/ppo-deal-pipeline_r38.html",
-        "docs/blueprints/BP-03-crm.md"
+        "docs/blueprints/BP-03-crm.md",
+        "src/components/crm-insights.tsx",
+        "src/crm/insights.ts",
+        "src/crm/worklist.ts",
+        "docs/decisions/ADR-0046-sales-native-workflows.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Native Sales workflow, authority, source ownership, recovery and boundaries.",
       "document_id": "PPO-GUIDE-PAGE-SALES-OPPORTUNITIES",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -69069,6 +68507,1174 @@
         }
       ],
       "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending."
+    },
+    {
+      "guide_key": "guide.route-estimating-intake",
+      "entry_key": "route:/estimating/intake",
+      "title": "Estimating Intake",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic application; business acceptance pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "The current deal owner needs opportunity edit access. The chosen receiver needs estimating.edit and source visibility. Prepare an open, owned and dated Activity linked to the Opportunity."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Confirm your Estimating identity and source visibility.",
+            "Choose a submitted brief and open its linked record.",
+            "Review frozen evidence and clarification, then record an explicit receiving decision."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "This receiving queue shows only submitted briefs. Open the linked handover record to review its exact revision, source changes and outstanding clarification. Draft preparation is available from the Sales preparation link.",
+            "Sales preparation worklist: select a permitted deal and create its draft.",
+            "Brief: problem/outcome, included scope, exclusions, assumptions, unknowns, date, locations/equipment and exact evidence.",
+            "Review: Submit, Clarify, Answer, Resolve, Return and Accept remain separate.",
+            "History and comparison: source basis and immutable revisions. Estimating Intake shows submitted briefs."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Save is not Submit. Submission freezes content. Accepted for estimating is not estimate or quotation approval. A later draft never replaces the previous submitted basis. Evidence identifies its native source and exact revision."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [],
+          "steps": [
+            "Choose the Opportunity and create a handover draft.",
+            "Complete the brief, date basis, next Activity and receiving owner; Save.",
+            "Read readiness and Submit the exact revision.",
+            "The receiver opens Estimating Intake and asks for clarification when needed.",
+            "Sales answers; the reviewer resolves before Accept, or returns with a reason and owned follow-up.",
+            "After return or acceptance, deliberately create and submit a successor; earlier evidence remains."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Acceptance records receiving evidence only. It does not create or approve an Estimate. The latest submitted revision remains the Intake basis while a successor is a draft."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Loading is a pending read; a failed read is not an empty result. Complete/partial source projections retain their own observation times. Draft, Submitted, Clarification requested/answered, Returned and Accepted have distinct meanings. Aftercare Open, Review completed and Closed are separate. Unknown receiving results block resubmission and closure."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "Synthetic normal case: a nursery controls review identifies a concern. Retain attributed feedback and an owned Activity, then submit a separate Service referral. A receiving case reference confirms acceptance, not resolution.",
+            "Synthetic exception: source evidence changes during receiver review. Preserve the earlier revision, return with a reason, prepare a successor and review its current source basis."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "The retained HTML supplies task/visual intent. ADR-0046 and the implementation handover explain native source reconciliation. Use Customer, Activity, Service and Estimating source pages for their own commands."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
+      "change_summary": "Native Sales workflow, authority, source ownership, recovery and boundaries.",
+      "source_paths": [
+        "src/components/sales-handover.tsx",
+        "src/sales/handover-service.ts",
+        "src/sales/handover-model.ts",
+        "docs/decisions/ADR-0046-sales-native-workflows.md"
+      ]
+    },
+    {
+      "guide_key": "guide.route-sales-aftercare-id",
+      "entry_key": "route:/sales/aftercare/[id]",
+      "title": "Sales aftercare and renewal worklist record",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic application; business acceptance pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Plan a customer review from an issued Service report and track commitments, Service concerns, training and commercial follow-up."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Choose a visible issued Service report. This bounded native implementation supports that source; it does not manufacture delivered Project or Service Agreement facts. Internal history authority, source report visibility and account/review ownership govern editing."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Create aftercare from an issued report and choose responsible owners.",
+            "Record the date choice or exact commitment/rule, and refresh source preparation.",
+            "Record review date/method, participants, attributed statements and commitment dispositions."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "This record workspace owns the workflow commands and retained evidence. The worklist link returns to the permitted collection; source links open their independent owners.",
+            "Worklist: permitted reviews and eligible issued reports.",
+            "Review: date basis, preparation, participants/roles, attributed feedback and commitments.",
+            "Service: source cases and separate prepared/submitted/receiving outcomes.",
+            "Training: asset/configuration/material basis, arrangement, attendance, delivery and bounded assessment.",
+            "Commercial: existing-opportunity check, discussion and separate CRM handover.",
+            "History: immutable commands and deliberate corrections."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "No default review interval or satisfaction score is adopted. Sourced dates require an exact rule reference/revision. A contact title does not confer purchasing authority. Training defaults to Not assessed with method/limits. Account-owner conflicts require explicit reconciliation. Each source projection retains its own freshness/completeness."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [],
+          "steps": [
+            "Create aftercare from an issued report and choose responsible owners.",
+            "Record the date choice or exact commitment/rule, and refresh source preparation.",
+            "Record review date/method, participants, attributed statements and commitment dispositions.",
+            "Carry obligations in owned dated shared Activities and complete the review.",
+            "Prepare Service or CRM referral, then submit separately; the authorised receiver records Accepted, Returned or Unknown and links the result.",
+            "Record each training step independently; inspect existing Opportunities before commercial follow-up.",
+            "Close only after source, receiving and owned-work guards pass. Use Correct review for later changes."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Service acceptance is not resolution. CRM acceptance links a separately created qualified source record and does not perform qualification. Proposed renewal changes no agreement; training arrangement makes no booking; this workflow sends no message or invitation."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Loading is a pending read; a failed read is not an empty result. Complete/partial source projections retain their own observation times. Draft, Submitted, Clarification requested/answered, Returned and Accepted have distinct meanings. Aftercare Open, Review completed and Closed are separate. Unknown receiving results block resubmission and closure."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "Synthetic normal case: a nursery controls review identifies a concern. Retain attributed feedback and an owned Activity, then submit a separate Service referral. A receiving case reference confirms acceptance, not resolution.",
+            "Synthetic exception: source evidence changes during receiver review. Preserve the earlier revision, return with a reason, prepare a successor and review its current source basis."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "The retained HTML supplies task/visual intent. ADR-0046 and the implementation handover explain native source reconciliation. Use Customer, Activity, Service and Estimating source pages for their own commands."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
+      "change_summary": "Native Sales workflow, authority, source ownership, recovery and boundaries.",
+      "source_paths": [
+        "src/components/sales-aftercare.tsx",
+        "src/sales/aftercare-service.ts",
+        "src/sales/aftercare-model.ts",
+        "docs/decisions/ADR-0046-sales-native-workflows.md"
+      ]
+    },
+    {
+      "guide_key": "guide.route-sales-aftercare",
+      "entry_key": "route:/sales/aftercare",
+      "title": "Sales aftercare and renewal worklist worklist",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic application; business acceptance pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Plan a customer review from an issued Service report and track commitments, Service concerns, training and commercial follow-up."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Choose a visible issued Service report. This bounded native implementation supports that source; it does not manufacture delivered Project or Service Agreement facts. Internal history authority, source report visibility and account/review ownership govern editing."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Create aftercare from an issued report and choose responsible owners.",
+            "Record the date choice or exact commitment/rule, and refresh source preparation.",
+            "Record review date/method, participants, attributed statements and commitment dispositions."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "This worklist selects a permitted source and creates or opens a workflow record. Its linked record workspace contains the detailed fields, review commands, recovery and history described below.",
+            "Worklist: permitted reviews and eligible issued reports.",
+            "Review: date basis, preparation, participants/roles, attributed feedback and commitments.",
+            "Service: source cases and separate prepared/submitted/receiving outcomes.",
+            "Training: asset/configuration/material basis, arrangement, attendance, delivery and bounded assessment.",
+            "Commercial: existing-opportunity check, discussion and separate CRM handover.",
+            "History: immutable commands and deliberate corrections."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "No default review interval or satisfaction score is adopted. Sourced dates require an exact rule reference/revision. A contact title does not confer purchasing authority. Training defaults to Not assessed with method/limits. Account-owner conflicts require explicit reconciliation. Each source projection retains its own freshness/completeness."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [],
+          "steps": [
+            "Create aftercare from an issued report and choose responsible owners.",
+            "Record the date choice or exact commitment/rule, and refresh source preparation.",
+            "Record review date/method, participants, attributed statements and commitment dispositions.",
+            "Carry obligations in owned dated shared Activities and complete the review.",
+            "Prepare Service or CRM referral, then submit separately; the authorised receiver records Accepted, Returned or Unknown and links the result.",
+            "Record each training step independently; inspect existing Opportunities before commercial follow-up.",
+            "Close only after source, receiving and owned-work guards pass. Use Correct review for later changes."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Service acceptance is not resolution. CRM acceptance links a separately created qualified source record and does not perform qualification. Proposed renewal changes no agreement; training arrangement makes no booking; this workflow sends no message or invitation."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Loading is a pending read; a failed read is not an empty result. Complete/partial source projections retain their own observation times. Draft, Submitted, Clarification requested/answered, Returned and Accepted have distinct meanings. Aftercare Open, Review completed and Closed are separate. Unknown receiving results block resubmission and closure."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "Synthetic normal case: a nursery controls review identifies a concern. Retain attributed feedback and an owned Activity, then submit a separate Service referral. A receiving case reference confirms acceptance, not resolution.",
+            "Synthetic exception: source evidence changes during receiver review. Preserve the earlier revision, return with a reason, prepare a successor and review its current source basis."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "The retained HTML supplies task/visual intent. ADR-0046 and the implementation handover explain native source reconciliation. Use Customer, Activity, Service and Estimating source pages for their own commands."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
+      "change_summary": "Native Sales workflow, authority, source ownership, recovery and boundaries.",
+      "source_paths": [
+        "src/components/sales-aftercare.tsx",
+        "src/sales/aftercare-service.ts",
+        "src/sales/aftercare-model.ts",
+        "docs/decisions/ADR-0046-sales-native-workflows.md"
+      ]
+    },
+    {
+      "guide_key": "guide.route-sales-handoffs-estimating-id",
+      "entry_key": "route:/sales/handoffs/estimating/[id]",
+      "title": "Sales-to-estimating handover record",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic application; business acceptance pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "The current deal owner needs opportunity edit access. The chosen receiver needs estimating.edit and source visibility. Prepare an open, owned and dated Activity linked to the Opportunity."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Choose the Opportunity and create a handover draft.",
+            "Complete the brief, date basis, next Activity and receiving owner; Save.",
+            "Read readiness and Submit the exact revision."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "This record workspace owns the workflow commands and retained evidence. The worklist link returns to the permitted collection; source links open their independent owners.",
+            "Sales preparation worklist: select a permitted deal and create its draft.",
+            "Brief: problem/outcome, included scope, exclusions, assumptions, unknowns, date, locations/equipment and exact evidence.",
+            "Review: Submit, Clarify, Answer, Resolve, Return and Accept remain separate.",
+            "History and comparison: source basis and immutable revisions. Estimating Intake shows submitted briefs."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Save is not Submit. Submission freezes content. Accepted for estimating is not estimate or quotation approval. A later draft never replaces the previous submitted basis. Evidence identifies its native source and exact revision."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [],
+          "steps": [
+            "Choose the Opportunity and create a handover draft.",
+            "Complete the brief, date basis, next Activity and receiving owner; Save.",
+            "Read readiness and Submit the exact revision.",
+            "The receiver opens Estimating Intake and asks for clarification when needed.",
+            "Sales answers; the reviewer resolves before Accept, or returns with a reason and owned follow-up.",
+            "After return or acceptance, deliberately create and submit a successor; earlier evidence remains."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Acceptance records receiving evidence only. It does not create or approve an Estimate. The latest submitted revision remains the Intake basis while a successor is a draft."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Loading is a pending read; a failed read is not an empty result. Complete/partial source projections retain their own observation times. Draft, Submitted, Clarification requested/answered, Returned and Accepted have distinct meanings. Aftercare Open, Review completed and Closed are separate. Unknown receiving results block resubmission and closure."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "Synthetic normal case: a nursery controls review identifies a concern. Retain attributed feedback and an owned Activity, then submit a separate Service referral. A receiving case reference confirms acceptance, not resolution.",
+            "Synthetic exception: source evidence changes during receiver review. Preserve the earlier revision, return with a reason, prepare a successor and review its current source basis."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "The retained HTML supplies task/visual intent. ADR-0046 and the implementation handover explain native source reconciliation. Use Customer, Activity, Service and Estimating source pages for their own commands."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
+      "change_summary": "Native Sales workflow, authority, source ownership, recovery and boundaries.",
+      "source_paths": [
+        "src/components/sales-handover.tsx",
+        "src/sales/handover-service.ts",
+        "src/sales/handover-model.ts",
+        "docs/decisions/ADR-0046-sales-native-workflows.md"
+      ]
+    },
+    {
+      "guide_key": "guide.route-sales-handoffs-estimating",
+      "entry_key": "route:/sales/handoffs/estimating",
+      "title": "Sales-to-estimating handover worklist",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic application; business acceptance pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "The current deal owner needs opportunity edit access. The chosen receiver needs estimating.edit and source visibility. Prepare an open, owned and dated Activity linked to the Opportunity."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Choose the Opportunity and create a handover draft.",
+            "Complete the brief, date basis, next Activity and receiving owner; Save.",
+            "Read readiness and Submit the exact revision."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "This worklist selects a permitted source and creates or opens a workflow record. Its linked record workspace contains the detailed fields, review commands, recovery and history described below.",
+            "Sales preparation worklist: select a permitted deal and create its draft.",
+            "Brief: problem/outcome, included scope, exclusions, assumptions, unknowns, date, locations/equipment and exact evidence.",
+            "Review: Submit, Clarify, Answer, Resolve, Return and Accept remain separate.",
+            "History and comparison: source basis and immutable revisions. Estimating Intake shows submitted briefs."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Save is not Submit. Submission freezes content. Accepted for estimating is not estimate or quotation approval. A later draft never replaces the previous submitted basis. Evidence identifies its native source and exact revision."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [],
+          "steps": [
+            "Choose the Opportunity and create a handover draft.",
+            "Complete the brief, date basis, next Activity and receiving owner; Save.",
+            "Read readiness and Submit the exact revision.",
+            "The receiver opens Estimating Intake and asks for clarification when needed.",
+            "Sales answers; the reviewer resolves before Accept, or returns with a reason and owned follow-up.",
+            "After return or acceptance, deliberately create and submit a successor; earlier evidence remains."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Acceptance records receiving evidence only. It does not create or approve an Estimate. The latest submitted revision remains the Intake basis while a successor is a draft."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Loading is a pending read; a failed read is not an empty result. Complete/partial source projections retain their own observation times. Draft, Submitted, Clarification requested/answered, Returned and Accepted have distinct meanings. Aftercare Open, Review completed and Closed are separate. Unknown receiving results block resubmission and closure."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "Synthetic normal case: a nursery controls review identifies a concern. Retain attributed feedback and an owned Activity, then submit a separate Service referral. A receiving case reference confirms acceptance, not resolution.",
+            "Synthetic exception: source evidence changes during receiver review. Preserve the earlier revision, return with a reason, prepare a successor and review its current source basis."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "The retained HTML supplies task/visual intent. ADR-0046 and the implementation handover explain native source reconciliation. Use Customer, Activity, Service and Estimating source pages for their own commands."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
+      "change_summary": "Native Sales workflow, authority, source ownership, recovery and boundaries.",
+      "source_paths": [
+        "src/components/sales-handover.tsx",
+        "src/sales/handover-service.ts",
+        "src/sales/handover-model.ts",
+        "docs/decisions/ADR-0046-sales-native-workflows.md"
+      ]
+    },
+    {
+      "guide_key": "guide.route-sales-handoffs-won-id",
+      "entry_key": "route:/sales/handoffs/won/[id]",
+      "title": "Won-deal receiving handover record",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic application; business acceptance pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Prepare and receive a precise delivery handover while preserving the immutable Won handover-due obligation."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Start with a Won opportunity. Preparation requires current deal ownership and edit access. A designated Projects or Service receiver needs its existing command capability and source visibility. Parts receiving has no implemented contract."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Open a Won deal and prepare the handover.",
+            "Record destination and exact routing basis, or retain Routing decision required.",
+            "Record delivery items, documents/revisions, open release prerequisites and owned next Activity; Save."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "This record workspace owns the workflow commands and retained evidence. The worklist link returns to the permitted collection; source links open their independent owners.",
+            "Won worklist: source deal and current receiving state.",
+            "Brief: selected delivery items, exact evidence, destination basis and release prerequisites.",
+            "Review: source fingerprint and independent return/accept decision.",
+            "History: immutable Won obligation, submitted revisions and successor evidence."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Customer acceptance, CRM Won, conversion, receiving, work release, scheduling, delivery and Finance are separate. ES-05/06/07 outcomes remain unavailable on the audited main. No routing thresholds are inferred."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [],
+          "steps": [
+            "Open a Won deal and prepare the handover.",
+            "Record destination and exact routing basis, or retain Routing decision required.",
+            "Record delivery items, documents/revisions, open release prerequisites and owned next Activity; Save.",
+            "Submit for receiver review.",
+            "Return with a reason for a corrected successor where necessary.",
+            "Accept only the current reviewed source fingerprint; retain downstream release prerequisites."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Receiving creates no Project, Service work order, sales order, stock movement, booking or ERP/Finance transaction."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Loading is a pending read; a failed read is not an empty result. Complete/partial source projections retain their own observation times. Draft, Submitted, Clarification requested/answered, Returned and Accepted have distinct meanings. Aftercare Open, Review completed and Closed are separate. Unknown receiving results block resubmission and closure."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "Synthetic normal case: a nursery controls review identifies a concern. Retain attributed feedback and an owned Activity, then submit a separate Service referral. A receiving case reference confirms acceptance, not resolution.",
+            "Synthetic exception: source evidence changes during receiver review. Preserve the earlier revision, return with a reason, prepare a successor and review its current source basis."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "The retained HTML supplies task/visual intent. ADR-0046 and the implementation handover explain native source reconciliation. Use Customer, Activity, Service and Estimating source pages for their own commands."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
+      "change_summary": "Native Sales workflow, authority, source ownership, recovery and boundaries.",
+      "source_paths": [
+        "src/components/sales-handover.tsx",
+        "src/sales/handover-service.ts",
+        "src/sales/handover-model.ts",
+        "docs/decisions/ADR-0046-sales-native-workflows.md"
+      ]
+    },
+    {
+      "guide_key": "guide.route-sales-handoffs-won",
+      "entry_key": "route:/sales/handoffs/won",
+      "title": "Won-deal receiving handover worklist",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic application; business acceptance pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Prepare and receive a precise delivery handover while preserving the immutable Won handover-due obligation."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Start with a Won opportunity. Preparation requires current deal ownership and edit access. A designated Projects or Service receiver needs its existing command capability and source visibility. Parts receiving has no implemented contract."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Open a Won deal and prepare the handover.",
+            "Record destination and exact routing basis, or retain Routing decision required.",
+            "Record delivery items, documents/revisions, open release prerequisites and owned next Activity; Save."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "This worklist selects a permitted source and creates or opens a workflow record. Its linked record workspace contains the detailed fields, review commands, recovery and history described below.",
+            "Won worklist: source deal and current receiving state.",
+            "Brief: selected delivery items, exact evidence, destination basis and release prerequisites.",
+            "Review: source fingerprint and independent return/accept decision.",
+            "History: immutable Won obligation, submitted revisions and successor evidence."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Customer acceptance, CRM Won, conversion, receiving, work release, scheduling, delivery and Finance are separate. ES-05/06/07 outcomes remain unavailable on the audited main. No routing thresholds are inferred."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [],
+          "steps": [
+            "Open a Won deal and prepare the handover.",
+            "Record destination and exact routing basis, or retain Routing decision required.",
+            "Record delivery items, documents/revisions, open release prerequisites and owned next Activity; Save.",
+            "Submit for receiver review.",
+            "Return with a reason for a corrected successor where necessary.",
+            "Accept only the current reviewed source fingerprint; retain downstream release prerequisites."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Receiving creates no Project, Service work order, sales order, stock movement, booking or ERP/Finance transaction."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Loading is a pending read; a failed read is not an empty result. Complete/partial source projections retain their own observation times. Draft, Submitted, Clarification requested/answered, Returned and Accepted have distinct meanings. Aftercare Open, Review completed and Closed are separate. Unknown receiving results block resubmission and closure."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "Synthetic normal case: a nursery controls review identifies a concern. Retain attributed feedback and an owned Activity, then submit a separate Service referral. A receiving case reference confirms acceptance, not resolution.",
+            "Synthetic exception: source evidence changes during receiver review. Preserve the earlier revision, return with a reason, prepare a successor and review its current source basis."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "The retained HTML supplies task/visual intent. ADR-0046 and the implementation handover explain native source reconciliation. Use Customer, Activity, Service and Estimating source pages for their own commands."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
+      "change_summary": "Native Sales workflow, authority, source ownership, recovery and boundaries.",
+      "source_paths": [
+        "src/components/sales-handover.tsx",
+        "src/sales/handover-service.ts",
+        "src/sales/handover-model.ts",
+        "docs/decisions/ADR-0046-sales-native-workflows.md"
+      ]
     }
   ]
 }
