@@ -61,7 +61,7 @@ jobs:
           npm run db:seed
           npm run db:health
       - name: Scoped commands, evidence, concurrency and additive upgrade
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/engineering.test.ts tests/database/quality-upgrade.test.ts tests/database/desktop-shell.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/engineering.test.ts tests/database/engineering-control.test.ts tests/database/engineering-materials.test.ts tests/database/engineering-changes.test.ts tests/database/quality-upgrade.test.ts tests/database/desktop-shell.test.ts
       - name: Real HTTP and saved desktop and phone journeys
         run: npx playwright test --config=playwright.compiled.config.ts tests/browser/engineering.spec.ts --output verification-evidence/engineering-browser --reporter=list
       - name: Retain bounded synthetic verification evidence

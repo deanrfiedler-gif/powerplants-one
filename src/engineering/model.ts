@@ -14,6 +14,13 @@ export const coordinationStates = [
 export type EngineeringState = (typeof coordinationStates)[number];
 export type LinkKind = "Project" | "Opportunity";
 export type EngineeringPackage = {
+  technical?: {
+    deliverables: number;
+    blocked: number;
+    author_waiting: number;
+    reviews: number;
+    released: number;
+  };
   id: string;
   display_number: string;
   version: number;

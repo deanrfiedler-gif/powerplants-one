@@ -7,6 +7,7 @@ import { createResolutionAuthority as fertigationCreateResolutionAuthority } fro
 import { acceptedAuthority as specialistAcceptedAuthority } from "../estimating/specialist/context";
 import { receiptAuthority as acceptanceReceiptAuthority } from "../projects/acceptance/commands";
 import { engineeringRow } from "../engineering/service";
+import { receiptAuthority as engineeringControlReceiptAuthority } from "../engineering/control/context";
 import { materialReceiptAuthority } from "../engineering/materials/commands";
 import { changeReceiptAuthority } from "../engineering/changes/commands";
 import { commissioningReceiptAuthority } from "../engineering/commissioning/commands";
@@ -90,7 +91,8 @@ export async function readOperation(
     await quoteContext(client,p,r.record_id,"estimating.quote.prepare");
     await quoteContext(client,p,r.record_id);
   } else if (r.object_type === "EngineeringPackage") {
-    await engineeringRow(client, p, r.record_id, r.command === "CreateEngineeringRequest" ? "engineering.create" : "engineering.edit");
+    if (r.command?.startsWith("EngineeringControl:")) await engineeringControlReceiptAuthority(client,p,r.record_id,operation_id);
+    else await engineeringRow(client, p, r.record_id, r.command === "CreateEngineeringRequest" ? "engineering.create" : "engineering.edit");
   } else if (r.object_type === "EngineeringChange") {
     // EN-07 originals: present scope and the same duty the command needed, before the receipt is disclosed.
     await changeReceiptAuthority(client, p, r.record_id, r.command);
