@@ -4,7 +4,7 @@
 
 **Owner:** Dean Fiedler · **Catalogue key:** `foundations` · **Review:** Pending
 
-Runtime colour, type, border, radius and elevation values.
+Runtime colour, type, border, radius and elevation values, with the actual shared Button and ButtonLink showing their application to controls.
 
 ## Source and reference
 

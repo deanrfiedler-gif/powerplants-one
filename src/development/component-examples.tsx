@@ -624,6 +624,8 @@ export function ComponentExample({
             Roboto / Verdana · text, surfaces, borders and geometry from the
             application stylesheet.
           </p>
+          <h3>Theme applied to shared controls</h3>
+          <ButtonExample />
           <div className="catalogue-swatches">
             {tokens.map((t) => (
               <div key={t.name}>
