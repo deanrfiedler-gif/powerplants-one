@@ -16,7 +16,8 @@
   - module-workspace registration;
   - no bulk selection;
   - follow-up calls recorded as customer statements.
-- **Lifecycle extension.** It is drafted as proposed [ADR-0043](decisions/ADR-0043-service-request-lifecycle.md). The schema already holds all eight TicketState values, so the extension adds guarded commands, the customer-update commitment and typed evidence, contact, waiting and resolution records. It authorises no migration. Six questions (Q1–Q6) await Dean, including P03's known-site triage gate for organisation-level requests.
+- **Lifecycle extension.** It is drafted as proposed [ADR-0043](decisions/ADR-0043-service-request-lifecycle.md). The schema already holds all eight TicketState values, so the extension adds guarded commands, the customer-update commitment and typed evidence, contact, waiting and resolution records. It authorises no migration. Seven questions (Q1–Q7) await Dean, including P03's known-site triage gate for organisation-level requests and an explicit customer field.
+- **Native build.** The [integration build plan](delivery/service-requests-integration-build-plan.md) sequences it as I1 read model, I2 register, I3 record, I4 capture and I5 conformance proof, followed by lifecycle increments after ADR-0043. Visual acceptance stays separate, as for every current module integration.
 - **Second round.** After the decision, eleven frames were drawn: the native three-state board, Triage & actions, the 1024 × 768 and 320 px layouts, and phone capture, filters, no matches, work and evidence. Frame 8 was corrected, because *Request information* is unavailable while a request waits.
 - **Still open.** Dean's visual review is not yet recorded, so the board is not an accepted baseline.
 - **Not claimed.** No application code, migration, guide article, visual acceptance or deployment.

@@ -142,6 +142,7 @@ None of these child records takes a readable reference or a business identity, s
 | Q4 | May the proposer accept their own resolution? | Allowed, as in r02, with both identities recorded; revisit under D-002 |
 | Q5 | Should open waiting reviews appear in My Work? | Yes, as a separate group in the native build |
 | Q6 | P03 triage requires a known site ([ADR-0008](ADR-0008-p03-customer-intake.md)), so an organisation-level request such as the invoice query cannot be triaged today. Should triage accept an explicit "no site applies" for named categories? | Yes, for *Account & invoice* first, as an explicit category rule, never an empty site. This is the same category rule D4 would need before missing site and equipment could ever block closure |
+| Q7 | The Ticket has no customer field; `company_id` is the ERP company context. The native register derives the customer from the site's current Operator party or the requester's single relationship ([build plan](../delivery/service-requests-integration-build-plan.md) P1). Should the lifecycle migration add an explicit `customer_id`? | Yes. Validate it against current site parties, as WorkOrder already does, then retire the derivation |
 
 ## Validation required before acceptance
 

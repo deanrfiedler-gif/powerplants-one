@@ -215,8 +215,8 @@ All eight were accepted by Dean on 23 September 2026 (see [Owner decision](#owne
 ## Next steps
 
 1. **Visual review.** Dean reviews the complete board: frames 1–24, desktop, 1024 × 768 and phone. Record his words, the date, and the screen and device scope, or the changes he asks for. Until then, the page register keeps *Desktop/mobile visual review pending*.
-2. **Lifecycle extension.** Dean reviews proposed [ADR-0043](ADR-0043-service-request-lifecycle.md) and its questions Q1–Q6. Only after he accepts it are the migration and commands built, with the registry and upgrade proofs `AGENTS.md` requires.
-3. **Native increment.** Build the three-state register (frame 14) and the record header, progress strip, Overview and triage form under the [application integration gate](../standards/html-module-conformance.md#application-integration-gate). Update the guides, captures and review records only from actual evidence.
+2. **Lifecycle extension.** Dean reviews proposed [ADR-0043](ADR-0043-service-request-lifecycle.md) and its questions Q1–Q7. Only after he accepts it are the migration and commands built, with the registry and upgrade proofs `AGENTS.md` requires.
+3. **Native increment.** Build the three-state register (frame 14) and the record header, progress strip, Overview and triage form under the [application integration gate](../standards/html-module-conformance.md#application-integration-gate), following the [build plan](../delivery/service-requests-integration-build-plan.md): I1 read model, I2 register, I3 record, I4 capture, I5 conformance proof. Update the guides, captures and review records only from actual evidence.
 4. **Image sets.** Board images r01 and r02 are retained unchanged. A changed frame is issued in a successor set; r02's source bytes stay unchanged.
 
 ## Related
