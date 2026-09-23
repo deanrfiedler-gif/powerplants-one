@@ -1380,7 +1380,8 @@
         "src/app/desktop-shell.css",
         "src/app/mobile-layout.css",
         "src/app/styles/customers.css",
-        "src/scheduling/components/client/workspace-navigation.client.tsx"
+        "src/scheduling/components/client/workspace-navigation.client.tsx",
+        "src/app/styles/scheduling-workspaces.css"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",

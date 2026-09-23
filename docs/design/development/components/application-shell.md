@@ -45,3 +45,5 @@ The existing `system:shell` binding owns the inherited frame around CS pages. Pa
 ## Scheduling workspace navigation
 
 The secondary SchedulingNavigation composition reuses current shell permission discovery, native links and shared tokens. It links Planner, Resources, Changes & follow-up, Travel review and Demand & capacity while preserving day, timezone, site and resource context. The global rail retains its existing destinations. The inherited system:shell binding covers the four new routes; their native compositions remain pending review; navigation does not add a capability or grant access. Host examples remain the evidence surface.
+
+Native Scheduling captures exposed legacy identity-grid rules placing header utilities over Service tabs at phone widths. The Scheduling stylesheet restores the existing shell flex row only where SchedulingNavigation is present, following the existing Customers containment pattern. Header button containment is checked at all captured widths; broader legacy shell migration remains separate.

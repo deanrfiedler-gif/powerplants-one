@@ -7,7 +7,7 @@
 
 ## Evidence and scope
 
-Refreshed origin/main is `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc`. Open PRs #299 (fertigation import) and #300 (Projects documentation) contain no scheduling runtime or migration. Shared STATUS, guides and document registers overlap. Other local worktrees remain untouched.
+Initial main was `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc`. PRs #299 and #300 subsequently merged; the branch is reconciled with `6c5e7c4fcbaf05d712a46989faf2cf7cabb8ba72`. Current #301 to #304 overlap shared documentation/component records; Equipment and Sales reserve 0045/0046. No Scheduling migration or capability is needed. Other worktrees remain untouched.
 
 PL-01 and Field Team already work. Preserve their engines and accepted presentation. PL-02 adds read-only resource detail; PL-04 adds a coordination queue and explicit request comparison using existing decisions; PL-05 reviews explicit reservations and analytical visit order; PL-03 combines source-owned contributions on the server.
 
@@ -37,4 +37,4 @@ SVC-04/05, ENG-01, PRJ-02/04, DAT-06, SC-07/08, TR-03/08/16, API-R04/C04–07 an
 
 ## Local setup finding
 
-Unchanged main reproduced seed timeout in PostgreSQL 16.15 on Windows while the site timezone trigger scanned `pg_timezone_names`. A seed bundle runs several statements under one call; its setup-only transaction now has a bounded 120-second statement timeout. The application pool remains at 10 seconds, and constraints, transaction atomicity and durability are unchanged. Extending all application query limits or changing historical migrations was rejected.
+Unchanged main reproduced seed timeout in PostgreSQL 16.15 on Windows while the site timezone trigger scanned `pg_timezone_names`. A seed bundle runs several statements under one call; its setup-only transaction now has a bounded 120-second statement timeout. The same setup bound covers explicit synthetic reset after schema disposal also exceeded the ordinary read limit under concurrent local validation. The application pool remains at 10 seconds, and constraints, transaction atomicity and durability are unchanged. Extending all application query limits or changing historical migrations was rejected.

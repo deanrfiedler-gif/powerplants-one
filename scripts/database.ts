@@ -106,6 +106,8 @@ export async function reset() {
       "Reset requires PPO_ALLOW_RESET=dispose-synthetic and PPO_RESET_DATABASE matching the named database. Stop the application first.",
     );
   await transaction(async (client) => {
+    // Disposing the complete synthetic schema is setup, not an application read.
+    await client.query("SET LOCAL statement_timeout = '120s'");
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     await client.query(await read("migrations/0001-recover.sql"));
     await client.query("DROP TABLE IF EXISTS public.ppo_migrations");

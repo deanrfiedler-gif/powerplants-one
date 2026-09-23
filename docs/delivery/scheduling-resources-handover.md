@@ -3,11 +3,13 @@
 <!-- versioning: git; committed history is authoritative -->
 
 **Owner:** Dean Fiedler · **Date:** 24 September 2026 · **Status:** Implementation and verification in progress; owner acceptance and deployment separate.
-**Base:** `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc` · **Branch:** `feat/scheduling-resources-completion`.
+**Original base:** `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc` · **Branch:** `feat/scheduling-resources-completion`.
 
 ## Refreshed audit
 
-Fetched origin before implementation. Main still matches the prompt's audited head. Open #299 remains fertigation import; new #300 adds Projects documentation, overlapping STATUS, guides, the page register and document register. Neither reserves a migration or changes Scheduling runtime. Unrelated working-tree edits and other worktrees remain intact.
+Fetched origin before implementation; it matched the prompt's audited head. During implementation PRs #299 (fertigation held-field placement) and #300 (Projects reconciliation) merged. Reconciled with main `6c5e7c4fcbaf05d712a46989faf2cf7cabb8ba72`, preserving their runtime and shared-register changes. The document-register append conflict retained both programmes. No Scheduling engine or migration changed upstream.
+
+A second open-PR audit found #301 (Estimating), #302 (Equipment), #303 (Sales) and #304 (SV-05 print/source review). They overlap STATUS, guides, registers and some shared component records/fixtures. #302 reserves migration 0045 and #303 reserves 0046; this programme needs neither a migration nor a new capability. Other worktrees remain untouched.
 
 The retained Scheduling r01 HTML and its packaged design/change records were inspected without editing issued bytes. Its unassigned lane was Proposed appointments; current ADR-0039 and the authorised work-order demand implementation supersede that design detail. Field Team remains the accepted technician-centric workflow. Its new resource link continues into PL-02 detail.
 

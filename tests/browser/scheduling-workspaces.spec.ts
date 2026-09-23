@@ -50,7 +50,7 @@ test("native scheduling pages retain context and reflow at coordination, phone a
             .locator(".scheduling-workspace .read-meta")
             .filter({ hasText: /Read at|Snapshot/ })
             .first(),
-        ).toBeVisible();
+        ).toBeVisible({ timeout: 15000 });
       else
         await expect(
           page.getByRole("heading", { name: "Service planner", exact: true }),
@@ -61,6 +61,18 @@ test("native scheduling pages retain context and reflow at coordination, phone a
           () => document.documentElement.scrollWidth <= innerWidth,
         ),
         name + " must not overflow the page",
+      ).toBe(true);
+      expect(
+        await page.locator(".ppo-shell-header").evaluate((header) => {
+          const bounds = header.getBoundingClientRect();
+          return [...header.querySelectorAll("button")]
+            .filter((button) => button.getBoundingClientRect().width > 0)
+            .every((button) => {
+              const r = button.getBoundingClientRect();
+              return r.top >= bounds.top && r.bottom <= bounds.bottom + 1;
+            });
+        }),
+        "Header utilities stay above Service tabs",
       ).toBe(true);
       await page.screenshot({
         path: info.outputPath(name + "-" + width + "x" + height + ".png"),
@@ -116,7 +128,7 @@ test("capacity exclusions compare scenarios and refresh clears analysis without 
   expect(writes).toEqual([]);
   await page.getByLabel("Domain", { exact: true }).selectOption("Engineering");
   await expect(
-    page.getByText(/No contributions match|Engineering/).first(),
+    page.locator(".scheduling-workspace").getByText(/No contributions match/),
   ).toBeVisible();
 });
 test("travel handover retains exact appointment and resource without changing booking", async ({
@@ -143,7 +155,7 @@ test("travel handover retains exact appointment and resource without changing bo
 });
 test("change request review presents exact comparison before a reasoned decision and returns focus", async ({
   page,
-}) => {
+}, info) => {
   await identity(page);
   const a = (
     await (await page.request.get("/api/v1/appointments/" + id("a8"))).json()
@@ -187,6 +199,9 @@ test("change request review presents exact comparison before a reasoned decision
   await expect(
     request.getByRole("heading", { name: "Requested booking" }),
   ).toBeVisible();
+  await request.screenshot({
+    path: info.outputPath("current-proposed-comparison.png"),
+  });
   await request
     .getByLabel("Decision reason")
     .fill("SYN-PPO retain the existing customer arrangement");
@@ -220,20 +235,43 @@ test("failed and denied reads cannot imply free capacity or retain an old source
     }),
   );
   await page.getByRole("button", { name: "Refresh source snapshot" }).click();
-  await expect(page.getByRole("alert")).toContainText(
-    "capacity source unavailable",
-  );
+  await expect(
+    page.locator(".scheduling-workspace").getByRole("alert"),
+  ).toContainText("capacity source unavailable");
   await expect(
     page.getByRole("heading", { name: "Scenario comparison" }),
   ).toHaveCount(0);
   await page.unroute("**/api/v1/schedule/capacity?**");
   await identity(page, "systems");
   await page.reload();
-  await expect(page.getByRole("alert")).toBeVisible();
+  await expect(
+    page.locator(".scheduling-workspace").getByRole("alert"),
+  ).toBeVisible();
   await expect(
     page.getByRole("navigation", { name: "Scheduling workspace" }),
   ).toHaveCount(0);
   await expect(
     page.getByRole("heading", { name: "Scenario comparison" }),
   ).toHaveCount(0);
+});
+
+test("planner long resource labels wrap in the maintained component fixture", async ({
+  page,
+}, info) => {
+  await page.setViewportSize({
+    width: info.project.name.includes("mobile") ? 320 : 1440,
+    height: 960,
+  });
+  await page.goto(
+    "/development/component-preview?component=planner&state=long-label",
+  );
+  await expect(
+    page.getByRole("link", { name: /SYN-PPO Technician with a long/ }),
+  ).toBeVisible();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({ path: info.outputPath("planner-long-label.png") });
 });

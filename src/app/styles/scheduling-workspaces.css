@@ -153,3 +153,13 @@
     flex-wrap: wrap;
   }
 }
+
+@media (max-width: 780px) {
+  /* Match the native shell row: legacy identity grid rules otherwise place
+     utility buttons over the Service tabs on these Scheduling surfaces. */
+  .workspace:has(.scheduling-navigation) .topbar.ppo-shell-header {
+    display: flex;
+    padding: 0 10px;
+    gap: 4px;
+  }
+}
