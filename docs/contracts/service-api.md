@@ -456,3 +456,29 @@ Additive read contract for the Job Pack r03 application integration, increment I
 - `revisions[].created_by_name`, `checks[].actor_name`, `jobs[].actor_name`, `issues[].issued_by_name` and `events[].actor_name` carry the actor's display name for staff. For a recipient technician `created_by_name` and `issued_by_name` are `null`; the technician event projection is unchanged.
 - GET `/appointments/:id/pack-options` additionally returns `existing_pack_id` (UUID or `null`). `ppo.packs` is unique per appointment, so the preparation page opens the existing pack.
 - GET `/appointments/:id/pack` — `pack.read` and `schedule.read` in the appointment's scope; no query fields. Returns `{ pack: { id, display_number, status, needs_review } | null, can_prepare }`. `pack` is `null` both when no pack exists and when the pack is outside this identity's scope, so the response discloses nothing the appointment's own `pack_requirement` does not. An appointment outside scope is the same 404 `RecordUnavailable`; an identity without the capability is 403.
+
+## SV-01 service requests register read-model amendment — 23 September 2026
+
+Additive read contract for the service requests register, increment I1 of build plan `PPO-SV01-PLAN` ([`docs/delivery/service-requests-integration-build-plan.md`](../delivery/service-requests-integration-build-plan.md)). No command, state, permission, migration or seed changes. Existing list fields, filters, default order and cursors are unchanged.
+
+- **GET `/service/tickets`**: each row additionally returns:
+  - `received_at`, `channel`, `next_action` and `triage_owner_name`;
+  - `site` `{id, display_number, display_name}` and `asset` `{id, display_number, description}`, or `null`. Ticket visibility already requires both records to be visible;
+  - `customer` `{id, display_name, basis}` or `null`, derived as the build plan's P1 records:
+    1. the site's current Operator party when visible (basis `SiteOperator`; the schema allows one at a time);
+    2. otherwise the requester's single current visible relationship organisation (basis `RequesterRelationship`);
+    3. otherwise `null`.
+
+    It never chooses between candidates, and the company visibility context is never presented as the customer;
+  - `clarification` `{id, summary, owner_name, due_at, due_needed, status}` when the clarification activity passes the same activity visibility as `readIntake`. Otherwise it is `null`, with `clarification_unavailable: true` when a clarification exists;
+  - `triage_blocker_count`, computed by the same gate as the record's `triage_blockers` for New and NeedsInformation, or `null`;
+  - `work_orders` `[{id, display_number, status}]`: only linked orders that pass work-order visibility. Hidden orders are omitted and not counted.
+- **GET `/service/tickets?sort=urgency`**:
+  - **Order:** priority (Urgent, High, Normal, Low), then oldest `received_at`, then reference and id.
+  - **Cursor:** stays a signed UUID bound to the actor, filters and sort, so a cursor from another order is refused as `InvalidData`. The next page resolves that row's key on the server.
+  - **Validation:** any other `sort` value is refused.
+- **GET `/service/tickets/queues`**:
+  - **Access:** `service.ticket.read`.
+  - **Query fields:** `q`, `company_id`, `site_id` and `owner_id`. `status` and paging are refused.
+  - **Returns:** `{as_at, all_open, new, needs_information, triaged, urgent, overdue_clarifications, source}`, using the list's visibility and filters.
+  - **Overdue clarifications:** a NeedsInformation request whose visible clarification activity is Open or InProgress with a past `due_at`. A clarification the identity cannot read is not counted.

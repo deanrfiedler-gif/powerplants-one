@@ -5,9 +5,11 @@ import { sharedOperation } from "../platform/operations";
 import {
   hasPermission,
   requireCapability,
+  scopeSql,
   type QueryClient,
 } from "../platform/permissions";
 import {
+  activityVisibility,
   authoriseActivityInput,
   dueFields,
   insertActivity,
@@ -15,8 +17,12 @@ import {
   visibleActivity,
   type ActivityInput,
 } from "../activities/activities";
+import { crmAvailable } from "../crm/context";
+import { leadsAvailable } from "../crm/leads/context";
+import { projectsAvailable } from "../projects/visibility";
+import { orderVisibility } from "./work-orders";
 import { companyContext, scopedOwner } from "../shared/authority";
-import { envelope, page, readShared, visible } from "../shared/reads";
+import { envelope, page, readShared, visibility, visible } from "../shared/reads";
 import {
   choice,
   common,
@@ -598,6 +604,95 @@ export async function readIntake(p: Principal, id: string) {
     triage_blockers: triageBlockers(t, clarification?.status === "Completed"),
   };
 }
+const priorityRank = (alias: string) =>
+  `CASE ${alias}.priority WHEN 'Urgent' THEN 0 WHEN 'High' THEN 1 WHEN 'Normal' THEN 2 ELSE 3 END`;
+// Filters shared by the register list and its queue counts; $1 workspace, $2 actor, then $3-$6.
+const registerFilters = `t.workspace_id=$1 AND ${ticketVisibility()}
+    AND ($3::uuid IS NULL OR t.company_id=$3) AND ($4::uuid IS NULL OR t.site_id=$4)
+    AND position(lower($5) in lower(t.summary||' '||t.display_number))>0 AND ($6::uuid IS NULL OR t.triage_owner_id=$6)`;
+async function activityFlags(c: QueryClient) {
+  return [await crmAvailable(c), await leadsAvailable(c), await projectsAvailable(c)] as const;
+}
+const clarificationJoin = (flags: readonly [boolean, boolean, boolean]) =>
+  `LEFT JOIN ppo.activities ca ON (ca.workspace_id,ca.id)=(t.workspace_id,t.clarification_activity_id) AND ${activityVisibility("ca", ...flags)}`;
+// P1 (build plan): the site's current Operator party when visible (the schema allows one at a time), else the
+// requester's single current visible relationship organisation; never a choice between candidates. The company
+// context is not a customer.
+const customerSql = `COALESCE(
+    (SELECT CASE WHEN count(DISTINCT o.id)=1 THEN (array_agg(jsonb_build_object('id',o.id,'display_name',o.display_name,'basis','SiteOperator')))[1] END
+       FROM ppo.site_parties sp JOIN ppo.organisations o ON (o.workspace_id,o.id)=(sp.workspace_id,sp.organisation_id)
+      WHERE sp.workspace_id=t.workspace_id AND sp.site_id=t.site_id AND sp.role='Operator'
+        AND sp.valid_from<=clock_timestamp() AND (sp.valid_to IS NULL OR sp.valid_to>clock_timestamp()) AND ${visibility("Organisation", "o")}),
+    (SELECT CASE WHEN count(DISTINCT o.id)=1 THEN (array_agg(jsonb_build_object('id',o.id,'display_name',o.display_name,'basis','RequesterRelationship')))[1] END
+       FROM ppo.relationships rel JOIN ppo.organisations o ON (o.workspace_id,o.id)=(rel.workspace_id,rel.organisation_id)
+      WHERE rel.workspace_id=t.workspace_id AND rel.person_id=t.requester_id
+        AND rel.valid_from<=current_date AND (rel.valid_to IS NULL OR rel.valid_to>current_date)
+        AND ${scopeSql("rel.company_id")} AND ${visibility("Organisation", "o")}))`;
+const workOrdersSql = `COALESCE((SELECT jsonb_agg(jsonb_build_object('id',w.id,'display_number',w.display_number,'status',w.status) ORDER BY w.display_number)
+    FROM ppo.work_order_tickets wl JOIN ppo.work_orders w ON (w.workspace_id,w.id)=(wl.workspace_id,wl.work_order_id)
+   WHERE wl.workspace_id=t.workspace_id AND wl.ticket_id=t.id AND ${orderVisibility("w")}),'[]'::jsonb)`;
+type RegisterRow = IntakeGate & {
+  id: string;
+  display_number: string;
+  summary: string;
+  priority: string;
+  version: number;
+  triage_owner_id: string;
+  triage_owner_name: string;
+  site_identification_needed: boolean;
+  received_at: Date;
+  channel: string;
+  asset_id: string | null;
+  site_number: string | null;
+  site_name: string | null;
+  asset_number: string | null;
+  asset_description: string | null;
+  customer: { id: string; display_name: string; basis: "SiteOperator" | "RequesterRelationship" } | null;
+  clarification_id: string | null;
+  clarification_summary: string | null;
+  clarification_status: string | null;
+  clarification_due_at: Date | null;
+  clarification_due_needed: boolean | null;
+  clarification_owner_name: string | null;
+  work_orders: { id: string; display_number: string; status: string }[];
+};
+function registerRow(t: RegisterRow) {
+  const clarification = t.clarification_id
+    ? {
+        id: t.clarification_id,
+        summary: t.clarification_summary,
+        owner_name: t.clarification_owner_name,
+        due_at: t.clarification_due_at?.toISOString() ?? null,
+        due_needed: t.clarification_due_needed,
+        status: t.clarification_status,
+      }
+    : null;
+  return {
+    id: t.id,
+    display_number: t.display_number,
+    summary: t.summary,
+    status: t.status,
+    priority: t.priority,
+    version: t.version,
+    triage_owner_id: t.triage_owner_id,
+    triage_owner_name: t.triage_owner_name,
+    site_id: t.site_id,
+    site_identification_needed: t.site_identification_needed,
+    received_time_basis: t.received_time_basis,
+    received_at: t.received_at.toISOString(),
+    channel: t.channel,
+    next_action: t.next_action,
+    site: t.site_id ? { id: t.site_id, display_number: t.site_number, display_name: t.site_name } : null,
+    asset: t.asset_id ? { id: t.asset_id, display_number: t.asset_number, description: t.asset_description } : null,
+    customer: t.customer,
+    clarification,
+    clarification_unavailable: !!t.clarification_activity_id && !clarification,
+    triage_blocker_count: ["New", "NeedsInformation"].includes(t.status)
+      ? triageBlockers(t, clarification?.status === "Completed").length
+      : null,
+    work_orders: t.work_orders,
+  };
+}
 export async function listTickets(p: Principal, input: unknown = {}) {
   const c = database();
   await requireCapability(c, p, "service.ticket.read");
@@ -609,15 +704,17 @@ export async function listTickets(p: Principal, input: unknown = {}) {
     "site_id",
     "status",
     "owner_id",
+    "sort",
   ]);
   const status =
       r.status === undefined
         ? null
         : choice(r.status, "status", ["New", "NeedsInformation", "Triaged"]),
-    owner = optionalId(r.owner_id, "owner_id");
+    owner = optionalId(r.owner_id, "owner_id"),
+    sort = r.sort === undefined ? "id" : choice(r.sort, "sort", ["urgency"]);
   const pg = page(
     Object.fromEntries(
-      Object.entries(r).filter(([k]) => !["status", "owner_id"].includes(k)),
+      Object.entries(r).filter(([k]) => !["status", "owner_id", "sort"].includes(k)),
     ),
     {
       workspace: p.workspace_id,
@@ -625,28 +722,82 @@ export async function listTickets(p: Principal, input: unknown = {}) {
       kind: "Ticket",
       status,
       owner,
+      // The original binding had no sort; keep its fingerprint so existing cursors stay valid.
+      ...(sort === "urgency" ? { sort } : {}),
     },
   );
+  const flags = await activityFlags(c);
+  const keyset =
+    sort === "urgency"
+      ? `($7::uuid IS NULL OR (${priorityRank("t")},t.received_at,t.display_number,t.id) >
+          (SELECT ${priorityRank("k")},k.received_at,k.display_number,k.id FROM ppo.tickets k WHERE k.workspace_id=$1 AND k.id=$7))`
+      : "($7::uuid IS NULL OR t.id>$7)";
+  const order = sort === "urgency" ? `${priorityRank("t")},t.received_at,t.display_number,t.id` : "t.id";
   const rows = (
-    await c.query(
-      `SELECT t.id,t.display_number,t.summary,t.status,t.priority,t.version,t.triage_owner_id,t.site_id,t.site_identification_needed,t.received_time_basis FROM ppo.tickets t WHERE t.workspace_id=$1 AND ${ticketVisibility()}
-    AND ($3::uuid IS NULL OR t.company_id=$3) AND ($4::uuid IS NULL OR t.site_id=$4) AND ($5::uuid IS NULL OR t.id>$5) AND position(lower($6) in lower(t.summary||' '||t.display_number))>0
-    AND ($7::text IS NULL OR t.status=$7) AND ($8::uuid IS NULL OR t.triage_owner_id=$8) ORDER BY t.id LIMIT $9`,
+    await c.query<RegisterRow>(
+      `SELECT t.id,t.display_number,t.summary,t.status,t.priority,t.version,t.triage_owner_id,t.site_id,t.site_identification_needed,t.received_time_basis,
+        t.received_at,t.channel,t.next_action,t.requester_id,t.asset_id,t.symptom,t.impact,t.priority_reason,t.clarification_activity_id,
+        u.display_name AS triage_owner_name,s.display_number AS site_number,s.display_name AS site_name,a.display_number AS asset_number,a.description AS asset_description,
+        ca.id AS clarification_id,ca.summary AS clarification_summary,ca.status AS clarification_status,ca.due_at AS clarification_due_at,ca.due_needed AS clarification_due_needed,
+        cu.display_name AS clarification_owner_name,${customerSql} AS customer,${workOrdersSql} AS work_orders
+      FROM ppo.tickets t
+      JOIN ppo.users u ON (u.workspace_id,u.id)=(t.workspace_id,t.triage_owner_id)
+      LEFT JOIN ppo.sites s ON (s.workspace_id,s.id)=(t.workspace_id,t.site_id)
+      LEFT JOIN ppo.assets a ON (a.workspace_id,a.id)=(t.workspace_id,t.asset_id)
+      ${clarificationJoin(flags)}
+      LEFT JOIN ppo.users cu ON (cu.workspace_id,cu.id)=(ca.workspace_id,ca.owner_id)
+      WHERE ${registerFilters} AND ${keyset} AND ($8::text IS NULL OR t.status=$8) ORDER BY ${order} LIMIT $9`,
       [
         p.workspace_id,
         p.actor_id,
         pg.company_id,
         pg.site_id,
-        pg.after,
         pg.q,
-        status,
         owner,
+        pg.after,
+        status,
         pg.limit + 1,
       ],
     )
   ).rows;
   return envelope(
-    rows.slice(0, pg.limit),
+    rows.slice(0, pg.limit).map(registerRow),
     rows.length > pg.limit ? pg.cursor(rows[pg.limit - 1].id) : null,
   );
+}
+// Queue counts for the register (API-R03 amendment, SV-01 I1): the list's filters except status and paging.
+export async function ticketQueues(p: Principal, input: unknown = {}) {
+  const c = database();
+  await requireCapability(c, p, "service.ticket.read");
+  const r = object(input, ["q", "company_id", "site_id", "owner_id"]);
+  const owner = optionalId(r.owner_id, "owner_id");
+  const pg = page(
+    Object.fromEntries(Object.entries(r).filter(([k]) => k !== "owner_id")),
+    { workspace: p.workspace_id, actor: p.actor_id, kind: "TicketQueues" },
+  );
+  const flags = await activityFlags(c);
+  const counts = (
+    await c.query<Record<string, string | Date>>(
+      `SELECT clock_timestamp() AS as_at,
+        count(*) FILTER (WHERE t.status NOT IN ('Closed','Cancelled')) AS all_open,
+        count(*) FILTER (WHERE t.status='New') AS new,
+        count(*) FILTER (WHERE t.status='NeedsInformation') AS needs_information,
+        count(*) FILTER (WHERE t.status='Triaged') AS triaged,
+        count(*) FILTER (WHERE t.status NOT IN ('Closed','Cancelled') AND t.priority='Urgent') AS urgent,
+        count(*) FILTER (WHERE t.status='NeedsInformation' AND ca.status IN ('Open','InProgress') AND ca.due_at<clock_timestamp()) AS overdue_clarifications
+      FROM ppo.tickets t ${clarificationJoin(flags)} WHERE ${registerFilters}`,
+      [p.workspace_id, p.actor_id, pg.company_id, pg.site_id, pg.q, owner],
+    )
+  ).rows[0];
+  const n = (key: string) => Number(counts[key]);
+  return {
+    as_at: (counts.as_at as Date).toISOString(),
+    all_open: n("all_open"),
+    new: n("new"),
+    needs_information: n("needs_information"),
+    triaged: n("triaged"),
+    urgent: n("urgent"),
+    overdue_clarifications: n("overdue_clarifications"),
+    source: "Synthetic",
+  };
 }

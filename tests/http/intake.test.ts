@@ -155,3 +155,33 @@ test("P03 HTTP read/filter/owner/link paths refuse unauthorised scope and do not
   );
   assert.equal((await call(cookie, "work?role=Coordinator")).status, 422);
 });
+test("SV-01 I1 register reads: the queues route and the urgency order share the list's authority and validation", async () => {
+  const cookie = await session("coordinator");
+  const queues = await call(cookie, "service/tickets/queues");
+  assert.equal(queues.status, 200);
+  assert.equal(queues.headers.get("cache-control")?.includes("no-store"), true);
+  assert.deepEqual(Object.keys(queues.body).sort(), [
+    "all_open",
+    "as_at",
+    "needs_information",
+    "new",
+    "overdue_clarifications",
+    "source",
+    "triaged",
+    "urgent",
+  ]);
+  for (const key of ["all_open", "new", "needs_information", "triaged", "urgent", "overdue_clarifications"])
+    assert.equal(Number.isInteger(queues.body[key]), true, key);
+  assert.equal((await call(cookie, `service/tickets/queues?site_id=${site}`)).status, 200);
+  assert.equal((await call(cookie, "service/tickets/queues?status=New")).status, 422);
+  const list = await call(cookie, "service/tickets?sort=urgency&limit=200");
+  assert.equal(list.status, 200);
+  const rank: Record<string, number> = { Urgent: 0, High: 1, Normal: 2, Low: 3 };
+  const ranks = list.body.items.map((t: { priority: string }) => rank[t.priority]);
+  assert.deepEqual(ranks, [...ranks].sort((a, b) => a - b));
+  for (const key of ["received_at", "channel", "triage_owner_name", "customer", "clarification", "clarification_unavailable", "triage_blocker_count", "work_orders"])
+    assert.ok(key in list.body.items[0], key);
+  assert.equal((await call(cookie, "service/tickets?sort=received")).status, 422);
+  const denied = await session("finance-processor");
+  assert.equal((await call(denied, "service/tickets/queues")).status, 403);
+});
