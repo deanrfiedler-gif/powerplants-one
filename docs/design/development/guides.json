@@ -1,11 +1,10 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "guides": [
     {
       "guide_key": "guide.sh.01",
       "entry_key": "scope:SH-01",
       "title": "Role-based home overview",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -263,13 +262,13 @@
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sh.02",
       "entry_key": "scope:SH-02",
       "title": "My Work action centre",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -535,13 +534,13 @@
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sh.03",
       "entry_key": "scope:SH-03",
       "title": "Notification inbox and preferences",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -801,13 +800,13 @@
         "docs/reference/ui/notifications/PPO-Notification-Inbox-and-Preferences-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sh.04",
       "entry_key": "scope:SH-04",
       "title": "Global search results and record preview",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -1064,13 +1063,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sh.05",
       "entry_key": "scope:SH-05",
       "title": "Personal and team saved views",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -1326,13 +1325,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sh.06",
       "entry_key": "scope:SH-06",
       "title": "Cross-module approvals and handover inbox",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -1591,13 +1590,13 @@
         "docs/reference/ui/approvals-handover/PPO-Cross-Module-Approvals-and-Handover-Inbox-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cs.01",
       "entry_key": "scope:CS-01",
       "title": "Customer register and customer 360",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -1858,13 +1857,13 @@
         "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cs.02",
       "entry_key": "scope:CS-02",
       "title": "Contact directory and contact detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -2125,13 +2124,13 @@
         "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cs.03",
       "entry_key": "scope:CS-03",
       "title": "Stakeholder and relationship view",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -2390,13 +2389,13 @@
         "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cs.04",
       "entry_key": "scope:CS-04",
       "title": "Site register and site workspace",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -2656,13 +2655,13 @@
         "docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cs.05",
       "entry_key": "scope:CS-05",
       "title": "Facilities and growing areas: registers, detail and forms",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -2926,13 +2925,13 @@
         "docs/delivery/facilities-growing-areas-handover.md",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cs.06",
       "entry_key": "scope:CS-06",
       "title": "Site access and horticultural readiness",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -3192,13 +3191,13 @@
         "docs/reference/ui/site-access/PPO-Site-Access-and-Horticultural-Readiness-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cs.07",
       "entry_key": "scope:CS-07",
       "title": "Account development and visit plan",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -3455,13 +3454,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cs.08",
       "entry_key": "scope:CS-08",
       "title": "Site survey and as-found brief",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -3722,13 +3721,13 @@
         "docs/reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.eq.01",
       "entry_key": "scope:EQ-01",
       "title": "Installed-base register and equipment workspace",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -3989,13 +3988,13 @@
         "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.eq.02",
       "entry_key": "scope:EQ-02",
       "title": "QR lookup and equipment identity confirmation",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -4253,13 +4252,13 @@
         "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.eq.03",
       "entry_key": "scope:EQ-03",
       "title": "Configuration and change history",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -4519,13 +4518,13 @@
         "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.eq.04",
       "entry_key": "scope:EQ-04",
       "title": "Equipment movement, replacement and retirement",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -4785,13 +4784,13 @@
         "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.eq.05",
       "entry_key": "scope:EQ-05",
       "title": "Equipment document and service timeline",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -5052,13 +5051,13 @@
         "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.eq.06",
       "entry_key": "scope:EQ-06",
       "title": "Service bulletin applicability",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -5316,13 +5315,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.eq.07",
       "entry_key": "scope:EQ-07",
       "title": "Support lifecycle and obsolescence",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -5580,13 +5579,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.eq.08",
       "entry_key": "scope:EQ-08",
       "title": "Control configuration backup and recovery record",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -5844,13 +5843,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.eq.09",
       "entry_key": "scope:EQ-09",
       "title": "Test instruments and calibration evidence",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -6107,13 +6106,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cr.01",
       "entry_key": "scope:CR-01",
       "title": "Opportunity detail and internal work",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -6374,13 +6373,13 @@
         "docs/reference/ui/crm/PPO-Deal-Workspace-r01.html",
         "docs/blueprints/BP-03-crm.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cr.02",
       "entry_key": "scope:CR-02",
       "title": "Sales-to-estimating handover",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -6639,13 +6638,13 @@
         "docs/reference/ui/estimating/sales-estimating-intake-preview-r02.html",
         "docs/blueprints/BP-03-crm.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cr.03",
       "entry_key": "scope:CR-03",
       "title": "Won-deal receiving handover",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -6904,13 +6903,13 @@
         "docs/reference/ui/crm/PPO-Sales-to-Delivery-Handover-Workspace-r01.html",
         "docs/blueprints/BP-03-crm.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cr.04",
       "entry_key": "scope:CR-04",
       "title": "Pipeline insights and forecast review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -7170,13 +7169,13 @@
         "docs/reference/ui/crm/ppo-deal-pipeline_r38.html",
         "docs/blueprints/BP-03-crm.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cr.05",
       "entry_key": "scope:CR-05",
       "title": "Sales aftercare and renewal worklist",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -7435,13 +7434,13 @@
         "docs/reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist-r01.html",
         "docs/blueprints/BP-03-crm.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.es.01",
       "entry_key": "scope:ES-01",
       "title": "Estimating intake and workload",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -7701,13 +7700,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.es.02",
       "entry_key": "scope:ES-02",
       "title": "Estimation Wizard · discovery, alternatives & revisions",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -7972,13 +7971,13 @@
         "docs/delivery/es02-estimation-wizard-handover.md",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.es.03",
       "entry_key": "scope:ES-03",
       "title": "Cost-source and supplier-price review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -8237,13 +8236,13 @@
         "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.es.04",
       "entry_key": "scope:ES-04",
       "title": "Estimate review and pricing exceptions",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -8501,13 +8500,13 @@
         "docs/reference/ui/estimate-review/PPO-Estimate-Review-and-Pricing-Exceptions-r01.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.es.05",
       "entry_key": "scope:ES-05",
       "title": "Quotation approval, issue and distribution",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -8768,13 +8767,13 @@
         "docs/reference/ui/quoting/PPO-Quotation-Approval-Issue-and-Distribution-r02.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.es.06",
       "entry_key": "scope:ES-06",
       "title": "Quotation response and negotiation",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -9032,13 +9031,13 @@
         "docs/reference/ui/quoting/PPO-Quotation-Response-and-Negotiation-r01.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.es.07",
       "entry_key": "scope:ES-07",
       "title": "One-off item resolution and conversion",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -9298,13 +9297,13 @@
         "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.es.08",
       "entry_key": "scope:ES-08",
       "title": "Specialist configuration workbench",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -9567,13 +9566,13 @@
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.es.09",
       "entry_key": "scope:ES-09",
       "title": "Estimate-to-actual outcome review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -9832,13 +9831,13 @@
         "docs/reference/ui/estimate-actual-review/PPO-Estimate-to-Actual-Outcome-Review-r01.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.es.10",
       "entry_key": "scope:ES-10",
       "title": "Reference cases and calibration proposals",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -10096,13 +10095,13 @@
         "docs/reference/ui/reference-calibration/PPO-Reference-Cases-and-Calibration-Proposals-r01.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.en.01",
       "entry_key": "scope:EN-01",
       "title": "Engineering workload and deliverables",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -10362,13 +10361,13 @@
         "docs/reference/ui/engineering/PPO-Engineering-Container-r02.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.en.02",
       "entry_key": "scope:EN-02",
       "title": "Design basis and interface register",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -10627,13 +10626,13 @@
         "docs/reference/ui/engineering-basis/PPO-Design-Basis-and-Interface-Register-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.en.03",
       "entry_key": "scope:EN-03",
       "title": "Drawing and controlled technical document register",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -10890,13 +10889,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.en.04",
       "entry_key": "scope:EN-04",
       "title": "Technical queries and supplier submittals",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -11156,13 +11155,13 @@
         "docs/reference/ui/engineering/PPO-Engineering-Container-r02.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.en.05",
       "entry_key": "scope:EN-05",
       "title": "Technical review, approval and transmittal",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -11419,13 +11418,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.en.06",
       "entry_key": "scope:EN-06",
       "title": "Released materials and substitutions",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -11691,13 +11690,13 @@
         "docs/delivery/engineering-materials-substitutions-handover.md",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.en.07",
       "entry_key": "scope:EN-07",
       "title": "Engineering change-impact review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -11960,13 +11959,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.en.08",
       "entry_key": "scope:EN-08",
       "title": "Commissioning basis and as-built release",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -12231,13 +12230,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pj.01",
       "entry_key": "scope:PJ-01",
       "title": "Project initiation and receiving review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -12495,13 +12494,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pj.02",
       "entry_key": "scope:PJ-02",
       "title": "Project overview and portfolio health",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -12759,13 +12758,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pj.03",
       "entry_key": "scope:PJ-03",
       "title": "Baseline, forecast and dependency review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -13026,13 +13025,13 @@
         "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pj.04",
       "entry_key": "scope:PJ-04",
       "title": "RAID, decisions and project actions",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -13288,13 +13287,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pj.05",
       "entry_key": "scope:PJ-05",
       "title": "Contract obligations, notices and variations",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -13552,13 +13551,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pj.06",
       "entry_key": "scope:PJ-06",
       "title": "Subcontractor and specialist packages",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -13815,13 +13814,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pj.07",
       "entry_key": "scope:PJ-07",
       "title": "Readiness and change-impact review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -14082,13 +14081,13 @@
         "docs/reference/ui/projects/PPO-Project-Delivery-Readiness-and-Change-Control-r01.html",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pj.08",
       "entry_key": "scope:PJ-08",
       "title": "Stakeholder update preparation and publication",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -14345,13 +14344,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pj.09",
       "entry_key": "scope:PJ-09",
       "title": "Staged acceptance and closeout",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -14617,13 +14616,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sv.01",
       "entry_key": "scope:SV-01",
       "title": "Service desk and triage worklist",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -14884,13 +14883,13 @@
         "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sv.02",
       "entry_key": "scope:SV-02",
       "title": "Request detail and communication timeline",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -15150,13 +15149,13 @@
         "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sv.03",
       "entry_key": "scope:SV-03",
       "title": "Work-order register and scope workspace",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -15419,13 +15418,13 @@
         "docs/reference/ui/service/PPO-Work-Orders-Workspace-r01.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sv.04",
       "entry_key": "scope:SV-04",
       "title": "Appointment coordination detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -15681,13 +15680,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sv.05",
       "entry_key": "scope:SV-05",
       "title": "Job-pack preparation and issue follow-through",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -15951,13 +15950,13 @@
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sv.06",
       "entry_key": "scope:SV-06",
       "title": "Service review and controlled report workspace",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -16220,13 +16219,13 @@
         "docs/delivery/p09-handover.md",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sv.07",
       "entry_key": "scope:SV-07",
       "title": "Unresolved findings and follow-up worklist",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -16486,13 +16485,13 @@
         "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sv.08",
       "entry_key": "scope:SV-08",
       "title": "Remote diagnosis and OEM escalation",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -16751,13 +16750,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pl.01",
       "entry_key": "scope:PL-01",
       "title": "Service planner and unassigned demand",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -17015,13 +17014,13 @@
         "docs/delivery/pl01-demand-to-booking-handover.md",
         "docs/delivery/p05-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pl.02",
       "entry_key": "scope:PL-02",
       "title": "Resource availability and competence",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -17279,13 +17278,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/delivery/p05-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pl.03",
       "entry_key": "scope:PL-03",
       "title": "Cross-domain resource demand and capacity",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -17543,13 +17542,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/delivery/p05-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pl.04",
       "entry_key": "scope:PL-04",
       "title": "Rescheduling and acknowledgement centre",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -17807,13 +17806,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/delivery/p05-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pl.05",
       "entry_key": "scope:PL-05",
       "title": "Visit route and travel review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -18071,13 +18070,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/delivery/p05-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.fi.01",
       "entry_key": "scope:FI-01",
       "title": "Technician Today and job execution",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -18334,13 +18333,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/delivery/p07-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.fi.02",
       "entry_key": "scope:FI-02",
       "title": "Offline downloads, queue and conflict recovery",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -18598,13 +18597,13 @@
         "docs/delivery/p08-handover.md",
         "docs/delivery/p07-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.fi.03",
       "entry_key": "scope:FI-03",
       "title": "Inspection and commissioning form runner",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -18865,13 +18864,13 @@
         "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
         "docs/delivery/p07-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.fi.04",
       "entry_key": "scope:FI-04",
       "title": "Inspection review, defects and retests",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -19129,13 +19128,13 @@
         "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
         "docs/delivery/p07-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.fi.05",
       "entry_key": "scope:FI-05",
       "title": "Site induction, risk and biosecurity review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -19394,13 +19393,13 @@
         "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
         "docs/delivery/p07-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.fi.06",
       "entry_key": "scope:FI-06",
       "title": "Incident and corrective-action record",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -19658,13 +19657,13 @@
         "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
         "docs/delivery/p07-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.fi.07",
       "entry_key": "scope:FI-07",
       "title": "Customer attendance and report response",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -19918,13 +19917,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/delivery/p07-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ma.01",
       "entry_key": "scope:MA-01",
       "title": "Agreement register and agreement detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -20183,13 +20182,13 @@
         "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ma.02",
       "entry_key": "scope:MA-02",
       "title": "Coverage and entitlement assessment",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -20447,13 +20446,13 @@
         "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ma.03",
       "entry_key": "scope:MA-03",
       "title": "Maintenance plans and task templates",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -20713,13 +20712,13 @@
         "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ma.04",
       "entry_key": "scope:MA-04",
       "title": "Due-maintenance occurrence worklist",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -20978,13 +20977,13 @@
         "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ma.05",
       "entry_key": "scope:MA-05",
       "title": "Renewals and service relationship review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -21243,13 +21242,13 @@
         "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ma.06",
       "entry_key": "scope:MA-06",
       "title": "Warranty case and customer resolution",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -21508,13 +21507,13 @@
         "docs/reference/ui/warranty/PPO-Warranty-and-Customer-Resolution-Workspace-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ma.07",
       "entry_key": "scope:MA-07",
       "title": "Supplier recovery coordination",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -21773,13 +21772,13 @@
         "docs/reference/ui/warranty/PPO-Warranty-and-Customer-Resolution-Workspace-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sc.01",
       "entry_key": "scope:SC-01",
       "title": "Demand and material-readiness workspace",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -22039,13 +22038,13 @@
         "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sc.02",
       "entry_key": "scope:SC-02",
       "title": "Purchasing and supplier commitments",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -22304,13 +22303,13 @@
         "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sc.03",
       "entry_key": "scope:SC-03",
       "title": "Inbound shipments and line allocations",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -22568,13 +22567,13 @@
         "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sc.04",
       "entry_key": "scope:SC-04",
       "title": "Receipt, inspection and quarantine",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -22832,13 +22831,13 @@
         "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sc.05",
       "entry_key": "scope:SC-05",
       "title": "Stock availability and reservations",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -23098,13 +23097,13 @@
         "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sc.06",
       "entry_key": "scope:SC-06",
       "title": "Picking and dispatch preparation",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -23362,13 +23361,13 @@
         "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sc.07",
       "entry_key": "scope:SC-07",
       "title": "Customer delivery and proof of delivery",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -23626,13 +23625,13 @@
         "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sc.08",
       "entry_key": "scope:SC-08",
       "title": "Returns, supplier claims and credit tracking",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -23891,13 +23890,13 @@
         "docs/reference/ui/returns-claims/PPO-Returns-Supplier-Claims-and-Credit-Tracking-Workspace-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sc.09",
       "entry_key": "scope:SC-09",
       "title": "Material change-impact review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -24156,13 +24155,13 @@
         "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.sc.10",
       "entry_key": "scope:SC-10",
       "title": "Service stock custody and job reconciliation",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -24421,13 +24420,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pd.01",
       "entry_key": "scope:PD-01",
       "title": "Catalogue and product technical workspace",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -24685,13 +24684,13 @@
         "docs/reference/ui/products/PPO-Products-Preview-r04.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pd.02",
       "entry_key": "scope:PD-02",
       "title": "Catalogue authoring and publication review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -24947,13 +24946,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pd.03",
       "entry_key": "scope:PD-03",
       "title": "Price books and supplier-source maintenance",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -25212,13 +25211,13 @@
         "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pd.04",
       "entry_key": "scope:PD-04",
       "title": "Compatibility, replacements and product lifecycle",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -25474,13 +25473,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.pd.05",
       "entry_key": "scope:PD-05",
       "title": "Catalogue import and exception review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -25738,13 +25737,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.fn.01",
       "entry_key": "scope:FN-01",
       "title": "Finance workspace and service-handoff follow-through",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -26007,13 +26006,13 @@
         "docs/reference/ui/finance/PPO-Finance-and-Commercial-Controls-r02.html",
         "docs/delivery/p10-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.fn.02",
       "entry_key": "scope:FN-02",
       "title": "Customer accounts, applications and exceptions",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -26274,13 +26273,13 @@
         "docs/reference/ui/finance/PPO-Finance-and-Commercial-Controls-r02.html",
         "docs/delivery/p10-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.fn.03",
       "entry_key": "scope:FN-03",
       "title": "Project financial performance",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -26537,13 +26536,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/delivery/p10-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.fn.04",
       "entry_key": "scope:FN-04",
       "title": "Milestone claims and commercial obligations",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -26800,13 +26799,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/delivery/p10-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.fn.05",
       "entry_key": "scope:FN-05",
       "title": "Cash timing and commercial outlook",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -27063,13 +27062,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/delivery/p10-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.fn.06",
       "entry_key": "scope:FN-06",
       "title": "Financial measure definitions and reconciliation review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -27325,13 +27324,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/delivery/p10-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.dk.01",
       "entry_key": "scope:DK-01",
       "title": "Document register and linked library",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -27590,13 +27589,13 @@
         "docs/reference/ui/document-library/PPO-Document-Register-and-Linked-Library-r01.html",
         "docs/blueprints/contextual-help-design.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.dk.02",
       "entry_key": "scope:DK-02",
       "title": "Document viewer, revision and review workspace",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -27856,13 +27855,13 @@
         "docs/reference/ui/document-library/PPO-Document-Register-and-Linked-Library-r01.html",
         "docs/blueprints/contextual-help-design.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.dk.03",
       "entry_key": "scope:DK-03",
       "title": "Output, issue and distribution centre",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -28121,13 +28120,13 @@
         "docs/reference/ui/output-distribution/PPO-Output-Issue-and-Distribution-Centre-r01.html",
         "docs/blueprints/contextual-help-design.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.dk.04",
       "entry_key": "scope:DK-04",
       "title": "Knowledge search and article detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -28386,13 +28385,13 @@
         "docs/reference/ui/knowledge/PPO-Knowledge-Search-and-Article-Detail-r01.html",
         "docs/blueprints/contextual-help-design.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.dk.05",
       "entry_key": "scope:DK-05",
       "title": "Knowledge authoring, review and learning intake",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -28651,13 +28650,13 @@
         "docs/reference/ui/knowledge-authoring/PPO-Knowledge-Authoring-Review-and-Learning-Intake-r01.html",
         "docs/blueprints/contextual-help-design.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.dk.06",
       "entry_key": "scope:DK-06",
       "title": "Document and form template management",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -28916,13 +28915,13 @@
         "docs/reference/ui/template-management/PPO-Document-and-Form-Template-Management-r01.html",
         "docs/blueprints/contextual-help-design.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.dk.07",
       "entry_key": "scope:DK-07",
       "title": "Page guides and contextual help coverage",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -29179,13 +29178,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/contextual-help-design.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ec.01",
       "entry_key": "scope:EC-01",
       "title": "Connected inbox and record-linking review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -29446,13 +29445,13 @@
         "docs/reference/ui/email-calendar/powerplants-one-email-r04.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ec.02",
       "entry_key": "scope:EC-02",
       "title": "Mailbox connection and synchronisation status",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -29710,13 +29709,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ec.03",
       "entry_key": "scope:EC-03",
       "title": "Calendar and activity coordination",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -29974,13 +29973,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ec.04",
       "entry_key": "scope:EC-04",
       "title": "Communication draft, approval and delivery review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -30239,13 +30238,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cp.01",
       "entry_key": "scope:CP-01",
       "title": "Portal home, organisation/site selection and access",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -30505,13 +30504,13 @@
         "docs/blueprints/customer-portal-mockup.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cp.02",
       "entry_key": "scope:CP-02",
       "title": "Customer support request and conversation",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -30770,13 +30769,13 @@
         "docs/blueprints/customer-portal-mockup.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cp.03",
       "entry_key": "scope:CP-03",
       "title": "Published project updates and customer actions",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -31035,13 +31034,13 @@
         "docs/blueprints/customer-portal-mockup.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cp.04",
       "entry_key": "scope:CP-04",
       "title": "Customer equipment, documents and service reports",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -31302,13 +31301,13 @@
         "docs/blueprints/customer-portal-mockup.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cp.05",
       "entry_key": "scope:CP-05",
       "title": "Customer knowledge and guided support",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -31567,13 +31566,13 @@
         "docs/blueprints/customer-portal-mockup.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cp.06",
       "entry_key": "scope:CP-06",
       "title": "Customer quotation, variation and account views",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -31834,13 +31833,13 @@
         "docs/blueprints/customer-portal-mockup.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ai.01",
       "entry_key": "scope:AI-01",
       "title": "Assistant workspace and docked/mobile conversation",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -32097,13 +32096,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ai.02",
       "entry_key": "scope:AI-02",
       "title": "AI proposal review and saved outcomes",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -32360,13 +32359,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ai.03",
       "entry_key": "scope:AI-03",
       "title": "Source and answer evidence inspection",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -32624,13 +32623,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ai.04",
       "entry_key": "scope:AI-04",
       "title": "Domain assistance and drafting flows",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -32887,13 +32886,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ai.05",
       "entry_key": "scope:AI-05",
       "title": "Voice capture and transcript review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -33150,13 +33149,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ai.06",
       "entry_key": "scope:AI-06",
       "title": "AI assistance settings and quality review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -33413,13 +33412,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ai.07",
       "entry_key": "scope:AI-07",
       "title": "Recurring checks and automation review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -33677,13 +33676,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.rp.01",
       "entry_key": "scope:RP-01",
       "title": "Management overview and report catalogue",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -33940,13 +33939,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.rp.02",
       "entry_key": "scope:RP-02",
       "title": "Sales and quotation performance",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -34203,13 +34202,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.rp.03",
       "entry_key": "scope:RP-03",
       "title": "Engineering and project delivery performance",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -34466,13 +34465,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.rp.04",
       "entry_key": "scope:RP-04",
       "title": "Service, maintenance and resource performance",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -34729,13 +34728,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.rp.05",
       "entry_key": "scope:RP-05",
       "title": "Supply and Finance trust/exceptions",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -34993,13 +34992,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.rp.06",
       "entry_key": "scope:RP-06",
       "title": "Report definition, saved views and scheduled review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -35256,13 +35255,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ad.01",
       "entry_key": "scope:AD-01",
       "title": "Users, roles, teams and access review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -35518,13 +35517,13 @@
         "docs/reference/ui/access-review/PPO-Users-Roles-and-Access-Review-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ad.02",
       "entry_key": "scope:AD-02",
       "title": "Business configuration and policy publication",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -35780,13 +35779,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ad.03",
       "entry_key": "scope:AD-03",
       "title": "Data-quality workbench",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -36044,13 +36043,13 @@
         "docs/reference/ui/data-quality/PPO-Data-Quality-Workbench-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ad.04",
       "entry_key": "scope:AD-04",
       "title": "Integration health and exception recovery",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -36308,13 +36307,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ad.05",
       "entry_key": "scope:AD-05",
       "title": "External mapping and reconciliation detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -36571,13 +36570,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ad.06",
       "entry_key": "scope:AD-06",
       "title": "Migration, coexistence and cutover workbench",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -36836,13 +36835,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ad.07",
       "entry_key": "scope:AD-07",
       "title": "Audit history and controlled export",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -37098,13 +37097,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ad.08",
       "entry_key": "scope:AD-08",
       "title": "Retention and information lifecycle",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -37362,13 +37361,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ad.09",
       "entry_key": "scope:AD-09",
       "title": "Operational health, recovery and release readiness",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
@@ -37625,13 +37624,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.ad.10",
       "entry_key": "scope:AD-10",
       "title": "User onboarding, learning and support",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -37887,13 +37886,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cx.01",
       "entry_key": "scope:CX-01",
       "title": "Company tools, loan units and calibration",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Conditional proposal",
@@ -38150,13 +38149,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cx.02",
       "entry_key": "scope:CX-02",
       "title": "Workshop assembly, testing and rework",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Conditional proposal",
@@ -38413,13 +38412,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cx.03",
       "entry_key": "scope:CX-03",
       "title": "Remote monitoring and alarm review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Conditional proposal",
@@ -38677,13 +38676,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cx.04",
       "entry_key": "scope:CX-04",
       "title": "Advanced customer training and subscription coordination",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Conditional proposal",
@@ -38940,13 +38939,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cx.05",
       "entry_key": "scope:CX-05",
       "title": "Grower production and traceability integration",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Conditional proposal",
@@ -39203,13 +39202,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.cx.06",
       "entry_key": "scope:CX-06",
       "title": "Water and energy improvement review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Conditional proposal",
@@ -39466,13 +39465,13 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.excel.import",
       "entry_key": "scope:excel-import",
       "title": "Excel estimate import and review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Planned workflow",
@@ -39736,13 +39735,13 @@
         "docs/blueprints/excel-estimate-import.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.admin",
       "entry_key": "route:/admin",
       "title": "Exceptions & recovery",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -39998,13 +39997,13 @@
         "src/app/(business)/admin/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.admin.recovery.id",
       "entry_key": "route:/admin/recovery/[id]",
       "title": "Recovery case",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -40261,13 +40260,13 @@
         "src/app/(business)/admin/recovery/[id]/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.calendar",
       "entry_key": "route:/calendar",
       "title": "Calendar",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -40523,13 +40522,13 @@
         "src/app/(business)/calendar/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.customers.id.account",
       "entry_key": "route:/customers/[id]/account",
       "title": "Customer Finance account",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -40788,13 +40787,13 @@
         "docs/reference/ui/finance/PPO-Finance-and-Commercial-Controls-r02.html",
         "docs/delivery/p10-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.customers.id",
       "entry_key": "route:/customers/[id]",
       "title": "Customer detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -41053,13 +41052,13 @@
         "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.customers.new",
       "entry_key": "route:/customers/new",
       "title": "Create customer / shared record",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -41318,13 +41317,13 @@
         "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.customers",
       "entry_key": "route:/customers",
       "title": "Customer register",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -41582,13 +41581,13 @@
         "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.documents.id",
       "entry_key": "route:/documents/[id]",
       "title": "Issued job-pack document",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -41847,13 +41846,13 @@
         "docs/reference/ui/document-library/PPO-Document-Register-and-Linked-Library-r01.html",
         "docs/blueprints/contextual-help-design.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.email.id",
       "entry_key": "route:/email/[id]",
       "title": "Email detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -42112,13 +42111,13 @@
         "docs/reference/ui/email-calendar/powerplants-one-email-r04.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.email",
       "entry_key": "route:/email",
       "title": "Email inbox",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -42376,13 +42375,13 @@
         "docs/reference/ui/email-calendar/powerplants-one-email-r04.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.id",
       "entry_key": "route:/engineering/[id]",
       "title": "Engineering package",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -42642,13 +42641,13 @@
         "docs/reference/ui/engineering/PPO-Engineering-Container-r02.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering",
       "entry_key": "route:/engineering",
       "title": "Engineering workspace",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -42907,13 +42906,13 @@
         "docs/reference/ui/engineering/PPO-Engineering-Container-r02.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.equipment.id",
       "entry_key": "route:/equipment/[id]",
       "title": "Equipment detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -43175,13 +43174,13 @@
         "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.equipment",
       "entry_key": "route:/equipment",
       "title": "Equipment register",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -43442,13 +43441,13 @@
         "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.estimating.discovery.id.costing",
       "entry_key": "route:/estimating/discovery/[id]/costing",
       "title": "Discovery costing",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -43714,13 +43713,13 @@
         "docs/delivery/es02-estimation-wizard-handover.md",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.estimating.discovery.id",
       "entry_key": "route:/estimating/discovery/[id]",
       "title": "Discovery workspace",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -43981,13 +43980,13 @@
         "docs/delivery/es02-estimation-wizard-handover.md",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.estimating.discovery.new",
       "entry_key": "route:/estimating/discovery/new",
       "title": "Create discovery workspace",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -44248,13 +44247,13 @@
         "docs/delivery/es02-estimation-wizard-handover.md",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.estimating.discovery",
       "entry_key": "route:/estimating/discovery",
       "title": "Discovery register",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -44514,13 +44513,13 @@
         "docs/delivery/es02-estimation-wizard-handover.md",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.estimating.estimates.id",
       "entry_key": "route:/estimating/estimates/[id]",
       "title": "Estimate detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -44779,13 +44778,13 @@
         "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.estimating.new",
       "entry_key": "route:/estimating/new",
       "title": "Create estimate",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -45044,13 +45043,13 @@
         "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.estimating",
       "entry_key": "route:/estimating",
       "title": "Estimate register",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -45308,13 +45307,13 @@
         "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.estimating.quotes.id",
       "entry_key": "route:/estimating/quotes/[id]",
       "title": "Quotation detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -45571,13 +45570,13 @@
         "src/app/(business)/estimating/quotes/[id]/page.tsx",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.finance.handoffs.id",
       "entry_key": "route:/finance/handoffs/[id]",
       "title": "Finance handoff detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -45836,13 +45835,13 @@
         "docs/reference/ui/finance/PPO-Finance-and-Commercial-Controls-r02.html",
         "docs/delivery/p10-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.finance.handoffs.new",
       "entry_key": "route:/finance/handoffs/new",
       "title": "Create Finance handoff",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -46101,13 +46100,13 @@
         "docs/reference/ui/finance/PPO-Finance-and-Commercial-Controls-r02.html",
         "docs/delivery/p10-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.finance.handoffs",
       "entry_key": "route:/finance/handoffs",
       "title": "Finance handoff queue",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -46365,13 +46364,13 @@
         "docs/reference/ui/finance/PPO-Finance-and-Commercial-Controls-r02.html",
         "docs/delivery/p10-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.my-jobs.id",
       "entry_key": "route:/my-jobs/[id]",
       "title": "Technician job detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -46628,13 +46627,13 @@
         "src/app/(business)/my-jobs/[id]/page.tsx",
         "docs/delivery/p07-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.my-jobs",
       "entry_key": "route:/my-jobs",
       "title": "My Jobs",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -46890,13 +46889,13 @@
         "src/app/(business)/my-jobs/page.tsx",
         "docs/delivery/p07-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.people.id",
       "entry_key": "route:/people/[id]",
       "title": "Contact detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -47155,13 +47154,13 @@
         "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.people",
       "entry_key": "route:/people",
       "title": "Contact directory",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -47419,13 +47418,13 @@
         "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.projects.id",
       "entry_key": "route:/projects/[id]",
       "title": "Project detail & Gantt",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -47685,13 +47684,13 @@
         "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.projects.new",
       "entry_key": "route:/projects/new",
       "title": "Create project",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -47948,13 +47947,13 @@
         "src/app/(business)/projects/new/page.tsx",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.projects",
       "entry_key": "route:/projects",
       "title": "Project register",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -48213,13 +48212,13 @@
         "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.sales.leads.id",
       "entry_key": "route:/sales/leads/[id]",
       "title": "Lead detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -48477,13 +48476,13 @@
         "docs/blueprints/BP-03-crm.md",
         "src/components/leads-guide.ts"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.sales.leads",
       "entry_key": "route:/sales/leads",
       "title": "Leads",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -48740,13 +48739,13 @@
         "docs/blueprints/BP-03-crm.md",
         "src/components/leads-guide.ts"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.sales.opportunities.id",
       "entry_key": "route:/sales/opportunities/[id]",
       "title": "Opportunity detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -49005,13 +49004,13 @@
         "docs/reference/ui/crm/PPO-Deal-Workspace-r01.html",
         "docs/blueprints/BP-03-crm.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.sales.opportunities.new",
       "entry_key": "route:/sales/opportunities/new",
       "title": "Create opportunity",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -49266,13 +49265,13 @@
         "src/app/(business)/sales/opportunities/new/page.tsx",
         "docs/blueprints/BP-03-crm.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.sales.opportunities",
       "entry_key": "route:/sales/opportunities",
       "title": "Opportunities · Board / List / Forecast / Archive",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -49530,13 +49529,13 @@
         "docs/reference/ui/crm/ppo-deal-pipeline_r38.html",
         "docs/blueprints/BP-03-crm.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.schedule",
       "entry_key": "route:/schedule",
       "title": "Service planner",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -49794,13 +49793,13 @@
         "docs/delivery/pl01-demand-to-booking-handover.md",
         "docs/delivery/p05-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.service.appointments.id",
       "entry_key": "route:/service/appointments/[id]",
       "title": "Appointment detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -50057,13 +50056,13 @@
         "src/app/(business)/service/appointments/[id]/page.tsx",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.service.packs.id",
       "entry_key": "route:/service/packs/[id]",
       "title": "Job pack detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -50322,13 +50321,13 @@
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.service.packs.new",
       "entry_key": "route:/service/packs/new",
       "title": "Create job pack",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -50587,13 +50586,13 @@
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.service.packs",
       "entry_key": "route:/service/packs",
       "title": "Job pack register",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -50851,13 +50850,13 @@
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.service.reports.id",
       "entry_key": "route:/service/reports/[id]",
       "title": "Service report detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -51119,13 +51118,13 @@
         "docs/delivery/p09-handover.md",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.service.reports",
       "entry_key": "route:/service/reports",
       "title": "Service review & reports",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -51386,13 +51385,13 @@
         "docs/delivery/p09-handover.md",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.service.technicians",
       "entry_key": "route:/service/technicians",
       "title": "Field technicians",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -51648,13 +51647,13 @@
         "src/app/(business)/service/technicians/page.tsx",
         "docs/delivery/p05-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.service.tickets.id",
       "entry_key": "route:/service/tickets/[id]",
       "title": "Service request detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -51913,13 +51912,13 @@
         "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.service.tickets.new",
       "entry_key": "route:/service/tickets/new",
       "title": "Create service request",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -52178,13 +52177,13 @@
         "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.service.tickets",
       "entry_key": "route:/service/tickets",
       "title": "Service request register",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -52442,13 +52441,13 @@
         "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.service.work-orders.id",
       "entry_key": "route:/service/work-orders/[id]",
       "title": "Work order detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -52707,13 +52706,13 @@
         "docs/reference/ui/service/PPO-Work-Orders-Workspace-r01.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.service.work-orders.new",
       "entry_key": "route:/service/work-orders/new",
       "title": "Create work order",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -52972,13 +52971,13 @@
         "docs/reference/ui/service/PPO-Work-Orders-Workspace-r01.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.service.work-orders",
       "entry_key": "route:/service/work-orders",
       "title": "Work order register",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -53236,13 +53235,13 @@
         "docs/reference/ui/service/PPO-Work-Orders-Workspace-r01.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.sites.id",
       "entry_key": "route:/sites/[id]",
       "title": "Site detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -53502,13 +53501,13 @@
         "docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.sites",
       "entry_key": "route:/sites",
       "title": "Site register",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -53767,13 +53766,13 @@
         "docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.work.actions",
       "entry_key": "route:/work/actions",
       "title": "My actions",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -54031,13 +54030,13 @@
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.work",
       "entry_key": "route:/work",
       "title": "My Work · Overview",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -54296,13 +54295,13 @@
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.work.reviews",
       "entry_key": "route:/work/reviews",
       "title": "Reviews & handovers",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -54566,13 +54565,13 @@
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.work.team",
       "entry_key": "route:/work/team",
       "title": "Team queue",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -54830,13 +54829,13 @@
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.work.updates",
       "entry_key": "route:/work/updates",
       "title": "Updates & preferences",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -55095,13 +55094,13 @@
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.work.waiting",
       "entry_key": "route:/work/waiting",
       "title": "Blocked & waiting",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -55359,13 +55358,13 @@
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.work.id",
       "entry_key": "route:/work/[id]",
       "title": "Activity detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -55624,13 +55623,13 @@
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.work.new",
       "entry_key": "route:/work/new",
       "title": "Create activity",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -55889,13 +55888,13 @@
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.foundation",
       "entry_key": "route:/foundation",
       "title": "Foundation checks",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -56151,13 +56150,13 @@
         "src/app/foundation/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.home",
       "entry_key": "route:/",
       "title": "Home → My Work",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -56411,13 +56410,13 @@
         "src/app/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.login",
       "entry_key": "route:/login",
       "title": "Login",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -56671,13 +56670,13 @@
         "scripts/local-server.ts",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.offline.index.html",
       "entry_key": "route:/offline/index.html",
       "title": "Offline workspace",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -56935,13 +56934,13 @@
         "docs/delivery/p08-handover.md",
         "docs/delivery/p07-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.contacts",
       "entry_key": "route:/contacts",
       "title": "Contacts",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -57199,13 +57198,13 @@
         "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.id.changes",
       "entry_key": "route:/engineering/[id]/changes",
       "title": "Engineering change review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -57462,13 +57461,13 @@
         "src/app/(business)/engineering/[id]/changes/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.id.changes.handovers",
       "entry_key": "route:/engineering/[id]/changes/handovers",
       "title": "Engineering change review · handovers",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -57730,13 +57729,13 @@
         "src/app/(business)/engineering/[id]/changes/handovers/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.id.changes.history",
       "entry_key": "route:/engineering/[id]/changes/history",
       "title": "Engineering change review · history",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -57998,13 +57997,13 @@
         "src/app/(business)/engineering/[id]/changes/history/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.id.changes.impact",
       "entry_key": "route:/engineering/[id]/changes/impact",
       "title": "Engineering change review · impact",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -58266,13 +58265,13 @@
         "src/app/(business)/engineering/[id]/changes/impact/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.id.changes.reviews",
       "entry_key": "route:/engineering/[id]/changes/reviews",
       "title": "Engineering change review · reviews",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -58534,13 +58533,13 @@
         "src/app/(business)/engineering/[id]/changes/reviews/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.id.changes.verification",
       "entry_key": "route:/engineering/[id]/changes/verification",
       "title": "Engineering change review · verification",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -58802,13 +58801,13 @@
         "src/app/(business)/engineering/[id]/changes/verification/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.id.materials",
       "entry_key": "route:/engineering/[id]/materials",
       "title": "Materials & substitutions",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -59067,13 +59066,13 @@
         "docs/delivery/engineering-materials-substitutions-handover.md",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.id.materials.handover",
       "entry_key": "route:/engineering/[id]/materials/handover",
       "title": "Materials & substitutions · handover",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -59337,13 +59336,13 @@
         "docs/delivery/engineering-materials-substitutions-handover.md",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.id.materials.history",
       "entry_key": "route:/engineering/[id]/materials/history",
       "title": "Materials & substitutions · history",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -59607,13 +59606,13 @@
         "docs/delivery/engineering-materials-substitutions-handover.md",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.id.materials.mapping",
       "entry_key": "route:/engineering/[id]/materials/mapping",
       "title": "Materials & substitutions · mapping",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -59877,13 +59876,13 @@
         "docs/delivery/engineering-materials-substitutions-handover.md",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.id.materials.releases",
       "entry_key": "route:/engineering/[id]/materials/releases",
       "title": "Materials & substitutions · releases",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -60147,13 +60146,13 @@
         "docs/delivery/engineering-materials-substitutions-handover.md",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.id.materials.substitutions",
       "entry_key": "route:/engineering/[id]/materials/substitutions",
       "title": "Materials & substitutions · substitutions",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -60417,13 +60416,13 @@
         "docs/delivery/engineering-materials-substitutions-handover.md",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.changes",
       "entry_key": "route:/engineering/changes",
       "title": "Engineering change review",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -60679,13 +60678,13 @@
         "src/app/(business)/engineering/changes/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.commissioning",
       "entry_key": "route:/engineering/commissioning",
       "title": "Commissioning & as-built",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -60941,13 +60940,13 @@
         "src/app/(business)/engineering/commissioning/(views)/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.commissioning.basis",
       "entry_key": "route:/engineering/commissioning/basis",
       "title": "Commissioning & as-built · basis",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -61209,13 +61208,13 @@
         "src/app/(business)/engineering/commissioning/(views)/basis/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.commissioning.configuration",
       "entry_key": "route:/engineering/commissioning/configuration",
       "title": "Commissioning & as-built · configuration",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -61477,13 +61476,13 @@
         "src/app/(business)/engineering/commissioning/(views)/configuration/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.commissioning.handovers",
       "entry_key": "route:/engineering/commissioning/handovers",
       "title": "Commissioning & as-built · handovers",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -61745,13 +61744,13 @@
         "src/app/(business)/engineering/commissioning/(views)/handovers/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.commissioning.packages.id",
       "entry_key": "route:/engineering/commissioning/packages/[id]",
       "title": "Commissioning & as-built · packages / [id]",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -62008,13 +62007,13 @@
         "src/app/(business)/engineering/commissioning/packages/[id]/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.commissioning.releases",
       "entry_key": "route:/engineering/commissioning/releases",
       "title": "Commissioning & as-built · releases",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -62276,13 +62275,13 @@
         "src/app/(business)/engineering/commissioning/(views)/releases/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.commissioning.results",
       "entry_key": "route:/engineering/commissioning/results",
       "title": "Commissioning & as-built · results",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -62544,13 +62543,13 @@
         "src/app/(business)/engineering/commissioning/(views)/results/page.tsx",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.engineering.materials",
       "entry_key": "route:/engineering/materials",
       "title": "Materials & substitutions",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -62808,13 +62807,13 @@
         "docs/delivery/engineering-materials-substitutions-handover.md",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.estimating.configurations",
       "entry_key": "route:/estimating/configurations",
       "title": "Screen Systems configurations",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -63072,13 +63071,13 @@
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.estimating.configurations.id",
       "entry_key": "route:/estimating/configurations/[id]",
       "title": "Screen Systems configurations · detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -63337,13 +63336,13 @@
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.estimating.configurations.id.view",
       "entry_key": "route:/estimating/configurations/[id]/[view]",
       "title": "Screen Systems configurations · selected view",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -63607,13 +63606,13 @@
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.estimating.configurations.new",
       "entry_key": "route:/estimating/configurations/new",
       "title": "Screen Systems configurations · create",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -63872,13 +63871,13 @@
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.estimating.fertigation",
       "entry_key": "route:/estimating/fertigation",
       "title": "Priva Fertigation Configurator",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -64134,13 +64133,13 @@
         "docs/blueprints/BP-04-estimating-quotation.md",
         "docs/delivery/priva-fertigation-native-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.estimating.fertigation.id",
       "entry_key": "route:/estimating/fertigation/[id]",
       "title": "Priva Fertigation Configurator · detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -64397,13 +64396,13 @@
         "docs/blueprints/BP-04-estimating-quotation.md",
         "docs/delivery/priva-fertigation-native-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.estimating.fertigation.new",
       "entry_key": "route:/estimating/fertigation/new",
       "title": "Priva Fertigation Configurator · create",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -64660,13 +64659,13 @@
         "docs/blueprints/BP-04-estimating-quotation.md",
         "docs/delivery/priva-fertigation-native-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.estimating.quotes",
       "entry_key": "route:/estimating/quotes",
       "title": "Quotations",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -64924,13 +64923,13 @@
         "docs/reference/ui/quoting/PPO-Quotation-Approval-Issue-and-Distribution-r02.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.facilities",
       "entry_key": "route:/facilities",
       "title": "Facilities & growing areas",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -65190,13 +65189,13 @@
         "docs/delivery/facilities-growing-areas-handover.md",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.facilities.id",
       "entry_key": "route:/facilities/[id]",
       "title": "Facilities & growing areas · detail",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -65457,13 +65456,13 @@
         "docs/delivery/facilities-growing-areas-handover.md",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.facilities.id.edit",
       "entry_key": "route:/facilities/[id]/edit",
       "title": "Facilities & growing areas · edit",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -65729,13 +65728,13 @@
         "docs/delivery/facilities-growing-areas-handover.md",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.facilities.new",
       "entry_key": "route:/facilities/new",
       "title": "Facilities & growing areas · create",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -65996,13 +65995,13 @@
         "docs/delivery/facilities-growing-areas-handover.md",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.finance.accounts",
       "entry_key": "route:/finance/accounts",
       "title": "Customer accounts",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -66260,13 +66259,13 @@
         "docs/reference/ui/finance/PPO-Finance-and-Commercial-Controls-r02.html",
         "docs/delivery/p10-handover.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.projects.acceptance",
       "entry_key": "route:/projects/acceptance",
       "title": "Project acceptance & closeout",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -66522,13 +66521,13 @@
         "src/app/(business)/projects/acceptance/page.tsx",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.projects.acceptance.closeout",
       "entry_key": "route:/projects/acceptance/closeout",
       "title": "Project acceptance & closeout · closeout",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -66790,13 +66789,13 @@
         "src/app/(business)/projects/acceptance/closeout/page.tsx",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.projects.acceptance.handover",
       "entry_key": "route:/projects/acceptance/handover",
       "title": "Project acceptance & closeout · handover",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -67058,13 +67057,13 @@
         "src/app/(business)/projects/acceptance/handover/page.tsx",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.projects.acceptance.history",
       "entry_key": "route:/projects/acceptance/history",
       "title": "Project acceptance & closeout · history",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -67326,13 +67325,13 @@
         "src/app/(business)/projects/acceptance/history/page.tsx",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.projects.acceptance.outstanding",
       "entry_key": "route:/projects/acceptance/outstanding",
       "title": "Project acceptance & closeout · outstanding",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -67594,13 +67593,13 @@
         "src/app/(business)/projects/acceptance/outstanding/page.tsx",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.projects.acceptance.readiness",
       "entry_key": "route:/projects/acceptance/readiness",
       "title": "Project acceptance & closeout · readiness",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -67862,13 +67861,13 @@
         "src/app/(business)/projects/acceptance/readiness/page.tsx",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.projects.acceptance.stages.id",
       "entry_key": "route:/projects/acceptance/stages/[id]",
       "title": "Project acceptance & closeout · stages / [id]",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -68125,13 +68124,13 @@
         "src/app/(business)/projects/acceptance/stages/[id]/page.tsx",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.projects.programme",
       "entry_key": "route:/projects/programme",
       "title": "Programme",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -68389,13 +68388,13 @@
         "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.sales.pulse",
       "entry_key": "route:/sales/pulse",
       "title": "Sales Pulse",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -68653,13 +68652,13 @@
         "docs/reference/ui/crm/ppo-deal-pipeline_r38.html",
         "docs/blueprints/BP-03-crm.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.page.sales.tasks",
       "entry_key": "route:/sales/tasks",
       "title": "Sales Tasks",
-      "revision": "r01",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Page workflow draft",
@@ -68917,14 +68916,14 @@
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "applicable_app_release": null
+      "applicable_app_release": null,
+      "reviewed_content_hash": null
     },
     {
       "guide_key": "guide.route-development-design-system",
       "entry_key": "route:/development/design-system",
       "title": "Theme & shared controls",
       "status": "Draft",
-      "revision": "r01",
       "content_mode": "Implemented local workspace; acceptance pending",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "related_entry_keys": [
@@ -69068,14 +69067,17 @@
           "headers": [],
           "rows": []
         }
-      ]
+      ],
+      "reviewed_content_hash": null,
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null
     },
     {
       "guide_key": "guide.route-development-page-register",
       "entry_key": "route:/development/page-register",
       "title": "Design & build register",
       "status": "Draft",
-      "revision": "r01",
       "content_mode": "Implemented local workspace; acceptance pending",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "related_entry_keys": [
@@ -69219,7 +69221,11 @@
           "headers": [],
           "rows": []
         }
-      ]
+      ],
+      "reviewed_content_hash": null,
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null
     }
   ]
 }

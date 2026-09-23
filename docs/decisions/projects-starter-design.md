@@ -1,10 +1,10 @@
 ---
 document_id: PPO-012-STARTER-DEC
-revision: r02
 date: 2026-09-09
 owner: Dean Fiedler - private prototype
 status: Requested design continuation; proposed product details for review
 source_commit: f8035b5c55251da4da52430adf2f83094feccd6b
+versioning: git
 ---
 
 # Projects starter design decision and handover

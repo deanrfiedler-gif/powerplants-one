@@ -11,11 +11,27 @@ export type Guide = {
   entry_key: string;
   title: string;
   status: string;
-  revision: string;
+  owner_role: string;
+  reviewer: string | null;
+  reviewed_at: string | null;
+  reviewed_content_hash: string | null;
   content_mode: string;
   source_commit: string;
   sections: GuideSection[];
   related_entry_keys: string[];
+};
+export type FileHistory = {
+  path: string;
+  checkout_commit: string | null;
+  last_changed_at: string | null;
+  last_commit: string | null;
+  state: "Committed" | "Uncommitted changes" | "History unavailable";
+  history_url: string | null;
+  source_url: string | null;
+};
+export type GuideDocument = Guide & {
+  history: FileHistory;
+  review_state: "Draft" | "Reviewed" | "Changes awaiting review";
 };
 export type Entry = {
   key: string;
@@ -36,12 +52,13 @@ export type Entry = {
   deployment_status: string;
   review_fingerprint: string | null;
   reviewed_at: string | null;
+  reviewer: string | null;
   owner: string;
   build_rank: number | null;
   related_keys: string[];
 };
 export type Register = {
-  schema_version: 1;
+  schema_version: 2;
   title: string;
   source_baseline: string;
   local_base: string;
@@ -59,17 +76,20 @@ export type Resource = {
   current: boolean;
   group: string;
   module: string | null;
+  history: FileHistory;
 };
 export type CatalogEntry = Entry & {
   source_present: boolean;
   fingerprint: string;
   review_state: "Not reviewed" | "Current" | "Stale";
   guide_status: string;
+  history: FileHistory;
   resources: Resource[];
   issues: string[];
 };
 export type Catalog = {
-  schema_version: 1;
+  schema_version: 2;
+  checkout_commit: string | null;
   title: string;
   observed_at: string;
   source_baseline: string;

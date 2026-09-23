@@ -1,11 +1,11 @@
 ---
 document_id: PPO-HELP-TPL
 title: PPO Page Guide Authoring Template
-revision: r01
 date: 2026-09-13
 status: Template prepared for review
 owner: Dean Fiedler - personal prototype owner
 source_commit: 1cc882e53020bdfb22f7e9192365d90b1d8282ab
+versioning: git
 ---
 
 # PPO Page Guide Authoring Template
@@ -17,7 +17,8 @@ Use with [Contextual Help Design](../blueprints/contextual-help-design.md). Copy
 | Metadata | Required author entry |
 |---|---|
 | `document_id`, `guide_key` | Registered document ID and stable task/page key; do not use a page title as the key. |
-| `title`, `revision`, `status` | User-facing title, rNN revision, Draft/InReview/Published/Superseded/Withdrawn. |
+| `title`, `versioning`, `status` | Stable user-facing title, `git` for the living master, and actual Draft/InReview/Reviewed/Published/Superseded/Withdrawn state. No routine rNN. Publication remains a separate release action. |
+| `issued_revision` | Only for a separately issued frozen guide; not a counter on the working article. |
 | `route_patterns`, `entry_sections` | Explicit routes and stable section anchors; exact routes before dynamic patterns. |
 | `audience` | Permitted audience and any restricted section rules. Public source must remain publishable. |
 | `owner_role`, `reviewer`, `reviewed_at` | Actual accountability and evidence; use “Not yet nominated/reviewed” when absent. |

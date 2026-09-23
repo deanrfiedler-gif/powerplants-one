@@ -1,15 +1,15 @@
 ---
 document_id: PPO-CS02-R01-PLAN
 title: Contacts, Stakeholders & Relationships workspace r01 — design build plan
-revision: r01
 date: 2026-09-18
 owner: Dean Fiedler
 status: Proposed. Not yet authorised; §12 decisions are open and §16 questions are unanswered
 register_entry: CS-02 · Contact directory and contact detail · P1 · D (dedicated refinement) · Pages — with CS-03 · Stakeholder and relationship view · P1 · N (new design candidate) · Tab · reviewer CRM / site data steward
 source_commit: 01b9824a63e468b393265b159fa681f83f6e668c
+versioning: git
 ---
 
-# Contacts, Stakeholders & Relationships workspace r01 — design build plan
+# Contacts, Stakeholders & Relationships workspace — design build plan
 
 ## 0. What this plan is
 

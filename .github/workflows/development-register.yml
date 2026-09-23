@@ -18,4 +18,4 @@ jobs:
           node-version-file: .nvmrc
       - run: npm ci --ignore-scripts
       - run: npm run studio:check
-      - run: node --import tsx --test tests/unit/development-workspace.test.ts
+      - run: node --import tsx --test tests/unit/development-workspace.test.ts tests/unit/development-history.test.ts

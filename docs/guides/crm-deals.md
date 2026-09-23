@@ -2,7 +2,6 @@
 document_id: PPO-HELP-CRM
 guide_key: crm.deals.worklist
 title: CRM Deals - Page Guide
-revision: r01
 date: 2026-09-13
 status: InReview - source-checked pilot; application walkthrough not run
 owner: Dean Fiedler - personal prototype owner
@@ -12,6 +11,7 @@ workflow_basis: Two-stage Enquiry and Qualified synthetic opportunity workflow
 audience: Internal prototype users; synthetic examples only
 route_patterns: /crm/opportunities; /crm/opportunities/new; /crm/opportunities/:id
 resource_ids: None - no approved SOP supplied or connected
+versioning: git
 ---
 
 <!-- USER GUIDE START -->

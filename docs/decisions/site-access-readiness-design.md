@@ -1,6 +1,8 @@
 # CS-06 — Site access and horticultural readiness design
 
-**Revision:** r01 · **Date:** 16 September 2026 · **Owner:** Dean Fiedler · **State:** Authorised design delivered for review; application integration and owner acceptance remain separate.
+<!-- versioning: git; committed history is authoritative -->
+
+**Date:** 16 September 2026 · **Owner:** Dean Fiedler · **State:** Authorised design delivered for review; application integration and owner acceptance remain separate.
 
 ## Outcome and authority
 

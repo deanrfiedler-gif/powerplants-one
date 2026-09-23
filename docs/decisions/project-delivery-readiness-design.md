@@ -1,10 +1,10 @@
 ---
 document_id: PPO-012-READINESS-DES
-revision: r01
 date: 2026-09-15
 owner: Dean Fiedler
 status: Authorised standalone design for review; native visual review and application integration pending
 source_commit: bc1dcf21490dda37979227f5fc13224183853d5a
+versioning: git
 ---
 
 # Projects — Delivery Readiness & Change Control

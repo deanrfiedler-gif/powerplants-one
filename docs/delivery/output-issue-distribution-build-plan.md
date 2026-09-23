@@ -1,7 +1,6 @@
 ---
 document_id: PPO-DK03-PLAN
 title: DK-03 — Output, Issue & Distribution Centre — Build Plan
-revision: r01
 date: 2026-09-17
 prepared_for: Dean Fiedler
 project: Powerplants One
@@ -12,6 +11,7 @@ source_branch: main
 source_commit: a5406a81c02d37c4a23e75c1b71c7653fcec0d80
 supporting_design_commit: eba0f3842639c2bbdf86e3af8f12d319c9f37071
 language: en-AU
+versioning: git
 ---
 
 # DK-03 — Output, Issue & Distribution Centre

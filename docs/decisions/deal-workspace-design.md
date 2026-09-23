@@ -1,13 +1,13 @@
 ---
 document_id: PPO-DEAL-WORKSPACE-DEC
 title: Deal Workspace design and receiving handover
-revision: r01
 date: 2026-09-17
 owner: Dean Fiedler
 status: User-authorised standalone build; owner acceptance and runtime integration separate
+versioning: git
 ---
 
-# CR-01 — Deal Workspace r01
+# CR-01 — Deal Workspace
 
 Dean instructed the dedicated Sales Deal Workspace HTML build after reviewing the detailed build report. This package implements the standalone design and companion report, with a shared Board/List navigation harness. It preserves the existing CR-01 identity from page coverage register r06 and parents CRM-02, CRM-03, CRM-04, CRM-05, CRM-07 and CRM-08.
 

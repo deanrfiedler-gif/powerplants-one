@@ -1,10 +1,10 @@
 ---
 document_id: PPO-WAR-WORKSPACE-DES
-revision: r01
 date: 2026-09-15
 owner: Dean Fiedler
 status: Proposed HTML design; model and native browser verification complete; owner acceptance and application integration separate
 source_commit: d041de7c40e7ba73acdef3252d5f18f1bf8ccb2f
+versioning: git
 ---
 
 # Warranty & Customer Resolution — design and receiving handover

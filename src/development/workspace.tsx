@@ -7,16 +7,14 @@ import { Button, ButtonLink } from "../components/ui/button";
 import {
   type Catalog,
   type CatalogEntry,
-  type Guide,
+  type GuideDocument,
   type Resource,
   origin,
   resolveDestination,
   resourceHref,
 } from "./model";
+import { DocumentDetails } from "./document-details";
 
-const github = (path: string) =>
-  "https://github.com/deanrfiedler-gif/powerplants-one/blob/main/" +
-  path.split("/").map(encodeURIComponent).join("/");
 function download(name: string, value: unknown) {
   const url = URL.createObjectURL(
     new Blob([JSON.stringify(value, null, 2)], { type: "application/json" }),
@@ -59,7 +57,7 @@ export function DevelopmentWorkspace({
     }),
     [trail, setTrail] = useState<Reader[]>([]),
     [text, setText] = useState(""),
-    [guide, setGuide] = useState<Guide | null>(null),
+    [guide, setGuide] = useState<GuideDocument | null>(null),
     [loading, setLoading] = useState(false),
     [error, setError] = useState(""),
     [refreshing, setRefreshing] = useState(false),
@@ -129,7 +127,7 @@ export function DevelopmentWorkspace({
       })
       .then((value) => {
         if (!controller.signal.aborted) {
-          if (reader.kind === "guide") setGuide(value as Guide);
+          if (reader.kind === "guide") setGuide(value as GuideDocument);
           else setText(value as string);
           setLoading(false);
         }
@@ -195,6 +193,13 @@ export function DevelopmentWorkspace({
       setRefreshing(false);
     }
   }
+  const github = (path: string) =>
+    catalog.checkout_commit
+      ? "https://github.com/deanrfiedler-gif/powerplants-one/blob/" +
+        catalog.checkout_commit +
+        "/" +
+        path.split("/").map(encodeURIComponent).join("/")
+      : undefined;
   const filtered = catalog.entries.filter(
     (e) =>
       (tab === "systems" ? e.kind === "system" : e.kind !== "system") &&
@@ -520,13 +525,7 @@ export function DevelopmentWorkspace({
                 acceptance or current application behaviour.
               </p>
               {resourceButton(item, "Read journey map")}
-              <a
-                href={github(item.path)}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Source in GitHub ↗
-              </a>
+              <DocumentDetails history={item.history} />
             </article>
           ))}
         </div>
@@ -674,6 +673,16 @@ export function DevelopmentWorkspace({
           {reader?.kind === "entry" && (
             <>
               <p>{reader.entry.summary}</p>
+              <DocumentDetails
+                history={reader.entry.history}
+                owner={reader.entry.owner}
+                reviewer={reader.entry.reviewer}
+                reviewedAt={reader.entry.reviewed_at}
+              />
+              <p className="studio-note">
+                History covers the design reference. Page review also tracks its
+                source, guide and shared dependencies.
+              </p>
               <div className="studio-badges">
                 <span>{reader.entry.scope_status} · retained assessment</span>
                 <span>Visual: {reader.entry.visual_status}</span>
@@ -797,14 +806,8 @@ export function DevelopmentWorkspace({
                 >
                   Download exact reference
                 </ButtonLink>
-                <ButtonLink
-                  href={github(reader.resource.path)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Open source in GitHub ↗
-                </ButtonLink>
               </div>
+              <DocumentDetails history={reader.resource.history} />
               {reader.resource.missing ? (
                 <p>Reference missing from this working copy.</p>
               ) : reader.resource.type === "markdown" ? (
@@ -848,8 +851,18 @@ export function DevelopmentWorkspace({
           {reader?.kind === "guide" && guide && (
             <>
               <p className="studio-note">
-                {guide.status} {guide.revision} · {guide.content_mode}. Review
-                against the applicable running release.
+                {guide.review_state} · {guide.content_mode}. Review against the
+                applicable running release.
+              </p>
+              <DocumentDetails
+                history={guide.history}
+                owner={guide.owner_role}
+                reviewer={guide.reviewer}
+                reviewedAt={guide.reviewed_at}
+              />
+              <p className="studio-note">
+                History covers the guide library file; review is recorded for
+                this article separately.
               </p>
               <label>
                 Search this guide

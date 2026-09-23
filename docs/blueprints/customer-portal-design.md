@@ -1,10 +1,10 @@
 ---
 title: Powerplants One - Customer portal design
-revision: r01
 date: 2026-09-06
 owner: Dean Fiedler - personal private prototype
 status: Authorised design and staged direction; runtime not implemented
 source_commit: 94289a20fc609e47af647b29ca8170557da312bb
+versioning: git
 ---
 
 # Customer portal

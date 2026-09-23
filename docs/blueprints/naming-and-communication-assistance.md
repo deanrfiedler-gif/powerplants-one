@@ -1,9 +1,9 @@
 ---
 document_id: PPO-NAM-FUNC
-revision: r01
 status: Authored design; synthetic prototype supplied; application implementation pending
 owner: Dean Fiedler — personal prototype owner
 date: 2026-09-15
+versioning: git
 ---
 
 # Naming and Communication Assistance — Functional Specification

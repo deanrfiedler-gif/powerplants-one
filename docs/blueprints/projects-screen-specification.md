@@ -1,9 +1,9 @@
 ---
 document_id: PPO-012-UI
-revision: r01
 date: 2026-09-07
 owner: Dean Fiedler - private prototype
 status: Static visual design and proposed interaction contract
+versioning: git
 ---
 
 # Projects — first-increment screens

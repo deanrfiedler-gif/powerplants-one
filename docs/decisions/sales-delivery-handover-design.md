@@ -1,11 +1,11 @@
 ---
 document_id: PPO-CR03-DES
 title: Sales-to-Delivery Handover design and receiving handover
-revision: r01
 date: 2026-09-16
 owner: Dean Fiedler
 status: Authorised design creation; owner acceptance, native device review and application integration remain separate
 source_commit: 0769a16dd842e9dc1c349a853036ab71949e7807
+versioning: git
 ---
 
 # CR-03 — Sales-to-Delivery Handover

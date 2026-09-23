@@ -1,10 +1,10 @@
 ---
 document_id: PPO-QUALITY-REG
-revision: r01
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
 status: Adopted requirements; delivery and acceptance incomplete
 source_commit: 10625815187f26179f316b887fcdee33467ac81f
+versioning: git
 ---
 
 # Product quality and gap register

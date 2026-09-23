@@ -1,11 +1,11 @@
 ---
 title: Powerplants One - Shared UI style specification
-revision: r08
 date: 2026-09-17
 status: Brand-derived visual direction; functional extensions proposed
 owner: Dean Fiedler
 scope: Shared visual foundation; BP-03 C02 CRM board and grid mockups; UI design baseline requirements
 source_commit: 03f6dbd72340e62fa5329bbeb412621bfa31924f
+versioning: git
 ---
 
 # Powerplants One - Shared UI style specification

@@ -19,3 +19,5 @@ Alternatives considered: a separate catalogue service/database would duplicate a
 Conformance: Register/worklist plus Document & evidence workspace; shared shell remains the host. The proposed development interior uses existing Roboto/navy/green tokens, accessible controls, phone cards and one reading dialog. Existing accepted business-page measurements and the UI baseline register remain authoritative. Reference/design acceptance, actual source implementation, functional verification and deployed availability are separate fields.
 
 Technical references checked: [Next.js request headers](https://nextjs.org/docs/app/api-reference/functions/headers) and [MDN iframe sandbox](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe). Implementation proof is recorded in the development-workspace handover.
+
+The later [living-master decision](living-master-documents.md) removes routine article revisions, introduces schema 2 and adds Git history with explicit local-edit and review state. This supersedes any working-issue labels without reissuing the archived r04/r05 HTML.

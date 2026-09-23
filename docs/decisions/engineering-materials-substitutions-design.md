@@ -1,10 +1,10 @@
 ---
 document_id: PPO-EN06-INT
-revision: r01
 date: 2026-09-20
 owner: Dean Fiedler
 status: Implemented and merged to main as PR #265 (5d54c4e) on 20 September 2026; visual acceptance, business acceptance, technical authority (D-002/D-019) and the accepted UI baseline register remain separate
 source_commit: 99c32aed5032393b7658713cca53aa4c1a2ab2dd
+versioning: git
 ---
 
 # EN-06 Released Materials & Substitutions: application integration

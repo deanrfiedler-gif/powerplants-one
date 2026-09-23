@@ -1,5 +1,7 @@
 # Priva Fertigation Configurator — native implementation plan
 
+<!-- versioning: git; committed history is authoritative -->
+
 22 September 2026. Authorised implementation under ES-02 / EST-02, EST-03 and EST-06. Delivery, owner acceptance, manufacturer suitability and hosted deployment are separate states.
 
 ## Baseline and sources

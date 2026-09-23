@@ -1,10 +1,10 @@
 ---
 document_id: PPO-013-READINESS
-revision: r01
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
 status: Candidate synthetic readiness contract; no Supply Chain runtime or ERP mapping
 source_commit: 3a27728c2c41e366a4863683fac748cd0d1da910
+versioning: git
 ---
 
 # Supply Chain readiness receiving contract

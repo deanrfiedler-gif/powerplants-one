@@ -56,6 +56,7 @@ if (process.argv.includes("--sync")) {
       deployment_status: "Not verified",
       review_fingerprint: null,
       reviewed_at: null,
+      reviewer: null,
       owner: "Dean Fiedler",
       build_rank: null,
       related_keys: [],
@@ -66,7 +67,10 @@ if (process.argv.includes("--sync")) {
       entry_key: key,
       title,
       status: "Draft",
-      revision: "r01",
+      owner_role: "Prototype content owner: Dean Fiedler",
+      reviewer: null,
+      reviewed_at: null,
+      reviewed_content_hash: null,
       content_mode: "New source; review needed",
       source_commit: master.source_baseline,
       related_entry_keys: [],
@@ -120,7 +124,7 @@ if (process.argv.includes("--sync")) {
   );
   await writeFile(
     resolve(root, guidePath),
-    JSON.stringify({ schema_version: 1, guides }, null, 2) + "\n",
+    JSON.stringify({ schema_version: 2, guides }, null, 2) + "\n",
   );
   console.log(
     `Registered ${added} newly discovered pages. Existing editorial content and statuses retained.`,

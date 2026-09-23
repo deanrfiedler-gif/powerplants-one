@@ -1,11 +1,11 @@
 ---
 document_id: PPO-FIN-UI-DEC
 title: Finance workspace design and handover
-revision: r02
 date: 2026-09-14
 status: Proposed interactive design; visual browser validation pending; application integration separate
 owner: Dean Fiedler - personal prototype owner
 source_commit: c3797ce9605a9eb1afab1f839e47e63095de1f7d
+versioning: git
 ---
 
 # Finance workspace design and handover

@@ -1,6 +1,5 @@
 ---
 title: EN-02 — Design Basis & Interface Register — Build Plan
-revision: r01
 date: 2026-09-17
 owner: Dean Fiedler
 scope_id: EN-02
@@ -8,6 +7,7 @@ status: Build plan prepared; HTML construction and verification pending
 source_repository: deanrfiedler-gif/powerplants-one
 source_branch: main
 source_commit: 108b1600152ee12443c75ffaf7feb7cc857316f5
+versioning: git
 ---
 
 # EN-02 — Design Basis & Interface Register

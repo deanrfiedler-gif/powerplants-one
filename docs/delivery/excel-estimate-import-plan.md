@@ -1,10 +1,10 @@
 ---
 document_id: PPO-010-EXCEL-PLAN
-revision: r01
 date: 2026-09-15
 owner: Dean Fiedler - prototype owner
 status: Bounded implementation plan; runtime not started
 source_commit: dcabfec1b5cde1c2cf220359e6cf1c63408512d6
+versioning: git
 ---
 
 # Excel estimate import implementation plan

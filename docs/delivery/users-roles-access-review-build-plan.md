@@ -1,15 +1,15 @@
 ---
 document_id: PPO-AD01-R01-PLAN
 title: Users, Roles, Teams & Access Review workspace r01 — design build plan
-revision: r01
 date: 2026-09-17
 owner: Dean Fiedler
 status: Authorised by Dean on 17 September 2026 ("proceed however you believe is the most professional"); built as AD-01 r01. Corrections found during the build are recorded in the companion report §12, not by rewriting this plan
 register_entry: AD-01 · Users, roles, teams and access review · P1 · N (new design candidate) · reviewer Platform / data owner
 source_commit: 81b0d401edc1c2ea31e5440c3416befe335219e3
+versioning: git
 ---
 
-# Users, Roles, Teams & Access Review workspace r01 — design build plan
+# Users, Roles, Teams & Access Review workspace — design build plan
 
 ## 0. What this plan is
 

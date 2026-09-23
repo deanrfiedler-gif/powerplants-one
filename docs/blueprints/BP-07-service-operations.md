@@ -1,6 +1,8 @@
 # BP-07 — Service Operations Functional & Build Blueprint
 
-**Edition:** r10 · **Date:** 10 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
+<!-- versioning: git; committed history is authoritative -->
+
+**Date:** 10 September 2026 · **Scope:** PP-01 planned-service synthetic prototype.
 
 **Status:** Functional specification with the bounded P03–P05 SC-01–SC-05/SC-07/SC-08 implementation amendments below. Later workflows and full acceptance remain incomplete. [Package](../prototype/README.md) · [Dictionary](../contracts/service-data-dictionary.md) · [API](../contracts/service-api.md) · [Acceptance](../testing/prototype-acceptance.md).
 

@@ -1,10 +1,10 @@
 ---
 document_id: PPO-KNOWLEDGE-DES
-revision: r01
 date: 2026-09-16
 owner: Dean Fiedler
 status: Proposed DK-04 design; local model and DOM verification passed; native visual review and application integration pending
 source_commit: 07eb34d5df5ea430c365da78e160cb6aa0b76f20
+versioning: git
 ---
 
 # Knowledge search and article detail — design and receiving handover

@@ -1,11 +1,11 @@
 ---
 document_id: PPO-ES09-DES
 title: ES-09 Estimate-to-Actual Outcome Review design and receiving handover
-revision: r01
 date: 2026-09-16
 owner: Dean Fiedler
 status: Proposed standalone design; owner acceptance, financial-definition adoption and application integration remain separate
 source_commit: 0769a16dd842e9dc1c349a853036ab71949e7807
+versioning: git
 ---
 
 # ES-09 — Estimate-to-Actual Outcome Review

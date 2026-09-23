@@ -13,6 +13,8 @@ import {
   readMaster,
   sourceRoutes,
   resourceId,
+  guideContentHash,
+  guideReviewState,
 } from "../../src/development/catalog";
 import {
   matchEntry,
@@ -20,6 +22,7 @@ import {
   resolveDestination,
   type Register,
   type Entry,
+  type Guide,
 } from "../../src/development/model";
 
 const env = {
@@ -148,12 +151,13 @@ test("source discovery catches omissions and shared changes invalidate recorded 
       deployment_status: "Unknown",
       review_fingerprint: null,
       reviewed_at: null,
+      reviewer: null,
       owner: "Fixture",
       build_rank: null,
       related_keys: [],
     };
     const master: Register = {
-      schema_version: 1,
+      schema_version: 2,
       title: "Fixture",
       source_baseline: "fixture",
       local_base: "http://127.0.0.1:3000",
@@ -172,12 +176,13 @@ test("source discovery catches omissions and shared changes invalidate recorded 
     await put(
       "docs/design/development/guides.json",
       JSON.stringify({
+        schema_version: 2,
         guides: [
           {
             guide_key: "sample",
             entry_key: "route:/sample",
             status: "Draft",
-            revision: "r01",
+            owner_role: "Fixture owner",
           },
         ],
       }),
@@ -189,6 +194,8 @@ test("source discovery catches omissions and shared changes invalidate recorded 
     let catalog = await buildCatalog(root);
     assert.deepEqual(catalog.errors, []);
     entry.review_fingerprint = catalog.entries[0].fingerprint;
+    entry.reviewer = "Fixture reviewer";
+    entry.reviewed_at = "2026-09-23";
     await save();
     catalog = await buildCatalog(root);
     assert.equal(catalog.entries[0].review_state, "Current");
@@ -216,4 +223,32 @@ test("source discovery catches omissions and shared changes invalidate recorded 
   } finally {
     await rm(root, { recursive: true, force: true });
   }
+});
+
+test("guide review is explicit and content changes cannot inherit review", () => {
+  const guide: Guide = {
+    guide_key: "fixture",
+    entry_key: "route:/fixture",
+    title: "Fixture guide",
+    status: "Draft",
+    owner_role: "Fixture owner",
+    reviewer: null,
+    reviewed_at: null,
+    reviewed_content_hash: null,
+    content_mode: "Fixture",
+    source_commit: "fixture-source",
+    sections: [],
+    related_entry_keys: [],
+  };
+  assert.equal(guideReviewState(guide), "Draft");
+  guide.status = "Reviewed";
+  assert.equal(guideReviewState(guide), "Changes awaiting review");
+  guide.reviewer = "Fixture reviewer";
+  guide.reviewed_at = "2026-09-23";
+  guide.reviewed_content_hash = guideContentHash(guide);
+  assert.equal(guideReviewState(guide), "Reviewed");
+  guide.title = "Changed instructions";
+  assert.equal(guideReviewState(guide), "Changes awaiting review");
+  guide.status = "Draft";
+  assert.equal(guideReviewState(guide), "Draft");
 });

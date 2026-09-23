@@ -1,12 +1,12 @@
 ---
 document_id: BP-04
 title: Estimating & Quotation Functional & Build Blueprint
-revision: r01
 date: 2026-09-06
 owner: Dean Fiedler - private prototype
 status: Proposed design; source and business acceptance remain open
 work_package: PPO-010
 source_commit: c3ac9b2ab9c09308f620a5b451a337eb75fe6390
+versioning: git
 ---
 
 # BP-04 — Estimating and quotation

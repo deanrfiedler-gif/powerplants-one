@@ -1,6 +1,8 @@
 # Powerplants One — working design and build register
 
-**Owner:** Dean Fiedler · **Working issue:** r01 · **Schema:** 1 · **Date:** 23 September 2026.
+<!-- versioning: git; committed history is authoritative -->
+
+**Owner:** Dean Fiedler · **Schema:** 2 · **Date:** 23 September 2026.
 
 This folder is the Git master for the local development workspace. Open `/development/page-register` through the local application or the **Design and build workspace** icon next to global search. `/development/design-system` shows the current root tokens and real shared controls. These routes and supporting endpoints are unavailable in hosted/production mode. Set `PPO_DEVELOPMENT_WORKSPACE=off` to disable them locally.
 
@@ -9,7 +11,7 @@ This folder is the Git master for the local development workspace. Open `/develo
 | Source | Responsibility |
 |---|---|
 | `register.json` | Stable scope/route/system keys, source and design links, owners, dependencies, review fingerprints and separate delivery states |
-| `guides.json` | Structured per-entry articles; section IDs, revision, draft/review state, tasks, recovery, evidence and applicability |
+| `guides.json` | Structured per-entry articles; stable section IDs, draft/review state, tasks, recovery, evidence and applicability |
 | `pages/*.md` | Editable desktop and mobile design contracts, exact images/HTML and observable review requirements |
 | `systems/*.md` | Shell, theme, guidance and offline cross-page contracts |
 | `src/app/globals.css`, `src/components/ui/` | Runtime tokens and shared component implementation; the theme page reads these |
@@ -24,7 +26,7 @@ The imported baseline has 150 scopes and 110 source destinations from r05. Two n
 3. Edit existing working files directly. Add exact available images and HTML paths, including their revision and intended viewport in the Markdown contract. Retain old issued references. Do not substitute an unrelated screenshot to fill a missing image.
 4. Implement using shared components/tokens. Document accepted exceptions and gradually migrate legacy controls when their page is refined. The gallery does not yet replace every legacy button family.
 5. Run `npm run studio:check`, applicable tests and a paired reference/application review. CI fails missing canonical routes, missing files/guides, duplicate keys or broken guide/related bindings. Review warnings remain separate from integrity failures. New journey HTML is discovered without editing a second index.
-6. Record actual review evidence, reviewer, viewport, source/release and result in the Markdown contract. Only then copy the current fingerprint and date into the entry. Keep functional and deployment evidence distinct. A matching fingerprint means no tracked change since that recorded review; it is not an approval system.
+6. Record actual review evidence, reviewer, viewport, source/release and result in the Markdown contract. Only then copy the current fingerprint, reviewer and date into the entry. Keep functional and deployment evidence distinct. A matching fingerprint means no tracked change since that recorded review; it is not an approval system.
 7. Commit the code, guide and design changes together. Review the PR and deploy only under the existing authority. Refresh the local register after editing; it also checks every 30 seconds while visible and no reader is open. An open reader stays stable. A changed file hash asks for a refresh instead of silently substituting a different reference.
 
 The dedicated GitHub workflow and `npm run check` enforce coverage. The repository `AGENTS.md` and PR template require this maintenance. Automation detects omissions and changed sources; it cannot invent correct business instructions or approve visual similarity.
@@ -60,3 +62,13 @@ The native reader uses a labelled dialog, keyboard Escape, heading focus and ret
 Reference serving accepts registry-derived IDs only, resolves real paths within the repository, restricts published extensions, checks expected hashes and disables caching. HTML previews run in a sandbox with no same-origin privileges, network requests, form submission or top navigation. The archived r04/r05 register is not exposed through this preview endpoint. No filesystem editor, Git credentials or business mutation is exposed to the browser.
 
 See [ADR-0040](../../decisions/ADR-0040-development-workspace.md) and the [delivery handover](../../delivery/development-workspace-handover.md).
+
+## Stable masters and history
+
+The register, articles and page/system contracts have stable paths and clean titles. Schema 2 removes the guide `revision` field, adds `reviewed_content_hash` and makes the entry reviewer explicit. These are schema versions, not document issues. The one-time importer and route discovery create only this current shape; issued r04/r05 sources keep their original schema and bytes.
+
+The entry reader shows its design-file owner, last committed change, local change state, recorded reviewer/date and GitHub history/source links. Resource readers show file history. Guide history covers the whole `guides.json` library, labelled explicitly; it must not be mistaken for a per-article change time. A missing Git checkout displays History unavailable. An unpushed commit may not yet resolve in GitHub; push the reviewed branch to publish its history. The source links use the actual commit, including on a PR branch, rather than assuming the files are on main.
+
+Guide `status` is Draft or Reviewed. Only a genuine review supplies `reviewer`, `reviewed_at` and `reviewed_content_hash` from `guideContentHash` over the exact article content, applicability/source and related links. A content change then displays Changes awaiting review; a Git commit alone never grants review. Page visual review remains a separate dependency fingerprint. All migrated articles remain Draft and all unrecorded reviewers/dates remain null.
+
+The repository-wide naming policy and retained-record boundary are documented in [living master adoption](../../decisions/living-master-documents.md). Do not strip revision references from business instructions, issued images, journey maps or evidence.

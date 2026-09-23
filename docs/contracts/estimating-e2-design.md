@@ -1,9 +1,9 @@
 ---
 document_id: PPO-010-E2-CONTRACT
-revision: r02
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
 status: Adopted options and questions reconciled; schema and API implementation pending
+versioning: git
 ---
 
 # E2 receiving and preservation contract

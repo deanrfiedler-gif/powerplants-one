@@ -25,3 +25,5 @@ Explain effects on data, interfaces, permissions, documents, offline operations 
 - [ ] Applicable checks passed, or a specific unresolved failure is explained.
 - [ ] No credentials or unauthorised operational data are included.
 - [ ] Production readiness and business approvals are not inferred from this PR.
+
+- [ ] Living documents keep stable paths/titles and Git history; actual review evidence is separate. Retained issues keep their revisions and bytes. New document-register entries declare their versioning method.

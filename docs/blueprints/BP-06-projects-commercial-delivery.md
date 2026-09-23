@@ -1,10 +1,10 @@
 ---
 document_id: BP-06
-revision: r01
 date: 2026-09-07
 owner: Dean Fiedler - private prototype
 status: Bounded discovery and proposed build contract; implementation not invoked
 source_commit: 1f13dd8d6f5006559152fe9d5410aed3fff64234
+versioning: git
 ---
 
 # BP-06 — Projects & Commercial Delivery

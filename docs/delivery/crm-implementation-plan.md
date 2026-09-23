@@ -1,6 +1,8 @@
 # CRM — Ordered implementation sequence
 
-**Revision:** r07 · **Date:** 10 September 2026 · **Status:** r02 scope/priorities accepted; I1/I2 evidence retained; remaining implementation and operating-policy details outstanding · **Parent workstream:** PPO-009 / issue #9. **Owner:** Dean Fiedler, private prototype.
+<!-- versioning: git; committed history is authoritative -->
+
+**Date:** 10 September 2026 · **Status:** r02 scope/priorities accepted; I1/I2 evidence retained; remaining implementation and operating-policy details outstanding · **Parent workstream:** PPO-009 / issue #9. **Owner:** Dean Fiedler, private prototype.
 
 [BP-03](../blueprints/BP-03-crm.md) · [Parity](../blueprints/crm-parity.md) · [First implementation starter](crm-first-increment-starter.md) · [Handover](crm-discovery-handover.md).
 

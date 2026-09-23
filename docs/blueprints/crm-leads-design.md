@@ -1,9 +1,11 @@
 # Leads workspace and qualification design
 
+<!-- versioning: git; committed history is authoritative -->
+
 | Document control | Value |
 |---|---|
 | Document ID | PPO-009-LEADS-DES |
-| Revision / date | r02 / 9 September 2026 |
+| Updated date | 9 September 2026 |
 | Status | UI design approved; implementation contract proposed |
 | Owner | Dean Fiedler |
 | Workstream | PPO-009 / issue #9; CRM-01, CRM-02, CRM-03, CRM-08 |

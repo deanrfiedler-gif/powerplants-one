@@ -1,10 +1,10 @@
 ---
 document_id: PPO-UI-CONFORMANCE
 title: HTML module scope and design conformance
-revision: r01
 date: 2026-09-16
 owner: Dean Fiedler
 status: Authorised package discipline; individual design and baseline acceptance remain separate
+versioning: git
 ---
 
 # HTML module scope and design conformance

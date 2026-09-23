@@ -1,11 +1,11 @@
 ---
 document_id: PPO-EN02-DES
 title: Design Basis and Interface Register design and receiving handover
-revision: r01
 date: 2026-09-17
 owner: Dean Fiedler
 status: Authorised standalone build; native browser and owner review pending
 source_commit: 108b1600152ee12443c75ffaf7feb7cc857316f5
+versioning: git
 ---
 
 # EN-02 — Design Basis & Interface Register

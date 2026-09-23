@@ -1,10 +1,10 @@
 ---
 document_id: PPO-ES08-WORKSPACE-DES
-revision: r02
 date: 2026-09-16
 owner: Dean Fiedler
 status: Proposed standalone design; specialist acceptance and application integration separate
 source_commit: 0602db2b82013b5869b41bd1b88c623a9bc81f6b
+versioning: git
 ---
 
 # Specialist Configuration Workbench — design and receiving handover

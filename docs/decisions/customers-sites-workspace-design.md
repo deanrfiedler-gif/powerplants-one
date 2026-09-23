@@ -1,6 +1,8 @@
 # Customers, Sites & Growing Areas Workspace
 
-**Revision:** r03 · **Date:** 15 September 2026 · **Owner:** Dean Fiedler · **State:** Authorised standalone workspace refinement, delivered for review. Native visual/device acceptance and application integration remain pending.
+<!-- versioning: git; committed history is authoritative -->
+
+**Date:** 15 September 2026 · **Owner:** Dean Fiedler · **State:** Authorised standalone workspace refinement, delivered for review. Native visual/device acceptance and application integration remain pending.
 
 [Current r03 HTML](../reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html) · [Map extension](customers-sites-maps-r03.md) · [Detailed r02 audit](customers-sites-workspace-audit-r02.md) · [98 model/DOM results](../testing/evidence/customers-sites-workspace-r03.json) · [Retained r01 HTML](../reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r01.html).
 

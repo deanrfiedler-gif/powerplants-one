@@ -1,7 +1,6 @@
 ---
 document_id: PPO-AD03-PLAN
 title: AD-03 — Data Quality Workbench — Build Plan
-revision: r01
 date: 2026-09-17
 owner: Dean Fiedler
 scope_id: AD-03
@@ -9,6 +8,7 @@ status: Planning report complete; HTML implementation and executed verification 
 source_repository: deanrfiedler-gif/powerplants-one
 source_branch: main
 source_commit: 86802e9cbaa7f0f72a5108018802a3d95e0a4285
+versioning: git
 ---
 
 # AD-03 — Data Quality Workbench

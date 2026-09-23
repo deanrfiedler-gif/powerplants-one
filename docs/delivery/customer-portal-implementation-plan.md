@@ -1,9 +1,9 @@
 ---
 title: Customer portal - bounded implementation plan
-revision: r01
 date: 2026-09-06
 status: Design delivery now; runtime stages pending verified dependencies
 owner: Dean Fiedler
+versioning: git
 ---
 
 # Customer portal delivery plan

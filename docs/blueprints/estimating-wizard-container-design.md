@@ -1,12 +1,12 @@
 ---
 document_id: PPO-010-CONTAINER-STUDY
 title: Estimating container design study
-revision: r03
 date: 2026-09-11
 owner: Dean Fiedler - private prototype
 status: Design study supporting PPO-010-CONTAINER-DEC; not adopted, supersedes nothing
 work_package: PPO-010
 source_commit: 386d9a7d63ffd28b61691491f9dc0880230d89b9
+versioning: git
 ---
 
 # Estimating container — design study

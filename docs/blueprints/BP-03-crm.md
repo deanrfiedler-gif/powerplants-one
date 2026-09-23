@@ -1,8 +1,10 @@
 # BP-03 — CRM Functional & Build Blueprint
 
+<!-- versioning: git; committed history is authoritative -->
+
 | Document control | Value |
 |---|---|
-| Revision / date | r06 / 10 September 2026 |
+| Updated date | 10 September 2026 |
 | Status | r02 product scope and priorities accepted; delivery evidence remains in I1/I2 and later handovers; operating-policy details outstanding |
 | Owner | Dean Fiedler — personal private prototype |
 | Workstream | PPO-009 / [issue #9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9); distinct from PP-01 P09 |

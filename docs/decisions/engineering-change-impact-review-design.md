@@ -1,12 +1,12 @@
 ---
 document_id: PPO-EN07-INT
-revision: r01
 date: 2026-09-20
 owner: Dean Fiedler
 scope_id: EN-07
 principal_requirement: ENG-06
 status: Implemented on a branch, pushed on Dean's authority as draft PR #266, for owner review; visual acceptance, business acceptance and the accepted UI baseline register remain separate
 source_commit: 5d54c4e (main with EN-06 merged as PR #265, which this branch was rebased onto on 20 September 2026; main was 1a69e93 at the planning checkpoint)
+versioning: git
 ---
 
 # EN-07 Engineering Change-Impact Review: application integration

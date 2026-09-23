@@ -1,6 +1,8 @@
 # BP-03 — Controlled opportunity handover contract
 
-**Revision:** r02 · **Date:** 14 September 2026 · **Owner:** Dean Fiedler · **State:** H-01–H-03 adopted; implementation and HV verification pending. **Baseline:** `744b6e6b89e69abdd0fbd4bfdd6ef5ae51e154f3`.
+<!-- versioning: git; committed history is authoritative -->
+
+**Date:** 14 September 2026 · **Owner:** Dean Fiedler · **State:** H-01–H-03 adopted; implementation and HV verification pending. **Baseline:** `744b6e6b89e69abdd0fbd4bfdd6ef5ae51e154f3`.
 
 **Current reconciliation:** The [audit follow-through policy package](../decisions/audit-follow-through-policy-package.md) adopts H-01–H-03 and authorises this single transfer journey under #145. The complete #55 publication ledger was reread. The older proposed labels below are retained as design history; all concrete guards and HV obligations remain.
 [Decisions](../decisions/crm-opportunity-handover.md) · [Journey](../blueprints/crm-handover-journey.md) · [Future proof](../testing/crm-handover-verification.md) · [Handover](../delivery/crm-handover-design-handover.md).

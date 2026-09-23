@@ -1,6 +1,5 @@
 ---
 title: EN-06 — Released Materials & Substitutions — Local App Build Plan
-revision: r02
 date: 2026-09-20
 owner: Dean Fiedler
 scope_id: EN-06
@@ -11,6 +10,7 @@ source_branch: main
 source_commit: 99c32aed5032393b7658713cca53aa4c1a2ab2dd
 ui_reference: PPO-EN-06-Released-Materials-and-Substitutions-Desktop-UI-Mockup-r04.png
 supersedes: Standalone HTML delivery approach in Build Plan r01
+versioning: git
 ---
 
 # EN-06 — Released Materials & Substitutions

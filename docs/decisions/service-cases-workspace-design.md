@@ -1,4 +1,6 @@
-# Service Cases & Triage workspace r02
+# Service Cases & Triage workspace
+
+<!-- versioning: git; committed history is authoritative -->
 
 **Owner:** Dean Fiedler · **Date:** 15 September 2026 · **State:** Requested standalone design delivered for review; native visual/device acceptance and application integration pending.
 

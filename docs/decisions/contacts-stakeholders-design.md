@@ -1,11 +1,11 @@
 ---
 document_id: PPO-CS02-DES
 title: Contacts, Stakeholders and Relationships design and receiving handover
-revision: r01
 date: 2026-09-18
 owner: Dean Fiedler
 status: Standalone CS-02 / CS-03 design delivered against the build plan; owner acceptance, the open role-vocabulary question and application integration remain separate
 source_commit: 01b9824a63e468b393265b159fa681f83f6e668c
+versioning: git
 ---
 
 # CS-02 / CS-03 — Contacts, Stakeholders & Relationships design decision

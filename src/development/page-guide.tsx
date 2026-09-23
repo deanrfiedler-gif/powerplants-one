@@ -2,12 +2,13 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import type { Guide } from "./model";
+import type { GuideDocument } from "./model";
+import { DocumentDetails } from "./document-details";
 
 // Mounted only in the local development shell. Hosted users keep released help.
 export function DevelopmentPageGuide() {
   const pathname = usePathname();
-  const [guide, setGuide] = useState<Guide | null>(null),
+  const [guide, setGuide] = useState<GuideDocument | null>(null),
     [error, setError] = useState(false);
   useEffect(() => {
     const controller = new AbortController();
@@ -17,7 +18,7 @@ export function DevelopmentPageGuide() {
     )
       .then(async (response) => {
         if (!response.ok) throw Error("unavailable");
-        return response.json() as Promise<Guide>;
+        return response.json() as Promise<GuideDocument>;
       })
       .then((value) => {
         if (!controller.signal.aborted) setGuide(value);
@@ -37,7 +38,17 @@ export function DevelopmentPageGuide() {
       ) : (
         <>
           <p>
-            <strong>{guide.title}</strong> · {guide.status} {guide.revision}
+            <strong>{guide.title}</strong> · {guide.review_state}
+          </p>
+          <DocumentDetails
+            history={guide.history}
+            owner={guide.owner_role}
+            reviewer={guide.reviewer}
+            reviewedAt={guide.reviewed_at}
+          />
+          <p>
+            History covers the guide library file; it does not record a review
+            of this article.
           </p>
           <p>
             Working design guidance. Validate the tasks against this release

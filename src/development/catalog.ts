@@ -2,7 +2,15 @@
 import { readFile, readdir, realpath } from "node:fs/promises";
 import { resolve, relative, extname, isAbsolute, sep, posix } from "node:path";
 import { createHash } from "node:crypto";
-import type { Catalog, Entry, Guide, Register, Resource } from "./model";
+import type {
+  Catalog,
+  Entry,
+  Guide,
+  GuideDocument,
+  Register,
+  Resource,
+} from "./model";
+import { fileHistories } from "./history";
 
 export const registerPath = "docs/design/development/register.json";
 export const guidePath = "docs/design/development/guides.json";
@@ -75,7 +83,7 @@ export async function readMaster(root: string): Promise<Register> {
     (await readReference(root, registerPath)).toString(),
   ) as Register;
   if (
-    master.schema_version !== 1 ||
+    master.schema_version !== 2 ||
     !Array.isArray(master.entries) ||
     !Array.isArray(master.shared_sources)
   )
@@ -83,7 +91,41 @@ export async function readMaster(root: string): Promise<Register> {
   return master;
 }
 export async function readGuides(root: string): Promise<Guide[]> {
-  return JSON.parse((await readReference(root, guidePath)).toString()).guides;
+  const library = JSON.parse((await readReference(root, guidePath)).toString());
+  if (library.schema_version !== 2 || !Array.isArray(library.guides))
+    throw Error("Unsupported guide-library schema.");
+  return library.guides;
+}
+export function guideContentHash(guide: Guide): string {
+  return digest(
+    JSON.stringify({
+      guide_key: guide.guide_key,
+      entry_key: guide.entry_key,
+      title: guide.title,
+      content_mode: guide.content_mode,
+      source_commit: guide.source_commit,
+      sections: guide.sections,
+      related_entry_keys: guide.related_entry_keys,
+    }),
+  );
+}
+export function guideReviewState(guide: Guide): GuideDocument["review_state"] {
+  if (guide.status !== "Reviewed") return "Draft";
+  return guide.reviewer &&
+    guide.reviewed_at &&
+    guide.reviewed_content_hash === guideContentHash(guide)
+    ? "Reviewed"
+    : "Changes awaiting review";
+}
+export async function guideDocument(
+  root: string,
+  guide: Guide,
+): Promise<GuideDocument> {
+  return {
+    ...guide,
+    history: (await fileHistories(root, [guidePath])).get(guidePath)!,
+    review_state: guideReviewState(guide),
+  };
 }
 export async function buildCatalog(root: string): Promise<Catalog> {
   const [master, guides, routes, journeyFiles, css] = await Promise.all([
@@ -92,6 +134,15 @@ export async function buildCatalog(root: string): Promise<Catalog> {
     sourceRoutes(root),
     files(root, "docs/reference/ui/module-workflow-maps"),
     readReference(root, "src/app/globals.css"),
+  ]);
+  const histories = await fileHistories(root, [
+    guidePath,
+    ...master.entries.flatMap((entry) => [
+      entry.design_path,
+      ...entry.image_paths,
+      ...(entry.html_path ? [entry.html_path] : []),
+    ]),
+    ...journeyFiles,
   ]);
   const errors: string[] = [],
     cache = new Map<string, Promise<Buffer | null>>();
@@ -184,7 +235,10 @@ export async function buildCatalog(root: string): Promise<Catalog> {
     return {
       id: resourceId(path),
       path,
-      title: path.split("/").at(-1)!.replace(/[-_]/g, " "),
+      title:
+        extension === ".md"
+          ? bytes?.toString().match(/^# (.+)$/m)?.[1] || path.split("/").at(-1)!
+          : path.split("/").at(-1)!.replace(/[-_]/g, " "),
       type:
         extension === ".html"
           ? "html"
@@ -196,6 +250,7 @@ export async function buildCatalog(root: string): Promise<Catalog> {
       current: true,
       group,
       module,
+      history: histories.get(path)!,
     };
   };
   const entries = await Promise.all(
@@ -234,7 +289,7 @@ export async function buildCatalog(root: string): Promise<Catalog> {
           entry.source_paths.some((p) => p.startsWith("src/")));
       if (entry.kind !== "system" && !guide) issues.push("User guide missing");
       if (!entry.image_paths.length) issues.push("UI image not linked");
-      if (!entry.review_fingerprint)
+      if (!entry.review_fingerprint || !entry.reviewer || !entry.reviewed_at)
         issues.push("Desktop/mobile visual review pending");
       else if (entry.review_fingerprint !== fingerprint)
         issues.push("Source or design changed since review");
@@ -250,16 +305,18 @@ export async function buildCatalog(root: string): Promise<Catalog> {
         ...entry,
         source_present: present,
         fingerprint,
-        review_state: !entry.review_fingerprint
-          ? ("Not reviewed" as const)
-          : entry.review_fingerprint === fingerprint
-            ? ("Current" as const)
-            : ("Stale" as const),
+        review_state:
+          !entry.review_fingerprint || !entry.reviewer || !entry.reviewed_at
+            ? ("Not reviewed" as const)
+            : entry.review_fingerprint === fingerprint
+              ? ("Current" as const)
+              : ("Stale" as const),
         guide_status: guide
-          ? `${guide.status} ${guide.revision}`
+          ? guideReviewState(guide)
           : entry.kind === "system"
             ? "Reference document"
             : "Missing",
+        history: histories.get(entry.design_path)!,
         resources: await Promise.all(
           [...new Set(references)].map((p) =>
             resource(p, "Entry reference", entry.module),
@@ -281,6 +338,19 @@ export async function buildCatalog(root: string): Promise<Catalog> {
       )
     )
       errors.push("Guide binding does not resolve: " + guide.guide_key);
+  for (const guide of guides) {
+    if (
+      "revision" in guide ||
+      !["Draft", "Reviewed"].includes(guide.status) ||
+      !guide.owner_role
+    )
+      errors.push("Guide needs living-master metadata: " + guide.guide_key);
+    if (
+      guide.status === "Reviewed" &&
+      (!guide.reviewer || !guide.reviewed_at || !guide.reviewed_content_hash)
+    )
+      errors.push("Guide review evidence missing: " + guide.guide_key);
+  }
   const unregistered = routes
     .filter(
       (r) =>
@@ -316,7 +386,8 @@ export async function buildCatalog(root: string): Promise<Catalog> {
     (m) => ({ name: m[1], value: m[2].trim() }),
   );
   return {
-    schema_version: 1,
+    schema_version: 2,
+    checkout_commit: histories.get(guidePath)?.checkout_commit || null,
     title: master.title,
     source_baseline: master.source_baseline,
     observed_at: new Date().toISOString(),

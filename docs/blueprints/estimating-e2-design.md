@@ -1,9 +1,9 @@
 ---
 document_id: PPO-010-E2-DES
-revision: r02
 date: 2026-09-14
 owner: Dean Fiedler - prototype owner
 status: Adopted options and questions reconciled; no E2 runtime implementation
+versioning: git
 ---
 
 # E2 — from enquiry to a selected estimating basis

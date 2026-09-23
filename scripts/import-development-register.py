@@ -22,7 +22,7 @@ for row in data['scopes'] + data['routes']:
     entries.append(dict(key=row['key'],title=title,kind=row['kind'],module=row['module'],summary=row['summary'],
         path=row['path'] if row['kind']=='route' else row['links']['path'],source_paths=source_paths,guide_key=row['guide_key'],design_path=md,html_path=design,
         image_paths=images,dependencies=[],scope_status=row['status'],visual_status='Needs review',functional_status='Not recorded here',
-        deployment_status='Not verified',review_fingerprint=None,reviewed_at=None,owner='Dean Fiedler',
+        deployment_status='Not verified',review_fingerprint=None,reviewed_at=None,reviewer=None,owner='Dean Fiedler',
         build_rank=row['build']['rank'],related_keys=next(g['related_entry_keys'] for g in data['guides'] if g['entry_key']==row['key'])))
     article = next(g for g in data['guides'] if g['entry_key']==row['key'])
     steps = article['sections'][5]['steps']
@@ -81,7 +81,7 @@ for key,title,source,html,summary in systems:
     path='docs/design/development/systems/'+key+'.md'
     entries.append(dict(key='system:'+key,title=title,kind='system',module='Shared',summary=summary,path=None,source_paths=[source],guide_key=None,
       design_path=path,html_path=html if html and (root/html).exists() else None,image_paths=[],dependencies=[],scope_status='Shared source',
-      visual_status='Needs review',functional_status='See linked source evidence',deployment_status='Not verified',review_fingerprint=None,reviewed_at=None,
+      visual_status='Needs review',functional_status='See linked source evidence',deployment_status='Not verified',review_fingerprint=None,reviewed_at=None,reviewer=None,
       owner='Dean Fiedler',build_rank=None,related_keys=['scope:DK-07'] if key=='guidance' else []))
     file=root/path
     file.parent.mkdir(parents=True,exist_ok=True)
@@ -108,6 +108,10 @@ The live component gallery consumes runtime tokens and the shared Button compone
 Restore an unwanted working-source change through a reviewed successor in Git. Preserve issued references and past acceptance evidence. Verify keyboard navigation, focus, long content, loading, read-only and error states in the owning workflow. No complete visual review is recorded for this new development surface yet.
 ''',encoding='utf-8',newline='\n')
 out.mkdir(parents=True,exist_ok=True)
-(out/'register.json').write_text(json.dumps(dict(schema_version=1,title='Powerplants One · Design & build',source_baseline=data['meta']['sha'],local_base=data['meta']['base'],live_base=data['meta']['live_base'],shared_sources=shared,entries=entries),ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
-(out/'guides.json').write_text(json.dumps(dict(schema_version=1,guides=data['guides']),ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
+(out/'register.json').write_text(json.dumps(dict(schema_version=2,title='Powerplants One · Design & build',source_baseline=data['meta']['sha'],local_base=data['meta']['base'],live_base=data['meta']['live_base'],shared_sources=shared,entries=entries),ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
+for guide in data['guides']:
+    guide.pop('revision', None)
+    guide['reviewed_content_hash'] = None
+
+(out/'guides.json').write_text(json.dumps(dict(schema_version=2,guides=data['guides']),ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
 print(f'Imported {len(entries)} entries and {len(data["guides"])} draft articles into the stable working master.')

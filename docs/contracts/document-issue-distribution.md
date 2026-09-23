@@ -1,6 +1,8 @@
 # PP-01 — Minimum document, issue and distribution contract
 
-**Edition:** r07 · **Status:** OUT-09/DAT-07/minimum DAT-11 implemented in P06; bounded DAT-09/OUT-10 in P09 and restricted OUT-14 in P10, with actual verification recorded separately. No actual SharePoint repository, template or retention policy has been verified in this package.
+<!-- versioning: git; committed history is authoritative -->
+
+**Status:** OUT-09/DAT-07/minimum DAT-11 implemented in P06; bounded DAT-09/OUT-10 in P09 and restricted OUT-14 in P10, with actual verification recorded separately. No actual SharePoint repository, template or retention policy has been verified in this package.
 
 [Package](../prototype/README.md) · [Dictionary](service-data-dictionary.md) · [BP-07](../blueprints/BP-07-service-operations.md).
 

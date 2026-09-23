@@ -14,7 +14,7 @@ This repository is Dean's personal prototype. It contains the planning foundatio
 | [Adopted naming standard](docs/standards/naming-conventions.md) | Powerplants One / PPO naming, references, revisions and implementation rules |
 | [ChatGPT project instructions](docs/standards/chatgpt-project-instructions.md) | Copy-ready instructions for the dedicated design and development project |
 | [Current project status](docs/STATUS.md) | What exists, what remains planned and how recent user decisions relate to the issued blueprint |
-| [Master Blueprint — working r06](docs/blueprints/BP-01-master-blueprint.md) | Scope Assurance & Development Planning Edition: seven domains, 78 parent requirements and release contracts |
+| [Master Blueprint](docs/blueprints/BP-01-master-blueprint.md) | Scope Assurance & Development Planning Edition: seven domains, 78 parent requirements and release contracts |
 | [Documentation index](docs/README.md) | Where specifications, decisions, requirements and acceptance records belong |
 | [HTML design index](docs/reference/ui/README.md) | Module visuals, recorded approvals, implementation references, earlier revisions and a copyable maintenance template |
 | [Development backlog](docs/delivery/backlog.md) | Initial discovery/design work packages and their live GitHub issue links |

@@ -1,11 +1,11 @@
 ---
 document_id: PPO-AD01-DES
 title: Users, Roles, Teams and Access Review design and receiving handover
-revision: r01
 date: 2026-09-17
 owner: Dean Fiedler
 status: Standalone design delivered against the authorised build plan; owner acceptance, D-020 decisions and application integration separate
 source_commit: efd4d4e33f5fc4ef2a4605455ed8d4c66e0ddc39
+versioning: git
 ---
 
 # AD-01 — Users, Roles, Teams & Access Review

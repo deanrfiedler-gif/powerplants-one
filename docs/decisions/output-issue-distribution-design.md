@@ -1,11 +1,11 @@
 ---
 document_id: PPO-DK03-DES
 title: Output, Issue and Distribution Centre design and receiving handover
-revision: r01
 date: 2026-09-17
 owner: Dean Fiedler
 status: Standalone design delivered against the authorised build plan; owner acceptance and application integration separate
 source_commit: a5406a81c02d37c4a23e75c1b71c7653fcec0d80
+versioning: git
 ---
 
 # DK-03 — Output, Issue & Distribution Centre
