@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { createDemand, openDemand, fillProposal, pl01Call, pl01Identity, fixtureId } from "../helpers/pl01";
+import { createDemand, openDemand, openDemandPanel, fillProposal, pl01Call, pl01Identity, fixtureId } from "../helpers/pl01";
 
 // The device must not share the site's zone, or entry in device time would pass unnoticed.
 test.use({ timezoneId: "America/Los_Angeles" });
@@ -130,15 +130,15 @@ test("PL01 corrupted or unavailable storage refuses sending and another identity
   await page.evaluate(() => sessionStorage.setItem("ppo-pl01-command-v1", "{corrupt"));
   await page.reload();
   await expect(page.getByText(/same-tab recovery record is unreadable/)).toBeVisible();
-  const card = page.locator("article").filter({ has: page.locator(`a[href='/service/work-orders/${w.id}']`) });
-  await card.getByRole("button", { name: "Plan visit" }).click();
+  await openDemandPanel(page, w.id);
   await expect(page.getByRole("button", { name: "Save proposal", exact: true })).toBeDisabled();
   await page.getByRole("button", { name: "Close plan visit" }).click();
   await page.getByRole("button", { name: "Change identity", exact: true }).click();
   await page.getByLabel("Identity", { exact: true }).selectOption("observer");
   await page.getByRole("button", { name: "Use this identity", exact: true }).click();
+  await expect(page.getByRole("region", { name: "Local demonstration identity" })).toHaveAttribute("aria-busy", "false");
   await expect.poll(() => page.evaluate(() => sessionStorage.getItem("ppo-pl01-command-v1"))).toBe(null);
-  await card.getByRole("button", { name: "Plan visit" }).click();
+  await openDemandPanel(page, w.id);
   await expect(page.getByText("Your current permissions allow viewing this work, but not proposing a visit.")).toBeVisible();
   await expect(page.getByRole("button", { name: "Save proposal", exact: true })).toBeDisabled();
 });

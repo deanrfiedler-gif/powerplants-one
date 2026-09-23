@@ -14,7 +14,7 @@ An unchanged-source retry was considered first, but GitHub refused it while the 
 
 PR #293's [broad browser job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35848257245/job/107139528966) returned 332 passed, 60 skipped and one failure on `4a67e4c96282f0bcdb52aa6f888951f4080123fd`. ES-08 fixture reset deadlocked with permission and engineering-change reads left by the preceding SH suite. This source already included main's `e11e0b3` teardown repair: waiting for current page traffic alone was insufficient because navigation can abandon a browser fetch while its server transaction continues.
 
-SH now registers a fallback GET route before its specific test routes. It retains the real server read through `route.fetch`, preserving its response, so the existing `unrouteAll({ behavior: "wait" })` waits for reads from earlier navigations too. Specific mocks keep precedence and POST commands keep their original transport. The database reset guards, migrations and application transaction handling are unchanged.
+The initial repair registered a fallback GET route before SH's specific test routes. It retained the real server read through `route.fetch`, preserving its response, and relied on `unrouteAll({ behavior: "wait" })` to wait for reads from earlier navigations too. That teardown order proved insufficient for overlapping reads; the PR #293 follow-up below supersedes it. Specific mocks keep precedence and POST commands keep their original transport. The database reset guards, migrations and application transaction handling are unchanged.
 
 ## Executed local verification
 
@@ -35,3 +35,23 @@ The six browser cases use routed synthetic responses and an ephemeral loopback H
 - #290 had no failed checks at the latest inspection and is left unchanged.
 
 Publication and current-head CI are separate from local evidence. No PR is merged or deployed by this repair.
+
+## PR #293 follow-up: overlapping teardown and identity-switch readiness
+
+The first repair, published at `193a72cb67c5219f652f688cc74e763332b7ae05`, introduced a teardown defect that its single-read regression did not cover. The [compiled job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35852707951/job/107153893107) reported 335 passed, 60 skipped and four failures; the [broad browser job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35852708046/job/107153894260) reported 336 passed, 60 skipped and three failures. Both encountered `route.fulfill: Route is already handled!` in three SH cases. Removing all routes while multiple `route.fetch` handlers are pending lets the first completed handler disable interception and continue other routes before their handlers fulfil them.
+
+SH now waits for current page traffic, explicitly drains the retained reads while their route is still registered, and only then removes the routes. The regression holds two real loopback server responses and releases them separately, covering both navigation and AbortController cancellation. With the previous helper and teardown order, both desktop cases reproduced the exact CI exception. With the corrected order, all four desktop/phone cases passed, including assertions that teardown waits for both reads and neither read is forwarded twice. Errors are not suppressed and no retry is added.
+
+The fourth compiled failure was PL-01's corrupt-storage/identity-switch case: it bypassed the existing calendar-readiness helper and clicked Plan visit before the new identity's calendar settled. The saved failure context contained no open dialog. Both panel openings now share that readiness check, and the second also waits for the identity change to finish. The original corrupt-storage, cleared-journal, denied-permission and disabled-save assertions remain.
+
+The separate [diagnostic replay](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35852708046/job/107153894322) failed before its three journeys ran. At 11:28:28 UTC the log records that the runner received a shutdown signal; warm-up then reported 114 unreachable routes. This is runner interruption evidence, not a reproduced application failure, and its reachability assertion is unchanged.
+
+### Executed follow-up verification
+
+- `npm run build`: passed using the default Turbopack build, ID `zhGK4Quv1Wl-MchfGuA5W`.
+- Compiled browser run: **27 passed, none skipped, 5.2 minutes**. This includes ten PL-01 cases, ten SH cases, both immediately following ES-08 native/reset cases, four overlapping-read regressions and the warm-up dependency. All 450 warm-up routes were reachable. The isolated PostgreSQL log contained no errors or deadlocks.
+- Runtime: Windows, Node `24.21.0`, Playwright `1.63.0`, approved local Chrome `153.0.8010.53`, PostgreSQL `16.15`. CI uses its installed reviewed Chrome channel; local results do not substitute for that run.
+- Focused ESLint, TypeScript `--noEmit` and development-register integrity: passed; zero stale entries or integrity errors.
+- Foundation, PP-01 prototype and naming checks: passed; all 78 parent IDs preserved.
+
+The compiled run used `playwright.compiled.config.ts` and the ordinary deadlines with `pl01.spec.ts`, `sh-platform.spec.ts`, `specialist-workbench.spec.ts` and `browser-read-drain.spec.ts`, filtered by `PL01|SH |ES08 native six views|teardown waits`. A new loopback PostgreSQL cluster on port 55493 contained only its own `ppo_synthetic_test`; the compiled app ran on port 3059. Local evidence is retained under the repair worktree's ignored `tmp/pr293-focused.log` and `tmp/pr293-focused-results`. The user's existing database and unrelated Facilities edit were preserved. The fresh PR checks must establish the Linux CI outcome; this follow-up does not merge or deploy the PR.
