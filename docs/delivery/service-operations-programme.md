@@ -12,6 +12,8 @@ Refreshed `origin/main`: `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc`, identical t
 
 A second fetch before I6 found main at `6c5e7c4fcbaf05d712a46989faf2cf7cabb8ba72`: #299 and #300 had merged. The inspected delta is estimating/Projects and shared documentation/register work, with no Service implementation. I6 is explicitly stacked on I4 (`899dd6e`); later integration must retain those unrelated records.
 
+I4 #304 subsequently merged as `9e49a57332aacfbb45a43fdd4d17c1d031fc80fb` with all 18 checks successful, including standard database, HTTP and compiled browser suites. I6 was reconciled with that main before publication. This supersedes the initial local test limits as the release regression signal; those local observations remain recorded honestly.
+
 ## Reconciled programme
 
 | Scope | Starting source state | Next bounded work |
