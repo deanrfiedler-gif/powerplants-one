@@ -1,6 +1,6 @@
 # Priva fertigation workbench refinement — proposed design departures
 
-**Status:** Proposed. Raised for decision; not accepted. No baseline, stylesheet, register entry or application screen is changed by this record. Two application defects found during the audit are fixed separately; see [Audit findings](#audit-findings-23-september-2026).
+**Status:** Direction given; implementation in progress. On 23 September 2026 Dean directed that the improvements be applied (see [Direction and implementation](#direction-and-implementation-23-september-2026)). D1 and D7 and features F2–F7 and F9 are implemented on this branch; the rest remain proposed. Visual review, owner acceptance of the running screens and CI are separate and not yet recorded.
 **Owner:** Dean Fiedler.
 **Raised:** 23 September 2026, from a design review of the r02 standalone workbench. Extended the same day by an audit of the board against the native module.
 **Covers:** Priva fertigation scoping workbench r02, the standalone HTML whose SHA-256 is `b51bf2cab7cb1af54e33a0ec739921c4ca1a08da918165d615ead347d6463ab9` (the same bytes [ADR-0038](ADR-0038-priva-fertigation-native.md) records, retained at `reference/ui/priva-fertigation-scoping-workbench-r02.html`); the ES-02 fertigation scope; and the native record route `route:/estimating/fertigation/[id]` ([page contract](../design/development/pages/route-estimating-fertigation-id.md)).
@@ -92,6 +92,31 @@ Each feature is proposed, not accepted. "Edition change" means a new calculation
 | F12 | Device-to-channel allocation: declared bank demand reconciled with recorded devices | 05 · Controls & I/O | Count of recorded devices per bank | No | Controls view |
 
 Recommendation: take F1 first. It is the only item that currently stops real work: an r02 project cannot become a native draft. F2, F3 and F9 then turn the module from a register into a working tool. F7 is the one most visible to customers.
+
+## Direction and implementation, 23 September 2026
+
+Dean's direction, after reviewing the board: "I'd like you to apply all the improvements that you believe will make this module as advanced and professional as possible. I'm quite happy to spend a lot of work on this module, as it will be a core component of the Powerplants One app."
+
+This is direction to build, not a visual review or acceptance of the running screens. Each item below is built in the native module; nothing changes a calculation or a finding.
+
+| Item | Built as | Rule basis kept | Verified |
+|---|---|---|---|
+| D1, D7 | Grouped secondary menu with per-view severity badges and a readiness summary; native severities and a default responsible role per finding code | Badge hidden from the accessible name, announced by `aria-describedby`; role register keyed by all 60 engine codes | FN-T94–T98; compiled desktop/phone suite |
+| F4 | Capacity headroom on the Overview | Each row compares a native result with its entered capacity using the engine's inequality; a bank whose declared and device-derived demand disagree reads Not assessable, as the engine withholds its spare count | FN-T99 |
+| F5 | What this scope can produce now | The server's own preconditions for export, report, review and handover | FN-T101 |
+| F6 | Next actions by role; Scope review grouped by resolving view with severity and role filters | Conflicts, then incomplete, then review; candidate failures listed with conflicts but never counted as findings | FN-T97, FN-T107 |
+| F3 | Calculation trace drawer for required head, curve head, margin, operating peak and connected flow; pump-duty chart and duty table | The engine's value only; rule text mirrors the engine; curve heads use `interpolateCurve`. Sensitivity and break-even are not built (they would be new calculations) | FN-T89–T93 |
+| F2 | Resolve a conflict drawer | Options restate the engine's pass condition. Draft edits exist only where unambiguous (split a group, align declared I/O demand, de-duplicate a valve), are previewed by the server and are applied to the working draft only | FN-T104–T107 |
+| F9 | Result, finding and candidate changes in saved-revision comparison; Compare draft against the saved revision | Both sides are engine outputs; nothing is recalculated for the comparison | FN-T102, FN-T103, FN-T107 |
+| F7 | Report template `PPO-FERT-NATIVE-REPORT-r02` and a 10 px PDF footer | Customer allowlist kept; phrases come from the guidance register; retained r01 outputs keep their bytes | FN-T108; FN-T45/T46 retained HTML locally; r02 PDF not run locally |
+| Evidence coverage | Overview panel | Each active record counted once by its strongest linked evidence (document, observation, assumption, none) | FN-T100 |
+
+Not built yet: F1 (import placement; its ADR comes first), F8 (site-visit capture), F10 and F11 (new calculations need a new calculation edition), F12, and A9 (a required save reason would change three existing save journeys).
+
+Corrections found while building, now reflected here and to be reflected on the board:
+
+- Native records a technical review with open findings (disposition "Reviewed; unresolved"), and a handover needs only a review of the exact revision. The board's "review unavailable while conflicts are open" was a design assumption, not native behaviour; the running screen shows the native rule.
+- An injection channel above its entered range is a candidate failure in native, not a scope finding. It appears in Next actions and Resolve alongside conflicts but is never added to finding counts.
 
 ## Not changed
 
