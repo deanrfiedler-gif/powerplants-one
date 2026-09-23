@@ -260,6 +260,8 @@ export function ProjectsGantt({
   loading = false,
   saved = "",
   programme = false,
+  referenceDate,
+  persistLayout = true,
 }: {
   schedule: Schedule;
   preferenceKey: string;
@@ -269,10 +271,13 @@ export function ProjectsGantt({
   loading?: boolean;
   saved?: string;
   programme?: boolean;
+  referenceDate?: string;
+  persistLayout?: boolean;
 }) {
   const { project, tasks } = schedule;
   // This component mounts after the current session's schedule fetch, on the client.
   const [layout, setLayout] = useState(() => {
+    if (!persistLayout) return initialLayout();
     try {
       const v: unknown = JSON.parse(
         localStorage.getItem(preferenceKey) ?? "null",
@@ -300,7 +305,7 @@ export function ProjectsGantt({
   const [resizing, setResizing] = useState<"pane" | "column" | null>(null),
     [includeToday, setIncludeToday] = useState(false),
     [anchor, setAnchor] = useState<string | null>(null);
-  const [today, setToday] = useState(() => todayInZone(project.timezone));
+  const [today, setToday] = useState(() => referenceDate ?? todayInZone(project.timezone));
   const host = useRef<HTMLElement>(null),
     grid = useRef<HTMLDivElement>(null),
     sheetRail = useRef<HTMLDivElement>(null),
@@ -308,14 +313,15 @@ export function ProjectsGantt({
     displayPanel = useRef<HTMLDivElement>(null),
     displayToggle = useRef<HTMLButtonElement>(null);
   useEffect(() => {
-    if (!resizing)
+    if (persistLayout && !resizing)
       try {
         localStorage.setItem(preferenceKey, JSON.stringify(layout));
       } catch {
         /* In-memory resizing remains available. */
       }
-  }, [layout, preferenceKey, resizing]);
+  }, [layout, preferenceKey, resizing, persistLayout]);
   useEffect(() => {
+    if (referenceDate) return;
     const tick = () => setToday(todayInZone(project.timezone));
     const timer = setInterval(tick, 60000);
     window.addEventListener("focus", tick);
@@ -323,7 +329,7 @@ export function ProjectsGantt({
       clearInterval(timer);
       window.removeEventListener("focus", tick);
     };
-  }, [project.timezone]);
+  }, [project.timezone, referenceDate]);
   useLayoutEffect(() => {
     const node = grid.current;
     if (!node) return;

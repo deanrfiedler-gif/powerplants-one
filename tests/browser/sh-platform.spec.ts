@@ -147,8 +147,19 @@ test("SH search keyboard entry, full results, authorised preview and personal sa
   await expect(
     page.getByRole("region", { name: "Local demonstration identity", exact: true }),
   ).toHaveAttribute("aria-busy", "false");
+  // Navigation can finish before hydration installs the global shortcut. Wait
+  // for the client-loaded identity and responsive shell before sending a key;
+  // keyboard.press has no locator readiness checks of its own.
+  await expect(
+    page.getByRole("button", { name: "Change identity", exact: true }),
+  ).toBeVisible({ timeout: 15000 });
+  if (isMobile)
+    await expect(
+      page.getByRole("button", { name: "Open global search", exact: true }),
+    ).toBeVisible();
   await page.keyboard.press("Control+k");
   const search = page.getByRole("combobox", { name: /Search/ });
+  await expect(search).toBeFocused();
   await search.fill("SYN");
   await expect(page.getByRole("option").first()).toBeVisible();
   await expect(

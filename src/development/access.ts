@@ -26,3 +26,8 @@ export function developmentRequest(
     return false;
   return timingSafeEqual(Buffer.from(expected), Buffer.from(actual));
 }
+
+// Only the synthetic catalogue renderer can be embedded by the same local origin.
+export function developmentFramePolicy(pathname: string, env: Record<string, string | undefined> = process.env): "SAMEORIGIN" | "DENY" {
+  return pathname === "/development/component-preview" && developmentAvailable(env) ? "SAMEORIGIN" : "DENY";
+}

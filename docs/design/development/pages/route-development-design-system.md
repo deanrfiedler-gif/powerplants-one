@@ -1,37 +1,25 @@
-# Theme & shared controls — working design reference
+# Component catalogue — working design reference
 
-Stable entry: `route:/development/design-system`. Owner: Dean Fiedler. Revision: r01. Status: Implemented for local review; visual acceptance pending.
+<!-- versioning: git; committed history is authoritative -->
+
+**Owner:** Dean Fiedler · **Stable entry:** `route:/development/design-system` · **Review:** Pending.
 
 ## Purpose and tasks
 
-Inspect the runtime theme tokens and reusable controls, and prepare a proposed global style adjustment with its likely page impact.
-
-1. Inspect the current buttons, input labels, focus and disabled/busy examples before changing the sample.
-2. Choose a navy colour or corner radius. Confirm that only the sample changes; no global stylesheet is saved.
-3. Use Reset sample to restore current source defaults or Export change proposal to download the proposed values.
-4. Inspect the affected-page list and the shared desktop/mobile specification.
-5. Apply an agreed change through source and a pull request, update relevant references, run checks and reload the gallery.
+Browse PPO's real components, compare design references, inspect mapped pages and review unresolved differences. Search/filter the catalogue, select a component/state, choose a viewport and use Compare with design. Copy example links for a precise review context. Use the page register for environment-specific destinations and record parameters. Theme adjustment tools remain expandable at the bottom and export unapplied proposals.
 
 ## Desktop
 
-Use full-width white sections with the existing shell. Keep adjustment controls above the isolated sample, then token tiles in three columns and affected consumers in an expandable list. Show exact token names/values and label each button variant.
+Show coverage counts above search and filters; category navigation beside the selected component. Keep six labelled detail tabs, source links and review state visible. Bound horizontal scrolling inside the preview/comparison frame. Use application typography, shared controls and semantic tokens. At smaller desktop widths comparison frames stack.
 
 ## Mobile
 
-Stack token tiles and the impact list below 700 CSS px. Wrap sample actions without clipping their labels. Preserve the colour input, radius choice, Reset and Export at 390/320 CSS px and 200% zoom. All controls retain 44 px minimum targets.
+Stack navigation above the detail pane; bound the navigation list so it does not overwhelm the page. Wrap filters/actions/tabs with 44 px targets. Inputs use 16 px text. Frame controls set actual 390/320 px child viewports, with scoped scrolling if necessary. Resize the browser separately to review the shell. Check long source paths, no page-level horizontal overflow and 200% zoom.
 
-## Components and states
+## Components, states and differences
 
-Reuse the application shell, runtime semantic tokens and shared Button/ButtonLink. Use navy/green, Roboto/Verdana, meaningful visible labels and visible keyboard focus.
+Use real Button/ButtonLink, RecordTabs/RecordPanel and runtime components named by `components.json`. Example adapters supply only synthetic data and local interaction. Runnable, Host example and Reference only coverage remain distinct from Current/Not reviewed/Stale review evidence. Search has a useful no-results state. Missing references/exports fail the integrity check. Comparison and source links do not mark visual alignment approved.
 
-Sample actions announce their result without changing business records. Disabled and busy controls remain distinct. A proposal download is not a save confirmation. Tokens shown below the sample continue to describe source values.
+## Verification and recovery
 
-## References and verification
-
-No exact mockup image is linked yet. This document specifies the new surface; it does not claim approved visual parity. Source: `src/app/development/design-system/page.tsx`. Related shared records: shell, theme and guidance.
-
-Verify search/proposal controls as applicable, dialog keyboard/focus behaviour, actual link targets, responsive wrapping, stale references and unavailable states. Record execution evidence in the development-workspace handover.
-
-## Recovery
-
-Reset sample discards temporary colour/radius choices. Reload reads the current source. If a legacy page looks different, inspect its scoped CSS and accepted reference; do not assume the gallery already governs every legacy control.
+Run catalogue integrity, source/dependency drift tests, browser interaction tests and the affected application checks. Record results in the component catalogue handover. Reset discards fixture edits; Refresh rereads sources. Original HTML, page permissions and production deployment remain unchanged.

@@ -5,6 +5,7 @@ import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import {
   developmentAvailable,
+  developmentFramePolicy,
   developmentRequest,
 } from "../../src/development/access";
 import {
@@ -251,4 +252,10 @@ test("guide review is explicit and content changes cannot inherit review", () =>
   assert.equal(guideReviewState(guide), "Changes awaiting review");
   guide.status = "Draft";
   assert.equal(guideReviewState(guide), "Draft");
+});
+
+test("only the gated component preview allows same-origin framing", () => {
+  assert.equal(developmentFramePolicy("/development/component-preview", env), "SAMEORIGIN");
+  for (const path of ["/projects", "/schedule", "/development/design-system", "/development/component-preview/extra", "/development/component-preview-other"]) assert.equal(developmentFramePolicy(path, env), "DENY");
+  for (const override of [{PPO_ENV:"azure-demo"},{NODE_ENV:"production"},{PPO_DEVELOPMENT_WORKSPACE:"off"}]) assert.equal(developmentFramePolicy("/development/component-preview", {...env,...override}), "DENY");
 });

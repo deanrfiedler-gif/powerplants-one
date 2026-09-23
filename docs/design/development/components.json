@@ -1,0 +1,1502 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "id": "foundations",
+      "title": "Theme foundations",
+      "category": "Foundations",
+      "module": "Shared",
+      "purpose": "Runtime colour, type, border, radius and elevation values.",
+      "owner": "Dean Fiedler",
+      "example": "foundations",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Representative synthetic content and normal interaction."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/ui/button.tsx",
+          "symbol": "Button"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+        "anchor": "colour",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/foundations.md",
+      "used_on": [
+        "system:theme"
+      ],
+      "desktop": "Use semantic tokens and preserve the meaning of each colour.",
+      "mobile": "Swatches wrap; labels and values remain readable without horizontal page scrolling.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
+      "limitations": "Token adoption across legacy module scopes is incomplete.",
+      "gaps": [
+        {
+          "id": "foundations-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "Token adoption across legacy module scopes is incomplete.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "buttons",
+      "title": "Buttons and action links",
+      "category": "Foundations",
+      "module": "Shared",
+      "purpose": "Primary, secondary, quiet, destructive, disabled, busy and link actions.",
+      "owner": "Dean Fiedler",
+      "example": "buttons",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Representative synthetic content and normal interaction."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/ui/button.tsx",
+          "symbol": "Button"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+        "anchor": "controls",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/buttons.md",
+      "used_on": [
+        "system:theme",
+        "route:/development/page-register"
+      ],
+      "desktop": "Use one primary action per task region and a visible action label.",
+      "mobile": "Controls retain touch targets and wrap into additional rows.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
+      "limitations": "Legacy scoped button families do not all use Button/ButtonLink.",
+      "gaps": [
+        {
+          "id": "buttons-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "Legacy scoped button families do not all use Button/ButtonLink.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "sales-table",
+      "title": "Sales register table",
+      "category": "Tables & grids",
+      "module": "CRM",
+      "purpose": "Real deal rows, wrapped identity, unknown values, filtering, sorting and keyboard-resizable columns.",
+      "owner": "Dean Fiedler",
+      "example": "sales-table",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "empty",
+          "label": "Empty",
+          "description": "No matching example records; absence is distinct from failure."
+        },
+        {
+          "id": "loading",
+          "label": "Loading",
+          "description": "Read in progress; no success is inferred."
+        },
+        {
+          "id": "compact",
+          "label": "Compact",
+          "description": "Current compact-density variant."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/crm-worklist-board.tsx",
+          "symbol": "Grid"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
+        "anchor": "",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/sales-table.md",
+      "used_on": [
+        "route:/sales/opportunities"
+      ],
+      "desktop": "Keep record identity visible and distinguish unknown amounts from zero. Filtering and sorting here are local fixture adapters.",
+      "mobile": "The application table uses a bounded horizontal scroller. Inspect identity and actions at 390 and 320 px.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
+      "limitations": "Row selection and pagination belong to host workflows; they are not implemented by Grid. A universal selectable table remains unspecified.",
+      "gaps": [
+        {
+          "id": "sales-table-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "Row selection and pagination belong to host workflows; they are not implemented by Grid. A universal selectable table remains unspecified.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "area-editor",
+      "title": "Selectable table and area editing",
+      "category": "Tables & grids",
+      "module": "Estimating",
+      "purpose": "Select a real estimating area row and edit its details through the application AreasEditor.",
+      "owner": "Dean Fiedler",
+      "example": "area-editor",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "empty",
+          "label": "Empty",
+          "description": "No matching example records; absence is distinct from failure."
+        },
+        {
+          "id": "read-only",
+          "label": "Read only",
+          "description": "Management actions unavailable in this example."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/configuration-editor.tsx",
+          "symbol": "AreasEditor"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+        "anchor": "forms",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/area-editor.md",
+      "used_on": [
+        "route:/estimating/discovery/[id]"
+      ],
+      "desktop": "Select an area before changing its fields. Add/remove affects the preview only; saved configuration commands remain in the owning page.",
+      "mobile": "Scroll the table within its container; the selected-area field editor must remain reachable below it.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
+      "limitations": "This is the existing select-and-edit pattern. Spreadsheet-style cell editing, bulk selection and frozen columns are not shared capabilities.",
+      "gaps": [
+        {
+          "id": "area-editor-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "This is the existing select-and-edit pattern. Spreadsheet-style cell editing, bulk selection and frozen columns are not shared capabilities.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "sales-board",
+      "title": "Sales board and record cards",
+      "category": "Boards & cards",
+      "module": "CRM",
+      "purpose": "Stage columns, owner avatars, next activity, card actions, collapse and stage movement.",
+      "owner": "Dean Fiedler",
+      "example": "sales-board",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "empty",
+          "label": "Empty",
+          "description": "No matching example records; absence is distinct from failure."
+        },
+        {
+          "id": "loading",
+          "label": "Loading",
+          "description": "Read in progress; no success is inferred."
+        },
+        {
+          "id": "read-only",
+          "label": "Read only",
+          "description": "Management actions unavailable in this example."
+        },
+        {
+          "id": "compact",
+          "label": "Compact",
+          "description": "Current compact-density variant."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/crm-worklist-board.tsx",
+          "symbol": "Board"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
+        "anchor": "",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/sales-board.md",
+      "used_on": [
+        "route:/sales/opportunities"
+      ],
+      "desktop": "Amounts are AUD excluding GST; unknown estimates remain explicit. Change stage is the keyboard and touch alternative to drag.",
+      "mobile": "Use the actual mobile stage layout; long titles and activity descriptions wrap without obscuring actions.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
+      "limitations": "Board styling remains a CRM variant. Compact targets and narrow-screen behaviour need owner/device review.",
+      "gaps": [
+        {
+          "id": "sales-board-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "Board styling remains a CRM variant. Compact targets and narrow-screen behaviour need owner/device review.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "forecast",
+      "title": "Forecast cards",
+      "category": "Boards & cards",
+      "module": "CRM",
+      "purpose": "Real forecast month groups, overdue/undated groups and known versus unpriced amounts.",
+      "owner": "Dean Fiedler",
+      "example": "forecast",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "empty",
+          "label": "Empty",
+          "description": "No matching example records; absence is distinct from failure."
+        },
+        {
+          "id": "read-only",
+          "label": "Read only",
+          "description": "Management actions unavailable in this example."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/crm-worklist-tools.tsx",
+          "symbol": "ForecastWorklist"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
+        "anchor": "",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/forecast.md",
+      "used_on": [
+        "route:/sales/opportunities"
+      ],
+      "desktop": "Forecast groups use a fixed as-of date. Values remain unweighted estimates, not revenue.",
+      "mobile": "Month lanes scroll within their region and card actions stay reachable.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
+      "limitations": "Forecast grouping and controls are module-specific; no global forecast approval is implied.",
+      "gaps": [
+        {
+          "id": "forecast-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "Forecast grouping and controls are module-specific; no global forecast approval is implied.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "gantt",
+      "title": "Project Gantt and list",
+      "category": "Gantt",
+      "module": "Projects",
+      "purpose": "Actual project timeline with groups, milestones, dependencies, progress, zoom, warnings and list mode.",
+      "owner": "Dean Fiedler",
+      "example": "gantt",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "empty",
+          "label": "Empty",
+          "description": "No matching example records; absence is distinct from failure."
+        },
+        {
+          "id": "loading",
+          "label": "Loading",
+          "description": "Read in progress; no success is inferred."
+        },
+        {
+          "id": "read-only",
+          "label": "Read only",
+          "description": "Management actions unavailable in this example."
+        },
+        {
+          "id": "undated",
+          "label": "Undated",
+          "description": "Inspect the undated variant and its explanatory messages."
+        },
+        {
+          "id": "programme",
+          "label": "Programme",
+          "description": "Programme mode over synthetic project context."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/projects-gantt.tsx",
+          "symbol": "ProjectsGantt"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
+        "anchor": "",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/gantt.md",
+      "used_on": [
+        "route:/projects",
+        "route:/projects/programme"
+      ],
+      "desktop": "Use Week/Month/Fit, owner and issue filters, group collapse, display options and list mode. The fixed reference date is 23 September 2026.",
+      "mobile": "Inspect the actual list fallback, timeline scroll, long task titles and resize controls at phone width.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
+      "limitations": "Task editing and server history are not part of this presentation fixture. Dependency warnings are advisory. Full paired r10 visual acceptance remains open.",
+      "gaps": [
+        {
+          "id": "gantt-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "Task editing and server history are not part of this presentation fixture. Dependency warnings are advisory. Full paired r10 visual acceptance remains open.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "planner",
+      "title": "Resource scheduling lanes",
+      "category": "Scheduling",
+      "module": "Service",
+      "purpose": "Actual day/week resource lanes, appointments, calendar evidence, availability blocks and reserved periods.",
+      "owner": "Dean Fiedler",
+      "example": "planner",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "week",
+          "label": "Week",
+          "description": "Seven-day resource lane view."
+        },
+        {
+          "id": "empty",
+          "label": "Empty",
+          "description": "No matching example records; absence is distinct from failure."
+        },
+        {
+          "id": "read-only",
+          "label": "Read only",
+          "description": "Management actions unavailable in this example."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/scheduling/components/client/planner-screens.client.tsx",
+          "symbol": "PlannerBoard"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+        "anchor": "gantt",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/planner.md",
+      "used_on": [
+        "route:/schedule"
+      ],
+      "desktop": "Day and Week share the same fixture. A drop proposes a move; the host still owns conflict, readiness, crew and authority checks.",
+      "mobile": "Each lane scrolls independently in Week. Day provides the simpler narrow-screen alternative.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
+      "limitations": "This planner is not the project Gantt. Catalogue callbacks do not prove conflict enforcement or saved booking behaviour.",
+      "gaps": [
+        {
+          "id": "planner-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "This planner is not the project Gantt. Catalogue callbacks do not prove conflict enforcement or saved booking behaviour.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "appointment",
+      "title": "Appointment cards and readiness",
+      "category": "Scheduling",
+      "module": "Service",
+      "purpose": "Real confirmed/proposed appointment cards, scope-review warning and move action.",
+      "owner": "Dean Fiedler",
+      "example": "appointment",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "proposed",
+          "label": "Proposed",
+          "description": "Inspect the proposed variant and its explanatory messages."
+        },
+        {
+          "id": "review-required",
+          "label": "Review required",
+          "description": "Inspect the review required variant and its explanatory messages."
+        },
+        {
+          "id": "read-only",
+          "label": "Read only",
+          "description": "Management actions unavailable in this example."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/scheduling/components/client/planner-screens.client.tsx",
+          "symbol": "AppointmentCard"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+        "anchor": "records",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/appointment.md",
+      "used_on": [
+        "route:/schedule"
+      ],
+      "desktop": "Keep site timezone, scope revision, dispatch hold and customer commitment distinct.",
+      "mobile": "Times and readiness copy wrap; Move or reassign remains available as a non-drag control when permitted.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
+      "limitations": "Dispatch remains held in this current component; catalogue fixtures do not represent a dispatch-ready visit.",
+      "gaps": [
+        {
+          "id": "appointment-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "Dispatch remains held in this current component; catalogue fixtures do not represent a dispatch-ready visit.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "fields",
+      "title": "Form controls and save states",
+      "category": "Forms",
+      "module": "Shared",
+      "purpose": "Actual text, multiline, date and select controls, required fields and synthetic save feedback.",
+      "owner": "Dean Fiedler",
+      "example": "fields",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "disabled",
+          "label": "Disabled",
+          "description": "Inspect the disabled variant and its explanatory messages."
+        },
+        {
+          "id": "saving",
+          "label": "Saving",
+          "description": "Inspect the saving variant and its explanatory messages."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/business-ui.tsx",
+          "symbol": "Field"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts",
+        "src/app/styles/customers.css"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+        "anchor": "forms",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/fields.md",
+      "used_on": [
+        "route:/customers/new",
+        "route:/people/[id]",
+        "route:/sites/[id]",
+        "route:/sites/[id]/readiness",
+        "route:/customers/[id]/development",
+        "route:/surveys",
+        "route:/surveys/[id]"
+      ],
+      "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
+      "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
+      "limitations": "Page-specific forms still use several control families. Device keyboard and assistive-technology acceptance remain pending.",
+      "gaps": [
+        {
+          "id": "fields-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "Page-specific forms still use several control families. Device keyboard and assistive-technology acceptance remain pending.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "cs-fields-host-review",
+          "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
+          "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
+          "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "lookup",
+      "title": "Search and select a record",
+      "category": "Forms",
+      "module": "Shared",
+      "purpose": "Real lookup combobox with synthetic matches, keyboard selection, loading, empty and error states.",
+      "owner": "Dean Fiedler",
+      "example": "lookup",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "empty",
+          "label": "Empty",
+          "description": "No matching example records; absence is distinct from failure."
+        },
+        {
+          "id": "loading",
+          "label": "Loading",
+          "description": "Read in progress; no success is inferred."
+        },
+        {
+          "id": "error",
+          "label": "Error",
+          "description": "Inspect the error variant and its explanatory messages."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/record-ui.tsx",
+          "symbol": "LookupField"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+        "anchor": "forms",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/lookup.md",
+      "used_on": [
+        "route:/projects/new"
+      ],
+      "desktop": "Typed text is not a selected record. Changing search clears selection; choose an explicit result.",
+      "mobile": "The result list stays within the available width; long names wrap.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use arrows/Home/End in tabs or menus; Escape dismisses overlays.",
+      "limitations": "Real permission-filtered search and paging stay with each host; these examples use a local result list.",
+      "gaps": [
+        {
+          "id": "lookup-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "Real permission-filtered search and paging stay with each host; these examples use a local result list.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "validation",
+      "title": "Validation and error summary",
+      "category": "Forms",
+      "module": "Shared",
+      "purpose": "Actual ValidationFields, Field and ErrorNotice with linked errors and preserved inputs.",
+      "owner": "Dean Fiedler",
+      "example": "validation",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "invalid",
+          "label": "Invalid",
+          "description": "Required-field errors with retained input."
+        },
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Representative synthetic content and normal interaction."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/business-ui.tsx",
+          "symbol": "ValidationFields"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts",
+        "src/app/styles/customers.css"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+        "anchor": "states",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/validation.md",
+      "used_on": [
+        "route:/customers/new",
+        "route:/people/[id]",
+        "route:/sites/[id]",
+        "route:/sites/[id]/readiness",
+        "route:/customers/[id]/development",
+        "route:/surveys",
+        "route:/surveys/[id]"
+      ],
+      "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
+      "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
+      "limitations": "ErrorNotice moves focus to its summary; screen-reader announcement still needs manual acceptance.",
+      "gaps": [
+        {
+          "id": "validation-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "ErrorNotice moves focus to its summary; screen-reader announcement still needs manual acceptance.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "cs-validation-host-review",
+          "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
+          "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
+          "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "tabs",
+      "title": "Record navigation and panels",
+      "category": "Navigation",
+      "module": "Shared",
+      "purpose": "Real RecordTabs and RecordPanel with controlled selection and directional keyboard navigation.",
+      "owner": "Dean Fiedler",
+      "example": "tabs",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "cs-customer",
+          "label": "Customer 360",
+          "description": "Eight native Customer 360 labels exercise wrapping, scroll and keyboard selection; panels are presentation-only synthetic fixtures."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/record-ui.tsx",
+          "symbol": "RecordTabs"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts",
+        "src/app/styles/customers.css"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+        "anchor": "page-layouts",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/tabs.md",
+      "used_on": [
+        "route:/estimating/discovery/[id]",
+        "route:/customers/[id]",
+        "route:/people/[id]",
+        "route:/customers/[id]/stakeholders",
+        "route:/sites/[id]/readiness",
+        "route:/customers/[id]/development",
+        "route:/surveys/[id]",
+        "route:/sites/[id]"
+      ],
+      "desktop": "Arrow keys, Home and End select/focus tabs. Each tab labels its corresponding panel.",
+      "mobile": "Confirm wrapped or scrolling tabs keep the selected label and focus visible.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use arrows/Home/End in tabs or menus; Escape dismisses overlays.",
+      "limitations": "Tab variants across modules require an explicit migration decision; this example does not restyle unrelated navigation.",
+      "gaps": [
+        {
+          "id": "tabs-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "Tab variants across modules require an explicit migration decision; this example does not restyle unrelated navigation.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "cs-tabs-host-review",
+          "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
+          "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
+          "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "menu",
+      "title": "Menus and selection popovers",
+      "category": "Navigation",
+      "module": "CRM",
+      "purpose": "Actual WorklistChoice and WorklistMenu with selected state and keyboard operation.",
+      "owner": "Dean Fiedler",
+      "example": "menu",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Representative synthetic content and normal interaction."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/crm-worklist-tools.tsx",
+          "symbol": "WorklistChoice"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
+        "anchor": "",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/menu.md",
+      "used_on": [
+        "route:/sales/opportunities"
+      ],
+      "desktop": "Open with the trigger; arrows/Home/End move through choices; Escape returns focus.",
+      "mobile": "Popover stays within viewport bounds and closes through selection or dismissal.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use arrows/Home/End in tabs or menus; Escape dismisses overlays.",
+      "limitations": "Native popover support is required by the current runtime. Touch and assistive-technology review remain separate.",
+      "gaps": [
+        {
+          "id": "menu-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "Native popover support is required by the current runtime. Touch and assistive-technology review remain separate.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "dialog",
+      "title": "Modal dialogs",
+      "category": "Dialogs & overlays",
+      "module": "CRM",
+      "purpose": "Actual WorklistPanel with editable content, confirmation, Escape and focus return.",
+      "owner": "Dean Fiedler",
+      "example": "dialog",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Representative synthetic content and normal interaction."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/crm-worklist-tools.tsx",
+          "symbol": "WorklistPanel"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
+        "anchor": "",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/dialog.md",
+      "used_on": [
+        "route:/sales/opportunities"
+      ],
+      "desktop": "Opening creates a modal focus boundary. Confirm is local to the example; close and Escape return to the opener.",
+      "mobile": "Inspect the dialog at phone width with long content and browser zoom; keep Close and Done reachable.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use arrows/Home/End in tabs or menus; Escape dismisses overlays.",
+      "limitations": "Other module dialogs are still independent implementations; this does not declare one universal dialog contract adopted.",
+      "gaps": [
+        {
+          "id": "dialog-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "Other module dialogs are still independent implementations; this does not declare one universal dialog contract adopted.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "drawer",
+      "title": "Side drawers",
+      "category": "Dialogs & overlays",
+      "module": "CRM",
+      "purpose": "The drawer variant of the actual WorklistPanel.",
+      "owner": "Dean Fiedler",
+      "example": "drawer",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Representative synthetic content and normal interaction."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/crm-worklist-tools.tsx",
+          "symbol": "WorklistPanel"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
+        "anchor": "",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/drawer.md",
+      "used_on": [
+        "route:/sales/opportunities"
+      ],
+      "desktop": "Use drawers for supplementary record context; preserve the parent task and focus return.",
+      "mobile": "The actual drawer should fit the phone viewport and scroll content internally.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use arrows/Home/End in tabs or menus; Escape dismisses overlays.",
+      "limitations": "Drawer geometry must be compared with its CRM reference; shell utility panels have separate behaviour.",
+      "gaps": [
+        {
+          "id": "drawer-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "Drawer geometry must be compared with its CRM reference; shell utility panels have separate behaviour.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "read-state",
+      "title": "Loading, empty, error and recovery",
+      "category": "Feedback",
+      "module": "Shared",
+      "purpose": "Actual ReadState/ErrorNotice plus explicitly labelled host-level empty, success and offline messages.",
+      "owner": "Dean Fiedler",
+      "example": "read-state",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "loading",
+          "label": "Loading",
+          "description": "Read in progress; no success is inferred."
+        },
+        {
+          "id": "empty",
+          "label": "Empty",
+          "description": "No matching example records; absence is distinct from failure."
+        },
+        {
+          "id": "error",
+          "label": "Error",
+          "description": "Inspect the error variant and its explanatory messages."
+        },
+        {
+          "id": "denied",
+          "label": "Denied",
+          "description": "Inspect the denied variant and its explanatory messages."
+        },
+        {
+          "id": "conflict",
+          "label": "Conflict",
+          "description": "Inspect the conflict variant and its explanatory messages."
+        },
+        {
+          "id": "success",
+          "label": "Success",
+          "description": "Inspect the success variant and its explanatory messages."
+        },
+        {
+          "id": "offline",
+          "label": "Offline",
+          "description": "Inspect the offline variant and its explanatory messages."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/business-ui.tsx",
+          "symbol": "ReadState"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts",
+        "src/app/styles/customers.css"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+        "anchor": "states",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/read-state.md",
+      "used_on": [
+        "route:/schedule",
+        "route:/customers",
+        "route:/customers/[id]",
+        "route:/people/[id]",
+        "route:/customers/[id]/stakeholders",
+        "route:/sites/[id]/readiness",
+        "route:/customers/[id]/development",
+        "route:/surveys/[id]",
+        "route:/sites/[id]",
+        "route:/surveys"
+      ],
+      "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
+      "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
+      "limitations": "Offline copy is illustrative. Real queued/synced/conflict support is page-specific and must not be inferred from the catalogue.",
+      "gaps": [
+        {
+          "id": "read-state-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "Offline copy is illustrative. Real queued/synced/conflict support is page-specific and must not be inferred from the catalogue.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "cs-read-state-host-review",
+          "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
+          "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
+          "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "status",
+      "title": "Status indicators",
+      "category": "Feedback",
+      "module": "Shared",
+      "purpose": "Real Status chips across neutral, progress, warning, success and failure tones.",
+      "owner": "Dean Fiedler",
+      "example": "status",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Representative synthetic content and normal interaction."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/business-ui.tsx",
+          "symbol": "Status"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts",
+        "src/app/styles/customers.css"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+        "anchor": "selection-states",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/status.md",
+      "used_on": [
+        "route:/schedule",
+        "route:/customers",
+        "route:/customers/[id]",
+        "route:/people/[id]",
+        "route:/sites/[id]"
+      ],
+      "desktop": "Keep a readable label with each tone; business state and tone are not equivalent.",
+      "mobile": "Chips wrap without truncating operational meaning.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
+      "limitations": "Current status-to-colour mapping is not a substitute for business state definitions.",
+      "gaps": [
+        {
+          "id": "status-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "Current status-to-colour mapping is not a substitute for business state definitions.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "cs-status-host-review",
+          "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
+          "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
+          "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "mobile-form",
+      "title": "Mobile form behaviour",
+      "category": "Mobile",
+      "module": "Shared",
+      "purpose": "The same runtime fields and validation with a long-title phone fixture.",
+      "owner": "Dean Fiedler",
+      "example": "mobile-form",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "invalid",
+          "label": "Invalid",
+          "description": "Required-field errors with retained input."
+        },
+        {
+          "id": "saving",
+          "label": "Saving",
+          "description": "Inspect the saving variant and its explanatory messages."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/business-ui.tsx",
+          "symbol": "Field"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts",
+        "src/app/styles/customers.css"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+        "anchor": "responsive",
+        "status": "Retained design reference; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/mobile-form.md",
+      "used_on": [
+        "route:/customers/new",
+        "route:/people/[id]",
+        "route:/sites/[id]",
+        "route:/sites/[id]/readiness",
+        "route:/customers/[id]/development",
+        "route:/surveys",
+        "route:/surveys/[id]"
+      ],
+      "desktop": "Use the phone presets and a separate browser window. This is the same form component family at a real responsive viewport.",
+      "mobile": "Check 390/320 px, 200% zoom, touch targets, keyboard occlusion and error focus. No scaled screenshot is used.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
+      "limitations": "Real-device input, screen-reader and keyboard-occlusion acceptance remain pending.",
+      "gaps": [
+        {
+          "id": "mobile-form-alignment",
+          "expected": "Verify the current component against the linked design and desktop/mobile rules.",
+          "actual": "Real-device input, screen-reader and keyboard-occlusion acceptance remain pending.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "cs-mobile-form-host-review",
+          "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
+          "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
+          "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "application-shell",
+      "title": "Application shell and global navigation",
+      "category": "Navigation",
+      "module": "Shared",
+      "purpose": "The actual ProductNavigation, ProductHeader and ShellControls surround this catalogue. Use the full application window to review them.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [],
+      "implementation": [
+        {
+          "path": "src/components/product-navigation.tsx",
+          "symbol": "ProductNavigation"
+        },
+        {
+          "path": "src/components/product-navigation.tsx",
+          "symbol": "ProductHeader"
+        },
+        {
+          "path": "src/components/shell-controls.tsx",
+          "symbol": "ShellControls"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/desktop-shell.css",
+        "src/app/mobile-layout.css",
+        "src/app/styles/customers.css"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
+        "anchor": "",
+        "status": "Retained shell reference; current environment permissions govern navigation"
+      },
+      "specification": "docs/design/development/components/application-shell.md",
+      "used_on": [
+        "system:shell"
+      ],
+      "desktop": "Review the real global search, workspace switcher, rail, More and utility controls around this catalogue. Shell access can be unavailable without a running identity/database service.",
+      "mobile": "Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application.",
+      "keyboard": "Check tab order, skip link, More dialog, Escape and focus return in the real host.",
+      "limitations": "No synthetic permission grants are supplied. The host is not counted as an isolated runnable fixture.",
+      "gaps": [
+        {
+          "id": "shell-host-review",
+          "expected": "Paired desktop/mobile shell review with permitted synthetic identity.",
+          "actual": "Host rendering depends on the local shell service. No blanket shell acceptance is recorded.",
+          "action": "Run the existing shell checks and pair with r17 under a permitted synthetic identity.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "cs-application-shell-host-review",
+          "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
+          "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
+          "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "ai-assistance",
+      "title": "AI assistance patterns",
+      "category": "Boards & cards",
+      "module": "Reference library",
+      "purpose": "No adopted shared application component is mapped to the retained AI examples.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [],
+      "implementation": [],
+      "dependencies": [],
+      "reference": {
+        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+        "anchor": "ai-assistance",
+        "status": "Reference only; proposed pattern"
+      },
+      "specification": "docs/design/development/components/ai-assistance.md",
+      "used_on": [
+        "system:theme"
+      ],
+      "desktop": "Read the retained reference and resolve intended scope before implementing.",
+      "mobile": "No mobile implementation is asserted. Specify responsive transformation before adoption.",
+      "keyboard": "Keyboard and assistive-technology rules must be defined before adoption.",
+      "limitations": "No adopted shared application component is mapped to the retained AI examples.",
+      "gaps": [
+        {
+          "id": "ai-assistance-implementation",
+          "expected": "An adopted implementation, owning page and representative fixture before runnable status.",
+          "actual": "No adopted shared application component is mapped to the retained AI examples.",
+          "action": "Resolve in the owning feature increment; retain this visible catalogue entry.",
+          "priority": "Low",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "product-patterns",
+      "title": "Product catalogue patterns",
+      "category": "Boards & cards",
+      "module": "Reference library",
+      "purpose": "Retained product patterns need a bounded application-component inventory and fixture before claiming runnable coverage.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [],
+      "implementation": [],
+      "dependencies": [],
+      "reference": {
+        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+        "anchor": "products",
+        "status": "Reference only; proposed pattern"
+      },
+      "specification": "docs/design/development/components/product-patterns.md",
+      "used_on": [
+        "system:theme"
+      ],
+      "desktop": "Read the retained reference and resolve intended scope before implementing.",
+      "mobile": "No mobile implementation is asserted. Specify responsive transformation before adoption.",
+      "keyboard": "Keyboard and assistive-technology rules must be defined before adoption.",
+      "limitations": "Retained product patterns need a bounded application-component inventory and fixture before claiming runnable coverage.",
+      "gaps": [
+        {
+          "id": "product-patterns-implementation",
+          "expected": "An adopted implementation, owning page and representative fixture before runnable status.",
+          "actual": "Retained product patterns need a bounded application-component inventory and fixture before claiming runnable coverage.",
+          "action": "Resolve in the owning feature increment; retain this visible catalogue entry.",
+          "priority": "Low",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "estimation-journey",
+      "title": "Complete estimation wizard",
+      "category": "Forms",
+      "module": "Reference library",
+      "purpose": "Area editing and tabs have runnable examples; the full saved multistep workflow remains an application integration scenario.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [],
+      "implementation": [],
+      "dependencies": [],
+      "reference": {
+        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+        "anchor": "estimation-wizard",
+        "status": "Reference only; proposed pattern"
+      },
+      "specification": "docs/design/development/components/estimation-journey.md",
+      "used_on": [
+        "system:theme"
+      ],
+      "desktop": "Read the retained reference and resolve intended scope before implementing.",
+      "mobile": "No mobile implementation is asserted. Specify responsive transformation before adoption.",
+      "keyboard": "Keyboard and assistive-technology rules must be defined before adoption.",
+      "limitations": "Area editing and tabs have runnable examples; the full saved multistep workflow remains an application integration scenario.",
+      "gaps": [
+        {
+          "id": "estimation-journey-implementation",
+          "expected": "An adopted implementation, owning page and representative fixture before runnable status.",
+          "actual": "Area editing and tabs have runnable examples; the full saved multistep workflow remains an application integration scenario.",
+          "action": "Resolve in the owning feature increment; retain this visible catalogue entry.",
+          "priority": "Low",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "future-patterns",
+      "title": "Future and innovation patterns",
+      "category": "Boards & cards",
+      "module": "Reference library",
+      "purpose": "Proposed patterns in the theme board have not been adopted as shared application components.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [],
+      "implementation": [],
+      "dependencies": [],
+      "reference": {
+        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+        "anchor": "future-patterns",
+        "status": "Reference only; proposed pattern"
+      },
+      "specification": "docs/design/development/components/future-patterns.md",
+      "used_on": [
+        "system:theme"
+      ],
+      "desktop": "Read the retained reference and resolve intended scope before implementing.",
+      "mobile": "No mobile implementation is asserted. Specify responsive transformation before adoption.",
+      "keyboard": "Keyboard and assistive-technology rules must be defined before adoption.",
+      "limitations": "Proposed patterns in the theme board have not been adopted as shared application components.",
+      "gaps": [
+        {
+          "id": "future-patterns-implementation",
+          "expected": "An adopted implementation, owning page and representative fixture before runnable status.",
+          "actual": "Proposed patterns in the theme board have not been adopted as shared application components.",
+          "action": "Resolve in the owning feature increment; retain this visible catalogue entry.",
+          "priority": "Low",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    }
+  ]
+}

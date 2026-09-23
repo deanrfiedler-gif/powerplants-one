@@ -21,3 +21,11 @@ Conformance: Register/worklist plus Document & evidence workspace; shared shell 
 Technical references checked: [Next.js request headers](https://nextjs.org/docs/app/api-reference/functions/headers) and [MDN iframe sandbox](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe). Implementation proof is recorded in the development-workspace handover.
 
 The later [living-master decision](living-master-documents.md) removes routine article revisions, introduces schema 2 and adds Git history with explicit local-edit and review state. This supersedes any working-issue labels without reissuing the archived r04/r05 HTML.
+
+## Component catalogue extension, 23 September 2026
+
+Dean authorised the full catalogue recommendation. Extend the existing route and Git master with `components.json`, component-specific Markdown, code-owned fixture renderers and an internal `/development/component-preview` route. The real application implementation supplies each runnable example. Retained future patterns remain explicitly reference-only. Use fixed synthetic fixtures, local callbacks and the existing global stylesheet order; the preview mounts no business session/shell service.
+
+The local launcher permits same-origin framing only for this independently gated synthetic preview; all business pages remain protected by DENY and the hosted gateway remains unchanged. Separate real viewport documents are necessary for media-query and native dialog/menu behaviour. No new framework, service, database or dependency is introduced. Component references reuse the existing allowlisted, hash-checked sandboxed reader.
+
+Coverage, alignment, review currency and business verification are separate. Follow transitive source/style dependencies and explicit runtime dependencies to mark changed reviews stale. Require source/export, reference/anchor and consumer binding integrity in the existing CI check. Existing baseline decisions remain authoritative. See the [maintenance contract](../design/development/components/README.md) and [delivery handover](../delivery/component-catalogue-handover.md).

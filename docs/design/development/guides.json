@@ -39934,7 +39934,8 @@
           "section_id": "page-tour",
           "title": "Controls and views",
           "paragraphs": [
-            "Overview, Deals & quotations, Sales orders, Cases & service, Projects, Sites & equipment, Accounts, Activity & documents."
+            "Overview, Deals & quotations, Sales orders, Cases & service, Projects, Sites & equipment, Accounts, Activity & documents.",
+            "Use Left/Right, Home and End to select and focus tabs. The page URL retains the selected view; source-owned records open through their exact links."
           ],
           "steps": [],
           "headers": [],
@@ -67435,9 +67436,9 @@
     {
       "guide_key": "guide.route-development-design-system",
       "entry_key": "route:/development/design-system",
-      "title": "Theme & shared controls",
+      "title": "Component catalogue",
       "status": "Draft",
-      "content_mode": "Implemented local workspace; acceptance pending",
+      "content_mode": "Implemented local presentation; synthetic fixtures; alignment acceptance pending",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "related_entry_keys": [
         "system:shell",
@@ -67449,7 +67450,7 @@
           "section_id": "purpose",
           "title": "Purpose and applicability",
           "paragraphs": [
-            "Inspect the runtime theme tokens and reusable controls, and prepare a proposed global style adjustment with its likely page impact."
+            "Inspect the actual PPO components and compare them with retained design references. The catalogue is available in the local development workspace. Runnable coverage does not imply visual or business acceptance."
           ],
           "steps": [],
           "headers": [],
@@ -67459,7 +67460,7 @@
           "section_id": "prerequisites",
           "title": "Before you begin",
           "paragraphs": [
-            "Open this page through the local development register. The gallery reads the root stylesheet and real shared components. Existing accepted page exceptions still govern their migration."
+            "Run the local PPO application from the current checkout. The catalogue examples use fixed synthetic fixtures and do not need business records. The surrounding shell still requires its normal context."
           ],
           "steps": [],
           "headers": [],
@@ -67468,11 +67469,10 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Inspect the current buttons, input labels, focus and disabled/busy examples before changing the sample.",
-            "Choose a navy colour or corner radius. Confirm that only the sample changes; no global stylesheet is saved."
+          "paragraphs": [
+            "Choose Component catalogue from the design workspace. Search or select a category, then open an example. Select a state and viewport. Use the six detail views to inspect references, usage, pages and differences."
           ],
+          "steps": [],
           "headers": [],
           "rows": []
         },
@@ -67480,7 +67480,7 @@
           "section_id": "page-tour",
           "title": "Page tour",
           "paragraphs": [
-            "The proposal controls precede an isolated sample containing primary, secondary, quiet, danger, disabled and busy actions. Forms and state examples follow. Current root tokens and an expandable affected-page list provide traceability."
+            "Coverage counts distinguish runnable, host and reference-only entries. Filters narrow the navigation. The selected example has state/viewport/reset controls and optional design comparison. Theme adjustment tools remain expandable below."
           ],
           "steps": [],
           "headers": [],
@@ -67488,9 +67488,9 @@
         },
         {
           "section_id": "information",
-          "title": "Information to prepare",
+          "title": "Information shown",
           "paragraphs": [
-            "Keep the stable entry key, exact design revision, relevant viewport and current working source. Local and hosted record IDs are separate; do not put private operational data into public design files."
+            "Each entry records owner, source export/path, exact design reference, desktop/mobile specification, states, consuming page keys, differences and review fingerprints. Unassigned review remains visible."
           ],
           "steps": [],
           "headers": [],
@@ -67498,15 +67498,11 @@
         },
         {
           "section_id": "tasks",
-          "title": "Main tasks",
-          "paragraphs": [],
-          "steps": [
-            "Inspect the current buttons, input labels, focus and disabled/busy examples before changing the sample.",
-            "Choose a navy colour or corner radius. Confirm that only the sample changes; no global stylesheet is saved.",
-            "Use Reset sample to restore current source defaults or Export change proposal to download the proposed values.",
-            "Inspect the affected-page list and the shared desktop/mobile specification.",
-            "Apply an agreed change through source and a pull request, update relevant references, run checks and reload the gallery."
+          "title": "Tasks",
+          "paragraphs": [
+            "Use Copy example link to share an exact state and width. Reset discards local example edits. Open Used on to reach page-register local/live links and guides. Compare the same reference and application viewport. Apply durable changes through Git and a pull request."
           ],
+          "steps": [],
           "headers": [],
           "rows": []
         },
@@ -67514,7 +67510,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The result is an inspected theme or an exported unapplied proposal. Only a reviewed source change updates the actual global standard. Validate contrast, control states and affected page layouts before acceptance."
+            "A browser action never updates Git or grants visual acceptance. Record an actual paired review with evidence, reviewer, date and source fingerprint; retain unresolved differences with owners."
           ],
           "steps": [],
           "headers": [],
@@ -67522,9 +67518,9 @@
         },
         {
           "section_id": "states",
-          "title": "States and feedback",
+          "title": "States and limits",
           "paragraphs": [
-            "Sample actions announce their result without changing business records. Disabled and busy controls remain distinct. A proposal download is not a save confirmation. Tokens shown below the sample continue to describe source values."
+            "Unknown example/state addresses are unavailable. Missing files/exports fail catalogue integrity. A changed dependency makes old review evidence stale. Reference-only entries have no fake interactive implementation."
           ],
           "steps": [],
           "headers": [],
@@ -67532,9 +67528,9 @@
         },
         {
           "section_id": "example",
-          "title": "Worked example",
+          "title": "Synthetic example",
           "paragraphs": [
-            "A proposed 8 px corner radius changes the sample controls. Export it for review, compare desktop and phone examples, and retain the current 6 px source value until the reviewed implementation is accepted."
+            "Open Project Gantt, choose Programme or Undated, compare at 1440 px then 390 px, and inspect List and warning behaviour. Dates are fixed to 23 September 2026 in the catalogue. No project task is saved."
           ],
           "steps": [],
           "headers": [],
@@ -67542,9 +67538,9 @@
         },
         {
           "section_id": "recovery",
-          "title": "Recovery and unavailable actions",
+          "title": "Recovery",
           "paragraphs": [
-            "Reset sample discards temporary colour/radius choices. Reload reads the current source. If a legacy page looks different, inspect its scoped CSS and accepted reference; do not assume the gallery already governs every legacy control."
+            "Use Reset example or reload to restore fixtures. Refresh working copy after editing sources. If a reference changes while open, refresh before comparing it again. Git history supports reverting durable changes."
           ],
           "steps": [],
           "headers": [],
@@ -67554,7 +67550,7 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "Stack token tiles and the impact list below 700 CSS px. Wrap sample actions without clipping their labels. Preserve the colour input, radius choice, Reset and Export at 390/320 CSS px and 200% zoom. All controls retain 44 px minimum targets. Use Tab and visible focus; Escape closes the register reader and returns focus. These development references require the running local server; no offline editing or queued Git save is provided."
+            "The frame changes real viewport width; the host shell requires browser resizing. Use labelled controls and keyboard alternatives. Escape returns focus from overlays. Mobile emulation and illustrative offline messages do not establish device/offline acceptance."
           ],
           "steps": [],
           "headers": [],
@@ -67562,9 +67558,9 @@
         },
         {
           "section_id": "resources",
-          "title": "Related references",
+          "title": "Resources",
           "paragraphs": [
-            "The working design README explains maintenance. The register links exact desktop/mobile contracts, shell/theme references and retained journeys. ADR-0040 records the architecture and access boundary."
+            "Read docs/design/development/components/README.md for the coverage and maintenance contract. Per-component rules and source links are in the catalogue. Existing UI baseline decisions remain authoritative."
           ],
           "steps": [],
           "headers": [],
@@ -67572,9 +67568,9 @@
         },
         {
           "section_id": "review",
-          "title": "Review and feedback",
+          "title": "Review status",
           "paragraphs": [
-            "Record observed mismatches against the exact source and viewport. This article is Draft r01. Visual review, functional evidence, owner acceptance and hosted publication remain separate; the development workspace is local-only."
+            "Draft guidance for the local catalogue. Individual visual alignment, physical-device review and operational acceptance remain separate."
           ],
           "steps": [],
           "headers": [],
@@ -67739,6 +67735,151 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null
+    },
+    {
+      "guide_key": "guide.route-development-component-preview",
+      "entry_key": "route:/development/component-preview",
+      "title": "Component preview",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Implemented local presentation; synthetic fixtures; alignment acceptance pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "This is the internal catalogue renderer. Open it from a registered example link with its component and state. It uses the same application styles and enforces the local development gate."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "prerequisites",
+          "title": "Before you begin",
+          "paragraphs": [
+            "Run the local PPO application from the current checkout. The catalogue examples use fixed synthetic fixtures and do not need business records. The surrounding shell still requires its normal context."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [
+            "Choose Component catalogue from the design workspace. Search or select a category, then open an example. Select a state and viewport. Use the six detail views to inspect references, usage, pages and differences."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "Coverage counts distinguish runnable, host and reference-only entries. Filters narrow the navigation. The selected example has state/viewport/reset controls and optional design comparison. Theme adjustment tools remain expandable below."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information shown",
+          "paragraphs": [
+            "Each entry records owner, source export/path, exact design reference, desktop/mobile specification, states, consuming page keys, differences and review fingerprints. Unassigned review remains visible."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Tasks",
+          "paragraphs": [
+            "Use Copy example link to share an exact state and width. Reset discards local example edits. Open Used on to reach page-register local/live links and guides. Compare the same reference and application viewport. Apply durable changes through Git and a pull request."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "A browser action never updates Git or grants visual acceptance. Record an actual paired review with evidence, reviewer, date and source fingerprint; retain unresolved differences with owners."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "States and limits",
+          "paragraphs": [
+            "Unknown example/state addresses are unavailable. Missing files/exports fail catalogue integrity. A changed dependency makes old review evidence stale. Reference-only entries have no fake interactive implementation."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "Open Project Gantt, choose Programme or Undated, compare at 1440 px then 390 px, and inspect List and warning behaviour. Dates are fixed to 23 September 2026 in the catalogue. No project task is saved."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery",
+          "paragraphs": [
+            "Use Reset example or reload to restore fixtures. Refresh working copy after editing sources. If a reference changes while open, refresh before comparing it again. Git history supports reverting durable changes."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "The frame changes real viewport width; the host shell requires browser resizing. Use labelled controls and keyboard alternatives. Escape returns focus from overlays. Mobile emulation and illustrative offline messages do not establish device/offline acceptance."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Resources",
+          "paragraphs": [
+            "Read docs/design/development/components/README.md for the coverage and maintenance contract. Per-component rules and source links are in the catalogue. Existing UI baseline decisions remain authoritative."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review status",
+          "paragraphs": [
+            "Draft guidance for the local catalogue. Individual visual alignment, physical-device review and operational acceptance remain separate."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ]
     },
     {
       "guide_key": "guide.route-search",
