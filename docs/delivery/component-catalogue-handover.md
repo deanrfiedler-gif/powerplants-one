@@ -31,6 +31,16 @@ Post-integration verification on `8f602b6` passed the build/TypeScript check, 15
 
 Paired design acceptance, physical-device and screen-reader acceptance remain open. The local database service was unavailable, so database-backed business journeys were not claimed as locally executed. Retained reference documents are unchanged.
 
+## PR #286 search assurance repair
+
+On catalogue head `b30df17`, both [compiled browser assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35820638388/job/107051524095) and [Application browser proof](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35820638425/job/107051524693) passed 314 tests, skipped 52 and failed the same mobile SH search journey. `keyboard.press("Control+k")` immediately followed navigation; the subsequent fill waited 45 seconds for a search field that never opened. The final snapshot showed the loaded My Work page with global search closed. All catalogue cases passed in those runs.
+
+The test and `ShellControls` are unchanged from main `25170bf`, whose [compiled suite passed](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35817041438). The original search test also passed both desktop and mobile locally. A three-attempt diagnostic with slower client execution observed the mobile search trigger absent immediately after navigation in every attempt, although each local shortcut ultimately succeeded. This supports a startup timing race; it does not establish a deterministic catalogue application regression.
+
+The repair waits for the client-loaded **Change identity** control and, on a phone, **Open global search** before sending the original shortcut. It additionally asserts that the shortcut focuses the search field. Existing search results, source-authorised preview, focus return and saved-view assertions remain. No application code, global timeout, retry policy or skipped case changes.
+
+Local verification uses Node 24.21.0, maintained Chrome 153.0.8010.53 and task-owned PostgreSQL 16.15 / `ppo_synthetic_test`; CI used Chrome 154.0.8037.57. The PR application build, focused lint and TypeScript checks passed. An initial wider local SH/catalogue run overlapped a baseline build and encountered five-second search-result and My Work data-loading timeouts after the repaired shortcut/focus step passed. That run and the competing baseline build were stopped; neither is claimed as a pass. The subsequent focused compiled run passed **10/10** desktop/mobile catalogue and search checks in 3.7 minutes, including every registered fixture state. Fresh PR CI remains separate from local verification and owner acceptance.
+
 ## Open alignment work
 
 All 24 component records retain Not reviewed visual state. Existing module-specific button/table/dialog families are not silently restyled. The four reference-only entries are AI assistance, product patterns, complete saved estimation wizard and future/innovation patterns. Select/edit tables are represented by AreasEditor; universal bulk selection and spreadsheet cell editing remain unadopted capabilities, not hidden finished controls. Whole-app business regression and component presentation are separate evidence.
