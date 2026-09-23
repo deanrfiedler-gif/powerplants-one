@@ -27,3 +27,12 @@ export async function drainApiReadsForTeardown(page: Page) {
   // handlers still hold responses, causing "Route is already handled".
   while (active?.size) await Promise.all([...active]);
 }
+
+export async function finishApiReadsForTeardown(page: Page) {
+  // Stop refresh timers and focus handlers before checking the retained reads.
+  // Unlike networkidle, this also completes after a deliberately failed page
+  // request. Interception stays installed throughout the navigation and drain.
+  await page.goto("about:blank");
+  await drainApiReadsForTeardown(page);
+  await page.unrouteAll({ behavior: "wait" });
+}
