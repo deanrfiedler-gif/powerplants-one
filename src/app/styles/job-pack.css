@@ -294,3 +294,6 @@
 @media(max-height:650px){#ppo-job-pack .jp-form-actions{position:static;left:auto;right:auto;bottom:auto;margin-top:14px}#ppo-job-pack .jp-preparation{padding-bottom:0}}
 @media(pointer:coarse){#ppo-job-pack :is(button,a.jp-button,.jp-text-button,.jp-contents nav a){min-height:44px}}
 @media(prefers-reduced-motion:reduce){#ppo-job-pack *{scroll-behavior:auto!important;transition:none!important}}
+
+/* Version/hash drift can be longer than a phone column. */
+#ppo-job-pack .jp-notice>div{min-width:0;overflow-wrap:anywhere}

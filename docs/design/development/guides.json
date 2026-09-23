@@ -14786,7 +14786,7 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Not run for this guide",
@@ -14882,7 +14882,10 @@
           "steps": [
             "Prepare the pack against the correct scope",
             "Review exact source/template revisions and readiness",
-            "Issue the checked pack and track recipient acknowledgement"
+            "Issue the checked pack and track recipient acknowledgement",
+            "When sources have changed, choose Review changed sources. In Preparation, review the current source information and choose Refresh saved sources… to record a reason and save a successor, even when the nine notes are unchanged.",
+            "For a saved preparation preview, choose Print preview, then Print saved draft. Unsaved entries stay in the form. Choose Save and print… to record a reason and save first; after success, open Print saved revision to print that exact successor.",
+            "Open exact issued document opens the retained controlled issue. A preparation preview is not an issue and printing never acknowledges a pack."
           ],
           "rows": [],
           "headers": []
@@ -14975,6 +14978,14 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Save and print has an uncertain result",
+              "Keep the entries and reason unchanged and retry Save preparation. The original operation is replayed. No print link appears until the save is confirmed and the saved successor has been read."
+            ],
+            [
+              "The source-change notice remains",
+              "Compare the listed source versions and review the appointment/work order. The notice is advisory; Check and Issue still verify the exact snapshot digest."
             ]
           ],
           "headers": [
@@ -15031,7 +15042,7 @@
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "I4: source-change review and exact saved preparation printing; owner review remains pending.",
       "document_id": "PPO-GUIDE-SV-05",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -48922,7 +48933,7 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "4c8fd6dba83794f6c64aee6859cadb913401fd64",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Compiled application driven through the preparation workflow on 23 September 2026; captures in docs/testing/evidence/job-pack-i3/. Not an owner's visual review.",
@@ -49024,7 +49035,10 @@
             "In section 06 select the exact document versions the crew works from. At least one is required; an unavailable source cannot be selected.",
             "Choose Save preparation. The dialog lists every changed field and asks for the reason recorded with this save.",
             "Confirm with Save preparation. A refusal is shown in the dialog, which stays open so the same entry can be retried unchanged.",
-            "Discard changes restores the last saved revision. Only unsaved entries are discarded."
+            "Discard changes restores the last saved revision. Only unsaved entries are discarded.",
+            "When sources have changed, choose Review changed sources. In Preparation, review the current source information and choose Refresh saved sources… to record a reason and save a successor, even when the nine notes are unchanged.",
+            "For a saved preparation preview, choose Print preview, then Print saved draft. Unsaved entries stay in the form. Choose Save and print… to record a reason and save first; after success, open Print saved revision to print that exact successor.",
+            "Open exact issued document opens the retained controlled issue. A preparation preview is not an issue and printing never acknowledges a pack."
           ],
           "rows": [],
           "headers": []
@@ -49139,6 +49153,14 @@
             [
               "The guide differs from the page",
               "Check the guide and source revision against the running release, stop relying on the instruction, and record the discrepancy."
+            ],
+            [
+              "Save and print has an uncertain result",
+              "Keep the entries and reason unchanged and retry Save preparation. The original operation is replayed. No print link appears until the save is confirmed and the saved successor has been read."
+            ],
+            [
+              "The source-change notice remains",
+              "Compare the listed source versions and review the appointment/work order. The notice is advisory; Check and Issue still verify the exact snapshot digest."
             ]
           ],
           "headers": [
@@ -49190,7 +49212,7 @@
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "I4: source-change review and exact saved preparation printing; owner review remains pending.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-PACKS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
