@@ -4,11 +4,31 @@
 
 Owner: Dean Fiedler. Synthetic local assurance; owner/device acceptance and deployment are not implied.
 
-The [receiving handover](../../../delivery/cs-native-completion-handover.md) records source main, scope, routes, contracts and limitations. Post-concurrency source is `25170bf83008727f005e36b5603841a7b9359027` (merged PR #284). Original checkout and its dirty Facilities page were preserved. No source snapshot was edited.
+The [receiving handover](../../../delivery/cs-native-completion-handover.md) records source main, scope, routes, contracts and limitations. The original post-SH receiving source was `25170bf83008727f005e36b5603841a7b9359027` (merged PR #284); the final merged result is recorded below. Original checkout and its dirty Facilities page were preserved. No source snapshot was edited.
 
-## Executed checks
+## Merged native result
 
-Implementation tested: `36035a309db04000c703386e5edf5b3815de2daa`, following contracts `51b4787` and merged main `25170bf`. Windows, Node 24.21.0, PostgreSQL 16, Playwright 1.63.0 and Chrome 153.0.8010.53. Browser/HTTP commands use `PPO_PORT=3048`; database commands use the ignored synthetic local environment and the guarded `ppo_synthetic_test` database. PowerShell invokes `npm.cmd` and `python -X utf8`.
+[Native PR #287](https://github.com/deanrfiedler-gif/powerplants-one/pull/287) passed all 20 reported checks at `e11e0b34f075229d111e1b77a86cda09a0707338`, including all seven contexts read from main's protection configuration. GitHub records the external merge by `deanrfiedler-gif` at `2026-09-23T10:07:55Z`, producing `5499df4f55fbb39aaeb9e3452c9358cad78b0927`. Both commits have tree `222282f6bfe9d35e93925d41daa78bf32114469c`; `git diff --exit-code e11e0b3 5499df4` passed. The final fetch and ancestry checks also passed for merged #284. No merge, deployment or owner acceptance was performed by this task.
+
+| Final-head check | Actual result and retained job |
+|---|---|
+| `npm run studio:check`, `npm run lint`, `npm run typecheck`, `npm run build` | Passed in [application assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35840895147/job/107115409779) |
+| `npm run test:unit` | Linux 353/353 passed in the same job |
+| `npm run test:db` | 546/546 passed; upgrade, registry, repeated seed, permissions and competing transactions retained |
+| `npm run test:http` | 44/44 passed; issued-output isolation 1/1 and the application/database/browser restart proof also passed |
+| `npx playwright test --config=playwright.compiled.config.ts --reporter=list,json` | [Compiled desktop/mobile suite](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35840895129/job/107115410181): 333 passed, 60 intentional skips |
+| Broader retained browser lane | [333 passed, 60 intentional skips](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35840895147/job/107115410132), plus separate Facility 14/14, mobile CRM 15/15, CRM I2 17/17 and the retained restart journey |
+| Original offline diagnostic replay | [4/4 passed](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35840895147/job/107115409474); the deliberately lost-response procedure, assertions and deadlines were unchanged |
+| Documentation foundation, prototype and naming scripts | [Passed](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35840895102/job/107115409061) using `python3 scripts/check_foundation.py`, `python3 scripts/check_prototype.py` and `python3 scripts/check_naming.py` |
+| Combined application/PostgreSQL protected gate | [Passed](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35840895147/job/107135263756) after every retained matrix suite succeeded |
+
+Estimating, CRM persistence and shell geometry, Email Calendar, Engineering, Projects, Finance, reporting, performance, quality/access and register/baseline integrity checks also passed. The earlier Windows baseline failures and intermediate CI failures remain recorded below; they are not silently relabelled as successful runs. Both ES-08 cases formerly affected by the reset deadlock passed in the final compiled suite within their unchanged 45-second limits.
+
+Visual evidence totals remain 67 unmodified captures, with 37 individually inspected. Seven native screens were checked at 1440, 1280, 1024, 768, 430, 390 and 320px. The [manifest](capture-manifest.json) distinguishes individual inspection from automated geometry checks. This publication record does not add or imply owner/device acceptance.
+
+## Earlier execution checkpoints
+
+Initial implementation tested: `36035a309db04000c703386e5edf5b3815de2daa`, following contracts `51b4787` and merged main `25170bf`. The following sections retain the chronological receiving checkpoints; the merged result above supersedes their publication state. Windows, Node 24.21.0, PostgreSQL 16, Playwright 1.63.0 and Chrome 153.0.8010.53. Browser/HTTP commands use `PPO_PORT=3048`; database commands use the ignored synthetic local environment and the guarded `ppo_synthetic_test` database. PowerShell invokes `npm.cmd` and `python -X utf8`.
 
 | Command | Actual result |
 |---|---|
@@ -66,9 +86,9 @@ Server contracts: [PR #285](https://github.com/deanrfiedler-gif/powerplants-one/
 
 ## Final main reconciliation
 
-Final verified implementation/test head: `403b42db323c4e7afe558f1d30902702285cbcb3` on `feat/cs-customer-location-completion`; the evidence-only successor is identified by the PR head and Git history. Current main and merged #284 are proven ancestors. No owner acceptance or deployment is implied by these checks.
+Pre-publication verification checkpoint: `403b42db323c4e7afe558f1d30902702285cbcb3` on `feat/cs-customer-location-completion`; successors are identified by the PR head and Git history. Then-current main and merged #284 are proven ancestors. No owner acceptance or deployment is implied by these checks.
 
-Native head `7fd2a25` passed all six required checks, including [325 compiled desktop/mobile cases](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35829098796/job/107077332753), with 60 intentional skips. The broad browser, CRM persistence, quality, performance, Estimating, Email Calendar and documentation lanes also passed. Final publication then incorporated newly merged component catalogue #286 (`9151266`) and Job Pack #288 (`6c7df0c`, tree `fa49f8b6164d8fbad2bedeb0cf43d5d8f83eb8a5`). Reconciliation commits `7a8cb52` and `22d99d6` preserve GitHub's published merge `0c941a9`; no force push or unfinished contribution is used.
+Native head `7fd2a25` passed the reported required checks, including [325 compiled desktop/mobile cases](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35829098796/job/107077332753), with 60 intentional skips. The broad browser, CRM persistence, quality, performance, Estimating, Email Calendar and documentation lanes also passed. Final publication then incorporated newly merged component catalogue #286 (`9151266`) and Job Pack #288 (`6c7df0c`, tree `fa49f8b6164d8fbad2bedeb0cf43d5d8f83eb8a5`). Reconciliation commits `7a8cb52` and `22d99d6` preserve GitHub's published merge `0c941a9`; no force push or unfinished contribution is used.
 
 All non-CS guides match current main and none are lost. The combined register has 273 entries, 119 routes and 24 component records with 19 runnable examples; all 24 component alignment reviews remain pending. CS bindings identify actual consumers, and the existing RecordTabs example includes the eight Customer 360 labels. The Job Pack implementation is unchanged from main. Neither reconciliation changes migration 0044, capabilities or backend command contracts.
 
