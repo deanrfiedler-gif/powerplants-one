@@ -1,3 +1,4 @@
+import { sectionView } from "./section-view";
 import { visibleActivity } from "../activities/activities";
 import { randomUUID } from "node:crypto";
 import { database, transaction } from "../platform/database";
@@ -740,8 +741,9 @@ export async function readPack(p: Principal, id: string) {
         ...pack,
         current_issue_id:
           staff || currentIssues.length ? pack.current_issue_id : null,
-        current_revision_id:
-          staff || permittedRevisions.length ? pack.current_revision_id : null,
+        current_revision_id: staff
+          ? pack.current_revision_id
+          : (permittedRevisions[0]?.id ?? null),
         revisions: staff
           ? permittedRevisions
           : permittedRevisions.map((r) => ({ ...r, created_by_name: null })),
@@ -749,6 +751,19 @@ export async function readPack(p: Principal, id: string) {
         issues: staff
           ? currentIssues
           : currentIssues.map((i) => ({ ...i, issued_by_name: null })),
+        section_view: await sectionView(
+          c,
+          p,
+          w,
+          permittedRevisions.find(
+            (r) =>
+              r.id ===
+              (staff
+                ? pack.current_revision_id
+                : currentIssues[0]?.revision_id),
+          ),
+          staff,
+        ),
         criteria: assessed?.criteria ?? null,
         readiness_policy: assessed?.policy ?? null,
         basis,

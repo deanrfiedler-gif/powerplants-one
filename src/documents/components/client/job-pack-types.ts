@@ -1,3 +1,4 @@
+import type { SectionView } from "../../section-readers";
 // The pack read as the Job Pack page consumes it. Type-only imports are erased; no server module reaches the client.
 import type { PackInput } from "../../validation";
 import type { PackSnapshot } from "../../render";
@@ -46,6 +47,7 @@ export type PackRecipient = {
   acknowledged_at: string | null;
 };
 export type Pack = {
+  section_view?: SectionView | null;
   id: string;
   display_number: string;
   appointment_id: string;

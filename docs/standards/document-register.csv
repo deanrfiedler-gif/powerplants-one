@@ -418,3 +418,4 @@ PPO-SVC-REQ-BOARD-R02,Service requests native refinement board images supplement
 PPO-SV01-PLAN,SV-01/SV-02 Service requests application integration build plan,docs/delivery/service-requests-integration-build-plan.md,,Prepared under D3; I1 delivered for review; I2-I5 not started,Dean Fiedler,7bf972cbc38a9e62fd25b1bd635c6991895d76e6,,,git,
 PPO-SERVICE-PROGRAMME,Service Operations programme restart and delivery ledger,docs/delivery/service-operations-programme.md,,Working delivery record,Dean Fiedler,ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc,,,git,
 PPO-SV05-I4-HANDOVER,Job Pack source changes and saved preparation printing,docs/delivery/job-pack-i4-handover.md,,Implementation in verification,Dean Fiedler,ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc,,,git,
+PPO-SV05-I6-HANDOVER,Job Pack structured saved sections,docs/delivery/job-pack-i6-handover.md,,Implementation in verification; owner acceptance open,Dean Fiedler,899dd6e,,,git,

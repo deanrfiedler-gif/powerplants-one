@@ -3,7 +3,6 @@ import { sectionKeys, type SectionKey } from "../../validation";
 import {
   formatDate,
   formatStamp,
-  historyKindLabel,
   packSectionShortTitles,
   packSectionTitles,
   visitWindow,
@@ -11,6 +10,8 @@ import {
 } from "../../pack-view";
 import type { Pack, PackRevision } from "./job-pack-types";
 import { Badge, Icon, Pair, Person } from "./job-pack-ui";
+import { readSection } from "../../section-readers";
+import { SectionParts } from "./job-pack-section-parts";
 
 export const sectionId = (prefix: "s" | "p", key: SectionKey) =>
   `${prefix}-${sectionKeys.indexOf(key) + 1}`;
@@ -135,26 +136,18 @@ export function SectionBody({
   revision: PackRevision;
 }) {
   const s = revision.snapshot,
-    frozen = s.sections[section],
-    selected = s.history
-      .map((h) => pack.history.find((x) => x.id === h.id))
-      .filter((x): x is Pack["history"][number] => !!x);
-  if (section === "identification") return <Identification revision={revision} />;
-  if (
-    section === "history" &&
-    s.history.length > 0 &&
-    selected.length === s.history.length
-  )
+    frozen = s.sections[section];
+  if (section === "identification")
+    return <Identification revision={revision} />;
+  const structured = readSection(section, s, revision.id, pack.section_view);
+  if (structured)
     return (
       <>
-        {selected.map((h) => (
-          <article className="jp-history-item" key={h.id}>
-            <span className="jp-kind">{historyKindLabel(h.kind)}</span>
-            <div>
-              <p>{h.summary}</p>
-            </div>
-          </article>
-        ))}
+        <SectionParts section={structured} zone={s.appointment.timezone} />
+        <details className="jp-exact">
+          <summary>Exact text as it will be issued</summary>
+          <p className="jp-body-copy">{frozen.text}</p>
+        </details>
       </>
     );
   if (section === "technical_information")

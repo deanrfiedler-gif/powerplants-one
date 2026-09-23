@@ -31,6 +31,8 @@ ADR-0043 remains **Proposed, not accepted**. SV-01/SV-02 must retain New, NeedsI
 |---|---|---|---|
 | SV-05 I4 | `feat/sv05-i4-source-print`, based on starting main | Source-change review; reasoned successor refresh; exact saved preparation print choices; real API receipt shape; original-operation replay retained | [I4 handover](job-pack-i4-handover.md). Final verification in progress; I6/I7/I5 remain |
 
+I6 on `feat/sv05-i6-structured-sections` is a stack after I4. It adds the adopted pure formatter, permission-scoped projection, exact-text proof/fallback and structured saved sections. Six unit cases, three focused database cases, a pre-I6-created revision Check and 22 compiled browser cases pass; six browser skips avoid duplicate width coverage. [I6 handover](job-pack-i6-handover.md) records the environment and acceptance limits. I7 and I5 remain.
+
 ## Programme boundaries
 
 Use the [Job Pack plan](job-pack-integration-build-plan.md), [request plan](service-requests-integration-build-plan.md), current source, BP-01/BP-07 and each route/scope contract. Before each later workstream, audit the exact implementation, tests and retained design. Work Orders retain P04 authority; Scheduling retains booking authority; Service Review retains P09 revisions, exact evidence, controlled output and response bindings. Findings should project existing sources; an essential new durable identity requires its own architectural decision before schema work. Remote support must distinguish reported symptoms, hypotheses, verified findings and OEM advice, with manual evidence capture only.

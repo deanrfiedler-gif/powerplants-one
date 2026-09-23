@@ -1,3 +1,13 @@
+import {
+  formatArrangements,
+  formatScope,
+  formatEquipment,
+  formatHistory,
+  formatControls,
+  formatSiteControls,
+  completionPrefix,
+  type ScopeItem,
+} from "./section-text";
 import type { Principal } from "../platform/identity";
 import {
   type Capability,
@@ -307,53 +317,37 @@ export async function snapshot(
   const contact = site.primary_contact_id
     ? await visible(c, p, "Person", site.primary_contact_id)
     : null;
-  const items = r.items as {
-    id: string;
-    sequence: number;
-    task_description: string;
-    task_kind: string;
-    completion_requirements: string;
-    shutdown_condition: string;
-    assets: {
-      asset_id: string;
-      display_number: string;
-      description: string;
-      identity_status: string;
-      serial: string;
-      configuration_description: string;
-      method: string;
-      limits: string;
-    }[];
-  }[];
-  const text = (v: unknown) => String(v ?? "Not recorded");
-  const equipment = items
-    .flatMap((i) => i.assets)
-    .map(
-      (x) =>
-        `${x.display_number}: ${x.description}\nIdentity: ${x.identity_status}; serial: ${text(x.serial)}\nConfiguration: ${text(x.configuration_description)}${x.method ? `\nIdentification only: ${x.method}; limits: ${x.limits}` : ""}`,
-    )
-    .join("\n\n");
-  const controlText = controls
-    .filter(
+  const items = r.items as ScopeItem[];
+  const controlText = formatControls(
+    controls.filter(
       (x) =>
         x.blocking_stage === "Authorisation" ||
         x.criterion_code === "ToolPreparation",
-    )
-    .map(
-      (x) =>
-        `${x.label}: ${x.outcome}. ${x.reason ?? ""}\nEvidence: ${x.evidence_title ?? "Not recorded"}; ${x.evidence_hash ?? ""}`,
-    )
-    .join("\n\n");
+    ),
+  );
   const body: Record<string, string> = {
     identification: `${w.display_number} · ${a.display_number}\n${customer.display_name}\n${site.display_name}\n${new Date(a.start_at).toISOString()} to ${new Date(a.end_at).toISOString()} (UTC); site timezone ${a.site_timezone}\nCrew: ${members.map((x) => `${x.name} (${x.crew_role})`).join(", ")}`,
-    customer_arrangements: `Location: ${site.location_description}\nContact: ${contact ? `${contact.display_name}; ${text(contact.phone)}; ${text(contact.email)}` : "Not recorded"}\nAccess: ${text(site.access_instructions)}\nDate agreement: ${a.customer_commitment}. This is not pack acknowledgement.`,
-    scope: `Approved scope r${String(r.revision).padStart(2, "0")}: ${r.summary}\nExclusions: ${r.exclusions}\nDiagnostic limits: ${text(r.diagnostic_limit)}\n\n${items.map((i) => `${i.sequence}. ${i.task_kind}: ${i.task_description}\nCompletion: ${i.completion_requirements}\nShutdown condition: ${text(i.shutdown_condition)}`).join("\n\n")}`,
-    equipment,
-    history: history.length
-      ? history
-          .map((h) => `${h.kind} (${h.confidence}): ${h.summary}`)
-          .join("\n\n")
-      : "No service-audience history selected. The preparation notes must explain the review or relevant absence.",
+    customer_arrangements: formatArrangements({
+      location: site.location_description,
+      contact: contact
+        ? {
+            name: contact.display_name,
+            phone: contact.phone,
+            email: contact.email,
+          }
+        : null,
+      access: site.access_instructions,
+      commitment: a.customer_commitment,
+    }),
+    scope: formatScope({
+      revision: r.revision,
+      summary: r.summary,
+      exclusions: r.exclusions,
+      diagnostic_limit: r.diagnostic_limit,
+      items,
+    }),
+    equipment: formatEquipment(items),
+    history: formatHistory(history),
     technical_information: sources
       .map(
         (s) =>
@@ -361,8 +355,12 @@ export async function snapshot(
       )
       .join("\n\n"),
     readiness: controlText,
-    site_controls: `Access: ${text(site.access_instructions)}\nBiosecurity: ${text(site.biosecurity_notes)}\n${controlText}\nStop if site access, isolation, shutdown authority or competency cannot be confirmed. Tool-preparation exceptions do not waive these controls.`,
-    completion: `${items.map((i) => `${i.sequence}. ${i.completion_requirements}`).join("\n")}\nRecord unresolved work and escalate to the preparation owner. This pack does not grant authority outside the approved scope. ${template.version === 1 ? "Use My Jobs for online capture. Completion remains a draft; offline, reviewed reports and Finance remain incomplete." : completionInstructions}`,
+    site_controls: formatSiteControls(
+      site.access_instructions,
+      site.biosecurity_notes,
+      controlText,
+    ),
+    completion: `${completionPrefix(items)}Record unresolved work and escalate to the preparation owner. This pack does not grant authority outside the approved scope. ${template.version === 1 ? "Use My Jobs for online capture. Completion remains a draft; offline, reviewed reports and Finance remain incomplete." : completionInstructions}`,
   };
   const evidence = controls
     .filter((x) => x.evidence_ref)

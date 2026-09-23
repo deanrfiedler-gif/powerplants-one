@@ -1,5 +1,7 @@
 # Current prototype status
 
+**Job Pack I6, 24 September 2026:** structured saved sections are in verification on a stack after I4. Six compatibility tests and three focused database proofs passed, with local seeding timeout limits recorded in the [I6 handover](delivery/job-pack-i6-handover.md). I7 and final I5 remain.
+
 **Service Operations restart, 24 September 2026:** refreshed main remains `ca006fb1`; SV-05 I1–I3 are merged. I4 source-change review and saved-revision print choices are in the Service worktree for verification. [Programme ledger](delivery/service-operations-programme.md) and [I4 handover](delivery/job-pack-i4-handover.md) separate implementation, checks and remaining I6/I7/I5 and SV-01–SV-08 work. ADR-0043 remains Proposed; request lifecycle extensions are excluded. No deployment or owner acceptance is claimed.
 
 **My Work browser readiness follow-up, 24 September 2026:** PR #292 passed all 19 checks and merged as `993fa55`. The next compiled run on #297 exposed an SH layout check that started its five-second render deadline while the first My Work data read was still pending. The focused test now observes the matching successful API response before checking the layout; [evidence and limits](testing/pr-browser-ci-repair-2026-09-23.md#my-work-initial-data-readiness) record the controlled reproduction and verification. Application behaviour and owner acceptance remain separate.
