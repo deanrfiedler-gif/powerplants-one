@@ -6,7 +6,10 @@ import { discoveryInput } from "../helpers/estimating-discovery";
 import type { Scope } from "../../src/estimating/fertigation/types";
 import { compareFertigationDesign } from "../helpers/fertigation-design";
 import { largeFertigationScope } from "../helpers/fertigation-large";
-import { scenarioComparisonScope } from "../helpers/fertigation-scenarios";
+import {
+  injectionConflictScope,
+  scenarioComparisonScope,
+} from "../helpers/fertigation-scenarios";
 import { calculate } from "../../src/estimating/fertigation/engine";
 import { validateScope } from "../../src/estimating/fertigation/validation";
 import { valveCsv } from "../../src/estimating/fertigation/output";
@@ -1151,4 +1154,97 @@ test("FN-T44 upload valve CSV, inspect incomplete projection and explicitly impo
   expect(saved.revision.proposal.production_context.hydraulic_arrangement).toBe(
     "unknown",
   );
+});
+
+test("FN-T107 guidance cockpit, calculation trace and a previewed conflict resolution stay draft-only", async ({
+  page,
+}) => {
+  const discovery = await savedDiscovery(page);
+  const options = await call(
+    page,
+    `estimating/fertigation/options?estimating_workspace_id=${discovery.id}`,
+  );
+  const source = options.sources.find(
+    (x: { option_id: string }) => x.option_id === discovery.option_id,
+  );
+  const proposal = injectionConflictScope();
+  const id = randomUUID();
+  await call(page, "estimating/fertigation", {
+    ...crmBase(),
+    id,
+    name: proposal.name,
+    estimating_workspace_id: discovery.id,
+    option_id: source.option_id,
+    revision_id: source.revision_id,
+    expected_workspace_version: source.expected_workspace_version,
+    coverage: {
+      system_id: null,
+      area_ids: [],
+      facility_ids: source.facility_ids,
+    },
+    proposal,
+  });
+  await page.goto(`/estimating/fertigation/${id}?view=overview`);
+  const root = page.locator("#ppo-fertigation");
+  await expect(
+    root.getByRole("heading", { name: "What this scope can produce now" }),
+  ).toBeVisible();
+  await expect(
+    root.getByRole("heading", { name: "Next actions" }),
+  ).toBeVisible();
+  await expect(
+    root.getByRole("heading", { name: "Capacity headroom" }),
+  ).toBeVisible();
+  await expect(root.getByText(/is outside its entered limits/)).toBeVisible();
+
+  await root
+    .getByRole("button", { name: "How this is calculated" })
+    .first()
+    .click();
+  const trace = page.getByRole("dialog", {
+    name: "How this is calculated: Connected flow",
+  });
+  await expect(
+    trace.getByText(/sum of every active physical valve flow/),
+  ).toBeVisible();
+  await trace
+    .getByRole("button", { name: /^Close How this is calculated/ })
+    .click();
+
+  await root
+    .getByRole("button", { name: "Resolve", exact: true })
+    .first()
+    .click();
+  const resolve = page.getByRole("dialog", { name: "Resolve a conflict" });
+  await expect(
+    resolve.getByText(/needs 10 L\/h; the entered maximum is 8 L\/h/),
+  ).toBeVisible();
+  await expect(resolve.getByText(/8 ÷ 5 = 1\.6 L\/m³/)).toBeVisible();
+  await resolve.getByRole("button", { name: "Preview consequences" }).click();
+  await expect(
+    resolve.getByRole("heading", { name: "Result changes" }),
+  ).toBeVisible();
+  await resolve.getByRole("button", { name: "Apply to working draft" }).click();
+  await expect(page.locator(".fn-status")).toHaveText("Unsaved changes");
+
+  await root
+    .getByRole("button", { name: "Compare draft", exact: true })
+    .click();
+  const compare = page.getByRole("dialog", {
+    name: "Compare the working draft with revision 1",
+  });
+  await expect(
+    compare.getByRole("heading", { name: "Input changes" }),
+  ).toBeVisible();
+  await expect(
+    compare.getByText("Added", { exact: true }).first(),
+  ).toBeVisible();
+  await compare
+    .getByRole("button", { name: /^Close Compare the working draft/ })
+    .click();
+
+  // Nothing was saved: the exact saved revision is unchanged.
+  const saved = await call(page, `estimating/fertigation/${id}`);
+  expect(saved.revision.version).toBe(1);
+  expect(saved.revision.proposal.groups).toHaveLength(1);
 });

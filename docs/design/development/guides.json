@@ -62780,6 +62780,26 @@
             [
               "Guide and design",
               "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+            ],
+            [
+              "Menu counts",
+              "Each view shows a badge when it holds open findings: conflicts first, then incomplete, then review. The summary above the menu states whether the counts come from the saved revision or a calculated draft."
+            ],
+            [
+              "What this scope can produce now",
+              "Lists export, report, technical review and handover with the server's own preconditions. Open findings travel with an output; they never block it."
+            ],
+            [
+              "Next actions",
+              "Groups findings by kind, conflicts first, with the role that normally resolves them. Resolve appears when a registered option exists; Open takes you to the view that fixes it."
+            ],
+            [
+              "Capacity headroom and evidence coverage",
+              "Compares each entered capacity with its calculated demand, and counts records by their strongest linked evidence. Entered capacities remain unverified inputs."
+            ],
+            [
+              "How this is calculated",
+              "Opens a trace of the result: the rule, every input and its basis, the evidence, and where the result is used. The value is the engine's own."
             ]
           ],
           "headers": [
@@ -62809,7 +62829,9 @@
             "Confirm the record reference and customer/site context in this record workspace.",
             "Select or create the permitted configurator scope",
             "Review the exact valve and master-source revisions and unresolved bindings",
-            "Inspect calculated results and review evidence before preparing a controlled report"
+            "Inspect calculated results and review evidence before preparing a controlled report",
+            "Work the Next actions list from the top; use Resolve to preview an option's consequences before applying it to the working draft.",
+            "Use Compare draft to check result, finding and input changes against the saved revision, then save a revision with a reason."
           ],
           "rows": [],
           "headers": []
@@ -62855,6 +62877,14 @@
             [
               "Planned / not available",
               "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+            ],
+            [
+              "Calculated draft",
+              "Counts, next actions and capacity reflect the calculated draft. Until you calculate a changed draft, guidance falls back to the saved revision and says so."
+            ],
+            [
+              "Applied resolution",
+              "An applied option changes the working draft only and shows Unsaved changes. Nothing is saved until you save a revision."
             ]
           ],
           "headers": [

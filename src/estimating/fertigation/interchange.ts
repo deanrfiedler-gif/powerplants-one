@@ -458,6 +458,10 @@ export function previewImport(
     sourceSchema =
       source.schema_version === 1 ? "standalone_1" : "standalone_2";
     source = validateLegacyProject(source);
+    if (typeof source.exported_at === "string")
+      warnings.push(
+        `The file's export metadata (exported ${source.exported_at}) is retained only as source provenance; it creates no native revision or date.`,
+      );
     if (
       typeof source.project_id !== "string" ||
       !/^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$/.test(source.project_id)
@@ -1492,6 +1496,8 @@ export function previewImport(
       "activity",
       "review_history",
       "review",
+      "exported_at",
+      "export_scope",
       ...collections,
     ];
     unused(source, topKeys, "source");

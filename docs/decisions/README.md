@@ -1,5 +1,7 @@
 # Decision control
 
+[Priva fertigation workbench refinement](fertigation-workbench-refinement.md) raised seven presentation departures (D1–D7), audit findings A1–A9 and twelve features (F1–F12) on 23 September 2026. Dean directed the same day that the improvements be applied; D1, D7, F2–F7 and F9 are built, and the rest remain proposed. No calculation changes; visual review and acceptance are not yet recorded.
+
 [Service requests native refinement](service-requests-native-refinement.md) is a **proposed** SV-01/SV-02 design: the r02 Service Cases & Triage workspace refined as a module interior for the shared shell, with a separate register and record, less chrome, collapsible empty lanes and "Service request" as the label. Recorded 23 September 2026. Dean accepted all eight of its recommendations (D1–D8) the same day. His visual review is still to be recorded, so it is not an accepted baseline. [ADR-0043](ADR-0043-service-request-lifecycle.md) is its **proposed** lifecycle extension, drafted for his review; it authorises no migration.
 
 [Notice accent rule departure](notice-accent-rule-departure.md) is a **proposed** design-system decision: whether notices keep the 3 px coloured left rule used by theme board r22 and Job Pack r03. Raised from the field work timer concept on 23 September 2026; not accepted.

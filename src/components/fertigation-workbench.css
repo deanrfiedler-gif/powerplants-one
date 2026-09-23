@@ -468,3 +468,767 @@
     padding: 14px 16px;
   }
 }
+
+/* Guidance cockpit, grouped menu and scope review (fertigation-cockpit.tsx).
+   Status colours come from the shared status families; the chart fills are
+   the chart-only values raised in the workbench refinement record (D3). */
+#ppo-fertigation {
+  --fn-fill-conflict: #c4553f;
+  --fn-fill-incomplete: #c4851a;
+  --fn-fill-review: #5b9bc0;
+  --fn-fill-neutral: #8896a8;
+}
+#ppo-fertigation .fn-menu-group {
+  margin-top: 14px;
+}
+#ppo-fertigation .fn-menu-group-title {
+  margin: 0 0 4px;
+  padding: 0 18px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--text-secondary, #596779);
+}
+#ppo-fertigation .fn-menu-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#ppo-fertigation .mw-menu nav button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#ppo-fertigation .fn-menu-label {
+  flex: 1;
+  min-width: 0;
+}
+#ppo-fertigation .mw-menu .mw-badge {
+  flex: none;
+  gap: 3px;
+  display: inline-flex;
+  align-items: center;
+}
+#ppo-fertigation .mw-badge svg,
+#ppo-fertigation .fn-chip svg {
+  width: 11px;
+  height: 11px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+#ppo-fertigation .mw-badge.fn-badge-conflict {
+  background: var(--danger-surface, #fff1ed);
+  color: var(--danger, #993b2a);
+}
+#ppo-fertigation .mw-badge.fn-badge-incomplete {
+  background: var(--warning-surface, #fff2d9);
+  color: var(--warning, #80530e);
+}
+#ppo-fertigation .mw-badge.fn-badge-review {
+  background: var(--info-surface, #e9f2f8);
+  color: var(--info, #346580);
+}
+#ppo-fertigation .fn-readiness {
+  margin: 0 0 8px;
+}
+#ppo-fertigation .fn-readiness-compact {
+  padding: 0 18px 12px;
+  border-bottom: 1px solid var(--line, #e1e5eb);
+  margin-bottom: 4px;
+}
+#ppo-fertigation .fn-readiness-total {
+  margin: 0 0 8px;
+  font-size: 13px;
+}
+#ppo-fertigation .fn-readiness-basis {
+  display: block;
+}
+#ppo-fertigation .fn-readiness-total strong {
+  font-size: 22px;
+  font-weight: 500;
+  margin-right: 2px;
+}
+#ppo-fertigation .fn-readiness-bar,
+#ppo-fertigation .fn-evidence-bar {
+  display: flex;
+  gap: 2px;
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 0 0 8px;
+}
+#ppo-fertigation .fn-readiness-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  font-size: 12px;
+  color: var(--text-secondary, #596779);
+}
+#ppo-fertigation .fn-readiness-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+#ppo-fertigation .fn-key {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  display: inline-block;
+}
+#ppo-fertigation .fn-bar-conflict {
+  background: var(--fn-fill-conflict);
+}
+#ppo-fertigation .fn-bar-incomplete {
+  background: var(--fn-fill-incomplete);
+}
+#ppo-fertigation .fn-bar-review {
+  background: var(--fn-fill-review);
+}
+#ppo-fertigation .fn-cockpit {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+#ppo-fertigation .fn-panel {
+  border: 1px solid var(--line, #e1e5eb);
+  border-radius: var(--radius-card, 8px);
+  background: #fff;
+  margin: 0 0 16px;
+  min-width: 0;
+}
+#ppo-fertigation .fn-cockpit .fn-panel {
+  margin: 0;
+}
+#ppo-fertigation .fn-panel-head {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--line-soft, #e9ecf1);
+}
+#ppo-fertigation .fn-panel-head h2 {
+  font-size: 16px;
+  margin: 0;
+}
+#ppo-fertigation .fn-panel-head p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--text-secondary, #596779);
+}
+#ppo-fertigation .fn-panel-empty,
+#ppo-fertigation .fn-panel-foot {
+  margin: 0;
+  padding: 10px 16px;
+  font-size: 12px;
+  color: var(--text-secondary, #596779);
+}
+#ppo-fertigation .fn-panel-foot {
+  border-top: 1px solid var(--line-soft, #e9ecf1);
+  background: #fcfcfd;
+}
+#ppo-fertigation .fn-chip,
+#ppo-fertigation .fn-role {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 7px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  white-space: nowrap;
+  background: var(--neutral-surface, #edf0f5);
+  color: var(--neutral, #526078);
+}
+#ppo-fertigation .fn-chip-conflict {
+  background: var(--danger-surface, #fff1ed);
+  color: var(--danger, #993b2a);
+}
+#ppo-fertigation .fn-chip-incomplete {
+  background: var(--warning-surface, #fff2d9);
+  color: var(--warning, #80530e);
+}
+#ppo-fertigation .fn-chip-review {
+  background: var(--info-surface, #e9f2f8);
+  color: var(--info, #346580);
+}
+#ppo-fertigation .fn-chip-success {
+  background: var(--success-surface, #edf5e9);
+  color: var(--success, #416d33);
+}
+#ppo-fertigation .fn-role {
+  background: #fff;
+  border: 1px solid var(--line-strong, #dce2e9);
+  border-radius: 10px;
+  font-weight: 400;
+  color: #40495a;
+}
+#ppo-fertigation button.fn-link {
+  border: 0;
+  background: none;
+  min-height: 0;
+  padding: 0;
+  color: var(--link, #355b80);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-size: inherit;
+}
+#ppo-fertigation button.fn-link:hover:not(:disabled) {
+  background: none;
+  color: var(--ink, #242a37);
+}
+#ppo-fertigation .fn-output-list,
+#ppo-fertigation .fn-next-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#ppo-fertigation .fn-output-list li,
+#ppo-fertigation .fn-next-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--line-soft, #e9ecf1);
+}
+#ppo-fertigation .fn-next-list li {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+#ppo-fertigation .fn-output-list li:last-child,
+#ppo-fertigation .fn-next-list li:last-child {
+  border-bottom: 0;
+}
+#ppo-fertigation .fn-output-list strong,
+#ppo-fertigation .fn-next-body strong {
+  display: block;
+  font-weight: 500;
+  font-size: 14px;
+}
+#ppo-fertigation .fn-output-list small,
+#ppo-fertigation .fn-next-body small {
+  display: block;
+}
+#ppo-fertigation .fn-count {
+  font-weight: 400;
+  color: var(--text-secondary, #596779);
+}
+#ppo-fertigation .fn-next-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 5px;
+}
+#ppo-fertigation .fn-next-meta code {
+  font-size: 11px;
+  color: var(--text-secondary, #596779);
+}
+#ppo-fertigation .fn-capacity th,
+#ppo-fertigation .fn-capacity td {
+  vertical-align: middle;
+}
+#ppo-fertigation .fn-capacity tbody th {
+  background: none;
+  font-weight: 400;
+  min-width: 190px;
+}
+#ppo-fertigation .fn-capacity tbody th small,
+#ppo-fertigation .fn-capacity td small {
+  display: block;
+}
+#ppo-fertigation .fn-capacity .fn-scale {
+  font-weight: 400;
+  color: var(--text-secondary, #596779);
+  margin-left: 6px;
+}
+#ppo-fertigation .fn-capacity-bar-cell {
+  width: 38%;
+  min-width: 180px;
+}
+#ppo-fertigation .fn-capacity-bar {
+  position: relative;
+  height: 12px;
+  border-radius: 3px;
+  background: #f0f2f5;
+}
+#ppo-fertigation .fn-capacity-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 3px;
+}
+#ppo-fertigation .fn-capacity-within {
+  background: var(--fn-fill-neutral);
+}
+#ppo-fertigation .fn-capacity-storage {
+  background: var(--fn-fill-incomplete);
+}
+#ppo-fertigation .fn-capacity-over {
+  background: var(--fn-fill-conflict);
+}
+#ppo-fertigation .fn-capacity-limit {
+  position: absolute;
+  left: 50%;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--ink, #242a37);
+}
+#ppo-fertigation .fn-evidence-bar {
+  margin: 12px 16px 8px;
+  height: 10px;
+}
+#ppo-fertigation .fn-ev-document_reference {
+  background: var(--success, #416d33);
+}
+#ppo-fertigation .fn-ev-observation {
+  background: var(--fn-fill-review);
+}
+#ppo-fertigation .fn-ev-assumption {
+  background: var(--fn-fill-incomplete);
+}
+#ppo-fertigation .fn-ev-none {
+  background: repeating-linear-gradient(135deg, #cbd2dc 0 3px, #f0f2f5 3px 6px);
+}
+#ppo-fertigation .fn-evidence-counts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 4px 16px 12px;
+}
+#ppo-fertigation .fn-evidence-counts dt {
+  font-size: 12px;
+  color: var(--text-secondary, #596779);
+}
+#ppo-fertigation .fn-evidence-counts dd {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+#ppo-fertigation .fn-review-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 12px 0 16px;
+}
+#ppo-fertigation .fn-segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 3px;
+  border: 1px solid var(--line-strong, #dce2e9);
+  border-radius: 8px;
+  background: #f0f2f5;
+}
+#ppo-fertigation .fn-segmented button {
+  min-height: 32px;
+  border-color: transparent;
+  background: transparent;
+  font-size: 13px;
+}
+#ppo-fertigation .fn-segmented button[aria-pressed="true"] {
+  background: #fff;
+  border-color: var(--line-strong, #dce2e9);
+  font-weight: 500;
+}
+#ppo-fertigation .fn-inline-label {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+#ppo-fertigation .fn-inline-label select {
+  width: auto;
+  min-width: 200px;
+}
+#ppo-fertigation .fn-review-group {
+  border: 1px solid var(--line, #e1e5eb);
+  border-radius: var(--radius-card, 8px);
+  margin: 0 0 12px;
+  overflow: hidden;
+}
+#ppo-fertigation .fn-review-group > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 16px;
+  background: #f7f8fa;
+  border-bottom: 1px solid var(--line-soft, #e9ecf1);
+}
+#ppo-fertigation .fn-review-group h3 {
+  margin: 0;
+  font-size: 14px;
+}
+#ppo-fertigation .fn-review-group h3 small {
+  font-weight: 400;
+}
+#ppo-fertigation .fn-review-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#ppo-fertigation .fn-review-group li {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line-soft, #e9ecf1);
+}
+#ppo-fertigation .fn-review-group li:last-child {
+  border-bottom: 0;
+}
+#ppo-fertigation .fn-review-group li > .fn-chip {
+  justify-self: start;
+}
+#ppo-fertigation .fn-review-body strong {
+  display: block;
+  font-weight: 500;
+}
+@media (max-width: 1100px) {
+  #ppo-fertigation .fn-cockpit {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 780px) {
+  #ppo-fertigation .fn-output-list li {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  #ppo-fertigation .fn-output-list li > button {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+  #ppo-fertigation .fn-next-list li,
+  #ppo-fertigation .fn-review-group li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #ppo-fertigation .fn-next-list li > button,
+  #ppo-fertigation .fn-review-group li > button {
+    justify-self: start;
+  }
+  #ppo-fertigation .fn-evidence-counts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #ppo-fertigation .fn-inline-label {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  #ppo-fertigation .fn-inline-label select {
+    min-width: 0;
+    width: 100%;
+  }
+}
+@media (max-width: 780px) {
+  #ppo-fertigation .fn-capacity thead {
+    display: none;
+  }
+  #ppo-fertigation .fn-capacity,
+  #ppo-fertigation .fn-capacity tbody {
+    display: block;
+  }
+  #ppo-fertigation .fn-capacity tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line-soft, #e9ecf1);
+  }
+  #ppo-fertigation .fn-capacity tbody th,
+  #ppo-fertigation .fn-capacity td {
+    min-width: 0;
+    padding: 0;
+    border: 0;
+  }
+  #ppo-fertigation .fn-capacity tbody th,
+  #ppo-fertigation .fn-capacity td:last-child {
+    grid-column: 1 / -1;
+  }
+  #ppo-fertigation .fn-capacity-bar-cell {
+    width: auto;
+    align-self: center;
+  }
+}
+
+/* Pump duty chart and calculation trace (fertigation-trace.tsx). */
+#ppo-fertigation .fn-chart {
+  margin: 8px 0 16px;
+  min-width: 0;
+}
+#ppo-fertigation .fn-chart svg {
+  display: block;
+  overflow: visible;
+}
+#ppo-fertigation .fn-chart text {
+  font-size: 11px;
+  fill: var(--text-secondary, #596779);
+  font-variant-numeric: tabular-nums;
+}
+#ppo-fertigation .fn-chart .fn-axis-title {
+  font-size: 12px;
+  fill: #40495a;
+}
+#ppo-fertigation .fn-chart .fn-grid {
+  stroke: #e9ecf1;
+}
+#ppo-fertigation .fn-chart .fn-curve {
+  fill: none;
+  stroke: var(--ink, #242a37);
+  stroke-width: 2;
+}
+#ppo-fertigation .fn-chart .fn-curve-point {
+  fill: #fff;
+  stroke: var(--ink, #242a37);
+  stroke-width: 1.5;
+}
+#ppo-fertigation .fn-chart .fn-curve-at-peak {
+  fill: #fff;
+  stroke: var(--link, #355b80);
+  stroke-width: 2.5;
+}
+#ppo-fertigation .fn-chart .fn-required-point {
+  fill: var(--success, #416d33);
+  stroke: #fff;
+  stroke-width: 1.5;
+}
+#ppo-fertigation .fn-chart .fn-required-line {
+  stroke: var(--success, #416d33);
+  stroke-dasharray: 5 4;
+}
+#ppo-fertigation .fn-chart .fn-duty-line {
+  stroke: var(--fn-fill-neutral);
+  stroke-dasharray: 2 4;
+}
+#ppo-fertigation .fn-chart .fn-duty-label {
+  fill: #40495a;
+}
+#ppo-fertigation .fn-chart figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 8px 0 4px;
+  font-size: 12px;
+  color: var(--text-secondary, #596779);
+}
+#ppo-fertigation .fn-chart figcaption > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+#ppo-fertigation .fn-key-curve {
+  height: 2px;
+  width: 16px;
+  background: var(--ink, #242a37);
+}
+#ppo-fertigation .fn-key-required {
+  border-radius: 50%;
+  background: var(--success, #416d33);
+}
+#ppo-fertigation .fn-key-peak {
+  border-radius: 50%;
+  border: 2px solid var(--link, #355b80);
+  width: 6px;
+  height: 6px;
+}
+#ppo-fertigation .fn-key-duty {
+  width: 0;
+  height: 12px;
+  border-left: 2px dotted var(--fn-fill-neutral);
+}
+#ppo-fertigation .fn-metric .fn-link {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+}
+.fn-dialog .fn-trace-result {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+}
+.fn-dialog .fn-trace-result strong {
+  font-size: 26px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.fn-dialog .fn-chip {
+  display: inline-flex;
+  padding: 1px 7px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--neutral-surface, #edf0f5);
+  color: var(--neutral, #526078);
+}
+.fn-dialog .fn-chip-success {
+  background: var(--success-surface, #edf5e9);
+  color: var(--success, #416d33);
+}
+.fn-dialog .fn-chip-incomplete {
+  background: var(--warning-surface, #fff2d9);
+  color: var(--warning, #80530e);
+}
+.fn-dialog .fn-trace-rule {
+  border: 1px solid #e1e5eb;
+  border-radius: 8px;
+  background: #fcfcfd;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+}
+.fn-dialog .fn-trace-rule p {
+  margin: 2px 0;
+  font-size: 13px;
+}
+.fn-dialog .fn-trace-rule p:first-child {
+  font-weight: 500;
+}
+.fn-dialog .fn-trace tfoot th,
+.fn-dialog .fn-trace tfoot td {
+  border-top: 2px solid #242a37;
+  font-weight: 500;
+}
+.fn-dialog .fn-number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.fn-dialog .fn-subtle {
+  font-size: 12px;
+  color: #596779;
+}
+.fn-dialog .fn-trace-used {
+  margin: 0 0 12px;
+  padding-left: 18px;
+}
+
+/* Revision and draft comparison (CalculationDelta). */
+.fn-dialog .fn-delta-findings {
+  list-style: none;
+  margin: 8px 0 12px;
+  padding: 0;
+}
+.fn-dialog .fn-delta-findings li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  padding: 7px 0;
+  border-bottom: 1px solid #e9ecf1;
+}
+.fn-dialog .fn-delta-findings s {
+  color: #596779;
+}
+.fn-dialog .fn-chip-conflict {
+  background: var(--danger-surface, #fff1ed);
+  color: var(--danger, #993b2a);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.fn-dialog .fn-chip-review {
+  background: var(--info-surface, #e9f2f8);
+  color: var(--info, #346580);
+}
+.fn-dialog .fn-chip svg {
+  width: 11px;
+  height: 11px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+}
+.fn-dialog button.fn-link {
+  border: 0;
+  background: none;
+  min-height: 0;
+  padding: 0;
+  color: var(--link, #355b80);
+  text-decoration: underline;
+}
+
+#ppo-fertigation .fn-duty-table tbody th,
+.fn-dialog .fn-trace tbody th {
+  background: none;
+  font-weight: 500;
+}
+
+/* Resolve drawer and action groups (fertigation-resolve.tsx). */
+#ppo-fertigation .fn-next-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.fn-dialog .fn-resolve-problem {
+  border: 1px solid var(--danger-border, #edc6bd);
+  background: #fffaf8;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+.fn-dialog .fn-resolve-problem p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #40495a;
+}
+.fn-dialog .fn-resolve-option {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid #dce2e9;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 8px 0;
+  font-weight: 400;
+  cursor: pointer;
+}
+.fn-dialog .fn-resolve-option.fn-selected {
+  border: 2px solid #242a37;
+  padding: 11px 13px;
+}
+.fn-dialog .fn-resolve-choice {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+#ppo-fertigation .fn-dialog .fn-resolve-choice input[type="radio"],
+.fn-dialog .fn-resolve-choice input[type="radio"] {
+  flex: none;
+  height: 18px;
+  padding: 0;
+  width: 18px;
+  min-height: 18px;
+  margin-top: 2px;
+  accent-color: #242a37;
+}
+.fn-dialog .fn-resolve-option small {
+  display: block;
+  font-size: 12px;
+  color: #596779;
+  padding-left: 28px;
+}
+.fn-dialog .fn-next-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.fn-dialog .fn-role {
+  display: inline-flex;
+  padding: 1px 8px;
+  border: 1px solid #dce2e9;
+  border-radius: 10px;
+  font-size: 12px;
+  color: #40495a;
+}

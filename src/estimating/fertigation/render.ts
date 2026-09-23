@@ -19,7 +19,7 @@ export async function renderReportPdf(
       margin: { top: "16mm", right: "16mm", bottom: "22mm", left: "16mm" },
       headerTemplate: "<span></span>",
       footerTemplate:
-        '<div style="font:8px Verdana;width:100%;margin:0 16mm;color:#183348">Synthetic draft scoping report - not for construction or commissioning <span style="float:right"><span class="pageNumber"></span> / <span class="totalPages"></span></span></div>',
+        '<div style="font:10px Verdana;width:100%;margin:0 16mm;color:#183348">Synthetic draft scoping report - not for construction or commissioning <span style="float:right"><span class="pageNumber"></span> / <span class="totalPages"></span></span></div>',
     });
     if (!pdf.subarray(0, 5).equals(Buffer.from("%PDF-")))
       throw Error("Invalid fertigation PDF");

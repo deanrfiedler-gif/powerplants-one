@@ -122,3 +122,35 @@ test("FN-T44 native export declares unavailable bytes and reviews; CSV formulas 
   assert.equal(csvCell('line\n"two"'), '"line\n""two"""');
   assert.equal(csvCell(0), '"0"');
 });
+test("FN-T108 report template r02 leads with a summary and states findings in plain customer terms", () => {
+  const scope = blankScope();
+  const calc = calculate(scope);
+  const customer = reportHtml(reportModel(basis, scope, calc, "customer"));
+  const internal = reportHtml(reportModel(basis, scope, calc, "internal"));
+  assert.equal(
+    reportModel(basis, scope, calc, "customer").template_id,
+    "PPO-FERT-NATIVE-REPORT-r02",
+  );
+  assert.match(customer, /Customer audience/);
+  assert.match(customer, /22 September 2026/);
+  assert.match(customer, /At a glance/);
+  assert.match(customer, /not for construction or commissioning/);
+  assert.match(customer, /does not imply readiness or approval/);
+  assert.match(customer, /Engineering approval is not configured/);
+  // Every finding is counted once in the summary.
+  assert.match(
+    customer,
+    new RegExp(`<strong>${calc.findings.length}</strong> open`),
+  );
+  const codes = [...new Set(calc.findings.map((f) => f.id.split(":")[0]))];
+  assert.ok(codes.length > 0);
+  for (const code of codes) {
+    assert.doesNotMatch(customer, new RegExp(`<code>${code}</code>`));
+    assert.match(internal, new RegExp(`<code>${code}</code>`));
+  }
+  // Document control keeps the exact identities, after the summary.
+  assert.ok(
+    customer.indexOf("Document control") > customer.indexOf("At a glance"),
+  );
+  assert.match(customer, new RegExp(basis.content_hash));
+});

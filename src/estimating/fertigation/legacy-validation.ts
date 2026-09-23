@@ -60,11 +60,18 @@ export function validateLegacyProject(value: unknown, depth = 0): Row {
     "review",
     ...Object.keys(legacyContract),
   ];
+  // r02's own "Download project" (exportProject) adds these two file-level
+  // keys to every portable file. They describe the export, not the project.
+  const exportMetadata = ["exported_at", "export_scope"];
   if (
     top.some((key) => !Object.hasOwn(source, key)) ||
-    Object.keys(source).some((key) => !top.includes(key))
+    Object.keys(source).some(
+      (key) => !top.includes(key) && !exportMetadata.includes(key),
+    )
   )
     fail("legacy", "use the complete declared portable project fields.");
+  for (const key of exportMetadata)
+    if (Object.hasOwn(source, key)) text(source[key], key);
   id(source.project_id, "project_id");
   integer(source.revision, "revision", 1);
   text(source.app_version, "app_version");

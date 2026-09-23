@@ -13,6 +13,16 @@ This route is present in application source at ccc2251b. Review its specific wor
 3. Review the exact valve and master-source revisions and unresolved bindings
 4. Inspect calculated results and review evidence before preparing a controlled report
 
+## Page-specific guidance
+
+The native record workspace carries the guidance layer raised in [Priva fertigation workbench refinement](../../../decisions/fertigation-workbench-refinement.md) (F2–F7 and F9, implemented on direction of 23 September 2026; visual review is still pending):
+
+- **Menu.** The nine views are grouped Define the farm · Test the operating basis · Prepare the scope. A view with open findings shows a severity badge (conflict, then incomplete, then review count). The badge is hidden from the accessible name and announced through `aria-describedby`, so each view keeps its exact name. A readiness summary above the menu states the open findings and their basis (saved revision, or calculated draft).
+- **Overview.** In order: what this scope can produce now (the server's own preconditions; open findings never block an output), next actions ranked conflicts first with a default responsible role, scope at a glance, capacity headroom (each entered capacity loaded by its native result on one 0–200% scale), evidence coverage, production context and saved origin.
+- **Water & hydraulics.** Required head, curve head at pump peak and margin, each with a calculation trace, and a pump chart drawn at the container's real width so chart text stays 11–12 px.
+- **Scope review.** Findings grouped by the view that resolves them, with severity and responsible-role filters, native codes and the affected record.
+- **Drawers.** Calculation trace (rule, inputs, evidence, where used; the engine's value only), Resolve a conflict (options restate the engine's pass condition; an unambiguous edit is previewed by the server and applied to the working draft only) and Compare draft (result, finding, candidate and input changes against the saved revision).
+
 ## Desktop
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
@@ -23,7 +33,7 @@ At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+At phone width the cockpit panels stack, capacity rows become stacked cards with the bar under the label, output rows keep their state chip, and review rows stack their actions. Drawers fill the viewport through the shared dialog. The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
 
 ## Shared components and states
 
@@ -34,6 +44,10 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 ## Visual references
 
 No exact image or HTML reference is linked. Keep this gap visible.
+
+A proposed refinement of the r02 standalone workbench (SHA-256 `b51bf2cab7cb1af54e33a0ec739921c4ca1a08da918165d615ead347d6463ab9`) exists as a private design canvas. It covers all nine views at 1440 px, the Overview at 390 px, and import, conflict-resolution, calculation-trace, revision-compare, report, site-visit and state artboards. Its departures and proposed features are raised in [Priva fertigation workbench refinement](../../../decisions/fertigation-workbench-refinement.md). It is not accepted and is not an exact reference for this route.
+
+Implementation captures of the guidance layer were taken locally at 1440 × 1000 and 390 × 844 against a synthetic scope (compiled build, preinstalled Chromium) on 23 September 2026. They are working evidence, not a visual review, and are not committed; no reference image is linked yet.
 
 ## Behaviour, handovers and verification
 

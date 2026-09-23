@@ -70,6 +70,12 @@ Both branches receive the verified five-file test repair from `8bd6b93`, includi
 
 #293 is already repaired at `633995a`; it also passed a second 27-case local compiled run after main integration, in 4.8 minutes with no skips or database errors. #294 and #295 had no reported failed checks at inspection and were left unchanged. Pending checks are not classified as failures. Fresh branch CI remains the authority for each final head.
 
+## Subsequent PR #295 failure
+
+While the repaired branches were being monitored, [#295's broad browser job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35855722509/job/107163596895) completed with 332 passed, 60 skipped and one failure on `69e5233`: the first desktop ES-08 reset deadlocked while preceding permission reads still held schema locks. The log identifies `DROP SCHEMA` competing with reads of `ppo.permission_grants`. Its separate compiled lane passed; that does not disprove the observed timing race.
+
+The older branch did not yet contain the main-branch SH teardown. It incorporates main `7bf972c` without conflicts, then receives the corrected retained-read helper, SH setup/teardown and the overlapping-read regression already verified above. Its proposed fertigation departures and existing two audit fixes are preserved. The repair does not adopt the proposed design or change application behaviour. Four desktop/phone overlapping-read regressions, all eight existing fertigation legacy-import unit tests, focused lint, foundation, prototype, naming and development-register checks passed on this branch. All 78 parent IDs remain intact; the register reported zero stale entries or integrity errors. The SH-to-ES-08 compiled application proof on `633995a` remains shared evidence; final branch CI is separate.
+
 ## Shell navigation before ES-08 reset
 
 The [PR #292 compiled follow-up](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35859692355/job/107176574668) passed 340 cases with 60 intentional skips but failed the first desktop ES-08 reset. The [PR #291 broad follow-up](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35859677874/job/107176526784) likewise passed 340 and failed the first mobile reset. Both database logs show reads contending with schema removal; the route-handling errors from the earlier repair are gone.

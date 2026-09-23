@@ -1,6 +1,10 @@
+import { findingGuidance } from "./guidance";
 import type { Calculation, Scope } from "./types";
 
-export const outputTemplate = "PPO-FERT-NATIVE-REPORT-r01";
+/** r02 (proposed feature F7): summary-first layout, plain-language findings
+ * from the guidance phrase register, document control at the end. Retained
+ * r01 outputs keep their stored bytes and template identity. */
+export const outputTemplate = "PPO-FERT-NATIVE-REPORT-r02";
 export type OutputBasis = {
   scope_id: string;
   reference: string;
@@ -193,40 +197,142 @@ function internalReport(scope: Scope, calculation: Calculation) {
     scope.actions.map((a) => [a.label, a.owner, a.status, a.due_date]),
   )}<p>Full typed inputs and calculation are retained in the separately authorised native JSON export. This report is a register summary; it does not replace exact source evidence.</p>`;
 }
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+/** dd Month yyyy from the recorded UTC timestamp; locale-independent. */
+const proseDate = (iso: string) => {
+  const d = new Date(iso);
+  return Number.isFinite(d.getTime())
+    ? `${d.getUTCDate()} ${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`
+    : iso;
+};
+const metricLabels: Record<string, string> = {
+  represented_area: "Represented area",
+  containers: "Containers",
+  plants: "Plants",
+  connected_flow: "Connected flow",
+  operating_peak: "Operating peak",
+  daily_demand: "Daily demand",
+};
+const severityWords: Record<string, [string, string]> = {
+  conflict: ["Conflicts", "Two recorded values cannot both hold."],
+  incomplete: ["Incomplete", "A required input is missing."],
+  review: ["For review", "Evidence or specialist judgement is still needed."],
+};
 export function reportHtml(model: ReturnType<typeof reportModel>) {
+  const internalAudience = "scope" in model;
+  const value = (r: { value: number | null; unit: string; state: string }) =>
+    r.value === null
+      ? escape(r.state.replaceAll("_", " "))
+      : `${escape(Number(r.value.toPrecision(8)).toLocaleString("en-AU"))} <small>${escape(r.unit)}</small>`;
+  const tiles = Object.entries(model.metrics)
+    .map(
+      ([name, r]) =>
+        `<div class="tile"><span>${escape(metricLabels[name] ?? name.replaceAll("_", " "))}</span><strong>${value(r)}</strong></div>`,
+    )
+    .join("");
   const metricRows = Object.entries(model.metrics)
     .map(
       ([name, result]) =>
-        `<tr><th>${escape(name.replaceAll("_", " "))}</th><td>${result.value === null ? escape(result.state.replaceAll("_", " ")) : escape(result.value)}</td><td>${escape(result.unit)}</td></tr>`,
+        `<tr><th>${escape(metricLabels[name] ?? name.replaceAll("_", " "))}</th><td>${result.value === null ? escape(result.state.replaceAll("_", " ")) : escape(result.value)}</td><td>${escape(result.unit)}</td></tr>`,
+    )
+    .join("");
+  const counts = { conflict: 0, incomplete: 0, review: 0 } as Record<
+    string,
+    number
+  >;
+  for (const f of model.findings)
+    counts[f.severity] = (counts[f.severity] ?? 0) + 1;
+  const total = model.findings.length;
+  const bar = total
+    ? `<div class="bar" aria-hidden="true">${[
+        "conflict",
+        "incomplete",
+        "review",
+      ]
+        .filter((k) => counts[k])
+        .map((k) => `<span class="${k}" style="flex-grow:${counts[k]}"></span>`)
+        .join("")}</div>`
+    : "";
+  // Plain-language groups keyed by finding code: registry text only, so the
+  // customer allowlist is unaffected.
+  const groups = ["conflict", "incomplete", "review"]
+    .filter((severity) => counts[severity])
+    .map((severity) => {
+      const byCode = new Map<string, number>();
+      for (const f of model.findings.filter((x) => x.severity === severity)) {
+        const code = f.id.split(":")[0];
+        byCode.set(code, (byCode.get(code) ?? 0) + 1);
+      }
+      const items = [...byCode.entries()]
+        .map(([code, n]) => {
+          const phrase =
+            findingGuidance[code]?.customer ??
+            code.replaceAll("_", " ").replace(/^./, (c) => c.toUpperCase());
+          return `<li>${escape(phrase)}${n > 1 ? ` <span class="muted">(${n})</span>` : ""}${internalAudience ? ` <code>${escape(code)}</code>` : ""}</li>`;
+        })
+        .join("");
+      return `<div class="group"><h3>${escape(severityWords[severity][0])} · ${counts[severity]}</h3><ul>${items}</ul></div>`;
+    })
+    .join("");
+  const context = model.production_context;
+  const contextRows = [
+    ["Growing system", context.growing_system],
+    ["Application method", context.application_method],
+    ["Hydraulic arrangement", context.hydraulic_arrangement],
+    ["Context tags", context.tags.join(", ")],
+  ]
+    .map(
+      ([label, v]) =>
+        `<tr><th>${escape(label)}</th><td>${escape(String(v).replaceAll("_", " "))}</td></tr>`,
     )
     .join("");
   const internal =
     "scope" in model ? internalReport(model.scope, model.calculation) : "";
-  const operatingBasis = `<h2>Operating and review basis</h2><p>${escape(model.operating_basis.selected_scenario)}${"scenario_label" in model && model.scenario_label ? `: ${escape(model.scenario_label)}` : ""} · Phase ${escape(model.operating_basis.phase)}. Included record phases: ${escape(model.operating_basis.included_phases.join(", "))}; ${escape(model.operating_basis.excluded_phases.join(", "))} remain outside active results.</p><p>${escape(model.operating_basis.applicability)} ${escape(model.operating_basis.flow_basis)}</p><p>Revision author: ${escape(model.authorship.author_id ?? "Not supplied")}. ${model.authorship.review ? `Review ${escape(model.authorship.review.id)}: ${escape(model.authorship.review.disposition)}; recorded by ${escape(model.authorship.review.created_by)} at ${escape(model.authorship.review.created_at)}. Exact review basis: <code>${escape(model.authorship.review.basis_hash)}</code>.` : "No authenticated review recorded for this exact revision."} Engineering approval is not configured.</p>`;
-  const grouped = new Map<
-    string,
-    { severity: string; field: string; code: string; count: number }
-  >();
-  for (const f of model.findings) {
-    const code = f.id.split(":")[0],
-      key = `${f.severity}|${f.field}|${code}`;
-    const item = grouped.get(key);
-    if (item) item.count++;
-    else
-      grouped.set(key, {
-        severity: f.severity,
-        field: f.field,
-        code,
-        count: 1,
-      });
-  }
-  const findings = [...grouped.values()]
-    .map(
-      (f) =>
-        `<li>${escape(f.severity)}: ${escape(f.code.replaceAll("_", " "))} — ${f.count} recorded ${f.count === 1 ? "finding" : "findings"}</li>`,
-    )
-    .join("");
-  return `<!doctype html><html lang="en-AU"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Fertigation scope ${escape(model.basis.reference)}</title><style>body{font:14px Verdana,Arial,sans-serif;color:#183348;max-width:1100px;margin:24px auto;padding:0 16px}h1{font-size:24px}h2{font-size:18px}table{width:100%;border-collapse:collapse}th,td{padding:8px;border:1px solid #adb7c0;text-align:left;vertical-align:top;overflow-wrap:anywhere}td:nth-child(2){text-align:right}.valve-register{table-layout:fixed}.valve-register td:nth-child(2){text-align:left}.valve-register th:nth-child(5),.valve-register td:nth-child(5){white-space:nowrap}thead{display:table-header-group}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px}.notice{padding:12px;border:2px solid #183348}code{overflow-wrap:anywhere}@page{size:A4;margin:16mm}@media print{body{font-size:13px;margin:0;max-width:none;padding:0}h1{margin:0 0 10px}.notice{padding:10px}h2{margin:12px 0 6px}h3{margin:10px 0 6px}p{margin:7px 0}ul{margin:6px 0}ul:empty{display:none}th,td{padding:6px}tr{break-inside:avoid}h2,h3{break-after:avoid}h2.internal-registers{break-before:page}}</style></head><body><h1>Fertigation scope report</h1><p class="notice">${escape(model.status)} · ${escape(model.audience)} audience</p><p>${escape(model.basis.reference)} · Revision ${model.basis.revision_number} · ${escape(model.basis.created_at)}</p><p>Exact scope: <code>${escape(model.basis.scope_id)}</code><br>Revision: <code>${escape(model.basis.revision_id)}</code><br>Content: <code>${escape(model.basis.content_hash)}</code><br>Discovery source: <code>${escape(model.basis.source_revision_id)}</code><br>Calculation: ${escape(model.basis.calculation_edition)} · Template: ${escape(model.template_id)}</p><h2>Production context</h2><p>${escape(Object.values(model.production_context).flat().join(" · ").replaceAll("_", " "))}</p>${operatingBasis}<h2>Recorded scope results</h2><table><thead><tr><th>Result</th><th>Value or state</th><th>Unit</th></tr></thead><tbody>${metricRows}</tbody></table><h2>Open findings</h2><p>${model.findings.length} findings remain recorded against this exact revision. This report does not imply readiness or approval.</p><ul>${findings}</ul><h2>Candidate assessment</h2>${model.candidates.length ? "" : "<p>No configured candidate is recorded. Suitability remains unassessed.</p>"}<ul>${model.candidates.map((c) => `<li>${escape(c.family)}: ${escape(c.status.replaceAll("_", " "))}; ${c.failed_checks} failed checks and ${c.unresolved_checks} unresolved checks.</li>`).join("")}</ul><h2>Scope boundaries</h2><ul>${model.boundaries.map((b) => `<li>${escape(b)}</li>`).join("")}</ul>${internal}</body></html>`;
+  const operating = `<p>${escape(model.operating_basis.selected_scenario)}${"scenario_label" in model && model.scenario_label ? `: ${escape(model.scenario_label)}` : ""} · Phase ${escape(model.operating_basis.phase)}. Included record phases: ${escape(model.operating_basis.included_phases.join(", "))}; ${escape(model.operating_basis.excluded_phases.join(", "))} remain outside active results.</p><p>${escape(model.operating_basis.applicability)} ${escape(model.operating_basis.flow_basis)}</p>`;
+  const review = `<p>Revision author: ${escape(model.authorship.author_id ?? "Not supplied")}. ${model.authorship.review ? `Review ${escape(model.authorship.review.id)}: ${escape(model.authorship.review.disposition)}; recorded by ${escape(model.authorship.review.created_by)} at ${escape(model.authorship.review.created_at)}. Exact review basis: <code>${escape(model.authorship.review.basis_hash)}</code>.` : "No authenticated review recorded for this exact revision."} Engineering approval is not configured.</p>`;
+  const style = `body{font:13px/1.5 Verdana,Arial,sans-serif;color:#183348;max-width:1000px;margin:24px auto;padding:0 16px}
+.head{display:flex;justify-content:space-between;gap:16px;font-size:11px;color:#51627a}.head strong{display:block;color:#183348;letter-spacing:1.2px;text-transform:uppercase}
+.rule{height:3px;background:#62bb46;margin:10px 0 20px}h1{font-size:26px;margin:0}h2{font-size:15px;margin:22px 0 8px}h3{font-size:13px;margin:8px 0 2px}
+.sub{font-size:16px;margin:6px 0 2px}.muted{color:#51627a}.notice{padding:10px 12px;border:2px solid #183348;margin:14px 0}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.tile{border:1px solid #c9d1db;border-radius:4px;padding:9px 12px}.tile span{display:block;font-size:11px;color:#51627a}.tile strong{font-size:19px}.tile small{font-size:12px;font-weight:400}
+.bar{display:flex;gap:2px;height:10px;margin:6px 0}.bar span{display:block}.bar .conflict{background:#c4553f}.bar .incomplete{background:#c4851a}.bar .review{background:#5b9bc0}
+.groups{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}ul{margin:2px 0 6px;padding-left:18px}
+table{width:100%;border-collapse:collapse}th,td{padding:6px 8px;border:1px solid #c9d1db;text-align:left;vertical-align:top;overflow-wrap:anywhere}th{background:#f3f5f8;font-weight:700;width:34%}
+.results td:nth-child(2){text-align:right}.valve-register{table-layout:fixed}.valve-register th{width:auto}thead{display:table-header-group}code{overflow-wrap:anywhere;font-size:11px}
+.control{margin-top:16px;padding:10px 12px;background:#f3f5f8;border:1px solid #c9d1db;font-size:11px;color:#51627a}.control strong{color:#183348}
+@page{size:A4;margin:16mm}@media print{body{margin:0;max-width:none;padding:0}tr{break-inside:avoid}h2,h3{break-after:avoid}.page{break-before:page}h2.internal-registers{break-before:page}}`;
+  return `<!doctype html><html lang="en-AU"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Fertigation scope ${escape(model.basis.reference)}</title><style>${style}</style></head><body>
+<div class="head"><div><strong>Powerplants One</strong>Priva Fertigation Configurator</div><div>${model.audience === "customer" ? "Customer" : "Internal"} audience<br>Template ${escape(model.template_id)}</div></div><div class="rule"></div>
+<h1>Fertigation scope report</h1><p class="sub">${escape(model.basis.reference)} · Revision ${model.basis.revision_number}</p><p class="muted">${escape(proseDate(model.basis.created_at))} · calculation ${escape(model.basis.calculation_edition)}</p>
+<p class="notice"><strong>${escape(model.status)}.</strong> It records the scope as entered on this revision. It does not imply readiness or approval.</p>
+<h2>At a glance</h2><div class="tiles">${tiles}</div>
+<h2>Where the scope stands</h2>${bar}<p><strong>${total}</strong> open ${total === 1 ? "check" : "checks"}: ${counts.conflict} conflicts, ${counts.incomplete} incomplete, ${counts.review} for review. ${Object.values(
+    severityWords,
+  )
+    .map(([w, d]) => `${escape(w)}: ${escape(d)}`)
+    .join(" ")}</p>
+<h2>Production context</h2><table><tbody>${contextRows}</tbody></table>
+<h2>Operating basis</h2>${operating}
+<h2 class="page">Recorded scope results</h2><table class="results"><thead><tr><th>Result</th><th>Value or state</th><th>Unit</th></tr></thead><tbody>${metricRows}</tbody></table>
+<h2>Open checks in plain terms</h2><p>${total} findings remain recorded against this exact revision. This report does not imply readiness or approval.</p><div class="groups">${groups}</div>
+<h2>Candidate assessment</h2>${model.candidates.length ? "" : "<p>No configured candidate is recorded. Suitability remains unassessed.</p>"}<ul>${model.candidates.map((c) => `<li>${escape(c.family)}: ${escape(c.status.replaceAll("_", " "))}; ${c.failed_checks} failed checks and ${c.unresolved_checks} unresolved checks.</li>`).join("")}</ul>
+<h2>Scope boundaries</h2><ul>${model.boundaries.map((b) => `<li>${escape(b)}</li>`).join("")}</ul>
+<h2>Review and approval</h2>${review}
+<div class="control"><strong>Document control</strong><br>Exact scope <code>${escape(model.basis.scope_id)}</code> · Revision <code>${escape(model.basis.revision_id)}</code><br>Content <code>${escape(model.basis.content_hash)}</code> · Discovery source <code>${escape(model.basis.source_revision_id)}</code><br>Calculation ${escape(model.basis.calculation_edition)} · Template ${escape(model.template_id)} · created ${escape(model.basis.created_at)}</div>
+${internal}</body></html>`;
 }
 
 export function nativeExport(

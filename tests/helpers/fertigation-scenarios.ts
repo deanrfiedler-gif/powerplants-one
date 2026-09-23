@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import {
+  baseRecord,
   blankArea,
   blankCandidate,
   blankCropGroup,
@@ -118,5 +119,71 @@ export function scenarioComparisonScope() {
       maximum_m3h: 100,
     },
   ];
+  return p;
+}
+
+/** One group of two valves (2 + 3 m³/h), a 2 L/m³ stock and an 8 L/h
+ * entered channel maximum: the engine needs 10 L/h and fails the candidate. */
+export function injectionConflictScope() {
+  const p = scenarioComparisonScope();
+  const recipe = {
+    ...baseRecord(randomUUID(), "SYN recipe"),
+    phase: "proposed" as const,
+    author: "SYN",
+    revision: "A",
+    ec_target_mscm: null,
+    ph_target: null,
+    ec_basis: "final" as const,
+    composition: "",
+    changeover: "",
+  };
+  const stock = {
+    ...baseRecord(randomUUID(), "SYN stock"),
+    phase: "proposed" as const,
+    recipe_id: recipe.id,
+    function: "nutrient" as const,
+    dose_l_m3: 2,
+    usable_l: 500,
+    concentration: "",
+    conditions: "",
+  };
+  p.recipes = [recipe];
+  p.stocks = [stock];
+  const merged = {
+    ...p.groups[0],
+    label: "G1 · North + South",
+    valve_ids: p.valves.map((v) => v.id),
+    recipe_id: recipe.id,
+  };
+  p.groups = [merged];
+  for (const s of p.scenarios) s.group_ids = [merged.id];
+  p.candidates[0].shortlisted = true;
+  p.channels = [
+    {
+      ...baseRecord(randomUUID(), "SYN channel A"),
+      phase: "proposed" as const,
+      candidate_id: p.candidates[0].id,
+      stock_id: stock.id,
+      minimum_lph: 1,
+      maximum_lph: 8,
+      conditions: "",
+    },
+  ];
+  p.hydraulics = {
+    ...p.hydraulics,
+    outlet_pressure_bar: 2,
+    static_head_m: 6,
+    pipe_loss_m: 5,
+    filter_loss_m: 4,
+    unit_loss_m: 4,
+    other_loss_m: 0,
+    head_basis_flow_m3h: 5,
+    curve_points: [0, 2, 4, 6, 8].map((flow, i) => ({
+      flow_m3h: flow,
+      head_m: 58 - i * 4,
+      efficiency_percent: null,
+      power_kw: null,
+    })),
+  };
   return p;
 }
