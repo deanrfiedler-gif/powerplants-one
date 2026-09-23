@@ -47,6 +47,7 @@ class BuildShellTests(unittest.TestCase):
         self.assertTrue(commands[0].startswith("docker build --platform linux/amd64"))
         tag = "ppo-demo:" + "a" * 40 + "-123-2"
         self.assertIn(tag, commands[0])
+        self.assertIn("--build-arg PPO_BUILD_COMMIT=" + "a" * 40, commands[0])
         self.assertIn(tag, commands[1])
         self.assertTrue(commands[1].startswith("docker push "))
         self.assertIn("--image " + tag, commands[2])

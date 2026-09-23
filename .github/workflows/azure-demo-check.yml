@@ -65,4 +65,4 @@ jobs:
       - name: Check operator definitions
         run: python3 -m unittest discover -s tests/demo -p '*_test.py'
       - name: Build the compiled demo container without cloud credentials
-        run: docker build --file infra/azure-demo/Dockerfile --tag ppo-demo-check .
+        run: docker build --build-arg "PPO_BUILD_COMMIT=$GITHUB_SHA" --file infra/azure-demo/Dockerfile --tag ppo-demo-check .
