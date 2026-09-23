@@ -33,7 +33,7 @@ test("catalogue filters, permanent links, references and consuming pages", async
   ).toBeVisible();
   await page.getByRole("tab", { name: "Differences", exact: true }).click();
   await expect(
-    page.getByText("--surface-hover", { exact: true }),
+    page.getByRole("tabpanel", { name: "Differences", exact: true }).getByText("--surface-hover", { exact: true }),
   ).toBeVisible();
 });
 test("every registered state mounts without runtime errors or business writes", async ({
