@@ -1,8 +1,10 @@
 "use client";
+import "../app/styles/customers.css";
 import Link from "next/link";
 import { CrmDirectory } from "./crm-directory";
 import { Suspense, useState } from "react";
 import { FacilityRegister } from "./facility-register";
+import { SitePrimaryContact } from "./site-primary-contact";
 import { RecordTabs, RecordPanel } from "./record-ui";
 import {
   Field,
@@ -375,7 +377,7 @@ function HistoryList({ path }: { path: string }) {
     </section>
   );
 }
-function DuplicateCandidates({ record }: { record: Shared }) {
+export function DuplicateCandidates({ record }: { record: {id:string;display_name?:string} }) {
   const r = useResource<Envelope<Shared>>(
     `customers?q=${encodeURIComponent(record.display_name ?? "")}`,
   );
@@ -428,7 +430,7 @@ export function ContextDetail({
     ? `/work/new?${new URLSearchParams({ type: kind, id: o.id, company: o.company_id, ...(kind === "Site" ? { site: o.id } : o.site_id ? { site: o.site_id } : {}) })}`
     : "";
   return (
-    <>
+    <div id={kind==="Site"?"ppo-site":undefined} className={kind==="Site"?"cs-workspace":undefined}>
       <Link href={kind === "Asset" ? "/equipment" : `/${path}`}>
         ←{" "}
         {kind === "Asset"
@@ -493,6 +495,7 @@ export function ContextDetail({
               </div>
               <section className="detail-section">
                 <h2>Contacts and affiliations</h2>
+                <p><Link href={`/customers/${id}/stakeholders`}>Open stakeholders, relationship gaps and contact reliance</Link></p>
                 {o.contacts?.length ? (
                   o.contacts.map((c) => (
                     <div
@@ -515,7 +518,7 @@ export function ContextDetail({
                     </div>
                   ))
                 ) : (
-                  <p>No permitted affiliations are available.</p>
+                  <p>Affiliations are unavailable in this view. Open Stakeholders to distinguish restricted access from no recorded contacts.</p>
                 )}
               </section>
               <section className="detail-section">
@@ -597,6 +600,7 @@ export function ContextDetail({
           )}
           {kind === "Site" && (
             <>
+              <div className="actions"><Link className="button secondary" href={`/sites/${id}/readiness`}>Access & readiness</Link><Link className="button secondary" href={`/surveys?site_id=${id}`}>Surveys & as-found briefs</Link></div>
               <RecordTabs id="site-location" label="Site record" value={tab} onChange={setTab} tabs={[{id:"details",label:"Details"},{id:"facilities",label:"Facilities & areas"}]}/>
               <RecordPanel id="site-location" tab="details" value={tab}>
               <div className="actions">
@@ -645,6 +649,8 @@ export function ContextDetail({
                 <SummaryPair label="Access information">
                   {o.access_instructions ?? "Unknown"}
                 </SummaryPair>
+                <SummaryPair label="Delivery context">No separately verified delivery instructions recorded. Confirm the arrival and unloading basis with the Site contact.</SummaryPair>
+                {o.address && <p><a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(Object.values(o.address).filter(Boolean).join(", "))}`} target="_blank" rel="noopener noreferrer">Open Site address in external maps</a> · Address handoff only; confirm the arrival point with the Site contact.</p>}
                 <SummaryPair label="Biosecurity / controls">
                   {o.biosecurity_notes ??
                     "Unknown; no dispatch control is approved here"}
@@ -661,6 +667,7 @@ export function ContextDetail({
               </dl>
               <section className="detail-section">
                 <h2>Operator, owner and billing parties</h2>
+                {o.can_edit && <SitePrimaryContact id={id} version={o.version} onSaved={r.reload}/>}
                 {o.parties?.length ? (
                   o.parties.map((a) => (
                     <article className="history-card" key={a.id}>
@@ -812,7 +819,7 @@ export function ContextDetail({
           </button>
         </>
       )}
-    </>
+    </div>
   );
 }
 function EquipmentTree({

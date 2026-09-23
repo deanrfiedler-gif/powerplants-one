@@ -20,10 +20,11 @@ async function openPack(page: Page) {
       await readFile("tests/fixtures/job-pack-read.json", "utf8"),
     ),
     id = read.items[0].id as string;
-  await page.request.post("/api/v1/local-session", {
-    headers: { Origin: "http://127.0.0.1:3000" },
+  const session = await page.request.post("/api/v1/local-session", {
+    headers: { Origin: new URL(test.info().project.use.baseURL!).origin },
     data: { profile: "coordinator" },
   });
+  expect(session.status(), await session.text()).toBe(200);
   await page.route(`**/api/v1/packs/${id}`, (route) =>
     route.fulfill({ status: 200, json: read }),
   );

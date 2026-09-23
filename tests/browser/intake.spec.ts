@@ -62,12 +62,24 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
     fullPage: true,
   });
   await noOverflow(page);
+  const stakeholders = page.getByRole("link", {
+    name: "Stakeholders & relationships", exact: true,
+  });
+  await expect(stakeholders).toHaveAttribute(
+    "href", "/customers/50000000-0000-4000-8000-000000000001/stakeholders",
+  );
+  await stakeholders.click();
+  await expect(
+    page.getByRole("link", { name: "SYN Avery Contact", exact: true }),
+  ).toHaveAttribute("href", `/people/${person}`);
   await page
     .getByRole("link", { name: "SYN Avery Contact", exact: true })
     .click();
+  await page.getByRole("tab", { name: "Relationships", exact: true }).click();
   await expect(
-    page.getByRole("heading", { name: "Affiliations for this shared person" }),
+    page.getByRole("heading", { name: "Organisation affiliations", exact: true }),
   ).toBeVisible();
+  await expect(page.getByText(/Purchasing authority: Unknown/).first()).toBeVisible();
   await capture(page, info, "P03-contact.png");
   await page.goto(`/sites/${site}`);
   await expect(

@@ -176,7 +176,7 @@ export function ReviewWorkspace() {
             onChange={(e) => set({ module: e.target.value })}
           >
             <option value="">All permitted</option>
-            {["Service", "Finance", "Engineering"].map((v) => (
+            {["Service", "Finance", "Engineering", "Customers & sites"].map((v) => (
               <option key={v}>{v}</option>
             ))}
           </select>
@@ -296,13 +296,13 @@ export function ReviewWorkspace() {
               .filter((s) => s.bounded)
               .map((s) => `${s.module} uses a bounded source window.`)
               .join(" ")}{" "}
-            My reviews includes eligible unassigned Finance review work;
+            My reviews includes eligible unassigned Finance and survey review work;
             eligibility does not assign approval authority.
           </p>
         </>
       )}
       <p className="sh-muted">
-        Connected: Service reports, Finance handoffs, Engineering change reviews
+        Connected: Service reports, Finance handoffs, Engineering change reviews and Site survey reviews
         and receiving requests. Estimating approval and Sales-to-delivery
         receiving tasks await persisted source contracts.
       </p>

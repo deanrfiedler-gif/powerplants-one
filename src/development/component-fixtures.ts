@@ -9,6 +9,16 @@ import { emptyConfiguration } from "../estimating/configuration-definition";
 
 export const fixtureDate = "2026-09-23";
 export const fixtureTime = "2026-09-23T00:00:00Z";
+export const customerRecordTabsFixture = [
+  { id: "overview", label: "Overview" },
+  { id: "deals", label: "Deals & quotations" },
+  { id: "orders", label: "Sales orders" },
+  { id: "service", label: "Cases & service" },
+  { id: "projects", label: "Projects" },
+  { id: "sites", label: "Sites & equipment" },
+  { id: "accounts", label: "Accounts" },
+  { id: "activity", label: "Activity & documents" },
+];
 export const fixtureId = (n: number) =>
   `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 export const salesFixture: ComponentProps<typeof Board>["data"] = {
