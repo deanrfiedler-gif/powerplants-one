@@ -115,6 +115,7 @@ export const destinations: ShellDestination[] = [
   {"id": "exceptions", "label": "Exceptions", "icon": "nav-exceptions", "readiness": "unavailable", "workspace": "finance"},
   {"id": "sites", "label": "Sites", "icon": "nav-sites", "readiness": "ready", "href": "/sites", "requires": ["shared.read"]},
   {"id": "facilities", "label": "Facilities & growing areas", "icon": "nav-facilities", "readiness": "ready", "href": "/facilities", "requires": ["shared.read"]},
+  {"id": "surveys", "label": "Site surveys & as-found", "icon": "nav-sites", "readiness": "ready", "href": "/surveys", "requires": ["shared.read"]},
   {"id": "equipment", "label": "Equipment", "icon": "nav-equipment", "readiness": "ready", "href": "/equipment", "requires": ["shared.read"]},
   {"id": "documents", "label": "Documents", "icon": "nav-documents", "readiness": "unavailable"},
   {"id": "approvals", "label": "Approvals & handovers", "icon": "nav-approval", "readiness": "ready", "href": "/work/reviews", "requires": ["activity.read"]},
@@ -331,7 +332,7 @@ export function menuGroups(query: string, workspace: WorkspaceId = "sales") {
     { title: "Workspaces", ids: workspaces.map(w => w.primary) },
     { title: "Department pages", ids: [...departmentRails[workspace], ...(workspace === "estimate" ? ["fertigation"] : workspace === "service" ? ["jobs"] : [])] },
     { title: "My workspace", ids: ["home", "work", "mail", "calendar", "approvals"] },
-    { title: "Shared records", ids: ["contacts", "people", "customers", "sites", "facilities", "equipment", "products", "documents", "reports"] },
+    { title: "Shared records", ids: ["contacts", "people", "customers", "sites", "facilities", "surveys", "equipment", "products", "documents", "reports"] },
     { title: "Administration & support", ids: ["settings", "recovery", "foundation"] },
     ...(q ? [{ title: "Workspace pages", ids: destinations.map(d => d.id) }] : []),
   ];

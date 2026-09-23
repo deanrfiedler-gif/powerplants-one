@@ -143,6 +143,11 @@ export async function contentAuthority(
       if (item.person_id) personIds.add(item.person_id);
   } else if (kind === "Survey") {
     const x = content as SurveyContent;
+    if (
+      submitting &&
+      (!x.purpose.trim() || x.purpose === "Record the survey scope before submission.")
+    )
+      invalid("purpose", "Record the actual survey scope and purpose before submission.");
     for (const id of x.facility_ids) facilityIds.add(id);
     for (const id of x.asset_ids) assetIds.add(id);
     for (const o of x.observations) {
