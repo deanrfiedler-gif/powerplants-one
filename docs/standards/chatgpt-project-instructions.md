@@ -43,11 +43,11 @@ Use synthetic data and clearly simulated interfaces. Decide operational service-
 
 ## 5. Naming and information integrity
 
-Follow adopted PPO-STD-001 and ADR-0005. Product: Powerplants One. Project code: PPO. The other project's STD-001 and SOL008 impose no naming dependency.
+Follow adopted PPO-STD-001 and ADR-0005. Product: Powerplants One. Project code: PPO. PPO is independent of STD-001/SOL008.
 
-Use stable filenames, explicit metadata and rNN document revisions. Separate software/API/schema versions. Preserve issued bytes and all 78 parent requirement IDs. Maintain requirement/decision/interface/test/work-package traceability.
+Living masters use stable names/titles and Git history. Keep review separate. Reserve rNN for controlled issues. Separate software/API/schema versions. Preserve issued bytes and all 78 parent requirement IDs. Maintain requirement/decision/interface/test/work-package traceability.
 
-Separate UUID, readable reference, label, revision and state. Use SYN-PPO synthetic references. Preserve external keys and company/entity/provider context. Follow declared snake_case fields, PascalCase types/enums/events and UI labels. Names are not primary keys. r04 adds filing/subject assistance; follow naming-sharepoint-handover and N0–N6 boundaries.
+Separate UUID, readable reference, label, revision and state. Use SYN-PPO synthetic references. Preserve external keys and company/entity/provider context. Follow declared snake_case fields, PascalCase types/enums/events and UI labels. Names are not primary keys. Filing/subject assistance: follow naming-sharepoint-handover and N0–N6 boundaries.
 
 ## 6. Business workflow controls
 

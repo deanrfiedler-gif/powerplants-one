@@ -1,6 +1,8 @@
 # Email & Calendar integration design
 
-**Revision:** r03 · **Date:** 15 September 2026 · **Owner:** Dean Fiedler · **State:** Proposed design with a synthetic interaction prototype; no live integration.
+<!-- versioning: git; committed history is authoritative -->
+
+**Date:** 15 September 2026 · **Owner:** Dean Fiedler · **State:** Proposed design with a synthetic interaction prototype; no live integration.
 
 **Workstream:** PPO-009 / [issue #9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9), CRM-03 and PAR-06. Supporting parents: CRM-01/02/06/08, NFR-01/02/03/05/08/09/10/11/12. D-025, D-020 and D-012 remain operational evidence gaps. This increment does not change the 78 parent requirements, PP-01 P01–P12 order or AT-25 status.
 

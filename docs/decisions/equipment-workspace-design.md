@@ -1,10 +1,10 @@
 ---
 document_id: PPO-EQUIPMENT-DES
-revision: r02
 date: 2026-09-14
 owner: Dean Fiedler
 status: Authorised r02 refinement; visual review and application integration pending
 source_commit: 42383fc2e3a85f6cf9c38c829683b14787578579
+versioning: git
 ---
 
 # Equipment and Installed Base workspace

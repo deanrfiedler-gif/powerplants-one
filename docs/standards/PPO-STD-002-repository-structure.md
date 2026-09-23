@@ -1,10 +1,10 @@
 ---
 document_id: PPO-STD-002
 title: Repository structure, layer model and naming
-revision: r03
 date: 19 September 2026
 owner: Dean Fiedler
 status: Adopted as a forward target; existing files move only when already being changed
+versioning: git
 ---
 
 # Repository structure, layer model and naming
@@ -13,7 +13,6 @@ status: Adopted as a forward target; existing files move only when already being
 |---|---|
 | Document ID | **PPO-STD-002** |
 | Short title | Repository Structure Standard |
-| Revision | **r03** |
 | Status | **Adopted as a forward target** |
 | Prepared for | Dean Fiedler — private prototype owner |
 | Authoritative working path | `docs/standards/PPO-STD-002-repository-structure.md` |

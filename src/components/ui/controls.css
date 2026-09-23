@@ -1,0 +1,58 @@
+/* Shared controls for new/adopted surfaces. Existing scoped baselines migrate explicitly. */
+:root {
+  --ppo-control-height: 44px;
+  --ppo-control-gap: 8px;
+  --ppo-control-padding: 12px;
+}
+.ppo-button,
+.ppo-button:visited {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ppo-control-gap);
+  min-height: var(--ppo-control-height);
+  max-width: 100%;
+  padding: 8px var(--ppo-control-padding);
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--white);
+  color: var(--navy);
+  font:
+    500 14px/1.35 Roboto,
+    Verdana,
+    sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+  white-space: normal;
+}
+.ppo-button--primary,
+.ppo-button--primary:visited {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+}
+.ppo-button--quiet {
+  border-color: transparent;
+  background: transparent;
+}
+.ppo-button--danger {
+  color: var(--danger);
+  border-color: var(--danger-border);
+  background: var(--danger-surface);
+}
+.ppo-button:hover:not(:disabled) {
+  filter: brightness(0.96);
+}
+.ppo-button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+.ppo-button:disabled {
+  color: var(--text-secondary);
+  background: var(--surface-2);
+  border-color: var(--line-strong);
+  cursor: not-allowed;
+  filter: none;
+  opacity: 1;
+}

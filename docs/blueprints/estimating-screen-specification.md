@@ -1,9 +1,9 @@
 ---
 document_id: PPO-010-SCR
-revision: r01
 date: 2026-09-06
 owner: Dean Fiedler - private prototype
 status: Proposed screens and synthetic walkthrough; no runtime implementation
+versioning: git
 ---
 
 # Estimating screens and synthetic walkthrough

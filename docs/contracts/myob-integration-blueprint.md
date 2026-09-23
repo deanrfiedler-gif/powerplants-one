@@ -1,10 +1,10 @@
 ---
 document_id: PPO-002-MYOB-HB
-revision: r01
 date: 2026-09-15
 owner: Dean Fiedler
 status: Discovery edition; proposed mappings; tenant evidence outstanding
 source_commit: dcabfec1b5cde1c2cf220359e6cf1c63408512d6
+versioning: git
 ---
 
 # PPO × MYOB Acumatica — Integration Blueprint & Field Mapping Handbook

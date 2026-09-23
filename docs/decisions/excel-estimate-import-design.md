@@ -1,10 +1,10 @@
 ---
 document_id: PPO-010-EXCEL-DEC
-revision: r01
 date: 2026-09-15
 owner: Dean Fiedler - prototype owner
 status: User-authorised design package; implementation remains separate
 source_commit: dcabfec1b5cde1c2cf220359e6cf1c63408512d6
+versioning: git
 ---
 
 # Excel estimate import design decision

@@ -1,18 +1,18 @@
 ---
 document_id: PPO-HELP-DES
 title: PPO Contextual Help & User Guidance Design
-revision: r01
 date: 2026-09-13
 status: Prepared for review; application implementation pending
 owner: Dean Fiedler - personal prototype owner
 source_commit: 1cc882e53020bdfb22f7e9192365d90b1d8282ab
+versioning: git
 ---
 
 # PPO Contextual Help & User Guidance Design
 
 Provide a consistent **Page guide** on every business page, explaining its purpose, required information, actions, responsibilities, exceptions and completion criteria. Start with CRM Deals. Guidance belongs to the application release it describes and links to authoritative business procedures.
 
-This r01 delivers the design, [authoring template](../standards/page-guide-template.md), [worked CRM guide](../guides/crm-deals.md), [interactive preview](contextual-help-preview.html), [acceptance and pilot plan](../testing/contextual-help-acceptance.md) and [decision/handover](../decisions/contextual-help.md). It introduces no application controls, business rules, permissions or integrations. The HTML is a standalone synthetic design review surface.
+The original design contribution delivered the design, [authoring template](../standards/page-guide-template.md), [worked CRM guide](../guides/crm-deals.md), [interactive preview](contextual-help-preview.html), [acceptance and pilot plan](../testing/contextual-help-acceptance.md) and [decision/handover](../decisions/contextual-help.md). It introduces no application controls, business rules, permissions or integrations. The HTML is a standalone synthetic design review surface.
 
 ## 1. Authority, evidence and scope
 
@@ -161,7 +161,7 @@ Ordinary help links resolve to the currently approved procedure where the source
 
 ### 5.1 Guide metadata
 
-Each guide has a stable `guide_key`, title, route/section mappings, `revision` (rNN), content state, audience, owner role, reviewer, review dates, workflow basis, source commit, related resources, supersession/section aliases and evidence references. Readable guide revision is separate from software version and database schema.
+Each guide has a stable `guide_key`, title, route/section mappings, Git versioning, content state, audience, owner role, reviewer, review dates, workflow basis, source commit, related resources, supersession/section aliases and evidence references. Readable guide revision is separate from software version and database schema.
 
 Recommended pilot delivery: reviewed Markdown in the repository, a small explicit page-to-guide registration and application-bundled rendered content/search index. It fits the existing Next.js app and normal release review; no external CMS, SaaS subscription, model or new runtime service. Later private SOP metadata stays outside the public bundle. Compare this with an external knowledge base or CMS only when non-developer authoring volume or source-permission needs justify the additional system.
 
@@ -255,3 +255,5 @@ HELP identifiers below and in the acceptance plan are local design/verification 
 | NFR-09 | Explain pending, refused, stale and uncertain commands without duplicate action | HELP-10 |
 
 These mappings contribute to existing acceptance scope; they do not mark AT-01, AT-20, AT-23, AT-25 or AT-37 passed.
+
+The current local development guide library uses schema 2 with stable guide keys, Git file history and separate article review evidence. Routine edits do not increment rNN; a formally issued guide may retain its own controlled issue revision. See [living masters](../decisions/living-master-documents.md).

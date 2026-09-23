@@ -1,9 +1,9 @@
 ---
 document_id: PPO-012-PLAN
-revision: r01
 date: 2026-09-07
 status: Proposed sequence; J1 implementation requires a new invocation
 owner: Dean Fiedler - private prototype
+versioning: git
 ---
 
 # Projects — proposed bounded delivery

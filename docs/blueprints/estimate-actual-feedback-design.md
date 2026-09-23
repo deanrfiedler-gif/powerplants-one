@@ -1,10 +1,10 @@
 ---
 document_id: PPO-010-FEEDBACK-DES
-revision: r05
 date: 2026-09-12
 owner: Dean Fiedler - private prototype
 status: Proposed for review; nothing adopted, no scope widened
 source_commit: ff81f9cb376156e0cfb2b8a8daba6fe0915cae62
+versioning: git
 ---
 
 # Estimate-to-actual feedback loop — design proposal

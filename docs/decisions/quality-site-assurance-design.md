@@ -1,10 +1,10 @@
 ---
 document_id: PPO-QA-WORKSPACE-DES
-revision: r01
 date: 2026-09-16
 owner: Dean Fiedler
 status: Authorised design creation; owner acceptance and application integration separate
 source_commit: a4061c43b11d6a53604ec628cdf370ee72f54f7a
+versioning: git
 ---
 
 # Quality, Safety & Site Assurance workspace

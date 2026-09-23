@@ -1,6 +1,8 @@
 # BP-03 — Five-stage pipeline implementation plan (increment A)
 
-**Revision:** r02 · **Date:** 13 September 2026 · **Owner:** Dean Fiedler · **State:** Plan for review. **r02 corrects two material errors in r01** — see §3.0. No migration, seed, code or fixture change is performed by this document. Implementation requires its own branch and pull request.
+<!-- versioning: git; committed history is authoritative -->
+
+**Date:** 13 September 2026 · **Owner:** Dean Fiedler · **State:** Plan for review. **r02 corrects two material errors in r01** — see §3.0. No migration, seed, code or fixture change is performed by this document. Implementation requires its own branch and pull request.
 
 **Work:** [#143](https://github.com/deanrfiedler-gif/powerplants-one/issues/143), closing [#135](https://github.com/deanrfiedler-gif/powerplants-one/issues/135) and [#136](https://github.com/deanrfiedler-gif/powerplants-one/issues/136), under [#9](https://github.com/deanrfiedler-gif/powerplants-one/issues/9).
 

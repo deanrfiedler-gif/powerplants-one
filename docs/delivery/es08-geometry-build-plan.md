@@ -1,10 +1,10 @@
 ---
 document_id: PPO-ES08-GEOMETRY-PLAN
-revision: r01
 date: 2026-09-22
 owner: Dean Fiedler
 status: Proposed native refinement plan; stop before implementation pending separate instruction
 source_commit: 0c95c5af776c97374997623bd1070d9de480cf82
+versioning: git
 ---
 
 # ES-08 Advanced Geometry Refinement / Native Build Plan

@@ -1,11 +1,11 @@
 ---
 document_id: PPO-SUPPLIER-PRICING-DEC
 title: Supplier Pricing and Cost Sources design and receiving handover
-revision: r01
 date: 2026-09-16
 owner: Dean Fiedler
 status: Authorised standalone design; owner acceptance and application integration separate
 source_commit: d565a9de01b94aa7ad3fffe3a996f78c3aee589b
+versioning: git
 ---
 
 # Supplier Pricing & Cost Sources design

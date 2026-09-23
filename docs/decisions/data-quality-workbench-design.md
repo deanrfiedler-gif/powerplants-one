@@ -1,11 +1,11 @@
 ---
 document_id: PPO-AD03-DES
 title: Data Quality Workbench design and repository handover
-revision: r01
 date: 2026-09-18
 owner: Dean Fiedler
 status: User-authorised repository publication of standalone AD-03 design; owner acceptance and application integration separate
 source_commit: 108b1600152ee12443c75ffaf7feb7cc857316f5
+versioning: git
 ---
 
 # AD-03 — Data Quality Workbench

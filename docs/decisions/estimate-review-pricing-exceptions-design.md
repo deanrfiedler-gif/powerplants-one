@@ -1,11 +1,11 @@
 ---
 document_id: PPO-ES04-DES
 title: Estimate Review and Pricing Exceptions design and receiving handover
-revision: r01
 date: 2026-09-17
 owner: Dean Fiedler
 status: Authorised standalone design; owner acceptance and runtime integration separate
 source_commit: e1b705acc5457dab6fc0b6a2f0c977132cbd2215
+versioning: git
 ---
 
 # ES-04 estimate review and pricing exceptions

@@ -9,9 +9,9 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 ERRORS = []
 FRONT_MATTER = re.compile(r'\A---\r?\n(.*?)\r?\n---\r?\n', re.S)
-# PR #151's measured baseline. New comparisons may increase coverage; removing
-# metadata must not silently reduce the guarantee already provided.
-MIN_FRONT_MATTER_REVISIONS = 40
+# Preserve the 192 registered metadata comparisons measured before living-master
+# adoption. Git masters replace revision matching with explicit lifecycle checks.
+MIN_METADATA_DOCUMENTS = 192
 
 
 def require(condition, message):
@@ -56,6 +56,7 @@ def main():
     require(len(paths) == len({p.casefold() for p in paths}), 'Case-insensitive document path collision')
     require({f'BP-{n:02}' for n in range(1, 10)} <= set(ids), 'Blueprint reservations missing')
     compared = 0
+    masters = 0
     for row in documents:
         path = ROOT / row['canonical_path']
         require(path.resolve().is_relative_to(ROOT), f'{row["document_id"]}: path escapes repository')
@@ -63,23 +64,36 @@ def main():
             require(path.is_file(), f'{row["document_id"]}: missing canonical file')
         for field in ['title', 'owner', 'status']:
             require(bool(row[field]), f'{row["document_id"]}: missing {field}')
+        require(row.get('versioning') in ['git', 'retained-record'], f'{row["document_id"]}: declare versioning method')
+        if row.get('versioning') == 'git':
+            masters += 1
+            require(not row['revision'], f'{row["document_id"]}: living master must not carry a current revision')
+            require(not re.search(r'[-_][rv]\d+([-.]|$)', path.name, re.I), f'{row["document_id"]}: living master filename contains a revision')
+            require(not re.search(r'\br\d+\b', row['title'], re.I), f'{row["document_id"]}: living master title contains a revision')
         if row['status'] != 'Planned' and path.is_file() and path.suffix == '.md':
             declared = front_matter(path)
-            if 'revision' in declared:
+            if row.get('versioning') == 'git':
+                content = path.read_text(encoding='utf-8')
+                compared += 1
+                require('revision' not in declared, f'{row["document_id"]}: remove manual working revision metadata')
+                require(declared.get('versioning') == 'git' or '<!-- versioning: git;' in content, f'{row["document_id"]}: missing Git master metadata')
+                title = re.search(r'^# (.+)$', content, re.M)
+                require(not title or not re.search(r'\br\d+\b', title[1], re.I), f'{row["document_id"]}: current heading contains a revision')
+            elif 'revision' in declared:
                 compared += 1
                 require(declared['revision'] == row['revision'], f'{row["document_id"]}: register revision {row["revision"]}, front matter {declared["revision"]}')
             if 'document_id' in declared:
                 require(declared['document_id'] == row['document_id'], f'{row["document_id"]}: front matter declares document_id {declared["document_id"]}')
-    require(compared >= MIN_FRONT_MATTER_REVISIONS,
-            f'Front-matter revision coverage fell to {compared}; preserve at least {MIN_FRONT_MATTER_REVISIONS} compared documents')
+    require(compared >= MIN_METADATA_DOCUMENTS,
+            f'Document metadata coverage fell to {compared}; preserve at least {MIN_METADATA_DOCUMENTS} compared documents')
     exceptions = rows('docs/standards/naming-exceptions.csv')
     require(len({r['exception_key'] for r in exceptions}) == len(exceptions), 'Duplicate naming exception')
     for row in exceptions:
         require(all(row[k] for k in ['scope','reason','owner','review_trigger']), 'Incomplete naming exception')
     standard = read('docs/standards/naming-conventions.md')
-    current_revision = next((r['revision'] for r in documents if r['document_id'] == 'PPO-STD-001'), '')
-    require(bool(re.fullmatch(r'r\d{2,}', current_revision)), 'Invalid naming-standard register revision')
-    require(f'| Revision | **{current_revision}** |' in standard and 'Adopted for the Powerplants One private prototype' in standard, 'Adoption metadata inconsistent')
+    naming = next(r for r in documents if r['document_id'] == 'PPO-STD-001')
+    require(naming['versioning'] == 'git' and not naming['revision'], 'Naming standard must be a Git master')
+    require('Adopted for the Powerplants One private prototype' in standard and 'Living master documents' in standard, 'Adoption metadata inconsistent')
     for obsolete in ['docs/blueprints/GEN_SPC_PPABusinessPlatform_MasterBlueprint.md', 'docs/contracts/documents-and-issues.md']:
         require(not (ROOT / obsolete).exists(), f'Retired editable path still exists: {obsolete}')
     for path in ['AGENTS.md','CONTRIBUTING.md','docs/STATUS.md']:
@@ -101,7 +115,7 @@ def main():
         require(f'SYN-PPO-{prefix}-000001-' in output, f'{prefix}: output naming example missing')
     decisions = {r['decision_id']:r for r in rows('docs/decisions/decision-register.csv')}
     require(decisions['D-003']['status'] == 'Resolved for private prototype', 'Naming decision state inconsistent')
-    print(json.dumps({'status':'failed' if ERRORS else 'passed','document_records':len(documents),'standing_exceptions':len(exceptions),'front_matter_revisions_compared':compared,'project_instruction_characters':len(instructions),'errors':ERRORS,'scope':'Naming and documentation consistency only; runtime behaviour is verified separately'}, indent=2))
+    print(json.dumps({'status':'failed' if ERRORS else 'passed','document_records':len(documents),'standing_exceptions':len(exceptions),'metadata_documents_compared':compared,'git_masters':masters,'project_instruction_characters':len(instructions),'errors':ERRORS,'scope':'Naming and documentation consistency only; runtime behaviour is verified separately'}, indent=2))
     return bool(ERRORS)
 
 

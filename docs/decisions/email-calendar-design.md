@@ -1,6 +1,8 @@
 # Email & Calendar design direction
 
-**Revision:** r02 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** User-authorised design and synthetic prototype; live policy/implementation proposed.
+<!-- versioning: git; committed history is authoritative -->
+
+**Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** User-authorised design and synthetic prototype; live policy/implementation proposed.
 
 Dean requested Outlook email/calendar integration similar to his Pipedrive screenshot, then explicitly authorised the next bounded design and synthetic prototype. This covers desktop/mobile screens, record linking, privacy settings and preparation of a first Microsoft pilot. Repository publication is within the normal requested project workflow; company mailbox access, sending, consent changes and deployment are outside this increment.
 

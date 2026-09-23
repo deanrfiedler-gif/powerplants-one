@@ -1,10 +1,10 @@
 ---
 document_id: PPO-SVC-REVIEW-DES
-revision: r02
 date: 2026-09-15
 owner: Dean Fiedler
 status: Requested standalone design; browser verification and owner visual acceptance tracked separately
 source_commit: 07ade644de06ff3b13e5af6ae9c299ca7c78c535
+versioning: git
 ---
 
 # Service Review & Reports — design and receiving handover

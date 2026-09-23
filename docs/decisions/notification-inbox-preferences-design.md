@@ -1,10 +1,10 @@
 ---
 document_id: PPO-NOTIFICATIONS-DES
-revision: r01
 date: 2026-09-16
 owner: Dean Fiedler
 status: Proposed standalone design; owner acceptance and application integration separate
 source_commit: 07eb34d5df5ea430c365da78e160cb6aa0b76f20
+versioning: git
 ---
 
 # Notification inbox and preferences — design and receiving handover

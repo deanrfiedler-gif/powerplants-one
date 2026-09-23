@@ -9,6 +9,8 @@
   },
   "packageManager": "npm@11.19.0",
   "scripts": {
+    "studio:check": "node --import tsx scripts/check-development-register.ts",
+    "studio:sync": "node --import tsx scripts/check-development-register.ts --sync",
     "dev": "node --env-file=.env.local --import tsx scripts/local-server.ts",
     "serve:compiled": "node --env-file=.env.local --import tsx scripts/local-server.ts --compiled",
     "build": "node --import tsx scripts/build-offline.ts && next build",
@@ -23,7 +25,7 @@
     "test:db": "node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/*.test.ts",
     "test:http": "node --env-file=.env.local --import tsx --test tests/http/*.test.ts",
     "test:browser": "playwright test",
-    "check": "npm run lint && npm run typecheck && npm run test:unit && npm run build",
+    "check": "npm run studio:check && npm run lint && npm run typecheck && npm run test:unit && npm run build",
     "documents:worker": "node --env-file=.env.local --import tsx scripts/document-worker.ts",
     "browser:install": "bash scripts/install-browser.sh",
     "browser:check": "node --import tsx scripts/check-browser.ts"

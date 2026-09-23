@@ -1,6 +1,8 @@
 # BP-04 E1 physical and API contract
 
-**Revision:** r02 · **Updated:** 14 September 2026 · Implemented E1 contract with adopted extension specified separately below.
+<!-- versioning: git; committed history is authoritative -->
+
+**Updated:** 14 September 2026 · Implemented E1 contract with adopted extension specified separately below.
 
 **Scope:** Authorised manual synthetic estimate and draft quotation, issue #46 / ADR-0017. Verification is recorded in the [handover](../delivery/estimating-e1-handover.md). The broader BP-04 design and 78 master parents remain unchanged.
 

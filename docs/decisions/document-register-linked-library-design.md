@@ -1,11 +1,11 @@
 ---
 document_id: PPO-DOCLIB-DES
 title: Document Register and Linked Library design and receiving handover
-revision: r01
 date: 2026-09-17
 owner: Dean Fiedler
 status: Authorised standalone design; owner acceptance and application integration separate
 source_commit: aa94dcdcb1dd08798be240325857c3d32d04af02
+versioning: git
 ---
 
 # DK-01 / DK-02 — Document Register & Linked Library

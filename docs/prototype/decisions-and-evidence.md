@@ -1,6 +1,8 @@
 # PP-01 — Decisions, assumptions and unresolved evidence
 
-**Edition:** v01 · **Status:** Current design disposition, 5 September 2026. [Master decision register](../decisions/decision-register.csv) retains original questions and closure evidence.
+<!-- versioning: git; committed history is authoritative -->
+
+**Status:** Current design disposition, 5 September 2026. [Master decision register](../decisions/decision-register.csv) retains original questions and closure evidence.
 
 ## 1. Evidence hierarchy
 

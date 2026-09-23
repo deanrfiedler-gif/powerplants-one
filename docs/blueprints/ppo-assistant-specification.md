@@ -1,6 +1,8 @@
 # PPO Assistant — Design and implementation specification
 
-**Document:** PPO-AI-SPEC · **Revision:** r01 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Proposed implementation specification; design preparation authorised; application and AI acceptance not run.
+<!-- versioning: git; committed history is authoritative -->
+
+**Document:** PPO-AI-SPEC · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Proposed implementation specification; design preparation authorised; application and AI acceptance not run.
 
 ## 1. Outcome and authority
 

@@ -1,6 +1,8 @@
 # PP-01 — Service data and choice dictionary
 
-**Edition:** r14 · **Status:** Logical and physical contract; P01–P10 and CRM I1–I2 implement the bounded subsets explicitly identified below. Actual verification/publication is recorded in each handover. This is not an exported CREMS/MYOB schema.
+<!-- versioning: git; committed history is authoritative -->
+
+**Status:** Logical and physical contract; P01–P10 and CRM I1–I2 implement the bounded subsets explicitly identified below. Actual verification/publication is recorded in each handover. This is not an exported CREMS/MYOB schema.
 
 BP-03 I1 adds only the explicitly identified opportunity amendment below; its actual verification/publication is in the [I1 handover](../delivery/crm-i1-handover.md).
 

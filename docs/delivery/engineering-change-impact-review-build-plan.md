@@ -1,6 +1,5 @@
 ---
 title: EN-07 — Engineering Change-Impact Review — Local Application Build Plan
-revision: r02
 date: 2026-09-20
 owner: Dean Fiedler
 scope_id: EN-07
@@ -14,6 +13,7 @@ ui_basis: Audited EN-07 desktop mockup r02; actual My Work menu; theme board r22
 ui_reference: PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r02.png
 companion_prompt: PPO-EN-07-Engineering-Change-Impact-Review-VS-Code-Build-Prompt-r01.md
 supersedes: Build Plan r01 visual guidance; all retained domain controls still apply
+versioning: git
 ---
 
 # EN-07 — Engineering Change-Impact Review

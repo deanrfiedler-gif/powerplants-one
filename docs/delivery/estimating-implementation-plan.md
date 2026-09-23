@@ -1,9 +1,9 @@
 ---
 document_id: PPO-010-PLAN
-revision: r02
 date: 2026-09-14
 owner: Dean Fiedler - private prototype
 status: E1 implemented; adopted E2 subset authorised; later policy dependencies remain
+versioning: git
 ---
 
 # BP-04 bounded implementation sequence

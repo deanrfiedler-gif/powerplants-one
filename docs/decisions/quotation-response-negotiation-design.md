@@ -1,11 +1,11 @@
 ---
 document_id: PPO-ES06-DES
 title: Quotation response and negotiation design and receiving handover
-revision: r01
 date: 2026-09-16
 owner: Dean Fiedler
 status: Authorised direction; detailed design proposed; visual acceptance and runtime integration pending
 source_commit: 9921be2439ca479135482c51fbf3ed4b28615f37
+versioning: git
 ---
 
 # ES-06 quotation response and negotiation

@@ -1,6 +1,8 @@
 # PP-01 — Prototype scope and service journey
 
-**Edition:** v01 · **Status:** Selected scope for the requested design package; bounded P01–P03 implementation, full synthetic journey incomplete.
+<!-- versioning: git; committed history is authoritative -->
+
+**Status:** Selected scope for the requested design package; bounded P01–P03 implementation, full synthetic journey incomplete.
 
 Sources: Master Sections 06–08, 13, 15–21 and 24–26; DAT-01–DAT-11; SVC-01–SVC-12; user-confirmed service problems. [Package index](README.md).
 

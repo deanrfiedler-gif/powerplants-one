@@ -1,15 +1,15 @@
 ---
 document_id: PPO-SC06-PLAN
 title: SC-06 — Job Pack r03 application integration — build plan
-revision: r01
 date: 2026-09-20
 owner: Dean Fiedler
 status: Authorised by Dean Fiedler on 20 September 2026 with the recommended answer to each of D1–D5 adopted; I1 merged (#256), I2 delivered for review, I3–I5 not yet delivered
 scope_id: SC-06
 source_commit: 540b2b7e463ad68d5f552d006ea7cae6d75fbff8
+versioning: git
 ---
 
-# SC-06 — Job Pack r03 application integration — build plan
+# SC-06 — Job Pack application integration — build plan
 
 ## 0. What this plan is
 

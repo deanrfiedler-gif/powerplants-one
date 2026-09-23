@@ -10,6 +10,10 @@ source_commit: 108b1600152ee12443c75ffaf7feb7cc857316f5
 
 # Powerplants One HTML design index
 
+The [working design and build register](../../design/development/README.md) is the current Git master for page links, draft guides, desktop/mobile contracts, shell/theme references and journey discovery. The local app reads it at `/development/page-register`; issued HTML references in this index remain retained evidence.
+
+**Scoped addition, 23 September 2026 — app page register:** [App page register r05](app-page-register/PPO-App-Page-Register-r05.html) adds detailed draft guides, local/live links and linked/missing-image viewers for 150 retained scopes and 110 source routes. [Dean's original r04](app-page-register/PPO-App-Page-Register-r04.html) is preserved unchanged. [Source and application mapping](../../design/app-page-register/README.md), [decision/conformance](../../decisions/app-page-register.md) and [handover](../../delivery/app-page-register-r05-handover.md) record the review and verification limits. This does not repeat the dated inventory below or establish guide approval, visual acceptance or application integration.
+
 **Scoped addition, 22 September 2026:** The exact supplied [Priva fertigation r02 reference](../../../reference/ui/priva-fertigation-scoping-workbench-r02.html) is retained for native conformance. [Native implementation handover](../../delivery/priva-fertigation-native-handover.md) records adaptations and tests. This file is not served as an iframe or standalone native runtime, and retention does not establish owner design acceptance. The earlier dated inventory below is unchanged.
 
 Use this page to find the **latest available HTML for each design family**, its recorded approval and its implementation handover. The tables distinguish files already on `main` from contributions still in open pull requests. Keep this index at one stable path and update it in the same pull request as a new design or approval decision.

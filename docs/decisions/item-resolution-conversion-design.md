@@ -1,11 +1,11 @@
 ---
 document_id: PPO-ES07-DES
 title: One-off item resolution and conversion design and receiving handover
-revision: r01
 date: 2026-09-16
 owner: Dean Fiedler
 status: Authorised direction; detailed design proposed; native visual and application acceptance pending
 source_commit: 8d821e9d764737ab41a753c6fb72342b399428a2
+versioning: git
 ---
 
 # ES-07 item resolution and conversion

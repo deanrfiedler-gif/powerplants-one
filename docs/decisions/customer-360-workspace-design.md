@@ -1,11 +1,11 @@
 ---
 document_id: PPO-CS01-DES
 title: Customer 360 workspace design and receiving handover
-revision: r01
 date: 2026-09-16
 owner: Dean Fiedler
 status: Proposed design delivered for review; owner acceptance and application integration remain separate
 source_commit: 0769a16dd842e9dc1c349a853036ab71949e7807
+versioning: git
 ---
 
 # CS-01 Customer 360 — design and receiving handover

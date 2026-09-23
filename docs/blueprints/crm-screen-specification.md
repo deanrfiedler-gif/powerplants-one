@@ -1,6 +1,8 @@
 # CRM — Screen specification and synthetic walkthrough
 
-**Revision:** r06 · **Date:** 7 September 2026 · **Status:** Design only; no persistence, permission, integration, offline or business-acceptance claim. **Parent:** BP-03 / PPO-009. **Owner:** Dean Fiedler, private prototype.
+<!-- versioning: git; committed history is authoritative -->
+
+**Date:** 7 September 2026 · **Status:** Design only; no persistence, permission, integration, offline or business-acceptance claim. **Parent:** BP-03 / PPO-009. **Owner:** Dean Fiedler, private prototype.
 
 [Open the standalone wireframe source](crm-wireframes.html) · [BP-03](BP-03-crm.md) · [Implementation sequence](../delivery/crm-implementation-plan.md) · [Handover and visual evidence](../delivery/crm-discovery-handover.md).
 

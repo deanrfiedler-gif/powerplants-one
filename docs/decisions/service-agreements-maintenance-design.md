@@ -1,10 +1,10 @@
 ---
 document_id: PPO-MA-WORKSPACE-DES
-revision: r01
 date: 2026-09-15
 owner: Dean Fiedler
 status: Draft HTML design; native browser and capture review complete; owner acceptance and application integration separate
 source_commit: 07ade644de06ff3b13e5af6ae9c299ca7c78c535
+versioning: git
 ---
 
 # Service Agreements & Maintenance — design and receiving handover

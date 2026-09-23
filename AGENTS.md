@@ -8,7 +8,7 @@ Powerplants One is Dean Fiedler's personal prototype in a public repository; its
 
 Preserve the distinction between a user decision, documented CREMS behaviour, bounded prior account observation, proposed design and unresolved question. Never turn a prototype, mocked response, disabled Smartsheet rule or example calculation into a production claim.
 
-Retain issued source snapshots in `docs/reference/` unchanged. The working master uses a stable versionless filename; edit working specifications through reviewed changes and preserve baseline/traceability. Record newer decisions in `docs/decisions/` and update `docs/STATUS.md`. Preserve all existing parent requirement IDs. Derived registers must identify their source and remain consistent with the parent scope.
+Retain issued source snapshots in `docs/reference/` unchanged. Living masters use stable versionless filenames and titles, with Git history rather than manual rNN metadata. Record owner and review status separately; an edit never grants review. Retain rNN for controlled issues and historical records; edit working specifications through reviewed changes and preserve baseline/traceability. Record newer decisions in `docs/decisions/` and update `docs/STATUS.md`. Preserve all existing parent requirement IDs. Derived registers must identify their source and remain consistent with the parent scope.
 
 MYOB remains the intended ERP authority; SharePoint owns business documents; native CAD tools retain authoring responsibilities. This repository task does not authorise business transactions, production integration, customer communications or migration. Apply the actual scope of subsequent user instructions.
 
@@ -33,6 +33,14 @@ The runner applies every pending migration in one transaction, so a migration is
 A new `Capability` in `src/platform/permissions.ts` is not confined to permissions either. The AD-01 access-review design is generated from that file and its job fails on stale output: run `python3 scripts/build-access-review.py` on LF bytes (a CRLF working copy embeds the wrong source hash), add a plain-English label in `docs/design/access-review/model.js`, and move the pinned size of the contract in `scripts/check-access-review-model.mjs`, `scripts/check-access-review-browser.mjs` and `docs/design/access-review/workspace.js`. A seed that adds any grant must also extend the reseed allowlist in `tests/database/quality-upgrade.test.ts` and the exact added-grant set in `tests/helpers/engineering-materials-grants.ts`: the two Estimating upgrade proofs (`estimating.test.ts`, `estimating-workspaces.test.ts`) snapshot the whole of `ppo.permission_grants` across the upgrade, and seed 29 was the first since 0020 to add rows to it. Any seed above 17 also replays on the hosted-demo upgrade, so `tests/demo/upgrade.test.ts` counts its users.
 
 ## Validation and handover
+
+### Maintain the live design register
+
+For page, shell, shared-control, guide or theme work, update the working master in `docs/design/development/` in the same PR. Run `npm run studio:sync` for new routes, then replace discovery stubs with page-specific guidance and desktop/mobile design requirements. Add exact mockup/HTML references when available; record missing images explicitly. Preserve stable keys, source provenance and existing scope IDs. Keep source presence, visual review, functional proof and deployment separate.
+
+Use shared tokens and reusable controls for new surfaces; document accepted legacy exceptions. Review the impact of changes to shared files and imported components. Run `npm run studio:check` and relevant application checks. Never copy a current fingerprint into a review record without an actual review and evidence. Update guides when workflows change. Living guide and register schemas use stable keys, not document revisions; preserve their separate schema versions. Git files are the authority; the local workspace reads them, and exported proposals are not saved edits. Follow `docs/design/development/README.md` for the workflow and global information-icon mapping.
+
+Do not rewrite issued r04/r05 snapshots as routine maintenance. The one-time import/build tools are not the daily update process. A missing page registration fails CI; draft or stale review remains visible and must be reported rather than silently labelled accepted.
 
 Run `python3 scripts/check_foundation.py` for foundation changes and `python3 scripts/check_prototype.py` for PP-01 package changes. Run `python3 scripts/check_naming.py` for naming/guidance changes. Add meaningful application tests only when application behaviour exists. The current check is documentation assurance, not business acceptance.
 

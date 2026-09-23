@@ -1,6 +1,8 @@
 # PP-01 — Minimum Finance and customer-account contract
 
-**Edition:** r02 · **Status:** Maintained minimum BP-09 contract with bounded P10 implementation; actual verification/publication in the P10 handover. This is a software/workflow contract, not approved accounting policy or a live MYOB mapping.
+<!-- versioning: git; committed history is authoritative -->
+
+**Status:** Maintained minimum BP-09 contract with bounded P10 implementation; actual verification/publication in the P10 handover. This is a software/workflow contract, not approved accounting policy or a live MYOB mapping.
 
 Sources: FIN-01–FIN-03/FIN-06/FIN-07, FD-01/FD-02/FD-04/FD-10, DAT-10, TR-14, BR-01/BR-08/BR-14/BR-16/BR-19–BR-21. [Package](../prototype/README.md).
 

@@ -1,10 +1,10 @@
 ---
 document_id: PPO-MYWORK-DES
-revision: r01
 date: 2026-09-16
 owner: Dean Fiedler
 status: Authorised standalone design; owner acceptance and application integration pending
 source_commit: a4061c43b11d6a53604ec628cdf370ee72f54f7a
+versioning: git
 ---
 
 # My Work & Action Centre design

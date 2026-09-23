@@ -1,13 +1,13 @@
 ---
 document_id: PPO-DK06-DEC
 title: DK-06 Document and form template management design and receiving handover
-revision: r01
 date: 2026-09-17
 owner: Dean Fiedler
 project: Powerplants One
 scope_id: DK-06
 status: Authorised standalone design; owner acceptance, operational template approval and application integration separate
 language: en-AU
+versioning: git
 ---
 
 # DK-06 — Document and form template management: design decision and receiving handover

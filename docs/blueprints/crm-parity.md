@@ -1,6 +1,8 @@
 # CRM — Pipedrive parity and evidence assessment
 
-**Revision:** r04 · **Date:** 10 September 2026 · **Status:** r02 product scope accepted; account context and exhaustive operational parity unverified · **Owner:** Dean Fiedler, private prototype · **Workstream:** PPO-009 / issue #9.
+<!-- versioning: git; committed history is authoritative -->
+
+**Date:** 10 September 2026 · **Status:** r02 product scope accepted; account context and exhaustive operational parity unverified · **Owner:** Dean Fiedler, private prototype · **Workstream:** PPO-009 / issue #9.
 
 [BP-03](BP-03-crm.md) owns target journeys/contracts. This register expands the original PAR-01–PAR-18 without changing their identities. The r02 product scope and deferrals are **accepted**; remaining account-specific mappings and operational transition dispositions are proposed. Preserve means retain the required outcome/history; improve means retain it with an evidenced improvement; integrate means keep an authoritative external capability; defer means retain it in its operational tool pending a later decision. No retirement is approved. Proposed criticality describes the impact of losing the outcome, not measured usage or an approved priority.
 

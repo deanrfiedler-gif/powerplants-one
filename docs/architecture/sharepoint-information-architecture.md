@@ -1,9 +1,9 @@
 ---
 document_id: PPO-SP-ARCH
-revision: r01
 status: Proposed configuration; no tenant provisioning or live connection
 owner: Dean Fiedler — personal prototype owner
 date: 2026-09-15
+versioning: git
 ---
 
 # SharePoint Information Architecture and Configuration Specification

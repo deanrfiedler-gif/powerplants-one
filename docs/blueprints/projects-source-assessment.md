@@ -1,9 +1,9 @@
 ---
 document_id: PPO-012-SRC
-revision: r01
 date: 2026-09-07
 status: Bounded read-only source assessment; migration and operational validation open
 owner: Dean Fiedler - private prototype
+versioning: git
 ---
 
 # Projects — Smartsheet source assessment

@@ -1,6 +1,8 @@
 # Powerplants One — Business Operations Platform
 
-## Master Business & Build Blueprint — working r06
+<!-- versioning: git; committed history is authoritative -->
+
+## Master Business & Build Blueprint
 
 ### Scope Assurance & Development Planning Edition
 
@@ -11,7 +13,7 @@
 | Prepared for | Powerplants Australia |
 | Requested by | Dean Fiedler |
 | Document reference | PPO-BP-01 |
-| Version and date | r06 — 14 September 2026 UTC; adopted product quality and capability scope supplement |
+| Historical planning update | 14 September 2026 UTC; adopted product quality and capability scope supplement |
 | Document status | Draft wider target state with accepted CRM r02 and product quality scope; implementation and operational acceptance remain separate |
 | Authoring basis | User requirements, supplied CREMS materials, prior read-only account observations and selected official sources |
 | Intended audience | Executive sponsor, departmental process owners, product owner, solution architect, delivery partners and acceptance reviewers |

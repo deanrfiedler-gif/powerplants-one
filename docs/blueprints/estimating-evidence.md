@@ -1,9 +1,9 @@
 ---
 document_id: PPO-010-EVID
-revision: r01
 date: 2026-09-06
 owner: Dean Fiedler - private prototype
 status: Targeted source assessment; operational validation incomplete
+versioning: git
 ---
 
 # Estimating evidence and CREMS behaviour assessment

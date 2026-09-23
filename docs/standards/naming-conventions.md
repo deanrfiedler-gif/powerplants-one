@@ -1,19 +1,20 @@
 # Powerplants One — Naming, Identification & Information Organisation Standard
 
-**Adopted project standard · Business filing and communication design edition · 15 September 2026**
+<!-- versioning: git; committed history is authoritative -->
+
+**Adopted project standard · Living master · Changes tracked in Git**
 
 | Document control | Value |
 |---|---|
 | Document ID | **PPO-STD-001** |
 | Short title | Naming Standard |
-| Revision | **r04** |
 | Status | **Adopted for the Powerplants One private prototype** |
 | Prepared for | Dean Fiedler — private prototype owner |
 | Applies to | Powerplants One — Design & Development |
 | Authoritative working path | `docs/standards/naming-conventions.md` |
 | Download filename | `powerplants-one-naming-standard.md` |
 | Source baseline inspected | `deanrfiedler-gif/powerplants-one`, commit `c44321e8cbbe205a482e38499016f396e2f6374d` |
-| Scope of this edition | Naming policy, terminology, examples, exceptions and implementation plan |
+| Scope | Naming policy, terminology, examples, exceptions and implementation plan |
 | Adoption state | User adopted r02 and authorised the r04 business filing/communication design package. Existing selected output naming is implemented; general assistance, live SharePoint and Outlook writes remain future work |
 | Authority and independence | Independently designed for Powerplants One. The user confirmed that the other project's `STD-001` and identifiers do not govern this project. Existing PPO decisions are retained or refined on their merits |
 
@@ -26,7 +27,7 @@ Use the user-confirmed **Powerplants One** application and project identity and 
 
 This is an independent Powerplants One standard. The `STD` element in **PPO-STD-001** means “standard”; `001` is the first entry in this project's own standards catalogue. It does not inherit the rules, numbering authority or approval process of another project's STD-001.
 
-Working files should have short, stable names. Document identity, revision, status, owner and source belong in document metadata. Issued copies should retain a revision in both their metadata and their filename. Business records should use permanent internal identifiers and separate readable references. External MYOB, SharePoint, CAD and legacy-system identities must remain intact.
+Working files should have short, stable names. Keep document identity, owner, status and review evidence in metadata. Living masters use Git history and have no manually incremented revision in their filename, title or current metadata. Issued copies should retain a revision in both their metadata and their filename. Business records should use permanent internal identifiers and separate readable references. External MYOB, SharePoint, CAD and legacy-system identities must remain intact.
 
 The adopted working master blueprint path is:
 
@@ -244,20 +245,20 @@ Do not allocate a new document code to every note. Formal IDs are warranted when
 
 ### 6.4 Minimum metadata
 
-New controlled documents should contain:
+Living masters and controlled issues should contain the following metadata. Their versioning methods remain distinct:
 
 | Field | Required content |
 |---|---|
 | Title and ID | Readable title plus stable short or qualified document ID |
-| Revision | Current controlled revision, independent of Git commit count |
 | Status | Draft, In review, Approved, Superseded or Withdrawn, according to actual evidence |
 | Owner | Accountable role or named private prototype owner |
-| Updated date | Unambiguous date |
+| Change history | Git file history for committed edits; identify local uncommitted edits separately |
+| Review | Status, actual reviewer/date and exact reviewed content/source; an edit is not review |
 | Scope | Relevant product, package or domain |
 | Authority/source | Canonical path and applicable source baseline/decision |
 | Change record | Material change, reason and linked decision/PR when available |
 
-The user adopted r02. This r03 working edition records adoption and repository-specific implementation without changing the selected naming scheme. The exact [accepted r02](../reference/baselines/PPO-STD-001-naming-conventions-r02.md) is retained. [ADR-0005](../decisions/ADR-0005-project-naming-adoption.md) and the [adoption record](naming-adoption.md) identify what is implemented at documentation level and what awaits application development.
+Historical adoption: the user adopted r02, r03 recorded repository implementation and r04 extended business filing/communication. The maintained standard now follows the living-master decision below. The exact [accepted r02](../reference/baselines/PPO-STD-001-naming-conventions-r02.md) is retained. [ADR-0005](../decisions/ADR-0005-project-naming-adoption.md) and the [adoption record](naming-adoption.md) identify what is implemented at documentation level and what awaits application development.
 
 ## 7. Revisions, snapshots and issued copies
 
@@ -265,7 +266,7 @@ The user adopted r02. This r03 working edition records adoption and repository-s
 
 | Object | Convention | Example |
 |---|---|---|
-| Working specification | Stable filename; controlled revision in metadata | `BP-01-master-blueprint.md`, revision r03 after a deliberate later issue |
+| Living specification, register, design reference or guide | Stable filename and title; Git history; no routine rNN metadata | `BP-01-master-blueprint.md`; Draft/Reviewed status recorded separately |
 | New controlled document revision | `r` plus at least two decimal digits, starting at r01 | r01, r02, r99, r100 |
 | Existing issued blueprint | Retain exact existing v01/v02 notation and bytes | `GEN_SPC_PPABusinessPlatform_MasterBlueprint_v02.md` |
 | Application release | Semantic version with `v` prefix in release tag | `v0.1.0` |
@@ -279,7 +280,7 @@ These values are not interchangeable. A document revision is not the database ro
 
 Legacy `v02` is a historical label. Record it as such. The next deliberately issued successor to that master may use `r03`, with the transition noted in its control table and register. Do not create a second “r02” historical baseline that appears to be a different issue of the same v02 content.
 
-Existing v01 edition labels in BP-02, BP-07 and the PP-01 contracts also remain valid historical metadata. Introduce the new revision notation at a deliberate subsequent revision and record the predecessor; do not relabel every existing edition as a new issue. Render integer content revisions as r01/r02 for users while retaining the dictionary's integer storage type. Compare revisions numerically, not by alphabetic filename order.
+Existing v01 edition labels in retained BP-02, BP-07 and PP-01 evidence remain valid historical metadata. Do not relabel issued evidence. The current living masters use Git; a separately issued successor receives a deliberate controlled revision. Render integer content revisions as r01/r02 for users while retaining the dictionary's integer storage type. Compare revisions numerically, not by alphabetic filename order.
 
 ### 7.2 Working and issued file patterns
 
@@ -288,7 +289,7 @@ Existing v01 edition labels in BP-02, BP-07 and the PP-01 contracts also remain 
 | Working Git document | `<ID>-<description>.md` | `BP-01-master-blueprint.md` |
 | Issued project document | `PPO-<ID>-<description>-rNN.ext` | `PPO-BP-01-master-blueprint-r03.pdf` |
 | Issued naming standard | `PPO-STD-001-naming-conventions-rNN.ext` | `PPO-STD-001-naming-conventions-r03.pdf` |
-| Unissued review export | Issued pattern plus `-draft` | `PPO-STD-001-naming-conventions-r03-draft.pdf` |
+| Unissued review export | Stable master name; source commit/hash and Draft status inside the export | `powerplants-one-naming-standard-draft.pdf` |
 | Dated working reference copy | Working stem plus snapshot timestamp | `BP-01-master-blueprint-snapshot-20260905T031522Z.md` |
 | Future issued design-package tag | `docs-<package-lowercase>-rNN` | `docs-pp-01-r02` |
 
@@ -1013,3 +1014,16 @@ PPO-authored messages and native Outlook compose assistance are separate impleme
 | Revision | Date | Change | Adoption |
 |---|---|---|---|
 | r04 | 2026-09-15 | Business files/folders, subjects/tasks, context, legacy review, exceptions and safe application; linked five-deliverable package | Authorised prototype design extension; visual acceptance and application/live integration separate |
+
+## 25. Living master documents — adopted 23 September 2026
+
+Dean authorised stable master filenames and clean titles, with Git-managed change history. This decision supersedes older requirements to increment rNN for routine edits to living design/planning documentation. It does not change controlled business-document issue rules.
+
+- Edit the same master path. Keep BP/ADR/requirement IDs, section IDs and schema/API/software versions. Names are not identities.
+- Use `versioning: git` in Markdown front matter (or the matching metadata comment in an existing plain Markdown document). The document register records `versioning=git` and an empty `revision` for these masters. `last_labelled_revision` preserves the former label as migration provenance only; never increment it.
+- Keep ownership and the actual document status. Review is a separate record: who reviewed, when, against which exact content and application source. Changed content is not automatically reviewed. Do not fabricate reviewers or approval dates during migration.
+- Show View history and the last committed change where supported. Mark later local edits as uncommitted. GitHub history covers committed content; the running/deployed application can still use a different source version.
+- For an approved baseline, retain an immutable commit permalink and the relevant content hash/review evidence. Create a separate revision-labelled export only when a formal issue is required. Never overwrite an issued source.
+- `retained-record` entries retain their original revision, identity, title and paths where those describe an issued source, historical issue decision, audit run or delivery handover. New files must be classified; classification does not grant approval.
+
+The [adoption and verification record](../decisions/living-master-documents.md) identifies migrated masters and the retained boundaries. The old standard adoption records and revision history remain factual historical evidence. The original r04/r05 register exports, source images and journey HTML are preserved.

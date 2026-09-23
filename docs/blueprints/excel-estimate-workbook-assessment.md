@@ -1,10 +1,10 @@
 ---
 document_id: PPO-010-EXCEL-ASSESS
-revision: r01
 date: 2026-09-15
 owner: Dean Fiedler - prototype owner
 status: Repository and synthetic assessment; operational examples outstanding
 source_commit: dcabfec1b5cde1c2cf220359e6cf1c63408512d6
+versioning: git
 ---
 
 # Excel estimate workbook assessment

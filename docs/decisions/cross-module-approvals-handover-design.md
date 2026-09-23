@@ -1,10 +1,10 @@
 ---
 document_id: PPO-SH06-DES
-revision: r01
 date: 2026-09-17
 owner: Dean Fiedler
 status: Authorised standalone package; design acceptance and runtime integration pending
 source_commit: e1b705acc5457dab6fc0b6a2f0c977132cbd2215
+versioning: git
 ---
 
 # SH-06 — Cross-module approvals and handover inbox

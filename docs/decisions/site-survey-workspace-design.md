@@ -1,4 +1,6 @@
-# Site Survey & As-Found workspace r01
+# Site Survey & As-Found workspace
+
+<!-- versioning: git; committed history is authoritative -->
 
 **Owner:** Dean Fiedler · **Date:** 15 September 2026 · **State:** Proposed interactive HTML; native visual review and application integration pending.
 
