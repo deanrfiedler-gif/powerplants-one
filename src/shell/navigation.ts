@@ -56,6 +56,9 @@ export type ShellDestination = {
   requiresAny?: Capability[];
 };
 export const destinations: ShellDestination[] = [
+  {id:"sales-estimating",label:"Sales-to-Estimating handovers",icon:"nav-inbox",readiness:"ready",workspace:"sales",href:"/sales/handoffs/estimating",requires:["crm.opportunity.read"]},
+  {id:"sales-won",label:"Won-deal receiving",icon:"nav-approval",readiness:"ready",workspace:"sales",href:"/sales/handoffs/won",requires:["crm.opportunity.read"]},
+  {id:"sales-aftercare",label:"Aftercare & renewal",icon:"nav-activities",readiness:"ready",workspace:"sales",href:"/sales/aftercare",requiresAll:["shared.internal.read","report.read"]},
   {"id": "settings", "label": "Settings", "icon": "settings", "readiness": "unavailable"},
   {"id": "home", "label": "Home", "icon": "home", "readiness": "ready", "href": "/"},
   {"id": "work", "label": "My Work", "icon": "nav-work", "readiness": "ready", "href": "/work", "requires": ["activity.read"]},
@@ -70,7 +73,7 @@ export const destinations: ShellDestination[] = [
   {"id": "customers", "label": "Organisations", "icon": "nav-organisations", "readiness": "ready", "href": "/customers", "requires": ["shared.read"]},
   {"id": "products", "label": "Products", "icon": "nav-products", "readiness": "unavailable"},
   {"id": "insights", "label": "Insights", "icon": "nav-insights", "readiness": "unavailable", "workspace": "sales"},
-  {"id": "intake", "label": "Intake", "icon": "nav-inbox", "readiness": "unavailable", "workspace": "estimate"},
+  {"id": "intake", "label": "Intake", "icon": "nav-inbox", "readiness": "ready", "workspace": "estimate", "href":"/estimating/intake", "requiresAll":["crm.opportunity.read","estimating.edit"]},
   {"id": "wizard", "label": "Estimation wizard", "icon": "nav-wizard", "readiness": "ready", "href": "/estimating/discovery", "workspace": "estimate", "requires": ["estimating.read"]},
   {"id": "estimates", "label": "Estimates", "icon": "nav-estimates", "readiness": "ready", "href": "/estimating", "workspace": "estimate", "requires": ["estimating.read"]},
   {"id": "configurations", "label": "Specialist configurations", "icon": "nav-configurations", "readiness": "ready", "href": "/estimating/configurations", "workspace": "estimate", "requires": ["estimating.read"]},
@@ -330,7 +333,7 @@ export function menuGroups(query: string, workspace: WorkspaceId = "sales") {
   const q = query.trim().toLocaleLowerCase("en-AU").slice(0, 100);
   const groups = [
     { title: "Workspaces", ids: workspaces.map(w => w.primary) },
-    { title: "Department pages", ids: [...departmentRails[workspace], ...(workspace === "estimate" ? ["fertigation"] : workspace === "service" ? ["jobs"] : [])] },
+    { title: "Department pages", ids: [...departmentRails[workspace], ...(workspace === "sales" ? ["sales-estimating","sales-won","sales-aftercare"] : workspace === "estimate" ? ["fertigation"] : workspace === "service" ? ["jobs"] : [])] },
     { title: "My workspace", ids: ["home", "work", "mail", "calendar", "approvals"] },
     { title: "Shared records", ids: ["contacts", "people", "customers", "sites", "facilities", "surveys", "equipment", "products", "documents", "reports"] },
     { title: "Administration & support", ids: ["settings", "recovery", "foundation"] },

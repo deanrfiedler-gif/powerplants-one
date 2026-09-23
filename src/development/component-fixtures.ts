@@ -78,6 +78,7 @@ export const salesFixture: ComponentProps<typeof Board>["data"] = {
     value_amount: i === 1 ? null : "12500.00",
     expected_close_date: i === 2 ? null : "2026-10-20",
     can_edit: true,
+    history: [{ version: 1, at: fixtureTime, from_stage: null, to_stage: (["Discovery", "Scoping", "Quoting"] as const)[i], close_date: i === 2 ? null : "2026-10-20", close_recorded: true }],
   })),
 };
 export const projectFixture: ProjectSchedule = {

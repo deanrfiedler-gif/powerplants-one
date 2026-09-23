@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { PipelineInsights } from "./crm-insights";
 import { initialWorklistFilters as initial } from "../crm/worklist-location";
 import { useWorklistLocation } from "./crm-worklist-location";
 import { useEffect, useState, useRef, useCallback, useMemo } from "react";
@@ -220,6 +221,7 @@ export function SalesWorklist() {
     {data.loading && <p role="status">Loading permitted sales records…</p>}
     {data.error != null && <button className="secondary" onClick={refresh}>Try loading again</button>}
     {!data.error && data.data && <>
+      <PipelineInsights data={data.data}/>
       <div className="source-stamp crm-worklist-stamp"><strong>{data.data.items.length} {data.data.items.length === 1 ? "deal" : "deals"}{data.data.completeness === "Complete" ? "" : " on this page"}</strong><span>{totals?.formatted} known{totals?.unknown ? ` · ${totals.unknown} not estimated` : ""}</span><span className="crm-summary-basis">{filters.outcome} · AUD, excl. GST</span></div>
       {view === "Board" ? <>
         <div className="crm-stage-navigation" role="group" aria-label="Choose Board stage">{data.data.stages.map((stage) => <button key={stage.stage_id} aria-pressed={activeStage === stage.stage_id} className={activeStage === stage.stage_id ? "" : "secondary"} onClick={() => setSelected(stage.stage_id, "push")}>{stage.stage_id} ({stage.count})</button>)}</div>

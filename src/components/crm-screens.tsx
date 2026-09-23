@@ -1,5 +1,7 @@
 "use client";
 import Link from "next/link";
+import { OpportunityWorkflows } from "./opportunity-workflows";
+import { OpportunityCorrespondence } from "./opportunity-correspondence";
 import { useEffect, useState } from "react";
 import { LookupField, LocalDateTimeField, RecordTabs, RecordPanel } from "./record-ui";
 import { DealDialog, DealInformation, DealScope, dealAmount, dealClose, type DealMode } from "./crm-deal-controls";
@@ -431,8 +433,11 @@ function OpportunityContent({
   reload: () => void;
 }) {
   const [dialog, setDialog] = useState<DealMode | null>(null), [targetStage,setTargetStage] = useState<string | undefined>();
-  const section = useSearchParams().get("section");
-  const [tab, setTab] = useState(section && ["timeline", "details", "commercial", "files"].includes(section) ? section : "timeline"),
+  const search = useSearchParams();
+  const section = search.get("section");
+  const returnTo = search.get("return_to");
+  const back = returnTo && /^\/sales\/opportunities(?:\?|$)/.test(returnTo) ? returnTo : "/sales/opportunities";
+  const [tab, setTab] = useState(section && ["overview", "timeline", "details", "commercial", "files", "tasks", "correspondence", "history"].includes(section) ? section : "overview"),
     [version, setVersion] = useState(o.version),
     [need, setNeed] = useState(o.need_summary),
     [note, setNote] = useState(""),
@@ -461,7 +466,7 @@ function OpportunityContent({
   return (
     <>
       <div className="crm-deal-page-heading">
-        <Link className="crm-back-link" href="/sales/opportunities">← Back to sales worklist</Link>
+        <Link className="crm-back-link" href={back}>← Back to sales worklist</Link>
         <PageHeader eyebrow={`${o.display_number} · ${o.close_outcome}`} title={o.title}
           description={`${o.organisation_name} · ${o.site_name ?? "Site to be confirmed"}`}
           action={o.can_edit ? <button className="secondary crm-main-edit" aria-label="Edit deal information" onClick={() => setDialog("information")}><ProductIcon name="edit"/><span>Edit deal</span></button> : undefined} />
@@ -511,7 +516,16 @@ function OpportunityContent({
         </button>
       )}
       <RecordTabs id="opportunity" label="Deal sections" value={tab} onChange={setTab}
-        tabs={[{id:"timeline",label:"Timeline"},{id:"details",label:"Details"},{id:"commercial",label:"Commercial"},{id:"files",label:"Files"}]} />
+        tabs={[{id:"overview",label:"Overview"},{id:"details",label:"Scope & sites"},{id:"timeline",label:"Activities"},{id:"tasks",label:"Tasks"},{id:"commercial",label:"Estimates & quotations"},{id:"correspondence",label:"Correspondence"},{id:"files",label:"Documents"},{id:"history",label:"History"}]} />
+      <RecordPanel id="opportunity" tab="overview" value={tab}>
+        <OpportunityWorkflows id={o.id} won={o.close_outcome === "Won"}/>
+        <DealInformation o={o} onEdit={() => setDialog("information")} onStage={() => setDialog("stage")} />
+        <section className="crm-panel"><h2>Next action</h2><p>{NEXT_LABELS[o.next_action_state]}</p>{o.next_activity && <p><Link href={`/work/${o.next_activity.id}`}>{o.next_activity.summary}</Link> · Activity owner: {o.next_activity.owner_name}</p>}<p>Deal ownership changes do not transfer Activities, tasks or receiving responsibility.</p></section>
+      </RecordPanel>
+      <RecordPanel id="opportunity" tab="tasks" value={tab}>
+        <section className="crm-panel"><h2>Owned work</h2><p>Open shared Activities linked to this opportunity. The Sales Tasks worklist and My Work use these same records.</p><Link href="/sales/tasks">Open Sales Tasks</Link><ul>{active.map(a => <li key={a.id}><Link href={`/work/${a.id}`}>{a.summary}</Link> · {a.owner_name} · {a.due_needed ? "Due date needed" : <Stamp value={a.due_at}/>} · <Status value={a.status}/></li>)}</ul>{!active.length && <p>No permitted open work.</p>}</section>
+      </RecordPanel>
+      <RecordPanel id="opportunity" tab="correspondence" value={tab}>{tab === "correspondence" && <OpportunityCorrespondence id={o.id}/>}</RecordPanel>
       <RecordPanel id="opportunity" tab="details" value={tab}>
 
       <p className="source-stamp">
@@ -705,6 +719,8 @@ function OpportunityContent({
           <p>No permitted activities are available.</p>
         )}
       </section>
+      </RecordPanel>
+      <RecordPanel id="opportunity" tab="history" value={tab}>
       <section className="crm-panel">
         <h2>Deal history</h2>
         <ol className="crm-history">
