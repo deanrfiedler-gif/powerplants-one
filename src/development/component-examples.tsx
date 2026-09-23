@@ -32,6 +32,7 @@ import {
   fixtureId,
   fixtureTime,
   plannerFixture,
+  longSchedulingResourceName,
   projectFixture,
   salesFixture,
 } from "./component-fixtures";
@@ -358,7 +359,13 @@ function PlannerExample({
       can_manage: state !== "read-only",
     },
   };
-  const data = { ...plannerFixture, items: state === "empty" ? [] : [a] };
+  const data = {
+    ...plannerFixture,
+    items: state === "empty" ? [] : [a],
+    resources: plannerFixture.resources.map((r) =>
+      state === "long-label" ? { ...r, name: longSchedulingResourceName } : r,
+    ),
+  };
   return (
     <>
       <p>

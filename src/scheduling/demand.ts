@@ -51,30 +51,34 @@ export async function readUnassignedDemand(p: Principal, input: unknown = {}) {
     return demandSnapshot(c, p, input);
   });
 }
-export async function demandSnapshot(c: QueryClient, p: Principal, input: unknown = {}) {
+export async function demandSnapshot(
+  c: QueryClient,
+  p: Principal,
+  input: unknown = {},
+) {
   const q = demandQuery(input);
-    await requireCapability(c, p, DEMAND_CAPABILITY);
-    // A named site outside this identity's scope refuses exactly as a site that
-    // does not exist. Nothing distinguishes "not permitted" from "not found".
-    if (q.site_id) {
-      const site = await visible(c, p, "Site", q.site_id);
-      if (
-        !(await hasPermission(
-          c,
-          p,
-          DEMAND_CAPABILITY,
-          site.company_id,
-          q.site_id,
-        ))
-      )
-        throw unavailable();
-    }
-    // Row-level scope is applied in SQL by the same projections the schedule
-    // read uses. An identity without scope over a site reads no rows from it
-    // rather than an error; no work order crosses a scope boundary here.
-    const rows = (
-      await c.query<UnassignedDemand>(
-        `SELECT w.id,w.display_number,w.version,w.company_id,w.site_id,
+  await requireCapability(c, p, DEMAND_CAPABILITY);
+  // A named site outside this identity's scope refuses exactly as a site that
+  // does not exist. Nothing distinguishes "not permitted" from "not found".
+  if (q.site_id) {
+    const site = await visible(c, p, "Site", q.site_id);
+    if (
+      !(await hasPermission(
+        c,
+        p,
+        DEMAND_CAPABILITY,
+        site.company_id,
+        q.site_id,
+      ))
+    )
+      throw unavailable();
+  }
+  // Row-level scope is applied in SQL by the same projections the schedule
+  // read uses. An identity without scope over a site reads no rows from it
+  // rather than an error; no work order crosses a scope boundary here.
+  const rows = (
+    await c.query<UnassignedDemand>(
+      `SELECT w.id,w.display_number,w.version,w.company_id,w.site_id,
           o.display_name AS customer_name,
           site.display_name AS site_name,site.timezone AS site_timezone,
           sr.id AS authorised_scope_revision_id,sr.revision AS authorised_scope_revision,
@@ -89,18 +93,18 @@ export async function demandSnapshot(c: QueryClient, p: Principal, input: unknow
            AND ${orderVisibility("w")} AND ${visibility("Site", "site")}
            AND ($3::uuid IS NULL OR w.site_id=$3)
          ORDER BY w.display_number,w.id LIMIT $4`,
-        [p.workspace_id, p.actor_id, q.site_id, q.limit + 1],
-      )
-    ).rows;
-    // One row beyond the bound is read only to report completeness honestly. A
-    // truncated list is never described as complete.
-    const more = rows.length > q.limit,
-      items = rows.slice(0, q.limit);
-    return {
-      ...envelope(
-        items.map((w) => ({ ...w, projection: "UnassignedDemand" as const })),
-      ),
-      completeness: more ? "Partial" : "Complete",
-      limit: q.limit,
-    };
+      [p.workspace_id, p.actor_id, q.site_id, q.limit + 1],
+    )
+  ).rows;
+  // One row beyond the bound is read only to report completeness honestly. A
+  // truncated list is never described as complete.
+  const more = rows.length > q.limit,
+    items = rows.slice(0, q.limit);
+  return {
+    ...envelope(
+      items.map((w) => ({ ...w, projection: "UnassignedDemand" as const })),
+    ),
+    completeness: more ? "Partial" : "Complete",
+    limit: q.limit,
+  };
 }
