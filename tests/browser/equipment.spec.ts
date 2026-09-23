@@ -283,6 +283,132 @@ test("EQ permissions clear records after identity switch; missing sources remain
   ).toHaveCount(0);
   await expect(page.getByText(/record is unavailable/i).first()).toBeVisible();
 });
+test("EQ06 native bulletin retains candidate and reviewed disposition separately", async ({
+  page,
+  baseURL,
+}) => {
+  const id = await fixture(page, baseURL!),
+    reference = `SYN-B-${id}`;
+  await page.goto("/equipment/bulletins");
+  await page
+    .getByRole("button", { name: "Record bulletin revision", exact: true })
+    .click();
+  await page.getByLabel("Company context").selectOption(company);
+  for (const [label, value] of [
+    ["Bulletin reference", reference],
+    ["Bulletin revision", "r01"],
+    ["Title", "SYN exact candidate review"],
+    ["Publication date", "2026-09-15"],
+    ["Exact serial criterion", `SYN-${id}`],
+    ["Exact source reference", "SYN supplier bulletin"],
+    ["Reason for recording", "SYN reviewed original source"],
+  ])
+    await page.getByLabel(label, { exact: true }).fill(value);
+  await page
+    .getByRole("button", { name: "Record evidence", exact: true })
+    .click();
+  const card = page
+    .locator("article")
+    .filter({
+      has: page.getByRole("heading", {
+        name: `${reference} · r01 · Open`,
+        exact: true,
+      }),
+    });
+  await expect(
+    card.getByText(
+      "1 permitted candidates. Matching does not establish applicability.",
+    ),
+  ).toBeVisible();
+  await card.getByText("Review Asset applicability", { exact: true }).click();
+  await card.getByLabel("Candidate equipment").selectOption(id);
+  await card
+    .getByLabel("Applicability", { exact: true })
+    .selectOption("NotApplicable");
+  await card
+    .getByLabel("Applicability evidence")
+    .fill("SYN exact serial and source comparison");
+  await card.getByLabel("Evidence revision").fill("r01");
+  await card
+    .getByLabel("Review / closure reason")
+    .fill("SYN reviewed exclusion in retained supplier source");
+  await card.getByRole("button", { name: "Record Asset disposition" }).click();
+  await expect(
+    card.getByRole("listitem").filter({ hasText: "NotApplicable" }),
+  ).toBeVisible();
+  await card
+    .getByRole("button", { name: "Close bulletin after all dispositions" })
+    .click();
+  await expect(
+    page.getByRole("heading", {
+      name: `${reference} · r01 · Closed`,
+      exact: true,
+    }),
+  ).toBeVisible();
+  await page.reload();
+  await expect(
+    page.getByRole("heading", {
+      name: `${reference} · r01 · Closed`,
+      exact: true,
+    }),
+  ).toBeVisible();
+});
+test("EQ09 native calibration creation and withdrawal retain certificate evidence", async ({
+  page,
+}) => {
+  const reference = `SYN-I-${randomUUID()}`;
+  await page.goto("/equipment/instruments");
+  await page
+    .getByRole("button", { name: "Record calibration evidence", exact: true })
+    .click();
+  await page.getByLabel("Company context").selectOption(company);
+  for (const [label, value] of [
+    ["Instrument reference", reference],
+    ["Description", "SYN browser pressure gauge"],
+    ["Measurement type", "Pressure"],
+    ["Measurement range", "0-1000"],
+    ["Unit", "kPa"],
+    ["Calibration reference", `SYN-C-${randomUUID()}`],
+    ["Calibration version", "r01"],
+    ["Valid from", "2026-09-01"],
+    ["Valid to", "2027-08-31"],
+    ["Exact certificate evidence reference", "SYN certificate source"],
+    ["Certificate revision", "r01"],
+    ["Reason for recording", "SYN reviewed certificate and range"],
+  ])
+    await page.getByLabel(label, { exact: true }).fill(value);
+  await page
+    .getByRole("button", { name: "Record certificate evidence", exact: true })
+    .click();
+  const card = page
+    .locator("article")
+    .filter({
+      has: page.getByRole("heading", {
+        name: `${reference} · SYN browser pressure gauge`,
+        exact: true,
+      }),
+    });
+  await expect(
+    card.getByText("SYN certificate source · r01", { exact: true }),
+  ).toBeVisible();
+  await card
+    .getByText("Record retrospective withdrawal", { exact: true })
+    .click();
+  await card.getByLabel("Withdrawal effective from").fill("2026-09-10");
+  await card
+    .getByLabel("Source-backed withdrawal reason")
+    .fill("SYN supplier withdrawal notice r02");
+  await card
+    .getByRole("button", { name: "Record withdrawal", exact: true })
+    .click();
+  await expect(
+    card.getByText(/2026-09-10 · SYN supplier withdrawal notice r02/),
+  ).toBeVisible();
+  await page.reload();
+  await expect(
+    card.getByText("SYN certificate source · r01", { exact: true }),
+  ).toBeVisible();
+});
 for (const width of [1440, 1280, 1024, 768, 430, 390, 320]) {
   test(`EQ family reflows and preserves source decisions at ${width}px`, async ({
     page,
