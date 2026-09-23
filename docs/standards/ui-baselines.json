@@ -7,22 +7,70 @@
   "authority": "docs/standards/ui-style-specification.md section 7",
   "scope": "Accepted UI design baselines, their scope containers and the application routes they govern. Design-side integrity and token facts only; this register establishes no application, permission or business acceptance.",
   "viewports": [
-    { "name": "desktop", "width": 1440, "height": 960 },
-    { "name": "laptop", "width": 1024, "height": 768 },
-    { "name": "tablet", "width": 820, "height": 800 },
-    { "name": "phone", "width": 390, "height": 844 }
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "name": "laptop",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "name": "tablet",
+      "width": 820,
+      "height": 800
+    },
+    {
+      "name": "phone",
+      "width": 390,
+      "height": 844
+    }
   ],
   "shared_token_core": {
     "note": "Token names declared by two or more accepted baselines. Names and values must agree across every baseline that declares them, except where listed in known_divergences. Derived by measurement, not assertion: Job Pack r03 declares 41 tokens and Field Technicians r05 declares those same 41 plus --progress and --progress-surface.",
     "names": [
-      "--avatar-surface", "--avatar-text", "--control-border", "--danger", "--danger-accent",
-      "--danger-border", "--danger-surface", "--focus", "--green", "--hairline",
-      "--info", "--info-accent", "--info-border", "--info-surface", "--ink",
-      "--line", "--line-soft", "--line-strong", "--link", "--muted",
-      "--navy", "--neutral", "--neutral-surface", "--paper", "--success",
-      "--success-border", "--success-icon", "--success-surface", "--success-tint", "--surface",
-      "--surface-2", "--surface-3", "--surface-hover", "--surface-white", "--text-secondary",
-      "--warning", "--warning-accent", "--warning-border", "--warning-icon", "--warning-surface",
+      "--avatar-surface",
+      "--avatar-text",
+      "--control-border",
+      "--danger",
+      "--danger-accent",
+      "--danger-border",
+      "--danger-surface",
+      "--focus",
+      "--green",
+      "--hairline",
+      "--info",
+      "--info-accent",
+      "--info-border",
+      "--info-surface",
+      "--ink",
+      "--line",
+      "--line-soft",
+      "--line-strong",
+      "--link",
+      "--muted",
+      "--navy",
+      "--neutral",
+      "--neutral-surface",
+      "--paper",
+      "--success",
+      "--success-border",
+      "--success-icon",
+      "--success-surface",
+      "--success-tint",
+      "--surface",
+      "--surface-2",
+      "--surface-3",
+      "--surface-hover",
+      "--surface-white",
+      "--text-secondary",
+      "--warning",
+      "--warning-accent",
+      "--warning-border",
+      "--warning-icon",
+      "--warning-surface",
       "--warning-tint"
     ]
   },
@@ -31,17 +79,26 @@
     "entries": [
       {
         "token": "--surface-hover",
-        "values": { "field-technicians-r05": "#f0f2f5", "job-pack-r03": "#eff2f5" },
+        "values": {
+          "field-technicians-r05": "#f0f2f5",
+          "job-pack-r03": "#eff2f5"
+        },
         "status": "Unresolved; one channel apart"
       },
       {
         "token": "--line-soft",
-        "values": { "field-technicians-r05": "#e9ecf1", "job-pack-r03": "#eef0f3" },
+        "values": {
+          "field-technicians-r05": "#e9ecf1",
+          "job-pack-r03": "#eef0f3"
+        },
         "status": "Unresolved; visually close"
       },
       {
         "token": "--success-tint",
-        "values": { "field-technicians-r05": "#f3f7f1", "job-pack-r03": "#ebefe9" },
+        "values": {
+          "field-technicians-r05": "#f3f7f1",
+          "job-pack-r03": "#ebefe9"
+        },
         "status": "Unresolved; the most visible of the three"
       }
     ]
@@ -213,6 +270,111 @@
       "application_proof": "tests/browser/facilities.spec.ts",
       "authority": "Dean authorised execution of the supplied CS-05 r02 delivery contract. Native adaptations are proposed for visual review; this entry grants no owner baseline acceptance.",
       "adaptations": "docs/delivery/facilities-growing-areas-handover.md"
+    },
+    {
+      "id": "cs01-native-r01",
+      "route": "/customers/[id]",
+      "scope": "#ppo-customer-360",
+      "layout": "padded",
+      "scroll_owner": "#main",
+      "design": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
+      "sha256": "ce8b117f5b62615389111c59e479f606c8c50b7b3c218cde5e5d86cd14edeab8",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/browser/customer-location.spec.ts",
+      "application_proof": "tests/browser/customer-location.spec.ts",
+      "authority": "Authorised CS native receiving implementation. Layout adaptations are proposed for owner visual/device review; no new accepted screenshot baseline.",
+      "adaptations": "docs/delivery/cs-native-completion-handover.md"
+    },
+    {
+      "id": "cs02-native-r01",
+      "route": "/people/[id]",
+      "scope": "#ppo-contact",
+      "layout": "padded",
+      "scroll_owner": "#main",
+      "design": "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
+      "sha256": "aa97680dadf459aa6fbeaf39c761df124adf6737fb68c62b106589c38eac9a52",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/browser/customer-location.spec.ts",
+      "application_proof": "tests/browser/customer-location.spec.ts",
+      "authority": "Authorised CS native receiving implementation. Layout adaptations are proposed for owner visual/device review; no new accepted screenshot baseline.",
+      "adaptations": "docs/delivery/cs-native-completion-handover.md"
+    },
+    {
+      "id": "cs03-native-r01",
+      "route": "/customers/[id]/stakeholders",
+      "scope": "#ppo-stakeholders",
+      "layout": "padded",
+      "scroll_owner": "#main",
+      "design": "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
+      "sha256": "aa97680dadf459aa6fbeaf39c761df124adf6737fb68c62b106589c38eac9a52",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/browser/customer-location.spec.ts",
+      "application_proof": "tests/browser/customer-location.spec.ts",
+      "authority": "Authorised CS native receiving implementation. Layout adaptations are proposed for owner visual/device review; no new accepted screenshot baseline.",
+      "adaptations": "docs/delivery/cs-native-completion-handover.md"
+    },
+    {
+      "id": "cs04-native-r01",
+      "route": "/sites/[id]",
+      "scope": "#ppo-site",
+      "layout": "padded",
+      "scroll_owner": "#main",
+      "design": "docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html",
+      "sha256": "139938cfabaa71ac0b7e7e5e326d31fd7c3789f116e67f79d348ba5e9ae7ae33",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/browser/customer-location.spec.ts",
+      "application_proof": "tests/browser/customer-location.spec.ts",
+      "authority": "Authorised CS native receiving implementation. Layout adaptations are proposed for owner visual/device review; no new accepted screenshot baseline.",
+      "adaptations": "docs/delivery/cs-native-completion-handover.md"
+    },
+    {
+      "id": "cs06-native-r01",
+      "route": "/sites/[id]/readiness",
+      "scope": "#ppo-readiness",
+      "layout": "padded",
+      "scroll_owner": "#main",
+      "design": "docs/reference/ui/site-access/PPO-Site-Access-and-Horticultural-Readiness-r01.html",
+      "sha256": "c47c49041195b3834393f880daad83239e15280eaaff8978125f827c52036506",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/browser/customer-location.spec.ts",
+      "application_proof": "tests/browser/customer-location.spec.ts",
+      "authority": "Authorised CS native receiving implementation. Layout adaptations are proposed for owner visual/device review; no new accepted screenshot baseline.",
+      "adaptations": "docs/delivery/cs-native-completion-handover.md"
+    },
+    {
+      "id": "cs07-native-r01",
+      "route": "/customers/[id]/development",
+      "scope": "#ppo-account-development",
+      "layout": "padded",
+      "scroll_owner": "#main",
+      "design": "docs/design/development/pages/scope-cs-07.md",
+      "sha256": "30a7f18274081dab8bd8f3351d0f9a1b719b19ef452ffb47f9866beee51e448b",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/browser/customer-location.spec.ts",
+      "application_proof": "tests/browser/customer-location.spec.ts",
+      "authority": "Authorised CS native receiving implementation. Layout adaptations are proposed for owner visual/device review; no new accepted screenshot baseline.",
+      "adaptations": "docs/delivery/cs-native-completion-handover.md"
+    },
+    {
+      "id": "cs08-native-r01",
+      "route": "/surveys",
+      "scope": "#ppo-survey",
+      "layout": "padded",
+      "scroll_owner": "#main",
+      "design": "docs/reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html",
+      "sha256": "5645a89430f081cc32edea9c748614b7c3c9ebbf43f5f393d1d18d1a55ee40bd",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/browser/customer-location.spec.ts",
+      "application_proof": "tests/browser/customer-location.spec.ts",
+      "authority": "Authorised CS native receiving implementation. Layout adaptations are proposed for owner visual/device review; no new accepted screenshot baseline.",
+      "adaptations": "docs/delivery/cs-native-completion-handover.md"
     }
   ]
 }

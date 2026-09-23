@@ -2,17 +2,17 @@ import type { NextRequest } from "next/server";
 import { createHash } from "node:crypto";
 import { developmentRequest } from "../../../../development/access";
 import {
-  buildCatalog,
   readReference,
   resourcesFor,
 } from "../../../../development/catalog";
+import { developmentCatalog } from "../../../../development/runtime";
 export const dynamic = "force-dynamic";
 export async function GET(request: NextRequest) {
-  if (!developmentRequest(request.headers))
+  if (!(await developmentRequest(request.headers)))
     return new Response("Not found", { status: 404 });
   try {
     const id = request.nextUrl.searchParams.get("id");
-    const item = resourcesFor(await buildCatalog(process.cwd())).find(
+    const item = resourcesFor(await developmentCatalog()).find(
       (r) => r.id === id && !r.missing,
     );
     if (!item) return new Response("Reference unavailable", { status: 404 });

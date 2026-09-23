@@ -12,8 +12,10 @@ import {
   seedChangesScenario,
 } from "../helpers/engineering-changes";
 import type { SignIn } from "../helpers/engineering-materials";
+import { drainApiReadsForTeardown, retainApiReadsForTeardown } from "../helpers/browser-read-drain";
 
 test.beforeEach(async ({ page, baseURL }) => {
+  await retainApiReadsForTeardown(page);
   expect(
     (
       await page.request.post("/api/v1/local-session", {
@@ -23,6 +25,15 @@ test.beforeEach(async ({ page, baseURL }) => {
     ).ok(),
   ).toBe(true);
 });
+test.afterEach(async ({ page }) => {
+  // The following ES-08 suite resets the synthetic schema. Closing a page
+  // can abort a response while its server read still holds database locks.
+  // Finish routed fetches and pending page traffic before fixture teardown.
+  await page.waitForLoadState("networkidle");
+  await drainApiReadsForTeardown(page);
+  await page.unrouteAll({ behavior: "wait" });
+});
+
 test("SH notification event, explicit read, source guard, grouped state and preferences persist", async ({
   page,
   baseURL,
@@ -142,6 +153,11 @@ test("SH search keyboard entry, full results, authorised preview and personal sa
   isMobile,
 }, info) => {
   await page.goto("/work");
+  // The shortcut listener belongs to the hydrated shell. An immediate key
+  // after navigation can arrive before the initial session read completes.
+  await expect(
+    page.getByRole("region", { name: "Local demonstration identity", exact: true }),
+  ).toHaveAttribute("aria-busy", "false");
   // Navigation can finish before hydration installs the global shortcut. Wait
   // for the client-loaded identity and responsive shell before sending a key;
   // keyboard.press has no locator readiness checks of its own.

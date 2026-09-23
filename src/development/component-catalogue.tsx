@@ -1,4 +1,5 @@
 "use client";
+import { ReleaseLabel } from "./release-label";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -154,7 +155,7 @@ function CatalogueContent({
           </p>
         </div>
         <div className="catalogue-actions">
-          <Button onClick={() => router.refresh()}>Refresh working copy</Button>
+          <Button onClick={() => router.refresh()}>{catalog.release ? "Refresh deployed register" : "Refresh working copy"}</Button>
           <ButtonLink href="/development/page-register">
             Page register
           </ButtonLink>
@@ -186,8 +187,9 @@ function CatalogueContent({
           reviews pending or stale
         </span>
       </div>
+      <ReleaseLabel catalog={catalog} />
       <p className="catalogue-note">
-        Local development · synthetic examples · Git is the master. Coverage,
+        Design workspace · synthetic examples · Git is the master. Coverage,
         design alignment and functional acceptance are separate. Browser changes
         are temporary.
       </p>

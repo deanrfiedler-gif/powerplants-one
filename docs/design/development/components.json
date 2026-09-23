@@ -626,7 +626,8 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/app/styles/customers.css"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -635,7 +636,13 @@
       },
       "specification": "docs/design/development/components/fields.md",
       "used_on": [
-        "route:/customers/new"
+        "route:/customers/new",
+        "route:/people/[id]",
+        "route:/sites/[id]",
+        "route:/sites/[id]/readiness",
+        "route:/customers/[id]/development",
+        "route:/surveys",
+        "route:/surveys/[id]"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -647,6 +654,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Page-specific forms still use several control families. Device keyboard and assistive-technology acceptance remain pending.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "cs-fields-host-review",
+          "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
+          "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
+          "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -752,7 +767,8 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/app/styles/customers.css"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -761,7 +777,13 @@
       },
       "specification": "docs/design/development/components/validation.md",
       "used_on": [
-        "route:/customers/new"
+        "route:/customers/new",
+        "route:/people/[id]",
+        "route:/sites/[id]",
+        "route:/sites/[id]/readiness",
+        "route:/customers/[id]/development",
+        "route:/surveys",
+        "route:/surveys/[id]"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -773,6 +795,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "ErrorNotice moves focus to its summary; screen-reader announcement still needs manual acceptance.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "cs-validation-host-review",
+          "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
+          "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
+          "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -793,6 +823,11 @@
           "id": "default",
           "label": "Default",
           "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "cs-customer",
+          "label": "Customer 360",
+          "description": "Eight native Customer 360 labels exercise wrapping, scroll and keyboard selection; panels are presentation-only synthetic fixtures."
         }
       ],
       "implementation": [
@@ -805,7 +840,8 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/app/styles/customers.css"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -814,7 +850,14 @@
       },
       "specification": "docs/design/development/components/tabs.md",
       "used_on": [
-        "route:/estimating/discovery/[id]"
+        "route:/estimating/discovery/[id]",
+        "route:/customers/[id]",
+        "route:/people/[id]",
+        "route:/customers/[id]/stakeholders",
+        "route:/sites/[id]/readiness",
+        "route:/customers/[id]/development",
+        "route:/surveys/[id]",
+        "route:/sites/[id]"
       ],
       "desktop": "Arrow keys, Home and End select/focus tabs. Each tab labels its corresponding panel.",
       "mobile": "Confirm wrapped or scrolling tabs keep the selected label and focus visible.",
@@ -826,6 +869,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Tab variants across modules require an explicit migration decision; this example does not restyle unrelated navigation.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "cs-tabs-host-review",
+          "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
+          "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
+          "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1047,7 +1098,8 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/app/styles/customers.css"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1057,7 +1109,15 @@
       "specification": "docs/design/development/components/read-state.md",
       "used_on": [
         "route:/schedule",
-        "route:/customers"
+        "route:/customers",
+        "route:/customers/[id]",
+        "route:/people/[id]",
+        "route:/customers/[id]/stakeholders",
+        "route:/sites/[id]/readiness",
+        "route:/customers/[id]/development",
+        "route:/surveys/[id]",
+        "route:/sites/[id]",
+        "route:/surveys"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -1069,6 +1129,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Offline copy is illustrative. Real queued/synced/conflict support is page-specific and must not be inferred from the catalogue.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "cs-read-state-host-review",
+          "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
+          "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
+          "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1101,7 +1169,8 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/app/styles/customers.css"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1111,7 +1180,10 @@
       "specification": "docs/design/development/components/status.md",
       "used_on": [
         "route:/schedule",
-        "route:/customers"
+        "route:/customers",
+        "route:/customers/[id]",
+        "route:/people/[id]",
+        "route:/sites/[id]"
       ],
       "desktop": "Keep a readable label with each tone; business state and tone are not equivalent.",
       "mobile": "Chips wrap without truncating operational meaning.",
@@ -1123,6 +1195,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Current status-to-colour mapping is not a substitute for business state definitions.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "cs-status-host-review",
+          "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
+          "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
+          "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1165,7 +1245,8 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/app/styles/customers.css"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1174,7 +1255,13 @@
       },
       "specification": "docs/design/development/components/mobile-form.md",
       "used_on": [
-        "route:/customers/new"
+        "route:/customers/new",
+        "route:/people/[id]",
+        "route:/sites/[id]",
+        "route:/sites/[id]/readiness",
+        "route:/customers/[id]/development",
+        "route:/surveys",
+        "route:/surveys/[id]"
       ],
       "desktop": "Use the phone presets and a separate browser window. This is the same form component family at a real responsive viewport.",
       "mobile": "Check 390/320 px, 200% zoom, touch targets, keyboard occlusion and error focus. No scaled screenshot is used.",
@@ -1186,6 +1273,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Real-device input, screen-reader and keyboard-occlusion acceptance remain pending.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "cs-mobile-form-host-review",
+          "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
+          "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
+          "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1219,7 +1314,8 @@
       "dependencies": [
         "src/app/layout.tsx",
         "src/app/desktop-shell.css",
-        "src/app/mobile-layout.css"
+        "src/app/mobile-layout.css",
+        "src/app/styles/customers.css"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -1240,6 +1336,14 @@
           "expected": "Paired desktop/mobile shell review with permitted synthetic identity.",
           "actual": "Host rendering depends on the local shell service. No blanket shell acceptance is recorded.",
           "action": "Run the existing shell checks and pair with r17 under a permitted synthetic identity.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "cs-application-shell-host-review",
+          "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
+          "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
+          "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

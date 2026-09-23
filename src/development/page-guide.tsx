@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { GuideDocument } from "./model";
 import { DocumentDetails } from "./document-details";
 
-// Mounted only in the local development shell. Hosted users keep released help.
+// Mounted only for authorised design-workspace users; released help stays available.
 export function DevelopmentPageGuide() {
   const pathname = usePathname();
   const [guide, setGuide] = useState<GuideDocument | null>(null),

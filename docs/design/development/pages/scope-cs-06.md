@@ -1,41 +1,33 @@
-# Site access and horticultural readiness — design reference
+# Site access & horticultural readiness — native receiving reference
 
-Stable entry: `scope:CS-06`. Owner: Dean Fiedler. Status: **Draft for visual review**.
-Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/sites?tab=readiness`.
-This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
+Stable entry: `scope:CS-06`. Scope: **CS-06**. Owner: Dean Fiedler.
+Source main: `25170bf83008727f005e36b5603841a7b9359027`. Route: `/sites/[id]/readiness`.
+Native implementation and adaptations are proposed for owner review; this is not a new accepted visual baseline.
 
-## Purpose and task
+## Purpose and page type
 
-Extend basic site access fields into sourced, reviewed readiness: crop windows, biosecurity, induction, shutdown constraints, visitor instructions and required tools.
+Record exact requirements, evidence and work windows, then evaluate and acknowledge a retained visit preparation.
 
-1. Check the source and currency of site instructions
-2. Identify unmet readiness conditions and their owners
-3. Pass the reviewed constraints to planning and field preparation
+r20 page type: **Planning workspace; Review / comparison**. Overview, Requirements, Visitor / biosecurity / evidence, Work windows, Visit preparation and Review / history.
 
 ## Desktop
 
-Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
+Use the current native PPO shell and padded content composition. Reuse PageHeader, RecordTabs/RecordPanel, Field/SelectField, ReadState, ErrorNotice and the existing command recovery controls. Keep source ownership, unknown/restricted states and exact record links visible. The shared shell retains header, search and global navigation; no standalone demo shell is copied.
 
-At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
+The native proposal receives the business views rather than the standalone drawer geometry. The owning page scrolls; horizontal scrolling is confined to the tab strip. Paired retained-source/native inspection and actual viewport evidence are recorded in the CS handover.
 
 ## Mobile
 
-At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
+Stack fields and record facts; let long names and unknown values wrap. Keep labelled save/recovery controls, visible focus and keyboard-operable tabs. Inspect 430, 390 and 320 CSS px and intermediate 768/1024 layouts. No information or required decision is hidden to make a screenshot fit.
 
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+## Sources, handovers and authority
 
-## Shared components and states
+Facility type or hierarchy does not imply readiness. Captured evidence is not reviewed evidence; edited or expired evidence does not satisfy an earlier review. No work window means access is unknown. Acknowledgement grants no work authority, booking, resource reservation, pack issue or dispatch clearance.
 
-Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
+Incoming: exact canonical customer/Site/Person and permitted source records. Outgoing: exact source links, owned Activity follow-up and, for surveys, an immutable Reviewed receiving snapshot. Preserve canonical Facilities and their installed-versus-served equipment distinction.
 
-Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
+Reference: docs/reference/ui/site-access/PPO-Site-Access-and-Horticultural-Readiness-r01.html
 
-## Visual references
+## Verification and acceptance
 
-- [PPO-Site-Access-and-Horticultural-Readiness-r01.html](../../../reference/ui/site-access/PPO-Site-Access-and-Horticultural-Readiness-r01.html)
-
-## Behaviour, handovers and verification
-
-The draft User Guide `guide.cs.06` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
-
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+The detailed page guide is `guide.cs.06`. [CS receiving handover](../../../delivery/cs-native-completion-handover.md) records executed behaviour, visual inspection, source hashes and open business definitions. Owner/device acceptance and deployment remain separate.
