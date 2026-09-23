@@ -123,6 +123,13 @@ test("CS08 HTTP rejects forged Site/workspace/read-only writes and provides immu
   };
   assert.equal((await call(limited, "cs/Survey", create)).status, 404);
   assert.equal((await call(p, "cs/Survey", create)).status, 201);
+  const unscoped = await call(p, `cs/Survey/${id}/actions`, {
+    ...base(),
+    expected_version: 1,
+    action: "submit",
+  });
+  assert.equal(unscoped.status, 422);
+  assert.ok(unscoped.body.field_errors.some((e: { field: string }) => e.field === "purpose"));
   assert.equal((await call(other, `cs/Survey/${id}`)).status, 404);
   const content = {
     schema_version: 1,
