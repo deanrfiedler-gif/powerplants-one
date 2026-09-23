@@ -174,6 +174,29 @@ export function PackDialog({
       className="jp-dialog"
       aria-labelledby="jp-dialog-title"
       aria-describedby="jp-dialog-subtitle"
+      onKeyDown={(e) => {
+        if (e.key !== "Tab") return;
+        const controls = [
+          ...e.currentTarget.querySelectorAll<HTMLElement>(
+            'button:not(:disabled), a[href], input:not(:disabled), textarea:not(:disabled), select:not(:disabled), [tabindex="0"]',
+          ),
+        ].filter((el) => el.getClientRects().length > 0);
+        const first = controls[0],
+          last = controls.at(-1);
+        // Information dialogs start on a heading outside the tab order. Shift+Tab
+        // must enter the last control rather than leave the modal's content.
+        if (
+          e.shiftKey &&
+          (document.activeElement === first ||
+            !controls.includes(document.activeElement as HTMLElement))
+        ) {
+          e.preventDefault();
+          last?.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first?.focus();
+        }
+      }}
       onCancel={(e) => {
         e.preventDefault();
         close();

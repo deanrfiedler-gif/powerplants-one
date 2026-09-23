@@ -14,6 +14,7 @@ import {
 } from "../../../components/business-ui";
 import { useUnsavedChanges } from "../../../components/record-ui";
 import { useIdentity } from "../../../components/business-session";
+import type { OperationReceipt } from "../../../platform/operations";
 import { sectionKeys, type PackInput, type SectionKey } from "../../validation";
 import {
   driftSources,
@@ -391,6 +392,12 @@ export function JobPackScreen({ id }: { id: string }) {
     // resurrects a stale draft and a fresh save clears the dirty state without waiting for the read.
     [draft, setDraft] = useState<PackInput | null>(null),
     [prep, setPrep] = useState<null | "save" | "discard">(null),
+    [printChoice, setPrintChoice] = useState(false),
+    [printAfterSave, setPrintAfterSave] = useState(false),
+    [savedPrint, setSavedPrint] = useState<{
+      revision: number;
+      version: number;
+    } | null>(null),
     [working, setWorking] = useState(false),
     [error, setError] = useState<unknown>(null),
     [current, setCurrent] = useState({ pack: "s-1", prepare: "p-1" });
@@ -418,7 +425,9 @@ export function JobPackScreen({ id }: { id: string }) {
     hasRevision = !!revision;
   // Readable names for the change record: a stored history code never reaches the dialog or the timeline.
   const names = {
-      sources: Object.fromEntries((p?.sources ?? []).map((s) => [s.id, s.title])),
+      sources: Object.fromEntries(
+        (p?.sources ?? []).map((s) => [s.id, s.title]),
+      ),
       history: Object.fromEntries(
         (p?.history ?? []).map((h) => [h.id, historyLabel(h)]),
       ),
@@ -467,12 +476,18 @@ export function JobPackScreen({ id }: { id: string }) {
   // uncertain save replays byte-identically instead of creating a second revision.
   async function savePreparation(reason: string) {
     if (!p) return;
-    const result = await command.send(`packs/${p.id}/amend`, {
+    const result = await command.send<OperationReceipt>(`packs/${p.id}/amend`, {
       expected_version: p.version,
       reason,
       content: value,
     });
     if (result) {
+      if (printAfterSave && revision)
+        setSavedPrint({
+          revision: revision.revision + 1,
+          version: result.record_version,
+        });
+      setPrintAfterSave(false);
       setPrep(null);
       setDraft(null);
       show("pack");
@@ -522,6 +537,14 @@ export function JobPackScreen({ id }: { id: string }) {
     step = p ? nextStep(p, issue, jobState, mine) : null,
     summary = p?.criteria ? readinessSummary(p.criteria) : null,
     drifted = driftSources(p?.basis_drift ?? []),
+    sourceChanged =
+      drifted.length > 0 ||
+      (p?.status === "Issued" && p.needs_review) ||
+      jobState === "StaleSource",
+    printRevision =
+      savedPrint && p && p.version >= savedPrint.version
+        ? p.revisions.find((item) => item.revision === savedPrint.revision)
+        : undefined,
     flagged: SectionKey[] = sectionKeys.filter(
       (k) =>
         (k === "readiness" && !!summary?.blocked.length) ||
@@ -550,6 +573,56 @@ export function JobPackScreen({ id }: { id: string }) {
     show(views[next][0]);
     document.getElementById(`jp-tab-${views[next][0]}`)?.focus();
   };
+
+  const sourceNotice =
+    p && sourceChanged && staff ? (
+      <div
+        className="jp-notice"
+        role="region"
+        aria-label="Changed pack sources"
+      >
+        <Icon name="warning" />
+        <div>
+          <strong>Source changed since this draft was prepared</strong>
+          <span>
+            The saved revision is retained. Prepare a successor with current
+            sources; checking and issuing still verify the exact source content.
+          </span>
+          {!!p.basis_drift?.length && (
+            <ul>
+              {p.basis_drift.map((item) => (
+                <li key={item.field}>
+                  {item.source} {item.label}: {String(item.from)} →{" "}
+                  {item.to == null
+                    ? "Current source unavailable"
+                    : String(item.to)}
+                </li>
+              ))}
+            </ul>
+          )}
+          {p.actions.can_prepare && (
+            <button
+              type="button"
+              className="jp-text-button"
+              disabled={busy}
+              onClick={() => {
+                if (view === "prepare") {
+                  setPrintAfterSave(false);
+                  setPrep("save");
+                } else {
+                  show("prepare");
+                  document.getElementById("jp-tab-prepare")?.focus();
+                }
+              }}
+            >
+              {view === "prepare"
+                ? "Refresh saved sources…"
+                : "Review changed sources"}
+            </button>
+          )}
+        </div>
+      </div>
+    ) : null;
 
   return frame(
     <>
@@ -600,16 +673,15 @@ export function JobPackScreen({ id }: { id: string }) {
               >
                 Appointment
               </Link>
-              {revision && (p.actions.can_prepare || p.actions.can_check) && (
-                <a
-                  className="jp-button"
-                  href={`/api/v1/packs/${id}/preview?revision_id=${revision.id}`}
-                  target="_blank"
-                  rel="noreferrer"
+              {revision && issue?.revision_id !== revision.id && staff && (
+                <button
+                  type="button"
+                  disabled={busy}
+                  onClick={() => setPrintChoice(true)}
                 >
                   <Icon name="print" />
-                  Open preparation preview
-                </a>
+                  Print preview
+                </button>
               )}
               {issue && (
                 <Link
@@ -703,6 +775,7 @@ export function JobPackScreen({ id }: { id: string }) {
                   : "No saved revision"}
             </span>
           </div>
+
           <section
             id="jp-panel-pack"
             role="tabpanel"
@@ -740,6 +813,7 @@ export function JobPackScreen({ id }: { id: string }) {
                 <aside className="jp-contents" aria-label="Pack contents" />
               )}
               <div className="jp-main-column">
+                {view === "pack" && sourceNotice}
                 {step && (
                   <div className={`jp-notice ${step.tone}`.trim()}>
                     <Icon name={step.icon} />
@@ -890,6 +964,7 @@ export function JobPackScreen({ id }: { id: string }) {
                   }
                 />
                 <div className="jp-main-column">
+                  {view === "prepare" && sourceNotice}
                   {p.actions.can_prepare ? (
                     <ValidationFields error={prep ? null : command.error}>
                       <PreparationForm
@@ -911,7 +986,10 @@ export function JobPackScreen({ id }: { id: string }) {
                                 : "No unsaved changes"
                         }
                         error={prep ? null : command.error}
-                        onSave={() => setPrep("save")}
+                        onSave={() => {
+                          setPrintAfterSave(false);
+                          setPrep("save");
+                        }}
                         onDiscard={() => setPrep("discard")}
                       />
                     </ValidationFields>
@@ -1049,8 +1127,93 @@ export function JobPackScreen({ id }: { id: string }) {
               changes={changes}
               command={command}
               onConfirm={savePreparation}
-              onClose={() => setPrep(null)}
+              onClose={() => {
+                setPrep(null);
+                setPrintAfterSave(false);
+              }}
             />
+          )}
+          {printChoice && revision && (
+            <PackDialog
+              title={
+                dirty
+                  ? "Print with unsaved preparation?"
+                  : "Print saved preparation"
+              }
+              subtitle={`${p.display_number} · ${revisionLabel(revision.revision)}`}
+              onClose={() => setPrintChoice(false)}
+              actions={
+                <>
+                  <a
+                    className="jp-button"
+                    target="_blank"
+                    rel="noreferrer"
+                    href={`/api/v1/packs/${id}/preview?revision_id=${revision.id}`}
+                  >
+                    Print saved draft
+                  </a>
+                  {dirty && p.actions.can_prepare && (
+                    <button
+                      type="button"
+                      className="jp-primary"
+                      data-primary
+                      onClick={() => {
+                        setPrintChoice(false);
+                        setPrintAfterSave(true);
+                        setPrep("save");
+                      }}
+                    >
+                      Save and print…
+                    </button>
+                  )}
+                </>
+              }
+            >
+              <p>
+                {dirty
+                  ? "Your unsaved entries are not in the saved draft. Save a successor with a reason before printing those changes, or open the saved draft and keep editing."
+                  : "Open the controlled preview of this saved revision, then use your browser’s Print command."}
+              </p>
+              <p>
+                Preparation preview — not issued. Printing does not check, issue
+                or acknowledge a pack.
+              </p>
+            </PackDialog>
+          )}
+          {savedPrint && (
+            <PackDialog
+              title="Saved preparation — ready to print"
+              subtitle={p.display_number}
+              onClose={() => setSavedPrint(null)}
+              actions={
+                printRevision && !r.error && !r.loading ? (
+                  <a
+                    className="jp-button jp-primary"
+                    data-primary
+                    target="_blank"
+                    rel="noreferrer"
+                    href={`/api/v1/packs/${id}/preview?revision_id=${printRevision.id}`}
+                  >
+                    Print saved revision {revisionLabel(printRevision.revision)}
+                  </a>
+                ) : undefined
+              }
+            >
+              <p>
+                The save succeeded. Open the exact saved successor preview, then
+                use your browser’s Print command. Preparation preview — not
+                issued.
+              </p>
+              <ReadState loading={r.loading} error={r.error} retry={r.reload} />
+              {!r.loading && !r.error && !printRevision && (
+                <p>
+                  The saved revision is not available in this read.{" "}
+                  <button type="button" onClick={r.reload}>
+                    Reload saved revision
+                  </button>
+                </p>
+              )}
+            </PackDialog>
           )}
           {prep === "discard" && (
             <DiscardDialog
@@ -1273,7 +1436,10 @@ export function NewJobPackScreen({ appointmentId }: { appointmentId: string }) {
                   />
                 </ValidationFields>
               </div>
-              <aside className="jp-right-rail" aria-label="Preparation guidance">
+              <aside
+                className="jp-right-rail"
+                aria-label="Preparation guidance"
+              >
                 <PreparationStatusCard />
                 <PreparationGuidanceCard />
               </aside>
