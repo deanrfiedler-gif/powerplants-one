@@ -94,4 +94,29 @@ Initial head `0bb5ede` passed the compiled application browser suite and applica
 
 Concurrent refresh found #282 and #283 merged. The branch rebased onto `743d58f`, preserving both shell contributions, STATUS entries and all document-register records under its new schema. No #281/#282 change was copied or weakened. The working design register now includes `/search`, SH guides/contracts and shared-shell dependencies. Guides and visual review stay Draft/Needs review; earlier captures predate #283 integration and no review fingerprint was manufactured.
 
-Focused NetLog/SH/shell units pass **14/14**. Foundation and prototype assurance pass. Post-rebase browser, HTTP, naming and fresh remote CI results are pending at this repair checkpoint and will be recorded below.
+Post-rebase local checks: **21/21** focused NetLog, SH, shell and development-register/history units; lint, typecheck, compiled build, foundation, prototype, naming and `studio:check` passed. Naming records 7,993 project-instruction characters; register integrity records 267 entries and 113 canonical source routes, all still unreviewed. The original Finance HTTP isolation proof passed **1/1** from fresh synthetic seed. Its first repair iteration correctly exposed an Activity permission refusal for the systems identity; the final test explicitly permits 403 only with `Forbidden`, retains private no-store, and validates item arrays for successful projections. Reusing that dated fixture without reset correctly refused its existing technician booking; the passing run used the normal guarded reset of task-owned `ppo_synthetic_test` on port 55438.
+
+The combined local compiled Leads/Projects/SH/My Work/shell run recorded **37 passed, 2 failed, 21 intentional viewport skips and 9 not run**. All 429 routes were reachable; desktop seven-width geometry passed. The desktop My Work group timed out starting its dedicated server before assertions; mobile SH geometry timed out after five seconds while Search still displayed Loading. Other phone SH journeys and all ten retained phone My Work journeys passed. These are retained local failures, not a clean combined run and not asserted to reproduce on main. Isolated reruns and the complete remote suite are reported on [PR #284](https://github.com/deanrfiedler-gif/powerplants-one/pull/284); no deadline, guard or assertion was relaxed.
+
+Commands for this repair:
+
+```text
+node --import tsx --test tests/unit/netlog-metadata.test.ts tests/unit/sh-platform.test.ts tests/unit/desktop-shell.test.ts tests/unit/development*.test.ts
+node --env-file=.env.local --import tsx --test --test-reporter=tap tests/integration/quality-http.test.ts
+npx playwright test --config=playwright.compiled.config.ts tests/browser/leads.spec.ts tests/browser/projects-gantt.spec.ts tests/browser/sh-platform.spec.ts tests/browser/my-work.spec.ts tests/browser/my-work-mobile.spec.ts tests/browser/shell.spec.ts --output=tmp/sh-ci-browser --reporter=list
+```
+
+A separate actual-browser guide check opened Search, Notifications and Reviews guidance, verified their route-specific titles, Draft state and register handoff, retained the design-workspace header control, and checked the 390px Search guide for overflow. These fresh captures were opened and inspected: [merged bell](captures/rebased-notification-bell.png), [Search guide desktop](captures/rebased-search-guide-desktop.png), [Search guide phone](captures/rebased-search-guide-phone.png). They supplement the 37 initial implementation captures; the manifest now contains 40 entries. They establish bounded integration inspection, not new owner acceptance. Search results are still loading behind the desktop guide capture; that image is guide evidence only.
+
+The repaired-code head `5f51713` passed the previously failing Leads, Projects, focused HTTP and performance jobs. [Application assurance run 35811277877](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35811277877) exercises the streaming metadata writer. At this recorded checkpoint 14 checks had passed and five longer checks remained running. Final exact-head checks, isolated retry outcomes and the latest main refresh belong to the live PR verification record; this checkpoint is not a claim that pending checks passed.
+
+### Isolated post-rebase retries
+
+With unchanged test code and deadlines, the dedicated desktop My Work rerun passed **11/11** (warm-up plus ten journeys), and the phone seven-width geometry/review-perspectives rerun passed **2/2** (warm-up plus the original case). All 429 routes remained reachable in both runs. The combined run's original timeout evidence remains recorded above.
+
+```text
+npx playwright test --config=playwright.compiled.config.ts tests/browser/my-work.spec.ts --project=desktop-chromium --output=tmp/sh-ci-my-work-rerun --reporter=list
+npx playwright test --config=playwright.compiled.config.ts tests/browser/sh-platform.spec.ts --project=mobile-chromium --grep "SH review perspectives" --output=tmp/sh-ci-geometry-rerun --reporter=list
+```
+
+Application code is unchanged from `5f51713`; the follow-up commit records evidence and design references only. Final CI on that exact published head is linked from the PR rather than inferred from its predecessor.

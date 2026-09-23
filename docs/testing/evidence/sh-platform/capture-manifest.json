@@ -187,6 +187,27 @@
       "file": "notifications-failed.png",
       "source": "tmp/sh-reviewed-browser/sh-platform-SH-failure-par-e7e45--and-clear-revoked-previews-mobile-chromium/notifications-failed.png",
       "sha256": "d6bef35d014f37bd6b46e2b77085a7249fd3a3f06aa27a6d70dd08cc3cf4bfd1"
+    },
+    {
+      "file": "rebased-notification-bell.png",
+      "source": "tmp/sh-ci-browser/sh-platform-SH-notificatio-83b23-ate-and-preferences-persist-desktop-chromium/notification-bell.png",
+      "sha256": "091035c99d2b7064147c03f8f7ca1c88f6cfd58406c9bed124a7d198c69ef440",
+      "source_commit": "5f51713170d10a722030344a292c332a74515064",
+      "purpose": "Post-rebase shell/guide integration; implementation inspection, not owner approval"
+    },
+    {
+      "file": "rebased-search-guide-desktop.png",
+      "source": "tmp/sh-ci-guide-proof/-search-guide-desktop.png",
+      "sha256": "244a44e1e40504f93400c72febc6486032659fefbef9377da741c47c6f74667a",
+      "source_commit": "5f51713170d10a722030344a292c332a74515064",
+      "purpose": "Post-rebase shell/guide integration; implementation inspection, not owner approval"
+    },
+    {
+      "file": "rebased-search-guide-phone.png",
+      "source": "tmp/sh-ci-guide-proof/search-guide-phone.png",
+      "sha256": "c15e5a8005e560e1161ab4242e6b68e3f89a68a868a614ca2c314f5b2420723e",
+      "source_commit": "5f51713170d10a722030344a292c332a74515064",
+      "purpose": "Post-rebase shell/guide integration; implementation inspection, not owner approval"
     }
   ]
 }

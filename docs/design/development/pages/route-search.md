@@ -40,3 +40,7 @@ Open record hands off to the owning domain. Browser Back retains URL criteria. S
 Use text and optional record type. Pagination requires one type and a cursor tied to the query. Facility context identifies site, physical parent and grouping; identical names alone do not establish identity.
 
 [SH verification](../../../testing/evidence/sh-platform/README.md) records actual checks, inspected captures and CI repairs; [handover](../../../delivery/sh-platform-handover.md) records scope and dependencies. Images above predate the merged development-workspace shell controls and require a fresh paired review for that integration. No review fingerprint or owner acceptance is claimed. The article `guide.route-search` remains Draft.
+
+## Post-rebase guide inspection
+
+The implementation agent inspected the merged header/guide at 1440 × 1000 and 390 × 844 on `5f51713`. The route-specific Search article opens, retains Draft and Last reviewed: Not recorded, and links to its register entry. The phone guide wraps within the viewport. [Desktop capture](../../../testing/evidence/sh-platform/captures/rebased-search-guide-desktop.png) and [phone capture](../../../testing/evidence/sh-platform/captures/rebased-search-guide-phone.png) record that bounded check; the background results are not the subject of this capture. Owner and paired design acceptance remain pending, so no review fingerprint is set.

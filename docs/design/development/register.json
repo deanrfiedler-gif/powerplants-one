@@ -7690,7 +7690,9 @@
       "guide_key": null,
       "design_path": "docs/design/development/systems/shell.md",
       "html_path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/sh-platform/captures/rebased-notification-bell.png"
+      ],
       "dependencies": [
         "src/components/shell-controls.tsx",
         "src/components/notification-workspace.tsx",
@@ -7866,7 +7868,9 @@
         "docs/testing/evidence/sh-platform/captures/compact-search-desktop.png",
         "docs/testing/evidence/sh-platform/captures/search-desktop.png",
         "docs/testing/evidence/sh-platform/captures/search-320.png",
-        "docs/testing/evidence/sh-platform/captures/search-preview-phone.png"
+        "docs/testing/evidence/sh-platform/captures/search-preview-phone.png",
+        "docs/testing/evidence/sh-platform/captures/rebased-search-guide-desktop.png",
+        "docs/testing/evidence/sh-platform/captures/rebased-search-guide-phone.png"
       ],
       "dependencies": [
         "src/components/platform-search.tsx",
