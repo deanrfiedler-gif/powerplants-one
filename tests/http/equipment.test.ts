@@ -3,7 +3,8 @@ import { test } from "node:test";
 import { randomUUID } from "node:crypto";
 const origin = `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 const company = "20000000-0000-4000-8000-000000000001",
-  site = "70000000-0000-4000-8000-000000000001";
+  // Keep the seeded Site-01 observer window intact for the concurrent shared HTTP suite.
+  site = "70000000-0000-4000-8000-000000000002";
 const base = () => ({
   schema_version: 1,
   operation_id: randomUUID(),

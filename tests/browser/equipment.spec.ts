@@ -4,7 +4,8 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 const company = "20000000-0000-4000-8000-000000000001",
-  site = "70000000-0000-4000-8000-000000000001";
+  // Preserve the seeded Site-01 observer window used by retained browser journeys.
+  site = "70000000-0000-4000-8000-000000000002";
 const base = () => ({
   operation_id: randomUUID(),
   schema_version: 1,
