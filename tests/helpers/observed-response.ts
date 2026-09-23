@@ -1,8 +1,8 @@
-import { test, type Page, type Response } from "@playwright/test";
+import { test, type Page, type Request, type Response } from "@playwright/test";
 
 // Preserve the existing action/response deadlines and their failures. This
 // observer distinguishes actionability, request, response and click completion.
-export async function observedResponse(page: Page, label: string, matches: (response: Response) => boolean, action: () => Promise<unknown>) {
+export async function observedResponse(page: Page, label: string, matches: (response: Response) => boolean, action: () => Promise<unknown>, navigation?: { request: (request: Request) => boolean; timeout: number }) {
   const at = Date.now();
   const events: { event: string; elapsed_ms: number; status?: number }[] = [];
   const record = (event: string, status?: number) => {
@@ -18,8 +18,18 @@ export async function observedResponse(page: Page, label: string, matches: (resp
   page.on("request", request).on("response", response).on("requestfinished", finished).on("requestfailed", failed);
   record("wait-start");
   try {
+    const wait = async () => {
+      if (navigation) {
+        // A navigation must load and hydrate before it can issue its data read.
+        // Give request readiness its navigation budget, then start the existing
+        // response budget. Ordinary command observers keep their original timing.
+        await page.waitForRequest(navigation.request, { timeout: navigation.timeout });
+        record("navigation-request");
+      }
+      return page.waitForResponse(matches);
+    };
     const outcomes = await Promise.allSettled([
-      page.waitForResponse(matches).then(r => { record("wait-resolved", r.status()); return r; }, error => { record("wait-rejected"); throw error; }),
+      wait().then(r => { record("wait-resolved", r.status()); return r; }, error => { record("wait-rejected"); throw error; }),
       action().then(() => record("click-resolved"), error => { record("click-rejected"); throw error; }),
     ]);
     if (outcomes[0].status === "rejected") throw outcomes[0].reason;
@@ -27,6 +37,6 @@ export async function observedResponse(page: Page, label: string, matches: (resp
     return outcomes[0].value;
   } finally {
     page.off("request", request).off("response", response).off("requestfinished", finished).off("requestfailed", failed);
-    await test.info().attach(`${label}-lifecycle`, { body: JSON.stringify({ started_at_ms: at, events, boundary: "Original response and click timeouts; no retries or timeout extension; no request data retained." }, null, 2), contentType: "application/json" });
+    await test.info().attach(`${label}-lifecycle`, { body: JSON.stringify({ started_at_ms: at, events, boundary: navigation ? "Separate navigation-to-request budget; original response and action timeouts; no retries or request data retained." : "Original response and click timeouts; no retries or timeout extension; no request data retained." }, null, 2), contentType: "application/json" });
   }
 }
