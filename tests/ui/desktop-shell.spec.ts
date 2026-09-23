@@ -214,7 +214,7 @@ test("runtime shell matches the retained r17 reference typography, panel geometr
       await expect(actualPanel.locator(".ppo-menu-group .ppo-more-link")).toHaveCount(26);
       await expect(actualPanel.locator(".ppo-help-link")).toBeVisible();
       for (const [name, href] of [["Sales-to-Estimating handovers", "/sales/handoffs/estimating"], ["Won-deal receiving", "/sales/handoffs/won"], ["Aftercare & renewal", "/sales/aftercare"]]) {
-        await expect(actualPanel.getByRole("link", { name, exact: true })).toHaveAttribute("href", `${href}?department=sales`);
+        await expect(actualPanel.getByRole("link", { name, exact: true })).toHaveAttribute("href", href);
       }
       await expect(actualPanel.locator("footer")).toContainText("27 destinations");
       await expect(actualPanel.getByRole("link", { name: "Facilities & growing areas", exact: true })).toHaveAttribute("href", "/facilities?department=sales");

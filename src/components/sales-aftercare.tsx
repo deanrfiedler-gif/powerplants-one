@@ -249,7 +249,8 @@ function AftercareWorkspace({
       };
     }
   }, [command.accepted]);
-  const blocked = command.busy || !!command.pending || !command.ready;
+  const refreshing = !!command.accepted && row.version < command.accepted.receipt.record_version;
+  const blocked = command.busy || !!command.pending || !command.ready || refreshing;
   useUnsavedChanges(dirty, !!command.pending);
   const update = <K extends keyof ReviewDraft>(
     key: K,
@@ -287,6 +288,7 @@ function AftercareWorkspace({
         <Link href={`/sites/${row.site_id}`}>Site</Link>
       </p>
       <Recovery command={command} />
+      {refreshing && <p role="status">Loading the saved revision before the next action…</p>}
       {d.owner_conflict && (
         <p role="status">
           The aftercare account-owner assignment differs from Customer 360.

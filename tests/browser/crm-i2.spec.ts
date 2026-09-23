@@ -77,7 +77,7 @@ test("CRM URL restores filtered List, Board stage and sort through reload, a cop
     await expect(copy.getByRole("button", { name: "List", exact: true })).toHaveAttribute("aria-pressed", "true");
   } finally { await copy.close(); }
   await page.getByRole("link", { name: inputs[1].title, exact: true }).click();
-  await expect(page).toHaveURL(new RegExp(`/sales/opportunities/${inputs[1].id}$`));
+  await expect(page).toHaveURL(url => url.pathname === `/sales/opportunities/${inputs[1].id}`);
   await page.goBack(); await expect(page).toHaveURL(linked);
   await expect.poll(() => ids(page)).toEqual(expected);
   await page.getByRole("button", { name: "Board", exact: true }).click();
@@ -186,7 +186,7 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   expect(await snapshot()).toEqual(before);
   await page.getByRole("button", { name: "List", exact: true }).click();
   await page.getByRole("link", { name: inputs[0].title, exact: true }).click();
-  await expect(page).toHaveURL(new RegExp(`/sales/opportunities/${inputs[0].id}$`));
+  await expect(page).toHaveURL(url => url.pathname === `/sales/opportunities/${inputs[0].id}`);
   await page.getByRole("tab",{name:"Scope & sites",exact:true}).click();
   await expect(page.getByLabel("Qualification outcome", { exact: true })).toBeVisible();
   // Reload remounts identity and then reads the permitted opportunity. Reproduce

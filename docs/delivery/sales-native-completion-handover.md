@@ -16,7 +16,7 @@ Implementation order: CR-01/04; CR-02; CR-03; CR-05; integrated assurance. Exist
 
 ## Status and evidence
 
-The native code and full guides are present; final HTTP/browser and CI assurance is in progress. Owner acceptance, merge and deployment are pending.
+The native code and full guides are present in draft PR #303; final browser and CI assurance is in progress. Initial CI passed all 388 units and all 61 CRM/Sales database tests (including the seven new Sales cases). The local Sales HTTP proof passed 1/1. Retained navigation expectations and actual phone header containment are being reconciled. Owner acceptance, merge and deployment are pending.
 
 | Scope | Native result | Persistence and controls |
 |---|---|---|

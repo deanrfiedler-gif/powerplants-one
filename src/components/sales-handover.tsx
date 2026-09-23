@@ -280,7 +280,8 @@ function HandoverContentView({
       };
     }
   }, [command.accepted]);
-  const blocked = command.busy || !!command.pending || !command.ready;
+  const refreshing = !!command.accepted && row.version < command.accepted.receipt.record_version;
+  const blocked = command.busy || !!command.pending || !command.ready || refreshing;
   useUnsavedChanges(dirty, !!command.pending);
   const set = <K extends keyof HandoverContent>(
     key: K,
@@ -343,6 +344,7 @@ function HandoverContentView({
         · As at <Stamp value={d.observed_at} />
       </p>
       <Recovery command={command} />
+      {refreshing && <p role="status">Loading the saved revision before the next decision…</p>}
       {baseVersion !== row.version && dirty && (
         <section role="alert">
           <h2>Saved handover changed</h2>

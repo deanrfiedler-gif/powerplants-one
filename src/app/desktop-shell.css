@@ -219,7 +219,9 @@
   .crm-toolbar .crm-header-search { width: 180px; flex-basis: 180px; }
 }
 @media (max-width: 780px) {
-  .topbar.ppo-shell-header, body:has(.crm-workspace) .topbar.ppo-shell-header { display: flex; gap: 4px; padding: 0 10px; height: 64px; min-height: 64px; }
+  /* Match the legacy identity-strip selector so its grid cannot put utilities
+     in an implicit second row over the first page action. */
+  .workspace .topbar.ppo-shell-header, body:has(.crm-workspace) .topbar.ppo-shell-header { display: flex; gap: 4px; padding: 0 10px; height: 64px; min-height: 64px; }
   .ppo-shell-header .mobile-brand { display: flex; align-items: center; justify-content: center; width: 36px; min-width: 36px; height: 44px; margin: 0; }
   .ppo-shell-header .mobile-brand .brand-logo { width: 34px; height: 34px; }
   .ppo-shell-header .ppo-product-name { font-size: 13px; }

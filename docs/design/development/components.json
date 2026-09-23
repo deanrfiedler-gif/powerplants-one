@@ -1379,7 +1379,7 @@
         "system:shell"
       ],
       "desktop": "Review the real global search, workspace switcher, rail, More and utility controls around this catalogue. Shell access can be unavailable without a running identity/database service.",
-      "mobile": "Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application.",
+      "mobile": "Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application. Native shell controls must remain inside the 64px header, including local identity at 390px and 320px; the legacy CRM grid must not overlay the first page action.",
       "keyboard": "Check tab order, skip link, More dialog, Escape and focus return in the real host.",
       "limitations": "No synthetic permission grants are supplied. The host is not counted as an isolated runnable fixture.",
       "gaps": [
@@ -1396,6 +1396,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "sales-shell-mobile-containment",
+          "expected": "Phone utility controls stay inside the native header and leave Sales back links operable.",
+          "actual": "Sales captures identified an inherited identity-strip grid override. The native flex selector is corrected; final paired evidence and owner review remain pending.",
+          "action": "Run native Sales browser journeys and retained shell geometry checks, then inspect 390px and 320px captures.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

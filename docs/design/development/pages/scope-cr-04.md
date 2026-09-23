@@ -46,7 +46,7 @@ Acceptance evidence is pending. Capture matching original-reference and applicat
 Review stage history, next-action coverage and close-date movement over the same permitted result page as Deals.
 
 - Board, List, Forecast and Archive preserve their existing controls.
-- Pipeline insights expands above the existing worklist.
+- Pipeline insights has a compact 44px disclosure above the worklist and a bounded scrolling body when expanded, retaining Board access at phone widths.
 - Coverage distinguishes known/unknown values and next-action states.
 - Deal drill-through links retain the selected worklist URL.
 
