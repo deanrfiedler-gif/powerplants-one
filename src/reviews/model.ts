@@ -16,7 +16,7 @@ export const reviewViewLabels = {
 };
 export type ReviewTask = {
   id: string;
-  source: "ServiceReport" | "FinanceHandoff" | "EngineeringChange";
+  source: "ServiceReport" | "FinanceHandoff" | "EngineeringChange" | "SiteSurvey";
   module: string;
   record_id: string;
   package_id?: string;

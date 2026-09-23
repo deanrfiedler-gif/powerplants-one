@@ -94,7 +94,9 @@ export function assertOnlyEngineeringSeedGrantsAdded(original: Grant[], upgraded
   const sorted = (gs: Grant[]) => gs.map(g => JSON.stringify(Object.fromEntries(Object.entries(g).filter(([k]) => k !== "id")))).sort();
   const materials = seed29Grants(original, at), changes = seed30Grants(original, at), commissioning = seed31Grants(original, at);
   const earlier = [...materials, ...changes, ...commissioning];
-  const expected=[...earlier,...acceptanceSeedGrants(original,earlier)];
+  const customerReview=original.filter(g=>g.user_id===coordinator&&g.company_id===companyA&&g.scope_type==="Company"&&["shared.read","shared.edit","shared.internal.read","activity.read"].includes(String(g.capability))).map(g=>({...g,user_id:"c5010044-0000-4000-8000-000000000001"}));
+  assert.equal(customerReview.length,4);
+  const expected=[...earlier,...acceptanceSeedGrants(original,earlier),...customerReview];
   assert.equal(materials.length, 31);
   assert.equal(changes.length, 21); // twelve reads for three profiles and nine duty grants
   assert.equal(commissioning.length, 18); // four reads for one profile, six duty grants and eight My Work action grants

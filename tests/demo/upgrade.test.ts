@@ -76,7 +76,8 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   // which the hosted sign-in can never select, and no invited tester gains a material duty from them.
   // Seed 30 adds three more for EN-07: the receiving owners and the verifier that seed 29 had nobody for.
   // Seed 31 adds one for EN-08: the Equipment records receiver that the installed base had nobody for.
-  assert.equal(addedUsers.length,12);
+  assert.equal(addedUsers.length,13);
+  assert.ok(addedUsers.some(r=>r.row.id==="c5010044-0000-4000-8000-000000000001"&&r.row.subject_id==="cs-reviewer"));
   assert.deepEqual(addedUsers.filter(r=>r.row.issuer==="PPO-LocalSynthetic"&&String(r.row.subject_id).startsWith("commissioning-")).map(r=>[r.row.id,r.row.subject_id]),
     [["30000000-0000-4000-8000-000000000025","commissioning-equipment"]]);
   assert.deepEqual(addedUsers.filter(r=>r.row.issuer==="PPO-LocalSynthetic"&&String(r.row.subject_id).startsWith("changes-")).map(r=>r.row.subject_id).sort(),
@@ -179,7 +180,7 @@ test("a baseline executed from Windows CRLF SQL upgrades without rewriting histo
   // 0039 adds ES-02 child identity integrity without a synthetic seed.
   // 0040 adds ES-08 specialist evidence and immutable policy manifests; seed 40 adds no users or grants.
   // 0041 adds typed Facility details and additive synthetic identities, with no users/grants.
-  assert.equal(final.length, baseline.length + 26);
+  assert.equal(final.length, baseline.length + 27);
   assert.ok((await db.query("SELECT to_regclass('ppo.projects') AS relation")).rows[0].relation);
 });
 

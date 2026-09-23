@@ -15,6 +15,7 @@ import { listActivities, readActivity } from "../activities/activities";
 import { listTickets, readIntake } from "../service/intake";
 import { searchQuery } from "./search";
 import type { SearchItem } from "./model";
+import { listCs, readCs } from "../shared/cs/service";
 import {
   exactDocumentPreview,
   searchExactDocuments,
@@ -28,6 +29,7 @@ export type SearchAdapter = {
   label: string;
   list: (query: Query) => Promise<{ items: Row[]; next_cursor: string | null }>;
   detail: (id: string) => Promise<Row>;
+  href?: (row: Row) => string;
   context?: (row: Row) => Promise<string>;
 };
 export type SearchSourceState = {
@@ -48,6 +50,12 @@ export type ApplicationSearch = {
 // Registry entries always use domain readers. No stored result, cursor or preview ID is authority.
 export function searchAdapters(p: Principal): SearchAdapter[] {
   return [
+    ...([['Survey','Site survey'],['Readiness','Site readiness'],['AccountPlan','Account development']] as const).map(([kind,label])=>({
+      kind:label,path:"",label:"name",
+      list:(q:Query)=>listCs(p,kind,q),
+      detail:async(id:string)=>(await readCs(p,kind,id)).record,
+      href:(row:Row)=>kind==='Survey'?`/surveys/${row.id}`:kind==='Readiness'?`/sites/${row.site_id}/readiness`:`/customers/${row.organisation_id}/development`,
+    })),
     {
       kind: "Issued job pack",
       path: "/documents",
@@ -152,7 +160,7 @@ function display(source: SearchAdapter, row: Row): SearchItem {
     label: String(row[source.label] ?? row.title ?? row.summary ?? "Record"),
     reference: String(row.display_number ?? row.reference ?? ""),
     kind: source.kind,
-    href: `${source.path}/${encodeURIComponent(String(row.id))}`,
+    href: source.href?source.href(row):`${source.path}/${encodeURIComponent(String(row.id))}`,
   };
 }
 export async function collectApplicationSearch(
