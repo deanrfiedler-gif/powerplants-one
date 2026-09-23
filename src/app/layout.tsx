@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { ProductHeader, ProductNavigation } from "../components/product-navigation";
+import { ApplicationFrame } from "../components/application-frame";
 import { appleTouchIconPath, navy } from "../platform/installation";
-import { SessionViewBoundary } from "../components/session-view-boundary";
-import { ShellProvider } from "../components/shell-provider";
 import { developmentAvailable } from "../development/access";
 import "./globals.css";
 import "./shared-layout.css";
@@ -31,6 +29,7 @@ import "./styles/facilities.css";
 import "./styles/planner-demand.css";
 import "../components/ui/controls.css";
 import "./styles/development.css";
+import "./styles/component-catalogue.css";
 export const metadata: Metadata = {
   title: "Powerplants One | Private prototype",
   description: "Private synthetic application foundation for Powerplants One",
@@ -68,16 +67,7 @@ export default function RootLayout({
         <a className="skip-link" href="#main">
           Skip to main content
         </a>
-        <ShellProvider hosted={process.env.PPO_ENV === "azure-demo"} development={developmentAvailable()}><div className="app-frame">
-          <ProductNavigation />
-          <div className="workspace">
-            <ProductHeader />
-            <main id="main" tabIndex={-1}>
-              <SessionViewBoundary>{children}</SessionViewBoundary>
-            </main>
-
-          </div>
-        </div></ShellProvider>
+        <ApplicationFrame hosted={process.env.PPO_ENV === "azure-demo"} development={developmentAvailable()}>{children}</ApplicationFrame>
       </body>
     </html>
   );

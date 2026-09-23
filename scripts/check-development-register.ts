@@ -1,3 +1,4 @@
+import { buildComponentLibrary } from "../src/development/component-catalog";
 import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import {
@@ -131,6 +132,8 @@ if (process.argv.includes("--sync")) {
   );
 }
 const catalog = await buildCatalog(root);
+const components = await buildComponentLibrary(root, catalog);
+catalog.errors.push(...components.errors);
 for (const entry of catalog.entries) {
   const spec = await readFile(resolve(root, entry.design_path), "utf8");
   if (!/^## Desktop\s*$/m.test(spec) || !/^## Mobile\s*$/m.test(spec))
@@ -142,6 +145,9 @@ console.log(
   JSON.stringify(
     {
       entries: catalog.entries.length,
+      component_entries: components.entries.length,
+      runnable_components: components.entries.filter(e=>e.coverage === "Runnable").length,
+      component_reviews_pending: components.entries.filter(e=>e.review_state !== "Current").length,
       journeys: catalog.journeys.length,
       current_journeys: catalog.journeys.filter((j) => j.current).length,
       source_routes: catalog.entries.filter((e) => e.kind === "route").length,

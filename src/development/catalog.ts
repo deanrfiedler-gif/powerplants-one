@@ -135,8 +135,11 @@ export async function buildCatalog(root: string): Promise<Catalog> {
     files(root, "docs/reference/ui/module-workflow-maps"),
     readReference(root, "src/app/globals.css"),
   ]);
+  const componentEntries = JSON.parse((await readReference(root, "docs/design/development/components.json").catch(() => Buffer.from('{"entries":[]}'))).toString()).entries as import("./component-model").ComponentRecord[];
+  const componentPaths = [...new Set(componentEntries.flatMap(e => [e.specification, e.reference.path]))];
   const histories = await fileHistories(root, [
     guidePath,
+    ...componentPaths,
     ...master.entries.flatMap((entry) => [
       entry.design_path,
       ...entry.image_paths,
@@ -397,12 +400,14 @@ export async function buildCatalog(root: string): Promise<Catalog> {
     entries,
     journeys,
     tokens,
+    component_links: componentEntries.map(e => ({id:e.id,title:e.title,used_on:e.used_on})),
+    component_resources: await Promise.all(componentPaths.map(p => resource(p, "Component reference", null))),
     unregistered_routes: unregistered,
     errors,
   };
 }
 export function resourcesFor(catalog: Catalog): Resource[] {
-  return [...catalog.entries.flatMap((e) => e.resources), ...catalog.journeys];
+  return [...catalog.entries.flatMap((e) => e.resources), ...catalog.journeys, ...(catalog.component_resources ?? [])];
 }
 export function documentationSlug(entry: Pick<Entry, "key">): string {
   return entry.key

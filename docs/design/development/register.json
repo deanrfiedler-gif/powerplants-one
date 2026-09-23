@@ -7697,10 +7697,10 @@
     },
     {
       "key": "route:/development/design-system",
-      "title": "Theme & shared controls",
+      "title": "Component catalogue",
       "kind": "route",
       "module": "Development",
-      "summary": "Inspect the runtime theme tokens and reusable controls, and prepare a proposed global style adjustment with its likely page impact.",
+      "summary": "Browse real PPO components, responsive states, design references, consuming pages and unresolved alignment differences.",
       "path": "/development/design-system",
       "source_paths": [
         "src/app/development/design-system/page.tsx"
@@ -7709,7 +7709,9 @@
       "design_path": "docs/design/development/pages/route-development-design-system.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/components.json"
+      ],
       "scope_status": "Local development source",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -7754,6 +7756,36 @@
         "system:guidance"
       ],
       "reviewer": null
+    },
+    {
+      "key": "route:/development/component-preview",
+      "title": "Component preview",
+      "kind": "route",
+      "module": "Development",
+      "summary": "Internal gated renderer for synthetic catalogue examples; open with a registered component/state from the catalogue.",
+      "path": "/development/component-preview",
+      "source_paths": [
+        "src/app/development/component-preview/page.tsx"
+      ],
+      "guide_key": "guide.route-development-component-preview",
+      "design_path": "docs/design/development/pages/route-development-component-preview.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "docs/design/development/components.json"
+      ],
+      "scope_status": "Internal catalogue renderer; source present",
+      "visual_status": "Needs review",
+      "functional_status": "Not recorded here",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "route:/development/design-system"
+      ]
     }
   ]
 }
