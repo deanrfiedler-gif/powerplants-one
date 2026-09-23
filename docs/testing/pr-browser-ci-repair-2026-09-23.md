@@ -61,3 +61,21 @@ The compiled run used `playwright.compiled.config.ts` and the ordinary deadlines
 ### Current-main integration
 
 After `8bd6b93` was pushed, GitHub reported PR #293 as conflicting and did not create new pull-request checks. Main had advanced to `7bf972c` through merged #290. Its only textual conflict was the document register: PR #293's three final CS statuses were retained alongside main's two new hosted-workspace records. All other main changes were incorporated unchanged. Foundation and naming checks passed on the resolved tree: 78 parent IDs, 4,375 local links, 3,180 text files and 410 document records. Fresh CI must verify the combined source. Incorporating an already merged branch does not deploy the hosted workspace.
+
+## Shell navigation before ES-08 reset
+
+The [PR #292 compiled follow-up](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35859692355/job/107176574668) passed 340 cases with 60 intentional skips but failed the first desktop ES-08 reset. The [PR #291 broad follow-up](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35859677874/job/107176526784) likewise passed 340 and failed the first mobile reset. Both database logs show reads contending with schema removal; the route-handling errors from the earlier repair are gone.
+
+The prior focused run omitted `shared.spec.ts` and `shell.spec.ts`, which actually run between SH and ES-08. The shell preview case navigates through Engineering and My Work before ending on Customers; it had no retained-read teardown. The existing retained-read hooks now cover all three shell cases too, including reads abandoned during navigation. The reset itself, business assertions, transport deadlines and application code are unchanged.
+
+An unchanged local shell/ES-08 sequence passed nine cases, so the CI scheduling race was not reproduced in that bounded run. The controlled overlapping-read regressions remain the deterministic before/after proof of the retained-read mechanism. Local verification and new CI results are recorded separately below.
+
+Dean subsequently authorised merging the open PRs after their checks pass. Earlier statements that no merge was authorised describe the prior task scope; deployment remains separate.
+
+Extending the old `networkidle` teardown exposed a second local failure: both desktop and phone deliberately unavailable-page cases timed out in that wait (23 passes, two failures). The shared finish helper now navigates to `about:blank` while interception remains registered, drains the retained reads, then removes routes. This stops page refresh/focus producers and avoids depending on the failed page reaching network idle. The regression additionally covers reads abandoned by teardown itself.
+
+### Completed local sequence and merged prerequisite
+
+The final compiled local run passed **27/27 cases in 4.3 minutes**, with no skips: SH, shared context, all shell cases, the following ES-08 native/reset case and six controlled read-drain regressions on desktop and phone, plus warm-up. All 450 warm-up routes were reachable; the isolated PostgreSQL log recorded no errors or deadlocks. The exact filter was `SH |P02 diagnostic|responsive shell|unavailable dependency|r17 preview|ES08 native six|teardown waits` across the five corresponding spec files. Evidence is retained in the repair worktree under ignored `tmp/shell-final.log` and `tmp/shell-final-results`. The six drain regressions also passed separately. An intermediate test-fixture edit incorrectly gated its HTML response; that edit was corrected before this clean final run.
+
+PR #293 passed all 17 final reported checks and was merged with Dean's subsequent authorisation as `34e73b03c8c9e4d754f52c98488db2cfea7f9d39`. Both full browser lanes at its reviewed head passed 341 cases with 60 intentional skips each. The remaining branches incorporate that merged prerequisite, preserving their own decisions, register entries and application work. Their latest shell-cleanup changes still require fresh full CI before merge.
