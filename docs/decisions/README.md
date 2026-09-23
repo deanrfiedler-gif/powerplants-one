@@ -2,6 +2,8 @@
 
 [Notice accent rule departure](notice-accent-rule-departure.md) is a **proposed** design-system decision: whether notices keep the 3 px coloured left rule used by theme board r22 and Job Pack r03. Raised from the field work timer concept on 23 September 2026; not accepted.
 
+[Field work timer design](field-work-timer-design.md) records Dean's acceptance on 23 September 2026 of the FI-01 work timer presentation baseline r05 (record header with the state and controls, job menu, one visit track, edge-to-edge time and activity lists, multi-day allowance). Presentation only; the timer is not implemented.
+
 [Department navigation icons](department-navigation-icons.md) implements seven ordered department rails, semantic SVG pairs and bounded existing-service landings. It amends r17's no-shortcuts choice; readiness and permissions control live links.
 
 [ES-08 Screen Geometry Study architecture proposal](es08-screen-geometry-study.md) retains the quantity engine and proposes an owned versioned study with explicit mapping, source adoption and immutable drawings. Audit only at `0c95c5a`; no migration slot or native implementation is authorised by that session.
