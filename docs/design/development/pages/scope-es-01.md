@@ -6,11 +6,11 @@ This is an editable working specification. Existing accepted page baselines take
 
 ## Purpose and task
 
-Extend the estimate/discovery registers with intake, allocation, estimator workload, clarification and returned briefs.
+The native front door now reads permitted opportunity briefs alongside discovery ownership/readiness and saved-estimate links. Allocation, intake acceptance, returned-brief commands and priority policy remain Not configured. This is the first native programme increment, not completion of every ES-01 business-state transition.
 
 1. Find the intake or existing estimate
 2. Check scope completeness and required clarification
-3. Assign or review the next estimating action
+3. Review the next estimating step and open the exact discovery or saved estimate
 
 ## Desktop
 
@@ -33,6 +33,18 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 ## Visual references
 
 No exact image or HTML reference is linked. Keep this gap visible.
+
+## Native workload contract — 24 September 2026
+
+Reuse the current shell, PageHeader, Button/ButtonLink, ErrorNotice and Status. The r20 page type is a register/worklist. Incoming handover: canonical Opportunity UUID/company/version and need summary, plus the current estimating workspace and selected option. A post-Won Sales handover-due reference is shown as an obligation only. No accepted intake is inferred. Outgoing links retain workspace, opportunity, option and saved-estimate identity; ordinary navigation writes nothing.
+
+Desktop: the filter row wraps search, readiness, owner and sort; cards have brief, ownership/context and next-step columns. At 1000 px, next step spans the card below two source columns. At 600 px and below, all card regions and filters stack. Keep labels and action links visible at 390 and 320 CSS px and 200% zoom. Allow long references, briefs and owner names to wrap. Reuse navy/green semantic tokens and Roboto/Verdana; no new masthead or rail.
+
+URL filters survive reload and browser history. Search applies literally to canonical customer, brief, title and reference before the bounded candidate window. Readiness filters apply within the 100-candidate window, explicitly labelled; counts are displayed permitted rows, not global workload. My estimating work refers to the workspace owner, not Sales ownership. The Saved estimates view preserves the existing E1 register at `/estimating?tab=estimates`.
+
+Loading, no matches, empty permitted workload, failure, no-permission and revoked-access states remain distinct. Failed refresh clears rows rather than displaying old data as current. This page has no business command or unsaved proposal; stale writes and uncertain operations are handled in the existing destination workflow. Required response date stays Unknown; Sales action due date is separate. No automatic price, approval or issue follows from complete scope.
+
+Native evidence and current verification: [programme handover](../../../delivery/estimating-programme-handover.md). Missing exact design image remains explicit. No baseline or owner visual acceptance is registered.
 
 ## Behaviour, handovers and verification
 
