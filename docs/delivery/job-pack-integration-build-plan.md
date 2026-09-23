@@ -223,7 +223,7 @@ Pure presentation logic — input diff, timeline assembly, readiness summary, st
 | DP-13 | Header action "Prepare pack" | "Prepare successor revision" | Found in I2: every save is a new immutable revision (DP-2), so the accepted label would understate what the action does; it is also the name the P11 journey helper already uses |
 | DP-14 | Class names `.layout`, `.notice`, `.field`, `.badge` … | The same rules under a `jp-` prefix | Found in I2: `globals.css` already defines `.notice`, `.field` and a 10 px `footer`, which would leak into the scope container. Tokens, values and geometry are unchanged and are asserted against the issued HTML |
 
-DP-15 to DP-21 follow the adoption of D6–D10 on 23 September 2026 (§7). They are proposed in [build report](job-pack-build-report.md) Appendix F and recorded here as adopted departures for the increments that deliver them.
+DP-15 to DP-21 follow the adoption of D6–D10 on 23 September 2026 (§7); DP-22 was adopted on the same day, after I3 measured the defect it resolves. They are proposed in [build report](job-pack-build-report.md) Appendix F and recorded here as adopted departures for the increments that deliver them.
 
 | # | r03 | Application treatment | Why |
 |---|---|---|---|
@@ -234,6 +234,7 @@ DP-15 to DP-21 follow the adoption of D6–D10 on 23 September 2026 (§7). They 
 | DP-19 | Breadcrumb "Service › Field technicians › Job pack" | "Service › Job packs › {reference}", beside the shell breadcrumb | D8-A; recorded as an accepted exception in the UI-consistency handover |
 | DP-20 | Tools table with "Parts: not applicable" | Recorded controls table in section 07 and a compact list in 08; no parts row | No parts criterion exists, and the frozen control text is identical in both sections |
 | DP-21 | Section 01 shows the coordinator, site address and visit status | Coordinator and live visit status omitted; the location stays in section 02 | Neither is in the pack read; the location is in the frozen arrangements text |
+| DP-22 | Preparation action bar `position:sticky; bottom:12px` | **Fixed** above the shell’s navigation bar at ≤ 760 px; r03’s static fallback is kept below 650 px of viewport height | Found in I3. A sticky box may not be displaced above its containing block, and on a phone the form begins near the foot of the scrollport, so the bar was clamped to the form’s own top and fell behind the shell’s fixed bar — measured at 26 px of overlap at 390 px and 145 px at 320 px. A bottom inset, which §11 anticipated, does not reach the cause. Every r03 value — box, padding, radius, shadow, border, 44 px targets — is unchanged; only the positioning scheme differs. Because a fixed bar paints over the modal backdrop, it is hidden while a dialog is open |
 
 
 ## 7. Decisions
@@ -337,7 +338,7 @@ A local machine without the document renderer reports `RenderOrStorageFailure` i
 
 Measured on the owner's Windows machine during I1, 20 September 2026, so that later increments do not rediscover them:
 
-- `ppo_synthetic_test` does not exist and the local role has no `CREATEDB`, so the database suites cannot run there. CI is their first execution until that database is created by a privileged role.
+- ~~`ppo_synthetic_test` does not exist and the local role has no `CREATEDB`, so the database suites cannot run there.~~ **Superseded on 23 September 2026.** The database every `.env.local` named was a task-owned cluster inside a worktree, and it was destroyed when that worktree was cleaned up. A durable cluster now lives outside every worktree at `C:\Users\Dean.Fiedler\ppo-pgdata` on port 5433, holding both `ppo_synthetic` and `ppo_synthetic_test`, so `npm run test:db` runs locally. Its README records how to move it to the 5432 service that `.env.example` documents. A local database failure must still be compared with CI’s `P01–P11 database proof` on the same commit before it is attributed to a change: a clean full-suite local baseline has not yet been established, single-file reruns against an already-exercised database are not a valid way to run these suites, and the disposable cluster used during I3 produced five failures CI did not reproduce. CI remains the authority for a database result.
 - The dev database held no pack, so a pack page has nothing to show until one is prepared through the planner.
 - `tsconfig.json` includes every `.ts` under the root. A git-ignored `tmp/` holding 641 of them exhausts the default heap; the type check passes on the tracked tree with `tmp/` excluded. CI's clean checkout is unaffected.
 - Four unit tests fail there and fail identically on unmodified `main`, because they assume POSIX paths and file modes: `document-store` (2), `recovery` (1) and `warm-routes` (1).

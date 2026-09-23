@@ -12,6 +12,12 @@ Expose existing audit foundations in a permission-filtered history and controlle
 2. Review source context and successor changes
 3. Export only the permitted scope with its evidence basis
 
+## Route gap and retained status
+
+No `/admin/audit` route exists. On 23 September 2026 `src/app` had no audit route, page or component, and `src/app/api/v1` had no audit endpoint; `/admin` shows exceptions and `/admin/recovery/[id]` one recovery record. The workspace therefore shows `/admin/audit` as a proposed destination, matching the r05 register (`Planned route`, no linked routes).
+
+The retained `refine` status is the imported r04 build-plan classification ("Refine existing", rank 9), carried unchanged into r05. It refers to the audit foundations this scope would expose, not to an existing page: the append-only `ppo.audit_events` table (introduced in migration 0001) and the record histories that owning modules already show, such as Facility history and Contact correction history. The issued Coverage Audit r04 classifies AD-07 as **N — New design candidate**: no dedicated screen was found. SH-04, SH-05, PL-04, DK-03 and DK-07 have the same route-less `refine` classification, so the status is kept rather than reclassified for this one scope. Any reclassification is an owner decision for the register as a whole.
+
 ## Desktop
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
@@ -32,7 +38,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+No exact image or HTML reference is linked, and no application page exists to capture. Keep this gap visible.
 
 ## Behaviour, handovers and verification
 
