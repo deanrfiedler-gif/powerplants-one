@@ -14,6 +14,8 @@ The native front door now reads permitted opportunity briefs alongside discovery
 
 ## Desktop
 
+Native cards stack by available container width when enlarged, preserving whole owner/status values. The scoped header avoids the legacy phone grid and reflows its centre controls when constrained. Actual native captures are retained in [workload evidence](../../../testing/evidence/estimating-native-workload/README.md); exact ES-01 comparison imagery remains missing and owner/device acceptance pending.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
@@ -38,7 +40,7 @@ No exact image or HTML reference is linked. Keep this gap visible.
 
 Reuse the current shell, PageHeader, Button/ButtonLink, ErrorNotice and Status. The r20 page type is a register/worklist. Incoming handover: canonical Opportunity UUID/company/version and need summary, plus the current estimating workspace and selected option. A post-Won Sales handover-due reference is shown as an obligation only. No accepted intake is inferred. Outgoing links retain workspace, opportunity, option and saved-estimate identity; ordinary navigation writes nothing.
 
-Desktop: the filter row wraps search, readiness, owner and sort; cards have brief, ownership/context and next-step columns. At 1000 px, next step spans the card below two source columns. At 600 px and below, all card regions and filters stack. Keep labels and action links visible at 390 and 320 CSS px and 200% zoom. Allow long references, briefs and owner names to wrap. Reuse navy/green semantic tokens and Roboto/Verdana; no new masthead or rail.
+Desktop: search and Apply filters remain visible; the native Readiness, owner and sort disclosure retains additional selections when collapsed. This also leaves room for the first workload card on a phone. Cards have brief, ownership/context and next-step columns. At 1000 px, next step spans the card below two source columns. At 600 px and below, card regions and expanded filters stack. Keep labels and action links visible at 390 and 320 CSS px and 200% zoom. Allow long references, briefs and owner names to wrap. Reuse navy/green semantic tokens and Roboto/Verdana; no new masthead or rail.
 
 URL filters survive reload and browser history. Search applies literally to canonical customer, brief, title and reference before the bounded candidate window. Readiness filters apply within the 100-candidate window, explicitly labelled; counts are displayed permitted rows, not global workload. My estimating work refers to the workspace owner, not Sales ownership. The Saved estimates view preserves the existing E1 register at `/estimating?tab=estimates`.
 

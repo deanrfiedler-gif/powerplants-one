@@ -26,6 +26,25 @@
   flex-direction: column;
   gap: 4px;
   font-weight: 600;
+  margin: 0;
+}
+.est-workload-advanced summary {
+  cursor: pointer;
+  min-height: 44px;
+  padding: 12px 8px;
+}
+.est-workload-advanced summary:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+.est-workload-advanced[open] {
+  flex: 1 1 100%;
+}
+.est-workload-advanced > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 12px;
 }
 .est-workload-filters input,
 .est-workload-filters select {
@@ -46,6 +65,8 @@
 .est-workload-rows {
   display: grid;
   gap: 12px;
+  container-type: inline-size;
+  container-name: workload-cards;
 }
 .est-workload-row {
   display: grid;
@@ -86,6 +107,37 @@
 .est-workload-boundaries {
   margin-top: 20px;
 }
+.workspace:has(.est-workload) .ppo-shell-header {
+  container-type: inline-size;
+  container-name: workload-header;
+}
+@container workload-cards (max-width: 900px) {
+  .est-workload-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .est-workload-context,
+  .est-workload-next {
+    border-left: 0;
+    border-top: 1px solid var(--line-soft);
+    padding: 16px 0 0;
+  }
+}
+@container workload-header (max-width: 900px) {
+  .workspace:has(.est-workload) .ppo-header-centre {
+    position: static;
+    transform: none;
+    width: auto;
+    flex: 1 1 140px;
+    min-width: 0;
+  }
+  .workspace:has(.est-workload) .ppo-global-search kbd {
+    display: none;
+  }
+  .workspace:has(.est-workload) .product-heading {
+    max-width: 22%;
+  }
+}
 /* Local identities enable an older shell grid. Match the current compact shell
    row on this register, including 200% reflow, without changing other pages. */
 @media (max-width: 780px) {
@@ -115,6 +167,9 @@
     padding: 16px 0 0;
   }
   .est-workload-filters label {
+    flex-basis: 100%;
+  }
+  .est-workload-advanced {
     flex-basis: 100%;
   }
   .est-workload-nav {

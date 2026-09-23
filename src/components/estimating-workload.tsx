@@ -72,34 +72,45 @@ export function EstimatingWorkload() {
                 placeholder="Customer, opportunity or brief"
               />
             </label>
-            <label>
-              Scope readiness
-              <select name="view" defaultValue={params.get("view") ?? "all"}>
-                <option value="all">All readiness states</option>
-                {Object.entries(workloadLabels).map(([id, label]) => (
-                  <option key={id} value={id}>
-                    {label}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Estimating owner
-              <select name="owner" defaultValue={params.get("owner") ?? "all"}>
-                <option value="all">All permitted owners</option>
-                <option value="mine">My estimating work</option>
-              </select>
-            </label>
-            <label>
-              Sort workload
-              <select
-                name="sort"
-                defaultValue={params.get("sort") ?? "updated"}
-              >
-                <option value="updated">Recently changed</option>
-                <option value="customer">Customer</option>
-              </select>
-            </label>
+            <details className="est-workload-advanced">
+              <summary>Readiness, owner and sort</summary>
+              <div>
+                <label>
+                  Scope readiness
+                  <select
+                    name="view"
+                    defaultValue={params.get("view") ?? "all"}
+                  >
+                    <option value="all">All readiness states</option>
+                    {Object.entries(workloadLabels).map(([id, label]) => (
+                      <option key={id} value={id}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  Estimating owner
+                  <select
+                    name="owner"
+                    defaultValue={params.get("owner") ?? "all"}
+                  >
+                    <option value="all">All permitted owners</option>
+                    <option value="mine">My estimating work</option>
+                  </select>
+                </label>
+                <label>
+                  Sort workload
+                  <select
+                    name="sort"
+                    defaultValue={params.get("sort") ?? "updated"}
+                  >
+                    <option value="updated">Recently changed</option>
+                    <option value="customer">Customer</option>
+                  </select>
+                </label>
+              </div>
+            </details>
             <Button type="submit" variant="primary">
               Apply filters
             </Button>
