@@ -33,7 +33,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+Accepted presentation baseline: [field work timer r05](../../../reference/ui/field-work-timer/powerplants-one-field-work-timer-r05.html) ([decision](../../../decisions/field-work-timer-design.md), [change record](../../../reference/ui/field-work-timer/powerplants-one-field-work-timer-r05-change-record.md)). It governs the work timer on the job page and the running-timer banner in My Jobs, at 1440, 1024, 820 and 390 px. The timer is not implemented, so no application comparison exists; the visual review status below stays open until the built page is compared with the baseline.
 
 ## Behaviour, handovers and verification
 
