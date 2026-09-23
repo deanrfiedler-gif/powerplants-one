@@ -476,8 +476,10 @@ function OpportunityContent({
         </div>
       </div>
       {o.original_owner && <p className="source-stamp">Original deal owner: {o.original_owner.owner_name} · Current owner: {o.owner_name}</p>}
-      {o.can_transfer && <p><button className="secondary" disabled={command.busy||command.uncertain} onClick={()=>setDialog("transfer")}>Transfer deal owner</button></p>}
-      {o.can_record_outcome && <p><button className="secondary" disabled={command.busy || command.uncertain} onClick={()=>setDialog("outcome")}>Record sales outcome</button></p>}
+      {(o.can_transfer || o.can_record_outcome) && <div className="crm-actions">
+        {o.can_transfer && <button className="secondary" disabled={command.busy||command.uncertain} onClick={()=>setDialog("transfer")}>Transfer deal owner</button>}
+        {o.can_record_outcome && <button className="secondary" disabled={command.busy || command.uncertain} onClick={()=>setDialog("outcome")}>Record sales outcome</button>}
+      </div>}
       {o.handover_due && <section className="crm-panel" aria-label="Handover due"><h2>Handover due</h2><p>Accountable owner: {o.handover_due.owner_name}. Receiving route and owner still need confirmation.</p><p>Won at deal version {o.handover_due.opportunity_version}. Existing activities retain their owners.</p></section>}
       {dialog && <DealDialog id={o.id} mode={dialog} targetStage={targetStage} onClose={() => {setDialog(null);setTargetStage(undefined);}} onSaved={(receipt, _old, stage) => {
         setDialog(null);setTargetStage(undefined);
@@ -518,9 +520,12 @@ function OpportunityContent({
       <RecordTabs id="opportunity" label="Deal sections" value={tab} onChange={setTab}
         tabs={[{id:"overview",label:"Overview"},{id:"details",label:"Scope & sites"},{id:"timeline",label:"Activities"},{id:"tasks",label:"Tasks"},{id:"commercial",label:"Estimates & quotations"},{id:"correspondence",label:"Correspondence"},{id:"files",label:"Documents"},{id:"history",label:"History"}]} />
       <RecordPanel id="opportunity" tab="overview" value={tab}>
-        <OpportunityWorkflows id={o.id} won={o.close_outcome === "Won"}/>
+        <div className="crm-detail-grid">
+          <section className="crm-panel"><h2>Next customer action</h2><p>{NEXT_LABELS[o.next_action_state]}</p>{o.next_activity && <><p><Link href={`/work/${o.next_activity.id}`}>{o.next_activity.summary}</Link></p><p>Activity owner: {o.next_activity.owner_name} · {o.next_activity.due_needed ? "Due date needed" : <Stamp value={o.next_activity.due_at}/>}</p></>}<p>Deal ownership changes do not transfer Activities, tasks or receiving responsibility.</p></section>
+          <section className="crm-panel"><h2>Customer objective</h2><p className="crm-narrative">{o.need_summary}</p><Link href={`/customers/${o.organisation_id}`}>View customer and site context</Link></section>
+        </div>
         <DealInformation o={o} onEdit={() => setDialog("information")} onStage={() => setDialog("stage")} />
-        <section className="crm-panel"><h2>Next action</h2><p>{NEXT_LABELS[o.next_action_state]}</p>{o.next_activity && <p><Link href={`/work/${o.next_activity.id}`}>{o.next_activity.summary}</Link> · Activity owner: {o.next_activity.owner_name}</p>}<p>Deal ownership changes do not transfer Activities, tasks or receiving responsibility.</p></section>
+        <OpportunityWorkflows id={o.id} won={o.close_outcome === "Won"}/>
       </RecordPanel>
       <RecordPanel id="opportunity" tab="tasks" value={tab}>
         <section className="crm-panel"><h2>Owned work</h2><p>Open shared Activities linked to this opportunity. The Sales Tasks worklist and My Work use these same records.</p><Link href="/sales/tasks">Open Sales Tasks</Link><ul>{active.map(a => <li key={a.id}><Link href={`/work/${a.id}`}>{a.summary}</Link> · {a.owner_name} · {a.due_needed ? "Due date needed" : <Stamp value={a.due_at}/>} · <Status value={a.status}/></li>)}</ul>{!active.length && <p>No permitted open work.</p>}</section>

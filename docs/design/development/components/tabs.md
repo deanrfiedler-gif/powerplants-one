@@ -47,3 +47,5 @@ The **Customer 360** state uses the eight native tab labels with the real Record
 ## Sales handover and aftercare consumers
 
 CR-02/03/05 reuse these controls for Save, Submit, receiving decisions and recovery. Disabled/busy and uncertain results remain distinct; background refresh preserves dirty form values. Scope-specific handlers stay in the page. Labels, native keyboard semantics and source ownership remain intact. Actual device evidence is in the Sales handover; owner acceptance is pending.
+
+The Sales workspace fixture uses all eight CR-01 labels. Keyboard selection and horizontally scrollable phone tabs use the existing RecordTabs control; this fixture carries no business permissions or saved workflow state.

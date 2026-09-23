@@ -249,8 +249,10 @@ function AftercareWorkspace({
       };
     }
   }, [command.accepted]);
-  const refreshing = !!command.accepted && row.version < command.accepted.receipt.record_version;
-  const blocked = command.busy || !!command.pending || !command.ready || refreshing;
+  const refreshing =
+    !!command.accepted && row.version < command.accepted.receipt.record_version;
+  const blocked =
+    command.busy || !!command.pending || !command.ready || refreshing;
   useUnsavedChanges(dirty, !!command.pending);
   const update = <K extends keyof ReviewDraft>(
     key: K,
@@ -288,7 +290,9 @@ function AftercareWorkspace({
         <Link href={`/sites/${row.site_id}`}>Site</Link>
       </p>
       <Recovery command={command} />
-      {refreshing && <p role="status">Loading the saved revision before the next action…</p>}
+      {refreshing && (
+        <p role="status">Loading the saved revision before the next action…</p>
+      )}
       {d.owner_conflict && (
         <p role="status">
           The aftercare account-owner assignment differs from Customer 360.
@@ -375,6 +379,7 @@ function AftercareWorkspace({
             <Field
               name="due_detail"
               label="Date choice / commitment / reason date needed"
+              maxLength={4000}
               value={review.due_detail}
               onChange={(v) => update("due_detail", v)}
               multiline
@@ -405,6 +410,7 @@ function AftercareWorkspace({
             <Field
               name="method"
               label="Review method and evidence limits"
+              maxLength={4000}
               value={review.method}
               onChange={(v) => update("method", v)}
               multiline
@@ -500,6 +506,7 @@ function AftercareWorkspace({
                 <Field
                   name={`statement-${i}`}
                   label="Statement and context"
+                  maxLength={4000}
                   multiline
                   value={v.statement}
                   onChange={(statement) =>
@@ -536,6 +543,7 @@ function AftercareWorkspace({
                 label={label}
                 multiline
                 value={review[key]}
+                maxLength={4000}
                 onChange={(v) => update(key, v)}
               />
             ))}
@@ -568,6 +576,7 @@ function AftercareWorkspace({
                 <Field
                   name={`commitment-${i}`}
                   label="Commitment"
+                  maxLength={2000}
                   value={v.summary}
                   multiline
                   onChange={(summary) =>
@@ -606,6 +615,7 @@ function AftercareWorkspace({
                 <Field
                   name={`commitment-note-${i}`}
                   label="Disposition evidence"
+                  maxLength={4000}
                   value={v.note}
                   onChange={(note) =>
                     update(
@@ -1054,6 +1064,20 @@ function ActionForm({
                   setData((old) => ({ ...old, [key]: value }))
                 }
                 multiline={type === "text"}
+                maxLength={
+                  type === "text"
+                    ? [
+                        "summary",
+                        "impact",
+                        "need",
+                        "configuration",
+                        "method",
+                        "limits",
+                      ].includes(key) && name !== "PrepareCommercial"
+                      ? 2000
+                      : 4000
+                    : 200
+                }
                 type={type === "date" ? "date" : "text"}
               />
             ) : (

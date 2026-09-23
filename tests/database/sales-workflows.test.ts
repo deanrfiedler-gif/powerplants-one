@@ -32,6 +32,7 @@ import {
 } from "../../src/sales/aftercare-service";
 import { emptyHandover } from "../../src/sales/handover-model";
 import { emptyReview } from "../../src/sales/aftercare-model";
+import { aftercareOptions } from "../../src/sales/aftercare-options";
 import { crmBase, crmDiscovery, crmAction, CRM } from "../helpers/crm";
 import {
   createActivity,
@@ -451,6 +452,256 @@ test("CR05 issued source -> chosen date -> prepared review -> attributed feedbac
     code("RecordUnavailable"),
   );
 });
+test("CR05 source changes, separate training evidence and exact CRM receiving obey command and options authority", async () => {
+  const source = await reportIssued(),
+    p = source.reviewer,
+    id = randomUUID();
+  const create = { ...crmBase(), id, source_report_id: source.report.id };
+  await createAftercare(p, create);
+  const act = async (action: string, data: Record<string, unknown> = {}) => {
+    const d = await readAftercare(p, id);
+    const input = {
+      ...crmBase(),
+      expected_version: d.record.version,
+      action,
+      data,
+    };
+    return { input, result: await commandAftercare(p, id, input) };
+  };
+  for (const hidden of [
+    await principal("second-company"),
+    { ...p, workspace_id: randomUUID() },
+  ]) {
+    await assert.rejects(
+      aftercareOptions(hidden, id),
+      code("RecordUnavailable"),
+    );
+    await assert.rejects(
+      commandAftercare(hidden, id, {
+        ...crmBase(),
+        expected_version: 1,
+        action: "PrepareReview",
+        data: {},
+      }),
+      code("RecordUnavailable"),
+    );
+  }
+  await assert.rejects(
+    createAftercare(p, { ...create, id: randomUUID() }),
+    code("OperationConflict"),
+  );
+  const choices = await aftercareOptions(p, id);
+  assert.ok(choices.assets.length);
+  await assert.rejects(
+    act("TrainingNeed", {
+      need: "SYN hidden asset",
+      asset_id: randomUUID(),
+      configuration: "SYN unverified",
+      material_basis: "SYN no basis",
+    }),
+    code("RecordUnavailable"),
+  );
+  const review = {
+    ...emptyReview(),
+    due_detail: "SYN explicit date choice pending customer confirmation",
+    review_date: "2026-09-24",
+    method: "SYN telephone, attributed statements only",
+    participants: [
+      {
+        person_id: CRM.person,
+        role: "Participant; signing authority not established",
+      },
+    ],
+    feedback: [
+      {
+        person_id: CRM.person,
+        basis: "Paraphrased",
+        statement: "SYN controls usable; further instruction requested",
+      },
+    ],
+    next_steps:
+      "SYN carry instruction and commercial discussion through owned work",
+  };
+  await act("SaveReview", { review });
+  await assert.rejects(
+    commandAftercare(p, id, {
+      ...crmBase(),
+      expected_version: 1,
+      action: "SaveReview",
+      data: { review },
+    }),
+    code("VersionConflict"),
+  );
+  await act("PrepareReview");
+  // A source-owned revision changes independently while the reviewer has it open.
+  await database().query(
+    "UPDATE ppo.sites SET version=version+1 WHERE workspace_id=$1 AND id=$2",
+    [p.workspace_id, CRM.site],
+  );
+  assert.equal((await readAftercare(p, id)).source_changed, true);
+  await assert.rejects(act("CompleteReview"), code("VersionConflict"));
+  await act("PrepareReview");
+  await act("CompleteReview");
+  const work = {
+    ...crmBase(),
+    ...crmAction(p.actor_id),
+    company_id: CRM.company,
+    site_id: CRM.site,
+    access_class: "Internal",
+    due_at: "2031-10-01T00:00:00.000Z",
+    due_needed: false,
+    links: [{ object_type: "Organisation", object_id: CRM.org }],
+  };
+  await createActivity(p, work);
+  await act("TrainingNeed", {
+    need: "SYN instruction on controls",
+    asset_id: choices.assets[0].id,
+    configuration: "SYN current local configuration",
+    material_basis: "SYN operator sheet, recorded issue A",
+  });
+  assert.equal(
+    (await readAftercare(p, id)).record.content.training[0].assessment,
+    "Not assessed",
+  );
+  await assert.rejects(
+    act("TrainingDelivery", {
+      index: 0,
+      note: "SYN premature delivery",
+      activity_id: work.id,
+    }),
+    code("VersionConflict"),
+  );
+  await act("TrainingArrangement", {
+    index: 0,
+    date: "2026-09-24",
+    note: "SYN customer agreed instruction; no booking created",
+  });
+  await act("TrainingAttendance", {
+    index: 0,
+    note: "SYN participant attended",
+  });
+  await act("TrainingDelivery", {
+    index: 0,
+    note: "SYN control operation explained using recorded sheet",
+    activity_id: work.id,
+  });
+  await act("TrainingAssessment", {
+    index: 0,
+    assessment: "Not assessed",
+    method: "No competence test conducted",
+    limits: "Attendance and instruction do not establish competence",
+  });
+  await assert.rejects(act("Close"), code("VersionConflict"));
+  await act("PrepareCommercial", {
+    observation: "SYN customer review",
+    need: "SYN later upgrade discussion",
+    assumptions: "No renewal terms or customer authority adopted",
+    existing_checked: true,
+  });
+  const referral = {
+    summary: "SYN assess a later upgrade",
+    context: "Recorded customer discussion",
+    impact: "Clarify an option only",
+    next_activity_id: work.id,
+    receiving_owner_id: p.actor_id,
+    duplicate_check: true,
+  };
+  const before = (
+    await database().query("SELECT count(*)::int n FROM ppo.opportunities")
+  ).rows[0].n;
+  await act("PrepareCrm", referral);
+  const submission = await act("SubmitCrm");
+  assert.deepEqual(
+    (await commandAftercare(p, id, submission.input)).receipt,
+    submission.result.receipt,
+  );
+  assert.deepEqual(
+    await readOperation(p, submission.input.operation_id),
+    submission.result.receipt,
+  );
+  await assert.rejects(
+    commandAftercare(p, id, {
+      ...submission.input,
+      reason: "Different intent",
+    }),
+    code("OperationConflict"),
+  );
+  assert.equal(
+    (await database().query("SELECT count(*)::int n FROM ppo.opportunities"))
+      .rows[0].n,
+    before,
+  );
+  await act("CrmOutcome", {
+    outcome: "Unknown",
+    note: "SYN receiving response not confirmed",
+  });
+  await assert.rejects(act("ReviseCrm", referral), code("VersionConflict"));
+  await act("CrmOutcome", {
+    outcome: "Returned",
+    note: "SYN receiver requires explicit proposed scope",
+  });
+  await act("ReviseCrm", {
+    ...referral,
+    context: "SYN corrected proposed scope; no price or order",
+  });
+  await act("SubmitCrm");
+  const opportunity = crmDiscovery();
+  await createOpportunity(p, opportunity);
+  const accepted = await act("CrmOutcome", {
+    outcome: "Accepted",
+    receiving_id: opportunity.id,
+    note: "SYN receiver confirms this separate CRM source record",
+  });
+  assert.equal(
+    (await readAftercare(p, id)).record.content.crm_handover?.revision,
+    2,
+  );
+  await activityCommand(
+    p,
+    work.id,
+    {
+      ...crmBase(),
+      expected_version: 1,
+      outcome: "SYN instruction and receiving follow-up confirmed",
+    },
+    "complete",
+  );
+  await act("Close");
+  const final = await readAftercare(p, id);
+  assert.equal(final.record.state, "Closed");
+  assert.equal(final.record.content.training[0].assessment, "Not assessed");
+  assert.equal((await readOpportunity(p, opportunity.id)).version, 1);
+  // Revocation applies to a previously successful receiving receipt as well.
+  await database().query(
+    "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE workspace_id=$1 AND user_id=$2 AND capability='crm.opportunity.create'",
+    [p.workspace_id, p.actor_id],
+  );
+  await assert.rejects(
+    readOperation(p, accepted.input.operation_id),
+    code("RecordUnavailable"),
+  );
+  await database().query(
+    "UPDATE ppo.permission_grants SET scope_type='Site',scope_id=$3,site_id=$3 WHERE workspace_id=$1 AND user_id=$2 AND capability='shared.internal.read'",
+    [p.workspace_id, p.actor_id, "70000000-0000-4000-8000-000000000002"],
+  );
+  for (const read of [
+    () => readAftercare(p, id),
+    () => aftercareOptions(p, id),
+    () => readOperation(p, create.operation_id),
+  ])
+    await assert.rejects(read(), code("RecordUnavailable"));
+  assert.equal((await listAftercare(p)).items.length, 0);
+  await assert.rejects(
+    commandAftercare(p, id, {
+      ...crmBase(),
+      expected_version: final.record.version,
+      action: "CorrectReview",
+      data: {},
+    }),
+    code("RecordUnavailable"),
+  );
+});
+
 test("migration 0046 preserves previous ledger and immutable Won obligations on upgrade", async () => {
   await transaction(async (c) => {
     await c.query(

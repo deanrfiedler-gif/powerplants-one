@@ -47,3 +47,5 @@ The maintained consumer bindings include the native Customer, Contact, Stakehold
 ## Sales handover and aftercare consumers
 
 CR-02/03/05 reuse these controls for Save, Submit, receiving decisions and recovery. Disabled/busy and uncertain results remain distinct; background refresh preserves dirty form values. Scope-specific handlers stay in the page. Labels, native keyboard semantics and source ownership remain intact. Actual device evidence is in the Sales handover; owner acceptance is pending.
+
+The Sales evidence fixture demonstrates a long synthetic statement with the 4000-character source limit. Native handover and review fields declare their server limits explicitly; short default fields must not truncate a supported evidence narrative.

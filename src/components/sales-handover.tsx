@@ -280,8 +280,10 @@ function HandoverContentView({
       };
     }
   }, [command.accepted]);
-  const refreshing = !!command.accepted && row.version < command.accepted.receipt.record_version;
-  const blocked = command.busy || !!command.pending || !command.ready || refreshing;
+  const refreshing =
+    !!command.accepted && row.version < command.accepted.receipt.record_version;
+  const blocked =
+    command.busy || !!command.pending || !command.ready || refreshing;
   useUnsavedChanges(dirty, !!command.pending);
   const set = <K extends keyof HandoverContent>(
     key: K,
@@ -344,7 +346,11 @@ function HandoverContentView({
         · As at <Stamp value={d.observed_at} />
       </p>
       <Recovery command={command} />
-      {refreshing && <p role="status">Loading the saved revision before the next decision…</p>}
+      {refreshing && (
+        <p role="status">
+          Loading the saved revision before the next decision…
+        </p>
+      )}
       {baseVersion !== row.version && dirty && (
         <section role="alert">
           <h2>Saved handover changed</h2>
@@ -389,34 +395,36 @@ function HandoverContentView({
           <fieldset
             disabled={!d.can_prepare || row.state !== "Draft" || blocked}
           >
-            {(
-              [
-                ["problem", "Customer problem"],
-                ["outcome", "Desired outcome"],
-                ["included_scope", "Included scope"],
-                ["exclusions", "Exclusions (record None if none)"],
-                ["assumptions", "Assumptions (record None if none)"],
-                ["unknowns", "Unresolved unknowns and their owner"],
-                ["date_reason", "Requested-date basis / reason unknown"],
-              ] as const
-            ).map(([key, label]) => (
+            <div className="form-grid">
+              {(
+                [
+                  ["problem", "Customer problem"],
+                  ["outcome", "Desired outcome"],
+                  ["included_scope", "Included scope"],
+                  ["exclusions", "Exclusions (record None if none)"],
+                  ["assumptions", "Assumptions (record None if none)"],
+                  ["unknowns", "Unresolved unknowns and their owner"],
+                  ["date_reason", "Requested-date basis / reason unknown"],
+                ] as const
+              ).map(([key, label]) => (
+                <Field
+                  key={key}
+                  name={key}
+                  label={label}
+                  value={content[key]}
+                  onChange={(v) => set(key, v)}
+                  multiline
+                  maxLength={4000}
+                />
+              ))}
               <Field
-                key={key}
-                name={key}
-                label={label}
-                value={content[key]}
-                onChange={(v) => set(key, v)}
-                multiline
-                maxLength={4000}
+                name="requested_date"
+                label="Requested date"
+                type="date"
+                value={content.requested_date ?? ""}
+                onChange={(v) => set("requested_date", v || null)}
               />
-            ))}
-            <Field
-              name="requested_date"
-              label="Requested date"
-              type="date"
-              value={content.requested_date ?? ""}
-              onChange={(v) => set("requested_date", v || null)}
-            />
+            </div>
             {d.locations.map((x) => (
               <label key={x.id}>
                 <input
@@ -486,6 +494,7 @@ function HandoverContentView({
                   name="routing_basis"
                   label="Routing evidence and exact source revision"
                   multiline
+                  maxLength={4000}
                   value={content.routing_basis}
                   onChange={(v) => set("routing_basis", v)}
                 />
@@ -493,6 +502,7 @@ function HandoverContentView({
                   name="delivery_items"
                   label="Selected delivery items"
                   multiline
+                  maxLength={4000}
                   value={content.delivery_items}
                   onChange={(v) => set("delivery_items", v)}
                 />
@@ -500,6 +510,7 @@ function HandoverContentView({
                   name="release_prerequisites"
                   label="Open work-release prerequisites and owners"
                   multiline
+                  maxLength={4000}
                   value={content.release_prerequisites}
                   onChange={(v) => set("release_prerequisites", v)}
                 />

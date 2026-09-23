@@ -28,6 +28,8 @@ import {
   appointmentFixture,
   areaFixture,
   customerRecordTabsFixture,
+  salesEvidenceFixture,
+  salesRecordTabsFixture,
   fixtureDate,
   fixtureId,
   fixtureTime,
@@ -51,7 +53,7 @@ function FieldsExample({
         : "",
     ),
     [kind, setKind] = useState(""),
-    [notes, setNotes] = useState(""),
+    [notes, setNotes] = useState(state === "sales-evidence" ? salesEvidenceFixture : ""),
     [date, setDate] = useState(""),
     [saved, setSaved] = useState(false),
     [invalid, setInvalid] = useState(state === "invalid");
@@ -116,6 +118,7 @@ function FieldsExample({
             name="catalogue-notes"
             label="Notes"
             multiline
+            maxLength={4000}
             value={notes}
             onChange={setNotes}
             hint="Include useful context; no customer data."
@@ -476,7 +479,7 @@ function AreasExample({ state }: { state: string }) {
 }
 function NavigationExample({ menu = false, state = "default" }: { menu?: boolean; state?: string }) {
   const [value, setValue] = useState("overview");
-  const options = state === "cs-customer" ? customerRecordTabsFixture : [
+  const options = state === "cs-customer" ? customerRecordTabsFixture : state === "sales-workspace" ? salesRecordTabsFixture : [
     { id: "overview", label: "Overview" },
     { id: "details", label: "Details" },
     { id: "history", label: "History" },

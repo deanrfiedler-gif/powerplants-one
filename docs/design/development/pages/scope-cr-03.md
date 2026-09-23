@@ -62,3 +62,5 @@ Mobile: stack fields/actions, keep every tab reachable and contain table/history
 Loading, empty/filter-empty, partial, failed, denied, read-only, validation, saving, saved, uncertain and source-changed states remain explicit. The guide `guide.cr.03` carries normal and recovery steps.
 
 Retained reference: `docs/reference/ui/crm/PPO-Sales-to-Delivery-Handover-Workspace-r01.html`. Missing mobile reference images are explicitly unprovided. The current shell and server authority govern departures from demonstration HTML. ES-05/06/07, agreements and automatic downstream effects remain unavailable under ADR-0046. Actual paired captures and differences are recorded in `docs/delivery/sales-native-completion-handover.md`; acceptance is pending.
+
+Paired review refinement: the exact brief uses the shared two-column form grid, stacking on phones. Routing basis, selected items and release prerequisites each retain their 4000-character source limit.

@@ -624,6 +624,11 @@
           "id": "saving",
           "label": "Saving",
           "description": "Inspect the saving variant and its explanatory messages."
+        },
+        {
+          "id": "sales-evidence",
+          "label": "Sales evidence",
+          "description": "Long synthetic source statement with a 4000-character field limit; preview-only, no saved business record."
         }
       ],
       "implementation": [
@@ -679,6 +684,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "sales-fields-host-review",
+          "expected": "Review native Sales fields and tabs with long statements and the actual saved workflow states.",
+          "actual": "Synthetic catalogue fixtures and native browser journeys are present; owner and assistive-technology acceptance are pending.",
+          "action": "Compare the Sales native captures with issued references; retain original-operation recovery and source-authority distinctions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -852,6 +865,11 @@
           "id": "cs-customer",
           "label": "Customer 360",
           "description": "Eight native Customer 360 labels exercise wrapping, scroll and keyboard selection; panels are presentation-only synthetic fixtures."
+        },
+        {
+          "id": "sales-workspace",
+          "label": "Sales workspace",
+          "description": "Eight native Sales workspace labels with keyboard selection and horizontal tab scrolling at phone widths; preview-only panels."
         }
       ],
       "implementation": [
@@ -908,6 +926,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "sales-tabs-host-review",
+          "expected": "Review native Sales fields and tabs with long statements and the actual saved workflow states.",
+          "actual": "Synthetic catalogue fixtures and native browser journeys are present; owner and assistive-technology acceptance are pending.",
+          "action": "Compare the Sales native captures with issued references; retain original-operation recovery and source-authority distinctions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

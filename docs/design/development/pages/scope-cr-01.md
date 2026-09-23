@@ -62,3 +62,5 @@ Mobile: stack fields/actions, keep every tab reachable and contain table/history
 Loading, empty/filter-empty, partial, failed, denied, read-only, validation, saving, saved, uncertain and source-changed states remain explicit. The guide `guide.cr.01` carries normal and recovery steps.
 
 Retained reference: `docs/reference/ui/crm/PPO-Deal-Workspace-r01.html`. Missing mobile reference images are explicitly unprovided. The current shell and server authority govern departures from demonstration HTML. ES-05/06/07, agreements and automatic downstream effects remain unavailable under ADR-0046. Actual paired captures and differences are recorded in `docs/delivery/sales-native-completion-handover.md`; acceptance is pending.
+
+Paired review refinement: the Overview begins with Next customer action and Customer objective in the existing two-column detail grid, stacking on phones. Deal information and linked receiving workflows follow. Transfer/outcome controls share one wrapping row; no authority changes.

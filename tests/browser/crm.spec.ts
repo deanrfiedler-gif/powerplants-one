@@ -180,6 +180,7 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   ).toBeVisible();
   await expect(page.getByText("No unsaved changes", { exact: true })).toBeVisible();
   await capture(page, info, "saved-opportunity");
+  await page.getByRole("tab", {name:"Activities",exact:true}).click();
   await page.getByRole("link", { name: "Open activity", exact: true }).click();
   await expect(
     page.getByRole("heading", {
@@ -200,6 +201,7 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
     page.getByText("Completed", { exact: true }).first(),
   ).toBeVisible();
   await page.goto(detailUrl);
+  await page.getByRole("tab", {name:"Activities",exact:true}).click();
   await expect(
     page.getByRole("heading", { name: "Next action needed", exact: true }),
   ).toBeVisible();
@@ -228,12 +230,13 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
     page.getByRole("heading", { name: "Due date needed", exact: true }),
   ).toBeVisible();
   await page.reload();
+  await page.getByRole("tab", {name:"Activities",exact:true}).click();
   await expect(
     page
-      .getByText("SYN Arrange a technical discovery conversation", {
+      .getByRole("tabpanel", {name:"Activities",exact:true})
+      .getByRole("link", {name:"SYN Arrange a technical discovery conversation",
         exact: true,
-      })
-      .first(),
+      }),
   ).toBeVisible();
   await capture(page, info, "qualified-successor");
   await capture(page, info, "successor-action");
@@ -250,6 +253,7 @@ test("CA-02/03 real conflict retains proposed need; lost response reconciles ori
   page,
 }, info) => {
   const i = await seeded(page);
+  await page.getByRole("tab", {name:"Activities",exact:true}).click();
   await expect(page.getByRole("heading",{name:"Overdue",exact:true})).toBeVisible();
   await capture(page,info,"overdue");
   await page.getByRole("tab", {name:"Scope & sites",exact:true}).click();
