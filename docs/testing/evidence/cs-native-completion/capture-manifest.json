@@ -417,5 +417,68 @@
       "height": 960,
       "inspection": "Inspected: readable content, source boundary and responsive geometry"
     }
-  ]
+  ],
+  "post_286_reconciliation": {
+    "implementation_commit": "7a8cb5271573533adab3d317d5d0a6bca181be1f",
+    "source_main": "91512668e969b545c8e99280b96d9d48d719a729",
+    "owner_acceptance": "Pending",
+    "captures": [
+      {
+        "file": "captures/post286-cs-customer-320.png",
+        "sha256": "a00cf848641486a84ffeda0d20345b8d3369364b909f3b4a68642c6915df4980",
+        "width": 320,
+        "height": 960,
+        "inspection": "Inspected after #286 reconciliation: readable source boundaries, contained header controls and tab strip, no application overflow"
+      },
+      {
+        "file": "captures/post286-cs-contact-320.png",
+        "sha256": "81e9481353002d2561e8979b96284ab393da5428fe6a7b0be23f6d48d1318e78",
+        "width": 320,
+        "height": 960,
+        "inspection": "Inspected after #286 reconciliation: readable source boundaries, contained header controls and tab strip, no application overflow"
+      },
+      {
+        "file": "captures/post286-cs-stakeholders-320.png",
+        "sha256": "18a6711530ab44bcb3c86154f33f4715b5617701dfbf3a7193a54dab0947e3fe",
+        "width": 320,
+        "height": 960,
+        "inspection": "Inspected after #286 reconciliation: readable source boundaries, contained header controls and tab strip, no application overflow"
+      },
+      {
+        "file": "captures/post286-cs-site-320.png",
+        "sha256": "034075febc01ef87a77b385c98e3f4019427c4a5a705613100b7b07888df8704",
+        "width": 320,
+        "height": 960,
+        "inspection": "Inspected after #286 reconciliation: readable source boundaries, contained header controls and tab strip, no application overflow"
+      },
+      {
+        "file": "captures/post286-cs-readiness-320.png",
+        "sha256": "c09a2b29777d6cd5248819f47ab0113bd01f1dc29d313d010a7c0c11c551cc9f",
+        "width": 320,
+        "height": 960,
+        "inspection": "Inspected after #286 reconciliation: readable source boundaries, contained header controls and tab strip, no application overflow"
+      },
+      {
+        "file": "captures/post286-cs-plan-320.png",
+        "sha256": "99a646bec5265bfab1dbba04253d0f7e8673b7ec10d363f3d3a89cec99be7c07",
+        "width": 320,
+        "height": 960,
+        "inspection": "Inspected after #286 reconciliation: readable source boundaries, contained header controls and tab strip, no application overflow"
+      },
+      {
+        "file": "captures/post286-cs-survey-320.png",
+        "sha256": "36d27b6497eabd8a54f36e61e09d7916dbd3b4bc5b26a75c4ae4f110f678664d",
+        "width": 320,
+        "height": 960,
+        "inspection": "Inspected after #286 reconciliation: readable source boundaries, contained header controls and tab strip, no application overflow"
+      },
+      {
+        "file": "captures/post286-cs-customer-1440.png",
+        "sha256": "a1ec24013e1ad7ffe6301066ea37263dca6e1b2d261d89a126cbbae14ba2d5c1",
+        "width": 1440,
+        "height": 960,
+        "inspection": "Inspected after #286 reconciliation: readable source boundaries, contained header controls and tab strip, no application overflow"
+      }
+    ]
+  }
 }
