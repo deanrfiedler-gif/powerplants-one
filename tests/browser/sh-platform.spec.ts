@@ -12,8 +12,10 @@ import {
   seedChangesScenario,
 } from "../helpers/engineering-changes";
 import type { SignIn } from "../helpers/engineering-materials";
+import { retainApiReadsForTeardown } from "../helpers/browser-read-drain";
 
 test.beforeEach(async ({ page, baseURL }) => {
+  await retainApiReadsForTeardown(page);
   expect(
     (
       await page.request.post("/api/v1/local-session", {
