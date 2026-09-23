@@ -97,6 +97,7 @@
 }
 #ppo-my-work .sh-register > li > div {
   min-width: 0;
+  flex: 1 1 220px;
 }
 #ppo-my-work .sh-register p {
   font-size: 12px;

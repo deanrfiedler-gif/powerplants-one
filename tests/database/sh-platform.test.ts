@@ -40,6 +40,8 @@ import {
   seedChangesScenario,
 } from "../helpers/engineering-changes";
 import { directSignIn } from "../helpers/engineering-changes-direct";
+import { readView as readChangeView } from "../../src/engineering/changes/reads";
+import { handoverCommand } from "../../src/engineering/changes/commands";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -287,6 +289,7 @@ test("SH04 identical growing-area names retain site context, stable IDs and curr
         name: "SYN SH repeated area",
         structure_type: "open_growing_area",
         use: "production",
+        context_observed_on: "2026-09-01",
       },
     });
   const result = await applicationSearch(p, {
@@ -304,6 +307,24 @@ test("SH04 identical growing-area names retain site context, stable IDs and curr
     id: ids[1],
   });
   assert.ok(selected.context?.includes("SYN SH second site"));
+  const child = randomUUID();
+  await createFacilityDetails(p, {
+    ...crmBase(),
+    id: child,
+    company_id: CRM.company,
+    site_id: CRM.site,
+    details: {
+      name: "SYN SH grouping child",
+      structure_type: "open_growing_area",
+      parent_facility_id: ids[0],
+      parent_relationship: "grouping",
+    },
+  });
+  assert.ok(
+    (
+      await searchPreview(p, { kind: "Facility / growing area", id: child })
+    ).context.includes("(grouping)"),
+  );
   assert.equal(
     (
       await applicationSearch(await principal("second-company"), {
@@ -436,7 +457,7 @@ test("SH06 real Finance handoff appears for the eligible reviewer and sending ow
 });
 test("SH06 Engineering retains independent reviewer, returned author and receiving handover identities", async () => {
   const ids = changeScenarioIds(false);
-  await seedChangesScenario(directSignIn, ids);
+  const scenario = await seedChangesScenario(directSignIn, ids);
   const reviewer = await principal(CHANGES.reviewer.profile),
     author = await principal(CHANGES.author.profile);
   const reviews = await reviewInbox(reviewer, {
@@ -450,8 +471,16 @@ test("SH06 Engineering retains independent reviewer, returned author and receivi
     ),
   );
   assert.ok(
-    (await reviewInbox(author, { view: "returned", module: "Engineering" }))
-      .items.length > 0,
+    !reviews.items.some((t) => t.record_id === scenario.changes["005"]),
+  );
+  const returned = await reviewInbox(author, {
+    view: "returned",
+    module: "Engineering",
+  });
+  assert.equal(
+    returned.items.filter((t) => t.record_id === scenario.changes["005"])
+      .length,
+    1,
   );
   const handovers = await reviewInbox(await principal(CHANGES.supply.profile), {
     view: "handovers",
@@ -459,4 +488,41 @@ test("SH06 Engineering retains independent reviewer, returned author and receivi
   });
   assert.ok(handovers.items.length > 0);
   for (const t of handovers.items) assert.equal(t.kind, "Handover");
+  const receiver = await principal(CHANGES.supply.profile);
+  const current = await readChangeView(
+    receiver,
+    scenario.package_id,
+    { change: scenario.changes["003"] },
+    "handovers",
+  );
+  const request = current.selected!.requests.find(
+    (r) => r.destination === "SupplyChain",
+  )!;
+  await handoverCommand(receiver, scenario.package_id, {
+    ...crmBase(),
+    action: "decide",
+    change_id: scenario.changes["003"],
+    handover_id: request.id,
+    submission_id: request.latest_submission_id,
+    expected_version: request.version,
+    outcome: "Returned",
+    outcome_reason: "SYN clarify the disposition before receiving",
+    owner_id: CHANGES.author.id,
+    due: "2031-09-27",
+  });
+  const correction = (
+    await reviewInbox(author, { view: "returned", module: "Engineering" })
+  ).items.find((t) => t.id === `EngineeringChange:${request.id}`);
+  assert.ok(correction);
+  assert.equal(correction.owner_id, CHANGES.author.id);
+  assert.equal(correction.due, "2031-09-27");
+  assert.equal(
+    correction.return_reason,
+    "SYN clarify the disposition before receiving",
+  );
+  assert.ok(
+    !(
+      await reviewInbox(receiver, { view: "mine", module: "Engineering" })
+    ).items.some((t) => t.id === correction.id),
+  );
 });

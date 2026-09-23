@@ -1,6 +1,17 @@
-import { test, expect } from "@playwright/test";
+import {
+  test,
+  expect,
+  request as playwrightRequest,
+  type APIRequestContext,
+} from "@playwright/test";
 import { randomUUID } from "node:crypto";
 import { CRM, crmBase } from "../helpers/crm";
+import {
+  CHANGES,
+  changeScenarioIds,
+  seedChangesScenario,
+} from "../helpers/engineering-changes";
+import type { SignIn } from "../helpers/engineering-materials";
 
 test.beforeEach(async ({ page, baseURL }) => {
   expect(
@@ -38,8 +49,13 @@ test("SH notification event, explicit read, source guard, grouped state and pref
   expect(created.status()).toBe(201);
   await page.goto("/work/updates");
   if (!isMobile) {
-    await page.getByRole("button", { name: "Notifications", exact: true }).click();
-    await expect(page.getByRole("link", { name: "Open Notifications", exact: true })).toBeVisible();
+    await page
+      .getByRole("button", { name: "Notifications", exact: true })
+      .click();
+    await expect(
+      page.getByRole("link", { name: "Open Notifications", exact: true }),
+    ).toBeVisible();
+    await expect(page.locator(".sh-bell-list a").filter({ hasText: title })).toBeVisible();
     await page.screenshot({ path: info.outputPath("notification-bell.png") });
     await page.keyboard.press("Escape");
   }
@@ -105,8 +121,12 @@ test("SH notification event, explicit read, source guard, grouped state and pref
     path: info.outputPath("notifications-preferences.png"),
     fullPage: true,
   });
-  await page.getByRole("heading", { name: "Notifications", exact: true }).scrollIntoViewIfNeeded();
-  await page.screenshot({ path: info.outputPath("notifications-preferences-top.png") });
+  await page
+    .getByRole("heading", { name: "Notifications", exact: true })
+    .scrollIntoViewIfNeeded();
+  await page.screenshot({
+    path: info.outputPath("notifications-preferences-top.png"),
+  });
   await page.reload();
   await page.getByRole("button", { name: "Preferences", exact: true }).click();
   await expect(page.getByLabel("Digest time", { exact: true })).toHaveValue(
@@ -125,6 +145,7 @@ test("SH search keyboard entry, full results, authorised preview and personal sa
   await page.keyboard.press("Control+k");
   const search = page.getByRole("combobox", { name: /Search/ });
   await search.fill("SYN");
+  await expect(page.getByRole("option").first()).toBeVisible();
   await expect(
     page.getByRole("link", { name: "View all results", exact: true }),
   ).toBeVisible();
@@ -143,7 +164,31 @@ test("SH search keyboard entry, full results, authorised preview and personal sa
       .getByRole("link", { name: "Open record" }),
   ).toBeVisible();
   await page.screenshot({ path: info.outputPath("search-preview.png") });
+  const preview = page.getByRole("dialog", { name: "Record preview" });
+  await preview.getByRole("button", { name: "Close", exact: true }).focus();
+  await page.keyboard.press("Tab");
+  expect(
+    await page.evaluate(() => !!document.activeElement?.closest("dialog")),
+  ).toBe(true);
   await page.keyboard.press("Escape");
+  await expect(page.locator(".sh-register .sh-title").first()).toBeFocused();
+  await page.locator(".sh-register .sh-title").first().click();
+  const source = page
+    .getByRole("dialog", { name: "Record preview" })
+    .getByRole("link", { name: "Open record" });
+  const sourcePath = await source.getAttribute("href");
+  await source.click();
+  await expect
+    .poll(() => new URL(page.url()).pathname.startsWith(sourcePath!))
+    .toBe(true);
+  await page.goBack();
+  await expect(
+    page.getByRole("heading", { name: "Search", exact: true }),
+  ).toBeVisible();
+  expect(new URL(page.url()).searchParams.get("q")).toBe("SYN");
+  await expect(page.getByLabel("Search records", { exact: true })).toHaveValue(
+    "SYN",
+  );
   await page.getByRole("button", { name: "Saved views", exact: true }).click();
   await page
     .getByLabel("Save current criteria as")
@@ -195,6 +240,15 @@ test("SH review perspectives, responsive geometry and current My Work interiors"
           ),
           fullPage: true,
         });
+      if (path === "/work/updates" && [390, 320].includes(width)) {
+        await page
+          .locator(".sh-register > li")
+          .first()
+          .scrollIntoViewIfNeeded();
+        await page.screenshot({
+          path: info.outputPath(`notifications-row-${width}.png`),
+        });
+      }
     }
   }
   await page.setViewportSize({ width: 1440, height: 1000 });
@@ -213,6 +267,127 @@ test("SH review perspectives, responsive geometry and current My Work interiors"
       path: info.outputPath(`reviews-${label.replaceAll(" ", "-")}.png`),
       fullPage: true,
     });
+  }
+});
+
+test("SH real review detail keeps source authority and return navigation for reviewer, author and receiver", async ({
+  page,
+  baseURL,
+}, info) => {
+  test.setTimeout(420000); // Builds the existing real EN-07 source scenario through its ordinary APIs.
+  const contexts = new Map<string, APIRequestContext>();
+  const as: SignIn = async (profile) => {
+    let context = contexts.get(profile);
+    if (!context) {
+      context = await playwrightRequest.newContext({
+        baseURL,
+        extraHTTPHeaders: { Origin: baseURL! },
+      });
+      expect(
+        (
+          await context.post("/api/v1/local-session", { data: { profile } })
+        ).ok(),
+      ).toBe(true);
+      contexts.set(profile, context);
+    }
+    return async (path, body) => {
+      const response = await context!.fetch(`/api/v1/${path}`, {
+        method: body ? "POST" : "GET",
+        data: body,
+      });
+      return { status: response.status(), body: await response.json() };
+    };
+  };
+  try {
+    const source = await seedChangesScenario(
+      as,
+      changeScenarioIds(false),
+      ` SH browser ${Date.now()}`,
+    );
+    for (const [profile, view] of [
+      [CHANGES.reviewer.profile, "mine"],
+      [CHANGES.author.profile, "returned"],
+      [CHANGES.supply.profile, "handovers"],
+    ]) {
+      expect(
+        (
+          await page.request.post("/api/v1/local-session", {
+            headers: { Origin: baseURL! },
+            data: { profile },
+          })
+        ).ok(),
+      ).toBe(true);
+      let pageNumber = 1;
+      let query = `view=${view}&module=Engineering&page=${pageNumber}`;
+      let inbox = await (
+        await page.request.get(`/api/v1/reviews?${query}`)
+      ).json();
+      const isTarget = (t: { href: string; owner_id: string | null }) =>
+        t.href.includes(source.package_id) &&
+        (view !== "handovers" || t.owner_id === CHANGES.supply.id);
+      let task = inbox.items.find(isTarget);
+      while (!task && inbox.has_more) {
+        query = `view=${view}&module=Engineering&page=${++pageNumber}`;
+        inbox = await (
+          await page.request.get(`/api/v1/reviews?${query}`)
+        ).json();
+        task = inbox.items.find(isTarget);
+      }
+      expect(task).toBeTruthy();
+      if (view === "mine")
+        expect(
+          inbox.items.some(
+            (t: { record_id: string }) => t.record_id === source.changes["005"],
+          ),
+        ).toBe(false);
+      if (view === "returned")
+        expect(
+          inbox.items.filter(
+            (t: { record_id: string }) => t.record_id === source.changes["005"],
+          ),
+        ).toHaveLength(1);
+      await page.goto(`/work/reviews?${query}`);
+      const row = page.locator(`[data-task-id="${task.id}"]`);
+      await expect(row).toBeVisible();
+      await row.scrollIntoViewIfNeeded();
+      await page.screenshot({
+        path: info.outputPath(`reviews-populated-${view}.png`),
+      });
+      await row
+        .getByRole("button", { name: "Review detail", exact: true })
+        .click();
+      const detail = page.getByRole("dialog", {
+        name: "Review & handover detail",
+      });
+      const open = detail.getByRole("link", {
+        name: "Open source workflow",
+        exact: true,
+      });
+      await expect(open).toHaveAttribute("href", task.href);
+      await page.screenshot({
+        path: info.outputPath(`reviews-detail-${view}.png`),
+      });
+      await open.click();
+      await expect
+        .poll(() => new URL(page.url()).pathname)
+        .toBe(new URL(task.href, baseURL).pathname);
+      await page.goBack();
+      await expect(
+        page.getByRole("heading", { name: "Reviews & handovers", exact: true }),
+      ).toBeVisible();
+      expect(new URL(page.url()).searchParams.get("view")).toBe(view);
+      const current = await (
+        await page.request.get(
+          `/api/v1/reviews/preview?${new URLSearchParams({ id: task.id, version: String(task.version) })}`,
+        )
+      ).json();
+      expect(current.stale).toBe(false);
+      expect(current.item.status).toBe(task.status);
+    }
+  } finally {
+    await Promise.all(
+      [...contexts.values()].map((context) => context.dispose()),
+    );
   }
 });
 
@@ -235,6 +410,20 @@ test("SH failure, partial and successful empty presentations retain retry and cl
           items: [],
           sources: [{ kind: "Activity", state: "available", has_more: false }],
           state: "complete",
+          observed_at: new Date().toISOString(),
+          limit_per_type: 20,
+          has_more: false,
+          next_cursor: null,
+        },
+      });
+    if (mode === "unavailable")
+      return route.fulfill({
+        json: {
+          items: [],
+          sources: [
+            { kind: "Activity", state: "unavailable", has_more: false },
+          ],
+          state: "unavailable",
           observed_at: new Date().toISOString(),
           limit_per_type: 20,
           has_more: false,
@@ -292,6 +481,40 @@ test("SH failure, partial and successful empty presentations retain retry and cl
   await page.getByRole("button", { name: "Refresh results" }).click();
   await expect(page.getByText(/0 results on this page/)).toBeVisible();
   await page.screenshot({ path: info.outputPath("search-empty.png") });
+  mode = "unavailable";
+  await page.getByRole("button", { name: "Refresh results" }).click();
+  await expect(page.getByText(/Search unavailable:/)).toBeVisible();
+  await expect(page.getByText(/results on this page/)).toHaveCount(0);
+  await page.route("**/api/v1/reviews?**", (route) =>
+    route.fulfill({
+      json: {
+        items: [],
+        total: 0,
+        counts: {
+          mine: 0,
+          all: 0,
+          returned: 0,
+          handovers: 0,
+          sent: 0,
+          history: 0,
+        },
+        page: 1,
+        has_more: false,
+        owners: [],
+        bounded: false,
+        sources: [{ module: "Service", state: "unavailable", bounded: false }],
+        state: "unavailable",
+        observed_at: new Date().toISOString(),
+      },
+    }),
+  );
+  await page.goto("/work/reviews");
+  await expect(page.getByText(/Sources unavailable:/)).toBeVisible();
+  await expect(page.getByText(/matching tasks/)).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { name: "My reviews", exact: true }),
+  ).toBeVisible();
+  await page.screenshot({ path: info.outputPath("reviews-unavailable.png") });
   await page.route("**/api/v1/notifications", (route) =>
     route.fulfill({
       status: 503,

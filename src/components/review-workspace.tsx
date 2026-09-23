@@ -154,6 +154,7 @@ export function ReviewWorkspace() {
           >
             {reviewViewLabels[v]}
             {data &&
+              ["complete", "partial"].includes(data.state) &&
               ` (${data.counts[v]}${data.bounded || data.state === "partial" ? "+" : ""})`}
           </button>
         ))}
@@ -232,14 +233,16 @@ export function ReviewWorkspace() {
               <button onClick={read.reload}>Retry</button>
             </p>
           )}
-          <p role="status">
-            {data.total} matching tasks
-            {data.bounded ? " in the available source windows" : ""} · Oldest
-            known submission first
-          </p>
+          {["complete", "partial"].includes(data.state) && (
+            <p role="status">
+              {data.total} matching tasks
+              {data.bounded ? " in the available source windows" : ""} · Oldest
+              known submission first
+            </p>
+          )}
           <ul className="sh-register">
             {data.items.map((t) => (
-              <li key={t.id}>
+              <li key={t.id} data-task-id={t.id}>
                 <div>
                   <button className="sh-title" onClick={() => setSelected(t)}>
                     {t.title}

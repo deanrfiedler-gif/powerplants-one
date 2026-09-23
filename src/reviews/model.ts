@@ -47,7 +47,8 @@ export function inReviewView(
   if (view === "history") return !t.current;
   if (!t.current) return false;
   if (view === "mine") return t.actionable && t.owner_id === actor;
-  if (view === "returned") return t.returned && t.author_id === actor;
+  if (view === "returned")
+    return t.returned && (t.author_id === actor || t.owner_id === actor);
   if (view === "sent") return t.author_id === actor;
   if (view === "handovers") return t.kind === "Handover";
   return true;

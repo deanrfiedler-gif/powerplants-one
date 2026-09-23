@@ -133,7 +133,13 @@ export function searchAdapters(p: Principal): SearchAdapter[] {
         return [
           ...new Set(organisations),
           f.site_name,
-          ...f.path.map((x) => x.name),
+          ...f.path.map((x, i) => {
+            const relationship =
+              i === f.path.length - 1
+                ? f.details.parent_relationship
+                : f.path[i + 1].parent_relationship;
+            return `${x.name} (${relationship === "physically_within" ? "physical parent" : "grouping"})`;
+          }),
           String(f.details.name),
         ].join(" → ");
       },

@@ -37,11 +37,15 @@ export function NotificationBell({ close }: { close: () => void }) {
       {read.error && <button onClick={read.reload}>Retry notifications</button>}
       {read.data && (
         <>
-          <p>
-            {read.data.unread}
-            {read.data.bounded ? "+" : ""} unread · {read.data.owned} owned
-            activities
-          </p>
+          {read.data.state !== "unavailable" && (
+            <p>
+              {read.data.unread}
+              {read.data.bounded || read.data.state === "partial"
+                ? "+"
+                : ""}{" "}
+              unread · {read.data.owned} owned activities
+            </p>
+          )}
           {read.data.state !== "complete" && (
             <p role="alert">Some updates could not be checked.</p>
           )}
@@ -499,6 +503,8 @@ export function NotificationWorkspace() {
               onClick={() =>
                 navigateWithReview(() => {
                   setView(v);
+                  setError(undefined);
+                  setMessage("");
                   setSelected([]);
                 })
               }
@@ -519,24 +525,26 @@ export function NotificationWorkspace() {
           {read.loading && <p role="status">Loading notifications…</p>}
           {data && (
             <>
-              <div className="sh-stats">
-                <span>
-                  <strong>
-                    {data.unread}
-                    {data.bounded ? "+" : ""}
-                  </strong>
-                  unread
-                </span>
-                <span>
-                  <strong>{data.owned}</strong>owned activities
-                </span>
-                <span>
-                  <strong>
-                    {data.obligations.filter((a) => !a.due_at).length}
-                  </strong>
-                  date needed
-                </span>
-              </div>
+              {data.state !== "unavailable" && (
+                <div className="sh-stats">
+                  <span>
+                    <strong>
+                      {data.unread}
+                      {data.bounded || data.state === "partial" ? "+" : ""}
+                    </strong>
+                    unread
+                  </span>
+                  <span>
+                    <strong>{data.owned}</strong>owned activities
+                  </span>
+                  <span>
+                    <strong>
+                      {data.obligations.filter((a) => !a.due_at).length}
+                    </strong>
+                    date needed
+                  </span>
+                </div>
+              )}
               {data.state !== "complete" && (
                 <p className="sh-notice" role="alert">
                   {data.state === "partial"

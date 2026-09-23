@@ -165,12 +165,14 @@ export function PlatformSearch() {
           ) : read.data.state === "denied" ? (
             <p role="status">You do not have access to these search sources.</p>
           ) : null}
-          <p role="status">
-            {read.data.items.length} results on this page for “{q}”
-            {read.data.has_more
-              ? "; more available. Choose a type to page through its results."
-              : ""}
-          </p>
+          {["complete", "partial"].includes(read.data.state) && (
+            <p role="status">
+              {read.data.items.length} results on this page for “{q}”
+              {read.data.has_more
+                ? "; more available. Choose a type to page through its results."
+                : ""}
+            </p>
+          )}
           <ul className="sh-register">
             {read.data.items.map((item) => (
               <li key={item.id}>

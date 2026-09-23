@@ -110,6 +110,11 @@ test("SH06 perspectives preserve ownership, return, handover and closed source m
     inReviewView({ ...t, returned: true }, "returned", "author"),
     true,
   );
+  assert.equal(inReviewView({ ...t, returned: true }, "returned", "me"), true);
+  assert.equal(
+    inReviewView({ ...t, returned: true }, "returned", "reader"),
+    false,
+  );
   assert.equal(
     inReviewView({ ...t, kind: "Handover" }, "handovers", "reader"),
     true,
