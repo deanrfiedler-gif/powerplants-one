@@ -136,11 +136,23 @@ export function PackDialog({
   useEffect(() => {
     const d = dialog.current;
     if (!d) return;
+    // Where focus came from, so it can go back. A control that has since gone leaves focus on the
+    // active tab rather than on the document, which would strand a keyboard user at the page start.
+    const opener = document.activeElement as HTMLElement | null;
     d.showModal();
     const first = d.querySelector<HTMLElement>("[data-autofocus]"),
       primary = d.querySelector<HTMLElement>("[data-primary]");
     (first ?? primary ?? heading.current)?.focus();
-    return () => d.close();
+    return () => {
+      d.close();
+      const back =
+        opener?.isConnected && opener.offsetParent !== null
+          ? opener
+          : document.querySelector<HTMLElement>(
+              '#ppo-job-pack [role="tab"][aria-selected="true"]',
+            );
+      back?.focus();
+    };
   }, []);
   const isOutside = (event: { clientX: number; clientY: number }) => {
     const b = dialog.current?.getBoundingClientRect();

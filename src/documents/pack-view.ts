@@ -38,6 +38,44 @@ export const preparationFieldLabels: Record<SectionKey, string> = {
   site_controls: "Visit-specific work arrangements",
   completion: "Escalation and remaining-work instructions",
 };
+// What each entry is for. The server requires all nine notes, so each one says what belongs in it
+// and, where the boundary matters, what does not.
+export const preparationHelp: Record<SectionKey, string> = {
+  identification:
+    "Required. Add anything the crew needs beyond the linked records, or state that nothing further applies.",
+  customer_arrangements:
+    "Meeting point, arrival agreement and visit-specific arrangements. Contact details come from the site record.",
+  scope:
+    "Brief the authorised tasks. Notes cannot extend the approved scope; additional work needs a new scope approval.",
+  equipment:
+    "How the crew confirms equipment identity on arrival, and what to do on a discrepancy.",
+  history: "Why these records were selected, or why none apply.",
+  technical_information:
+    "What each reference is for and any limits on its use.",
+  readiness:
+    "Collection and preparation instructions. Tool readiness itself is assessed at the appointment.",
+  site_controls:
+    "Reference the site’s approved requirements. Do not create permits or work authority here.",
+  completion:
+    "Who to contact and what to record when work cannot be completed within the approved scope.",
+};
+
+// Stored vocabulary values are never shown verbatim. A value the map does not name has its CamelCase
+// split into words, which is still readable; it is never presented as a code.
+export function readableValue(value: string) {
+  const words = value.replace(/([a-z0-9])([A-Z])/g, "$1 $2");
+  return words.charAt(0).toUpperCase() + words.slice(1).toLowerCase();
+}
+export const historyKindLabels: Record<string, string> = {
+  PriorWork: "Prior work",
+  KnownIssue: "Known issue",
+  AttemptedFix: "Attempted fix",
+  TechnicalAdvice: "Technical advice",
+};
+export const historyKindLabel = (kind: string) =>
+  historyKindLabels[kind] ?? readableValue(kind);
+export const historyLabel = (record: { kind: string; summary: string }) =>
+  `${historyKindLabel(record.kind)}: ${record.summary}`;
 export const revisionLabel = (revision: number) =>
   `r${String(revision).padStart(2, "0")}`;
 export const initials = (name: string) =>

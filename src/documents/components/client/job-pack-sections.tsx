@@ -3,6 +3,7 @@ import { sectionKeys, type SectionKey } from "../../validation";
 import {
   formatDate,
   formatStamp,
+  historyKindLabel,
   packSectionShortTitles,
   packSectionTitles,
   visitWindow,
@@ -16,8 +17,9 @@ export const sectionId = (prefix: "s" | "p", key: SectionKey) =>
 // Exact identities stay exact in the issued manifest; on the page a long one is abbreviated.
 const short = (value: string) =>
   value.length > 16 ? value.slice(0, 12) + "…" : value;
-const number = (key: SectionKey) =>
+export const sectionNumber = (key: SectionKey) =>
   String(sectionKeys.indexOf(key) + 1).padStart(2, "0");
+const number = sectionNumber;
 
 // Which linked records each section's frozen context was composed from.
 export const sectionSources: Record<SectionKey, BasisDrift["source"][]> = {
@@ -47,7 +49,7 @@ const noteHeadings: Record<SectionKey, string> = {
   completion: "Escalation and remaining work",
 };
 
-function SourceTag({
+export function SourceTag({
   section,
   revision,
   drift,
@@ -120,7 +122,10 @@ function Identification({ revision }: { revision: PackRevision }) {
   );
 }
 
-function Section({
+// The frozen context of one section, without its heading or the coordinator's notes. The Job pack view
+// shows it under the section title; the Preparation view shows the same body as linked context beside the
+// field, so a coordinator writes against exactly what the last save froze.
+export function SectionBody({
   section,
   pack,
   revision,
@@ -131,10 +136,64 @@ function Section({
 }) {
   const s = revision.snapshot,
     frozen = s.sections[section],
-    id = sectionId("s", section),
     selected = s.history
       .map((h) => pack.history.find((x) => x.id === h.id))
       .filter((x): x is Pack["history"][number] => !!x);
+  if (section === "identification") return <Identification revision={revision} />;
+  if (
+    section === "history" &&
+    s.history.length > 0 &&
+    selected.length === s.history.length
+  )
+    return (
+      <>
+        {selected.map((h) => (
+          <article className="jp-history-item" key={h.id}>
+            <span className="jp-kind">{historyKindLabel(h.kind)}</span>
+            <div>
+              <p>{h.summary}</p>
+            </div>
+          </article>
+        ))}
+      </>
+    );
+  if (section === "technical_information")
+    return (
+      <>
+        {s.sources.map((d) => (
+          <div className="jp-document-row" key={d.id}>
+            <span className="jp-doc-icon">
+              <Icon name="document" />
+            </span>
+            <div className="jp-doc-main">
+              {d.title}
+              <small>
+                Version {short(d.version_id)} · SHA-256 {short(d.hash)} ·{" "}
+                {d.byte_count} bytes
+              </small>
+            </div>
+          </div>
+        ))}
+        <details className="jp-exact">
+          <summary>Exact source text as it will be issued</summary>
+          <p className="jp-body-copy">{frozen.text}</p>
+        </details>
+      </>
+    );
+  return <p className="jp-body-copy">{frozen.text}</p>;
+}
+
+function Section({
+  section,
+  pack,
+  revision,
+}: {
+  section: SectionKey;
+  pack: Pack;
+  revision: PackRevision;
+}) {
+  const frozen = revision.snapshot.sections[section],
+    id = sectionId("s", section);
   return (
     <section
       id={id}
@@ -154,43 +213,7 @@ function Section({
           drift={pack.basis_drift ?? []}
         />
       </div>
-      {section === "identification" ? (
-        <Identification revision={revision} />
-      ) : section === "history" &&
-        s.history.length > 0 &&
-        selected.length === s.history.length ? (
-        selected.map((h) => (
-          <article className="jp-history-item" key={h.id}>
-            <span className="jp-kind">{h.kind}</span>
-            <div>
-              <p>{h.summary}</p>
-            </div>
-          </article>
-        ))
-      ) : section === "technical_information" ? (
-        <>
-          {s.sources.map((d) => (
-            <div className="jp-document-row" key={d.id}>
-              <span className="jp-doc-icon">
-                <Icon name="document" />
-              </span>
-              <div className="jp-doc-main">
-                {d.title}
-                <small>
-                  Version {short(d.version_id)} · SHA-256 {short(d.hash)} ·{" "}
-                  {d.byte_count} bytes
-                </small>
-              </div>
-            </div>
-          ))}
-          <details className="jp-exact">
-            <summary>Exact source text as it will be issued</summary>
-            <p className="jp-body-copy">{frozen.text}</p>
-          </details>
-        </>
-      ) : (
-        <p className="jp-body-copy">{frozen.text}</p>
-      )}
+      <SectionBody section={section} pack={pack} revision={revision} />
       <p className="jp-subheading">{noteHeadings[section]}</p>
       <p className="jp-body-copy">{frozen.notes}</p>
     </section>

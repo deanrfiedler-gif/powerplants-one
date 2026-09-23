@@ -1,10 +1,7 @@
 "use client";
-import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
   useResource,
-  useCommand,
   ErrorNotice,
   ReadState,
   isDenied,
@@ -12,21 +9,10 @@ import {
   Stamp,
   RegisterHeading,
 } from "./business-ui";
-import {
-  sectionKeys,
-  sectionLabels,
-  type PackInput,
-} from "../documents/validation";
-import type {
-  Pack,
-  PackHistory as History,
-  PackIssue as Issue,
-  PackSource as Source,
-} from "../documents/components/client/job-pack-types";
-// The pack detail page is src/documents/components/client/job-pack-screen.tsx. This file keeps the list,
-// first preparation and exact issued document screens, and the preparation form the detail page hosts.
-const empty = () =>
-  Object.fromEntries(sectionKeys.map((k) => [k, ""])) as PackInput["sections"];
+import type { Pack, PackIssue as Issue } from "../documents/components/client/job-pack-types";
+// The pack detail page and its first-preparation view are
+// src/documents/components/client/job-pack-screen.tsx. This file keeps the register and the exact
+// issued document screen.
 function Intro({
   title,
   children,
@@ -41,155 +27,6 @@ function Intro({
       <p>Synthetic prototype — not for operational use</p>
       {children}
     </>
-  );
-}
-export function PreparationForm({
-  appointment,
-  pack,
-  sources,
-  history,
-  onSaved,
-}: {
-  appointment?: { id: string; version: number };
-  pack?: Pack;
-  sources: Source[];
-  history: History[];
-  onSaved: (id: string) => void;
-}) {
-  const current = pack?.revisions[0];
-  const [sections, setSections] = useState<PackInput["sections"]>(
-      current?.input.sections ?? empty(),
-    ),
-    [sourceIds, setSourceIds] = useState<string[]>(
-      current?.input.source_ids ?? [],
-    ),
-    [historyIds, setHistoryIds] = useState<string[]>(
-      current?.input.history_ids ?? [],
-    ),
-    [reason, setReason] = useState(""),
-    [id] = useState(() => crypto.randomUUID());
-  const command = useCommand();
-  return (
-    <form
-      className="pack-form"
-      onSubmit={async (e) => {
-        e.preventDefault();
-        const result = await command.send<{ record_id: string }>(
-          pack ? `packs/${pack.id}/amend` : "packs",
-          {
-            ...(pack
-              ? { expected_version: pack.version }
-              : {
-                  id,
-                  appointment_id: appointment!.id,
-                  expected_appointment_version: appointment!.version,
-                }),
-            reason,
-            content: {
-              sections,
-              source_ids: sourceIds,
-              history_ids: historyIds,
-            },
-          },
-        );
-        if (result) onSaved(result.record_id);
-      }}
-    >
-      <h2>
-        {pack ? "Prepare successor revision" : "Prepare nine-section job pack"}
-      </h2>
-      <p>
-        Each section includes server-derived authorised context. Add reviewed
-        preparation notes, explicit limits or a reason where no additional
-        information applies. These notes cannot extend authorised scope.
-      </p>
-      <fieldset disabled={command.busy}>
-        <legend>Exact technical sources</legend>
-        {sources.map((s) => (
-          <label className="pack-choice" key={s.id}>
-            <input
-              type="checkbox"
-              checked={sourceIds.includes(s.id)}
-              disabled={!s.available}
-              onChange={(e) =>
-                setSourceIds((x) =>
-                  e.target.checked ? [...x, s.id] : x.filter((v) => v !== s.id),
-                )
-              }
-            />
-            <span>
-              {s.title}
-              <small>
-                {s.available
-                  ? "Available exact version"
-                  : "Unavailable — recover original source"}
-              </small>
-            </span>
-          </label>
-        ))}
-      </fieldset>
-      <fieldset disabled={command.busy}>
-        <legend>Relevant service history</legend>
-        {history.length ? (
-          history.map((h) => (
-            <label className="pack-choice" key={h.id}>
-              <input
-                type="checkbox"
-                checked={historyIds.includes(h.id)}
-                onChange={(e) =>
-                  setHistoryIds((x) =>
-                    e.target.checked
-                      ? [...x, h.id]
-                      : x.filter((v) => v !== h.id),
-                  )
-                }
-              />
-              <span>
-                {h.kind}: {h.summary}
-              </span>
-            </label>
-          ))
-        ) : (
-          <p>No permitted service history is available for selection.</p>
-        )}
-      </fieldset>
-      {sectionKeys.map((k, i) => (
-        <label className="pack-field" key={k} htmlFor={`section-${k}`}>
-          <strong>
-            {i + 1}. {sectionLabels[i]}
-          </strong>
-          <textarea
-            id={`section-${k}`}
-            required
-            maxLength={6000}
-            rows={3}
-            value={sections[k]}
-            disabled={command.busy}
-            onChange={(e) =>
-              setSections((x) => ({ ...x, [k]: e.target.value }))
-            }
-          />
-        </label>
-      ))}
-      <label className="pack-field" htmlFor="pack-change-reason">
-        Preparation / change reason
-        <textarea
-          id="pack-change-reason"
-          required
-          maxLength={2000}
-          value={reason}
-          onChange={(e) => setReason(e.target.value)}
-          disabled={command.busy}
-        />
-      </label>
-      <ErrorNotice error={command.error} />
-      <p role="status">
-        {command.busy ? "Saving preparation…" : command.saved}
-      </p>
-      <button disabled={command.busy}>
-        {pack ? "Save successor and hold dispatch" : "Save preparation"}
-      </button>
-    </form>
   );
 }
 export function PackListScreen() {
@@ -235,39 +72,6 @@ export function PackListScreen() {
           appointment in the planner to prepare one.
         </p>
       )}
-    </div>
-  );
-}
-export function NewPackScreen({ appointmentId }: { appointmentId: string }) {
-  const router = useRouter(),
-    r = useResource<{
-      appointment: { id: string; version: number; display_number: string };
-      work_order_reference: string;
-      sources: Source[];
-      history: History[];
-    }>(`appointments/${appointmentId}/pack-options`);
-  return (
-    <div className="business-page">
-      <Intro title="Prepare job pack">
-        <Link href={`/service/appointments/${appointmentId}`}>
-          Back to appointment
-        </Link>
-      </Intro>
-      <ErrorNotice error={r.error} />
-      {r.data && (
-        <>
-          <p>
-            {r.data.work_order_reference} · {r.data.appointment.display_number}
-          </p>
-          <PreparationForm
-            appointment={r.data.appointment}
-            sources={r.data.sources}
-            history={r.data.history}
-            onSaved={(id) => router.push(`/service/packs/${id}`)}
-          />
-        </>
-      )}
-      {r.loading && <p>Loading preparation context…</p>}
     </div>
   );
 }

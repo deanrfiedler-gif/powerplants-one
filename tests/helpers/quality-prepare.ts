@@ -16,6 +16,20 @@ import {
 
 const id = (prefix: string, n = 1) =>
   `${prefix}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
+// Audit finding M1: every preparation save records its own reason, in the dialog that lists what changed.
+export async function savePreparation(page: Page, reason: string) {
+  await page
+    .getByRole("button", { name: "Save preparation…", exact: true })
+    .click();
+  const dialog = page.getByRole("dialog");
+  await dialog
+    .getByLabel("Reason for this change", { exact: true })
+    .fill(reason);
+  await dialog
+    .getByRole("button", { name: "Save preparation", exact: true })
+    .click();
+  await expect(dialog).toHaveCount(0);
+}
 export async function committed(
   page: Page,
   path: string,
@@ -517,14 +531,10 @@ export async function prepareJourney(page: Page, info: TestInfo) {
             8,
           ),
       );
-  await page
-    .getByLabel("Preparation / change reason", { exact: true })
-    .fill(
-      "SYN prepare all nine sections from exact approved context and source bytes.",
-    );
-  await page
-    .getByRole("button", { name: "Save preparation", exact: true })
-    .click();
+  await savePreparation(
+    page,
+    "SYN prepare all nine sections from exact approved context and source bytes.",
+  );
   await expect(page).toHaveURL(/\/service\/packs\/[a-f0-9-]{36}$/);
   const pid = page.url().split("/").at(-1)!;
   await issuePack(page, pid);
@@ -642,18 +652,11 @@ export async function prepareJourney(page: Page, info: TestInfo) {
       .fill(
         "SYN amended technical instruction: stop the external label inspection if condensation obscures the display. Record uncertainty and obtain a separately authorised return; do not open the enclosure or infer the original diagnosis.",
       );
-    await page
-      .getByLabel("Preparation / change reason", { exact: true })
-      .fill(
-        "SYN successor reflects controlled changed dates; original issue remains immutable.",
-      );
     await committed(page, `packs/${pid}/amend`, () =>
-      page
-        .getByRole("button", {
-          name: "Save successor and hold dispatch",
-          exact: true,
-        })
-        .click(),
+      savePreparation(
+        page,
+        "SYN successor reflects controlled changed dates; original issue remains immutable.",
+      ),
     );
     await issuePack(page, pid);
     const currentPack = (await call(page, `packs/${pid}`)).items[0];
