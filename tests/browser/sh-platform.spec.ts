@@ -23,6 +23,14 @@ test.beforeEach(async ({ page, baseURL }) => {
     ).ok(),
   ).toBe(true);
 });
+test.afterEach(async ({ page }) => {
+  // The following ES-08 suite resets the synthetic schema. Closing a page
+  // can abort a response while its server read still holds database locks.
+  // Finish routed fetches and pending page traffic before fixture teardown.
+  await page.unrouteAll({ behavior: "wait" });
+  await page.waitForLoadState("networkidle");
+});
+
 test("SH notification event, explicit read, source guard, grouped state and preferences persist", async ({
   page,
   baseURL,
