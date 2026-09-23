@@ -1,6 +1,6 @@
 # Decision control
 
-[Priva fertigation workbench refinement](fertigation-workbench-refinement.md) is a **proposed** design decision: six presentation departures (D1–D6) from the r02 standalone workbench, drawn on a private design canvas and raised on 23 September 2026. Calculations, checks and accepted baselines are unchanged; not accepted.
+[Priva fertigation workbench refinement](fertigation-workbench-refinement.md) is a **proposed** design decision, raised on 23 September 2026 and drawn on a private design canvas. It covers seven presentation departures (D1–D7), audit findings A1–A9 and twelve proposed features (F1–F12). Calculations and accepted baselines are unchanged; not accepted.
 
 [Notice accent rule departure](notice-accent-rule-departure.md) is a **proposed** design-system decision: whether notices keep the 3 px coloured left rule used by theme board r22 and Job Pack r03. Raised from the field work timer concept on 23 September 2026; not accepted.
 

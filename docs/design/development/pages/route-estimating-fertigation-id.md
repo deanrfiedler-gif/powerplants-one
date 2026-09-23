@@ -35,7 +35,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 No exact image or HTML reference is linked. Keep this gap visible.
 
-A proposed refinement of the r02 standalone workbench (SHA-256 `b51bf2cab7cb1af54e33a0ec739921c4ca1a08da918165d615ead347d6463ab9`) exists as a private design canvas. Its six departures, including a section rail in place of r02's tabs, are raised in [Priva fertigation workbench refinement](../../../decisions/fertigation-workbench-refinement.md). It is not accepted and is not an exact reference for this route.
+A proposed refinement of the r02 standalone workbench (SHA-256 `b51bf2cab7cb1af54e33a0ec739921c4ca1a08da918165d615ead347d6463ab9`) exists as a private design canvas. It covers all nine views at 1440 px, the Overview at 390 px, and import, conflict-resolution, calculation-trace, revision-compare, report, site-visit and state artboards. Its departures and proposed features are raised in [Priva fertigation workbench refinement](../../../decisions/fertigation-workbench-refinement.md). It is not accepted and is not an exact reference for this route.
 
 ## Behaviour, handovers and verification
 
