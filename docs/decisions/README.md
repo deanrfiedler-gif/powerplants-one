@@ -98,3 +98,5 @@ The [PPO Assistant direction and architecture decision](ppo-assistant-direction.
 - [ADR-0042 — Customer location readiness, survey and account development](ADR-0042-customer-location-workflows.md): additive exact-scope aggregates, immutable evidence and shared SH coordination adapters; existing CS-05 retained.
 
 - [ADR-0043 — Service request lifecycle](ADR-0043-service-request-lifecycle.md): **proposed**, not accepted. Intent-specific TR-15 commands for work, waiting, resolution review, closure, reopening and cancellation on the existing Ticket. It reuses Activity for owned actions and the customer-update commitment, and adds typed evidence, contact, waiting and resolution records. No new state values; one future migration.
+
+- [ADR-0045 - Native Equipment workflows](ADR-0045-equipment-native-workflows.md): authorised synthetic EQ-01-EQ-09 implementation using canonical Assets, CS locations, Inspection instruments and SH coordination; retained configuration lineage and explicit reviewed physical changes. Operational and visual acceptance remain separate.
