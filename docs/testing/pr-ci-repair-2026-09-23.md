@@ -1,5 +1,7 @@
 # Open pull-request CI repair, 23 September 2026
 
+Follow-up: the [shared browser-harness repair](pr-browser-ci-repair-2026-09-23.md) supersedes the pending retry disposition below. Server timing evidence established a repeatable defect, and #293 exposed an additional abandoned-read teardown gap. Both have failing-before/passing-after regressions and are now included on this branch. The historical first-pass findings below are retained.
+
 Owner: Dean Fiedler. Scope: requested repair of failing open pull requests; component assurance only.
 
 ## PR #291: integrate the existing main fixes
