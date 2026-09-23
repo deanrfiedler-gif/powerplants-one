@@ -353,7 +353,7 @@
       "layout": "padded",
       "scroll_owner": "#main",
       "design": "docs/design/development/pages/scope-cs-07.md",
-      "sha256": "3521302557f273b2c54086817d2b8c782c110c64cd27956212b222e9a81bed80",
+      "sha256": "30a7f18274081dab8bd8f3351d0f9a1b719b19ef452ffb47f9866beee51e448b",
       "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
       "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
       "component_proof": "tests/browser/customer-location.spec.ts",

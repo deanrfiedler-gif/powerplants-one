@@ -1,0 +1,421 @@
+{
+  "environment": "Windows; Node 24.21.0; Chrome 153.0.8010.53; Playwright 1.63.0; synthetic compiled app; 960px capture height",
+  "implementation_commit": "36035a309db04000c703386e5edf5b3815de2daa",
+  "source_main": "25170bf83008727f005e36b5603841a7b9359027",
+  "owner_acceptance": "Pending",
+  "captures": [
+    {
+      "file": "captures/cs-contact-1024.png",
+      "sha256": "d5eb55a973650b727ef7cec6c3166780bc5266a74fa57c07228d60480752a517",
+      "width": 1024,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-contact-1280.png",
+      "sha256": "cd9fca501951412ffec0cc99a737a284764299b765dee4abfec1ce28458fd84d",
+      "width": 1280,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-contact-1440.png",
+      "sha256": "5fe3de9d4fe895f1076286c2cb2e163bcc29184470c180c42c49ea98ce6872c1",
+      "width": 1440,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-contact-320.png",
+      "sha256": "3cb1c7135420793dd2951082bb70cd397e5ad46a653c3a4ae65e96d5fb18accd",
+      "width": 320,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-contact-390.png",
+      "sha256": "494cf2b25bd4f743f2a00cd1e6728fbebf139c6656aa89545897c82ad4e045ca",
+      "width": 390,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-contact-430.png",
+      "sha256": "8be762bacf3a556d0c3e8cbc1420d939df637615b55292d0929b1c37cc12e1eb",
+      "width": 430,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-contact-768.png",
+      "sha256": "935eb3d13ea74bf3e35e9ac5c899f178958600aa8c842b55fbca67c6901627f3",
+      "width": 768,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-customer-1024.png",
+      "sha256": "78056d25ab3cf0afd78d154cfde850ee3ddb7a469e3dc812013b8700bc257004",
+      "width": 1024,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-customer-1280.png",
+      "sha256": "e17bf0ea7953548756a70871ed03b9a18812e9a5c2199a8dadc19b4fc053b4c6",
+      "width": 1280,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-customer-1440.png",
+      "sha256": "a1ec24013e1ad7ffe6301066ea37263dca6e1b2d261d89a126cbbae14ba2d5c1",
+      "width": 1440,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-customer-320.png",
+      "sha256": "a00cf848641486a84ffeda0d20345b8d3369364b909f3b4a68642c6915df4980",
+      "width": 320,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-customer-390.png",
+      "sha256": "e247349b1ebb42cd017308f6cf3ab936d2b8afedb4a6a989b6e8aba7c947dbef",
+      "width": 390,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-customer-430.png",
+      "sha256": "c816ff271582a84493968d22e00bbef208858030ea08c426f97d13237b9a67a9",
+      "width": 430,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-customer-768.png",
+      "sha256": "03dbacb400aa530332316452ab0fb4b16f1d27cd634455b6fa978b12ba25b4bb",
+      "width": 768,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-plan-1024.png",
+      "sha256": "956da21b0a3c684b4e4dd1eae6ed421b3ff0ce2ace8de06b03a78d87aee6e310",
+      "width": 1024,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-plan-1280.png",
+      "sha256": "afaac640bd3d40e11b6c7230282caa3790c2af52b1fe62c567ee60928e33e923",
+      "width": 1280,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-plan-1440.png",
+      "sha256": "f19e638327fb7e085d575567413852f37c3dac954e94616fff47468330aa3aac",
+      "width": 1440,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-plan-320.png",
+      "sha256": "17088c9672c2e0e4b5d51115de8d9331441ad1e69d82b9143055cb08c0959bb1",
+      "width": 320,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-plan-390.png",
+      "sha256": "651937c8dccb2fe6e4189245a08f0fa30bb4d7e8ffdc6bb35a4234334b3ff89c",
+      "width": 390,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-plan-430.png",
+      "sha256": "539d5949d09ee2481ae39be87389460e0620a619aec26424d51bf59c8767b49a",
+      "width": 430,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-plan-768.png",
+      "sha256": "2f24a410331c29fac7920a9cf815979397483141e4c30514aa3761d8de0955d6",
+      "width": 768,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-readiness-1024.png",
+      "sha256": "a777e11c2ca84e6c323aba945ab0389f8029a2d8ba0d56af3e7c9c36dde5f2f8",
+      "width": 1024,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-readiness-1280.png",
+      "sha256": "017e35f49e079b7f7ef1e89f37cd2e59c5fd1d40b4a3a0f680bdae391ee48bdd",
+      "width": 1280,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-readiness-1440.png",
+      "sha256": "bdda7387641245ecf370518611edbc8d74432c4aabc90a20138aceccbd1a4746",
+      "width": 1440,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-readiness-320.png",
+      "sha256": "cedd254be2c49fc9380d42774ef8e4ef412f7a429dd16560f777765c2f3084e7",
+      "width": 320,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-readiness-390.png",
+      "sha256": "834e6a4376da99bd31ddb7bea58e1f54a52d8c907fa6db51c1c6a8607d5e6c05",
+      "width": 390,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-readiness-430.png",
+      "sha256": "4099c54250473ea87ceb39cdd3094e4cf0019bbe73b439b0163c9e8caf75765a",
+      "width": 430,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-readiness-768.png",
+      "sha256": "b21de9c03071d3ba19569a2728fad5b8d402e1c73e91c651390f9998493bf655",
+      "width": 768,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-site-1024.png",
+      "sha256": "a3394d391cd73bc2b8401113649720669462368f9078428dc1430bd922a5cfcb",
+      "width": 1024,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-site-1280.png",
+      "sha256": "e65895560fe647ecc7e9a30ab53695cebcedfc6a4a39a349ffe0ca1df52fbbbf",
+      "width": 1280,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-site-1440.png",
+      "sha256": "798a8131ad59443a29bf85f4139171a58b68f9bb18f07dbbfe998ba5328c00c1",
+      "width": 1440,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-site-320.png",
+      "sha256": "034075febc01ef87a77b385c98e3f4019427c4a5a705613100b7b07888df8704",
+      "width": 320,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-site-390.png",
+      "sha256": "153996c2c3952adb0425ef8d35cbf0be8fe1c5a66af9a8861d9215ebb909a551",
+      "width": 390,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-site-430.png",
+      "sha256": "438e795c083a505969ca30768105aba641db4a7174ac3d6d7c18ab4fe6174a9f",
+      "width": 430,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-site-768.png",
+      "sha256": "b2c429f1ee03e26d6e3299749234458c1ce78a28a91dbdfcf58177de95ab6fd0",
+      "width": 768,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-stakeholders-1024.png",
+      "sha256": "bbc29a8e30d8ec2a7f60bc6896565a0c0033941270c16014207d9da4be992d07",
+      "width": 1024,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-stakeholders-1280.png",
+      "sha256": "6cf384a36d206e2d66549e1b0d8ef27c8f252d7c0f10b67c4e7abfe912248357",
+      "width": 1280,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-stakeholders-1440.png",
+      "sha256": "cb3eeb47809253a162204260418793c5bb184431a46ae4cb8c5e70c02efff641",
+      "width": 1440,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-stakeholders-320.png",
+      "sha256": "18a6711530ab44bcb3c86154f33f4715b5617701dfbf3a7193a54dab0947e3fe",
+      "width": 320,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-stakeholders-390.png",
+      "sha256": "d48825e38c3584411486a7858d31363853704c80a422fc621da449962e677f01",
+      "width": 390,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-stakeholders-430.png",
+      "sha256": "3a7cd4fb2f97b1e985aa37e2fca8dd8f6ebd05e7b1fcd7d8cd17e4fe4511a727",
+      "width": 430,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-stakeholders-768.png",
+      "sha256": "27c23406c650cfe48cf77fbc3f4bc5f1e3311fdb470522c2012ed99f48a31a5d",
+      "width": 768,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-survey-1024.png",
+      "sha256": "86f5ba51a2a652548d53293144f931eaad1636bad278610c78cb2a0818034d7a",
+      "width": 1024,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-survey-1280.png",
+      "sha256": "f38e8904835c6644b9a0a4e1f8b247a65066075382eba093ade1eecf7b007966",
+      "width": 1280,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-survey-1440.png",
+      "sha256": "1af2f6dbc6217e767e0815851d6d1355bf055dfb517419274c0e8b60a8f4489c",
+      "width": 1440,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-survey-320.png",
+      "sha256": "ead286cb22c0adb8182564991e152b961d3121e3677a302b9f213bfaa74ae25f",
+      "width": 320,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-survey-390.png",
+      "sha256": "2bfd99f449d34649b9a487a357ff1ff5a99a420bb734df6de7995a5c20c117fc",
+      "width": 390,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/cs-survey-430.png",
+      "sha256": "b22c89aab3c2e87bf0eacc5c0139b9d2fde93d836683e4029a86e5bd84f0bf5a",
+      "width": 430,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/cs-survey-768.png",
+      "sha256": "58a43e00e327a5b73f78ab192d64e5fb28a25ac5a1a99dc542539347231f9e24",
+      "width": 768,
+      "height": 960,
+      "inspection": "Retained automated geometry evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/source-contacts-1440.png",
+      "sha256": "0b2ef6c7e3403a89b493985231370fd505fd085c454f71137e4e0a602537177d",
+      "width": 1440,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/source-contacts-390.png",
+      "sha256": "326141187b6c37e0f29ef7106ec275636cb6c80a4a0a319e5bf854d44b112d4d",
+      "width": 390,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/source-customer-1440.png",
+      "sha256": "0d9344571de9dc0c6a9f60e7849f4d4040eba593b029d363d52c5248037125b2",
+      "width": 1440,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/source-customer-390.png",
+      "sha256": "fd45730ed4827c182d38fd85dd10872165a7862f587d126f220e6ade5e46b205",
+      "width": 390,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/source-readiness-1440.png",
+      "sha256": "70c71e3f8d73445bd5dda8634f46fe9592192eb1b8e1bd8746fad14f65737ea4",
+      "width": 1440,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/source-readiness-390.png",
+      "sha256": "668a5512ad98d409992cd8068a8ba593208ba82efe70d0e8953444a759b41cdf",
+      "width": 390,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/source-sites-1440.png",
+      "sha256": "45c2be870f5ba990af488babc96e0f768540dbaafa5341c2ddac121875d5b3f0",
+      "width": 1440,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/source-sites-390.png",
+      "sha256": "190c8741bbe7bb8abf2af0ecb6a0b0f6dc58d2bd73093e8c0e9a34b4e969ba21",
+      "width": 390,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/source-survey-1440.png",
+      "sha256": "8612636a88d89fc62208f22ca85cbd3b330569a660804fbb0f9ec2cda174937f",
+      "width": 1440,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    },
+    {
+      "file": "captures/source-survey-390.png",
+      "sha256": "07f4e84cbaabd53b8018666ad05cd695d1d7a04440e76882b05cef7425bde883",
+      "width": 390,
+      "height": 960,
+      "inspection": "Inspected: readable content, source boundary and responsive geometry"
+    }
+  ]
+}
