@@ -3555,7 +3555,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Filter the source-owned timeline. Read reported symptoms, technical history, changes, Service requests, Work Orders, appointments, report links, exact document revisions, field evidence, Inspection attempts and Activities."
+            "Filter the source-owned timeline. Read reported symptoms, technical history, changes, Service requests, Work Orders, appointments, report links, exact document revisions, field evidence, Inspection attempts and Activities.",
+            "Use Create follow-up to open the canonical Activity form with this Asset, company and Site retained. Review the history before assigning the action; this does not authorise diagnostic work."
           ],
           "steps": [],
           "rows": [],

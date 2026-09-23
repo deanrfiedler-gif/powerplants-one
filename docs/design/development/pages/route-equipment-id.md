@@ -35,11 +35,13 @@ Shared Assets and CS supply identities, physical Site/Facility and served relati
 
 Configuration and lifecycle decisions never infer a warranty or maintenance transfer.
 
+The Documents & service tab opens the canonical Create follow-up form with this Asset, company and Site preselected. Identity uncertainty remains explicit and never authorises diagnostic work.
+
 ## States, recovery and proposed departures
 
 Loading, no permitted records, filtered-empty, read-only, missing source, partial/bounded history, invalid input, stale source/version, saving, saved and uncertain outcome are distinct. Keep the original operation for recovery; do not submit a second intent when its outcome is uncertain. Stale proposals retain their original evidence basis and require explicit comparison/fresh proposal. A permission failure clears the sensitive read.
 
-Proposed native adaptation: use the existing shared shell and responsive cards/tabs instead of copying the standalone HTML shell, scripted mock state or a new Equipment search/review/task master. This is an implementation proposal under ADR-0044, not adoption of a visual baseline.
+Proposed native adaptation: use the existing shared shell and responsive cards/tabs instead of copying the standalone HTML shell, scripted mock state or a new Equipment search/review/task master. This is an implementation proposal under ADR-0045, not adoption of a visual baseline.
 
 ## Evidence and review
 

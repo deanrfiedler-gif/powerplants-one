@@ -64,6 +64,7 @@ export function EquipmentEvidencePortfolio({ kind }: { kind: EvidenceKind }) {
         <div className="eq-filters">
           <EqSelect
             label="Equipment context"
+            emptyLabel="All permitted equipment"
             required={false}
             value={asset}
             onChange={(id) => {

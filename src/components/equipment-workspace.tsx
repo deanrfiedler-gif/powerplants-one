@@ -53,6 +53,13 @@ export function EquipmentContext({ row }: { row: EquipmentRow }) {
             <Status value={row.lifecycle_status} />
           </dd>
         </dl>
+        {row.identity_status !== "Verified" && (
+          <p className="eq-notice">
+            Equipment identity is {row.identity_status.toLowerCase()}. Similar
+            descriptions or serial candidates remain separate assets.
+            Identification questions do not authorise diagnostic work.
+          </p>
+        )}
       </section>
       <section>
         <h2>Installed location</h2>
@@ -231,8 +238,9 @@ export function EquipmentRegister() {
                   <dl>
                     <dt>Customer</dt>
                     <dd>
-                      {a.customers.map((c) => c.name).join(", ") ||
-                        "Not recorded"}
+                      {[...new Set(a.customers.map((c) => c.name))].join(
+                        ", ",
+                      ) || "Not recorded"}
                     </dd>
                     <dt>Installed</dt>
                     <dd>
@@ -389,9 +397,7 @@ export function EquipmentWorkspace({ id }: { id: string }) {
               <ButtonLink href={`/sites/${r.data.context.site_id}/readiness`}>
                 Review Site readiness
               </ButtonLink>
-              <ButtonLink href={`/work?asset_id=${id}`}>
-                Owned follow-up
-              </ButtonLink>
+              <ButtonLink href="/work">Open My Work</ButtonLink>
               <ButtonLink href={`/customers/new?kind=asset`}>
                 Create equipment
               </ButtonLink>
@@ -423,6 +429,11 @@ export function EquipmentWorkspace({ id }: { id: string }) {
             )}
           </RecordPanel>
           <RecordPanel id="eq" tab="history" value={view}>
+            <ButtonLink
+              href={`/work/new?${new URLSearchParams({ type: "Asset", id, company: r.data.context.company_id, site: r.data.context.site_id })}`}
+            >
+              Create follow-up
+            </ButtonLink>
             {opened("history") && <EquipmentTimeline id={id} />}
           </RecordPanel>
           <RecordPanel id="eq" tab="lifecycle" value={view}>

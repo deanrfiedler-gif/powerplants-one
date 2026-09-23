@@ -49,6 +49,7 @@ export function EquipmentTimeline({
             <EqSelect
               required={false}
               label="Timeline source"
+              emptyLabel="All permitted sources"
               value={filter}
               onChange={setFilter}
               options={[...new Set(r.data.items.map((x) => x.source))].map(

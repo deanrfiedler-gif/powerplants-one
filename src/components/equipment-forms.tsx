@@ -39,12 +39,14 @@ export function EqSelect({
   onChange,
   options,
   required = true,
+  emptyLabel,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
   options: { id: string; label: string }[];
   required?: boolean;
+  emptyLabel?: string;
 }) {
   return (
     <label className="eq-select">
@@ -54,7 +56,9 @@ export function EqSelect({
         value={value}
         onChange={(e) => onChange(e.target.value)}
       >
-        <option value="">{required ? "Select…" : "Not recorded"}</option>
+        <option value="">
+          {emptyLabel ?? (required ? "Select…" : "Not recorded")}
+        </option>
         {options.map((o) => (
           <option key={o.id} value={o.id}>
             {o.label}
