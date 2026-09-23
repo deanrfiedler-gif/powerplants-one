@@ -1,15 +1,15 @@
-# Configuration backups and recovery evidence - native design contract
+# Support lifecycle and obsolescence - native design contract
 
 <!-- versioning: git; committed history is authoritative -->
 
-Stable entry: `scope:EQ-08`. Owner: Dean Fiedler. Review: **Draft; owner visual acceptance pending**.
-Starting implementation baseline: `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc`. Route: `/equipment/backups`.
+Stable entry: `route:/equipment/lifecycle`. Owner: Dean Fiedler. Review: **Draft; owner visual acceptance pending**.
+Starting implementation baseline: `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc`. Route: `/equipment/lifecycle`.
 
 ## Purpose and page type
 
-Record an exact configuration backup, captured time/person, custodian, protected location/source revision, compatibility and recovery-procedure revision.
+Record dated supplier support evidence, support/software dates, affected component, replacement advice and uncertainty against the exact Asset.
 
-Selected r20 family: **Document & evidence workspace**. The issued [Equipment r02 HTML](../../../reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html) remains the semantic/reference source. Its bytes are unchanged. No accepted native image is available; missing desktop/mobile approval images are explicit.
+Selected r20 family: **Register / worklist; supporting Document & evidence workspace**. The issued [Equipment r02 HTML](../../../reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html) remains the semantic/reference source. Its bytes are unchanged. No accepted native image is available; missing desktop/mobile approval images are explicit.
 
 ## Desktop
 
@@ -23,17 +23,17 @@ At 430, 390 and 320 CSS px use one-column cards, stacked description lists and o
 
 ## Controls and workflow
 
-1. Select Equipment and its current configuration; record Baseline, PreChange or PostChange evidence.
-2. Record separate BackupReviewed, ProcedureReviewed, RecoveryTested and RecoveryVerified evidence with result, occurrence time and exact evidence revision.
-3. Complete prerequisites and use a different permitted reviewer to verify a passed recovery test. Read Engineering commissioning backups at their owning source.
+1. Select Equipment context and record a source/revision/date.
+2. Choose an evidenced conclusion or retain Unknown; leave unavailable end dates Unknown.
+3. Retain subsequent evidence separately and use source-owned follow-up or a governed physical replacement only when authorised.
 
 Reuse Button/ButtonLink, Field, ValidationFields, ErrorNotice, ReadState, Status, RecordTabs/RecordPanel, LocalDateTimeField and the existing command/receipt pattern. Fixtures are synthetic Equipment tests and source-owned canonical seed records; no production export is used.
 
 ## Incoming and outgoing handovers
 
-Canonical Asset configurations and existing EN-08 backup records keep their identities. SH Reviews coordinates pending evidence; no controller restore is executed.
+The supplier evidence portfolio links to canonical Equipment. Support advice can inform later Engineering, Sales or Service work without creating it automatically.
 
-A later configuration makes earlier recovery evidence historical. Repeating an earlier review invalidates subsequent current-stage claims while retaining all prior reviews. Never enter credentials or connection strings.
+Supported, SupportEnding or Discontinued evidence does not change the Asset's physical lifecycle. Unknown is never inferred from absence as supported.
 
 ## States, recovery and proposed departures
 
@@ -43,4 +43,4 @@ Proposed native adaptation: use the existing shared shell and responsive cards/t
 
 ## Evidence and review
 
-The page guide `guide.eq.08` describes current controls. [Completion handover](../../../delivery/equipment-native-completion-handover.md) records executed checks, screenshots, failure comparisons and publication status. Source presence, functional evidence, visual comparison, business acceptance and deployment remain separate. No review fingerprint is asserted.
+The page guide `guide.route-equipment-lifecycle` describes current controls. [Completion handover](../../../delivery/equipment-native-completion-handover.md) records executed checks, screenshots, failure comparisons and publication status. Source presence, functional evidence, visual comparison, business acceptance and deployment remain separate. No review fingerprint is asserted.

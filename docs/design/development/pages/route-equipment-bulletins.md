@@ -1,15 +1,15 @@
-# Configuration backups and recovery evidence - native design contract
+# Service bulletin applicability - native design contract
 
 <!-- versioning: git; committed history is authoritative -->
 
-Stable entry: `scope:EQ-08`. Owner: Dean Fiedler. Review: **Draft; owner visual acceptance pending**.
-Starting implementation baseline: `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc`. Route: `/equipment/backups`.
+Stable entry: `route:/equipment/bulletins`. Owner: Dean Fiedler. Review: **Draft; owner visual acceptance pending**.
+Starting implementation baseline: `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc`. Route: `/equipment/bulletins`.
 
 ## Purpose and page type
 
-Record an exact configuration backup, captured time/person, custodian, protected location/source revision, compatibility and recovery-procedure revision.
+Record exact bulletin source/revision and supported manufacturer/model/serial/configuration criteria. Matches are candidates; an Asset-level review makes the disposition.
 
-Selected r20 family: **Document & evidence workspace**. The issued [Equipment r02 HTML](../../../reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html) remains the semantic/reference source. Its bytes are unchanged. No accepted native image is available; missing desktop/mobile approval images are explicit.
+Selected r20 family: **Review / comparison; supporting Register / worklist**. The issued [Equipment r02 HTML](../../../reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html) remains the semantic/reference source. Its bytes are unchanged. No accepted native image is available; missing desktop/mobile approval images are explicit.
 
 ## Desktop
 
@@ -23,17 +23,17 @@ At 430, 390 and 320 CSS px use one-column cards, stacked description lists and o
 
 ## Controls and workflow
 
-1. Select Equipment and its current configuration; record Baseline, PreChange or PostChange evidence.
-2. Record separate BackupReviewed, ProcedureReviewed, RecoveryTested and RecoveryVerified evidence with result, occurrence time and exact evidence revision.
-3. Complete prerequisites and use a different permitted reviewer to verify a passed recovery test. Read Engineering commissioning backups at their owning source.
+1. Record the supplier bulletin revision in its permitted company.
+2. Choose candidate Equipment, record applicability evidence and Unknown, PotentiallyAffected, Affected or NotApplicable.
+3. For unresolved/affected Equipment select an owned existing Activity or name an owner and due date. Close only after current definitive dispositions and completed affected follow-ups.
 
 Reuse Button/ButtonLink, Field, ValidationFields, ErrorNotice, ReadState, Status, RecordTabs/RecordPanel, LocalDateTimeField and the existing command/receipt pattern. Fixtures are synthetic Equipment tests and source-owned canonical seed records; no production export is used.
 
 ## Incoming and outgoing handovers
 
-Canonical Asset configurations and existing EN-08 backup records keep their identities. SH Reviews coordinates pending evidence; no controller restore is executed.
+Shared Reviews coordinates the bulletin; Activities supply ownership, My Work and shared notifications. Service, Sales and Engineering remain separate destination authorities.
 
-A later configuration makes earlier recovery evidence historical. Repeating an earlier review invalidates subsequent current-stage claims while retaining all prior reviews. Never enter credentials or connection strings.
+Candidate matching never makes the final decision. Missing identity criteria stay visible for review and Unknown blocks closure.
 
 ## States, recovery and proposed departures
 
@@ -43,4 +43,4 @@ Proposed native adaptation: use the existing shared shell and responsive cards/t
 
 ## Evidence and review
 
-The page guide `guide.eq.08` describes current controls. [Completion handover](../../../delivery/equipment-native-completion-handover.md) records executed checks, screenshots, failure comparisons and publication status. Source presence, functional evidence, visual comparison, business acceptance and deployment remain separate. No review fingerprint is asserted.
+The page guide `guide.route-equipment-bulletins` describes current controls. [Completion handover](../../../delivery/equipment-native-completion-handover.md) records executed checks, screenshots, failure comparisons and publication status. Source presence, functional evidence, visual comparison, business acceptance and deployment remain separate. No review fingerprint is asserted.

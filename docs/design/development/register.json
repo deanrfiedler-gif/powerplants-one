@@ -530,23 +530,34 @@
     },
     {
       "key": "scope:EQ-01",
-      "title": "Installed-base register and equipment workspace",
+      "title": "Installed base and Equipment workspace",
       "kind": "scope",
       "module": "EQ",
-      "summary": "Integrate the richer installed-base workspace over existing equipment routes, including exact location versus served area and permanent history.",
+      "summary": "Search reference, description, serial, manufacturer, model, customer, Site, installed Facility or served area. Restore filters and pagination from the URL. Open a canonical Asset and use its record tabs.",
       "path": "/equipment",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
       ],
       "guide_key": "guide.eq.01",
       "design_path": "docs/design/development/pages/scope-eq-01.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "dependencies": [
+        "docs/decisions/ADR-0045-equipment-native-workflows.md",
+        "docs/delivery/equipment-native-completion-handover.md"
+      ],
+      "scope_status": "Native implementation; verification in progress",
+      "visual_status": "Proposed native adaptation; owner review pending",
+      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -555,57 +566,84 @@
         "route:/equipment/[id]",
         "route:/equipment",
         "scope:CS-05",
-        "scope:PD-01"
+        "scope:PD-01",
+        "scope:CS-06",
+        "scope:SH-06"
       ],
       "reviewer": null
     },
     {
       "key": "scope:EQ-02",
-      "title": "QR lookup and equipment identity confirmation",
+      "title": "Identify equipment",
       "kind": "scope",
       "module": "EQ",
-      "summary": "Implement QR scanning/manual fallback, record lookup and explicit equipment identity confirmation.",
+      "summary": "Enter an exact Asset reference, UUID, serial or same-origin equipment URL. Camera support is detected at runtime; manual lookup stays available.",
       "path": "/equipment/lookup",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
       ],
       "guide_key": "guide.eq.02",
       "design_path": "docs/design/development/pages/scope-eq-02.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
-      "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "dependencies": [
+        "docs/decisions/ADR-0045-equipment-native-workflows.md",
+        "docs/delivery/equipment-native-completion-handover.md"
+      ],
+      "scope_status": "Native implementation; verification in progress",
+      "visual_status": "Proposed native adaptation; owner review pending",
+      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 34,
       "related_keys": [
-        "scope:EQ-01"
+        "scope:EQ-01",
+        "scope:CS-05",
+        "scope:CS-06",
+        "scope:SH-06"
       ],
       "reviewer": null
     },
     {
       "key": "scope:EQ-03",
-      "title": "Configuration and change history",
+      "title": "Configuration succession",
       "kind": "scope",
       "module": "EQ",
-      "summary": "Extend basic snapshots/history into controlled hardware, firmware, software, licence, component and served-area configuration revisions.",
-      "path": "/equipment?tab=configuration",
+      "summary": "Read retained configuration revisions and their effective times. Describe a source-backed successor, review its impact, then submit a separate review decision.",
+      "path": "/equipment/[id]?view=configuration",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
       ],
       "guide_key": "guide.eq.03",
       "design_path": "docs/design/development/pages/scope-eq-03.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "dependencies": [
+        "docs/decisions/ADR-0045-equipment-native-workflows.md",
+        "docs/delivery/equipment-native-completion-handover.md"
+      ],
+      "scope_status": "Native implementation; verification in progress",
+      "visual_status": "Proposed native adaptation; owner review pending",
+      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -613,29 +651,43 @@
       "related_keys": [
         "route:/equipment/[id]",
         "route:/equipment",
-        "scope:EQ-01"
+        "scope:EQ-01",
+        "scope:CS-05",
+        "scope:CS-06",
+        "scope:SH-06"
       ],
       "reviewer": null
     },
     {
       "key": "scope:EQ-04",
-      "title": "Equipment movement, replacement and retirement",
+      "title": "Movement, replacement and retirement",
       "kind": "scope",
       "module": "EQ",
-      "summary": "Complete movement, replacement and retirement forms with effective dates, predecessor/successor links and impact review.",
-      "path": "/equipment?tab=lifecycle",
+      "summary": "Record actual relocation, correction of recorded location, replacement with a separate successor, or retirement. Current version, both contexts and consequences are checked in one transaction.",
+      "path": "/equipment/[id]?view=lifecycle",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
       ],
       "guide_key": "guide.eq.04",
       "design_path": "docs/design/development/pages/scope-eq-04.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "dependencies": [
+        "docs/decisions/ADR-0045-equipment-native-workflows.md",
+        "docs/delivery/equipment-native-completion-handover.md"
+      ],
+      "scope_status": "Native implementation; verification in progress",
+      "visual_status": "Proposed native adaptation; owner review pending",
+      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -643,29 +695,43 @@
       "related_keys": [
         "route:/equipment/[id]",
         "route:/equipment",
-        "scope:EQ-03"
+        "scope:EQ-03",
+        "scope:CS-05",
+        "scope:CS-06",
+        "scope:SH-06"
       ],
       "reviewer": null
     },
     {
       "key": "scope:EQ-05",
-      "title": "Equipment document and service timeline",
+      "title": "Documents and Service timeline",
       "kind": "scope",
       "module": "EQ",
-      "summary": "Extend equipment history with authoritative documents, exact revisions, previous diagnoses, unsuccessful fixes and unresolved findings.",
-      "path": "/equipment?tab=history",
+      "summary": "Filter the source-owned timeline. Read reported symptoms, technical history, changes, Service requests, Work Orders, appointments, report links, exact document revisions, field evidence, Inspection attempts and Activities.",
+      "path": "/equipment/[id]?view=history",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
       ],
       "guide_key": "guide.eq.05",
       "design_path": "docs/design/development/pages/scope-eq-05.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "dependencies": [
+        "docs/decisions/ADR-0045-equipment-native-workflows.md",
+        "docs/delivery/equipment-native-completion-handover.md"
+      ],
+      "scope_status": "Native implementation; verification in progress",
+      "visual_status": "Proposed native adaptation; owner review pending",
+      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -674,7 +740,10 @@
         "route:/equipment/[id]",
         "route:/equipment",
         "scope:EQ-01",
-        "scope:DK-01"
+        "scope:DK-01",
+        "scope:CS-05",
+        "scope:CS-06",
+        "scope:SH-06"
       ],
       "reviewer": null
     },
@@ -683,20 +752,31 @@
       "title": "Service bulletin applicability",
       "kind": "scope",
       "module": "EQ",
-      "summary": "Add supplier service-bulletin publication, applicability review, affected assets and owned follow-up.",
+      "summary": "Record exact bulletin source/revision and supported manufacturer/model/serial/configuration criteria. Matches are candidates; an Asset-level review makes the disposition.",
       "path": "/equipment/bulletins",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
       ],
       "guide_key": "guide.eq.06",
       "design_path": "docs/design/development/pages/scope-eq-06.md",
-      "html_path": null,
+      "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
-      "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "dependencies": [
+        "docs/decisions/ADR-0045-equipment-native-workflows.md",
+        "docs/delivery/equipment-native-completion-handover.md"
+      ],
+      "scope_status": "Native implementation; verification in progress",
+      "visual_status": "Proposed native adaptation; owner review pending",
+      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -704,7 +784,10 @@
       "related_keys": [
         "scope:EQ-01",
         "scope:PD-04",
-        "scope:MA-03"
+        "scope:MA-03",
+        "scope:CS-05",
+        "scope:CS-06",
+        "scope:SH-06"
       ],
       "reviewer": null
     },
@@ -713,20 +796,31 @@
       "title": "Support lifecycle and obsolescence",
       "kind": "scope",
       "module": "EQ",
-      "summary": "Add support dates, discontinued parts, obsolescence evidence and reviewed replacement/upgrade candidates.",
+      "summary": "Record dated supplier support evidence, support/software dates, affected component, replacement advice and uncertainty against the exact Asset.",
       "path": "/equipment/lifecycle",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
       ],
       "guide_key": "guide.eq.07",
       "design_path": "docs/design/development/pages/scope-eq-07.md",
-      "html_path": null,
+      "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
-      "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "dependencies": [
+        "docs/decisions/ADR-0045-equipment-native-workflows.md",
+        "docs/delivery/equipment-native-completion-handover.md"
+      ],
+      "scope_status": "Native implementation; verification in progress",
+      "visual_status": "Proposed native adaptation; owner review pending",
+      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -734,29 +828,43 @@
       "related_keys": [
         "scope:EQ-01",
         "scope:PD-04",
-        "scope:MA-05"
+        "scope:MA-05",
+        "scope:CS-05",
+        "scope:CS-06",
+        "scope:SH-06"
       ],
       "reviewer": null
     },
     {
       "key": "scope:EQ-08",
-      "title": "Control configuration backup and recovery record",
+      "title": "Configuration backups and recovery evidence",
       "kind": "scope",
       "module": "EQ",
-      "summary": "Add controlled backup references, compatibility, recovery procedure and verified recovery evidence. This records evidence; it does not restore controllers.",
+      "summary": "Record an exact configuration backup, captured time/person, custodian, protected location/source revision, compatibility and recovery-procedure revision.",
       "path": "/equipment/backups",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
       ],
       "guide_key": "guide.eq.08",
       "design_path": "docs/design/development/pages/scope-eq-08.md",
-      "html_path": null,
+      "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
-      "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "dependencies": [
+        "docs/decisions/ADR-0045-equipment-native-workflows.md",
+        "docs/delivery/equipment-native-completion-handover.md"
+      ],
+      "scope_status": "Native implementation; verification in progress",
+      "visual_status": "Proposed native adaptation; owner review pending",
+      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -764,36 +872,53 @@
       "related_keys": [
         "scope:EQ-01",
         "scope:EQ-03",
-        "scope:DK-01"
+        "scope:DK-01",
+        "scope:CS-05",
+        "scope:CS-06",
+        "scope:SH-06"
       ],
       "reviewer": null
     },
     {
       "key": "scope:EQ-09",
-      "title": "Test instruments and calibration evidence",
+      "title": "Test instruments and calibration",
       "kind": "scope",
       "module": "EQ",
-      "summary": "Add instrument register, calibration certificates, validity evidence and historical links to captured readings.",
+      "summary": "Read canonical Inspection instruments and retained calibration certificate versions, measurement capability, exact certificate references, current assessment and historical use/readings.",
       "path": "/equipment/instruments",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
       ],
       "guide_key": "guide.eq.09",
       "design_path": "docs/design/development/pages/scope-eq-09.md",
-      "html_path": null,
+      "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
-      "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "dependencies": [
+        "docs/decisions/ADR-0045-equipment-native-workflows.md",
+        "docs/delivery/equipment-native-completion-handover.md"
+      ],
+      "scope_status": "Native implementation; verification in progress",
+      "visual_status": "Proposed native adaptation; owner review pending",
+      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 39,
       "related_keys": [
         "scope:DK-01",
-        "scope:DK-06"
+        "scope:DK-06",
+        "scope:CS-05",
+        "scope:CS-06",
+        "scope:SH-06"
       ],
       "reviewer": null
     },
@@ -4966,23 +5091,34 @@
     },
     {
       "key": "route:/equipment/[id]",
-      "title": "Equipment detail",
+      "title": "Installed base and Equipment workspace - native route",
       "kind": "route",
       "module": "EQ",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Search reference, description, serial, manufacturer, model, customer, Site, installed Facility or served area. Restore filters and pagination from the URL. Open a canonical Asset and use its record tabs.",
       "path": "/equipment/[id]",
       "source_paths": [
-        "src/app/(business)/equipment/[id]/page.tsx"
+        "src/app/(business)/equipment/[id]/page.tsx",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
       ],
       "guide_key": "guide.page.equipment.id",
       "design_path": "docs/design/development/pages/route-equipment-id.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "dependencies": [
+        "docs/decisions/ADR-0045-equipment-native-workflows.md",
+        "docs/delivery/equipment-native-completion-handover.md"
+      ],
+      "scope_status": "Native implementation; verification in progress",
+      "visual_status": "Proposed native adaptation; owner review pending",
+      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -4991,29 +5127,43 @@
         "scope:EQ-01",
         "scope:EQ-03",
         "scope:EQ-04",
-        "scope:EQ-05"
+        "scope:EQ-05",
+        "scope:CS-05",
+        "scope:CS-06",
+        "scope:SH-06"
       ],
       "reviewer": null
     },
     {
       "key": "route:/equipment",
-      "title": "Equipment register",
+      "title": "Installed base and Equipment workspace - native route",
       "kind": "route",
       "module": "EQ",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Search reference, description, serial, manufacturer, model, customer, Site, installed Facility or served area. Restore filters and pagination from the URL. Open a canonical Asset and use its record tabs.",
       "path": "/equipment",
       "source_paths": [
-        "src/app/(business)/equipment/page.tsx"
+        "src/app/(business)/equipment/page.tsx",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
       ],
       "guide_key": "guide.page.equipment",
       "design_path": "docs/design/development/pages/route-equipment.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "dependencies": [
+        "docs/decisions/ADR-0045-equipment-native-workflows.md",
+        "docs/delivery/equipment-native-completion-handover.md"
+      ],
+      "scope_status": "Native implementation; verification in progress",
+      "visual_status": "Proposed native adaptation; owner review pending",
+      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -5022,7 +5172,10 @@
         "scope:EQ-01",
         "scope:EQ-03",
         "scope:EQ-04",
-        "scope:EQ-05"
+        "scope:EQ-05",
+        "scope:CS-05",
+        "scope:CS-06",
+        "scope:SH-06"
       ],
       "reviewer": null
     },
@@ -8224,6 +8377,216 @@
       "related_keys": [
         "scope:CS-08",
         "route:/surveys/[id]"
+      ]
+    },
+    {
+      "key": "route:/equipment/backups",
+      "title": "Configuration backups and recovery evidence - native route",
+      "kind": "route",
+      "module": "EQ",
+      "summary": "Record an exact configuration backup, captured time/person, custodian, protected location/source revision, compatibility and recovery-procedure revision.",
+      "path": "/equipment/backups",
+      "source_paths": [
+        "src/app/(business)/equipment/backups/page.tsx",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
+      ],
+      "guide_key": "guide.route-equipment-backups",
+      "design_path": "docs/design/development/pages/route-equipment-backups.md",
+      "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
+      "image_paths": [],
+      "dependencies": [
+        "docs/decisions/ADR-0045-equipment-native-workflows.md",
+        "docs/delivery/equipment-native-completion-handover.md"
+      ],
+      "scope_status": "Native implementation; verification in progress",
+      "visual_status": "Proposed native adaptation; owner review pending",
+      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EQ-08",
+        "scope:CS-05",
+        "scope:CS-06",
+        "scope:SH-06"
+      ]
+    },
+    {
+      "key": "route:/equipment/bulletins",
+      "title": "Service bulletin applicability - native route",
+      "kind": "route",
+      "module": "EQ",
+      "summary": "Record exact bulletin source/revision and supported manufacturer/model/serial/configuration criteria. Matches are candidates; an Asset-level review makes the disposition.",
+      "path": "/equipment/bulletins",
+      "source_paths": [
+        "src/app/(business)/equipment/bulletins/page.tsx",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
+      ],
+      "guide_key": "guide.route-equipment-bulletins",
+      "design_path": "docs/design/development/pages/route-equipment-bulletins.md",
+      "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
+      "image_paths": [],
+      "dependencies": [
+        "docs/decisions/ADR-0045-equipment-native-workflows.md",
+        "docs/delivery/equipment-native-completion-handover.md"
+      ],
+      "scope_status": "Native implementation; verification in progress",
+      "visual_status": "Proposed native adaptation; owner review pending",
+      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EQ-06",
+        "scope:CS-05",
+        "scope:CS-06",
+        "scope:SH-06"
+      ]
+    },
+    {
+      "key": "route:/equipment/instruments",
+      "title": "Test instruments and calibration - native route",
+      "kind": "route",
+      "module": "EQ",
+      "summary": "Read canonical Inspection instruments and retained calibration certificate versions, measurement capability, exact certificate references, current assessment and historical use/readings.",
+      "path": "/equipment/instruments",
+      "source_paths": [
+        "src/app/(business)/equipment/instruments/page.tsx",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
+      ],
+      "guide_key": "guide.route-equipment-instruments",
+      "design_path": "docs/design/development/pages/route-equipment-instruments.md",
+      "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
+      "image_paths": [],
+      "dependencies": [
+        "docs/decisions/ADR-0045-equipment-native-workflows.md",
+        "docs/delivery/equipment-native-completion-handover.md"
+      ],
+      "scope_status": "Native implementation; verification in progress",
+      "visual_status": "Proposed native adaptation; owner review pending",
+      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EQ-09",
+        "scope:CS-05",
+        "scope:CS-06",
+        "scope:SH-06"
+      ]
+    },
+    {
+      "key": "route:/equipment/lifecycle",
+      "title": "Support lifecycle and obsolescence - native route",
+      "kind": "route",
+      "module": "EQ",
+      "summary": "Record dated supplier support evidence, support/software dates, affected component, replacement advice and uncertainty against the exact Asset.",
+      "path": "/equipment/lifecycle",
+      "source_paths": [
+        "src/app/(business)/equipment/lifecycle/page.tsx",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
+      ],
+      "guide_key": "guide.route-equipment-lifecycle",
+      "design_path": "docs/design/development/pages/route-equipment-lifecycle.md",
+      "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
+      "image_paths": [],
+      "dependencies": [
+        "docs/decisions/ADR-0045-equipment-native-workflows.md",
+        "docs/delivery/equipment-native-completion-handover.md"
+      ],
+      "scope_status": "Native implementation; verification in progress",
+      "visual_status": "Proposed native adaptation; owner review pending",
+      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EQ-07",
+        "scope:CS-05",
+        "scope:CS-06",
+        "scope:SH-06"
+      ]
+    },
+    {
+      "key": "route:/equipment/lookup",
+      "title": "Identify equipment - native route",
+      "kind": "route",
+      "module": "EQ",
+      "summary": "Enter an exact Asset reference, UUID, serial or same-origin equipment URL. Camera support is detected at runtime; manual lookup stays available.",
+      "path": "/equipment/lookup",
+      "source_paths": [
+        "src/app/(business)/equipment/lookup/page.tsx",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
+      ],
+      "guide_key": "guide.route-equipment-lookup",
+      "design_path": "docs/design/development/pages/route-equipment-lookup.md",
+      "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
+      "image_paths": [],
+      "dependencies": [
+        "docs/decisions/ADR-0045-equipment-native-workflows.md",
+        "docs/delivery/equipment-native-completion-handover.md"
+      ],
+      "scope_status": "Native implementation; verification in progress",
+      "visual_status": "Proposed native adaptation; owner review pending",
+      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EQ-02",
+        "scope:CS-05",
+        "scope:CS-06",
+        "scope:SH-06"
       ]
     }
   ]

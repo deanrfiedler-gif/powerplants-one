@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Stable entry: `scope:EQ-08`. Owner: Dean Fiedler. Review: **Draft; owner visual acceptance pending**.
+Stable entry: `route:/equipment/backups`. Owner: Dean Fiedler. Review: **Draft; owner visual acceptance pending**.
 Starting implementation baseline: `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc`. Route: `/equipment/backups`.
 
 ## Purpose and page type
@@ -43,4 +43,4 @@ Proposed native adaptation: use the existing shared shell and responsive cards/t
 
 ## Evidence and review
 
-The page guide `guide.eq.08` describes current controls. [Completion handover](../../../delivery/equipment-native-completion-handover.md) records executed checks, screenshots, failure comparisons and publication status. Source presence, functional evidence, visual comparison, business acceptance and deployment remain separate. No review fingerprint is asserted.
+The page guide `guide.route-equipment-backups` describes current controls. [Completion handover](../../../delivery/equipment-native-completion-handover.md) records executed checks, screenshots, failure comparisons and publication status. Source presence, functional evidence, visual comparison, business acceptance and deployment remain separate. No review fingerprint is asserted.
