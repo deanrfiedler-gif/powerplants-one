@@ -1,8 +1,9 @@
-import { ContextDetail } from "../../../../components/context-screens";
+import { Suspense } from "react";
+import { CustomerWorkspace } from "../../../../components/customer-workspace";
 export default async function Page({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  return <ContextDetail kind="Organisation" id={(await params).id} />;
+  return <Suspense fallback={<p>Loading Customer 360…</p>}><CustomerWorkspace id={(await params).id} /></Suspense>;
 }

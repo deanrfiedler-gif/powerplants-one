@@ -40,6 +40,9 @@ export async function createDemand(page: Page, summary = "SYN PL01 reviewed exte
 }
 export async function openDemand(page: Page, id: string, context = "/schedule") {
   await page.goto(context);
+  // Demand and the calendar load independently. Wait for the calendar above
+  // the card to settle so its arrival cannot move Plan visit during the click.
+  await expect(page.getByText("Complete permitted result within this date/site/resource filter", { exact: false })).toBeVisible();
   const card = page.locator("article").filter({ has: page.locator(`a[href='/service/work-orders/${id}']`) });
   await card.getByRole("button", { name: "Plan visit" }).click();
   const panel = page.getByRole("dialog", { name: "Plan visit", exact: true });

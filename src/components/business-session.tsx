@@ -157,6 +157,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
             {[
               ["coordinator", "Coordinator"],
               ["crm-receiver", "Sales receiver"],
+              ["cs-reviewer", "Customer records reviewer"],
               ["observer", "Observer"],
               ["site-observer", "Site observer — Q01"],
               ["finance", "Finance preparer"],

@@ -1,0 +1,136 @@
+.cs-workspace {
+  min-width: 0;
+  max-width: 100%;
+  padding-bottom: 24px;
+}
+.cs-fields,
+.cs-workspace .summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.cs-workspace .summary-grid {
+  margin-block: 12px;
+}
+.cs-workspace .summary-grid dt {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.cs-workspace .summary-grid dd {
+  margin: 4px 0 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.cs-workspace .cs-entry {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+  margin-block: 12px;
+}
+.cs-form details {
+  min-width: 0;
+}
+.cs-form summary,
+.cs-workspace summary {
+  cursor: pointer;
+  padding-block: 12px;
+  font-weight: 600;
+}
+.cs-form .cs-checks {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+}
+.cs-form .cs-checks label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cs-form input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+.cs-workspace .button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-block: 16px;
+}
+.cs-workspace .cs-break {
+  overflow-wrap: anywhere;
+}
+.cs-workspace .cs-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: 16px;
+}
+.cs-workspace p,
+.cs-workspace h3,
+.cs-workspace a {
+  overflow-wrap: anywhere;
+}
+.cs-workspace .record-tablist {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.cs-workspace .record-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.cs-form {
+  max-width: 720px;
+  min-width: 0;
+}
+.cs-form fieldset {
+  min-width: 0;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+.cs-form input,
+.cs-form select,
+.cs-form textarea {
+  min-width: 0;
+  max-width: 100%;
+}
+.cs-workspace .history-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-block: 12px;
+}
+@media (max-width: 780px) {
+  /* Legacy CRM identity rules allocate only three grid cells. Keep the merged
+     shell controls in the native flex row on these receiving workspaces. */
+  .workspace:has(.cs-workspace) .topbar.ppo-shell-header {
+    display: flex;
+    padding: 0 10px;
+    gap: 4px;
+  }
+}
+@media (max-width: 600px) {
+  .cs-fields,
+  .cs-workspace .summary-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cs-workspace button,
+  .cs-workspace .button {
+    min-height: 44px;
+  }
+  .cs-workspace .context-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cs-workspace .record-banner {
+    gap: 8px;
+  }
+  .cs-form .actions {
+    flex-wrap: wrap;
+  }
+}

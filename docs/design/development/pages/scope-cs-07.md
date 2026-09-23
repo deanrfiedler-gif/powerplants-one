@@ -1,41 +1,33 @@
-# Account development and visit plan — design reference
+# Account development & visit plan — native receiving reference
 
-Stable entry: `scope:CS-07`. Owner: Dean Fiedler. Status: **Draft for visual review**.
-Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/customers?tab=development`.
-This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
+Stable entry: `scope:CS-07`. Scope: **CS-07**. Owner: Dean Fiedler.
+Source main: `25170bf83008727f005e36b5603841a7b9359027`. Route: `/customers/[id]/development`.
+Native implementation and adaptations are proposed for owner review; this is not a new accepted visual baseline.
 
-## Purpose and task
+## Purpose and page type
 
-Add account-development objectives, territory/sector review, customer visits and accountable follow-up.
+Plan relationship development using recorded customer and horticultural context, owners and accountable next actions.
 
-1. Identify the customer outcome sought
-2. Plan a visit around known contacts and site constraints
-3. Record the visit outcome and accountable follow-up
+r20 page type: **Planning workspace**. Account context, Relationship objectives, Planned visits, Next actions and Reviews & history.
 
 ## Desktop
 
-Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
+Use the current native PPO shell and padded content composition. Reuse PageHeader, RecordTabs/RecordPanel, Field/SelectField, ReadState, ErrorNotice and the existing command recovery controls. Keep source ownership, unknown/restricted states and exact record links visible. The shared shell retains header, search and global navigation; no standalone demo shell is copied.
 
-At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
+The native proposal receives the business views rather than the standalone drawer geometry. The owning page scrolls; horizontal scrolling is confined to the tab strip. Paired retained-source/native inspection and actual viewport evidence are recorded in the CS handover.
 
 ## Mobile
 
-At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
+Stack fields and record facts; let long names and unknown values wrap. Keep labelled save/recovery controls, visible focus and keyboard-operable tabs. Inspect 430, 390 and 320 CSS px and intermediate 768/1024 layouts. No information or required decision is hidden to make a screenshot fit.
 
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+## Sources, handovers and authority
 
-## Shared components and states
+This is broader account planning. Sales Aftercare owns event-specific follow-up; Scheduling owns actual resource bookings. A proposed visit creates no Appointment. The plan creates no opportunity, forecast, score, health formula, territory taxonomy or fixed visit cadence. Finance remains at the separate customer Account page.
 
-Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
+Incoming: exact canonical customer/Site/Person and permitted source records. Outgoing: exact source links, owned Activity follow-up and, for surveys, an immutable Reviewed receiving snapshot. Preserve canonical Facilities and their installed-versus-served equipment distinction.
 
-Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
+Reference: docs/blueprints/crm-parity.md PAR-07; no dedicated CS-07 standalone design exists.
 
-## Visual references
+## Verification and acceptance
 
-No exact image or HTML reference is linked. Keep this gap visible.
-
-## Behaviour, handovers and verification
-
-The draft User Guide `guide.cs.07` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
-
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+The detailed page guide is `guide.cs.07`. [CS receiving handover](../../../delivery/cs-native-completion-handover.md) records executed behaviour, visual inspection, source hashes and open business definitions. Owner/device acceptance and deployment remain separate.

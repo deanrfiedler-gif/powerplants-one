@@ -3,7 +3,7 @@ import { CRM, crmCreate } from "../helpers/crm";
 import { estimateInput } from "../helpers/estimating";
 test.describe.configure({ timeout:120000 });
 async function call(page:Page,path:string,body?:unknown) {
-  const r=await page.request.fetch(`/api/v1/${path}`,{method:body===undefined?"GET":"POST",headers:body===undefined?{}:{Origin:"http://127.0.0.1:3000"},data:body});
+  const r=await page.request.fetch(`/api/v1/${path}`,{method:body===undefined?"GET":"POST",headers:body===undefined?{}:{Origin:new URL(test.info().project.use.baseURL!).origin},data:body});
   expect(r.ok(),await r.text()).toBe(true);return r.json();
 }
 test("mobile CRM completion, Brisbane follow-up and record links persist through reload",async({page},info)=>{
@@ -57,11 +57,16 @@ test("mobile CRM completion, Brisbane follow-up and record links persist through
 test("organisation summary opens the full Sites hierarchy; mobile menu contains keyboard focus",async({page},info)=>{
   await call(page,"local-session",{profile:"coordinator"});
   await page.goto(`/customers/${CRM.org}`);
-  await expect(page.locator(".site-summary")).toContainText("linked sites");
-  await expect(page.locator(".site-card:visible")).toHaveCount(0);
-  await page.getByRole("button",{name:"View sites",exact:true}).click();
-  await expect(page.getByRole("tab",{name:"Sites",exact:true})).toBeFocused();
-  await expect(page.locator(".site-card").first()).toBeVisible();
+  await expect(page.getByRole("tab",{name:"Overview",exact:true})).toHaveAttribute("aria-selected","true");
+  const sitesTab=page.getByRole("tab",{name:"Sites & equipment",exact:true});
+  await sitesTab.focus();
+  await page.keyboard.press("Enter");
+  await expect(sitesTab).toBeFocused();
+  await expect(sitesTab).toHaveAttribute("aria-selected","true");
+  await expect(page).toHaveURL(/view=sites/);
+  const siteLink=page.locator(`.history-card h3 a[href="/sites/${CRM.site}"]`);
+  await expect(siteLink).toBeVisible();
+  await expect(page.locator(`a[href="/facilities?organisation_id=${CRM.org}"]`)).toBeVisible();
   await page.screenshot({path:info.outputPath("organisation-sites.png")});
   if(info.project.use.isMobile) {
     await page.setViewportSize({width:320,height:640});
