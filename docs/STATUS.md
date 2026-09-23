@@ -1,5 +1,7 @@
 # Current prototype status
 
+**Open-PR shell reset follow-up, 23 September 2026:** The retained-read cleanup now also covers the shell tests between SH and ES-08, after #291/#292 exposed another reset deadlock. [Evidence and limits](testing/pr-browser-ci-repair-2026-09-23.md#shell-navigation-before-es-08-reset) distinguish the missing test coverage from application behaviour. Dean authorised merging the open PRs once their checks pass; deployment remains separate.
+
 **Service requests refinement, 23 September 2026:**
 
 - **Why this page.** A register audit at main `5499df4` identified SV-01, with SV-02, as the next dedicated-refinement page that has a delivered design but no native refinement.
