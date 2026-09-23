@@ -35,7 +35,7 @@ test("CR01/04 scoped insights drill through eight workspace views and preserve w
   await expect(
     page.getByRole("link", { name: o.title, exact: true }).first(),
   ).toBeVisible();
-  await page.locator(".crm-insights summary").click();
+  await page.locator(".crm-insights > summary").click();
   await expect(page.locator(".crm-insights")).toContainText("Unweighted");
   await page.screenshot({
     path: info.outputPath("sales-cr04-insights.png"),
@@ -149,8 +149,8 @@ test("CR02 frozen submission survives clarification, reload and source drift; CR
   }
   await page.goto("/estimating/intake");
   await expect(
-    page.getByRole("link", { name: o.title, exact: true }),
-  ).toBeVisible();
+    page.locator(`a[href="/sales/handoffs/estimating/${id}"]`),
+  ).toContainText(o.title);
   await page.goto("/sales/handoffs/won");
   await expect(page.getByRole("heading", { name: /Won/ })).toBeVisible();
 });
@@ -158,13 +158,18 @@ test("CR05 issued source review exposes policy unknowns, all follow-up views and
   page,
 }, info) => {
   await call(page, "local-session", { profile: "coordinator" });
-  const source = await reportIssued(),
+  // This view-only case can share a native issued record with the other browser
+  // project or HTTP proof. The pack helper owns one seeded appointment; issuing
+  // it twice would incorrectly try to confirm a completed visit.
+  const available = await call(page, "sales/aftercare");
+  let id = available.items[0]?.record.id as string | undefined;
+  if (!id) {
+    const reportId = available.sources[0]?.id ?? (await reportIssued()).report.id;
     id = randomUUID();
-  await call(page, "sales/aftercare", {
-    ...crmBase(),
-    id,
-    source_report_id: source.report.id,
-  });
+    await call(page, "sales/aftercare", {
+      ...crmBase(), id, source_report_id: reportId,
+    });
+  }
   await page.goto(`/sales/aftercare/${id}`);
   await expect(
     page.getByRole("tab", { name: "Customer review", exact: true }),

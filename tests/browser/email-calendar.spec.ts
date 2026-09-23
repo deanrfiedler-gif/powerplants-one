@@ -113,7 +113,7 @@ test("EC complete journey, reload, calendar navigation, details, narrow layout a
   await page.goto(`/sales/opportunities/${o.id}`);
   await page.getByRole("tab", { name: "Activities", exact: true }).click();
   await expect(
-    page.getByText("SYN Confirm irrigation site visit", { exact: true }),
+    page.getByRole("tabpanel", { name: "Activities", exact: true }).getByRole("link", { name: "SYN Confirm irrigation site visit", exact: true }),
   ).toBeVisible();
   await page.goto("/calendar?day=2026-09-09");
   await expect(
