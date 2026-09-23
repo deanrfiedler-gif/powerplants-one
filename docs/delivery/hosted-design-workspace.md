@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Owner:** Dean Fiedler · **Date:** 23 September 2026 · **State:** Implementation and verification in progress.
+**Owner:** Dean Fiedler · **Date:** 23 September 2026 · **State:** Implementation complete; integrated release checks and hosted rollout tracked in PR #290.
 
 ## Scope and source
 
@@ -12,7 +12,7 @@ The existing shell entry, page register, component catalogue, guides, design ref
 
 ## Deployment configuration
 
-Use the existing `ppo-demo` GitHub environment and `Update Azure private demo` workflow. Set `PPO_DEVELOPMENT_WORKSPACE=on` and `PPO_DEVELOPMENT_OWNER_OBJECT_ID` to the owner's verified object ID in the configured tenant. Keep identity values out of the public repository. The workflow validates configuration, supplies the exact build commit, runs the existing database gate, deploys the image and verifies the selected revision and anonymous refusals. It preserves all unrelated runtime settings.
+Use the existing `ppo-demo` GitHub environment and `Update Azure private demo` workflow. Set the environment variable `PPO_DEVELOPMENT_WORKSPACE=on` and the environment secret `PPO_DEVELOPMENT_OWNER_OBJECT_ID` to the owner's verified object ID in the configured tenant. The secret is automatically masked in workflow logs. Keep identity values out of the public repository. The workflow validates configuration, supplies the exact build commit, runs the existing database gate, deploys the image and verifies the selected revision and anonymous refusals. It preserves all unrelated runtime settings.
 
 Every image build packages `.ppo-development/snapshot.json` outside public assets. Docker deliberately excludes Git and any pre-existing generated snapshot. Local/manual builds must supply `--build-arg PPO_BUILD_COMMIT=<full source commit>`. Reference serving verifies the packaged catalogue's hashes against the immutable image bytes. A deployed SHA mismatch or absent snapshot prevents workspace reads.
 
@@ -30,6 +30,10 @@ Before this change, observed hosted revision `ca-ppo-demo-90deea5d--0000037` use
 
 If the workspace leaks access, references fail or release identity is wrong, disable it immediately by setting the web app's `PPO_DEVELOPMENT_WORKSPACE=off` and the matching GitHub environment variable. Keep normal app access intact. Verify workspace requests are unavailable and business pages still load. This feature has no database migration to reverse. For an image rollback, first check compatibility with any independently deployed migrations, then restore the recorded previous web/worker image using the existing deployment runbook and verify both digests, readiness and sign-in. Do not reset the database or invitations.
 
-## Executed evidence
+## Completed pre-integration checks and current release record
 
-Local TypeScript passed. The focused workspace/history/catalogue/login/Azure suite passed 26 tests before the new cases; the subsequent owner-access, snapshot and HTTP gateway suite passed 10 tests. Register integrity passed with 268 entries, 24 components, 19 runnable examples, 30 journey references and no integrity errors. Local lint, foundation, naming and prototype checks passed. Snapshot generation passed for source b17d6ab with 268 entries and 24 components. PR #290 Azure checks have also passed the full unit suite and real PostgreSQL identity tests, including the new owner/role/revocation case; remaining browser/container checks and release remain in progress. The existing catalogue's visual reviews remain pending; functional access checks do not approve its design.
+All 18 PR checks passed on `753def00a93fee2c79b383941453307256be07fd`, including 356 unit tests, 11 hosted identity database cases, six hosted-demo desktop/mobile scenarios, 34 operator tests and the Docker image build without Git. Local TypeScript, lint, application build, register integrity and foundation/naming/prototype checks passed. The Windows-only operator file-mode assertion also fails on the unchanged previous worktree; all operator tests passed on the Linux release runner.
+
+A read-only check of the existing hosted database confirmed one enabled, active owner membership with a current invitation. Its expiry and business grants were preserved. Browser-tab creation repeatedly failed in the available desktop browser connection, so no interactive signed-in hosted visual acceptance is claimed.
+
+While these checks ran, CS PR #287 merged as `5499df4`. Integration preserves its new pages, guides, component bindings and evidence. The only conflict was the leading STATUS entry; both records were retained. The merged revision is rechecked before release. The [PR #290 release record](https://github.com/deanrfiedler-gif/powerplants-one/pull/290) records the final merge/deployment SHA, checks, actual running image and any remaining acceptance limits. This source-time record is not itself evidence of a completed rollout.

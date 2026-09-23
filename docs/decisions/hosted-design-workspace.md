@@ -8,7 +8,7 @@ Dean approved a small protected workspace in the existing hosted PPO app, initia
 
 ## Access
 
-Reuse the validated Entra tenant, opaque session and current tester membership. A deployment policy enables the workspace only when `PPO_DEVELOPMENT_WORKSPACE=on` and one valid `PPO_DEVELOPMENT_OWNER_OBJECT_ID` is configured. Match that stable directory identity, not an email, display name, first tester, business role or browser flag. Missing configuration fails closed. The owner's identity was verified through the existing signed-in Azure account; its object ID stays in deployment configuration, outside this public repository.
+Reuse the validated Entra tenant, opaque session and current tester membership. A deployment policy enables the workspace only when `PPO_DEVELOPMENT_WORKSPACE=on` and one valid `PPO_DEVELOPMENT_OWNER_OBJECT_ID` is configured. Match that stable directory identity, not an email, display name, first tester, business role or browser flag. Missing configuration fails closed. The owner's identity was verified through the existing signed-in Azure account; its object ID stays in a masked GitHub environment secret and the private web runtime configuration, outside this public repository.
 
 Recheck enabled membership, tenant, session expiry, active actor and any selected hosted-role expiry on every request. The owner can use either of their existing hosted demonstration roles; switching roles cannot grant another tester access. Invitation expiry is not extended by this feature. No database migration, business capability or permission grant is introduced.
 
