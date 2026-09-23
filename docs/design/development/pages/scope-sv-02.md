@@ -1,41 +1,100 @@
 # Request detail and communication timeline — design reference
 
-Stable entry: `scope:SV-02`. Owner: Dean Fiedler. Status: **Draft for visual review**.
-Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/service/tickets`.
+Stable entry: `scope:SV-02`. Owner: Dean Fiedler. Status: **Draft for visual review**. A proposed native refinement was recorded on 23 September 2026 and is not accepted.
+Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/service/tickets` (register entry); record route `/service/tickets/{id}`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
 ## Purpose and task
 
-Complete the richer request detail and communication timeline, with evidence, coverage uncertainty and linked work/visits.
+Hold one service request: reported symptoms, scope questions, notes, attachments, the triage decision, coverage uncertainty and linked work and visits (r06 SV-02).
 
-1. Open the request and review its timeline
-2. Separate customer statements from verified findings
-3. Link the correct authorised work and retain unresolved questions
+1. Open the request and review its current stage, commitments and timeline.
+2. Keep customer statements separate from verified findings.
+3. Triage the request, link the correct authorised work and keep unresolved questions visible.
+4. Review a proposed resolution against its evidence before it is accepted.
+
+The composition below comes from the [proposed native refinement](../../../decisions/service-requests-native-refinement.md). Its open decisions D1–D5 still apply.
 
 ## Desktop
 
-Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
+Proposed at 1440 × 960 (board frames 3, 4 and 5).
 
-At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
+- **Shell.** Breadcrumb *Service / Service requests / SYN-PPO-TKT-000201*. No module masthead and no selected-case dropdown: the record is the page.
+- **Record header** (white, full bleed):
+  - A back link to *Service requests*.
+  - A 24 px/600 title with stage and priority chips beside it.
+  - One meta line: reference, customer, site, received time and channel, and revision.
+  - Actions on the right: *Request information* and *Update details* as secondary buttons, the stage's primary action (*Triage request* for New), and a *More* menu (link a related request, complete history, assistant).
+- **Progress strip:** Capture, Triage, Coordinate and Resolution, each as an inline step with a short outcome. The current step is marked with `aria-current="step"`.
+- **Record tabs** (`tabs`, 3 px green underline on the current tab): Overview, Triage & actions, Work & visits, Evidence & updates (with count) and Resolution & review.
+- **Overview** (frame 4), in two columns: a flexible main column and a 372 px aside.
+  - **Main column:**
+    - A possible-recurrence notice (same equipment, earlier request) with *Compare* and *Link as related*.
+    - *Reported issue*: the symptom, production and crop impact, backup arrangements with unconfirmed parts marked, and the reported priority, which triage confirms.
+    - *Location and equipment*: site path, address and map link, affected area chips, and the equipment with its installed location and served areas.
+    - *Next actions*, empty until triage.
+  - **Aside:**
+    - *Next customer update*: large time, relative time and *Record customer update*.
+    - *Accountability*: owner, logged by, caller and received time.
+    - *Activity*.
+- **Triage form** (frame 3): a right-docked 560 px panel over a 40 % navy scrim.
+  - **Header:** the transition (New → Triaged, with the revision), the title and the request reference.
+  - **Note:** nothing moves until save; a stale revision refuses the save and keeps entries.
+  - **Groups:**
+    - Response decision: reviewed priority, accountable owner, priority rationale, response route, and triage decision and limitations.
+    - Impact and backup.
+    - Owned next action: action, person responsible and due.
+    - Customer commitment: next update due, plus an escalation instruction below the fold.
+  - **Footer:** *Cancel · keep in New* and *Save triage decision*.
+  - **Fields:** the same as r02 (`fields`, `validation`).
+- **Resolution & review** (frame 5):
+  - A *Proposed resolution* panel: summary, proposer and time, then the cited evidence with its basis chip and source link.
+  - A scope-of-evidence notice, then *Return for correction* and *Accept and mark resolved*.
+  - *Closure readiness* checks: no open actions; no waiting dependency, work order or visit; customer contact after the review (still required); and site and equipment recorded (advisory, open decision D4).
+  - Aside: next customer update, customer contact and completed action.
+- **Not drawn:** the Triage & actions, Work & visits and Evidence & updates tab bodies. r02's content and rules for these tabs are retained.
+- **At 1024 × 768 (not drawn):** the aside stacks below the main column, and header actions wrap onto a second row without hiding the primary action.
 
 ## Mobile
 
-At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
+Proposed at 390 × 844 (board frames 7 and 8).
 
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+- **Record page:**
+  - **Header:** a back link with a 40 px target, a 21 px title, stage and priority chips, a step label (*Step 2 of 4 · Triage*) and a meta line.
+  - **Tabs** scroll horizontally.
+  - **Body:** a customer-update row with a *Record* link, then the recurrence notice, then the reported issue.
+  - **Sticky action bar** above the bottom navigation: *Request info* and the primary *Triage request*, both 48 px high.
+- **Triage form:**
+  - **Layout:** full screen with no bottom navigation, a 44 px close control, and the subtitle *reference · New → Triaged*.
+  - **Validation:** an error summary at the top links to the first invalid field; the drawn example is a missing response route.
+  - **Fields:** 48 px, with 16 px text.
+  - **Footer:** sticky *Cancel* and *Save triage decision*.
+- **At 320 px (not drawn):** chips wrap and the action bar keeps both actions visible.
 
 ## Shared components and states
 
-Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
+Uses `application-shell`, `tabs`, `fields`, `validation`, `status`, `buttons`, `drawer` and `mobile-form`.
 
-Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
+- **Drawn states:** New and Urgent with a commitment due soon; possible recurrence; Active with a resolution proposed; a customer contact recorded before the review; a validation error on a phone.
+- **Not drawn:** loading; denied or revoked; read-only for non-managers; Waiting with a review due; a closed record with retained history; a returned resolution.
 
 ## Visual references
 
-- [PPO-Service-Cases-and-Triage-Workspace-r02.html](../../../reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html)
+- [PPO-Service-Cases-and-Triage-Workspace-r02.html](../../../reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html), SHA-256 `23e92f96…18fa5f` (the Case workspace and Resolution & review views). Retained design reference.
+- Design board frames 3, 4, 5, 7 and 8, in the private claude.ai design canvas "Page Refinement Audit", page "SV-01/02 Service requests". Proposed composition, not an approved mockup.
+- **Missing:** there is no repository image of the proposed frames, and no native record-page capture after the PR #283 shell integration.
 
 ## Behaviour, handovers and verification
 
-The draft User Guide `guide.sv.02` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
-
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+- **Customer update:** the owner keeps the customer informed. Technicians and specialists record actions and evidence.
+- **Work & visits** hands on to Work orders (SV-03) and Schedule (SV-04, PL-01). The request never creates or changes a booking.
+- **Finance referral:** a Finance referral stays with Finance.
+- **Closure** needs a successful customer contact recorded after the resolution review.
+- **Existing contract:** the native record currently supports the P03 states and fields. Resolution review and the extended stages need the SC-04 extension contract (open decision D3).
+- **Guide:** the draft User Guide `guide.sv.02` describes the running page and is not rewritten for proposed behaviour.
+- **Acceptance evidence is pending.** Compare captures of the board frames and the application at the same viewport and state, then verify:
+  - keyboard order and focus into and out of the triage form;
+  - Escape and focus return;
+  - 200 % zoom and wrapping;
+  - scroll ownership;
+  - the phone states.

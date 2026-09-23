@@ -1796,7 +1796,9 @@
       "design_path": "docs/design/development/pages/scope-sv-01.md",
       "html_path": "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/service-requests-native-refinement.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -1827,7 +1829,9 @@
       "design_path": "docs/design/development/pages/scope-sv-02.md",
       "html_path": "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/service-requests-native-refinement.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -5881,7 +5885,9 @@
       "design_path": "docs/design/development/pages/route-service-tickets-id.md",
       "html_path": "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/service-requests-native-refinement.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -5937,7 +5943,9 @@
       "design_path": "docs/design/development/pages/route-service-tickets.md",
       "html_path": "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/service-requests-native-refinement.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
