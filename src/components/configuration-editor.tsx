@@ -139,7 +139,7 @@ export function AreasEditor({
   options,
   onEvidence,
   readOnly = false,
-}: Props) {
+}: Omit<Props, "options"> & { options: Pick<FormOptions, "owner" | "owners" | "facilities"> }) {
   const [selected, setSelected] = useState<string | null>(null),
     a = value.areas.find((a) => a.id === selected);
   const update = (patch: Partial<Area>) =>

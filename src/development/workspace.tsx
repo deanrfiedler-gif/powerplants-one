@@ -718,6 +718,9 @@ export function DevelopmentWorkspace({
                 {environmentLinks(reader.entry, "local")}
                 {environmentLinks(reader.entry, "live")}
               </div>
+              <h3>Application components</h3>
+              <div className="studio-actions">{(catalog.component_links ?? []).filter(c=>c.used_on.includes(reader.entry.key)).map(c=><Link className="ppo-button" key={c.id} href={"/development/design-system?component="+encodeURIComponent(c.id)}>{c.title}</Link>)}</div>
+              <p>Mappings name verified consumers; an empty list means component inventory is still needed for this page.</p>
               <h3>Related entries</h3>
               <div className="studio-actions">
                 {reader.entry.related_keys.map((key) => {

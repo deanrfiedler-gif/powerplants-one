@@ -98,7 +98,11 @@ test("SC-06 the running Job Pack page carries the accepted r03 tokens and geomet
   await page.setViewportSize(viewports[0]);
   await openPack(page);
   expect(await tokensOf(page, names)).toEqual(accepted);
-  const geometry = await measure(page, ".jp-layout", ".jp-contents");
+  const geometry = await measure(
+    page,
+    "#jp-panel-pack .jp-layout",
+    "#jp-panel-pack .jp-contents",
+  );
   expect(geometry).toEqual(acceptedGeometry);
   expect(geometry.padding).toBe("24px");
   expect([geometry.first, geometry.last, geometry.columns]).toEqual([
@@ -150,7 +154,9 @@ test("SC-06 negative control: the last section is reachable by scrolling (r02 au
   );
   await page.setViewportSize(viewports[0]);
   await openPack(page);
-  const current = page.locator('.jp-contents nav a[aria-current="true"]');
+  const current = page.locator(
+    '#jp-panel-pack .jp-contents nav a[aria-current="true"]',
+  );
   await expect(current).toContainText("Job and visit");
   // In approved r02 the scroll-spy stopped at section 07 because 08 and 09 never crossed its threshold.
   // This scroll lands within the first second of a compiled page's life, which is how the first build of this page
@@ -190,6 +196,6 @@ test("SC-06 negative control: scroll-spy answers from the first moment of the pa
     .locator("#ppo-job-pack")
     .evaluate((el) => el.scrollTo({ top: el.scrollHeight }));
   await expect(
-    page.locator('.jp-contents nav a[aria-current="true"]'),
+    page.locator('#jp-panel-pack .jp-contents nav a[aria-current="true"]'),
   ).toContainText("Completion requirements");
 });

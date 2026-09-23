@@ -4,7 +4,7 @@
 
 **Owner:** Dean Fiedler · **Schema:** 2 · **Date:** 23 September 2026.
 
-This folder is the Git master for the local development workspace. Open `/development/page-register` through the local application or the **Design and build workspace** icon next to global search. `/development/design-system` shows the current root tokens and real shared controls. These routes and supporting endpoints are unavailable in hosted/production mode. Set `PPO_DEVELOPMENT_WORKSPACE=off` to disable them locally.
+This folder is the Git master for the local development workspace. Open `/development/page-register` through the local application or the **Design and build workspace** icon next to global search. `/development/design-system` is the component catalogue: real tables, cards, Gantt, scheduling, forms, navigation, overlays, feedback and mobile examples, linked references and alignment records. See the [component maintenance contract](components/README.md). These routes and supporting endpoints are unavailable in hosted/production mode. Set `PPO_DEVELOPMENT_WORKSPACE=off` to disable them locally.
 
 ## What is maintained
 
@@ -72,3 +72,7 @@ The entry reader shows its design-file owner, last committed change, local chang
 Guide `status` is Draft or Reviewed. Only a genuine review supplies `reviewer`, `reviewed_at` and `reviewed_content_hash` from `guideContentHash` over the exact article content, applicability/source and related links. A content change then displays Changes awaiting review; a Git commit alone never grants review. Page visual review remains a separate dependency fingerprint. All migrated articles remain Draft and all unrecorded reviewers/dates remain null.
 
 The repository-wide naming policy and retained-record boundary are documented in [living master adoption](../../decisions/living-master-documents.md). Do not strip revision references from business instructions, issued images, journey maps or evidence.
+
+## Component catalogue extension
+
+`components.json` is the stable component master; `components/*.md` supplies desktop/mobile rules. The catalogue includes 19 runnable examples, one host-shell entry and four reference-only entries. Its internal renderer adds one source route, taking the page register to 267 entries and 263 draft guides. `studio:check` also validates component categories, renderer/export bindings, reference anchors, consumer keys and review records. Automatic fingerprints mark reviews stale; no test pass grants design approval.

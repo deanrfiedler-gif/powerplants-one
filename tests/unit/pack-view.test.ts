@@ -6,9 +6,14 @@ import {
   driftSources,
   emptyInput,
   formatStamp,
+  historyKindLabel,
+  historyLabel,
   initials,
   inputDiff,
   packTimeline,
+  preparationFieldLabels,
+  preparationHelp,
+  readableValue,
   readinessSummary,
   revisionLabel,
   statusPresentation,
@@ -353,4 +358,67 @@ test("the timeline is one newest-first record with a reason and field delta on e
   );
   // An unacknowledged recipient produces no event.
   assert.equal(events.filter((e) => e.title.includes("Morgan")).length, 0);
+});
+
+// SC-06 I3 — preparation entry labels, help and the change record the save dialog shows.
+test("every section has a distinct entry label and help sentence", () => {
+  const labels = sectionKeys.map((k) => preparationFieldLabels[k]),
+    help = sectionKeys.map((k) => preparationHelp[k]);
+  assert.equal(new Set(labels).size, sectionKeys.length);
+  assert.equal(new Set(help).size, sectionKeys.length);
+  for (const text of [...labels, ...help]) {
+    assert.ok(text.trim().length > 0);
+    // No entry label may contain a name a suite looks up without exact matching.
+    assert.ok(!/criteria satisfied/.test(text));
+  }
+  // The boundaries the plan's D4 and DP-5 fix are stated where the coordinator types.
+  assert.match(preparationHelp.scope, /cannot extend the approved scope/);
+  assert.match(preparationHelp.readiness, /assessed at the appointment/);
+  assert.match(preparationHelp.site_controls, /Do not create permits/);
+});
+
+test("stored vocabulary values are shown as words, never as codes", () => {
+  assert.equal(historyKindLabel("PriorWork"), "Prior work");
+  assert.equal(historyKindLabel("KnownIssue"), "Known issue");
+  assert.equal(historyKindLabel("AttemptedFix"), "Attempted fix");
+  assert.equal(historyKindLabel("TechnicalAdvice"), "Technical advice");
+  // A value the map does not name is still split into words rather than shown as stored.
+  assert.equal(historyKindLabel("SomeFutureKind"), "Some future kind");
+  assert.equal(readableValue("NotApplicable"), "Not applicable");
+  assert.equal(
+    historyLabel({ kind: "KnownIssue", summary: "SYN reported alarm" }),
+    "Known issue: SYN reported alarm",
+  );
+});
+
+test("the save dialog's change list is the page's dirty state", () => {
+  const saved = input();
+  // An unchanged entry, and whitespace around one, are not a change.
+  assert.deepEqual(inputDiff(saved, input(), names), []);
+  assert.deepEqual(
+    inputDiff(saved, input({ sections: { ...saved.sections, scope: "  SYN scope note  " } as PackInput["sections"] }), names),
+    [],
+  );
+  const edited = inputDiff(
+    saved,
+    input({
+      sections: { ...saved.sections, scope: "SYN amended scope note" } as PackInput["sections"],
+      history_ids: ["h1"],
+    }),
+    names,
+  );
+  assert.deepEqual(
+    edited.map((c) => [c.field, c.label]),
+    [
+      ["scope", preparationFieldLabels.scope],
+      ["history_ids", "Service history"],
+    ],
+  );
+  assert.equal(edited[0].from, "SYN scope note");
+  assert.equal(edited[0].to, "SYN amended scope note");
+  assert.equal(edited[1].to, "added SYN reported alarm");
+  // A first preparation records every entry as added, so the dialog can list them all.
+  const first = inputDiff(null, saved, names);
+  assert.equal(first.length, sectionKeys.length + 1);
+  assert.ok(first.every((c) => c.from === "(empty)" || c.from === ""));
 });

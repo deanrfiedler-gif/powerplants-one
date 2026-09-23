@@ -48922,9 +48922,9 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "4c8fd6dba83794f6c64aee6859cadb913401fd64",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Compiled application driven through the preparation workflow on 23 September 2026; captures in docs/testing/evidence/job-pack-i3/. Not an owner's visual review.",
       "sections": [
         {
           "section_id": "purpose",
@@ -49012,13 +49012,18 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Preparation is entered in the Preparation view, one guided section per pack section. Each section shows the frozen context the last save composed, so entries are written against exactly what will be checked and issued.",
+            "Every save creates a new immutable revision and records its own reason with the fields that changed. There is no standing reason field on the form."
           ],
           "steps": [
-            "Confirm the record reference and customer/site context in this record workspace.",
-            "Prepare the pack against the correct scope",
-            "Review exact source/template revisions and readiness",
-            "Issue the checked pack and track recipient acknowledgement"
+            "Open the Preparation view. The contents rail lists the nine sections and flags any that need attention.",
+            "Read the linked context for a section. Section 01 shows it in place; the others keep it behind View source details.",
+            "Complete the entry for each section. All nine are required, 1 to 6000 characters; a remaining-character count appears from 5,500.",
+            "In section 05 select the relevant service history, or explain in the note why none applies.",
+            "In section 06 select the exact document versions the crew works from. At least one is required; an unavailable source cannot be selected.",
+            "Choose Save preparation. The dialog lists every changed field and asks for the reason recorded with this save.",
+            "Confirm with Save preparation. A refusal is shown in the dialog, which stays open so the same entry can be retried unchanged.",
+            "Discard changes restores the last saved revision. Only unsaved entries are discarded."
           ],
           "rows": [],
           "headers": []
@@ -49038,32 +49043,46 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
+          "paragraphs": [
+            "Prepared, checked, queued, generated, issued, sent, opened, acknowledged and dispatched are separate facts and are shown as such. None of them is implied by another."
+          ],
           "steps": [],
           "rows": [
             [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
+              "No unsaved changes",
+              "The form matches the saved revision. Save and Discard are unavailable because there is nothing to record."
             ],
             [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
+              "Unsaved changes",
+              "Entries differ from the saved revision. An Unsaved changes badge appears beside the status, and the view tabs carry the same wording. Switching between views keeps the entries; leaving the page asks first."
             ],
             [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
+              "Saving preparation…",
+              "The save is in flight. The form is disabled and the dialog stays open until the server answers."
             ],
             [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
+              "Saved as rNN",
+              "The save was accepted and created that revision. The page returns to the Job pack view showing it."
             ],
             [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
+              "Result not confirmed",
+              "Retry the unchanged action from the dialog. The same entries and the same reason replay the original save rather than creating a second revision."
             ],
             [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+              "Check the highlighted details",
+              "The server refused the content. The summary above the form links to each field; the dialog states the refusal."
+            ],
+            [
+              "Draft · not issued / Returned / Checked / Issued / Withdrawn",
+              "The pack's own state, shown as a badge. Preparation stays available to a preparer in every state; saving against a current issue raises an amendment."
+            ],
+            [
+              "Review required",
+              "A source changed after the issue. Prepare a successor revision; the existing issue is retained."
+            ],
+            [
+              "Read-only or access refused",
+              "A missing pack and one outside this identity's scope read the same. Use the authorised route; do not try another identity."
             ]
           ],
           "headers": [
@@ -49089,28 +49108,36 @@
           "steps": [],
           "rows": [
             [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
+              "The save result is unclear",
+              "Reopen Save preparation and confirm with the same entries and the same reason. The command replays the original operation; changing the reason first starts a different action and is refused while the original is unresolved."
             ],
             [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
+              "A refusal names a section",
+              "Use the links in the summary above the form. Each one moves focus to the entry the server named."
             ],
             [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
+              "Preparation is not ready",
+              "The listed items are server readiness blockers, not form errors. Assess readiness at the appointment, then save again."
             ],
             [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
+              "The authorised scope needs review",
+              "The approved scope changed or is under review. Resolve it on the work order before saving this pack."
             ],
             [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
+              "A source cannot be selected",
+              "The exact version is unavailable. Recover the original source; a successor cannot reselect a version that is gone."
             ],
             [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+              "Entries seem to have gone",
+              "Switching views keeps unsaved entries; a successful save replaces them with the saved revision. Check Revision history for what was recorded and why."
+            ],
+            [
+              "Preparing a pack that already exists",
+              "One pack exists per appointment. Opening the first-preparation route for an appointment that already has one redirects to that pack and says so."
+            ],
+            [
+              "The guide differs from the page",
+              "Check the guide and source revision against the running release, stop relying on the instruction, and record the discrepancy."
             ]
           ],
           "headers": [
@@ -49120,10 +49147,11 @@
         },
         {
           "section_id": "mobile",
-          "title": "Mobile, keyboard and offline use",
+          "title": "On a phone",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 760 CSS px and below the page is a single column: the contents rail becomes a Jump to a section control, entries use 16 px text and controls keep a 44 px target.",
+            "The preparation action bar is fixed above the application's own navigation bar, so the save state and both actions stay reachable at every scroll position. Measured clear at 390 and 320 px wide.",
+            "Between 761 and 780 px the application shell is already in its phone layout while this page still uses its tablet layout. That band is checked explicitly at 770 px."
           ],
           "steps": [],
           "rows": [],
@@ -49187,9 +49215,9 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "4c8fd6dba83794f6c64aee6859cadb913401fd64",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Compiled application driven through the preparation workflow on 23 September 2026; captures in docs/testing/evidence/job-pack-i3/. Not an owner's visual review.",
       "sections": [
         {
           "section_id": "purpose",
@@ -49277,13 +49305,14 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "This route prepares the first revision of a pack for a confirmed appointment. Until the first save there is no revision, no readiness and no pack record, so only the Preparation view is available and each section states that its context is composed from the current records when you save."
           ],
           "steps": [
-            "Search the related register for an existing record before creating another.",
-            "Complete the information requested by the creation form; keep unknown values explicit.",
-            "Review the entered context, save through the page action and inspect the resulting record/confirmation.",
-            "Then continue the wider workflow: Issue the checked pack and track recipient acknowledgement"
+            "Open the route from the appointment. If a pack already exists it opens instead, with a message saying so.",
+            "Complete all nine entries, select the exact document versions, and select any relevant service history.",
+            "Choose Save preparation. The dialog lists every entry as added and asks for the reason recorded with this first save.",
+            "Confirm with Save preparation. On success the pack opens at its own address as Draft r01, awaiting check.",
+            "A refusal stays in the dialog with the entries retained, so the same save can be retried unchanged."
           ],
           "rows": [],
           "headers": []
@@ -49303,32 +49332,46 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
+          "paragraphs": [
+            "Prepared, checked, queued, generated, issued, sent, opened, acknowledged and dispatched are separate facts and are shown as such. None of them is implied by another."
+          ],
           "steps": [],
           "rows": [
             [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
+              "No unsaved changes",
+              "The form matches the saved revision. Save and Discard are unavailable because there is nothing to record."
             ],
             [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
+              "Unsaved changes",
+              "Entries differ from the saved revision. An Unsaved changes badge appears beside the status, and the view tabs carry the same wording. Switching between views keeps the entries; leaving the page asks first."
             ],
             [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
+              "Saving preparation…",
+              "The save is in flight. The form is disabled and the dialog stays open until the server answers."
             ],
             [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
+              "Saved as rNN",
+              "The save was accepted and created that revision. The page returns to the Job pack view showing it."
             ],
             [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
+              "Result not confirmed",
+              "Retry the unchanged action from the dialog. The same entries and the same reason replay the original save rather than creating a second revision."
             ],
             [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+              "Check the highlighted details",
+              "The server refused the content. The summary above the form links to each field; the dialog states the refusal."
+            ],
+            [
+              "Draft · not issued / Returned / Checked / Issued / Withdrawn",
+              "The pack's own state, shown as a badge. Preparation stays available to a preparer in every state; saving against a current issue raises an amendment."
+            ],
+            [
+              "Review required",
+              "A source changed after the issue. Prepare a successor revision; the existing issue is retained."
+            ],
+            [
+              "Read-only or access refused",
+              "A missing pack and one outside this identity's scope read the same. Use the authorised route; do not try another identity."
             ]
           ],
           "headers": [
@@ -49354,28 +49397,36 @@
           "steps": [],
           "rows": [
             [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
+              "The save result is unclear",
+              "Reopen Save preparation and confirm with the same entries and the same reason. The command replays the original operation; changing the reason first starts a different action and is refused while the original is unresolved."
             ],
             [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
+              "A refusal names a section",
+              "Use the links in the summary above the form. Each one moves focus to the entry the server named."
             ],
             [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
+              "Preparation is not ready",
+              "The listed items are server readiness blockers, not form errors. Assess readiness at the appointment, then save again."
             ],
             [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
+              "The authorised scope needs review",
+              "The approved scope changed or is under review. Resolve it on the work order before saving this pack."
             ],
             [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
+              "A source cannot be selected",
+              "The exact version is unavailable. Recover the original source; a successor cannot reselect a version that is gone."
             ],
             [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+              "Entries seem to have gone",
+              "Switching views keeps unsaved entries; a successful save replaces them with the saved revision. Check Revision history for what was recorded and why."
+            ],
+            [
+              "Preparing a pack that already exists",
+              "One pack exists per appointment. Opening the first-preparation route for an appointment that already has one redirects to that pack and says so."
+            ],
+            [
+              "The guide differs from the page",
+              "Check the guide and source revision against the running release, stop relying on the instruction, and record the discrepancy."
             ]
           ],
           "headers": [
@@ -49385,10 +49436,11 @@
         },
         {
           "section_id": "mobile",
-          "title": "Mobile, keyboard and offline use",
+          "title": "On a phone",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 760 CSS px and below the page is a single column: the contents rail becomes a Jump to a section control, entries use 16 px text and controls keep a 44 px target.",
+            "The preparation action bar is fixed above the application's own navigation bar, so the save state and both actions stay reachable at every scroll position. Measured clear at 390 and 320 px wide.",
+            "Between 761 and 780 px the application shell is already in its phone layout while this page still uses its tablet layout. That band is checked explicitly at 770 px."
           ],
           "steps": [],
           "rows": [],
@@ -67435,9 +67487,9 @@
     {
       "guide_key": "guide.route-development-design-system",
       "entry_key": "route:/development/design-system",
-      "title": "Theme & shared controls",
+      "title": "Component catalogue",
       "status": "Draft",
-      "content_mode": "Implemented local workspace; acceptance pending",
+      "content_mode": "Implemented local presentation; synthetic fixtures; alignment acceptance pending",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "related_entry_keys": [
         "system:shell",
@@ -67449,7 +67501,7 @@
           "section_id": "purpose",
           "title": "Purpose and applicability",
           "paragraphs": [
-            "Inspect the runtime theme tokens and reusable controls, and prepare a proposed global style adjustment with its likely page impact."
+            "Inspect the actual PPO components and compare them with retained design references. The catalogue is available in the local development workspace. Runnable coverage does not imply visual or business acceptance."
           ],
           "steps": [],
           "headers": [],
@@ -67459,7 +67511,7 @@
           "section_id": "prerequisites",
           "title": "Before you begin",
           "paragraphs": [
-            "Open this page through the local development register. The gallery reads the root stylesheet and real shared components. Existing accepted page exceptions still govern their migration."
+            "Run the local PPO application from the current checkout. The catalogue examples use fixed synthetic fixtures and do not need business records. The surrounding shell still requires its normal context."
           ],
           "steps": [],
           "headers": [],
@@ -67468,11 +67520,10 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Inspect the current buttons, input labels, focus and disabled/busy examples before changing the sample.",
-            "Choose a navy colour or corner radius. Confirm that only the sample changes; no global stylesheet is saved."
+          "paragraphs": [
+            "Choose Component catalogue from the design workspace. Search or select a category, then open an example. Select a state and viewport. Use the six detail views to inspect references, usage, pages and differences."
           ],
+          "steps": [],
           "headers": [],
           "rows": []
         },
@@ -67480,7 +67531,7 @@
           "section_id": "page-tour",
           "title": "Page tour",
           "paragraphs": [
-            "The proposal controls precede an isolated sample containing primary, secondary, quiet, danger, disabled and busy actions. Forms and state examples follow. Current root tokens and an expandable affected-page list provide traceability."
+            "Coverage counts distinguish runnable, host and reference-only entries. Filters narrow the navigation. The selected example has state/viewport/reset controls and optional design comparison. Theme adjustment tools remain expandable below."
           ],
           "steps": [],
           "headers": [],
@@ -67488,9 +67539,9 @@
         },
         {
           "section_id": "information",
-          "title": "Information to prepare",
+          "title": "Information shown",
           "paragraphs": [
-            "Keep the stable entry key, exact design revision, relevant viewport and current working source. Local and hosted record IDs are separate; do not put private operational data into public design files."
+            "Each entry records owner, source export/path, exact design reference, desktop/mobile specification, states, consuming page keys, differences and review fingerprints. Unassigned review remains visible."
           ],
           "steps": [],
           "headers": [],
@@ -67498,15 +67549,11 @@
         },
         {
           "section_id": "tasks",
-          "title": "Main tasks",
-          "paragraphs": [],
-          "steps": [
-            "Inspect the current buttons, input labels, focus and disabled/busy examples before changing the sample.",
-            "Choose a navy colour or corner radius. Confirm that only the sample changes; no global stylesheet is saved.",
-            "Use Reset sample to restore current source defaults or Export change proposal to download the proposed values.",
-            "Inspect the affected-page list and the shared desktop/mobile specification.",
-            "Apply an agreed change through source and a pull request, update relevant references, run checks and reload the gallery."
+          "title": "Tasks",
+          "paragraphs": [
+            "Use Copy example link to share an exact state and width. Reset discards local example edits. Open Used on to reach page-register local/live links and guides. Compare the same reference and application viewport. Apply durable changes through Git and a pull request."
           ],
+          "steps": [],
           "headers": [],
           "rows": []
         },
@@ -67514,7 +67561,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The result is an inspected theme or an exported unapplied proposal. Only a reviewed source change updates the actual global standard. Validate contrast, control states and affected page layouts before acceptance."
+            "A browser action never updates Git or grants visual acceptance. Record an actual paired review with evidence, reviewer, date and source fingerprint; retain unresolved differences with owners."
           ],
           "steps": [],
           "headers": [],
@@ -67522,9 +67569,9 @@
         },
         {
           "section_id": "states",
-          "title": "States and feedback",
+          "title": "States and limits",
           "paragraphs": [
-            "Sample actions announce their result without changing business records. Disabled and busy controls remain distinct. A proposal download is not a save confirmation. Tokens shown below the sample continue to describe source values."
+            "Unknown example/state addresses are unavailable. Missing files/exports fail catalogue integrity. A changed dependency makes old review evidence stale. Reference-only entries have no fake interactive implementation."
           ],
           "steps": [],
           "headers": [],
@@ -67532,9 +67579,9 @@
         },
         {
           "section_id": "example",
-          "title": "Worked example",
+          "title": "Synthetic example",
           "paragraphs": [
-            "A proposed 8 px corner radius changes the sample controls. Export it for review, compare desktop and phone examples, and retain the current 6 px source value until the reviewed implementation is accepted."
+            "Open Project Gantt, choose Programme or Undated, compare at 1440 px then 390 px, and inspect List and warning behaviour. Dates are fixed to 23 September 2026 in the catalogue. No project task is saved."
           ],
           "steps": [],
           "headers": [],
@@ -67542,9 +67589,9 @@
         },
         {
           "section_id": "recovery",
-          "title": "Recovery and unavailable actions",
+          "title": "Recovery",
           "paragraphs": [
-            "Reset sample discards temporary colour/radius choices. Reload reads the current source. If a legacy page looks different, inspect its scoped CSS and accepted reference; do not assume the gallery already governs every legacy control."
+            "Use Reset example or reload to restore fixtures. Refresh working copy after editing sources. If a reference changes while open, refresh before comparing it again. Git history supports reverting durable changes."
           ],
           "steps": [],
           "headers": [],
@@ -67554,7 +67601,7 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "Stack token tiles and the impact list below 700 CSS px. Wrap sample actions without clipping their labels. Preserve the colour input, radius choice, Reset and Export at 390/320 CSS px and 200% zoom. All controls retain 44 px minimum targets. Use Tab and visible focus; Escape closes the register reader and returns focus. These development references require the running local server; no offline editing or queued Git save is provided."
+            "The frame changes real viewport width; the host shell requires browser resizing. Use labelled controls and keyboard alternatives. Escape returns focus from overlays. Mobile emulation and illustrative offline messages do not establish device/offline acceptance."
           ],
           "steps": [],
           "headers": [],
@@ -67562,9 +67609,9 @@
         },
         {
           "section_id": "resources",
-          "title": "Related references",
+          "title": "Resources",
           "paragraphs": [
-            "The working design README explains maintenance. The register links exact desktop/mobile contracts, shell/theme references and retained journeys. ADR-0040 records the architecture and access boundary."
+            "Read docs/design/development/components/README.md for the coverage and maintenance contract. Per-component rules and source links are in the catalogue. Existing UI baseline decisions remain authoritative."
           ],
           "steps": [],
           "headers": [],
@@ -67572,9 +67619,9 @@
         },
         {
           "section_id": "review",
-          "title": "Review and feedback",
+          "title": "Review status",
           "paragraphs": [
-            "Record observed mismatches against the exact source and viewport. This article is Draft r01. Visual review, functional evidence, owner acceptance and hosted publication remain separate; the development workspace is local-only."
+            "Draft guidance for the local catalogue. Individual visual alignment, physical-device review and operational acceptance remain separate."
           ],
           "steps": [],
           "headers": [],
@@ -67739,6 +67786,151 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null
+    },
+    {
+      "guide_key": "guide.route-development-component-preview",
+      "entry_key": "route:/development/component-preview",
+      "title": "Component preview",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Implemented local presentation; synthetic fixtures; alignment acceptance pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "This is the internal catalogue renderer. Open it from a registered example link with its component and state. It uses the same application styles and enforces the local development gate."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "prerequisites",
+          "title": "Before you begin",
+          "paragraphs": [
+            "Run the local PPO application from the current checkout. The catalogue examples use fixed synthetic fixtures and do not need business records. The surrounding shell still requires its normal context."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [
+            "Choose Component catalogue from the design workspace. Search or select a category, then open an example. Select a state and viewport. Use the six detail views to inspect references, usage, pages and differences."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "Coverage counts distinguish runnable, host and reference-only entries. Filters narrow the navigation. The selected example has state/viewport/reset controls and optional design comparison. Theme adjustment tools remain expandable below."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information shown",
+          "paragraphs": [
+            "Each entry records owner, source export/path, exact design reference, desktop/mobile specification, states, consuming page keys, differences and review fingerprints. Unassigned review remains visible."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Tasks",
+          "paragraphs": [
+            "Use Copy example link to share an exact state and width. Reset discards local example edits. Open Used on to reach page-register local/live links and guides. Compare the same reference and application viewport. Apply durable changes through Git and a pull request."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "A browser action never updates Git or grants visual acceptance. Record an actual paired review with evidence, reviewer, date and source fingerprint; retain unresolved differences with owners."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "States and limits",
+          "paragraphs": [
+            "Unknown example/state addresses are unavailable. Missing files/exports fail catalogue integrity. A changed dependency makes old review evidence stale. Reference-only entries have no fake interactive implementation."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "Open Project Gantt, choose Programme or Undated, compare at 1440 px then 390 px, and inspect List and warning behaviour. Dates are fixed to 23 September 2026 in the catalogue. No project task is saved."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery",
+          "paragraphs": [
+            "Use Reset example or reload to restore fixtures. Refresh working copy after editing sources. If a reference changes while open, refresh before comparing it again. Git history supports reverting durable changes."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "The frame changes real viewport width; the host shell requires browser resizing. Use labelled controls and keyboard alternatives. Escape returns focus from overlays. Mobile emulation and illustrative offline messages do not establish device/offline acceptance."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Resources",
+          "paragraphs": [
+            "Read docs/design/development/components/README.md for the coverage and maintenance contract. Per-component rules and source links are in the catalogue. Existing UI baseline decisions remain authoritative."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review status",
+          "paragraphs": [
+            "Draft guidance for the local catalogue. Individual visual alignment, physical-device review and operational acceptance remain separate."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ]
     },
     {
       "guide_key": "guide.route-search",
