@@ -81,15 +81,15 @@ Repository work does not authorise paid services, public deployment, access chan
 
 ## 9. Verification and communication
 
-Run applicable foundation, prototype and naming checks.
+Run foundation/prototype/naming checks.
 
-Test implemented behaviour: permissions, booking conflicts, stale revisions, offline replay, deduplication, document integrity and Finance reconciliation. Visually inspect relevant screens/documents. Record actual commit/environment evidence.
+Test behaviour: permissions, booking conflicts, stale revisions, offline replay, deduplication, document integrity and Finance reconciliation. Visually check relevant screens/documents. Record commit/environment.
 
 Separate decisions, evidence, proposals and open questions; distinguish delivery, tests, acceptance and production readiness. Cite sources and limits.
 
 Preserve ES-02 exact costs and PJ-09 scoped close/reopen. ES-08 geometry: audit only (es08-geometry-audit.md); reconcile merged #277; refresh main before separately authorised build; no migration slot. ADR-0034 review is not engineering approval. Retain four CI lanes (ci-retained-suite-isolation.md).
 
-See docs/delivery/demo-email-crm-integration.md. Keep synthetic mailboxes private; exclude email bodies from shared Activities. CI and Outlook acceptance are separate.
+Keep synthetic mailboxes private and bodies outside shared Activities; see demo-email-crm-integration.md. CI and Outlook acceptance are separate. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
 
 CS-05: preserve Facility IDs, legacy Grouping, service links and E2 snapshots; see its handover.
 
