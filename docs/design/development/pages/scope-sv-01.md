@@ -12,13 +12,13 @@ Show service requests by urgency, site, equipment, owner, impact, waiting reason
 2. See what needs attention first: urgent requests, overdue commitments, waiting requests and resolutions awaiting review.
 3. Move a request to its next stage through the required workflow form, or open it.
 
-The composition below comes from the [proposed native refinement](../../../decisions/service-requests-native-refinement.md). Its open decisions D1–D5 still apply; nothing here is an accepted baseline.
+The composition below comes from the [proposed native refinement](../../../decisions/service-requests-native-refinement.md). Its open decisions D1–D6 still apply; nothing here is an accepted baseline.
 
 ## Desktop
 
-Proposed at 1440 × 960 (board frames 1–3).
+Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 1–3). The shell is a separate module and is not drawn.
 
-- **Shell.** Shared rail (76 px), header (64 px) with breadcrumb *Service / Service requests*, centred global search and quick add, and the live Service tab row (44 px). No module masthead or title band. A visually hidden `h1` reads *Service requests*; the page description belongs in the page-information panel.
+- **Host (not drawn).** The shell supplies the 76 px rail and the 64 px header, with breadcrumb *Service / Service requests*, global search and quick add. Registered as a `full-bleed` module workspace with `navigation: "workspace"`, so the shell hides its Service tab row (open decision D6). The module draws no masthead or title band. A visually hidden `h1` reads *Service requests*; the page description belongs in the page-information panel.
 - **Toolbar** (56 px, white, full bleed):
   - Board/List segmented control.
   - Search, 330 px: *Search requests, customers, sites or callers*.
@@ -48,9 +48,9 @@ Proposed at 1440 × 960 (board frames 1–3).
 
 ## Mobile
 
-Proposed at 390 × 844 (board frame 6).
+Proposed module interior of 390 × 716 at a 390 × 844 window (board frame 6).
 
-- **Shell:** header (64 px), scrolling Service tab row (48 px) and bottom navigation (64 px).
+- **Host (not drawn):** the shell's 64 px header and 64 px bottom navigation. The Service tab row is hidden for a registered module workspace (D6).
 - **Controls:**
   - Search is 44 px high with 16 px text.
   - *Filters* opens a sheet; *Log a request* is the primary button beside it.
@@ -62,7 +62,7 @@ Proposed at 390 × 844 (board frame 6).
 
 ## Shared components and states
 
-Uses `application-shell`, `sales-board`, `sales-table`, `drawer`, `fields`, `validation`, `status`, `buttons` and `mobile-form`. Status chips always carry words; tone is not the business state.
+Hosted by `application-shell`. Uses `sales-board`, `sales-table`, `drawer`, `fields`, `validation`, `status`, `buttons` and `mobile-form`. Status chips always carry words; tone is not the business state.
 
 - **Drawn states:** normal register, collapsed empty lanes, overdue commitments, waiting for parts, resolution proposed, missing site, selected row with preview.
 - **Not drawn:**

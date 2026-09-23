@@ -19,6 +19,7 @@ Follow the [SV-01 contract](scope-sv-01.md#desktop). The route-specific points a
 - Remove the current `PageHeader` register band (eyebrow *SC-04 / Service intake* and the visible title). The breadcrumb carries identity, and the description moves to the page-information panel.
 - Rename the existing *New service request* action *Log a request* and keep it as the only primary action.
 - Present Board and List over one collection, following the flush-register rules: full bleed, one scroll owner, compact toolbar.
+- Register the route in `src/shell/module-workspaces.ts` as `full-bleed` with `navigation: "workspace"` (open decision D6). The module interior is then 1364 × 896 at a 1440 × 960 window.
 
 ## Mobile
 

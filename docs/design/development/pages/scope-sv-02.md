@@ -13,13 +13,13 @@ Hold one service request: reported symptoms, scope questions, notes, attachments
 3. Triage the request, link the correct authorised work and keep unresolved questions visible.
 4. Review a proposed resolution against its evidence before it is accepted.
 
-The composition below comes from the [proposed native refinement](../../../decisions/service-requests-native-refinement.md). Its open decisions D1–D5 still apply.
+The composition below comes from the [proposed native refinement](../../../decisions/service-requests-native-refinement.md). Its open decisions D1–D6 still apply.
 
 ## Desktop
 
-Proposed at 1440 × 960 (board frames 3, 4 and 5).
+Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 3, 4 and 5). The shell is a separate module and is not drawn.
 
-- **Shell.** Breadcrumb *Service / Service requests / SYN-PPO-TKT-000201*. No module masthead and no selected-case dropdown: the record is the page.
+- **Host (not drawn).** The shell's breadcrumb reads *Service / Service requests / SYN-PPO-TKT-000201*. Registered as a `padded` module workspace with `navigation: "workspace"` (D6). The module draws no masthead and no selected-case dropdown: the record is the page.
 - **Record header** (white, full bleed):
   - A back link to *Service requests*.
   - A 24 px/600 title with stage and priority chips beside it.
@@ -57,7 +57,7 @@ Proposed at 1440 × 960 (board frames 3, 4 and 5).
 
 ## Mobile
 
-Proposed at 390 × 844 (board frames 7 and 8).
+Proposed module interior of 390 × 716 at a 390 × 844 window (board frame 7). The triage dialog (frame 8) covers the full 390 × 844 viewport.
 
 - **Record page:**
   - **Header:** a back link with a 40 px target, a 21 px title, stage and priority chips, a step label (*Step 2 of 4 · Triage*) and a meta line.
@@ -73,7 +73,7 @@ Proposed at 390 × 844 (board frames 7 and 8).
 
 ## Shared components and states
 
-Uses `application-shell`, `tabs`, `fields`, `validation`, `status`, `buttons`, `drawer` and `mobile-form`.
+Hosted by `application-shell`. Uses `tabs`, `fields`, `validation`, `status`, `buttons`, `drawer` and `mobile-form`.
 
 - **Drawn states:** New and Urgent with a commitment due soon; possible recurrence; Active with a resolution proposed; a customer contact recorded before the review; a validation error on a phone.
 - **Not drawn:** loading; denied or revoked; read-only for non-managers; Waiting with a review due; a closed record with retained history; a returned resolution.

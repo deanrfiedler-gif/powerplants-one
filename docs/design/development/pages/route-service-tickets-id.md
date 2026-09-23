@@ -17,7 +17,8 @@ This route is the SV-02 record. The proposed refinement gives it a record header
 
 Follow the [SV-02 contract](scope-sv-02.md#desktop). The route-specific points are:
 
-- The breadcrumb ends with the request reference.
+- The shell's breadcrumb ends with the request reference.
+- Register the route in `src/shell/module-workspaces.ts` as `padded` with `navigation: "workspace"` (open decision D6).
 - The existing *← Service requests* link stays as the back link in the record header.
 - The record keeps its heading, because it carries name, reference, stage, priority and revision. The existing-modules rule keeps record headings.
 
