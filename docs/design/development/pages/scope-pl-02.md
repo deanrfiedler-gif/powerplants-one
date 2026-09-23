@@ -34,6 +34,8 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 No exact image or HTML reference is linked. Keep this gap visible.
 
+[PPO-Scheduling-and-Appointments-Workspace-r01.html](../../../reference/ui/service/PPO-Scheduling-and-Appointments-Workspace-r01.html) declares only a read-only PL-02 subset: its Resources view shows published calendars, exceptions, blocks and skills with no editor. It does not design this whole scope, so it is not linked as this entry's HTML reference; see `scope:SV-04`.
+
 ## Behaviour, handovers and verification
 
 The draft User Guide `guide.pl.02` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
