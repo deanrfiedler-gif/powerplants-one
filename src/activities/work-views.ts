@@ -2,6 +2,7 @@
 // never records and never authority: every use runs the ordinary reads under current grants.
 // The document is replaced whole under optimistic concurrency, after crm/directory.ts.
 // Team-shared views are not offered: the application has no team concept to share them with.
+import { workViewRegistry } from "../platform/view-targets";
 import { database } from "../platform/database";
 import { AppError } from "../platform/errors";
 import type { Principal } from "../platform/identity";
@@ -10,7 +11,7 @@ import { choice, invalid, object, optionalId, uuid } from "../shared/validation"
 import { activityKinds } from "./activities";
 import { activityTypes } from "./work-view";
 
-export const workViewTargets = ["overview", "actions", "team"] as const;
+export const workViewTargets = Object.keys(workViewRegistry) as (keyof typeof workViewRegistry)[];
 export type WorkViewCriteria = {
   owner: "mine" | "all";
   company_id: string | null;

@@ -2,7 +2,9 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Owner:** Dean Fiedler · **Date:** 23 September 2026 · **Source baseline:** `743d58f` · **Branch:** `feat/component-catalogue`.
+**Owner:** Dean Fiedler · **Date:** 23 September 2026 · **Source baseline:** `743d58f` · **Branch:** `feat/component-catalogue` · **Review:** [PR #286](https://github.com/deanrfiedler-gif/powerplants-one/pull/286).
+
+The branch incorporates main `25170bf` (SH platform PR #284). Its search route, guides, shell stylesheet, document records and compiled browser configuration are preserved alongside the catalogue. Combined coverage is now 268 page entries, 264 guides and 114 source routes; the document register has 403 records. The original pre-integration counts below identify the earlier executed checks, not the new total.
 
 ## Outcome and scope
 

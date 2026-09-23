@@ -140,7 +140,7 @@ function MyWorkMobileOverview() {
   const attention: { id: string; icon: IconName; status: Status; count: number | null; label: (n: number) => string; tone?: "overdue"; href?: string; onOpen?: () => void }[] = [
     { id: "overdue", icon: "calendar-alert", tone: "overdue", status: state(), count: data?.counts.overdue ?? null, label: (n) => plural(n, "overdue activity", "overdue activities"), href: queue({ due: "Overdue" }) },
     { id: "overdue-opportunities", icon: "dollar", tone: "overdue", status: state(data?.overdue_opportunities), count: data?.overdue_opportunities.status === "ok" ? data.overdue_opportunities.total : null, label: (n) => plural(n, "overdue opportunity", "overdue opportunities"), onOpen: () => setSheet("overdue") },
-    { id: "reviews", icon: "clock", status: state(data?.reviews), count: data?.reviews.status === "ok" ? data.reviews.total : null, label: (n) => `${plural(n, "review awaits", "reviews await")} your decision`, href: "/work/reviews" },
+    { id: "reviews", icon: "clock", status: state(data?.reviews), count: data?.reviews.status === "ok" ? data.reviews.total : null, label: (n) => `${data?.reviews.status === "ok" && data.reviews.bounded ? "At least " : ""}${plural(n, "review awaits", "reviews await")} your decision`, href: "/work/reviews" },
     { id: "gaps", icon: "dollar", status: state(data?.gaps), count: data?.gaps.status === "ok" ? data.gaps.total : null, label: (n) => `${plural(n, "opportunity", "opportunities")} without a next activity`, onOpen: () => setSheet("gaps") },
     { id: "undated", icon: "calendar", status: state(), count: data?.counts.date_needed ?? null, label: (n) => `${plural(n, "activity needs", "activities need")} a date`, href: queue({ due: "Needed" }) },
   ];

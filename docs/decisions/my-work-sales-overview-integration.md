@@ -120,3 +120,7 @@ Screenshots are in the git-ignored `verification-evidence/my-work-sales-r06/`: b
 2. **UI baseline register:** My Work is **not** registered in `ui-baselines.json` or the module-workspace registry. The register requires retained, hashed design sources, a component proof and a compiled proof, and the r06 sources are not in the repository. Registering needs Dean's decision to retain them.
 3. **Not claimed:** notifications, external calendar updates, attendee notification, message sending, offline capture, team capacity, production readiness, or business acceptance of any scenario.
 4. **Hosted demo:** `scripts/demo-upgrade.ts` carries the reviewed note for 0028. No hosted upgrade has been run.
+
+## SH-01–SH-06 continuation, 23 September 2026
+
+[ADR-0041](ADR-0041-sh-platform-coordination.md) supplements D10/D12 under Dean's current implementation instruction: real Activity notifications now occupy Updates, and persisted Engineering change reviews/receiving requests join Service and Finance. D7's personal-view storage is preserved and explicit eligible targets extend the personal contract; canonical team sharing remains unavailable. The [current coverage/handover](../delivery/sh-platform-handover.md) records exact runtime boundaries and evidence. Earlier count/business definitions and issued references remain unchanged; bounded review summaries now disclose their source window.

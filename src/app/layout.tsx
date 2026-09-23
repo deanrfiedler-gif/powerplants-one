@@ -15,6 +15,7 @@ import "./engineering.css";
 import "./field-technicians.css";
 import "./styles/job-pack.css";
 import "./styles/my-work.css";
+import "./styles/sh-platform.css";
 import "./styles/my-work-mobile.css";
 import "./styles/engineering-review-base.css";
 import "./styles/engineering-materials.css";

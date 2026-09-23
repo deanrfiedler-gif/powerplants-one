@@ -2,18 +2,19 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { AppError } from "../../src/platform/errors";
 import { actionsForCapabilities, contextualActions } from "../../src/shell/model";
-import { collectSearch, searchQuery, type SearchSource } from "../../src/shell/search";
+import { searchQuery } from "../../src/shell/search";
+import { collectApplicationSearch, type SearchAdapter } from "../../src/shell/search-service";
 
 test("global search omits denied domains, strips unrelated fields and bounds each result type", async () => {
   const calls: unknown[] = [];
-  const sources: SearchSource[] = [
-    { kind: "Denied", path: "/private", label: "title", read: async () => { throw new AppError(403, "Forbidden", "No access"); } },
-    { kind: "Customer", path: "/customers", label: "display_name", read: async query => {
+  const sources: SearchAdapter[] = [
+    { kind: "Denied", path: "/private", label: "title", detail: async () => ({}), list: async () => { throw new AppError(403, "Forbidden", "No access"); } },
+    { kind: "Customer", path: "/customers", label: "display_name", detail: async () => ({}), list: async query => {
       calls.push(query);
       return { items: Array.from({ length: 6 }, (_, i) => ({ id: String(i), display_name: "SYN " + "A".repeat(120), private_note: "Never return", email: "synthetic@example.invalid" })), next_cursor: "opaque" };
     } },
   ];
-  const result = await collectSearch("SYN", sources);
+  const result = await collectApplicationSearch("SYN", sources, 5);
   assert.deepEqual(calls, [{ q: "SYN", limit: "5" }]);
   assert.equal(result.items.length, 5); assert.equal(result.has_more, true);
   assert.equal(result.items[0].label.length, 124);
@@ -22,7 +23,9 @@ test("global search omits denied domains, strips unrelated fields and bounds eac
 });
 test("a dependency failure or unavailable record does not become an empty successful search", async () => {
   for (const status of [404, 500, 503]) {
-    await assert.rejects(collectSearch("SYN", [{ kind: "Customer", path: "/customers", label: "display_name", read: async () => { throw new AppError(status, "Unavailable", "Unavailable"); } }]), (error: unknown) => error instanceof AppError && error.status === status);
+    const result = await collectApplicationSearch("SYN", [{ kind: "Customer", path: "/customers", label: "display_name", detail: async () => ({}), list: async () => { throw new AppError(status, "Unavailable", "Unavailable"); } }], 5);
+    assert.equal(result.state, "unavailable");
+    assert.deepEqual(result.items, []);
   }
 });
 test("search rejects unknown inputs, control characters and unbounded queries before reading data", () => {

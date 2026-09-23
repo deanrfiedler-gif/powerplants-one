@@ -55,7 +55,7 @@ jobs:
       - name: Combined Leads and Projects PostgreSQL acceptance
         run: node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/leads-projects-integration.test.ts tests/database/leads.test.ts tests/database/projects-gantt.test.ts tests/database/desktop-shell.test.ts
       - name: Approved desktop and mobile journey
-        run: npx playwright test tests/browser/leads.spec.ts tests/browser/projects-gantt.spec.ts tests/browser/component-catalogue.spec.ts
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/leads.spec.ts tests/browser/projects-gantt.spec.ts tests/browser/component-catalogue.spec.ts
       - name: Retain Leads evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a

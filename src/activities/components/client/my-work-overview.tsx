@@ -507,7 +507,7 @@ export function MyWorkOverview() {
                       </span>
                       <div>
                         <strong>
-                          {data.reviews.total} {data.reviews.total === 1 ? "review awaits" : "reviews await"} your decision
+                          {data.reviews.bounded ? "At least " : ""}{data.reviews.total} {data.reviews.total === 1 ? "review awaits" : "reviews await"} your decision
                         </strong>
                         <p>
                           {data.reviews.items[0].reference} · {data.reviews.items[0].revision}

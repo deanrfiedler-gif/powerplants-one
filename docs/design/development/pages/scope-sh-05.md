@@ -1,41 +1,40 @@
-# Personal and team saved views — design reference
+# Personal saved views — design reference
 
 Stable entry: `scope:SH-05`. Owner: Dean Fiedler. Status: **Draft for visual review**.
-Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/work/actions?view=saved`.
-This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
+Source baseline and existing issued references remain recorded in the register. SH implementation is synthetic and bounded; guide, visual and owner acceptance remain separate.
 
 ## Purpose and task
 
-Retain personal saved views already implemented in My Work. Add a defined team-sharing model and extend saved-view support across eligible workspaces.
+Reuse named personal criteria in supported workspaces. Existing My Work saved-view IDs/storage remain intact; new Search, Reviews and Updates targets use registered criteria schemas.
 
-1. Set the criteria and inspect the resulting records
-2. Save a personal view where supported
-3. For team sharing, define ownership and permitted membership first
+1. Set supported filters and choose Save view.
+2. Name the view and save it to My views.
+3. Choose a saved view to apply its criteria, then manage it if needed.
 
 ## Desktop
 
-Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
-
-At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
+Reuse the saved-view controls and native WorkDialog; preserve existing My Work geometry and editor. Do not imply that personal pinning shares the view. Retain the existing 1440/1280/1024 layout and test the intermediate 768 width. The merged global design-workspace and information controls remain available.
 
 ## Mobile
 
-At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
-
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+Saved-view controls and the editor wrap at 390 and 320 CSS px. Retain labelled names, explicit update actions, Escape and focus return. Offline writes are not supported. Verification covered widths 430, 390 and 320; physical-device and owner acceptance remain pending.
 
 ## Shared components and states
 
-Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
+Use existing My Work styles, semantic tokens, WorkDialog and platform resource lifecycle controls. The scoped native SH button/input styles are retained as the My Work compatibility exception; this change does not replace the shared control system.
 
-Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
+Empty, invalid criteria, capacity reached, saving and version conflict remain visible. Review a refreshed version before retrying a stale write.
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+- [saved-views-desktop.png](../../../testing/evidence/sh-platform/captures/saved-views-desktop.png) — synthetic implementation capture, pre-PR #283 shell integration; not an approved mockup.
+- [saved-views-phone.png](../../../testing/evidence/sh-platform/captures/saved-views-phone.png) — synthetic implementation capture, pre-PR #283 shell integration; not an approved mockup.
+- No accepted standalone page mockup is available. The retained implementation captures are explicitly distinct from design approval.
 
 ## Behaviour, handovers and verification
 
-The draft User Guide `guide.sh.05` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
+Saving criteria does not modify source records, permission grants or another user’s views. A view name is not a shared team definition.
 
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+Each target validates only its supported criteria and retains a version for conflict handling. A maximum of twelve personal views is supported per registered target.
+
+[SH verification](../../../testing/evidence/sh-platform/README.md) records actual checks, inspected captures and CI repairs; [handover](../../../delivery/sh-platform-handover.md) records scope and dependencies. Images above predate the merged development-workspace shell controls and require a fresh paired review for that integration. No review fingerprint or owner acceptance is claimed. The article `guide.sh.05` remains Draft.
