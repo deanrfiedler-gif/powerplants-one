@@ -1,5 +1,7 @@
 # Decision control
 
+[Priva fertigation workbench refinement](fertigation-workbench-refinement.md) is a **proposed** design decision: six presentation departures (D1–D6) from the r02 standalone workbench, drawn on a private design canvas and raised on 23 September 2026. Calculations, checks and accepted baselines are unchanged; not accepted.
+
 [Notice accent rule departure](notice-accent-rule-departure.md) is a **proposed** design-system decision: whether notices keep the 3 px coloured left rule used by theme board r22 and Job Pack r03. Raised from the field work timer concept on 23 September 2026; not accepted.
 
 [Department navigation icons](department-navigation-icons.md) implements seven ordered department rails, semantic SVG pairs and bounded existing-service landings. It amends r17's no-shortcuts choice; readiness and permissions control live links.

@@ -154,6 +154,8 @@ The [audit follow-through package](decisions/audit-follow-through-policy-package
 
 The [notice accent rule](decisions/notice-accent-rule-departure.md) is a proposed design-system decision covering theme board r22 and Job Pack r03, raised 23 September 2026 from the field work timer concept; it awaits Dean's decision and changes no baseline.
 
+The [Priva fertigation workbench refinement](decisions/fertigation-workbench-refinement.md) raises six proposed presentation departures from the r02 standalone workbench, drawn on a private design canvas on 23 September 2026; it awaits Dean's decision per departure and changes no baseline, calculation or application screen.
+
 D-003 is resolved for this personal prototype (Powerplants One, PPO, independent naming). D-004/D-022/D-029 are partially resolved; the other 25 master decisions remain open. [Current evidence treatment](prototype/decisions-and-evidence.md) separates useful design detail from operational closure evidence. The merged ADR sequence runs ADR-0001–0018 and ADR-0020–0030 (ADR-0030 is proposed, not accepted): runtime maintenance owns ADR-0022, taxonomy ADR-0023 and P12 recovery ADR-0024. ADR-0019 was never allocated. ADR-0031 proposes the structural answer to ADR-0030 and ADR-0032 records mobile installation; both are pending merge. Dean owns prototype decisions; proposed department roles assign no employees and establish no corporate sponsorship.
 
 ## 6. Boundaries that still hold
