@@ -33,7 +33,9 @@ Starting source: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`; branch `feat/design
 - Seven live HTTP groups passed: catalog count/no-store, static/dynamic information-icon lookup, unknown guide/route/arbitrary path refusal, exact Markdown content/security headers, stale-hash refusal and forged gateway-header refusal. [Recorded results](../testing/evidence/development-workspace/http-results.json).
 - Standalone r05: [16 DOM verification groups passed](../testing/evidence/app-page-register-r05/dom-results.json), including all 260 article windows and destination rules. r05 itself was not visually rendered because its browser URL was blocked; no alternate renderer/protocol workaround was used.
 
-Final lint/build/document assurance and browser observations are recorded in the evidence section below after the last implementation edit. Database/business workflow suites are not needed to claim this read-only catalogue works and were not re-run; this does not imply whole-app acceptance.
+Final code commit `422bac8` includes the latest main changes through `c5280be` (browser-runtime PR #281). The final Next build and its TypeScript phase passed. Repository-wide lint passed before the final catalogue hash-cache refactor; focused lint passed for all affected TypeScript after that refactor (an explicitly supplied CSS file was reported as ignored, not linted). All three required Python checks passed: foundation, prototype (78 parent dispositions) and naming (370 records). Register integrity and six focused tests (five new contracts plus the updated browser-runtime test) passed. The seven HTTP groups also passed against the compiled local server. `git diff --check` passed and committed r04/r05 hashes match the retained evidence.
+
+The [browser evidence](../testing/evidence/development-workspace/README.md) records desktop, phone, focus, guide and theme observations. Following the compiled-server restart, the browser tool rejected navigation from its temporary connection-error data page; compiled visual checks were therefore not claimed and no alternate renderer was used. The compiled server remained available to the seven endpoint checks. Database/business workflow suites were not re-run; this does not imply whole-app acceptance.
 
 ## Important boundaries
 
@@ -47,4 +49,4 @@ GitHub source links target the stable main branch and resolve for newly added fi
 
 Use the [working-register workflow](../design/development/README.md) and [ADR-0040](../decisions/ADR-0040-development-workspace.md). For the next page refinement, nominate the exact mockup and viewport, complete its concrete desktop/mobile contract, compare the running page at that state, and update its guide and evidence in the same PR. Prioritise the PP-01 service journey and the most-used CRM/estimating pages. Preserve source, visual review, functional proof, owner acceptance and deployed availability as distinct statements.
 
-No merge or hosted deployment is recorded in this handover. Publication and final verification follow below.
+No merge or hosted deployment is recorded in this handover. The review branch is `feat/design-development-workspace`; publication is recorded below.

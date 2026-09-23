@@ -23,3 +23,7 @@ The shell reported unavailable identity context in this isolated environment; bu
 The standalone r05's [16 DOM groups](../app-page-register-r05/dom-results.json) passed separately, against its exact hash. The browser tool rejected that file URL; no alternate protocol, server or renderer was used to preview it. Native workspace screenshots/observations cannot establish the standalone document's visual quality.
 
 Outstanding: independent visual approval, physical mobile, screen reader, 200% zoom, full operational HELP-01–HELP-14 review and hosted deployment. Final source/check/publication details are in the [handover](../../../delivery/development-workspace-handover.md).
+
+## Final compiled source
+
+Implementation commit `422bac8` follows main `c5280be`. Build/TypeScript, register integrity, the five new unit contracts plus the updated browser-runtime test, affected-TypeScript lint and foundation/prototype/naming checks passed. The seven HTTP groups were repeated successfully against the compiled server on port 3006. After the server restart the browser tool refused its temporary connection-error data-page URL; compiled browser inspection was not completed. The earlier native browser observations above remain bounded to the development-server run, and no alternate browser/renderer was used to bypass a refusal.
