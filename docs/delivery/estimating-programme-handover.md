@@ -45,3 +45,7 @@ Executed on Windows with Node 24.21.0, npm 11.19.0, Playwright 1.63.0, Chrome 15
 The earlier local rerun encountered a compiled-server startup timeout before tests executed; the original 120-second deadline remains intact. At pushed head `f929312`, [Estimating CI](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35919319365) passed all 385 Linux units, 89 database and 12 HTTP cases, restart proofs, 17 E1/workload browsers, 29 ES-02/shared regression cases, 10 ES-08 cases and 14 fertigation browsers. Both broader browser jobs passed 354 cases and failed only an outdated rail label/order assertion; that assertion is corrected here. Final-commit CI remains required before merge.
 
 Draft [PR #301](https://github.com/deanrfiedler-gif/powerplants-one/pull/301) carries this first increment. Exact ES-01 design imagery remains unavailable; no paired-source baseline, owner review, physical-device/browser-UI zoom acceptance, merge or deployment is inferred. The separate cost-source increment is in progress; the full programme remains open.
+
+### Current-main integration
+
+Rebased the workload increment onto fetched main `6c5e7c4fcbaf05d712a46989faf2cf7cabb8ba72` (merged Projects A0 #300 and fertigation placement #299). Preserved the Projects status and document-register additions and both families' guide/page updates. Main still ends at migration 0044; this increment adds none. Earlier capture source hashes remain the evidence for their actual build, not a claim of fresh visual acceptance after rebase. Final published-head CI remains required.
