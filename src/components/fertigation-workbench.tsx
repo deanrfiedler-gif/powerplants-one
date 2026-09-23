@@ -8,10 +8,35 @@ import { useDiscoveryNavigation } from "./discovery-navigation";
 import { RecordTabs } from "./record-ui";
 import { FertigationArtifacts } from "./fertigation-artifacts";
 import { FertigationImport } from "./fertigation-import";
-import { FertigationComparison } from "./fertigation-comparison";
+import {
+  CalculationDelta,
+  FertigationComparison,
+  scopeDifferences,
+} from "./fertigation-comparison";
 import { FertigationHistoryActions } from "./fertigation-history-actions";
 import { FertigationScenarios } from "./fertigation-scenarios";
 import { FertigationCandidateDetails } from "./fertigation-candidate-details";
+import {
+  CapacityPanel,
+  EvidencePanel,
+  FindingsReview,
+  NextActionsPanel,
+  OutputReadinessPanel,
+  ReadinessSummary,
+} from "./fertigation-cockpit";
+import { PumpDutyChart, TraceDrawer } from "./fertigation-trace";
+import { ResolveDrawer } from "./fertigation-resolve";
+import {
+  resolvables,
+  type Resolvable,
+} from "../estimating/fertigation/resolutions";
+import type { TraceKey } from "../estimating/fertigation/trace";
+import {
+  candidateFailures,
+  withLabels,
+  countsByView,
+  severityCounts,
+} from "../estimating/fertigation/guidance";
 import {
   FertigationFrame,
   fertigationViews,
@@ -497,7 +522,10 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
     [inspectHistory, setInspectHistory] = useState<boolean | null>(null),
     [historyPending, setHistoryPending] = useState(false),
     [historyDirty, setHistoryDirty] = useState(false),
-    [historyEpoch, setHistoryEpoch] = useState(0);
+    [historyEpoch, setHistoryEpoch] = useState(0),
+    [trace, setTrace] = useState<TraceKey | null>(null),
+    [compareDraft, setCompareDraft] = useState(false),
+    [resolving, setResolving] = useState<Resolvable[] | null>(null);
   const [artifactsVisited, setArtifactsVisited] = useState(
     initialView === "evidence" || initialView === "review",
   );
@@ -668,12 +696,53 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
   };
   const registers = sectionRegisters[view] ?? [],
     selectedRegister = registers.includes(section) ? section : registers[0];
+  // Guidance always reads one consistent pair: the calculation on screen and
+  // the proposal it was calculated from. A changed, uncalculated draft falls
+  // back to the saved revision and says so.
+  const guidanceScope = activeCalculation ? proposal : data.revision.proposal,
+    guidanceCalculation = activeCalculation ?? data.calculation,
+    guidanceBasis = !activeCalculation
+      ? `saved revision ${data.revision.version}; draft not recalculated`
+      : activeCalculation === data.calculation
+        ? `saved revision ${data.revision.version}`
+        : "calculated draft",
+    viewCounts = countsByView(guidanceScope, guidanceCalculation.findings),
+    totalCounts = severityCounts(guidanceCalculation.findings);
+  // Resolutions are offered only when the calculation on screen belongs to
+  // the current proposal, so an applied edit never discards draft changes.
+  const resolveList = activeCalculation
+    ? resolvables(proposal, activeCalculation)
+    : [];
+  const resolveFor = (match: (key: string) => boolean) => {
+    const items = resolveList.filter((r) => match(r.key));
+    if (items.length) setResolving(items);
+  };
+  async function previewProposal(next: Scope) {
+    const response = await api<{ calculation: Calculation }>(
+      `${base}/${scopeId}/preview`,
+      { expected_version: baseVersion ?? data.scope.version, proposal: next },
+    );
+    return response.calculation;
+  }
+  function openRecord(recordId: string) {
+    for (const register of Object.keys(registerNames) as Register[]) {
+      const record = proposal[register].find((r) => r.id === recordId);
+      if (record) {
+        edit(register, record);
+        return;
+      }
+    }
+  }
   return (
     <FertigationFrame
       view={view}
       onView={changeView}
       sourceHref={sourceHref}
       message={status}
+      counts={{ ...viewCounts, review: totalCounts }}
+      summary={
+        <ReadinessSummary compact counts={totalCounts} basis={guidanceBasis} />
+      }
     >
       <header className="fn-context">
         <div>
@@ -695,6 +764,11 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
           >
             Irrigation valves
           </button>
+          {!historical && dirty && (
+            <button type="button" onClick={() => setCompareDraft(true)}>
+              Compare draft
+            </button>
+          )}
           {!historical && (
             <button
               className="fn-primary"
@@ -791,6 +865,97 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
         )}
         {view === "overview" && (
           <>
+            <div className="fn-cockpit">
+              <OutputReadinessPanel
+                onView={changeView}
+                input={{
+                  dirty,
+                  historical,
+                  sourceChanged: !!data.source.changed,
+                  canEdit: data.can_edit,
+                  revision: data.revision.version,
+                  openFindings: data.calculation.findings.length,
+                }}
+              />
+              <NextActionsPanel
+                scope={guidanceScope}
+                findings={guidanceCalculation.findings}
+                basis={guidanceBasis}
+                onView={changeView}
+                candidates={candidateFailures(
+                  guidanceScope,
+                  guidanceCalculation,
+                )}
+                canResolve={(code) =>
+                  canEdit &&
+                  resolveList.some((r) => r.key.startsWith(`${code}:`))
+                }
+                onResolve={(code) =>
+                  resolveFor((key) => key.startsWith(`${code}:`))
+                }
+              />
+            </div>
+            <section className="fn-section">
+              <div className="fn-heading">
+                <h2>Scope at a glance</h2>
+                <button
+                  disabled={previewBusy || pending}
+                  onClick={() => void calculate()}
+                >
+                  {previewBusy ? "Calculating…" : "Validate & calculate draft"}
+                </button>
+              </div>
+              {!activeCalculation ? (
+                <p className="fn-note">
+                  Draft changed. Recalculate to inspect the current proposal;
+                  saved results remain attached to the earlier revision.
+                </p>
+              ) : (
+                <div className="fn-metrics">
+                  {[
+                    ["Connected flow", activeCalculation.connected_flow_m3h],
+                    ["Operating peak", activeCalculation.operating_peak_m3h],
+                    ["Daily crop demand", activeCalculation.daily_demand_m3],
+                    ["Represented area", activeCalculation.area_m2],
+                    ["Containers", activeCalculation.containers],
+                    ["Plants", activeCalculation.plants],
+                  ].map(([label, result]) => (
+                    <div className="fn-metric" key={label as string}>
+                      <small>{label as string}</small>
+                      <strong>{show(result as Result)}</strong>
+                      {(result as Result).state !== "known" && (
+                        <small>{(result as Result).reason}</small>
+                      )}
+                      {(label === "Connected flow" ||
+                        label === "Operating peak") && (
+                        <button
+                          type="button"
+                          className="fn-link"
+                          onClick={() =>
+                            setTrace(
+                              label === "Connected flow"
+                                ? "connected_flow"
+                                : "operating_peak",
+                            )
+                          }
+                        >
+                          How this is calculated
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+            {activeCalculation && (
+              <CapacityPanel
+                scope={proposal}
+                calculation={activeCalculation}
+                onView={changeView}
+                onTrace={() => setTrace("margin")}
+              />
+            )}
+            <EvidencePanel scope={proposal} onView={changeView} />
             <section className="fn-section">
               <div className="fn-heading">
                 <h2>Production context</h2>
@@ -835,40 +1000,6 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
                 labels do not certify a process, controller, licence or
                 equipment selection.
               </p>
-            </section>
-            <section className="fn-section">
-              <div className="fn-heading">
-                <h2>Scope at a glance</h2>
-                <button
-                  disabled={previewBusy || pending}
-                  onClick={() => void calculate()}
-                >
-                  {previewBusy ? "Calculating…" : "Validate & calculate draft"}
-                </button>
-              </div>
-              {!activeCalculation ? (
-                <p className="fn-note">
-                  Draft changed. Recalculate to inspect the current proposal;
-                  saved results remain attached to the earlier revision.
-                </p>
-              ) : (
-                <div className="fn-metrics">
-                  {[
-                    ["Connected flow", activeCalculation.connected_flow_m3h],
-                    ["Operating peak", activeCalculation.operating_peak_m3h],
-                    ["Daily crop demand", activeCalculation.daily_demand_m3],
-                    ["Represented area", activeCalculation.area_m2],
-                    ["Containers", activeCalculation.containers],
-                    ["Plants", activeCalculation.plants],
-                  ].map(([label, result]) => (
-                    <div className="fn-metric" key={label as string}>
-                      <small>{label as string}</small>
-                      <strong>{show(result as Result)}</strong>
-                      <small>{(result as Result).reason}</small>
-                    </div>
-                  ))}
-                </div>
-              )}
             </section>
             <section className="fn-section">
               <h2>Saved origin & exact revision</h2>
@@ -991,16 +1122,47 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
               duty uses entered losses at their recorded flow basis.
             </p>
             {activeCalculation && (
-              <p>
-                Required head:{" "}
-                <ResultValue
-                  result={activeCalculation.hydraulic.required_head_m}
-                />{" "}
-                · Curve head:{" "}
-                <ResultValue
-                  result={activeCalculation.hydraulic.curve_head_m}
+              <>
+                <div className="fn-metrics">
+                  {(
+                    [
+                      [
+                        "Required head",
+                        "required_head",
+                        activeCalculation.hydraulic.required_head_m,
+                      ],
+                      [
+                        "Curve head at pump peak",
+                        "curve_head",
+                        activeCalculation.hydraulic.curve_head_m,
+                      ],
+                      [
+                        "Margin at duty",
+                        "margin",
+                        activeCalculation.hydraulic.margin_m,
+                      ],
+                    ] as const
+                  ).map(([label, key, result]) => (
+                    <div className="fn-metric" key={key}>
+                      <small>{label}</small>
+                      <strong>
+                        <ResultValue result={result} />
+                      </strong>
+                      <button
+                        type="button"
+                        className="fn-link"
+                        onClick={() => setTrace(key)}
+                      >
+                        How this is calculated
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <PumpDutyChart
+                  scope={proposal}
+                  calculation={activeCalculation}
                 />
-              </p>
+              </>
             )}
             <p className="fn-note">
               Edit the hydraulic basis to capture exact curve points and source
@@ -1255,35 +1417,16 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
                     {activeCalculation.edition}. No engineering or manufacturer
                     approval is implied.
                   </p>
-                  <ul className="fn-findings">
-                    {activeCalculation.findings.map((f) => (
-                      <li key={f.id}>
-                        <strong>
-                          {human(f.severity)} · {f.message}
-                        </strong>
-                        <small>{f.field}</small>
-                        {f.record_id && (
-                          <button
-                            onClick={() => {
-                              for (const register of Object.keys(
-                                registerNames,
-                              ) as Register[]) {
-                                const record = proposal[register].find(
-                                  (r) => r.id === f.record_id,
-                                );
-                                if (record) {
-                                  edit(register, record);
-                                  return;
-                                }
-                              }
-                            }}
-                          >
-                            Open affected record
-                          </button>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
+                  <FindingsReview
+                    scope={proposal}
+                    calculation={activeCalculation}
+                    onOpenRecord={openRecord}
+                    onView={changeView}
+                    canResolve={(id) =>
+                      canEdit && resolveList.some((r) => r.key === id)
+                    }
+                    onResolve={(id) => resolveFor((key) => key === id)}
+                  />
                 </>
               )}
               <p className="fn-note fn-warning">
@@ -1457,6 +1600,76 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
             </div>
           </div>
         </FertigationDialog>
+      )}
+      {compareDraft && (
+        <FertigationDialog
+          title={`Compare the working draft with revision ${data.revision.version}`}
+          close={() => setCompareDraft(false)}
+        >
+          <div className="fn-dialog-body">
+            {!draft ? (
+              <p>The draft has no unsaved changes.</p>
+            ) : !activeCalculation ? (
+              <>
+                <p className="fn-note">
+                  Calculate the draft to compare its results. Input changes are
+                  listed below either way.
+                </p>
+                <button
+                  type="button"
+                  disabled={previewBusy || pending}
+                  onClick={() => void calculate()}
+                >
+                  {previewBusy ? "Calculating…" : "Validate & calculate draft"}
+                </button>
+              </>
+            ) : (
+              <CalculationDelta
+                beforeScope={data.revision.proposal}
+                before={data.calculation}
+                afterScope={proposal}
+                after={activeCalculation}
+                beforeLabel={`Revision ${data.revision.version}`}
+                afterLabel="Working draft"
+              />
+            )}
+            {draft && (
+              <DraftInputChanges
+                before={data.revision.proposal}
+                after={draft}
+              />
+            )}
+            <p className="fn-subtle">
+              Revision {data.revision.version} stays read-only. Saving creates a
+              new revision with the reason you enter; earlier outputs keep their
+              binding.
+            </p>
+          </div>
+        </FertigationDialog>
+      )}
+      {resolving && activeCalculation && (
+        <ResolveDrawer
+          items={resolving}
+          scope={proposal}
+          calculation={activeCalculation}
+          canEdit={canEdit}
+          preview={previewProposal}
+          apply={(next, calculation) => {
+            update(next);
+            setPreview({ proposal: next, calculation });
+          }}
+          close={() => setResolving(null)}
+        />
+      )}
+      {trace && (
+        <TraceDrawer
+          scope={guidanceScope}
+          calculation={guidanceCalculation}
+          traceKey={trace}
+          onTrace={setTrace}
+          onView={changeView}
+          close={() => setTrace(null)}
+        />
       )}
       {sourceReview && (
         <FertigationDialog
@@ -2005,5 +2218,68 @@ function History({
         )}
       </div>
     </FertigationDialog>
+  );
+}
+
+function DraftInputChanges({ before, after }: { before: Scope; after: Scope }) {
+  const changes = scopeDifferences(before, after);
+  // Show record labels rather than identities; whole records read as added
+  // or removed instead of their serialised content.
+  const readable = (text: string) => {
+    const labelled = (value: string) =>
+      withLabels(after, withLabels(before, value));
+    if (text.startsWith("[")) {
+      try {
+        const list = JSON.parse(text) as unknown[];
+        if (list.every((v) => typeof v === "string"))
+          return list.map((v) => labelled(v as string)).join(", ") || "None";
+      } catch {
+        /* not a list of identities */
+      }
+    }
+    return labelled(text);
+  };
+  const rows = changes.map((c) => ({
+    field: readable(c.field.replace(/ \[[0-9a-f-]{36}\]/gi, "")),
+    before: c.before.startsWith("{") ? "Present" : readable(c.before),
+    after:
+      c.after.startsWith("{") && c.before === "Not present"
+        ? "Added"
+        : c.after === "Not present"
+          ? "Removed"
+          : c.after.startsWith("{")
+            ? "Changed"
+            : readable(c.after),
+  }));
+  return (
+    <>
+      <h3>Input changes</h3>
+      <p>
+        {rows.length} changed {rows.length === 1 ? "field" : "fields"}.
+      </p>
+      {rows.length > 0 && (
+        <div className="fn-table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Field / record</th>
+                <th scope="col">Saved</th>
+                <th scope="col">Draft</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.slice(0, 100).map((c, i) => (
+                <tr key={i}>
+                  <td>{c.field}</td>
+                  <td>{c.before}</td>
+                  <td>{c.after}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      {rows.length > 100 && <p>Showing the first 100 changes.</p>}
+    </>
   );
 }
