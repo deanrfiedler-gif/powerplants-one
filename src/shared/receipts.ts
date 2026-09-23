@@ -1,3 +1,6 @@
+import { personEditAuthority } from "./contacts/commands";
+import { csRecord } from "./cs/service";
+import { companyContext } from "./authority";
 import { createResolutionAuthority } from "../estimating/specialist/recovery";
 import { acceptedAuthority as fertigationAcceptedAuthority } from "../estimating/fertigation/context";
 import { createResolutionAuthority as fertigationCreateResolutionAuthority } from "../estimating/fertigation/recovery";
@@ -45,7 +48,15 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.command?.startsWith("Acceptance:")) {
+  if (["SiteReadiness","SiteSurvey","AccountPlan"].includes(r.object_type)) {
+    const row=await csRecord(client,p,r.object_type==="SiteReadiness"?"Readiness":r.object_type==="SiteSurvey"?"Survey":"AccountPlan",r.record_id,true);
+    if(r.command?.startsWith("CsCreate:"))await companyContext(client,p,row.company_id,row.site_id,"shared.create");
+  } else if (r.command === "RevisePerson") {
+    await personEditAuthority(client, p, r.record_id);
+  } else if (r.command === "EndAffiliation" || r.command === "SetSitePrimaryContact") {
+    const row = await visible(client,p,r.command === "EndAffiliation" ? "Organisation" : "Site",r.record_id);
+    await companyContext(client,p,row.company_id,r.command === "SetSitePrimaryContact" ? row.id : null,"shared.edit");
+  } else if (r.command?.startsWith("Acceptance:")) {
     await acceptanceReceiptAuthority(client,p,r.record_id,r.command);
   } else if (r.object_type === "EmailMessage") {
     const message = await emailContext(client,p,r.record_id,true);

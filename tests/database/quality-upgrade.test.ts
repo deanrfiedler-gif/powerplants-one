@@ -213,6 +213,7 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
       ]),
     );
     expected.push(...acceptanceSeedGrants(originalGrants.map(g=>g.value),expected) as {capability:string}[]);
+    expected.push(...companyAGrants.filter(g=>["shared.read","shared.edit","shared.internal.read","activity.read"].includes(String(g.value.capability))).map(g=>({...g.value,capability:String(g.value.capability),user_id:"c5010044-0000-4000-8000-000000000001"})));
     const grantShape = (g: Record<string, unknown>) => Object.fromEntries(Object.entries(g).filter(([k]) => k !== "id"));
     const sorted = (gs: Record<string, unknown>[]) => gs.map(g => JSON.stringify(grantShape(g))).sort();
     assert.deepEqual(sorted(added.map(g => g.value)), sorted(expected));

@@ -1,0 +1,23 @@
+# ADR-0042 — Customer location records, readiness and survey evidence
+
+<!-- versioning: git; committed history is authoritative -->
+
+**Owner:** Dean Fiedler. **State:** Implementation decision under the authorised synthetic CS programme; owner acceptance pending. **Date:** 23 September 2026.
+
+The authorised CS-01–CS-08 completion needs durable readiness, survey and account-development records. Main `743d58f` contains canonical Organisation/Person/Site/Facility/Asset and Activity identities, but no owning aggregate for these three workflows. Live PostgreSQL schema inspection confirms that `readiness_assessments` belongs to Service work-order readiness, and `field_attachments` belongs to assigned field attendance. Reusing either as a new CS master would misstate its authority.
+
+Retain the adopted TypeScript/Next.js/PostgreSQL stack. Add three explicit aggregates with bounded, validated document content and immutable revision/snapshot/event children. Their scope is fixed to a canonical Organisation (account development) or Site (readiness/survey); Facility, Asset, Person and Activity references are validated in that exact scope. They do not introduce new customer/location or task identities. SQL guards retain scope and history; commands add expected-version, current authority, before/after audit, original-operation receipts and the existing shared outbox event. No framework, ORM, provider, dependency or production integration is added.
+
+Alternatives rejected: browser-only persistence cannot support controlled review; extending Scheduling/Service records would conflate visit preparation with bookings/work authority; independent task/notification/search stores would duplicate canonical Activity and PR #284. CS follow-up references existing Activities linked to the same Site/Organisation. SH remains coordination, with decisions in the owning workflow.
+
+Use existing `shared.read`, `shared.create` and `shared.edit` for CS records. Person corrections require edit/read in every company context. Account planning is shared customer maintenance. Readiness/survey review is an attributable shared-data review, requires another editor than the submitter/capturer, and grants no technical approval, site-safety certification or work authority. Receiving owners must hold the relevant Estimating/Engineering capability. No new capability is introduced. Seed 44 adds a dedicated fictional Customer records reviewer with existing shared read/edit, internal read and Activity read duties in company A. All existing profiles retain their previous grants. This is a synthetic receiving proof, not a production role policy.
+
+Requirements, evidence and work windows retain source text/revision and exact applicability. Reviewed evidence is an explicit independent action; edited evidence loses review. Individual induction names an individual. Preparation captures the whole selected site/facility/activity/time/person basis, source versions and blockers. A changed source requires recheck; acknowledgement retains its original snapshot and cannot remove blockers or authorise work.
+
+Survey observations retain Measured/Observed/Customer statement/Assumption/Unknown, explicit measurement units and source/observer/capture date. Unknown is null, never numeric zero. Significant Unknown/Assumption records require a permitted open owned Activity before submission. Submitted snapshots, return/review events, successor revisions and exact Reviewed handovers are retained. Photo storage reuses the private DocumentStoreAdapter and the existing full PNG inspection; original PNG bytes and hash are immutable, with separate successor captions. Unsupported formats are refused explicitly rather than silently converted.
+
+Account development uses optional recorded free text, objectives, intended relationship visits, owners, reviews and canonical Activity links. No territory taxonomy, scoring, cadence, health/forecast formula, approval policy or automatic Appointment is introduced. `/customers/[id]/account` stays Finance.
+
+Migration 0044 follows merged #284 migration 0043 and ADR-0041 at main `25170bf`. SH search, personal views and review coordination are extended through their existing registries; Activity notifications remain the shared notification source. Both registry versions, hosted upgrade counts and all exact consumers are reconciled. The protected identity registry must flush deferred identity events before ALTER and restore deferred checking afterwards. No synthetic seed identities are replaced.
+
+The [contract handover](../delivery/cs-native-contracts.md) records implemented scope and actual verification. This decision is not owner business acceptance, deployment approval or evidence of production readiness.

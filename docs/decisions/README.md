@@ -84,3 +84,5 @@ The [PPO Assistant direction and architecture decision](ppo-assistant-direction.
 [Output, Issue & Distribution Centre design and receiving handover](output-issue-distribution-design.md) records the DK-03 standalone workspace built from the authorised [build plan](../delivery/output-issue-distribution-build-plan.md): exact output and bundle manifests, readiness and domain review, reserved preparation against actual issue time, original-operation recovery, per-recipient distribution evidence and explicit responses. It creates no new module, domain or requirement identity. Owner acceptance and application integration remain separate.
 
 - [ADR-0041 — SH platform coordination](ADR-0041-sh-platform-coordination.md): shared search, Activity notifications, personal views and source-owned review projections; canonical teams and providers remain dependent.
+
+- [ADR-0042 — Customer location readiness, survey and account development](ADR-0042-customer-location-workflows.md): additive exact-scope aggregates, immutable evidence and shared SH coordination adapters; existing CS-05 retained.

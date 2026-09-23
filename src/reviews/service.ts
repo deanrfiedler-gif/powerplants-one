@@ -6,6 +6,7 @@ import { listFinance, readFinance } from "../finance/reads";
 import { listEngineering } from "../engineering/service";
 import { changeReviewTasks } from "../engineering/changes/reads";
 import { inReviewView, reviewViews, type ReviewTask } from "./model";
+import { surveyReviewTasks } from "../shared/cs/reviews";
 
 type SourceState = {
   module: string;
@@ -18,7 +19,7 @@ export async function reviewSources(
 ) {
   const items: ReviewTask[] = [],
     sources: SourceState[] = [];
-  for (const domain of ["Service", "Finance", "Engineering"]) {
+  for (const domain of ["Service", "Finance", "Engineering", "Customers & sites"]) {
     const selected: ReviewTask[] = [];
     let bounded = false;
     try {
@@ -81,6 +82,8 @@ export async function reviewSources(
           after = page.next_cursor;
           bounded = !!after && selected.length >= 500;
         } while (after && !bounded);
+      } else if(domain === "Customers & sites") {
+        const source=await surveyReviewTasks(p,company);selected.push(...source.items);bounded=source.bounded;
       } else {
         let cursor: string | null = null,
           count = 0;
@@ -134,7 +137,7 @@ export async function reviewInbox(p: Principal, input: unknown = {}) {
   const matches = (t: ReviewTask) =>
     inReviewView(t, view, p.actor_id) ||
     (view === "mine" &&
-      t.source === "FinanceHandoff" &&
+      ["FinanceHandoff","SiteSurvey"].includes(t.source) &&
       t.current &&
       t.actionable &&
       !t.owner_id);
@@ -145,7 +148,7 @@ export async function reviewInbox(p: Principal, input: unknown = {}) {
         (t) =>
           inReviewView(t, v, p.actor_id) ||
           (v === "mine" &&
-            t.source === "FinanceHandoff" &&
+            ["FinanceHandoff","SiteSurvey"].includes(t.source) &&
             t.current &&
             t.actionable &&
             !t.owner_id),
