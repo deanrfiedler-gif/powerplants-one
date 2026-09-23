@@ -12,7 +12,7 @@ import {
   seedChangesScenario,
 } from "../helpers/engineering-changes";
 import type { SignIn } from "../helpers/engineering-materials";
-import { drainApiReadsForTeardown, retainApiReadsForTeardown } from "../helpers/browser-read-drain";
+import { finishApiReadsForTeardown, retainApiReadsForTeardown } from "../helpers/browser-read-drain";
 
 test.beforeEach(async ({ page, baseURL }) => {
   await retainApiReadsForTeardown(page);
@@ -29,9 +29,7 @@ test.afterEach(async ({ page }) => {
   // The following ES-08 suite resets the synthetic schema. Closing a page
   // can abort a response while its server read still holds database locks.
   // Finish routed fetches and pending page traffic before fixture teardown.
-  await page.waitForLoadState("networkidle");
-  await drainApiReadsForTeardown(page);
-  await page.unrouteAll({ behavior: "wait" });
+  await finishApiReadsForTeardown(page);
 });
 
 test("SH notification event, explicit read, source guard, grouped state and preferences persist", async ({
