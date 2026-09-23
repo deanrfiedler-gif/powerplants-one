@@ -16,7 +16,7 @@ Implementation tested: `36035a309db04000c703386e5edf5b3815de2daa`, following con
 | `npm run typecheck` | Passed |
 | `npm run test:unit` | Local broad run: 342/347 passed; four Windows baseline failures and one load-sensitive CLI startup timeout. Exact isolated startup/CS/SH replay: 16/16 passed. Contract PR Linux CI: 347/347 passed |
 | `npm run build` | Passed after the final responsive fix; compiled runtime used for the final seven-width proof |
-| `npm run studio:sync`; `npm run studio:check` | Maintained 272 entries / 118 routes; final evidence update checked separately |
+| `npm run studio:sync`; `npm run studio:check` | Passed after final evidence update: 272 entries / 118 routes, no integrity errors; owner review remains unaccepted |
 | `node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/contacts-native.test.ts tests/database/customer-location.test.ts` | Final 11/11 passed, including untouched survey scope refusal, CS projection/contact integrity and merged SH adapters |
 | `node --import tsx --test tests/unit/azure-demo.test.ts tests/unit/customer-readiness.test.ts tests/unit/sh-platform.test.ts` | 16/16 passed with unchanged deadlines |
 | `node --env-file=.env.local --import tsx --test tests/http/customer-location.test.ts tests/http/facilities.test.ts tests/http/sh-platform.test.ts` | Compiled 4/4 passed |
@@ -50,4 +50,4 @@ The native proposal receives business workflow into PPO's shared shell and contr
 
 ## Publication record
 
-Server contracts: [PR #285](https://github.com/deanrfiedler-gif/powerplants-one/pull/285), `feat/cs-customer-location-contracts`, `51b4787`. Native receiving branch: `feat/cs-customer-location-completion`, implementation commits `f682204` and `36035a3`, based on the contracts branch. The dependent PR and final documentation head are recorded at publication. No merge, deployment, live integration or owner acceptance is performed by this task.
+Server contracts: [PR #285](https://github.com/deanrfiedler-gif/powerplants-one/pull/285), `feat/cs-customer-location-contracts`, `51b4787`. Native receiving: [dependent PR #287](https://github.com/deanrfiedler-gif/powerplants-one/pull/287), `feat/cs-customer-location-completion`, implementation commits `f682204` / `36035a3` and guide/evidence publication `94e7d05`, based on the contracts branch. This publication-link successor changes documentation only; Git and the PR expose its exact head. At publication #285 has 18 green jobs and its broad database job still running; #287 checks have started. Current results remain visible on both PRs. No merge, deployment, live integration or owner acceptance is performed by this task.
