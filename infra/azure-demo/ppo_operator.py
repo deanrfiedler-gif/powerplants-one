@@ -95,6 +95,7 @@ def bootstrap_image(out, head, use_existing):
     else:
         print("Building the reviewed application image. This can take several minutes.", flush=True)
         az("acr", "build", "--registry", out["registryName"], "--image", tag,
+           "--build-arg", f"PPO_BUILD_COMMIT={head}",
            "--file", "infra/azure-demo/Dockerfile", "--no-logs", ".")
     # Require the selected checkout's tag in this demo's registry before changing
     # the database or storage. All three containers then use the same immutable image.

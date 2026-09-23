@@ -1,6 +1,6 @@
 # Design & build register — working design reference
 
-Stable entry: `route:/development/page-register`. Owner: Dean Fiedler. Revision: r01. Status: Implemented for local review; visual acceptance pending.
+Stable entry: `route:/development/page-register`. Owner: Dean Fiedler. Status: Implemented; review; visual acceptance pending.
 
 ## Purpose and tasks
 
@@ -35,3 +35,7 @@ Verify search/proposal controls as applicable, dialog keyboard/focus behaviour, 
 ## Recovery
 
 If refresh fails, the previous snapshot remains visible. Close the reader and refresh after a reference changes. A missing image opens an explanation and available design references. Unknown guides remain unavailable; no unrelated guide is substituted.
+
+## Protected hosted workspace
+
+In the private hosted app, show the Design & Development shell entry only for the configured owner with an active Microsoft session. Authorise direct pages, previews, guides and reference downloads on the server too. Show the exact deployed Git commit. Hosted refresh reads that release; local refresh reads working files. Temporary examples and theme proposals never save business data or Git edits. Other testers retain their existing help and business access. Verify denied and expired sessions as well as owner access, desktop/mobile wrapping, reference isolation and preview framing. See [release and access decision](../../../decisions/hosted-design-workspace.md).

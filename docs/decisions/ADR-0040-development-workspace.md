@@ -29,3 +29,7 @@ Dean authorised the full catalogue recommendation. Extend the existing route and
 The local launcher permits same-origin framing only for this independently gated synthetic preview; all business pages remain protected by DENY and the hosted gateway remains unchanged. Separate real viewport documents are necessary for media-query and native dialog/menu behaviour. No new framework, service, database or dependency is introduced. Component references reuse the existing allowlisted, hash-checked sandboxed reader.
 
 Coverage, alignment, review currency and business verification are separate. Follow transitive source/style dependencies and explicit runtime dependencies to mark changed reviews stale. Require source/export, reference/anchor and consumer binding integrity in the existing CI check. Existing baseline decisions remain authoritative. See the [maintenance contract](../design/development/components/README.md) and [delivery handover](../delivery/component-catalogue-handover.md).
+
+## Protected hosted extension, 23 September 2026
+
+Dean subsequently authorised the protected hosted workspace and deployment. The [hosted workspace decision](hosted-design-workspace.md) supersedes the local-only deployment boundary above for the existing private Azure demo. Local mode, Git authority, reference isolation, temporary previews and separate review/acceptance remain unchanged.

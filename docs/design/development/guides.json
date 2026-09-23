@@ -67502,7 +67502,7 @@
           "section_id": "purpose",
           "title": "Purpose and applicability",
           "paragraphs": [
-            "Inspect the actual PPO components and compare them with retained design references. The catalogue is available in the local development workspace. Runnable coverage does not imply visual or business acceptance."
+            "Inspect the actual PPO components and compare them with retained design references. The catalogue is available locally and in the protected hosted workspace for the authorised owner. Runnable coverage does not imply visual or business acceptance."
           ],
           "steps": [],
           "headers": [],
@@ -67512,7 +67512,7 @@
           "section_id": "prerequisites",
           "title": "Before you begin",
           "paragraphs": [
-            "Run the local PPO application from the current checkout. The catalogue examples use fixed synthetic fixtures and do not need business records. The surrounding shell still requires its normal context."
+            "Open the local PPO application or sign in to the hosted app with the authorised owner account. The catalogue examples use fixed synthetic fixtures and do not need business records. The surrounding shell still requires its normal context."
           ],
           "steps": [],
           "headers": [],
@@ -67622,7 +67622,18 @@
           "section_id": "review",
           "title": "Review status",
           "paragraphs": [
-            "Draft guidance for the local catalogue. Individual visual alignment, physical-device review and operational acceptance remain separate."
+            "Draft guidance for the development catalogue. Individual visual alignment, physical-device review and operational acceptance remain separate."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "hosted-access",
+          "title": "Protected hosted access and release",
+          "paragraphs": [
+            "Open Design & Development from the shell while signed in with the authorised owner account. Other testers cannot access its pages, examples or references. Expired access requires sign-in or the existing invitation renewal process.",
+            "The hosted workspace displays its deployed Git commit. Refresh reads that release; GitHub changes appear after deployment. Local refresh reads working files. Examples and theme previews are temporary and do not save business data or repository edits."
           ],
           "steps": [],
           "headers": [],
@@ -67661,7 +67672,7 @@
           "section_id": "prerequisites",
           "title": "Before you begin",
           "paragraphs": [
-            "Use the loopback local application. Git working files are the master. No business identity, production write or deployment is performed by this register."
+            "Use the local application or the owner-protected hosted workspace. Git files are the master. The hosted workspace requires an active Microsoft session and reads the deployed release. Opening the register does not write business records or deploy changes."
           ],
           "steps": [],
           "headers": [],
@@ -67756,7 +67767,7 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "Below 700 CSS px stack cards, entry environment panels and token tiles. The summary uses two columns and the reader fills the viewport. Preserve search, filters, all actions, visible focus, labelled 16 px inputs and a reachable Close button at 390 and 320 CSS px. Check 200% zoom and long names. Use Tab and visible focus; Escape closes the register reader and returns focus. These development references require the running local server; no offline editing or queued Git save is provided."
+            "Below 700 CSS px stack cards, entry environment panels and token tiles. The summary uses two columns and the reader fills the viewport. Preserve search, filters, all actions, visible focus, labelled 16 px inputs and a reachable Close button at 390 and 320 CSS px. Check 200% zoom and long names. Use Tab and visible focus; Escape closes the register reader and returns focus. These development references require the running local or hosted application; no offline editing or queued Git save is provided."
           ],
           "steps": [],
           "headers": [],
@@ -67776,7 +67787,18 @@
           "section_id": "review",
           "title": "Review and feedback",
           "paragraphs": [
-            "Record observed mismatches against the exact source and viewport. This article is Draft r01. Visual review, functional evidence, owner acceptance and hosted publication remain separate; the development workspace is local-only."
+            "Record observed mismatches against the exact source and viewport. This article is Draft. Visual review, functional evidence, owner acceptance and hosted deployment remain separate. The workspace is available locally and to the configured owner in the private hosted app."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "hosted-access",
+          "title": "Protected hosted access and release",
+          "paragraphs": [
+            "Open Design & Development from the shell while signed in with the authorised owner account. Other testers cannot access its pages, examples or references. Expired access requires sign-in or the existing invitation renewal process.",
+            "The hosted workspace displays its deployed Git commit. Refresh reads that release; GitHub changes appear after deployment. Local refresh reads working files. Examples and theme previews are temporary and do not save business data or repository edits."
           ],
           "steps": [],
           "headers": [],
@@ -67805,7 +67827,7 @@
           "section_id": "purpose",
           "title": "Purpose and applicability",
           "paragraphs": [
-            "This is the internal catalogue renderer. Open it from a registered example link with its component and state. It uses the same application styles and enforces the local development gate."
+            "This is the internal catalogue renderer. Open it from a registered example link with its component and state. It uses the same application styles and enforces the local gateway or hosted owner access gate."
           ],
           "steps": [],
           "headers": [],
@@ -67815,7 +67837,7 @@
           "section_id": "prerequisites",
           "title": "Before you begin",
           "paragraphs": [
-            "Run the local PPO application from the current checkout. The catalogue examples use fixed synthetic fixtures and do not need business records. The surrounding shell still requires its normal context."
+            "Open the local PPO application or sign in to the hosted app with the authorised owner account. The catalogue examples use fixed synthetic fixtures and do not need business records. The surrounding shell still requires its normal context."
           ],
           "steps": [],
           "headers": [],
@@ -67925,7 +67947,18 @@
           "section_id": "review",
           "title": "Review status",
           "paragraphs": [
-            "Draft guidance for the local catalogue. Individual visual alignment, physical-device review and operational acceptance remain separate."
+            "Draft guidance for the development catalogue. Individual visual alignment, physical-device review and operational acceptance remain separate."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "hosted-access",
+          "title": "Protected hosted access and release",
+          "paragraphs": [
+            "Open Design & Development from the shell while signed in with the authorised owner account. Other testers cannot access its pages, examples or references. Expired access requires sign-in or the existing invitation renewal process.",
+            "The hosted workspace displays its deployed Git commit. Refresh reads that release; GitHub changes appear after deployment. Local refresh reads working files. Examples and theme previews are temporary and do not save business data or repository edits."
           ],
           "steps": [],
           "headers": [],
