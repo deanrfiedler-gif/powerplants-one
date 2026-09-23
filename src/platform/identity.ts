@@ -22,6 +22,7 @@ export async function createSession(profile: string, previous_token?: string) {
     ![
       "coordinator",
       "crm-receiver",
+      "cs-reviewer",
       "observer",
       "systems",
       "other-workspace",

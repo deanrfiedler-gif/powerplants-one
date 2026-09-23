@@ -43,6 +43,8 @@ Local verification uses Node 24.21.0, maintained Chrome 153.0.8010.53 and task-o
 
 ## Open alignment work
 
+PR #285 merged to main `4c8fd6d` during the search-assurance repair. The branch incorporates its CS contracts, migration/seed 0044 and shared search/view/review adapters unchanged. The STATUS conflict retains both the catalogue repair and CS handover; the document register retains both sets of entries. Earlier local results above precede this integration; the PR's current-head checks establish the combined result.
+
 All 24 component records retain Not reviewed visual state. Existing module-specific button/table/dialog families are not silently restyled. The four reference-only entries are AI assistance, product patterns, complete saved estimation wizard and future/innovation patterns. Select/edit tables are represented by AreasEditor; universal bulk selection and spreadsheet cell editing remain unadopted capabilities, not hidden finished controls. Whole-app business regression and component presentation are separate evidence.
 
 The surrounding application shell uses its normal local identity service. If that service is unavailable, the catalogue fixtures still run, while permitted navigation is not fabricated. No merge, hosted deployment, business transaction or production readiness is asserted by this handover.

@@ -1,6 +1,7 @@
 import { choice, invalid, object, uuid } from "../shared/validation";
 export const viewTargets = {
   search: { label: "Search", fields: ["q", "kind"] },
+  surveys: { label: "Site surveys", fields: ["site_id"] },
   reviews: {
     label: "Reviews & handovers",
     fields: ["view", "q", "module", "kind", "owner_id"],
@@ -50,10 +51,11 @@ export function parseViewCriteria(target: ViewTarget, input: unknown) {
         "history",
       ]);
     if (b.module)
-      choice(b.module, "module", ["Service", "Finance", "Engineering"]);
+      choice(b.module, "module", ["Service", "Finance", "Engineering", "Customers & sites"]);
     if (b.kind) choice(b.kind, "kind", ["Review", "Handover"]);
     if (b.owner_id) uuid(b.owner_id, "owner_id");
   }
+  if(target==="surveys" && b.site_id)uuid(b.site_id,"site_id");
   if (target === "updates") {
     if (b.view)
       choice(b.view, "view", ["Inbox", "Grouped changes", "Owned escalations"]);
@@ -74,6 +76,9 @@ export function parseViewCriteria(target: ViewTarget, input: unknown) {
       "Activity",
       "Service request",
       "Facility / growing area",
+      "Site survey",
+      "Site readiness",
+      "Account development",
     ]);
   return Object.fromEntries(
     Object.entries(b).filter(([, v]) => v !== ""),
