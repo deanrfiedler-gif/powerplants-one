@@ -4,7 +4,7 @@
 
 **Owner:** Dean Fiedler · **Date:** 15 September 2026 · **State:** Requested standalone design delivered for review; native visual/device acceptance and application integration pending.
 
-**Native refinement, 23 September 2026:** a proposed refinement of r02 for the shared application shell, covering the SV-01 register and SV-02 record, is recorded in [Service requests native refinement](service-requests-native-refinement.md). It changes nothing in r02 or below; D1, D2, D5 and D6 are applied under Dean's delegation, and D3 and D4 are open.
+**Native refinement, 23 September 2026:** a proposed refinement of r02 for the shared application shell, covering the SV-01 register and SV-02 record, is recorded in [Service requests native refinement](service-requests-native-refinement.md). It changes nothing in r02 or below. Dean accepted its recommendations (D1–D8) the same day, and its lifecycle extension is drafted as proposed [ADR-0043](ADR-0043-service-request-lifecycle.md).
 
 The [interactive HTML r02](../reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html) is the internal support front door requested by Dean: a Powerplants employee records a customer's issue; the Service Manager reviews its impact, selects a response and assigns an owned action; a technician or specialist records evidence; the manager reviews resolution and customer contact before closure. It uses the r20 theme with only the module's own header, context and local views. There is no left navigation rail, corporate masthead, customer login or external messaging action.
 

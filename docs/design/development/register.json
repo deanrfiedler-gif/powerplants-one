@@ -1802,10 +1802,16 @@
         "docs/reference/ui/service-cases/native-refinement-r01/04-register-triage.png",
         "docs/reference/ui/service-cases/native-refinement-r01/05-log-request.png",
         "docs/reference/ui/service-cases/native-refinement-r01/06-register-states.png",
-        "docs/reference/ui/service-cases/native-refinement-r01/11-phone-register.png"
+        "docs/reference/ui/service-cases/native-refinement-r01/11-phone-register.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/14-native-register-board.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/16-register-list-1024.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/19-phone-filters.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/20-phone-no-matches.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/23-narrow-register-320.png"
       ],
       "dependencies": [
-        "docs/decisions/service-requests-native-refinement.md"
+        "docs/decisions/service-requests-native-refinement.md",
+        "docs/decisions/ADR-0043-service-request-lifecycle.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -1839,14 +1845,20 @@
       "image_paths": [
         "docs/reference/ui/service-cases/native-refinement-r01/04-register-triage.png",
         "docs/reference/ui/service-cases/native-refinement-r01/07-request-overview.png",
-        "docs/reference/ui/service-cases/native-refinement-r01/08-request-work-visits.png",
         "docs/reference/ui/service-cases/native-refinement-r01/09-request-evidence.png",
         "docs/reference/ui/service-cases/native-refinement-r01/10-request-resolution.png",
         "docs/reference/ui/service-cases/native-refinement-r01/12-phone-request.png",
-        "docs/reference/ui/service-cases/native-refinement-r01/13-phone-triage.png"
+        "docs/reference/ui/service-cases/native-refinement-r01/13-phone-triage.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/08-request-work-visits.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/15-request-triage-actions.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/17-request-overview-1024.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/21-phone-work-visits.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/22-phone-evidence.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/24-narrow-request-320.png"
       ],
       "dependencies": [
-        "docs/decisions/service-requests-native-refinement.md"
+        "docs/decisions/service-requests-native-refinement.md",
+        "docs/decisions/ADR-0043-service-request-lifecycle.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -5902,14 +5914,20 @@
       "html_path": "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
       "image_paths": [
         "docs/reference/ui/service-cases/native-refinement-r01/07-request-overview.png",
-        "docs/reference/ui/service-cases/native-refinement-r01/08-request-work-visits.png",
         "docs/reference/ui/service-cases/native-refinement-r01/09-request-evidence.png",
         "docs/reference/ui/service-cases/native-refinement-r01/10-request-resolution.png",
         "docs/reference/ui/service-cases/native-refinement-r01/12-phone-request.png",
-        "docs/reference/ui/service-cases/native-refinement-r01/13-phone-triage.png"
+        "docs/reference/ui/service-cases/native-refinement-r01/13-phone-triage.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/08-request-work-visits.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/15-request-triage-actions.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/17-request-overview-1024.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/21-phone-work-visits.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/22-phone-evidence.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/24-narrow-request-320.png"
       ],
       "dependencies": [
-        "docs/decisions/service-requests-native-refinement.md"
+        "docs/decisions/service-requests-native-refinement.md",
+        "docs/decisions/ADR-0043-service-request-lifecycle.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -5938,7 +5956,8 @@
       "design_path": "docs/design/development/pages/route-service-tickets-new.md",
       "html_path": "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
       "image_paths": [
-        "docs/reference/ui/service-cases/native-refinement-r01/05-log-request.png"
+        "docs/reference/ui/service-cases/native-refinement-r01/05-log-request.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/18-phone-log-request.png"
       ],
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md"
@@ -5974,10 +5993,16 @@
         "docs/reference/ui/service-cases/native-refinement-r01/02-register-list-scrolled.png",
         "docs/reference/ui/service-cases/native-refinement-r01/03-register-list-preview.png",
         "docs/reference/ui/service-cases/native-refinement-r01/06-register-states.png",
-        "docs/reference/ui/service-cases/native-refinement-r01/11-phone-register.png"
+        "docs/reference/ui/service-cases/native-refinement-r01/11-phone-register.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/14-native-register-board.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/16-register-list-1024.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/19-phone-filters.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/20-phone-no-matches.png",
+        "docs/reference/ui/service-cases/native-refinement-r02/23-narrow-register-320.png"
       ],
       "dependencies": [
-        "docs/decisions/service-requests-native-refinement.md"
+        "docs/decisions/service-requests-native-refinement.md",
+        "docs/decisions/ADR-0043-service-request-lifecycle.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",

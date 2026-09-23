@@ -1,6 +1,6 @@
 # Service desk and triage worklist — design reference
 
-Stable entry: `scope:SV-01`. Owner: Dean Fiedler. Status: **Draft for visual review**. A proposed native refinement was recorded on 23 September 2026. Its presentation decisions are applied under Dean's delegation; it is not an accepted baseline.
+Stable entry: `scope:SV-01`. Owner: Dean Fiedler. Status: **Draft for visual review**. A proposed native refinement was recorded on 23 September 2026. Dean accepted its recommendations (D1–D8) that day. His visual review is still to be recorded, so it is not an accepted baseline.
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/service/tickets`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
@@ -12,11 +12,11 @@ Show service requests by urgency, site, equipment, owner, impact, waiting reason
 2. See what needs attention first: urgent requests, overdue commitments, waiting requests and resolutions awaiting review.
 3. Move a request to its next stage through the required workflow form, or open it.
 
-The composition below comes from the [proposed native refinement](../../../decisions/service-requests-native-refinement.md). D1, D2, D5 and D6 are applied under Dean's delegation; D3 and D4 remain open. Nothing here is an accepted baseline.
+The composition below comes from the [proposed native refinement](../../../decisions/service-requests-native-refinement.md). Dean accepted D1–D8 on 23 September 2026. The later stages wait for the proposed lifecycle extension, [ADR-0043](../../../decisions/ADR-0043-service-request-lifecycle.md) (D3). Nothing here is an accepted baseline.
 
 ## Desktop
 
-Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 1–6; images in [board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md)). The shell is a separate module and is not drawn.
+Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 1–6 and 14; images in [board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md) and [r02](../../../reference/ui/service-cases/native-refinement-r02/README.md)). The shell is a separate module and is not drawn.
 
 - **Host (not drawn).** The shell supplies the 76 px rail and the 64 px header, with breadcrumb *Service / Service requests*, global search and quick add. Registered as a `full-bleed` module workspace with `navigation: "workspace"`, so the shell hides its Service tab row (D6). The module draws no masthead or title band. A visually hidden `h1` reads *Service requests*; the page description belongs in the page-information panel.
 - **Toolbar** (60 px, white, full bleed), shared by Board and List:
@@ -39,6 +39,13 @@ Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 1�
   - **Attention chips** wrap and are never truncated.
   - **Footer:** the accountable owner, plus labelled 32 px *Preview* and *Move* buttons.
   - **Selected state:** 2 px `#416d33` border.
+- **Native increment** (frame 14, D3):
+  - **Lanes:** the board shows only the three states the application moves a request through today: New, Needs information and Triaged.
+  - **Queues:** All open, New to triage, Urgent, Needs information and Overdue clarifications.
+  - **Next-action block:** the recorded next action, marked *no due time* because the native field has none. Where an owned clarification exists, the block shows it instead, with its owner and due time.
+  - **Attention chips:** the triage blocker count from the existing gate.
+  - **Linked work:** a work order shows in its own native state (*authorised*).
+  - **Later stages:** lanes, queues and columns that need data only [ADR-0043](../../../decisions/ADR-0043-service-request-lifecycle.md) provides appear once it is built. Nothing is shown as an empty placeholder.
 - **List** (frames 2 and 3): the house register table (`sales-table` with the EN-06/EN-07 register rules).
   - **Scrolling:** the table meets both edges of the module and scrolls horizontally inside one scroller. The *Request* column is pinned on the left. Once scrolled, it casts an 8 px edge shadow; a right-edge shadow shows there are more columns. Frame 2 shows the table scrolled right past the triage columns; frame 3 shows scroll position zero.
   - **Headers:** 43 px, `#f4f5f7` fill, 13 px regular `#596779` sentence case, and 1 px column separators.
@@ -69,6 +76,8 @@ Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 1�
   | Category | 196 | Category |
   | Received | 186 | Received time |
   | Channel | 104 | Phone, Email, Internal or Other |
+
+  **Native increment columns.** Before ADR-0043, twelve of the eighteen columns have a native source. *Customer update*, *Affected areas*, *Response route* and *Category* stay hidden until a contract supplies them, because the native Ticket has no such fields. *Action owner* and *Action due* come from the owned clarification where there is one; otherwise the owner is the triage owner and the due time reads *No due time*. *Attention* shows triage blockers and overdue clarifications.
 - **Preview panel** (frame 3, `drawer`): 420 px, docked beside the table below the toolbar, with a left-only shadow.
   - **Header:** reference, a close control, a 20 px title, customer and site, and the stage and priority chips.
   - **Attention notice:** stated in words, for example *Two commitments are overdue*.
@@ -87,7 +96,15 @@ Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 1�
   - read only, with Move disabled and the reason stated;
   - changed while moving, where the stale revision is refused, entries are kept and the request stays in its lane.
 - **Tokens:** globals/r22 navy `#242a37`, green `#62bb46` and the status surface/border pairs; Roboto; 6 px control radius, 5 px status chips and 7–8 px card radius. A warning icon marks something someone must act on; a tick marks only a completed positive state.
-- **At 1024 × 768 (not drawn):** below 1024 px the board switches to List (r02 rule). At 1024 px the filter menus wrap to a second toolbar row rather than truncating.
+- **At 1024 × 768** (frame 16; interior 948 × 704). Below a proposed 1200 px:
+  - *Saved views* move into the scope menu;
+  - *Columns* and *Sort* become 36 px icon buttons with accessible names;
+  - the search field narrows to *Search requests*;
+  - the queue uses the short labels All open, New, Urgent, Waiting, Overdue and Review;
+  - the preview panel narrows to 380 px and overlays the table from the right, with a deeper shadow, instead of docking beside it;
+  - the table keeps its full width and horizontal scroll, and the footer drops its sort description.
+
+  Below 1024 px the board switches to List (r02 rule).
 
 ## Mobile
 
@@ -100,21 +117,30 @@ Proposed module interior of 390 × 716 at a 390 × 844 window (board frame 11).
   - Queue chips (36 px) scroll horizontally.
 - **Cards** stack: reference and stage, priority, a 17 px title, customer and site, the next-action block and attention chips.
 - **Presentation:** List is the only presentation below 1024 px, and the desktop Board/List preference is retained.
+- **Filters sheet** (frame 19): full screen at 390 × 844, with a 44 px close control and *Clear all* in the header.
+  - **Fields:** Scope first (Open requests, or Include closed, D5), then priority checkboxes, and owner, customer, site, equipment and category selects of 48 px.
+  - **Footer:** a sticky *Show n requests*, where n is the live count.
+- **No matches** (frame 20): the active filters appear as removable 36 px chips below the toolbar. The empty state states how many open requests are hidden and offers *Clear filters*. The other register states use frame 6's content in this layout.
 - **Triage** opens full screen (see SV-02).
-- **At 320 px (not drawn):** chips and cards wrap without hiding the next action or an overdue state.
+- **At 320 px** (frame 23; interior 320 × 440 at a 320 × 568 window):
+  - *Filters* becomes a 44 px icon button, so *Log a request* keeps its label;
+  - the queue chips scroll and the side gutters narrow to 12 px;
+  - card text wraps, and the next-action block keeps its owner and due time on separate lines.
 
 ## Shared components and states
 
 Hosted by `application-shell`. Uses `sales-board`, `sales-table`, `drawer`, `fields`, `validation`, `status`, `buttons` and `mobile-form`. Status chips always carry words; tone is not the business state.
 
 - **Drawn states:** normal register, collapsed empty lanes, overdue commitments, waiting for parts, resolution proposed, missing site, unknown table values, horizontal scroll at the start and scrolled, selected row with preview, possible duplicate at capture, loading, no open requests, no matches, could not load, read only, and changed while moving.
-- **Not drawn:** denied access (the register lists only permitted records, so there is no per-row denied state); phone versions of frames 5 and 6.
+- **Also drawn:** the native three-state board, the compact 1024 × 768 register, the phone filters sheet, phone no matches and the 320 px register.
+- **Not drawn:** denied access (the register lists only permitted records, so there is no per-row denied state); phone versions of the remaining register states, which follow frame 6's content in frame 20's layout.
 
 ## Visual references
 
 - [PPO-Service-Cases-and-Triage-Workspace-r02.html](../../../reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html), SHA-256 `23e92f96…18fa5f`. Retained design reference, delivered for review.
 - [Board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md): `01-register-board.png`, `02-register-list-scrolled.png`, `03-register-list-preview.png`, `04-register-triage.png`, `05-log-request.png`, `06-register-states.png` and `11-phone-register.png`, each 1364 × 896 except the phone image, which is 390 × 716. These are renders of the private claude.ai design canvas "Page Refinement Audit", version 7. Proposed composition, not an approved mockup.
-- **Missing:** a native capture of this route after the PR #283 shell integration, and the 1024 × 768 and 320 px layouts.
+- [Board images r02](../../../reference/ui/service-cases/native-refinement-r02/README.md): `14-native-register-board.png` (1364 × 896), `16-register-list-1024.png` (948 × 704), `19-phone-filters.png` (390 × 844), `20-phone-no-matches.png` (390 × 716) and `23-narrow-register-320.png` (320 × 440). These are renders of canvas version 8. Proposed.
+- **Missing:** a native capture of this route after the PR #283 shell integration.
 
 ## Gaps against scope
 
@@ -124,7 +150,7 @@ Hosted by `application-shell`. Uses `sales-board`, `sales-table`, `drawer`, `fie
 
 ## Behaviour, handovers and verification
 
-- **Existing contract:** the native P03 contract supports New, NeedsInformation and Triaged only. Active, Waiting, Resolved and Closed need the SC-04 extension contract (D3, open). A native increment before then can deliver this register for the existing three states.
+- **Existing contract:** the application moves a request only through New, NeedsInformation and Triaged. The first native increment builds this register for those three states (D3, accepted). Active, Waiting, Resolved and Closed wait for the proposed [ADR-0043](../../../decisions/ADR-0043-service-request-lifecycle.md); the database already holds those values.
 - **Handovers:** *Open request* hands on to SV-02. *Log a request* uses the existing intake route `/service/tickets/new`.
 - **Guide:** the draft User Guide `guide.sv.01` describes the running page and is not rewritten for proposed behaviour.
 - **Separate statuses:** source presence, visual review, functional testing, owner acceptance and deployment stay separate.

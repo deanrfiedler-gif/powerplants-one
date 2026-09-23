@@ -1,6 +1,6 @@
 # Service request detail — design reference
 
-Stable entry: `route:/service/tickets/[id]`. Owner: Dean Fiedler. Status: **Draft for visual review**. A proposed native refinement was recorded on 23 September 2026. Its presentation decisions are applied under Dean's delegation; it is not an accepted baseline.
+Stable entry: `route:/service/tickets/[id]`. Owner: Dean Fiedler. Status: **Draft for visual review**. A proposed native refinement was recorded on 23 September 2026. Dean accepted its recommendations (D1–D8) that day. His visual review is still to be recorded, so it is not an accepted baseline.
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/service/tickets/{id}`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
@@ -18,13 +18,13 @@ This route is the SV-02 record. The proposed refinement gives it a record header
 Follow the [SV-02 contract](scope-sv-02.md#desktop). The route-specific points are:
 
 - The shell's breadcrumb ends with the request reference.
-- Register the route in `src/shell/module-workspaces.ts` as `padded` with `navigation: "workspace"` (D6, applied under delegation).
+- Register the route in `src/shell/module-workspaces.ts` as `padded` with `navigation: "workspace"` (D6, accepted).
 - The existing *← Service requests* link stays as the back link in the record header.
 - The record keeps its heading, because it carries name, reference, stage, priority and revision. The existing-modules rule keeps record headings.
 
 ## Mobile
 
-Follow the [SV-02 contract](scope-sv-02.md#mobile): sticky record actions above the bottom navigation, and a full-screen triage form with an error summary.
+Follow the [SV-02 contract](scope-sv-02.md#mobile): sticky record actions above the bottom navigation, a full-screen triage form with an error summary, phone Work & visits and Evidence & updates (frames 21 and 22), and the 320 px layout (frame 24).
 
 ## Shared components and states
 
@@ -33,7 +33,8 @@ See the [SV-02 contract](scope-sv-02.md#shared-components-and-states).
 ## Visual references
 
 - [PPO-Service-Cases-and-Triage-Workspace-r02.html](../../../reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html). Retained design reference.
-- [Board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md): `07-request-overview.png`, `08-request-work-visits.png`, `09-request-evidence.png`, `10-request-resolution.png`, `12-phone-request.png` and `13-phone-triage.png`. These are renders of the private claude.ai design canvas "Page Refinement Audit", version 7. Proposed.
+- [Board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md): `07-request-overview.png`, `09-request-evidence.png`, `10-request-resolution.png`, `12-phone-request.png` and `13-phone-triage.png`. These are renders of the private claude.ai design canvas "Page Refinement Audit", version 7. Proposed.
+- [Board images r02](../../../reference/ui/service-cases/native-refinement-r02/README.md): `08-request-work-visits.png` (supersedes r01's), `15-request-triage-actions.png`, `17-request-overview-1024.png`, `21-phone-work-visits.png`, `22-phone-evidence.png` and `24-narrow-request-320.png`. Renders of canvas version 8. Proposed.
 - **Missing:** a current native capture of this route.
 
 ## Behaviour, handovers and verification

@@ -1,6 +1,6 @@
 # Create service request — design reference
 
-Stable entry: `route:/service/tickets/new`. Owner: Dean Fiedler. Status: **Draft for visual review**. A proposed native refinement was recorded on 23 September 2026. Its presentation decisions are applied under Dean's delegation; it is not an accepted baseline.
+Stable entry: `route:/service/tickets/new`. Owner: Dean Fiedler. Status: **Draft for visual review**. A proposed native refinement was recorded on 23 September 2026. Dean accepted its recommendations (D1–D8) that day. His visual review is still to be recorded, so it is not an accepted baseline.
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/service/tickets/new`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
@@ -27,7 +27,12 @@ Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frame 5).
 
 ## Mobile
 
-Not drawn. Requirement: the form stacks in one column with 16 px inputs. The duplicate check appears as a notice above *Create request* once a match exists, and opens the matches in a sheet.
+Proposed module interior of 390 × 716 (board frame 18).
+
+- **Form:** stacks in one column, with 48 px fields and 16 px text. The frame shows it scrolled to *Location and impact*, where the equipment choice finds the match.
+- **Duplicate check:** once a match exists, a sticky notice sits above *Create request* and names the matching request, its stage and priority. *Review match* opens the matches in a sheet. The notice says the check is a prompt, not a block.
+- **Footer:** sticky *Cancel* and *Create request*.
+- **Not drawn:** the matches sheet itself, and the 320 px form.
 
 ## Shared components and states
 
@@ -36,11 +41,12 @@ Uses `fields`, `lookup` (customer, site and equipment), `validation`, `status` a
 ## Visual references
 
 - [Board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md): `05-log-request.png` (1364 × 896). This is a render of the private claude.ai design canvas "Page Refinement Audit", version 7. Proposed.
-- **Missing:** a phone layout and a current native capture of this route.
+- [Board images r02](../../../reference/ui/service-cases/native-refinement-r02/README.md): `18-phone-log-request.png` (390 × 716), a render of canvas version 8. Proposed.
+- **Missing:** the 1024 × 768 layout and a current native capture of this route.
 
 ## Behaviour, handovers and verification
 
 - **Existing command:** creating uses the existing P03 intake command.
-- **Adding to an existing request:** records the call as evidence with the *Reported symptom* basis on that request (assumed r02 model; see the [proposed refinement record](../../../decisions/service-requests-native-refinement.md)). It never changes that request's priority, owner or stage.
+- **Adding to an existing request:** records the call as evidence with the *Reported symptom* basis on that request (D8, accepted; see the [refinement record](../../../decisions/service-requests-native-refinement.md)). It never changes that request's priority, owner or stage.
 - **Guide:** the draft User Guide `guide.page.service.tickets.new` describes the running page and remains Draft.
 - **Separate statuses:** source presence, visual review, functional testing, owner acceptance and deployment stay separate.
