@@ -3,7 +3,7 @@ document_id: PPO-SV01-PLAN
 title: SV-01/SV-02 — Service requests application integration — build plan
 date: 2026-09-23
 owner: Dean Fiedler
-status: Prepared under Dean's acceptance of D3 on 23 September 2026; I1 in progress; I2–I5 not started; lifecycle increments wait for ADR-0043
+status: Prepared under Dean's acceptance of D3 on 23 September 2026; I1 delivered for review in a stacked PR; I2–I5 not started; lifecycle increments wait for ADR-0043
 scope_id: SV-01
 source_commit: 7bf972cbc38a9e62fd25b1bd635c6991895d76e6
 versioning: git
@@ -41,7 +41,7 @@ This plan applies the [proposed service requests refinement](../decisions/servic
 | Record read | `readIntake`: the full intake, owner name, the clarification when its activity is readable, permitted actions and triage blockers | Contract |
 | Visibility | A ticket is visible only when its site, requester and asset are visible too (`ticketVisibility`). Activities and work orders have their own visibility SQL | Contract |
 | Company | `tickets.company_id` is the **company visibility context** (the ERP company), labelled so in the intake form. It is not the customer | Contract |
-| Customer | The Ticket has no customer field. Organisations relate to a site through `site_parties` (Operator, BillingParty or Owner, with validity dates) and to people through `relationships` | Contract |
+| Customer | The Ticket has no customer field. Organisations relate to a site through `site_parties` (Operator, BillingParty or Owner, with validity dates; at most one effective Operator per site) and to people through `relationships` | Contract |
 | Shell | `/service/tickets` is not a module workspace, so the shell's Service tab row shows | Contract |
 | Tests touching these pages | `tests/browser/intake.spec.ts` (heading *Service requests*, *New service request*), `quality-states.spec.ts` (PT-29 record row), `tests/ui/shell-geometry.probe.mjs` (`/service/tickets`) and the my-work specs | Contract |
 
@@ -77,7 +77,7 @@ This plan applies the [proposed service requests refinement](../decisions/servic
 | `src/service/ticket-register-view.ts` | Pure module | Relative time, lane, queue membership and the one attention chip per row. No server imports; unit tested |
 
 **P1 · Which organisation is a request's customer?** The Ticket records none, and the company context is not the customer. Proposed rule, applied under delegation:
-1. The **Operator** party current at the ticket's site, when exactly one is visible (basis `SiteOperator`).
+1. The **Operator** party current at the ticket's site, when it is visible (basis `SiteOperator`). The schema's exclusion constraint allows one effective Operator per site at a time. This was found in I1; the rule originally said "when exactly one is visible".
 2. Otherwise, the requester's single current visible relationship organisation (basis `RequesterRelationship`).
 3. Otherwise `null`, shown as *Customer not identified* in amber.
 
