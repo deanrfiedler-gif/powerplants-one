@@ -6,7 +6,7 @@ This is an editable working specification. Existing accepted page baselines take
 
 ## Purpose and task
 
-Complete Job Pack r03 integration. The new detail screen is in current source; the maintained plan still identifies preparation, revision history/source-change/print and entry-point/conformance work (I3–I5).
+Complete Job Pack r03 integration. I1–I3 are merged; I4 source changes and printing are in verification. Continue I6, I7 and I5 in that order.
 
 1. Prepare the pack against the correct scope
 2. Review exact source/template revisions and readiness
@@ -63,3 +63,11 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.sv.05` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## I4 source changes and printing
+
+The source-change notice uses the server advisory drift, issued review flag or stale-output state. Review changed sources opens Preparation without discarding entries. Refresh saved sources opens the existing reason dialog and saves a successor through the existing amendment command, including when notes are unchanged. Check and Issue retain the digest authority.
+
+Print preview offers the exact saved preparation. Unsaved entries can be retained while printing the saved draft, or saved with a reason before opening the exact successor. A later concurrent save must not silently change that print target. A refusal retains entries; an uncertain result replays unchanged bytes. The exact issued document remains separately available.
+
+Desktop and mobile use the existing r03 notice/dialog styling and native focus trap/return. Source values must wrap at 320 px. Functional and visual evidence is recorded in the I4 handover; owner acceptance and deployment remain separate.

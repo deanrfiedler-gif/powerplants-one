@@ -24,7 +24,10 @@ async function call(page: Page, path: string, body?: unknown) {
   const r = await page.request.fetch("/api/v1/" + path, {
     method: body ? "POST" : "GET",
     headers: body
-      ? { Origin: "http://127.0.0.1:3000", "Content-Type": "application/json" }
+      ? {
+          Origin: new URL(test.info().project.use.baseURL!).origin,
+          "Content-Type": "application/json",
+        }
       : {},
     data: body,
   });
@@ -33,15 +36,30 @@ async function call(page: Page, path: string, body?: unknown) {
   return data;
 }
 async function identity(page: Page, profile = "coordinator") {
-  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
-  if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await page.getByRole("button", { name: "Change identity", exact: true }).click();
+  await expect(
+    page.getByRole("region", {
+      name: "Local demonstration identity",
+      exact: true,
+    }),
+  ).toHaveAttribute("aria-busy", "false");
+  if (!(await page.getByLabel("Identity", { exact: true }).isVisible()))
+    await page
+      .getByRole("button", { name: "Change identity", exact: true })
+      .click();
 
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   await page
     .getByRole("button", { name: "Use this identity", exact: true })
     .click();
-  await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
-  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
+  await expect(
+    page.getByRole("button", { name: "Change identity", exact: true }),
+  ).toBeEnabled();
+  await expect(
+    page.getByRole("region", {
+      name: "Local demonstration identity",
+      exact: true,
+    }),
+  ).toHaveAttribute("aria-busy", "false");
 }
 async function capture(
   page: Page,
@@ -210,12 +228,50 @@ test("P06 complete workbench preparation, check, queued output, exact document a
     page.getByRole("button", { name: "Check this revision" }),
   ).toBeVisible();
   const pid = page.url().split("/").pop()!;
+  // Save and print must consume the actual flat OperationReceipt returned by commandRoute.
+  // Prove the preview is the immutable saved successor, before continuing the issue journey.
+  await page.getByRole("tab", { name: /^Preparation,/ }).click();
+  await page
+    .locator("#section-identification")
+    .fill("SYN revised arrival notes for the exact preparation preview.");
+  await page
+    .getByRole("button", { name: "Print preview", exact: true })
+    .click();
+  await page.getByRole("button", { name: "Save and print…" }).click();
+  await page
+    .getByLabel("Reason for this change", { exact: true })
+    .fill("SYN print the saved successor");
+  await page
+    .getByRole("button", { name: "Save preparation", exact: true })
+    .click();
+  const printDialog = page.getByRole("dialog", {
+    name: "Saved preparation — ready to print",
+  });
+  await expect(printDialog).toBeVisible();
+  const savedPack = (await call(page, `packs/${pid}`)).items[0];
+  const previewLink = printDialog.getByRole("link", {
+    name: /^Print saved revision/,
+  });
+  await expect(previewLink).toHaveAttribute(
+    "href",
+    `/api/v1/packs/${pid}/preview?revision_id=${savedPack.current_revision_id}`,
+  );
+  const preview = await page.request.get(
+    (await previewLink.getAttribute("href"))!,
+  );
+  expect(preview.ok()).toBe(true);
+  expect(await preview.text()).toContain(
+    "SYN revised arrival notes for the exact preparation preview.",
+  );
+  await printDialog
+    .getByRole("button", { name: "Cancel", exact: true })
+    .click();
   await capture(page, info, "prepared");
   // SC-06 r03 page: the accepted scope container, its nine sections and readiness read from the policy registry.
   await expect(page.locator("#ppo-job-pack")).toBeVisible();
-  await expect(
-    page.locator("#jp-panel-pack .jp-section-head h2"),
-  ).toHaveCount(9);
+  await expect(page.locator("#jp-panel-pack .jp-section-head h2")).toHaveCount(
+    9,
+  );
   await expect(
     page.getByRole("tab", { name: "Job pack, 9 sections", exact: true }),
   ).toHaveAttribute("aria-selected", "true");
@@ -257,7 +313,9 @@ test("P06 complete workbench preparation, check, queued output, exact document a
   await expect(
     page.getByRole("heading", { name: "Exact issued job pack", exact: true }),
   ).toBeVisible();
-  await expect(page.getByText("Current applicable issue", { exact: true })).toBeVisible();
+  await expect(
+    page.getByText("Current applicable issue", { exact: true }),
+  ).toBeVisible();
   await capture(page, info, "document-manifest");
   const pdf = await page.request.get(`/api/v1/pack-issues/${issue.id}/pdf`);
   expect(pdf.ok()).toBeTruthy();
@@ -345,7 +403,9 @@ test("P06 complete workbench preparation, check, queued output, exact document a
   const after = await page.request.get(`/api/v1/pack-issues/${issue.id}/pdf`);
   expect(await after.body()).toEqual(bytes);
   await page.goto(`/documents/${issue.id}`);
-  await expect(page.getByText("Not currently applicable", { exact: true })).toBeVisible();
+  await expect(
+    page.getByText("Not currently applicable", { exact: true }),
+  ).toBeVisible();
   await capture(page, info, "withdrawn-document-status");
 });
 test("P06 long content remains readable in exact HTML and multi-page A4 output", async ({
