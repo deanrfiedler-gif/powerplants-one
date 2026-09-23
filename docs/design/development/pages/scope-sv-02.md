@@ -17,7 +17,7 @@ The composition below comes from the [proposed native refinement](../../../decis
 
 ## Desktop
 
-Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 4, 5 and 6). The shell is a separate module and is not drawn.
+Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 4 and 7–10; images in [board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md)). The shell is a separate module and is not drawn.
 
 - **Host (not drawn).** The shell's breadcrumb reads *Service / Service requests / SYN-PPO-TKT-000201*. Registered as a `padded` module workspace with `navigation: "workspace"` (D6). The module draws no masthead and no selected-case dropdown: the record is the page.
 - **Record header** (white, full bleed):
@@ -27,7 +27,7 @@ Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 4,
   - Actions on the right: *Request information* and *Update details* as secondary buttons, the stage's primary action (*Triage request* for New), and a *More* menu (link a related request, complete history, assistant).
 - **Progress strip:** Capture, Triage, Coordinate and Resolution, each as an inline step with a short outcome. The current step is marked with `aria-current="step"`.
 - **Record tabs** (`tabs`, 3 px green underline on the current tab): Overview, Triage & actions, Work & visits, Evidence & updates (with count) and Resolution & review.
-- **Overview** (frame 5), in two columns: a flexible main column and a 372 px aside.
+- **Overview** (frame 7), in two columns: a flexible main column and a 372 px aside.
   - **Main column:**
     - A possible-recurrence notice (same equipment, earlier request) with *Compare* and *Link as related*.
     - *Reported issue*: the symptom, production and crop impact, backup arrangements with unconfirmed parts marked, and the reported priority, which triage confirms.
@@ -47,17 +47,27 @@ Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 4,
     - Customer commitment: next update due, plus an escalation instruction below the fold.
   - **Footer:** *Cancel · keep in New* and *Save triage decision*.
   - **Fields:** the same as r02 (`fields`, `validation`).
-- **Resolution & review** (frame 6):
+- **Resolution & review** (frame 10):
   - A *Proposed resolution* panel: summary, proposer and time, then the cited evidence with its basis chip and source link.
-  - A scope-of-evidence notice, then *Return for correction* and *Accept and mark resolved*.
+  - A scope-of-evidence notice, then an explanation of what accepting does, then *Return for correction* and *Accept and mark resolved*. The buttons never wrap.
   - *Closure readiness* checks: no open actions; no waiting dependency, work order or visit; customer contact after the review (still required); and site and equipment recorded (advisory; D4 is open).
   - Aside: next customer update, customer contact and completed action.
-- **Not drawn:** the Triage & actions, Work & visits and Evidence & updates tab bodies. r02's content and rules for these tabs are retained.
+- **Work & visits** (frame 8, TKT-000203 waiting for parts):
+  - An information notice states that the visit is complete but the request is not.
+  - The linked work order shows its reference, title and its own state (*In progress*). It states that Work orders and Schedule own scope, state and bookings, followed by scope, parts (unconfirmed, in amber), the service note and the source, then its visit with a *Completed* chip, technician, time and note.
+  - *Link other work* links an existing work order; new work needs its own scope decision in Work orders.
+  - **Aside:** the waiting dependency (responsible person, next review, detail), the next customer update, and *Who owns what*, which lists the request stage, the work-order state, the visit state and part supply.
+- **Evidence & updates** (frame 9, TKT-000206): the communication timeline.
+  - **Filters:** toggles for All activity, Customer statements, Findings, Contacts and Actions and decisions, with counts; *Add evidence* on the right.
+  - **Entries**, newest first: date and time, a basis chip, a title, the author, the text and the source.
+  - **Kinds shown:** customer statement, verified finding, customer contact, action completed, and resolution proposed, which links to the review.
+  - **Aside:** *Evidence basis* counts r02's five bases (reported symptom, suspected cause, attempted fix, verified finding and work completed) and explains that statements and diagnoses stay separate and that a correction supersedes a note without deleting it. *Evidence gaps* lists the missing site and equipment, with *Update details*.
+- **Not drawn:** the *Triage & actions* tab body. r02's content and rules for it are retained.
 - **At 1024 × 768 (not drawn):** the aside stacks below the main column, and header actions wrap onto a second row without hiding the primary action.
 
 ## Mobile
 
-Proposed module interior of 390 × 716 at a 390 × 844 window (board frame 8). The triage dialog (frame 9) covers the full 390 × 844 viewport.
+Proposed module interior of 390 × 716 at a 390 × 844 window (board frame 12). The triage dialog (frame 13) covers the full 390 × 844 viewport.
 
 - **Record page:**
   - **Header:** a back link with a 40 px target, a 21 px title, stage and priority chips, a step label (*Step 2 of 4 · Triage*) and a meta line.
@@ -75,14 +85,14 @@ Proposed module interior of 390 × 716 at a 390 × 844 window (board frame 8). T
 
 Hosted by `application-shell`. Uses `tabs`, `fields`, `validation`, `status`, `buttons`, `drawer` and `mobile-form`.
 
-- **Drawn states:** New and Urgent with a commitment due soon; possible recurrence; Active with a resolution proposed; a customer contact recorded before the review; a validation error on a phone.
-- **Not drawn:** loading; denied or revoked; read-only for non-managers; Waiting with a review due; a closed record with retained history; a returned resolution.
+- **Drawn states:** New and Urgent with a commitment due soon; possible recurrence; Waiting with a review due and a completed visit beside unfinished work; Active with a resolution proposed; a customer contact recorded before the review; unknown site and equipment; a validation error on a phone.
+- **Not drawn:** loading; denied or revoked; read-only for non-managers; a closed record with retained history; a returned resolution; phone versions of frames 8 and 9.
 
 ## Visual references
 
 - [PPO-Service-Cases-and-Triage-Workspace-r02.html](../../../reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html), SHA-256 `23e92f96…18fa5f` (the Case workspace and Resolution & review views). Retained design reference.
-- Design board frames 4, 5, 6, 8 and 9, in the private claude.ai design canvas "Page Refinement Audit", page "SV-01/02 Service requests". Proposed composition, not an approved mockup.
-- **Missing:** there is no repository image of the proposed frames, and no native record-page capture after the PR #283 shell integration.
+- [Board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md): `04-register-triage.png`, `07-request-overview.png`, `08-request-work-visits.png`, `09-request-evidence.png`, `10-request-resolution.png`, `12-phone-request.png` and `13-phone-triage.png`. These are renders of the private claude.ai design canvas "Page Refinement Audit", version 7. Proposed composition, not an approved mockup.
+- **Missing:** a native record-page capture after the PR #283 shell integration, and the 1024 × 768 and 320 px layouts.
 
 ## Behaviour, handovers and verification
 

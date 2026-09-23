@@ -16,7 +16,7 @@ The composition below comes from the [proposed native refinement](../../../decis
 
 ## Desktop
 
-Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 1–4). The shell is a separate module and is not drawn.
+Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 1–6; images in [board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md)). The shell is a separate module and is not drawn.
 
 - **Host (not drawn).** The shell supplies the 76 px rail and the 64 px header, with breadcrumb *Service / Service requests*, global search and quick add. Registered as a `full-bleed` module workspace with `navigation: "workspace"`, so the shell hides its Service tab row (D6). The module draws no masthead or title band. A visually hidden `h1` reads *Service requests*; the page description belongs in the page-information panel.
 - **Toolbar** (60 px, white, full bleed), shared by Board and List:
@@ -40,9 +40,9 @@ Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 1�
   - **Footer:** the accountable owner, plus labelled 32 px *Preview* and *Move* buttons.
   - **Selected state:** 2 px `#416d33` border.
 - **List** (frames 2 and 3): the house register table (`sales-table` with the EN-06/EN-07 register rules).
-  - **Scrolling:** the table meets both edges of the module and scrolls horizontally inside one scroller. The *Request* column is sticky on the left, with a 1 px boundary. Frame 2 shows scroll position zero, with *Action owner* partly visible.
+  - **Scrolling:** the table meets both edges of the module and scrolls horizontally inside one scroller. The *Request* column is pinned on the left. Once scrolled, it casts an 8 px edge shadow; a right-edge shadow shows there are more columns. Frame 2 shows the table scrolled right past the triage columns; frame 3 shows scroll position zero.
   - **Headers:** 43 px, `#f4f5f7` fill, 13 px regular `#596779` sentence case, and 1 px column separators.
-  - **Rows:** 62 px, 14 px text, and 8 px × 12 px cell padding. Only *Request* and *Next action* wrap; other cells stay on one line.
+  - **Rows:** 62 px, 14 px text, and 8 px × 12 px cell padding. *Request* and *Next action* wrap. *Action due*, *Customer update* and *Linked work* use two fixed lines (time then relative time; reference then its own state). Other cells stay on one line.
   - **Unknown values** read *Not recorded* or *Not confirmed* in amber words. *None* reads in grey. No cell is left blank.
   - **Selected row:** `#edf6e9` fill and a 3 px navy inset marker on the sticky cell.
   - **Footer:** 52 px. It gives the count, the sort rule and the as-at time on the left, and *1–5 of 5* with previous and next buttons on the right.
@@ -75,12 +75,23 @@ Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 1�
   - **Sections:** Next action, Customer commitment (with *Record customer update*), Why information is needed, and Context.
   - **Footer:** full-width *Open request* (primary) and *Move request*.
 - **Triage from a drag or from Move:** a right-docked 560 px form over a 40 % navy scrim, detailed in the SV-02 contract. The board does not change while the form is open; cancelling keeps the request in its lane.
+- **Log a request** (frame 5, route `/service/tickets/new`): a page with the form on the left and a 420 px *Check before creating* panel on the right.
+  - **Form groups:** Caller and customer; Issue (summary, and what the customer reported, kept separate from any diagnosis); Location and impact (site, equipment, affected areas as checkboxes, category and reported priority). Impact, backup and owner can be added now or at triage.
+  - **Duplicate check:** as customer, site, equipment and areas are entered, matching open requests appear with the reasons they match. The action *Add as a customer statement on TKT-000201* records the call on the open request without changing its priority, owner or stage. Earlier requests on the same equipment are listed with their outcome.
+  - **The check is a prompt, not a block:** *Create request* stays available.
+- **Register states** (frame 6), each shown in the table area below the toolbar:
+  - loading, with skeleton rows and a status line;
+  - no open requests, with *Log a request*;
+  - no matches, with removable filter chips, the count of hidden requests and *Clear filters*;
+  - could not load, with no stale rows and *Try again*;
+  - read only, with Move disabled and the reason stated;
+  - changed while moving, where the stale revision is refused, entries are kept and the request stays in its lane.
 - **Tokens:** globals/r22 navy `#242a37`, green `#62bb46` and the status surface/border pairs; Roboto; 6 px control radius, 5 px status chips and 7–8 px card radius. A warning icon marks something someone must act on; a tick marks only a completed positive state.
 - **At 1024 × 768 (not drawn):** below 1024 px the board switches to List (r02 rule). At 1024 px the filter menus wrap to a second toolbar row rather than truncating.
 
 ## Mobile
 
-Proposed module interior of 390 × 716 at a 390 × 844 window (board frame 7).
+Proposed module interior of 390 × 716 at a 390 × 844 window (board frame 11).
 
 - **Host (not drawn):** the shell's 64 px header and 64 px bottom navigation. The Service tab row is hidden for a registered module workspace (D6).
 - **Controls:**
@@ -96,19 +107,14 @@ Proposed module interior of 390 × 716 at a 390 × 844 window (board frame 7).
 
 Hosted by `application-shell`. Uses `sales-board`, `sales-table`, `drawer`, `fields`, `validation`, `status`, `buttons` and `mobile-form`. Status chips always carry words; tone is not the business state.
 
-- **Drawn states:** normal register, collapsed empty lanes, overdue commitments, waiting for parts, resolution proposed, missing site, unknown table values, horizontal scroll at position zero, selected row with preview.
-- **Not drawn:**
-  - loading;
-  - filtered-empty (keep r02's empty panel, reworded to *No matching requests*);
-  - denied;
-  - read-only for non-managers (Move disabled, with the reason);
-  - stale-revision refusal after a drag (r02 rule: the save is refused and entries are kept).
+- **Drawn states:** normal register, collapsed empty lanes, overdue commitments, waiting for parts, resolution proposed, missing site, unknown table values, horizontal scroll at the start and scrolled, selected row with preview, possible duplicate at capture, loading, no open requests, no matches, could not load, read only, and changed while moving.
+- **Not drawn:** denied access (the register lists only permitted records, so there is no per-row denied state); phone versions of frames 5 and 6.
 
 ## Visual references
 
 - [PPO-Service-Cases-and-Triage-Workspace-r02.html](../../../reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html), SHA-256 `23e92f96…18fa5f`. Retained design reference, delivered for review.
-- Design board frames 1, 2, 3, 4 and 7, in the private claude.ai design canvas "Page Refinement Audit", page "SV-01/02 Service requests". Proposed composition, not an approved mockup.
-- **Missing:** there is no repository image of the proposed frames, and no native capture of this route after the PR #283 shell integration.
+- [Board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md): `01-register-board.png`, `02-register-list-scrolled.png`, `03-register-list-preview.png`, `04-register-triage.png`, `05-log-request.png`, `06-register-states.png` and `11-phone-register.png`, each 1364 × 896 except the phone image, which is 390 × 716. These are renders of the private claude.ai design canvas "Page Refinement Audit", version 7. Proposed composition, not an approved mockup.
+- **Missing:** a native capture of this route after the PR #283 shell integration, and the 1024 × 768 and 320 px layouts.
 
 ## Gaps against scope
 

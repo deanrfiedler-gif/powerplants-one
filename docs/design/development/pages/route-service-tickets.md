@@ -32,8 +32,8 @@ See the [SV-01 contract](scope-sv-01.md#shared-components-and-states). Keep the 
 ## Visual references
 
 - [PPO-Service-Cases-and-Triage-Workspace-r02.html](../../../reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html). Retained design reference.
-- Design board frames 1, 2, 3 and 7 (private claude.ai design canvas "Page Refinement Audit"). Proposed.
-- **Missing:** there is no repository image of the proposed frames, and no current native capture of this route.
+- [Board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md): `01-register-board.png`, `02-register-list-scrolled.png`, `03-register-list-preview.png`, `06-register-states.png` and `11-phone-register.png`. These are renders of the private claude.ai design canvas "Page Refinement Audit", version 7. Proposed.
+- **Missing:** a current native capture of this route.
 
 ## Behaviour, handovers and verification
 

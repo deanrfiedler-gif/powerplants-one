@@ -23,13 +23,14 @@ The audit also found register gaps, which are recorded here and not corrected by
 |---|---|---|
 | Service Cases & Triage r02 | [`docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html`](../reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html), SHA-256 `23e92f96f495690e5670d664ac09e1063b8f9473679c39d7fa77b1e13d18fa5f` | Standalone design delivered for review; native visual/device acceptance pending. The copy Dean attached on 23 September 2026 is byte-identical |
 | Dean's r02 desktop captures | Two browser screenshots at 1920 px width, attached to the design session on 23 September 2026; not retained in the repository | Observation of the r02 register at desktop width |
-| Refinement design board | Private claude.ai design canvas "Page Refinement Audit", page "SV-01/02 Service requests": nine frames of the module interior. The shell is a separate module and is not drawn | Proposed composition prepared on Dean's instructions (see [Delegation](#delegation)). Not an accepted baseline |
+| Refinement design board | Private claude.ai design canvas "Page Refinement Audit", page "SV-01/02 Service requests", version 7: thirteen frames of the module interior. The shell is a separate module and is not drawn | Proposed composition prepared on Dean's instructions (see [Delegation](#delegation)). Not an accepted baseline |
+| Board images r01 | [`docs/reference/ui/service-cases/native-refinement-r01/`](../reference/ui/service-cases/native-refinement-r01/README.md): thirteen PNG renders of canvas version 7, with sizes and SHA-256 in its README | Proposed design images for paired review. Not application captures |
 | House register pattern | [EN-07 r03 desktop mockup](../reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png); the EN-06 materials register table rules in `src/app/styles/engineering-materials.css` (`em-table`, `em-chip`) | Owner-refined register composition: 43 px grey sentence-case headers with column separators, 5 px status chips, a navy inset marker on the selected row, a pagination footer and a docked inspector |
 | Host shell | `src/components/product-navigation.tsx`, `src/shell/module-workspaces.ts`, `src/shell/navigation.ts`; Job Pack I3 captures at 1440 × 960 and 390 × 844 | The shell's geometry (76 px rail, 64 px header), its Service tab row, and the rule that a registered module workspace with `navigation: "workspace"` hides that row |
 | Native intake | `src/components/intake-screens.tsx`, [ADR-0008](ADR-0008-p03-customer-intake.md) | Existing P03 contract: Ticket states New, NeedsInformation and Triaged |
 | Vocabulary | [PPO-STD-001 §4.2](../standards/naming-conventions.md) | "Service request" is the preferred plain-language term; `Ticket` remains the data-contract entity |
 
-Fixture: r02's synthetic Willowbank Horticulture and Fernbank Flower Farm records at its fixed time, 10:00 am Tuesday 15 September 2026 (Australia/Melbourne). No real customer, person or operational record is used.
+Fixture: r02's synthetic Willowbank Horticulture and Fernbank Flower Farm records at its fixed time, 10:00 am Tuesday 15 September 2026 (Australia/Melbourne). Frame 5 adds one new fictional call, from Priya Shah at 10:05 am, to show the duplicate check; it is not an r02 record. No real customer, person or operational record is used.
 
 ## Delegation
 
@@ -51,10 +52,10 @@ The third instruction delegates presentation choices. Under it, the recommendati
 | Source authority | See Sources and Delegation. r02 is a delivered design, not an accepted baseline. The refinements are proposals; D1, D2, D5 and D6 are applied under delegation |
 | Incoming handover | Permitted Ticket records at their current version, with customer, site, facility and equipment context from the CS pages (`CS-04` dependency). Registers and record pages read only what the actor may see; no source is modified by viewing or preview |
 | Outgoing handover | Triage produces an owned action and a customer-update commitment on the request. Work & visits hands on to Work orders (`SV-03`) and Schedule (`SV-04`, `PL-01`); the request never creates a booking. A Finance referral stays with Finance. Resolution review produces Resolved; closure needs a customer contact recorded after that review. Nothing is sent to a customer |
-| Exceptions and recovery | A stale revision refuses the save and keeps entries (r02 rule retained). Cancelling a drag keeps the original lane. Drawn states: empty lane, overdue commitments, missing site and equipment, unknown values in the table, a validation error summary. Not drawn: loading, denied, filtered-empty and a revoked preview |
-| Departures | R1–R13 below, all proposed |
+| Exceptions and recovery | A stale revision refuses the save and keeps entries (r02 rule retained). Cancelling a drag keeps the original lane. Drawn states: empty lane, overdue commitments, missing site and equipment, unknown values in the table, a validation error summary, a possible duplicate at capture, and the register states sheet (loading, no open requests, no matches, could not load, read only, changed while moving). Not drawn: denied access to a single record and a revoked preview |
+| Departures | R1–R17 below, all proposed |
 | Application integration (proposed) | Canonical routes `/service/tickets` (layout `full-bleed`) and `/service/tickets/[id]` (layout `padded`), registered in `moduleWorkspaces` with `navigation: "workspace"` like CS-05 and PJ-09 (D6, applied under delegation). The shell owns navigation and viewport height; the module owns its interior. Scroll owners: the board surface, the table scroller (both axes) and the record body |
-| Verification | Board frames authored as module interiors: 1364 × 896 (a 1440 × 960 window less the 76 px rail and 64 px header) and 390 × 716 (a 390 × 844 phone less the 64 px header and 64 px bottom navigation). The phone triage dialog covers the full 390 × 844 viewport. The generated register frames were checked for balanced markup only. The frames were not rendered or inspected in a browser in this session; no native comparison exists; no device, zoom or screen-reader review is claimed. Repository checks are listed in the pull request |
+| Verification | Board frames authored as module interiors: 1364 × 896 (a 1440 × 960 window less the 76 px rail and 64 px header) and 390 × 716 (a 390 × 844 phone less the 64 px header and 64 px bottom navigation). The phone triage dialog covers the full 390 × 844 viewport. Every frame was rendered in Chromium at 1 CSS px per image px, inspected, and checked for content overflowing its box; the audit below records what that found. The renders are retained as board images r01. No native comparison exists; no device, zoom or screen-reader review is claimed. Repository checks are listed in the pull request |
 
 ## Refinements (proposed departures from r02)
 
@@ -72,25 +73,52 @@ The third instruction delegates presentation choices. Under it, the recommendati
 | R10 | Resolution review in a separate tab body | The evidence's scope limit and the closure checks appear before the Accept and Return buttons | The reviewer decides with the limits visible |
 | R11 | Below 1024 px, List with a note | Phone: list only, queue chips, filters in a sheet, sticky record actions, full-screen triage form with an error summary | `mobile-form` component; 16 px inputs and 44 px targets |
 | R12 | "Case" throughout | "Service request" in labels; `SYN-PPO-TKT` references and the `Ticket` entity unchanged | PPO-STD-001 §4.2 and the live navigation label (D1) |
-| R13 | A five-column table inside a rounded card: case and customer, status and priority, owner, next update, open actions | The house register table. Eighteen columns, 3,364 px wide, scroll horizontally behind a sticky *Request* column. Each column is described in the SV-01 contract. Grey 43 px sentence-case headers, 62 px rows, unknown values stated in amber words, a *Columns* control, *Sort*, and a footer with the count and *1–5 of 5* pagination. Selecting a row docks a 420 px preview panel beside the table | r02's table combined unlike facts in single cells and left out equipment, affected areas, linked work, route and category, which r06 SV-01 asks the register to show. A horizontally scrolling table carries them without truncation, and matches the owner-refined EN-06/EN-07 registers |
+| R13 | A five-column table inside a rounded card: case and customer, status and priority, owner, next update, open actions | The house register table. Eighteen columns, 3,364 px wide, scroll horizontally behind a pinned *Request* column that casts an edge shadow once scrolled; a right-edge shadow shows there are more columns. Times and linked work use two-line cells. Each column is described in the SV-01 contract. Grey 43 px sentence-case headers, 62 px rows, unknown values stated in amber words, a *Columns* control, *Sort*, and a footer with the count and *1–5 of 5* pagination. Selecting a row docks a 420 px preview panel beside the table | r02's table combined unlike facts in single cells and left out equipment, affected areas, linked work, route and category, which r06 SV-01 asks the register to show. A horizontally scrolling table carries them without truncation, and matches the owner-refined EN-06/EN-07 registers |
+| R14 | *Log a case* opens a form with no duplicate check | *Log a request* (frame 5) checks the customer, site, equipment and areas as the call is recorded. A matching open request offers *Add as a customer statement on TKT-000201*, which does not change that request's priority, owner or stage; earlier requests on the same equipment are listed. The check is a prompt, not a block | SV-01 task 1 is to capture a request without duplicating an existing one |
+| R15 | Work and visits listed inside the workspace, with the request stage alongside | *Work & visits* (frame 8) keeps the request stage, work-order state and visit state apart and names who owns each. A completed visit is shown as such, and a notice states that it does not resolve the request | r06 SV-01/SV-02 check: a visit outcome cannot hide unresolved work; request state stays distinct from work-order and appointment state |
+| R16 | Evidence and communications in separate lists | *Evidence & updates* (frame 9) is the communication timeline. Each entry is labelled by basis (customer statement, verified finding, customer contact, action, decision), filters by type, and an *Evidence basis* panel counts the five r02 bases | SV-02 is the request detail and communication timeline; r06 asks for customer statements to stay separate from verified findings |
+| R17 | Empty panel copy only | A register states sheet (frame 6): loading, no open requests, no matches (with the hidden count), could not load, read only, and changed while moving | r06 asks for review against a normal, a missing-source and an interrupted or returned case |
 
 Notices use an even border without a coloured edge rule, consistent with the [notice accent rule departure](notice-accent-rule-departure.md). That record is also still proposed.
 
 ## Board frames
 
-| Frame | Module interior | State shown |
-|---|---|---|
-| 1. Register · board | 1364 × 896 | Manager view, open scope, five requests, two empty lanes collapsed |
-| 2. Register · list | 1364 × 896 | The full table at scroll position zero; *Action owner* is partly visible to show the horizontal scroll |
-| 3. Register · list with preview | 1364 × 896 | TKT-000202 selected; the preview shows two overdue commitments |
-| 4. Triage from the board | 1364 × 896 | Drag New → Triaged opens the docked form; the board is unchanged behind it |
-| 5. Request overview | 1364 × 896 | TKT-000201, New, Urgent; recurrence notice; update due in 30 min |
-| 6. Resolution review | 1364 × 896 | TKT-000206; proposed resolution, cited evidence, closure checks |
-| 7. Phone register | 390 × 716 | List only, queue chips |
-| 8. Phone request overview | 390 × 716 | TKT-000201 with sticky actions |
-| 9. Phone triage form | 390 × 844, full-screen dialog | Validation state: response route missing |
+Images: [board images r01](../reference/ui/service-cases/native-refinement-r01/README.md).
 
-No repository image of these frames exists yet. The missing images are recorded in the page contracts.
+| Frame | Module interior | State shown | Image |
+|---|---|---|---|
+| 1. Register · board | 1364 × 896 | Manager view, open scope, five requests, two empty lanes collapsed | `01-register-board.png` |
+| 2. Register · list, scrolled right | 1364 × 896 | Scrolled past the triage columns; *Request* pinned with its edge shadow; two-line time cells, overdue in the danger tone | `02-register-list-scrolled.png` |
+| 3. Register · list with preview | 1364 × 896 | Scroll position zero; TKT-000202 selected; the preview shows two overdue commitments | `03-register-list-preview.png` |
+| 4. Triage from the board | 1364 × 896 | Drag New → Triaged opens the docked form; the board is unchanged behind it | `04-register-triage.png` |
+| 5. Log a request | 1364 × 896 | A second call about the same pump; the duplicate check finds TKT-000201 and the earlier TKT-000205 | `05-log-request.png` |
+| 6. Register states | 1364 × 896 | Loading, no open requests, no matches, could not load, read only, changed while moving | `06-register-states.png` |
+| 7. Request overview | 1364 × 896 | TKT-000201, New, Urgent; recurrence notice; update due in 30 min | `07-request-overview.png` |
+| 8. Work & visits | 1364 × 896 | TKT-000203, Waiting for parts; work order in progress; visit completed | `08-request-work-visits.png` |
+| 9. Evidence & updates | 1364 × 896 | TKT-000206 timeline of five entries, newest first; evidence basis counts and gaps | `09-request-evidence.png` |
+| 10. Resolution review | 1364 × 896 | TKT-000206; proposed resolution, cited evidence, closure checks | `10-request-resolution.png` |
+| 11. Phone register | 390 × 716 | List only, queue toggles with counts | `11-phone-register.png` |
+| 12. Phone request overview | 390 × 716 | TKT-000201 with sticky actions | `12-phone-request.png` |
+| 13. Phone triage form | 390 × 844, full-screen dialog | Validation state: response route missing | `13-phone-triage.png` |
+
+## Design audit
+
+On Dean's request of 23 September 2026 ("Carry out an audit on it, then apply an[y] improvements that you believe are beneficial for the design"), every frame was rendered and inspected.
+
+| # | Finding | Severity | Resolution |
+|---|---|---|---|
+| A1 | Phone register: the flex column shrank the queue row, so its toggles showed as empty boxes | High | Toolbar, queue and status rows no longer shrink; the list scrolls below them. Toggles now carry the desktop count badges |
+| A2 | List: action due, customer update and linked work overflowed their columns in four cells per frame | High | Two-line cells: time then relative time, reference then its own state |
+| A3 | Resolution review: *Return for correction* and *Accept and mark resolved* wrapped to two lines | Medium | The explanation sits above; the buttons never wrap |
+| A4 | Board cards: due lines broke inside phrases ("· in / 30 min") | Medium | Action owner on one line; time and relative time on the next, each kept whole |
+| A5 | List: a chip cut at the scroll edge read as a defect; nothing showed there were more columns | Medium | Right-edge shadow on the scroller; frame 2 now shows the scrolled state with the pinned column's shadow |
+| A6 | Mixed label styles: uppercase eyebrows beside sentence-case headings | Low | Sentence case throughout: 13 px medium field labels and 15–17 px headings |
+| A7 | The owner's role wrapped mid-phrase in *Accountability* | Low | Name and role on separate lines |
+| A8 | Coverage: no frame showed SV-02's communication timeline, work and visit separation, capture with a duplicate check, or register states | High | Frames 5, 6, 8 and 9 added (R14–R17) |
+
+Also changed: the board's work-order chip names its own state (*WO-000503 · in progress*); the invoice card's green *On track* became a neutral *Referred to Finance*, because a tick marks only a completed state; the record frames share one header, card and label style.
+
+Not drawn, and left for a later increment: 1024 × 768 and 320 px layouts; the *Triage & actions* tab body; phone versions of frames 5, 6, 8 and 9; denied access to a single record.
 
 ## Decisions
 
@@ -106,17 +134,17 @@ No repository image of these frames exists yet. The missing images are recorded 
 ## Known, assumed and uncertain
 
 - **Known:** r02's bytes, model rules and fixture; the live Service navigation labels and rail order; native P03 states; the PPO-STD-001 vocabulary; r06 SV-01/SV-02 scope text and checks; the EN-06/EN-07 register rules.
-- **Assumed:** the Job Pack I3 captures represent the current shell geometry; the default visible column set is all eighteen columns, with the *Columns* control able to hide any but *Request*.
+- **Assumed:** the Job Pack I3 captures represent the current shell geometry; the default visible column set is all eighteen columns, with the *Columns* control able to hide any but *Request*; adding a follow-up call to an open request uses r02's existing evidence record with the *Reported symptom* basis.
 - **Uncertain:**
   - whether collapsed lane targets meet owner and device review;
-  - whether the horizontal scroll is discoverable enough without a visible edge shadow on the sticky column;
   - exact behaviour at 1024 × 768 and 320 px, which is not drawn;
+  - how the duplicate check ranks several partial matches; frame 5 shows one strong match only;
   - whether bulk selection is needed. No bulk command exists in r02 or P03, so the table has no selection checkboxes, unlike EN-07.
 
 ## Next steps
 
 1. Dean reviews the board. Record his review, or any change he asks for, here with the date and his words.
-2. Retain the board as a reference with captures at the drawn viewports, or issue an r03 HTML successor. Preserve r02's bytes.
+2. Board images r01 are retained. A changed board is issued as a successor image set; r02's bytes stay unchanged.
 3. For D3, prepare the SC-04 extension contract and ADR before any migration. Settle D4 with it.
 4. Build natively under the [application integration gate](../standards/html-module-conformance.md#application-integration-gate), then update the page guides, captures and review records from actual evidence.
 

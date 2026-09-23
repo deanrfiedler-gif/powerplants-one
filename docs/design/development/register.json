@@ -1795,7 +1795,15 @@
       "guide_key": "guide.sv.01",
       "design_path": "docs/design/development/pages/scope-sv-01.md",
       "html_path": "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/service-cases/native-refinement-r01/01-register-board.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/02-register-list-scrolled.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/03-register-list-preview.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/04-register-triage.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/05-log-request.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/06-register-states.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/11-phone-register.png"
+      ],
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md"
       ],
@@ -1828,7 +1836,15 @@
       "guide_key": "guide.sv.02",
       "design_path": "docs/design/development/pages/scope-sv-02.md",
       "html_path": "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/service-cases/native-refinement-r01/04-register-triage.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/07-request-overview.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/08-request-work-visits.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/09-request-evidence.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/10-request-resolution.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/12-phone-request.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/13-phone-triage.png"
+      ],
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md"
       ],
@@ -5884,7 +5900,14 @@
       "guide_key": "guide.page.service.tickets.id",
       "design_path": "docs/design/development/pages/route-service-tickets-id.md",
       "html_path": "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/service-cases/native-refinement-r01/07-request-overview.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/08-request-work-visits.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/09-request-evidence.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/10-request-resolution.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/12-phone-request.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/13-phone-triage.png"
+      ],
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md"
       ],
@@ -5914,8 +5937,12 @@
       "guide_key": "guide.page.service.tickets.new",
       "design_path": "docs/design/development/pages/route-service-tickets-new.md",
       "html_path": "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/service-cases/native-refinement-r01/05-log-request.png"
+      ],
+      "dependencies": [
+        "docs/decisions/service-requests-native-refinement.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -5942,7 +5969,13 @@
       "guide_key": "guide.page.service.tickets",
       "design_path": "docs/design/development/pages/route-service-tickets.md",
       "html_path": "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/service-cases/native-refinement-r01/01-register-board.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/02-register-list-scrolled.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/03-register-list-preview.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/06-register-states.png",
+        "docs/reference/ui/service-cases/native-refinement-r01/11-phone-register.png"
+      ],
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md"
       ],
