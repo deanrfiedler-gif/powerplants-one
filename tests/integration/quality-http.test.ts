@@ -222,7 +222,7 @@ test(
           `${profile}:${publicProjection}:${output.status}`,
         );
         if (
-          ["search?", "notifications", "exports/", "finance/targets/"].some(
+          ["exports/", "finance/targets/"].some(
             (prefix) => publicProjection.startsWith(prefix),
           )
         )
@@ -231,6 +231,15 @@ test(
             404,
             "Unimplemented distribution/target routes must not become successful",
           );
+        if (["search?", "notifications"].some((prefix) => publicProjection.startsWith(prefix))) {
+          // Activity-backed notifications require activity.read; a systems-only
+          // principal may be denied. Neither implemented endpoint is a 404 stub.
+          assert.ok([200, 403].includes(output.status), `${profile}:${publicProjection}: implemented scoped projection`);
+          assert.match(output.headers.get("cache-control") ?? "", /no-store/);
+          const projection = JSON.parse(text);
+          if (output.status === 200) assert.ok(Array.isArray(projection.items));
+          else assert.equal(projection.code, "Forbidden");
+        }
         // A search query can appear in a generic page's client route metadata;
         // restricted results, target identities and output names must never do so.
         for (const secret of restricted.slice(1))

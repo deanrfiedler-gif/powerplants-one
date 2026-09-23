@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
+import { NotificationBell } from "./notification-workspace";
 import { navigateWithReview } from "./navigation-intent";
 import {
   useEffect,
@@ -477,6 +478,8 @@ export function ShellControls({
             ))}
           </div>
         </div>
+        {q.trim().length >= 2 && <Link className="ppo-account-link" href={`/search?${new URLSearchParams({q:q.trim()})}`} onClick={() => setPanel(null)}>View all results</Link>}
+        {results?.state === "partial" && <p role="alert">Some sources are unavailable. Open all results to retry.</p>}
         <div className="ppo-panel-footer">
           <span className="ppo-preview-label">Powerplants One · r17</span><span>{query ? "Up to 5 per record type" : "Pages & records"}</span>
         </div>
@@ -582,7 +585,7 @@ export function ShellControls({
             </div>
           )}
           {panel === "notifications" && (
-            <div className="ppo-notification-empty"><span className="ppo-empty-icon"><ProductIcon name="bell" /></span><h3>Notifications are not connected</h3><p>Updates will appear here when their source modules are connected.</p></div>
+            <NotificationBell close={() => setPanel(null)} />
           )}
           {panel === "account" && <><ShellAccountProfile name={context?.display_name} /><Link className="ppo-account-link" href="/work" onClick={() => setPanel(null)}>Open My Work and account controls</Link></>}
 
@@ -590,7 +593,7 @@ export function ShellControls({
         <div className="ppo-panel-footer">
           <span className="ppo-preview-label">Powerplants One · r17</span>
           {panel === "guide" && <span>User guide & journey</span>}
-          {panel === "notifications" && <span>No live feed</span>}
+          {panel === "notifications" && <span>In-app updates</span>}
         </div>
       </section>
     </div>

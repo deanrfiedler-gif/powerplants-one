@@ -30,7 +30,11 @@
       "design_path": "docs/design/development/pages/scope-sh-01.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md",
+        "src/components/saved-view-controls.tsx"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -58,7 +62,11 @@
       "design_path": "docs/design/development/pages/scope-sh-02.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md",
+        "src/components/saved-view-controls.tsx"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -82,22 +90,33 @@
     },
     {
       "key": "scope:SH-03",
-      "title": "Notification inbox and preferences",
+      "title": "Notifications and preferences",
       "kind": "scope",
       "module": "SH",
-      "summary": "Implement notification records, inbox, read state, grouped updates, delivery preferences and escalation. /work/updates currently reports that notifications are not connected.",
+      "summary": "Durable personal Activity notices, explicit read/archive state, grouped changes, owned obligations and saved delivery preferences. Email, push and SMS delivery are not connected.",
       "path": "/work/updates",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/components/notification-workspace.tsx",
+        "src/notifications/service.ts"
       ],
       "guide_key": "guide.sh.03",
       "design_path": "docs/design/development/pages/scope-sh-03.md",
       "html_path": "docs/reference/ui/notifications/PPO-Notification-Inbox-and-Preferences-r01.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/sh-platform/captures/notifications-inbox-desktop.png",
+        "docs/testing/evidence/sh-platform/captures/notifications-inbox-320.png",
+        "docs/testing/evidence/sh-platform/captures/preferences-phone.png"
+      ],
+      "dependencies": [
+        "src/components/notification-workspace.tsx",
+        "src/notifications/service.ts",
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md"
+      ],
+      "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Bounded local and CI evidence: docs/testing/evidence/sh-platform/README.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -112,22 +131,34 @@
     },
     {
       "key": "scope:SH-04",
-      "title": "Global search results and record preview",
+      "title": "Search",
       "kind": "scope",
       "module": "SH",
-      "summary": "Extend existing scoped search to facilities, controlled documents, knowledge and future domains; add fuller results and record previews where needed.",
+      "summary": "Shared compact and full scoped search with per-type pagination, current record previews and personal saved criteria. General Knowledge and document-library search remain deferred.",
       "path": "/search",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/components/platform-search.tsx",
+        "src/shell/search-service.ts"
       ],
       "guide_key": "guide.sh.04",
       "design_path": "docs/design/development/pages/scope-sh-04.md",
       "html_path": null,
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/testing/evidence/sh-platform/captures/compact-search-desktop.png",
+        "docs/testing/evidence/sh-platform/captures/search-desktop.png",
+        "docs/testing/evidence/sh-platform/captures/search-320.png",
+        "docs/testing/evidence/sh-platform/captures/search-preview-phone.png"
+      ],
+      "dependencies": [
+        "src/components/platform-search.tsx",
+        "src/shell/search-service.ts",
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Bounded local and CI evidence: docs/testing/evidence/sh-platform/README.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -141,22 +172,34 @@
     },
     {
       "key": "scope:SH-05",
-      "title": "Personal and team saved views",
+      "title": "Personal saved views",
       "kind": "scope",
       "module": "SH",
-      "summary": "Retain personal saved views already implemented in My Work. Add a defined team-sharing model and extend saved-view support across eligible workspaces.",
+      "summary": "Personal saved criteria for Search, Reviews and Updates, retaining existing My Work views. Canonical team sharing remains Not configured.",
       "path": "/work/actions?view=saved",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/components/saved-view-controls.tsx",
+        "src/platform/view-targets.ts",
+        "src/platform/saved-views.ts"
       ],
       "guide_key": "guide.sh.05",
       "design_path": "docs/design/development/pages/scope-sh-05.md",
       "html_path": null,
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/testing/evidence/sh-platform/captures/saved-views-desktop.png",
+        "docs/testing/evidence/sh-platform/captures/saved-views-phone.png"
+      ],
+      "dependencies": [
+        "src/components/saved-view-controls.tsx",
+        "src/platform/view-targets.ts",
+        "src/platform/saved-views.ts",
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Bounded local and CI evidence: docs/testing/evidence/sh-platform/README.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -169,22 +212,33 @@
     },
     {
       "key": "scope:SH-06",
-      "title": "Cross-module approvals and handover inbox",
+      "title": "Reviews and handovers",
       "kind": "scope",
       "module": "SH",
-      "summary": "Implement the standalone cross-module review and handover inbox, with decisions delegated to the owning domains.",
+      "summary": "Six bounded coordination views over actual Service report, Finance handoff and Engineering change review/receiving records; decisions stay in their source workspaces.",
       "path": "/work/reviews",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/components/review-workspace.tsx",
+        "src/reviews/service.ts"
       ],
       "guide_key": "guide.sh.06",
       "design_path": "docs/design/development/pages/scope-sh-06.md",
       "html_path": "docs/reference/ui/approvals-handover/PPO-Cross-Module-Approvals-and-Handover-Inbox-r01.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/sh-platform/captures/reviews-all-permitted.png",
+        "docs/testing/evidence/sh-platform/captures/returned-detail-phone.png",
+        "docs/testing/evidence/sh-platform/captures/receiver-desktop.png"
+      ],
+      "dependencies": [
+        "src/components/review-workspace.tsx",
+        "src/reviews/service.ts",
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md"
+      ],
+      "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Bounded local and CI evidence: docs/testing/evidence/sh-platform/README.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6013,7 +6067,11 @@
       "design_path": "docs/design/development/pages/route-work-actions.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md",
+        "src/components/saved-view-controls.tsx"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -6041,7 +6099,11 @@
       "design_path": "docs/design/development/pages/route-work.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md",
+        "src/components/saved-view-controls.tsx"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -6058,22 +6120,31 @@
     },
     {
       "key": "route:/work/reviews",
-      "title": "Reviews & handovers",
+      "title": "Reviews and handovers",
       "kind": "route",
       "module": "SH",
-      "summary": "This page address exists in the inspected application source. Open it from a running app using an identity with the required access.",
+      "summary": "Six bounded coordination views over actual Service report, Finance handoff and Engineering change review/receiving records; decisions stay in their source workspaces.",
       "path": "/work/reviews",
       "source_paths": [
         "src/app/(business)/work/(workspace)/reviews/page.tsx"
       ],
       "guide_key": "guide.page.work.reviews",
       "design_path": "docs/design/development/pages/route-work-reviews.md",
-      "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-      "image_paths": [],
-      "dependencies": [],
+      "html_path": "docs/reference/ui/approvals-handover/PPO-Cross-Module-Approvals-and-Handover-Inbox-r01.html",
+      "image_paths": [
+        "docs/testing/evidence/sh-platform/captures/reviews-all-permitted.png",
+        "docs/testing/evidence/sh-platform/captures/returned-detail-phone.png",
+        "docs/testing/evidence/sh-platform/captures/receiver-desktop.png"
+      ],
+      "dependencies": [
+        "src/components/review-workspace.tsx",
+        "src/reviews/service.ts",
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Bounded local and CI evidence: docs/testing/evidence/sh-platform/README.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6098,7 +6169,11 @@
       "design_path": "docs/design/development/pages/route-work-team.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md",
+        "src/components/saved-view-controls.tsx"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -6114,22 +6189,31 @@
     },
     {
       "key": "route:/work/updates",
-      "title": "Updates & preferences",
+      "title": "Notifications and preferences",
       "kind": "route",
       "module": "SH",
-      "summary": "The page shell exists. Notifications, read state and delivery preferences are not connected yet; implement SH-03 behind this view.",
+      "summary": "Durable personal Activity notices, explicit read/archive state, grouped changes, owned obligations and saved delivery preferences. Email, push and SMS delivery are not connected.",
       "path": "/work/updates",
       "source_paths": [
         "src/app/(business)/work/(workspace)/updates/page.tsx"
       ],
       "guide_key": "guide.page.work.updates",
       "design_path": "docs/design/development/pages/route-work-updates.md",
-      "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "refine",
+      "html_path": "docs/reference/ui/notifications/PPO-Notification-Inbox-and-Preferences-r01.html",
+      "image_paths": [
+        "docs/testing/evidence/sh-platform/captures/notifications-inbox-desktop.png",
+        "docs/testing/evidence/sh-platform/captures/notifications-inbox-320.png",
+        "docs/testing/evidence/sh-platform/captures/preferences-phone.png"
+      ],
+      "dependencies": [
+        "src/components/notification-workspace.tsx",
+        "src/notifications/service.ts",
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md"
+      ],
+      "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Bounded local and CI evidence: docs/testing/evidence/sh-platform/README.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6155,7 +6239,11 @@
       "design_path": "docs/design/development/pages/route-work-waiting.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md",
+        "src/components/saved-view-controls.tsx"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -7602,8 +7690,16 @@
       "guide_key": null,
       "design_path": "docs/design/development/systems/shell.md",
       "html_path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/testing/evidence/sh-platform/captures/rebased-notification-bell.png"
+      ],
+      "dependencies": [
+        "src/components/shell-controls.tsx",
+        "src/components/notification-workspace.tsx",
+        "src/shell/search-service.ts",
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md"
+      ],
       "scope_status": "Shared source",
       "visual_status": "Needs review",
       "functional_status": "See linked source evidence",
@@ -7754,6 +7850,47 @@
         "system:guidance"
       ],
       "reviewer": null
+    },
+    {
+      "key": "route:/search",
+      "title": "Search",
+      "kind": "route",
+      "module": "SH",
+      "summary": "Shared compact and full scoped search with per-type pagination, current record previews and personal saved criteria. General Knowledge and document-library search remain deferred.",
+      "path": "/search",
+      "source_paths": [
+        "src/app/(business)/search/page.tsx"
+      ],
+      "guide_key": "guide.route-search",
+      "design_path": "docs/design/development/pages/route-search.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/testing/evidence/sh-platform/captures/compact-search-desktop.png",
+        "docs/testing/evidence/sh-platform/captures/search-desktop.png",
+        "docs/testing/evidence/sh-platform/captures/search-320.png",
+        "docs/testing/evidence/sh-platform/captures/search-preview-phone.png",
+        "docs/testing/evidence/sh-platform/captures/rebased-search-guide-desktop.png",
+        "docs/testing/evidence/sh-platform/captures/rebased-search-guide-phone.png"
+      ],
+      "dependencies": [
+        "src/components/platform-search.tsx",
+        "src/shell/search-service.ts",
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "Bounded local and CI evidence: docs/testing/evidence/sh-platform/README.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SH-04",
+        "scope:SH-05"
+      ]
     }
   ]
 }

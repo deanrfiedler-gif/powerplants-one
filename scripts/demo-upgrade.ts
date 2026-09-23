@@ -108,7 +108,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // No backfill, seed, users, grants or issued document changes. Pending identity events
   // are flushed before widening the identity registry. Existing generic table grants apply.
   // Schema downgrade is unsupported; old application images ignore these additive tables.
-  if (latestMigrationVersion !== 42) throw Error("Review the existing-demo upgrade for this release.");
+  // 0043 review: four additive personal coordination tables, no seeds/grants/backfill or identity ALTER.
+  // Existing grantRuntimePrivileges covers them; rollback leaves unused personal tables intact.
+  if (latestMigrationVersion !== 43) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

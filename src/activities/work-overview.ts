@@ -1,7 +1,7 @@
 import { projectsAvailable } from "../projects/visibility";
 // My Work read models. My Work projects obligations that other modules own; it stores none of
 // them. Every row is re-read under the reader's current grants, and every count covers the whole
-// permitted scope for the selected owner and filters, never just the rows shown.
+// permitted scope for the selected owner and filters; review source windows carry an explicit bound.
 import { crmAvailable } from "../crm/context";
 import { leadsAvailable } from "../crm/leads/context";
 import { listOverdueOpportunities, listPlanningGaps } from "../crm/planning-gaps";
@@ -64,12 +64,12 @@ export type WorkRow = {
 };
 // A panel that cannot be read says so. It is never reported as an empty or zero result.
 export type Panel<T> =
-  | { status: "ok"; total: number; items: T[] }
+  | { status: "ok"; total: number; items: T[]; bounded?: boolean }
   | { status: "not_permitted" }
   | { status: "unavailable" };
 
 async function settle<T>(
-  read: () => Promise<{ total: number; items: T[] } | null>,
+  read: () => Promise<{ total: number; items: T[]; bounded?: boolean } | null>,
 ): Promise<Panel<T>> {
   try {
     const value = await read();
@@ -543,7 +543,7 @@ export async function readWorkNavigation(p: Principal) {
     observed_at: new Date().toISOString(),
     can_coordinate,
     sales,
-    reviews: reviews.status === "ok" ? { status: reviews.status, total: reviews.total } : { status: reviews.status },
+    reviews: reviews.status === "ok" ? { status: reviews.status, total: reviews.total, bounded: reviews.bounded } : { status: reviews.status },
   };
 }
 

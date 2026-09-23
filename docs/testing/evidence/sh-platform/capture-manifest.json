@@ -1,0 +1,213 @@
+{
+  "scope": "SH-01 through SH-06",
+  "synthetic": true,
+  "inspection": "Actual PNGs inspected by the implementation agent; not independent owner acceptance.",
+  "captures": [
+    {
+      "file": "my-work-desktop.png",
+      "source": "tmp/sh-final-browser/my-work-the-overview-recon-da7ec-notices-in-both-menu-states-desktop-chromium/overview-expanded.png",
+      "sha256": "2fcffcccf4107e8d43ea1abe84df6e0ef68c00fb76a3c4db660190f46ff36b56"
+    },
+    {
+      "file": "my-work-phone.png",
+      "source": "tmp/sh-final-browser/my-work-mobile-the-phone-o-8f936-n-one-agenda-and-follow-ups-mobile-chromium/personal-overview.png",
+      "sha256": "9ea11f9ca0b02bb26b77af53faf4df6484c0754730b69559ffdc5e2bf086b326"
+    },
+    {
+      "file": "my-work-agenda-phone.png",
+      "source": "tmp/sh-final-browser/my-work-mobile-the-phone-o-8f936-n-one-agenda-and-follow-ups-mobile-chromium/agenda-and-follow-ups.png",
+      "sha256": "1ec00dc6cb2822b8067025f4a8424d64459881d7f50df6fed078d2cf740186e3"
+    },
+    {
+      "file": "actions-desktop.png",
+      "source": "tmp/sh-final-browser/sh-platform-SH-review-pers-4bf9d-d-current-My-Work-interiors-desktop-chromium/-work-actions-1440.png",
+      "sha256": "3600b88588c2f0edd93966416b3d7a9bfe342c328c9568d6d60ae2355a80fba8"
+    },
+    {
+      "file": "notifications-inbox-desktop.png",
+      "source": "tmp/sh-refined-browser/sh-platform-SH-review-pers-4bf9d-d-current-My-Work-interiors-desktop-chromium/-work-updates-1440.png",
+      "sha256": "1ff661d59d13c3ea7297bbef07006cb6a1945dd7b19c46004c6db41e3abd0022"
+    },
+    {
+      "file": "notifications-inbox-320.png",
+      "source": "tmp/sh-refined-browser/sh-platform-SH-review-pers-4bf9d-d-current-My-Work-interiors-desktop-chromium/notifications-row-320.png",
+      "sha256": "fca4454865543bafa1b2cb1308490b2397016056439dae4489b5351d3c4d7b37"
+    },
+    {
+      "file": "notifications-grouped.png",
+      "source": "tmp/sh-refined-browser/sh-platform-SH-notificatio-83b23-ate-and-preferences-persist-desktop-chromium/notifications-grouped.png",
+      "sha256": "cc6900758e961edce92a208002c6235d7a0b5f19e4b3d9789ed19c14dcf49a02"
+    },
+    {
+      "file": "notifications-owned.png",
+      "source": "tmp/sh-refined-browser/sh-platform-SH-notificatio-83b23-ate-and-preferences-persist-desktop-chromium/notifications-owned.png",
+      "sha256": "fed5360553d460e0305d5b11d6b7235223184d6c1e50513d5ad1c26553fd5f80"
+    },
+    {
+      "file": "preferences-desktop.png",
+      "source": "tmp/sh-refined-browser/sh-platform-SH-notificatio-83b23-ate-and-preferences-persist-desktop-chromium/notifications-preferences-top.png",
+      "sha256": "bce56a4e673f4ca5cb58943b05830cac20e070633ead20a904cf1d63fc3734fd"
+    },
+    {
+      "file": "preferences-quiet-hours.png",
+      "source": "tmp/sh-reviewed-browser/sh-platform-SH-notificatio-83b23-ate-and-preferences-persist-desktop-chromium/notifications-preferences.png",
+      "sha256": "5646039be4c8a26c1d3aff7efdd27b55771b66be8da7783eab40899f131b4906"
+    },
+    {
+      "file": "notification-detail-phone.png",
+      "source": "tmp/sh-refined-browser/sh-platform-SH-notificatio-83b23-ate-and-preferences-persist-mobile-chromium/notification-detail.png",
+      "sha256": "cab3b556041931649be6d92413566988161427d5205411dd5bdf45d2a9c6794b"
+    },
+    {
+      "file": "preferences-phone.png",
+      "source": "tmp/sh-refined-browser/sh-platform-SH-notificatio-83b23-ate-and-preferences-persist-mobile-chromium/notifications-preferences-top.png",
+      "sha256": "7a8d6372f30a5194212e00b0d167106ca4a49340bb6609e55d1178fbfe35a325"
+    },
+    {
+      "file": "notification-bell.png",
+      "source": "tmp/sh-bell-receiver-proof/sh-platform-SH-notificatio-83b23-ate-and-preferences-persist-desktop-chromium/notification-bell.png",
+      "sha256": "cb64319c3e68d6ac790e0c7552b92e6c1573edd364688f8f44b503cc19cef010"
+    },
+    {
+      "file": "search-desktop.png",
+      "source": "tmp/sh-refined-browser/sh-platform-SH-review-pers-4bf9d-d-current-My-Work-interiors-desktop-chromium/-search-1440.png",
+      "sha256": "f037c40b522064a2b544e28791d6bf4eeaeef451d740400432cc255229085035"
+    },
+    {
+      "file": "search-320.png",
+      "source": "tmp/sh-reviewed-browser/sh-platform-SH-review-pers-4bf9d-d-current-My-Work-interiors-mobile-chromium/-search-320.png",
+      "sha256": "11636ee62e35772d59e549317780e42617b1e997ca1a09157bea4da1b23d5f04"
+    },
+    {
+      "file": "compact-search-desktop.png",
+      "source": "tmp/sh-reviewed-browser/sh-platform-SH-search-keyb-03866-iew-and-personal-saved-view-desktop-chromium/search-compact.png",
+      "sha256": "c9c26a65e08dd5753f5b999bd601bf64bf185893db10d53da63a83b837841e69"
+    },
+    {
+      "file": "compact-search-mobile.png",
+      "source": "tmp/sh-reviewed-browser/sh-platform-SH-search-keyb-03866-iew-and-personal-saved-view-mobile-chromium/search-compact.png",
+      "sha256": "9a57aefec258aac6cc0e0a6e7cc73a8ce65496b1aabf160e12b0d5c867cd707b"
+    },
+    {
+      "file": "search-preview-desktop.png",
+      "source": "tmp/sh-reviewed-browser/sh-platform-SH-search-keyb-03866-iew-and-personal-saved-view-desktop-chromium/search-preview.png",
+      "sha256": "8ebd1637f3bf1f89d494eb1ae7282edb5cc700df5c0a3137074233eccc60831e"
+    },
+    {
+      "file": "search-preview-phone.png",
+      "source": "tmp/sh-refined-browser/sh-platform-SH-search-keyb-03866-iew-and-personal-saved-view-mobile-chromium/search-preview.png",
+      "sha256": "5118fa30d186a631c8012b120262626ce1562f23c7e943a937c707787c56a08a"
+    },
+    {
+      "file": "saved-views-desktop.png",
+      "source": "tmp/sh-final-browser/sh-platform-SH-search-keyb-03866-iew-and-personal-saved-view-desktop-chromium/saved-views.png",
+      "sha256": "024caf6ed8e132d0250eb7542959b6bc91d12c6282254c042459be881ee58166"
+    },
+    {
+      "file": "saved-views-phone.png",
+      "source": "tmp/sh-refined-browser/sh-platform-SH-search-keyb-03866-iew-and-personal-saved-view-mobile-chromium/saved-views.png",
+      "sha256": "62f239f726f7ba9b0005a5101b0a21fbae7d4def837beb30a3b3c203a6fb7a03"
+    },
+    {
+      "file": "reviews-my-reviews.png",
+      "source": "tmp/sh-reviewed-browser/sh-platform-SH-review-pers-4bf9d-d-current-My-Work-interiors-desktop-chromium/reviews-My-reviews.png",
+      "sha256": "0bb46c4266cf916a14783ccae350b504e08f9e0797cf79ab691d6f55c14e0ee5"
+    },
+    {
+      "file": "reviews-all-permitted.png",
+      "source": "tmp/sh-reviewed-browser/sh-platform-SH-review-pers-4bf9d-d-current-My-Work-interiors-desktop-chromium/reviews-All-permitted.png",
+      "sha256": "a5b5f6cbd41a5ab58e2365e4c3a5cbaaebf3222f2e93842284825c9906f9fdfc"
+    },
+    {
+      "file": "reviews-returned-to-me.png",
+      "source": "tmp/sh-reviewed-browser/sh-platform-SH-review-pers-4bf9d-d-current-My-Work-interiors-desktop-chromium/reviews-Returned-to-me.png",
+      "sha256": "8236af6470f43dbddfbdd96ae3aaf25aff0df1c7725734110619d41b6f448ec0"
+    },
+    {
+      "file": "reviews-handovers.png",
+      "source": "tmp/sh-reviewed-browser/sh-platform-SH-review-pers-4bf9d-d-current-My-Work-interiors-desktop-chromium/reviews-Handovers.png",
+      "sha256": "aea3cd0d7649cd16d391daed60981c46a856637cfb8257a0a96b1e79b306795f"
+    },
+    {
+      "file": "reviews-sent-by-me.png",
+      "source": "tmp/sh-reviewed-browser/sh-platform-SH-review-pers-4bf9d-d-current-My-Work-interiors-desktop-chromium/reviews-Sent-by-me.png",
+      "sha256": "8095385a22bf048743dfcc5083b964ef92ded5c7e2cf2b5d2a2243a8112d6dbb"
+    },
+    {
+      "file": "reviews-history.png",
+      "source": "tmp/sh-reviewed-browser/sh-platform-SH-review-pers-4bf9d-d-current-My-Work-interiors-desktop-chromium/reviews-History.png",
+      "sha256": "a96c2bb7707c0760e6407a34ddcea1f6b80ef3f75487476994ba2bf1d6d48b2b"
+    },
+    {
+      "file": "reviewer-mine.png",
+      "source": "tmp/sh-reviewed-browser/sh-platform-SH-real-review-4855d-eviewer-author-and-receiver-desktop-chromium/reviews-populated-mine.png",
+      "sha256": "1a22e419cb513825dc8af3e4d25767016adbd7a23ba7b42a93de41e246955b58"
+    },
+    {
+      "file": "reviewer-returned.png",
+      "source": "tmp/sh-reviewed-browser/sh-platform-SH-real-review-4855d-eviewer-author-and-receiver-desktop-chromium/reviews-populated-returned.png",
+      "sha256": "da07897709797e20cfc369ed48db58e1670b1cdfc67cd2ea7ca4f49208bc6210"
+    },
+    {
+      "file": "receiver-desktop.png",
+      "source": "tmp/sh-bell-receiver-proof/sh-platform-SH-real-review-4855d-eviewer-author-and-receiver-desktop-chromium/reviews-detail-handovers.png",
+      "sha256": "7281453b1d5bb35bb6b19815b59e3d3b79e38c4d374a876bfaf5489e8a1be5a1"
+    },
+    {
+      "file": "receiver-mobile.png",
+      "source": "tmp/sh-bell-receiver-proof/sh-platform-SH-real-review-4855d-eviewer-author-and-receiver-mobile-chromium/reviews-detail-handovers.png",
+      "sha256": "f3504f21f5f9d21c089f3e1be3482085c7c495015b1e206c5a7c15fc8bb81731"
+    },
+    {
+      "file": "returned-detail-phone.png",
+      "source": "tmp/sh-bell-receiver-proof/sh-platform-SH-real-review-4855d-eviewer-author-and-receiver-mobile-chromium/reviews-detail-returned.png",
+      "sha256": "03e7386838b13d207dd645af564c3a8b7eb72e5f5ca6a798b6ef2320c05bc87d"
+    },
+    {
+      "file": "search-partial.png",
+      "source": "tmp/sh-reviewed-browser/sh-platform-SH-failure-par-e7e45--and-clear-revoked-previews-desktop-chromium/search-partial.png",
+      "sha256": "7cbad52b899c2d0b7450f953cad1231009a04ea5e01151e3de1fd9d405d7927b"
+    },
+    {
+      "file": "reviews-unavailable.png",
+      "source": "tmp/sh-reviewed-browser/sh-platform-SH-failure-par-e7e45--and-clear-revoked-previews-desktop-chromium/reviews-unavailable.png",
+      "sha256": "eca0786611013a82810b41bbfbae0ad0323cedbc73e14923b603adb6cc945991"
+    },
+    {
+      "file": "search-empty.png",
+      "source": "tmp/sh-reviewed-browser/sh-platform-SH-failure-par-e7e45--and-clear-revoked-previews-mobile-chromium/search-empty.png",
+      "sha256": "ec8b94d2a4ab2fb8ae5393cfe6780da356f046cc6255f4cb297182d364726cc0"
+    },
+    {
+      "file": "search-failed.png",
+      "source": "tmp/sh-reviewed-browser/sh-platform-SH-failure-par-e7e45--and-clear-revoked-previews-mobile-chromium/search-failed.png",
+      "sha256": "06630dd1fa60a552f2ab3d0f59a72a5005045b29e16fb3983fa2008a6763c39c"
+    },
+    {
+      "file": "notifications-failed.png",
+      "source": "tmp/sh-reviewed-browser/sh-platform-SH-failure-par-e7e45--and-clear-revoked-previews-mobile-chromium/notifications-failed.png",
+      "sha256": "d6bef35d014f37bd6b46e2b77085a7249fd3a3f06aa27a6d70dd08cc3cf4bfd1"
+    },
+    {
+      "file": "rebased-notification-bell.png",
+      "source": "tmp/sh-ci-browser/sh-platform-SH-notificatio-83b23-ate-and-preferences-persist-desktop-chromium/notification-bell.png",
+      "sha256": "091035c99d2b7064147c03f8f7ca1c88f6cfd58406c9bed124a7d198c69ef440",
+      "source_commit": "5f51713170d10a722030344a292c332a74515064",
+      "purpose": "Post-rebase shell/guide integration; implementation inspection, not owner approval"
+    },
+    {
+      "file": "rebased-search-guide-desktop.png",
+      "source": "tmp/sh-ci-guide-proof/-search-guide-desktop.png",
+      "sha256": "244a44e1e40504f93400c72febc6486032659fefbef9377da741c47c6f74667a",
+      "source_commit": "5f51713170d10a722030344a292c332a74515064",
+      "purpose": "Post-rebase shell/guide integration; implementation inspection, not owner approval"
+    },
+    {
+      "file": "rebased-search-guide-phone.png",
+      "source": "tmp/sh-ci-guide-proof/search-guide-phone.png",
+      "sha256": "c15e5a8005e560e1161ab4242e6b68e3f89a68a868a614ca2c314f5b2420723e",
+      "source_commit": "5f51713170d10a722030344a292c332a74515064",
+      "purpose": "Post-rebase shell/guide integration; implementation inspection, not owner approval"
+    }
+  ]
+}

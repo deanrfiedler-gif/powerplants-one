@@ -1,41 +1,41 @@
-# Updates & preferences — design reference
+# Notifications and preferences — design reference
 
 Stable entry: `route:/work/updates`. Owner: Dean Fiedler. Status: **Draft for visual review**.
-Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/work/updates`.
-This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
+Source baseline and existing issued references remain recorded in the register. SH implementation is synthetic and bounded; guide, visual and owner acceptance remain separate.
 
 ## Purpose and task
 
-The page shell exists. Notifications, read state and delivery preferences are not connected yet; implement SH-03 behind this view.
+Use Inbox, Grouped changes, Owned escalations and Preferences to coordinate current permitted Activity work. A notice is a source event; reading it is not completing the Activity.
 
-1. Choose Overview, My actions, Reviews & handovers, Blocked & waiting or Team queue
-2. Narrow the list to the relevant owner and work
-3. Open the activity and record an outcome when completing it
+1. Open the header notification bell or My Work > Updates & preferences.
+2. Choose a view, inspect the source and open a notice for current details.
+3. Mark read or unread explicitly; open the source Activity to complete the actual work.
 
 ## Desktop
 
-Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
-
-At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
+Keep four labelled view controls, source-state notices, saved views and list actions in the existing My Work shell. Notice rows must keep selection, source text and actions aligned. Preferences expose dirty/save status without stretching labels. Retain the existing 1440/1280/1024 layout and test the intermediate 768 width. The merged global design-workspace and information controls remain available.
 
 ## Mobile
 
-At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
-
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+At 390 and 320 CSS px, wrap filters and notice actions, stack preference fields and retain readable source labels. Use Tab and Escape with the native detail dialog and return focus to its opener. Offline notification writes are not supported. Verification covered widths 430, 390 and 320; physical-device and owner acceptance remain pending.
 
 ## Shared components and states
 
-Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
+Use existing My Work styles, semantic tokens, WorkDialog and platform resource lifecycle controls. The scoped native SH button/input styles are retained as the My Work compatibility exception; this change does not replace the shared control system.
 
-Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
+Loading, empty, partial/unavailable, denied, stale and save-error states are distinct. An unavailable source is not a zero workload. A conflicting save requires refresh/review rather than silent overwrite.
 
 ## Visual references
 
-- [PPO-My-Work-and-Action-Centre-r01.html](../../../reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html)
+- [notifications-inbox-desktop.png](../../../testing/evidence/sh-platform/captures/notifications-inbox-desktop.png) — synthetic implementation capture, pre-PR #283 shell integration; not an approved mockup.
+- [notifications-inbox-320.png](../../../testing/evidence/sh-platform/captures/notifications-inbox-320.png) — synthetic implementation capture, pre-PR #283 shell integration; not an approved mockup.
+- [preferences-phone.png](../../../testing/evidence/sh-platform/captures/preferences-phone.png) — synthetic implementation capture, pre-PR #283 shell integration; not an approved mockup.
+- [PPO-Notification-Inbox-and-Preferences-r01.html](../../../reference/ui/notifications/PPO-Notification-Inbox-and-Preferences-r01.html) — retained design reference.
 
 ## Behaviour, handovers and verification
 
-The draft User Guide `guide.page.work.updates` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
+Opening or reading a notice never changes source status. Source completion remains in the Activity workflow. Saved preferences persist but do not schedule or send email, push or SMS.
 
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+Each notice retains event identity/time and source version. Current text and access are resolved again when opened. Inbox is a bounded slice of 200 notices, with a visible limit; owned obligations are read independently.
+
+[SH verification](../../../testing/evidence/sh-platform/README.md) records actual checks, inspected captures and CI repairs; [handover](../../../delivery/sh-platform-handover.md) records scope and dependencies. Images above predate the merged development-workspace shell controls and require a fresh paired review for that integration. No review fingerprint or owner acceptance is claimed. The article `guide.page.work.updates` remains Draft.

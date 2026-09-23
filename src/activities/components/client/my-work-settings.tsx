@@ -1,6 +1,7 @@
 "use client";
 // Filters, Customise and saved views. All three change what is shown; none changes access.
 import { useState } from "react";
+import { teamSharing } from "../../../platform/view-targets";
 import { ErrorNotice, friendly, useResource, type Envelope, type Option } from "../../../components/business-ui";
 import { defaultCriteria, sameCriteria, TODAYS_FOCUS } from "../../work-criteria";
 import type { WorkView, WorkViewCriteria } from "../../work-views";
@@ -227,6 +228,7 @@ export function ViewsDialog({
   const unique = (wanted: string) => !views.some((v) => v.name.toLowerCase() === wanted.trim().toLowerCase());
   return (
     <WorkDialog title="Saved views" subtitle="Personal to you. A view stores criteria only; each use applies your current access." busy={busy} onClose={onClose}>
+      <p className="mw-hint">{teamSharing.reason}</p>
       <form
         className="mw-inline-form"
         onSubmit={async (e) => {
@@ -317,6 +319,7 @@ export function ViewsDialog({
                       Use
                     </button>
                   )}
+                  {v.target === target && <button type="button" className="mw-button" disabled={busy || sameCriteria(v.criteria, criteria)} onClick={() => void save(views.map(x => x.id === v.id ? {...x, criteria} : x), "Saved view updated to current criteria.")}>Update criteria</button>}
                   <button type="button" className="mw-button mw-button-quiet" onClick={() => setRenaming({ id: v.id, name: v.name })} disabled={busy}>
                     Rename
                   </button>
@@ -325,8 +328,8 @@ export function ViewsDialog({
                     className="mw-button mw-button-quiet"
                     disabled={busy || views.length >= 12}
                     onClick={() => {
-                      let copy = `${v.name} copy`.slice(0, 60);
-                      for (let n = 2; !unique(copy); n++) copy = `${v.name} copy ${n}`.slice(0, 60);
+                      let copy = `${v.name.slice(0, 48)} copy`;
+                      for (let n = 2; !unique(copy); n++) copy = `${v.name.slice(0, 48)} copy ${n}`;
                       void save([...views, { ...v, id: crypto.randomUUID(), name: copy, pinned: false }], `View duplicated as “${copy}”.`);
                     }}
                   >

@@ -118,7 +118,8 @@
           "paragraphs": [
             "A prioritised personal work list with an accountable next action.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "An overview is a view of permitted source records, not a separate source of business truth."
+            "An overview is a view of permitted source records, not a separate source of business truth.",
+            "SH continuation retains this My Work layout and personal view IDs. Reviews and notification links now open source-backed coordination views. Team saved-view sharing remains Not configured because no canonical team model exists; source commands still own business outcomes."
           ],
           "steps": [],
           "rows": [],
@@ -382,7 +383,8 @@
           "paragraphs": [
             "The activity has a truthful outcome or a current owner and next step.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "An unknown due date is different from an overdue date. Completing an activity does not complete its linked job."
+            "An unknown due date is different from an overdue date. Completing an activity does not complete its linked job.",
+            "SH continuation retains this My Work layout and personal view IDs. Reviews and notification links now open source-backed coordination views. Team saved-view sharing remains Not configured because no canonical team model exists; source commands still own business outcomes."
           ],
           "steps": [],
           "rows": [],
@@ -540,242 +542,151 @@
     {
       "guide_key": "guide.sh.03",
       "entry_key": "scope:SH-03",
-      "title": "Notification inbox and preferences",
+      "title": "Notifications and preferences",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Implemented bounded synthetic workflow; draft guidance",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "d129962",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/sh-platform/README.md; guide acceptance remains pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Notification inbox and preferences to work towards this outcome: An update is read and its required action is separately owned.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "The r04 source explicitly says notifications are not connected. Planned delivery and escalation must not be presented as operating."
+            "Use Inbox, Grouped changes, Owned escalations and Preferences to coordinate current permitted Activity work. A notice is a source event; reading it is not completing the Activity."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Notification topic, recipient, channel and delivery preference.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Sign in to the synthetic application. Only current permitted Activity events for your current ownership are projected; historical recipients are not inferred."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Review the source event and its linked record",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open the header notification bell or My Work > Updates & preferences.",
+            "Choose a view, inspect the source and open a notice for current details.",
+            "Mark read or unread explicitly; open the source Activity to complete the actual work."
           ],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Notification inbox and preferences · Page + panel"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Inbox shows individual events. Grouped changes gathers notices by source. Owned escalations shows current open owned Activities even without a notice. Preferences records email category modes, digest cadence, timezone, quiet hours and grouping."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Notification topic, recipient, channel and delivery preference.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Each notice retains event identity/time and source version. Current text and access are resolved again when opened. Inbox is a bounded slice of 200 notices, with a visible limit; owned obligations are read independently."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Review the source event and its linked record",
-            "Separate unread updates from outstanding actions",
-            "Review any preference change before applying it"
+            "Use explicit read/unread or archive/restore for the displayed notices. Bulk actions carry the displayed IDs and versions.",
+            "Keep active owned work visible: archive is refused while the source obligation remains open.",
+            "Edit preferences and Save preferences. Read the saved/dirty/error state before leaving."
           ],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "An update is read and its required action is separately owned.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "The r04 source explicitly says notifications are not connected. Planned delivery and escalation must not be presented as operating."
+            "Opening or reading a notice never changes source status. Source completion remains in the Activity workflow. Saved preferences persist but do not schedule or send email, push or SMS."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading, empty, partial/unavailable, denied, stale and save-error states are distinct. An unavailable source is not a zero workload. A conflicting save requires refresh/review rather than silent overwrite."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "examples",
-          "title": "Worked examples",
+          "title": "Worked example",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare notification topic, recipient, channel and delivery preference. Follow the task sequence and check that an update is read and its required action is separately owned. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Notification inbox and preferences has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. The r04 source explicitly says notifications are not connected. Planned delivery and escalation must not be presented as operating."
+            "A synthetic assigned follow-up can have several retained events. Marking an event read leaves the open Activity in Owned escalations until the source work is completed."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Refresh after a source/access/version change. Review the source before retrying an archive refusal. Unsaved preferences use the existing navigation warning; refresh can discard the draft."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390 and 320 CSS px, wrap filters and notice actions, stack preference fields and retain readable source labels. Use Tab and Escape with the native detail dialog and return focus to its opener. Offline notification writes are not supported."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Source Activities own completion. See SH-03 evidence and the My Work handover; delivery-provider integration remains a separate dependency."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft for owner review against SH implementation. Functional evidence and historical captures do not grant guide approval or deployment acceptance."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         }
       ],
       "related_entry_keys": [
@@ -786,9 +697,11 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/notifications/PPO-Notification-Inbox-and-Preferences-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Updated for the bounded SH implementation; draft guide review remains separate.",
       "document_id": "PPO-GUIDE-SH-03",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -798,7 +711,8 @@
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/notifications/PPO-Notification-Inbox-and-Preferences-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/delivery/sh-platform-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -806,242 +720,151 @@
     {
       "guide_key": "guide.sh.04",
       "entry_key": "scope:SH-04",
-      "title": "Global search results and record preview",
+      "title": "Search",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Implemented bounded synthetic workflow; draft guidance",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "d129962",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/sh-platform/README.md; guide acceptance remains pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Global search results and record preview to work towards this outcome: The correct permitted source record is found.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Global search is permission scoped. No result can mean missing access, different wording or unsupported indexing."
+            "Find permitted records through the same source registry in global compact search and the full Search page. Preview context, then open the owning record."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Record name or reference, record type and permitted organisation.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Sign in with current source access. Search spans implemented CRM, Engineering packages, Activities, Service requests, facilities/growing areas and exact permitted issued job packs. It is not a universal document or Knowledge index."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Enter a specific name or readable reference",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Enter at least two characters in global search, or open /search.",
+            "Choose View all results, then narrow by record type when more results are available.",
+            "Preview a result, inspect its company/site/source context and choose Open record."
           ],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Global search results and record preview · Panel + results page"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Compact search offers up to five items per type; full search offers twenty per type. Full results show source availability and source-specific next-page controls. Saved views retain supported criteria; the preview is a native dialog."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Record name or reference, record type and permitted organisation.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Use text and optional record type. Pagination requires one type and a cursor tied to the query. Facility context identifies site, physical parent and grouping; identical names alone do not establish identity."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Enter a specific name or readable reference",
-            "Check the result type and customer/site context",
-            "Open the record and confirm its identity before acting"
+            "Enter text and inspect the available results and source-state message.",
+            "Choose a single type to page through additional results.",
+            "Create, rename, update, duplicate, pin or retire a personal saved view when useful."
           ],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The correct permitted source record is found.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Global search is permission scoped. No result can mean missing access, different wording or unsupported indexing."
+            "Open record hands off to the owning domain. Browser Back retains URL criteria. Search and preview do not grant permission or modify the source."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Distinguish empty from partial, unavailable and denied. There is no global total across bounded source pages. A revoked/missing preview has no usable source link."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "examples",
-          "title": "Worked examples",
+          "title": "Worked example",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare record name or reference, record type and permitted organisation. Follow the task sequence and check that the correct permitted source record is found. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Global search results and record preview has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Global search is permission scoped. No result can mean missing access, different wording or unsupported indexing."
+            "Two synthetic growing areas with the same name can have different sites and physical/grouping parents. Use the displayed context and source ID to choose the correct area."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Retry unavailable sources, clear an invalid cursor by starting a fresh search, and refresh after access changes. Do not infer no records from a failed source."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Filters, saved-view controls and results wrap at 390 and 320 CSS px. Preserve long labels and context, keyboard result selection, Escape and dialog focus return. Search requires a connection; no offline search index is supplied."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "See SH-04/SH-05 handover and verification. The source domain remains responsible for edits and current permission."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft for owner review against SH implementation. Functional evidence and historical captures do not grant guide approval or deployment acceptance."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         }
       ],
       "related_entry_keys": [
@@ -1050,9 +873,11 @@
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Updated for the bounded SH implementation; draft guide review remains separate.",
       "document_id": "PPO-GUIDE-SH-04",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -1061,7 +886,8 @@
       "section_aliases": {},
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/delivery/sh-platform-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -1069,242 +895,151 @@
     {
       "guide_key": "guide.sh.05",
       "entry_key": "scope:SH-05",
-      "title": "Personal and team saved views",
+      "title": "Personal saved views",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Implemented bounded synthetic workflow; draft guidance",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "d129962",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/sh-platform/README.md; guide acceptance remains pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Personal and team saved views to work towards this outcome: A reproducible worklist selection with a clear audience.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A saved view does not grant access or freeze the underlying records. Team sharing remains a separate capability."
+            "Reuse named personal criteria in supported workspaces. Existing My Work saved-view IDs/storage remain intact; new Search, Reviews and Updates targets use registered criteria schemas."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Filter criteria, sort order, view name and intended audience.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Sign in and select an eligible workspace. Team sharing requires a canonical team model which is absent; role, department and workspace membership are not substitutes."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Set the criteria and inspect the resulting records",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Set supported filters and choose Save view.",
+            "Name the view and save it to My views.",
+            "Choose a saved view to apply its criteria, then manage it if needed."
           ],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Personal and team saved views · Panel"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Saved-view controls offer create/use, rename, update criteria, duplicate, pin and retire. The Team area explicitly reports Not configured."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Filter criteria, sort order, view name and intended audience.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Each target validates only its supported criteria and retains a version for conflict handling. A maximum of twelve personal views is supported per registered target."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Set the criteria and inspect the resulting records",
-            "Save a personal view where supported",
-            "For team sharing, define ownership and permitted membership first"
+            "Save the current criteria under a recognisable personal name.",
+            "Use Update criteria to replace the saved criteria deliberately.",
+            "Duplicate for an alternative, pin for quick access or retire an obsolete personal view."
           ],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A reproducible worklist selection with a clear audience.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A saved view does not grant access or freeze the underlying records. Team sharing remains a separate capability."
+            "Saving criteria does not modify source records, permission grants or another user’s views. A view name is not a shared team definition."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Empty, invalid criteria, capacity reached, saving and version conflict remain visible. Review a refreshed version before retrying a stale write."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "examples",
-          "title": "Worked examples",
+          "title": "Worked example",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare filter criteria, sort order, view name and intended audience. Follow the task sequence and check that a reproducible worklist selection with a clear audience. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Personal and team saved views has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A saved view does not grant access or freeze the underlying records. Team sharing remains a separate capability."
+            "Save a personal Reviews view for Engineering returned work, then switch back to All permitted without changing the underlying source decisions."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Refresh after a conflicting edit or identity change. Start a fresh view if its target criteria no longer apply. Canonical team ownership/membership is required before sharing can be implemented."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Saved-view controls and the editor wrap at 390 and 320 CSS px. Retain labelled names, explicit update actions, Escape and focus return. Offline writes are not supported."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "See SH-05 handover, registered view targets and the explicit canonical-team dependency."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft for owner review against SH implementation. Functional evidence and historical captures do not grant guide approval or deployment acceptance."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         }
       ],
       "related_entry_keys": [
@@ -1312,9 +1047,11 @@
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Updated for the bounded SH implementation; draft guide review remains separate.",
       "document_id": "PPO-GUIDE-SH-05",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -1323,7 +1060,8 @@
       "section_aliases": {},
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/delivery/sh-platform-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -1331,242 +1069,151 @@
     {
       "guide_key": "guide.sh.06",
       "entry_key": "scope:SH-06",
-      "title": "Cross-module approvals and handover inbox",
+      "title": "Reviews and handovers",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Implemented bounded synthetic workflow; draft guidance",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "d129962",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/sh-platform/README.md; guide acceptance remains pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Cross-module approvals and handover inbox to work towards this outcome: A recorded decision or owned clarification against the exact submission.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "A cross-module inbox must delegate business decisions to the owning workflow."
+            "Coordinate current review work without creating another approval authority. My reviews, All permitted, Returned to me, Handovers, Sent by me and History use real source records."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Originating domain, exact revision, decision requested and receiving owner.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Sign in with source read permission. Assignment, reviewer eligibility and author/receiver roles come from the source. The queue does not create a Finance reviewer assignment."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Read the submitted evidence and decision scope",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Choose the perspective that matches your work.",
+            "Filter by source and owner, then inspect the current task detail.",
+            "Use Open source to review or correct the source record; return to refresh the queue."
           ],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Cross-module approvals and handover inbox · Page"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Six view controls, source/owner criteria, personal saved views and a paged worklist share the My Work shell. The detail dialog shows current status/version, ownership, submission/due facts and return reason where supplied."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Originating domain, exact revision, decision requested and receiving owner.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "A missing due date says Date needed. Source slices are explicitly bounded: Service 200, Finance 500 and Engineering 200 packages; queue pages show 30 rows. Counts describe the available slice, not all business work."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Read the submitted evidence and decision scope",
-            "Resolve missing information with the originating owner",
-            "Use the domain's authorised review or receiving action"
+            "Inspect current source version and requested work.",
+            "For Returned to me, follow the actual correction owner and due date; an old reviewer assignment is not a current review after return.",
+            "Open the source to approve, return, correct or receive using its existing authority checks."
           ],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A recorded decision or owned clarification against the exact submission.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A cross-module inbox must delegate business decisions to the owning workflow."
+            "Only the source command records the business decision. The coordination queue re-resolves source access/version before opening and requires refresh after a stale result."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "All-source failure/denial does not show zero workload. A partial source slice remains qualified. History is distinct from current actionability, and missing owner/due facts are not invented."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "examples",
-          "title": "Worked examples",
+          "title": "Worked example",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare originating domain, exact revision, decision requested and receiving owner. Follow the task sequence and check that a recorded decision or owned clarification against the exact submission. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Cross-module approvals and handover inbox has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A cross-module inbox must delegate business decisions to the owning workflow."
+            "An Engineering return appears as one correction for its named owner, rather than a second pending review. A returned handover follows the source correction owner, reason and due date."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Refresh a stale task before reopening. If current access is revoked, return to a permitted queue. Retain the source failure message and retry; do not complete or approve from the coordination view."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Wrap all six perspectives and filters, stack long source/owner details at 390 and 320 CSS px, and keep Open source and dialog close reachable. Keyboard focus returns on Escape. Review decisions require the online source workflow."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Service reports, Finance handoffs and Engineering changes own their commands. See SH-06 implementation evidence and ADR-0041."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft for owner review against SH implementation. Functional evidence and historical captures do not grant guide approval or deployment acceptance."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         }
       ],
       "related_entry_keys": [
@@ -1576,9 +1223,11 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/approvals-handover/PPO-Cross-Module-Approvals-and-Handover-Inbox-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Updated for the bounded SH implementation; draft guide review remains separate.",
       "document_id": "PPO-GUIDE-SH-06",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -1588,7 +1237,8 @@
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/approvals-handover/PPO-Cross-Module-Approvals-and-Handover-Inbox-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/delivery/sh-platform-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -53886,7 +53536,8 @@
           "paragraphs": [
             "The activity has a truthful outcome or a current owner and next step.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "An unknown due date is different from an overdue date. Completing an activity does not complete its linked job."
+            "An unknown due date is different from an overdue date. Completing an activity does not complete its linked job.",
+            "SH continuation retains this My Work layout and personal view IDs. Reviews and notification links now open source-backed coordination views. Team saved-view sharing remains Not configured because no canonical team model exists; source commands still own business outcomes."
           ],
           "steps": [],
           "rows": [],
@@ -54150,7 +53801,8 @@
           "paragraphs": [
             "A prioritised personal work list with an accountable next action.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "An overview is a view of permitted source records, not a separate source of business truth."
+            "An overview is a view of permitted source records, not a separate source of business truth.",
+            "SH continuation retains this My Work layout and personal view IDs. Reviews and notification links now open source-backed coordination views. Team saved-view sharing remains Not configured because no canonical team model exists; source commands still own business outcomes."
           ],
           "steps": [],
           "rows": [],
@@ -54301,248 +53953,151 @@
     {
       "guide_key": "guide.page.work.reviews",
       "entry_key": "route:/work/reviews",
-      "title": "Reviews & handovers",
+      "title": "Reviews and handovers",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Implemented bounded synthetic workflow; draft guidance",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "d129962",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/sh-platform/README.md; guide acceptance remains pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "This page focuses on review decisions within the registered workflow.",
-            "Use Reviews & handovers to work towards this outcome: The activity has a truthful outcome or a current owner and next step.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "An unknown due date is different from an overdue date. Completing an activity does not complete its linked job."
+            "Coordinate current review work without creating another approval authority. My reviews, All permitted, Returned to me, Handovers, Sent by me and History use real source records."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Activity owner, linked record, due state and completion outcome.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Sign in with source read permission. Assignment, reviewer eligibility and author/receiver roles come from the source. The queue does not create a Finance reviewer assignment."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Read the exact submitted revision and decision requested.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Choose the perspective that matches your work.",
+            "Filter by source and owner, then inspect the current task detail.",
+            "Use Open source to review or correct the source record; return to refresh the queue."
           ],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Reviews & handovers · Register / workspace"
-            ],
-            [
-              "This page’s focus",
-              "Review decisions. The task sequence below is specific to this view."
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Six view controls, source/owner criteria, personal saved views and a paged worklist share the My Work shell. The detail dialog shows current status/version, ownership, submission/due facts and return reason where supplied."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Activity owner, linked record, due state and completion outcome.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "A missing due date says Date needed. Source slices are explicitly bounded: Service 200, Finance 500 and Engineering 200 packages; queue pages show 30 rows. Counts describe the available slice, not all business work."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Read the exact submitted revision and decision requested.",
-            "Inspect its impact/evidence and any unresolved questions within your authority.",
-            "Use the available review action and inspect the resulting decision record; a revised submission needs its own review.",
-            "Wider workflow outcome: The activity has a truthful outcome or a current owner and next step."
+            "Inspect current source version and requested work.",
+            "For Returned to me, follow the actual correction owner and due date; an old reviewer assignment is not a current review after return.",
+            "Open the source to approve, return, correct or receive using its existing authority checks."
           ],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The activity has a truthful outcome or a current owner and next step.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "An unknown due date is different from an overdue date. Completing an activity does not complete its linked job."
+            "Only the source command records the business decision. The coordination queue re-resolves source access/version before opening and requires refresh after a stale result."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "All-source failure/denial does not show zero workload. A partial source slice remains qualified. History is distinct from current actionability, and missing owner/due facts are not invented."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "examples",
-          "title": "Worked examples",
+          "title": "Worked example",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare activity owner, linked record, due state and completion outcome. Follow the task sequence and check that the activity has a truthful outcome or a current owner and next step. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Reviews & handovers has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. An unknown due date is different from an overdue date. Completing an activity does not complete its linked job."
+            "An Engineering return appears as one correction for its named owner, rather than a second pending review. A returned handover follows the source correction owner, reason and due date."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Refresh a stale task before reopening. If current access is revoked, return to a permitted queue. Retain the source failure message and retry; do not complete or approve from the coordination view."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Wrap all six perspectives and filters, stack long source/owner details at 390 and 320 CSS px, and keep Open source and dialog close reachable. Keyboard focus returns on Escape. Review decisions require the online source workflow."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Service reports, Finance handoffs and Engineering changes own their commands. See SH-06 implementation evidence and ADR-0041."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft for owner review against SH implementation. Functional evidence and historical captures do not grant guide approval or deployment acceptance."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         }
       ],
       "related_entry_keys": [
@@ -54551,9 +54106,11 @@
       "source_paths": [
         "src/app/(business)/work/(workspace)/reviews/page.tsx",
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Updated for the bounded SH implementation; draft guide review remains separate.",
       "document_id": "PPO-GUIDE-PAGE-WORK-REVIEWS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -54563,7 +54120,8 @@
       "workflow_basis": [
         "src/app/(business)/work/(workspace)/reviews/page.tsx",
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/delivery/sh-platform-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -54685,7 +54243,8 @@
           "paragraphs": [
             "The activity has a truthful outcome or a current owner and next step.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "An unknown due date is different from an overdue date. Completing an activity does not complete its linked job."
+            "An unknown due date is different from an overdue date. Completing an activity does not complete its linked job.",
+            "SH continuation retains this My Work layout and personal view IDs. Reviews and notification links now open source-backed coordination views. Team saved-view sharing remains Not configured because no canonical team model exists; source commands still own business outcomes."
           ],
           "steps": [],
           "rows": [],
@@ -54835,242 +54394,151 @@
     {
       "guide_key": "guide.page.work.updates",
       "entry_key": "route:/work/updates",
-      "title": "Updates & preferences",
+      "title": "Notifications and preferences",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Implemented bounded synthetic workflow; draft guidance",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "d129962",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/sh-platform/README.md; guide acceptance remains pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Updates & preferences to work towards this outcome: The activity has a truthful outcome or a current owner and next step.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "An unknown due date is different from an overdue date. Completing an activity does not complete its linked job."
+            "Use Inbox, Grouped changes, Owned escalations and Preferences to coordinate current permitted Activity work. A notice is a source event; reading it is not completing the Activity."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Activity owner, linked record, due state and completion outcome.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Sign in to the synthetic application. Only current permitted Activity events for your current ownership are projected; historical recipients are not inferred."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Choose Overview, My actions, Reviews & handovers, Blocked & waiting or Team queue",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open the header notification bell or My Work > Updates & preferences.",
+            "Choose a view, inspect the source and open a notice for current details.",
+            "Mark read or unread explicitly; open the source Activity to complete the actual work."
           ],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Updates & preferences · Register / workspace"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Inbox shows individual events. Grouped changes gathers notices by source. Owned escalations shows current open owned Activities even without a notice. Preferences records email category modes, digest cadence, timezone, quiet hours and grouping."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Activity owner, linked record, due state and completion outcome.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Each notice retains event identity/time and source version. Current text and access are resolved again when opened. Inbox is a bounded slice of 200 notices, with a visible limit; owned obligations are read independently."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Choose Overview, My actions, Reviews & handovers, Blocked & waiting or Team queue",
-            "Narrow the list to the relevant owner and work",
-            "Open the activity and record an outcome when completing it"
+            "Use explicit read/unread or archive/restore for the displayed notices. Bulk actions carry the displayed IDs and versions.",
+            "Keep active owned work visible: archive is refused while the source obligation remains open.",
+            "Edit preferences and Save preferences. Read the saved/dirty/error state before leaving."
           ],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The activity has a truthful outcome or a current owner and next step.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "An unknown due date is different from an overdue date. Completing an activity does not complete its linked job."
+            "Opening or reading a notice never changes source status. Source completion remains in the Activity workflow. Saved preferences persist but do not schedule or send email, push or SMS."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading, empty, partial/unavailable, denied, stale and save-error states are distinct. An unavailable source is not a zero workload. A conflicting save requires refresh/review rather than silent overwrite."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "examples",
-          "title": "Worked examples",
+          "title": "Worked example",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare activity owner, linked record, due state and completion outcome. Follow the task sequence and check that the activity has a truthful outcome or a current owner and next step. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Updates & preferences has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. An unknown due date is different from an overdue date. Completing an activity does not complete its linked job."
+            "A synthetic assigned follow-up can have several retained events. Marking an event read leaves the open Activity in Owned escalations until the source work is completed."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Refresh after a source/access/version change. Review the source before retrying an archive refusal. Unsaved preferences use the existing navigation warning; refresh can discard the draft."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390 and 320 CSS px, wrap filters and notice actions, stack preference fields and retain readable source labels. Use Tab and Escape with the native detail dialog and return focus to its opener. Offline notification writes are not supported."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Source Activities own completion. See SH-03 evidence and the My Work handover; delivery-provider integration remains a separate dependency."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft for owner review against SH implementation. Functional evidence and historical captures do not grant guide approval or deployment acceptance."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         }
       ],
       "related_entry_keys": [
@@ -55080,9 +54548,11 @@
       "source_paths": [
         "src/app/(business)/work/(workspace)/updates/page.tsx",
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Updated for the bounded SH implementation; draft guide review remains separate.",
       "document_id": "PPO-GUIDE-PAGE-WORK-UPDATES",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -55092,7 +54562,8 @@
       "workflow_basis": [
         "src/app/(business)/work/(workspace)/updates/page.tsx",
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/delivery/sh-platform-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -55214,7 +54685,8 @@
           "paragraphs": [
             "The activity has a truthful outcome or a current owner and next step.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "An unknown due date is different from an overdue date. Completing an activity does not complete its linked job."
+            "An unknown due date is different from an overdue date. Completing an activity does not complete its linked job.",
+            "SH continuation retains this My Work layout and personal view IDs. Reviews and notification links now open source-backed coordination views. Team saved-view sharing remains Not configured because no canonical team model exists; source commands still own business outcomes."
           ],
           "steps": [],
           "rows": [],
@@ -69226,6 +68698,167 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null
+    },
+    {
+      "guide_key": "guide.route-search",
+      "entry_key": "route:/search",
+      "title": "Search",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Implemented bounded synthetic workflow; draft guidance",
+      "source_commit": "d129962",
+      "related_entry_keys": [
+        "scope:SH-04",
+        "scope:SH-05"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Find permitted records through the same source registry in global compact search and the full Search page. Preview context, then open the owning record."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Sign in with current source access. Search spans implemented CRM, Engineering packages, Activities, Service requests, facilities/growing areas and exact permitted issued job packs. It is not a universal document or Knowledge index."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Enter at least two characters in global search, or open /search.",
+            "Choose View all results, then narrow by record type when more results are available.",
+            "Preview a result, inspect its company/site/source context and choose Open record."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "Compact search offers up to five items per type; full search offers twenty per type. Full results show source availability and source-specific next-page controls. Saved views retain supported criteria; the preview is a native dialog."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Use text and optional record type. Pagination requires one type and a cursor tied to the query. Facility context identifies site, physical parent and grouping; identical names alone do not establish identity."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [],
+          "steps": [
+            "Enter text and inspect the available results and source-state message.",
+            "Choose a single type to page through additional results.",
+            "Create, rename, update, duplicate, pin or retire a personal saved view when useful."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Open record hands off to the owning domain. Browser Back retains URL criteria. Search and preview do not grant permission or modify the source."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Distinguish empty from partial, unavailable and denied. There is no global total across bounded source pages. A revoked/missing preview has no usable source link."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked example",
+          "paragraphs": [
+            "Two synthetic growing areas with the same name can have different sites and physical/grouping parents. Use the displayed context and source ID to choose the correct area."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "Retry unavailable sources, clear an invalid cursor by starting a fresh search, and refresh after access changes. Do not infer no records from a failed source."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Filters, saved-view controls and results wrap at 390 and 320 CSS px. Preserve long labels and context, keyboard result selection, Escape and dialog focus return. Search requires a connection; no offline search index is supplied."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "See SH-04/SH-05 handover and verification. The source domain remains responsible for edits and current permission."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Draft for owner review against SH implementation. Functional evidence and historical captures do not grant guide approval or deployment acceptance."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "change_summary": "Updated for the bounded SH implementation; draft guide review remains separate.",
+      "runtime_evidence": "See docs/testing/evidence/sh-platform/README.md; guide acceptance remains pending.",
+      "source_paths": [
+        "docs/delivery/sh-platform-handover.md",
+        "docs/testing/evidence/sh-platform/README.md"
+      ],
+      "workflow_basis": [
+        "docs/delivery/sh-platform-handover.md"
+      ]
     }
   ]
 }
