@@ -7854,9 +7854,11 @@
       "html_path": null,
       "image_paths": [],
       "dependencies": [
-        "docs/design/development/components.json"
+        "docs/design/development/components.json",
+        "docs/decisions/hosted-design-workspace.md",
+        "scripts/build-development-snapshot.ts"
       ],
-      "scope_status": "Local development source",
+      "scope_status": "Protected development source",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
       "deployment_status": "Not verified",
@@ -7885,8 +7887,11 @@
       "design_path": "docs/design/development/pages/route-development-page-register.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "Local development source",
+      "dependencies": [
+        "docs/decisions/hosted-design-workspace.md",
+        "scripts/build-development-snapshot.ts"
+      ],
+      "scope_status": "Protected development source",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
       "deployment_status": "Not verified",
@@ -7916,7 +7921,9 @@
       "html_path": null,
       "image_paths": [],
       "dependencies": [
-        "docs/design/development/components.json"
+        "docs/design/development/components.json",
+        "docs/decisions/hosted-design-workspace.md",
+        "scripts/build-development-snapshot.ts"
       ],
       "scope_status": "Internal catalogue renderer; source present",
       "visual_status": "Needs review",

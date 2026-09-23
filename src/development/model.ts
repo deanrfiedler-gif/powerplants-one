@@ -88,6 +88,7 @@ export type CatalogEntry = Entry & {
   issues: string[];
 };
 export type Catalog = {
+  release?: { mode: "hosted"; commit: string; packaged_at: string };
   schema_version: 2;
   checkout_commit: string | null;
   title: string;

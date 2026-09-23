@@ -48,6 +48,8 @@ The separate [diagnostic replay](https://github.com/deanrfiedler-gif/powerplants
 
 ### Executed follow-up verification
 
+These local results establish the repair published as `8bd6b93`, before incorporating the newer main branch described below.
+
 - `npm run build`: passed using the default Turbopack build, ID `zhGK4Quv1Wl-MchfGuA5W`.
 - Compiled browser run: **27 passed, none skipped, 5.2 minutes**. This includes ten PL-01 cases, ten SH cases, both immediately following ES-08 native/reset cases, four overlapping-read regressions and the warm-up dependency. All 450 warm-up routes were reachable. The isolated PostgreSQL log contained no errors or deadlocks.
 - Runtime: Windows, Node `24.21.0`, Playwright `1.63.0`, approved local Chrome `153.0.8010.53`, PostgreSQL `16.15`. CI uses its installed reviewed Chrome channel; local results do not substitute for that run.
@@ -55,3 +57,7 @@ The separate [diagnostic replay](https://github.com/deanrfiedler-gif/powerplants
 - Foundation, PP-01 prototype and naming checks: passed; all 78 parent IDs preserved.
 
 The compiled run used `playwright.compiled.config.ts` and the ordinary deadlines with `pl01.spec.ts`, `sh-platform.spec.ts`, `specialist-workbench.spec.ts` and `browser-read-drain.spec.ts`, filtered by `PL01|SH |ES08 native six views|teardown waits`. A new loopback PostgreSQL cluster on port 55493 contained only its own `ppo_synthetic_test`; the compiled app ran on port 3059. Local evidence is retained under the repair worktree's ignored `tmp/pr293-focused.log` and `tmp/pr293-focused-results`. The user's existing database and unrelated Facilities edit were preserved. The fresh PR checks must establish the Linux CI outcome; this follow-up does not merge or deploy the PR.
+
+### Current-main integration
+
+After `8bd6b93` was pushed, GitHub reported PR #293 as conflicting and did not create new pull-request checks. Main had advanced to `7bf972c` through merged #290. Its only textual conflict was the document register: PR #293's three final CS statuses were retained alongside main's two new hosted-workspace records. All other main changes were incorporated unchanged. Foundation and naming checks passed on the resolved tree: 78 parent IDs, 4,375 local links, 3,180 text files and 410 document records. Fresh CI must verify the combined source. Incorporating an already merged branch does not deploy the hosted workspace.

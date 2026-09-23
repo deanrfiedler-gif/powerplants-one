@@ -43,7 +43,7 @@ export function DesignSystem({
       <header className="studio-heading">
         <div>
           <p className="studio-eyebrow">
-            Local design reference · actual application controls
+            Design reference · actual application controls
           </p>
           <h1>Theme & shared controls</h1>
           <p>

@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { ApplicationFrame } from "../components/application-frame";
 import { appleTouchIconPath, navy } from "../platform/installation";
-import { developmentAvailable } from "../development/access";
+import { developmentRequest } from "../development/access";
+import { headers } from "next/headers";
 import "./globals.css";
 import "./shared-layout.css";
 import "./mobile-layout.css";
@@ -57,7 +58,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: navy,
 };
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -68,7 +69,7 @@ export default function RootLayout({
         <a className="skip-link" href="#main">
           Skip to main content
         </a>
-        <ApplicationFrame hosted={process.env.PPO_ENV === "azure-demo"} development={developmentAvailable()}>{children}</ApplicationFrame>
+        <ApplicationFrame hosted={process.env.PPO_ENV === "azure-demo"} development={await developmentRequest(await headers())}>{children}</ApplicationFrame>
       </body>
     </html>
   );
