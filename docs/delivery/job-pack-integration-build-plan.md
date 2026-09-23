@@ -3,7 +3,7 @@ document_id: PPO-SC06-PLAN
 title: SC-06 — Job Pack r03 application integration — build plan
 date: 2026-09-20
 owner: Dean Fiedler
-status: Authorised by Dean Fiedler on 20 September 2026 with the recommended answer to each of D1–D5 adopted; I1 merged (#256), I2 delivered for review, I3–I5 not yet delivered
+status: Authorised by Dean Fiedler on 20 September 2026 with the recommended answer to each of D1–D5 adopted, and extended on 23 September 2026 with D6–D10 adopted from the build report; I1 merged (#256), I2 merged (#257), I3 delivered for review, I4, I6, I7 and I5 not yet delivered
 scope_id: SC-06
 source_commit: 540b2b7e463ad68d5f552d006ea7cae6d75fbff8
 versioning: git
@@ -223,6 +223,19 @@ Pure presentation logic — input diff, timeline assembly, readiness summary, st
 | DP-13 | Header action "Prepare pack" | "Prepare successor revision" | Found in I2: every save is a new immutable revision (DP-2), so the accepted label would understate what the action does; it is also the name the P11 journey helper already uses |
 | DP-14 | Class names `.layout`, `.notice`, `.field`, `.badge` … | The same rules under a `jp-` prefix | Found in I2: `globals.css` already defines `.notice`, `.field` and a 10 px `footer`, which would leak into the scope container. Tokens, values and geometry are unchanged and are asserted against the issued HTML |
 
+DP-15 to DP-21 follow the adoption of D6–D10 on 23 September 2026 (§7). They are proposed in [build report](job-pack-build-report.md) Appendix F and recorded here as adopted departures for the increments that deliver them.
+
+| # | r03 | Application treatment | Why |
+|---|---|---|---|
+| DP-15 | Sections render live source values | A proved re-presentation of the frozen section text, with the exact text always one activation away | The page must show what Check and Issue freeze (D6-A) |
+| DP-16 | The notice button performs "Submit for review" | The notice action moves focus to the card that holds the decision | One control per decision; unique accessible names across the browser suites |
+| DP-17 | Six flat readiness rows | Registry criteria grouped by blocking stage, satisfied rows collapsed | Eight real criteria across three stages (D9) |
+| DP-18 | Two header buttons | At most two by state; "View appointment" moves into section 01 | Header economy at every width |
+| DP-19 | Breadcrumb "Service › Field technicians › Job pack" | "Service › Job packs › {reference}", beside the shell breadcrumb | D8-A; recorded as an accepted exception in the UI-consistency handover |
+| DP-20 | Tools table with "Parts: not applicable" | Recorded controls table in section 07 and a compact list in 08; no parts row | No parts criterion exists, and the frozen control text is identical in both sections |
+| DP-21 | Section 01 shows the coordinator, site address and visit status | Coordinator and live visit status omitted; the location stays in section 02 | Neither is in the pack read; the location is in the frozen arrangements text |
+
+
 ## 7. Decisions
 
 **Decided 20 September 2026.** Asked to choose on D1–D5, Dean answered: "Proceed based on your professional recommendations." The recommended answer in each row below is therefore the adopted one. The alternatives are retained as the record of what was not chosen and what reopening each would cost; none is scheduled. This is a user decision about the integration build. It does not amend ADR-0011, the API contract or the accepted r03 presentation.
@@ -235,11 +248,23 @@ Pure presentation logic — input diff, timeline assembly, readiness summary, st
 | D4 | Are tool and access readiness recorded on the pack page? | **No, link out** to the appointment readiness assessment in this build | Embed the existing `service.readiness.assess` command in a dialog as a later increment; no schema change |
 | D5 | Which section titles appear on screen? | **r03 titles** ("Job and visit details", "Completion and escalation") on screen; OUT-09 keeps "Identification and visit" and "Completion evidence and escalation" until its next template version | Use `sectionLabels` on screen so workbench and issued document match today, departing from the accepted titles |
 
+**Decided 23 September 2026.** Asked to choose on D6–D10 after reading the [build report](job-pack-build-report.md) §9, Dean answered: "I adopt D6 (option A), D7, D8 (option A), D9 and D10 (all four items) as recommended in §9 of the report." The adopted answer in each row below is therefore the recommended one. These decisions authorise I6 and I7; I3, I4 and I5 need none of them. Like D1–D5 they are decisions about this integration build: they do not amend ADR-0011, the API contract, the pack snapshot or the accepted r03 presentation.
+
+| # | Question | Adopted answer | Alternative not chosen, and its cost |
+|---|---|---|---|
+| D6 | How do the six flat text sections get their structure? | **Option A — re-serialisation proof.** The v1 section-text formatter moves byte-identically from `context.ts` to a pure module; the page re-serialises any structure it derives and shows it only when the result equals the frozen text exactly, otherwise that text verbatim. `readPack` gains a permission-scoped `section_view` | Snapshot schema v2 with structured context: per-version recompute in Check and Issue, a new ADR, likely OUT-09 work, and every existing Draft must stay readable as v1. A better long-term shape, much larger now. Keeping flat text costs nothing and stays well short of r03 |
+| D7 | What is the page title? | **The verified approved-scope summary**, with the distinct scope task kinds as the work kind on the reference line; the two references remain the fallback | Keeping two reference numbers as the title. Depends on D6-A for the verified scope read |
+| D8 | One breadcrumb or two? | **Option A — keep the r03 in-module breadcrumb**, root "Service" to match the shell, "Job packs" linking to the register, then the reference; record the double breadcrumb as an accepted exception in the UI-consistency handover | Removing it and relying on the shell departs from accepted r03 and needs a new departure. Leaving two trails with different root names is the current defect |
+| D9 | How dense is the readiness rail? | **Stage groups** in the fixed order Authorisation, Booking, Dispatch, Completion; unsatisfied rows first; satisfied rows collapsed behind a native disclosure. Nothing needing action is hidden | The flat list, which DP-12 already accepts as a scrolling rail, but which pushes the decision out of view |
+| D10 | Which read-model additions? | **All four, staff-only where stated, following I1's pattern and adding no migration**: recovery and follow-up owner display names; history `occurred_at`, `confidence`, `author_label`, `source_system`, `source_id` and `verification_status`; staff-only `acknowledgements[]` across all issues; and `section_view` | Items 1 and 2 only, which leaves superseded acknowledgements off the page and D6-A without its scoped read |
+
+Open questions Q-01 to Q-07 in report §9.1 keep their stated defaults, except Q-07: the five r03 reference captures are stored in I5 as report Appendix E describes. The three shared-core token values where Job Pack r03 differs from Field Technicians r05 (`--surface-hover`, `--line-soft`, `--success-tint`) stay as recorded in `ui-baselines.json`; I5 places a side-by-side swatch of the three pairs in its evidence for a separate decision.
+
 Token placement needs no decision here: tokens stay on the scope container with r03 values, including the three divergences already recorded in `ui-baselines.json`. Promotion to `:root` remains the separate question the style specification leaves open.
 
 ## 8. Build sequence
 
-One pull request per increment; the application works and every suite passes after each.
+One pull request per increment; the application works and every suite passes after each. With D6–D10 adopted the order is **I3 → I4 → I6 → I7 → I5**: I6 (structured section content) and I7 (professional finish) are the build report's increments, and I5 stays last so its conformance proof, captures and records describe the finished page.
 
 ### I1 — Read model and view logic (no visible change)
 
@@ -266,6 +291,7 @@ One pull request per increment; the application works and every suite passes aft
 
 ### I4 — Revision history, source change and print choices
 
+- **Delivered early in I2:** the revision timeline and the "Current version" card shipped with #257, so I4 carries the source-change notice, the notice actions and the print choices only. The record of what each increment planned is kept as it was written.
 - `job-pack-history.tsx` and the "Current version" card; source-change notice; print choices and unsaved guard.
 - Tests: history shows two saves with two reasons and their deltas; a schedule move raises the notice and a successor clears it; print choice dialog.
 - Exit: D2 and D3 behaviour as decided.

@@ -81,6 +81,31 @@ async function decide(
   await dialog.getByRole("button", { name: confirm, exact: true }).click();
   await expect(dialog).toHaveCount(0);
 }
+// Audit finding M1: every save records its own reason, in the dialog that states what it changes.
+async function savePreparation(page: Page, title: string, reason: string) {
+  await page
+    .getByRole("button", { name: "Save preparation…", exact: true })
+    .click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog.getByRole("heading", { name: title })).toBeVisible();
+  await expect(
+    dialog.getByLabel("Reason for this change", { exact: true }),
+  ).toBeFocused();
+  // A save without a reason is refused in place, before any command is sent.
+  await dialog
+    .getByRole("button", { name: "Save preparation", exact: true })
+    .click();
+  await expect(
+    dialog.getByText("Enter the reason for this change.", { exact: true }),
+  ).toBeVisible();
+  await dialog
+    .getByLabel("Reason for this change", { exact: true })
+    .fill(reason);
+  await dialog
+    .getByRole("button", { name: "Save preparation", exact: true })
+    .click();
+  await expect(dialog).toHaveCount(0);
+}
 async function appointment(page: Page, day: string) {
   const order = (await call(page, `service/work-orders/${id("a9")}`)).items[0],
     aid = crypto.randomUUID();
@@ -161,8 +186,12 @@ test("P06 complete workbench preparation, check, queued output, exact document a
   );
   await page.goto(`/service/packs/new?appointment_id=${aid}`);
   await expect(
-    page.getByRole("heading", { name: "Prepare nine-section job pack" }),
+    page.getByRole("heading", { name: "Prepare the first revision" }),
   ).toBeVisible();
+  // Nothing has been entered, so there is nothing to record a reason for.
+  await expect(
+    page.getByRole("button", { name: "Save preparation…", exact: true }),
+  ).toBeDisabled();
   await capture(page, info, "empty-preparation");
   await page.getByRole("checkbox", { name: /SYN visual inspection/ }).check();
   for (const k of keys)
@@ -171,12 +200,11 @@ test("P06 complete workbench preparation, check, queued output, exact document a
       .fill(
         `SYN reviewed ${k.replaceAll("_", " ")}. Visual inspection only. Stop and escalate any access, equipment identity or safety uncertainty. No intervention is authorised.`,
       );
-  await page
-    .getByLabel("Preparation / change reason")
-    .fill("SYN reviewed nine-section inspection preparation");
-  await page
-    .getByRole("button", { name: "Save preparation", exact: true })
-    .click();
+  await savePreparation(
+    page,
+    "Record the first preparation",
+    "SYN reviewed nine-section inspection preparation",
+  );
   await expect(page).toHaveURL(/\/service\/packs\/[a-f0-9-]+$/);
   await expect(
     page.getByRole("button", { name: "Check this revision" }),

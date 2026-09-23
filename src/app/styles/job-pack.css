@@ -182,6 +182,29 @@
 #ppo-job-pack textarea{min-height:90px;resize:vertical}
 #ppo-job-pack input[type=checkbox]{width:16px;height:16px;min-height:16px;accent-color:var(--navy);flex:none;margin:3px 0 0;padding:0}
 #ppo-job-pack [aria-invalid=true]{border-color:var(--danger-accent)}
+#ppo-job-pack .jp-bare-fieldset{border:0;padding:0;margin:0;min-width:0}
+#ppo-job-pack .jp-check-choice{display:flex;gap:10px;padding:10px 0;align-items:flex-start;font-size:13px;line-height:1.55;cursor:pointer;font-weight:400}
+#ppo-job-pack .jp-check-choice small{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+#ppo-job-pack .jp-check-choice.unavailable{color:var(--muted);cursor:default}
+#ppo-job-pack [data-validation-field],#ppo-job-pack .jp-check-choice{scroll-margin-block:100px 150px}
+#ppo-job-pack .jp-linked-context{margin-bottom:18px}
+#ppo-job-pack details.jp-linked-context{margin-top:0}
+#ppo-job-pack .jp-linked-body{padding:0 14px 14px}
+#ppo-job-pack .jp-linked-body>:first-child{margin-top:0}
+#ppo-job-pack .jp-lead{font-size:13px;margin-bottom:9px}
+#ppo-job-pack .jp-gap-bottom{margin-bottom:15px}
+/* Sticky within the module's own scroll container. On a phone the shell reserves its fixed bar's height
+   beneath the content, so the bar clears it without an extra inset. */
+#ppo-job-pack .jp-form-actions{position:sticky;bottom:12px;padding:13px 18px;margin-top:14px;display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--surface-white);border:1px solid var(--line-strong);border-radius:8px;box-shadow:0 3px 12px #242a3712;z-index:2}
+#ppo-job-pack .jp-form-actions p{font-size:12px;color:var(--muted)}
+#ppo-job-pack .jp-change-list{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px;font-size:13px}
+#ppo-job-pack .jp-change-list li{padding:9px 12px;border:1px solid var(--line);border-radius:6px;background:var(--surface-2);line-height:1.5;overflow-wrap:anywhere}
+#ppo-job-pack .jp-change-list strong{font-weight:500;display:block;color:var(--ink)}
+#ppo-job-pack .jp-change-list span{color:var(--muted);font-size:12px}
+/* The action bar is sticky (fixed on a phone), so it paints over the modal backdrop and reads as a second
+   live control beside the dialog's own confirm. Hidden, not removed, so nothing shifts behind the dialog. */
+#ppo-job-pack:has(dialog[open]) .jp-form-actions{visibility:hidden}
+#ppo-job-pack .jp-tab-trailing.changed{color:var(--warning)}
 /* Shared read and command failure notices keep their class for the screen-state suites and take the r03 error treatment here. */
 #ppo-job-pack .business-error{scroll-margin-top:24px;padding:13px 15px;color:var(--danger);background:var(--danger-surface);border:1px solid var(--danger-border);border-radius:6px;margin:0 0 14px;font-size:13px}
 #ppo-job-pack .business-error :is(ul,ol){padding-left:20px;margin-top:5px}
@@ -242,6 +265,17 @@
  #ppo-job-pack .jp-notice{font-size:14px}
  #ppo-job-pack :is(input,select,textarea){font-size:16px;min-height:44px}
  #ppo-job-pack .jp-field{font-size:14px}
+ #ppo-job-pack .jp-check-choice{font-size:14px;min-height:44px}
+ /* Host adaptation. A sticky box may not be displaced above its containing block, and on a phone the form
+    begins near the foot of the scrollport, so at the top of the view the sticky bar was clamped to the form's
+    own top and fell behind the shell's fixed navigation bar (measured: 26px at 390px, 145px at 320px).
+    Fixed to the viewport above that bar, it clears it at every scroll position; the r03 box is unchanged. */
+ #ppo-job-pack .jp-form-actions{position:fixed;left:16px;right:16px;bottom:calc(72px + env(safe-area-inset-bottom));margin-top:0;padding:12px;flex-wrap:wrap;z-index:3}
+ #ppo-job-pack .jp-form-actions>p{flex:1 1 100%}
+ #ppo-job-pack .jp-form-actions .jp-button-row{width:100%}
+ #ppo-job-pack .jp-form-actions .jp-button-row button{flex:1}
+ /* Room for the fixed bar, so the last entry is never hidden behind it. */
+ #ppo-job-pack .jp-preparation{padding-bottom:132px}
  #ppo-job-pack input[type=checkbox]{min-height:18px;width:18px;height:18px}
  #ppo-job-pack .jp-history-item{grid-template-columns:1fr;gap:5px}
  #ppo-job-pack .jp-history-item p{font-size:14px}
@@ -257,5 +291,6 @@
  #ppo-job-pack .jp-dialog-actions{padding:12px 18px}
 }
 @media(max-height:850px){#ppo-job-pack .jp-contents{position:static}}
+@media(max-height:650px){#ppo-job-pack .jp-form-actions{position:static;left:auto;right:auto;bottom:auto;margin-top:14px}#ppo-job-pack .jp-preparation{padding-bottom:0}}
 @media(pointer:coarse){#ppo-job-pack :is(button,a.jp-button,.jp-text-button,.jp-contents nav a){min-height:44px}}
 @media(prefers-reduced-motion:reduce){#ppo-job-pack *{scroll-behavior:auto!important;transition:none!important}}

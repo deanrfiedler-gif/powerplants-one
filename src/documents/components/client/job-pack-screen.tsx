@@ -1,22 +1,27 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   api,
   useResource,
   useCommand,
   ErrorNotice,
   ReadState,
+  ValidationFields,
   isDenied,
   type Envelope,
 } from "../../../components/business-ui";
+import { useUnsavedChanges } from "../../../components/record-ui";
 import { useIdentity } from "../../../components/business-session";
-import { PreparationForm } from "../../../components/pack-screens";
-import { sectionKeys, type SectionKey } from "../../validation";
+import { sectionKeys, type PackInput, type SectionKey } from "../../validation";
 import {
   driftSources,
+  emptyInput,
   formatDate,
   formatStamp,
+  historyLabel,
+  inputDiff,
   packTimeline,
   readinessSummary,
   revisionLabel,
@@ -25,9 +30,11 @@ import {
 } from "../../pack-view";
 import type {
   Pack,
+  PackHistory,
   PackIssue,
   PackRecipient,
   PackRevision,
+  PackSource,
 } from "./job-pack-types";
 import {
   Badge,
@@ -48,6 +55,16 @@ import {
   ReadinessCard,
   RecordCard,
 } from "./job-pack-rail";
+import {
+  PreparationForm,
+  PreparationGuidanceCard,
+  PreparationStatusCard,
+  UnsavedBadge,
+} from "./job-pack-preparation";
+import {
+  DiscardDialog,
+  PreparationChangeDialog,
+} from "./job-pack-change-dialog";
 
 type View = "pack" | "prepare" | "revisions";
 type Decision =
@@ -303,12 +320,77 @@ function nextStep(
       );
 }
 
+// Scroll-spy on the module's own scroll container: the last section whose top has passed the threshold,
+// or the last section when the container cannot scroll further. A jump holds its selection for 600 ms.
+function useSectionSpy(
+  scroller: React.RefObject<HTMLElement | null>,
+  panel: string | null,
+  ready: unknown,
+  onSelect: (id: string) => void,
+) {
+  // performance.now() counts from page load. A lock that starts at 0 would swallow every scroll in the first
+  // 600 ms, which a compiled page reaches and a dev server never does.
+  const jumpLock = useRef(Number.NEGATIVE_INFINITY),
+    select = useRef(onSelect);
+  // The listener is attached once per panel; the callback it calls is always the latest render's.
+  useEffect(() => {
+    select.current = onSelect;
+  });
+  useEffect(() => {
+    const el = scroller.current;
+    if (!el || !panel) return;
+    let pending = false;
+    const onScroll = () => {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(() => {
+        pending = false;
+        if (performance.now() - jumpLock.current < 600) return;
+        // Both panels hold sections; only the visible one is tracked.
+        const sections = [
+          ...el.querySelectorAll<HTMLElement>(`${panel} .jp-paper-section`),
+        ];
+        if (!sections.length) return;
+        const top = el.getBoundingClientRect().top,
+          atEnd = el.scrollTop + el.clientHeight >= el.scrollHeight - 2;
+        let selected = sections[0];
+        if (atEnd) selected = sections[sections.length - 1];
+        else
+          for (const s of sections)
+            if (s.getBoundingClientRect().top - top <= 100) selected = s;
+        select.current(selected.id);
+      });
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, [scroller, panel, ready]);
+  return jumpLock;
+}
+// A contents-rail jump focuses its section, scrolls it to the top of the module container and holds the
+// rail's selection past the scroll it causes.
+function jumpToSection(
+  target: string,
+  jumpLock: React.RefObject<number>,
+  select: (id: string) => void,
+) {
+  const el = document.getElementById(target);
+  if (!el) return;
+  jumpLock.current = performance.now();
+  el.focus({ preventScroll: true });
+  el.scrollIntoView({ behavior: "auto", block: "start" });
+  select(target);
+}
+
 export function JobPackScreen({ id }: { id: string }) {
   const r = useResource<Envelope<Pack>>(`packs/${id}`),
     command = useCommand(),
     identity = useIdentity();
   const [view, setView] = useState<View>("pack"),
     [decision, setDecision] = useState<Decision | null>(null),
+    // null means "no edits yet": the saved revision is shown as it stands, so a reload never
+    // resurrects a stale draft and a fresh save clears the dirty state without waiting for the read.
+    [draft, setDraft] = useState<PackInput | null>(null),
+    [prep, setPrep] = useState<null | "save" | "discard">(null),
     [working, setWorking] = useState(false),
     [error, setError] = useState<unknown>(null),
     [current, setCurrent] = useState({ pack: "s-1", prepare: "p-1" });
@@ -316,9 +398,6 @@ export function JobPackScreen({ id }: { id: string }) {
       null,
     ),
     scroller = useRef<HTMLElement>(null),
-    // performance.now() counts from page load. A lock that starts at 0 would swallow every scroll in the first
-    // 600 ms, which a compiled page reaches and a dev server never does.
-    jumpLock = useRef(Number.NEGATIVE_INFINITY),
     positions = useRef<Record<View, number>>({
       pack: 0,
       prepare: 0,
@@ -337,49 +416,33 @@ export function JobPackScreen({ id }: { id: string }) {
     zone = revision?.snapshot.appointment.timezone ?? "Australia/Brisbane",
     busy = working || command.busy || r.loading || !!r.error,
     hasRevision = !!revision;
+  // Readable names for the change record: a stored history code never reaches the dialog or the timeline.
+  const names = {
+      sources: Object.fromEntries((p?.sources ?? []).map((s) => [s.id, s.title])),
+      history: Object.fromEntries(
+        (p?.history ?? []).map((h) => [h.id, historyLabel(h)]),
+      ),
+    },
+    baseline = revision?.input ?? null,
+    value = draft ?? baseline ?? emptyInput(),
+    // The change list and the dirty state are the same comparison, so what the dialog records is
+    // exactly what the action bar reports.
+    changes = staff ? inputDiff(baseline, value, names) : [],
+    dirty = !!draft && changes.length > 0;
+  useUnsavedChanges(dirty, command.busy);
 
-  // Scroll-spy on the module's own scroll container: the last section whose top has passed the threshold,
-  // or the last section when the container cannot scroll further. A jump holds its selection for 600 ms.
-  useEffect(() => {
-    const el = scroller.current;
-    if (!el || view !== "pack") return;
-    let pending = false;
-    const onScroll = () => {
-      if (pending) return;
-      pending = true;
-      requestAnimationFrame(() => {
-        pending = false;
-        if (performance.now() - jumpLock.current < 600) return;
-        // The hidden Preparation panel has sections too; only the visible pack is tracked.
-        const sections = [
-          ...el.querySelectorAll<HTMLElement>(
-            "#jp-panel-pack .jp-paper-section",
-          ),
-        ];
-        if (!sections.length) return;
-        const top = el.getBoundingClientRect().top,
-          atEnd = el.scrollTop + el.clientHeight >= el.scrollHeight - 2;
-        let selected = sections[0];
-        if (atEnd) selected = sections[sections.length - 1];
-        else
-          for (const s of sections)
-            if (s.getBoundingClientRect().top - top <= 100) selected = s;
-        setCurrent((c) =>
-          c.pack === selected.id ? c : { ...c, pack: selected.id },
-        );
-      });
-    };
-    el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
-  }, [view, hasRevision]);
-  function jump(target: string) {
-    const el = document.getElementById(target);
-    if (!el) return;
-    jumpLock.current = performance.now();
-    el.focus({ preventScroll: true });
-    el.scrollIntoView({ behavior: "auto", block: "start" });
-    setCurrent((c) => ({ ...c, pack: target }));
-  }
+  const select = (target: string) =>
+      setCurrent((c) => {
+        const key = target.startsWith("p-") ? "prepare" : "pack";
+        return c[key] === target ? c : { ...c, [key]: target };
+      }),
+    jumpLock = useSectionSpy(
+      scroller,
+      view === "revisions" ? null : `#jp-panel-${view}`,
+      hasRevision,
+      select,
+    );
+  const jump = (target: string) => jumpToSection(target, jumpLock, select);
   function show(next: View) {
     const el = scroller.current;
     if (el && next !== view) positions.current[view] = el.scrollTop;
@@ -398,6 +461,22 @@ export function JobPackScreen({ id }: { id: string }) {
       setError(e);
     } finally {
       setWorking(false);
+    }
+  }
+  // The dialog supplies only the reason; the body is built here and not rebuilt on a retry, so an
+  // uncertain save replays byte-identically instead of creating a second revision.
+  async function savePreparation(reason: string) {
+    if (!p) return;
+    const result = await command.send(`packs/${p.id}/amend`, {
+      expected_version: p.version,
+      reason,
+      content: value,
+    });
+    if (result) {
+      setPrep(null);
+      setDraft(null);
+      show("pack");
+      r.reload();
     }
   }
   async function acknowledge() {
@@ -453,15 +532,7 @@ export function JobPackScreen({ id }: { id: string }) {
       ["pack", "Job pack"],
       ...(staff ? ([["prepare", "Preparation"]] as [View, string][]) : []),
       ["revisions", "Revision history"],
-    ],
-    names = {
-      sources: Object.fromEntries(
-        (p?.sources ?? []).map((s) => [s.id, s.title]),
-      ),
-      history: Object.fromEntries(
-        (p?.history ?? []).map((h) => [h.id, `${h.kind}: ${h.summary}`]),
-      ),
-    };
+    ];
   const tabKeys = (e: React.KeyboardEvent) => {
     const i = views.findIndex(([v]) => v === view),
       next =
@@ -516,6 +587,7 @@ export function JobPackScreen({ id }: { id: string }) {
                 </>
               )}
               {status && <Badge tone={status.tone}>{status.label}</Badge>}
+              {dirty && <UnsavedBadge />}
             </div>
           )}
         </div>
@@ -619,9 +691,16 @@ export function JobPackScreen({ id }: { id: string }) {
                 )}
               </button>
             ))}
-            <span className="jp-tab-trailing" role="presentation">
-              <Icon name="document" />
-              Record version {p.version}
+            <span
+              className={`jp-tab-trailing${dirty ? " changed" : ""}`}
+              role="presentation"
+            >
+              <Icon name={dirty ? "warning" : "document"} />
+              {dirty
+                ? "Unsaved preparation changes"
+                : revision
+                  ? `${revisionLabel(revision.revision)} saved ${formatStamp(revision.created_at, zone)}`
+                  : "No saved revision"}
             </span>
           </div>
           <section
@@ -794,63 +873,68 @@ export function JobPackScreen({ id }: { id: string }) {
               aria-labelledby="jp-tab-prepare"
               hidden={view !== "prepare"}
             >
-              <div className="jp-revision-layout">
-                <div className="jp-paper">
-                  <div className="jp-form-intro">
-                    <h2>
-                      Prepare{" "}
-                      {revision
-                        ? `the successor to ${revisionLabel(revision.revision)}`
-                        : "the first revision"}
-                    </h2>
-                    <p>
-                      Every save is a new immutable revision with its own
-                      reason.
-                      {issue
-                        ? " Saving now raises an amendment: dispatch is held at once, and a fresh check, issue and every crew acknowledgement are required."
-                        : ""}
-                    </p>
-                  </div>
-                  <div className="jp-paper-section">
-                    {p.actions.can_prepare ? (
+              <div className="jp-layout">
+                <ContentsRail
+                  prefix="p"
+                  title="Preparation"
+                  label="Preparation sections"
+                  current={current.prepare}
+                  flagged={flagged}
+                  onJump={jump}
+                  foot={
+                    <>
+                      The job records supply the context.
+                      <br />
+                      Add the instructions this visit needs.
+                    </>
+                  }
+                />
+                <div className="jp-main-column">
+                  {p.actions.can_prepare ? (
+                    <ValidationFields error={prep ? null : command.error}>
                       <PreparationForm
-                        key={p.version}
                         pack={p}
+                        revision={revision}
                         sources={p.sources}
                         history={p.history}
-                        onSaved={() => {
-                          show("pack");
-                          r.reload();
-                        }}
+                        value={value}
+                        onChange={setDraft}
+                        dirty={dirty}
+                        busy={command.busy}
+                        saveState={
+                          command.busy
+                            ? "Saving preparation…"
+                            : dirty
+                              ? "Unsaved changes"
+                              : command.saved && revision
+                                ? `Saved as ${revisionLabel(revision.revision)}`
+                                : "No unsaved changes"
+                        }
+                        error={prep ? null : command.error}
+                        onSave={() => setPrep("save")}
+                        onDiscard={() => setPrep("discard")}
                       />
-                    ) : (
-                      <p className="jp-muted">
-                        This identity can review the preparation but cannot save
-                        a revision.
-                      </p>
-                    )}
-                  </div>
+                    </ValidationFields>
+                  ) : (
+                    <article className="jp-paper">
+                      <div className="jp-paper-heading">
+                        <div>
+                          <h2>Preparation</h2>
+                          <p>
+                            This identity can review the preparation but cannot
+                            save a revision.
+                          </p>
+                        </div>
+                      </div>
+                    </article>
+                  )}
                 </div>
-                <aside className="jp-side-card">
-                  <div className="jp-side-heading">
-                    <h2>Where information comes from</h2>
-                  </div>
-                  <div className="jp-side-body">
-                    <p>
-                      <strong className="jp-ink">Linked records</strong>
-                      <br />
-                      Customer, appointment, approved scope, site record and
-                      equipment are composed by the server when you save, each
-                      at its current version.
-                    </p>
-                    <p className="jp-gap-top">
-                      <strong className="jp-ink">Preparation entries</strong>
-                      <br />
-                      Nine reviewed notes, the exact document versions and the
-                      service history you select. Notes cannot extend the
-                      authorised scope.
-                    </p>
-                  </div>
+                <aside
+                  className="jp-right-rail"
+                  aria-label="Preparation guidance"
+                >
+                  <PreparationStatusCard pack={p} revision={revision} />
+                  <PreparationGuidanceCard />
                 </aside>
               </div>
             </section>
@@ -948,6 +1032,36 @@ export function JobPackScreen({ id }: { id: string }) {
             <span>Powerplants One · Service operations</span>
             <span>Synthetic prototype — not for operational use</span>
           </footer>
+          {prep === "save" && (
+            <PreparationChangeDialog
+              title={
+                revision
+                  ? "Record preparation change"
+                  : "Record the first preparation"
+              }
+              subtitle={`${p.display_number} · ${changes.length} field${changes.length === 1 ? "" : "s"} changed`}
+              lead={`The changed fields below are recorded with your reason in the revision history. This save creates ${revision ? revisionLabel(revision.revision + 1) : revisionLabel(1)}.`}
+              amendment={
+                issue && p.status !== "Withdrawn"
+                  ? "Dispatch is held as soon as this revision is saved, and a fresh check, issue and every crew acknowledgement are required."
+                  : undefined
+              }
+              changes={changes}
+              command={command}
+              onConfirm={savePreparation}
+              onClose={() => setPrep(null)}
+            />
+          )}
+          {prep === "discard" && (
+            <DiscardDialog
+              subtitle={`${p.display_number} · ${changes.length} field${changes.length === 1 ? "" : "s"} changed`}
+              onConfirm={() => {
+                setDraft(null);
+                setPrep(null);
+              }}
+              onClose={() => setPrep(null)}
+            />
+          )}
           {decision && (
             <DecisionDialog
               pack={p}
@@ -966,5 +1080,232 @@ export function JobPackScreen({ id }: { id: string }) {
         </>
       )}
     </>,
+  );
+}
+
+type PreparationOptions = {
+  appointment: { id: string; version: number; display_number: string };
+  work_order_reference: string;
+  // Non-null when a pack already exists for this appointment: one pack per appointment, so this page
+  // opens that pack instead of failing the unique constraint on save.
+  existing_pack_id: string | null;
+  sources: PackSource[];
+  history: PackHistory[];
+};
+
+// First preparation. The same frame and the same preparation view as the pack page, with only the
+// Preparation view available: there is no revision, no readiness and no record until the first save.
+export function NewJobPackScreen({ appointmentId }: { appointmentId: string }) {
+  const router = useRouter(),
+    r = useResource<PreparationOptions>(
+      `appointments/${appointmentId}/pack-options`,
+    ),
+    command = useCommand();
+  const [draft, setDraft] = useState<PackInput | null>(null),
+    [prep, setPrep] = useState<null | "save" | "discard">(null),
+    [current, setCurrent] = useState("p-1"),
+    // The identity of the pack this page is preparing, fixed for the life of the page so that an
+    // uncertain first save replays instead of creating a second pack.
+    [packId] = useState(() => crypto.randomUUID());
+  const scroller = useRef<HTMLElement>(null);
+  const options = r.data,
+    existing = options?.existing_pack_id ?? null,
+    value = draft ?? emptyInput(),
+    names = {
+      sources: Object.fromEntries(
+        (options?.sources ?? []).map((s) => [s.id, s.title]),
+      ),
+      history: Object.fromEntries(
+        (options?.history ?? []).map((h) => [h.id, historyLabel(h)]),
+      ),
+    },
+    changes = inputDiff(null, value, names),
+    dirty = !!draft && changes.length > 0;
+  useUnsavedChanges(dirty, command.busy);
+  useEffect(() => {
+    if (existing) router.replace(`/service/packs/${existing}`);
+  }, [existing, router]);
+  const select = (target: string) => setCurrent(target),
+    jumpLock = useSectionSpy(
+      scroller,
+      existing ? null : "#jp-panel-prepare",
+      !!options,
+      select,
+    );
+  const jump = (target: string) => jumpToSection(target, jumpLock, select);
+  async function savePreparation(reason: string) {
+    if (!options) return;
+    const result = await command.send<{ record_id: string }>("packs", {
+      id: packId,
+      appointment_id: options.appointment.id,
+      expected_appointment_version: options.appointment.version,
+      reason,
+      content: value,
+    });
+    if (result) {
+      setPrep(null);
+      setDraft(null);
+      router.push(`/service/packs/${result.record_id}`);
+    }
+  }
+  if (isDenied(r.error))
+    return (
+      <section id="ppo-job-pack" data-module-layout="full-bleed">
+        <h1 className="jp-sr">Job pack</h1>
+        <ErrorNotice error={r.error} />
+      </section>
+    );
+  return (
+    <section
+      id="ppo-job-pack"
+      data-module-layout="full-bleed"
+      aria-labelledby="jp-page-title"
+      ref={scroller}
+    >
+      <nav className="jp-breadcrumb" aria-label="Page location">
+        <Link href="/service/tickets">Service</Link>
+        <span aria-hidden="true">›</span>
+        <Link href="/service/packs">Job packs</Link>
+        <span aria-hidden="true">›</span>
+        <span>Prepare</span>
+      </nav>
+      <header className="jp-heading">
+        <div>
+          <div className="jp-reference-line">
+            <span>{options?.work_order_reference ?? "Job pack"}</span>
+            <span>Job pack · first preparation</span>
+          </div>
+          <h1 id="jp-page-title">
+            {options
+              ? `${options.work_order_reference} · ${options.appointment.display_number}`
+              : "Prepare job pack"}
+          </h1>
+          <div className="jp-subtitle">
+            <Badge>Not yet saved</Badge>
+            {dirty && <UnsavedBadge />}
+          </div>
+        </div>
+        <div className="jp-heading-right">
+          <div className="jp-button-row">
+            <Link
+              className="jp-button"
+              href={`/service/appointments/${appointmentId}`}
+            >
+              Appointment
+            </Link>
+          </div>
+        </div>
+      </header>
+      <div className="jp-read-state">
+        <ReadState
+          loading={r.loading}
+          error={r.error}
+          retry={r.reload}
+          retained={!!options}
+        />
+        {existing && (
+          <p role="status">
+            A job pack already exists for this appointment — opening it.
+          </p>
+        )}
+      </div>
+      {options && !existing && (
+        <>
+          <div className="jp-tabs" role="tablist" aria-label="Job pack view">
+            <button
+              type="button"
+              role="tab"
+              id="jp-tab-prepare"
+              aria-controls="jp-panel-prepare"
+              aria-selected="true"
+              aria-label="Preparation, 9 outstanding items"
+            >
+              Preparation
+              <span className="jp-count" aria-hidden="true">
+                9
+              </span>
+            </button>
+            <span className="jp-tab-trailing" role="presentation">
+              <Icon name={dirty ? "warning" : "document"} />
+              {dirty ? "Unsaved preparation changes" : "No saved revision"}
+            </span>
+          </div>
+          <section
+            id="jp-panel-prepare"
+            role="tabpanel"
+            aria-labelledby="jp-tab-prepare"
+          >
+            <div className="jp-layout">
+              <ContentsRail
+                prefix="p"
+                title="Preparation"
+                label="Preparation sections"
+                current={current}
+                flagged={[]}
+                onJump={jump}
+                foot={
+                  <>
+                    The job records supply the context.
+                    <br />
+                    Add the instructions this visit needs.
+                  </>
+                }
+              />
+              <div className="jp-main-column">
+                <ValidationFields error={prep ? null : command.error}>
+                  <PreparationForm
+                    sources={options.sources}
+                    history={options.history}
+                    value={value}
+                    onChange={setDraft}
+                    dirty={dirty}
+                    busy={command.busy}
+                    saveState={
+                      command.busy
+                        ? "Saving preparation…"
+                        : dirty
+                          ? "Unsaved changes"
+                          : "No unsaved changes"
+                    }
+                    error={prep ? null : command.error}
+                    onSave={() => setPrep("save")}
+                    onDiscard={() => setPrep("discard")}
+                  />
+                </ValidationFields>
+              </div>
+              <aside className="jp-right-rail" aria-label="Preparation guidance">
+                <PreparationStatusCard />
+                <PreparationGuidanceCard />
+              </aside>
+            </div>
+          </section>
+          <footer className="jp-page-foot">
+            <span>Powerplants One · Service operations</span>
+            <span>Synthetic prototype — not for operational use</span>
+          </footer>
+          {prep === "save" && (
+            <PreparationChangeDialog
+              title="Record the first preparation"
+              subtitle={`${options.appointment.display_number} · ${changes.length} field${changes.length === 1 ? "" : "s"} changed`}
+              lead="Every entry below is recorded as added, with your reason, in the revision history. This save creates r01."
+              changes={changes}
+              command={command}
+              onConfirm={savePreparation}
+              onClose={() => setPrep(null)}
+            />
+          )}
+          {prep === "discard" && (
+            <DiscardDialog
+              subtitle={`${options.appointment.display_number} · ${changes.length} field${changes.length === 1 ? "" : "s"} changed`}
+              onConfirm={() => {
+                setDraft(null);
+                setPrep(null);
+              }}
+              onClose={() => setPrep(null)}
+            />
+          )}
+        </>
+      )}
+    </section>
   );
 }
